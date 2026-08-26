@@ -12,5 +12,5 @@ export default async function Home() {
       ? decodeURIComponent(encodedName)
       : email;
 
-  return <Workspace displayName={displayName} />;
+  return <Workspace displayName={displayName} userKey={email.toLowerCase()} />;
 }

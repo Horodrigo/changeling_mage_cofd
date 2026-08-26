@@ -2,420 +2,169 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Archive, Ban, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Download, FileJson,
-  FileText, Languages, LayoutDashboard, Loader2, Menu, Plus, Save, Search, Settings2,
-  ShieldCheck, Sparkles, Upload, UsersRound, X
+  Archive, BookOpen, ChevronRight, Cloud, Database, Download, FileJson, FileText,
+  HardDrive, LayoutDashboard, Menu, Pencil, Plus, Search, ShieldCheck, Sparkles,
+  Upload, UsersRound, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CharacterBuilder, type CharacterSheet } from "./character-builder";
+import { ATTRIBUTES, SKILLS, SOURCE_CATALOG } from "@/lib/creation-rules";
 
-type View = "inicio" | "personagens" | "fontes" | "regras" | "rulesets" | "traducoes";
-type Character = {
-  id: string; name: string; concept: string; gameLine: "CtL" | "MtA"; rulesetId: string;
-  rulesetVersion: number; schemaVersion: number; characterData: string; updatedAt: string;
+type View = "inicio" | "personagens" | "fontes" | "regras";
+type CatalogRule = {
+  id: string; originalName: string; gameLine: string; sourceId: string | null;
+  sourcePage: number | null; structuredData: string; reviewStatus: string;
 };
-type RuleRecord = {
-  id: string; originalName: string; translatedName: string | null; category: string;
-  gameLine: string; sourceId: string | null; sourcePage: number | null; sourceSection: string | null;
-  sourceType: string; translatedText: string | null; structuredData: string;
-  reviewStatus: "PENDING" | "APPROVED" | "REJECTED"; needsReview: boolean;
-  reviewNotes: string; reviewerId: string | null; reviewedAt: string | null;
-};
-
-const sourceFiles = [
-  ["Chronicles of Darkness", "Core", "2ª", "OFFICIAL"],
-  ["Changeling the Lost", "CtL", "2ª", "OFFICIAL"],
-  ["Kith and Kin", "CtL", "2ª", "OFFICIAL"],
-  ["Oak Ash and Thorn", "CtL", "2ª", "OFFICIAL"],
-  ["The Hedge", "CtL", "2ª", "OFFICIAL"],
-  ["Dark Eras Changeling", "CtL", "2ª", "OFFICIAL"],
-  ["Mage the Awakening", "MtA", "2ª", "OFFICIAL"],
-  ["Signs of Sorcery", "MtA", "2ª", "OFFICIAL"],
-  ["Tome of the Pentacle", "MtA", "2ª", "OFFICIAL"],
-  ["Nameless and Accursed", "NH", "2ª", "OFFICIAL"],
-  ["Beyond the Hedge", "CtL", "—", "HOMEBREW"],
-  ["Book of Courts", "CtL", "—", "HOMEBREW"],
-  ["Book of Seemings", "CtL", "—", "HOMEBREW"],
-] as const;
 
 const nav = [
   ["inicio", "Visão geral", LayoutDashboard],
   ["personagens", "Personagens", UsersRound],
+  ["regras", "Regras compartilhadas", BookOpen],
   ["fontes", "Fontes", Archive],
-  ["regras", "Regras", BookOpen],
-  ["rulesets", "Rulesets", Settings2],
-  ["traducoes", "Traduções", Languages],
 ] as const;
 
-export function Workspace({ displayName }: { displayName: string }) {
+export function Workspace({ displayName, userKey }: { displayName: string; userKey: string }) {
   const [view, setView] = useState<View>("inicio");
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [selected, setSelected] = useState<Character | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [characters, setCharacters] = useState<CharacterSheet[]>([]);
+  const [catalog, setCatalog] = useState<CatalogRule[]>([]);
+  const [selected, setSelected] = useState<CharacterSheet | null>(null);
+  const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
+  const [ready, setReady] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
-  const [ruleCounts, setRuleCounts] = useState({ pending: 0, approved: 0 });
   const fileRef = useRef<HTMLInputElement>(null);
+  const storageKey = useMemo(() => `arquivo-das-trevas:v2:${userKey}`, [userKey]);
 
-  async function loadCharacters() {
-    setLoading(true);
-    try {
-      const response = await fetch("/api/characters", { cache: "no-store" });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error);
-      setCharacters(data.characters);
-    } catch {
-      setNotice("O banco está sendo preparado. Tente novamente após a publicação concluir.");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    let cancelled = false;
+    async function start() {
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && !cancelled) setCharacters(parsed);
+        } else {
+          const legacy = await fetch("/api/characters", { cache: "no-store" });
+          if (legacy.ok) {
+            const data = await legacy.json();
+            const migrated = (data.characters ?? []).map((item: any) => migrateLegacy(item, displayName));
+            if (migrated.length && !cancelled) {
+              setCharacters(migrated);
+              localStorage.setItem(storageKey, JSON.stringify(migrated));
+              setNotice(`${migrated.length} ficha(s) antiga(s) foram transferidas para este navegador.`);
+            }
+          }
+        }
+      } catch { setNotice("Não foi possível ler o armazenamento local deste navegador."); }
+      try {
+        const response = await fetch("/api/catalog", { method: "POST" });
+        const data = await response.json();
+        if (response.ok && !cancelled) setCatalog(data.rules);
+      } catch { setNotice("As fichas locais funcionam, mas o catálogo compartilhado não pôde ser atualizado."); }
+      if (!cancelled) setReady(true);
     }
-  }
+    void start();
+    return () => { cancelled = true; };
+  }, [storageKey, displayName]);
 
-  async function loadRuleCounts() {
-    try {
-      const [pendingResponse, approvedResponse] = await Promise.all([
-        fetch("/api/rules?status=PENDING", { cache: "no-store" }),
-        fetch("/api/rules?status=APPROVED", { cache: "no-store" }),
-      ]);
-      if (!pendingResponse.ok || !approvedResponse.ok) return;
-      const [pending, approved] = await Promise.all([pendingResponse.json(), approvedResponse.json()]);
-      setRuleCounts({ pending: pending.rules.length, approved: approved.rules.length });
-    } catch { /* Counts are informative; the review screen handles errors explicitly. */ }
-  }
-
-  useEffect(() => { void loadCharacters(); void loadRuleCounts(); }, []);
+  useEffect(() => {
+    if (ready) localStorage.setItem(storageKey, JSON.stringify(characters));
+  }, [characters, ready, storageKey]);
 
   function navigate(next: View) {
-    setView(next); setSelected(null); setMobileOpen(false);
+    setView(next); setSelected(null); setEditing(null); setMobileOpen(false);
   }
 
-  async function createCharacter(form: HTMLFormElement) {
-    const fd = new FormData(form);
-    const payload = {
-      name: fd.get("name"), concept: fd.get("concept"), game_line: fd.get("gameLine"),
-      ruleset_id: `${String(fd.get("gameLine")).toLowerCase()}-base`,
-      ruleset_version: 1, character_data: {},
-    };
-    const response = await fetch("/api/characters", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
-    const data = await response.json();
-    if (!response.ok) { setNotice(data.error ?? "Não foi possível criar a ficha."); return; }
-    setCharacters((current) => [data.character, ...current]);
-    setDialogOpen(false); setSelected(data.character); setView("personagens");
-  }
-
-  async function saveCharacter(character: Character, form: HTMLFormElement) {
-    const fd = new FormData(form);
-    let characterData: object = {};
-    try { characterData = JSON.parse(String(fd.get("characterData") || "{}")); }
-    catch { setNotice("Os dados modulares precisam ser um JSON válido."); return; }
-    const response = await fetch(`/api/characters/${character.id}`, {
-      method: "PATCH", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ name: fd.get("name"), concept: fd.get("concept"), character_data: characterData }),
+  function saveCharacter(sheet: CharacterSheet) {
+    setCharacters((current) => {
+      const exists = current.some((item) => item.id === sheet.id);
+      return exists ? current.map((item) => item.id === sheet.id ? sheet : item) : [sheet, ...current];
     });
-    const data = await response.json();
-    if (!response.ok) { setNotice(data.error ?? "Não foi possível salvar."); return; }
-    setCharacters((current) => current.map((item) => item.id === data.character.id ? data.character : item));
-    setSelected(data.character); setNotice("Ficha salva com rastreabilidade de schema e ruleset.");
+    setEditing(null); setSelected(sheet); setView("personagens");
+    setNotice("Ficha salva localmente neste navegador. Exporte o JSON para manter uma cópia independente.");
   }
 
-  function exportCharacter(character: Character) {
-    const payload = {
-      schema_version: character.schemaVersion,
-      system: "chronicles-of-darkness",
-      game_line: character.gameLine,
-      ruleset: { id: character.rulesetId, version: character.rulesetVersion },
-      character: { name: character.name, concept: character.concept },
-      attributes: {}, skills: {}, specializations: [], merits: [],
-      line_data: JSON.parse(character.characterData || "{}"),
-      current_state: {},
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  function exportCharacter(character: CharacterSheet) {
+    const blob = new Blob([JSON.stringify(character, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
-    anchor.href = url; anchor.download = `${character.name.toLowerCase().replace(/[^a-z0-9]+/gi, "-")}.json`; anchor.click();
-    URL.revokeObjectURL(url);
+    anchor.href = url;
+    anchor.download = `${character.character.name.toLowerCase().replace(/[^a-z0-9]+/gi, "-")}.json`;
+    anchor.click(); URL.revokeObjectURL(url);
   }
 
   async function importCharacter(file: File) {
     try {
-      const payload = JSON.parse(await file.text());
-      if (payload.schema_version !== 1 || payload.system !== "chronicles-of-darkness" || !["CtL", "MtA"].includes(payload.game_line)) {
-        throw new Error("Arquivo incompatível: confira schema_version, system e game_line.");
-      }
-      if (!payload.character?.name || typeof payload.character.name !== "string") throw new Error("O personagem importado não possui nome válido.");
-      const response = await fetch("/api/characters", {
-        method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: payload.character.name, concept: payload.character.concept ?? "", game_line: payload.game_line,
-          ruleset_id: payload.ruleset?.id ?? `${payload.game_line.toLowerCase()}-base`,
-          ruleset_version: Number(payload.ruleset?.version) || 1, character_data: payload.line_data ?? {},
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error);
-      setCharacters((current) => [data.character, ...current]); setView("personagens"); setSelected(data.character);
-      setNotice(`“${data.character.name}” foi importado com sucesso.`);
-    } catch (error) {
-      setNotice(error instanceof Error ? error.message : "JSON inválido.");
-    }
+      const parsed = JSON.parse(await file.text());
+      if (parsed.system !== "chronicles-of-darkness" || !["CtL", "MtA"].includes(parsed.game_line)) throw new Error("O JSON não pertence a uma ficha CtL ou MtA compatível.");
+      const sheet = parsed.schema_version === 2 ? parsed as CharacterSheet : migrateJsonV1(parsed, displayName);
+      setCharacters((current) => [sheet, ...current.filter((item) => item.id !== sheet.id)]);
+      setView("personagens"); setSelected(sheet);
+      setNotice(`“${sheet.character.name}” foi importado para este navegador.`);
+    } catch (error) { setNotice(error instanceof Error ? error.message : "JSON inválido."); }
   }
 
-  const title = useMemo(() => nav.find(([id]) => id === view)?.[1] ?? "Arquivo", [view]);
+  const title = nav.find(([id]) => id === view)?.[1] ?? "Arquivo";
+  if (editing) return <CharacterBuilder player={displayName} initial={editing === "new" ? null : editing} onCancel={() => setEditing(null)} onSave={saveCharacter} />;
 
-  return (
-    <main className="app-shell">
-      <aside className={`sidebar ${mobileOpen ? "sidebar-open" : ""}`}>
-        <div className="brand">
-          <div className="brand-mark"><Sparkles /></div>
-          <div><strong>Arquivo</strong><span>das Trevas</span></div>
-          <button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Fechar menu"><X /></button>
-        </div>
-        <nav aria-label="Navegação principal">
-          {nav.map(([id, label, Icon]) => (
-            <button key={id} className={view === id ? "nav-item active" : "nav-item"} onClick={() => navigate(id)}>
-              <Icon /> <span>{label}</span>{view === id && <ChevronRight className="nav-chevron" />}
-            </button>
-          ))}
-        </nav>
-        <div className="source-promise">
-          <ShieldCheck />
-          <div><strong>Fontes primeiro</strong><span>Nenhuma regra é confirmada sem livro e página.</span></div>
-        </div>
-        <div className="profile"><div className="avatar">{displayName.slice(0, 1).toUpperCase()}</div><div><strong>{displayName}</strong><span>Workspace privado</span></div></div>
-      </aside>
-
-      <section className="content">
-        <header className="topbar">
-          <button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Abrir menu"><Menu /></button>
-          <div><p>Chronicles of Darkness</p><h1>{title}</h1></div>
-          <div className="top-actions">
-            <input ref={fileRef} hidden type="file" accept=".json,application/json" onChange={(event) => {
-              const file = event.target.files?.[0]; if (file) void importCharacter(file); event.target.value = "";
-            }} />
-            <Button variant="outline" onClick={() => fileRef.current?.click()}><Upload /> Importar JSON</Button>
-            <CreateDialog open={dialogOpen} setOpen={setDialogOpen} onCreate={createCharacter} />
-          </div>
-        </header>
-
-        {notice && <div className="notice" role="status"><CircleHelp /><span>{notice}</span><button onClick={() => setNotice("")} aria-label="Fechar aviso"><X /></button></div>}
-
-        {selected ? (
-          <CharacterEditor character={selected} onBack={() => setSelected(null)} onSave={saveCharacter} onExport={exportCharacter} />
-        ) : view === "inicio" ? (
-          <Dashboard characters={characters} loading={loading} ruleCounts={ruleCounts} openCharacters={() => navigate("personagens")} newCharacter={() => setDialogOpen(true)} />
-        ) : view === "personagens" ? (
-          <Characters characters={characters} loading={loading} open={setSelected} create={() => setDialogOpen(true)} />
-        ) : view === "fontes" ? <Sources notify={setNotice} onProcessed={loadRuleCounts} /> : view === "regras" ? <Rules notify={setNotice} onChanged={loadRuleCounts} /> : view === "rulesets" ? <Rulesets /> : <Translations />}
-      </section>
-      {mobileOpen && <button className="overlay" onClick={() => setMobileOpen(false)} aria-label="Fechar menu" />}
-    </main>
-  );
+  return <main className="app-shell">
+    <aside className={`sidebar ${mobileOpen ? "sidebar-open" : ""}`}>
+      <div className="brand"><div className="brand-mark"><Sparkles /></div><div><strong>Arquivo</strong><span>das Trevas</span></div><button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Fechar menu"><X /></button></div>
+      <nav aria-label="Navegação principal">{nav.map(([id,label,Icon]) => <button key={id} className={view === id ? "nav-item active" : "nav-item"} onClick={() => navigate(id)}><Icon /><span>{label}</span>{view === id && <ChevronRight className="nav-chevron" />}</button>)}</nav>
+      <div className="storage-card"><HardDrive /><div><strong>Fichas locais</strong><span>Seus personagens ficam neste navegador. As regras são compartilhadas pelo sistema.</span></div></div>
+      <div className="profile"><div className="avatar">{displayName.slice(0,1).toUpperCase()}</div><div><strong>{displayName}</strong><span>{characters.length} ficha(s) neste dispositivo</span></div></div>
+    </aside>
+    <section className="content">
+      <header className="topbar"><button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Abrir menu"><Menu /></button><div><p>Chronicles of Darkness</p><h1>{title}</h1></div><div className="top-actions"><input ref={fileRef} hidden type="file" accept=".json,application/json" onChange={(event) => { const file=event.target.files?.[0]; if(file) void importCharacter(file); event.target.value=""; }} /><Button variant="outline" onClick={() => fileRef.current?.click()}><Upload /> Importar JSON</Button><Button onClick={() => setEditing("new")}><Plus /> Criar ficha</Button></div></header>
+      {notice && <div className="notice" role="status"><ShieldCheck /><span>{notice}</span><button onClick={() => setNotice("")} aria-label="Fechar aviso"><X /></button></div>}
+      {selected ? <CharacterView character={selected} back={() => setSelected(null)} edit={() => setEditing(selected)} exportSheet={() => exportCharacter(selected)} /> : view === "inicio" ? <Dashboard characters={characters} catalog={catalog} create={() => setEditing("new")} openCharacters={() => navigate("personagens")} /> : view === "personagens" ? <Characters characters={characters} ready={ready} open={setSelected} create={() => setEditing("new")} /> : view === "regras" ? <RulesCatalog catalog={catalog} /> : <Sources />}
+    </section>
+    {mobileOpen && <button className="overlay" onClick={() => setMobileOpen(false)} aria-label="Fechar menu" />}
+  </main>;
 }
 
-function CreateDialog({ open, setOpen, onCreate }: { open: boolean; setOpen: (value: boolean) => void; onCreate: (form: HTMLFormElement) => void }) {
-  const [line, setLine] = useState("CtL");
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild><Button><Plus /> Novo personagem</Button></DialogTrigger>
-      <DialogContent className="dialog-surface">
-        <DialogHeader><DialogTitle>Criar personagem</DialogTitle><DialogDescription>Comece pela identidade. Campos mecânicos serão adicionados somente após revisão das fontes.</DialogDescription></DialogHeader>
-        <form className="form-stack" onSubmit={(event) => { event.preventDefault(); onCreate(event.currentTarget); }}>
-          <label>Nome<Input name="name" placeholder="Nome do personagem" required /></label>
-          <label>Conceito<Input name="concept" placeholder="Descrição curta" /></label>
-          <label>Linha de jogo
-            <input type="hidden" name="gameLine" value={line} />
-            <Select value={line} onValueChange={setLine}><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="CtL">Changeling: The Lost</SelectItem><SelectItem value="MtA">Mage: The Awakening</SelectItem></SelectContent></Select>
-          </label>
-          <div className="dialog-actions"><Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancelar</Button><Button type="submit">Criar ficha</Button></div>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function Dashboard({ characters, loading, ruleCounts, openCharacters, newCharacter }: { characters: Character[]; loading: boolean; ruleCounts: { pending: number; approved: number }; openCharacters: () => void; newCharacter: () => void }) {
+function Dashboard({ characters, catalog, create, openCharacters }: { characters: CharacterSheet[]; catalog: CatalogRule[]; create: () => void; openCharacters: () => void }) {
   return <div className="page-grid">
-    <section className="welcome-panel">
-      <div><Badge className="eyebrow">FUNDAÇÃO • ETAPA 1</Badge><h2>Suas crônicas, com cada regra no lugar certo.</h2><p>Crie fichas portáveis e mantenha livros, traduções e decisões de campanha rastreáveis.</p></div>
-      <div className="sigil" aria-hidden="true"><span>CoD</span></div>
-    </section>
-    <section className="metrics">
-      <Metric value={loading ? "—" : String(characters.length)} label="personagens" accent="violet" />
-      <Metric value="13" label="fontes catalogadas" accent="green" />
-      <Metric value={String(ruleCounts.approved)} label="regras aprovadas" accent="amber" />
-      <Metric value="2" label="linhas preparadas" accent="blue" />
-    </section>
-    <section className="panel wide">
-      <div className="panel-heading"><div><span className="kicker">ACESSO RÁPIDO</span><h3>Personagens recentes</h3></div><Button variant="ghost" onClick={openCharacters}>Ver todos <ChevronRight /></Button></div>
-      {characters.length ? <div className="character-strip">{characters.slice(0, 3).map((character) => <div className="mini-character" key={character.id}><span>{character.gameLine}</span><strong>{character.name}</strong><small>{character.concept || "Sem conceito"}</small></div>)}</div> : <Empty title="Nenhum personagem ainda" text="Crie a primeira ficha para iniciar sua crônica." action={newCharacter} />}
-    </section>
-    <section className="panel review-card"><span className="kicker">PIPELINE SEGURA</span><h3>Fila de revisão</h3><p>{ruleCounts.pending ? `${ruleCounts.pending} candidatos do Core aguardam sua conferência.` : "Processe o livro Core para criar a primeira fila de revisão."}</p><div className="progress-line"><span style={{ width: ruleCounts.pending ? "45%" : "8%" }} /></div><small>{ruleCounts.approved} regras aprovadas</small></section>
-    <section className="panel principles"><span className="kicker">PRINCÍPIO CENTRAL</span><blockquote>“Qual é a fonte desta informação?”</blockquote><p>Conteúdo sem livro, página e revisão permanece suspeito e não entra nas fichas.</p></section>
+    <section className="welcome-panel"><div><Badge className="eyebrow">CRIAÇÃO GUIADA ATIVA</Badge><h2>Crie a ficha agora. Corrija exceções depois.</h2><p>As distribuições e fórmulas são aplicadas automaticamente pelas fontes principais de cada linha.</p><div className="welcome-actions"><Button onClick={create}><Plus /> Nova ficha guiada</Button><Button variant="outline" onClick={openCharacters}>Ver personagens</Button></div></div><div className="sigil" aria-hidden="true"><span>CoD</span></div></section>
+    <section className="metrics"><Metric value={String(characters.length)} label="fichas locais" accent="violet" /><Metric value={String(catalog.length)} label="regras compartilhadas" accent="green" /><Metric value="2" label="linhas completas" accent="amber" /><Metric value="13" label="fontes conectadas" accent="blue" /></section>
+    <section className="panel wide"><div className="panel-heading"><div><span className="kicker">ARQUITETURA</span><h3>Separação de dados</h3></div></div><div className="storage-split"><div><HardDrive /><strong>Personagens</strong><p>JSON local por navegador e usuário, com importação e exportação.</p></div><div><Database /><strong>Regras</strong><p>Catálogo único no banco, utilizado por todos os usuários do site.</p></div><div><Cloud /><strong>Fontes</strong><p>Core como base, CtL e MtA como livros principais, demais como adjacentes.</p></div></div></section>
   </div>;
 }
+function Metric({ value,label,accent }: any) { return <div className={`metric ${accent}`}><strong>{value}</strong><span>{label}</span></div>; }
 
-function Metric({ value, label, accent }: { value: string; label: string; accent: string }) {
-  return <div className={`metric ${accent}`}><strong>{value}</strong><span>{label}</span></div>;
+function Characters({ characters, ready, open, create }: { characters: CharacterSheet[]; ready: boolean; open:(item:CharacterSheet)=>void; create:()=>void }) {
+  return <section className="panel"><div className="panel-heading"><div><span className="kicker">ARMAZENAMENTO LOCAL</span><h3>Personagens neste navegador</h3><p>Use Exportar JSON para transportar uma ficha para outro dispositivo.</p></div><Button onClick={create}><Plus /> Nova ficha</Button></div>{!ready ? <div className="loading-card">Carregando fichas locais…</div> : characters.length ? <div className="character-grid">{characters.map((character)=><button className="character-card" key={character.id} onClick={()=>open(character)}><div className="character-monogram">{character.character.name.slice(0,1)}</div><div><Badge variant="outline">{character.game_line}</Badge><h3>{character.character.name}</h3><p>{character.character.concept}</p><small>{character.game_line === "CtL" ? String(character.line_data.seeming ?? "Changeling") : String(character.line_data.path ?? "Mage")} · JSON v{character.schema_version}</small></div><ChevronRight /></button>)}</div> : <Empty title="Nenhuma ficha neste navegador" text="Crie um Changeling ou Mago com o assistente de regras." action={create} />}</section>;
 }
 
-function Characters({ characters, loading, open, create }: { characters: Character[]; loading: boolean; open: (item: Character) => void; create: () => void }) {
-  if (loading) return <div className="loading-card">Carregando fichas…</div>;
-  return <section className="panel">
-    <div className="panel-heading"><div><span className="kicker">FICHAS SALVAS</span><h3>Personagens</h3></div><Button onClick={create}><Plus /> Criar personagem</Button></div>
-    {characters.length ? <div className="character-grid">{characters.map((character) => <button className="character-card" key={character.id} onClick={() => open(character)}><div className="character-monogram">{character.name.slice(0, 1)}</div><div><Badge variant="outline">{character.gameLine}</Badge><h3>{character.name}</h3><p>{character.concept || "Conceito não informado"}</p><small>Ruleset v{character.rulesetVersion} · Schema v{character.schemaVersion}</small></div><ChevronRight /></button>)}</div> : <Empty title="Sua estante está vazia" text="Uma ficha começa com nome, conceito, linha e ruleset." action={create} />}
-  </section>;
+function CharacterView({ character, back, edit, exportSheet }: { character: CharacterSheet; back:()=>void; edit:()=>void; exportSheet:()=>void }) {
+  return <section className="sheet-editor"><div className="sheet-toolbar"><Button variant="ghost" onClick={back}>← Personagens</Button><div><Badge>{character.game_line}</Badge><span>Salva localmente</span></div><div><Button variant="outline" onClick={edit}><Pencil /> Editar</Button><Button variant="outline" onClick={exportSheet}><Download /> Exportar JSON</Button></div></div><article className="ready-sheet"><header><span className="kicker">FICHA DE PERSONAGEM</span><h2>{character.character.name}</h2><p>{character.character.concept}</p></header><div className="sheet-data-grid"><TraitPanel title="Atributos" values={character.attributes} /><TraitPanel title="Perícias" values={character.skills} /><TraitPanel title="Vantagens" values={character.derived} /><section><h3>{character.game_line === "CtL" ? "Changeling" : "Mage"}</h3>{Object.entries(character.line_data).filter(([,value])=>typeof value!=="object").map(([key,value])=><div className="sheet-row" key={key}><span>{pretty(key)}</span><strong>{String(value)}</strong></div>)}</section></div><section className="sheet-lists"><div><h3>Especializações</h3>{character.specializations.map((item)=><Badge key={item} variant="secondary">{item}</Badge>)}</div><div><h3>Méritos</h3>{character.merits.map((item)=><Badge key={item.name} variant="outline">{item.name} · {item.dots}</Badge>)}</div></section></article></section>;
+}
+function TraitPanel({ title, values }: { title:string; values:Record<string,number> }) { return <section><h3>{title}</h3>{Object.entries(values).map(([name,value])=><div className="sheet-row" key={name}><span>{pretty(name)}</span><strong>{value}</strong></div>)}</section>; }
+
+function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
+  return <section className="panel"><div className="panel-heading"><div><span className="kicker">BANCO COMPARTILHADO</span><h3>Regras ativas para todos</h3><p>Não há fila de aprovação. Ajustes posteriores substituem a versão compartilhada.</p></div><Badge className="approved-badge">ATIVAS</Badge></div><div className="rule-cards">{catalog.map((rule)=><article key={rule.id}><div><Badge>{rule.gameLine}</Badge><Badge variant="outline">p. {rule.sourcePage}</Badge></div><h3>{rule.originalName}</h3><p>{summarizeRule(rule)}</p><small>Fonte: {rule.sourceId} · {rule.reviewStatus}</small></article>)}</div></section>;
 }
 
-function CharacterEditor({ character, onBack, onSave, onExport }: { character: Character; onBack: () => void; onSave: (item: Character, form: HTMLFormElement) => void; onExport: (item: Character) => void }) {
-  return <section className="sheet-editor">
-    <div className="sheet-toolbar"><Button variant="ghost" onClick={onBack}>← Personagens</Button><div><Badge variant="outline">{character.gameLine}</Badge><span>Ruleset v{character.rulesetVersion}</span></div><Button variant="outline" onClick={() => onExport(character)}><Download /> Exportar JSON</Button></div>
-    <form onSubmit={(event) => { event.preventDefault(); onSave(character, event.currentTarget); }}>
-      <div className="sheet-identity"><div><span className="kicker">FICHA MODULAR</span><Input name="name" defaultValue={character.name} className="name-input" /></div><label>Conceito<Input name="concept" defaultValue={character.concept} placeholder="Conceito do personagem" /></label><Button type="submit">Salvar alterações</Button></div>
-      <div className="sheet-columns">
-        <div className="sheet-main">
-          <section className="sheet-section"><div className="section-title"><h3>Dados base</h3><Badge variant="secondary">Aguardando Core</Badge></div><PendingBlock /></section>
-          <section className="sheet-section"><div className="section-title"><h3>Módulo {character.gameLine}</h3><Badge variant="secondary">Aguardando revisão</Badge></div><PendingBlock /></section>
-          <section className="sheet-section"><div className="section-title"><h3>Dados modulares</h3><Badge variant="outline">JSON estruturado</Badge></div><p className="helper">Área técnica temporária para dados já aprovados pelo administrador.</p><Textarea name="characterData" defaultValue={formatJson(character.characterData)} className="json-editor" spellCheck={false} /></section>
-        </div>
-        <aside className="trace-panel"><ShieldCheck /><span className="kicker">RASTREABILIDADE</span><h3>Ficha protegida</h3><p>Nenhuma fórmula, Mérito, poder ou campo mecânico foi inventado.</p><dl><div><dt>Sistema</dt><dd>chronicles-of-darkness</dd></div><div><dt>Schema</dt><dd>v{character.schemaVersion}</dd></div><div><dt>Ruleset</dt><dd>{character.rulesetId}</dd></div><div><dt>Linha</dt><dd>{character.gameLine}</dd></div></dl></aside>
-      </div>
-    </form>
-  </section>;
+function Sources() {
+  const [query,setQuery]=useState("");
+  const filtered=SOURCE_CATALOG.filter((source)=>Object.values(source).join(" ").toLowerCase().includes(query.toLowerCase()));
+  return <section className="panel"><div className="panel-heading"><div><span className="kicker">HIERARQUIA DE FONTES</span><h3>Livros conectados</h3><p>Os livros principais comandam a criação; os adjacentes ampliam opções.</p></div><div className="searchbox"><Search /><Input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Buscar fonte…" /></div></div><div className="table-wrap"><Table><TableHeader><TableRow><TableHead>Livro</TableHead><TableHead>Linha</TableHead><TableHead>Tipo</TableHead><TableHead>Papel</TableHead><TableHead>Status</TableHead></TableRow></TableHeader><TableBody>{filtered.map((source)=><TableRow key={source.id}><TableCell><div className="source-title"><FileText />{source.title}</div></TableCell><TableCell>{source.gameLine}</TableCell><TableCell>{source.type}</TableCell><TableCell><Badge variant={source.role==="PRIMARY"?"default":"outline"}>{source.role==="PRIMARY"?"PRINCIPAL":source.role==="BASE"?"BASE":"ADJACENTE"}</Badge></TableCell><TableCell><Badge className="approved-badge">ATIVO</Badge></TableCell></TableRow>)}</TableBody></Table></div></section>;
 }
+function Empty({title,text,action}:{title:string;text:string;action:()=>void}) { return <div className="empty-state"><FileJson /><h3>{title}</h3><p>{text}</p><Button onClick={action}><Plus /> Criar ficha</Button></div>; }
 
-function Sources({ notify, onProcessed }: { notify: (message: string) => void; onProcessed: () => Promise<void> }) {
-  const [query, setQuery] = useState("");
-  const [processing, setProcessing] = useState(false);
-  const filtered = sourceFiles.filter((source) => source.join(" ").toLowerCase().includes(query.toLowerCase()));
-  async function processCore() {
-    setProcessing(true);
-    try {
-      const response = await fetch("/api/ingestion/core", { method: "POST" });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error);
-      await onProcessed();
-      notify(`${data.imported} candidatos do Core foram enviados para a fila de revisão.`);
-    } catch (error) {
-      notify(error instanceof Error ? error.message : "Não foi possível processar o Core.");
-    } finally {
-      setProcessing(false);
-    }
-  }
-  return <section className="panel">
-    <div className="panel-heading"><div><span className="kicker">13 DOCUMENTOS</span><h3>Catálogo de fontes</h3><p>Metadados interpretados pela nomenclatura fornecida.</p></div><div className="searchbox"><Search /><Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar fonte…" /></div></div>
-    <div className="table-wrap"><Table><TableHeader><TableRow><TableHead>Título</TableHead><TableHead>Linha</TableHead><TableHead>Edição</TableHead><TableHead>Tipo</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Ação</TableHead></TableRow></TableHeader><TableBody>{filtered.map((source) => <TableRow key={source[0]}><TableCell><div className="source-title"><FileText />{source[0]}</div></TableCell><TableCell>{source[1]}</TableCell><TableCell>{source[2]}</TableCell><TableCell><Badge variant={source[3] === "HOMEBREW" ? "secondary" : "outline"}>{source[3]}</Badge></TableCell><TableCell><Badge className={source[0] === "Chronicles of Darkness" ? "review-badge" : "pending-badge"}>{source[0] === "Chronicles of Darkness" ? "PRONTO PARA INDEXAR" : "PENDING"}</Badge></TableCell><TableCell className="text-right">{source[0] === "Chronicles of Darkness" ? <Button size="sm" onClick={processCore} disabled={processing}>{processing ? <Loader2 className="spin" /> : <Archive />} {processing ? "Processando…" : "Processar este livro"}</Button> : <Button size="sm" variant="ghost" disabled>Aguardar Core</Button>}</TableCell></TableRow>)}</TableBody></Table></div>
-  </section>;
+function migrateLegacy(item:any, player:string): CharacterSheet {
+  const attributes=Object.values(ATTRIBUTES).flat().reduce<Record<string,number>>((acc,name)=>({...acc,[name]:1}),{});
+  const skills=Object.values(SKILLS).flat().reduce<Record<string,number>>((acc,name)=>({...acc,[name]:0}),{});
+  const now=new Date().toISOString();
+  return { id:item.id??crypto.randomUUID(),schema_version:2,system:"chronicles-of-darkness",game_line:item.gameLine==="MtA"?"MtA":"CtL",ruleset:{id:item.rulesetId??"legacy",version:item.rulesetVersion??1},character:{name:item.name??"Sem nome",concept:item.concept??"",player},attributes,skills,specializations:[],merits:[],line_data:safeJson(item.characterData),derived:{},current_state:{legacy:true},created_at:item.createdAt??now,updated_at:now };
 }
-
-function Rules({ notify, onChanged }: { notify: (message: string) => void; onChanged: () => Promise<void> }) {
-  const [status, setStatus] = useState("PENDING");
-  const [items, setItems] = useState<RuleRecord[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedRule, setSelectedRule] = useState<RuleRecord | null>(null);
-
-  async function load(nextStatus = status) {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/rules?status=${nextStatus}`, { cache: "no-store" });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error);
-      setItems(data.rules);
-    } catch (error) {
-      notify(error instanceof Error ? error.message : "Não foi possível carregar as regras.");
-    } finally {
-      setLoading(false);
-    }
-  }
-  useEffect(() => { void load(status); }, [status]);
-
-  async function review(rule: RuleRecord, form: HTMLFormElement, reviewStatus: RuleRecord["reviewStatus"]) {
-    const fd = new FormData(form);
-    let structuredData: object;
-    try { structuredData = JSON.parse(String(fd.get("structuredData") || "{}")); }
-    catch { notify("Os dados estruturados precisam ser um JSON válido."); return; }
-    const response = await fetch(`/api/rules/${rule.id}`, {
-      method: "PATCH", headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        translated_name: fd.get("translatedName"), summary: fd.get("summary"),
-        category: fd.get("category"), source_page: Number(fd.get("sourcePage")),
-        source_section: fd.get("sourceSection"), structured_data: structuredData,
-        review_notes: fd.get("reviewNotes"), review_status: reviewStatus,
-      }),
-    });
-    const data = await response.json();
-    if (!response.ok) { notify(data.error ?? "Não foi possível salvar a revisão."); return; }
-    setSelectedRule(null);
-    await Promise.all([load(status), onChanged()]);
-    notify(reviewStatus === "APPROVED" ? `“${rule.originalName}” foi aprovada.` : reviewStatus === "REJECTED" ? `“${rule.originalName}” foi rejeitada.` : "Revisão salva como pendente.");
-  }
-
-  return <section className="panel rules-panel">
-    <div className="panel-heading"><div><span className="kicker">BANCO DE REGRAS</span><h3>Fila de revisão do Core</h3><p>Confira cada candidato contra a página indicada antes de aprovar.</p></div><div className="rule-filters"><Select value={status} onValueChange={setStatus}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="PENDING">Pendentes</SelectItem><SelectItem value="APPROVED">Aprovadas</SelectItem><SelectItem value="REJECTED">Rejeitadas</SelectItem><SelectItem value="ALL">Todas</SelectItem></SelectContent></Select></div></div>
-    {loading ? <div className="loading-card"><Loader2 className="spin" /> Carregando fila…</div> : items.length ? <div className="review-list">{items.map((rule) => <button className="review-row" key={rule.id} onClick={() => setSelectedRule(rule)}><div className="review-icon"><BookOpen /></div><div><div className="review-name"><strong>{rule.translatedName || rule.originalName}</strong>{rule.translatedName && <span>{rule.originalName}</span>}</div><p>{rule.category} · Chronicles of Darkness · página {rule.sourcePage}</p></div><StatusBadge status={rule.reviewStatus} /><ChevronRight /></button>)}</div> : <Empty icon={<BookOpen />} title={status === "PENDING" ? "Nenhuma regra pendente" : "Nenhum item neste status"} text={status === "PENDING" ? "Em Fontes, processe primeiro o livro Chronicles of Darkness." : "Altere o filtro para consultar outra etapa da revisão."} />}
-    <RuleReviewDialog rule={selectedRule} close={() => setSelectedRule(null)} review={review} />
-  </section>;
+function migrateJsonV1(value:any, player:string): CharacterSheet {
+  const now=new Date().toISOString();
+  return { id:crypto.randomUUID(),schema_version:2,system:"chronicles-of-darkness",game_line:value.game_line,ruleset:value.ruleset??{id:"imported-v1",version:1},character:{name:value.character?.name??"Sem nome",concept:value.character?.concept??"",player},attributes:value.attributes??{},skills:value.skills??{},specializations:value.specializations??[],merits:value.merits??[],line_data:value.line_data??{},derived:{},current_state:value.current_state??{},created_at:now,updated_at:now };
 }
-
-function RuleReviewDialog({ rule, close, review }: { rule: RuleRecord | null; close: () => void; review: (rule: RuleRecord, form: HTMLFormElement, status: RuleRecord["reviewStatus"]) => Promise<void> }) {
-  const [saving, setSaving] = useState(false);
-  if (!rule) return null;
-  async function submit(form: HTMLFormElement, status: RuleRecord["reviewStatus"]) {
-    setSaving(true);
-    try { await review(rule, form, status); } finally { setSaving(false); }
-  }
-  return <Dialog open={Boolean(rule)} onOpenChange={(open) => { if (!open) close(); }}>
-    <DialogContent className="dialog-surface review-dialog">
-      <DialogHeader><DialogTitle>Revisar: {rule.originalName}</DialogTitle><DialogDescription>Compare estes metadados com sua cópia do livro. O texto integral não é armazenado automaticamente.</DialogDescription></DialogHeader>
-      <form className="review-form" onSubmit={(event) => { event.preventDefault(); void submit(event.currentTarget, "PENDING"); }}>
-        <div className="source-reference"><ShieldCheck /><div><span>FONTE CONFIRMADA</span><strong>Chronicles of Darkness · 2ª edição · página {rule.sourcePage}</strong><small>OFFICIAL · Core · seção “{rule.sourceSection}”</small></div></div>
-        <div className="review-form-grid">
-          <label>Nome original<Input value={rule.originalName} readOnly /></label>
-          <label>Nome em português<Input name="translatedName" defaultValue={rule.translatedName ?? ""} placeholder="Tradução aprovada" /></label>
-          <label>Categoria<Input name="category" defaultValue={rule.category} required /></label>
-          <label>Página<Input name="sourcePage" type="number" min="1" defaultValue={rule.sourcePage ?? ""} required /></label>
-          <label className="full">Seção<Input name="sourceSection" defaultValue={rule.sourceSection ?? ""} required /></label>
-          <label className="full">Resumo em português<Textarea name="summary" defaultValue={rule.translatedText ?? ""} placeholder="Escreva um resumo próprio depois de conferir a regra…" /></label>
-          <label className="full">Dados estruturados (JSON)<Textarea name="structuredData" className="json-editor compact" defaultValue={formatJson(rule.structuredData)} spellCheck={false} /></label>
-          <label className="full">Notas da revisão<Textarea name="reviewNotes" defaultValue={rule.reviewNotes ?? ""} placeholder="Dúvidas, conflitos ou decisões de tradução…" /></label>
-        </div>
-        <div className="copyright-note"><CircleHelp /><span>Use o PDF adquirido para conferência. Registre aqui somente seu resumo, estrutura e decisões de revisão.</span></div>
-        <div className="review-actions">
-          <Button type="button" variant="ghost" onClick={close}>Cancelar</Button>
-          <Button type="submit" variant="outline" disabled={saving}><Save /> Manter pendente</Button>
-          <Button type="button" variant="destructive" disabled={saving} onClick={(event) => { const form = event.currentTarget.form; if (form) void submit(form, "REJECTED"); }}><Ban /> Rejeitar</Button>
-          <Button type="button" disabled={saving} onClick={(event) => { const form = event.currentTarget.form; if (form) void submit(form, "APPROVED"); }}><CheckCircle2 /> Aprovar</Button>
-        </div>
-      </form>
-    </DialogContent>
-  </Dialog>;
-}
-
-function StatusBadge({ status }: { status: RuleRecord["reviewStatus"] }) {
-  return <Badge className={status === "APPROVED" ? "approved-badge" : status === "REJECTED" ? "rejected-badge" : "pending-badge"}>{status === "APPROVED" ? "APROVADA" : status === "REJECTED" ? "REJEITADA" : "PENDENTE"}</Badge>;
-}
-
-function Rulesets() {
-  return <div className="two-columns"><section className="panel"><span className="kicker">CONFIGURAÇÕES DE CAMPANHA</span><h3>Rulesets preparados</h3><div className="ruleset-card"><div><Badge>CtL</Badge><h4>Base Changeling</h4><p>Core + linha CtL. Fontes ainda desabilitadas até revisão.</p></div><span>v1</span></div><div className="ruleset-card"><div><Badge>MtA</Badge><h4>Base Mage</h4><p>Core + linha MtA. Fontes ainda desabilitadas até revisão.</p></div><span>v1</span></div></section><section className="panel principles"><ShieldCheck /><h3>Precedência explícita</h3><p>Conflitos entre fontes nunca são resolvidos silenciosamente. Cada decisão cria uma nova versão do ruleset.</p></section></div>;
-}
-
-function Translations() {
-  return <section className="panel"><div className="panel-heading"><div><span className="kicker">GLOSSÁRIO CENTRAL</span><h3>Traduções</h3></div><Button disabled><Plus /> Adicionar termo</Button></div><Empty icon={<Languages />} title="Glossário aguardando revisão" text="Termos originais e traduções aprovadas serão preservados separadamente." /></section>;
-}
-
-function Empty({ title, text, action, icon }: { title: string; text: string; action?: () => void; icon?: React.ReactNode }) {
-  return <div className="empty-state">{icon ?? <FileJson />}<h3>{title}</h3><p>{text}</p>{action && <Button onClick={action}><Plus /> Começar agora</Button>}</div>;
-}
-
-function PendingBlock() {
-  return <div className="pending-block"><CircleHelp /><div><strong>Informação não encontrada ou não confirmada nas fontes fornecidas.</strong><span>needs_review: true</span></div></div>;
-}
-
-function formatJson(value: string) {
-  try { return JSON.stringify(JSON.parse(value || "{}"), null, 2); } catch { return "{}"; }
-}
+function safeJson(value:string) { try{return JSON.parse(value||"{}");}catch{return{};} }
+function pretty(value:string) { return value.replace(/([A-Z])/g," $1").replace(/_/g," ").trim(); }
+function summarizeRule(rule:CatalogRule) { try { const data=JSON.parse(rule.structuredData); return `${Object.keys(data).length} blocos mecânicos estruturados e aplicados pelo criador de fichas.`; } catch { return "Regra compartilhada ativa."; } }
