@@ -62,6 +62,10 @@ export const rules = sqliteTable("rules", {
   structuredData: text("structured_data").notNull().default("{}"),
   reviewStatus: text("review_status").notNull().default("PENDING"),
   needsReview: integer("needs_review", { mode: "boolean" }).notNull().default(true),
+  reviewNotes: text("review_notes").notNull().default(""),
+  reviewerId: text("reviewer_id"),
+  reviewedAt: text("reviewed_at"),
+  updatedAt: text("updated_at"),
 });
 
 export const translations = sqliteTable("translations", {

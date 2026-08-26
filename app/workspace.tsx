@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Archive, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Download, FileJson,
-  FileText, Languages, LayoutDashboard, Menu, Plus, Search, Settings2, ShieldCheck,
-  Sparkles, Upload, UserRound, UsersRound, X
+  Archive, Ban, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Download, FileJson,
+  FileText, Languages, LayoutDashboard, Loader2, Menu, Plus, Save, Search, Settings2,
+  ShieldCheck, Sparkles, Upload, UsersRound, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,13 @@ type View = "inicio" | "personagens" | "fontes" | "regras" | "rulesets" | "tradu
 type Character = {
   id: string; name: string; concept: string; gameLine: "CtL" | "MtA"; rulesetId: string;
   rulesetVersion: number; schemaVersion: number; characterData: string; updatedAt: string;
+};
+type RuleRecord = {
+  id: string; originalName: string; translatedName: string | null; category: string;
+  gameLine: string; sourceId: string | null; sourcePage: number | null; sourceSection: string | null;
+  sourceType: string; translatedText: string | null; structuredData: string;
+  reviewStatus: "PENDING" | "APPROVED" | "REJECTED"; needsReview: boolean;
+  reviewNotes: string; reviewerId: string | null; reviewedAt: string | null;
 };
 
 const sourceFiles = [
@@ -53,6 +60,7 @@ export function Workspace({ displayName }: { displayName: string }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
+  const [ruleCounts, setRuleCounts] = useState({ pending: 0, approved: 0 });
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function loadCharacters() {
@@ -69,7 +77,19 @@ export function Workspace({ displayName }: { displayName: string }) {
     }
   }
 
-  useEffect(() => { void loadCharacters(); }, []);
+  async function loadRuleCounts() {
+    try {
+      const [pendingResponse, approvedResponse] = await Promise.all([
+        fetch("/api/rules?status=PENDING", { cache: "no-store" }),
+        fetch("/api/rules?status=APPROVED", { cache: "no-store" }),
+      ]);
+      if (!pendingResponse.ok || !approvedResponse.ok) return;
+      const [pending, approved] = await Promise.all([pendingResponse.json(), approvedResponse.json()]);
+      setRuleCounts({ pending: pending.rules.length, approved: approved.rules.length });
+    } catch { /* Counts are informative; the review screen handles errors explicitly. */ }
+  }
+
+  useEffect(() => { void loadCharacters(); void loadRuleCounts(); }, []);
 
   function navigate(next: View) {
     setView(next); setSelected(null); setMobileOpen(false);
@@ -188,10 +208,10 @@ export function Workspace({ displayName }: { displayName: string }) {
         {selected ? (
           <CharacterEditor character={selected} onBack={() => setSelected(null)} onSave={saveCharacter} onExport={exportCharacter} />
         ) : view === "inicio" ? (
-          <Dashboard characters={characters} loading={loading} openCharacters={() => navigate("personagens")} newCharacter={() => setDialogOpen(true)} />
+          <Dashboard characters={characters} loading={loading} ruleCounts={ruleCounts} openCharacters={() => navigate("personagens")} newCharacter={() => setDialogOpen(true)} />
         ) : view === "personagens" ? (
           <Characters characters={characters} loading={loading} open={setSelected} create={() => setDialogOpen(true)} />
-        ) : view === "fontes" ? <Sources /> : view === "regras" ? <Rules /> : view === "rulesets" ? <Rulesets /> : <Translations />}
+        ) : view === "fontes" ? <Sources notify={setNotice} onProcessed={loadRuleCounts} /> : view === "regras" ? <Rules notify={setNotice} onChanged={loadRuleCounts} /> : view === "rulesets" ? <Rulesets /> : <Translations />}
       </section>
       {mobileOpen && <button className="overlay" onClick={() => setMobileOpen(false)} aria-label="Fechar menu" />}
     </main>
@@ -219,7 +239,7 @@ function CreateDialog({ open, setOpen, onCreate }: { open: boolean; setOpen: (va
   );
 }
 
-function Dashboard({ characters, loading, openCharacters, newCharacter }: { characters: Character[]; loading: boolean; openCharacters: () => void; newCharacter: () => void }) {
+function Dashboard({ characters, loading, ruleCounts, openCharacters, newCharacter }: { characters: Character[]; loading: boolean; ruleCounts: { pending: number; approved: number }; openCharacters: () => void; newCharacter: () => void }) {
   return <div className="page-grid">
     <section className="welcome-panel">
       <div><Badge className="eyebrow">FUNDAÇÃO • ETAPA 1</Badge><h2>Suas crônicas, com cada regra no lugar certo.</h2><p>Crie fichas portáveis e mantenha livros, traduções e decisões de campanha rastreáveis.</p></div>
@@ -228,14 +248,14 @@ function Dashboard({ characters, loading, openCharacters, newCharacter }: { char
     <section className="metrics">
       <Metric value={loading ? "—" : String(characters.length)} label="personagens" accent="violet" />
       <Metric value="13" label="fontes catalogadas" accent="green" />
-      <Metric value="0" label="regras aprovadas" accent="amber" />
+      <Metric value={String(ruleCounts.approved)} label="regras aprovadas" accent="amber" />
       <Metric value="2" label="linhas preparadas" accent="blue" />
     </section>
     <section className="panel wide">
       <div className="panel-heading"><div><span className="kicker">ACESSO RÁPIDO</span><h3>Personagens recentes</h3></div><Button variant="ghost" onClick={openCharacters}>Ver todos <ChevronRight /></Button></div>
       {characters.length ? <div className="character-strip">{characters.slice(0, 3).map((character) => <div className="mini-character" key={character.id}><span>{character.gameLine}</span><strong>{character.name}</strong><small>{character.concept || "Sem conceito"}</small></div>)}</div> : <Empty title="Nenhum personagem ainda" text="Crie a primeira ficha para iniciar sua crônica." action={newCharacter} />}
     </section>
-    <section className="panel review-card"><span className="kicker">PIPELINE SEGURA</span><h3>Livros aguardando revisão</h3><p>Os documentos já estão catalogados, mas nenhuma regra foi extraída ou aprovada automaticamente.</p><div className="progress-line"><span style={{ width: "8%" }} /></div><small>1 etapa de 4 preparada</small></section>
+    <section className="panel review-card"><span className="kicker">PIPELINE SEGURA</span><h3>Fila de revisão</h3><p>{ruleCounts.pending ? `${ruleCounts.pending} candidatos do Core aguardam sua conferência.` : "Processe o livro Core para criar a primeira fila de revisão."}</p><div className="progress-line"><span style={{ width: ruleCounts.pending ? "45%" : "8%" }} /></div><small>{ruleCounts.approved} regras aprovadas</small></section>
     <section className="panel principles"><span className="kicker">PRINCÍPIO CENTRAL</span><blockquote>“Qual é a fonte desta informação?”</blockquote><p>Conteúdo sem livro, página e revisão permanece suspeito e não entra nas fichas.</p></section>
   </div>;
 }
@@ -269,17 +289,115 @@ function CharacterEditor({ character, onBack, onSave, onExport }: { character: C
   </section>;
 }
 
-function Sources() {
+function Sources({ notify, onProcessed }: { notify: (message: string) => void; onProcessed: () => Promise<void> }) {
   const [query, setQuery] = useState("");
+  const [processing, setProcessing] = useState(false);
   const filtered = sourceFiles.filter((source) => source.join(" ").toLowerCase().includes(query.toLowerCase()));
+  async function processCore() {
+    setProcessing(true);
+    try {
+      const response = await fetch("/api/ingestion/core", { method: "POST" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      await onProcessed();
+      notify(`${data.imported} candidatos do Core foram enviados para a fila de revisão.`);
+    } catch (error) {
+      notify(error instanceof Error ? error.message : "Não foi possível processar o Core.");
+    } finally {
+      setProcessing(false);
+    }
+  }
   return <section className="panel">
     <div className="panel-heading"><div><span className="kicker">13 DOCUMENTOS</span><h3>Catálogo de fontes</h3><p>Metadados interpretados pela nomenclatura fornecida.</p></div><div className="searchbox"><Search /><Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar fonte…" /></div></div>
-    <div className="table-wrap"><Table><TableHeader><TableRow><TableHead>Título</TableHead><TableHead>Linha</TableHead><TableHead>Edição</TableHead><TableHead>Tipo</TableHead><TableHead>Status</TableHead></TableRow></TableHeader><TableBody>{filtered.map((source) => <TableRow key={source[0]}><TableCell><div className="source-title"><FileText />{source[0]}</div></TableCell><TableCell>{source[1]}</TableCell><TableCell>{source[2]}</TableCell><TableCell><Badge variant={source[3] === "HOMEBREW" ? "secondary" : "outline"}>{source[3]}</Badge></TableCell><TableCell><Badge className="pending-badge">PENDING</Badge></TableCell></TableRow>)}</TableBody></Table></div>
+    <div className="table-wrap"><Table><TableHeader><TableRow><TableHead>Título</TableHead><TableHead>Linha</TableHead><TableHead>Edição</TableHead><TableHead>Tipo</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Ação</TableHead></TableRow></TableHeader><TableBody>{filtered.map((source) => <TableRow key={source[0]}><TableCell><div className="source-title"><FileText />{source[0]}</div></TableCell><TableCell>{source[1]}</TableCell><TableCell>{source[2]}</TableCell><TableCell><Badge variant={source[3] === "HOMEBREW" ? "secondary" : "outline"}>{source[3]}</Badge></TableCell><TableCell><Badge className={source[0] === "Chronicles of Darkness" ? "review-badge" : "pending-badge"}>{source[0] === "Chronicles of Darkness" ? "PRONTO PARA INDEXAR" : "PENDING"}</Badge></TableCell><TableCell className="text-right">{source[0] === "Chronicles of Darkness" ? <Button size="sm" onClick={processCore} disabled={processing}>{processing ? <Loader2 className="spin" /> : <Archive />} {processing ? "Processando…" : "Processar este livro"}</Button> : <Button size="sm" variant="ghost" disabled>Aguardar Core</Button>}</TableCell></TableRow>)}</TableBody></Table></div>
   </section>;
 }
 
-function Rules() {
-  return <section className="panel"><div className="panel-heading"><div><span className="kicker">BANCO DE REGRAS</span><h3>Regras rastreáveis</h3></div><Button disabled><Plus /> Nova regra CUSTOM</Button></div><Empty icon={<BookOpen />} title="Nenhuma regra processada" text="Escolha e revise primeiro o livro Core. Informações não confirmadas terão needs_review: true." /></section>;
+function Rules({ notify, onChanged }: { notify: (message: string) => void; onChanged: () => Promise<void> }) {
+  const [status, setStatus] = useState("PENDING");
+  const [items, setItems] = useState<RuleRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedRule, setSelectedRule] = useState<RuleRecord | null>(null);
+
+  async function load(nextStatus = status) {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/rules?status=${nextStatus}`, { cache: "no-store" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      setItems(data.rules);
+    } catch (error) {
+      notify(error instanceof Error ? error.message : "Não foi possível carregar as regras.");
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => { void load(status); }, [status]);
+
+  async function review(rule: RuleRecord, form: HTMLFormElement, reviewStatus: RuleRecord["reviewStatus"]) {
+    const fd = new FormData(form);
+    let structuredData: object;
+    try { structuredData = JSON.parse(String(fd.get("structuredData") || "{}")); }
+    catch { notify("Os dados estruturados precisam ser um JSON válido."); return; }
+    const response = await fetch(`/api/rules/${rule.id}`, {
+      method: "PATCH", headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        translated_name: fd.get("translatedName"), summary: fd.get("summary"),
+        category: fd.get("category"), source_page: Number(fd.get("sourcePage")),
+        source_section: fd.get("sourceSection"), structured_data: structuredData,
+        review_notes: fd.get("reviewNotes"), review_status: reviewStatus,
+      }),
+    });
+    const data = await response.json();
+    if (!response.ok) { notify(data.error ?? "Não foi possível salvar a revisão."); return; }
+    setSelectedRule(null);
+    await Promise.all([load(status), onChanged()]);
+    notify(reviewStatus === "APPROVED" ? `“${rule.originalName}” foi aprovada.` : reviewStatus === "REJECTED" ? `“${rule.originalName}” foi rejeitada.` : "Revisão salva como pendente.");
+  }
+
+  return <section className="panel rules-panel">
+    <div className="panel-heading"><div><span className="kicker">BANCO DE REGRAS</span><h3>Fila de revisão do Core</h3><p>Confira cada candidato contra a página indicada antes de aprovar.</p></div><div className="rule-filters"><Select value={status} onValueChange={setStatus}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="PENDING">Pendentes</SelectItem><SelectItem value="APPROVED">Aprovadas</SelectItem><SelectItem value="REJECTED">Rejeitadas</SelectItem><SelectItem value="ALL">Todas</SelectItem></SelectContent></Select></div></div>
+    {loading ? <div className="loading-card"><Loader2 className="spin" /> Carregando fila…</div> : items.length ? <div className="review-list">{items.map((rule) => <button className="review-row" key={rule.id} onClick={() => setSelectedRule(rule)}><div className="review-icon"><BookOpen /></div><div><div className="review-name"><strong>{rule.translatedName || rule.originalName}</strong>{rule.translatedName && <span>{rule.originalName}</span>}</div><p>{rule.category} · Chronicles of Darkness · página {rule.sourcePage}</p></div><StatusBadge status={rule.reviewStatus} /><ChevronRight /></button>)}</div> : <Empty icon={<BookOpen />} title={status === "PENDING" ? "Nenhuma regra pendente" : "Nenhum item neste status"} text={status === "PENDING" ? "Em Fontes, processe primeiro o livro Chronicles of Darkness." : "Altere o filtro para consultar outra etapa da revisão."} />}
+    <RuleReviewDialog rule={selectedRule} close={() => setSelectedRule(null)} review={review} />
+  </section>;
+}
+
+function RuleReviewDialog({ rule, close, review }: { rule: RuleRecord | null; close: () => void; review: (rule: RuleRecord, form: HTMLFormElement, status: RuleRecord["reviewStatus"]) => Promise<void> }) {
+  const [saving, setSaving] = useState(false);
+  if (!rule) return null;
+  async function submit(form: HTMLFormElement, status: RuleRecord["reviewStatus"]) {
+    setSaving(true);
+    try { await review(rule, form, status); } finally { setSaving(false); }
+  }
+  return <Dialog open={Boolean(rule)} onOpenChange={(open) => { if (!open) close(); }}>
+    <DialogContent className="dialog-surface review-dialog">
+      <DialogHeader><DialogTitle>Revisar: {rule.originalName}</DialogTitle><DialogDescription>Compare estes metadados com sua cópia do livro. O texto integral não é armazenado automaticamente.</DialogDescription></DialogHeader>
+      <form className="review-form" onSubmit={(event) => { event.preventDefault(); void submit(event.currentTarget, "PENDING"); }}>
+        <div className="source-reference"><ShieldCheck /><div><span>FONTE CONFIRMADA</span><strong>Chronicles of Darkness · 2ª edição · página {rule.sourcePage}</strong><small>OFFICIAL · Core · seção “{rule.sourceSection}”</small></div></div>
+        <div className="review-form-grid">
+          <label>Nome original<Input value={rule.originalName} readOnly /></label>
+          <label>Nome em português<Input name="translatedName" defaultValue={rule.translatedName ?? ""} placeholder="Tradução aprovada" /></label>
+          <label>Categoria<Input name="category" defaultValue={rule.category} required /></label>
+          <label>Página<Input name="sourcePage" type="number" min="1" defaultValue={rule.sourcePage ?? ""} required /></label>
+          <label className="full">Seção<Input name="sourceSection" defaultValue={rule.sourceSection ?? ""} required /></label>
+          <label className="full">Resumo em português<Textarea name="summary" defaultValue={rule.translatedText ?? ""} placeholder="Escreva um resumo próprio depois de conferir a regra…" /></label>
+          <label className="full">Dados estruturados (JSON)<Textarea name="structuredData" className="json-editor compact" defaultValue={formatJson(rule.structuredData)} spellCheck={false} /></label>
+          <label className="full">Notas da revisão<Textarea name="reviewNotes" defaultValue={rule.reviewNotes ?? ""} placeholder="Dúvidas, conflitos ou decisões de tradução…" /></label>
+        </div>
+        <div className="copyright-note"><CircleHelp /><span>Use o PDF adquirido para conferência. Registre aqui somente seu resumo, estrutura e decisões de revisão.</span></div>
+        <div className="review-actions">
+          <Button type="button" variant="ghost" onClick={close}>Cancelar</Button>
+          <Button type="submit" variant="outline" disabled={saving}><Save /> Manter pendente</Button>
+          <Button type="button" variant="destructive" disabled={saving} onClick={(event) => { const form = event.currentTarget.form; if (form) void submit(form, "REJECTED"); }}><Ban /> Rejeitar</Button>
+          <Button type="button" disabled={saving} onClick={(event) => { const form = event.currentTarget.form; if (form) void submit(form, "APPROVED"); }}><CheckCircle2 /> Aprovar</Button>
+        </div>
+      </form>
+    </DialogContent>
+  </Dialog>;
+}
+
+function StatusBadge({ status }: { status: RuleRecord["reviewStatus"] }) {
+  return <Badge className={status === "APPROVED" ? "approved-badge" : status === "REJECTED" ? "rejected-badge" : "pending-badge"}>{status === "APPROVED" ? "APROVADA" : status === "REJECTED" ? "REJEITADA" : "PENDENTE"}</Badge>;
 }
 
 function Rulesets() {
