@@ -2,6 +2,7 @@ import { asc } from "drizzle-orm";
 import { getDb } from "@/db";
 import { rules, sources } from "@/db/schema";
 import { SHARED_RULES, SOURCE_CATALOG } from "@/lib/creation-rules";
+import { MERIT_RULES } from "@/lib/merits";
 
 export async function POST() {
   try {
@@ -22,11 +23,11 @@ export async function POST() {
         target: sources.id,
         set: { reviewStatus: "APPROVED", enabled: true, notes: source.role },
       })),
-      ...SHARED_RULES.map((rule) => db.insert(rules).values({
+      ...[...SHARED_RULES, ...MERIT_RULES].map((rule) => db.insert(rules).values({
         id: rule.id,
         originalName: rule.name,
         translatedName: rule.name,
-        category: "Criação de personagem",
+        category: rule.id.startsWith("merits-") ? "Méritos" : "Criação de personagem",
         gameLine: rule.gameLine,
         sourceId: rule.sourceId,
         sourcePage: rule.page,

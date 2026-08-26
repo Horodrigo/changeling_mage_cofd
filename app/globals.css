@@ -264,6 +264,14 @@ button { cursor: pointer; }
 .arcana-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; padding: 14px 18px; border: 1px solid #e0d8cf; border-radius: 10px; background: #fbf8f3; }
 .merit-heading { display: flex; align-items: center; justify-content: space-between; margin-top: 26px; }
 .merit-heading h3 { margin: 0 0 10px; font: 700 18px Georgia,serif; }
+.merit-heading p { margin: 0; color: #766e77; font-size: 12px; }
+.specialty-grid,.merit-picker { display: grid; gap: 10px; }
+.specialty-row { display: grid; grid-template-columns: minmax(180px,.8fr) minmax(240px,1.2fr); gap: 10px; padding: 12px; border: 1px solid #e5dde7; border-radius: 12px; background: #fcfafc; }
+.specialty-row > label { display: grid; gap: 6px; color: #504851; font-size: 11px; font-weight: 700; }
+.merit-picker { margin-bottom: 12px; }
+.merit-row { display: grid; grid-template-columns: minmax(260px,1fr) 110px 38px; align-items: end; gap: 10px; padding: 12px; border: 1px solid #e5dde7; border-radius: 12px; background: #fcfafc; }
+.merit-row > div:first-child { display: grid; gap: 5px; }
+.merit-row small { color: #827884; font-size: 11px; }
 .review-summary { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 10px; }
 .review-summary > div { padding: 18px; border: 1px solid #ddd6cd; border-radius: 10px; background: #faf7f2; }
 .review-summary h3 { margin: 9px 0 4px; font: 700 20px Georgia,serif; }.review-summary p { margin: 0; color: #776f77; }
@@ -321,7 +329,8 @@ button { cursor: pointer; }
   .review-row [data-slot="badge"] { grid-column: 2; width: fit-content; }
   .review-actions { justify-content: stretch; }
   .review-actions button { flex: 1 1 45%; }
-  .storage-split,.rule-cards,.line-choice,.dot-groups,.priority-row,.three-inputs,.form-grid,.form-grid.thirds,.arcana-grid,.review-summary,.line-review,.sheet-data-grid,.sheet-lists { grid-template-columns: 1fr; }
+  .storage-split,.rule-cards,.line-choice,.dot-groups,.priority-row,.three-inputs,.form-grid,.form-grid.thirds,.arcana-grid,.review-summary,.line-review,.sheet-data-grid,.sheet-lists,.specialty-row { grid-template-columns: 1fr; }
+  .merit-row { grid-template-columns: 1fr 100px 38px; }
   .stepper strong { display: none; }
   .step:after { left: 31px; right: 4px; }
   .builder-body { padding: 18px 14px; }
