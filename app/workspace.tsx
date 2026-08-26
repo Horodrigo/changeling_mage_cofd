@@ -156,28 +156,26 @@ function CharacterPaper({ character }: { character: CharacterSheet }) {
   return <article className={`cod-sheet ${isCtl?"ctl-sheet":"mta-sheet"}`}>
     <header className="cod-sheet-title"><div><span>{isCtl?"CHANGELING":"MAGE"}</span><strong>{isCtl?"THE LOST":"THE AWAKENING"}</strong></div><p>CHRONICLES OF DARKNESS</p></header>
     <section className="sheet-identity-grid">
-      <SheetField label="Nome" value={character.character.name}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Conceito" value={character.character.concept}/>
-      {isCtl?<><SheetField label="Seeming" value={data.seeming}/><SheetField label="Kith" value={data.kith}/><SheetField label="Corte" value={data.court}/><SheetField label="Needle" value={data.needle}/><SheetField label="Thread" value={data.thread}/><SheetField label="Touchstone" value={data.touchstone}/></>:<><SheetField label="Path" value={data.path}/><SheetField label="Order" value={data.order}/><SheetField label="Virtude" value={data.virtue}/><SheetField label="Vício" value={data.vice}/><SheetField label="Nimbus" value={data.nimbus}/><SheetField label="Ferramenta dedicada" value={data.dedicated_tool}/></>}
+      {isCtl?<><SheetField label="Nome" value={character.character.name}/><SheetField label="Seeming" value={data.seeming}/><SheetField label="Touchstone" value={data.touchstone}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Kith" value={data.kith}/><SheetField label="Corte" value={data.court}/><SheetField label="Needle" value={data.needle}/><SheetField label="Thread" value={data.thread}/><SheetField label="Conceito" value={character.character.concept}/></>:<><SheetField label="Nome" value={character.character.name}/><SheetField label="Path" value={data.path}/><SheetField label="Ferramenta dedicada" value={data.dedicated_tool}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Order" value={data.order}/><SheetField label="Nimbus" value={data.nimbus}/><SheetField label="Vício" value={data.vice}/><SheetField label="Virtude" value={data.virtue}/><SheetField label="Conceito" value={character.character.concept}/></>}
     </section>
     <SheetHeading>Atributos</SheetHeading>
     <div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div>
     <div className="official-sheet-body">
       <div className="sheet-skills-column"><SheetHeading>Perícias</SheetHeading>{Object.entries(SKILLS).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={character.skills} specialties={specialties}/>)}</div>
       <div className="sheet-center-column">
-        <SheetHeading>Outras Características</SheetHeading>
-        <CompactValues values={character.derived}/>
-        <SheetHeading>Características da Linha</SheetHeading>
-        {isCtl?<CompactValues values={{Wyrd:Number(data.wyrd??1),"Clareza Máxima":Number(character.derived.ClarezaMaxima??0)}}/>:<CompactValues values={{Gnosis:gnosis,Sabedoria:Number(data.wisdom??7),"Mana Máximo":9+gnosis,"Mana por Turno":gnosis}}/>}
+        {isCtl?<><SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia??""),String(data.second_regalia??"")]}/><SheetHeading>Contratos</SheetHeading><LineList items={contracts.map((item)=>`${String(item.name??"")} · ${String(item.regalia??"")}`)}/></>:<><SheetHeading>Arcana</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name,value])=><TraitLine key={name} name={name} value={Number(value)}/>)}</div><SheetHeading>Rotes e Praxes</SheetHeading><LineList items={[...rotes.map((item)=>`Rote · ${item}`),...praxes.map((item)=>`Praxis · ${item}`)]}/></>}
         <SheetHeading>Especializações</SheetHeading><LineList items={specialties.map((item)=>`${item.skill}: ${item.name}`)}/>
-        <SheetHeading>Aspirações</SheetHeading><LineList items={aspirations}/>
+        <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits}/>
       </div>
       <div className="sheet-right-column">
         <SheetHeading>Vitalidade</SheetHeading><Track value={Number(character.derived.Vitalidade??0)} max={12}/>
         <SheetHeading>Força de Vontade</SheetHeading><Track value={Number(character.derived.ForçaDeVontade??0)} max={10}/>
-        {isCtl?<><SheetHeading>Contratos</SheetHeading><LineList items={contracts.map((item)=>`${String(item.name??"")} · ${String(item.regalia??"")}`)}/><SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia??""),String(data.second_regalia??"")]}/></>:<><SheetHeading>Arcana</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name,value])=><TraitLine key={name} name={name} value={Number(value)}/>)}</div><SheetHeading>Rotes</SheetHeading><LineList items={rotes}/><SheetHeading>Praxes</SheetHeading><LineList items={praxes}/></>}
+        <SheetHeading>Características da Linha</SheetHeading>
+        {isCtl?<CompactValues values={{Wyrd:Number(data.wyrd??1),"Clareza Máxima":Number(character.derived.ClarezaMaxima??0)}}/>:<CompactValues values={{Gnosis:gnosis,Sabedoria:Number(data.wisdom??7),"Mana Máximo":9+gnosis,"Mana por Turno":gnosis}}/>}
+        <SheetHeading>Outras Características</SheetHeading><CompactValues values={character.derived}/>
       </div>
     </div>
-    <div className="sheet-bottom-grid"><section><SheetHeading>Méritos</SheetHeading><div className="sheet-merits">{character.merits.length?character.merits.map((item,index)=><div key={`${item.name}-${index}`} title={item.source}><span>{item.name}</span><DotValue value={item.dots} max={Math.max(5,item.dots)}/></div>):<em>Nenhum Mérito selecionado</em>}</div></section><section><SheetHeading>{isCtl?"Hollow, Tokens e Anotações":"Condições e Anotações"}</SheetHeading><div className="blank-lines">{Array.from({length:6},(_,index)=><i key={index}/>)}</div></section></div>
+    <div className="sheet-bottom-grid"><section><SheetHeading>Aspirações</SheetHeading><LineList items={aspirations}/></section><section><SheetHeading>{isCtl?"Hollow, Tokens e Anotações":"Condições e Anotações"}</SheetHeading><div className="blank-lines">{Array.from({length:6},(_,index)=><i key={index}/>)}</div></section></div>
   </article>;
 }
 
@@ -189,6 +187,7 @@ function DotValue({value,max=5}:{value:number;max?:number}) { return <span class
 function CompactValues({values}:{values:Record<string,number>}) { return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{pretty(name)}</span><strong>{value}</strong></div>)}</div>; }
 function Track({value,max}:{value:number;max:number}) { return <div className="official-track">{Array.from({length:max},(_,index)=><i key={index} className={index<value?"available":""}/>)}</div>; }
 function LineList({items}:{items:string[]}) { return <div className="official-lines">{items.filter(Boolean).map((item,index)=><div key={`${item}-${index}`}>{item}</div>)}{!items.filter(Boolean).length&&<div>&nbsp;</div>}</div>; }
+function MeritSheetList({merits}:{merits:CharacterSheet["merits"]}) { return <div className="sheet-merits single-column">{merits.length?merits.map((item,index)=><div key={`${item.name}-${index}`} title={item.source}><span>{item.name}</span><DotValue value={item.dots} max={Math.max(5,item.dots)}/></div>):<em>Nenhum Mérito selecionado</em>}</div>; }
 function stringList(value:unknown) { return Array.isArray(value)?value.map(String):[]; }
 function objectList(value:unknown) { return Array.isArray(value)?value as Array<Record<string,unknown>>:[]; }
 

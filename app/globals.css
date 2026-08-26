@@ -319,14 +319,15 @@ button { cursor: pointer; }
 .compact-values { display:grid; grid-template-columns:1fr 1fr; gap:0 13px; }
 .compact-values > div { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid #aaa8a16b; font-size:10px; }
 .compact-values strong { color:var(--sheet-accent); font-size:14px; }
-.official-track { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; margin:5px 0 13px; }
-.official-track i { aspect-ratio:1; border:1px solid var(--sheet-ink); background:#fff; }
+.official-track { display:flex; flex-wrap:wrap; gap:4px; margin:5px 0 13px; }
+.official-track i { width:9px; height:9px; flex:none; border:1px solid var(--sheet-ink); background:#fff; }
 .official-track i.available { background:color-mix(in srgb,var(--sheet-accent) 17%,#fff); }
 .official-lines { display:grid; gap:2px; }
 .official-lines > div { min-height:22px; overflow:hidden; border-bottom:1px solid #aaa8a16b; font:italic 10px/21px Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
 .arcana-sheet-list { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; }
 .sheet-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
 .sheet-merits { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+.sheet-merits.single-column { grid-template-columns:1fr; }
 .sheet-merits > div { min-height:24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #aaa8a16b; font-size:11px; }
 .sheet-merits em { color:#777; font-size:11px; }
 .blank-lines { display:grid; gap:9px; padding-top:6px; }.blank-lines i { height:15px; border-bottom:1px solid #aaa8a16b; }
