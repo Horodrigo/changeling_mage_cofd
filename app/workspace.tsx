@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Archive, BookOpen, ChevronRight, Cloud, Database, Download, FileJson, FileText,
   HardDrive, LayoutDashboard, Menu, Pencil, Plus, Search, ShieldCheck, Sparkles,
@@ -140,9 +140,57 @@ function Characters({ characters, ready, open, create }: { characters: Character
 }
 
 function CharacterView({ character, back, edit, exportSheet }: { character: CharacterSheet; back:()=>void; edit:()=>void; exportSheet:()=>void }) {
-  return <section className="sheet-editor"><div className="sheet-toolbar"><Button variant="ghost" onClick={back}>← Personagens</Button><div><Badge>{character.game_line}</Badge><span>Salva localmente</span></div><div><Button variant="outline" onClick={edit}><Pencil /> Editar</Button><Button variant="outline" onClick={exportSheet}><Download /> Exportar JSON</Button></div></div><article className="ready-sheet"><header><span className="kicker">FICHA DE PERSONAGEM</span><h2>{character.character.name}</h2><p>{character.character.concept}</p></header><div className="sheet-data-grid"><TraitPanel title="Atributos" values={character.attributes} /><TraitPanel title="Perícias" values={character.skills} /><TraitPanel title="Vantagens" values={character.derived} /><section><h3>{character.game_line === "CtL" ? "Changeling" : "Mage"}</h3>{Object.entries(character.line_data).filter(([,value])=>typeof value!=="object").map(([key,value])=><div className="sheet-row" key={key}><span>{pretty(key)}</span><strong>{String(value)}</strong></div>)}</section></div><section className="sheet-lists"><div><h3>Especializações</h3>{character.specializations.map((item,index)=>{const specialty=typeof item==="string"?{skill:"",name:item}:item;return <Badge key={`${specialty.skill}-${specialty.name}-${index}`} variant="secondary">{specialty.skill ? `${specialty.skill}: ` : ""}{specialty.name}</Badge>;})}</div><div><h3>Méritos</h3>{character.merits.map((item,index)=><Badge key={`${item.name}-${index}`} variant="outline" title={item.source}>{item.name} · {item.dots}</Badge>)}</div></section></article></section>;
+  return <section className="sheet-editor"><div className="sheet-toolbar"><Button variant="ghost" onClick={back}>← Personagens</Button><div><Badge>{character.game_line}</Badge><span>Salva localmente</span></div><div><Button variant="outline" onClick={edit}><Pencil /> Editar</Button><Button variant="outline" onClick={exportSheet}><Download /> Exportar JSON</Button></div></div><CharacterPaper character={character} /></section>;
 }
-function TraitPanel({ title, values }: { title:string; values:Record<string,number> }) { return <section><h3>{title}</h3>{Object.entries(values).map(([name,value])=><div className="sheet-row" key={name}><span>{pretty(name)}</span><strong>{value}</strong></div>)}</section>; }
+
+function CharacterPaper({ character }: { character: CharacterSheet }) {
+  const isCtl=character.game_line==="CtL";
+  const data=character.line_data;
+  const specialties=character.specializations.map((item)=>typeof item==="string"?{skill:"",name:item}:item);
+  const aspirations=stringList(data.aspirations);
+  const contracts=objectList(data.contracts);
+  const rotes=stringList(data.rotes);
+  const praxes=stringList(data.praxes);
+  const arcana=(data.arcana && typeof data.arcana==="object" ? data.arcana : {}) as Record<string,number>;
+  const gnosis=Number(data.gnosis??1);
+  return <article className={`cod-sheet ${isCtl?"ctl-sheet":"mta-sheet"}`}>
+    <header className="cod-sheet-title"><div><span>{isCtl?"CHANGELING":"MAGE"}</span><strong>{isCtl?"THE LOST":"THE AWAKENING"}</strong></div><p>CHRONICLES OF DARKNESS</p></header>
+    <section className="sheet-identity-grid">
+      <SheetField label="Nome" value={character.character.name}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Conceito" value={character.character.concept}/>
+      {isCtl?<><SheetField label="Seeming" value={data.seeming}/><SheetField label="Kith" value={data.kith}/><SheetField label="Corte" value={data.court}/><SheetField label="Needle" value={data.needle}/><SheetField label="Thread" value={data.thread}/><SheetField label="Touchstone" value={data.touchstone}/></>:<><SheetField label="Path" value={data.path}/><SheetField label="Order" value={data.order}/><SheetField label="Virtude" value={data.virtue}/><SheetField label="Vício" value={data.vice}/><SheetField label="Nimbus" value={data.nimbus}/><SheetField label="Ferramenta dedicada" value={data.dedicated_tool}/></>}
+    </section>
+    <SheetHeading>Atributos</SheetHeading>
+    <div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div>
+    <div className="official-sheet-body">
+      <div className="sheet-skills-column"><SheetHeading>Perícias</SheetHeading>{Object.entries(SKILLS).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={character.skills} specialties={specialties}/>)}</div>
+      <div className="sheet-center-column">
+        <SheetHeading>Outras Características</SheetHeading>
+        <CompactValues values={character.derived}/>
+        <SheetHeading>Características da Linha</SheetHeading>
+        {isCtl?<CompactValues values={{Wyrd:Number(data.wyrd??1),"Clareza Máxima":Number(character.derived.ClarezaMaxima??0)}}/>:<CompactValues values={{Gnosis:gnosis,Sabedoria:Number(data.wisdom??7),"Mana Máximo":9+gnosis,"Mana por Turno":gnosis}}/>}
+        <SheetHeading>Especializações</SheetHeading><LineList items={specialties.map((item)=>`${item.skill}: ${item.name}`)}/>
+        <SheetHeading>Aspirações</SheetHeading><LineList items={aspirations}/>
+      </div>
+      <div className="sheet-right-column">
+        <SheetHeading>Vitalidade</SheetHeading><Track value={Number(character.derived.Vitalidade??0)} max={12}/>
+        <SheetHeading>Força de Vontade</SheetHeading><Track value={Number(character.derived.ForçaDeVontade??0)} max={10}/>
+        {isCtl?<><SheetHeading>Contratos</SheetHeading><LineList items={contracts.map((item)=>`${String(item.name??"")} · ${String(item.regalia??"")}`)}/><SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia??""),String(data.second_regalia??"")]}/></>:<><SheetHeading>Arcana</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name,value])=><TraitLine key={name} name={name} value={Number(value)}/>)}</div><SheetHeading>Rotes</SheetHeading><LineList items={rotes}/><SheetHeading>Praxes</SheetHeading><LineList items={praxes}/></>}
+      </div>
+    </div>
+    <div className="sheet-bottom-grid"><section><SheetHeading>Méritos</SheetHeading><div className="sheet-merits">{character.merits.length?character.merits.map((item,index)=><div key={`${item.name}-${index}`} title={item.source}><span>{item.name}</span><DotValue value={item.dots} max={Math.max(5,item.dots)}/></div>):<em>Nenhum Mérito selecionado</em>}</div></section><section><SheetHeading>{isCtl?"Hollow, Tokens e Anotações":"Condições e Anotações"}</SheetHeading><div className="blank-lines">{Array.from({length:6},(_,index)=><i key={index}/>)}</div></section></div>
+  </article>;
+}
+
+function SheetHeading({children}:{children:ReactNode}) { return <h3 className="official-heading"><span>{children}</span></h3>; }
+function SheetField({label,value}:{label:string;value:unknown}) { return <div className="official-field"><span>{label}</span><strong>{String(value??"")}</strong></div>; }
+function TraitBlock({title,names,values,specialties=[]}:{title:string;names:readonly string[];values:Record<string,number>;specialties?:Array<{skill:string;name:string}>}) { return <section className="official-trait-block"><h4>{title}</h4>{names.map((name)=><TraitLine key={name} name={name} value={values[name]??0} note={specialties.filter((item)=>item.skill===name).map((item)=>item.name).join(", ")}/>)}</section>; }
+function TraitLine({name,value,note}:{name:string;value:number;note?:string}) { return <div className="official-trait-line"><span>{name}{note&&<small>{note}</small>}</span><DotValue value={value}/></div>; }
+function DotValue({value,max=5}:{value:number;max?:number}) { return <span className="official-dots" aria-label={`${value} pontos`}>{Array.from({length:max},(_,index)=><i key={index} className={index<value?"on":""}/>)}</span>; }
+function CompactValues({values}:{values:Record<string,number>}) { return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{pretty(name)}</span><strong>{value}</strong></div>)}</div>; }
+function Track({value,max}:{value:number;max:number}) { return <div className="official-track">{Array.from({length:max},(_,index)=><i key={index} className={index<value?"available":""}/>)}</div>; }
+function LineList({items}:{items:string[]}) { return <div className="official-lines">{items.filter(Boolean).map((item,index)=><div key={`${item}-${index}`}>{item}</div>)}{!items.filter(Boolean).length&&<div>&nbsp;</div>}</div>; }
+function stringList(value:unknown) { return Array.isArray(value)?value.map(String):[]; }
+function objectList(value:unknown) { return Array.isArray(value)?value as Array<Record<string,unknown>>:[]; }
 
 function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
   return <section className="panel"><div className="panel-heading"><div><span className="kicker">BANCO COMPARTILHADO</span><h3>Regras ativas para todos</h3><p>Não há fila de aprovação. Ajustes posteriores substituem a versão compartilhada.</p></div><Badge className="approved-badge">ATIVAS</Badge></div><div className="rule-cards">{catalog.map((rule)=><article key={rule.id}><div><Badge>{rule.gameLine}</Badge><Badge variant="outline">p. {rule.sourcePage}</Badge></div><h3>{rule.originalName}</h3><p>{summarizeRule(rule)}</p><small>Fonte: {rule.sourceId} · {rule.reviewStatus}</small></article>)}</div></section>;

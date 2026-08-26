@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox";
+import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxLabel, ComboboxList } from "@/components/ui/combobox";
 import {
   ARCANA, ATTRIBUTES, CTL_COURTS, CTL_NEEDLES, CTL_SEEMINGS, CTL_THREADS,
   MTA_ORDERS, MTA_PATHS, REGALIA, SKILLS
@@ -118,7 +118,7 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
     }
     if (step === 3) {
       if (aspirations.some((item) => !item.trim())) return fail("Preencha as três Aspirações.");
-      if (meritSpent !== meritBudget) return fail(`Distribua exatamente ${meritBudget} pontos de Méritos.`);
+      if (meritSpent > meritBudget) return fail(`Os Méritos excedem o limite de ${meritBudget} pontos.`);
       if (merits.some((item) => !meritCatalog.some((definition) => definition.name === item.name && definition.ratings.includes(item.dots)))) return fail("Escolha Méritos e níveis válidos para esta linha de jogo.");
       if (line === "CtL") {
         const favoredSet = favoredChoices(CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS].favored);
@@ -249,14 +249,18 @@ function Choice({ label, value, setValue, options }: { label?: string; value: st
 function Aspirations({ values, setValues }: any) { return <><h3>Aspirações</h3><div className="three-inputs">{values.map((value:string,index:number)=><Input key={index} value={value} onChange={(e)=>updateArray(setValues,values,index,e.target.value)} placeholder={`Aspiração ${index+1}`} />)}</div></>; }
 function Merits({ merits, setMerits, catalog, spent, budget }: { merits: MeritSelection[]; setMerits: (value: MeritSelection[]) => void; catalog: MeritDefinition[]; spent: number; budget: number }) {
   const names = catalog.map((merit) => merit.name);
+  const categories = [...new Set(catalog.map((merit) => merit.category))].sort((a,b) => meritCategoryRank(a) - meritCategoryRank(b) || a.localeCompare(b));
   function changeMerit(index: number, name: string) {
     const definition = catalog.find((merit) => merit.name === name);
     const next = [...merits];
     next[index] = { name, dots: definition?.ratings[0] ?? 1, sourceId: definition?.sourceId, source: definition?.source };
     setMerits(next);
   }
-  return <><div className="merit-heading"><div><h3>Méritos</h3><p>Core + livros da linha. Em nomes repetidos, a versão da linha é usada automaticamente.</p></div><Badge variant={spent===budget ? "secondary" : spent>budget ? "destructive" : "outline"}>{spent}/{budget} pontos</Badge></div><div className="merit-picker">{merits.map((selection,index) => { const definition = catalog.find((item) => item.name === selection.name); return <div className="merit-row" key={`${index}-${selection.name}`}><div><Combobox items={names} value={selection.name} onValueChange={(value) => changeMerit(index, String(value ?? ""))}><ComboboxInput placeholder="Buscar Mérito…" showClear={false} /><ComboboxContent><ComboboxEmpty>Nenhum Mérito encontrado.</ComboboxEmpty><ComboboxList>{names.map((name) => <ComboboxItem key={name} value={name}>{name}</ComboboxItem>)}</ComboboxList></ComboboxContent></Combobox><small>{definition ? `${definition.source} · ${definition.category}` : "Selecione um Mérito"}</small></div><Choice label="Pontos" value={String(selection.dots)} setValue={(value) => { const next=[...merits]; next[index]={...selection,dots:Number(value)}; setMerits(next); }} options={(definition?.ratings ?? [1]).map(String)} /><Button type="button" variant="ghost" size="icon" aria-label="Remover Mérito" onClick={() => setMerits(merits.filter((_,itemIndex) => itemIndex !== index))}><Trash2 /></Button></div>; })}</div><Button type="button" variant="outline" onClick={() => { const first=catalog[0]; setMerits([...merits,{name:first.name,dots:first.ratings[0],sourceId:first.sourceId,source:first.source}]); }}><Plus /> Adicionar Mérito</Button></>;
+  return <><div className="merit-heading"><div><h3>Méritos</h3><p>Core + livros da linha, separados pelas categorias das fontes. Você pode guardar pontos sem gastá-los.</p></div><Badge variant={spent>budget ? "destructive" : "outline"}>{spent}/{budget} pontos usados</Badge></div><div className="merit-picker">{merits.map((selection,index) => { const definition = catalog.find((item) => item.name === selection.name); return <div className="merit-row" key={`${index}-${selection.name}`}><div><Combobox items={names} value={selection.name} onValueChange={(value) => changeMerit(index, String(value ?? ""))}><ComboboxInput placeholder="Buscar Mérito por nome…" showClear={false} /><ComboboxContent><ComboboxEmpty>Nenhum Mérito encontrado.</ComboboxEmpty><ComboboxList>{categories.map((category) => <ComboboxGroup key={category}><ComboboxLabel>{meritCategoryLabel(category)}</ComboboxLabel>{catalog.filter((item) => item.category === category).map((item) => <ComboboxItem key={item.id} value={item.name}><span>{item.name}</span><small>{item.source}</small></ComboboxItem>)}</ComboboxGroup>)}</ComboboxList></ComboboxContent></Combobox><small>{definition ? `${meritCategoryLabel(definition.category)} · ${definition.source}` : "Selecione um Mérito"}</small></div><Choice label="Pontos" value={String(selection.dots)} setValue={(value) => { const next=[...merits]; next[index]={...selection,dots:Number(value)}; setMerits(next); }} options={(definition?.ratings ?? [1]).map(String)} /><Button type="button" variant="ghost" size="icon" aria-label="Remover Mérito" onClick={() => setMerits(merits.filter((_,itemIndex) => itemIndex !== index))}><Trash2 /></Button></div>; })}</div><Button type="button" variant="outline" onClick={() => { const first=catalog[0]; setMerits([...merits,{name:first.name,dots:first.ratings[0],sourceId:first.sourceId,source:first.source}]); }}><Plus /> Adicionar Mérito</Button></>;
 }
+
+function meritCategoryRank(category:string) { return ["Mental","Physical","Social","Supernatural","Fighting Style","Human (CtL)","Mundane (MtA)","Changeling","Awakened"].indexOf(category) < 0 ? 99 : ["Mental","Physical","Social","Supernatural","Fighting Style","Human (CtL)","Mundane (MtA)","Changeling","Awakened"].indexOf(category); }
+function meritCategoryLabel(category:string) { return ({ Mental:"Mentais",Physical:"Físicos",Social:"Sociais",Supernatural:"Sobrenaturais","Fighting Style":"Estilos de Combate","Human (CtL)":"Humanos (Changeling)","Mundane (MtA)":"Mundanos (Mago)",Changeling:"Changelings",Awakened:"Despertos",Entitlement:"Entitlements",Court:"Cortes",Seeming:"Seemings",Historical:"Históricos",Order:"Ordens","Mystery Cult":"Cultos de Mistério" } as Record<string,string>)[category] ?? category; }
 
 function spent(values: Record<string,number>, names: readonly string[], base: number) { return names.reduce((sum,name)=>sum+values[name]-base,0); }
 function favoredChoices(type: string) { return type === "Power" ? ["Inteligência","Força","Presença"] : type === "Finesse" ? ["Raciocínio","Destreza","Manipulação"] : ["Perseverança","Vigor","Autocontrole"]; }
