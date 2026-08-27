@@ -19,10 +19,22 @@ export type MeritDefinition = {
 const range = (min: number, max: number) => Array.from({ length: max - min + 1 }, (_, index) => min + index);
 const fixed = (...values: number[]) => values;
 const slug = (value: string) => value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-const m = (name: string, ratings: number[], line: "Core" | GameLine, sourceId: string, source: string, category: string, priority = 1): MeritDefinition => ({
-  id: `${sourceId}:${slug(name)}`, name, ratings, line, sourceId, source, category, priority,
-  ...meritText(`${sourceId}:${slug(name)}`, name, source),
-});
+const m = (name: string, ratings: number[], line: "Core" | GameLine, sourceId: string, source: string, category: string, priority = 1): MeritDefinition => {
+  const text = meritText(`${sourceId}:${slug(name)}`, name, source);
+  return {
+    id: `${sourceId}:${slug(name)}`,
+    name,
+    ratings,
+    line,
+    sourceId,
+    source,
+    category,
+    priority,
+    translatedName: text.name,
+    description: text.description,
+    page: text.page,
+  };
+};
 
 const CORE = [
   ...[
