@@ -11,7 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CharacterBuilder, type CharacterSheet } from "./character-builder";
-import { ATTRIBUTES, SKILLS, SOURCE_CATALOG } from "@/lib/creation-rules";
+import { ATTRIBUTES, CTL_SEEMING_LABELS, MTA_ORDER_LABELS, SKILLS, SOURCE_CATALOG } from "@/lib/creation-rules";
+import { getMeritsForLine } from "@/lib/merits";
+import { findContract } from "@/lib/contracts";
 
 type View = "inicio" | "personagens" | "fontes" | "regras";
 type CatalogRule = {
@@ -154,18 +156,18 @@ function CharacterPaper({ character }: { character: CharacterSheet }) {
   const arcana=(data.arcana && typeof data.arcana==="object" ? data.arcana : {}) as Record<string,number>;
   const gnosis=Number(data.gnosis??1);
   return <article className={`cod-sheet ${isCtl?"ctl-sheet":"mta-sheet"}`}>
-    <header className="cod-sheet-title"><div><span>{isCtl?"CHANGELING":"MAGE"}</span><strong>{isCtl?"THE LOST":"THE AWAKENING"}</strong></div><p>CHRONICLES OF DARKNESS</p></header>
+    <header className="cod-sheet-title"><div><span>{isCtl?"CHANGELING":"MAGO"}</span><strong>{isCtl?"OS PERDIDOS":"O DESPERTAR"}</strong></div><p>CRÔNICAS DAS TREVAS</p></header>
     <section className="sheet-identity-grid">
-      {isCtl?<><SheetField label="Nome" value={character.character.name}/><SheetField label="Seeming" value={data.seeming}/><SheetField label="Touchstone" value={data.touchstone}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Kith" value={data.kith}/><SheetField label="Corte" value={data.court}/><SheetField label="Needle" value={data.needle}/><SheetField label="Thread" value={data.thread}/><SheetField label="Conceito" value={character.character.concept}/></>:<><SheetField label="Nome" value={character.character.name}/><SheetField label="Path" value={data.path}/><SheetField label="Ferramenta dedicada" value={data.dedicated_tool}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Order" value={data.order}/><SheetField label="Nimbus" value={data.nimbus}/><SheetField label="Vício" value={data.vice}/><SheetField label="Virtude" value={data.virtue}/><SheetField label="Conceito" value={character.character.concept}/></>}
+      {isCtl?<><SheetField label="Nome" value={character.character.name}/><SheetField label="Aparência" value={CTL_SEEMING_LABELS[String(data.seeming)]??data.seeming}/><SheetField label="Pedra de Toque" value={data.touchstone}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Kith" value={data.kith}/><SheetField label="Corte" value={data.court}/><SheetField label="Agulha" value={data.needle}/><SheetField label="Fio" value={data.thread}/><SheetField label="Conceito" value={character.character.concept}/></>:<><SheetField label="Nome" value={character.character.name}/><SheetField label="Caminho" value={data.path}/><SheetField label="Ferramenta dedicada" value={data.dedicated_tool}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Ordem" value={MTA_ORDER_LABELS[String(data.order)]??data.order}/><SheetField label="Nimbus" value={data.nimbus}/><SheetField label="Vício" value={data.vice}/><SheetField label="Virtude" value={data.virtue}/><SheetField label="Conceito" value={character.character.concept}/></>}
     </section>
     <SheetHeading>Atributos</SheetHeading>
     <div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div>
     <div className="official-sheet-body">
       <div className="sheet-skills-column"><SheetHeading>Perícias</SheetHeading>{Object.entries(SKILLS).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={character.skills} specialties={specialties}/>)}</div>
       <div className="sheet-center-column">
-        {isCtl?<><SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia??""),String(data.second_regalia??"")]}/><SheetHeading>Contratos</SheetHeading><LineList items={contracts.map((item)=>`${String(item.name??"")} · ${String(item.regalia??"")}`)}/></>:<><SheetHeading>Arcana</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name,value])=><TraitLine key={name} name={name} value={Number(value)}/>)}</div><SheetHeading>Rotes e Praxes</SheetHeading><LineList items={[...rotes.map((item)=>`Rote · ${item}`),...praxes.map((item)=>`Praxis · ${item}`)]}/></>}
+        {isCtl?<><SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia??""),String(data.second_regalia??"")]}/><SheetHeading>Contratos</SheetHeading><ContractSheetList contracts={contracts}/></>:<><SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name,value])=><TraitLine key={name} name={name} value={Number(value)}/>)}</div><SheetHeading>Rotas e Práxis</SheetHeading><LineList items={[...rotes.map((item)=>`Rota · ${item}`),...praxes.map((item)=>`Práxis · ${item}`)]}/></>}
         <SheetHeading>Especializações</SheetHeading><LineList items={specialties.map((item)=>`${item.skill}: ${item.name}`)}/>
-        <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits}/>
+        <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits} line={character.game_line}/>
       </div>
       <div className="sheet-right-column">
         <SheetHeading>Vitalidade</SheetHeading><Track value={Number(character.derived.Vitalidade??0)} max={12}/>
@@ -187,7 +189,8 @@ function DotValue({value,max=5}:{value:number;max?:number}) { return <span class
 function CompactValues({values}:{values:Record<string,number>}) { return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{pretty(name)}</span><strong>{value}</strong></div>)}</div>; }
 function Track({value,max}:{value:number;max:number}) { return <div className="official-track">{Array.from({length:max},(_,index)=><i key={index} className={index<value?"available":""}/>)}</div>; }
 function LineList({items}:{items:string[]}) { return <div className="official-lines">{items.filter(Boolean).map((item,index)=><div key={`${item}-${index}`}>{item}</div>)}{!items.filter(Boolean).length&&<div>&nbsp;</div>}</div>; }
-function MeritSheetList({merits}:{merits:CharacterSheet["merits"]}) { return <div className="sheet-merits single-column">{merits.length?merits.map((item,index)=><div key={`${item.name}-${index}`} title={item.source}><span>{item.name}</span><DotValue value={item.dots} max={Math.max(5,item.dots)}/></div>):<em>Nenhum Mérito selecionado</em>}</div>; }
+function MeritSheetList({merits,line}:{merits:CharacterSheet["merits"];line:"CtL"|"MtA"}) { const catalog=getMeritsForLine(line); return <div className="sheet-merits single-column">{merits.length?merits.map((item,index)=>{ const definition=catalog.find((entry)=>entry.name===item.name); return <div key={`${item.name}-${index}`} title={definition?.description??item.source}><span>{definition?.translatedName??item.name}</span><DotValue value={item.dots} max={Math.max(5,item.dots)}/></div>; }):<em>Nenhum Mérito selecionado</em>}</div>; }
+function ContractSheetList({contracts}:{contracts:Array<Record<string,unknown>>}) { return <div className="official-lines">{contracts.filter((item)=>item.name).map((item,index)=>{ const definition=findContract(String(item.id??item.name??"")); return <div key={`${String(item.name)}-${index}`} title={definition?.description??String(item.description??"")}><span>{definition?.name??String(item.name)}</span><small>{definition?.regalia??String(item.regalia??"")} · {definition?.type??String(item.type??(index<4?"Comum":"Real"))}</small></div>; })}{!contracts.some((item)=>item.name)&&<div>&nbsp;</div>}</div>; }
 function stringList(value:unknown) { return Array.isArray(value)?value.map(String):[]; }
 function objectList(value:unknown) { return Array.isArray(value)?value as Array<Record<string,unknown>>:[]; }
 

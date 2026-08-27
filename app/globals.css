@@ -260,7 +260,9 @@ button { cursor: pointer; }
 .rule-callout { display: flex; align-items: center; gap: 7px; margin: 18px 0!important; padding: 12px 14px; border-radius: 8px; background: #edf4ef; color: #4a6453!important; font-size: 11px; }
 .rule-callout svg { width: 17px; flex: none; }
 .contract-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
-.contract-grid > div { display: grid; grid-template-columns: auto 1fr 130px; align-items: center; gap: 8px; padding: 9px; border: 1px solid #e0d9d0; border-radius: 9px; }
+.contract-grid > div { display: grid; grid-template-columns: auto 1fr 38px; align-items: center; gap: 8px; padding: 9px; border: 1px solid #e0d9d0; border-radius: 9px; }
+.contract-grid strong,.contract-grid small { display: block; }.contract-grid small { margin-top: 3px; color: #827884; font-size: 10px; }
+.official-lines small { display: block; color: #766d77; font-size: 8px; }
 .arcana-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; padding: 14px 18px; border: 1px solid #e0d8cf; border-radius: 10px; background: #fbf8f3; }
 .merit-heading { display: flex; align-items: center; justify-content: space-between; margin-top: 26px; }
 .merit-heading h3 { margin: 0 0 10px; font: 700 18px Georgia,serif; }
@@ -285,6 +287,7 @@ button { cursor: pointer; }
 .merit-option > div { min-width: 0; display: grid; gap: 4px; }
 .merit-option strong,.merit-option small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .merit-option strong { font-size: 12px; }.merit-option small { color: #817681; font-size: 9px; }
+.merit-option p { margin: 3px 0 0; color: #625963; font-size: 10px; line-height: 1.4; }
 .merit-option button { flex: none; }
 .review-summary { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 10px; }
 .review-summary > div { padding: 18px; border: 1px solid #ddd6cd; border-radius: 10px; background: #faf7f2; }

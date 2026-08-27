@@ -11,25 +11,26 @@ export const SKILLS = {
 } as const;
 
 export const CTL_SEEMINGS = {
-  Beast: { translated: "Fera", favored: "Resistance", regalia: "Steed" },
-  Darkling: { translated: "Sombrio", favored: "Finesse", regalia: "Mirror" },
-  Elemental: { translated: "Elemental", favored: "Resistance", regalia: "Sword" },
-  Fairest: { translated: "Belíssimo", favored: "Power", regalia: "Crown" },
-  Ogre: { translated: "Ogro", favored: "Power", regalia: "Shield" },
-  Wizened: { translated: "Enrugado", favored: "Finesse", regalia: "Jewels" },
+  Beast: { translated: "Fera", favored: "Resistance", regalia: "Corcel" },
+  Darkling: { translated: "Sombrio", favored: "Finesse", regalia: "Espelho" },
+  Elemental: { translated: "Elemental", favored: "Resistance", regalia: "Espada" },
+  Fairest: { translated: "Belíssimo", favored: "Power", regalia: "Coroa" },
+  Ogre: { translated: "Ogro", favored: "Power", regalia: "Escudo" },
+  Wizened: { translated: "Enrugado", favored: "Finesse", regalia: "Joias" },
 } as const;
+export const CTL_SEEMING_LABELS = Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([key, value]) => [key, value.translated])) as Record<string, string>;
 
-export const CTL_NEEDLES = ["Bon Vivant", "Chess Master", "Commander", "Composer", "Counselor", "Daredevil", "Dynamo", "Protector", "Provider", "Scholar", "Storyteller", "Teacher", "Traditionalist", "Visionary"];
-export const CTL_THREADS = ["Acceptance", "Anger", "Family", "Friendship", "Hate", "Honor", "Joy", "Love", "Memory", "Revenge"];
-export const CTL_COURTS = ["Sem Corte", "Spring", "Summer", "Autumn", "Winter"];
-export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword"];
+export const CTL_NEEDLES = ["Bon Vivant", "Mestre de Xadrez", "Comandante", "Compositor", "Conselheiro", "Audacioso", "Dínamo", "Protetor", "Provedor", "Erudito", "Contador de Histórias", "Professor", "Tradicionalista", "Visionário"];
+export const CTL_THREADS = ["Aceitação", "Raiva", "Família", "Amizade", "Ódio", "Honra", "Alegria", "Amor", "Memória", "Vingança"];
+export const CTL_COURTS = ["Sem Corte", "Primavera", "Verão", "Outono", "Inverno"];
+export const REGALIA = ["Coroa", "Joias", "Espelho", "Escudo", "Corcel", "Espada", "Cálice", "Moeda", "Cetro", "Estrelas", "Espinho"];
 
 export const MTA_PATHS = {
-  Acanthus: { ruling: ["Time", "Fate"], inferior: "Forces" },
-  Mastigos: { ruling: ["Space", "Mind"], inferior: "Matter" },
-  Moros: { ruling: ["Matter", "Death"], inferior: "Spirit" },
-  Obrimos: { ruling: ["Forces", "Prime"], inferior: "Death" },
-  Thyrsus: { ruling: ["Life", "Spirit"], inferior: "Mind" },
+  Acanthus: { ruling: ["Tempo", "Destino"], inferior: "Forças" },
+  Mastigos: { ruling: ["Espaço", "Mente"], inferior: "Matéria" },
+  Moros: { ruling: ["Matéria", "Morte"], inferior: "Espírito" },
+  Obrimos: { ruling: ["Forças", "Primórdio"], inferior: "Morte" },
+  Thyrsus: { ruling: ["Vida", "Espírito"], inferior: "Mente" },
 } as const;
 
 export const MTA_ORDERS = {
@@ -41,8 +42,13 @@ export const MTA_ORDERS = {
   "Seers of the Throne": ["Investigação", "Ocultismo", "Persuasão"],
   Nameless: [],
 } as const;
+export const MTA_ORDER_LABELS: Record<string, string> = {
+  "Adamantine Arrow": "Seta Adamantina", "Free Council": "Conselho Livre",
+  "Guardians of the Veil": "Guardiões do Véu", Mysterium: "Mysterium",
+  "Silver Ladder": "Escada de Prata", "Seers of the Throne": "Videntes do Trono", Nameless: "Sem Ordem",
+};
 
-export const ARCANA = ["Death", "Fate", "Forces", "Life", "Matter", "Mind", "Prime", "Space", "Spirit", "Time"];
+export const ARCANA = ["Morte", "Destino", "Forças", "Vida", "Matéria", "Mente", "Primórdio", "Espaço", "Espírito", "Tempo"];
 
 export const SOURCE_CATALOG = [
   { id: "core-2ed", title: "Chronicles of Darkness", gameLine: "Core", edition: 2, type: "OFFICIAL", role: "BASE" },
