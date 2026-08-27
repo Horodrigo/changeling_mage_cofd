@@ -1,4 +1,5 @@
 import { CONTRACT_DICE_POOLS_PT } from "./rule-details";
+import { CONTRACT_DETAILS, type SeemingKey } from "./contract-details";
 
 export type ContractDefinition = {
   id: string;
@@ -8,6 +9,8 @@ export type ContractDefinition = {
   regalia: string;
   description: string;
   dicePool?: string;
+  loophole?: string;
+  seemingBenefits?: Partial<Record<SeemingKey, string>>;
   sourceId: string;
   source: string;
   page: number;
@@ -95,7 +98,7 @@ export const CONTRACTS: ContractDefinition[] = [
   { id:"ctl-2ed:flickering-hours", name:"Horas Cintilantes", originalName:"Flickering Hours", type:"Real", regalia:"Corcel", description:"Distorce o ritmo do tempo ao redor do changeling, acelerando seus movimentos e permitindo realizar mais antes que o mundo o acompanhe.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:146 },
   { id:"ctl-2ed:leaping-toward-nightfall", name:"Salto Rumo ao Anoitecer", originalName:"Leaping Toward Nightfall", type:"Real", regalia:"Corcel", description:"Transforma um salto em deslocamento impossível, transportando o changeling e possíveis companheiros para um ponto distante associado ao horizonte.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:146 },
   { id:"ctl-2ed:mirror-walk", name:"Caminhar pelos Espelhos", originalName:"Mirror Walk", type:"Real", regalia:"Corcel", description:"Entra em uma superfície refletora e emerge de outro espelho conhecido, usando os reflexos como passagem entre lugares.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:146 },
-  { id:"ctl-2ed:talon-and-wing", name:"Garra e Asa", originalName:"Talon and Wing", type:"Real", regalia:"Espada", description:"Concede características predatórias de uma fera, como garras, asas ou sentidos de caça, transformando o changeling em combatente sobrenatural.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:147 },
+  { id:"ctl-2ed:talon-and-wing", name:"Garra e Asa", originalName:"Talon and Wing", type:"Real", regalia:"Corcel", description:"Concede características predatórias de uma fera, como garras, asas ou sentidos de caça, transformando o changeling em combatente sobrenatural.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:147 },
   { id:"ctl-2ed:elemental-weapon", name:"Arma Elemental", originalName:"Elemental Weapon", type:"Comum", regalia:"Espada", description:"Reveste uma arma ou os próprios golpes com um elemento escolhido, aumentando o dano e produzindo efeitos naturais coerentes com fogo, gelo, eletricidade ou outra afinidade.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:147 },
   { id:"ctl-2ed:might-of-the-terrible-brute", name:"Força da Fera Terrível", originalName:"Might of the Terrible Brute", type:"Comum", regalia:"Espada", description:"Amplia sobrenaturalmente a força física do changeling para uma ação, permitindo feitos brutais, romper obstáculos e dominar adversários.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:148 },
   { id:"ctl-2ed:overpowering-dread", name:"Pavor Avassalador", originalName:"Overpowering Dread", type:"Comum", regalia:"Espada", description:"Projeta terror feérico sobre um adversário, impondo medo e prejudicando sua capacidade de atacar ou enfrentar o changeling.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:148 },
@@ -303,10 +306,14 @@ const ORIGINAL_SOURCE_TITLES: Record<string, string> = {
 };
 
 for (const contract of CONTRACTS) {
+  const detail = CONTRACT_DETAILS[contract.id];
   contract.source = ORIGINAL_SOURCE_TITLES[contract.sourceId] ?? contract.source;
-  contract.dicePool = CONTRACT_DICE_POOLS_PT[contract.id] ?? "Não informada";
+  contract.dicePool = detail?.dicePool ?? CONTRACT_DICE_POOLS_PT[contract.id] ?? "Não informada";
+  contract.loophole = detail?.loophole ?? "Não informado";
+  contract.seemingBenefits = detail?.seemingBenefits ?? {};
 }
 
 export function findContract(name: string) {
   return CONTRACTS.find((contract) => contract.id === name || contract.name === name || contract.originalName === name);
 }
+
