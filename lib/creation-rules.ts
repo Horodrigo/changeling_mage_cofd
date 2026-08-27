@@ -12,11 +12,11 @@ export const SKILLS = {
 
 export const CTL_SEEMINGS = {
   Beast: { translated: "Fera", favored: "Resistance", regalia: "Corcel" },
-  Darkling: { translated: "Sombrio", favored: "Finesse", regalia: "Espelho" },
+  Darkling: { translated: "Trevoso", favored: "Finesse", regalia: "Espelho" },
   Elemental: { translated: "Elemental", favored: "Resistance", regalia: "Espada" },
   Fairest: { translated: "Belíssimo", favored: "Power", regalia: "Coroa" },
   Ogre: { translated: "Ogro", favored: "Power", regalia: "Escudo" },
-  Wizened: { translated: "Enrugado", favored: "Finesse", regalia: "Joias" },
+  Wizened: { translated: "Mirrado", favored: "Finesse", regalia: "Joias" },
 } as const;
 export const CTL_SEEMING_LABELS = Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([key, value]) => [key, value.translated])) as Record<string, string>;
 
