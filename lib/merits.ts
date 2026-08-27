@@ -1,4 +1,5 @@
 import { meritText } from "./merit-i18n";
+import { MERIT_PREREQUISITES_PT } from "./rule-details";
 
 export type GameLine = "CtL" | "MtA";
 
@@ -13,6 +14,7 @@ export type MeritDefinition = {
   priority: number;
   translatedName: string;
   description: string;
+  prerequisites?: string;
   page: number;
 };
 
@@ -32,6 +34,7 @@ const m = (name: string, ratings: number[], line: "Core" | GameLine, sourceId: s
     priority,
     translatedName: text.name,
     description: text.description,
+    prerequisites: MERIT_PREREQUISITES_PT[`${sourceId}:${slug(name)}`],
     page: text.page,
   };
 };

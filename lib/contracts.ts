@@ -1,3 +1,5 @@
+import { CONTRACT_DICE_POOLS_PT } from "./rule-details";
+
 export type ContractDefinition = {
   id: string;
   name: string;
@@ -5,6 +7,7 @@ export type ContractDefinition = {
   type: "Comum" | "Real";
   regalia: string;
   description: string;
+  dicePool?: string;
   sourceId: string;
   source: string;
   page: number;
@@ -288,6 +291,21 @@ export const CONTRACTS: ContractDefinition[] = [
   { id:"h-seemings:last-hope", name:"Última Esperança", originalName:"Last Hope", type:"Real", regalia:"Aparências", description:"O Fairest torna-se símbolo de salvação para aliados, restaurando determinação e permitindo-lhes continuar quando já teriam sucumbido.", sourceId:"h-seemings", source:"Livro das Aparências", page:145 },
   { id:"h-seemings:the-troll-toll", name:"O Pedágio do Troll", originalName:"The Troll Toll", type:"Real", regalia:"Aparências", description:"O Ogre reivindica uma passagem e exige preço de quem a cruza; o Wyrd bloqueia ou pune aqueles que recusam pagar.", sourceId:"h-seemings", source:"Livro das Aparências", page:160 },
 ];
+
+const ORIGINAL_SOURCE_TITLES: Record<string, string> = {
+  "ctl-2ed": "Changeling the Lost",
+  "ctl-kith-kin": "Kith and Kin",
+  "ctl-oak-ash-thorn": "Oak, Ash, and Thorn",
+  "ctl-dark-eras": "Dark Eras Changeling",
+  "h-beyond-hedge": "Beyond the Hedge",
+  "h-courts": "Book of Courts",
+  "h-seemings": "Book of Seemings",
+};
+
+for (const contract of CONTRACTS) {
+  contract.source = ORIGINAL_SOURCE_TITLES[contract.sourceId] ?? contract.source;
+  contract.dicePool = CONTRACT_DICE_POOLS_PT[contract.id] ?? "Não informada";
+}
 
 export function findContract(name: string) {
   return CONTRACTS.find((contract) => contract.id === name || contract.name === name || contract.originalName === name);

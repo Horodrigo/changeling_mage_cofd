@@ -288,6 +288,7 @@ button { cursor: pointer; }
 .merit-option strong,.merit-option small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .merit-option strong { font-size: 12px; }.merit-option small { color: #817681; font-size: 9px; }
 .merit-option p { margin: 3px 0 0; color: #625963; font-size: 10px; line-height: 1.4; }
+.merit-option .rule-detail { padding-top: 5px; border-top: 1px solid #e8e0e9; color: #453a47; }
 .merit-option button { flex: none; }
 .review-summary { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 10px; }
 .review-summary > div { padding: 18px; border: 1px solid #ddd6cd; border-radius: 10px; background: #faf7f2; }
