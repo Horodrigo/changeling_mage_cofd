@@ -56,6 +56,9 @@ const CORE = [
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Fighting Style")),
 ];
 
+const CORE_CATEGORY_BY_NAME = new Map(CORE.map((merit) => [merit.name.toLocaleLowerCase("en"), merit.category]));
+const generalCategory = (name: string, fallback = "Mental") => CORE_CATEGORY_BY_NAME.get(name.toLocaleLowerCase("en")) ?? fallback;
+
 const CTL_PRIMARY = [
   ["Acute Senses", fixed(1)], ["Arcadian Metabolism", fixed(2)], ["Brownie's Boon", fixed(1)], ["Cloak of Leaves", range(1,3)],
   ["Cold Hearted", fixed(3)], ["Court Goodwill", range(1,5)], ["Defensive Dreamscaping", fixed(2)], ["Diviner", range(1,5)],
@@ -78,7 +81,7 @@ const CTL_LOCAL_OVERRIDES = [
   ["Parkour", range(1,5)], ["Pusher", fixed(1)], ["Resources", range(1,5)], ["Retainer", range(1,5)],
   ["Safe Place", range(1,5)], ["Small-Framed", fixed(2)], ["Staff", range(1,5)], ["Status", range(1,5)],
   ["Striking Looks", fixed(1,2)], ["Sympathetic", fixed(2)], ["Trained Observer", fixed(1,3)], ["True Friend", fixed(3)],
-].map(([name, ratings]) => m(name as string, ratings as number[], "CtL", "ctl-2ed", "Changeling the Lost", "Human (CtL)", 4));
+].map(([name, ratings]) => m(name as string, ratings as number[], "CtL", "ctl-2ed", "Changeling the Lost", generalCategory(name as string), 4));
 
 const CTL_SUPPLEMENTS = [
   ...[["Regalia Manifestation", range(1,5)], ["Dramaturge", fixed(3)], ["Understudy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-kith-kin","Kith and Kin","Changeling",2)),
@@ -122,7 +125,7 @@ const MTA_LOCAL_OVERRIDES = [
   ["Allies",range(1,5)],["Alternate Identity",range(1,3)],["Contacts",fixed(1)],["Defensive Combat",fixed(1)],["Fame",range(1,3)],["Language",fixed(1)],
   ["Library",range(1,3)],["Library, Advanced",range(1,5)],["Mentor",range(1,5)],["Professional Training",range(1,5)],["Resources",range(1,5)],["Retainer",range(1,5)],
   ["Safe Place",range(1,5)],["Status",range(1,5)],["Striking Looks",fixed(1,2)],["Trained Observer",fixed(1,3)],["True Friend",fixed(3)],
-].map(([name, ratings]) => m(name as string, ratings as number[], "MtA", "mta-2ed", "Mage the Awakening", "Mundane (MtA)", 4));
+].map(([name, ratings]) => m(name as string, ratings as number[], "MtA", "mta-2ed", "Mage the Awakening", generalCategory(name as string), 4));
 
 const MTA_SUPPLEMENTS = [
   ...[["Broad Dedication",fixed(1)],["Inheritance",fixed(2)],["Profligate Dedication",fixed(2)],["Cognoscente",fixed(2)],["Daimonomikon",range(1,5)],["Legacy Pedagogue",fixed(1)]].map(([n,r]) => m(n as string,r as number[],"MtA","mta-signs","Signs of Sorcery","Awakened",2)),

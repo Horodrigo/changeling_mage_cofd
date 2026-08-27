@@ -272,6 +272,20 @@ button { cursor: pointer; }
 .merit-row { display: grid; grid-template-columns: minmax(260px,1fr) 110px 38px; align-items: end; gap: 10px; padding: 12px; border: 1px solid #e5dde7; border-radius: 12px; background: #fcfafc; }
 .merit-row > div:first-child { display: grid; gap: 5px; }
 .merit-row small { color: #827884; font-size: 11px; }
+.merit-row strong { font-size: 13px; }
+.merit-dialog { width: min(920px,calc(100vw - 32px)); max-width: 920px!important; max-height: 88vh; grid-template-rows: auto auto minmax(0,1fr) auto; }
+.merit-search { position: relative; display: block; }
+.merit-search > svg { position: absolute; z-index: 1; top: 50%; left: 12px; width: 16px; height: 16px; color: #817681; transform: translateY(-50%); }
+.merit-search input { padding-left: 38px; }
+.merit-catalog { overflow-y: auto; display: grid; gap: 22px; padding: 4px 8px 8px 2px; }
+.merit-category > h3 { position: sticky; top: -4px; z-index: 1; display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 4px 8px; background: #fff; font: 700 17px Georgia,serif; }
+.merit-category > div { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.merit-option { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 12px; border: 1px solid #e4dde5; border-radius: 10px; background: #fcfafc; }
+.merit-option.selected { border-color: #b9a8c1; background: #f3edf5; }
+.merit-option > div { min-width: 0; display: grid; gap: 4px; }
+.merit-option strong,.merit-option small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.merit-option strong { font-size: 12px; }.merit-option small { color: #817681; font-size: 9px; }
+.merit-option button { flex: none; }
 .review-summary { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 10px; }
 .review-summary > div { padding: 18px; border: 1px solid #ddd6cd; border-radius: 10px; background: #faf7f2; }
 .review-summary h3 { margin: 9px 0 4px; font: 700 20px Georgia,serif; }.review-summary p { margin: 0; color: #776f77; }
@@ -348,6 +362,7 @@ button { cursor: pointer; }
   .sheet-columns, .two-columns { grid-template-columns: 1fr; }
   .trace-panel { border-left: 0; border-top: 1px solid #dfd7ce; }
   .storage-split,.rule-cards { grid-template-columns: 1fr; }
+  .merit-category > div { grid-template-columns: 1fr; }
   .sheet-data-grid { grid-template-columns: 1fr 1fr; }
   .sheet-data-grid > section:nth-child(2) { border-right: 0; }
   .sheet-data-grid > section:nth-child(-n+2) { border-bottom: 1px solid #e1dad1; }
