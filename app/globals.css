@@ -344,19 +344,18 @@ button { cursor: pointer; }
 .health-track,.resource-track { display:flex; flex-wrap:wrap; gap:5px; }
 .health-box,.resource-track button { position:relative; width:20px; height:20px; flex:none; padding:0; border:1.5px solid var(--sheet-ink); background:#fff; cursor:pointer; }
 .health-box:hover,.resource-track button:hover { outline:2px solid color-mix(in srgb,var(--sheet-accent) 30%,transparent); outline-offset:1px; }
-.health-box span,.health-box span:before,.health-box span:after { position:absolute; display:block; content:""; background:var(--sheet-ink); transform-origin:center; }
-.health-box.bashing span { width:2px; height:15px; left:8px; top:1px; transform:rotate(36deg); border-radius:2px; }
-.health-box.lethal span:before,.health-box.lethal span:after { width:2px; height:16px; left:9px; top:1px; border-radius:2px; }
-.health-box.lethal span:before { transform:rotate(45deg); }.health-box.lethal span:after { transform:rotate(-45deg); }
-.health-box.aggravated span,.health-box.aggravated span:before,.health-box.aggravated span:after { width:2px; height:17px; left:8px; top:0; border-radius:2px; }
-.health-box.aggravated span:before,.health-box.aggravated span:after { left:0; top:0; }
-.health-box.aggravated span { transform:rotate(0); }.health-box.aggravated span:before { transform:rotate(60deg); }.health-box.aggravated span:after { transform:rotate(-60deg); }
+.health-box span { position:absolute; inset:2px; display:block; }
+.health-box.bashing span { background:linear-gradient(55deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%); }
+.health-box.lethal span { background:linear-gradient(45deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%),linear-gradient(-45deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%); }
+.health-box.aggravated span { background:linear-gradient(90deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%),linear-gradient(30deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%),linear-gradient(-30deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%); }
 .resource-track button { border-radius:50%; }.resource-track button.filled { background:var(--sheet-ink); box-shadow:inset 0 0 0 2px #fff; }
 .tracker-meta,.power-rating { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid #aaa8a16b; font-size:10px; }
 .tracker-meta strong,.power-rating strong { color:var(--sheet-accent); font-size:13px; }.tracker-meta .penalty { color:#9c2f2f; }
 .tracker-help { margin:5px 0 0; color:#676d68; font:8px/1.45 Arial,sans-serif; }
-.tracker-help strong { color:var(--sheet-ink); }.legend-mark { position:relative; display:inline-block; width:9px; height:9px; margin:0 3px 0 6px; vertical-align:-1px; border:1px solid var(--sheet-ink); }
-.legend-mark:before,.legend-mark:after { content:""; position:absolute; left:3px; top:0; width:1px; height:7px; background:var(--sheet-ink); }.legend-mark.bashing:before { transform:rotate(36deg); }.legend-mark.lethal:before { transform:rotate(45deg); }.legend-mark.lethal:after { transform:rotate(-45deg); }.legend-mark.aggravated:before { transform:rotate(60deg); }.legend-mark.aggravated:after { transform:rotate(-60deg); }
+.tracker-help strong { color:var(--sheet-ink); }.legend-mark { display:inline-block; width:11px; height:11px; margin:0 3px 0 6px; vertical-align:-2px; border:1px solid var(--sheet-ink); background-color:#fff; }
+.legend-mark.bashing { background-image:linear-gradient(55deg,transparent 42%,var(--sheet-ink) 43% 57%,transparent 58%); }
+.legend-mark.lethal { background-image:linear-gradient(45deg,transparent 42%,var(--sheet-ink) 43% 57%,transparent 58%),linear-gradient(-45deg,transparent 42%,var(--sheet-ink) 43% 57%,transparent 58%); }
+.legend-mark.aggravated { background-image:linear-gradient(90deg,transparent 42%,var(--sheet-ink) 43% 57%,transparent 58%),linear-gradient(30deg,transparent 42%,var(--sheet-ink) 43% 57%,transparent 58%),linear-gradient(-30deg,transparent 42%,var(--sheet-ink) 43% 57%,transparent 58%); }
 .power-resource { margin-bottom:10px; }.power-rating { margin-bottom:7px; }.power-rating .official-dots { max-width:125px; flex-wrap:wrap; }
 .official-lines { display:grid; gap:2px; }
 .official-lines > div { min-height:22px; overflow:hidden; border-bottom:1px solid #aaa8a16b; font:italic 10px/21px Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
