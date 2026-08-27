@@ -14,6 +14,7 @@ import { CharacterBuilder, type CharacterSheet } from "./character-builder";
 import { ATTRIBUTES, CTL_SEEMING_LABELS, MTA_ORDER_LABELS, SKILLS, SOURCE_CATALOG } from "@/lib/creation-rules";
 import { getMeritsForLine } from "@/lib/merits";
 import { findContract } from "@/lib/contracts";
+import { normalizeDamage, powerResourceLimits, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
 
 type View = "inicio" | "personagens" | "fontes" | "regras";
 type CatalogRule = {
@@ -89,6 +90,12 @@ export function Workspace({ displayName, userKey }: { displayName: string; userK
     setNotice("Ficha salva localmente neste navegador. Exporte o JSON para manter uma cópia independente.");
   }
 
+  function updateCharacterState(character: CharacterSheet, currentState: Record<string, unknown>) {
+    const sheet = { ...character, current_state: currentState, updated_at: new Date().toISOString() };
+    setCharacters((current) => current.map((item) => item.id === sheet.id ? sheet : item));
+    setSelected(sheet);
+  }
+
   function exportCharacter(character: CharacterSheet) {
     const blob = new Blob([JSON.stringify(character, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -122,7 +129,7 @@ export function Workspace({ displayName, userKey }: { displayName: string; userK
     <section className="content">
       <header className="topbar"><button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Abrir menu"><Menu /></button><div><p>Chronicles of Darkness</p><h1>{title}</h1></div><div className="top-actions"><input ref={fileRef} hidden type="file" accept=".json,application/json" onChange={(event) => { const file=event.target.files?.[0]; if(file) void importCharacter(file); event.target.value=""; }} /><Button variant="outline" onClick={() => fileRef.current?.click()}><Upload /> Importar JSON</Button><Button onClick={() => setEditing("new")}><Plus /> Criar ficha</Button></div></header>
       {notice && <div className="notice" role="status"><ShieldCheck /><span>{notice}</span><button onClick={() => setNotice("")} aria-label="Fechar aviso"><X /></button></div>}
-      {selected ? <CharacterView character={selected} back={() => setSelected(null)} edit={() => setEditing(selected)} exportSheet={() => exportCharacter(selected)} /> : view === "inicio" ? <Dashboard characters={characters} catalog={catalog} create={() => setEditing("new")} openCharacters={() => navigate("personagens")} /> : view === "personagens" ? <Characters characters={characters} ready={ready} open={setSelected} create={() => setEditing("new")} /> : view === "regras" ? <RulesCatalog catalog={catalog} /> : <Sources />}
+      {selected ? <CharacterView character={selected} back={() => setSelected(null)} edit={() => setEditing(selected)} exportSheet={() => exportCharacter(selected)} updateState={(state) => updateCharacterState(selected, state)} /> : view === "inicio" ? <Dashboard characters={characters} catalog={catalog} create={() => setEditing("new")} openCharacters={() => navigate("personagens")} /> : view === "personagens" ? <Characters characters={characters} ready={ready} open={setSelected} create={() => setEditing("new")} /> : view === "regras" ? <RulesCatalog catalog={catalog} /> : <Sources />}
     </section>
     {mobileOpen && <button className="overlay" onClick={() => setMobileOpen(false)} aria-label="Fechar menu" />}
   </main>;
@@ -141,11 +148,11 @@ function Characters({ characters, ready, open, create }: { characters: Character
   return <section className="panel"><div className="panel-heading"><div><span className="kicker">ARMAZENAMENTO LOCAL</span><h3>Personagens neste navegador</h3><p>Use Exportar JSON para transportar uma ficha para outro dispositivo.</p></div><Button onClick={create}><Plus /> Nova ficha</Button></div>{!ready ? <div className="loading-card">Carregando fichas locais…</div> : characters.length ? <div className="character-grid">{characters.map((character)=><button className="character-card" key={character.id} onClick={()=>open(character)}><div className="character-monogram">{character.character.name.slice(0,1)}</div><div><Badge variant="outline">{character.game_line}</Badge><h3>{character.character.name}</h3><p>{character.character.concept}</p><small>{character.game_line === "CtL" ? String(character.line_data.seeming ?? "Changeling") : String(character.line_data.path ?? "Mage")} · JSON v{character.schema_version}</small></div><ChevronRight /></button>)}</div> : <Empty title="Nenhuma ficha neste navegador" text="Crie um Changeling ou Mago com o assistente de regras." action={create} />}</section>;
 }
 
-function CharacterView({ character, back, edit, exportSheet }: { character: CharacterSheet; back:()=>void; edit:()=>void; exportSheet:()=>void }) {
-  return <section className="sheet-editor"><div className="sheet-toolbar"><Button variant="ghost" onClick={back}>← Personagens</Button><div><Badge>{character.game_line}</Badge><span>Salva localmente</span></div><div><Button variant="outline" onClick={edit}><Pencil /> Editar</Button><Button variant="outline" onClick={exportSheet}><Download /> Exportar JSON</Button></div></div><CharacterPaper character={character} /></section>;
+function CharacterView({ character, back, edit, exportSheet, updateState }: { character: CharacterSheet; back:()=>void; edit:()=>void; exportSheet:()=>void; updateState:(state:Record<string,unknown>)=>void }) {
+  return <section className="sheet-editor"><div className="sheet-toolbar"><Button variant="ghost" onClick={back}>← Personagens</Button><div><Badge>{character.game_line}</Badge><span>Alterações nos marcadores são salvas automaticamente</span></div><div><Button variant="outline" onClick={edit}><Pencil /> Editar</Button><Button variant="outline" onClick={exportSheet}><Download /> Exportar JSON</Button></div></div><CharacterPaper character={character} updateState={updateState} /></section>;
 }
 
-function CharacterPaper({ character }: { character: CharacterSheet }) {
+function CharacterPaper({ character, updateState }: { character: CharacterSheet; updateState:(state:Record<string,unknown>)=>void }) {
   const isCtl=character.game_line==="CtL";
   const data=character.line_data;
   const specialties=character.specializations.map((item)=>typeof item==="string"?{skill:"",name:item}:item);
@@ -155,6 +162,15 @@ function CharacterPaper({ character }: { character: CharacterSheet }) {
   const praxes=stringList(data.praxes);
   const arcana=(data.arcana && typeof data.arcana==="object" ? data.arcana : {}) as Record<string,number>;
   const gnosis=Number(data.gnosis??1);
+  const powerRating=isCtl?Number(data.wyrd??1):gnosis;
+  const resource=powerResourceLimits(powerRating);
+  const health=Math.max(1,Number(character.derived.Vitalidade??5));
+  const willpower=Math.max(1,Number(character.derived.ForçaDeVontade??1));
+  const damage=normalizeDamage(character.current_state?.health_damage,health);
+  const currentWillpower=boundedNumber(character.current_state?.willpower_current,willpower,willpower);
+  const resourceKey=isCtl?"glamour_current":"mana_current";
+  const currentResource=boundedNumber(character.current_state?.[resourceKey],resource.maximum,resource.maximum);
+  const setState=(key:string,value:unknown)=>updateState({...character.current_state,[key]:value});
   return <article className={`cod-sheet ${isCtl?"ctl-sheet":"mta-sheet"}`}>
     <header className="cod-sheet-title"><div><span>{isCtl?"CHANGELING":"MAGO"}</span><strong>{isCtl?"OS PERDIDOS":"O DESPERTAR"}</strong></div><p>CRÔNICAS DAS TREVAS</p></header>
     <section className="sheet-identity-grid">
@@ -170,10 +186,11 @@ function CharacterPaper({ character }: { character: CharacterSheet }) {
         <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits} line={character.game_line}/>
       </div>
       <div className="sheet-right-column">
-        <SheetHeading>Vitalidade</SheetHeading><Track value={Number(character.derived.Vitalidade??0)} max={12}/>
-        <SheetHeading>Força de Vontade</SheetHeading><Track value={Number(character.derived.ForçaDeVontade??0)} max={10}/>
+        <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value)=>setState("health_damage",value)}/>
+        <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value)=>setState("willpower_current",value)}/>
         <SheetHeading>Características da Linha</SheetHeading>
-        {isCtl?<CompactValues values={{Wyrd:Number(data.wyrd??1),"Clareza Máxima":Number(character.derived.ClarezaMaxima??0)}}/>:<CompactValues values={{Gnosis:gnosis,Sabedoria:Number(data.wisdom??7),"Mana Máximo":9+gnosis,"Mana por Turno":gnosis}}/>}
+        <PowerResource name={isCtl?"Fado":"Gnose"} rating={powerRating} resourceName={isCtl?"Glamour":"Mana"} current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value)=>setState(resourceKey,value)}/>
+        <CompactValues values={isCtl?{"Clareza Máxima":Number(character.derived.ClarezaMaxima??0)}:{Sabedoria:Number(data.wisdom??7)}}/>
         <SheetHeading>Outras Características</SheetHeading><CompactValues values={character.derived}/>
       </div>
     </div>
@@ -187,7 +204,20 @@ function TraitBlock({title,names,values,specialties=[]}:{title:string;names:read
 function TraitLine({name,value,note}:{name:string;value:number;note?:string}) { return <div className="official-trait-line"><span>{name}{note&&<small>{note}</small>}</span><DotValue value={value}/></div>; }
 function DotValue({value,max=5}:{value:number;max?:number}) { return <span className="official-dots" aria-label={`${value} pontos`}>{Array.from({length:max},(_,index)=><i key={index} className={index<value?"on":""}/>)}</span>; }
 function CompactValues({values}:{values:Record<string,number>}) { return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{pretty(name)}</span><strong>{value}</strong></div>)}</div>; }
-function Track({value,max}:{value:number;max:number}) { return <div className="official-track">{Array.from({length:max},(_,index)=><i key={index} className={index<value?"available":""}/>)}</div>; }
+function HealthTrack({health,damage,onChange}:{health:number;damage:DamageLevel[];onChange:(value:DamageLevel[])=>void}) {
+  const penalty=woundPenalty(damage,health);
+  const cycle=(index:number)=>{
+    const slots=Array.from({length:health},(_,slot)=>damage[slot]);
+    const current=slots[index];
+    slots[index]=current==="bashing"?"lethal":current==="lethal"?"aggravated":current==="aggravated"?undefined:"bashing";
+    onChange(normalizeDamage(slots,health));
+  };
+  return <div className="tracker-block"><div className="health-track" role="group" aria-label={`Vitalidade: ${damage.length} de ${health} caixas marcadas`}>{Array.from({length:health},(_,index)=>{const level=damage[index];return <button type="button" key={index} className={`health-box ${level??"empty"}`} onClick={()=>cycle(index)} aria-label={`Caixa ${index+1}: ${damageLabel(level)}. Clique para alterar.`}><span aria-hidden="true"/></button>;})}</div><div className="tracker-meta"><span>{damage.length}/{health} marcadas</span><strong className={penalty<0?"penalty":""}>Penalidade {penalty||"—"}</strong></div><p className="tracker-help"><span className="legend-mark bashing"/>Contusão <span className="legend-mark lethal"/>Letal <span className="legend-mark aggravated"/>Agravado · clique para alternar</p></div>;
+}
+function ResourceTrack({label,current,maximum,onChange}:{label:string;current:number;maximum:number;onChange:(value:number)=>void}) { return <div className="tracker-block"><div className="resource-track" role="group" aria-label={`${label}: ${current} de ${maximum}`}>{Array.from({length:maximum},(_,index)=><button type="button" key={index} className={index<current?"filled":""} onClick={()=>onChange(index<current?index:index+1)} aria-label={`Definir ${label} como ${index<current?index:index+1}`}/>)}</div><div className="tracker-meta"><span>Atual</span><strong>{current} / {maximum}</strong></div></div>; }
+function PowerResource({name,rating,resourceName,current,maximum,perTurn,onChange}:{name:string;rating:number;resourceName:string;current:number;maximum:number;perTurn:number;onChange:(value:number)=>void}) { return <div className="power-resource"><div className="power-rating"><span>{name}</span><DotValue value={rating} max={10}/></div><ResourceTrack label={resourceName} current={current} maximum={maximum} onChange={onChange}/><p className="tracker-help">{resourceName} máximo: <strong>{maximum}</strong> · gasto por turno: <strong>{perTurn}</strong></p></div>; }
+function damageLabel(value:DamageLevel|undefined) { return value==="bashing"?"dano de contusão":value==="lethal"?"dano letal":value==="aggravated"?"dano agravado":"vazia"; }
+function boundedNumber(value:unknown,maximum:number,fallback:number) { const number=Number(value); return Number.isFinite(number)?Math.max(0,Math.min(maximum,Math.trunc(number))):fallback; }
 function LineList({items}:{items:string[]}) { return <div className="official-lines">{items.filter(Boolean).map((item,index)=><div key={`${item}-${index}`}>{item}</div>)}{!items.filter(Boolean).length&&<div>&nbsp;</div>}</div>; }
 function MeritSheetList({merits,line}:{merits:CharacterSheet["merits"];line:"CtL"|"MtA"}) { const catalog=getMeritsForLine(line); return <div className="sheet-merits single-column">{merits.length?merits.map((item,index)=>{ const definition=catalog.find((entry)=>entry.name===item.name); const tooltip=definition ? `${definition.description}${definition.prerequisites?`\nPré-requisitos: ${definition.prerequisites}`:""}` : item.source; return <div key={`${item.name}-${index}`} title={tooltip}><span>{definition?.translatedName??item.name}</span><DotValue value={item.dots} max={Math.max(5,item.dots)}/></div>; }):<em>Nenhum Mérito selecionado</em>}</div>; }
 function ContractSheetList({contracts}:{contracts:Array<Record<string,unknown>>}) { return <div className="official-lines">{contracts.filter((item)=>item.name).map((item,index)=>{ const definition=findContract(String(item.id??item.name??"")); const description=definition?.description??String(item.description??""); const dicePool=definition?.dicePool??String(item.dicePool??"Não informada"); return <div key={`${String(item.name)}-${index}`} title={`${description}\nParada de dados: ${dicePool}`}><span>{definition?.name??String(item.name)}</span><small>{definition?.regalia??String(item.regalia??"")} · {definition?.type??String(item.type??(index<4?"Comum":"Real"))}</small></div>; })}{!contracts.some((item)=>item.name)&&<div>&nbsp;</div>}</div>; }

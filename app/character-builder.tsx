@@ -184,7 +184,7 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
       merits: merits.map((item) => { const definition=meritCatalog.find((entry)=>entry.name===item.name); return { ...item, sourceId: definition?.sourceId, source: definition?.source }; }),
       line_data: lineData,
       derived,
-      current_state: {},
+      current_state: initial?.current_state ?? {},
       created_at: initial?.created_at ?? now,
       updated_at: now,
     });
