@@ -5,9 +5,11 @@ export type ChangelingCondition = {
   category: "Mental" | "Física" | "Social" | "Sobrenatural" | "Changeling";
   description: string;
   penalty?: string;
+  resolution?: string;
+  beat?: string;
   persistent?: boolean;
-  source: "Chronicles of Darkness" | "Changeling the Lost" | "Hurt Locker" | "Kith and Kin";
-  sourceCode: "CofD" | "CTL 2e" | "HL" | "Kith";
+  source: string;
+  sourceCode: string;
   page: number;
 };
 
@@ -79,4 +81,16 @@ export const CHANGELING_CONDITIONS: ChangelingCondition[] = [
 
 export function findChangelingCondition(id: string) {
   return CHANGELING_CONDITIONS.find((condition) => condition.id === id);
+}
+
+// As edições de CofD sempre apresentam uma Resolução e, nas Conditions
+// persistentes, um gatilho de Beat. Os textos abaixo também servem como
+// migração segura para registros importados antes de esses campos existirem.
+for (const condition of CHANGELING_CONDITIONS) {
+  condition.resolution ??= condition.persistent
+    ? "Remova de modo duradouro a causa da Condition ou cumpra a forma de recuperação estabelecida pelo Narrador e pela fonte indicada."
+    : "Cumpra a circunstância que encerra o efeito descrito ou elimine sua causa durante a história.";
+  condition.beat ??= condition.persistent
+    ? "Receba um Beat quando esta Condition causar uma complicação ou limitação significativa (no máximo uma vez por capítulo)."
+    : undefined;
 }

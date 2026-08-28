@@ -23,6 +23,15 @@
   --ring: #8c68ab;
   --radius: .8rem;
 }
+.beat-controls button { display:none; }
+.beat-resource { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:8px; margin:7px 0; padding:7px 8px; border:1px solid #d9d3ca; background:#fff; }
+.beat-resource>span { color:#707570; font-size:8px; font-weight:700; text-transform:uppercase; }.beat-resource>strong { color:var(--sheet-accent); font-size:10px; }
+.persistent-toggle { grid-column:1/-1; display:flex!important; align-items:center; gap:6px; color:#5f4b68; font-size:9px; font-weight:700; }.persistent-toggle input { width:15px; height:15px; }
+.power-resource { margin:10px 0 16px; padding:10px; border:1px solid color-mix(in srgb,var(--sheet-accent) 42%,#d8d2c8); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); }
+.power-rating { margin-bottom:12px; border-bottom:2px solid var(--sheet-accent); }.power-rating>span { color:var(--sheet-accent); font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }.power-rating .official-dots { max-width:155px; flex-wrap:wrap; }
+.power-resource .resource-track:before { content:attr(aria-label); width:100%; margin-bottom:3px; color:var(--sheet-accent); font-size:12px; font-weight:800; text-transform:uppercase; }
+.mage-magic-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:28px; }.mage-xp-balances { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:7px; }.spell-groups { display:block; }.spell-groups .merit-category { margin-bottom:14px; }.spell-groups .merit-category>div { display:grid; gap:8px; }
+@media(max-width:760px){.mage-magic-grid,.mage-xp-balances{grid-template-columns:1fr}}
 
 @theme inline {
   --color-background: var(--background); --color-foreground: var(--foreground);
@@ -485,3 +494,9 @@ button { cursor: pointer; }
   .sheet-identity-grid,.official-trait-grid,.official-sheet-body,.sheet-bottom-grid { grid-template-columns:1fr; }.sheet-skills-column { grid-row:auto; }.sheet-merits { grid-template-columns:1fr; }
   .powers-sheet-grid,.contract-power-list { grid-template-columns:1fr; }.contract-power-list dl>div { grid-template-columns:1fr; }
 }
+
+/* Recursos precisam permanecer visualmente separados mesmo nas fichas densas. */
+.power-resource { margin:10px 0 16px; padding:10px; border:1px solid color-mix(in srgb,var(--sheet-accent) 42%,#d8d2c8); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); }
+.power-resource .power-rating { margin-bottom:12px; border-bottom:2px solid var(--sheet-accent); }
+.power-resource .power-rating>span { color:var(--sheet-accent); font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
+.power-resource .resource-track:before { content:attr(aria-label); width:100%; margin-bottom:3px; color:var(--sheet-accent); font-size:12px; font-weight:800; text-transform:uppercase; }

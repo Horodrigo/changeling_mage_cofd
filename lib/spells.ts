@@ -6563,3 +6563,20 @@ export const SPELLS: SpellDefinition[] = [
     "page": 20
   }
 ];
+
+const PRACTICE_TRANSLATIONS: Record<string,string> = {
+  "Atraente":"Compelir", "Compelling":"Compelir", "Sabendo":"Conhecer", "Knowing":"Conhecer",
+  "Revelação":"Revelar", "Unveiling":"Revelar", "Véu":"Velar", "Veiling":"Velar",
+  "Decisão":"Governar", "Governação":"Governar", "Ruling":"Governar", "Blindagem":"Proteger", "Shielding":"Proteger",
+  "Tecelagem":"Tecer", "Weaving":"Tecer", "Aperfeiçoando":"Aperfeiçoar", "Perfecting":"Aperfeiçoar",
+  "Desgastando":"Enfraquecer", "Fraying":"Enfraquecer", "Desvendando":"Desmantelar", "Unraveling":"Desmantelar",
+  "Padronização":"Padronizar", "Patterning":"Padronizar", "Fazendo":"Criar", "Making":"Criar", "Desfazendo":"Destruir", "Unmaking":"Destruir"
+};
+const TRAIT_TRANSLATIONS: Record<string,string> = {
+  Academics:"Erudição", AnimalKen:"Empatia com Animais", Athletics:"Esportes", Brawl:"Briga", Crafts:"Ofícios", Drive:"Condução", Firearms:"Armas de Fogo", Investigation:"Investigação", Larceny:"Furto", Medicine:"Medicina", Occult:"Ocultismo", Persuasion:"Persuasão", Politics:"Política", Science:"Ciência", Socialize:"Socialização", Stealth:"Furtividade", Streetwise:"Manha", Subterfuge:"Dissimulação", Survival:"Sobrevivência", Weaponry:"Armas Brancas", Expression:"Expressão", Empathy:"Empatia", Intimidation:"Intimidação", Resolve:"Perseverança", Composure:"Autocontrole", Stamina:"Vigor"
+};
+for (const spell of SPELLS) {
+  spell.practice=PRACTICE_TRANSLATIONS[spell.practice]??spell.practice;
+  spell.roteSkills=spell.roteSkills.map(skill=>TRAIT_TRANSLATIONS[skill.replace(/\s/g,"")]??TRAIT_TRANSLATIONS[skill]??skill);
+  spell.withstand=spell.withstand.split(/\s*\+\s*/).map(trait=>TRAIT_TRANSLATIONS[trait]??trait).join(" + ");
+}
