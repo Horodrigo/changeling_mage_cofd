@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  Archive, BookOpen, ChevronRight, Cloud, Database, Download, FileJson, FileText,
-  HardDrive, History, LayoutDashboard, Menu, Pencil, Plus, RotateCcw, Search, ShieldCheck, Sparkles,
+  Archive, ChevronRight, Download, FileJson, FileText,
+  History, LayoutDashboard, Menu, Pencil, Plus, RotateCcw, Search, ShieldCheck, Sparkles,
   Trash2, Upload, UsersRound, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -34,14 +34,12 @@ type CatalogRule = {
 const nav = [
   ["inicio", "Visão geral", LayoutDashboard],
   ["personagens", "Personagens", UsersRound],
-  ["regras", "Regras compartilhadas", BookOpen],
   ["fontes", "Fontes", Archive],
 ] as const;
 
 export function Workspace({ displayName, userKey }: { displayName: string; userKey: string }) {
   const [view, setView] = useState<View>("inicio");
   const [characters, setCharacters] = useState<CharacterSheet[]>([]);
-  const [catalog, setCatalog] = useState<CatalogRule[]>([]);
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
   const [ready, setReady] = useState(false);
@@ -71,11 +69,6 @@ export function Workspace({ displayName, userKey }: { displayName: string; userK
           }
         }
       } catch { setNotice("Não foi possível ler o armazenamento local deste navegador."); }
-      try {
-        const response = await fetch("/api/catalog", { method: "POST" });
-        const data = await response.json();
-        if (response.ok && !cancelled) setCatalog(data.rules);
-      } catch { setNotice("As fichas locais funcionam, mas o catálogo compartilhado não pôde ser atualizado."); }
       if (!cancelled) setReady(true);
     }
     void start();
@@ -144,29 +137,29 @@ export function Workspace({ displayName, userKey }: { displayName: string; userK
     <aside className={`sidebar ${mobileOpen ? "sidebar-open" : ""}`}>
       <div className="brand"><div className="brand-mark"><Sparkles /></div><div><strong>Arquivo</strong><span>das Trevas</span></div><button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Fechar menu"><X /></button></div>
       <nav aria-label="Navegação principal">{nav.map(([id,label,Icon]) => <button key={id} className={view === id ? "nav-item active" : "nav-item"} onClick={() => navigate(id)}><Icon /><span>{label}</span>{view === id && <ChevronRight className="nav-chevron" />}</button>)}</nav>
-      <div className="storage-card"><HardDrive /><div><strong>Fichas locais</strong><span>Seus personagens ficam neste navegador. As regras são compartilhadas pelo sistema.</span></div></div>
-      <div className="profile"><div className="avatar">{displayName.slice(0,1).toUpperCase()}</div><div><strong>{displayName}</strong><span>{characters.length} ficha(s) neste dispositivo</span></div></div>
+      <div className="profile"><div className="avatar">{displayName.slice(0,1).toUpperCase()}</div><div><strong>{displayName}</strong><span>{characters.length} personagem(ns)</span></div></div>
     </aside>
     <section className="content">
       <header className="topbar"><button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Abrir menu"><Menu /></button><div><p>Chronicles of Darkness</p><h1>{title}</h1></div><div className="top-actions"><input ref={fileRef} hidden type="file" accept=".json,application/json" onChange={(event) => { const file=event.target.files?.[0]; if(file) void importCharacter(file); event.target.value=""; }} /><Button variant="outline" onClick={() => fileRef.current?.click()}><Upload /> Importar JSON</Button><Button onClick={() => setEditing("new")}><Plus /> Criar ficha</Button></div></header>
       {notice && <div className="notice" role="status"><ShieldCheck /><span>{notice}</span><button onClick={() => setNotice("")} aria-label="Fechar aviso"><X /></button></div>}
-      {selected ? <CharacterView character={selected} back={() => setSelected(null)} edit={() => setEditing(selected)} exportSheet={() => exportCharacter(selected)} updateState={(state) => updateCharacterState(selected, state)} updateSheet={updateCharacter} remove={() => deleteCharacter(selected)} /> : view === "inicio" ? <Dashboard characters={characters} catalog={catalog} create={() => setEditing("new")} openCharacters={() => navigate("personagens")} /> : view === "personagens" ? <Characters characters={characters} ready={ready} open={setSelected} create={() => setEditing("new")} /> : view === "regras" ? <RulesCatalog catalog={catalog} /> : <Sources />}
+      {selected ? <CharacterView character={selected} back={() => setSelected(null)} edit={() => setEditing(selected)} exportSheet={() => exportCharacter(selected)} updateState={(state) => updateCharacterState(selected, state)} updateSheet={updateCharacter} remove={() => deleteCharacter(selected)} /> : view === "inicio" ? <Dashboard characters={characters} create={() => setEditing("new")} importJson={() => fileRef.current?.click()} openCharacters={() => navigate("personagens")} openCharacter={setSelected} /> : view === "personagens" ? <Characters characters={characters} ready={ready} open={setSelected} create={() => setEditing("new")} /> : <Sources />}
     </section>
     {mobileOpen && <button className="overlay" onClick={() => setMobileOpen(false)} aria-label="Fechar menu" />}
   </main>;
 }
 
-function Dashboard({ characters, catalog, create, openCharacters }: { characters: CharacterSheet[]; catalog: CatalogRule[]; create: () => void; openCharacters: () => void }) {
+function Dashboard({ characters, create, importJson, openCharacters, openCharacter }: { characters: CharacterSheet[]; create: () => void; importJson:()=>void; openCharacters: () => void; openCharacter:(item:CharacterSheet)=>void }) {
+  const changelings=characters.filter(item=>item.game_line==="CtL").length;
+  const mages=characters.filter(item=>item.game_line==="MtA").length;
+  const recent=[...characters].sort((a,b)=>String(b.updated_at).localeCompare(String(a.updated_at))).slice(0,4);
   return <div className="page-grid">
-    <section className="welcome-panel"><div><Badge className="eyebrow">CRIAÇÃO GUIADA ATIVA</Badge><h2>Crie a ficha agora. Corrija exceções depois.</h2><p>As distribuições e fórmulas são aplicadas automaticamente pelas fontes principais de cada linha.</p><div className="welcome-actions"><Button onClick={create}><Plus /> Nova ficha guiada</Button><Button variant="outline" onClick={openCharacters}>Ver personagens</Button></div></div><div className="sigil" aria-hidden="true"><span>CoD</span></div></section>
-    <section className="metrics"><Metric value={String(characters.length)} label="fichas locais" accent="violet" /><Metric value={String(catalog.length)} label="regras compartilhadas" accent="green" /><Metric value="2" label="linhas completas" accent="amber" /><Metric value="13" label="fontes conectadas" accent="blue" /></section>
-    <section className="panel wide"><div className="panel-heading"><div><span className="kicker">ARQUITETURA</span><h3>Separação de dados</h3></div></div><div className="storage-split"><div><HardDrive /><strong>Personagens</strong><p>JSON local por navegador e usuário, com importação e exportação.</p></div><div><Database /><strong>Regras</strong><p>Catálogo único no banco, utilizado por todos os usuários do site.</p></div><div><Cloud /><strong>Fontes</strong><p>Core como base, CtL e MtA como livros principais, demais como adjacentes.</p></div></div></section>
+    <section className="welcome-panel practical-welcome"><div><Badge className="eyebrow">ARQUIVO DAS TREVAS</Badge><h2>Suas histórias, prontas para continuar.</h2><p>Crie um personagem novo ou retome uma ficha recente diretamente daqui.</p><div className="welcome-actions"><Button onClick={create}><Plus /> Criar personagem</Button><Button variant="outline" onClick={openCharacters}>Todos os personagens</Button></div></div><div className="sigil" aria-hidden="true"><span>CoD</span></div></section>
+    <section className="dashboard-actions wide"><button onClick={create}><Plus/><span><strong>Nova ficha</strong><small>Changeling ou Mago</small></span></button><button onClick={importJson}><Upload/><span><strong>Importar personagem</strong><small>Abrir um arquivo JSON</small></span></button><div><UsersRound/><span><strong>{characters.length} personagens</strong><small>{changelings} Changelings · {mages} Magos</small></span></div></section>
+    <section className="panel wide recent-panel"><div className="panel-heading"><div><span className="kicker">CONTINUAR</span><h3>Personagens recentes</h3><p>Acesse rapidamente as fichas usadas por último.</p></div>{characters.length>4&&<Button variant="ghost" onClick={openCharacters}>Ver todos</Button>}</div>{recent.length?<div className="character-grid compact-character-grid">{recent.map(character=><button className="character-card" key={character.id} onClick={()=>openCharacter(character)}><div className="character-monogram">{character.character.name.slice(0,1)}</div><div><Badge variant="outline">{character.game_line==="CtL"?"Changeling":"Mago"}</Badge><h3>{character.character.name}</h3><p>{character.character.concept||"Conceito não informado"}</p><small>{character.game_line==="CtL"?String(character.line_data.seeming??"Feição não definida"):String(character.line_data.path??"Caminho não definido")}</small></div><ChevronRight/></button>)}</div>:<div className="dashboard-empty"><Sparkles/><div><strong>Comece uma nova crônica</strong><p>Crie seu primeiro personagem com o assistente guiado.</p></div><Button onClick={create}>Criar personagem</Button></div>}</section>
   </div>;
 }
-function Metric({ value,label,accent }: any) { return <div className={`metric ${accent}`}><strong>{value}</strong><span>{label}</span></div>; }
-
 function Characters({ characters, ready, open, create }: { characters: CharacterSheet[]; ready: boolean; open:(item:CharacterSheet)=>void; create:()=>void }) {
-  return <section className="panel"><div className="panel-heading"><div><span className="kicker">ARMAZENAMENTO LOCAL</span><h3>Personagens neste navegador</h3><p>Use Exportar JSON para transportar uma ficha para outro dispositivo.</p></div><Button onClick={create}><Plus /> Nova ficha</Button></div>{!ready ? <div className="loading-card">Carregando fichas locais…</div> : characters.length ? <div className="character-grid">{characters.map((character)=><button className="character-card" key={character.id} onClick={()=>open(character)}><div className="character-monogram">{character.character.name.slice(0,1)}</div><div><Badge variant="outline">{character.game_line}</Badge><h3>{character.character.name}</h3><p>{character.character.concept}</p><small>{character.game_line === "CtL" ? String(character.line_data.seeming ?? "Changeling") : String(character.line_data.path ?? "Mage")} · JSON v{character.schema_version}</small></div><ChevronRight /></button>)}</div> : <Empty title="Nenhuma ficha neste navegador" text="Crie um Changeling ou Mago com o assistente de regras." action={create} />}</section>;
+  return <section className="panel"><div className="panel-heading"><div><span className="kicker">PERSONAGENS</span><h3>Suas fichas</h3><p>Abra uma ficha para jogar, atualizar características ou exportar uma cópia.</p></div><Button onClick={create}><Plus /> Nova ficha</Button></div>{!ready ? <div className="loading-card">Carregando personagens…</div> : characters.length ? <div className="character-grid">{characters.map((character)=><button className="character-card" key={character.id} onClick={()=>open(character)}><div className="character-monogram">{character.character.name.slice(0,1)}</div><div><Badge variant="outline">{character.game_line}</Badge><h3>{character.character.name}</h3><p>{character.character.concept}</p><small>{character.game_line === "CtL" ? String(character.line_data.seeming ?? "Changeling") : String(character.line_data.path ?? "Mage")}</small></div><ChevronRight /></button>)}</div> : <Empty title="Nenhum personagem criado" text="Crie um Changeling ou Mago com o assistente guiado." action={create} />}</section>;
 }
 
 function CharacterView({ character, back, edit, exportSheet, updateState, updateSheet, remove }: { character: CharacterSheet; back:()=>void; edit:()=>void; exportSheet:()=>void; updateState:(state:Record<string,unknown>)=>void; updateSheet:(sheet:CharacterSheet)=>void; remove:()=>void }) {
@@ -264,7 +257,7 @@ function CompactValues({values}:{values:Record<string,number>}) { return <div cl
 function HealthTrack({health,damage,onChange}:{health:number;damage:DamageLevel[];onChange:(value:DamageLevel[])=>void}) {
   const penalty=woundPenalty(damage,health);
   const cycle=(index:number)=>{
-    const slots=Array.from({length:health},(_,slot)=>damage[slot]);
+    const slots:Array<DamageLevel|undefined>=Array.from({length:health},(_,slot)=>damage[slot]);
     const current=slots[index];
     slots[index]=current==="bashing"?"lethal":current==="lethal"?"aggravated":current==="aggravated"?undefined:"bashing";
     onChange(normalizeDamage(slots,health));
@@ -273,7 +266,7 @@ function HealthTrack({health,damage,onChange}:{health:number;damage:DamageLevel[
 }
 function ClarityTrack({maximum,damage,onChange}:{maximum:number;damage:ClarityDamageLevel[];onChange:(value:ClarityDamageLevel[])=>void}) {
   const current=Math.max(0,maximum-damage.length);
-  const cycle=(index:number)=>{const slots=Array.from({length:maximum},(_,slot)=>damage[slot]);const level=slots[index];slots[index]=level==="mild"?"severe":level==="severe"?undefined:"mild";onChange(normalizeClarityDamage(slots,maximum));};
+  const cycle=(index:number)=>{const slots:Array<ClarityDamageLevel|undefined>=Array.from({length:maximum},(_,slot)=>damage[slot]);const level=slots[index];slots[index]=level==="mild"?"severe":level==="severe"?undefined:"mild";onChange(normalizeClarityDamage(slots,maximum));};
   return <div className="tracker-block clarity-block"><div className="health-track clarity-track" role="group" aria-label={`Lucidez atual ${current} de ${maximum}`}>{Array.from({length:maximum},(_,index)=>{const level=damage[index];return <button type="button" key={index} className={`health-box clarity-box ${level??"empty"}`} onClick={()=>cycle(index)} aria-label={`Caixa ${index+1}: ${level==="mild"?"dano leve":level==="severe"?"dano grave":"vazia"}. Clique para alterar.`}><span aria-hidden="true"/></button>;})}</div><div className="clarity-numbers" aria-hidden="true">{Array.from({length:maximum},(_,index)=><span key={index}>{index+1}</span>)}</div><div className="tracker-meta"><span>Lucidez atual</span><strong>{current} / {maximum}</strong></div><p className="tracker-help"><span className="legend-mark mild"/>Leve <span className="legend-mark severe"/>Grave · as três caixas à direita podem gerar Condições de Lucidez</p></div>;
 }
 type SelectedCondition={id:string;persistent:boolean};
@@ -309,10 +302,10 @@ function ExperiencePanel({character,updateSheet}:{character:CharacterSheet;updat
   const history=(Array.isArray(state.experience_history)?state.experience_history as ExperienceEntry[]:[]).filter((entry)=>entry.kind==="spend");
   const [experienceInput,setExperienceInput]=useState(String(available));
   const [purchaseType,setPurchaseType]=useState(PURCHASE_TYPES[0]);
-  const [attribute,setAttribute]=useState(Object.values(ATTRIBUTES).flat()[0]);
-  const [skill,setSkill]=useState(Object.values(SKILLS).flat()[0]);
+  const [attribute,setAttribute]=useState<string>(Object.values(ATTRIBUTES).flat()[0]);
+  const [skill,setSkill]=useState<string>(Object.values(SKILLS).flat()[0]);
   const [meritId,setMeritId]=useState("");
-  const [specialtySkill,setSpecialtySkill]=useState(Object.values(SKILLS).flat()[0]);
+  const [specialtySkill,setSpecialtySkill]=useState<string>(Object.values(SKILLS).flat()[0]);
   const [specialtyName,setSpecialtyName]=useState("");
   const [contractId,setContractId]=useState("");
   const [benefitKey,setBenefitKey]=useState("");
@@ -369,7 +362,7 @@ function MageExperiencePanel({character,updateSheet}:{character:CharacterSheet;u
   const lostWillpower=boundedNumber(state.willpower_lost_dots,maximumLostWillpower,0);
   const history=Array.isArray(state.mage_experience_history)?state.mage_experience_history as MageXpEntry[]:[];
   const [regularInput,setRegularInput]=useState(String(regular)),[arcaneInput,setArcaneInput]=useState(String(arcane));
-  const [purchase,setPurchase]=useState(MAGE_PURCHASES[0]),[target,setTarget]=useState(Object.values(ATTRIBUTES).flat()[0]);
+  const [purchase,setPurchase]=useState<string>(MAGE_PURCHASES[0]),[target,setTarget]=useState<string>(Object.values(ATTRIBUTES).flat()[0]);
   const [regularSplit,setRegularSplit]=useState(0),[feedback,setFeedback]=useState("");
   const merits=getMeritsForLine("MtA"), spells=SPELLS;
   const arcana=(character.line_data.arcana&&typeof character.line_data.arcana==="object"?character.line_data.arcana:{}) as Record<string,number>;
@@ -377,7 +370,7 @@ function MageExperiencePanel({character,updateSheet}:{character:CharacterSheet;u
   const options=purchase==="Atributo"?Object.values(ATTRIBUTES).flat():purchase==="Perícia"||purchase==="Especialização"?Object.values(SKILLS).flat():purchase==="Mérito"?merits.map(item=>item.id):purchase==="Arcano"?Object.keys(arcana):purchase==="Rota"||purchase==="Práxis"?spells.map(item=>item.id):[purchase];
   const selectedMerit=merits.find(item=>item.id===target)??merits[0], ownedMerit=selectedMerit&&character.merits.find(item=>item.name===selectedMerit.name), nextMerit=selectedMerit?.ratings.find(dot=>dot>(ownedMerit?.dots??0));
   const selectedSpell=spells.find(item=>item.id===target)??spells[0];
-  let cost=1,label=target,mode:"regular"|"arcane"|"either"="regular";
+  let cost=1,label:string=target,mode:"regular"|"arcane"|"either"="regular";
   if(purchase==="Atributo")cost=4;
   else if(purchase==="Perícia")cost=2;
   else if(purchase==="Mérito"){cost=nextMerit?nextMerit-(ownedMerit?.dots??0):0;label=selectedMerit?.translatedName??"Mérito";}

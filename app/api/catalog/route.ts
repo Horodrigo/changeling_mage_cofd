@@ -41,8 +41,10 @@ export async function POST() {
         target: rules.id,
         set: { structuredData: JSON.stringify(rule.data), reviewStatus: "APPROVED", needsReview: false },
       })),
-    ] as const;
-    await db.batch(statements);
+    ];
+    if (statements.length) {
+      await db.batch(statements as [typeof statements[number], ...typeof statements[number][]]);
+    }
     const rows = await db.select().from(rules).orderBy(asc(rules.gameLine), asc(rules.originalName));
     return Response.json({ rules: rows, sources: SOURCE_CATALOG });
   } catch (error) {
