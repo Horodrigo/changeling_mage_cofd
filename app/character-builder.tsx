@@ -144,6 +144,8 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
       kith_page: customKith ? 0 : selectedKith?.page ?? 0,
       primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS].regalia,
       second_regalia: secondRegalia, favored_attribute: favoredAttribute, aspirations, contracts,
+      learned_contracts: initial?.line_data.learned_contracts ?? [],
+      extra_contract_benefits: initial?.line_data.extra_contract_benefits ?? [],
     } : {
       path, order, virtue, vice, nimbus, dedicated_tool: tool, resistance_bonus: resistanceBonus,
       gnosis, wisdom: 7, aspirations, arcana, rotes: rotes.filter(Boolean), praxes: praxes.slice(0, gnosis).filter(Boolean),
@@ -292,7 +294,7 @@ function favoredChoices(type: string) { return type === "Power" ? ["Inteligênci
 function updateArray(setter: any, values: any[], index: number, value: any) { const next=[...values]; next[index]=value; setter(next); }
 function normalizeSpecialties(value: unknown): Specialty[] {
   if (!Array.isArray(value) || value.length === 0) return Array.from({ length: 3 }, () => ({ skill: "", name: "" }));
-  const normalized = value.slice(0,3).map((item) => { const record=item as Record<string,unknown>; return typeof item === "string" ? { skill: "", name: item } : { skill: String(record?.skill ?? ""), name: String(record?.name ?? "") }; });
+  const normalized = value.map((item) => { const record=item as Record<string,unknown>; return typeof item === "string" ? { skill: "", name: item } : { skill: String(record?.skill ?? ""), name: String(record?.name ?? "") }; });
   while (normalized.length < 3) normalized.push({ skill: "", name: "" });
   return normalized;
 }
