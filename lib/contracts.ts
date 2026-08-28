@@ -321,8 +321,32 @@ const ORIGINAL_SOURCE_TITLES: Record<string, string> = {
   "h-seemings": "Book of Seemings",
 };
 
+// Conferido pelo nome no índice do Codex of Darkness. Estes registros ficavam
+// nas Regalias vizinhas por causa de limites de seção extraídos dos livros.
+export const CONTRACT_REGALIA_CORRECTIONS: Record<string, string> = {
+  "Spinning Wheel": "Coroa",
+  "Stealing the Solid Reflection": "Joias",
+  "Tatterdemalion’s Workshop": "Joias",
+  "Prince of Ivy": "Primavera",
+  "Waking the Inner Fae": "Primavera",
+  "Solstice Revelation": "Verão",
+  "Sunburnt Heart": "Verão",
+  "Still Waters Run Deep": "Cálice",
+  "Poison the Well": "Cálice",
+  "Shared Cup": "Cálice",
+  "Grand Revel of the Harvest": "Moeda",
+  "Thirty Pieces": "Moeda",
+  "Curse of Hidden Strings": "Cetro",
+  "Spare Not the Rod": "Cetro",
+  "Pinch of Stardust": "Estrelas",
+  "Crown of Thorns": "Espinho",
+  "Shrike’s Larder": "Espinho",
+  "Witch’s Brambles": "Espinho",
+};
+
 for (const contract of CONTRACTS) {
   const detail = CONTRACT_DETAILS[contract.id];
+  contract.regalia = CONTRACT_REGALIA_CORRECTIONS[contract.originalName] ?? contract.regalia;
   contract.source = ORIGINAL_SOURCE_TITLES[contract.sourceId] ?? contract.source;
   contract.cost = contract.cost ?? CONTRACT_COSTS_PT[contract.id] ?? "Não informado";
   contract.dicePool = detail?.dicePool ?? contract.dicePool ?? CONTRACT_DICE_POOLS_PT[contract.id] ?? "Não informada";

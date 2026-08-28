@@ -6575,7 +6575,59 @@ const PRACTICE_TRANSLATIONS: Record<string,string> = {
 const TRAIT_TRANSLATIONS: Record<string,string> = {
   Academics:"Erudição", AnimalKen:"Empatia com Animais", Athletics:"Esportes", Brawl:"Briga", Crafts:"Ofícios", Drive:"Condução", Firearms:"Armas de Fogo", Investigation:"Investigação", Larceny:"Furto", Medicine:"Medicina", Occult:"Ocultismo", Persuasion:"Persuasão", Politics:"Política", Science:"Ciência", Socialize:"Socialização", Stealth:"Furtividade", Streetwise:"Manha", Subterfuge:"Dissimulação", Survival:"Sobrevivência", Weaponry:"Armas Brancas", Expression:"Expressão", Empathy:"Empatia", Intimidation:"Intimidação", Resolve:"Perseverança", Composure:"Autocontrole", Stamina:"Vigor"
 };
+export const SPELL_NAME_CORRECTIONS: Record<string,{originalName:string;name:string}> = {
+  "Initiate of Death Ectoplasmic Shaping": {originalName:"Ectoplasmic Shaping",name:"Moldagem Ectoplásmica"},
+  "Apprentice of Death Corpse Mask": {originalName:"Corpse Mask",name:"Máscara de Cadáver"},
+  "Disciple of Death Cold Snap": {originalName:"Cold Snap",name:"Onda de Frio"},
+  "Adept of Death Enervation": {originalName:"Enervation",name:"Enervação"},
+  "Master of Death Create Anchor": {originalName:"Create Anchor",name:"Criar Âncora"},
+  "Initiate of Fate Interconnections": {originalName:"Interconnections",name:"Interconexões"},
+  "Apprentice of Fate Exceptional Luck": {originalName:"Exceptional Luck",name:"Sorte Excepcional"},
+  "Disciple of Fate Grave Misfortune": {originalName:"Grave Misfortune",name:"Grave Infortúnio"},
+  "Adept of Fate Atonement": {originalName:"Atonement",name:"Expiação"},
+  "Master of Fate Forge Destiny": {originalName:"Forge Destiny",name:"Forjar Destino"},
+  "Initiate of Forces Influence Electricity": {originalName:"Influence Electricity",name:"Influenciar Eletricidade"},
+  "Apprentice of Forces Control Electricity": {originalName:"Control Electricity",name:"Controlar Eletricidade"},
+  "Disciple of Forces Call Lightning": {originalName:"Call Lightning",name:"Invocar Relâmpago"},
+  "Adept of Forces Electromagnetic Pulse": {originalName:"Electromagnetic Pulse",name:"Pulso Eletromagnético"},
+  "Master of Forces Adverse Weather": {originalName:"Adverse Weather",name:"Clima Adverso"},
+  "Apprentice of Life Body Control": {originalName:"Body Control",name:"Controle Corporal"},
+  "Disciple of Life Bruise Flesh": {originalName:"Bruise Flesh",name:"Ferir Carne"},
+  "Master of Life Create Life": {originalName:"Create Life",name:"Criar Vida"},
+  "Initiate of Matter Craftsman's Eye": {originalName:"Craftsmen's Eye",name:"Olho do Artesão"},
+  "Apprentice of Matter Alchemist's Touch": {originalName:"Alchemist's Touch",name:"Toque do Alquimista"},
+  "Disciple of Matter Aegis": {originalName:"Aegis",name:"Égide"},
+  "Adept of Matter Ghostwall": {originalName:"Ghostwall",name:"Muro Fantasma"},
+  "Master of Matter Annihilate Matter": {originalName:"Annihilate Matter",name:"Aniquilar Matéria"},
+  "Initiate of Mind Know Nature": {originalName:"Know Nature",name:"Conhecer Natureza"},
+  "Apprentice of Mind Alter Mental Pattern": {originalName:"Alter Mental Pattern",name:"Alterar Padrão Mental"},
+  "Disciple of Mind Augment Mind": {originalName:"Augment Mind",name:"Ampliar Mente"},
+  "Adept of Mind Gain Skill": {originalName:"Gain Skill",name:"Adquirir Perícia"},
+  "Master of Mind Amorality": {originalName:"Amorality",name:"Amoralidade"},
+  "Initiate of Prime Dispel Magic": {originalName:"Dispel Magic",name:"Dissipar Magia"},
+  "Apprentice of Prime As Above, So Below": {originalName:"As Above, So Below",name:"Assim Acima, Assim Abaixo"},
+  "Disciple of Prime Aetheric Winds": {originalName:"Aetheric Winds",name:"Ventos Etéreos"},
+  "Adept of Prime Apocalypse": {originalName:"Apocalypse",name:"Apocalipse"},
+  "Master of Prime Blasphemy": {originalName:"Blasphemy",name:"Blasfêmia"},
+  "Initiate of Space Correspondence": {originalName:"Correspondence",name:"Correspondência"},
+  "Apprentice of Space Borrow Threads": {originalName:"Borrow Threads",name:"Tomar Fios Emprestados"},
+  "Disciple of Space Ban": {originalName:"Ban",name:"Interdição"},
+  "Adept of Space Alter Direction": {originalName:"Alter Direction",name:"Alterar Direção"},
+  "Master of Space Create Sympathy": {originalName:"Create Sympathy",name:"Criar Simpatia"},
+  "Initiate of Spirit Coaxing the Spirits": {originalName:"Coaxing the Spirits",name:"Persuadir os Espíritos"},
+  "Apprentice of Spirit Cap the Well": {originalName:"Cap the Well",name:"Tampar o Poço"},
+  "Disciple of Spirit Bolster Spirit": {originalName:"Bolster Spirit",name:"Fortalecer Espírito"},
+  "Adept of Spirit Banishment": {originalName:"Banishment",name:"Banimento"},
+  "Master of Spirit Annihilate Spirit": {originalName:"Annihilate Spirit",name:"Aniquilar Espírito"},
+  "Initiate of Time Divination": {originalName:"Divination",name:"Adivinhação"},
+  "Apprentice of Time Choose the Thread": {originalName:"Choose the Thread",name:"Escolher o Fio"},
+  "Disciple of Time Acceleration": {originalName:"Acceleration",name:"Aceleração"},
+  "Adept of Time Present as Past": {originalName:"Present as Past",name:"Presente como Passado"},
+  "Master of Time Blink of an Eye": {originalName:"Blink of an Eye",name:"Num Piscar de Olhos"},
+};
 for (const spell of SPELLS) {
+  const corrected=SPELL_NAME_CORRECTIONS[spell.originalName];
+  if(corrected){spell.originalName=corrected.originalName;spell.name=corrected.name;}
   spell.practice=PRACTICE_TRANSLATIONS[spell.practice]??spell.practice;
   spell.roteSkills=spell.roteSkills.map(skill=>TRAIT_TRANSLATIONS[skill.replace(/\s/g,"")]??TRAIT_TRANSLATIONS[skill]??skill);
   spell.withstand=spell.withstand.split(/\s*\+\s*/).map(trait=>TRAIT_TRANSLATIONS[trait]??trait).join(" + ");
