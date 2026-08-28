@@ -1,5 +1,6 @@
 import { CONTRACT_DICE_POOLS_PT } from "./rule-details";
 import { CONTRACT_DETAILS, type SeemingKey } from "./contract-details";
+import { CONTRACT_COSTS_PT } from "./contract-costs";
 
 export type ContractDefinition = {
   id: string;
@@ -323,6 +324,7 @@ const ORIGINAL_SOURCE_TITLES: Record<string, string> = {
 for (const contract of CONTRACTS) {
   const detail = CONTRACT_DETAILS[contract.id];
   contract.source = ORIGINAL_SOURCE_TITLES[contract.sourceId] ?? contract.source;
+  contract.cost = contract.cost ?? CONTRACT_COSTS_PT[contract.id] ?? "Não informado";
   contract.dicePool = detail?.dicePool ?? contract.dicePool ?? CONTRACT_DICE_POOLS_PT[contract.id] ?? "Não informada";
   contract.loophole = detail?.loophole ?? contract.loophole ?? "Não informado";
   contract.seemingBenefits = detail?.seemingBenefits ?? {};
