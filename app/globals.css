@@ -30,6 +30,20 @@
 .power-resource { margin:10px 0 16px; padding:10px; border:1px solid color-mix(in srgb,var(--sheet-accent) 42%,#d8d2c8); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); }
 .power-rating { margin-bottom:12px; border-bottom:2px solid var(--sheet-accent); }.power-rating>span { color:var(--sheet-accent); font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }.power-rating .official-dots { max-width:155px; flex-wrap:wrap; }
 .power-resource .resource-track:before { content:attr(aria-label); width:100%; margin-bottom:3px; color:var(--sheet-accent); font-size:12px; font-weight:800; text-transform:uppercase; }
+.beat-resource { grid-template-columns:auto 1fr; }
+.beat-resource .resource-track { justify-content:flex-end; }
+.beat-resource>strong { display:none; }
+.beat-controls { justify-content:flex-end; }
+.beat-controls legend { margin-right:auto; }
+.beat-controls label:has(input:checked) span,.beat-controls label:has(~ label input:checked) span { background:var(--sheet-accent); box-shadow:inset 0 0 0 3px #fff; }
+.editable-lines { display:grid; gap:4px; }
+.editable-lines input { height:27px; padding:2px 5px; border:0; border-bottom:1px solid #aaa8a16b; border-radius:0; background:transparent; box-shadow:none; font:italic 10px Georgia,"Times New Roman",serif; }
+.editable-lines button { width:max-content; height:25px; margin-left:auto; font:8px Inter,Arial,sans-serif; }
+.sheet-wide-section { margin-top:18px; }
+.mage-page-355-grid { display:grid; grid-template-columns:.72fr 1.28fr; gap:28px; align-items:start; }
+.mage-spell-lines { display:grid; gap:4px; }.mage-spell-lines>div { display:grid; gap:2px; padding:5px 2px; border-bottom:1px solid #aaa8a16b; }.mage-spell-lines strong { font-size:10px; }.mage-spell-lines small { color:#737b80; font:8px Inter,Arial,sans-serif; }.mage-spell-lines em { color:#777; font-size:9px; }
+.mage-page-main .compact-values { grid-template-columns:repeat(5,1fr); }.mage-page-main .compact-values>div { display:grid; text-align:center; }
+@media(max-width:760px){.mage-page-355-grid{grid-template-columns:1fr}.mage-page-main .compact-values{grid-template-columns:1fr 1fr}}
 .mage-magic-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:28px; }.mage-xp-balances { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:7px; }.spell-groups { display:block; }.spell-groups .merit-category { margin-bottom:14px; }.spell-groups .merit-category>div { display:grid; gap:8px; }
 @media(max-width:760px){.mage-magic-grid,.mage-xp-balances{grid-template-columns:1fr}}
 
