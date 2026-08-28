@@ -1,4 +1,5 @@
 export type DamageLevel = "bashing" | "lethal" | "aggravated";
+export type ClarityDamageLevel = "mild" | "severe";
 
 const POWER_LIMITS: Record<number, { maximum: number; perTurn: number }> = {
   1: { maximum: 10, perTurn: 1 },
@@ -32,4 +33,13 @@ export function woundPenalty(damage: DamageLevel[], health: number) {
   if (filled === health - 1) return -2;
   if (filled === health - 2) return -1;
   return 0;
+}
+
+export function normalizeClarityDamage(value: unknown, maximum: number): ClarityDamageLevel[] {
+  if (!Array.isArray(value)) return [];
+  const severity: Record<ClarityDamageLevel, number> = { severe: 0, mild: 1 };
+  return value
+    .filter((item): item is ClarityDamageLevel => item === "mild" || item === "severe")
+    .slice(0, maximum)
+    .sort((left, right) => severity[left] - severity[right]);
 }

@@ -361,6 +361,33 @@ button { cursor: pointer; }
 .official-lines > div { min-height:22px; overflow:hidden; border-bottom:1px solid #aaa8a16b; font:italic 10px/21px Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
 .arcana-sheet-list { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; }
 .sheet-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.ctl-sheet-tabs { position:relative; z-index:1; margin-top:12px; }
+.ctl-sheet-tab-list { width:100%; height:auto!important; padding:4px; border:1px solid color-mix(in srgb,var(--sheet-accent) 50%,transparent); border-radius:0; background:color-mix(in srgb,var(--sheet-accent) 8%,#fff); }
+.ctl-sheet-tab-list button { min-height:38px; border-radius:0; font-family:Georgia,"Times New Roman",serif; font-size:15px; letter-spacing:.08em; text-transform:uppercase; }
+.ctl-sheet-tab-list button[data-state="active"] { color:#fff; background:var(--sheet-accent); }
+.ctl-sheet-page { margin-top:4px; outline:none; }
+.powers-page { min-height:760px; }
+.powers-sheet-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; margin-top:25px; }
+.contract-power-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.contract-power-list article { padding:12px; border:1px solid color-mix(in srgb,var(--sheet-accent) 35%,#d8d2c8); background:#fffefa; }
+.contract-power-title { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.contract-power-list article>small { display:block; margin-top:3px; color:#756d72; font-size:10px; }
+.contract-power-list article>p { margin:8px 0; font:11px/1.45 Inter,Arial,sans-serif; }
+.contract-power-list dl { display:grid; gap:6px; margin:0; font:10px/1.35 Inter,Arial,sans-serif; }
+.contract-power-list dl>div { display:grid; grid-template-columns:105px 1fr; gap:7px; padding-top:5px; border-top:1px dotted #cfc7bd; }
+.contract-power-list dt { font-weight:800; color:var(--sheet-accent); }.contract-power-list dd { margin:0; }
+.goblin-debt-row { color:#744014; background:#fff4df; }
+.labeled-blank { margin:0 0 18px; }.labeled-blank h4,.goblin-debt-block h4 { margin:0 0 8px; text-align:center; font-size:16px; text-transform:uppercase; }
+.goblin-debt-block { margin-top:24px; padding:13px; border:1px solid #a56c28; background:#fff8ea; }
+.goblin-debt-track { display:grid; grid-template-columns:repeat(9,1fr); gap:5px; }
+.goblin-debt-track button { width:100%; aspect-ratio:1; padding:0; border:1.5px solid #744014; background:#fff; cursor:pointer; }
+.goblin-debt-track button.filled { background:linear-gradient(45deg,transparent 43%,#744014 44% 56%,transparent 57%),linear-gradient(-45deg,transparent 43%,#744014 44% 56%,transparent 57%),#fff; }
+.goblin-debt-block p { margin:8px 0 0; color:#744014; font:10px/1.4 Inter,Arial,sans-serif; }
+.combat-summary { margin-top:24px; }
+.clarity-numbers { display:flex; gap:5px; margin-top:2px; }.clarity-numbers span { width:20px; flex:none; text-align:center; font:8px Inter,Arial,sans-serif; }
+.clarity-box.mild span,.legend-mark.mild { background-image:linear-gradient(55deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%); }
+.clarity-box.severe span,.legend-mark.severe { background-image:linear-gradient(45deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%),linear-gradient(-45deg,transparent 44%,var(--sheet-ink) 45% 55%,transparent 56%); }
+.goblin-debt-note { padding:7px; border-left:3px solid #a56c28; background:#fff6e7; }
 .sheet-merits { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
 .sheet-merits.single-column { grid-template-columns:1fr; }
 .sheet-merits > div { min-height:24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #aaa8a16b; font-size:11px; }
@@ -388,6 +415,7 @@ button { cursor: pointer; }
   .sheet-data-grid > section:nth-child(2) { border-right: 0; }
   .sheet-data-grid > section:nth-child(-n+2) { border-bottom: 1px solid #e1dad1; }
   .official-sheet-body { grid-template-columns:1fr 1fr; }.sheet-skills-column { grid-row:span 2; }
+  .contract-power-list { grid-template-columns:1fr; }
 }
 
 @media (max-width: 720px) {
@@ -418,4 +446,5 @@ button { cursor: pointer; }
   .sheet-data-grid > section { border-right: 0; border-bottom: 1px solid #e1dad1; }
   .cod-sheet { padding:24px 18px 32px; border-width:5px; }.cod-sheet-title { align-items:flex-start; flex-direction:column; }.cod-sheet-title p { display:none; }
   .sheet-identity-grid,.official-trait-grid,.official-sheet-body,.sheet-bottom-grid { grid-template-columns:1fr; }.sheet-skills-column { grid-row:auto; }.sheet-merits { grid-template-columns:1fr; }
+  .powers-sheet-grid,.contract-power-list { grid-template-columns:1fr; }.contract-power-list dl>div { grid-template-columns:1fr; }
 }
