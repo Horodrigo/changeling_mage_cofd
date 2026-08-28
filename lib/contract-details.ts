@@ -1095,7 +1095,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "ctl-2ed:fallow-fields": {
     "dicePool": "Manipulação + Empatia + Manto vs. Determinação + Fado",
-    "loophole": "O nome que o changeling anotou é uma das Pedras de Toque do alvo.",
+    "loophole": "O nome que o changeling anotou é uma das Pedras de Contato do alvo.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
     "page": 161

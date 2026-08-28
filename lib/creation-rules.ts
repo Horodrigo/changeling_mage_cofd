@@ -11,12 +11,36 @@ export const SKILLS = {
 } as const;
 
 export const CTL_SEEMINGS = {
-  Beast: { translated: "Fera", favored: "Resistance", regalia: "Corcel" },
-  Darkling: { translated: "Trevoso", favored: "Finesse", regalia: "Espelho" },
-  Elemental: { translated: "Elemental", favored: "Resistance", regalia: "Espada" },
-  Fairest: { translated: "Belíssimo", favored: "Power", regalia: "Coroa" },
-  Ogre: { translated: "Ogro", favored: "Power", regalia: "Escudo" },
-  Wizened: { translated: "Mirrado", favored: "Finesse", regalia: "Joias" },
+  Beast: {
+    translated: "Fera", favored: "Resistance", regalia: "Corcel",
+    blessing: "Enquanto não estiver amedrontado — ou ao gastar um ponto de Glamour por três turnos — causa dano letal com ataques desarmados e recebe +3 em Iniciativa e Deslocamento.",
+    curse: "Arrisca dano de Lucidez igual à metade do Fado quando decisões apressadas ou descuidadas prejudicam outras pessoas.",
+  },
+  Darkling: {
+    translated: "Trevoso", favored: "Finesse", regalia: "Espelho",
+    blessing: "Ao gastar Força de Vontade — e também Glamour, se houver testemunhas — pode tocar o imaterial e tornar-se imaterial por três turnos.",
+    curse: "Arrisca dano de Lucidez igual à metade do Fado quando um segredo que conhece se revela falso.",
+  },
+  Elemental: {
+    translated: "Elemental", favored: "Resistance", regalia: "Espada",
+    blessing: "Quando cercado por seu elemento e com ao menos metade da Força de Vontade — ou ao gastar Glamour — pode agir através dele a até três metros de distância.",
+    curse: "Arrisca dano de Lucidez igual à metade do Fado quando é intimidado ou coagido a seguir um curso de ação.",
+  },
+  Fairest: {
+    translated: "Belíssimo", favored: "Power", regalia: "Coroa",
+    blessing: "Enquanto estiver em harmonia com seus aliados — ou ao gastar Glamour — pode gastar Força de Vontade em benefício de outro personagem.",
+    curse: "Arrisca dano de Lucidez igual à metade do Fado quando suas ações são responsáveis por ferir seus aliados.",
+  },
+  Ogre: {
+    translated: "Ogro", favored: "Power", regalia: "Escudo",
+    blessing: "Quando ataca em defesa de outra pessoa — ou ao gastar Glamour — impõe a Condição Derrotado por três turnos.",
+    curse: "Arrisca dano de Lucidez igual à metade do Fado quando alguém que não é seu inimigo se encolhe de medo diante dele.",
+  },
+  Wizened: {
+    translated: "Mirrado", favored: "Finesse", regalia: "Joias",
+    blessing: "Com as ferramentas adequadas — ou ao gastar Glamour — pode usar a ação Construir Equipamento para transformar um material em outro.",
+    curse: "Arrisca dano de Lucidez igual à metade do Fado quando é pego desprevenido por uma surpresa desagradável.",
+  },
 } as const;
 export const CTL_SEEMING_LABELS = Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([key, value]) => [key, value.translated])) as Record<string, string>;
 

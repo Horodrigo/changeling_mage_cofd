@@ -14,6 +14,7 @@ import {
 import { getMeritsForLine, type MeritDefinition } from "@/lib/merits";
 import { CONTRACTS, type ContractDefinition } from "@/lib/contracts";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
+import { KITHS, findKith, type KithDefinition } from "@/lib/changeling-kiths";
 
 export type Specialty = { skill: string; name: string };
 export type MeritSelection = { name: string; dots: number; sourceId?: string; source?: string };
@@ -79,6 +80,9 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
 
   const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? "Beast"));
   const [kith, setKith] = useState(String(initial?.line_data.kith ?? ""));
+  const [customKithSkill, setCustomKithSkill] = useState(String(initial?.line_data.kith_skill ?? ""));
+  const [customKithDescription, setCustomKithDescription] = useState(String(initial?.line_data.kith_description ?? ""));
+  const [customKith, setCustomKith] = useState(Boolean(initial?.line_data.kith_custom));
   const [court, setCourt] = useState(translateCourt(String(initial?.line_data.court ?? "Sem Corte")));
   const [needle, setNeedle] = useState(translateNeedle(String(initial?.line_data.needle ?? "Mestre de Xadrez")));
   const [thread, setThread] = useState(translateThread(String(initial?.line_data.thread ?? "Aceitação")));
@@ -110,50 +114,15 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
 
   function validate(nextStep: number) {
     setError("");
-    const fail = (message: string) => setError(message);
-    if (step === 1 && (!name.trim() || !concept.trim())) return fail("Informe o nome e o conceito do personagem.");
-    if (step === 2) {
-      if (new Set(attributePriority).size !== 3 || new Set(skillPriority).size !== 3) return fail("Cada prioridade deve usar categorias diferentes.");
-      const attributeOk = attributePriority.every((category, index) => spent(attributes, ATTRIBUTES[category as keyof typeof ATTRIBUTES], 1) === [5, 4, 3][index]);
-      const skillOk = skillPriority.every((category, index) => spent(skills, SKILLS[category as keyof typeof SKILLS], 0) === [11, 7, 4][index]);
-      if (!attributeOk) return fail("Distribua exatamente 5/4/3 pontos nas categorias de Atributos.");
-      if (!skillOk) return fail("Distribua exatamente 11/7/4 pontos nas categorias de Perícias.");
-      if (specialties.some((item) => !item.skill || !item.name.trim())) return fail("Selecione a Perícia e informe o nome das três Especializações.");
-    }
-    if (step === 3) {
-      if (aspirations.some((item) => !item.trim())) return fail("Preencha as três Aspirações.");
-      if (meritSpent > meritBudget) return fail(`Os Méritos excedem o limite de ${meritBudget} pontos.`);
-      if (merits.some((item) => !meritCatalog.some((definition) => definition.name === item.name && definition.ratings.includes(item.dots)))) return fail("Escolha Méritos e níveis válidos para esta linha de jogo.");
-      if (line === "CtL") {
-        const favoredSet = favoredChoices(CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS].favored);
-        if (!favoredSet.includes(favoredAttribute)) return fail("Escolha um Atributo favorecido compatível com a Feição.");
-        if (attributes[favoredAttribute] >= 5) return fail("O ponto favorecido não pode elevar um Atributo acima de 5.");
-        if (!kith.trim() || !touchstone.trim()) return fail("Informe Fratria e Pedra de Toque.");
-        if (contracts.length !== 6 || contracts.some((item) => !item.name.trim()) || contracts.slice(0, 4).some((item) => item.type !== "Comum") || contracts.slice(4).some((item) => item.type !== "Real")) return fail("Selecione quatro Contratos Comuns e dois Reais.");
-        const primaryRegalia = CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS].regalia;
-        if (secondRegalia === primaryRegalia) return fail("A segunda Regalia favorecida deve ser diferente da Regalia da Feição.");
-        if (contracts.slice(0, 4).filter((item) => item.regalia === primaryRegalia || item.regalia === secondRegalia).length < 2) return fail("Ao menos dois Contratos Comuns devem pertencer às Regalias favorecidas.");
-      } else {
-        if (!virtue.trim() || !vice.trim() || !nimbus.trim() || !tool.trim()) return fail("Preencha Virtude, Vício, Nimbus e Ferramenta Mágica.");
-        if (attributes[resistanceBonus] >= 5) return fail("O ponto de Resistência não pode elevar o Atributo acima de 5.");
-        const total = Object.values(arcana).reduce((sum, value) => sum + value, 0);
-        const rulingTotal = pathData.ruling.reduce((sum, item) => sum + (arcana[item] ?? 0), 0);
-        if (total !== 6) return fail("Distribua exatamente seis pontos de Arcanos.");
-        if ((arcana[pathData.inferior] ?? 0) !== 0) return fail("O Arcanum inferior não pode receber pontos na criação.");
-        if (pathData.ruling.some((item) => (arcana[item] ?? 0) < 1) || rulingTotal < 3 || rulingTotal > 5) return fail("Os Arcanos Regentes precisam de ao menos um ponto cada e de três a cinco pontos no total.");
-        if (Object.values(arcana).filter((value) => value === 3).length > 1 || Object.values(arcana).some((value) => value > 3)) return fail("Somente um Arcanum pode começar em 3; nenhum pode exceder 3.");
-        if (rotes.some((item) => !item?.name)) return fail("Selecione as três Rotas iniciais.");
-        if (rotes.some((item) => item && item.roteSkills.length && !item.roteSkill)) return fail("Escolha a Perícia de Rota das três Rotas iniciais.");
-        if (praxes.slice(0, gnosis).some((item) => !item?.name)) return fail(`Selecione ${gnosis} Práxis.`);
-      }
-    }
     setStep(nextStep);
   }
 
   function finish() {
+    setError("");
+    if (!name.trim()) { setError("Informe o nome do personagem antes de salvar."); return; }
     const finalAttributes = { ...attributes };
-    if (line === "CtL") finalAttributes[favoredAttribute] += 1;
-    else finalAttributes[resistanceBonus] += 1;
+    if (line === "CtL") finalAttributes[favoredAttribute] = Math.min(5, (finalAttributes[favoredAttribute] ?? 1) + 1);
+    else finalAttributes[resistanceBonus] = Math.min(5, (finalAttributes[resistanceBonus] ?? 1) + 1);
     const derived = {
       Tamanho: 5,
       Vitalidade: 5 + finalAttributes["Vigor"],
@@ -164,8 +133,15 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
       ...(line === "CtL" ? { LucidezMaxima: finalAttributes["Raciocínio"] + finalAttributes["Autocontrole"] } : { Sabedoria: 7 }),
     };
     const now = new Date().toISOString();
+    const selectedKith=findKith(kith);
     const lineData = line === "CtL" ? {
       seeming, kith, court, needle, thread, touchstone, wyrd,
+      kith_custom: customKith,
+      kith_skill: customKith ? customKithSkill : selectedKith?.skill ?? "",
+      kith_description: customKith ? customKithDescription : selectedKith?.description ?? "",
+      kith_blessing: customKith ? customKithDescription : selectedKith?.blessing ?? "",
+      kith_source: customKith ? "Criação do jogador" : selectedKith?.source ?? "",
+      kith_page: customKith ? 0 : selectedKith?.page ?? 0,
       primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS].regalia,
       second_regalia: secondRegalia, favored_attribute: favoredAttribute, aspirations, contracts,
     } : {
@@ -203,7 +179,7 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
     <div className="builder-body">
       {step === 1 && <IdentityStep line={line} setLine={setLine} name={name} setName={setName} concept={concept} setConcept={setConcept} player={player} />}
       {step === 2 && <TraitsStep attributes={attributes} setAttributes={setAttributes} skills={skills} setSkills={setSkills} attributePriority={attributePriority} setAttributePriority={setAttributePriority} skillPriority={skillPriority} setSkillPriority={setSkillPriority} specialties={specialties} setSpecialties={setSpecialties} />}
-      {step === 3 && (line === "CtL" ? <CtlStep {...{ seeming, setSeeming, kith, setKith, court, setCourt, needle, setNeedle, thread, setThread, touchstone, setTouchstone, wyrd, setWyrd, secondRegalia, setSecondRegalia, favoredAttribute, setFavoredAttribute, contracts, setContracts, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent }} /> : <MtaStep {...{ path, setPath, order, setOrder, virtue, setVirtue, vice, setVice, nimbus, setNimbus, tool, setTool, resistanceBonus, setResistanceBonus, gnosis, setGnosis, arcana, setArcana, rotes, setRotes, praxes, setPraxes, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent }} />)}
+      {step === 3 && (line === "CtL" ? <CtlStep {...{ seeming, setSeeming, kith, setKith, customKith, setCustomKith, customKithSkill, setCustomKithSkill, customKithDescription, setCustomKithDescription, court, setCourt, needle, setNeedle, thread, setThread, touchstone, setTouchstone, wyrd, setWyrd, secondRegalia, setSecondRegalia, favoredAttribute, setFavoredAttribute, contracts, setContracts, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent }} /> : <MtaStep {...{ path, setPath, order, setOrder, virtue, setVirtue, vice, setVice, nimbus, setNimbus, tool, setTool, resistanceBonus, setResistanceBonus, gnosis, setGnosis, arcana, setArcana, rotes, setRotes, praxes, setPraxes, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent }} />)}
       {step === 4 && <ReviewStep line={line} name={name} concept={concept} attributes={attributes} skills={skills} merits={merits} lineData={line === "CtL" ? { seeming, kith, court, needle, thread, wyrd } : { path, order, gnosis }} />}
     </div>
     <div className="builder-actions">
@@ -226,7 +202,18 @@ function TraitsStep(props: any) {
 function CtlStep(props: any) {
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const favored = favoredChoices(seemingData.favored);
-  return <div className="builder-section"><span className="kicker">PASSO 3 · CHANGELING</span><h2>Modelo dos Perdidos</h2><p>As escolhas e limites abaixo vêm de Changeling the Lost.</p><div className="form-grid thirds"><Choice label="Feição" value={props.seeming} setValue={props.setSeeming} options={Object.keys(CTL_SEEMINGS)} /><label>Fratria<Input value={props.kith} onChange={(e) => props.setKith(e.target.value)} placeholder="Nome da Fratria" /></label><Choice label="Corte" value={props.court} setValue={props.setCourt} options={CTL_COURTS} /><Choice label="Agulha" value={props.needle} setValue={props.setNeedle} options={CTL_NEEDLES} /><Choice label="Fio" value={props.thread} setValue={props.setThread} options={CTL_THREADS} /><label>Pedra de Toque<Input value={props.touchstone} onChange={(e) => props.setTouchstone(e.target.value)} /></label><Choice label="Atributo favorecido (+1)" value={props.favoredAttribute} setValue={props.setFavoredAttribute} options={favored} /><Choice label="Segunda Regalia favorecida" value={props.secondRegalia} setValue={props.setSecondRegalia} options={REGALIA.filter((item) => item !== seemingData.regalia)} /><Choice label="Fado" value={String(props.wyrd)} setValue={(value) => props.setWyrd(Number(value))} options={["1","2","3"]} /></div><p className="rule-callout"><ShieldCheck /> Regalia da Feição: <strong>{seemingData.regalia}</strong> · Méritos disponíveis: <strong>{props.meritBudget}</strong></p><Aspirations values={props.aspirations} setValues={props.setAspirations} /><ContractSelector contracts={props.contracts} setContracts={props.setContracts} seeming={props.seeming} /><Merits merits={props.merits} setMerits={props.setMerits} catalog={props.meritCatalog} spent={props.meritSpent} budget={props.meritBudget} /></div>;
+  return <div className="builder-section"><span className="kicker">PASSO 3 · CHANGELING</span><h2>Modelo dos Perdidos</h2><p>As escolhas e limites abaixo vêm de Changeling the Lost.</p><div className="form-grid thirds"><Choice label="Feição" value={props.seeming} setValue={props.setSeeming} options={Object.keys(CTL_SEEMINGS)} /><KithSelector {...props}/><Choice label="Corte" value={props.court} setValue={props.setCourt} options={CTL_COURTS} /><Choice label="Agulha" value={props.needle} setValue={props.setNeedle} options={CTL_NEEDLES} /><Choice label="Fio" value={props.thread} setValue={props.setThread} options={CTL_THREADS} /><label>Pedra de Contato<Input value={props.touchstone} onChange={(e) => props.setTouchstone(e.target.value)} /></label><Choice label="Atributo favorecido (+1)" value={props.favoredAttribute} setValue={props.setFavoredAttribute} options={favored} /><Choice label="Segunda Regalia favorecida" value={props.secondRegalia} setValue={props.setSecondRegalia} options={REGALIA.filter((item) => item !== seemingData.regalia)} /><Choice label="Fado" value={String(props.wyrd)} setValue={(value) => props.setWyrd(Number(value))} options={["1","2","3"]} /></div><p className="rule-callout"><ShieldCheck /> Regalia da Feição: <strong>{seemingData.regalia}</strong> · Méritos disponíveis: <strong>{props.meritBudget}</strong></p><Aspirations values={props.aspirations} setValues={props.setAspirations} /><ContractSelector contracts={props.contracts} setContracts={props.setContracts} seeming={props.seeming} /><Merits merits={props.merits} setMerits={props.setMerits} catalog={props.meritCatalog} spent={props.meritSpent} budget={props.meritBudget} /></div>;
+}
+
+function KithSelector(props:any) {
+  const [search,setSearch]=useState("");
+  const [creating,setCreating]=useState(Boolean(props.customKith));
+  const normalized=search.trim().toLocaleLowerCase("pt-BR");
+  const selected=findKith(props.kith);
+  const filtered=KITHS.filter((item)=>!normalized||`${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`.toLocaleLowerCase("pt-BR").includes(normalized));
+  const choose=(item:KithDefinition)=>{props.setKith(item.name);props.setCustomKith(false);props.setCustomKithSkill(item.skill);props.setCustomKithDescription(item.description);setCreating(false);};
+  const chooseCustom=()=>{props.setCustomKith(true);props.setKith(props.customKith?props.kith:"");setCreating(true);};
+  return <div className="kith-field"><span>Fratria</span><div className="kith-current"><strong>{props.kith||"Nenhuma selecionada"}</strong><small>{props.customKith?`${props.customKithSkill||"Perícia não escolhida"} · Criação do jogador`:selected?`${selected.skill} · ${selected.source} · p. ${selected.page}`:"Abra o catálogo para escolher"}</small></div><Dialog><DialogTrigger asChild><Button type="button" variant="outline"><Search/> Selecionar Fratria</Button></DialogTrigger><DialogContent className="merit-dialog kith-dialog"><DialogHeader><DialogTitle>Selecionar Fratria</DialogTitle><DialogDescription>Consulte descrição, Perícia e Bênção antes de escolher.</DialogDescription></DialogHeader><label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder="Buscar Fratria, Perícia ou fonte…"/></label><div className="kith-create-toggle"><Button type="button" variant={creating?"secondary":"outline"} onClick={chooseCustom}><Plus/> Criar Kith</Button>{creating&&<Badge variant="outline">Fratria personalizada</Badge>}</div>{creating&&<div className="custom-kith-editor"><label>Nome<Input value={props.kith} onChange={(e)=>props.setKith(e.target.value)} maxLength={80} placeholder="Nome da Fratria"/></label><Choice label="Perícia" value={props.customKithSkill} setValue={props.setCustomKithSkill} options={Object.values(SKILLS).flat()}/><label className="full">Descrição da Bênção<textarea value={props.customKithDescription} onChange={(e)=>props.setCustomKithDescription(e.target.value.slice(0,350))} maxLength={350} placeholder="Descreva a Bênção da Fratria em até 350 caracteres."/><small>{props.customKithDescription.length}/350 caracteres</small></label></div>}<div className="merit-catalog"><section className="merit-category"><h3>Fratrias <Badge variant="outline">{filtered.length}</Badge></h3><div>{filtered.map((item)=>{const isSelected=!props.customKith&&props.kith===item.name;return <article className={isSelected?"merit-option selected":"merit-option"} key={item.id}><div><strong>{item.name}</strong><small>{item.skill} · {item.source} · p. {item.page}</small><p>{item.description}</p><p className="rule-detail"><strong>Bênção:</strong> {item.blessing}</p></div><Button type="button" size="sm" variant={isSelected?"secondary":"outline"} disabled={isSelected} onClick={()=>choose(item)}>{isSelected?<><Check/>Selecionada</>:<><Plus/>Escolher</>}</Button></article>})}</div></section></div><DialogFooter><DialogClose asChild><Button type="button">Concluir</Button></DialogClose></DialogFooter></DialogContent></Dialog></div>;
 }
 
 function ContractSelector({ contracts, setContracts, seeming }: { contracts: ContractSelection[]; setContracts: (value: ContractSelection[]) => void; seeming: string }) {

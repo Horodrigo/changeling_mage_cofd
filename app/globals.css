@@ -276,6 +276,15 @@ button { cursor: pointer; }
 .merit-row small { color: #827884; font-size: 11px; }
 .merit-row strong { font-size: 13px; }
 .merit-dialog { width: min(920px,calc(100vw - 32px)); max-width: 920px!important; max-height: 88vh; grid-template-rows: auto auto minmax(0,1fr) auto; }
+.kith-field { display:grid; gap:6px; color:#504851; font-size:11px; font-weight:700; }
+.kith-current { min-height:40px; display:grid; align-content:center; gap:2px; padding:7px 10px; border:1px solid #ded6df; border-radius:8px; background:#fff; }
+.kith-current strong { overflow:hidden; font-size:12px; text-overflow:ellipsis; white-space:nowrap; }.kith-current small { overflow:hidden; color:#827884; font-size:9px; font-weight:400; text-overflow:ellipsis; white-space:nowrap; }
+.kith-dialog { grid-template-rows:auto auto auto auto minmax(0,1fr) auto; }
+.kith-create-toggle { display:flex; align-items:center; gap:10px; }
+.custom-kith-editor { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px; border:1px solid #cfc0d2; border-radius:10px; background:#f7f1f8; }
+.custom-kith-editor label { display:grid; gap:6px; color:#504851; font-size:11px; font-weight:700; }.custom-kith-editor .full { grid-column:1/-1; }
+.custom-kith-editor textarea { min-height:82px; resize:vertical; padding:9px 11px; border:1px solid #d7cdd9; border-radius:8px; background:#fff; color:#312b33; font:12px/1.45 Inter,Arial,sans-serif; }
+.custom-kith-editor small { justify-self:end; color:#817681; font-weight:400; }
 .merit-search { position: relative; display: block; }
 .merit-search > svg { position: absolute; z-index: 1; top: 50%; left: 12px; width: 16px; height: 16px; color: #817681; transform: translateY(-50%); }
 .merit-search input { padding-left: 38px; }
@@ -378,6 +387,10 @@ button { cursor: pointer; }
 .contract-power-list dt { font-weight:800; color:var(--sheet-accent); }.contract-power-list dd { margin:0; }
 .goblin-debt-row { color:#744014; background:#fff4df; }
 .labeled-blank { margin:0 0 18px; }.labeled-blank h4,.goblin-debt-block h4 { margin:0 0 8px; text-align:center; font-size:16px; text-transform:uppercase; }
+.lore-panel { margin:0 0 13px; padding:12px 13px; border:1px solid color-mix(in srgb,var(--sheet-accent) 32%,#d8d2c8); background:#fffefa; }
+.lore-panel h4 { margin:0 0 7px; color:var(--sheet-accent); font-size:14px; text-align:center; text-transform:uppercase; }
+.lore-panel p { margin:0; font:10px/1.48 Inter,Arial,sans-serif; }.lore-panel .lore-intro { margin-bottom:7px; color:#687069; font-style:italic; }
+.lore-panel small { display:block; margin-top:7px; color:#756d72; font:8px/1.3 Inter,Arial,sans-serif; }
 .goblin-debt-block { margin-top:24px; padding:13px; border:1px solid #a56c28; background:#fff8ea; }
 .goblin-debt-track { display:grid; grid-template-columns:repeat(9,1fr); gap:5px; }
 .goblin-debt-track button { width:100%; aspect-ratio:1; padding:0; border:1.5px solid #744014; background:#fff; cursor:pointer; }
