@@ -32,6 +32,10 @@
 .power-resource .resource-track:before { content:attr(data-label); width:100%; margin-bottom:3px; color:var(--sheet-accent); font-size:12px; font-weight:800; text-transform:uppercase; }
 
 .merit-configuration.structured > div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.structured-option-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; margin-top:7px; }
+.structured-option-grid>label { display:flex!important; align-items:flex-start; gap:8px; min-width:0; padding:8px; border:1px solid #d8d1c8; background:#fff; cursor:pointer; }
+.structured-option-grid>label:has(input:checked) { border-color:var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 7%,#fff); }
+.structured-option-grid input { flex:none; margin-top:2px; }.structured-option-grid span { display:grid; min-width:0; gap:2px; }.structured-option-grid small { color:#756d72; font-size:8px; }
 .merit-configuration.structured fieldset { min-width:0; margin:0; padding:12px; border:1px solid #d9cfc4; border-radius:8px; background:#fffdfa; }
 .merit-configuration.structured fieldset legend { padding:0 6px; color:#654867; font-size:12px; font-weight:800; }
 .merit-configuration.structured fieldset > p,.merit-grant-picker > p { margin:0 0 9px; color:#746d75; font-size:11px; line-height:1.45; }
@@ -102,7 +106,7 @@
   .topbar,.sheet-toolbar,.sheet-toolbar>div{align-items:stretch;flex-direction:column}.top-actions,.sheet-toolbar>div:last-child{display:grid;grid-template-columns:1fr}.top-actions button,.sheet-toolbar button{width:100%}
   .ctl-sheet-tab-list{display:flex;width:100%;overflow-x:auto;justify-content:flex-start;padding-bottom:3px}.ctl-sheet-tab-list button{flex:0 0 auto;min-width:104px;min-height:42px}
   .cod-sheet{padding:12px 8px}.ctl-sheet-page{padding:12px 8px}.official-header,.ctl-main-grid,.ctl-powers-grid,.mage-page-355-grid,.combat-page,.combat-rules{grid-template-columns:1fr!important}
-  .companion-options,.companion-form-grid,.experience-purchase-form,.experience-merit-catalog article{grid-template-columns:1fr}
+  .companion-options,.companion-form-grid,.experience-purchase-form,.experience-merit-catalog article,.structured-option-grid{grid-template-columns:1fr}
   .experience-merit-choice{flex-direction:row;flex-wrap:wrap}.experience-merit-choice button{flex:1 1 110px;min-height:40px}
   .merit-dialog,.experience-dialog,.condition-dialog,.loadout-dialog{width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94vh!important;padding:14px}
   .companion-card .compact-values,.experience-totals{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -478,7 +482,8 @@ button { cursor: pointer; }
 .official-trait-line { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:7px; border-bottom:1px solid #aaa8a16b; font:12px/1.15 Georgia,serif; }
 .official-trait-line > span { display:flex; min-width:0; flex-direction:column; }
 .official-trait-line small { overflow:hidden; color:#707671; font:italic 8px/1.2 Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
-.official-dots { display:flex!important; flex-direction:row!important; flex:none; gap:3px; }
+.official-dots { display:flex!important; flex-direction:column!important; flex:none; gap:3px; }
+.official-dot-row { display:flex; flex-direction:row; gap:3px; }
 .official-dots i { width:9px; height:9px; border:1px solid var(--sheet-ink); border-radius:50%; background:transparent; }
 .official-dots i.on { background:var(--sheet-ink); box-shadow:inset 0 0 0 1px #fff; }
 .official-sheet-body { display:grid; grid-template-columns:1.08fr .94fr .98fr; gap:25px; align-items:start; }
@@ -544,6 +549,8 @@ button { cursor: pointer; }
 .powers-page { min-height:760px; }
 .powers-sheet-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; margin-top:25px; }
 .contract-power-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.contract-options { margin:7px 0; padding:8px 10px; border-left:3px solid var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); font:9px/1.45 Inter,Arial,sans-serif; }
+.contract-options ul { display:grid; gap:5px; margin:5px 0 0; padding-left:15px; list-style:disc; }
 .contract-power-list article { padding:12px; border:1px solid color-mix(in srgb,var(--sheet-accent) 35%,#d8d2c8); background:#fffefa; }
 .contract-power-title { display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .contract-power-list article>small { display:block; margin-top:3px; color:#756d72; font-size:10px; }

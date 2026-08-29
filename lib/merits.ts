@@ -19,6 +19,10 @@ export type MeritDefinition = {
   page: number;
 };
 
+export const REPEATABLE_MERITS=new Set(["Allies","Contacts","Status","Retainer","Fae Mount","Safe Place","Mentor","Staff","Language","Library","Court Goodwill","Hollow","Holding","Workshop","Token","Artifact","Enhanced Item","Imbued Item","Grimoire","Hallow","Sanctum","Familiar"]);
+export const EXTENDED_DOT_MERITS=new Set(["Artifact","Token","Resources"]);
+export const meritRatingsFor=(merit:Pick<MeritDefinition,"name"|"ratings">)=>EXTENDED_DOT_MERITS.has(merit.name)?Array.from({length:20},(_,index)=>index+1):merit.ratings;
+
 const range = (min: number, max: number) => Array.from({ length: max - min + 1 }, (_, index) => min + index);
 const fixed = (...values: number[]) => values;
 const slug = (value: string) => value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");

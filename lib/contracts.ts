@@ -16,6 +16,7 @@ export type ContractDefinition = {
   cost?: string;
   action?: string;
   duration?: string;
+  options?: string[];
   goblinDebt?: string;
   sourceId: string;
   source: string;
@@ -79,7 +80,7 @@ export const CONTRACTS: ContractDefinition[] = [
   { id:"ctl-2ed:know-the-competition", name:"Conhecer a Concorrência", originalName:"Know the Competition", type:"Comum", regalia:"Espelho", description:"Estuda um rival e percebe suas capacidades relevantes, revelando forças, fraquezas ou vantagens que ajudam o changeling a enfrentá-lo em uma disputa.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:136 },
   { id:"ctl-2ed:portents-and-visions", name:"Presságios e Visões", originalName:"Portents and Visions", type:"Comum", regalia:"Espelho", description:"Interpreta sinais no reflexo para receber uma visão simbólica sobre perigos, oportunidades ou acontecimentos ligados a uma pergunta do changeling.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:137 },
   { id:"ctl-2ed:read-lucidity", name:"Ler Lucidez", originalName:"Read Lucidity", type:"Comum", regalia:"Espelho", description:"Lê no rosto e no reflexo de alguém a estabilidade de sua identidade, revelando sua Clareza ou característica equivalente e condições que a estejam abalando.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:137 },
-  { id:"ctl-2ed:walls-have-ears", name:"As Paredes Têm Ouvidos", originalName:"Walls Have Ears", type:"Comum", regalia:"Espelho", description:"Faz uma superfície do ambiente repetir conversas e sons que presenciou, permitindo descobrir o que ocorreu recentemente no local.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:138 },
+  { id:"ctl-2ed:walls-have-ears", name:"As Paredes Têm Ouvidos", originalName:"Walls Have Ears", type:"Comum", regalia:"Espelho", description:"O changeling conversa com um objeto para descobrir seus segredos, antigos proprietários e pontos fracos.", cost:"1–3 Glamour", action:"Instantânea", duration:"Cena", options:["Conhecer a construção e os pontos fracos do objeto: reduza pela metade sua Durabilidade contra os ataques do changeling e some Inteligência às rolagens para repará-lo ou modificá-lo.","Saber utilizar o objeto da melhor maneira: recebe novamente os resultados 9 nas rolagens para empunhá-lo ou utilizá-lo.","Ver uma visão da última pessoa que manuseou ou tocou o objeto e das circunstâncias da cena, incluindo todos que estavam a até três metros dele."], sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:138 },
   { id:"ctl-2ed:props-and-scenery", name:"Adereços e Cenário", originalName:"Props and Scenery", type:"Real", regalia:"Espelho", description:"Reveste uma área com um cenário ilusório convincente, alterando a aparência e a percepção de objetos e arredores como se o mundo fosse um palco.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:138 },
   { id:"ctl-2ed:reflections-of-the-past", name:"Reflexos do Passado", originalName:"Reflections of the Past", type:"Real", regalia:"Espelho", description:"Faz um espelho mostrar acontecimentos anteriores ligados ao lugar ou a quem nele se refletiu, permitindo investigar cenas passadas.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:138 },
   { id:"ctl-2ed:riddle-kith", name:"Enigma do Kith", originalName:"Riddle-Kith", type:"Real", regalia:"Espelho", description:"Imita temporariamente a bênção de outro Kith após compreender e representar um aspecto de sua natureza feérica.", sourceId:"ctl-2ed", source:"Changeling: Os Perdidos", page:139 },
@@ -349,6 +350,8 @@ for (const contract of CONTRACTS) {
   contract.regalia = CONTRACT_REGALIA_CORRECTIONS[contract.originalName] ?? contract.regalia;
   contract.source = ORIGINAL_SOURCE_TITLES[contract.sourceId] ?? contract.source;
   contract.cost = contract.cost ?? CONTRACT_COSTS_PT[contract.id] ?? "Não informado";
+  contract.action = contract.action ?? "Instantânea";
+  contract.duration = contract.duration ?? "Cena";
   contract.dicePool = detail?.dicePool ?? contract.dicePool ?? CONTRACT_DICE_POOLS_PT[contract.id] ?? "Não informada";
   contract.loophole = detail?.loophole ?? contract.loophole ?? "Não informado";
   contract.seemingBenefits = detail?.seemingBenefits ?? {};

@@ -74,6 +74,8 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
 
 export const findMeritConfiguration=(name:string)=>MERIT_CONFIGURATIONS.find(item=>item.name===name);
 export const normalizeMeritConfiguration=(value:unknown):MeritConfiguration=>value&&typeof value==="object"&&!Array.isArray(value)?Object.fromEntries(Object.entries(value as Record<string,unknown>).map(([key,item])=>[key,Array.isArray(item)?item.map(String):String(item??"")])):{};
+const MERIT_TITLE_KEYS=["name","appearance","subject","organization","identity","field","court","specialty","weapon","interest","element","method","phenomenon","faction","theme","shadow_name","work_type"];
+export function meritConfigurationTitle(value:unknown){const configuration=normalizeMeritConfiguration(value);for(const key of MERIT_TITLE_KEYS){const item=configuration[key];if(Array.isArray(item)){if(item[0]?.trim())return item[0].trim();}else if(String(item??"").trim())return String(item).trim();}for(const key of ["spheres","languages","subjects"]){const item=configuration[key];if(Array.isArray(item)&&item[0]?.trim())return item[0].trim();}return "";}
 export const isStructuredMerit=(name:string)=>["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Dream Bastion"].includes(name);
 
 type GrantSheet={merits:Array<{name:string;dots:number;sourceId?:string;source?:string;configuration?:MeritConfiguration;grantedBy?:string}>;specializations:Array<{skill:string;name:string;grantedBy?:string}>;line_data:Record<string,unknown>};
@@ -118,7 +120,7 @@ export function expandedConfigurationLines(name:string,dots:number,value:unknown
   const configuration=normalizeMeritConfiguration(value);
   if(name==="Hollow"){
     const features=lines(configuration.features).map(entry=>entry.split("|")[0]);
-    return [`Recanto: ${configured(configuration,"name")||"sem nome"}.`, `Localização: ${configured(configuration,"location")||"não definida"}.`, `Melhorias: ${features.join(", ")||"nenhuma selecionada"}.`];
+    return [`Localização: ${configured(configuration,"location")||"não definida"}.`, `Melhorias: ${features.join(", ")||"nenhuma selecionada"}.`];
   }
   if(name==="Warded Dreams"||name==="Dream Bastion")return [`Bastião dos Sonhos: ${configured(configuration,"description")||"não descrito"}.`, `Fortificação adicional: +${dots}.`];
   if(name==="Professional Training"){
