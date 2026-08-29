@@ -30,6 +30,19 @@
 .power-resource { margin:10px 0 16px; padding:10px; border:1px solid color-mix(in srgb,var(--sheet-accent) 42%,#d8d2c8); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); }
 .power-rating { margin-bottom:12px; border-bottom:2px solid var(--sheet-accent); }.power-rating>span { color:var(--sheet-accent); font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }.power-rating .official-dots { max-width:155px; flex-wrap:wrap; }
 .power-resource .resource-track:before { content:attr(data-label); width:100%; margin-bottom:3px; color:var(--sheet-accent); font-size:12px; font-weight:800; text-transform:uppercase; }
+
+.merit-configuration.structured > div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.merit-configuration.structured fieldset { min-width:0; margin:0; padding:12px; border:1px solid #d9cfc4; border-radius:8px; background:#fffdfa; }
+.merit-configuration.structured fieldset legend { padding:0 6px; color:#654867; font-size:12px; font-weight:800; }
+.merit-configuration.structured fieldset > p,.merit-grant-picker > p { margin:0 0 9px; color:#746d75; font-size:11px; line-height:1.45; }
+.structured-choice-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(110px,.55fr) auto; gap:8px; align-items:end; margin-top:8px; }
+.structured-rule { align-self:center; margin:0; padding:12px; border-left:3px solid #7b587d; background:#f6eff6; font-size:12px; line-height:1.45; }
+.merit-grant-picker { margin-top:10px; }
+.merit-grant-picker > button { margin-top:8px; }
+@media (max-width:720px) {
+  .merit-configuration.structured > div,.structured-choice-row { grid-template-columns:1fr; }
+  .structured-choice-row > button { justify-self:end; }
+}
 .expanded-merit-list,.expanded-merit-list>article>div,.loadout-list,.combat-rules { display:grid; gap:8px; }
 .expanded-merit-list>article { border:1px solid color-mix(in srgb,var(--sheet-accent) 32%,#d8d2c8); background:#fffefa; padding:11px; }
 .expanded-merit-list header { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }

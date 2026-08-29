@@ -61,7 +61,7 @@ const CORE = [
     ["Closed Book", range(1,5)], ["Contacts", range(1,5)], ["Fame", range(1,3)], ["Fast-Talking", range(1,5)],
     ["Fixer", fixed(2)], ["Hobbyist Clique", fixed(2)], ["Inspiring", fixed(3)], ["Iron Will", fixed(2)],
     ["Mentor", range(1,5)], ["Pusher", fixed(1)], ["Resources", range(1,5)], ["Retainer", range(1,5)],
-    ["Safe Place", range(1,5)], ["Small Unit Tactics", fixed(2)], ["Spin Doctor", fixed(1)], ["Staff", range(1,5)], ["Mystery Cult Influence", fixed(3,4,5)],
+    ["Safe Place", range(1,5)], ["Small Unit Tactics", fixed(2)], ["Spin Doctor", fixed(1)], ["Staff", range(1,5)], ["Mystery Cult Initiation", range(1,5)], ["Mystery Cult Influence", fixed(3,4,5)],
     ["Status", range(1,5)], ["Striking Looks", fixed(1,2)], ["Sympathetic", fixed(2)], ["Table Turner", fixed(1)],
     ["Takes One to Know One", fixed(1)], ["Taste", fixed(1)], ["True Friend", fixed(3)], ["Untouchable", fixed(1)],
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Social")),

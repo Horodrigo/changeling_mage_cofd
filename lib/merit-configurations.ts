@@ -1,3 +1,5 @@
+import { getMeritsForLine } from "./merits";
+
 export type MeritConfigValue=string|string[];
 export type MeritConfiguration=Record<string,MeritConfigValue>;
 export type MeritConfigField={key:string;label:string;kind?:"text"|"textarea"|"list";placeholder?:string;minDots?:number};
@@ -22,7 +24,7 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
  {name:"Library",fields:[list("subjects","Assuntos da coleção","Um assunto por linha")]},
  {name:"Mentor",fields:[text("name","Nome do Mentor"),text("specialty","Especialidade"),area("relationship","Relação, expectativas e obrigações")]},
  {name:"Multilingual",fields:[list("languages","Idiomas adicionais","Um idioma por linha")]},
- {name:"Professional Training",fields:[text("profession","Profissão"),list("asset_skills","Perícias de Ativo","Uma Perícia por linha"),list("contacts","Contatos concedidos"),list("specialties","Especializações concedidas","Perícia: Especialização")],grants:true},
+ {name:"Professional Training",fields:[],grants:true},
  {name:"Psychokinesis",fields:[text("element","Força ou elemento")]},
  {name:"Quick Draw",fields:[text("weapon_category","Categoria de arma")]},
  {name:"Retainer",fields:[text("name","Nome do Seguidor"),text("specialty","Especialidade"),area("profile","Perfil e personalidade")]},
@@ -34,8 +36,8 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
  {name:"Unseen Sense",fields:[text("phenomenon","Fenômeno sobrenatural"),text("reaction","Sensação ou reação que o denuncia")]},
  {name:"Clairvoyance",fields:[text("method","Método de clarividência")]},
  {name:"Cursed",fields:[area("curse","Maldição ou destino inevitável")]},
- {name:"Mystery Cult Initiation",fields:[text("cult","Nome do culto"),list("level_benefits","Benefício de cada nível","• — benefício"),list("granted_merits","Méritos concedidos","Nome • pontos"),list("granted_specialties","Especializações concedidas","Perícia: Especialização"),list("granted_skills","Pontos de Perícia concedidos","Perícia • pontos"),list("granted_conditions","Condições concedidas"),list("granted_attainments","Attainments concedidos")],grants:true},
- {name:"Mystery Cult Influence",fields:[text("cult","Nome do culto"),list("level_benefits","Benefício de cada nível","••• — benefício"),list("granted_merits","Méritos concedidos","Nome • pontos"),list("granted_specialties","Especializações concedidas","Perícia: Especialização"),list("granted_skills","Pontos de Perícia concedidos","Perícia • pontos"),list("granted_conditions","Condições concedidas"),list("granted_attainments","Attainments concedidos")],grants:true},
+ {name:"Mystery Cult Initiation",fields:[],grants:true},
+ {name:"Mystery Cult Influence",fields:[],grants:true},
  {name:"Court Goodwill",line:"CtL",fields:[text("court","Corte beneficiada")]},
  {name:"Fae Mount",line:"CtL",fields:[text("name","Nome da Montaria"),area("profile","Aparência e perfil"),list("traits","Características e vantagens","Uma característica por linha")]},
  {name:"Holding",line:"CtL",fields:[text("name","Nome do Domínio"),area("territory","Descrição do território"),list("features","Características compradas")]},
@@ -70,6 +72,7 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
 
 export const findMeritConfiguration=(name:string)=>MERIT_CONFIGURATIONS.find(item=>item.name===name);
 export const normalizeMeritConfiguration=(value:unknown):MeritConfiguration=>value&&typeof value==="object"&&!Array.isArray(value)?Object.fromEntries(Object.entries(value as Record<string,unknown>).map(([key,item])=>[key,Array.isArray(item)?item.map(String):String(item??"")])):{};
+export const isStructuredMerit=(name:string)=>["Professional Training","Mystery Cult Initiation","Mystery Cult Influence"].includes(name);
 
 type GrantSheet={merits:Array<{name:string;dots:number;sourceId?:string;source?:string;configuration?:MeritConfiguration;grantedBy?:string}>;specializations:Array<{skill:string;name:string;grantedBy?:string}>;line_data:Record<string,unknown>};
 const lines=(value:MeritConfigValue|undefined)=>Array.isArray(value)?value:value?String(value).split("\n").map(item=>item.trim()).filter(Boolean):[];
@@ -80,10 +83,23 @@ export function synchronizeMeritGrants<T extends GrantSheet>(sheet:T):T{
   const skillBonuses:Record<string,number>={},conditions:string[]=[],attainments:string[]=[];
   const sources=[...sheet.merits];
   for(const source of sources){const configuration=normalizeMeritConfiguration(source.configuration);const sourceKey=`merit:${source.name}`;
-    const grantMerit=(name:string,dots:number)=>{if(!name)return;const existing=sheet.merits.find(item=>item.name===name&&item.grantedBy===sourceKey);if(existing){existing.dots=Math.max(existing.dots,dots);return}sheet.merits.push({name,dots,source:`Concedido por ${source.name}`,grantedBy:sourceKey})};
-    if(source.name==="Professional Training"&&source.dots>=1)grantMerit("Contacts",2);
+    const grantMerit=(name:string,dots:number,additive=false,meritConfiguration?:MeritConfiguration)=>{if(!name)return;const existing=sheet.merits.find(item=>item.name===name&&item.grantedBy===sourceKey);if(existing){existing.dots=Math.min(5,additive?existing.dots+dots:Math.max(existing.dots,dots));return}sheet.merits.push({name,dots:Math.min(5,dots),source:`Concedido por ${source.name}`,configuration:meritConfiguration,grantedBy:sourceKey})};
+    if(source.name==="Professional Training"){
+      const assetSkills=lines(configuration.asset_skills).slice(0,source.dots>=3?3:2);
+      if(source.dots>=1)grantMerit("Contacts",2,false,{spheres:lines(configuration.contacts)});
+      if(source.dots>=3)for(let index=1;index<=2;index++){const skill=String(configuration[`specialty_${index}_skill`]??"").trim(),name=String(configuration[`specialty_${index}_name`]??"").trim();if(assetSkills.includes(skill)&&name)sheet.specializations.push({skill,name,grantedBy:sourceKey})}
+      if(source.dots>=4){const skill=String(configuration.boosted_skill??"").trim();if(assetSkills.includes(skill))skillBonuses[skill]=(skillBonuses[skill]??0)+1}
+    }
+    if(source.name==="Mystery Cult Initiation"||source.name==="Mystery Cult Influence"){
+      for(let level=1;level<=source.dots;level++){
+        const type=String(configuration[`level_${level}_type`]??"");
+        if(type==="specialty"){const skill=String(configuration[`level_${level}_specialty_skill`]??"").trim(),name=String(configuration[`level_${level}_specialty_name`]??"").trim();if(skill&&name)sheet.specializations.push({skill,name,grantedBy:sourceKey})}
+        if(type==="skill"||type==="merit_skill"){const skill=String(configuration[`level_${level}_skill`]??"").trim();if(skill)skillBonuses[skill]=(skillBonuses[skill]??0)+1}
+        if(type==="merit"||type==="merits"||type==="merit_skill")for(const entry of lines(configuration[`level_${level}_merits`])){const [name,dots]=entry.split("|");grantMerit(name.trim(),Math.max(1,Number(dots)||1),true)}
+      }
+    }
     for(const entry of lines(configuration.granted_merits))grantMerit(cleanGrantName(entry),parsedDots(entry));
-    const specialtyEntries=source.name==="Professional Training"?lines(configuration.specialties):lines(configuration.granted_specialties);
+    const specialtyEntries=isStructuredMerit(source.name)?[]:lines(configuration.granted_specialties);
     for(const entry of specialtyEntries){const [skill,...rest]=entry.split(":");const name=rest.join(":").trim();if(skill.trim()&&name&&!sheet.specializations.some(item=>item.skill===skill.trim()&&item.name===name))sheet.specializations.push({skill:skill.trim(),name,grantedBy:sourceKey})}
     for(const entry of lines(configuration.granted_skills)){const name=cleanGrantName(entry);if(name)skillBonuses[name]=(skillBonuses[name]??0)+parsedDots(entry)}
     conditions.push(...lines(configuration.granted_conditions));attainments.push(...lines(configuration.granted_attainments));
@@ -91,4 +107,32 @@ export function synchronizeMeritGrants<T extends GrantSheet>(sheet:T):T{
     if(source.name==="Prelacy"&&source.dots>=3&&String(configuration.attainment??"").trim())attainments.push(String(configuration.attainment).trim());
   }
   sheet.line_data={...sheet.line_data,merit_granted_skill_bonuses:skillBonuses,merit_granted_conditions:[...new Set(conditions)],merit_granted_attainments:[...new Set(attainments)]};return sheet;
+}
+
+const configured=(configuration:MeritConfiguration,key:string)=>String(configuration[key]??"").trim();
+const configuredMeritNames=new Map([...getMeritsForLine("CtL"),...getMeritsForLine("MtA")].map(item=>[item.name,item.translatedName]));
+const meritPicks=(configuration:MeritConfiguration,level:number)=>lines(configuration[`level_${level}_merits`]).map(entry=>{const [name,dots]=entry.split("|");return `${configuredMeritNames.get(name)??name} ${Number(dots)||1}`}).join(", ");
+export function expandedConfigurationLines(name:string,dots:number,value:unknown):string[]{
+  const configuration=normalizeMeritConfiguration(value);
+  if(name==="Professional Training"){
+    const assetSkills=lines(configuration.asset_skills),contacts=lines(configuration.contacts),result:string[]=[];
+    if(dots>=1)result.push(`Nv 1: Contatos 2 (${contacts.join(", ")||"nomes não definidos"}).`);
+    if(dots>=2)result.push(`Nv 2: Perícias de Ativo — ${assetSkills.slice(0,2).join(", ")||"não definidas"}.`);
+    if(dots>=3){const specialties=[1,2].map(index=>{const skill=configured(configuration,`specialty_${index}_skill`),specialty=configured(configuration,`specialty_${index}_name`);return assetSkills.includes(skill)&&specialty?`${skill}: “${specialty}”`:""}).filter(Boolean);result.push(`Nv 3: ${assetSkills[2]?`Terceira Perícia de Ativo — ${assetSkills[2]}. `:""}Especializações — ${specialties.join(", ")||"não definidas"}.`)}
+    if(dots>=4){const boosted=configured(configuration,"boosted_skill");result.push(`Nv 4: +1 em ${assetSkills.includes(boosted)?boosted:"Perícia de Ativo não definida"}.`)}
+    if(dots>=5)result.push("Nv 5: Rotina aplicada às Perícias de Ativo.");
+    return result;
+  }
+  if(name!=="Mystery Cult Initiation"&&name!=="Mystery Cult Influence")return[];
+  const result:string[]=[];
+  for(let level=1;level<=dots;level++){
+    const type=configured(configuration,`level_${level}_type`);let description="benefício não definido";
+    if(type==="specialty")description=`Especialização ${configured(configuration,`level_${level}_specialty_skill`)}: “${configured(configuration,`level_${level}_specialty_name`)}”`;
+    if(type==="merit"||type==="merits")description=meritPicks(configuration,level)||"Mérito não definido";
+    if(type==="skill")description=`+1 em ${configured(configuration,`level_${level}_skill`)||"Perícia não definida"}`;
+    if(type==="merit_skill")description=`${meritPicks(configuration,level)||"Mérito não definido"}; +1 em ${configured(configuration,`level_${level}_skill`)||"Perícia não definida"}`;
+    if(type==="custom")description=`Descrição própria: ${configured(configuration,`level_${level}_custom`)||"não definida"}`;
+    result.push(`Nv ${level}: ${description}.`);
+  }
+  return result;
 }
