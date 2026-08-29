@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Minus, Plus, Save, Search, ShieldCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ import { CONTRACTS, type ContractDefinition } from "@/lib/contracts";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { KITHS, findKith, type KithDefinition } from "@/lib/changeling-kiths";
 import { findMeritConfiguration, isStructuredMerit, normalizeMeritConfiguration, synchronizeMeritGrants, type MeritConfiguration } from "@/lib/merit-configurations";
+import { SKILL_SPECIALTY_SUGGESTIONS } from "@/lib/skill-specialties";
 
 export type Specialty = { skill: string; name: string; grantedBy?:string };
 export type MeritSelection = { name: string; dots: number; sourceId?: string; source?: string; configuration?: MeritConfiguration; grantedBy?:string };
@@ -73,33 +74,33 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
   const [concept, setConcept] = useState(initial?.character.concept ?? "");
   const [attributes, setAttributes] = useState<Record<string, number>>(startingAttributes);
   const [skills, setSkills] = useState<Record<string, number>>(startingSkills);
-  const [attributePriority, setAttributePriority] = useState<string[]>(() => initial ? inferredPriority(startingAttributes, ATTRIBUTES, 1) : ["Mental", "Físicos", "Sociais"]);
-  const [skillPriority, setSkillPriority] = useState<string[]>(() => initial ? inferredPriority(startingSkills, SKILLS, 0) : ["Mentais", "Físicas", "Sociais"]);
-  const [specialties, setSpecialties] = useState<Specialty[]>(normalizeSpecialties(initial?.specializations));
+  const [attributePriority, setAttributePriority] = useState<string[]>(() => initial ? inferredPriority(startingAttributes, ATTRIBUTES, 1) : ["", "", ""]);
+  const [skillPriority, setSkillPriority] = useState<string[]>(() => initial ? inferredPriority(startingSkills, SKILLS, 0) : ["", "", ""]);
+  const [specialties, setSpecialties] = useState<Specialty[]>(normalizeSpecialties(initial?.specializations?.filter(item=>!item.grantedBy)));
   const [aspirations, setAspirations] = useState<string[]>(readArray(initial, "aspirations", ["", "", ""]));
   const [merits, setMerits] = useState<MeritSelection[]>(initial?.merits?.filter(item=>!item.grantedBy) ?? []);
 
-  const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? "Beast"));
+  const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? ""));
   const [kith, setKith] = useState(String(initial?.line_data.kith ?? ""));
   const [customKithSkill, setCustomKithSkill] = useState(String(initial?.line_data.kith_skill ?? ""));
   const [customKithDescription, setCustomKithDescription] = useState(String(initial?.line_data.kith_description ?? ""));
   const [customKith, setCustomKith] = useState(Boolean(initial?.line_data.kith_custom));
-  const [court, setCourt] = useState(translateCourt(String(initial?.line_data.court ?? "Sem Corte")));
-  const [needle, setNeedle] = useState(translateNeedle(String(initial?.line_data.needle ?? "Mestre de Xadrez")));
-  const [thread, setThread] = useState(translateThread(String(initial?.line_data.thread ?? "Aceitação")));
+  const [court, setCourt] = useState(translateCourt(String(initial?.line_data.court ?? "")));
+  const [needle, setNeedle] = useState(translateNeedle(String(initial?.line_data.needle ?? "")));
+  const [thread, setThread] = useState(translateThread(String(initial?.line_data.thread ?? "")));
   const [touchstone, setTouchstone] = useState(String(initial?.line_data.touchstone ?? ""));
   const [wyrd, setWyrd] = useState(Number(initial?.line_data.wyrd ?? 1));
-  const [secondRegalia, setSecondRegalia] = useState(translateRegalia(String(initial?.line_data.second_regalia ?? "Coroa")));
-  const [favoredAttribute, setFavoredAttribute] = useState(String(initial?.line_data.favored_attribute ?? "Perseverança"));
+  const [secondRegalia, setSecondRegalia] = useState(translateRegalia(String(initial?.line_data.second_regalia ?? "")));
+  const [favoredAttribute, setFavoredAttribute] = useState(String(initial?.line_data.favored_attribute ?? ""));
   const [contracts, setContracts] = useState<ContractSelection[]>(readContracts(initial));
 
-  const [path, setPath] = useState(String(initial?.line_data.path ?? "Acanthus"));
-  const [order, setOrder] = useState(String(initial?.line_data.order ?? "Mysterium"));
+  const [path, setPath] = useState(String(initial?.line_data.path ?? ""));
+  const [order, setOrder] = useState(String(initial?.line_data.order ?? ""));
   const [virtue, setVirtue] = useState(String(initial?.line_data.virtue ?? ""));
   const [vice, setVice] = useState(String(initial?.line_data.vice ?? ""));
   const [nimbus, setNimbus] = useState(String(initial?.line_data.nimbus ?? ""));
   const [tool, setTool] = useState(String(initial?.line_data.dedicated_tool ?? ""));
-  const [resistanceBonus, setResistanceBonus] = useState(String(initial?.line_data.resistance_bonus ?? "Perseverança"));
+  const [resistanceBonus, setResistanceBonus] = useState(String(initial?.line_data.resistance_bonus ?? ""));
   const [gnosis, setGnosis] = useState(Number(initial?.line_data.gnosis ?? 1));
   const [arcana, setArcana] = useState<Record<string, number>>(
     normalizeArcana(initial?.line_data.arcana)
@@ -112,15 +113,44 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
   const meritCatalog = useMemo(() => getMeritsForLine(line), [line]);
   const meritSpent = merits.reduce((sum, item) => sum + item.dots, 0);
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
+  const maximumPowerFromMerits=Math.max(1,Math.min(3,1+Math.floor(Math.max(0,10-meritSpent)/5)));
+  useEffect(()=>{if(line==="CtL"&&wyrd>maximumPowerFromMerits)setWyrd(maximumPowerFromMerits);if(line==="MtA"&&gnosis>maximumPowerFromMerits)setGnosis(maximumPowerFromMerits)},[line,meritSpent,maximumPowerFromMerits,wyrd,gnosis]);
+
+  const validationIssues=useMemo(()=>{
+    const issues:Array<{step:number;key:string;label:string}>=[];const add=(step:number,key:string,label:string)=>issues.push({step,key,label});
+    if(!name.trim())add(1,"name","Nome do personagem");
+    const prioritiesValid=(values:string[],labels:readonly string[])=>values.every(Boolean)&&new Set(values).size===labels.length&&labels.every(label=>values.includes(label));
+    if(!prioritiesValid(attributePriority,attributeCategories))add(2,"attribute-priority","Prioridades de Atributos");
+    if(!prioritiesValid(skillPriority,skillCategories))add(2,"skill-priority","Prioridades de Perícias");
+    for(const [category,names] of Object.entries(ATTRIBUTES)){const index=attributePriority.indexOf(category),budget=[5,4,3][index];if(index<0||spent(attributes,names,1)!==budget)add(2,`attribute-${category}`,`Atributos ${category}`)}
+    for(const [category,names] of Object.entries(SKILLS)){const index=skillPriority.indexOf(category),budget=[11,7,4][index];if(index<0||spent(skills,names,0)!==budget)add(2,`skill-${category}`,`Perícias ${category}`)}
+    specialties.slice(0,3).forEach((item,index)=>{if(!item.skill||!item.name.trim())add(2,`specialty-${index}`,`Especialização ${index+1}`)});
+    if(meritSpent>meritBudget)add(3,"merits","Méritos acima do limite");
+    aspirations.slice(0,3).forEach((item,index)=>{if(!item.trim())add(3,`aspiration-${index}`,`Aspiração ${index+1}`)});
+    if(line==="CtL"){
+      [["seeming",seeming,"Feição"],["kith",kith,"Fratria"],["court",court,"Corte"],["needle",needle,"Agulha"],["thread",thread,"Fio"],["touchstone",touchstone,"Pedra de Contato"],["favoredAttribute",favoredAttribute,"Atributo favorecido"],["secondRegalia",secondRegalia,"Segunda Regalia"]].forEach(([key,value,label])=>{if(!value)add(3,key,label)});
+      if(customKith&&(!customKithSkill||!customKithDescription.trim()))add(3,"kith","Fratria personalizada completa");
+      if(contracts.slice(0,4).filter(item=>item.name&&item.type==="Comum").length!==4||contracts.slice(4,6).filter(item=>item.name&&item.type==="Real").length!==2)add(3,"contracts","Quatro Contratos Comuns e dois Reais");
+    }else{
+      [["path",path,"Caminho"],["order",order,"Ordem"],["virtue",virtue,"Virtude"],["vice",vice,"Vício"],["nimbus",nimbus,"Nimbus"],["tool",tool,"Ferramenta Mágica Dedicada"],["resistanceBonus",resistanceBonus,"Atributo de Resistência"]].forEach(([key,value,label])=>{if(!value)add(3,key,label)});
+      const arcanaTotal=Object.values(arcana).reduce((sum,value)=>sum+Number(value),0),rulingTotal=path?pathData.ruling.reduce((sum,item)=>sum+(arcana[item]??0),0):0;
+      if(arcanaTotal!==6||Object.values(arcana).filter(value=>value===3).length>1||!path||pathData.ruling.some(item=>(arcana[item]??0)<1)||rulingTotal<3||rulingTotal>5||(pathData.inferior&&arcana[pathData.inferior]!==0))add(3,"arcana","Distribuição dos seis pontos de Arcanos");
+      if(rotes.slice(0,3).filter(item=>item&&item.roteSkill).length!==3)add(3,"rotes","Três Rotas iniciais e suas Perícias");
+      if(praxes.slice(0,gnosis).filter(Boolean).length!==gnosis)add(3,"praxes",`${gnosis} Práxis`);
+    }
+    return issues;
+  },[name,attributePriority,skillPriority,attributes,skills,specialties,meritSpent,meritBudget,aspirations,line,seeming,kith,court,needle,thread,touchstone,favoredAttribute,secondRegalia,customKith,customKithSkill,customKithDescription,contracts,path,order,virtue,vice,nimbus,tool,resistanceBonus,arcana,pathData,rotes,praxes,gnosis]);
+  const missing=(key:string)=>validationIssues.some(issue=>issue.key===key);
 
   function validate(nextStep: number) {
+    const current=validationIssues.filter(issue=>issue.step===step);if(current.length){setError(`Ainda falta: ${current.map(issue=>issue.label).join(", ")}.`);return}
     setError("");
     setStep(nextStep);
   }
 
   function finish() {
     setError("");
-    if (!name.trim()) { setError("Informe o nome do personagem antes de salvar."); return; }
+    if(validationIssues.length){setError(`Ainda falta: ${validationIssues.map(issue=>issue.label).join(", ")}.`);setStep(validationIssues[0].step);return}
     const finalAttributes = { ...attributes };
     if (line === "CtL") finalAttributes[favoredAttribute] = Math.min(5, (finalAttributes[favoredAttribute] ?? 1) + 1);
     else finalAttributes[resistanceBonus] = Math.min(5, (finalAttributes[resistanceBonus] ?? 1) + 1);
@@ -181,11 +211,12 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
       <div><Badge variant="outline">{line}</Badge><span>Criação guiada · regras compartilhadas v1</span></div>
     </div>
     <div className="stepper">{["Identidade", "Características", line === "CtL" ? "Modelo dos Perdidos" : "Modelo dos Despertos", "Conferência"].map((label, index) => <div key={label} className={step === index + 1 ? "step active" : step > index + 1 ? "step done" : "step"}><span>{step > index + 1 ? <Check /> : index + 1}</span><strong>{label}</strong></div>)}</div>
+    {validationIssues.length>0&&<div className="builder-pending"><strong>{validationIssues.length} {validationIssues.length===1?"item pendente":"itens pendentes"}</strong><span>{validationIssues.slice(0,6).map(issue=>issue.label).join(" · ")}{validationIssues.length>6?` · +${validationIssues.length-6}`:""}</span></div>}
     {error && <div className="builder-error">{error}</div>}
     <div className="builder-body">
-      {step === 1 && <IdentityStep line={line} setLine={setLine} name={name} setName={setName} concept={concept} setConcept={setConcept} player={player} />}
-      {step === 2 && <TraitsStep attributes={attributes} setAttributes={setAttributes} skills={skills} setSkills={setSkills} attributePriority={attributePriority} setAttributePriority={setAttributePriority} skillPriority={skillPriority} setSkillPriority={setSkillPriority} specialties={specialties} setSpecialties={setSpecialties} />}
-      {step === 3 && (line === "CtL" ? <CtlStep {...{ seeming, setSeeming, kith, setKith, customKith, setCustomKith, customKithSkill, setCustomKithSkill, customKithDescription, setCustomKithDescription, court, setCourt, needle, setNeedle, thread, setThread, touchstone, setTouchstone, wyrd, setWyrd, secondRegalia, setSecondRegalia, favoredAttribute, setFavoredAttribute, contracts, setContracts, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent }} /> : <MtaStep {...{ path, setPath, order, setOrder, virtue, setVirtue, vice, setVice, nimbus, setNimbus, tool, setTool, resistanceBonus, setResistanceBonus, gnosis, setGnosis, arcana, setArcana, rotes, setRotes, praxes, setPraxes, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent }} />)}
+      {step === 1 && <IdentityStep line={line} setLine={setLine} name={name} setName={setName} concept={concept} setConcept={setConcept} player={player} missing={missing} />}
+      {step === 2 && <TraitsStep attributes={attributes} setAttributes={setAttributes} skills={skills} setSkills={setSkills} attributePriority={attributePriority} setAttributePriority={setAttributePriority} skillPriority={skillPriority} setSkillPriority={setSkillPriority} specialties={specialties} setSpecialties={setSpecialties} missing={missing} />}
+      {step === 3 && (line === "CtL" ? <CtlStep {...{ seeming, setSeeming, kith, setKith, customKith, setCustomKith, customKithSkill, setCustomKithSkill, customKithDescription, setCustomKithDescription, court, setCourt, needle, setNeedle, thread, setThread, touchstone, setTouchstone, wyrd, setWyrd, secondRegalia, setSecondRegalia, favoredAttribute, setFavoredAttribute, contracts, setContracts, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent, maximumPowerFromMerits, missing }} /> : <MtaStep {...{ path, setPath, order, setOrder, virtue, setVirtue, vice, setVice, nimbus, setNimbus, tool, setTool, resistanceBonus, setResistanceBonus, gnosis, setGnosis, arcana, setArcana, rotes, setRotes, praxes, setPraxes, aspirations, setAspirations, merits, setMerits, meritCatalog, meritBudget, meritSpent, maximumPowerFromMerits, missing }} />)}
       {step === 4 && <ReviewStep line={line} name={name} concept={concept} attributes={attributes} skills={skills} merits={merits} lineData={line === "CtL" ? { seeming, kith, court, needle, thread, wyrd } : { path, order, gnosis }} />}
     </div>
     <div className="builder-actions">
@@ -196,19 +227,20 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
   </section>;
 }
 
-function IdentityStep({ line, setLine, name, setName, concept, setConcept, player }: any) {
-  return <div className="builder-section"><span className="kicker">PASSO 1</span><h2>Quem atravessou a escuridão?</h2><p>Escolha a linha principal. Ela determina todas as próximas opções.</p><div className="line-choice"><button className={line === "CtL" ? "selected" : ""} onClick={() => setLine("CtL")}><Badge>CtL</Badge><strong>Changeling the Lost</strong><small>Fonte principal: Changeling the Lost 2e</small></button><button className={line === "MtA" ? "selected" : ""} onClick={() => setLine("MtA")}><Badge>MtA</Badge><strong>Mage the Awakening</strong><small>Fonte principal: Mage the Awakening 2e</small></button></div><div className="form-grid"><label>Nome<Input value={name} onChange={(e) => setName(e.target.value)} /></label><label>Jogador<Input value={player} readOnly /></label><label className="full">Conceito<Input value={concept} onChange={(e) => setConcept(e.target.value)} placeholder="Uma frase curta" /></label></div></div>;
+function IdentityStep({ line, setLine, name, setName, concept, setConcept, player, missing }: any) {
+  return <div className="builder-section"><span className="kicker">PASSO 1</span><h2>Quem atravessou a escuridão?</h2><p>Escolha a linha principal. Ela determina todas as próximas opções.</p><div className="line-choice"><button className={line === "CtL" ? "selected" : ""} onClick={() => setLine("CtL")}><Badge>CtL</Badge><strong>Changeling the Lost</strong><small>Fonte principal: Changeling the Lost 2e</small></button><button className={line === "MtA" ? "selected" : ""} onClick={() => setLine("MtA")}><Badge>MtA</Badge><strong>Mage the Awakening</strong><small>Fonte principal: Mage the Awakening 2e</small></button></div><div className="form-grid"><label className={missing("name")?"missing-field":""}>Nome<Input value={name} onChange={(e) => setName(e.target.value)} /></label><label>Jogador<Input value={player} readOnly /></label><label className="full">Conceito<Input value={concept} onChange={(e) => setConcept(e.target.value)} placeholder="Uma frase curta" /></label></div></div>;
 }
 
 function TraitsStep(props: any) {
   const allSkills = Object.values(SKILLS).flat();
-  return <div className="builder-section"><span className="kicker">PASSO 2</span><h2>Atributos e Perícias</h2><p>Defina a prioridade das categorias e distribua exatamente os pontos indicados.</p><PriorityRow labels={attributeCategories} values={props.attributePriority} setValues={props.setAttributePriority} budgets={[5,4,3]} /><DotGroups groups={ATTRIBUTES} values={props.attributes} setValues={props.setAttributes} base={1} max={5} priority={props.attributePriority} budgets={[5,4,3]} /><div className="section-divider" /><PriorityRow labels={skillCategories} values={props.skillPriority} setValues={props.setSkillPriority} budgets={[11,7,4]} /><DotGroups groups={SKILLS} values={props.skills} setValues={props.setSkills} base={0} max={5} priority={props.skillPriority} budgets={[11,7,4]} /><div className="section-divider" /><h3>Especializações</h3><p>Escolha uma Perícia e escreva a área específica. A mesma Perícia pode ser escolhida mais de uma vez.</p><div className="specialty-grid">{props.specialties.map((value: Specialty, index: number) => <div className="specialty-row" key={index}><Choice label={`Perícia ${index + 1}`} value={value.skill} setValue={(skill) => updateArray(props.setSpecialties, props.specialties, index, { ...value, skill })} options={allSkills} /><label>Especialização<Input value={value.name} onChange={(e) => updateArray(props.setSpecialties, props.specialties, index, { ...value, name: e.target.value })} placeholder="Ex.: Prestidigitação" /></label></div>)}</div></div>;
+  return <div className="builder-section"><span className="kicker">PASSO 2</span><h2>Atributos e Perícias</h2><p>Defina a prioridade das categorias e distribua exatamente os pontos indicados.</p><PriorityRow labels={attributeCategories} values={props.attributePriority} setValues={props.setAttributePriority} budgets={[5,4,3]} invalid={props.missing("attribute-priority")}/><DotGroups groups={ATTRIBUTES} values={props.attributes} setValues={props.setAttributes} base={1} max={5} priority={props.attributePriority} budgets={[5,4,3]} missing={props.missing}/><div className="section-divider" /><PriorityRow labels={skillCategories} values={props.skillPriority} setValues={props.setSkillPriority} budgets={[11,7,4]} invalid={props.missing("skill-priority")}/><DotGroups groups={SKILLS} values={props.skills} setValues={props.setSkills} base={0} max={5} priority={props.skillPriority} budgets={[11,7,4]} missing={props.missing}/><div className="section-divider" /><h3>Especializações</h3><p>Escolha uma Perícia e escreva a área específica. A mesma Perícia pode ser escolhida mais de uma vez.</p><div className="specialty-grid">{props.specialties.map((value: Specialty, index: number) => {const listId=`specialties-${index}`;return <div className={`specialty-row ${props.missing(`specialty-${index}`)?"missing-field":""}`} key={index}><Choice label={`Perícia ${index + 1}`} value={value.skill} setValue={(skill) => updateArray(props.setSpecialties, props.specialties, index, { ...value, skill, name:"" })} options={allSkills} /><label>Especialização<Input list={listId} value={value.name} onChange={(e) => updateArray(props.setSpecialties, props.specialties, index, { ...value, name: e.target.value })} placeholder={value.skill?"Escolha uma sugestão ou escreva outra":"Selecione primeiro a Perícia"} disabled={!value.skill}/><datalist id={listId}>{(SKILL_SPECIALTY_SUGGESTIONS[value.skill]??[]).map(item=><option value={item} key={item}/>)}</datalist></label></div>})}</div></div>;
 }
 
 function CtlStep(props: any) {
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
-  const favored = favoredChoices(seemingData.favored);
-  return <div className="builder-section"><span className="kicker">PASSO 3 · CHANGELING</span><h2>Modelo dos Perdidos</h2><p>As escolhas e limites abaixo vêm de Changeling the Lost.</p><div className="form-grid thirds"><Choice label="Feição" value={props.seeming} setValue={props.setSeeming} options={Object.keys(CTL_SEEMINGS)} /><KithSelector {...props}/><Choice label="Corte" value={props.court} setValue={props.setCourt} options={CTL_COURTS} /><Choice label="Agulha" value={props.needle} setValue={props.setNeedle} options={CTL_NEEDLES} /><Choice label="Fio" value={props.thread} setValue={props.setThread} options={CTL_THREADS} /><label>Pedra de Contato<Input value={props.touchstone} onChange={(e) => props.setTouchstone(e.target.value)} /></label><Choice label="Atributo favorecido (+1)" value={props.favoredAttribute} setValue={props.setFavoredAttribute} options={favored} /><Choice label="Segunda Regalia favorecida" value={props.secondRegalia} setValue={props.setSecondRegalia} options={REGALIA.filter((item) => item !== seemingData.regalia)} /><Choice label="Fado" value={String(props.wyrd)} setValue={(value) => props.setWyrd(Number(value))} options={["1","2","3"]} /></div><p className="rule-callout"><ShieldCheck /> Regalia da Feição: <strong>{seemingData.regalia}</strong> · Méritos disponíveis: <strong>{props.meritBudget}</strong></p><Aspirations values={props.aspirations} setValues={props.setAspirations} /><ContractSelector contracts={props.contracts} setContracts={props.setContracts} seeming={props.seeming} /><Merits merits={props.merits} setMerits={props.setMerits} catalog={props.meritCatalog} spent={props.meritSpent} budget={props.meritBudget} /></div>;
+  const favored = seemingData?favoredChoices(seemingData.favored):[];
+  const powerOptions=Array.from({length:props.maximumPowerFromMerits},(_,index)=>String(index+1));
+  return <div className="builder-section"><span className="kicker">PASSO 3 · CHANGELING</span><h2>Modelo dos Perdidos</h2><p>As escolhas e limites abaixo vêm de Changeling the Lost.</p><div className="form-grid thirds"><Choice label="Feição" value={props.seeming} setValue={props.setSeeming} options={Object.keys(CTL_SEEMINGS)} invalid={props.missing("seeming")}/><div className={props.missing("kith")?"missing-field":""}><KithSelector {...props}/></div><Choice label="Corte" value={props.court} setValue={props.setCourt} options={CTL_COURTS} invalid={props.missing("court")}/><Choice label="Agulha" value={props.needle} setValue={props.setNeedle} options={CTL_NEEDLES} invalid={props.missing("needle")}/><Choice label="Fio" value={props.thread} setValue={props.setThread} options={CTL_THREADS} invalid={props.missing("thread")}/><label className={props.missing("touchstone")?"missing-field":""}>Pedra de Contato<Input value={props.touchstone} onChange={(e) => props.setTouchstone(e.target.value)} /></label><Choice label="Atributo favorecido (+1)" value={props.favoredAttribute} setValue={props.setFavoredAttribute} options={favored} invalid={props.missing("favoredAttribute")}/><Choice label="Segunda Regalia favorecida" value={props.secondRegalia} setValue={props.setSecondRegalia} options={REGALIA.filter((item) => item !== seemingData?.regalia)} invalid={props.missing("secondRegalia")}/><Choice label="Fado" value={String(props.wyrd)} setValue={(value) => props.setWyrd(Number(value))} options={powerOptions}/></div><p className="rule-callout"><ShieldCheck /> Regalia da Feição: <strong>{seemingData?.regalia??"selecione a Feição"}</strong> · Méritos disponíveis: <strong>{props.meritBudget}</strong> · Fado máximo com os Méritos atuais: <strong>{props.maximumPowerFromMerits}</strong></p><Aspirations values={props.aspirations} setValues={props.setAspirations} missing={props.missing}/><div className={props.missing("contracts")?"missing-field block":""}><ContractSelector contracts={props.contracts} setContracts={props.setContracts} seeming={props.seeming}/></div><div className={props.missing("merits")?"missing-field block":""}><Merits merits={props.merits} setMerits={props.setMerits} catalog={props.meritCatalog} spent={props.meritSpent} budget={props.meritBudget}/></div></div>;
 }
 
 function KithSelector(props:any) {
@@ -244,14 +276,15 @@ function ContractSelector({ contracts, setContracts, seeming }: { contracts: Con
 function MtaStep(props: any) {
   const pathData = MTA_PATHS[props.path as keyof typeof MTA_PATHS];
   const neededPraxes = props.gnosis;
-  return <div className="builder-section"><span className="kicker">PASSO 3 · MAGO</span><h2>Modelo dos Despertos</h2><p>As escolhas e limites abaixo vêm de Mage the Awakening.</p><div className="form-grid thirds"><Choice label="Caminho" value={props.path} setValue={props.setPath} options={Object.keys(MTA_PATHS)} /><Choice label="Ordem" value={props.order} setValue={props.setOrder} options={Object.keys(MTA_ORDERS)} /><Choice label="Gnose" value={String(props.gnosis)} setValue={(value: string) => props.setGnosis(Number(value))} options={["1","2","3"]} /><label>Virtude<Input value={props.virtue} onChange={(e) => props.setVirtue(e.target.value)} /></label><label>Vício<Input value={props.vice} onChange={(e) => props.setVice(e.target.value)} /></label><Choice label="Atributo de Resistência (+1)" value={props.resistanceBonus} setValue={props.setResistanceBonus} options={["Perseverança","Vigor","Autocontrole"]} /><label className="full">Nimbus<Input value={props.nimbus} onChange={(e) => props.setNimbus(e.target.value)} /></label><label className="full">Ferramenta Mágica Dedicada<Input value={props.tool} onChange={(e) => props.setTool(e.target.value)} /></label></div><p className="rule-callout"><ShieldCheck /> Regentes: <strong>{pathData.ruling.join(" e ")}</strong> · Inferior: <strong>{pathData.inferior}</strong> · Méritos disponíveis: <strong>{props.meritBudget}</strong></p><Aspirations values={props.aspirations} setValues={props.setAspirations} /><h3>Arcanos · 6 pontos</h3><div className="arcana-grid">{ARCANA.map((item) => <DotRow key={item} name={item} value={props.arcana[item]} setValue={(value: number) => props.setArcana({ ...props.arcana, [item]: value })} min={0} max={3} tag={pathData.ruling.includes(item as never) ? "Regente" : pathData.inferior === item ? "Inferior" : undefined} />)}</div><SpellSelector title="Rotas iniciais" count={3} values={props.rotes} setValues={props.setRotes} rote /><SpellSelector title={`Práxis · ${neededPraxes}`} count={neededPraxes} values={props.praxes} setValues={props.setPraxes} /><Merits merits={props.merits} setMerits={props.setMerits} catalog={props.meritCatalog} spent={props.meritSpent} budget={props.meritBudget} /></div>;
+  const powerOptions=Array.from({length:props.maximumPowerFromMerits},(_,index)=>String(index+1));
+  return <div className="builder-section"><span className="kicker">PASSO 3 · MAGO</span><h2>Modelo dos Despertos</h2><p>As escolhas e limites abaixo vêm de Mage the Awakening.</p><div className="form-grid thirds"><Choice label="Caminho" value={props.path} setValue={props.setPath} options={Object.keys(MTA_PATHS)} invalid={props.missing("path")}/><Choice label="Ordem" value={props.order} setValue={props.setOrder} options={Object.keys(MTA_ORDERS)} invalid={props.missing("order")}/><Choice label="Gnose" value={String(props.gnosis)} setValue={(value: string) => props.setGnosis(Number(value))} options={powerOptions}/><label className={props.missing("virtue")?"missing-field":""}>Virtude<Input value={props.virtue} onChange={(e) => props.setVirtue(e.target.value)} /></label><label className={props.missing("vice")?"missing-field":""}>Vício<Input value={props.vice} onChange={(e) => props.setVice(e.target.value)} /></label><Choice label="Atributo de Resistência (+1)" value={props.resistanceBonus} setValue={props.setResistanceBonus} options={["Perseverança","Vigor","Autocontrole"]} invalid={props.missing("resistanceBonus")}/><label className={`full ${props.missing("nimbus")?"missing-field":""}`}>Nimbus<Input value={props.nimbus} onChange={(e) => props.setNimbus(e.target.value)} /></label><label className={`full ${props.missing("tool")?"missing-field":""}`}>Ferramenta Mágica Dedicada<Input value={props.tool} onChange={(e) => props.setTool(e.target.value)} /></label></div><p className="rule-callout"><ShieldCheck /> Regentes: <strong>{pathData?.ruling.join(" e ")??"selecione o Caminho"}</strong> · Inferior: <strong>{pathData?.inferior??"—"}</strong> · Méritos disponíveis: <strong>{props.meritBudget}</strong> · Gnose máxima com os Méritos atuais: <strong>{props.maximumPowerFromMerits}</strong></p><Aspirations values={props.aspirations} setValues={props.setAspirations} missing={props.missing}/><h3>Arcanos · 6 pontos</h3><div className={`arcana-grid ${props.missing("arcana")?"missing-field":""}`}>{ARCANA.map((item) => <DotRow key={item} name={item} value={props.arcana[item]} setValue={(value: number) => props.setArcana({ ...props.arcana, [item]: value })} min={0} max={3} tag={pathData?.ruling.includes(item as never) ? "Regente" : pathData?.inferior === item ? "Inferior" : undefined} />)}</div><div className={props.missing("rotes")?"missing-field block":""}><SpellSelector title="Rotas iniciais" count={3} values={props.rotes} setValues={props.setRotes} rote /></div><div className={props.missing("praxes")?"missing-field block":""}><SpellSelector title={`Práxis · ${neededPraxes}`} count={neededPraxes} values={props.praxes} setValues={props.setPraxes} /></div><div className={props.missing("merits")?"missing-field block":""}><Merits merits={props.merits} setMerits={props.setMerits} catalog={props.meritCatalog} spent={props.meritSpent} budget={props.meritBudget} /></div></div>;
 }
 
 function SpellSelector({title,count,values,setValues,rote=false}:{title:string;count:number;values:Array<SpellSelection|null>;setValues:(value:Array<SpellSelection|null>)=>void;rote?:boolean}) {
   const [search,setSearch]=useState(""); const normalized=search.toLocaleLowerCase("pt-BR");
   const selectedIds=values.filter(Boolean).map(item=>item!.id);
   const filtered=SPELLS.filter(spell=>!normalized||`${spell.name} ${spell.originalName} ${spell.source} ${Object.keys(spell.requirements).join(" ")}`.toLocaleLowerCase("pt-BR").includes(normalized));
-  const choose=(spell:SpellDefinition)=>{const slot=values.findIndex((item,index)=>index<count&&!item);if(slot<0)return;const next=[...values];next[slot]={...spell,roteSkill:rote?spell.roteSkills[0]:undefined};setValues(next)};
+  const choose=(spell:SpellDefinition)=>{const slot=values.findIndex((item,index)=>index<count&&!item);if(slot<0)return;const next=[...values];next[slot]={...spell,roteSkill:rote?"":undefined};setValues(next)};
   const remove=(index:number)=>{const next=[...values];next[index]=null;setValues(next)};
   const arcanaLabels:Record<string,string>={Death:"Morte",Fate:"Destino",Forces:"Forças",Life:"Vida",Matter:"Matéria",Mind:"Mente",Prime:"Primórdio",Space:"Espaço",Spirit:"Espírito",Time:"Tempo"};
   const groups=new Map<string,SpellDefinition[]>();
@@ -264,19 +297,19 @@ function ReviewStep({ line, name, concept, attributes, skills, merits, lineData 
   return <div className="builder-section"><span className="kicker">PASSO 4</span><h2>Ficha pronta para salvar</h2><p>Ela ficará neste navegador e poderá ser exportada como JSON.</p><div className="review-summary"><div><Badge>{line}</Badge><h3>{name}</h3><p>{concept}</p></div><div><strong>{Object.values(attributes).reduce((a: number,b: any)=>a+Number(b),0)}</strong><span>pontos de Atributos</span></div><div><strong>{Object.values(skills).reduce((a: number,b: any)=>a+Number(b),0)}</strong><span>pontos de Perícias</span></div><div><strong>{merits.length}</strong><span>Méritos</span></div></div><div className="line-review">{Object.entries(lineData).map(([key,value]) => <div key={key}><span>{key}</span><strong>{String(value)}</strong></div>)}</div></div>;
 }
 
-function PriorityRow({ labels, values, setValues, budgets }: any) {
-  return <div className="priority-row">{values.map((value: string, index: number) => <Choice key={index} label={["Primária","Secundária","Terciária"][index] + ` · ${budgets[index]} pontos`} value={value} setValue={(next) => updateArray(setValues, values, index, next)} options={labels} />)}</div>;
+function PriorityRow({ labels, values, setValues, budgets, invalid }: any) {
+  return <div className={`priority-row ${invalid?"missing-field":""}`}>{values.map((value: string, index: number) => <Choice key={index} label={["Primária","Secundária","Terciária"][index] + ` · ${budgets[index]} pontos`} value={value} setValue={(next) => {const updated=[...values];const other=updated.indexOf(next);if(other>=0)updated[other]="";updated[index]=next;setValues(updated)}} options={labels} invalid={!value||values.filter((item:string)=>item===value).length>1}/>)}</div>;
 }
-function DotGroups({ groups, values, setValues, base, max, priority, budgets }: any) {
-  return <div className="dot-groups">{Object.entries(groups).map(([category,names]) => { const budget = budgets[priority.indexOf(category)]; const used = spent(values, names as string[], base); return <section key={category}><div><h3>{category}</h3><Badge variant={used === budget ? "secondary" : "outline"}>{used}/{budget}</Badge></div>{(names as string[]).map((name) => <DotRow key={name} name={name} value={values[name]} setValue={(value:number) => setValues({ ...values, [name]: value })} min={base} max={max} />)}</section>; })}</div>;
+function DotGroups({ groups, values, setValues, base, max, priority, budgets, missing }: any) {
+  return <div className="dot-groups">{Object.entries(groups).map(([category,names]) => { const budget = budgets[priority.indexOf(category)]; const used = spent(values, names as string[], base),invalid=missing(`${base===1?"attribute":"skill"}-${category}`); return <section key={category} className={invalid?"missing-field":""}><div><h3>{category}</h3><Badge variant={used === budget ? "secondary" : "outline"}>{used}/{budget??"—"}</Badge></div>{(names as string[]).map((name) => <DotRow key={name} name={name} value={values[name]} setValue={(value:number) => setValues({ ...values, [name]: value })} min={base} max={max} />)}</section>; })}</div>;
 }
 function DotRow({ name, value, setValue, min, max, tag }: any) {
   return <div className="dot-row"><span>{name}{tag && <small>{tag}</small>}</span><div><Button type="button" variant="ghost" size="icon-xs" onClick={() => setValue(Math.max(min,value-1))}><Minus /></Button><div className="dots">{Array.from({length:max},(_,i)=><i key={i} className={i<value ? "filled" : ""} />)}</div><Button type="button" variant="ghost" size="icon-xs" onClick={() => setValue(Math.min(max,value+1))}><Plus /></Button></div></div>;
 }
-function Choice({ label, value, setValue, options, optionLabels = { ...CTL_SEEMING_LABELS, ...MTA_ORDER_LABELS } }: { label?: string; value: string; setValue: (value:string)=>void; options: readonly string[]; optionLabels?: Record<string,string> }) {
-  return <label className="choice-label">{label}<Select value={value} onValueChange={setValue}><SelectTrigger className="w-full"><SelectValue>{optionLabels[value] ?? value}</SelectValue></SelectTrigger><SelectContent>{options.map((option)=><SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
+function Choice({ label, value, setValue, options, optionLabels = { ...CTL_SEEMING_LABELS, ...MTA_ORDER_LABELS },invalid=false }: { label?: string; value: string; setValue: (value:string)=>void; options: readonly string[]; optionLabels?: Record<string,string>;invalid?:boolean }) {
+  return <label className={`choice-label ${invalid?"missing-field":""}`}>{label}<Select value={value} onValueChange={setValue}><SelectTrigger className="w-full"><SelectValue placeholder="Selecione">{value?(optionLabels[value]??value):undefined}</SelectValue></SelectTrigger><SelectContent>{options.map((option)=><SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
 }
-function Aspirations({ values, setValues }: any) { return <><h3>Aspirações</h3><div className="three-inputs">{values.map((value:string,index:number)=><Input key={index} value={value} onChange={(e)=>updateArray(setValues,values,index,e.target.value)} placeholder={`Aspiração ${index+1}`} />)}</div></>; }
+function Aspirations({ values, setValues, missing }: any) { return <><h3>Aspirações</h3><div className="three-inputs">{values.map((value:string,index:number)=><div className={missing?.(`aspiration-${index}`)?"missing-field":""} key={index}><Input value={value} onChange={(e)=>updateArray(setValues,values,index,e.target.value)} placeholder={`Aspiração ${index+1}`} /></div>)}</div></>; }
 function Merits({ merits, setMerits, catalog, spent, budget }: { merits: MeritSelection[]; setMerits: (value: MeritSelection[]) => void; catalog: MeritDefinition[]; spent: number; budget: number }) {
   const [search, setSearch] = useState("");
   const categories = [...new Set(catalog.map((merit) => merit.category))].sort((a,b) => meritCategoryRank(a) - meritCategoryRank(b) || a.localeCompare(b));
