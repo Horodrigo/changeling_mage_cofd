@@ -39,9 +39,11 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
  {name:"Mystery Cult Initiation",fields:[],grants:true},
  {name:"Mystery Cult Influence",fields:[],grants:true},
  {name:"Court Goodwill",line:"CtL",fields:[text("court","Corte beneficiada")]},
- {name:"Fae Mount",line:"CtL",fields:[text("name","Nome da Montaria"),area("profile","Aparência e perfil"),list("traits","Características e vantagens","Uma característica por linha")]},
+ {name:"Fae Mount",line:"CtL",fields:[]},
  {name:"Holding",line:"CtL",fields:[text("name","Nome do Domínio"),area("territory","Descrição do território"),list("features","Características compradas")]},
  {name:"Hollow",line:"CtL",fields:[text("name","Nome do Recanto"),area("location","Descrição e localização"),list("features","Características compradas")]},
+ {name:"Warded Dreams",line:"CtL",fields:[]},
+ {name:"Dream Bastion",line:"CtL",fields:[]},
  {name:"Regalia Manifestation",line:"CtL",fields:[text("regalia","Regalia vinculada"),area("manifestation","Manifestação")]},
  {name:"Token",line:"CtL",fields:[text("name","Nome do Símbolo"),area("benefit","Benefício"),area("activation","Ativação"),area("catch","Ardil")]},
  {name:"Workshop",line:"CtL",fields:[text("work_type","Tipo de trabalho"),area("facilities","Instalações")]},
@@ -55,7 +57,7 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
  {name:"Egregore",line:"MtA",fields:[text("name","Nome da Egrégora"),area("identity","Identidade psíquica da Cabala")]},
  {name:"Enhanced Item",line:"MtA",fields:[text("name","Nome do objeto"),area("base_item","Objeto mundano"),list("enhancements","Melhorias compradas")]},
  {name:"Faction Member",line:"MtA",fields:[text("faction","Facção interna"),area("duties","Deveres e benefícios")]},
- {name:"Familiar",line:"MtA",fields:[text("name","Nome do Familiar"),area("profile","Perfil do espírito"),list("influences","Influências"),list("numina","Numina")]},
+ {name:"Familiar",line:"MtA",fields:[]},
  {name:"Grimoire",line:"MtA",fields:[text("name","Nome do Grimório"),list("rotes","Rotas contidas")]},
  {name:"Hallow",line:"MtA",fields:[text("name","Nome do Lugar Sagrado"),text("location","Localização"),text("resonance","Ressonância")]},
  {name:"Imbued Item",line:"MtA",fields:[text("name","Nome do item"),list("spells","Feitiços incorporados"),area("activation","Ativação e fatores")]},
@@ -72,7 +74,7 @@ export const MERIT_CONFIGURATIONS:MeritConfigDefinition[]=[
 
 export const findMeritConfiguration=(name:string)=>MERIT_CONFIGURATIONS.find(item=>item.name===name);
 export const normalizeMeritConfiguration=(value:unknown):MeritConfiguration=>value&&typeof value==="object"&&!Array.isArray(value)?Object.fromEntries(Object.entries(value as Record<string,unknown>).map(([key,item])=>[key,Array.isArray(item)?item.map(String):String(item??"")])):{};
-export const isStructuredMerit=(name:string)=>["Professional Training","Mystery Cult Initiation","Mystery Cult Influence"].includes(name);
+export const isStructuredMerit=(name:string)=>["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Dream Bastion"].includes(name);
 
 type GrantSheet={merits:Array<{name:string;dots:number;sourceId?:string;source?:string;configuration?:MeritConfiguration;grantedBy?:string}>;specializations:Array<{skill:string;name:string;grantedBy?:string}>;line_data:Record<string,unknown>};
 const lines=(value:MeritConfigValue|undefined)=>Array.isArray(value)?value:value?String(value).split("\n").map(item=>item.trim()).filter(Boolean):[];
@@ -114,6 +116,11 @@ const configuredMeritNames=new Map([...getMeritsForLine("CtL"),...getMeritsForLi
 const meritPicks=(configuration:MeritConfiguration,level:number)=>lines(configuration[`level_${level}_merits`]).map(entry=>{const [name,dots]=entry.split("|");return `${configuredMeritNames.get(name)??name} ${Number(dots)||1}`}).join(", ");
 export function expandedConfigurationLines(name:string,dots:number,value:unknown):string[]{
   const configuration=normalizeMeritConfiguration(value);
+  if(name==="Hollow"){
+    const features=lines(configuration.features).map(entry=>entry.split("|")[0]);
+    return [`Recanto: ${configured(configuration,"name")||"sem nome"}.`, `Localização: ${configured(configuration,"location")||"não definida"}.`, `Melhorias: ${features.join(", ")||"nenhuma selecionada"}.`];
+  }
+  if(name==="Warded Dreams"||name==="Dream Bastion")return [`Bastião dos Sonhos: ${configured(configuration,"description")||"não descrito"}.`, `Fortificação adicional: +${dots}.`];
   if(name==="Professional Training"){
     const assetSkills=lines(configuration.asset_skills),contacts=lines(configuration.contacts),result:string[]=[];
     if(dots>=1)result.push(`Nv 1: Contatos 2 (${contacts.join(", ")||"nomes não definidos"}).`);
