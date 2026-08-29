@@ -1,5 +1,6 @@
 import { meritText } from "./merit-i18n";
 import { MERIT_PREREQUISITES_PT } from "./rule-details";
+import { EXPANDED_MERITS } from "./expanded-merits";
 
 export type GameLine = "CtL" | "MtA";
 
@@ -23,6 +24,7 @@ const fixed = (...values: number[]) => values;
 const slug = (value: string) => value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const m = (name: string, ratings: number[], line: "Core" | GameLine, sourceId: string, source: string, category: string, priority = 1): MeritDefinition => {
   const text = meritText(`${sourceId}:${slug(name)}`, name, source);
+  const expanded=EXPANDED_MERITS.find(item=>item.name===name&&item.sourceId===sourceId);
   return {
     id: `${sourceId}:${slug(name)}`,
     name,
@@ -32,10 +34,10 @@ const m = (name: string, ratings: number[], line: "Core" | GameLine, sourceId: s
     source,
     category,
     priority,
-    translatedName: text.name,
-    description: text.description,
-    prerequisites: MERIT_PREREQUISITES_PT[`${sourceId}:${slug(name)}`],
-    page: text.page,
+    translatedName: expanded?.translatedName??text.name,
+    description: expanded?`Estilo com ${expanded.levels.length} manobras progressivas; cada nível adquirido libera a manobra correspondente.`:text.description,
+    prerequisites: expanded?.prerequisites??MERIT_PREREQUISITES_PT[`${sourceId}:${slug(name)}`],
+    page: expanded?.page??text.page,
   };
 };
 
@@ -77,6 +79,9 @@ const CORE = [
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Fighting Style")),
 ];
 
+const expandedRatings=(style:(typeof EXPANDED_MERITS)[number])=>[...new Set(style.levels.map(level=>level.rating))];
+const EXPANDED_CORE=EXPANDED_MERITS.filter(style=>(!style.line||style.line==="Core")&&!CORE.some(merit=>merit.name===style.name)).map(style=>m(style.name,expandedRatings(style),"Core",style.sourceId,style.source,"Fighting Style"));
+
 const CORE_CATEGORY_BY_NAME = new Map(CORE.map((merit) => [merit.name.toLocaleLowerCase("en"), merit.category]));
 const generalCategory = (name: string, fallback = "Mental") => CORE_CATEGORY_BY_NAME.get(name.toLocaleLowerCase("en")) ?? fallback;
 
@@ -108,7 +113,7 @@ const CTL_SUPPLEMENTS = [
   ...[["Regalia Manifestation", range(1,5)], ["Dramaturge", fixed(3)], ["Understudy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-kith-kin","Kith and Kin","Changeling",2)),
   ...[["Baron of the Lesser Ones", fixed(4)], ["Dauphines of Wayward Children", fixed(4)], ["Master of Keys", fixed(4)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-oak-ash-thorn","Oak, Ash, and Thorn","Entitlement",2)),
   ...[["Holding", range(1,5)], ["Thistle Guardian", fixed(3)], ["Dream-Tripper", fixed(3)], ["Dream Ghost", fixed(2)], ["Twice Shy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-hedge","The Hedge","Changeling",2)),
-  ...[["Hedgewise", fixed(2)], ["Librarian", fixed(3)], ["Gunslinger", range(1,5)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-dark-eras","Dark Eras Changeling","Historical",2)),
+  ...[["Hedgewise", fixed(2)], ["Librarian", fixed(3)], ["Gunslinger", fixed(1,3,5)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-dark-eras","Dark Eras Changeling","Historical",2)),
   ...[
     ["Bedside Manner",fixed(3)],["Dressed to Kill",fixed(2)],["Friends in Low Places",range(1,3)],["Spring-Loaded",fixed(1)],["I Meant to Do That",fixed(1)],["Host with the Most",fixed(3)],
     ["Beware of Dog",fixed(2)],["No Rest for the Wicked",fixed(3)],["Challenge Accepted",fixed(1)],["Street Pharmacist",fixed(1)],["Don't Mess with Jim",fixed(1)],["Sucker Born Every Minute",fixed(1)],
@@ -131,6 +136,7 @@ const CTL_SUPPLEMENTS = [
     ["Tinkerer",fixed(1)],["Treacherous Ground",fixed(1)],["Token Crucible",fixed(3)],["Unblemished Poise",fixed(1)],["The Crashing Oak",fixed(1)],
   ].map(([n,r]) => m(n as string,r as number[],"CtL","h-seemings","Book of Seemings","Seeming",2)),
 ];
+const EXPANDED_CTL=EXPANDED_MERITS.filter(style=>style.line==="CtL"&&!CTL_PRIMARY.some(merit=>merit.name===style.name)&&!CTL_SUPPLEMENTS.some(merit=>merit.name===style.name)).map(style=>m(style.name,expandedRatings(style),"CtL",style.sourceId,style.source,"Changeling Style",5));
 
 const MTA_PRIMARY = [
   ["Adamant Hand", fixed(2)], ["Artifact", range(3,10)], ["Astral Adept", fixed(3)], ["Between the Ticks", fixed(2)],
@@ -150,11 +156,12 @@ const MTA_LOCAL_OVERRIDES = [
 
 const MTA_SUPPLEMENTS = [
   ...[["Broad Dedication",fixed(1)],["Inheritance",fixed(2)],["Profligate Dedication",fixed(2)],["Cognoscente",fixed(2)],["Daimonomikon",range(1,5)],["Legacy Pedagogue",fixed(1)]].map(([n,r]) => m(n as string,r as number[],"MtA","mta-signs","Signs of Sorcery","Awakened",2)),
-  ...[["Exoteric Arete",range(2,3)],["Perfecti",range(1,5)],["Seasoned Duelist",fixed(3)],["Faction Member",range(1,3)]].map(([n,r]) => m(n as string,r as number[],"MtA","mta-pentacle","Tome of the Pentacle","Order",2)),
+  ...[["Exoteric Arete",range(2,3)],["Perfecti",fixed(1,3,5)],["Seasoned Duelist",fixed(3)],["Faction Member",range(1,3)]].map(([n,r]) => m(n as string,r as number[],"MtA","mta-pentacle","Tome of the Pentacle","Order",2)),
   ...[["Hand of Destiny",range(1,5)]].map(([n,r]) => m(n as string,r as number[],"MtA","nh-nameless","Nameless and Accursed","Mystery Cult",2)),
 ];
+const EXPANDED_MTA=EXPANDED_MERITS.filter(style=>style.line==="MtA"&&!MTA_PRIMARY.some(merit=>merit.name===style.name)&&!MTA_SUPPLEMENTS.some(merit=>merit.name===style.name)).map(style=>m(style.name,expandedRatings(style),"MtA",style.sourceId,style.source,"Awakened Style",5));
 
-export const RAW_MERITS = [...CORE, ...CTL_PRIMARY, ...CTL_LOCAL_OVERRIDES, ...CTL_SUPPLEMENTS, ...MTA_PRIMARY, ...MTA_LOCAL_OVERRIDES, ...MTA_SUPPLEMENTS];
+export const RAW_MERITS = [...CORE, ...EXPANDED_CORE, ...CTL_PRIMARY, ...CTL_LOCAL_OVERRIDES, ...CTL_SUPPLEMENTS, ...EXPANDED_CTL, ...MTA_PRIMARY, ...MTA_LOCAL_OVERRIDES, ...MTA_SUPPLEMENTS, ...EXPANDED_MTA];
 
 export function getMeritsForLine(line: GameLine) {
   const applicable = RAW_MERITS.filter((merit) => merit.line === "Core" || merit.line === line);
