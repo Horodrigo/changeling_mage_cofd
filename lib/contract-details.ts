@@ -6,8 +6,8 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling carrega consigo um objeto que pertence ao proprietário ou residente principal.",
     "seemingBenefits": {
       "Beast": "A Besta convence sentinelas animais a servi-la ativamente.",
-      "Fairest": "O jogador da Mais Bela ganha dois dados de bônus em um Conflito de Vontades com o dono de uma habitação sobrenatural.",
-      "Darkling": "O Trevoso goza de um +3 para todas as ações Furtividade e Furto dentro da habitação.",
+      "Fairest": "O jogador da Belíssima ganha dois dados de bônus em um Conflito de Vontades com o dono de uma habitação sobrenatural.",
+      "Darkling": "O Trevoso ganha +3 para todas as ações Furtividade e Furto dentro da habitação.",
       "Elemental": "Uma vez que a duração expira, o Elemental pode passar por uma abertura e sair por uma completamente diferente na moradia (um armário de salão para o frigorífico, por exemplo). Ela só pode fazer isso uma vez.",
       "Ogre": "Um Ogre pode usar este efeito em habitações controladas por personagens que também conhecem este Contrato, mas isso provoca um Confronto de Vontades.",
       "Wizened": "O Domovoi convence eletrodomésticos complexos a servi-la (faucets, fornos, vácuos, etc.), embora eles só podem realizar ações que eles são capazes de sob seu próprio poder."
@@ -117,7 +117,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "O changeling se levanta e faz um discurso que dura pelo menos cinco minutos.",
     "seemingBenefits": {
-      "Fairest": "A proteção da Mais Bela se estende às interações sociais; os alvos não podem intimidar ou ameaçar uns aos outros, mas ainda podem se envolver em gentilezas para promover a boa vontade.",
+      "Fairest": "A proteção da Belíssima se estende às interações sociais; os alvos não podem intimidar ou ameaçar uns aos outros, mas ainda podem se envolver em gentilezas para promover a boa vontade.",
       "Wizened": "A proteção do Chapeleiro se estende a danos mentais, incluindo ataques à Lucidez (mas não a pontos de ruptura).",
       "Beast": "A Besta pode acabar com a violência depois de iniciada, mas isso só pode afetar um número de mortais igual aos seus pontos de Fado mais um. Grupos maiores estão imunes.",
       "Darkling": "O Trevoso pode selecionar um personagem que não seja afetado por este Contrato.",
@@ -145,7 +145,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "O changeling aceita o pagamento para cumprir este Contrato e então enterra as moedas ou outro objeto negociado.",
     "seemingBenefits": {
-      "Fairest": "A Mais Bela também pode aplicar os efeitos deste Contrato aos testes de Expressão, Persuasão ou Socialização de outra pessoa.",
+      "Fairest": "A Belíssima também pode aplicar os efeitos deste Contrato aos testes de Expressão, Persuasão ou Socialização de outra pessoa.",
       "Wizened": "Um objeto abençoado retém o bônus de todos os testes feitos para usá-lo na cena.",
       "Beast": "Uma Besta também pode aplicar os efeitos deste Contrato às jogadas de Atletismo, Briga ou Sobrevivência de outro personagem.",
       "Darkling": "Um Trevoso também pode aplicar os efeitos deste Contrato aos testes de Furto, Furtividade ou Lábia de outro.",
@@ -164,7 +164,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Uma vez por cena, a vítima sofre metade do Fado do changeling (arredondado para cima) em dano contundente sempre que ele usar a parada de dados amaldiçoada até o próximo sol cruzar o horizonte. O efeito inicial ainda se aplica apenas uma vez.",
       "Darkling": "A Besta renova um ponto de Força de Vontade se o alvo falhar dramaticamente por causa deste Contrato em sua presença.",
       "Elemental": "O Elemental pode gastar um Glamour adicional para aplicar a qualidade 9 de novo à ação ou privá-la da qualidade de 10 de novo.",
-      "Fairest": "A Mais Bela renova um ponto de Força de Vontade se o alvo tiver sucesso excepcionalmente devido a este Contrato em sua presença."
+      "Fairest": "A Belíssima renova um ponto de Força de Vontade se o alvo tiver sucesso excepcionalmente devido a este Contrato em sua presença."
     },
     "source": "Changeling the Lost",
     "page": 132
@@ -191,7 +191,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "O Mirrado corta tão completamente os sentidos de seu alvo que ele também sofre a Condição Desorientada.",
       "Beast": "A Besta também enche sua vítima de agonia, impondo um Leg Wrack ou um Arm Wrack.",
       "Darkling": "O Trevoso pode gastar um ponto de Glamour extra para tornar a distração tão completa que a vítima perca a próxima ação.",
-      "Fairest": "A Mais Bela insere visões idealizadas de si mesmo nas alucinações do alvo, impondo um modificador de –3 no próximo ataque da vítima contra ele.",
+      "Fairest": "A Belíssima insere visões idealizadas de si mesmo nas alucinações do alvo, impondo um modificador de –3 no próximo ataque da vítima contra ele.",
       "Ogre": "O Ogro pode aplicar o Beaten Down Tilt ao alvo se conseguir usar este Contrato."
     },
     "source": "Changeling the Lost",
@@ -219,7 +219,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "O changeling pode tornar o efeito de congelamento permanente gastando também um ponto de Força de Vontade. Poderes sobrenaturais que anulam essa permanência provocam um choque de vontades.",
       "Beast": "A Besta pode usar o efeito de congelamento para curar o dano contundente de uma pessoa, um ponto por turno, até o limite de seus pontos de Sobrevivência. Contanto que este Contrato expire após o dano ter sido curado naturalmente, isso será permanente.",
       "Darkling": "O Trevoso pode usar os efeitos de velocidade e retrocesso sem alterar a aparência do objeto. Isto não é uma ilusão.",
-      "Fairest": "A Mais Bela pode tornar o efeito de retrocesso permanente gastando um ponto de Força de Vontade. Poderes sobrenaturais que anulam essa permanência provocam um choque de vontades.",
+      "Fairest": "A Belíssima pode tornar o efeito de retrocesso permanente gastando um ponto de Força de Vontade. Poderes sobrenaturais que anulam essa permanência provocam um choque de vontades.",
       "Ogre": "O Ogro pode tornar o efeito de aceleração permanente gastando um ponto de Força de Vontade. Poderes sobrenaturais que anulam essa permanência provocam um choque de vontades."
     },
     "source": "Changeling the Lost",
@@ -233,7 +233,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "O Astuto pode obrigar o dispositivo a sair de sua faixa normal de operação. Em vez de permanecer onde está, a arma pode se mover no ar para atingir os oponentes. O changeling decide onde e como o objeto se move a cada turno, com uma Velocidade igual à sua Fado, mas o Contrato termina se o objeto sair do alcance.",
       "Darkling": "O Wisp pode tornar o dispositivo invisível até interagir com algo ou alguém, mas isso provoca um Choque de Vontades com personagens que conseguem ver através das ilusões.",
       "Elemental": "Uma vez por cena, o dispositivo pode produzir o elemento preferido do Elemental como uma ação reflexiva, o suficiente para preencher um metro quadrado.",
-      "Fairest": "A Mais Bela não precisa ter sucesso excepcional para pegar o dispositivo como Retentor, mas ela deve comprá-lo por no mínimo dois pontos.",
+      "Fairest": "A Belíssima não precisa ter sucesso excepcional para pegar o dispositivo como Retentor, mas ela deve comprá-lo por no mínimo dois pontos.",
       "Ogre": "O Ogro aplica seus pontos de Força como penalidade em quaisquer testes feitos para mudar o curso de ação do dispositivo."
     },
     "source": "Changeling the Lost",
@@ -257,7 +257,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Força + Roubo + Fado",
     "loophole": "O changeling persuadiu o dono do original a expressar um sentimento de dívida para com ela, dentro da cena. Isso pode ser sincero, como \"Não esqueci nosso acordo e pagarei em breve\", ou alegre, como \"Café! Devo uma a você!\"",
     "seemingBenefits": {
-      "Fairest": "O Unicórnio recupera o reflexo de um ser vivo. O reflexo roubado carrega uma marca do sobrenatural, como ter seis dedos ou olhos heterocromáticos. Os traços mundanos do reflexo são iguais aos do original ou ao Fado do changeling, o que for menor. Por exemplo, se o original tiver Força 3 e o changeling Fado 2, a Força do reflexo se tornará 2. Ele não possui características sobrenaturais (como Lucidez, Fado ou Contratos). A reflexão roubada é amigável e respeitosa com a Mais Bela. Em uma falha dramática, a pessoa original não sofre nenhum dano, mas o reflexo que o changeling tentou roubar é uma pessoa espelho residente em Hedge que ganha uma Aspiração para punir o changeling no futuro.",
+      "Fairest": "O Unicórnio recupera o reflexo de um ser vivo. O reflexo roubado carrega uma marca do sobrenatural, como ter seis dedos ou olhos heterocromáticos. Os traços mundanos do reflexo são iguais aos do original ou ao Fado do changeling, o que for menor. Por exemplo, se o original tiver Força 3 e o changeling Fado 2, a Força do reflexo se tornará 2. Ele não possui características sobrenaturais (como Lucidez, Fado ou Contratos). A reflexão roubada é amigável e respeitosa com a Belíssima. Em uma falha dramática, a pessoa original não sofre nenhum dano, mas o reflexo que o changeling tentou roubar é uma pessoa espelho residente em Hedge que ganha uma Aspiração para punir o changeling no futuro.",
       "Wizened": "Se o Mirrado gastar um ponto de Glamour adicional, o reflexo roubado retém quaisquer propriedades místicas do original, como uma fruta goblin.",
       "Beast": "A Fera tira uma cópia mais resistente do original. Ele ganha metade de seu Vigor (arredondado para cima) como Durabilidade adicional.",
       "Darkling": "O Trevoso pode usar este Contrato em objetos que mostram até mesmo o menor reflexo.",
@@ -288,7 +288,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "O Selvagem também pode ver em qualquer superfície que atualmente reflita uma pessoa que lhe tenha feito uma promessa ou juramento ou que invoque seu nome, mesmo que a superfície não o tenha refletido anteriormente.",
       "Darkling": "O Trevoso também pode ouvir sons transmitidos pela janela. Se ele desejar, as pessoas do outro lado também poderão vê-lo e ouvi-lo.",
       "Elemental": "O Elemental pode ver através do reflexo perfeitamente, mesmo que esteja opaco (gelo rachado, água lamacenta, etc.).",
-      "Fairest": "A Mais Bela pode gastar um ponto de Força de Vontade para usar um Contrato Comum em um personagem que ela possa ver através do espelho.",
+      "Fairest": "A Belíssima pode gastar um ponto de Força de Vontade para usar um Contrato Comum em um personagem que ela possa ver através do espelho.",
       "Ogre": "O Ogro pode quebrar a superfície reflexiva do outro lado da janela, infligindo dados (Fado) de dano contundente a qualquer um que esteja diretamente na frente dele.",
       "Wizened": "O Mirrado também pode ver qualquer superfície que atualmente reflita uma pessoa que o enganou ou que lhe deve um favor, mesmo que a superfície não o tenha refletido anteriormente."
     },
@@ -316,7 +316,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Darkling": "O Enfeitiçado pode escolher ver um crime ou transgressão passado e infligir a Condição de Culpa ao seu alvo em relação a esse evento.",
       "Elemental": "A Torrente pode optar por ver o próximo evento violento que está por vir e conceder ao seu alvo um pouco de sua resistência para isso. Se o evento acontecer, o alvo ganha os efeitos da Mérito Gigante por uma cena.",
       "Beast": "O Grim ganha +3 para invocar este Contrato se o alvo puder vê-lo.",
-      "Fairest": "A Mais Bela pode visualizar um encontro romântico passado, concedendo a Condição Inspirada ao sujeito em relação a esse evento. Ela não pode usar esse efeito em si mesma.",
+      "Fairest": "A Belíssima pode visualizar um encontro romântico passado, concedendo a Condição Inspirada ao sujeito em relação a esse evento. Ela não pode usar esse efeito em si mesma.",
       "Ogre": "O Ogro pode optar por ver um encontro passado assustador, conferindo a Condição Assustada ao sujeito em relação a esse evento.",
       "Wizened": "O Mirrado pode usar este Contrato em objetos inanimados."
     },
@@ -330,7 +330,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Com um sucesso excepcional, o jogador da Besta pode lançar seus sucessos como dados em um ataque psíquico de Lucidez contra o alvo.",
       "Darkling": "Com um sucesso excepcional, o Trevoso pode emprestar um pouco de sua natureza escorregadia ao alvo: ele ganha Defesa igual ao seu Raciocínio contra o próximo ataque de Lucidez que sofrer. Este efeito dura até o uso ou até o final da sessão, o que ocorrer primeiro.",
       "Elemental": "Com um sucesso excepcional, o próximo ponto de ruptura do Elemental sofre uma penalidade de 1 dado, mas apenas antes do final do capítulo.",
-      "Fairest": "Com um sucesso excepcional, a Mais Bela pode curar um único ponto de dano leve de Lucidez no marcador de Lucidez do alvo.",
+      "Fairest": "Com um sucesso excepcional, a Belíssima pode curar um único ponto de dano leve de Lucidez no marcador de Lucidez do alvo.",
       "Ogre": "Com um sucesso excepcional, o Ogro adiciona +3 ao próximo Contrato que usar sobre o assunto.",
       "Wizened": "Com um sucesso excepcional, o Mirrado abre automaticamente uma porta na próxima vez que se envolver em manobras sociais com o alvo."
     },
@@ -345,7 +345,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "O jogador do Envelhecido pode gastar um ponto de Glamour por ponto adicional no tempo que desejar visualizar. Ele deve especificar um momento de acordo com quem estava presente e as circunstâncias gerais, ou simplesmente ver a última pessoa que manuseou o objeto antes do mais recente que ele já viu.",
       "Beast": "A Besta consegue excepcionalmente, com três sucessos, emboscar a pessoa que tocou o objeto pela última vez, se ela escolher essa opção.",
       "Elemental": "O Elemental ganha a qualidade 8 novamente em vez da qualidade 9 novamente para empunhar o item se escolher essa opção.",
-      "Fairest": "A Mais Bela ganha dois efeitos pelo primeiro Glamour que gasta.",
+      "Fairest": "A Belíssima ganha dois efeitos pelo primeiro Glamour que gasta.",
       "Ogre": "O Ogre pode reduzir a Durabilidade do objeto em três quartos, arredondando para baixo, se ela optar por aplicar essa opção."
     },
     "source": "Changeling the Lost",
@@ -370,7 +370,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling deixa um pouco de seu sangue cair na superfície após sofrer pelo menos 1L de dano nesta cena. A superfície absorve o sangue e mostra a visão acima.",
     "seemingBenefits": {
       "Darkling": "O Mountebank pode usar seu conhecimento para detectar fenômenos sobrenaturais dentro dos eventos refletidos.",
-      "Fairest": "A Mais Bela pode infligir a Condição Alavancada a um dos personagens da visão.",
+      "Fairest": "A Belíssima pode infligir a Condição Alavancada a um dos personagens da visão.",
       "Beast": "A Besta pode ver através dos olhos de qualquer animal refletido na visão.",
       "Elemental": "O Elemental pode ver as auras de qualquer um dentro da reflexão, revelando seus estados emocionais.",
       "Ogre": "O Ogre excepcionalmente consegue usar este Contrato em três sucessos se o evento retratar um momento de violência ou medo.",
@@ -398,7 +398,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling segura um objeto pertencente ao personagem que ele deseja imitar quando invoca este Contrato.",
     "seemingBenefits": {
       "Darkling": "O Enfeitiçado dominou tão perfeitamente um rosto que seu jogador pode comprá-lo como Mérito de Identidade Alternativa em qualquer classificação que desejar. Se o fizer, o changeling pode mudar para ele reflexivamente na cena, gastando um ponto de Glamour. Ele só pode ter uma Identidade Alternativa por vez; se ele decidir mudá-la, basta mudar os pontos de Mérito para a nova aparência. O jogador só pode adquirir uma identidade desta forma se o personagem tiver imitado aquela pessoa pelo menos três vezes no passado.",
-      "Fairest": "A Mais Bela sabe instintivamente se uma ação que planeja realizar está de acordo com a personalidade do alvo que copiou; ganhe três dados de bônus para tentar imitar o comportamento do alvo.",
+      "Fairest": "A Belíssima sabe instintivamente se uma ação que planeja realizar está de acordo com a personalidade do alvo que copiou; ganhe três dados de bônus para tentar imitar o comportamento do alvo.",
       "Beast": "A Besta também pode ganhar uma força de vontade para assumir uma forma com uma personalidade significativamente diferente da sua.",
       "Elemental": "O Elemental também pode ganhar uma força de vontade para assumir uma forma significativamente diferente da sua.",
       "Ogre": "A forma do Ogre dá-lhe alguma protecção contra ataques à sua clarividência. Seu próximo ponto de ruptura enquanto nesta forma é tomado em um modificador –2. Isto só pode ser aplicado uma vez por dia antes do sol cruzar o horizonte.",
@@ -415,7 +415,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "Agindo com precisão e velocidade impossíveis, o Mirrado ganha um ataque surpresa contra qualquer alvo viável, se ele quiser.",
       "Beast": "A Besta pode ser morta e revivida mais de uma vez com este Contrato, desde que possa pagar o custo, mas os reavivamentos subsequentes infligem três danos leves de Lucidez.",
       "Elemental": "O Elemental excepcionalmente sucede este Contrato com três sucessos em vez de cinco.",
-      "Fairest": "A Mais Bela pode aplicar este efeito a outro personagem gastando um Glamour adicional. O changeling estará ciente de quaisquer mudanças que ocorram por causa disso.",
+      "Fairest": "A Belíssima pode aplicar este efeito a outro personagem gastando um Glamour adicional. O changeling estará ciente de quaisquer mudanças que ocorram por causa disso.",
       "Ogre": "Se este contrato a reviver da morte, para o seu próximo ataque bem sucedido, o Ogre ganha um bônus de +5 armas contra aquele que a matou."
     },
     "source": "Changeling the Lost",
@@ -429,7 +429,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "O Ogro se aproxima da furtividade indo lentamente – em vez de voar de sombra em sombra, ele simplesmente permanece perfeitamente imóvel e silencioso até que o risco de ser descoberto passe. Ela pode substituir Vigor por Destreza para determinar quantos companheiros ela pode proteger.",
       "Beast": "A Besta exala uma aura territorial; outros personagens não cobertos pelo Contrato evitarão inconscientemente onde quer que ela esteja.",
       "Elemental": "O Elemental pode criar uma mancha estática de escuridão onde ela fica, desde que haja uma explicação razoável, com um raio de até (Fado) metros.",
-      "Fairest": "A Mais Bela pode ativar este Contrato com Presença em vez de Destreza.",
+      "Fairest": "A Belíssima pode ativar este Contrato com Presença em vez de Destreza.",
       "Wizened": "O Mirrado usa as sombras com mais eficiência, garantindo a qualidade 8 novamente a qualquer teste de Furtividade."
     },
     "source": "Changeling the Lost",
@@ -458,7 +458,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Os primeiros níveis (Fado) de dano que a Besta sofre são contusivos.",
       "Darkling": "O jogador do Trevoso pode testar Fado para evitar o dano deste Contrato, com cada dois sucessos negando um ponto.",
       "Elemental": "O Elemental pode escolher levar um único dano agravado para curar todas as feridas letais e esmagadas do sujeito.",
-      "Fairest": "A Mais Bela pode curar dano agravado usando este Contrato, mas ela deve gastar um ponto de Força de Vontade por ferimento agravado."
+      "Fairest": "A Belíssima pode curar dano agravado usando este Contrato, mas ela deve gastar um ponto de Força de Vontade por ferimento agravado."
     },
     "source": "Changeling the Lost",
     "page": 140
@@ -471,7 +471,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "Personagens que se movem através do Briarpatch sofrem uma penalidade em seus testes de Atletismo igual à Força do Ogro.",
       "Beast": "O modificador de dano do Campo de Espinhos é +2L se a Besta usar esse efeito.",
       "Elemental": "A Força do Elemental penaliza todas as ações de Destreza + Atletismo para evitar ficar preso em seu Briarpatch.",
-      "Fairest": "A Mais Bela pode designar um aliado para ser o centro do raio das amoreiras, e as plantas irão então corresponder aos movimentos desse personagem.",
+      "Fairest": "A Belíssima pode designar um aliado para ser o centro do raio das amoreiras, e as plantas irão então corresponder aos movimentos desse personagem.",
       "Wizened": "Para cada Glamour roubado com Leechweed, o Mirrado cura um dano contundente ou letal (primeiro)."
     },
     "source": "Changeling the Lost",
@@ -486,7 +486,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta marca a ilusão com um sinal de perigo, infligindo a Condição Abalado a qualquer um que tente investigar.",
       "Darkling": "O Trevoso não precisa se mover pela passagem para usar este efeito.",
       "Elemental": "O Elemental não precisa gastar Força de Vontade para prolongar a duração deste Contrato.",
-      "Fairest": "A ilusão da Mais Bela é particularmente bem feita, infligindo -3 em qualquer ação ou Choque de Vontades destinada a revelar sua natureza."
+      "Fairest": "A ilusão da Belíssima é particularmente bem feita, infligindo -3 em qualquer ação ou Choque de Vontades destinada a revelar sua natureza."
     },
     "source": "Changeling the Lost",
     "page": 142
@@ -513,7 +513,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "Hedgewall dura até o próximo sol passar no horizonte.",
       "Darkling": "O Trevoso pode usar pequenas ilusões nas paredes para manter os intrusos fora da base. Eles não podem machucar ninguém fisicamente, mas aplicam seu Fado como penalidade em escaladas e ações que exigem concentração.",
       "Elemental": "O Elemental pode gastar um ponto de Força de Vontade para invocar o sucesso excepcional deste Contrato.",
-      "Fairest": "O castelo da Mais Bela é transcendentalmente esplêndido, e mesmo inimigos terríveis terão dificuldade em desviar o olhar de suas delícias. Todos os intrusos sofrem -2 em Autocontrole.",
+      "Fairest": "O castelo da Belíssima é transcendentalmente esplêndido, e mesmo inimigos terríveis terão dificuldade em desviar o olhar de suas delícias. Todos os intrusos sofrem -2 em Autocontrole.",
       "Wizened": "O Mirrado pode criar sentinelas inanimadas ao redor de seu castelo e pode passar um turno se concentrando como uma ação instantânea para olhar através de uma delas."
     },
     "source": "Changeling the Lost",
@@ -523,7 +523,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Determinação + Compostura + Fado",
     "loophole": "O changeling veste uma manopla de metal por um lado e uma luva de seda por outro, ao invocar este Contrato. A manopla não precisa ser autêntica – um adereço de fantasia é suficiente, desde que seja feito de metal real.",
     "seemingBenefits": {
-      "Fairest": "A Mais Bela supera suas circunstâncias e pode invocar este Contrato para se proteger de situações que lhe são infligidas.",
+      "Fairest": "A Belíssima supera suas circunstâncias e pode invocar este Contrato para se proteger de situações que lhe são infligidas.",
       "Ogre": "O Ogro pode invocar este Contrato para proteger um de seus companheiros.",
       "Beast": "A determinação da Fera é tão grande que inspira seus companheiros. Se ela evitar um ponto de ruptura com este efeito, seus aliados na cena ganham +3 em suas próximas ações.",
       "Darkling": "Se o Trevoso não precisar deste efeito em uma cena, ele poderá reembolsar o custo de Força de Vontade.",
@@ -580,7 +580,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling segura um ursinho de pelúcia ou outro objeto de conforto infantil que pertença ao alvo, enquanto usa este Contrato.",
     "seemingBenefits": {
       "Beast": "A Besta pode assumir a aparência de qualquer um dos pesadelos do adormecido que ele testemunhou. Uma vez durante o capítulo atual, ele pode infligir a Condição Assustada a ela enquanto interage com ela no mundo desperto.",
-      "Fairest": "A Mais Bela vê um vislumbre da alma do sonhador, concedendo-lhe a Condição Informada em relação a quem dorme.",
+      "Fairest": "A Belíssima vê um vislumbre da alma do sonhador, concedendo-lhe a Condição Informada em relação a quem dorme.",
       "Darkling": "O Trevoso sabe que coisas fascinantes se escondem na mente do sonhador, ganhando a Condição Inspirada.",
       "Elemental": "O Elemental pode aparecer como qualquer pessoa que o sonhador conheça na vida real.",
       "Ogre": "O Ogro pode assumir a aparência de qualquer sonho positivo que tenha testemunhado. Uma vez durante o capítulo atual, ela pode optar por conceder ao sonhador a Condição Steadfast.",
@@ -597,7 +597,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "Os passos do Domovoi deixam armadilhas em seu rastro, de acordo com a Qualidade Lugar Seguro (pág. 125) com pontos efetivos iguais à sua Destreza.",
       "Darkling": "O Trevoso recebe +3 em qualquer teste de Choque de Vontades feito contra este efeito.",
       "Elemental": "O Elemental pode criar uma trilha falsa em algum lugar próximo gastando um Glamour adicional.",
-      "Fairest": "A Mais Bela pode criar uma distração natural para deslumbrar qualquer perseguidor que esteja procurando especificamente por ela, como um lindo canteiro de flores. Eles devem estudá-lo por pelo menos um minuto ou gastar um ponto de Força de Vontade.",
+      "Fairest": "A Belíssima pode criar uma distração natural para deslumbrar qualquer perseguidor que esteja procurando especificamente por ela, como um lindo canteiro de flores. Eles devem estudá-lo por pelo menos um minuto ou gastar um ponto de Força de Vontade.",
       "Ogre": "Em vez de não deixar rastros, o Ogro pode criar um caminho definido que garanta segurança, adicionando +2 à Defesa de qualquer aliado enquanto segue seu rastro."
     },
     "source": "Changeling the Lost",
@@ -611,7 +611,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Wizened": "O Mirrado sabe automaticamente se as frutas goblins que crescem nas proximidades são benéficas ou prejudiciais e coleta seus tipos.",
       "Darkling": "O Trevoso sabe automaticamente que tipo de mercadorias qualquer Mercado Goblin próximo a ela está vendendo e se os proprietários são (em geral) honestos ou não.",
       "Elemental": "O Elemental também pode apontar o exemplo mais próximo de seu elemento favorecido.",
-      "Fairest": "Se a Mais Bela se depara com mais de uma opção que se adapta ao seu destino, ela sabe instintivamente qual é a melhor escolha.",
+      "Fairest": "Se a Belíssima se depara com mais de uma opção que se adapta ao seu destino, ela sabe instintivamente qual é a melhor escolha.",
       "Ogre": "O Ogro também conhece os caminhos mais seguros para chegar ao alvo pretendido."
     },
     "source": "Changeling the Lost",
@@ -625,7 +625,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "O Ogro pode usar seu salto como um ataque desarmado para esmagar um inimigo, adicionando dois pontos à sua Força para a jogada de ataque e infligindo a Inclinação Derrubada se acertar.",
       "Darkling": "O Trevoso pode usar esse salto para se esconder de um inimigo, o que não exige nenhum teste, desde que haja um local razoavelmente escondido para pousar.",
       "Elemental": "O Elemental pode mudar sua trajetória no ar, desafiando as leis da física. Ela pode fazer isso uma vez por uso deste Contrato.",
-      "Fairest": "A Mais Bela comanda o vento para levá-la ainda mais longe, movendo-se 15 metros por ponto de Fado em vez de 10.",
+      "Fairest": "A Belíssima comanda o vento para levá-la ainda mais longe, movendo-se 15 metros por ponto de Fado em vez de 10.",
       "Wizened": "O Mirrado sabe exatamente onde pousar para obter a melhor vantagem, ganhando seu Fado como bônus em sua próxima ação Física."
     },
     "source": "Changeling the Lost",
@@ -639,7 +639,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "O personagem pode escolher animais de até tamanho 15 para se transformar.",
       "Darkling": "O Enfeitiçado pode ter uma forma menor que Tamanho 0 (como um inseto), mas sempre requer um Glamour adicional para ser adquirido.",
       "Elemental": "O Elemental pode combinar suas duas formas para obter Força de Vontade, usando as características mais altas, exceto Tamanho, que ela pode escolher se houver uma diferença.",
-      "Fairest": "Se a Mais Bela usar uma forma mítica, ela poderá adquirir um poder sobrenatural apropriado: Escolha um Poder Terrível para acessar, sujeito à aprovação do Narrador.",
+      "Fairest": "Se a Belíssima usar uma forma mítica, ela poderá adquirir um poder sobrenatural apropriado: Escolha um Poder Terrível para acessar, sujeito à aprovação do Narrador.",
       "Wizened": "O Mirrado pode assumir a forma de máquinas animalescas, ganhando 1/1 de armadura contra todos os ataques e permitindo que ela escolha um único Atributo Físico para mudar um ponto de quando ela se transforma (ou seja, se uma forma de cão-robô tiver Vigor 3 e Força 2, ela pode mudar um ponto do primeiro para o último)."
     },
     "source": "Changeling the Lost",
@@ -652,7 +652,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "O Selvagem pode estender livremente este Contrato a qualquer pessoa que encontrar em sua jornada, desde que gaste o custo de Força de Vontade para incluir outras pessoas uma vez.",
       "Elemental": "O caminho se torna quase intransponível na esteira do Elemental e sofre os efeitos mecânicos do Ice Tilt com especificidades apropriadas ao seu elemento associado.",
       "Darkling": "O Trevoso pode se esquivar completamente do tempo, congelando sua passagem por turnos (Fado) antes que o efeito normal deste Contrato se aplique. Ela só pode fazer isso uma vez por dia.",
-      "Fairest": "A Mais Bela não precisa gastar um ponto de Força de Vontade para estender esse efeito aos seus heterogêneos ou àqueles com quem ela tem um juramento ou uma barganha.",
+      "Fairest": "A Belíssima não precisa gastar um ponto de Força de Vontade para estender esse efeito aos seus heterogêneos ou àqueles com quem ela tem um juramento ou uma barganha.",
       "Ogre": "Vítimas involuntárias deste efeito devem infligir dano letal ao Ogro com seu Vigor antes que possam tentar se libertar.",
       "Wizened": "Antes que a duração expire, o Envelhecido pode gastar um Glamour reflexivamente para alterar a passagem do tempo na direção oposta de quando invocou o Contrato, inclusive para aqueles que ele também foi afetado."
     },
@@ -666,7 +666,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta pode permitir que a devastação do tempo atinja alvos sencientes, infligindo a Condição Desorientada. O alvo deve encontrar um aliado para resolvê-lo (os pontos de referência não ajudam) ou deixá-lo desaparecer sem resolução no final da cena em que ele chega.",
       "Darkling": "Ao chegar no futuro, o alvo não se lembra da cena em que o Mountebank invocou este Contrato. Este efeito é permanente, a menos que invertido através de meios sobrenaturais, que desencadeia um Confronto de Vontades contra changeling.",
       "Elemental": "O Elemental pode enviar o alvo para qualquer lugar dentro de (Fado × 2) quilômetros se gastar um ponto de Força de Vontade.",
-      "Fairest": "A mais bela pode usar este contrato em si mesma.",
+      "Fairest": "A Belíssima pode usar este contrato em si mesma.",
       "Ogre": "O Ogre pode conceder a seu sujeito alguma proteção contra um futuro desconhecido, concedendo 2/2 armadura ou 3 níveis de Durabilidade para uma cena na chegada.",
       "Wizened": "O Mirrado pode definir uma duração para a viagem do sujeito ao futuro, gastando uma força de vontade. Quando a duração expira, eles retornam para o momento em que desapareceram, mas eles também ganham a Condição Abalada por serem trocados no tempo. Esta duração não pode ser superior a (Fado) horas."
     },
@@ -680,7 +680,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta pode encerrar o Contrato antes de chegar ao outro lado, depositando-se deliberadamente no espaço do espelho; seu jogador ganha um bônus de dois dados em todos os testes para navegar até lá ou lidar com seus habitantes na cena.",
       "Elemental": "O Sprite fica espelhado após sair do portal, refletindo apenas o que já está na sala. Isso o torna invisível a olho nu por um número de minutos igual aos sucessos obtidos para invocar o Contrato.",
       "Darkling": "Com um sucesso excepcional, o Trevoso pode gastar um ponto de Força de Vontade para tornar o portal indefinido. No entanto, ele se estilhaça se tocar no ferro.",
-      "Fairest": "Em um sucesso excepcional, a Mais Bela pode pedir ao espelho para ser seletivo sobre quem ele deixa passar, restringindo a entrada a um grupo seleto ou negando uma categoria específica de pessoas.",
+      "Fairest": "Em um sucesso excepcional, a Belíssima pode pedir ao espelho para ser seletivo sobre quem ele deixa passar, restringindo a entrada a um grupo seleto ou negando uma categoria específica de pessoas.",
       "Ogre": "O Ogro pode armar uma armadilha se tiver sucesso excepcionalmente, deixando o portal do espelho aberto, mas infligindo dados (Fado) de dano letal a qualquer um que tentar segui-lo.",
       "Wizened": "O Mirrado pode deixar o portal aberto com um sucesso excepcional, mas uma vez que ele e seus aliados estejam no local pretendido, a saída do espelho de entrada é aleatória dentro de (Fado × 2) quilômetros."
     },
@@ -722,7 +722,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta pode roubar Destreza; ela decide qual Atributo ela rouba quando invoca o Contrato.",
       "Elemental": "O Elemental também ganha temporariamente os efeitos do Mérito Gigante.",
       "Darkling": "A transformação e a sanguessuga do Trevoso aterrorizam sua vítima, infligindo a Condição Abalado se ela roubar todo o seu Atributo.",
-      "Fairest": "A Mais Bela pode exceder seu limite de Atributo derivado de Fado em um com este efeito.",
+      "Fairest": "A Belíssima pode exceder seu limite de Atributo derivado de Fado em um com este efeito.",
       "Ogre": "O Ogro obtém excepcionalmente sucesso em ações para controlar agarramentos com três sucessos em vez de cinco.",
       "Wizened": "Em vez disso, o Mirrado pode roubar Vigor; ela decide qual Atributo ela rouba quando invoca o Contrato."
     },
@@ -734,7 +734,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling fica nas sombras e pega o alvo de surpresa.",
     "seemingBenefits": {
       "Elemental": "A Elemental pode invocar esse poder em um alvo adicional, contestado separadamente por cada um, enquanto ela infunde pavor no próprio ar.",
-      "Fairest": "A Mais Bela pode optar por fazer o alvo temer o que está ao seu redor e depois confortá-lo. Ele ganha a Condição Desmaiado em relação a ela.",
+      "Fairest": "A Belíssima pode optar por fazer o alvo temer o que está ao seu redor e depois confortá-lo. Ele ganha a Condição Desmaiado em relação a ela.",
       "Beast": "A Besta pode, em vez disso, provocar os instintos mais básicos da vítima, infligindo a Condição Bestial.",
       "Darkling": "O Trevoso pode fazer com que a Condição Assustada dure uma cena adicional antes de desaparecer.",
       "Ogre": "O Ogro aplica a qualidade 9 novamente no teste para invocar este Contrato.",
@@ -751,7 +751,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "O resistente Ogro é totalmente imune a instâncias mágicas do elemento escolhido.",
       "Beast": "A armadura da Besta é tão mortal quanto ela, causando 2 de dano letal em vez de 1.",
       "Darkling": "A armadura do Trevoso lhe proporciona vivacidade, adicionando a qualidade 9 de novo às rolagens de Esquiva.",
-      "Fairest": "A Mais Bela ganha uma aura de majestade primordial em sua armadura, ganhando um modificador de +1 em Presença enquanto durar.",
+      "Fairest": "A Belíssima ganha uma aura de majestade primordial em sua armadura, ganhando um modificador de +1 em Presença enquanto durar.",
       "Wizened": "O inteligente Mirrado ganha um ponto adicional de armadura geral ou balística (escolha do jogador)."
     },
     "source": "Changeling the Lost",
@@ -793,7 +793,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Elemental": "O Elemental pode tornar óbvios os detalhes da promessa quebrada do alvo para qualquer um que esteja assistindo, divulgando sua vergonha e infligindo a Condição de Notoriedade sobre ele.",
       "Beast": "A Besta está mais interessada em fazer seu súdito pecar novamente. Ao gastar um ponto de Força de Vontade, ele também inflige a Condição Devassa à vítima.",
       "Darkling": "O Trevoso não se importa com o que sua vítima faz, desde que ela sofra. Ele assume a condição Assustado no final do pesadelo.",
-      "Fairest": "A Mais Bela garante o arrependimento de sua vítima ou pelo menos ajuda a fortalecer sua determinação. Ao gastar um ponto de Força de Vontade, ele também inflige a Condição Obsessão ao alvo em relação a fazer as pazes com a ofensa mais grave.",
+      "Fairest": "A Belíssima garante o arrependimento de sua vítima ou pelo menos ajuda a fortalecer sua determinação. Ao gastar um ponto de Força de Vontade, ele também inflige a Condição Obsessão ao alvo em relação a fazer as pazes com a ofensa mais grave.",
       "Ogre": "As ilusões do Ogro são literalmente dolorosas de assistir, infligindo até (Fado) dados de dano contundente por pesadelo que ele criar."
     },
     "source": "Changeling the Lost",
@@ -807,7 +807,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "Os ataques do Ogro também infligem a inclinação derrubada.",
       "Beast": "A Fera excepcionalmente consegue todos os testes de Atletismo e Briga com três sucessos em vez de cinco.",
       "Darkling": "O Trevoso também adiciona +3 à Defesa.",
-      "Fairest": "A Mais Bela adiciona +5 a um único Atributo (escolha do jogador) além do efeito usual.",
+      "Fairest": "A Belíssima adiciona +5 a um único Atributo (escolha do jogador) além do efeito usual.",
       "Wizened": "O Mirrado pode conceder o efeito deste Contrato a outro caráter disposto."
     },
     "source": "Changeling the Lost",
@@ -832,7 +832,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "Changeling convenceu o sujeito a fazer uma declaração duvidando de sua própria sanidade, dentro desta cena. Esta declaração funciona mesmo se ela foi feita em hipérbole ou brincadeira, como \"meu chefe está me deixando louco!\"",
     "seemingBenefits": {
       "Elemental": "Os sucessos obtidos no ataque de Lucidez são adicionados ao Fado do changeling para fins de determinar a reserva de dano de Lucidez.",
-      "Fairest": "A Mais Bela pode pagar um ponto adicional de Glamour para adiar o efeito até que um gatilho de sua escolha ocorra. Se o gatilho não acontecer dentro de um dia, o Contrato termina.",
+      "Fairest": "A Belíssima pode pagar um ponto adicional de Glamour para adiar o efeito até que um gatilho de sua escolha ocorra. Se o gatilho não acontecer dentro de um dia, o Contrato termina.",
       "Beast": "Se a vítima sofrer dano de Lucidez, ela também ganha a Condição Acovardada.",
       "Darkling": "O Trevoso pode implantar uma memória falsa do que causou o ponto de ruptura, fazendo a vítima acreditar que foi outra fonte que não o Mountebank.",
       "Ogre": "O Ogro pode escolher limitar o dano de Lucidez que a vítima sofre, independentemente dos resultados de seu teste de Fado (até um mínimo de 1). Usar este efeito aplica –1 ao seu próprio ponto de ruptura.",
@@ -1346,7 +1346,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling unge seu cavaleiro com seu próprio sangue como a cerimônia de cavalaria exigida; ela deve derramar esse sangue infligindo pelo menos um ponto de dano letal a si mesma na mesma cena. Sangue de ferimentos que ela não causou a si mesma não conta.",
     "seemingBenefits": {
       "Darkling": "Se o cavaleiro desobedecer ou trair o Trevoso, ela saberá não apenas o que aconteceu, mas exatamente quando e onde, bem como quais emoções o cavaleiro sentiu naquele momento.",
-      "Fairest": "A mais bela pode conceder a cavalaria a uma série de alvos iguais ao seu Fado com uma invocação, desde que ela possa realizar o gesto cerimonial em cada um deles separadamente."
+      "Fairest": "A Belíssima pode conceder a cavalaria a uma série de alvos iguais ao seu Fado com uma invocação, desde que ela possa realizar o gesto cerimonial em cada um deles separadamente."
     },
     "source": "Kith and Kin",
     "page": 46
@@ -1376,7 +1376,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "Changeling fornece ao buscador uma provisão de uso e valor significativos para ajudar na busca, como uma arma, um símbolo, acesso a uma instalação privada, etc.",
     "seemingBenefits": {
       "Darkling": "Se o Trevoso falhar em fornecer a recompensa acordada a tempo depois que a missão for concluída, ele pode gastar 1 de Força de Vontade e testar Manipulação + Furto + Fado vs.",
-      "Fairest": "A Mais Bela pode emitir a mesma missão para um número de indivíduos até metade de seu Fado com uma invocação; no entanto, as recompensas oferecidas devem ser proporcionais às missões adicionais."
+      "Fairest": "A Belíssima pode emitir a mesma missão para um número de indivíduos até metade de seu Fado com uma invocação; no entanto, as recompensas oferecidas devem ser proporcionais às missões adicionais."
     },
     "source": "Kith and Kin",
     "page": 48
@@ -1623,7 +1623,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "Changeling apresentou-se pelo seu nome verdadeiro a alguém que nunca conheceu na mesma cena.",
     "seemingBenefits": {
       "Beast": "O Courser dobra sua velocidade para a cena após chegar ao local do locutor.",
-      "Fairest": "A Mais Bela pode arrastar aquele que falou seu nome para sua localização."
+      "Fairest": "A Belíssima pode arrastar aquele que falou seu nome para sua localização."
     },
     "source": "Kith and Kin",
     "page": 62
@@ -1662,7 +1662,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Força + Ofícios + Fado",
     "loophole": "Changeling defendeu-se com sucesso de um ataque dentro da mesma cena.",
     "seemingBenefits": {
-      "Fairest": "Se a Mais Bela invocar este Contrato dentro da Cerca, a fortaleza também vem com uma Mérito de Cajado temporária (Changeling, p. 125) com uma pontuação de metade de sua Fado representando seguidores hobgoblins; seus tipos e habilidades devem fazer sentido no contexto de uma fortaleza, como soldados com armamento, batedores com furtividade ou médicos com medicina.",
+      "Fairest": "Se a Belíssima invocar este Contrato dentro da Cerca, a fortaleza também vem com uma Mérito de Cajado temporária (Changeling, p. 125) com uma pontuação de metade de sua Fado representando seguidores hobgoblins; seus tipos e habilidades devem fazer sentido no contexto de uma fortaleza, como soldados com armamento, batedores com furtividade ou médicos com medicina.",
       "Ogre": "Subtraia sucessos iguais à metade do Fado do Ogro de qualquer ação de Hedgespinning que outro personagem realize para realizar mudanças na fortaleza ou em qualquer parte de seu interior."
     },
     "source": "Kith and Kin",
@@ -1707,7 +1707,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A proteção da Besta também se estende a todos os animais normais, e os bônus sociais concedidos pelo Contrato aplicam-se tanto aos animais quanto aos humanos.",
       "Darkling": "O Trevoso ganha +2 de Defesa durante o Contrato.",
       "Elemental": "Elementais ganham imunidade a danos de seu elemento específico (ou do elemento análogo mais próximo) durante a vigência do Contrato.",
-      "Fairest": "A Mais Bela não pode sofrer uma Falha Dramática, tratando qualquer falha como uma Falha normal.",
+      "Fairest": "A Belíssima não pode sofrer uma Falha Dramática, tratando qualquer falha como uma Falha normal.",
       "Ogre": "O Ogro ganha 1/1 de Armadura durante o Contrato.",
       "Wizened": "O Mirrado não sofre penalidade de Defesa devido ao número de atacantes ou perigos contra os quais ele se defende em um turno."
     },
@@ -1721,7 +1721,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta pode adicionar as seguintes Condições: Bonded ou Easy Prey.",
       "Darkling": "O Trevoso pode adicionar as seguintes Condições: Informado ou Assustado.",
       "Elemental": "O Elemental pode adicionar as seguintes Condições: Estóico ou Tenso.",
-      "Fairest": "A Mais Bela pode adicionar as seguintes Condições: Inspirado ou Desmaiado",
+      "Fairest": "A Belíssima pode adicionar as seguintes Condições: Inspirado ou Desmaiado",
       "Ogre": "O Ogro pode adicionar as seguintes Condições: Imprudente ou Constante.",
       "Wizened": "O Mirrado pode adicionar as seguintes Condições: Cativado ou Volátil."
     },
@@ -1735,7 +1735,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Os sentidos aguçados do Selvagem também concedem +1 à Habilidade de Investigação.",
       "Darkling": "A natureza clandestina do Lurker também confere +1 à habilidade Furtividade.",
       "Elemental": "A ferocidade do Torrent também confere +1 à habilidade Brawl.",
-      "Fairest": "O charme e a graça naturais da Mais Bela também concedem +1 à Habilidade de Persuasão.",
+      "Fairest": "O charme e a graça naturais da Belíssima também concedem +1 à Habilidade de Persuasão.",
       "Ogre": "A tenacidade do Bruto também confere +1 à Habilidade de Sobrevivência.",
       "Wizened": "As habilidades naturais do Tinker também conferem +1 à habilidade Crafts."
     },
@@ -1749,7 +1749,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Durante a vigência do Contrato, a Besta pode compreender qualquer animal com quem ela se comunica e eles podem entendê-la.",
       "Darkling": "Durante a vigência do Contrato, o Trevoso pode falar com as sombras de pessoas e coisas. As sombras são quietas e observadoras, testemunhando muitas coisas que a maioria das pessoas desconhece.",
       "Elemental": "Durante a vigência do Contrato, o Elemental pode falar com qualquer “elemento” em seu “idioma” nativo. Os elementos tendem a ter personalidades que correspondem às suas naturezas; Perdidos usando este contrato foram avisados.",
-      "Fairest": "A Mais Bela ganha um bônus de +3 em todos os testes de Expressão feitos enquanto o Contrato estiver em vigor; ser fluente em vários idiomas aumenta sua eloquência.",
+      "Fairest": "A Belíssima ganha um bônus de +3 em todos os testes de Expressão feitos enquanto o Contrato estiver em vigor; ser fluente em vários idiomas aumenta sua eloquência.",
       "Ogre": "O Ogro ganha um bônus de +3 em todas as jogadas de Intimidação enquanto o Contrato estiver em vigor; ser fluente em palavrões e ameaças em vários idiomas pode ser uma vantagem.",
       "Wizened": "Durante a vigência do Contrato, o Funileiro pode compreender qualquer linguagem de máquina ou código de programação e pode “falar” com computadores e outros dispositivos e receber informações."
     },
@@ -1763,7 +1763,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta pode aplicar o Contrato em tentativas de rastreamento, lendo os sinais e rastros da passagem de animais e outras criaturas em uma área; ele detecta automaticamente todas as tentativas mundanas de esconder uma trilha (como varrer trilhas ou atravessar um riacho). A ocultação mágica inicia o teste de Choque de Vontades, acima.",
       "Darkling": "Os Enfeitiçados ganham +3 dados no teste de Choque de Vontades ao decifrar qualquer mensagem magicamente codificada, seja essa cifra feita usando este Contrato ou alguma outra magia.",
       "Elemental": "Os Torrents podem usar este Contrato para codificar mensagens nos próprios elementos; uma brisa murmura uma mensagem secreta ao destinatário pretendido, ou os estalos e crepitações de um fogo transmitem uma mensagem a todos aqueles que estão ao redor de seu incêndio.",
-      "Fairest": "A Mais Bela recebe +3 dados no teste de Choque de Vontades quando alguém tenta decodificar sua mensagem oculta.",
+      "Fairest": "A Belíssima recebe +3 dados no teste de Choque de Vontades quando alguém tenta decodificar sua mensagem oculta.",
       "Ogre": "Os Bruisers criam cifras tão robustas que exigem dois testes de Choque de Vontades para decodificar; se falhar, a tentativa falha.",
       "Wizened": "Os Tinkers podem aplicar este Contrato ao código de máquina e a qualquer linguagem de computador para determinar o que um programa específico faz apenas olhando um trecho de código ou disco contendo o programa."
     },
@@ -1777,7 +1777,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta pode usar este Contrato em qualquer tipo de covil, como entrada de caverna, toca ou até mesmo Portão de Cerca. Neste caso, objetos naturais como pedras, arbustos, arbustos, galhos de árvores e coisas semelhantes barram a entrada com a mesma segurança que uma “porta” real.",
       "Darkling": "Se o Trevoso tiver sucesso em um teste de Destreza + Furtividade e não for observado, ele pode obscurecer o portal, exigindo essencialmente dois testes de Choque de Vontades; um para localizá-lo e um segundo para abri-lo.",
       "Elemental": "Aqueles que conseguem superar o bloqueio e vencer o Choque de Vontades sofrem um número de pontos de dano contundente igual ao Manto do Elemental por seu problema.",
-      "Fairest": "Se o portal não tiver nenhum tipo de bloqueio, a Mais Bela recebe +3 dados no teste de Choque de Vontades.",
+      "Fairest": "Se o portal não tiver nenhum tipo de bloqueio, a Belíssima recebe +3 dados no teste de Choque de Vontades.",
       "Ogre": "O Ogro adiciona sua classificação de Manto à Durabilidade do fechamento para tentativas de resistir a danos ou destruição.",
       "Wizened": "Se o portal tiver algum tipo de fechadura, o Funileiro recebe +3 dados no teste de Choque de Vontades."
     },
@@ -1805,7 +1805,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Os sentidos aguçados da Besta podem localizar todo e qualquer dispositivo de escuta/espionagem nas imediações, bem como dizer quando os sentidos de alguém foram cooptados por outro. Aqueles obscurecidos pela magia provocam um Choque de Vontades para localizar, ao qual a Besta adiciona +2.",
       "Darkling": "A proteção Trevoso também afeta a visão, cobrindo a área com mudanças, ocultando sombras para que os observadores não possam ver ou ouvir quem está presente ou o que estão discutindo.",
       "Elemental": "A Torrente pode enviar feedback mágico para aqueles que tentam vidência misticamente sobre ela e seus companheiros, causando um ponto de dano letal ao conjurador ofensor e provocando um Choque de Vontades para encerrar o feitiço ofensor.",
-      "Fairest": "A Mais Bela ganha +3 dados em qualquer disputa de Conflito de Vontades para perfurar sua proteção.",
+      "Fairest": "A Belíssima ganha +3 dados em qualquer disputa de Conflito de Vontades para perfurar sua proteção.",
       "Ogre": "O poder do Bruto faz com que aqueles que falham no Choque de Vontades sofram imediatamente a Inclinação Insensata devido à reação mágica.",
       "Wizened": "O Chapeleiro pode devolver os dispositivos eletrônicos de escuta aos seus proprietários, ouvindo qualquer coisa falada pela(s) pessoa(s) que plantou(m) os dispositivos."
     },
@@ -1819,7 +1819,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Os efeitos do Contrato se aplicam a todo e qualquer animal, mundano ou besta-sebe, que tente rastrear ou esteja sendo usado para rastrear o personagem.",
       "Darkling": "Os registros em papel do personagem, desde contratos de aluguel até recibos de cartão de crédito, são perdidos durante a vigência do Contrato, impedindo que alguém localize tais informações sobre o personagem durante a vigência do Contrato.",
       "Elemental": "Ao viajar por qualquer cenário natural, como uma floresta, deserto ou até mesmo um parque, o Elemental ganha +3 dados para ativar este Contrato, pois os elementos naturais ajudam a cobrir seus rastros e obscurecer seu rastro.",
-      "Fairest": "Qualquer pessoa que a Mais Bela conheça não conseguirá se lembrar de quaisquer detalhes sobre ela durante a vigência do Contrato, impedindo que os perseguidores obtenham qualquer informação de amigos, familiares e conhecidos.",
+      "Fairest": "Qualquer pessoa que a Belíssima conheça não conseguirá se lembrar de quaisquer detalhes sobre ela durante a vigência do Contrato, impedindo que os perseguidores obtenham qualquer informação de amigos, familiares e conhecidos.",
       "Ogre": "Ao viajar por qualquer ambiente urbano, o Ogro ganha +3 dados para ativar este Contrato, pois os recursos feitos pelo homem, incluindo lixo e entulhos de construção, ajudam a cobrir seus rastros e obscurecer seu rastro.",
       "Wizened": "Os efeitos do Contrato também se aplicam aos meios eletrônicos de rastreamento, vigilância e observação, incluindo câmeras, detectores de movimento e até caixas eletrônicos."
     },
@@ -1833,7 +1833,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta ganha a cooperação de qualquer animal próximo que possa lhe fornecer informações sobre outros perigos potenciais ou sobre os movimentos de seus inimigos.",
       "Darkling": "O Trevoso ganha +3 dados em todos os testes de Furtividade e pode tentar um teste de Furtividade mesmo se estiver sendo observado; sucesso significa que o observador perde o controle do changeling.",
       "Elemental": "O Elemental aplica metade de seu Fado (arredondado para baixo) como penalidade a qualquer um que tente segui-lo ou rastreá-lo.",
-      "Fairest": "A Mais Bela arredonda seu valor de Fado ao determinar o número de penalidades a serem ignoradas.",
+      "Fairest": "A Belíssima arredonda seu valor de Fado ao determinar o número de penalidades a serem ignoradas.",
       "Ogre": "O Bruto ganha 1/1 de Armadura contra todas as armas naturais, incluindo garras e dentes de animais, porretes de madeira e pedra, etc. (mas não contra armas feitas pelo homem ou modificadas, como espadas ou balas).",
       "Wizened": "O Mirrado pode gastar 2 pontos adicionais de Glamour para aplicar os efeitos deste Contrato a um veículo não maior que um pequeno sedã de quatro portas (e, portanto, a todos dentro dele)."
     },
@@ -1847,7 +1847,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Os sentidos aguçados da Besta permitem que ele detecte qualquer pessoa em um raio de (Fado x 10) metros, apesar da fumaça obscurecedora, para que ele permaneça ciente de todos os inimigos e aliados.",
       "Darkling": "O Trevoso adiciona automaticamente o elemento de sombra a este Contrato e dobra a distância que ele pode se teletransportar através das sombras apenas para (Fado x 10) metros.",
       "Elemental": "O Torrent ganha automaticamente um segundo elemento de sua escolha para usar com este Contrato. Se o elemento escolhido estiver relacionado à sua aparência, ele dobra a distância que pode se teletransportar através daquele elemento apenas para (Fado x 10) metros.",
-      "Fairest": "A Mais Bela pode gastar 1 ponto de Glamour e tocar um oponente para transportá-lo através da fumaça até (Fado x 10) metros. O alvo pode fazer um Choque de Vontades com a Mais Bela adicionando +3 à sua parada de dados para evitar o efeito.",
+      "Fairest": "A Belíssima pode gastar 1 ponto de Glamour e tocar um oponente para transportá-lo através da fumaça até (Fado x 10) metros. O alvo pode fazer um Choque de Vontades com a Belíssima adicionando +3 à sua parada de dados para evitar o efeito.",
       "Ogre": "O Bruto pode carregar uma pessoa adicional com ele pelo custo de 1 Glamour adicional ao usar este Contrato.",
       "Wizened": "O Domovoi poderá, ao custo de 2 Glamour adicionais, aplicar os efeitos deste Contrato a um veículo não maior que um sedã médio de quatro portas (e, consequentemente, a todos aqueles dentro do veículo)."
     },
@@ -2308,7 +2308,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Se a refeição for uma que a própria Besta matou, ela conta como dois níveis de Tamanho maiores para todos os efeitos deste Contrato, salvo o requisito.",
       "Darkling": "Se a criatura banqueteada for sobrenatural de alguma forma, o banquete do Trevoso cura um ponto adicional de dano.",
       "Elemental": "Se o Elemental infundir a refeição com o elemento escolhido, ele curará um ponto adicional de dano, mas isso pode comprometer a refeição de outros.",
-      "Fairest": "A Mais Bela pode optar por restaurar a Força de Vontade de todos os participantes em vez de curar os danos.",
+      "Fairest": "A Belíssima pode optar por restaurar a Força de Vontade de todos os participantes em vez de curar os danos.",
       "Ogre": "O Ogro requer apenas cinco minutos para consumir sua refeição e obter os benefícios, embora os hóspedes que não sejam Bruiser tenham que demorar mais.",
       "Wizened": "A frugal Mirrado não precisa pagar nenhum Glamour adicional por participantes adicionais até que ela adicione um terceiro."
     },
@@ -2322,7 +2322,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Se a Besta consumir uma criatura de Tamanho 2 ou maior com seu vórtice, ela recupera um ponto de Força de Vontade gasta.",
       "Darkling": "O vórtice do Trevoso também afeta seres efêmeros, danificando suas características Corpus. Se tal ser fosse “morto”, ele se desincorporaria.",
       "Elemental": "O Elemental conta a Durabilidade dos objetos capturados na área como um a menos.",
-      "Fairest": "A Mais Bela pode escolher drenar a vontade daqueles que foram pegos no vórtice em vez de drenar sua carne. As vítimas perdem 1 ponto de Força de Vontade por diferença de sucessos. Se o changeling escolher este efeito, os objetos no vórtice permanecerão ilesos. Ogros: O Ogro pode devorar objetos de até seu tamanho mais um.",
+      "Fairest": "A Belíssima pode escolher drenar a vontade daqueles que foram pegos no vórtice em vez de drenar sua carne. As vítimas perdem 1 ponto de Força de Vontade por diferença de sucessos. Se o changeling escolher este efeito, os objetos no vórtice permanecerão ilesos. Ogros: O Ogro pode devorar objetos de até seu tamanho mais um.",
       "Wizened": "Se um Chapeleiro causar dano a qualquer vítima que possua Glamour com seu vórtice, ele drenará um ponto de Glamour dela e o adicionará à sua própria reserva (o Glamour acima do seu máximo será perdido)."
     },
     "source": "Book of Seemings",
@@ -2349,7 +2349,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Se a Fera for forçada a vomitar sua vítima mais cedo, ela sofrerá mais cinco pontos de dano contundente na saída.",
       "Darkling": "O Trevoso pode engolir seres efêmeros contidos, amarrados ou indefesos, mas tal vítima não sofre danos ao ser engolido.",
       "Elemental": "O Elemental deve sofrer mais dano do que seu Vigor + Fado em sua barriga para ser forçado a cuspir sua vítima.",
-      "Fairest": "A barriga da Mais Bela não incha com a vítima engolida e ela não sofre a penalidade de Destreza/Defesa.",
+      "Fairest": "A barriga da Belíssima não incha com a vítima engolida e ela não sofre a penalidade de Destreza/Defesa.",
       "Wizened": "Se a vítima do Mirrado tiver uma reserva de Glamour, ela poderá gastá-la como se fosse sua enquanto permanece engolida.",
       "Ogre": "O Ogro pode engolir objetos do tamanho apropriado, mas eles ainda sofrem danos."
     },
