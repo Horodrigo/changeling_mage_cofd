@@ -15,9 +15,10 @@ import { getMeritsForLine, type MeritDefinition } from "@/lib/merits";
 import { CONTRACTS, type ContractDefinition } from "@/lib/contracts";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { KITHS, findKith, type KithDefinition } from "@/lib/changeling-kiths";
+import { findMeritConfiguration, normalizeMeritConfiguration, synchronizeMeritGrants, type MeritConfiguration } from "@/lib/merit-configurations";
 
-export type Specialty = { skill: string; name: string };
-export type MeritSelection = { name: string; dots: number; sourceId?: string; source?: string };
+export type Specialty = { skill: string; name: string; grantedBy?:string };
+export type MeritSelection = { name: string; dots: number; sourceId?: string; source?: string; configuration?: MeritConfiguration; grantedBy?:string };
 export type ContractSelection = Pick<ContractDefinition, "id" | "name" | "originalName" | "type" | "regalia" | "description" | "dicePool" | "loophole" | "seemingBenefits" | "goblin" | "cost" | "action" | "duration" | "goblinDebt" | "sourceId" | "source" | "page">;
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
 
@@ -76,7 +77,7 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
   const [skillPriority, setSkillPriority] = useState<string[]>(() => initial ? inferredPriority(startingSkills, SKILLS, 0) : ["Mentais", "Físicas", "Sociais"]);
   const [specialties, setSpecialties] = useState<Specialty[]>(normalizeSpecialties(initial?.specializations));
   const [aspirations, setAspirations] = useState<string[]>(readArray(initial, "aspirations", ["", "", ""]));
-  const [merits, setMerits] = useState<MeritSelection[]>(initial?.merits ?? []);
+  const [merits, setMerits] = useState<MeritSelection[]>(initial?.merits?.filter(item=>!item.grantedBy) ?? []);
 
   const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? "Beast"));
   const [kith, setKith] = useState(String(initial?.line_data.kith ?? ""));
@@ -135,6 +136,7 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
     const now = new Date().toISOString();
     const selectedKith=findKith(kith);
     const lineData = line === "CtL" ? {
+      ...(initial?.line_data??{}),
       seeming, kith, court, needle, thread, touchstone, wyrd,
       kith_custom: customKith,
       kith_skill: customKith ? customKithSkill : selectedKith?.skill ?? "",
@@ -147,12 +149,13 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
       learned_contracts: initial?.line_data.learned_contracts ?? [],
       extra_contract_benefits: initial?.line_data.extra_contract_benefits ?? [],
     } : {
+      ...(initial?.line_data??{}),
       path, order, virtue, vice, nimbus, dedicated_tool: tool, resistance_bonus: resistanceBonus,
       gnosis, wisdom: 7, aspirations, arcana, rotes: rotes.filter(Boolean), praxes: praxes.slice(0, gnosis).filter(Boolean),
       ruling_arcana: pathData.ruling, inferior_arcanum: pathData.inferior,
       rote_skills: MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? [],
     };
-    onSave({
+    const completed:CharacterSheet={
       id: initial?.id ?? crypto.randomUUID(),
       schema_version: 2,
       system: "chronicles-of-darkness",
@@ -162,13 +165,14 @@ export function CharacterBuilder({ player, initial, onCancel, onSave }: {
       attributes: finalAttributes,
       skills,
       specializations: specialties.map((item) => ({ skill: item.skill, name: item.name.trim() })),
-      merits: merits.map((item) => { const definition=meritCatalog.find((entry)=>entry.name===item.name); return { ...item, sourceId: definition?.sourceId, source: definition?.source }; }),
+      merits: merits.map((item) => { const definition=meritCatalog.find((entry)=>entry.name===item.name); return { ...item, configuration:normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId, source: definition?.source }; }),
       line_data: lineData,
       derived,
       current_state: initial?.current_state ?? {},
       created_at: initial?.created_at ?? now,
       updated_at: now,
-    });
+    };
+    onSave(synchronizeMeritGrants(completed));
   }
 
   return <section className="builder">
@@ -281,7 +285,13 @@ function Merits({ merits, setMerits, catalog, spent, budget }: { merits: MeritSe
     if (merits.some((merit) => merit.name === definition.name)) return;
     setMerits([...merits, { name: definition.name, dots: definition.ratings[0], sourceId: definition.sourceId, source: definition.source }]);
   }
-  return <><div className="merit-heading"><div><h3>Méritos</h3><p>Core + livros da linha, reunidos por categoria. Você pode guardar pontos sem gastá-los.</p></div><Badge variant={spent>budget ? "destructive" : "outline"}>{spent}/{budget} pontos usados</Badge></div><div className="merit-picker">{merits.map((selection,index) => { const definition = catalog.find((item) => item.name === selection.name); return <div className="merit-row" key={`${index}-${selection.name}`} title={definition ? meritTooltip(definition) : undefined}><div><strong>{definition?.translatedName ?? selection.name}</strong><small>{definition ? `${meritCategoryLabel(definition.category)} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}</small></div><Choice label="Pontos" value={String(selection.dots)} setValue={(value) => { const next=[...merits]; next[index]={...selection,dots:Number(value)}; setMerits(next); }} options={(definition?.ratings ?? [1]).map(String)} /><Button type="button" variant="ghost" size="icon" aria-label={`Remover ${definition?.translatedName ?? selection.name}`} onClick={() => setMerits(merits.filter((_,itemIndex) => itemIndex !== index))}><Trash2 /></Button></div>; })}</div><Dialog><DialogTrigger asChild><Button type="button" variant="outline"><Plus /> Selecionar méritos</Button></DialogTrigger><DialogContent className="merit-dialog"><DialogHeader><DialogTitle>Selecionar méritos</DialogTitle><DialogDescription>Procure por nome ou navegue pelas categorias. Méritos já escolhidos ficam marcados.</DialogDescription></DialogHeader><label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar mérito por nome, pré-requisito ou fonte…" /></label><div className="merit-catalog">{categories.map((category) => { const items = catalog.filter((item) => item.category === category && (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))); if (!items.length) return null; return <section className="merit-category" key={category}><h3>{meritCategoryLabel(category)} <Badge variant="outline">{items.length}</Badge></h3><div>{items.map((definition) => { const selected = merits.some((merit) => merit.name === definition.name); return <article className={selected ? "merit-option selected" : "merit-option"} key={definition.id}><div><strong>{definition.translatedName}</strong><small>{definition.source} · p. {definition.page || "—"} · {formatRatings(definition.ratings)}</small><p>{definition.description}</p>{definition.prerequisites&&<p className="rule-detail"><strong>Pré-requisitos:</strong> {definition.prerequisites}</p>}</div><Button type="button" size="sm" variant={selected ? "secondary" : "outline"} disabled={selected} onClick={() => addMerit(definition)}>{selected ? <><Check /> Selecionado</> : <><Plus /> Adicionar</>}</Button></article>; })}</div></section>; })}</div><DialogFooter><DialogClose asChild><Button type="button">Concluir</Button></DialogClose></DialogFooter></DialogContent></Dialog></>;
+  return <><div className="merit-heading"><div><h3>Méritos</h3><p>Core + livros da linha, reunidos por categoria. Você pode guardar pontos sem gastá-los.</p></div><Badge variant={spent>budget ? "destructive" : "outline"}>{spent}/{budget} pontos usados</Badge></div><div className="merit-picker">{merits.map((selection,index) => { const definition = catalog.find((item) => item.name === selection.name); return <div className="merit-row configurable" key={`${index}-${selection.name}`} title={definition ? meritTooltip(definition) : undefined}><div className="merit-row-main"><div><strong>{definition?.translatedName ?? selection.name}</strong><small>{definition ? `${meritCategoryLabel(definition.category)} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}</small></div><Choice label="Pontos" value={String(selection.dots)} setValue={(value) => { const next=[...merits]; next[index]={...selection,dots:Number(value)}; setMerits(next); }} options={(definition?.ratings ?? [1]).map(String)} /><Button type="button" variant="ghost" size="icon" aria-label={`Remover ${definition?.translatedName ?? selection.name}`} onClick={() => setMerits(merits.filter((_,itemIndex) => itemIndex !== index))}><Trash2 /></Button></div><MeritConfigurationEditor merit={selection} onChange={(configuration)=>{const next=[...merits];next[index]={...selection,configuration};setMerits(next);}}/></div>; })}</div><Dialog><DialogTrigger asChild><Button type="button" variant="outline"><Plus /> Selecionar méritos</Button></DialogTrigger><DialogContent className="merit-dialog"><DialogHeader><DialogTitle>Selecionar méritos</DialogTitle><DialogDescription>Procure por nome ou navegue pelas categorias. Méritos já escolhidos ficam marcados.</DialogDescription></DialogHeader><label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar mérito por nome, pré-requisito ou fonte…" /></label><div className="merit-catalog">{categories.map((category) => { const items = catalog.filter((item) => item.category === category && (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))); if (!items.length) return null; return <section className="merit-category" key={category}><h3>{meritCategoryLabel(category)} <Badge variant="outline">{items.length}</Badge></h3><div>{items.map((definition) => { const selected = merits.some((merit) => merit.name === definition.name); return <article className={selected ? "merit-option selected" : "merit-option"} key={definition.id}><div><strong>{definition.translatedName}</strong><small>{definition.source} · p. {definition.page || "—"} · {formatRatings(definition.ratings)}</small><p>{definition.description}</p>{definition.prerequisites&&<p className="rule-detail"><strong>Pré-requisitos:</strong> {definition.prerequisites}</p>}</div><Button type="button" size="sm" variant={selected ? "secondary" : "outline"} disabled={selected} onClick={() => addMerit(definition)}>{selected ? <><Check /> Selecionado</> : <><Plus /> Adicionar</>}</Button></article>; })}</div></section>; })}</div><DialogFooter><DialogClose asChild><Button type="button">Concluir</Button></DialogClose></DialogFooter></DialogContent></Dialog></>;
+}
+
+export function MeritConfigurationEditor({merit,onChange,compact=false}:{merit:MeritSelection;onChange:(value:MeritConfiguration)=>void;compact?:boolean}){
+  const definition=findMeritConfiguration(merit.name);if(!definition)return null;const configuration=normalizeMeritConfiguration(merit.configuration);const visible=definition.fields.filter(field=>(field.minDots??0)<=merit.dots);
+  const set=(key:string,value:string|string[])=>onChange({...configuration,[key]:value});
+  return <details className={`merit-configuration${compact?" compact":""}`}><summary>Configurar escolhas</summary><div>{visible.map(field=>{const value=configuration[field.key];if(field.kind==="list")return <label key={field.key}>{field.label}<textarea value={Array.isArray(value)?value.join("\n"):String(value??"")} placeholder={field.placeholder} onChange={event=>set(field.key,event.target.value.split("\n").map(item=>item.trim()).filter(Boolean))}/></label>;if(field.kind==="textarea")return <label key={field.key}>{field.label}<textarea value={Array.isArray(value)?value.join("\n"):String(value??"")} placeholder={field.placeholder} onChange={event=>set(field.key,event.target.value)}/></label>;return <label key={field.key}>{field.label}<Input value={Array.isArray(value)?value.join(", "):String(value??"")} placeholder={field.placeholder} onChange={event=>set(field.key,event.target.value)}/></label>})}</div></details>;
 }
 
 function meritTooltip(definition: MeritDefinition) { return definition.prerequisites ? `${definition.description}\nPré-requisitos: ${definition.prerequisites}` : definition.description; }

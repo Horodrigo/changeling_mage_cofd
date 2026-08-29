@@ -351,6 +351,20 @@ button { cursor: pointer; }
 .merit-option p { margin: 3px 0 0; color: #625963; font-size: 10px; line-height: 1.4; }
 .merit-option .rule-detail { padding-top: 5px; border-top: 1px solid #e8e0e9; color: #453a47; }
 .merit-option button { flex: none; }
+.merit-row.configurable { display:block; }
+.merit-row-main { display:grid; grid-template-columns:minmax(0,1fr) 130px auto; gap:10px; align-items:center; }
+.merit-row-main > div:first-child { min-width:0; display:grid; }
+.merit-configuration { grid-column:1/-1; margin-top:8px; border-top:1px solid #e7dfe7; padding-top:7px; }
+.merit-configuration summary { cursor:pointer; color:#6b556e; font-size:11px; font-weight:700; }
+.merit-configuration > div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
+.merit-configuration label { display:grid; gap:4px; color:#625963; font-size:10px; font-weight:700; }
+.merit-configuration textarea { min-height:64px; resize:vertical; border:1px solid #ded4df; border-radius:7px; background:white; padding:8px; color:#332b34; font-size:11px; }
+.merit-configuration.compact > div { grid-template-columns:1fr; }
+.sheet-merit-configurations { display:grid; gap:8px; margin-top:12px; }
+.sheet-merit-configurations > article { border:1px solid #ded3de; border-radius:8px; background:rgba(255,255,255,.68); padding:9px; }
+.sheet-merit-configurations > article > strong { color:#4d3a50; font-size:11px; }
+.merit-grant-summary { border-left:3px solid #806286; background:#f4eef5; padding:7px 9px; color:#56465a; font-size:10px; }
+.merit-grant-summary p { margin:2px 0; }
 .review-summary { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 10px; }
 .review-summary > div { padding: 18px; border: 1px solid #ddd6cd; border-radius: 10px; background: #faf7f2; }
 .review-summary h3 { margin: 9px 0 4px; font: 700 20px Georgia,serif; }.review-summary p { margin: 0; color: #776f77; }
