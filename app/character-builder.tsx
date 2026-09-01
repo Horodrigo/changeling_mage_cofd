@@ -55,6 +55,11 @@ import {
 } from "@/lib/merits";
 import { CONTRACTS, type ContractDefinition } from "@/lib/contracts";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
+import {
+  arcanaCreationErrors,
+  canSelectInitialContract,
+  meetsArcanaRequirements,
+} from "@/lib/creation-eligibility";
 import { KITHS, findKith, type KithDefinition } from "@/lib/changeling-kiths";
 import {
   findMeritConfiguration,
@@ -339,15 +344,33 @@ export function CharacterBuilder({
       });
       if (customKith && (!customKithSkill || !customKithDescription.trim()))
         add(3, "kith", "Fratria personalizada completa");
+      const favoredRegalia = [
+        CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia ?? "",
+        secondRegalia,
+      ].filter(Boolean);
       if (
         contracts
           .slice(0, 4)
-          .filter((item) => item.name && item.type === "Comum").length !== 4 ||
+          .filter(
+            (item) =>
+              item.name &&
+              item.type === "Comum" &&
+              canSelectInitialContract(item, favoredRegalia, court),
+          ).length !== 4 ||
         contracts
           .slice(4, 6)
-          .filter((item) => item.name && item.type === "Real").length !== 2
+          .filter(
+            (item) =>
+              item.name &&
+              item.type === "Real" &&
+              canSelectInitialContract(item, favoredRegalia, court),
+          ).length !== 2
       )
-        add(3, "contracts", "Quatro Contratos Comuns e dois Reais");
+        add(
+          3,
+          "contracts",
+          "Quatro Contratos Comuns e dois Reais permitidos pelas Regalias e Corte",
+        );
     } else {
       [
         ["path", path, "Caminho"],
@@ -360,30 +383,30 @@ export function CharacterBuilder({
       ].forEach(([key, value, label]) => {
         if (!value) add(3, key, label);
       });
-      const arcanaTotal = Object.values(arcana).reduce(
-          (sum, value) => sum + Number(value),
-          0,
-        ),
-        rulingTotal = path
-          ? pathData.ruling.reduce((sum, item) => sum + (arcana[item] ?? 0), 0)
-          : 0;
-      if (
-        arcanaTotal !== 6 ||
-        Object.values(arcana).filter((value) => value === 3).length > 1 ||
-        !path ||
-        pathData.ruling.some((item) => (arcana[item] ?? 0) < 1) ||
-        rulingTotal < 3 ||
-        rulingTotal > 5 ||
-        (pathData.inferior && arcana[pathData.inferior] !== 0)
-      )
-        add(3, "arcana", "Distribuição dos seis pontos de Arcanos");
+      arcanaCreationErrors(arcana, path ? pathData : undefined).forEach(
+        (message) => add(3, "arcana", message),
+      );
       if (
         order !== "Nameless" &&
-        rotes.slice(0, 3).filter((item) => item && item.roteSkill).length !== 3
+        rotes
+          .slice(0, 3)
+          .filter(
+            (item) =>
+              item &&
+              item.roteSkill &&
+              meetsArcanaRequirements(item.requirements, arcana),
+          ).length !== 3
       )
-        add(3, "rotes", "Três Rotas iniciais e suas Perícias");
-      if (praxes.slice(0, gnosis).filter(Boolean).length !== gnosis)
-        add(3, "praxes", `${gnosis} Práxis`);
+        add(3, "rotes", "Três Rotas utilizáveis e suas Perícias");
+      if (
+        praxes
+          .slice(0, gnosis)
+          .filter(
+            (item) =>
+              item && meetsArcanaRequirements(item.requirements, arcana),
+          ).length !== gnosis
+      )
+        add(3, "praxes", `${gnosis} Práxis utilizável(is)`);
     }
     return issues;
   }, [
@@ -1078,6 +1101,9 @@ function CtlStep(props: any) {
           contracts={props.contracts}
           setContracts={props.setContracts}
           seeming={props.seeming}
+          primaryRegalia={seemingData?.regalia ?? ""}
+          secondRegalia={props.secondRegalia}
+          court={props.court}
         />
       </div>
       <div className={props.missing("merits") ? "missing-field block" : ""}>
@@ -1435,23 +1461,36 @@ function ContractSelector({
   contracts,
   setContracts,
   seeming,
+  primaryRegalia,
+  secondRegalia,
+  court,
 }: {
   contracts: ContractSelection[];
   setContracts: (value: ContractSelection[]) => void;
   seeming: string;
+  primaryRegalia: string;
+  secondRegalia: string;
+  court: string;
 }) {
   const [search, setSearch] = useState("");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
+  const availableContracts = CONTRACTS.filter((contract) =>
+    canSelectInitialContract(
+      contract,
+      [primaryRegalia, secondRegalia].filter(Boolean),
+      court,
+    ),
+  );
   const contractGroups = [
     ...REGALIA,
-    ...CONTRACTS.map((item) => item.regalia).filter(
+    ...availableContracts.map((item) => item.regalia).filter(
       (item) => !REGALIA.includes(item),
     ),
   ];
   const groups = [...new Set(contractGroups)]
     .map((regalia) => ({
       regalia,
-      items: CONTRACTS.filter(
+      items: availableContracts.filter(
         (item) =>
           item.regalia === regalia &&
           (!normalizedSearch ||
@@ -1547,6 +1586,8 @@ function ContractSelector({
               Separados por Regalia, com efeito, brecha, parada de dados e o
               benefício da Feição atual. Contratos Goblin ocupam vagas de
               Contrato Comum e geram Débito Goblin quando invocados com sucesso.
+              Contratos Reais respeitam suas Regalias favorecidas; Contratos de
+              Corte respeitam a Corte selecionada.
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -1952,6 +1993,19 @@ function MtaStep(props: any) {
           />
         ))}
       </div>
+      {arcanaCreationErrors(props.arcana, pathData).length > 0 && (
+        <div className="rule-callout" role="alert">
+          <ShieldCheck />
+          <div>
+            <strong>Revise a distribuição de Arcana:</strong>
+            <ul>
+              {arcanaCreationErrors(props.arcana, pathData).map((message) => (
+                <li key={message}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
       {props.order !== "Nameless" && (
         <div className={props.missing("rotes") ? "missing-field block" : ""}>
           <SpellSelector
@@ -1960,6 +2014,7 @@ function MtaStep(props: any) {
             values={props.rotes}
             setValues={props.setRotes}
             rote
+            arcana={props.arcana}
           />
         </div>
       )}
@@ -1969,6 +2024,7 @@ function MtaStep(props: any) {
           count={neededPraxes}
           values={props.praxes}
           setValues={props.setPraxes}
+          arcana={props.arcana}
         />
       </div>
       <div className={props.missing("merits") ? "missing-field block" : ""}>
@@ -1990,22 +2046,25 @@ function SpellSelector({
   values,
   setValues,
   rote = false,
+  arcana,
 }: {
   title: string;
   count: number;
   values: Array<SpellSelection | null>;
   setValues: (value: Array<SpellSelection | null>) => void;
   rote?: boolean;
+  arcana: Record<string, number>;
 }) {
   const [search, setSearch] = useState("");
   const normalized = search.toLocaleLowerCase("pt-BR");
   const selectedIds = values.filter(Boolean).map((item) => item!.id);
   const filtered = SPELLS.filter(
     (spell) =>
-      !normalized ||
-      `${spell.name} ${spell.originalName} ${spell.source} ${Object.keys(spell.requirements).join(" ")}`
-        .toLocaleLowerCase("pt-BR")
-        .includes(normalized),
+      meetsArcanaRequirements(spell.requirements, arcana) &&
+      (!normalized ||
+        `${spell.name} ${spell.originalName} ${spell.source} ${Object.keys(spell.requirements).join(" ")}`
+          .toLocaleLowerCase("pt-BR")
+          .includes(normalized)),
   );
   const choose = (spell: SpellDefinition) => {
     const slot = values.findIndex((item, index) => index < count && !item);

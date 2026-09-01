@@ -2890,7 +2890,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Banquete de Carniça",
     originalName: "Carrion Feast",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Fauce",
     description:
       "A Fera devora restos de uma criatura para recuperar vigor e adquirir temporariamente uma lembrança ou característica da presa.",
     sourceId: "h-seemings",
@@ -2902,7 +2902,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Sem Escapatória",
     originalName: "No Escape",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Fauce",
     description:
       "Marca uma presa e impede que distância, esconderijos ou rotas mundanas encerrem a perseguição da Fera.",
     sourceId: "h-seemings",
@@ -2914,7 +2914,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Selvageria da Fome",
     originalName: "Starvation’s Savagery",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Fauce",
     description:
       "A fome transforma-se em força predatória, ampliando ataques e resistência enquanto a Fera persegue alimento ou presa.",
     sourceId: "h-seemings",
@@ -2926,7 +2926,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Engolir Inteiro",
     originalName: "Swallow Whole",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Fauce",
     description:
       "A Fera engole um alvo de tamanho permitido e o aprisiona num espaço feérico interno até que escape ou seja libertado.",
     sourceId: "h-seemings",
@@ -2938,7 +2938,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Você É Quem Você Come",
     originalName: "You Are Who You Eat",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Fauce",
     description:
       "Ao consumir parte de uma criatura, imita temporariamente sua aparência, voz e aspectos de suas capacidades.",
     sourceId: "h-seemings",
@@ -2950,7 +2950,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Última Esperança",
     originalName: "Last Hope",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Coroa",
     description:
       "O Fairest torna-se símbolo de salvação para aliados, restaurando determinação e permitindo-lhes continuar quando já teriam sucumbido.",
     sourceId: "h-seemings",
@@ -2962,7 +2962,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "O Pedágio do Troll",
     originalName: "The Troll Toll",
     type: "Real",
-    regalia: "Feições",
+    regalia: "Escudo",
     description:
       "O Ogre reivindica uma passagem e exige preço de quem a cruza; o Wyrd bloqueia ou pune aqueles que recusam pagar.",
     sourceId: "h-seemings",

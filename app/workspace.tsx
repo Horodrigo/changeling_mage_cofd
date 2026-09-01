@@ -39,7 +39,10 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -115,6 +118,7 @@ import {
 } from "@/lib/changeling-conditions";
 import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
 import { SPELLS } from "@/lib/spells";
+import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
 import { ARMORS, EQUIPMENT, WEAPONS } from "@/lib/combat-equipment";
 import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
@@ -835,7 +839,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">Combate</TabsTrigger>
             <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
           </TabsList>
-          <TabsContent forceMount={printLayout} value="principal" data-page-title="Principal" className="ctl-sheet-page">
+          <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Agulha" value={data.needle} />
@@ -966,7 +970,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount={printLayout} value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount={printLayout ? true : undefined} value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>Contratos</SheetHeading>
             <ContractPowerList
               contracts={contracts}
@@ -1003,7 +1007,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount={printLayout} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount={printLayout ? true : undefined} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1011,7 +1015,7 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
-            forceMount={printLayout}
+            forceMount={printLayout ? true : undefined}
             value="companheiros"
             data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
@@ -1033,7 +1037,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">Combate</TabsTrigger>
             <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
           </TabsList>
-          <TabsContent forceMount={printLayout} value="principal" data-page-title="Principal" className="ctl-sheet-page">
+          <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Caminho" value={data.path} />
@@ -1143,7 +1147,7 @@ function CharacterPaper({
             </section>
           </TabsContent>
           <TabsContent
-            forceMount={printLayout}
+            forceMount={printLayout ? true : undefined}
             value="magia"
             data-page-title="Detalhes"
             className="ctl-sheet-page powers-page mage-spell-page"
@@ -1236,7 +1240,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount={printLayout} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount={printLayout ? true : undefined} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1244,7 +1248,7 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
-            forceMount={printLayout}
+            forceMount={printLayout ? true : undefined}
             value="companheiros"
             data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
@@ -2686,6 +2690,14 @@ const PURCHASE_TYPES = [
   "Fado",
   "Ponto perdido de Força de Vontade",
 ];
+const groupedTraitOptions = (
+  groups: Record<string, readonly string[]>,
+) =>
+  Object.entries(groups).flatMap(([group, values]) =>
+    values.map((value) => ({ value, label: value, group })),
+  );
+const ATTRIBUTE_OPTIONS = groupedTraitOptions(ATTRIBUTES);
+const SKILL_OPTIONS = groupedTraitOptions(SKILLS);
 
 function ExperiencePanel({
   character,
@@ -3239,9 +3251,7 @@ function ExperiencePanel({
                   <RuleSelect
                     value={attribute}
                     onChange={setAttribute}
-                    options={Object.values(ATTRIBUTES)
-                      .flat()
-                      .map((value) => ({ value, label: value }))}
+                    options={ATTRIBUTE_OPTIONS}
                   />
                 </label>
               )}
@@ -3251,9 +3261,7 @@ function ExperiencePanel({
                   <RuleSelect
                     value={skill}
                     onChange={setSkill}
-                    options={Object.values(SKILLS)
-                      .flat()
-                      .map((value) => ({ value, label: value }))}
+                    options={SKILL_OPTIONS}
                   />
                 </label>
               )}
@@ -3280,9 +3288,7 @@ function ExperiencePanel({
                     <RuleSelect
                       value={specialtySkill}
                       onChange={setSpecialtySkill}
-                      options={Object.values(SKILLS)
-                        .flat()
-                        .map((value) => ({ value, label: value }))}
+                      options={SKILL_OPTIONS}
                     />
                   </label>
                   <label>
@@ -3298,13 +3304,18 @@ function ExperiencePanel({
               {purchaseType === "Contrato" && (
                 <label>
                   Contrato
-                  <RuleSelect
-                    value={contractId || contractOptions[0]?.id || ""}
-                    onChange={setContractId}
-                    options={contractOptions.map((item) => ({
-                      value: item.id,
-                      label: `${item.name} · ${item.type} · ${item.regalia}`,
+                  <ExperiencePowerPicker
+                    kind="Contrato"
+                    items={contractOptions.map((item) => ({
+                      id: item.id,
+                      name: item.name,
+                      category: item.regalia,
+                      secondaryCategory: item.type,
+                      description: item.description,
+                      meta: `${item.type} · ${item.regalia} · ${item.source} · p. ${item.page || "—"}`,
                     }))}
+                    selectedId={selectedContract?.id ?? ""}
+                    onSelect={setContractId}
                   />
                 </label>
               )}
@@ -3470,6 +3481,19 @@ function MageExperiencePanel({
   ) as Record<string, number>;
   const path =
     MTA_PATHS[String(character.line_data.path) as keyof typeof MTA_PATHS];
+  const knownSpellIds = new Set(
+    [
+      ...objectList(character.line_data.rotes),
+      ...objectList(character.line_data.praxes),
+      ...objectList(character.line_data.learned_rotes),
+      ...objectList(character.line_data.learned_praxes),
+    ].map((item) => String(item.id ?? "")),
+  );
+  const availableSpells = spells.filter(
+    (spell) =>
+      !knownSpellIds.has(spell.id) &&
+      meetsArcanaRequirements(spell.requirements, arcana),
+  );
   const options =
     purchase === "Atributo"
       ? Object.values(ATTRIBUTES).flat()
@@ -3480,7 +3504,7 @@ function MageExperiencePanel({
           : purchase === "Arcano"
             ? Object.keys(arcana)
             : purchase === "Rota" || purchase === "Práxis"
-              ? spells.map((item) => item.id)
+              ? availableSpells.map((item) => item.id)
               : [purchase];
   const selectedMerit = merits.find((item) => item.id === target) ?? merits[0],
     ownedMerit =
@@ -3498,7 +3522,8 @@ function MageExperiencePanel({
         )
       : [],
     nextMerit = meritRatings.includes(meritDots) ? meritDots : meritRatings[0];
-  const selectedSpell = spells.find((item) => item.id === target) ?? spells[0];
+  const selectedSpell =
+    availableSpells.find((item) => item.id === target) ?? availableSpells[0];
   let cost = 1,
     label: string = target,
     mode: "regular" | "arcane" | "either" = "regular";
@@ -3564,6 +3589,16 @@ function MageExperiencePanel({
   function buy() {
     if (cost < 1 || regular < splitRegular || arcane < splitArcane) {
       setFeedback("Experiência insuficiente ou compra indisponível.");
+      return;
+    }
+    if (
+      (purchase === "Rota" || purchase === "Práxis") &&
+      (!selectedSpell ||
+        !meetsArcanaRequirements(selectedSpell.requirements, arcana))
+    ) {
+      setFeedback(
+        "Não há feitiço disponível que atenda aos níveis atuais de Arcana.",
+      );
       return;
     }
     const next = structuredClone(character);
@@ -3802,21 +3837,44 @@ function MageExperiencePanel({
                 />
               </label>
             )}
-            {purchase !== "Mérito" && options.length > 1 && (
+            {purchase !== "Mérito" &&
+              ((purchase === "Rota" || purchase === "Práxis") ||
+                options.length > 1) && (
               <label>
                 Característica
-                <RuleSelect
-                  value={target || options[0]}
-                  onChange={setTarget}
-                  options={options.map((value) => ({
-                    value,
-                    label:
-                      purchase === "Rota" || purchase === "Práxis"
-                        ? (spells.find((item) => item.id === value)?.name ??
-                          value)
-                        : value,
-                  }))}
-                />
+                {purchase === "Rota" || purchase === "Práxis" ? (
+                  <ExperiencePowerPicker
+                    kind={purchase}
+                    items={availableSpells.map((spell) => {
+                      const requirements = Object.entries(spell.requirements).sort(
+                        (a, b) => b[1] - a[1],
+                      );
+                      const [mainArcanum, level] = requirements[0] ?? ["Outro", 0];
+                      return {
+                        id: spell.id,
+                        name: spell.name,
+                        category: mainArcanum,
+                        secondaryCategory: `Nível ${level}`,
+                        description: spell.description ?? "",
+                        meta: `${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page || "—"}`,
+                      };
+                    })}
+                    selectedId={selectedSpell?.id ?? ""}
+                    onSelect={setTarget}
+                  />
+                ) : (
+                  <RuleSelect
+                    value={target || options[0]}
+                    onChange={setTarget}
+                    options={
+                      purchase === "Atributo"
+                        ? ATTRIBUTE_OPTIONS
+                        : purchase === "Perícia" || purchase === "Especialização"
+                          ? SKILL_OPTIONS
+                          : options.map((value) => ({ value, label: value }))
+                    }
+                  />
+                )}
               </label>
             )}
             {mode === "either" && (
@@ -4010,6 +4068,116 @@ function MageExperienceRules() {
     </div>
   );
 }
+type ExperienceCatalogItem = {
+  id: string;
+  name: string;
+  category: string;
+  secondaryCategory?: string;
+  description: string;
+  meta: string;
+};
+
+function ExperiencePowerPicker({
+  kind,
+  items,
+  selectedId,
+  onSelect,
+}: {
+  kind: "Contrato" | "Rota" | "Práxis";
+  items: ExperienceCatalogItem[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("Todas");
+  const [secondary, setSecondary] = useState("Todos");
+  const normalized = search.trim().toLocaleLowerCase("pt-BR");
+  const selected = items.find((item) => item.id === selectedId);
+  const categories = ["Todas", ...new Set(items.map((item) => item.category))];
+  const secondaryCategories = [
+    "Todos",
+    ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),
+  ] as string[];
+  const visible = items.filter(
+    (item) =>
+      (category === "Todas" || item.category === category) &&
+      (secondary === "Todos" || item.secondaryCategory === secondary) &&
+      (!normalized ||
+        `${item.name} ${item.category} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
+          .toLocaleLowerCase("pt-BR")
+          .includes(normalized)),
+  );
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button type="button" variant="outline" className="experience-merit-trigger">
+          <span>{selected?.name ?? `Selecionar ${kind}`}</span>
+          <Search />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="merit-dialog experience-merit-dialog">
+        <DialogHeader>
+          <DialogTitle>Comprar {kind}</DialogTitle>
+          <DialogDescription>
+            O catálogo mostra somente opções disponíveis para este personagem.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="catalog-filters">
+          <label className="merit-search">
+            <Search />
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder={`Buscar ${kind.toLocaleLowerCase("pt-BR")}, fonte ou descrição`}
+            />
+          </label>
+          <RuleSelect
+            value={category}
+            onChange={setCategory}
+            options={categories.map((value) => ({ value, label: value }))}
+          />
+          {secondaryCategories.length > 2 && (
+            <RuleSelect
+              value={secondary}
+              onChange={setSecondary}
+              options={secondaryCategories.map((value) => ({ value, label: value }))}
+            />
+          )}
+        </div>
+        <div className="experience-merit-catalog">
+          {visible.map((item) => (
+            <article key={item.id} className={selectedId === item.id ? "selected" : ""}>
+              <div>
+                <strong>{item.name}</strong>
+                <small>{item.meta}</small>
+                <p>{item.description}</p>
+              </div>
+              <div className="experience-merit-choice">
+                <DialogClose asChild>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant={selectedId === item.id ? "default" : "outline"}
+                    onClick={() => onSelect(item.id)}
+                  >
+                    Selecionar
+                  </Button>
+                </DialogClose>
+              </div>
+            </article>
+          ))}
+          {!visible.length && <em>Nenhuma opção corresponde aos filtros.</em>}
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">Cancelar</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function ExperienceMeritPicker({
   line,
   character,
@@ -4024,9 +4192,11 @@ function ExperienceMeritPicker({
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
 }) {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("Todas");
   const catalog = getMeritsForLine(line),
     selected = catalog.find((item) => item.id === selectedId),
-    normalized = search.toLocaleLowerCase("pt-BR");
+    normalized = search.toLocaleLowerCase("pt-BR"),
+    categories = ["Todas", ...new Set(catalog.map((item) => item.category))];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -4051,20 +4221,29 @@ function ExperienceMeritPicker({
             escolha entre aumentar uma instância existente ou criar outra.
           </DialogDescription>
         </DialogHeader>
-        <label className="merit-search">
-          <Search />
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar por nome, descrição, requisito ou fonte"
+        <div className="catalog-filters">
+          <label className="merit-search">
+            <Search />
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Buscar por nome, descrição, requisito ou fonte"
+            />
+          </label>
+          <RuleSelect
+            value={category}
+            onChange={setCategory}
+            options={categories.map((value) => ({ value, label: value }))}
           />
-        </label>
+        </div>
         <div className="experience-merit-catalog">
           {catalog
-            .filter((item) =>
-              `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source}`
-                .toLocaleLowerCase("pt-BR")
-                .includes(normalized),
+            .filter(
+              (item) =>
+                (category === "Todas" || item.category === category) &&
+                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source}`
+                  .toLocaleLowerCase("pt-BR")
+                  .includes(normalized),
             )
             .map((item) => {
               const instances = character.merits
@@ -4166,9 +4345,10 @@ function RuleSelect({
 }: {
   value: string;
   onChange: (value: string) => void;
-  options: Array<{ value: string; label: string }>;
+  options: Array<{ value: string; label: string; group?: string }>;
 }) {
   const safe = options.length ? value || options[0].value : "__none";
+  const groups = [...new Set(options.map((item) => item.group).filter(Boolean))];
   return (
     <Select value={safe} onValueChange={onChange} disabled={!options.length}>
       <SelectTrigger>
@@ -4179,11 +4359,27 @@ function RuleSelect({
       </SelectTrigger>
       <SelectContent>
         {options.length ? (
-          options.map((item) => (
-            <SelectItem key={item.value} value={item.value}>
-              {item.label}
-            </SelectItem>
-          ))
+          groups.length ? (
+            groups.map((group, groupIndex) => (
+              <SelectGroup key={group}>
+                {groupIndex > 0 && <SelectSeparator />}
+                <SelectLabel>{group}</SelectLabel>
+                {options
+                  .filter((item) => item.group === group)
+                  .map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+              </SelectGroup>
+            ))
+          ) : (
+            options.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))
+          )
         ) : (
           <SelectItem value="__none" disabled>
             Nenhuma opção disponível
@@ -4192,6 +4388,11 @@ function RuleSelect({
       </SelectContent>
     </Select>
   );
+}
+function formatSpellRequirements(requirements: Record<string, number>) {
+  return Object.entries(requirements)
+    .map(([arcanum, dots]) => `${arcanum} ${dots}`)
+    .join(" + ");
 }
 function contractExperienceCost(
   contract: ContractDefinition,
