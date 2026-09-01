@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Arquivo das Trevas",
   description: "Fichas rastreáveis para Chronicles of Darkness.",
   manifest: "/manifest.webmanifest",
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  icons: { icon: "/app-icon-192.png", shortcut: "/app-icon-192.png", apple: "/app-icon-192.png" },
 };
 export const viewport: Viewport = { themeColor: "#311c35", width: "device-width", initialScale: 1, viewportFit: "cover" };
 

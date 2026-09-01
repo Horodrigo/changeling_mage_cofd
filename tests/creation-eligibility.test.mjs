@@ -19,6 +19,18 @@ after(async () => {
 
 const rules = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
 const { CONTRACTS } = await vite.ssrLoadModule("/lib/contracts.ts");
+const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
+
+test("cria e remove Fragilidades conforme os níveis pares de Fado", () => {
+  assert.deepEqual(creationRules.normalizeChangelingFrailties([], 1), ["Ferro Frio"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos"], 2), ["Ferro Frio", "Espelhos"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos", "Sinos"], 3), ["Ferro Frio", "Espelhos"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos", "Sinos"], 4), ["Ferro Frio", "Espelhos", "Sinos"]);
+});
+
+test("resume os benefícios de Fado para mouse, foco e toque", () => {
+  assert.equal(creationRules.wyrdSummary(5), "Fado 5 (-2 Fadiga/Doenças; 13 Frutas)");
+});
 
 test("explica separadamente cada erro na distribuição inicial de Arcana", () => {
   assert.deepEqual(
@@ -102,7 +114,7 @@ test("classifica os Contratos de Book of Seemings por Regalia real", () => {
     seemingsContracts
       .filter((contract) => contract.page >= 139 && contract.page <= 142)
       .map((contract) => contract.regalia),
-    ["Fauce", "Fauce", "Fauce", "Fauce", "Fauce"],
+    ["Garganta", "Garganta", "Garganta", "Garganta", "Garganta"],
   );
   assert.equal(
     seemingsContracts.find((contract) => contract.id === "h-seemings:last-hope")

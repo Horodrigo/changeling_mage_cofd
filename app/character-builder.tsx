@@ -46,6 +46,7 @@ import {
   MTA_PATHS,
   REGALIA,
   SKILLS,
+  normalizeChangelingFrailties,
 } from "@/lib/creation-rules";
 import {
   getMeritsForLine,
@@ -537,6 +538,7 @@ export function CharacterBuilder({
             thread,
             touchstone,
             wyrd,
+            frailties: normalizeChangelingFrailties(initial?.line_data.frailties, wyrd),
             custom_court: customCourt,
             kith_custom: customKith,
             kith_skill: customKith
@@ -3579,6 +3581,8 @@ function translateRegalia(value: string) {
         Scepter: "Cetro",
         Stars: "Estrelas",
         Thorn: "Espinho",
+        Maw: "Garganta",
+        Fauce: "Garganta",
       } as Record<string, string>
     )[value] ?? value
   );

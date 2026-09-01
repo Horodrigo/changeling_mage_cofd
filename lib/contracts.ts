@@ -2890,7 +2890,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Banquete de Carniça",
     originalName: "Carrion Feast",
     type: "Real",
-    regalia: "Fauce",
+    regalia: "Garganta",
     description:
       "A Fera devora restos de uma criatura para recuperar vigor e adquirir temporariamente uma lembrança ou característica da presa.",
     sourceId: "h-seemings",
@@ -2902,7 +2902,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Sem Escapatória",
     originalName: "No Escape",
     type: "Real",
-    regalia: "Fauce",
+    regalia: "Garganta",
     description:
       "Marca uma presa e impede que distância, esconderijos ou rotas mundanas encerrem a perseguição da Fera.",
     sourceId: "h-seemings",
@@ -2914,7 +2914,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Selvageria da Fome",
     originalName: "Starvation’s Savagery",
     type: "Real",
-    regalia: "Fauce",
+    regalia: "Garganta",
     description:
       "A fome transforma-se em força predatória, ampliando ataques e resistência enquanto a Fera persegue alimento ou presa.",
     sourceId: "h-seemings",
@@ -2926,7 +2926,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Engolir Inteiro",
     originalName: "Swallow Whole",
     type: "Real",
-    regalia: "Fauce",
+    regalia: "Garganta",
     description:
       "A Fera engole um alvo de tamanho permitido e o aprisiona num espaço feérico interno até que escape ou seja libertado.",
     sourceId: "h-seemings",
@@ -2938,7 +2938,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Você É Quem Você Come",
     originalName: "You Are Who You Eat",
     type: "Real",
-    regalia: "Fauce",
+    regalia: "Garganta",
     description:
       "Ao consumir parte de uma criatura, imita temporariamente sua aparência, voz e aspectos de suas capacidades.",
     sourceId: "h-seemings",

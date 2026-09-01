@@ -47,7 +47,25 @@ export const CTL_SEEMING_LABELS = Object.fromEntries(Object.entries(CTL_SEEMINGS
 export const CTL_NEEDLES = ["Bon Vivant", "Mestre de Xadrez", "Comandante", "Compositor", "Conselheiro", "Audacioso", "Dínamo", "Protetor", "Provedor", "Erudito", "Contador de Histórias", "Professor", "Tradicionalista", "Visionário"];
 export const CTL_THREADS = ["Aceitação", "Raiva", "Família", "Amizade", "Ódio", "Honra", "Alegria", "Amor", "Memória", "Vingança"];
 export const CTL_COURTS = ["Sem Corte", "Primavera", "Verão", "Outono", "Inverno"];
-export const REGALIA = ["Coroa", "Joias", "Espelho", "Escudo", "Corcel", "Espada", "Cálice", "Moeda", "Cetro", "Estrelas", "Espinho"];
+export const REGALIA = ["Coroa", "Joias", "Espelho", "Escudo", "Corcel", "Espada", "Cálice", "Moeda", "Cetro", "Estrelas", "Espinho", "Garganta"];
+
+export function changelingFrailtySlots(wyrd: number) {
+  return 1 + Math.floor(Math.max(1, Math.min(10, Math.trunc(wyrd))) / 2);
+}
+
+export function normalizeChangelingFrailties(value: unknown, wyrd: number) {
+  const slots = changelingFrailtySlots(wyrd);
+  const current = Array.isArray(value) ? value.map((item) => String(item ?? "")) : [];
+  const custom = current.filter((item) => item.trim() && item.toLocaleLowerCase("pt-BR") !== "ferro frio");
+  return ["Ferro Frio", ...custom.slice(0, slots - 1)]
+    .concat(Array(Math.max(0, slots - 1 - custom.length)).fill(""))
+    .slice(0, slots);
+}
+
+export function wyrdSummary(wyrd: number) {
+  const rating = Math.max(1, Math.min(10, Math.trunc(wyrd)));
+  return `Fado ${rating} (-${Math.floor(rating / 2)} Fadiga/Doenças; ${3 + rating * 2} Frutas)`;
+}
 
 export const MTA_PATHS = {
   Acanthus: { ruling: ["Tempo", "Destino"], inferior: "Forças" },

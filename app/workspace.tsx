@@ -92,6 +92,8 @@ import {
   MTA_ORDER_LABELS,
   MTA_PATHS,
   SKILLS,
+  normalizeChangelingFrailties,
+  wyrdSummary,
 } from "@/lib/creation-rules";
 import {
   getMeritsForLine,
@@ -127,7 +129,6 @@ import { HomebrewsPage } from "./homebrews";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHomebrews } from "@/lib/homebrews";
 import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
-import { StorageSettings } from "./storage-settings";
 
 type View = "inicio" | "personagens" | "homebrews";
 type CatalogRule = {
@@ -346,7 +347,9 @@ export function Workspace({
           {nav.map(([id, label, Icon]) => (
             <button
               key={id}
-                className={view === id && !selected ? "active" : ""}
+              aria-label={label}
+              title={label}
+              className={view === id && !selected ? "active" : ""}
               onClick={() => navigate(id)}
             >
               <Icon />
@@ -495,7 +498,6 @@ function Dashboard({
         <span className="ctl-summary"><strong>{changelings}</strong> Changelings</span>
         <span className="mta-summary"><strong>{mages}</strong> Magos</span>
       </section>
-      <StorageSettings />
       <section className="panel wide recent-panel">
         <div className="panel-heading">
           <div>
@@ -776,7 +778,7 @@ function CharacterPaper({
     ]),
   );
   const aspirations = stringList(data.aspirations);
-  const frailties = stringList(data.frailties);
+  const frailties = normalizeChangelingFrailties(data.frailties, Number(data.wyrd ?? 1));
   const oaths = stringList(data.oaths);
   const contracts = [
     ...objectList(data.contracts),
@@ -920,10 +922,8 @@ function CharacterPaper({
                   ]}
                 />
                 <SheetHeading>Fragilidades</SheetHeading>
-                <EditableList
+                <FrailtyList
                   values={frailties}
-                  minimum={3}
-                  placeholder="Escreva uma Fragilidade"
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "frailties", value)
                   }
@@ -965,6 +965,7 @@ function CharacterPaper({
                 <PowerResource
                   name="Fado"
                   rating={powerRating}
+                  summary={wyrdSummary(powerRating)}
                   resourceName="Glamour"
                   current={currentResource}
                   maximum={resource.maximum}
@@ -3007,7 +3008,7 @@ function ExperiencePanel({
         ),
       };
     else if (undo.kind === "wyrd")
-      next.line_data = { ...next.line_data, wyrd: undo.previous };
+      next.line_data = { ...next.line_data, wyrd: undo.previous, frailties: normalizeChangelingFrailties(next.line_data.frailties, undo.previous) };
     else
       next.current_state = {
         ...next.current_state,
@@ -3159,7 +3160,7 @@ function ExperiencePanel({
     if (purchaseType === "Fado") {
       if (wyrd >= 10) return setFeedback("Fado já atingiu 10.");
       spend(5, `Fado ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
-        next.line_data = { ...next.line_data, wyrd: wyrd + 1 };
+        next.line_data = { ...next.line_data, wyrd: wyrd + 1, frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
       });
       return;
     }
@@ -4712,6 +4713,7 @@ function PowerResource({
   maximum,
   perTurn,
   onChange,
+  summary,
 }: {
   name: string;
   rating: number;
@@ -4720,10 +4722,11 @@ function PowerResource({
   maximum: number;
   perTurn: number;
   onChange: (value: number) => void;
+  summary?: string;
 }) {
   return (
     <div className="power-resource">
-      <div className="power-rating">
+      <div className="power-rating power-rating-summary" tabIndex={summary ? 0 : undefined} title={summary} aria-label={summary} data-tooltip={summary}>
         <span>{name}</span>
         <DotValue value={rating} max={10} />
       </div>
@@ -4737,6 +4740,27 @@ function PowerResource({
         {resourceName} máximo: <strong>{maximum}</strong> · gasto por turno:{" "}
         <strong>{perTurn}</strong>
       </p>
+    </div>
+  );
+}
+function FrailtyList({ values, onChange }: { values: string[]; onChange: (value: string[]) => void }) {
+  return (
+    <div className="editable-lines frailty-lines">
+      {values.map((value, index) => (
+        <div className="editable-line-row" key={index}>
+          <Input
+            value={value}
+            readOnly={index === 0}
+            aria-label={index === 0 ? "Fragilidade obrigatória: Ferro Frio" : `Fragilidade de Fado ${index * 2}`}
+            placeholder={index === 0 ? undefined : `Fragilidade de Fado ${index * 2}`}
+            onChange={(event) => {
+              const next = [...values];
+              next[index] = event.target.value;
+              onChange(next);
+            }}
+          />
+        </div>
+      ))}
     </div>
   );
 }
@@ -4862,6 +4886,13 @@ function normalizeStoredSheet(value: CharacterSheet): CharacterSheet {
     : [];
   next.line_data =
     next.line_data && typeof next.line_data === "object" ? next.line_data : {};
+  if (next.game_line === "CtL") {
+    const wyrd = Number(next.line_data.wyrd ?? 1);
+    next.line_data = {
+      ...next.line_data,
+      frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd),
+    };
+  }
   return synchronizeMeritGrants(next);
 }
 const ARCANA_PT: Record<string, string> = {
