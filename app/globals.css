@@ -55,8 +55,8 @@
   border:0;
   border-image:none;
 }
-.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.png'); }
-.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.png'); }
+.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.png'); --sheet-skull:url('/changeling-skull.png'); }
+.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.png'); --sheet-skull:url('/mage-skull.png'); }
 .cod-sheet:before {
   inset:0;
   z-index:0;
@@ -832,7 +832,7 @@ button { cursor: pointer; }
 .pdf-preview-scroll .print-layout { width:min(100%,1050px); margin:0 auto; box-shadow:0 12px 38px #17212c38; }
 .print-layout .ctl-sheet-tab-list { display:none!important; }
 .print-layout .ctl-sheet-page[hidden] { display:block!important; }
-.print-layout .ctl-sheet-page { padding-top:28px; }
+.print-layout .ctl-sheet-page { position:relative; padding:32px 28px; background-color:#fffef9; background-image:linear-gradient(rgba(255,254,249,.91),rgba(255,254,249,.91)),var(--sheet-stamp),var(--sheet-skull); background-position:center,center,center 38%; background-repeat:no-repeat; background-size:100% 100%,100% 100%,min(70%,720px) auto; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sheet-accent) 65%,transparent); print-color-adjust:exact; -webkit-print-color-adjust:exact; }
 .print-layout .ctl-sheet-page + .ctl-sheet-page { margin-top:34px; padding-top:52px; border-top:3px double var(--sheet-accent); }
 .print-layout .ctl-sheet-page:before { content:attr(data-page-title); display:block; margin:0 0 22px; padding-bottom:7px; border-bottom:2px solid var(--sheet-accent); color:var(--sheet-accent); font:700 22px/1 Georgia,"Times New Roman",serif; letter-spacing:.12em; text-transform:uppercase; }
 
@@ -848,10 +848,12 @@ button { cursor: pointer; }
   body * { visibility:hidden!important; }
   .pdf-print-source,.pdf-print-source * { visibility:visible!important; }
   .pdf-print-source { display:block!important; position:absolute; inset:0; width:100%; }
-  .pdf-print-source .cod-sheet { width:100%; margin:0; padding:8mm 7mm; border:0; border-radius:0; box-shadow:none; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .pdf-print-source .cod-sheet { width:100%; margin:0; padding:0; border:0; border-radius:0; background:#fffef9!important; box-shadow:none; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .pdf-print-source .cod-sheet:before,.pdf-print-source .cod-sheet:after { display:none; }
+  .pdf-print-source .cod-sheet-title { padding:5mm 7mm; background:#fffef9; }
   .pdf-print-source .ctl-sheet-tab-list { display:none!important; }
   .pdf-print-source .ctl-sheet-page[hidden] { display:block!important; }
-  .pdf-print-source .ctl-sheet-page { padding:8mm 0 0; break-before:page; page-break-before:always; }
+  .pdf-print-source .ctl-sheet-page { min-height:277mm; margin:0; padding:9mm 8mm; border:1px solid var(--sheet-accent); background-color:#fffef9!important; background-image:linear-gradient(rgba(255,254,249,.91),rgba(255,254,249,.91)),var(--sheet-stamp),var(--sheet-skull)!important; background-position:center,center,center 38%!important; background-repeat:no-repeat!important; background-size:100% 100%,100% 100%,72% auto!important; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sheet-accent) 45%,transparent); break-before:page; page-break-before:always; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
   .pdf-print-source .ctl-sheet-page[data-page-title="Principal"] { break-before:auto; page-break-before:auto; }
   .pdf-print-source .ctl-sheet-page + .ctl-sheet-page { margin-top:0; border-top:0; }
   .pdf-print-source .ctl-sheet-page:before { margin-bottom:6mm; }

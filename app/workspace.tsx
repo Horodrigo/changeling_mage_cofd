@@ -835,7 +835,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">Combate</TabsTrigger>
             <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
           </TabsList>
-          <TabsContent forceMount value="principal" data-page-title="Principal" className="ctl-sheet-page">
+          <TabsContent forceMount={printLayout} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Agulha" value={data.needle} />
@@ -966,7 +966,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount={printLayout} value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>Contratos</SheetHeading>
             <ContractPowerList
               contracts={contracts}
@@ -1003,7 +1003,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount={printLayout} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1011,7 +1011,7 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
-            forceMount
+            forceMount={printLayout}
             value="companheiros"
             data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
@@ -1033,7 +1033,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">Combate</TabsTrigger>
             <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
           </TabsList>
-          <TabsContent forceMount value="principal" data-page-title="Principal" className="ctl-sheet-page">
+          <TabsContent forceMount={printLayout} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Caminho" value={data.path} />
@@ -1143,7 +1143,7 @@ function CharacterPaper({
             </section>
           </TabsContent>
           <TabsContent
-            forceMount
+            forceMount={printLayout}
             value="magia"
             data-page-title="Detalhes"
             className="ctl-sheet-page powers-page mage-spell-page"
@@ -1236,7 +1236,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount={printLayout} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1244,7 +1244,7 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
-            forceMount
+            forceMount={printLayout}
             value="companheiros"
             data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
