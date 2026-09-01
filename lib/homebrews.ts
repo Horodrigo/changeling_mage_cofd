@@ -2,6 +2,7 @@ import type { ContractDefinition } from "./contracts";
 import type { ExpandedMeritLevel } from "./expanded-merits";
 import type { GameLine, MeritDefinition } from "./merits";
 import type { SpellDefinition } from "./spells";
+import { setDeviceValue } from "./device-storage";
 
 export const HOMEBREW_STORAGE_KEY = "arquivo-das-trevas:homebrews:v1";
 export const HOMEBREW_EVENT = "arquivo-das-trevas:homebrews-updated";
@@ -215,6 +216,7 @@ export function migrateCharacterHomebrews(
 }
 
 export function saveHomebrews(catalog: HomebrewCatalog) {
+  void setDeviceValue(HOMEBREW_STORAGE_KEY, catalog);
   localStorage.setItem(HOMEBREW_STORAGE_KEY, JSON.stringify(catalog));
   localStorage.setItem(
     "arquivo-das-trevas:custom-courts",

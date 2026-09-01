@@ -7,12 +7,16 @@ import {
   readHomebrews,
   type HomebrewCatalog,
 } from "@/lib/homebrews";
+import { getDeviceValue } from "@/lib/device-storage";
 
 export function useHomebrews() {
   const [catalog, setCatalog] = useState<HomebrewCatalog>(EMPTY_HOMEBREWS);
   useEffect(() => {
     const refresh = () => setCatalog(readHomebrews());
-    refresh();
+    void getDeviceValue<HomebrewCatalog>("arquivo-das-trevas:homebrews:v1").then((stored)=>{
+      if (stored) { localStorage.setItem("arquivo-das-trevas:homebrews:v1",JSON.stringify(stored)); setCatalog(stored); }
+      else refresh();
+    });
     window.addEventListener(HOMEBREW_EVENT, refresh);
     window.addEventListener("storage", refresh);
     return () => {

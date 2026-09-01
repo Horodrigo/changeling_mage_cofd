@@ -126,6 +126,8 @@ import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
 import { HomebrewsPage } from "./homebrews";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHomebrews } from "@/lib/homebrews";
+import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
+import { StorageSettings } from "./storage-settings";
 
 type View = "inicio" | "personagens" | "homebrews";
 type CatalogRule = {
@@ -169,11 +171,10 @@ export function Workspace({
     let cancelled = false;
     async function start() {
       try {
-        const stored = localStorage.getItem(storageKey);
+        const stored = await getDeviceValue<CharacterSheet[]>(storageKey);
         if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && !cancelled)
-            setCharacters(parsed.map(normalizeStoredSheet));
+          if (Array.isArray(stored) && !cancelled)
+            setCharacters(stored.map(normalizeStoredSheet));
         } else {
           const legacy = await fetch("/api/characters", { cache: "no-store" });
           if (legacy.ok) {
@@ -183,7 +184,7 @@ export function Workspace({
             );
             if (migrated.length && !cancelled) {
               setCharacters(migrated);
-              localStorage.setItem(storageKey, JSON.stringify(migrated));
+              await setDeviceValue(storageKey, migrated);
               setNotice(
                 `${migrated.length} ficha(s) antiga(s) foram transferidas para este navegador.`,
               );
@@ -204,7 +205,7 @@ export function Workspace({
   }, [storageKey, displayName]);
 
   useEffect(() => {
-    if (ready) localStorage.setItem(storageKey, JSON.stringify(characters));
+    if (ready) void setDeviceValue(storageKey, characters);
   }, [characters, ready, storageKey]);
 
   useEffect(() => {
@@ -223,7 +224,7 @@ export function Workspace({
   ) {
     setCharacters((current) => {
       const next = change(current);
-      localStorage.setItem(storageKey, JSON.stringify(next));
+      void setDeviceValue(storageKey, next);
       return next;
     });
   }
@@ -494,6 +495,7 @@ function Dashboard({
         <span className="ctl-summary"><strong>{changelings}</strong> Changelings</span>
         <span className="mta-summary"><strong>{mages}</strong> Magos</span>
       </section>
+      <StorageSettings />
       <section className="panel wide recent-panel">
         <div className="panel-heading">
           <div>
