@@ -2,15 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  Archive,
   ChevronRight,
   Download,
+  Eye,
   FileJson,
-  FileText,
   History,
   LayoutDashboard,
-  Menu,
+  MoreHorizontal,
   Pencil,
+  Printer,
   Plus,
   RotateCcw,
   Search,
@@ -52,8 +52,15 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -81,7 +88,6 @@ import {
   MTA_ORDER_LABELS,
   MTA_PATHS,
   SKILLS,
-  SOURCE_CATALOG,
 } from "@/lib/creation-rules";
 import {
   getMeritsForLine,
@@ -113,7 +119,7 @@ import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
 import { ARMORS, EQUIPMENT, WEAPONS } from "@/lib/combat-equipment";
 import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
 
-type View = "inicio" | "personagens" | "fontes" | "regras";
+type View = "inicio" | "personagens";
 type CatalogRule = {
   id: string;
   originalName: string;
@@ -125,9 +131,8 @@ type CatalogRule = {
 };
 
 const nav = [
-  ["inicio", "Visão geral", LayoutDashboard],
+  ["inicio", "Início", LayoutDashboard],
   ["personagens", "Personagens", UsersRound],
-  ["fontes", "Fontes", Archive],
 ] as const;
 
 export function Workspace({
@@ -142,7 +147,7 @@ export function Workspace({
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
   const [ready, setReady] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const storageKey = useMemo(
@@ -206,7 +211,6 @@ export function Workspace({
     setView(next);
     setSelected(null);
     setEditing(null);
-    setMobileOpen(false);
   }
 
   function saveCharacter(sheet: CharacterSheet) {
@@ -307,58 +311,28 @@ export function Workspace({
 
   return (
     <main className="app-shell">
-      <aside className={`sidebar ${mobileOpen ? "sidebar-open" : ""}`}>
-        <div className="brand">
-          <div className="brand-mark">
-            <Sparkles />
-          </div>
+      <section className="content">
+        <header className="topbar">
+          <button className="top-brand" onClick={() => navigate("inicio")}>
+            <img src="/cod-emblem.png" alt="" aria-hidden="true" />
           <div>
             <strong>Arquivo</strong>
             <span>das Trevas</span>
           </div>
-          <button
-            className="mobile-close"
-            onClick={() => setMobileOpen(false)}
-            aria-label="Fechar menu"
-          >
-            <X />
           </button>
-        </div>
-        <nav aria-label="Navegação principal">
+          <nav className="top-navigation" aria-label="Navegação principal">
           {nav.map(([id, label, Icon]) => (
             <button
               key={id}
-              className={view === id ? "nav-item active" : "nav-item"}
+                className={view === id && !selected ? "active" : ""}
               onClick={() => navigate(id)}
             >
               <Icon />
               <span>{label}</span>
-              {view === id && <ChevronRight className="nav-chevron" />}
             </button>
           ))}
-        </nav>
-        <div className="profile">
-          <div className="avatar">{displayName.slice(0, 1).toUpperCase()}</div>
-          <div>
-            <strong>{displayName}</strong>
-            <span>{characters.length} personagem(ns)</span>
-          </div>
-        </div>
-      </aside>
-      <section className="content">
-        <header className="topbar">
-          <button
-            className="mobile-menu"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Abrir menu"
-          >
-            <Menu />
-          </button>
-          <div>
-            <p>Chronicles of Darkness</p>
-            <h1>{title}</h1>
-          </div>
-          <div className="top-actions">
+          </nav>
+          <div className="top-panel">
             <input
               ref={fileRef}
               hidden
@@ -370,14 +344,49 @@ export function Workspace({
                 event.target.value = "";
               }}
             />
-            <Button variant="outline" onClick={() => fileRef.current?.click()}>
-              <Upload /> Importar JSON
-            </Button>
-            <Button onClick={() => setEditing("new")}>
-              <Plus /> Criar ficha
-            </Button>
+            <div className="top-profile">
+              <strong>{displayName}</strong>
+              <span>{characters.length} personagem(ns)</span>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="sheet-actions-trigger">
+                  <MoreHorizontal /> Ações da ficha
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="sheet-actions-menu">
+                <DropdownMenuLabel>Gerenciar fichas</DropdownMenuLabel>
+                <DropdownMenuItem onSelect={() => setEditing("new")}>
+                  <Plus /> Criar ficha
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => fileRef.current?.click()}>
+                  <Upload /> Importar JSON
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  disabled={!selected}
+                  onSelect={() => selected && exportCharacter(selected)}
+                >
+                  <Download /> Salvar JSON
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  variant="destructive"
+                  disabled={!selected}
+                  onSelect={(event) => {
+                    event.preventDefault();
+                    if (selected) setDeleteOpen(true);
+                  }}
+                >
+                  <Trash2 /> Deletar ficha
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
+        <div className="view-heading">
+          <p>Chronicles of Darkness</p>
+          <h1>{selected ? selected.character.name : title}</h1>
+        </div>
         {notice && (
           <div className="notice" role="status">
             <ShieldCheck />
@@ -392,16 +401,12 @@ export function Workspace({
             character={selected}
             back={() => setSelected(null)}
             edit={() => setEditing(selected)}
-            exportSheet={() => exportCharacter(selected)}
             updateState={(state) => updateCharacterState(selected, state)}
             updateSheet={updateCharacter}
-            remove={() => deleteCharacter(selected)}
           />
         ) : view === "inicio" ? (
           <Dashboard
             characters={characters}
-            create={() => setEditing("new")}
-            importJson={() => fileRef.current?.click()}
             openCharacters={() => navigate("personagens")}
             openCharacter={setSelected}
           />
@@ -410,33 +415,28 @@ export function Workspace({
             characters={characters}
             ready={ready}
             open={setSelected}
-            create={() => setEditing("new")}
           />
-        ) : (
-          <Sources />
-        )}
+        ) : null}
       </section>
-      {mobileOpen && (
-        <button
-          className="overlay"
-          onClick={() => setMobileOpen(false)}
-          aria-label="Fechar menu"
-        />
-      )}
+      <DeleteCharacterDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        name={selected?.character.name ?? "esta ficha"}
+        onDelete={() => {
+          if (selected) deleteCharacter(selected);
+          setDeleteOpen(false);
+        }}
+      />
     </main>
   );
 }
 
 function Dashboard({
   characters,
-  create,
-  importJson,
   openCharacters,
   openCharacter,
 }: {
   characters: CharacterSheet[];
-  create: () => void;
-  importJson: () => void;
   openCharacters: () => void;
   openCharacter: (item: CharacterSheet) => void;
 }) {
@@ -452,48 +452,24 @@ function Dashboard({
       <section className="welcome-panel practical-welcome">
         <div>
           <Badge className="eyebrow">ARQUIVO DAS TREVAS</Badge>
-          <h2>Suas histórias, prontas para continuar.</h2>
+          <h2>Catálogo de Fichas</h2>
           <p>
-            Crie um personagem novo ou retome uma ficha recente diretamente
-            daqui.
+            Quem você será desta vez?
           </p>
           <div className="welcome-actions">
-            <Button onClick={create}>
-              <Plus /> Criar personagem
-            </Button>
             <Button variant="outline" onClick={openCharacters}>
               Todos os personagens
             </Button>
           </div>
         </div>
         <div className="sigil" aria-hidden="true">
-          <span>CoD</span>
+          <img src="/cod-emblem.png" alt="" />
         </div>
       </section>
-      <section className="dashboard-actions wide">
-        <button onClick={create}>
-          <Plus />
-          <span>
-            <strong>Nova ficha</strong>
-            <small>Changeling ou Mago</small>
-          </span>
-        </button>
-        <button onClick={importJson}>
-          <Upload />
-          <span>
-            <strong>Importar personagem</strong>
-            <small>Abrir um arquivo JSON</small>
-          </span>
-        </button>
-        <div>
-          <UsersRound />
-          <span>
-            <strong>{characters.length} personagens</strong>
-            <small>
-              {changelings} Changelings · {mages} Magos
-            </small>
-          </span>
-        </div>
+      <section className="line-summary wide">
+        <span><strong>{characters.length}</strong> personagens</span>
+        <span className="ctl-summary"><strong>{changelings}</strong> Changelings</span>
+        <span className="mta-summary"><strong>{mages}</strong> Magos</span>
       </section>
       <section className="panel wide recent-panel">
         <div className="panel-heading">
@@ -544,9 +520,8 @@ function Dashboard({
             <Sparkles />
             <div>
               <strong>Comece uma nova crônica</strong>
-              <p>Crie seu primeiro personagem com o assistente guiado.</p>
+              <p>Use “Ações da ficha” no painel superior para criar seu primeiro personagem.</p>
             </div>
-            <Button onClick={create}>Criar personagem</Button>
           </div>
         )}
       </section>
@@ -557,12 +532,10 @@ function Characters({
   characters,
   ready,
   open,
-  create,
 }: {
   characters: CharacterSheet[];
   ready: boolean;
   open: (item: CharacterSheet) => void;
-  create: () => void;
 }) {
   return (
     <section className="panel">
@@ -575,9 +548,6 @@ function Characters({
             cópia.
           </p>
         </div>
-        <Button onClick={create}>
-          <Plus /> Nova ficha
-        </Button>
       </div>
       {!ready ? (
         <div className="loading-card">Carregando personagens…</div>
@@ -609,8 +579,7 @@ function Characters({
       ) : (
         <Empty
           title="Nenhum personagem criado"
-          text="Crie um Changeling ou Mago com o assistente guiado."
-          action={create}
+          text="Use “Ações da ficha” no painel superior para criar um Changeling ou Mago."
         />
       )}
     </section>
@@ -632,19 +601,20 @@ function CharacterView({
   character,
   back,
   edit,
-  exportSheet,
   updateState,
   updateSheet,
-  remove,
 }: {
   character: CharacterSheet;
   back: () => void;
   edit: () => void;
-  exportSheet: () => void;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
-  remove: () => void;
 }) {
+  const [pdfPreviewOpen, setPdfPreviewOpen] = useState(false);
+  const printSheet = () => {
+    setPdfPreviewOpen(false);
+    window.setTimeout(() => window.print(), 80);
+  };
   return (
     <section className="sheet-editor">
       <div className="sheet-toolbar">
@@ -655,17 +625,16 @@ function CharacterView({
           <Badge>{character.game_line}</Badge>
           <span>Alterações nos marcadores são salvas automaticamente</span>
         </div>
-        <div>
+        <div className="sheet-toolbar-actions">
+          <Button variant="outline" onClick={() => setPdfPreviewOpen(true)}>
+            <Eye /> Visualizar PDF
+          </Button>
+          <Button variant="outline" onClick={printSheet}>
+            <Printer /> Imprimir PDF
+          </Button>
           <Button variant="outline" onClick={edit}>
             <Pencil /> Editar
           </Button>
-          <Button variant="outline" onClick={exportSheet}>
-            <Download /> Exportar JSON
-          </Button>
-          <DeleteCharacterButton
-            name={character.character.name}
-            onDelete={remove}
-          />
         </div>
       </div>
       <CharacterPaper
@@ -673,24 +642,54 @@ function CharacterView({
         updateState={updateState}
         updateSheet={updateSheet}
       />
+      <div className="pdf-print-source" aria-hidden="true">
+        <CharacterPaper
+          character={character}
+          updateState={updateState}
+          updateSheet={updateSheet}
+          printLayout
+        />
+      </div>
+      <Dialog open={pdfPreviewOpen} onOpenChange={setPdfPreviewOpen}>
+        <DialogContent className="pdf-preview-dialog">
+          <DialogHeader className="pdf-preview-header">
+            <div>
+              <DialogTitle>Visualização para PDF</DialogTitle>
+              <DialogDescription>
+                As quatro abas serão impressas como páginas separadas.
+              </DialogDescription>
+            </div>
+            <Button onClick={() => window.print()}>
+              <Printer /> Imprimir ou salvar em PDF
+            </Button>
+          </DialogHeader>
+          <div className="pdf-preview-scroll">
+            <CharacterPaper
+              character={character}
+              updateState={updateState}
+              updateSheet={updateSheet}
+              printLayout
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
 
-function DeleteCharacterButton({
+function DeleteCharacterDialog({
+  open,
+  onOpenChange,
   name,
   onDelete,
 }: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   name: string;
   onDelete: () => void;
 }) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive">
-          <Trash2 /> Excluir
-        </Button>
-      </AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Excluir “{name}”?</AlertDialogTitle>
@@ -714,10 +713,12 @@ function CharacterPaper({
   character,
   updateState,
   updateSheet,
+  printLayout = false,
 }: {
   character: CharacterSheet;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
+  printLayout?: boolean;
 }) {
   const isCtl = character.game_line === "CtL";
   const data = character.line_data;
@@ -798,7 +799,9 @@ function CharacterPaper({
   const expandedMerits = character.merits.filter(
     (item) => isExpandedMerit(item.name) && !item.grantedBy,
   );
-  const principalMerits = character.merits.filter((item) => !item.grantedBy);
+  const principalMerits = character.merits.filter(
+    (item) => !item.grantedBy || item.grantedBy === "Corte",
+  );
   const selectedConditions = [
     ...selectedConditionList(character.current_state?.conditions),
     ...stringList(data.merit_granted_conditions).map((id) => ({
@@ -813,7 +816,7 @@ function CharacterPaper({
   const setState = (key: string, value: unknown) =>
     updateState({ ...character.current_state, [key]: value });
   return (
-    <article className={`cod-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}`}>
+    <article className={`cod-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}${printLayout ? " print-layout" : ""}`}>
       <header className="cod-sheet-title">
         <div>
           <span>{isCtl ? "CHANGELING" : "MAGO"}</span>
@@ -832,7 +835,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">Combate</TabsTrigger>
             <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
           </TabsList>
-          <TabsContent value="principal" className="ctl-sheet-page">
+          <TabsContent forceMount value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Agulha" value={data.needle} />
@@ -963,7 +966,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent value="poderes" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>Contratos</SheetHeading>
             <ContractPowerList
               contracts={contracts}
@@ -1000,7 +1003,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent value="combate" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1008,7 +1011,9 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
+            forceMount
             value="companheiros"
+            data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
           >
             <CompanionPage character={character} updateSheet={updateSheet} />
@@ -1028,7 +1033,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">Combate</TabsTrigger>
             <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
           </TabsList>
-          <TabsContent value="principal" className="ctl-sheet-page">
+          <TabsContent forceMount value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Caminho" value={data.path} />
@@ -1138,7 +1143,9 @@ function CharacterPaper({
             </section>
           </TabsContent>
           <TabsContent
+            forceMount
             value="magia"
+            data-page-title="Detalhes"
             className="ctl-sheet-page powers-page mage-spell-page"
           >
             <section className="sheet-identity-grid">
@@ -1229,7 +1236,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent value="combate" className="ctl-sheet-page powers-page">
+          <TabsContent forceMount value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1237,7 +1244,9 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
+            forceMount
             value="companheiros"
+            data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
           >
             <CompanionPage character={character} updateSheet={updateSheet} />
@@ -4814,7 +4823,12 @@ function MeritSheetList({
   line: "CtL" | "MtA";
 }) {
   const catalog = getMeritsForLine(line),
-    visible = merits.filter((item) => !item.grantedBy);
+    visible = merits.filter(
+      (item) =>
+        !item.grantedBy ||
+        (line === "CtL" && item.grantedBy === "Corte") ||
+        (line === "MtA" && item.grantedBy === "Ordem"),
+    );
   return (
     <div className="sheet-merits single-column">
       {visible.length ? (
@@ -5220,75 +5234,6 @@ function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
   );
 }
 
-function Sources() {
-  const [query, setQuery] = useState("");
-  const filtered = SOURCE_CATALOG.filter((source) =>
-    Object.values(source).join(" ").toLowerCase().includes(query.toLowerCase()),
-  );
-  return (
-    <section className="panel">
-      <div className="panel-heading">
-        <div>
-          <span className="kicker">HIERARQUIA DE FONTES</span>
-          <h3>Livros conectados</h3>
-          <p>
-            Os livros principais comandam a criação; os adjacentes ampliam
-            opções.
-          </p>
-        </div>
-        <div className="searchbox">
-          <Search />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Buscar fonte…"
-          />
-        </div>
-      </div>
-      <div className="table-wrap">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Livro</TableHead>
-              <TableHead>Linha</TableHead>
-              <TableHead>Tipo</TableHead>
-              <TableHead>Papel</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filtered.map((source) => (
-              <TableRow key={source.id}>
-                <TableCell>
-                  <div className="source-title">
-                    <FileText />
-                    {source.title}
-                  </div>
-                </TableCell>
-                <TableCell>{source.gameLine}</TableCell>
-                <TableCell>{source.type}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={source.role === "PRIMARY" ? "default" : "outline"}
-                  >
-                    {source.role === "PRIMARY"
-                      ? "PRINCIPAL"
-                      : source.role === "BASE"
-                        ? "BASE"
-                        : "ADJACENTE"}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge className="approved-badge">ATIVO</Badge>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </section>
-  );
-}
 function Empty({
   title,
   text,
@@ -5296,16 +5241,18 @@ function Empty({
 }: {
   title: string;
   text: string;
-  action: () => void;
+  action?: () => void;
 }) {
   return (
     <div className="empty-state">
       <FileJson />
       <h3>{title}</h3>
       <p>{text}</p>
-      <Button onClick={action}>
-        <Plus /> Criar ficha
-      </Button>
+      {action && (
+        <Button onClick={action}>
+          <Plus /> Criar ficha
+        </Button>
+      )}
     </div>
   );
 }

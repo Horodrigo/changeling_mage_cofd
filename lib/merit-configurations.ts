@@ -490,6 +490,25 @@ export function synchronizeMeritGrants<T extends GrantSheet>(sheet: T): T {
       item.grantedBy === "Corte" ||
       item.grantedBy === "Ordem",
   );
+  const court = String(sheet.line_data?.court ?? "").trim();
+  const currentMantle = sheet.merits.find(
+    (item) =>
+      item.name === "Mantle" &&
+      item.grantedBy === "Corte" &&
+      String(item.configuration?.court ?? "").trim() === court,
+  );
+  sheet.merits = sheet.merits.filter(
+    (item) => !(item.name === "Mantle" && item.grantedBy === "Corte"),
+  );
+  if (court && court !== "Sem Corte")
+    sheet.merits.push({
+      name: "Mantle",
+      dots: Math.max(1, Number(currentMantle?.dots ?? 1)),
+      sourceId: "ctl-2ed",
+      source: "Changeling the Lost",
+      configuration: { court },
+      grantedBy: "Corte",
+    });
   sheet.specializations = sheet.specializations.filter(
     (item) => !item.grantedBy,
   );

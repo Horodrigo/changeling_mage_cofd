@@ -143,10 +143,6 @@ export const CONTRACTS: ContractDefinition[] = [
     regalia: "Joias",
     description:
       "Orienta o futuro de um alvo para uma experiência provável no mês seguinte. Ações que conduzem ao evento recebem bônus e as que o impedem sofrem penalidade; o Contrato cria o encontro, não determina seu resultado.",
-    options: [
-      'O jogador nomeia uma experiência para o alvo, que deve ser razoavelmente provável e não muito específica. Exemplos: "encontrar a Rainha do Outono" ou "ser atropelado por um carro". Todas as rolagens que levem a esse evento, feitas pelo alvo ou por outros personagens, ganham dados de bônus iguais aos sucessos obtidos ao invocar o Contrato, enquanto rolagens que atrapalhem o evento sofrem a mesma penalidade — até um máximo de +/−5. Esse Contrato só cria o evento, não o resultado dele.',
-      "Um jogador pode ter um número de instâncias desse Contrato pendentes igual ao seu Wyrd.",
-    ],
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 132,
@@ -402,10 +398,6 @@ export const CONTRACTS: ContractDefinition[] = [
     action: "Reflexiva",
     duration: "Instantânea",
     sourceId: "ctl-2ed",
-    options: [
-      "Esse Contrato volta os últimos 10 segundos, ou uma rodada inteira. O jogador pode agir diferente dessa vez, mas todos os outros repetem a mesma ação (a não ser que possuam alguma forma de perceber a alteração temporal).",
-      "Se o personagem morrer, este Contrato ativa sozinho — desde que ele possa pagar a ativação. Se ele escapar da morte assim, recebe a Condição Assustado. Isso funciona uma vez por história.",
-    ],
     source: "Changeling: Os Perdidos",
     page: 139,
   },
@@ -1413,10 +1405,6 @@ export const CONTRACTS: ContractDefinition[] = [
     regalia: "Moeda",
     description:
       "Um presente ou pagamento faz burocracias e negociações avançarem com rapidez incomum, reduzindo barreiras e o tempo necessário para obter cooperação.",
-    options: [
-      "Sucesso: O jogador resolve qualquer questão administrativa a seu favor, sem dificuldades e em um décimo do tempo normal, não importa o quão impossível isso seja. Burocratas e fiscalização não atrapalham. Não precisa ser presencial — um telefonema ou email direto ao responsável já basta. Só funciona se a organização já pudesse entregar esse resultado normalmente.",
-      "Sucesso Excepcional: Tudo se resolve na hora, mesmo que seja extremamente improvável — documentos já prontos, agendas liberadas, exigências dispensadas, mesmo sem o jogador ter feito a parte dele.",
-    ],
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 42,

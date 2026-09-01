@@ -11,6 +11,7 @@ import {
   Search,
   ShieldCheck,
   Trash2,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -183,6 +184,9 @@ export function CharacterBuilder({
   const [line, setLine] = useState<"CtL" | "MtA">(initial?.game_line ?? "CtL");
   const [name, setName] = useState(initial?.character.name ?? "");
   const [concept, setConcept] = useState(initial?.character.concept ?? "");
+  const [playerName, setPlayerName] = useState(
+    initial?.character.player ?? player,
+  );
   const [attributes, setAttributes] =
     useState<Record<string, number>>(startingAttributes);
   const [skills, setSkills] = useState<Record<string, number>>(startingSkills);
@@ -546,7 +550,11 @@ export function CharacterBuilder({
         id: line === "CtL" ? "ctl-2ed-embedded" : "mta-2ed-embedded",
         version: 1,
       },
-      character: { name: name.trim(), concept: concept.trim(), player },
+      character: {
+        name: name.trim(),
+        concept: concept.trim(),
+        player: playerName.trim(),
+      },
       attributes: finalAttributes,
       skills: finalSkills,
       specializations: specialties.map((item) => ({
@@ -667,7 +675,8 @@ export function CharacterBuilder({
             setName={setName}
             concept={concept}
             setConcept={setConcept}
-            player={player}
+            player={playerName}
+            setPlayer={setPlayerName}
             missing={missing}
           />
         )}
@@ -813,6 +822,7 @@ function IdentityStep({
   concept,
   setConcept,
   player,
+  setPlayer,
   missing,
 }: any) {
   return (
@@ -822,7 +832,7 @@ function IdentityStep({
       <p>Escolha a linha principal. Ela determina todas as próximas opções.</p>
       <div className="line-choice">
         <button
-          className={line === "CtL" ? "selected" : ""}
+          className={`ctl-line-choice ${line === "CtL" ? "selected" : ""}`}
           onClick={() => setLine("CtL")}
         >
           <Badge>CtL</Badge>
@@ -830,7 +840,7 @@ function IdentityStep({
           <small>Fonte principal: Changeling the Lost 2e</small>
         </button>
         <button
-          className={line === "MtA" ? "selected" : ""}
+          className={`mta-line-choice ${line === "MtA" ? "selected" : ""}`}
           onClick={() => setLine("MtA")}
         >
           <Badge>MtA</Badge>
@@ -845,7 +855,11 @@ function IdentityStep({
         </label>
         <label>
           Jogador
-          <Input value={player} readOnly />
+          <Input
+            value={player}
+            onChange={(event) => setPlayer(event.target.value)}
+            placeholder="Nome do jogador"
+          />
         </label>
         <label className="full">
           Conceito
@@ -1081,12 +1095,21 @@ function CtlStep(props: any) {
 
 function CourtSelector(props: any) {
   const [saved, setSaved] = useState<CustomCourtDefinition[]>([]);
-  const [creating, setCreating] = useState(Boolean(props.customCourt));
-  const draft: CustomCourtDefinition = props.customCourt ?? {
+  const emptyCourt = (): CustomCourtDefinition => ({
     name: "",
     emotion: "",
     mantleBenefits: ["", "", "", "", ""],
-  };
+  });
+  const copyCourt = (
+    court: CustomCourtDefinition | null | undefined,
+  ): CustomCourtDefinition =>
+    court
+      ? { ...court, mantleBenefits: [...court.mantleBenefits] }
+      : emptyCourt();
+  const [creating, setCreating] = useState(false);
+  const [draft, setDraft] = useState<CustomCourtDefinition>(() =>
+    copyCourt(props.customCourt),
+  );
   useEffect(() => {
     try {
       const raw = localStorage.getItem("arquivo-das-trevas:custom-courts");
@@ -1119,6 +1142,12 @@ function CourtSelector(props: any) {
     const custom = saved.find((item) => item.name === name) ?? null;
     props.setCourt(name);
     props.setCustomCourt(custom);
+    setDraft(copyCourt(custom));
+    setCreating(false);
+  };
+  const cancelCreation = () => {
+    setDraft(copyCourt(props.customCourt));
+    setCreating(false);
   };
   return (
     <div className="kith-field">
@@ -1160,11 +1189,11 @@ function CourtSelector(props: any) {
             type="button"
             variant={creating ? "secondary" : "outline"}
             onClick={() => {
+              setDraft(copyCourt(props.customCourt));
               setCreating(true);
-              props.setCustomCourt(draft);
             }}
           >
-            <Plus /> Criar Corte
+            <Plus /> {props.customCourt ? "Editar Corte" : "Criar Corte"}
           </Button>
           {creating && (
             <div className="custom-kith-editor">
@@ -1174,7 +1203,7 @@ function CourtSelector(props: any) {
                   value={draft.name}
                   maxLength={80}
                   onChange={(event) =>
-                    props.setCustomCourt({ ...draft, name: event.target.value })
+                    setDraft({ ...draft, name: event.target.value })
                   }
                 />
               </label>
@@ -1184,7 +1213,7 @@ function CourtSelector(props: any) {
                   value={draft.emotion}
                   maxLength={80}
                   onChange={(event) =>
-                    props.setCustomCourt({
+                    setDraft({
                       ...draft,
                       emotion: event.target.value,
                     })
@@ -1199,7 +1228,7 @@ function CourtSelector(props: any) {
                     onChange={(event) => {
                       const benefits = [...draft.mantleBenefits];
                       benefits[index] = event.target.value;
-                      props.setCustomCourt({
+                      setDraft({
                         ...draft,
                         mantleBenefits: benefits,
                       });
@@ -1208,17 +1237,22 @@ function CourtSelector(props: any) {
                   />
                 </label>
               ))}
-              <Button
-                type="button"
-                onClick={save}
-                disabled={
-                  !draft.name.trim() ||
-                  !draft.emotion.trim() ||
-                  draft.mantleBenefits.some((item) => !item.trim())
-                }
-              >
-                Salvar e selecionar Corte
-              </Button>
+              <div className="custom-court-actions full">
+                <Button type="button" variant="outline" onClick={cancelCreation}>
+                  <X /> Cancelar
+                </Button>
+                <Button
+                  type="button"
+                  onClick={save}
+                  disabled={
+                    !draft.name.trim() ||
+                    !draft.emotion.trim() ||
+                    draft.mantleBenefits.some((item) => !item.trim())
+                  }
+                >
+                  Salvar e selecionar Corte
+                </Button>
+              </div>
             </div>
           )}
           <DialogFooter>

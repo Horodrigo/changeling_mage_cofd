@@ -409,7 +409,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "ctl-2ed:unravel-the-tapestry": {
     "dicePool": "Raciocínio + Ocultismo + Fado",
-    "loophole": "O changeling contraiu uma dívida durante esta cena, que ainda não pagou. Isso pode ser tão trivial quanto prometer uma gorjeta ao barista na próxima vez, já que ele não tem nenhum troco no momento. Os Escudos Portadores do Escudo juram defender e proteger. Eles se mantêm firmes, fornecendo refúgio aos oprimidos e usam sua força para curar outros Perdidos. Ogros, ficando mais fortes a cada fardo que carregam, favorecem o Escudo.",
+    "loophole": "O changeling contraiu uma dívida durante esta cena, que ainda não pagou. Isso pode ser tão trivial quanto prometer uma gorjeta ao barista na próxima vez, já que ele não tem nenhum troco no momento.",
     "seemingBenefits": {
       "Darkling": "O Wisp pode realizar uma ação reflexiva para subir para sua classificação de Furtividade em jardas/metros, imediatamente após promulgar este Contrato, mas antes que o tempo comece novamente.",
       "Wizened": "Agindo com precisão e velocidade impossíveis, o Mirrado ganha um ataque surpresa contra qualquer alvo viável, se ele quiser.",
