@@ -61,6 +61,8 @@ import {
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
 import { KITHS, findKith, type KithDefinition } from "@/lib/changeling-kiths";
+import { useHomebrews } from "./use-homebrews";
+import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
   findMeritConfiguration,
   isStructuredMerit,
@@ -183,6 +185,15 @@ export function CharacterBuilder({
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
 }) {
+  const homebrews = useHomebrews();
+  const contractCatalog = useMemo(
+    () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
+    [homebrews],
+  );
+  const spellCatalog = useMemo(
+    () => [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))],
+    [homebrews],
+  );
   const startingAttributes = editableAttributes(initial);
   const startingSkills = editableSkills(initial);
   const [step, setStep] = useState(1);
@@ -281,7 +292,17 @@ export function CharacterBuilder({
   const [error, setError] = useState("");
 
   const meritBudget = 10 - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
-  const meritCatalog = useMemo(() => getMeritsForLine(line), [line]);
+  const meritCatalog = useMemo(() => {
+    const merged = new Map(
+      getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map((item) => [item.name.toLocaleLowerCase(), item]),
+    );
+    homebrews.merits
+      .filter((item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id))
+      .forEach((item) => merged.set(item.name.toLocaleLowerCase(), item));
+    return [...merged.values()].sort((a, b) =>
+      a.translatedName.localeCompare(b.translatedName, "pt-BR"),
+    );
+  }, [homebrews, line]);
   const meritSpent = merits.reduce((sum, item) => sum + item.dots, 0);
   const pathData =
     MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
@@ -750,6 +771,9 @@ export function CharacterBuilder({
                 setFavoredAttribute,
                 contracts,
                 setContracts,
+                contractCatalog,
+                kithCatalog: homebrews.kiths.filter(item=>isHomebrewActive(homebrews,item.id)),
+                courtCatalog: homebrews.courts.filter(item=>isHomebrewActive(homebrews,item.id)),
                 aspirations,
                 setAspirations,
                 merits,
@@ -788,6 +812,8 @@ export function CharacterBuilder({
                 setRotes,
                 praxes,
                 setPraxes,
+                spellCatalog,
+                orderCatalog: homebrews.orders.filter(item=>isHomebrewActive(homebrews,item.id)),
                 aspirations,
                 setAspirations,
                 merits,
@@ -1020,6 +1046,15 @@ function TraitsStep(props: any) {
 
 function CtlStep(props: any) {
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
+  const availableRegalia = [
+    ...REGALIA,
+    ...props.contractCatalog
+      .filter(
+        (item: ContractDefinition & { categoryKind?: string }) =>
+          item.categoryKind === "Regalia",
+      )
+      .map((item: ContractDefinition) => item.regalia),
+  ].filter((item, index, values) => values.indexOf(item) === index);
   const favored = seemingData ? favoredChoices(seemingData.favored) : [];
   const powerOptions = Array.from(
     { length: props.maximumPowerFromMerits },
@@ -1076,7 +1111,9 @@ function CtlStep(props: any) {
           label="Segunda Regalia favorecida"
           value={props.secondRegalia}
           setValue={props.setSecondRegalia}
-          options={REGALIA.filter((item) => item !== seemingData?.regalia)}
+          options={availableRegalia.filter(
+            (item) => item !== seemingData?.regalia,
+          )}
           invalid={props.missing("secondRegalia")}
         />
         <Choice
@@ -1104,6 +1141,7 @@ function CtlStep(props: any) {
           primaryRegalia={seemingData?.regalia ?? ""}
           secondRegalia={props.secondRegalia}
           court={props.court}
+          catalog={props.contractCatalog}
         />
       </div>
       <div className={props.missing("merits") ? "missing-field block" : ""}>
@@ -1120,7 +1158,7 @@ function CtlStep(props: any) {
 }
 
 function CourtSelector(props: any) {
-  const [saved, setSaved] = useState<CustomCourtDefinition[]>([]);
+  const [saved, setSaved] = useState<CustomCourtDefinition[]>(props.courtCatalog ?? []);
   const emptyCourt = (): CustomCourtDefinition => ({
     name: "",
     emotion: "",
@@ -1136,17 +1174,6 @@ function CourtSelector(props: any) {
   const [draft, setDraft] = useState<CustomCourtDefinition>(() =>
     copyCourt(props.customCourt),
   );
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("arquivo-das-trevas:custom-courts");
-      if (raw)
-        setSaved(
-          (JSON.parse(raw) as unknown[])
-            .map(normalizeCustomCourt)
-            .filter(Boolean) as CustomCourtDefinition[],
-        );
-    } catch {}
-  }, []);
   const save = () => {
     if (
       !draft.name.trim() ||
@@ -1298,17 +1325,18 @@ function KithSelector(props: any) {
   const [search, setSearch] = useState("");
   const [creating, setCreating] = useState(Boolean(props.customKith));
   const normalized = search.trim().toLocaleLowerCase("pt-BR");
-  const selected = findKith(props.kith);
-  const filtered = KITHS.filter(
+  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...KITHS, ...(props.kithCatalog ?? [])];
+  const selected = allKiths.find(item=>item.name===props.kith);
+  const filtered = allKiths.filter(
     (item) =>
       !normalized ||
       `${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`
         .toLocaleLowerCase("pt-BR")
         .includes(normalized),
   );
-  const choose = (item: KithDefinition) => {
+  const choose = (item: KithDefinition & {homebrew?:true}) => {
     props.setKith(item.name);
-    props.setCustomKith(false);
+    props.setCustomKith(Boolean(item.homebrew));
     props.setCustomKithSkill(item.skill);
     props.setCustomKithDescription(item.description);
     setCreating(false);
@@ -1464,6 +1492,7 @@ function ContractSelector({
   primaryRegalia,
   secondRegalia,
   court,
+  catalog,
 }: {
   contracts: ContractSelection[];
   setContracts: (value: ContractSelection[]) => void;
@@ -1471,10 +1500,11 @@ function ContractSelector({
   primaryRegalia: string;
   secondRegalia: string;
   court: string;
+  catalog: ContractDefinition[];
 }) {
   const [search, setSearch] = useState("");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
-  const availableContracts = CONTRACTS.filter((contract) =>
+  const availableContracts = catalog.filter((contract) =>
     canSelectInitialContract(
       contract,
       [primaryRegalia, secondRegalia].filter(Boolean),
@@ -1725,7 +1755,7 @@ function ContractSelector({
 }
 
 function OrderSelector(props: any) {
-  const [saved, setSaved] = useState<CustomOrderDefinition[]>([]);
+  const [saved, setSaved] = useState<CustomOrderDefinition[]>(props.orderCatalog ?? []);
   const [creating, setCreating] = useState(false);
   const draft: CustomOrderDefinition = props.customOrder ?? {
     name: "",
@@ -1733,17 +1763,6 @@ function OrderSelector(props: any) {
     roteSkills: ["", "", ""],
   };
   const allSkills = Object.values(SKILLS).flat();
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("arquivo-das-trevas:custom-orders");
-      if (raw)
-        setSaved(
-          (JSON.parse(raw) as unknown[])
-            .map(normalizeCustomOrder)
-            .filter(Boolean) as CustomOrderDefinition[],
-        );
-    } catch {}
-  }, []);
   const select = (name: string) => {
     const custom = saved.find((item) => item.name === name) ?? null;
     props.setOrder(name);
@@ -2015,6 +2034,7 @@ function MtaStep(props: any) {
             setValues={props.setRotes}
             rote
             arcana={props.arcana}
+            catalog={props.spellCatalog}
           />
         </div>
       )}
@@ -2025,6 +2045,7 @@ function MtaStep(props: any) {
           values={props.praxes}
           setValues={props.setPraxes}
           arcana={props.arcana}
+          catalog={props.spellCatalog}
         />
       </div>
       <div className={props.missing("merits") ? "missing-field block" : ""}>
@@ -2047,6 +2068,7 @@ function SpellSelector({
   setValues,
   rote = false,
   arcana,
+  catalog,
 }: {
   title: string;
   count: number;
@@ -2054,11 +2076,12 @@ function SpellSelector({
   setValues: (value: Array<SpellSelection | null>) => void;
   rote?: boolean;
   arcana: Record<string, number>;
+  catalog: SpellDefinition[];
 }) {
   const [search, setSearch] = useState("");
   const normalized = search.toLocaleLowerCase("pt-BR");
   const selectedIds = values.filter(Boolean).map((item) => item!.id);
-  const filtered = SPELLS.filter(
+  const filtered = catalog.filter(
     (spell) =>
       meetsArcanaRequirements(spell.requirements, arcana) &&
       (!normalized ||
@@ -2486,7 +2509,7 @@ function Merits({
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   function addMerit(definition: MeritDefinition) {
     if (
-      !REPEATABLE_MERITS.has(definition.name) &&
+      !isRepeatableDefinition(definition) &&
       merits.some((merit) => merit.name === definition.name)
     )
       return;
@@ -2623,7 +2646,7 @@ function Merits({
                       const selected = merits.some(
                           (merit) => merit.name === definition.name,
                         ),
-                        repeatable = REPEATABLE_MERITS.has(definition.name);
+                        repeatable = isRepeatableDefinition(definition);
                       return (
                         <article
                           className={
@@ -3310,6 +3333,12 @@ function MeritGrantPicker({
   );
 }
 
+function isRepeatableDefinition(definition: MeritDefinition) {
+  return (
+    REPEATABLE_MERITS.has(definition.name) ||
+    Boolean((definition as MeritDefinition & { repeatable?: boolean }).repeatable)
+  );
+}
 function meritTooltip(definition: MeritDefinition) {
   return definition.prerequisites
     ? `${definition.description}\nPré-requisitos: ${definition.prerequisites}`

@@ -117,7 +117,7 @@ const CTL_SUPPLEMENTS = [
   ...[["Regalia Manifestation", range(1,5)], ["Dramaturge", fixed(3)], ["Understudy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-kith-kin","Kith and Kin","Changeling",2)),
   ...[["Baron of the Lesser Ones", fixed(4)], ["Dauphines of Wayward Children", fixed(4)], ["Master of Keys", fixed(4)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-oak-ash-thorn","Oak, Ash, and Thorn","Entitlement",2)),
   ...[["Holding", range(1,5)], ["Thistle Guardian", fixed(3)], ["Dream-Tripper", fixed(3)], ["Dream Ghost", fixed(2)], ["Twice Shy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-hedge","The Hedge","Changeling",2)),
-  ...[["Hedgewise", fixed(2)], ["Librarian", fixed(3)], ["Gunslinger", fixed(1,3,5)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-dark-eras","Dark Eras Changeling","Historical",2)),
+  ...[["Hedgewise", fixed(2)], ["Librarian", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-dark-eras","Dark Eras Changeling","Historical",2)),
   ...[
     ["Bedside Manner",fixed(3)],["Dressed to Kill",fixed(2)],["Friends in Low Places",range(1,3)],["Spring-Loaded",fixed(1)],["I Meant to Do That",fixed(1)],["Host with the Most",fixed(3)],
     ["Beware of Dog",fixed(2)],["No Rest for the Wicked",fixed(3)],["Challenge Accepted",fixed(1)],["Street Pharmacist",fixed(1)],["Don't Mess with Jim",fixed(1)],["Sucker Born Every Minute",fixed(1)],

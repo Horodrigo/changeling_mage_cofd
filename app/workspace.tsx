@@ -7,6 +7,7 @@ import {
   Eye,
   FileJson,
   History,
+  FlaskConical,
   LayoutDashboard,
   MoreHorizontal,
   Pencil,
@@ -122,8 +123,11 @@ import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
 import { ARMORS, EQUIPMENT, WEAPONS } from "@/lib/combat-equipment";
 import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
+import { HomebrewsPage } from "./homebrews";
+import { useHomebrews } from "./use-homebrews";
+import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHomebrews } from "@/lib/homebrews";
 
-type View = "inicio" | "personagens";
+type View = "inicio" | "personagens" | "homebrews";
 type CatalogRule = {
   id: string;
   originalName: string;
@@ -137,6 +141,7 @@ type CatalogRule = {
 const nav = [
   ["inicio", "Início", LayoutDashboard],
   ["personagens", "Personagens", UsersRound],
+  ["homebrews", "Homebrews", FlaskConical],
 ] as const;
 
 export function Workspace({
@@ -153,6 +158,7 @@ export function Workspace({
   const [ready, setReady] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [notice, setNotice] = useState("");
+  const homebrews = useHomebrews();
   const fileRef = useRef<HTMLInputElement>(null);
   const storageKey = useMemo(
     () => `arquivo-das-trevas:v2:${userKey}`,
@@ -200,6 +206,17 @@ export function Workspace({
   useEffect(() => {
     if (ready) localStorage.setItem(storageKey, JSON.stringify(characters));
   }, [characters, ready, storageKey]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const migrated = migrateCharacterHomebrews(homebrews, characters);
+    if (
+      migrated.kiths.length !== homebrews.kiths.length ||
+      migrated.courts.length !== homebrews.courts.length ||
+      migrated.orders.length !== homebrews.orders.length
+    )
+      saveHomebrews(migrated);
+  }, [characters, homebrews, ready]);
 
   function commitCharacters(
     change: (current: CharacterSheet[]) => CharacterSheet[],
@@ -420,6 +437,8 @@ export function Workspace({
             ready={ready}
             open={setSelected}
           />
+        ) : view === "homebrews" ? (
+          <HomebrewsPage catalog={homebrews} />
         ) : null}
       </section>
       <DeleteCharacterDialog
@@ -724,6 +743,10 @@ function CharacterPaper({
   updateSheet: (sheet: CharacterSheet) => void;
   printLayout?: boolean;
 }) {
+  const homebrews = useHomebrews();
+  const isExpanded = (name: string) =>
+    isExpandedMerit(name) ||
+    Boolean(homebrews.merits.find((item) => item.name === name)?.levels?.length);
   const isCtl = character.game_line === "CtL";
   const data = character.line_data;
   const derived = derivedWithPermanentMerits(character);
@@ -801,7 +824,7 @@ function CharacterPaper({
   );
   const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 9, 0);
   const expandedMerits = character.merits.filter(
-    (item) => isExpandedMerit(item.name) && !item.grantedBy,
+    (item) => isExpanded(item.name) && !item.grantedBy,
   );
   const principalMerits = character.merits.filter(
     (item) => !item.grantedBy || item.grantedBy === "Corte",
@@ -975,6 +998,7 @@ function CharacterPaper({
             <ContractPowerList
               contracts={contracts}
               seeming={String(data.seeming ?? "")}
+              court={String(data.court ?? "")}
               extraBenefits={objectList(data.extra_contract_benefits)}
             />
             <div className="powers-sheet-grid">
@@ -1225,7 +1249,7 @@ function CharacterPaper({
                 <SheetHeading>Méritos Expandidos</SheetHeading>
                 <ExpandedMeritList
                   merits={character.merits.filter((item) =>
-                    isExpandedMerit(item.name),
+                    isExpanded(item.name),
                   )}
                 />
                 <MeritConfigurationPanel
@@ -1421,11 +1445,16 @@ function CompactValues({ values }: { values: Record<string, number> }) {
   );
 }
 function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
+  const homebrews = useHomebrews();
   const visible = merits.filter((item) => !item.grantedBy);
   return (
     <div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
-        const style = findExpandedMerit(item.name),
+        const style =
+            findExpandedMerit(item.name) ??
+            homebrews.merits.find(
+              (merit) => merit.name === item.name && merit.levels?.length,
+            ),
           configured = expandedConfigurationLines(
             item.name,
             item.dots,
@@ -1434,7 +1463,9 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
           cult = String(
             normalizeMeritConfiguration(item.configuration).cult ?? "",
           ),
-          title = meritLabel(item);
+          title =
+            homebrews.merits.find((merit) => merit.name === item.name)
+              ?.translatedName ?? meritLabel(item);
         if (!style)
           return (
             <article key={`${item.name}-${itemIndex}`}>
@@ -1482,7 +1513,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                     </section>
                   ))
-                : style.levels
+                : (style.levels ?? [])
                     .filter((level) => level.rating <= item.dots)
                     .map((level, index) => (
                       <section key={`${style.name}-${level.rating}-${index}`}>
@@ -2706,6 +2737,8 @@ function ExperiencePanel({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const homebrews = useHomebrews();
+  const contractsCatalog = [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))];
   const state = character.current_state ?? {};
   const beats = boundedNumber(state.experience_beats, 5, 0);
   const legacyTotal = Math.max(
@@ -2746,7 +2779,12 @@ function ExperiencePanel({
   const [contractId, setContractId] = useState("");
   const [benefitKey, setBenefitKey] = useState("");
   const [feedback, setFeedback] = useState("");
-  const merits = getMeritsForLine("CtL");
+  const merits = [
+    ...getMeritsForLine("CtL").filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
+    ...homebrews.merits.filter(
+      (item) => (item.line === "Core" || item.line === "CtL") && isHomebrewActive(homebrews,item.id),
+    ),
+  ];
   const ownedContracts = [
     ...objectList(character.line_data.contracts),
     ...objectList(character.line_data.learned_contracts),
@@ -2754,7 +2792,7 @@ function ExperiencePanel({
   const ownedContractIds = new Set(
     ownedContracts.map((item) => String(item.id ?? "")),
   );
-  const contractOptions = CONTRACTS.filter(
+  const contractOptions = contractsCatalog.filter(
     (item) => !ownedContractIds.has(item.id),
   );
   const extraBenefits = objectList(character.line_data.extra_contract_benefits);
@@ -2783,7 +2821,7 @@ function ExperiencePanel({
     meritInstance >= 0 &&
     character.merits[meritInstance]?.name === selectedMerit?.name
       ? character.merits[meritInstance]
-      : selectedMerit && !REPEATABLE_MERITS.has(selectedMerit.name)
+      : selectedMerit && !isRepeatableDefinition(selectedMerit)
         ? character.merits.find(
             (item) => item.name === selectedMerit.name && !item.grantedBy,
           )
@@ -2797,7 +2835,7 @@ function ExperiencePanel({
     ? meritDots
     : availableMeritRatings[0];
   const selectedContract =
-    CONTRACTS.find((item) => item.id === contractId) ?? contractOptions[0];
+    contractsCatalog.find((item) => item.id === contractId) ?? contractOptions[0];
   const wyrd = Math.max(1, Number(character.line_data.wyrd ?? 1));
   const traitMaximum = Math.max(5, wyrd);
   const lostWillpower = boundedNumber(
@@ -3433,6 +3471,7 @@ function MageExperiencePanel({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const homebrews = useHomebrews();
   const state = character.current_state ?? {};
   const regular = Math.max(
     0,
@@ -3472,8 +3511,8 @@ function MageExperiencePanel({
   const [mageMeritInstance, setMageMeritInstance] = useState(-1);
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
-  const merits = getMeritsForLine("MtA"),
-    spells = SPELLS;
+  const merits = [...getMeritsForLine("MtA"), ...homebrews.merits.filter((item) => (item.line === "Core" || item.line === "MtA") && isHomebrewActive(homebrews,item.id))],
+    spells = [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))];
   const arcana = (
     character.line_data.arcana && typeof character.line_data.arcana === "object"
       ? character.line_data.arcana
@@ -3511,7 +3550,7 @@ function MageExperiencePanel({
       mageMeritInstance >= 0 &&
       character.merits[mageMeritInstance]?.name === selectedMerit?.name
         ? character.merits[mageMeritInstance]
-        : selectedMerit && !REPEATABLE_MERITS.has(selectedMerit.name)
+        : selectedMerit && !isRepeatableDefinition(selectedMerit)
           ? character.merits.find(
               (item) => item.name === selectedMerit.name && !item.grantedBy,
             )
@@ -3617,7 +3656,7 @@ function MageExperiencePanel({
       const found =
         mageMeritInstance >= 0
           ? next.merits[mageMeritInstance]
-          : !REPEATABLE_MERITS.has(selectedMerit.name)
+          : !isRepeatableDefinition(selectedMerit)
             ? next.merits.find(
                 (item) => item.name === selectedMerit.name && !item.grantedBy,
               )
@@ -4191,9 +4230,15 @@ function ExperienceMeritPicker({
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
 }) {
+  const homebrews = useHomebrews();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
-  const catalog = getMeritsForLine(line),
+  const catalog = [
+      ...getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
+      ...homebrews.merits.filter(
+        (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
+      ),
+    ],
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),
     categories = ["Todas", ...new Set(catalog.map((item) => item.category))];
@@ -4256,7 +4301,7 @@ function ExperienceMeritPicker({
                           owned.name === "Mantle" &&
                           owned.grantedBy === "Corte")),
                   ),
-                repeatable = REPEATABLE_MERITS.has(item.name),
+                repeatable = isRepeatableDefinition(item),
                 ratings = meritRatingsFor(item);
               if (
                 !repeatable &&
@@ -4387,6 +4432,12 @@ function RuleSelect({
         )}
       </SelectContent>
     </Select>
+  );
+}
+function isRepeatableDefinition(definition: MeritDefinition) {
+  return (
+    REPEATABLE_MERITS.has(definition.name) ||
+    Boolean((definition as MeritDefinition & { repeatable?: boolean }).repeatable)
   );
 }
 function formatSpellRequirements(requirements: Record<string, number>) {
@@ -5023,7 +5074,13 @@ function MeritSheetList({
   merits: CharacterSheet["merits"];
   line: "CtL" | "MtA";
 }) {
-  const catalog = getMeritsForLine(line),
+  const homebrews = useHomebrews();
+  const catalog = [
+      ...getMeritsForLine(line),
+      ...homebrews.merits.filter(
+        (item) => item.line === "Core" || item.line === line,
+      ),
+    ],
     visible = merits.filter(
       (item) =>
         !item.grantedBy ||
@@ -5093,10 +5150,12 @@ function ContractSheetList({
 function ContractPowerList({
   contracts,
   seeming,
+  court,
   extraBenefits = [],
 }: {
   contracts: Array<Record<string, unknown>>;
   seeming: string;
+  court: string;
   extraBenefits?: Array<Record<string, unknown>>;
 }) {
   return (
@@ -5104,8 +5163,10 @@ function ContractPowerList({
       {contracts
         .filter((item) => item.name)
         .map((item, index) => {
-          const definition = findContract(String(item.id ?? item.name ?? ""));
-          if (!definition) return null;
+          const definition =
+            findContract(String(item.id ?? item.name ?? "")) ??
+            (item as unknown as ContractDefinition);
+          if (!definition?.id) return null;
           const benefits = [
             seeming,
             ...extraBenefits
@@ -5122,6 +5183,11 @@ function ContractPowerList({
               ],
             }))
             .filter((item) => item.text);
+          const courtBenefit = (
+            definition as ContractDefinition & {
+              courtBenefits?: Record<string, string>;
+            }
+          ).courtBenefits?.[court];
           return (
             <article key={`${definition.id}-${index}`}>
               <div className="contract-power-title">
@@ -5185,6 +5251,12 @@ function ContractPowerList({
                     <dd>{benefit.text}</dd>
                   </div>
                 ))}
+                {courtBenefit && (
+                  <div>
+                    <dt>Benefício da Corte {court}</dt>
+                    <dd>{courtBenefit}</dd>
+                  </div>
+                )}
                 {definition.goblin && (
                   <div className="goblin-debt-row">
                     <dt>Débito Goblin</dt>

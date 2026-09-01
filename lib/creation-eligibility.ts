@@ -59,6 +59,9 @@ export function canSelectInitialContract(
   favoredRegalia: readonly string[],
   court: string,
 ) {
+  const customKind = (contract as { categoryKind?: string }).categoryKind;
+  if (customKind === "Corte") return Boolean(court) && contract.regalia === court;
+  if (customKind === "Independente") return true;
   const isCourtContract = COURT_CONTRACT_GROUPS.has(contract.regalia);
   if (isCourtContract) return Boolean(court) && contract.regalia === court;
   if (contract.type === "Real") return favoredRegalia.includes(contract.regalia);
