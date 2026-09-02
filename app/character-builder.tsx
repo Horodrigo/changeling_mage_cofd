@@ -513,15 +513,15 @@ export function CharacterBuilder({
       Vitalidade: 5 + finalAttributes["Vigor"],
       Deslocamento: 5 + finalAttributes["Força"] + finalAttributes["Destreza"],
       ForçaDeVontade:
-        finalAttributes["Perseverança"] + finalAttributes["Autocontrole"],
-      Iniciativa: finalAttributes["Destreza"] + finalAttributes["Autocontrole"],
+        finalAttributes["Perseverança"] + finalAttributes["Compostura"],
+      Iniciativa: finalAttributes["Destreza"] + finalAttributes["Compostura"],
       Defesa:
         Math.min(finalAttributes["Destreza"], finalAttributes["Raciocínio"]) +
-        finalSkills["Esportes"],
+        finalSkills["Atletismo"],
       ...(line === "CtL"
         ? {
             LucidezMaxima:
-              finalAttributes["Raciocínio"] + finalAttributes["Autocontrole"],
+              finalAttributes["Raciocínio"] + finalAttributes["Compostura"],
           }
         : { Sabedoria: 7 }),
     };
@@ -1949,7 +1949,7 @@ function MtaStep(props: any) {
           label="Atributo de Resistência (+1)"
           value={props.resistanceBonus}
           setValue={props.setResistanceBonus}
-          options={["Perseverança", "Vigor", "Autocontrole"]}
+          options={["Perseverança", "Vigor", "Compostura"]}
           invalid={props.missing("resistanceBonus")}
         />
         <label
@@ -3438,7 +3438,7 @@ function favoredChoices(type: string) {
     ? ["Inteligência", "Força", "Presença"]
     : type === "Finesse"
       ? ["Raciocínio", "Destreza", "Manipulação"]
-      : ["Perseverança", "Vigor", "Autocontrole"];
+      : ["Perseverança", "Vigor", "Compostura"];
 }
 function updateArray(setter: any, values: any[], index: number, value: any) {
   const next = [...values];

@@ -1,13 +1,13 @@
 export const ATTRIBUTES = {
   Mental: ["Inteligência", "Raciocínio", "Perseverança"],
   Físicos: ["Força", "Destreza", "Vigor"],
-  Sociais: ["Presença", "Manipulação", "Autocontrole"],
+  Sociais: ["Presença", "Manipulação", "Compostura"],
 } as const;
 
 export const SKILLS = {
   Mentais: ["Erudição", "Computação", "Ofícios", "Investigação", "Medicina", "Ocultismo", "Política", "Ciência"],
-  Físicas: ["Esportes", "Briga", "Condução", "Armas de Fogo", "Furto", "Armas Brancas", "Furtividade", "Sobrevivência"],
-  Sociais: ["Empatia com Animais", "Empatia", "Expressão", "Intimidação", "Persuasão", "Socialização", "Manha", "Dissimulação"],
+  Físicas: ["Atletismo", "Briga", "Condução", "Armas de Fogo", "Furto", "Armas Brancas", "Furtividade", "Sobrevivência"],
+  Sociais: ["Empatia com Animais", "Empatia", "Expressão", "Intimidação", "Persuasão", "Socialização", "Manha", "Subterfúgio"],
 } as const;
 
 export const CTL_SEEMINGS = {
@@ -76,11 +76,11 @@ export const MTA_PATHS = {
 } as const;
 
 export const MTA_ORDERS = {
-  "Adamantine Arrow": ["Esportes", "Intimidação", "Medicina"],
+  "Adamantine Arrow": ["Atletismo", "Intimidação", "Medicina"],
   "Free Council": ["Ofícios", "Persuasão", "Ciência"],
-  "Guardians of the Veil": ["Investigação", "Furtividade", "Dissimulação"],
+  "Guardians of the Veil": ["Investigação", "Furtividade", "Subterfúgio"],
   Mysterium: ["Investigação", "Ocultismo", "Sobrevivência"],
-  "Silver Ladder": ["Expressão", "Persuasão", "Dissimulação"],
+  "Silver Ladder": ["Expressão", "Persuasão", "Subterfúgio"],
   "Seers of the Throne": ["Investigação", "Ocultismo", "Persuasão"],
   Nameless: [],
 } as const;

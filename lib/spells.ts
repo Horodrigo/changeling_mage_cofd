@@ -9,10 +9,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Atraente",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Furto"
     ],
     "description": "O mago pode moldar uma manifestação ectoplasmática, seja conjurada por outro mago ou por um fantasma Materializado, embora a pessoa ou fantasma que controla o ectoplasma possa Resistir à formação. Após uma conjuração bem-sucedida, o mago molda o ectoplasma na forma que desejar. O ectoplasma permanece na nova forma durante a duração do feitiço. Ele pode usá-lo para criar um espelho que reflete fantasmas e outras estruturas no Crepúsculo fantasmagórico em uma determinada área. Além disso, o mago pode usar o ectoplasma para criar a Condição Aberta em um objeto ou local para um fantasma se manifestar. Fantasmas perdem a Condição Manifestada quando a Duração do feitiço termina.",
@@ -31,7 +31,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Intimidação",
       "Expressão"
     ],
@@ -71,7 +71,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Ciência",
       "Expressão"
     ],
@@ -89,10 +89,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Revelação",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Medicamento",
-      "Oculto",
+      "Ocultismo",
       "Empatia"
     ],
     "description": "O mago pode determinar a saúde da alma de uma pessoa. Ela pode determinar uma marca de alma por Potência do feitiço lançado. Ele pode discernir a presença de Condições Persistentes, se o alvo estiver Desperto, se o alvo for um ser sobrenatural, se o alvo tiver criado uma pedra da alma (veja \"Pedras da Alma\" p. 98), se o alvo tiver sua alma adulterada, se o alvo estiver Possuído, a presença de qualquer Gnose 5+ Conquistas de Legado, se o alvo tiver comido ou consumido a alma de outra pessoa, ou se o alvo estiver sofrendo de uma Condição de Paradoxo.",
@@ -132,7 +132,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Subterfúgio",
-      "Artesanato",
+      "Ofícios",
       "Medicamento"
     ],
     "description": "O mago altera a aparência de um corpo para torná-lo diferente, mesmo sob exame minucioso. Ela pode lançar o feitiço em um cadáver, modificando completamente seus ferimentos, o tempo aparente e a causa da morte. Ela pode fazer com que um cadáver carbonizado pareça ter morrido de ataque cardíaco, ou uma pessoa que morreu em um acidente de carro pareça ter sido vítima de uma facada.",
@@ -153,7 +153,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Subterfúgio",
       "Ciência",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago degrada um objeto material, fazendo com que ele envelheça em questão de momentos. A Durabilidade do objeto é reduzida em –1 para cada Potência lançada pelo feitiço.",
     "sourceId": "mta-2ed",
@@ -171,7 +171,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Expressão",
       "Acadêmicos"
     ],
@@ -195,7 +195,7 @@ export const SPELLS: SpellDefinition[] = [
       "Subterfúgio",
       "Sobrevivência"
     ],
-    "description": "O lançador cria um escudo que protege seu alvo de Numina fantasmagórica, Influências, Manifestações, feitiços de Morte e quaisquer poderes relacionados à morte de outras criaturas sobrenaturais. Qualquer poder que tente perfurar o escudo provoca um teste de Choque de Vontades.",
+    "description": "O lançador cria um escudo que protege seu alvo de Numina fantasmagórica, Influências, Manifestações, feitiços de Morte e quaisquer poderes relacionados à morte de outras criaturas sobrenaturais. Qualquer poder que tente perfurar o escudo provoca um teste de Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 130
@@ -211,7 +211,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Vigor",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Ciência"
     ],
@@ -232,10 +232,10 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
-    "description": "Este feitiço protege a alma do alvo contra todos que possam profaná-la. Qualquer feitiço ou efeito que possa remover, manipular ou ferir a alma do alvo deve primeiro vencer um Choque de Vontades.",
+    "description": "Este feitiço protege a alma do alvo contra todos que possam profaná-la. Qualquer feitiço ou efeito que possa remover, manipular ou ferir a alma do alvo deve primeiro vencer um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 130
@@ -249,10 +249,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Decisão",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Persuasão"
     ],
     "description": "O mago cria um receptáculo para uma alma deslocada. O frasco da alma pode ser qualquer coisa projetada para conter e selar um líquido, desde uma lata de tinta até uma garrafa de água. Uma alma colocada no jarro de almas não pode escapar e está protegida de ataques externos. Se o jarro for aberto ou quebrado antes do término da duração do feitiço, a alma será liberada. + 1",
@@ -292,7 +292,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Sobrevivência",
-      "Artesanato",
+      "Ofícios",
       "Persuasão"
     ],
     "description": "O mago pode interagir fisicamente com fantasmas e outras coisas em Crepúsculo sintonizado com a Morte. Ela pode “puxar” itens de Twilight, tornando-os visíveis e sólidos; esses itens têm durabilidade 1 e se dissipam em coisas efêmeras se quebrados ou após o término da duração do feitiço. Itens retirados de Crepúsculo funcionam como suas contrapartes materiais, concedendo os mesmos bônus de equipamento.",
@@ -315,7 +315,7 @@ export const SPELLS: SpellDefinition[] = [
       "Furtividade",
       "Subterfúgio"
     ],
-    "description": "As pessoas constantemente perdem pele morta, cabelos e outras pequenas evidências de si mesmas à medida que passam pelo mundo. O mago esconde todas as evidências físicas da observação casual. Durante a duração do feitiço, o alvo não deixa impressões digitais, pegadas, vestígios de sangue ou qualquer outra evidência forense de si mesmo. Usar a Visão do Mago da Morte para procurar tais sinais provoca um Choque de Vontades. •••",
+    "description": "As pessoas constantemente perdem pele morta, cabelos e outras pequenas evidências de si mesmas à medida que passam pelo mundo. O mago esconde todas as evidências físicas da observação casual. Durante a duração do feitiço, o alvo não deixa impressões digitais, pegadas, vestígios de sangue ou qualquer outra evidência forense de si mesmo. Usar a Visão do Mago da Morte para procurar tais sinais provoca um Confronto de Vontades. •••",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 131
@@ -351,7 +351,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Intimidação",
       "Briga"
     ],
@@ -369,7 +369,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Desgastando",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Intimidação",
       "Medicamento",
@@ -391,7 +391,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Acadêmicos",
       "Expressão"
     ],
@@ -413,7 +413,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Persuasão",
       "Socializar",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago envia um chamado para o fantasma mais próximo dentro de seu alcance sensorial. Alternativamente, ela pode invocar fantasmas que conhece pessoalmente. Ela pode enviar uma chamada geral e o fantasma mais próximo atenderá, ou pode especificar o tipo de fantasma, como uma criança ou uma mulher. O fantasma não pode viajar além do permitido pela sua Âncora. O feitiço não funciona em fantasmas acima do Rank 5.",
     "sourceId": "mta-2ed",
@@ -432,7 +432,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Medicamento",
-      "Artesanato",
+      "Ofícios",
       "Persuasão"
     ],
     "description": "O lançador pode animar um cadáver, criando um servo zumbi leal. Um zumbi tem capacidade mental limitada e pode entender comandos simples de uma ou duas palavras e nada mais. É uma construção estúpida e sem alma, imune ao medo, à dor, à exaustão, à intimidação ou à coerção, e segue as ordens do criador sem se importar consigo mesmo. As capacidades físicas do cadáver ficam prejudicadas, tornando-o lento e desajeitado em comparação com uma pessoa viva. Os construtos não são adequados para combate (e não possuem Defesa), mas contam como Lacaios valendo pontos iguais à Potência do feitiço com um “campo” relacionado aos comandos do mago. Os zumbis têm tanta saúde quanto a criatura viva de onde veio o cadáver, mas sofrem danos como se estivessem sob os efeitos da Armadura do Mago da Morte. Eles não ficam inconscientes devido a danos, nem sangram quando recebem dano letal, e só são destruídos quando sua última caixa de Saúde é preenchida com dano agravado.",
@@ -471,7 +471,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Empatia"
     ],
     "description": "O toque do mago apodrece em seu alvo, fazendo com que sua carne e ossos murchem e se deteriorem. Cada nível de Potência causa um ponto de dano contundente ao alvo.",
@@ -488,7 +488,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Desgastando",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Intimidação",
       "Atletismo",
@@ -512,7 +512,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Acadêmicos",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O lançador pode moldar e endurecer sombras em formas sólidas e tridimensionais. O objeto ganha Durabilidade 2. Se for uma arma, ele ganha uma classificação de arma 2; se for armadura, ganha uma classificação de armadura 2; caso contrário, o objeto ganha +2 de bônus de equipamento. Objetos feitos de sombra mantêm uma aparência sombria e não projetam sombra própria. ••••",
     "sourceId": "mta-2ed",
@@ -530,7 +530,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Vigor",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Intimidação",
       "Subterfúgio"
     ],
@@ -552,7 +552,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Briga",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Este feitiço destrói o domínio de um fantasma sobre o mundo. Este feitiço retira um número de Condições de Manifestação do fantasma (ou de seu hospedeiro) igual à Potência do feitiço. O efeito é Duradouro, mas o espírito pode usar suas Influências e Manifestações para restabelecer as Condições normais. Adicionar Mente ou Espírito ••••: Os efeitos do feitiço se estendem a Goetia ou Espíritos.",
     "sourceId": "mta-2ed",
@@ -570,7 +570,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Classificação",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Briga",
       "Intimidação"
     ],
@@ -590,7 +590,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Vigor",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Medicamento",
       "Subterfúgio"
     ],
@@ -627,10 +627,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Fazendo",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Persuasão"
     ],
     "description": "O mago aplica uma versão universalmente aplicável da Condição Âncora a um alvo, utilizável por qualquer fantasma. Se o mago também tiver um fantasma como alvo adicional, esse fantasma se torna ancorado na nova Âncora, assim como na sua própria.",
@@ -649,8 +649,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
-      "Artesanato",
+      "Ocultismo",
+      "Ofícios",
       "Persuasão"
     ],
     "description": "O mago abre o mundo material para o Submundo, criando uma Íris entre o mundo material e as camadas superiores do Submundo dentro da área de efeito. Abrir o portão faz com que a área ganhe uma Ressonância da Morte e a Condição de Portal durante a duração do feitiço.",
@@ -669,7 +669,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Expressão",
       "Acadêmicos"
     ],
@@ -690,7 +690,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Medicamento",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "O mago é capaz de reverter os efeitos da entropia em seu alvo, até mesmo trazendo os mortos de volta à vida. O mago reverte os efeitos da decadência, restaurando o alvo ao seu estado físico anterior até um mês por Potência do feitiço. Em um sujeito vivo, o feitiço pode restaurar a visão, o uso dos membros, revertendo danos irreparáveis ​​e restaurando todas as funções corporais. Em assuntos inanimados, o feitiço pode restaurar fotos destruídas pelo tempo, tornar livros antigos imaculados ou devolver aparelhos eletrônicos antigos ao funcionamento.",
@@ -713,7 +713,7 @@ export const SPELLS: SpellDefinition[] = [
       "Persuasão",
       "Furtividade"
     ],
-    "description": "O mago destrói a presença do alvo no mundo, removendo qualquer evidência de sua vida ou existência. Qualquer tentativa de ver o sujeito através de meios mundanos de detecção ou observação falha completamente. Ela não apenas é invisível a olho nu, mas as evidências de sua vida são apagadas. Todas as portas que ela possa ter aberto durante interações sociais com outras pessoas, seja para si mesma ou para outra pessoa, são removidas. Todas as suas Condições, e todas as Condições aplicáveis ​​a ela (exceto as Condições Paradoxo), são resolvidas sem conceder Batidas. Enquanto estiver invisível, o alvo não pode realizar ações violentas e evidentes sem quebrar a ilusão da magia. Danificar ou quebrar objetos fisicamente, ou atacar alguém, faz com que o feitiço termine imediatamente. Magos que usam Visão de Mago Ativa fazem um teste de Choque de Vontades contra o alvo, e o uso de Visão de Mago Focada a revela ao mago que a usa. As condições não retornam quando o feitiço termina, mas as Portas retornam aos seus estados anteriores.",
+    "description": "O mago destrói a presença do alvo no mundo, removendo qualquer evidência de sua vida ou existência. Qualquer tentativa de ver o sujeito através de meios mundanos de detecção ou observação falha completamente. Ela não apenas é invisível a olho nu, mas as evidências de sua vida são apagadas. Todas as portas que ela possa ter aberto durante interações sociais com outras pessoas, seja para si mesma ou para outra pessoa, são removidas. Todas as suas Condições, e todas as Condições aplicáveis ​​a ela (exceto as Condições Paradoxo), são resolvidas sem conceder Batidas. Enquanto estiver invisível, o alvo não pode realizar ações violentas e evidentes sem quebrar a ilusão da magia. Danificar ou quebrar objetos fisicamente, ou atacar alguém, faz com que o feitiço termine imediatamente. Magos que usam Visão de Mago Ativa fazem um teste de Confronto de Vontades contra o alvo, e o uso de Visão de Mago Focada a revela ao mago que a usa. As condições não retornam quando o feitiço termina, mas as Portas retornam aos seus estados anteriores.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 134
@@ -727,9 +727,9 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Desfazendo",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Intimidação",
       "Medicamento"
     ],
@@ -767,7 +767,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Política",
       "Investigação"
     ],
@@ -787,9 +787,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Armas de fogo",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago lê probabilidades e compensa fatores deletérios, atraindo pequenos momentos de boa sorte para negar obstáculos infelizes que estejam em seu caminho. Isto nega penalidades a qualquer uma das ações do alvo igual à Potência por um número de ações durante a Duração igual à Potência. Além disso, o alvo pode passar um turno durante a Duração do feitiço visando uma ação. O alvo perde qualquer Defesa e deve permanecer imóvel enquanto mira. Um turno gasto com mira concede um bônus para a próxima ação igual à Potência. Esses efeitos só podem ser aplicados a ações instantâneas mundanas; ações estendidas e testes de conjuração não se beneficiam.",
     "sourceId": "mta-2ed",
@@ -828,7 +828,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Artesanato",
+      "Ofícios",
       "Sobrevivência"
     ],
     "description": "Este feitiço concede ao mago um vislumbre momentâneo de todos os caminhos potenciais que seu destino pode seguir até o destino desejado, o que permite ao mago identificar o próximo passo que ele deve dar para cumprir um objetivo declarado. Ao conjurar, o mago recebe um presságio claro que sugere um curso de ação que o levará mais perto de seu objetivo. Isto raramente garante sucesso imediato, especialmente se a tarefa que tem pela frente for complicada, mas pode proporcionar um avanço importante.",
@@ -848,7 +848,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Compostura",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Socializar"
     ],
     "description": "O mago abençoa os esforços do alvo ou o amaldiçoa com infortúnio. Seja boa ou ruim, a sorte do sujeito é verdadeiramente excepcional. Este feitiço concede uma bênção ou inflige um feitiço no alvo (veja pág. 134). O alvo pode Resistir a um feitiço com Compostura.",
@@ -868,7 +868,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Furto",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Às vezes, um mago deseja esconder um filho do destino daqueles que abusariam de seu dom. Outras vezes, ele deseja convencer os observadores de que um sujeito tem um destino que não tem. Este feitiço esconde ou falsifica destinos e Destino. Ele pode ser usado para \"enganar\" durações condicionais ou feitiços com gatilhos condicionais para que ignorem um evento que atenda à condição definida ou para que ajam como se o evento estipulado tivesse acontecido. Pode criar falsos presságios em relação ao alvo quando ele é examinado pela magia do Destino. Todos estes enganos provocam um choque de vontades contra aqueles que tentam superar as suas protecções.",
@@ -948,10 +948,10 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Briga",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
-    "description": "O mago cria uma proteção protegendo o alvo contra efeitos sobrenaturais que manipulam seu destino — um geas, uma compulsão sobrenatural para agir contra sua vontade ou ter seu destino manipulado pela magia do Destino ou efeitos sobrenaturais similares. Cada tentativa de mudar o destino do alvo provoca um Choque de Vontades com o mago. Este feitiço não tem efeito sobre alterações pré-existentes no destino do alvo. Além disso, o mago pode excluir seletivamente o alvo de qualquer magia de efeito de área que ele lançar. Se lançada em múltiplos alvos, esta magia permite ao mago excluir cada alvo válido caso a caso. + 1",
+    "description": "O mago cria uma proteção protegendo o alvo contra efeitos sobrenaturais que manipulam seu destino — um geas, uma compulsão sobrenatural para agir contra sua vontade ou ter seu destino manipulado pela magia do Destino ou efeitos sobrenaturais similares. Cada tentativa de mudar o destino do alvo provoca um Confronto de Vontades com o mago. Este feitiço não tem efeito sobre alterações pré-existentes no destino do alvo. Além disso, o mago pode excluir seletivamente o alvo de qualquer magia de efeito de área que ele lançar. Se lançada em múltiplos alvos, esta magia permite ao mago excluir cada alvo válido caso a caso. + 1",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 137
@@ -968,7 +968,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Compostura",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Armamento"
     ],
     "description": "Este feitiço atrai infortúnio para o alvo ou torna uma situação já prejudicial consideravelmente pior. Na próxima vez que o alvo sofrer pelo menos um ponto de dano durante a Duração deste feitiço, aumente o dano que ele sofre pela Potência do feitiço. Em vez disso, um golpe de raspão esmaga um osso, por exemplo. O tipo de dano é o mesmo da fonte original do dano. Isso afeta um número máximo de ataques igual à Potência durante a duração do feitiço.",
@@ -988,7 +988,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Dirigir",
-      "Artesanato",
+      "Ofícios",
       "Ciência"
     ],
     "description": "O mago interage com um objeto sem vida, trazendo a sorte para ele e tornando-o uma ferramenta do destino. O mago abençoa ou amaldiçoa o objeto. O bônus de equipamento do objeto é aumentado ou diminuído pela Potência do feitiço, o que pode fazer com que ele se torne uma penalidade de dados se movido abaixo de zero. O feitiço não pode fazer com que o bônus ou penalidade exceda cinco dados.",
@@ -1028,8 +1028,8 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Atletismo",
-      "Artesanato",
-      "Oculto"
+      "Ofícios",
+      "Ocultismo"
     ],
     "description": "O mago pode garantir sucesso em praticamente qualquer tarefa que se proponha realizar. O alvo ganha a qualidade mecânica em um número de jogadas de dados mundanos igual à Potência. O jogador do sujeito pode escolher quais de seus lançamentos serão afetados (declarados antes dos dados serem lançados).",
     "sourceId": "mta-2ed",
@@ -1048,10 +1048,10 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Expressão",
-      "Oculto",
+      "Ocultismo",
       "Política"
     ],
-    "description": "O mago pode testemunhar um juramento e garantir que o próprio Destino imponha a adesão do sujeito ao seu voto. O sujeito faz uma promessa e declara as consequências para si mesmo se violar o acordo. Ninguém pode ser forçado a fazer tal juramento, embora um sujeito possa ser colocado sob juramento involuntariamente se ele voluntariamente fizer um voto e concordar verbalmente com uma consequência específica, mesmo que ele não perceba que o mago pode fazer cumprir o juramento sobrenaturalmente. Contanto que o sujeito cumpra o juramento, ele receberá uma bênção (ver p. 134). Se um poder sobrenatural forçar o alvo a violar seu juramento – seja por ação ou inação – o mago pode fazer um Choque de Vontades contra o efeito. Se o alvo quebrar o juramento (intencionalmente ou não), ele sofre o feitiço (ver p. 134) com o qual concordou no momento em que fez o juramento. Um alvo que declara “Eu guardarei seus segredos ou posso ficar cego” sofrerá a Inclinação Cega pela duração restante do feitiço se ele falhar em guardar esses segredos, por exemplo. Uma vez que o alvo tenha quebrado um juramento, futuras violações de seus termos não impõem feitiços adicionais. Se lançado em vários assuntos, cada sujeito pode fazer seu próprio juramento; isso é frequentemente usado para criar contratos entre duas ou mais partes.",
+    "description": "O mago pode testemunhar um juramento e garantir que o próprio Destino imponha a adesão do sujeito ao seu voto. O sujeito faz uma promessa e declara as consequências para si mesmo se violar o acordo. Ninguém pode ser forçado a fazer tal juramento, embora um sujeito possa ser colocado sob juramento involuntariamente se ele voluntariamente fizer um voto e concordar verbalmente com uma consequência específica, mesmo que ele não perceba que o mago pode fazer cumprir o juramento sobrenaturalmente. Contanto que o sujeito cumpra o juramento, ele receberá uma bênção (ver p. 134). Se um poder sobrenatural forçar o alvo a violar seu juramento – seja por ação ou inação – o mago pode fazer um Confronto de Vontades contra o efeito. Se o alvo quebrar o juramento (intencionalmente ou não), ele sofre o feitiço (ver p. 134) com o qual concordou no momento em que fez o juramento. Um alvo que declara “Eu guardarei seus segredos ou posso ficar cego” sofrerá a Inclinação Cega pela duração restante do feitiço se ele falhar em guardar esses segredos, por exemplo. Uma vez que o alvo tenha quebrado um juramento, futuras violações de seus termos não impõem feitiços adicionais. Se lançado em vários assuntos, cada sujeito pode fazer seu próprio juramento; isso é frequentemente usado para criar contratos entre duas ou mais partes.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 138
@@ -1087,7 +1087,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Empatia",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "O mago pode Padronizar o Destino para manipular probabilidades complexas dentro do objeto ou área de efeito da magia. Este feitiço permite ao mago ditar qualquer resultado fisicamente possível dentro dos limites do alvo do feitiço, não importa quão improvável seja. O feitiço não pode criar efeitos sobrenaturais, mas dentro dos limites da improbabilidade o mago pode causar uma série de efeitos iguais à Potência, tais como: • Criar um efeito narrativo como controlar como os veículos se comportam em um acidente com vários carros. • Ao direcionar alterações bioquímicas antes aleatórias em um sujeito, causa convulsões, alucinações e eventos físicos, impondo Condições adequadas, como Cegueira ou Deficiência. • O mago reduz a próxima ação do alvo a um dado de sorte. • Atacar um alvo direcionando o acaso ao seu redor ou proteger um alvo de circunstâncias perigosas; este não é um feitiço de ataque direto e deve usar quaisquer regras para o perigo.",
@@ -1104,10 +1104,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "O mago lança uma maldição poderosa que encoraja o alvo a atingir um objetivo especificado pelo mago quando ele lança esta magia, ou que frustra todas as tentativas do alvo de perseguir tal objetivo. O alvo deve, entretanto, estar ciente do objetivo, e o mago não pode impor tarefas impossíveis. Uma das Aspirações do sujeito é substituída pela meta. Como um aguilhão, o sujeito sofre azar, exceto quando toma medidas construtivas para aproximá-lo do objetivo declarado. Se o alvo não tiver perseguido o objetivo do feitiço de forma significativa nas últimas 24 horas, ele sofrerá um feitiço (veja pág. 134). Como banimento, o sujeito sofre azar sempre que tenta atingir o objetivo proibido. Durante a duração do feitiço, o alvo sofre um feitiço se se esforçar ativamente para alcançá-lo.",
@@ -1124,7 +1124,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Acadêmicos",
       "Persuasão",
@@ -1146,7 +1146,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Compostura ===== PDF PÁGINA 140 ===== 139destino",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio",
       "Armamento"
     ],
@@ -1167,7 +1167,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Compostura",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Persuasão"
     ],
     "description": "Se um Mestre do Destino não tiver um herói do destino à mão, ele pode simplesmente criar um. Ele tem vários meios de fazer isso à sua disposição e pode aplicar um dos seguintes efeitos: • O mago concede ao alvo uma Qualidade Sobrenatural para a qual ele se qualifica com um nível máximo igual à Potência do feitiço. A Santidade dos Méritos (ver p. 99) não se aplica à perda deste Mérito. • O mago aumenta ou diminui o nível de Qualidade Sobrenatural do alvo em pontos iguais à Potência. • O mago impõe Aspirações e Obsessões ao alvo iguais à Potência, substituindo aquelas escolhidas pelo Narrador. • O mago escolhe a Perdição do alvo (pág. 100). Isso pode afetar indivíduos que não possuem a Qualidade Destino.",
@@ -1227,7 +1227,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "O mago cria condições caóticas: chuvas de sapos, enxames de gafanhotos, eclipses solares totais não programados e outras ocorrências similarmente “Forteanas”. Este evento aterrorizante e obviamente sobrenatural causa estragos na área, criando inclinações ambientais à escolha do jogador. A maioria dos Adormecidos sofre um Ponto de Ruptura imediato quando testemunha esse feitiço. Esfera das Forças: Eletricidade, gravidade, radiação, som, luz, calor, fogo, clima, movimento O Arcano bruto do Éter governa as energias mais poderosas do Mundo Decaído. Inúmeras lendas de magos conjurando raios para atingir seus inimigos, dançando entre pilares de chamas não naturais, voando e dirigindo tempestades contra seus inimigos falam da presença do poder bruto que as Forças representam. Com ele, um mago pode alterar e controlar a luz, o som, o fogo e a eletricidade – até mesmo a gravidade, a radiação e os padrões climáticos. Forças raramente são sutis, mas magos inteligentes encontram maneiras de usá-las: ouvindo um som vindo do outro lado da sala, amortecendo o barulho que o lançamento de feitiços faz ou vendo grandes distâncias. Praticantes habilidosos das Forças também podem desencadear tornados, terremotos e rajadas de fogo devastadoras quando a sutileza dá lugar à raiva rápida. •",
@@ -1247,7 +1247,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Computadores",
-      "Artesanato",
+      "Ofícios",
       "Ciência"
     ],
     "description": "O mago pode operar ou desligar dispositivos elétricos com magia. Com este feitiço, ela só pode fazer com que os dispositivos existentes funcionem como normalmente funcionariam quando ligados ou quando a energia é desligada. Por exemplo, ela poderia fazer uma \"ligação direta\" em um carro sem realmente precisar tocar em nenhum fio, desligar e ligar as luzes e fazer com que máquinas industriais ligassem ou desligassem. Este feitiço não dá a ela maior controle sobre esses dispositivos, mas permite que ela acione ou desligue dispositivos que poderiam exigir senhas ou chaves eletrônicas.",
@@ -1266,7 +1266,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Ciência",
       "Sobrevivência"
     ],
@@ -1306,7 +1306,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Ciência",
       "Sobrevivência"
     ],
@@ -1386,7 +1386,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Computadores",
       "Ciência"
     ],
@@ -1406,7 +1406,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Ciência",
       "Sobrevivência"
     ],
@@ -1427,7 +1427,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Atletismo",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "O mago pode redirecionar a força da gravidade em uma área. Ela pode alterar a direção de sua atração, fazendo com que os objetos afetados \"caiam\" para cima ou horizontalmente. Ela não pode fazer mais do que mudar sua direção neste nível, mas pode tornar quase impossível aproximar-se de um objeto ou área específica sem algum meio de superar a gravidade, como vôo ou equipamento de escalada. Qualquer pessoa e qualquer coisa afetada pelo feitiço que não esteja protegida “cai” na direção escolhida pelo lançador. As vítimas podem sofrer danos se colidirem com objetos. Alguém preso em uma área onde a gravidade o impulsiona para cima pode ficar preso, caindo até a borda do raio da magia, e então descer novamente quando a gravidade normal assumir o controle, apenas para cair novamente quando ele entrar na área da magia. Uma pessoa ou criatura capaz de ação pode fazer um teste para escapar, a critério do Narrador, agarrando-se a um objeto próximo ou encontrando meios de controlar sua posição.",
@@ -1466,7 +1466,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Investigação",
       "Ciência"
     ],
@@ -1526,11 +1526,11 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Ciência",
       "Sobrevivência"
     ],
-    "description": "O mago pode proteger-se contra condições ambientais prejudiciais. Este feitiço fornece resistência completa a quaisquer Condições ou Inclinações causadas por ambientes, até um nível de Ambiente Extremo da Potência do feitiço. O feitiço protege apenas contra danos indiretos, como calor e frio, e perigos menores como granizo. O mago ainda pode se afogar ou ser esmagado pelas ondas. Embora o feitiço não a protegesse contra raios se algo o forçasse a atingi-la, ela não atrairia naturalmente o raio. O feitiço requer um Choque de Vontades para funcionar contra os efeitos mágicos do clima.",
+    "description": "O mago pode proteger-se contra condições ambientais prejudiciais. Este feitiço fornece resistência completa a quaisquer Condições ou Inclinações causadas por ambientes, até um nível de Ambiente Extremo da Potência do feitiço. O feitiço protege apenas contra danos indiretos, como calor e frio, e perigos menores como granizo. O mago ainda pode se afogar ou ser esmagado pelas ondas. Embora o feitiço não a protegesse contra raios se algo o forçasse a atingi-la, ela não atrairia naturalmente o raio. O feitiço requer um Confronto de Vontades para funcionar contra os efeitos mágicos do clima.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 144
@@ -1586,7 +1586,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Ciência"
     ],
@@ -1746,11 +1746,11 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Computadores",
       "Ciência"
     ],
-    "description": "O mago degrada a energia eletromagnética do alvo do feitiço, destruindo dispositivos eletrônicos. O feitiço é capaz de apagar dispositivos elétricos mundanos, embora alguns dispositivos de nível militar sejam blindados, exigindo Potência igual ao seu nível de endurecimento. Encurtar dispositivos mágicos requer um Choque de Vontades. Quando usado contra um ser vivo, o dano ao sistema nervoso atua como um feitiço de dano direto, infligindo Potência em dano letal.",
+    "description": "O mago degrada a energia eletromagnética do alvo do feitiço, destruindo dispositivos eletrônicos. O feitiço é capaz de apagar dispositivos elétricos mundanos, embora alguns dispositivos de nível militar sejam blindados, exigindo Potência igual ao seu nível de endurecimento. Encurtar dispositivos mágicos requer um Confronto de Vontades. Quando usado contra um ser vivo, o dano ao sistema nervoso atua como um feitiço de dano direto, infligindo Potência em dano letal.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 146
@@ -1786,7 +1786,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Dirigir",
       "Ciência"
     ],
@@ -1826,8 +1826,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Toda energia compartilha simpatia, nascida talvez da mesma fonte cósmica no mesmo instante. Um Adepto das Forças pode usar essa simpatia para transformar um tipo de energia em outro. A tabela abaixo serve como um gráfico aproximado de equivalência para diferentes tipos de energia. Ela pode transformar uma sala cheia de luz em calor, transformando-a imediatamente em um forno escuro como breu. Ela também poderia transformar o rugido estrondoso de uma cachoeira em eletricidade, muito mais eficiente do que qualquer represa hidrelétrica. O feitiço pode afetar a energia de um nível igual à Potência.",
@@ -1846,8 +1846,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "O mago invoca um grande sistema climático tão severo quanto um tornado, tsunami, monção ou furacão. Os efeitos climáticos duram minutos e se dissipam imediatamente quando o feitiço expira. Isso permite ao mago criar Ambientes Extremos de praticamente qualquer tipo até o Nível 4, conforme Controle do Clima (veja acima), mas sem limitações. Ela não precisa evocar desastres; ela pode fazer uma tempestade aparecer em um céu azul sem nuvens, se desejar.",
@@ -1866,8 +1866,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "O mago cria energia a partir de algo dentro de um alvo ou área de efeito. Ela pode criar luz (incluindo luz solar), fogo, radiação, som e eletricidade. Use o gráfico acima em Energia de Transformação como um exemplo dos níveis que ela pode criar na área afetada. Para o fogo, suponha que o calor seja +1 para Potência 1–2, +2 para Potência 3–4 e +3 para Potência 5+. Depois de criar a energia, ela pode modificá-la com feitiços de Controle. A criação de radiação também cria um ambiente extremo perigoso para os seres vivos.",
@@ -1906,11 +1906,11 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Ciência",
       "Sobrevivência"
     ],
-    "description": "O mago desencadeia um terremoto para rachar o chão. Este feitiço inflige dano igual à sua Potência a todas as estruturas dentro da área afetada. A maioria dos edifícios modernos são construídos para suportar bem os terremotos e subtrair sua durabilidade dos danos normalmente. Estruturas menores ou mais frágeis não aplicam Durabilidade ao dano. Os seres vivos podem fazer um teste de Destreza + Esportes para manter o equilíbrio enquanto o chão se inclina e se eleva abaixo deles. Uma falha significa que o personagem sofre dano contundente ao cair no chão e ser arremessado violentamente, a menos que a queda o faça cair escada abaixo ou sobre uma saliência. O desabamento de edifícios pode causar danos muito mais catastróficos ou deixar as vítimas presas sob toneladas de escombros.",
+    "description": "O mago desencadeia um terremoto para rachar o chão. Este feitiço inflige dano igual à sua Potência a todas as estruturas dentro da área afetada. A maioria dos edifícios modernos são construídos para suportar bem os terremotos e subtrair sua durabilidade dos danos normalmente. Estruturas menores ou mais frágeis não aplicam Durabilidade ao dano. Os seres vivos podem fazer um teste de Destreza + Atletismo para manter o equilíbrio enquanto o chão se inclina e se eleva abaixo deles. Uma falha significa que o personagem sofre dano contundente ao cair no chão e ser arremessado violentamente, a menos que a queda o faça cair escada abaixo ou sobre uma saliência. O desabamento de edifícios pode causar danos muito mais catastróficos ou deixar as vítimas presas sob toneladas de escombros.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 148
@@ -2009,7 +2009,7 @@ export const SPELLS: SpellDefinition[] = [
       "Furtividade",
       "Subterfúgio"
     ],
-    "description": "O mago pode alterar as características aparentes do alvo, ainda que apenas estética e temporariamente. Ela pode alterar os pigmentos da pele, as características fenotípicas, o sexo aparente ou a cor e textura do cabelo; adicionar ou subtrair pequenos depósitos de gordura; ou alterar o som da voz do sujeito. Características distintivas como cicatrizes e manchas podem ser adicionadas ou removidas. Mesmo em sua forma mais extrema, as mudanças provocadas por este feitiço ainda deixam o alvo um pouco parecido com sua forma original. Se alguém comparasse as aparências mascaradas e regulares lado a lado, poderia notar uma semelhança quase familiar (mesmo que as duas fossem de raças obviamente diferentes), mas as mudanças são suficientes para enganar dispositivos de reconhecimento facial, desenhistas ou até mesmo mudar o cheiro do sujeito o suficiente para despistar animais rastreadores. Alguns dispositivos biométricos, como leitores de impressão digital, ainda detectarão a diferença. Ela não pode imitar pessoas específicas com este feitiço básico. As mudanças provocadas por este feitiço são ilusórias, e alguns poderes sobrenaturais (incluindo Visão do Mago da Vida) podem ver através delas com um Choque de Vontades bem-sucedido.",
+    "description": "O mago pode alterar as características aparentes do alvo, ainda que apenas estética e temporariamente. Ela pode alterar os pigmentos da pele, as características fenotípicas, o sexo aparente ou a cor e textura do cabelo; adicionar ou subtrair pequenos depósitos de gordura; ou alterar o som da voz do sujeito. Características distintivas como cicatrizes e manchas podem ser adicionadas ou removidas. Mesmo em sua forma mais extrema, as mudanças provocadas por este feitiço ainda deixam o alvo um pouco parecido com sua forma original. Se alguém comparasse as aparências mascaradas e regulares lado a lado, poderia notar uma semelhança quase familiar (mesmo que as duas fossem de raças obviamente diferentes), mas as mudanças são suficientes para enganar dispositivos de reconhecimento facial, desenhistas ou até mesmo mudar o cheiro do sujeito o suficiente para despistar animais rastreadores. Alguns dispositivos biométricos, como leitores de impressão digital, ainda detectarão a diferença. Ela não pode imitar pessoas específicas com este feitiço básico. As mudanças provocadas por este feitiço são ilusórias, e alguns poderes sobrenaturais (incluindo Visão do Mago da Vida) podem ver através delas com um Confronto de Vontades bem-sucedido.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 150
@@ -2186,7 +2186,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Medicamento",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Life Masters podem lançar pragas horríveis sobre seus inimigos. O mago pode criar doenças menores ou doenças potencialmente fatais. A Gravidade da doença é igual à Potência. Se o mago tiver algo em que possa armazenar a doença, ele poderá criá-la dentro desse equipamento, ou então deverá ter como alvo alguma forma de portador, dependendo dos métodos de transmissão da doença (água, comida, hospedeiros vivos). É contagioso assim que o mago o cria, exigindo um teste reflexivo de Vigor + Perseverança, modificado pela Severidade, para resistir a contraí-lo. A falha significa que a vítima contrai a doença e sofre seus efeitos normais.",
@@ -2225,7 +2225,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Investigação",
       "Ciência"
     ],
@@ -2245,7 +2245,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Investigação",
       "Ciência"
     ],
@@ -2265,7 +2265,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Investigação",
       "Ciência"
     ],
@@ -2285,7 +2285,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Furto",
       "Ciência"
     ],
@@ -2305,7 +2305,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Dirigir",
       "Intimidar"
     ],
@@ -2325,7 +2325,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Sobrevivência",
       "Persuasão"
     ],
@@ -2346,10 +2346,10 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Furto",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
-    "description": "Este feitiço torna a Matéria difícil de detectar. Não é precisamente invisibilidade; em vez disso, o feitiço oculta a conexão do alvo com as verdades Supernas, fazendo com que pareça insignificante e invisível. Tentativas mundanas de detectar o alvo falham automaticamente. Feitiços e poderes que detectariam o objeto velado estão sujeitos a um Choque de Vontades.",
+    "description": "Este feitiço torna a Matéria difícil de detectar. Não é precisamente invisibilidade; em vez disso, o feitiço oculta a conexão do alvo com as verdades Supernas, fazendo com que pareça insignificante e invisível. Tentativas mundanas de detectar o alvo falham automaticamente. Feitiços e poderes que detectariam o objeto velado estão sujeitos a um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 157
@@ -2385,7 +2385,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Durabilidade",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Persuasão"
     ],
@@ -2406,7 +2406,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Atletismo",
-      "Artesanato",
+      "Ofícios",
       "Ciência"
     ],
     "description": "Ao ajustar as propriedades da matéria, o mago pode tornar camisas de seda à prova de balas ou rasgar trajes de choque volumosos com as próprias mãos. O feitiço é lançado sobre um objeto vestível (dar armadura aos seres vivos é uma função da Vida). Para cada nível de Potência, o jogador escolhe um dos seguintes efeitos: • Aumentar ou diminuir a classificação de Armadura balística em 1 • Aumentar ou diminuir a classificação de Armadura geral em 1 • Aumentar ou diminuir a penalidade de Defesa em 1",
@@ -2445,7 +2445,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Durabilidade",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
       "Subterfúgio"
     ],
@@ -2465,8 +2465,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Com este feitiço, um objeto adquire um brilho de pureza Superna. Se seu propósito principal for como ferramenta, ele concede 8-Again em um número de jogadas igual à Potência do feitiço. Objetos valiosos, como ouro ou diamantes, tornam-se incrivelmente puros e bonitos. Adicione a Potência do feitiço ao índice de Disponibilidade do objeto para determinar seu valor aumentado. Este feitiço não pode aumentar a Disponibilidade de um objeto para mais que o dobro de sua classificação original.",
@@ -2485,7 +2485,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Briga",
       "Medicamento"
     ],
@@ -2505,7 +2505,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Durabilidade",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Ciência"
     ],
@@ -2525,7 +2525,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Durabilidade",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Persuasão",
       "Ciência"
     ],
@@ -2547,7 +2547,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Atletismo",
       "Briga",
-      "Artesanato"
+      "Ofícios"
     ],
     "description": "O próprio ar (ou outra matéria fluida) ataca os inimigos do mago. O vento sopra e golpeia como um punho, ou a água ataca como um chicote. Este é um feitiço de ataque; sua taxa de dano é igual à Potência do feitiço e inflige dano contundente.",
     "sourceId": "mta-2ed",
@@ -2565,7 +2565,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Política",
       "Ciência"
     ],
@@ -2586,7 +2586,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Atletismo",
-      "Oculto",
+      "Ocultismo",
       "Furtividade"
     ],
     "description": "Toda Matéria Caída é apenas uma sombra da verdade Superna, e este feitiço revela a verdade desse axioma. O mago torna um volume de matéria inerte total ou parcialmente insubstancial, não mais “real” do que uma ilusão. Objetos insubstanciais permanecem onde estavam quando foram transfigurados (ou seja, não caem no centro da Terra nem voam para o espaço). Objetos tornados insubstanciais por este feitiço não estão em Crepúsculo, eles simplesmente não são registrados como “reais”. Adicione Morte •••, Mente ••• ou Espírito •••: O objeto insubstancial pode ser transferido para Crepúsculo, sintonizado com o Arcano usado.",
@@ -2605,9 +2605,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Este feitiço anima uma estátua ou outro objeto, permitindo que ele se mova e aja quase como se estivesse vivo. Cada nível de Potência efetivamente concede ao mago um ponto de Mérito Retentor. O “campo” do Golem inclui trabalho físico simples, combate e outras tarefas descomplicadas. O golem é completamente estúpido e só pode executar qualquer ordem que o lançador lhe deu por último. Os pedidos devem ser muito simples. Se atacado, o golem não tem Defesa, mas tem Durabilidade apropriada à sua composição (veja Objetos na pág. 223) e Estrutura igual a Durabilidade + Tamanho. Adicione Morte •••• ou Espírito ••••: Vincule um fantasma ou espírito ao golem para servir como uma inteligência animadora. O golem ainda usa seu nível de Retentor para determinar as paradas de dados, mas o ser efêmero pode usar qualquer um de seus poderes, e o “campo” do golem é aquilo de que a entidade é capaz. Adicionar Mente •••••: Crie uma inteligência do nada que guiará o golem e informará seu “campo”. Veja \"Gênesis Psíquica\" na pág. 165 para criar uma mente do zero.",
     "sourceId": "mta-2ed",
@@ -2627,7 +2627,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Atletismo",
       "Briga",
-      "Artesanato"
+      "Ofícios"
     ],
     "description": "Muito parecido com Windstrike (veja pág. 157), este feitiço faz com que matéria inanimada atinja o alvo. Mas onde Windstrike ataca com ar e água, este feitiço faz com que a própria Terra se levante e esmague o alvo. Este é um feitiço de ataque; sua taxa de dano é igual à Potência do feitiço e inflige dano letal.",
     "sourceId": "mta-2ed",
@@ -2645,7 +2645,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Ciência"
     ],
@@ -2685,7 +2685,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência ===== PDF PÁGINA 160 ===== 159mente",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Ciência"
     ],
@@ -2705,9 +2705,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Este feitiço confere a um objeto uma pequena aparência de vida – especificamente, a habilidade de se reparar. Enquanto o feitiço durar, o objeto cura a Estrutura (Potência) todos os dias.",
     "sourceId": "mta-2ed",
@@ -2747,7 +2747,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Empatia",
       "Investigação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Ao examinar rapidamente a superfície dos pensamentos de um alvo, o mago é capaz de discernir seu estado mental e emocional. Para cada nível de Potência, o mago pode fazer uma única pergunta ao Narrador para obter informações sobre o estado mental ou emocional do alvo. Esta informação vem como flashes de percepção dos pensamentos do sujeito, então o Narrador deve ter certeza de representar suas respostas como tal. Exemplos de perguntas • Qual é o humor atual do sujeito? Flashes de estar preso no trânsito ou esperando em uma longa fila do lado de fora de uma loja. A ideia de um pôr do sol sereno na praia. • Quão inteligente é o sujeito? Flashes simples de imagens aparentemente não relacionadas. Uma imagem de uma teoria matemática complexa ou uma citação de uma peça de literatura conhecida. • O assunto é sobrenatural? Pensamentos de beber a força vital dos outros. As formas básicas das imagens passando rapidamente. Pensamentos que oscilam entre animalescos e humanos. • O que o sujeito mais deseja? Imagens de dinheiro, o rosto de uma pessoa passando ou um carro chamativo. • De que tipo de psicose o sujeito sofre, se houver? Pensamentos que parecem provir de muitas fontes. Medo paralisante associado a um pensamento específico.",
     "sourceId": "mta-2ed",
@@ -2809,7 +2809,7 @@ export const SPELLS: SpellDefinition[] = [
       "Furtividade",
       "Subterfúgio"
     ],
-    "description": "O mago pode alterar o fluxo mental básico do alvo, mudando seus pensamentos subconscientes e emanações superficiais para refletir qualquer estado mental ou emocional que o mago desejar. O feitiço na verdade não altera o estado de espírito do alvo, mas em vez disso altera a forma como ele se projeta, protegendo-o de poderes sobrenaturais que leriam seus pensamentos ou tentariam perfurar seu véu normal de mentiras e desorientações. Adicione a Potência do feitiço aos testes relevantes de Lábia. Poderes sobrenaturais que leem os pensamentos ou emoções superficiais do alvo provocam um Choque de Vontades.",
+    "description": "O mago pode alterar o fluxo mental básico do alvo, mudando seus pensamentos subconscientes e emanações superficiais para refletir qualquer estado mental ou emocional que o mago desejar. O feitiço na verdade não altera o estado de espírito do alvo, mas em vez disso altera a forma como ele se projeta, protegendo-o de poderes sobrenaturais que leriam seus pensamentos ou tentariam perfurar seu véu normal de mentiras e desorientações. Adicione a Potência do feitiço aos testes relevantes de Subterfúgio. Poderes sobrenaturais que leem os pensamentos ou emoções superficiais do alvo provocam um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 161
@@ -2865,11 +2865,11 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Compostura",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Socializar",
       "Subterfúgio"
     ],
-    "description": "O mago pode ditar como um alvo reagirá a uma interação social, tornando-o mais ou menos inclinado a ouvir uma discussão. O feitiço afeta a próxima tentativa de manobra Social feita contra o alvo, aumentando ou diminuindo a primeira impressão em níveis iguais à Potência. Presença Incógnita (Mente ••) Prática: Velar Fator Primário: Duração Resistência: Determinação Custo: 1 Mana Habilidades Rotinas Sugeridas: Empatia, Furtividade, Subterfúgio O mago esconde a presença psíquica do alvo, fazendo com que os espectadores a ignorem. Quando as pessoas olham para ela, elas querem desviar os olhos ou mal notá-la. As pessoas não conseguem se lembrar de tê-la visto quando não estão mais olhando em sua direção. Seres que usam habilidades sobrenaturais para se concentrar nela, incluindo Active Mage Sight, provocam um Confronto de Vontades.",
+    "description": "O mago pode ditar como um alvo reagirá a uma interação social, tornando-o mais ou menos inclinado a ouvir uma discussão. O feitiço afeta a próxima tentativa de manobra Social feita contra o alvo, aumentando ou diminuindo a primeira impressão em níveis iguais à Potência. Presença Incógnita (Mente ••) Prática: Velar Fator Primário: Duração Resistência: Perseverança Custo: 1 Mana Habilidades Rotinas Sugeridas: Empatia, Furtividade, Subterfúgio O mago esconde a presença psíquica do alvo, fazendo com que os espectadores a ignorem. Quando as pessoas olham para ela, elas querem desviar os olhos ou mal notá-la. As pessoas não conseguem se lembrar de tê-la visto quando não estão mais olhando em sua direção. Seres que usam habilidades sobrenaturais para se concentrar nela, incluindo Active Mage Sight, provocam um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 161
@@ -2909,7 +2909,7 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidação",
       "Sobrevivência"
     ],
-    "description": "O mago ergue um escudo mental que protege o alvo de ataques mentais. O escudo provoca um Choque de Vontades contra qualquer Goetia Numina, Influências ou Manifestações visando o",
+    "description": "O mago ergue um escudo mental que protege o alvo de ataques mentais. O escudo provoca um Confronto de Vontades contra qualquer Goetia Numina, Influências ou Manifestações visando o",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 161
@@ -2923,7 +2923,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Decisão",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Expressão",
       "Intimidação",
@@ -2945,11 +2945,11 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Compostura",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Socializar"
     ],
-    "description": "O mago sincroniza os pensamentos superficiais de seus súditos, fazendo com que os pensamentos superficiais de um deles se manifestem na mente dos outros. Aplique a Potência do feitiço como um bônus ou penalidade em testes de Habilidades relevantes (como Empatia ou Lábia) entre os alvos. Indivíduos que pensam cuidadosamente em uma mensagem podem usar o efeito para se comunicarem telepaticamente através do link; isso pode exigir um teste de Autocontrole + Empatia para indivíduos não acostumados com a sensação.",
+    "description": "O mago sincroniza os pensamentos superficiais de seus súditos, fazendo com que os pensamentos superficiais de um deles se manifestem na mente dos outros. Aplique a Potência do feitiço como um bônus ou penalidade em testes de Habilidades relevantes (como Empatia ou Subterfúgio) entre os alvos. Indivíduos que pensam cuidadosamente em uma mensagem podem usar o efeito para se comunicarem telepaticamente através do link; isso pode exigir um teste de Compostura + Empatia para indivíduos não acostumados com a sensação.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 162
@@ -3009,7 +3009,7 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidação",
       "Persuasão"
     ],
-    "description": "O mago suaviza pensamentos perturbadores e amortece emoções, fazendo o alvo pensar com clareza. O feitiço suprime uma Condição Mental ou Inclinação por nível de Potência durante sua Duração. Embora o feitiço seja frequentemente usado para tratar doenças mentais, ele também pode ser usado contra Condições positivas, suprimindo a euforia e a inspiração tão facilmente quanto o desespero e a fuga. O feitiço não pode afetar as Condições criadas pelo Paradoxo, e aquelas impostas por meios sobrenaturais provocam um Choque de Vontades.",
+    "description": "O mago suaviza pensamentos perturbadores e amortece emoções, fazendo o alvo pensar com clareza. O feitiço suprime uma Condição Mental ou Inclinação por nível de Potência durante sua Duração. Embora o feitiço seja frequentemente usado para tratar doenças mentais, ele também pode ser usado contra Condições positivas, suprimindo a euforia e a inspiração tão facilmente quanto o desespero e a fuga. O feitiço não pode afetar as Condições criadas pelo Paradoxo, e aquelas impostas por meios sobrenaturais provocam um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 162
@@ -3047,7 +3047,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Persuasão",
       "Socializar",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago envia uma chamada para a Goetia mais próxima dentro de seu alcance sensorial. Por outro lado, ela pode invocar Goetia que ela conhece pessoalmente. Ela pode enviar uma chamada geral e a Goetia mais próxima atenderá, ou pode especificar o tipo de entidade pela sua Ressonância. O feitiço não funciona em Goetia acima do Rank 5. Adicionar Espírito •• ou Morte ••: A entidade ganha a Condição Materializada pela Duração do feitiço.",
     "sourceId": "mta-2ed",
@@ -3069,7 +3069,7 @@ export const SPELLS: SpellDefinition[] = [
       "Furtividade",
       "Subterfúgio"
     ],
-    "description": "O mago confunde os sentidos do alvo, fazendo-o acreditar que ela é outra pessoa. Ela pode inventar uma aparência ou imitar a aparência, o som e o cheiro exatos de qualquer indivíduo que conheça. A menos que o mago tenha interagido extensivamente com a pessoa que ele está personificando, ele deve fazer um teste de Manipulação + Lábia quando começar a interagir com seu alvo e a cada minuto que continuar interagindo com ele. O feitiço não pode imitar Qualidades Sociais específicas que concedem bônus de dados em testes Sociais. Se o mago abrir qualquer Porta ou causar novas primeiras impressões, o benefício do progresso irá para a pessoa que ele está personificando, não para si mesmo.",
+    "description": "O mago confunde os sentidos do alvo, fazendo-o acreditar que ela é outra pessoa. Ela pode inventar uma aparência ou imitar a aparência, o som e o cheiro exatos de qualquer indivíduo que conheça. A menos que o mago tenha interagido extensivamente com a pessoa que ele está personificando, ele deve fazer um teste de Manipulação + Subterfúgio quando começar a interagir com seu alvo e a cada minuto que continuar interagindo com ele. O feitiço não pode imitar Qualidades Sociais específicas que concedem bônus de dados em testes Sociais. Se o mago abrir qualquer Porta ou causar novas primeiras impressões, o benefício do progresso irá para a pessoa que ele está personificando, não para si mesmo.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 163
@@ -3107,9 +3107,9 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Acadêmicos",
       "Atletismo",
-      "Oculto"
+      "Ocultismo"
     ],
-    "description": "O mago controla o ciclo de sono do alvo, permitindo que ele permaneça acordado sem efeitos nocivos ou dormindo sem ser acordado durante a duração do feitiço. O mago também pode controlar o que sonha ou criar um estado de sonho lúcido onde o alvo tem controle. Qualquer tentativa de entrar ou influenciar o estado de sonho provoca um Choque de Vontades.",
+    "description": "O mago controla o ciclo de sono do alvo, permitindo que ele permaneça acordado sem efeitos nocivos ou dormindo sem ser acordado durante a duração do feitiço. O mago também pode controlar o que sonha ou criar um estado de sonho lúcido onde o alvo tem controle. Qualquer tentativa de entrar ou influenciar o estado de sonho provoca um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 163
@@ -3123,7 +3123,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Tecelagem",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Empatia",
       "Investigação",
@@ -3165,7 +3165,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Ciência"
     ],
@@ -3223,7 +3223,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Medicamento",
       "Persuasão",
@@ -3243,10 +3243,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Socializar"
     ],
     "description": "O mago pode projetar a consciência do alvo em um estado de Crepúsculo ou nos sonhos de outra pessoa. A projeção mental usa as regras para Formas Oníricas no Capítulo Seis (p. 249). Não tem corpo efêmero, mas sim uma imagem mental incorpórea e intangível. Enquanto estiver em Crepúsculo, o alvo não pode interagir fisicamente com o ambiente e deve usar magia para afetar qualquer coisa. Ela é imune a ataques físicos, mas ainda é suscetível a habilidades sobrenaturais que afetam a mente. Embora mentalmente projetado, seu corpo fica em estado de coma, e ela não tem como saber sua saúde ou estado sem retornar ou usar outra magia. Se sua projeção morrer, ela retorna ao seu corpo com a condição Soul Shocked. Adicionar Espírito ••: O mago pode projetar a consciência do alvo além da Película para o Reino das Sombras. O feitiço também é Resistido pela classificação Gauntlet (pág. 179).",
@@ -3263,7 +3263,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Intimidação",
       "Medicamento",
@@ -3303,9 +3303,9 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Desfazendo",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Expressão"
     ],
@@ -3323,7 +3323,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Fazendo",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Expressão",
       "Persuasão",
@@ -3343,11 +3343,11 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Desfazendo",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Acadêmicos",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago remove uma grande parte das memórias do alvo. A vítima sofre da Condição de Amnésia durante a duração do feitiço, incapaz de recordar um mês por nível de Potência. O mago pode especificar qual parte da vida do alvo foi esquecida.",
     "sourceId": "mta-2ed",
@@ -3407,7 +3407,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Atletismo",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Toda magia Desperta contém a capacidade de acabar, de permitir que as leis do Mundo Decaído se reafirmem. Ao compelir essas falhas em um feitiço existente, o mago pode suprimi-lo temporariamente – ou até mesmo destruí-lo completamente. Este feitiço não é potente o suficiente para dissipar os feitiços de um arquimago e só funciona contra magia Desperta. Além disso, o mago deve incluir todos os Arcanos envolvidos na conjuração da magia em questão em um ponto. Um lançamento bem sucedido suprime o feitiço pela Duração de Dissipar Magia. Adicionar Destino •: O mago pode suprimir o feitiço alvo seletivamente, por um número de alvos igual ao fator de escala de Dissipar Magia.",
     "sourceId": "mta-2ed",
@@ -3427,7 +3427,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Investigação",
       "Medicamento",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Prime é o Arcanum da pura Verdade, e nenhuma falsidade pode estar diante dele. Por meio desse feitiço, o sujeito vê ilusões, fantasmas e mentiras pelo que são. O feitiço vê através de falsidades mundanas o sujeito percebe automaticamente; ilusão mágica ou engano provoca automaticamente um Clash of Wills. Este feitiço só revela inverdades \"ativas\": o sujeito veria que alguém com cabelo tingido não é realmente uma loira, ou reconheceria uma mentira quando a ouvisse, mas não saberia que um executivo de Wall Street vem cometendo fraude fiscal há anos apenas olhando para ele. No entanto, se ela visse a declaração de imposto dele, veria que era uma falsidade.",
     "sourceId": "mta-2ed",
@@ -3446,10 +3446,10 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Empatia",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
-    "description": "Ao abrir o terceiro olho de seu alvo, o mago revela a seus companheiros as fontes de poder Superno que são. Ao estudar uma pessoa, lugar ou local por um turno, o sujeito sabe automaticamente se ele está conectado ao Supernal (por exemplo, se uma pessoa é um mago, um Sonâmbulo, um Proximus ou um Adormecido; se um lugar é um Domínio ou Fronteira; se um objeto é Imbuído, Aprimorado ou um Artefato), e pode fazer um número das seguintes perguntas igual à Potência do feitiço: • Quanta Mana o alvo tem em seu Padrão? • Com qual Mundo Superno o alvo está mais alinhado? • Qual é o Arcano de maior valor do alvo?* • Quão adepto é o alvo em seu Arcano de maior valor? • Quantos Arcanos o sujeito conhece? • Qual é o Nimbus do alvo? • Qual é a Gnose do alvo? * A pergunta subsequente revela o segundo, terceiro, etc. Arcanos mais elevados do alvo. O sujeito percebe as respostas como símbolos e visões Supernas que se desdobram em torno do alvo. Se o alvo desejar mais informações sobre um fenômeno específico, ele poderá estudá-lo por vários turnos, enquanto durar a Duração da magia. Efeitos que ocultariam a natureza do alvo provocam um Choque de Vontades normalmente.",
+    "description": "Ao abrir o terceiro olho de seu alvo, o mago revela a seus companheiros as fontes de poder Superno que são. Ao estudar uma pessoa, lugar ou local por um turno, o sujeito sabe automaticamente se ele está conectado ao Supernal (por exemplo, se uma pessoa é um mago, um Sonâmbulo, um Proximus ou um Adormecido; se um lugar é um Domínio ou Fronteira; se um objeto é Imbuído, Aprimorado ou um Artefato), e pode fazer um número das seguintes perguntas igual à Potência do feitiço: • Quanta Mana o alvo tem em seu Padrão? • Com qual Mundo Superno o alvo está mais alinhado? • Qual é o Arcano de maior valor do alvo?* • Quão adepto é o alvo em seu Arcano de maior valor? • Quantos Arcanos o sujeito conhece? • Qual é o Nimbus do alvo? • Qual é a Gnose do alvo? * A pergunta subsequente revela o segundo, terceiro, etc. Arcanos mais elevados do alvo. O sujeito percebe as respostas como símbolos e visões Supernas que se desdobram em torno do alvo. Se o alvo desejar mais informações sobre um fenômeno específico, ele poderá estudá-lo por vários turnos, enquanto durar a Duração da magia. Efeitos que ocultariam a natureza do alvo provocam um Confronto de Vontades normalmente.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 167
@@ -3466,7 +3466,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "Enquanto seus sentidos estiverem abertos para este feitiço, o alvo pode perceber claramente linhas ley e nós. Dependendo da Trilha e do Nimbus do conjurador, ele pode vê-los como raios de luz dourada encontrando-se em sólidos platônicos brilhantes, rios azuis elétricos formando lagos ou acordes de música formando uma poderosa sinfonia. Se não houver linhas ley ou nós dentro do alcance sensorial, o sujeito sente uma sensação de puxão em direção ao ley ou nó mais próximo.",
@@ -3485,9 +3485,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Total de pontos de Arcano de todos os Arcanos usados ​​no feitiço que está sendo escrito.",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Por meio deste feitiço, o mago dá forma física aos mudras de uma Rotina específica, criando um Grimório (ver pág. 101). Este feitiço tem duas aplicações ligeiramente diferentes, embora relacionadas: o mago pode inscrever uma Rotina que ele conhece ou pode copiar uma Rotina de outro Grimório que tenha em mãos. Apenas um único Rote pode ser inscrito por lançamento deste feitiço, mas um determinado Grimório pode conter vários Rotes ao mesmo tempo: um livro grande pode conter de 10 a 15 Rotes, enquanto uma pedra esculpida do tamanho de um punho pode conter apenas um ou dois, e um banco de dados de computador pode conter um número teoricamente ilimitado. Quando a Duração do feitiço expira, as Rotes inscritas desaparecem e não podem ser recuperadas.",
     "sourceId": "mta-2ed",
@@ -3506,7 +3506,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Arte",
-      "Oculto",
+      "Ocultismo",
       "Persuasão"
     ],
     "description": "Objetos encantados e feitiços de longa duração geralmente têm gatilhos ou condições específicas que devem ser cumpridas antes de liberarem sua magia. Com este feitiço, um mago pode contornar essas condições, liberando a magia para fazer o que quiser. O objeto ou feitiço é ativado imediatamente, exatamente como se tivesse sido ativado por qualquer coisa que normalmente desencadeia o efeito. Se normalmente for necessária uma jogada de ativação, trate a Potência da magia como sucessos obtidos. Se a magia em questão requer Mana para ser ativada, o mago deve gastá-la de sua própria reserva. Sem Arcanos adicionais, este feitiço só pode ativar feitiços Supernos e objetos vinculados ao Mundo Superno, como Artefatos e Itens Imbuídos. Adicione Qualquer Outro Arcano •: Ao adicionar o Arcano relevante, um mago pode ativar efeitos mágicos e objetos criados por outras fontes de poder – Espírito para ativar um fetiche, Destino para desencadear uma maldição de uma fada, e assim por diante. Se este objeto requer energia mística (Essência ou substâncias estranhas) para ser ativado, o mago pode gastar Mana no lugar da fonte de energia normal. ••",
@@ -3526,7 +3526,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Política"
     ],
     "sourceId": "mta-2ed",
@@ -3548,7 +3548,7 @@ export const SPELLS: SpellDefinition[] = [
       "Furtividade",
       "Subterfúgio"
     ],
-    "description": "Este feitiço protege o Nimbus do alvo de feitiços e efeitos que o leriam, como Visão Superna ou a habilidade de certos médiuns de ler estados emocionais em auras. Qualquer efeito desse tipo está sujeito a um Choque de Vontades (veja p. 117). Qualquer efeito que não consiga perfurar o véu registra o alvo como um Adormecido comum. Feitiços lançados sob a influência deste feitiço não fazem com que o Nimbus Imediato do lançador (veja p. 89) se incendeie, a menos que ele queira. Além disso, enquanto este feitiço estiver ativo, o Signature Nimbus do alvo (veja pág. 89) é silenciado; qualquer tentativa de examiná-lo com a Visão de Mago provoca um Choque de Vontades. Se o mago examinador falhar, ele não conseguirá encontrar nenhuma característica identificável no Signature Nimbus. Se o alvo realizar qualquer ação que faça com que seu Nimbus se incendeie, como permitir que isso aconteça ao lançar um feitiço ou imprimir seu Nimbus Assinado em um objeto, este feitiço termina imediatamente.",
+    "description": "Este feitiço protege o Nimbus do alvo de feitiços e efeitos que o leriam, como Visão Superna ou a habilidade de certos médiuns de ler estados emocionais em auras. Qualquer efeito desse tipo está sujeito a um Confronto de Vontades (veja p. 117). Qualquer efeito que não consiga perfurar o véu registra o alvo como um Adormecido comum. Feitiços lançados sob a influência deste feitiço não fazem com que o Nimbus Imediato do lançador (veja p. 89) se incendeie, a menos que ele queira. Além disso, enquanto este feitiço estiver ativo, o Signature Nimbus do alvo (veja pág. 89) é silenciado; qualquer tentativa de examiná-lo com a Visão de Mago provoca um Confronto de Vontades. Se o mago examinador falhar, ele não conseguirá encontrar nenhuma característica identificável no Signature Nimbus. Se o alvo realizar qualquer ação que faça com que seu Nimbus se incendeie, como permitir que isso aconteça ao lançar um feitiço ou imprimir seu Nimbus Assinado em um objeto, este feitiço termina imediatamente.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 168
@@ -3584,11 +3584,11 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio",
       "Sobrevivência"
     ],
-    "description": "Às vezes, até mesmo o maior mágico deve esconder sua luz debaixo do alqueire. Esta magia protege seu alvo, que pode ser uma magia, objeto, mago, criatura sobrenatural ou qualquer outro fenômeno mágico ativo, da detecção. Habilidades passivas (como Visão Periférica do Mago) falham automaticamente em detectar o fenômeno velado, enquanto tentativas ativas provocam um Choque de Vontades.",
+    "description": "Às vezes, até mesmo o maior mágico deve esconder sua luz debaixo do alqueire. Esta magia protege seu alvo, que pode ser uma magia, objeto, mago, criatura sobrenatural ou qualquer outro fenômeno mágico ativo, da detecção. Habilidades passivas (como Visão Periférica do Mago) falham automaticamente em detectar o fenômeno velado, enquanto tentativas ativas provocam um Confronto de Vontades.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 169
@@ -3605,7 +3605,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "Ao ocultar seu alvo com símbolos etéricos de vitória e indomabilidade, o mago protege o alvo dos efeitos da magia hostil. Quando o alvo é alvo de uma magia, essa magia é Resistida com a Potência de Proteções e Sinais. Somente feitiços que tenham como alvo direto o alvo podem ser Resistidos; um feitiço que transforma o ar ao seu redor em fogo não pode ser resistido. Da mesma forma, se o alvo for um entre muitos assuntos, Proteções e Sinais apenas Resistirão ao feitiço em relação a ele. Outros sujeitos sofrem todos os efeitos.",
@@ -3646,7 +3646,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Atletismo",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago invoca uma pequena fração da fúria uivante do Éter, varrendo seu alvo com ventos estridentes. Este é um feitiço de ataque que causa dano contundente igual à Potência.",
     "sourceId": "mta-2ed",
@@ -3664,7 +3664,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Compostura (ou classificação para entidades supernas)",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Política",
       "Socializar"
     ],
@@ -3685,7 +3685,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Investigação",
-      "Oculto",
+      "Ocultismo",
       "Furtividade"
     ],
     "description": "As Formas que compõem o Padrão Superno de um alvo são marcadas pelo toque da magia. Com este feitiço, um mago remove os sinais reveladores de interferência dos Despertos. O feitiço remove o efeito dramático de falha de uma Revelação da Visão do Mago Focada (p. 92) de um alvo. Se o alvo do feitiço possuir o Nimbus de Assinatura de um mago, o feitiço o remove.",
@@ -3705,7 +3705,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Briga",
-      "Oculto",
+      "Ocultismo",
       "Socializar"
     ],
     "description": "A magia em si cai sob a alçada de Prime, até mesmo suas funções mais privadas. Ao usar este feitiço, um mago agita o Mundo Supernal, fazendo-o responder aos magos dentro da área do feitiço. Em vez de ser totalmente interno, os Ímagos formados por magos dentro do efeito do feitiço tornam-se visíveis no Mundo Supernal para todas as formas de Visão Maga Ativa, exibidos como runas mágicas e flashes de símbolos pairando em torno do mago. Mages usar este feitiço como um",
@@ -3724,8 +3724,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Armamento"
     ],
     "description": "As formas de símbolo do Éter são reais o suficiente para cortar todas as camadas da realidade. Este feitiço encanta o sujeito a ser tão sólido às entidades Twilight quanto à matéria física. Este feitiço é igualmente eficaz contra todas as formas de Twilight; o assunto pode interagir com fantasmas, espíritos, anjos e coisas estranhas com facilidade igual.",
@@ -3746,7 +3746,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Acadêmicos",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Ao impor sua vontade sobre o fluxo natural de energia da Terra, o mago pode redirecionar linhas de ley dentro da área de efeito, remodelando nós e alterando a ressonância livremente. Ela pode mover as linhas de Ley, e portanto os Nodes criaram onde as linhas de Ley se cruzam, \"fixando\" uma linha a um ponto dentro da área de efeito do feitiço. Ela também pode mudar a palavra chave de ressonância de um nó para o que ela quiser.",
     "sourceId": "mta-2ed",
@@ -3765,7 +3765,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Artesanato",
+      "Ofícios",
       "Expressão"
     ],
     "description": "O mago pode fazer com que Mana se comporte como se comporta dentro da tass, criando um objeto mágico formado pela pura Mana. O objeto deve ser um objeto ou ferramenta simples (espadas e pedras preciosas são permissíveis, armas e carros não são). É obviamente mágico para espectadores, tem uma Durabilidade padrão de 1 e consiste em um ponto de Mana (que o mago deve pagar como parte do elenco). A potência pode ser atribuída aos seguintes efeitos: • Incr facilidade Durabilidade por +1 • Incr facilidade capacidade Mana por +1 (o mago pode preencher esta capacidade Mana gastando Mana como parte do elenco ou deixar o objeto parcialmente vazio) • Se o objeto pode ser usado como um tool ou arma, adicione +1 bônus de equipamento ou dano arma. Cada ação usando o construto como uma ferramenta ou arma usa até 1 Mana de sua fonte. Quando todo o Mana é retirado do objeto, ele desmorona para nada. Um mago pode \"reenchi-lo\" com o feitiço do Canal Mana ou efeitos semelhantes. Quando a Duração do feitiço se esgota, qualquer Mana não utilizado sublima de volta ao mundo e é perdido. Adicione Forças •••: O objeto não é obviamente mágico.",
@@ -3782,7 +3782,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Aperfeiçoando",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Expressão",
       "Furto",
@@ -3802,9 +3802,9 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Persuasão",
       "Socializar"
     ],
@@ -3826,7 +3826,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Atletismo",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago convoca os fogos supernais do Éter para ferir seus inimigos. Isto não é base, chama caída, mas sim a expressão pura da vontade despertada. Este é um feitiço de ataque; sua classificação de danos é igual à potência do feitiço, e inflige danos letais. O feitiço afecta as entidades Twilight.",
     "sourceId": "mta-2ed",
@@ -3846,7 +3846,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Briga",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Por capricho do mago, as construções de Mana são varridas pelos ventos de Éter. Um elenco bem sucedido destrói o tass. O Mana mantido dentro dele não é destruído, mas sublima-se ao mundo e provavelmente retorna ao Hallow mais próximo.",
     "sourceId": "mta-2ed",
@@ -3865,7 +3865,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Classificação Hallow",
     "roteSkills": [
       "Expressão",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "As marés de Éter se dissipam e fluem, despertando lugares sagrados e enviando-os para dormir mais uma vez no ciclo das eras. Este feitiço permite ao mago dobrar esse ciclo à sua vontade. O mago pode suprimir um Hallow ativo ou acordar um adormecido com este feitiço. Despertar um Hallow adormecido requer uma potência igual à classificação do Hallow, enquanto amortecer um Hallow reduz a sua classificação de pontos eficaz em um por ponto de potência. Se o Hallow é suprimido a zero pontos ou menos, ele cai dormente. Ver p. 241 para mais informações sobre Hallows.",
@@ -3886,7 +3886,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Atletismo",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Verdades supernais nunca podem ser realmente desfeitas, mas com este feitiço o mago pode jogá-las de volta através do Abismo, efetivamente apagando qualquer feitiço que ela encontrar. Este feitiço não é potente o suficiente para dissipar os feitiços dos arcos. Um elenco bem sucedido suprime o feitiço para a Duração da Dispelação Supernal. Adicionar destino •: O mago pode suprimir o feitiço do sujeito seletivamente, para um número de sujeitos iguais ao fator Escala Dispel.",
     "sourceId": "mta-2ed",
@@ -3905,7 +3905,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Hallow Rating, se aplicável",
     "roteSkills": [
       "Atletismo",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "Ao definir todas as verdades, o Supernal inclui os meios de sua própria eliminação. Este feitiço corta a conexão do mundo com o Supernal, criando uma \"zona morta\" na qual as energias da vida simplesmente deixam de existir. O feitiço tem os seguintes efeitos: • Linhas de Ley dentro da área secam e morrem. Os nós também deixam de funcionar. • Hallows cuja classificação é inferior à potência do feitiço cair dormente. • Os dorminhocos que passam mais de um dia dentro da área ganham a condição Energizada (embora isso não seja perda de alma e as vítimas não progridam para a condição Thrall, ver p. 315). • Qualquer tentativa de despertar um Hallow dentro da área adiciona a potência deste feitiço à classificação de pontos do Hallow para fins de suportar o efeito.",
@@ -3925,7 +3925,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Hallow Classificação do desejado Hallow",
     "roteSkills": [
       "Expressão",
-      "Oculto",
+      "Ocultismo",
       "Persuasão"
     ],
     "description": "O Despertado fala, e os céus se reformulam. Este feitiço sobrepõe as condições da Realidade Caída dentro da área, criando um Hallow com uma classificação de pontos igual à potência do feitiço. Este Hallow tem ressonância apropriada à sua localização",
@@ -3945,8 +3945,8 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Artesanato",
-      "Oculto"
+      "Ofícios",
+      "Ocultismo"
     ],
     "description": "Onde adeptos de Prime podem criar objetos platônicos forçando Mana no padrão que ele usa dentro do tass, um mestre pode criar os complexos padrões Prime dentro dos seres vivos e do ambiente. Quando alimentado com Mana, este feitiço cria uma construção obviamente mágica como a Forma Platônica, exceto que a construção não se limita a objetos físicos únicos. Eidolons podem imitar fogo, nevoeiro, e até mesmo ambientes inteiros, mas a maioria dos mestres usam-no para criar construções \"vivas\". Eidolons ainda são feitos de Mana solidificado, e têm Durabilidade e Estrutura em vez de Cura , e quando mimetizando riscos ambientais não infligir danos como eles fazem (o fogo Eidolon não queima, por exemplo.) Eles seguem as regras de potência para Forma Platônica (p.169), mas a potência também pode ser atribuída para conceder pontos do Mérito do Retentor. Embora animado, a construção é sem mente. Se usado como Retentor, o \"campo\" do Eidolon inclui simples trabalho físico, combate e outras tarefas não complicadas. O Eidolon só pode executar a ordem que o lançador lhe deu. As ordens devem ser muito simples. Se for atacado, o Eidolon não tem defesa. Ao contrário das formas platônicas, os Eidolons não se desfazem quando toda Mana é retirada. Um mago pode \"reencher\" o construto com o feitiço Channel Mana (p. 168) ou efeitos semelhantes. Quando o feitiço",
     "sourceId": "mta-2ed",
@@ -3962,7 +3962,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Fazendo",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Empatia",
       "Expressão",
@@ -3985,7 +3985,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Classificação de mérito do objeto mágico visado, ou Durabilidade se não medido em pontos de mérito",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Armamento"
     ],
     "description": "As tempestades etéricas vasculham e destroem tanto quanto revitalizam. Com este feitiço, o mago chama para baixo o poder destrutivo do Supernal para destruir um item mágico. Os artefactos supernais não podem ser destruídos por este feitiço.",
@@ -4065,7 +4065,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Empatia",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Toda a distância é uma ilusão. Uma vez que esta verdade é entendida, todas as coisas estão no mesmo lugar que o mago, e como se pode perder o controle de si mesma? Enquanto o assunto deste feitiço estiver dentro",
@@ -4086,7 +4086,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Armas de fogo",
       "Investigação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Se todos os locais são um, deve seguir que todas as direções são um também. Enquanto este feitiço é ativo, o sujeito pode ver e ouvir em todas as direções e de todos os pontos dentro de seu alcance sensorial simultaneamente. Ela consegue ver o que está a acontecer atrás dela, no lado oposto de uma porta, ou debaixo dos pés. Ela não consegue perceber as coisas mais longe do que as suas percepções normais podem permitir, nem pode ver através da escuridão. Em essência, é como se tudo o que acontecia à sua volta estivesse espalhado numa planície plana, despojado de obstrução. Isto permite-lhe lançar feitiços sensoriais em assuntos que ela pode normalmente não ser capaz de perceber. O assunto também é quase impossível de emboscar ou surpreender — sem camuflagem excepcional ou uma tremenda distração para chamar sua atenção, todas essas tentativas são reduzidas a uma chance de morrer. Finalmente, o assunto pode reduzir quaisquer penalidades devido ao alcance, cobertura ou ocultação (mas não escuridão ou visibilidade ruim semelhante) pela potência do feitiço.",
     "sourceId": "mta-2ed",
@@ -4105,7 +4105,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Ligação",
     "roteSkills": [
       "Furto",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Ao mudar a conexão com os outros, muda-se a si mesmo. Este feitiço permite que o mago transfira uma série de conexões simpáticas iguais à potência do feitiço entre si e os sujeitos como determinado pela Escala do feitiço. Ela pode roubar links de seus alvos ou dar seus próprios a outros. Se o mago transfere um link para alguém que já tem uma conexão com a mesma coisa, a nova conexão substitui a antiga para a Duração do feitiço. O mago tem que estar ciente de uma conexão ( quer através da magia ou apenas conhecendo o sujeito) para manipulá-lo.",
@@ -4142,7 +4142,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Véu",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Acadêmicos",
       "Política",
@@ -4165,7 +4165,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Computadores",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Por meio deste feitiço, o mago parte a cortina da Mentira e revela um local distante aos seus sentidos. Ela cria uma \"janela\" que lhe permite perceber o assunto, muito parecido com uma tela de televisão. Quando ela lança o feitiço, ela pode escolher se o feitiço é uma maneira, ou se as pessoas no local podem ver de volta através da janela. Ao lançar este feitiço com simpatia, exatamente o que o mago vê depende do Yantra simpático que ela emprega. Simpatia com um local mostra-lhe uma ampla visão geral da área, análoga a uma fotografia cinematográfica ampla, mas que permanece estática. Simpatia",
@@ -4184,7 +4184,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Furtividade",
       "Subterfúgio"
     ],
@@ -4324,7 +4324,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Compostura",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Persuasão"
     ],
@@ -4464,7 +4464,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio",
       "Sobrevivência"
     ],
@@ -4484,7 +4484,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Sobrevivência"
     ],
@@ -4544,7 +4544,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência",
       "Socializar"
     ],
@@ -4586,7 +4586,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Briga",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Os Espíritos sabem o que lhes causa dor, e evitam a todo custo. Este feitiço força um espírito a evitar o seu Bane ainda mais assíduo do que o normal. O espírito deve gastar um ponto de força de vontade para mesmo entrar na área de influência de seu Bane (descrito pelo fator Área do feitiço), e não pode tocá-lo em tudo. Se o espírito já está dentro da área proscrita e falha o rolo, deve fugir imediatamente. Este feitiço não afeta os espíritos acima da Classe 5.",
     "sourceId": "mta-2ed",
@@ -4644,7 +4644,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Persuasão",
       "Sobrevivência"
     ],
@@ -4685,7 +4685,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Briga",
-      "Artesanato",
+      "Ofícios",
       "Intimidação"
     ],
     "description": "Às vezes, a única maneira de comandar um espírito é com força bruta e bruta. Este feitiço torna a carne do sujeito sólida aos espíritos em Twilight, permitindo-lhe interagir fisicamente com eles. Adicionar Morte •• ou Mente ••: Estes benefícios estendem-se a fantasmas ou Goetia, respectivamente.",
@@ -4724,7 +4724,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Furtividade",
       "Manha"
     ],
@@ -4745,7 +4745,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Classificação",
     "roteSkills": [
       "Expressão",
-      "Oculto",
+      "Ocultismo",
       "Armamento"
     ],
     "description": "O tolo se esgota tentando matar o que não pode morrer; melhor é enviar espíritos hostis para um sono profundo. Este feitiço reduz a frequência com que um espírito que hiberna após ser destruído (ver p. 257) recupera a Essência. Em vez de recuperar um ponto de Essência por dia, ele recupera um ponto de Essência cada (Potency) dias; mas o efeito ainda termina quando a duração do feitiço expira. •••",
@@ -4765,7 +4765,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Medicamento",
-      "Oculto",
+      "Ocultismo",
       "Expressão"
     ],
     "description": "O rato que arranca o espinho é muitas vezes mais respeitado do que o leão que ruge. Cada nível de potência deste feitiço cura um espírito de duas caixas de danos.",
@@ -4784,7 +4784,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Briga",
       "Intimidação"
     ],
@@ -4885,7 +4885,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Persuasão",
       "Socializar",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago envia uma chamada para o espírito mais próximo dentro do seu alcance sensorial. Por outro lado, ela pode invocar espíritos que conhece pessoalmente. Ela pode enviar uma chamada geral e o espírito mais próximo irá responder, ou ela pode especificar o tipo de espírito por Ressonância. O feitiço não funciona em espíritos acima da Classe 5. +1 Alcance O feitiço também cria a condição aberta na área, mesmo que não corresponda à ressonância do espírito.",
     "sourceId": "mta-2ed",
@@ -4905,7 +4905,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Briga",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Este feitiço despoja um espírito da sua capacidade de agir no mundo, lembrando-lhe o seu lugar. Este feitiço retira uma série de Condições de Manifestação do espírito (ou seu hospedeiro) igual à potência do feitiço. O efeito é duradouro, mas o espírito pode usar suas influências e manifestações para restabelecer as Condições como normais. Este feitiço não funciona em espíritos acima da Classe 5. Adicione Morte ou Mente •••: Os efeitos do feitiço estendem-se a fantasmas ou Goetia.",
     "sourceId": "mta-2ed",
@@ -4923,7 +4923,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Classificação",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Briga",
       "Intimidação"
     ],
@@ -4934,7 +4934,7 @@ export const SPELLS: SpellDefinition[] = [
   },
   {
     "id": "mta-2ed:craft-fetish",
-    "name": "Artesanato Fetish",
+    "name": "Ofícios Fetish",
     "originalName": "Craft Fetish",
     "requirements": {
       "Spirit": 4
@@ -4943,8 +4943,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Classificação",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Persuasão"
     ],
     "description": "Um inimigo derrotado pode ser uma ferramenta útil. Este feitiço permite que o mago ligue um espírito hibernante a um fetiche, uma espécie de item mágico. Fetishes funciona como um Itens Imbued, exceto que um fetiche é alimentado por Essence e, em vez de segurar um feitiço Supernal, ele detém uma das influências do espírito ligado e, possivelmente, algumas de suas Numina. Criar um fetiche requer que o feitiço tenha uma potência por ponto de influência que o objeto possuirá, mais uma potência por Numen. Um fetiche não tem de receber todas as capacidades do espírito. Ativar os poderes dentro do fetiche é uma ação instantânea e usa o pool de dados do espírito. O fetiche tem o seu espírito adormecido piscina Essence e pode recarregar Essence em um local Resonant como um espírito hibernante, ou pode receber Essence de outro espírito ou através do Canal Essence (ver p. 180) ou magia semelhante. O usuário do fetiche pode pagar Essência fora da piscina do fetiche para alimentar suas habilidades. Se o espírito ligado alguma vez adquire Essência igual ao seu Corpus, no entanto, o feitiço termina imediatamente. O mago também pode criar um fetiche muito mais simples que não abriga espírito, mas pode segurar Essência. Tal fetiche possui 10 Essence, mais um número de Essence igual à potência do feitiço. Disparar o Ban do espírito ligado ou Bane imediatamente destrói o fetiche.",
@@ -5002,7 +5002,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Classificação",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
       "Persuasão"
     ],
@@ -5022,7 +5022,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio",
       "Sobrevivência"
     ],
@@ -5082,7 +5082,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
       "Expressão"
     ],
@@ -5102,7 +5102,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Força da luva",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Sobrevivência"
     ],
@@ -5123,7 +5123,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Empatia",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O xamã alimenta os seus filhos espirituais. Este feitiço gera uma quantidade de Essência igual à potência do feitiço dentro do Padrão do sujeito. A Essência tem uma ressonância da escolha do mago, desde que a tenha encontrado antes.",
     "sourceId": "mta-2ed",
@@ -5141,7 +5141,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Sobrevivência"
     ],
@@ -5259,9 +5259,9 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Decisão",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Ciência",
       "Subterfúgio"
     ],
@@ -5281,7 +5281,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Persuasão",
       "Sobrevivência"
     ],
@@ -5319,10 +5319,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Decisão",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Atletismo",
-      "Artesanato",
+      "Ofícios",
       "Investigação"
     ],
     "description": "O mago pode momentaneamente alterar o fluxo do Tempo, fazendo-o acelerar ou abrandar para um sujeito, mas não drasticamente. Enquanto o feitiço pode permitir que o sujeito tempo extra para esquivar-se de um carro que se aproxima ou lento movimentos de um inimigo como se ele estivesse bêbado, ele não vai deixá-la voltar no tempo para evitar o carro ou o agressor irritado completamente. O lançador pode adicionar ou subtrair potência da Iniciativa do sujeito. Os sujeitos que já agiram por sua vez antes de lançarem este feitiço sobre eles não agem novamente na sua nova classificação de Iniciativa.",
@@ -5382,7 +5382,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Vigor",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Intimidação"
     ],
     "description": "O mago atrasa a experiência de seu sujeito de tempo para um rastejar. Para o assunto, tudo parece mover-se em velocidades deslumbrantes, enquanto ela sente que está presa em um sonho, incapaz de correr ou soco ou mover-se corretamente. Ela nem consegue falar normalmente com os outros enquanto está afetada — enquanto, da sua perspectiva, as suas palavras são suficientemente claras, para todos os outros, são um som longo e impossivelmente desenhado. Dividir a velocidade do sujeito por potência, arredondando para baixo. Se a velocidade chegar a 0, o sujeito está efetivamente se movendo tão lentamente que ela parece enraizada até o ponto. Enquanto sob o efeito do feitiço, o sujeito sempre vai por último. A defesa do sujeito também é reduzida pela potência.",
@@ -5402,7 +5402,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "O mago pode retroceder pelo tempo a uma curta distância, desfazendo alguns segundos preciosos. Este feitiço envia o sujeito de volta através do tempo uma série de voltas iguais a potência. O sujeito retém quaisquer ferimentos e condições ganhos nas voltas desfeitas, e Mana gasto e força de vontade não retornam. Feitiços lançados em sua pessoa no tempo desfeito permanecem enquanto ela lançou-los. Todos os outros feitiços que ela pode ter lançado ou tinha lançado sobre ela no intervalo são cancelados. Até que o sujeito alcance o presente, a distorção causada por este feitiço é visível sob a visão do mago do tempo ativo. Uma vez que ela faz isso, qualquer mudança que ela fez na história torna-se duradoura.",
@@ -5440,7 +5440,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Intimidação",
       "Medicamento"
     ],
@@ -5518,7 +5518,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Padronização",
     "primaryFactor": "Potência",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Expressão",
       "Investigação",
@@ -5561,8 +5561,8 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Artesanato",
-      "Oculto"
+      "Ofícios",
+      "Ocultismo"
     ],
     "description": "Ao desmoronar o tempo em torno de um sujeito, o mago permite que ela realize em segundos o que levaria horas. Este feitiço transforma a próxima ação estendida tomada pelo sujeito em uma ação instantânea, absorvendo rolos iguais a potência em um único turno. Não afeta intervalos de lançamento ritual para mages.",
     "sourceId": "mta-2ed",
@@ -5600,7 +5600,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Oculto",
+      "Ocultismo",
       "Ciência",
       "Furtividade"
     ],
@@ -5678,13 +5678,13 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Revelação",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Expressão",
       "Investigação",
-      "Oculto"
+      "Ocultismo"
     ],
-    "description": "Poucos magos têm até mesmo uma compreensão rudimentar de todos os Mistérios Supernais, mas os magos muitas vezes acham útil reunir seus esforços investigativos. Este feitiço concede ao sujeito, que deve ser um mago ou sob a influência do Prime •••• soletrar Apocalipse (Mage, p. 169), Primeiro mago Visão. Mages ainda percebe Arcana concedida sob seu próprio Caminho, não o Caminho do lançador. Este feitiço custa 1 Mana por Arcanum por sujeito, a menos que o Arcanum adicional seja um dos Arcanum's Ruling Arcana. Adicionar qualquer outro Arcanum •: Em vez de ou bem como Prime Sight, o feitiço pode conceder Mage Sight no Arcanum incluído. Incluindo vários Arcana permite que o feitiço conceda Mage Sight em um número de Arcana igual à potência do feitiço, desde que qualquer custo Mana é pago. Tradução Supernal (Mente •••, Prime •••) Prática: Tecelagem Fator primário: Duração Habilidades Rotas Sugeridas: Empatia, Expressão, Oculto Este feitiço permite que o sujeito compreenda o Alto Discurso, traduzindo qualquer um que ouve ou lê como se tivesse Visão de Magos Periférica. Ela não transmite, no entanto, a capacidade de falar ou escrever High Speech de volta, ou oferecer qualquer proteção contra Quiescência ou Dissonância se eles encontram High Speech usado como um feitiço Yantra, falado por uma entidade Supernal, ou como um Mistério espontâneo. Por esta razão, o",
+    "description": "Poucos magos têm até mesmo uma compreensão rudimentar de todos os Mistérios Supernais, mas os magos muitas vezes acham útil reunir seus esforços investigativos. Este feitiço concede ao sujeito, que deve ser um mago ou sob a influência do Prime •••• soletrar Apocalipse (Mage, p. 169), Primeiro mago Visão. Mages ainda percebe Arcana concedida sob seu próprio Caminho, não o Caminho do lançador. Este feitiço custa 1 Mana por Arcanum por sujeito, a menos que o Arcanum adicional seja um dos Arcanum's Ruling Arcana. Adicionar qualquer outro Arcanum •: Em vez de ou bem como Prime Sight, o feitiço pode conceder Mage Sight no Arcanum incluído. Incluindo vários Arcana permite que o feitiço conceda Mage Sight em um número de Arcana igual à potência do feitiço, desde que qualquer custo Mana é pago. Tradução Supernal (Mente •••, Prime •••) Prática: Tecelagem Fator primário: Duração Habilidades Rotas Sugeridas: Empatia, Expressão, Ocultismo Este feitiço permite que o sujeito compreenda o Alto Discurso, traduzindo qualquer um que ouve ou lê como se tivesse Visão de Magos Periférica. Ela não transmite, no entanto, a capacidade de falar ou escrever High Speech de volta, ou oferecer qualquer proteção contra Quiescência ou Dissonância se eles encontram High Speech usado como um feitiço Yantra, falado por uma entidade Supernal, ou como um Mistério espontâneo. Por esta razão, o",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
     "page": 29
@@ -5720,7 +5720,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Persuasão",
       "Ciência"
     ],
@@ -5740,8 +5740,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "Este feitiço combina metais perfeitos em um único metal que é resistente à magia. Chamado de \"thaumium\" (da palavra grega para \"maravilha\" ou \"marvel\"), este material é forjado a partir de uma liga de orícalco, lunar e hermium. O objeto criado por este feitiço é Durabilidade 1 e pode segurar um ponto de Mana, que ele gasta para proteger contra magia. A potência pode ser atribuída, um por um, ao aumento da Durabilidade ou da capacidade Mana. Para fins do fator Escala do feitiço, a liga tem o mesmo Tamanho que os metais de três componentes combinados. Enquanto um item de thaumium tem Mana armazenado nele, ele protege seu empunhador de magia Supernal. Qualquer feitiço lançado no empunhador provoca um Clash of Wills, a menos que o empunhador escolha permitir o feitiço. O pool de dados para o Clash of Wills é igual ao Gnosis + Matter do criador do item no momento do lançamento deste feitiço. Sempre que usado para Clash, o objeto gasta 1 Mana. O Mages pode reabastecer a fonte Mana usando o feitiço Prime \"Canal Mana\". (Mage, p. 168.)",
@@ -5760,8 +5760,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Este feitiço combina metais perfeitos em um único metal que escava Mana. Chamado \"sophis\" (da palavra grega para \"sabedoria\"), este material é forjado a partir de uma liga de apeiron, brontium e hermium. O objeto criado por este feitiço é Durabilidade 1 e pode segurar um ponto de Mana. A potência pode ser atribuída, um por um, ao aumento da Durabilidade ou da capacidade Mana. Para fins do fator Escala do feitiço, a liga tem o mesmo Tamanho que os metais de três componentes combinados. A primeira vez que alguém segurando o objeto forjado com sophis gasta Mana em uma cena, o item absorve um ponto de Mana gasto. Isso não muda os custos de Mana, mas, em vez disso, limpa o Mana gasto antes que ele se dissipa. Mages pode absorver a fonte Mana do item usando o feitiço Prime \"Canal Mana\".",
@@ -5780,7 +5780,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Persuasão"
     ],
@@ -5800,8 +5800,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Este feitiço transforma um objeto comum em um capaz de afetar objetos de efêmera e sombra sintonizadas com a morte. Após o lançamento, o objeto é simultaneamente um item do mundo material, do Crepúsculo Ajustado à Morte e das sombras lançadas da ausência de luz. Ele pode interagir com qualquer coisa no Crepúsculo Ajustado à Morte ou mesmo com itens criados de sombras através do Arcanum da Morte. Ele pode lidar com danos ao Corpus de um fantasma ou à Estrutura de um item sombra ou evitar danos ao usuário de tais coisas. O item mantém seus bônus de equipamento normal. Se o item é trazido para o Twilight, ele não perde sua forma material enquanto sob os efeitos deste feitiço.",
@@ -5820,7 +5820,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Furtividade"
     ],
@@ -5881,7 +5881,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Medicamento",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Este feitiço faz com que o seu sujeito extruda uma droga poderosa que visa o sistema nervoso de qualquer um que o toque. Qualquer pessoa cuja pele entra em contato com o sujeito é afetada pela droga para uma cena. O mago que lança este feitiço determina se a droga é um potenciador do sistema nervoso, que concede um bónus à Iniciativa igual à Potência, ou um antagonista do sistema nervoso, que inflige uma penalidade à Iniciativa igual à Potência. A droga afeta um sujeito vivo, bem como qualquer pessoa que a toque.",
@@ -5900,7 +5900,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Ciência",
       "Manha"
     ],
@@ -5920,7 +5920,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Compostura",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Persuasão"
     ],
@@ -5961,7 +5961,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Empatia",
-      "Oculto",
+      "Ocultismo",
       "Sobrevivência"
     ],
     "description": "O mago aumenta um objeto para ser mais sintonizado com a Sombra e espíritos em geral. O objeto torna-se simultaneamente um item do mundo material e da Sombra, capaz de interagir com espíritos tanto na Sombra como na Twilight. O item mantém seus bônus de equipamento normal. Se o objeto é levado para qualquer outro reino, ele mantém sua forma material quando o objeto retorna ao reino material enquanto sob os efeitos deste feitiço. A Natureza dos Melhorias Um aprimoramento em um item mágico é mais complexo do que apenas um item com um feitiço lançado nele. Embora o resultado seja funcionalmente o mesmo, o item tem sua essência e realidade fundamental alterada pelo feitiço de realce. Alguns itens aceitam estas melhorias melhor do que outros, e alguns objetos raros exibem melhor do que propriedades mundanas por conta própria. Mages estão cientes das formas aperfeiçoadas de materiais de base e compostos, e objetos feitos desses metais exibem propriedades aprimoradas que o material normalmente não tem. Alguns itens mundanos não aperfeiçoados através de propriedades de exposição mágica que os tornam extremamente receptivos a certos tipos de magia. Mages referiu-se a estes como itens melhorados que ocorrem naturalmente porque são tão fáceis de trabalhar com e são altamente valorizados. Naturalmente ocorrendo itens melhorados nunca parecem começar aver",
@@ -5981,8 +5981,8 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Resistência",
     "roteSkills": [
-      "Artesanato",
-      "Oculto",
+      "Ofícios",
+      "Ocultismo",
       "Expressão"
     ],
     "description": "Este feitiço prepara um assunto sob a alçada da Morte para o Imbue Item Attainment. O mago pode usar o Attainment para imbuir assuntos encontrados no Ghostly Twilight. Isso inclui os itens fantasmagóricos encontrados no Twilight, bem como os próprios fantasmas, que automaticamente suportam o elenco do feitiço. Ela também pode imbuir itens feitos de ectoplasma, como aqueles criados com Shaping Ectoplasmático, ou cadáveres. Para lançar um fantasma, ele deve estar no fantasma Crepúsculo, ou Manifestado. Um mago pode invocar um fantasma com o Arcano da Morte.",
@@ -6045,7 +6045,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Furto",
-      "Oculto",
+      "Ocultismo",
       "Ciência"
     ],
     "description": "Este feitiço permite que um mago prepare uma sala ou espaço para o Imbue Item Attainment. O mago deve aplicar o correto Fator de Feitiço de Área ao seu elenco enquanto imbui o quarto. Qualquer pessoa dentro da área definida é afetada por um efeito persistente ou pode ativar o feitiço se ela conhece o gatilho. Ao contrário de um objeto, o espaço não detém Mana, e qualquer Mana necessário para lançar o feitiço imbuído deve ser gasto pelo usuário.",
@@ -6067,7 +6067,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Acadêmicos",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Este feitiço prepara um espírito para o Imbue Item Attainment. O mago deve ser capaz de lançar seu feitiço através da Gauntlet, ou o espírito que ela está imbuindo deve ser Manifestado. O sujeito automaticamente Retira o elenco. O mago pode invocar um espírito para ela ou ajudar alguém a se manifestar antes de lançar este feitiço. Itens de Uso Limitado Pesquisa sobre a natureza dos Itens Imbued levou a algumas descobertas sobre como fazê-lo por um curto período de tempo, ou para um único uso. Os efeitos utilizam o conceito por trás de imbuir um feitiço em um item. Quando o feitiço dispara, ele é lançado uma vez, e o item não é mais imbuído. A função destes feitiços está relacionada com o destino •• Attainment, exceto que a Duração Condicional não termina os efeitos do feitiço, mas permite que o feitiço seja lançado. Os pesquisadores de Memias descobriram que a combinação do processo de imbuição com o spellcasting simples levou a resultados interessantes. Criar tais itens é menos intensivo que imbuir permanentemente um item, mas por natureza os itens não duram. Como tal, o processo foca na eficácia do feitiço no imediato, sem qualquer consideração à longevidade. Cabalas muitas vezes fazem com que esses itens passem para seus membros dando acesso temporário a Arcana desconhecida.",
     "sourceId": "mta-signs",
@@ -6107,7 +6107,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
       "Subterfúgio"
     ],
@@ -6128,7 +6128,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Com este feitiço, o mago pode fazer um item capaz de segurar um feitiço até mais tarde ativação, assim como o Prime Attainment, Imbue Item. Uma vez que este feitiço esteja em vigor, um mago pode gastar um Mana para usar o Soluço Armazenado ao lançar outro feitiço com alcance de toque/ auto, que está contido, não activado. O feitiço armazenado pode imbuir até sua potência em feitiços no objeto, que permanecem no controle de seu lançador, mas não fazem efeito até que um mago passe um ponto de Mana enquanto toca no item. Qualquer um que possa fazer isso pode gastar um ponto de Mana para liberar o feitiço do item enquanto ela está tocando. Feitiços liberados de Stored Spell usam a pessoa tocando o item como seu assunto. Se o mago controlador cancelar o feitiço armazenado, ou a sua duração terminar, qualquer feitiço contido termina. Baterias Mana Ao imbuir um objeto, um mago pode armazenar Mana dentro dele, bem como o feitiço. Normalmente, este Mana é reservado para lançar o feitiço imbuído, mas nem sempre. Qualquer pessoa segurando o item pode puxar sobre a reserva Mana para qualquer fundição, desde que o item ainda contém Mana. Mais tarde, o mago pode reabastecer a reserva Mana até sua capacidade usando o Arcanum Prime. A capacidade de tirar Mana de um item a qualquer momento é um recurso inestimável para muitos magos, especialmente aqueles incapazes de canalizar Mana por conta própria. O i",
@@ -6148,7 +6148,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "O mago prime um item para segurar Mana, que ela pode então acessar ou reabastecer como ela deseja. O mago lança este feitiço em um assunto antes de usar o Item Prime Attainment, Imbue. O sujeito está preparado para aceitar uma piscina Mana, mas não um feitiço. O número de sucessos necessários para imbuir o item é igual ao pool Mana imbuído no item. Um item criado através da bateria Mana não contém um feitiço como um item imbuído, mas pode armazenar Mana de forma similar. O item pode armazenar até a potência deste feitiço em Mana. Qualquer um que possa utilizar Mana pode puxar Mana para o seu padrão tocando no item. Alternativamente, enquanto em contato com o item, ela pode usar o Mana armazenado no item em vez de seu próprio para lançar feitiços. Um mago pode usar o Canal Mana (Mage: The Awakening Second Edition, p.168) para reabastecer suas lojas. Deixar ir: Abandonar o controle ortográfico A magia colocada em um item ou criatura não é o único tipo de magia que um mago pode querer para durar indefinidamente. Ela pode muito bem querer preservar as alas que colocou no lugar para proteger sua casa ou manter um feitiço para manter o controle de seus bens. Lançar qualquer feitiço para durar indefinidamente requer muito esforço da parte do mago, e muitas vezes leva bastante tempo. A não ser que tenham abandonado estes feitiços.",
@@ -6167,7 +6167,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Duração",
     "withstand": "Compostura",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Empatia",
       "Subterfúgio"
     ],
@@ -6206,9 +6206,9 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Desgastando",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
       "Persuasão"
     ],
@@ -6226,10 +6226,10 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Tecelagem",
     "primaryFactor": "Duração",
-    "withstand": "Resolver",
+    "withstand": "Perseverança",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Este feitiço altera o processo de imbuição, criando um Item que sempre visa o usuário. O tema do feitiço deve ser um mago. Se o sujeito usa o Item Prime Attainment, Imbue, antes que a Duração do feitiço termine, o Assunto Primário faz com que o sujeito do feitiço imbuído seja sempre o usuário do Item. Ou seja, qualquer um que tente acionar ou usar o Item Imbuído é o objeto do feitiço imbuído, independentemente de quem ou o que o empunhador tenta atingir.",
@@ -6249,7 +6249,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Vigor",
     "roteSkills": [
       "Expressão",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Este feitiço deve ser lançado num mago para alterar o seu processo de imbuição, resultando num Item que desvia Mana de quem quer que esteja em contacto com ele. Quando o mago sob os efeitos de Steal Mana imbue um item com o Prime Attainment, ela lhe dá uma capacidade Mana. Em vez de infundir o item com Mana, o item rouba tanto Mana de quem estiver em contato com ele. Sempre que o feitiço do Item é lançado, ele imediatamente retira Mana do usuário. Se o Mana o trouxesse acima de sua capacidade normal de armazenamento, o Mana se dissiparia na atmosfera. Se o usuário não tem tanto Mana quanto o Item tenta sifão, ele causa dano ao Bashing para cada Mana que não pode sifão.",
@@ -6309,7 +6309,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Compostura",
     "roteSkills": [
       "Intimidação",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "Este feitiço cria um ponto de ruptura para o sujeito como forma de um mago renunciar ao seu feitiço. O próximo ato de arrogância, ponto de ruptura, ou rolo similar por um sujeito deste feitiço sofre uma penalidade igual à potência deste feitiço, em que o próximo assunto (que pode ser o mesmo assunto, mas não necessariamente tem que ser) que renuncia a um feitiço faz isso com segurança como se ela gastou um ponto de força de vontade.",
@@ -6330,7 +6330,7 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Intimidação",
       "Medicamento",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago destrói uma alma para abandonar um feitiço em segurança. A próxima vez que o assunto deste feitiço destruir uma alma — seja em seu poder através de um feitiço de morte diferente ou contido em um Jarro de Alma — ela pode renunciar a outro feitiço com segurança como se ela gastasse um ponto de força de vontade. Adicionar Prime ••: O caster pode destruir uma pedra de alma em vez disso para o mesmo efeito. A sociedade de papel mago do Crafter tem opiniões mistas sobre itens mágicos. São inegavelmente úteis, e os magos recolhem e os usam tanto quanto possível. Ao mesmo tempo, alguns itens podem ser poderosos e perigosos nas mãos erradas e certos magos querem destruí - los ou escondê - los. Perigoso ou não, a maioria dos mages quer acesso a itens mágicos e ter uma grande quantidade é impressionante e um sinal de sucesso e poder. Aqueles que criam tais itens são tidos na mais alta consideração e estima, a menos que de alguma forma tenham ganho uma má reputação. Reputação Criando um item mágico é um processo demorado e exigente. Enquanto qualquer mago com o Arcanum Prime ou Matter pode criar um item com magia, muitos preferem deixar alguém fazer o trabalho. Alguns mages estão contentes em simplesmente usar um item já na posse de sua cabala ou uma ordem dela tem para empréstimo. Outros têm requisitos específicos e querem o item criado novo. Um mago com o desejo de trabalhar pode",
     "sourceId": "mta-signs",
@@ -6349,7 +6349,7 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
       "Investigação"
     ],
@@ -6369,9 +6369,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Investigação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago copia um Grimoire inteiro em duas ou mais partes díspares que individualmente não significam nada. Só alguém que reúne todas as partes pode lançar ou aprender quaisquer rotes, mesmo que uma parte parece conter rotes dentro de si. Usar as peças em conjunto requer Escrutínio com Visão de Mago Focado; adicione a Potência do feitiço à Opacidade do Mistério. Por padrão, o Grimoire pode ser dividido em vários pedaços iguais à potência do feitiço. Mages usa o Attainment Duração Condicional para especificar um ritual para executar, um quebra-cabeça para resolver, ou um jogo para ganhar que termina o feitiço e remonta o Grimoire.",
     "sourceId": "mta-signs",
@@ -6389,9 +6389,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Total de pontos Arcanum utilizados na rotação + 1",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Como \"Scribe Grimoire\", este feitiço dá forma física aos símbolos de uma única rotação. Um mago pode lançá - lo várias vezes para encher um vaso com muitas rotações. Ela faz isso usando um Grimoire previamente escrito com seu conteúdo apagado, esfregado, rabiscado, pintado sobre, ou de outra forma feito ilegível. O contador de histórias escolhe um Arcanum quando o personagem lança este feitiço. Sempre que um personagem mais tarde lança o rote do Grimoire completo, ele age como se incorporasse pontos do Arcanum escolhido igual à potência deste feitiço, criando efeitos misturados imprevisíveis. Se o contador de histórias escolheu um Arcanum já incluído no rote, conceda ao elenco um Reach livre em vez disso. Rotes aprendeu com Experiences de um palimpsest carregam estes efeitos Arcana extra com eles.",
     "sourceId": "mta-signs",
@@ -6410,9 +6410,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Total de pontos Arcanum utilizados na rotação",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Expressão",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "Escribar um Grimoire Astral é muito parecido com escribar um Grimoire terrestre, exceto que o vaso que detém os símbolos existe apenas nos Oneiros do sujeito. Um sujeito acordado pode lançar os rotes do Grimoire sem ter que meditar no Astral, mas se ela fizer o elenco com a representação Astral do Grimoire na mão, ele concede um bônus de dois-moedas Equipamentos para todos os rolos de fundição. Invocar o Goetia que representa o Grimoire tem o mesmo efeito.",
     "sourceId": "mta-signs",
@@ -6431,9 +6431,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Total de pontos Arcanum utilizados na rotação e na resistência",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Medicamento",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago escriba uma única rota por lançamento deste feitiço em um ser vivo, seja de memória ou copiado de outro Grimoire. Os símbolos poderiam ser representados como tatuagens que cobriam o corpo, marcas queimadas em carne, runas esculpidas em ossos a serem descobertas após a morte, ou qualquer outro método que o mago idealiza",
     "sourceId": "mta-signs",
@@ -6452,9 +6452,9 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potência",
     "withstand": "Total de pontos Arcanum utilizados na rotação e classificação",
     "roteSkills": [
-      "Artesanato",
+      "Ofícios",
       "Intimidação",
-      "Oculto"
+      "Ocultismo"
     ],
     "description": "O mago liga um espírito a um Grimoire, escrevendo sua Essência no Padrão do vaso. Ao contrário de um fetiche, um Grimoire assombrado não hospeda a Numina do espírito ou influências, nem tem uma piscina Essence. Em vez disso, o espírito é uma parte das palavras e runas, presos dentro dos símbolos Supernais. O Grimoire ganha as Condições Ressonantes e Abertas para esse espírito, que é um efeito duradouro do feitiço até resolvido como de costume. Sempre que alguém lança um rote do Grimoire, ela automaticamente aumenta o fator principal do rote pelo rank do espírito em vez de pela sua própria classificação Arcanum menos um, mas o espírito tem a chance de escapar montando Mana do navio para o mundo. Ele roda seu Power + Finesse em um confronto de vontades contra o lançador. Se o espírito tiver sucesso, o feitiço termina, e o espírito é liberado no Twilight, embora vários espíritos possam ser presos em um Grimoire com peças separadas desse feitiço. Sempre que alguém memoriza um rote do Grimoire, o espírito tem uma oportunidade de possuí-la, novamente Rolling Power + Finesse em um Clash of Wills. O mago aprende a rotação independentemente, mas se o espírito for bem sucedido, transfere as Condições Ressonantes e Abertas do Grimoire para o mago e pode usar imediatamente a Manifestação de Posse, mesmo que",
     "sourceId": "mta-signs",
@@ -6476,7 +6476,7 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidação",
       "Política"
     ],
-    "description": "O mago acende seu Nimbus Imediato para imprimir sua assinatura sobre um assunto — uma pessoa, lugar, objeto ou fenômeno — mais fortemente do que o normal. A assinatura reflete seu nome de sombra e dura para a duração do feitiço. Qualquer pessoa que usa Focused Mage Sight para estudar sua assinatura Nimbus sobre o assunto não só pode sentir os detalhes do Nimbus, mas ver uma visão idealizada da identidade Supernal do elenco. Ver essa visão move qualquer impressão que o espectador teve do mago para cima um nível no gráfico de Manobras Sociais, a menos que o espectador tenha sucesso em um rolo de Resolução + Compostura, penalizado pela Potência deste feitiço. Sustentar Nimbus (Primo • • + Tempo •) Prática: Governar Fator Primário: Duração Habilidades Rotas Sugeridas: Expressão, Investigação, Sobrevivência O mago lança este feitiço em uma assinatura Nimbus que ele estudou com Focused Mage Sight. Em vez de desaparecer ao seu ritmo habitual, o Nimbus persiste durante a duração deste feitiço. Após o feitiço expirar, o Nimbus volta a desaparecer à sua taxa habitual. Mages usa este feitiço em conjunto com \"Invocação Temporal\" (Mage: The Awakening Second Edition , pp. 189-190) para restaurar um feitiço sujeito a um estado anterior antes de sua assinatura Nimbus desbotado e, em seguida, manter o Nimbus de fazê-lo.",
+    "description": "O mago acende seu Nimbus Imediato para imprimir sua assinatura sobre um assunto — uma pessoa, lugar, objeto ou fenômeno — mais fortemente do que o normal. A assinatura reflete seu nome de sombra e dura para a duração do feitiço. Qualquer pessoa que usa Focused Mage Sight para estudar sua assinatura Nimbus sobre o assunto não só pode sentir os detalhes do Nimbus, mas ver uma visão idealizada da identidade Supernal do elenco. Ver essa visão move qualquer impressão que o espectador teve do mago para cima um nível no gráfico de Manobras Sociais, a menos que o espectador tenha sucesso em Perseverança + Compostura, penalizado pela Potência deste feitiço. Sustentar Nimbus (Primo • • + Tempo •) Prática: Governar Fator Primário: Duração Habilidades Rotas Sugeridas: Expressão, Investigação, Sobrevivência O mago lança este feitiço em uma assinatura Nimbus que ele estudou com Focused Mage Sight. Em vez de desaparecer ao seu ritmo habitual, o Nimbus persiste durante a duração deste feitiço. Após o feitiço expirar, o Nimbus volta a desaparecer à sua taxa habitual. Mages usa este feitiço em conjunto com \"Invocação Temporal\" (Mage: The Awakening Second Edition , pp. 189-190) para restaurar um feitiço sujeito a um estado anterior antes de sua assinatura Nimbus desbotado e, em seguida, manter o Nimbus de fazê-lo.",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
     "page": 94
@@ -6494,9 +6494,9 @@ export const SPELLS: SpellDefinition[] = [
     "roteSkills": [
       "Empatia",
       "Investigação",
-      "Oculto"
+      "Ocultismo"
     ],
-    "description": "O Willworker pode sintonizar mais atentamente qualquer assinatura Nimbus que ele escrutina com Focused Mage Sight. Para cada nível de potência, ele aprende uma das seguintes informações adicionais sobre o proprietário do Nimbus: • Gnosis • Sabedoria • Virtude ou Vício • Um Ato de Hubris que resultou da magia que deixou o Nimbus para trás • Uma Obsessão relacionada com a magia que deixou o Nimbus para trás • Se a magia resultou em Paradox e se foi contido ou liberado Unnaming (Espaço • • • • • • • •) Prática: Unmaking Primary Factor: Duration Withstand: Composure Sugestãod Rote Skills: Empatia, Expressão, Oculto O mago apaga o nome simpático do sujeito da existência. O nome excisado é imediatamente substituído por um que corresponde ao que a maioria dos dorminhocos usaria para se referir a ela. Todas as conexões simpáticas que o sujeito teve com base na identidade ou nome deixam de existir também. Quem tenta lançar ao alcance simpático sobre o assunto leva a pena por não ter um nome simpático até que ela aprenda o novo. Adicionar Prime •••••: O feitiço pode apagar o nome de sombra de um sujeito acordado e Nimbus em vez disso. O Nome da Sombra não é substituído imediatamente; o sujeito precisa reconstruir uma nova identidade Supernal do zero. O jogador do sujeito deve formar um novo Nimbus para o personagem e",
+    "description": "O Willworker pode sintonizar mais atentamente qualquer assinatura Nimbus que ele escrutina com Focused Mage Sight. Para cada nível de potência, ele aprende uma das seguintes informações adicionais sobre o proprietário do Nimbus: • Gnosis • Sabedoria • Virtude ou Vício • Um Ato de Hubris que resultou da magia que deixou o Nimbus para trás • Uma Obsessão relacionada com a magia que deixou o Nimbus para trás • Se a magia resultou em Paradox e se foi contido ou liberado Unnaming (Espaço • • • • • • • •) Prática: Unmaking Primary Factor: Duration Withstand: Composure Sugestãod Rote Skills: Empatia, Expressão, Ocultismo O mago apaga o nome simpático do sujeito da existência. O nome excisado é imediatamente substituído por um que corresponde ao que a maioria dos dorminhocos usaria para se referir a ela. Todas as conexões simpáticas que o sujeito teve com base na identidade ou nome deixam de existir também. Quem tenta lançar ao alcance simpático sobre o assunto leva a pena por não ter um nome simpático até que ela aprenda o novo. Adicionar Prime •••••: O feitiço pode apagar o nome de sombra de um sujeito acordado e Nimbus em vez disso. O Nome da Sombra não é substituído imediatamente; o sujeito precisa reconstruir uma nova identidade Supernal do zero. O jogador do sujeito deve formar um novo Nimbus para o personagem e",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
     "page": 95
@@ -6534,7 +6534,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "",
     "roteSkills": [
       "Investigação",
-      "Oculto",
+      "Ocultismo",
       "Empatia"
     ],
     "description": "Normalmente lançado em preparação antes de \"Postcognition\" ou magia semelhante, este feitiço básico avalia a linha do tempo do sujeito, revelando sua idade exata. Isso é revelado como o comprimento da linha do tempo que o sujeito experimentou no Mundo Caído, não uma data, o que significa que os sujeitos que viajaram no tempo podem produzir resultados confusos. O lançador também pode buscar o tempo decorrido desde um evento especificado em que o sujeito estava presente, caso em que o feitiço se torna resistido pela simpatia temporal do sujeito a esse evento.",
@@ -6554,7 +6554,7 @@ export const SPELLS: SpellDefinition[] = [
     "withstand": "Compaixão temporal (Conexão)",
     "roteSkills": [
       "Acadêmicos",
-      "Oculto",
+      "Ocultismo",
       "Subterfúgio"
     ],
     "description": "O mago agarra a simpatia temporal do sujeito em um ponto desejado e o destrói, criando uma lacuna e impedindo para sempre o uso da simpatia temporal para acessar qualquer coisa além dela. O feitiço é resistido pelo nível de conexão do ponto que agora será a lacuna, e o efeito é a duração. Memórias de Partilha Como adição às opções de Trincheira listadas para \"Leia as Profundidades\" (Mage, p. 162), para +1 Alcançar um mago pode copiar uma de suas próprias memórias ou uma de um segundo sujeito para a mente do primeiro sujeito sem escondê-la como uma das próprias do sujeito ou alterar as suas existentes. O resultado não é natural para o sujeito e é obviamente mágico quando lançado em um Sleeper. Historiadores do Pentacle da linha do tempo dividem a história humana em três épocas amplas, ou Yuga, dependendo da existência do diamante ou Pentacle, e subdividem aqueles em 12 idades ou períodos principais, com 11 eventos históricos que marcam as mudanças entre eles. As idades são termos acadêmicos aplicados com retrospectiva — ninguém acordou em 1101 e declarou que agora viviam na Era Dracônica, mas em 1150 o Diamante reconheceu a diferença. Da mesma forma, os eventos utilizados como pontos marcadores entre as idades não são sem controvérsia e discordância entre especialistas, alguns tanto que as datas alternadas são utilizadas por diffe",
@@ -6573,7 +6573,7 @@ const PRACTICE_TRANSLATIONS: Record<string,string> = {
   "Padronização":"Padronizar", "Patterning":"Padronizar", "Fazendo":"Criar", "Making":"Criar", "Desfazendo":"Destruir", "Unmaking":"Destruir"
 };
 const TRAIT_TRANSLATIONS: Record<string,string> = {
-  Academics:"Erudição", AnimalKen:"Empatia com Animais", Athletics:"Esportes", Brawl:"Briga", Crafts:"Ofícios", Drive:"Condução", Firearms:"Armas de Fogo", Investigation:"Investigação", Larceny:"Furto", Medicine:"Medicina", Occult:"Ocultismo", Persuasion:"Persuasão", Politics:"Política", Science:"Ciência", Socialize:"Socialização", Stealth:"Furtividade", Streetwise:"Manha", Subterfuge:"Dissimulação", Survival:"Sobrevivência", Weaponry:"Armas Brancas", Expression:"Expressão", Empathy:"Empatia", Intimidation:"Intimidação", Resolve:"Perseverança", Composure:"Autocontrole", Stamina:"Vigor"
+  Academics:"Erudição", AnimalKen:"Empatia com Animais", Athletics:"Atletismo", Brawl:"Briga", Crafts:"Ofícios", Drive:"Condução", Firearms:"Armas de Fogo", Investigation:"Investigação", Larceny:"Furto", Medicine:"Medicina", Occult:"Ocultismo", Persuasion:"Persuasão", Politics:"Política", Science:"Ciência", Socialize:"Socialização", Stealth:"Furtividade", Streetwise:"Manha", Subterfuge:"Subterfúgio", Survival:"Sobrevivência", Weaponry:"Armas Brancas", Expression:"Expressão", Empathy:"Empatia", Intimidation:"Intimidação", Perseverança:"Perseverança", Composure:"Compostura", Stamina:"Vigor"
 };
 export const SPELL_NAME_CORRECTIONS: Record<string,{originalName:string;name:string}> = {
   "Initiate of Death Ectoplasmic Shaping": {originalName:"Ectoplasmic Shaping",name:"Moldagem Ectoplásmica"},

@@ -2977,7 +2977,7 @@ export const CONTRACTS: ContractDefinition[] = [
     regalia: "Goblin",
     goblin: true,
     cost: "2 Glamour",
-    dicePool: "Manipulação + Dissimulação + Fado vs. Autocontrole + Fado",
+    dicePool: "Manipulação + Subterfúgio + Fado vs. Compostura + Fado",
     action: "Disputada",
     duration: "Instantânea",
     description:
@@ -3001,7 +3001,7 @@ export const CONTRACTS: ContractDefinition[] = [
     action: "Instantânea",
     duration: "Instantânea",
     description:
-      "Permite contar perfeitamente uma mentira a um mortal, que acredita nela enquanto não for demonstravelmente falsa. Contra alvos sobrenaturais, adiciona Fado aos testes de Dissimulação, até +5.",
+      "Permite contar perfeitamente uma mentira a um mortal, que acredita nela enquanto não for demonstravelmente falsa. Contra alvos sobrenaturais, adiciona Fado aos testes de Subterfúgio, até +5.",
     loophole:
       "Na mesma cena, o changeling conta a outro alvo uma mentira que prejudica alguém.",
     goblinDebt: "Uma invocação bem-sucedida gera 1 ponto de Débito Goblin.",

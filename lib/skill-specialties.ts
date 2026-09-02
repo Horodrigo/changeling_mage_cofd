@@ -7,7 +7,7 @@ export const SKILL_SPECIALTY_SUGGESTIONS:Record<string,string[]>={
   "Ocultismo":["Crenças Culturais","Fantasmas","Folclore","Magia","Monstros","Fenômenos Psíquicos","Superstições","Lendas Urbanas","Bruxaria"],
   "Política":["Suborno","Burocracia","Eleições","Política Local","Política Nacional","Escândalos","Partido Político"],
   "Ciência":["Biologia","Química","Genética","Geologia","Metalurgia","Óptica","Física de Partículas"],
-  "Esportes":["Acrobacia","Basquete","Escalada","Caiaque","Corrida de Longa Distância","Corrida de Velocidade","Natação","Arremesso"],
+  "Atletismo":["Acrobacia","Basquete","Escalada","Caiaque","Corrida de Longa Distância","Corrida de Velocidade","Natação","Arremesso"],
   "Briga":["Bloqueio","Boxe","Golpes Sujos","Agarramento","Kung Fu","Muay Thai","Projeções"],
   "Condução":["Evasão","Carros de Alto Desempenho","Motocicletas","Fora de Estrada","Pilotagem","Perseguição","Corrida","Manobras"],
   "Armas de Fogo":["Fogo Automático","Arco","Saque Rápido","Pistolas","Rifles","Espingardas","Tiro de Precisão","Tiro Acrobático"],
@@ -22,5 +22,5 @@ export const SKILL_SPECIALTY_SUGGESTIONS:Record<string,string[]>={
   "Persuasão":["Lábia","Inspirar","Argumentos de Venda","Discursos Motivacionais","Sedução","Sermões"],
   "Socialização":["Bares","Bailes de Gala","Festas Universitárias","Eventos Formais","Arrecadações Políticas","Clubes Privados"],
   "Manha":["Mercado Negro","Gangues","Navegação Urbana","Rumores","Operações Infiltradas"],
-  "Dissimulação":["Golpes","Detectar Mentiras","Significados Ocultos","Esconder Emoções","Mentir","Desorientação"]
+  "Subterfúgio":["Golpes","Detectar Mentiras","Significados Ocultos","Esconder Emoções","Mentir","Desorientação"]
 };

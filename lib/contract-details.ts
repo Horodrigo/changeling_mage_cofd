@@ -58,7 +58,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 129
   },
   "ctl-2ed:tumult": {
-    "dicePool": "Presença + Empatia + Fado − Resolver",
+    "dicePool": "Presença + Empatia + Fado − Perseverança",
     "loophole": "Changeling plantou um pássaro de origami na pessoa do alvo nesta cena.",
     "seemingBenefits": {
       "Fairest": "The Fairest adiciona estas condições à lista: Inspirado, Swooned, Wanton.",
@@ -100,7 +100,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 130
   },
   "ctl-2ed:pipes-of-the-beastcaller": {
-    "dicePool": "Manipulação + Conhecimento Animal + Fado vs. Determinação + Compostura",
+    "dicePool": "Manipulação + Conhecimento Animal + Fado vs. Perseverança + Compostura",
     "loophole": "Enquanto toca flauta, o changeling faz uma dancinha que imita os movimentos dos animais que deseja invocar.",
     "seemingBenefits": {
       "Beast": "O Grim ganha uma ligação empática com os animais que comanda, permitindo-lhe dar-lhes instruções novas ou adicionais à distância. Ele também está ciente de sua condição física geral e localização em relação à sua.",
@@ -128,7 +128,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 131
   },
   "ctl-2ed:spinning-wheel": {
-    "dicePool": "Inteligência + Ocultismo + Fado - Resolução",
+    "dicePool": "Inteligência + Ocultismo + Fado - Perseverança",
     "loophole": "Changeling pica o alvo com uma agulha ou um pino, extraindo pelo menos uma gota de sangue. Tirar uma gota de sangue de um alvo disposto não causa danos.",
     "seemingBenefits": {
       "Fairest": "A Musa ganha três dados de bônus para invocar este Contrato ao encorajar uma experiência positiva. Ele próprio ganha a Condição Inspirada referente às ações que apoiam o evento que está acontecendo.",
@@ -148,7 +148,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Fairest": "A Belíssima também pode aplicar os efeitos deste Contrato aos testes de Expressão, Persuasão ou Socialização de outra pessoa.",
       "Wizened": "Um objeto abençoado retém o bônus de todos os testes feitos para usá-lo na cena.",
       "Beast": "Uma Besta também pode aplicar os efeitos deste Contrato às jogadas de Atletismo, Briga ou Sobrevivência de outro personagem.",
-      "Darkling": "Um Trevoso também pode aplicar os efeitos deste Contrato aos testes de Furto, Furtividade ou Lábia de outro.",
+      "Darkling": "Um Trevoso também pode aplicar os efeitos deste Contrato aos testes de Furto, Furtividade ou Subterfúgio de outro.",
       "Elemental": "A habilidade abençoada de um Elemental mantém o bônus para todos os testes da cena.",
       "Ogre": "Um Ogro dobra seu Fado se usar este Contrato em uma Arma, até um máximo de +5."
     },
@@ -156,7 +156,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 132
   },
   "ctl-2ed:changing-fortunes": {
-    "dicePool": "Raciocínio + Ocultismo + Fado - Determinação",
+    "dicePool": "Raciocínio + Ocultismo + Fado - Perseverança",
     "loophole": "O changeling falhou dramaticamente em uma de suas próprias ações nesta cena. Ela também pode invocar este Contrato e falhar dramaticamente em uma ação posterior na mesma cena para recuperar o Glamour que gastou nele.",
     "seemingBenefits": {
       "Ogre": "O alvo sofre a Condição Abalado sempre que usar a parada de dados amaldiçoada, até o próximo sol cruzar o horizonte. O efeito inicial ainda se aplica apenas uma vez.",
@@ -206,7 +206,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "O Grim pode usar este Contrato em um animal, embora não possa obrigá-lo a se comportar de maneira diferente do que normalmente faria.",
       "Elemental": "O Elemental ganha +3 em qualquer ação Social à qual o item possa se aplicar, mas apenas se ele fizer com que pareça algo natural (ou seja, não feito pelo homem).",
       "Fairest": "O objeto do Fairest resistirá à inspeção mesmo usando ferramentas sofisticadas, como câmeras, raios-X, etc.",
-      "Ogre": "Seres normalmente imunes à Máscara devem se envolver em um Choque de Vontades para ver através deste efeito."
+      "Ogre": "Seres normalmente imunes à Máscara devem se envolver em um Confronto de Vontades para ver através deste efeito."
     },
     "source": "Changeling the Lost",
     "page": 133
@@ -231,7 +231,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "seemingBenefits": {
       "Beast": "A Besta imbui o dispositivo com inteligência animal, permitindo que ela dê comandos múltiplos ou mais complexos para seguir. Por exemplo, ela poderia atirar em qualquer pessoa vestindo uma jaqueta vermelha, em vez de atirar às cegas.",
       "Wizened": "O Astuto pode obrigar o dispositivo a sair de sua faixa normal de operação. Em vez de permanecer onde está, a arma pode se mover no ar para atingir os oponentes. O changeling decide onde e como o objeto se move a cada turno, com uma Velocidade igual à sua Fado, mas o Contrato termina se o objeto sair do alcance.",
-      "Darkling": "O Wisp pode tornar o dispositivo invisível até interagir com algo ou alguém, mas isso provoca um Choque de Vontades com personagens que conseguem ver através das ilusões.",
+      "Darkling": "O Wisp pode tornar o dispositivo invisível até interagir com algo ou alguém, mas isso provoca um Confronto de Vontades com personagens que conseguem ver através das ilusões.",
       "Elemental": "Uma vez por cena, o dispositivo pode produzir o elemento preferido do Elemental como uma ação reflexiva, o suficiente para preencher um metro quadrado.",
       "Fairest": "A Belíssima não precisa ter sucesso excepcional para pegar o dispositivo como Retentor, mas ela deve comprá-lo por no mínimo dois pontos.",
       "Ogre": "O Ogro aplica seus pontos de Força como penalidade em quaisquer testes feitos para mudar o curso de ação do dispositivo."
@@ -243,7 +243,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "O changeling faz uma demonstração de procura pelo recurso - virando uma caixa em suas mãos e pressionando partes aleatórias dela, antes de \"encontrar\" o compartimento secreto - e expressa surpresa quando o encontra. Isso faz com que a invocação demore um minuto inteiro.",
     "seemingBenefits": {
-      "Fairest": "Em vez disso, o Soberano tem como alvo uma pessoa em sua vizinhança, alterando sua Virtude ou Vício (ou âncora equivalente). Isso requer um teste de Manipulação + Lábia + Fado, contestado pela Perseverança + Fado do alvo.",
+      "Fairest": "Em vez disso, o Soberano tem como alvo uma pessoa em sua vizinhança, alterando sua Virtude ou Vício (ou âncora equivalente). Isso requer um teste de Manipulação + Subterfúgio + Fado, contestado pela Perseverança + Fado do alvo.",
       "Wizened": "Um Chapeleiro pode pagar um ponto adicional de Glamour para criar objetos totalmente novos que possam ser razoavelmente encontrados na área, como um molho de chaves em uma mesa próxima ou um carro estacionado na garagem.",
       "Beast": "A Besta pode aplicar este contrato a formas de vida simples, como plantas e insetos.",
       "Darkling": "A mudança do Trevoso é assustadora, impondo a Condição Abalado a qualquer um que se deparar com ela.",
@@ -439,7 +439,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "O personagem desafia um oponente para um duelo imediato.",
     "seemingBenefits": {
-      "Elemental": "A Elemental é desumanamente persistente, adicionando também seu nível de Determinação à sua Iniciativa e Velocidade.",
+      "Elemental": "A Elemental é desumanamente persistente, adicionando também seu nível de Perseverança à sua Iniciativa e Velocidade.",
       "Ogre": "A pele do Ogro fica dura como pedra ou dura como couro; qualquer arma mundana que a atingir sofre seu nível de Vigor como pontos de dano, sujeito à Durabilidade.",
       "Beast": "A Fera adiciona metade de seus pontos de Atletismo (arredondado para cima) a qualquer dano que ela infligir por Esquiva.",
       "Darkling": "O Trevoso fica invisível por um turno completo se obtiver sucesso excepcional em Esquiva.",
@@ -486,13 +486,13 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta marca a ilusão com um sinal de perigo, infligindo a Condição Abalado a qualquer um que tente investigar.",
       "Darkling": "O Trevoso não precisa se mover pela passagem para usar este efeito.",
       "Elemental": "O Elemental não precisa gastar Força de Vontade para prolongar a duração deste Contrato.",
-      "Fairest": "A ilusão da Belíssima é particularmente bem feita, infligindo -3 em qualquer ação ou Choque de Vontades destinada a revelar sua natureza."
+      "Fairest": "A ilusão da Belíssima é particularmente bem feita, infligindo -3 em qualquer ação ou Confronto de Vontades destinada a revelar sua natureza."
     },
     "source": "Changeling the Lost",
     "page": 142
   },
   "ctl-2ed:fortifying-presence": {
-    "dicePool": "Presença + Empatia + Fado vs. Determinação + Fado",
+    "dicePool": "Presença + Empatia + Fado vs. Perseverança + Fado",
     "loophole": "O changeling professa amizade com o alvo na frente de múltiplas testemunhas enquanto invoca este Contrato. Ela não precisa fazer um juramento, nem mesmo ser sincero, embora ela ainda corra o risco de que a Fado acredite em sua palavra.",
     "seemingBenefits": {
       "Fairest": "O alvo ganha Defesa igual ao nível de Presença da Musa contra o próximo ataque de Lucidez que sofrer durante a história atual.",
@@ -513,14 +513,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Ogre": "Hedgewall dura até o próximo sol passar no horizonte.",
       "Darkling": "O Trevoso pode usar pequenas ilusões nas paredes para manter os intrusos fora da base. Eles não podem machucar ninguém fisicamente, mas aplicam seu Fado como penalidade em escaladas e ações que exigem concentração.",
       "Elemental": "O Elemental pode gastar um ponto de Força de Vontade para invocar o sucesso excepcional deste Contrato.",
-      "Fairest": "O castelo da Belíssima é transcendentalmente esplêndido, e mesmo inimigos terríveis terão dificuldade em desviar o olhar de suas delícias. Todos os intrusos sofrem -2 em Autocontrole.",
+      "Fairest": "O castelo da Belíssima é transcendentalmente esplêndido, e mesmo inimigos terríveis terão dificuldade em desviar o olhar de suas delícias. Todos os intrusos sofrem -2 em Compostura.",
       "Wizened": "O Mirrado pode criar sentinelas inanimadas ao redor de seu castelo e pode passar um turno se concentrando como uma ação instantânea para olhar através de uma delas."
     },
     "source": "Changeling the Lost",
     "page": 142
   },
   "ctl-2ed:pure-clarity": {
-    "dicePool": "Determinação + Compostura + Fado",
+    "dicePool": "Perseverança + Compostura + Fado",
     "loophole": "O changeling veste uma manopla de metal por um lado e uma luva de seda por outro, ao invocar este Contrato. A manopla não precisa ser autêntica – um adereço de fantasia é suficiente, desde que seja feito de metal real.",
     "seemingBenefits": {
       "Fairest": "A Belíssima supera suas circunstâncias e pode invocar este Contrato para se proteger de situações que lhe são infligidas.",
@@ -595,7 +595,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "seemingBenefits": {
       "Beast": "A Besta permite que as pessoas que viajam com ele se beneficiem deste Contrato, até o dobro de sua classificação de Furtividade em companheiros. Ele ainda precisa invocar o Contrato apenas uma vez.",
       "Wizened": "Os passos do Domovoi deixam armadilhas em seu rastro, de acordo com a Qualidade Lugar Seguro (pág. 125) com pontos efetivos iguais à sua Destreza.",
-      "Darkling": "O Trevoso recebe +3 em qualquer teste de Choque de Vontades feito contra este efeito.",
+      "Darkling": "O Trevoso recebe +3 em qualquer teste de Confronto de Vontades feito contra este efeito.",
       "Elemental": "O Elemental pode criar uma trilha falsa em algum lugar próximo gastando um Glamour adicional.",
       "Fairest": "A Belíssima pode criar uma distração natural para deslumbrar qualquer perseguidor que esteja procurando especificamente por ela, como um lindo canteiro de flores. Eles devem estudá-lo por pelo menos um minuto ou gastar um ponto de Força de Vontade.",
       "Ogre": "Em vez de não deixar rastros, o Ogro pode criar um caminho definido que garanta segurança, adicionando +2 à Defesa de qualquer aliado enquanto segue seu rastro."
@@ -660,7 +660,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 146
   },
   "ctl-2ed:leaping-toward-nightfall": {
-    "dicePool": "Inteligência + Ocultismo + Fado vs. Determinação + Fado",
+    "dicePool": "Inteligência + Ocultismo + Fado vs. Perseverança + Fado",
     "loophole": "O changeling destrói um pedaço do alvo, como um cabelo, uma unha ou fluido corporal; um ícone; ou algo dos sonhos do alvo.",
     "seemingBenefits": {
       "Beast": "A Besta pode permitir que a devastação do tempo atinja alvos sencientes, infligindo a Condição Desorientada. O alvo deve encontrar um aliado para resolvê-lo (os pontos de referência não ajudam) ou deixá-lo desaparecer sem resolução no final da cena em que ele chega.",
@@ -691,7 +691,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "O changeling come um pedaço de pelo, uma garra ou outra parte de um animal que deseja imitar.",
     "seemingBenefits": {
-      "Beast": "O Courser não se cansa, imune a qualquer tipo de fadiga mundana. Poderes sobrenaturais que o deixam cansado desencadeiam um Choque de Vontades.",
+      "Beast": "O Courser não se cansa, imune a qualquer tipo de fadiga mundana. Poderes sobrenaturais que o deixam cansado desencadeiam um Confronto de Vontades.",
       "Darkling": "Um Trevoso pode adicionar presas ou garras venenosas à sua transformação para obter um ponto extra de Glamour. Fora das cenas de ação, este veneno tem Toxicidade igual ao seu Fado e causa dano uma vez por hora, por um número de horas igual a (seis - o Vigor do alvo) horas. No tempo de ação, um ataque bem-sucedido inflige o grave Poisoned Tilt em seu alvo. O veneno permanece em vigor mesmo após o término do Contrato.",
       "Elemental": "O Elemental ganha um efeito adicional para escolher: Ele pode assumir a mente de uma fera, ganhando a qualidade Ação Avançada em testes de Furtividade e Sobrevivência.",
       "Fairest": "O Soberano ganha um efeito adicional para escolher: Ele pode assumir a graça de uma fera, calculando a Defesa com o maior valor entre Destreza ou Raciocínio.",
@@ -710,7 +710,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "A Besta ganha um +4 em vez de +2 em All-Out Attacks ao usar esta arma.",
       "Fairest": "O Fairest pode usar os sucessos de seu jogador de forma mais eficiente, ganhando dois benefícios para cada sucesso se ela gastar um Glamour adicional ao ativar este Contrato.",
       "Ogre": "O Ogre ganha +3 Defesa enquanto empunha esta arma.",
-      "Wizened": "O Mirrado pode invocar este Contrato com Artesanato."
+      "Wizened": "O Mirrado pode invocar este Contrato com Ofícios."
     },
     "source": "Changeling the Lost",
     "page": 147
@@ -821,14 +821,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Elemental": "O Elemental pode se esconder dos raios solares enquanto cruza o horizonte, gastando um ponto de Glamour para prolongar a Perseguição Implacável e ganhar um modificador de +1 nas jogadas que seu jogador fizer para a perseguição. Ela pode repetir isso indefinidamente, mas seu modificador de perseguição não aumenta além de +5.",
       "Darkling": "O Trevoso pode gastar um Glamour para ganhar Observador Treinado 1 enquanto durar, mas apenas quando se trata de perceber sua presa. Se ela já tiver a versão de três pontos, ela ganha a qualidade mecânica em Percepção.",
       "Fairest": "O Mais Justo ganha a qualidade 9 novamente e o alvo perde a qualidade 10 novamente em qualquer ação mundana contestada para se engajar na perseguição (por exemplo, uma Perseguição).",
-      "Ogre": "O Ogro pode conceder uma bênção a um aliado desaparecido que ele está rastreando, concedendo +2 a todas as ações de Determinação e/ou Autocontrole enquanto durar.",
+      "Ogre": "O Ogro pode conceder uma bênção a um aliado desaparecido que ele está rastreando, concedendo +2 a todas as ações de Perseverança e/ou Compostura enquanto durar.",
       "Wizened": "O Mirrado sabe a distância exata de sua localização até a de seu alvo."
     },
     "source": "Changeling the Lost",
     "page": 150
   },
   "ctl-2ed:thief-of-reason": {
-    "dicePool": "Presença + Subterfúgio + Fado - Determinação",
+    "dicePool": "Presença + Subterfúgio + Fado - Perseverança",
     "loophole": "Changeling convenceu o sujeito a fazer uma declaração duvidando de sua própria sanidade, dentro desta cena. Esta declaração funciona mesmo se ela foi feita em hipérbole ou brincadeira, como \"meu chefe está me deixando louco!\"",
     "seemingBenefits": {
       "Elemental": "Os sucessos obtidos no ataque de Lucidez são adicionados ao Fado do changeling para fins de determinar a reserva de dano de Lucidez.",
@@ -947,7 +947,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 155
   },
   "ctl-2ed:fiery-tongue": {
-    "dicePool": "Presença + Intimidação + Manto − Determinação",
+    "dicePool": "Presença + Intimidação + Manto − Perseverança",
     "loophole": "O changeling afirma verbalmente o domínio sobre seu alvo. Ela pode invocar sua posição no tribunal superior, suas habilidades superiores em crochê ou sua primeira edição do romance Harper Lee, que ele não possui. O que quer que ela baseie sua afirmação deve ser verdade.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
@@ -1038,7 +1038,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 158
   },
   "ctl-2ed:sorcerers-rebuke": {
-    "dicePool": "Manipulação + Ocultismo + Manto – Resolução",
+    "dicePool": "Manipulação + Ocultismo + Manto – Perseverança",
     "loophole": "O changeling fez um grande discurso ou ameaça de pelo menos 30 segundos de duração, alertando o alvo sobre seu poder místico, no início desta cena. Ele não precisa ser específico sobre suas capacidades.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
@@ -1073,7 +1073,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 159
   },
   "ctl-2ed:slipknot-dreams": {
-    "dicePool": "Manipulação + Empatia + Manto vs. Determinação + Fado",
+    "dicePool": "Manipulação + Empatia + Manto vs. Perseverança + Fado",
     "loophole": "O alvo aceitou um presente valioso ou sentimental do changeling na cena.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
@@ -1094,14 +1094,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 160
   },
   "ctl-2ed:fallow-fields": {
-    "dicePool": "Manipulação + Empatia + Manto vs. Determinação + Fado",
+    "dicePool": "Manipulação + Empatia + Manto vs. Perseverança + Fado",
     "loophole": "O nome que o changeling anotou é uma das Pedras de Contato do alvo.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
     "page": 161
   },
   "ctl-2ed:field-of-regret": {
-    "dicePool": "Presença + Empatia + Manto − Determinação",
+    "dicePool": "Presença + Empatia + Manto − Perseverança",
     "loophole": "O changeling canta uma canção melancólica e deixa um fantasma possuí-la por pelo menos 10 segundos.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
@@ -1115,7 +1115,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 161
   },
   "ctl-2ed:winters-curse": {
-    "dicePool": "Presença + Sobrevivência + Manto vs. Determinação + Fado",
+    "dicePool": "Presença + Sobrevivência + Manto vs. Perseverança + Fado",
     "loophole": "Changeling engole um cubo de gelo inteiro logo antes de invocar este Contrato.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
@@ -1132,7 +1132,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 35
   },
   "ctl-kith-kin:sleeps-sweet-embrace": {
-    "dicePool": "Manipulação + Expressão + Fado - Resolução",
+    "dicePool": "Manipulação + Expressão + Fado - Perseverança",
     "loophole": "O changeling prepara um sonífero, leite morno, chá calmante ou qualquer outro remédio para dormir que envolva beber líquido, e ele convence ou força o alvo a beber tudo na mesma cena em que ele invoca o Contrato.",
     "seemingBenefits": {
       "Beast": "O Gárgula coloca seu alvo em uma hibernação mais profunda, sempre adicionando dois dias adicionais à sua duração.",
@@ -1175,14 +1175,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Presença + Socialização + Fado",
     "loophole": "Changeling cumprimenta todos os presentes na cena pelo nome com um gesto, como um aperto de mão ou um abraço, dentro da mesma cena; se não conhece o nome de alguém, deve aprendê-lo e utilizá-lo para invocar o Buraco.",
     "seemingBenefits": {
-      "Elemental": "A cornucópia do Unbound é anormalmente atraente; qualquer um que perceber isso deve contestar o teste de invocação com Autocontrole + Fado ou participar, quer queira ou não.",
+      "Elemental": "A cornucópia do Unbound é anormalmente atraente; qualquer um que perceber isso deve contestar o teste de invocação com Compostura + Fado ou participar, quer queira ou não.",
       "Ogre": "Aqueles que participam do banquete do Terrível ganham +1 em Defesa pelo resto do capítulo."
     },
     "source": "Kith and Kin",
     "page": 38
   },
   "ctl-kith-kin:still-waters-run-deep": {
-    "dicePool": "Manipulação + Subterfúgio + Fado – Resolução",
+    "dicePool": "Manipulação + Subterfúgio + Fado – Perseverança",
     "loophole": "Dentro da mesma cena, o changeling escreve pelo menos um parágrafo detalhando seu estado emocional atual, enfia o papel em uma garrafa e fecha a garrafa.",
     "seemingBenefits": {
       "Wizened": "O Chapeleiro pode escolher entre Condições emocionais ou Condições puramente mentais para suprimir, e pode misturá-las e combiná-las.",
@@ -1192,7 +1192,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 39
   },
   "ctl-kith-kin:poison-the-well": {
-    "dicePool": "Manipulação + Expressão + Fado vs. Resolução + Fado",
+    "dicePool": "Manipulação + Expressão + Fado vs. Perseverança + Fado",
     "loophole": "O changeling interage com o alvo da Mérito alvo dentro da mesma cena, semeando conflito ou sabotando um recurso pessoalmente.",
     "seemingBenefits": {
       "Fairest": "A Musa ganha acesso ao Mérito que ele desperdiçou durante a vigência do Contrato, transformando as conexões em seu próprio benefício.",
@@ -1205,14 +1205,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Presença + Ocultismo + Fado vs. Compostura + Fado",
     "loophole": "Changeling deve coletar sangue, um cabelo, uma unha cortada, ou alguma outra parte do corpo de cada participante durante a cena em que todos consomem a bebida ou refeição.",
     "seemingBenefits": {
-      "Darkling": "O Enfeitiçado pode pagar 1 de Glamour sempre que faria ou receberia um dos efeitos do vínculo para se separar dos outros, deixando de ativar o efeito compartilhado e excluindo-o de todos os efeitos passivos por alguns segundos (um turno em cenas de ação). Outros participantes podem sentir essa omissão com um teste bem-sucedido de Raciocínio + Autocontrole contestado pelo Raciocínio + Fado do Trevoso.",
+      "Darkling": "O Enfeitiçado pode pagar 1 de Glamour sempre que faria ou receberia um dos efeitos do vínculo para se separar dos outros, deixando de ativar o efeito compartilhado e excluindo-o de todos os efeitos passivos por alguns segundos (um turno em cenas de ação). Outros participantes podem sentir essa omissão com um teste bem-sucedido de Raciocínio + Compostura contestado pelo Raciocínio + Fado do Trevoso.",
       "Fairest": "A beneficência do Unicórnio enche os demais participantes de gratidão; todos eles sofrem a Condição de Desmaio em relação ao changeling após a invocação do Contrato."
     },
     "source": "Kith and Kin",
     "page": 39
   },
   "ctl-kith-kin:book-of-black-and-red": {
-    "dicePool": "Raciocínio + Acadêmicos + Fado vs. Determinação + Fado",
+    "dicePool": "Raciocínio + Acadêmicos + Fado vs. Perseverança + Fado",
     "loophole": "O alvo permitiu que o changeling examinasse seus registros ou contas durante a mesma cena.",
     "seemingBenefits": {
       "Darkling": "O Enfeitiçado pode escolher uma das dívidas que o alvo tem (além da Dívida Goblin ou obrigações de penhor) e tornar-se um intermediário; o alvo agora lhe deve a dívida, e ela deve a mesma ou equivalente ao credor original. A papelada e os registros mudam automaticamente para se ajustarem a esta nova realidade, mas porque a Fado se esforça para realizar esta mudança, ela observa o resultado mais de perto. Caso o changeling deixe de pagar sua nova dívida ou de outra forma quebre seu acordo, ele ganha a Condição de Quebrador de Juramento.",
@@ -1302,7 +1302,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 44
   },
   "ctl-kith-kin:thirty-pieces": {
-    "dicePool": "Raciocínio + Empatia + Fado vs. Determinação + Fado",
+    "dicePool": "Raciocínio + Empatia + Fado vs. Perseverança + Fado",
     "loophole": "O alvo aceitou o pagamento do metamorfo para trair seus companheiros durante a história atual, mesmo que eles não tinham intenção de realizá-lo.",
     "seemingBenefits": {
       "Darkling": "O alvo do Contrato fica isolado daqueles que traiu após cometer o ato escolhido; eles ganham a Condição de Notoriedade.",
@@ -1322,7 +1322,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 45
   },
   "ctl-kith-kin:jealous-vengeance": {
-    "dicePool": "Presença + Intimidação + Fado vs. Determinação + Fado",
+    "dicePool": "Presença + Intimidação + Fado vs. Perseverança + Fado",
     "loophole": "Você fez com que o alvo deste Contrato ganhasse a Condição Perjuro na cena atual, seja direta ou indiretamente.",
     "seemingBenefits": {
       "Elemental": "A ira da Torrente domina sua vítima, fazendo sua maldição durar; ela adiciona a Condição Mudo à lista de opções disponíveis e, se escolher Cego, será Persistente.",
@@ -1382,7 +1382,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 48
   },
   "ctl-kith-kin:curse-of-hidden-strings": {
-    "dicePool": "Manipulação + Furto + Fado vs. Determinação + Fado",
+    "dicePool": "Manipulação + Furto + Fado vs. Perseverança + Fado",
     "loophole": "O changeling quebra consciente e deliberadamente uma promessa ou acordo próprio dentro da mesma cena.",
     "seemingBenefits": {
       "Fairest": "A Musa pode ter como alvo vários personagens até seu Fado, desde que todos estejam vinculados à mesma obrigação, como um grupo inteiro ou vários funcionários da mesma empresa.",
@@ -1405,7 +1405,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "Changeling tem na mão um pedaço do seu alvo quando invoca este Contrato. Esta pode ser uma engrenagem do relógio do avô no corredor do seu alvo, ou um pedaço de tecido do casaco do inimigo.",
     "seemingBenefits": {
-      "Beast": "O Grim sente o cheiro de sua presa no ar. O jogador da Besta ganha +2 dados em um Choque de Vontades para descobrir um alvo oculto.",
+      "Beast": "O Grim sente o cheiro de sua presa no ar. O jogador da Besta ganha +2 dados em um Confronto de Vontades para descobrir um alvo oculto.",
       "Wizened": "O Chapeleiro já desenhou este mapa antes; ele sabe onde existem dragões e outros perigos. Seu jogador pode fazer uma pergunta ao Narrador sobre um oponente ou obstáculo que encontrará ao longo do caminho."
     },
     "source": "Kith and Kin",
@@ -1432,7 +1432,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 51
   },
   "ctl-kith-kin:retrograde": {
-    "dicePool": "Presença + Expressão + Fado vs. Determinação + Fado",
+    "dicePool": "Presença + Expressão + Fado vs. Perseverança + Fado",
     "loophole": "O changeling gira no sentido anti-horário enquanto conta a história.",
     "seemingBenefits": {
       "Darkling": "O Mountebank nomeia uma série de questões rotineiras específicas até sua classificação de Fado para dar errado para o alvo. Se o alvo mudar sua rotina e não realizar uma ação prevista pelo Trevoso, ele não sofrerá consequências adicionais. Por exemplo, se o changeling escolher “não consegue encontrar uma vaga para estacionar no trabalho”, mas o alvo não trabalhar em casa naquele dia, a escolha será desperdiçada.",
@@ -1442,7 +1442,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 51
   },
   "ctl-kith-kin:frozen-star": {
-    "dicePool": "Inteligência + (Empatia ou Persuasão) + Fado vs. Determinação + Fado",
+    "dicePool": "Inteligência + (Empatia ou Persuasão) + Fado vs. Perseverança + Fado",
     "loophole": "O changeling está em contato físico com um pedaço do alvo ou com o próprio alvo quando ele rastreia o alvo nas estrelas.",
     "seemingBenefits": {
       "Darkling": "O Contrato do Mountebank inflige a Condição Assustada, enchendo o alvo com uma sensação de destruição iminente e levando-o a alcançar o alvo o mais rápido possível.",
@@ -1462,7 +1462,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 52
   },
   "ctl-kith-kin:pinch-of-stardust": {
-    "dicePool": "Inteligência + Artesanato + Fado vs. Resolver + Fado",
+    "dicePool": "Inteligência + Ofícios + Fado vs. Perseverança + Fado",
     "loophole": "Changeling acrescenta algo de si mesmo ao hodgepodge da criatura de partes: uma mecha de cabelo, três gotas de sangue, recortes de unhas, etc. Espinho",
     "seemingBenefits": {
       "Darkling": "O Feiticeiro fez a orelha direita da criatura fora de uma lata e corda, e manteve a lata presa à outra extremidade. Quando o alvo sussurra um segredo à criatura, o Trevoso ouve-o.",
@@ -1472,7 +1472,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 53
   },
   "ctl-kith-kin:briars-herald": {
-    "dicePool": "Manipulação + Furto + Fado vs. Compostura +Fado",
+    "dicePool": "Manipulação + Furto + Fado vs. Compostura + Fado",
     "loophole": "Direta ou indiretamente, changeling causa um espinho, agulha, ou objeto pequeno semelhante, apontado para picar o alvo, desenhando pelo menos uma gota de sangue.",
     "seemingBenefits": {
       "Darkling": "Cada vez que a vítima falha em um teste, não importa a distância entre eles, o changeling pode sussurrar uma mensagem para ela com no máximo 37 palavras, e a vítima pode responder uma vez na mesma moeda. Somente esses dois ouvem as mensagens um do outro, mesmo que alguém esteja próximo deles quando sussurram.",
@@ -1486,7 +1486,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "Changeling prepara uma poção de hera venenosa, tritão e cardos dentro da mesma cena; ela olha para a poção, estendendo seus sentidos para a flora próxima.",
     "seemingBenefits": {
       "Beast": "Um primo selvagem, o Grim pode usar a planta que ela habita como uma arma natural. Estes ataques utilizam a Força da Besta + (Brawl ou Arma) e causam danos. Se a planta tiver espinhos ou agulhas, aumente os danos para letal. Estes ataques não levam a pena para perceber em dois lugares ao mesmo tempo, mas changeling pode ainda tomar apenas uma ação instantânea por turno.",
-      "Darkling": "O Feiticeiro pode ocupar um número de plantas até ou igual a sua Resolução simultaneamente; uma ação instantânea usada para mudar de uma planta para outra só muda uma dessas extensões simultâneas de cada vez. Assim, é preciso múltiplas ações para devolver completamente seus sentidos a si mesma, a menos que ela termine o contrato mais cedo."
+      "Darkling": "O Feiticeiro pode ocupar um número de plantas até ou igual a sua Perseverança simultaneamente; uma ação instantânea usada para mudar de uma planta para outra só muda uma dessas extensões simultâneas de cada vez. Assim, é preciso múltiplas ações para devolver completamente seus sentidos a si mesma, a menos que ela termine o contrato mais cedo."
     },
     "source": "Kith and Kin",
     "page": 55
@@ -1542,7 +1542,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 57
   },
   "ctl-kith-kin:crown-of-thorns": {
-    "dicePool": "Presença + Ocultismo + Fado vs. Determinação + Fado",
+    "dicePool": "Presença + Ocultismo + Fado vs. Perseverança + Fado",
     "loophole": "O changeling tece uma coroa de espinhos de videiras e galhos espinhosos e a coloca na cabeça do alvo na mesma cena.",
     "seemingBenefits": {
       "Beast": "A Besta envia pesadelos para atormentar o sono do alvo; eles perdem um ponto de Força de Vontade a cada noite em que permanecem dormindo e não podem recuperar Força de Vontade através do descanso até que a Condição resolva ou desapareça.",
@@ -1612,7 +1612,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 61
   },
   "ctl-kith-kin:cracked-mirror": {
-    "dicePool": "Manipulação + Larceneia + Fado vs. Stamina + Fado",
+    "dicePool": "Manipulação + Furto + Fado vs. Vigor + Fado",
     "loophole": null,
     "seemingBenefits": {},
     "source": "Kith and Kin",
@@ -1690,7 +1690,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 28
   },
   "ctl-oak-ash-thorn:principle": {
-    "dicePool": "Presença + Política + Manto vs. Determinação + Fado",
+    "dicePool": "Presença + Política + Manto vs. Perseverança + Fado",
     "loophole": null,
     "seemingBenefits": {},
     "source": "Oak, Ash, and Thorn",
@@ -1730,21 +1730,21 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "h-beyond-hedge:the-perfect-talent": {
     "dicePool": "Raciocínio + <Habilidade> + Fado",
-    "loophole": "Os mimos changelings uma ação que comumente usa a habilidade que ela está tentando aumentar.",
+    "loophole": "O changeling faz uma mímica de uma ação cuja habilidade ele está tentando aumentar.",
     "seemingBenefits": {
-      "Beast": "Os sentidos aguçados do Selvagem também concedem +1 à Habilidade de Investigação.",
-      "Darkling": "A natureza clandestina do Lurker também confere +1 à habilidade Furtividade.",
-      "Elemental": "A ferocidade do Torrent também confere +1 à habilidade Brawl.",
-      "Fairest": "O charme e a graça naturais da Belíssima também concedem +1 à Habilidade de Persuasão.",
-      "Ogre": "A tenacidade do Bruto também confere +1 à Habilidade de Sobrevivência.",
-      "Wizened": "As habilidades naturais do Tinker também conferem +1 à habilidade Crafts."
+      "Beast": "Os sentidos aguçados do Selvagem também concedem +1 de Investigação.",
+      "Darkling": "A natureza clandestina do Lurker também confere +1 de Furtividade.",
+      "Elemental": "A ferocidade do Torrent também confere +1 de Briga.",
+      "Fairest": "O charme e a graça naturais da Belíssima também concedem +1 de Persuasão.",
+      "Ogre": "A tenacidade do Bruto também confere +1 de Sobrevivência.",
+      "Wizened": "As habilidades naturais do Tinker também conferem +1 de Ofícios."
     },
     "source": "Beyond the Hedge",
     "page": 127
   },
   "h-beyond-hedge:babels-tower": {
     "dicePool": "Nenhum",
-    "loophole": "A personagem fala uma frase curta em latim-porco ou outra \"linguagem\" sem sentido, pedindo para poder entender o que está prestes a fazer.",
+    "loophole": "O personagem fala uma frase curta na lingua do Pê ou outra \"linguagem\" sem sentido, pedindo para poder entender o que está prestes a fazer.",
     "seemingBenefits": {
       "Beast": "Durante a vigência do Contrato, a Besta pode compreender qualquer animal com quem ela se comunica e eles podem entendê-la.",
       "Darkling": "Durante a vigência do Contrato, o Trevoso pode falar com as sombras de pessoas e coisas. As sombras são quietas e observadoras, testemunhando muitas coisas que a maioria das pessoas desconhece.",
@@ -1760,11 +1760,11 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum ou conflito de vontades",
     "loophole": "Changeling deve escrever uma palavra para frente e para trás, em seguida, esconder o item em que ela escreveu a palavra como ela invoca o Contrato.",
     "seemingBenefits": {
-      "Beast": "A Besta pode aplicar o Contrato em tentativas de rastreamento, lendo os sinais e rastros da passagem de animais e outras criaturas em uma área; ele detecta automaticamente todas as tentativas mundanas de esconder uma trilha (como varrer trilhas ou atravessar um riacho). A ocultação mágica inicia o teste de Choque de Vontades, acima.",
-      "Darkling": "Os Enfeitiçados ganham +3 dados no teste de Choque de Vontades ao decifrar qualquer mensagem magicamente codificada, seja essa cifra feita usando este Contrato ou alguma outra magia.",
+      "Beast": "A Besta pode aplicar o Contrato em tentativas de rastreamento, lendo os sinais e rastros da passagem de animais e outras criaturas em uma área; ele detecta automaticamente todas as tentativas mundanas de esconder uma trilha (como varrer trilhas ou atravessar um riacho). A ocultação mágica inicia o teste de Confronto de Vontades, acima.",
+      "Darkling": "Os Enfeitiçados ganham +3 dados no teste de Confronto de Vontades ao decifrar qualquer mensagem magicamente codificada, seja essa cifra feita usando este Contrato ou alguma outra magia.",
       "Elemental": "Os Torrents podem usar este Contrato para codificar mensagens nos próprios elementos; uma brisa murmura uma mensagem secreta ao destinatário pretendido, ou os estalos e crepitações de um fogo transmitem uma mensagem a todos aqueles que estão ao redor de seu incêndio.",
-      "Fairest": "A Belíssima recebe +3 dados no teste de Choque de Vontades quando alguém tenta decodificar sua mensagem oculta.",
-      "Ogre": "Os Bruisers criam cifras tão robustas que exigem dois testes de Choque de Vontades para decodificar; se falhar, a tentativa falha.",
+      "Fairest": "A Belíssima recebe +3 dados no teste de Confronto de Vontades quando alguém tenta decodificar sua mensagem oculta.",
+      "Ogre": "Os Bruisers criam cifras tão robustas que exigem dois testes de Confronto de Vontades para decodificar; se falhar, a tentativa falha.",
       "Wizened": "Os Tinkers podem aplicar este Contrato ao código de máquina e a qualquer linguagem de computador para determinar o que um programa específico faz apenas olhando um trecho de código ou disco contendo o programa."
     },
     "source": "Beyond the Hedge",
@@ -1775,17 +1775,17 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling carrega uma chave de qualquer tipo e imita o ato de trancar uma fechadura com ela.",
     "seemingBenefits": {
       "Beast": "A Besta pode usar este Contrato em qualquer tipo de covil, como entrada de caverna, toca ou até mesmo Portão de Cerca. Neste caso, objetos naturais como pedras, arbustos, arbustos, galhos de árvores e coisas semelhantes barram a entrada com a mesma segurança que uma “porta” real.",
-      "Darkling": "Se o Trevoso tiver sucesso em um teste de Destreza + Furtividade e não for observado, ele pode obscurecer o portal, exigindo essencialmente dois testes de Choque de Vontades; um para localizá-lo e um segundo para abri-lo.",
-      "Elemental": "Aqueles que conseguem superar o bloqueio e vencer o Choque de Vontades sofrem um número de pontos de dano contundente igual ao Manto do Elemental por seu problema.",
-      "Fairest": "Se o portal não tiver nenhum tipo de bloqueio, a Belíssima recebe +3 dados no teste de Choque de Vontades.",
+      "Darkling": "Se o Trevoso tiver sucesso em um teste de Destreza + Furtividade e não for observado, ele pode obscurecer o portal, exigindo essencialmente dois testes de Confronto de Vontades; um para localizá-lo e um segundo para abri-lo.",
+      "Elemental": "Aqueles que conseguem superar o bloqueio e vencer o Confronto de Vontades sofrem um número de pontos de dano contundente igual ao Manto do Elemental por seu problema.",
+      "Fairest": "Se o portal não tiver nenhum tipo de bloqueio, a Belíssima recebe +3 dados no teste de Confronto de Vontades.",
       "Ogre": "O Ogro adiciona sua classificação de Manto à Durabilidade do fechamento para tentativas de resistir a danos ou destruição.",
-      "Wizened": "Se o portal tiver algum tipo de fechadura, o Funileiro recebe +3 dados no teste de Choque de Vontades."
+      "Wizened": "Se o portal tiver algum tipo de fechadura, o Funileiro recebe +3 dados no teste de Confronto de Vontades."
     },
     "source": "Beyond the Hedge",
     "page": 130
   },
   "h-beyond-hedge:foul-is-fair": {
-    "dicePool": "Manipulação + Subterfúgio + Manto vs. Manipulação + Fado (Choque de Vontades)",
+    "dicePool": "Manipulação + Subterfúgio + Manto vs. Manipulação + Fado (Confronto de Vontades)",
     "loophole": "O changeling faz algum tipo de movimento físico e som apropriado, como mandar um beijo com um muah! ou jogar uma bola em direção ao alvo pretendido enquanto grita \"Aqui, pegue!\".",
     "seemingBenefits": {
       "Beast": "Para ganhar um ponto adicional de Glamour, o Melhor pode adicionar a Condição Agorafóbica ao seu alvo.",
@@ -1802,11 +1802,11 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "dicePool": "Nenhum",
     "loophole": "Changeling deve sussurrar a todos os presentes para serem cobertos pela enfermaria no momento em que é invocado.",
     "seemingBenefits": {
-      "Beast": "Os sentidos aguçados da Besta podem localizar todo e qualquer dispositivo de escuta/espionagem nas imediações, bem como dizer quando os sentidos de alguém foram cooptados por outro. Aqueles obscurecidos pela magia provocam um Choque de Vontades para localizar, ao qual a Besta adiciona +2.",
+      "Beast": "Os sentidos aguçados da Besta podem localizar todo e qualquer dispositivo de escuta/espionagem nas imediações, bem como dizer quando os sentidos de alguém foram cooptados por outro. Aqueles obscurecidos pela magia provocam um Confronto de Vontades para localizar, ao qual a Besta adiciona +2.",
       "Darkling": "A proteção Trevoso também afeta a visão, cobrindo a área com mudanças, ocultando sombras para que os observadores não possam ver ou ouvir quem está presente ou o que estão discutindo.",
-      "Elemental": "A Torrente pode enviar feedback mágico para aqueles que tentam vidência misticamente sobre ela e seus companheiros, causando um ponto de dano letal ao conjurador ofensor e provocando um Choque de Vontades para encerrar o feitiço ofensor.",
+      "Elemental": "A Torrente pode enviar feedback mágico para aqueles que tentam vidência misticamente sobre ela e seus companheiros, causando um ponto de dano letal ao conjurador ofensor e provocando um Confronto de Vontades para encerrar o feitiço ofensor.",
       "Fairest": "A Belíssima ganha +3 dados em qualquer disputa de Conflito de Vontades para perfurar sua proteção.",
-      "Ogre": "O poder do Bruto faz com que aqueles que falham no Choque de Vontades sofram imediatamente a Inclinação Insensata devido à reação mágica.",
+      "Ogre": "O poder do Bruto faz com que aqueles que falham no Confronto de Vontades sofram imediatamente a Inclinação Insensata devido à reação mágica.",
       "Wizened": "O Chapeleiro pode devolver os dispositivos eletrônicos de escuta aos seus proprietários, ouvindo qualquer coisa falada pela(s) pessoa(s) que plantou(m) os dispositivos."
     },
     "source": "Beyond the Hedge",
@@ -1847,7 +1847,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
       "Beast": "Os sentidos aguçados da Besta permitem que ele detecte qualquer pessoa em um raio de (Fado x 10) metros, apesar da fumaça obscurecedora, para que ele permaneça ciente de todos os inimigos e aliados.",
       "Darkling": "O Trevoso adiciona automaticamente o elemento de sombra a este Contrato e dobra a distância que ele pode se teletransportar através das sombras apenas para (Fado x 10) metros.",
       "Elemental": "O Torrent ganha automaticamente um segundo elemento de sua escolha para usar com este Contrato. Se o elemento escolhido estiver relacionado à sua aparência, ele dobra a distância que pode se teletransportar através daquele elemento apenas para (Fado x 10) metros.",
-      "Fairest": "A Belíssima pode gastar 1 ponto de Glamour e tocar um oponente para transportá-lo através da fumaça até (Fado x 10) metros. O alvo pode fazer um Choque de Vontades com a Belíssima adicionando +3 à sua parada de dados para evitar o efeito.",
+      "Fairest": "A Belíssima pode gastar 1 ponto de Glamour e tocar um oponente para transportá-lo através da fumaça até (Fado x 10) metros. O alvo pode fazer um Confronto de Vontades com a Belíssima adicionando +3 à sua parada de dados para evitar o efeito.",
       "Ogre": "O Bruto pode carregar uma pessoa adicional com ele pelo custo de 1 Glamour adicional ao usar este Contrato.",
       "Wizened": "O Domovoi poderá, ao custo de 2 Glamour adicionais, aplicar os efeitos deste Contrato a um veículo não maior que um sedã médio de quatro portas (e, consequentemente, a todos aqueles dentro do veículo)."
     },
@@ -1890,7 +1890,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 136
   },
   "h-beyond-hedge:merry-meet": {
-    "dicePool": "Presença + Socialização + Manto vs. Determinação + Compostura",
+    "dicePool": "Presença + Socialização + Manto vs. Perseverança + Compostura",
     "loophole": "Changeling oferece algo à pessoa que ela está tentando impressionar, seja um cartão de visita ou uma bebida. A outra parte não precisa aceitar a oferta para cumprir a lacuna.",
     "seemingBenefits": {},
     "source": "Beyond the Hedge",
@@ -1925,14 +1925,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 140
   },
   "h-beyond-hedge:babels-curse": {
-    "dicePool": "Inteligência + Expressão + Manto – Determinação",
+    "dicePool": "Inteligência + Expressão + Manto – Perseverança",
     "loophole": "Changeling escreve o nome do alvo ou apelido comumente usado em um pedaço de papel e rasga-lo em pequenos pedaços enquanto ela invoca o contrato.",
     "seemingBenefits": {},
     "source": "Beyond the Hedge",
     "page": 140
   },
   "h-beyond-hedge:dead-mens-tales": {
-    "dicePool": "Presença + Oculto + Fado",
+    "dicePool": "Presença + Ocultismo + Fado",
     "loophole": "O changeling queima a pena de um corvo ou corvo e sopra a fumaça sobre o cadáver para ser questionado.",
     "seemingBenefits": {},
     "source": "Beyond the Hedge",
@@ -1960,7 +1960,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 142
   },
   "h-beyond-hedge:bauble-of-the-mind": {
-    "dicePool": "Manipulação + Oculto + Manto vs. Resolução + Compostura",
+    "dicePool": "Manipulação + Ocultismo + Manto vs. Perseverança + Compostura",
     "loophole": "A mudança tem uma corda amarrada em torno de pelo menos um dedo para lembrá-los de algo (o que quer que seja).",
     "seemingBenefits": {},
     "source": "Beyond the Hedge",
@@ -2016,7 +2016,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 147
   },
   "h-beyond-hedge:curse-of-fading": {
-    "dicePool": "Manipulação + Intimidação + Manto vs. Determinação + Compostura",
+    "dicePool": "Manipulação + Intimidação + Manto vs. Perseverança + Compostura",
     "loophole": "A vítima já viu um fantasma antes, seja através do fantasma usando sua própria Numina para se manifestar, uma aplicação do Contrato de Presença Fantasmagórica sendo aplicado à vítima ou poderes semelhantes antes da Maldição do Desvanecimento ser decretada.",
     "seemingBenefits": {},
     "source": "Beyond the Hedge",
@@ -2044,7 +2044,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 105
   },
   "h-courts:climate-change": {
-    "dicePool": "Determinação + Sobrevivência + Manto",
+    "dicePool": "Perseverança + Sobrevivência + Manto",
     "loophole": "A área foi afetada pela condição ambiental real no último mês.",
     "seemingBenefits": {},
     "source": "Book of Courts",
@@ -2076,7 +2076,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 108
   },
   "h-courts:frozen-in-time": {
-    "dicePool": "Manipulação + Ocultismo + Manto vs. Determinação + Fado",
+    "dicePool": "Manipulação + Ocultismo + Manto vs. Perseverança + Fado",
     "loophole": "Há um relógio analógico visível nas proximidades do changeling.",
     "seemingBenefits": {},
     "source": "Book of Courts",
@@ -2090,15 +2090,18 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 108
   },
   "h-courts:protection-of-the-innocent": {
-    "dicePool": "Determinação + Medicina + Manto",
+    "dicePool": "Perseverança + Medicina + Manto",
     "loophole": "O contrato nunca foi usado no mortal antes.",
     "seemingBenefits": {},
     "source": "Book of Courts",
     "page": 109
   },
   "h-courts:shared-remembrance": {
-    "missing": "heading",
-    "seemingBenefits": {}
+    "dicePool": "Raciocínio + Empatia + Manto vs Perseverança + Fado",
+    "loophole": "O changeling diz ao alvo uma das suas memórias importantes.",
+    "seemingBenefits": {},
+    "source": "Book of Courts",
+    "page": 108
   },
   "h-courts:nothing-to-see-here": {
     "dicePool": "Nenhum",
@@ -2143,15 +2146,18 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 114
   },
   "h-courts:age-of-aquarius": {
-    "dicePool": "Manipulação + Socialização + Manto vs. Determinação + Fado",
+    "dicePool": "Manipulação + Socialização + Manto vs. Perseverança + Fado",
     "loophole": "O sujeito expressou ao metamorfo um desejo de mudança de ritmo ou alguma outra insatisfação com sua vida atual na mesma cena.",
     "seemingBenefits": {},
     "source": "Book of Courts",
     "page": 115
   },
   "h-courts:assuming-the-stellar-mantle": {
-    "missing": "heading",
-    "seemingBenefits": {}
+    "dicePool": "Manipulação + Persuasão + Manto vs. Compostura + Fado",
+    "loophole": "Estamos no mês do signo do alvo",
+    "seemingBenefits": {},
+    "source": "Book of Courts",
+    "page": 114
   },
   "h-courts:elemental-cycle": {
     "dicePool": "Nenhum",
@@ -2196,14 +2202,14 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 134
   },
   "h-courts:labyrinth": {
-    "dicePool": "Manipulação + Subterfúgio + Manto vs. Determinação + Fado",
+    "dicePool": "Manipulação + Subterfúgio + Manto vs. Perseverança + Fado",
     "loophole": "Changeling carrega um quebra-cabeça completo de algum tipo (por exemplo, um cubo de Rubik) que ela retorna ao seu estado pré-resolvido.",
     "seemingBenefits": {},
     "source": "Book of Courts",
     "page": 135
   },
   "h-courts:harmony-enforced": {
-    "dicePool": "Presença + Empatia + Manto vs. Maior Determinação + Fado",
+    "dicePool": "Presença + Empatia + Manto vs. Maior Perseverança + Fado",
     "loophole": "O changeling espalha penas de pomba ao redor da área que deseja afetar.",
     "seemingBenefits": {},
     "source": "Book of Courts",
@@ -2295,7 +2301,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 147
   },
   "h-courts:supply-and-demand": {
-    "dicePool": "Presença + Intimidação + Manto vs. Determinação + Fado",
+    "dicePool": "Presença + Intimidação + Manto vs. Perseverança + Fado",
     "loophole": "Changeling está algures onde não devia estar, e o comerciante sabe disso.",
     "seemingBenefits": {},
     "source": "Book of Courts",
@@ -2317,7 +2323,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "h-seemings:no-escape": {
     "dicePool": "Vigor + Atletismo + Fado vs. Vigor + Fado (role para resistir separadamente para cada vítima)",
-    "loophole": "O changeling deve morder e engolir um pedaço de sua própria carne, infligindo um ponto de dano letal a si mesmo. O Narrador pode pedir um teste de Perseverança + Autocontrole e/ou Lucidez para prosseguir com esse ato horrível de automutilação.",
+    "loophole": "O changeling deve morder e engolir um pedaço de sua própria carne, infligindo um ponto de dano letal a si mesmo. O Narrador pode pedir um teste de Perseverança + Compostura e/ou Lucidez para prosseguir com esse ato horrível de automutilação.",
     "seemingBenefits": {
       "Beast": "Se a Besta consumir uma criatura de Tamanho 2 ou maior com seu vórtice, ela recupera um ponto de Força de Vontade gasta.",
       "Darkling": "O vórtice do Trevoso também afeta seres efêmeros, danificando suas características Corpus. Se tal ser fosse “morto”, ele se desincorporaria.",
@@ -2378,7 +2384,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 145
   },
   "h-seemings:the-troll-toll": {
-    "dicePool": "Presença + Lábia + Fado vs. Determinação + Fado (o mais alto em um grupo)",
+    "dicePool": "Presença + Subterfúgio + Fado vs. Perseverança + Fado (o mais alto em um grupo)",
     "loophole": "O Troll escondeu uma senha perto da passagem. Qualquer pessoa que a declare é imune ao efeito deste Contrato.",
     "seemingBenefits": {},
     "source": "Book of Seemings",

@@ -70,7 +70,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     success:
       "Convoca todos os animais de uma espécie escolhida em um raio igual a Empatia com Animais em milhas. Eles entendem ordens verbais simples, transmitem as instruções aos mais distantes e retornam ao concluir a tarefa ou encontrar obstáculo insuperável. Animais hostis podem contestar o Contrato.",
     exceptionalSuccess:
-      "Controla os animais por um dia e uma noite e pode emitir novas ordens ao falar com eles. Maus-tratos ou ordens impossíveis permitem novo teste de Perseverança + Autocontrole para contestar.",
+      "Controla os animais por um dia e uma noite e pode emitir novas ordens ao falar com eles. Maus-tratos ou ordens impossíveis permitem novo teste de Perseverança + Compostura para contestar.",
     page: 131,
   },
   "ctl-2ed:the-royal-court": {
@@ -93,7 +93,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma ação",
     success:
-      "Em um objeto, substitui o bônus de equipamento pelo Fado do changeling. Em uma ação de Artesanato, Medicina ou Informática de outra pessoa, substitui a Habilidade usada pelo Fado do changeling.",
+      "Em um objeto, substitui o bônus de equipamento pelo Fado do changeling. Em uma ação de Ofícios, Medicina ou Informática de outra pessoa, substitui a Habilidade usada pelo Fado do changeling.",
     exceptionalSuccess: "",
     page: 132,
   },
@@ -135,7 +135,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Um capítulo",
     success:
-      "Escolhe um efeito sobre um objeto. Rebobinar: repara 1 Estrutura por turno e repõe partes ausentes, até Artesanato pontos de Estrutura. Acelerar: causa 1 dano por turno ignorando Durabilidade, até Artesanato pontos de dano. Congelar: fixa o objeto no tempo e espaço, impedindo movimento e tornando-o imune a dano ou alterações.",
+      "Escolhe um efeito sobre um objeto. Rebobinar: repara 1 Estrutura por turno e repõe partes ausentes, até Ofícios pontos de Estrutura. Acelerar: causa 1 dano por turno ignorando Durabilidade, até Ofícios pontos de dano. Congelar: fixa o objeto no tempo e espaço, impedindo movimento e tornando-o imune a dano ou alterações.",
     exceptionalSuccess: "",
     page: 134,
   },
@@ -542,7 +542,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Disputada",
     duration: "",
     success:
-      "Assume a aparência de quem o alvo mais deseja ver, inclusive alguém que ele não conheça. Pode afetar um grupo escolhendo um alvo principal; a maior Autocontrole do grupo contesta. Todos veem a mesma pessoa. Se agir fora do personagem copiado, testes Sociais podem ser exigidos, com Manto dados bônus.",
+      "Assume a aparência de quem o alvo mais deseja ver, inclusive alguém que ele não conheça. Pode afetar um grupo escolhendo um alvo principal; a maior Compostura do grupo contesta. Todos veem a mesma pessoa. Se agir fora do personagem copiado, testes Sociais podem ser exigidos, com Manto dados bônus.",
     exceptionalSuccess: "O disfarce dura até o próximo amanhecer.",
     page: 152,
   },
@@ -662,7 +662,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Ilumina um raio de 30 metros. Personagens escondidos ou disfarçados por meios mundanos testam Manipulação + Fado com penalidade igual ao Manto ou perdem a ocultação; novas tentativas de se esconder são impossíveis. Ocultação sobrenatural exige Confronto de Vontades. Qualquer pessoa pode testar Raciocínio + Autocontrole para ver através da Máscara.",
+      "Ilumina um raio de 30 metros. Personagens escondidos ou disfarçados por meios mundanos testam Manipulação + Fado com penalidade igual ao Manto ou perdem a ocultação; novas tentativas de se esconder são impossíveis. Ocultação sobrenatural exige Confronto de Vontades. Qualquer pessoa pode testar Raciocínio + Compostura para ver através da Máscara.",
     exceptionalSuccess: "",
     page: 156,
   },
@@ -1202,7 +1202,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Um capítulo",
     success:
-      "Concede senciência temporária a uma entrada, passagem, Hedgeway dormente ou acesso a Bastião/Recanto. O portal não se move nem realiza ações físicas ou que exijam fala, mas percebe como o changeling e pode comunicar-se mentalmente com ele a qualquer distância. O changeling pode usar Kenning pela perspectiva do portal, deixando de perceber o próprio ambiente enquanto o faz. O portal tem Inteligência 2, Raciocínio 2, Perseverança 5; Presença 2, Manipulação 1, Autocontrole 2; Ocultismo 2, Intimidação 3; Fado 2; Glamour 7/2 por turno; Força de Vontade 7; Iniciativa 3; Defesa 0; Armadura 3/3; Velocidade 0; Vitalidade 10; fraqueza apenas a ferro frio; Overpowering Dread, Thorns and Brambles; Influência (Sarças) 2 e Know Soul.",
+      "Concede senciência temporária a uma entrada, passagem, Hedgeway dormente ou acesso a Bastião/Recanto. O portal não se move nem realiza ações físicas ou que exijam fala, mas percebe como o changeling e pode comunicar-se mentalmente com ele a qualquer distância. O changeling pode usar Kenning pela perspectiva do portal, deixando de perceber o próprio ambiente enquanto o faz. O portal tem Inteligência 2, Raciocínio 2, Perseverança 5; Presença 2, Manipulação 1, Compostura 2; Ocultismo 2, Intimidação 3; Fado 2; Glamour 7/2 por turno; Força de Vontade 7; Iniciativa 3; Defesa 0; Armadura 3/3; Velocidade 0; Vitalidade 10; fraqueza apenas a ferro frio; Overpowering Dread, Thorns and Brambles; Influência (Sarças) 2 e Know Soul.",
     exceptionalSuccess: "",
     page: 57,
   },
@@ -1235,7 +1235,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma cena",
     success:
-      "Cria escuridão total em raio de Fado × 5 metros centrado no changeling. Quem estiver na área ao surgir deve passar em Raciocínio + Autocontrole ou receber Atordoado, salvo se enxergar claramente no escuro. Quem permanecer ou entrar recebe Cego em ambos os olhos até sair ou o efeito terminar. Luz mundana não atravessa; luz mágica exige Confronto de Vontades. O changeling é imune. Durante o efeito fica sem sombra; se terminar fora da área, deve recuperá-la na Sebe com mudança sutil de Hedgespinning de 4 sucessos.",
+      "Cria escuridão total em raio de Fado × 5 metros centrado no changeling. Quem estiver na área ao surgir deve passar em Raciocínio + Compostura ou receber Atordoado, salvo se enxergar claramente no escuro. Quem permanecer ou entrar recebe Cego em ambos os olhos até sair ou o efeito terminar. Luz mundana não atravessa; luz mágica exige Confronto de Vontades. O changeling é imune. Durante o efeito fica sem sombra; se terminar fora da área, deve recuperá-la na Sebe com mudança sutil de Hedgespinning de 4 sucessos.",
     exceptionalSuccess: "",
     page: 59,
   },
@@ -1277,7 +1277,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma cena ou até usar o teleporte",
     success:
-      "Quando seu nome verdadeiro é pronunciado a até Fado × 2 milhas, percebe isso e pode testar Raciocínio + Investigação + Fado contra Autocontrole + Fado do falante para ouvir a conversa por 1 turno. Enquanto escuta, não ouve fala ao seu redor. Proteções sobrenaturais contra espionagem exigem Confronto de Vontades. Em sucesso excepcional, escuta por turnos iguais aos sucessos excedentes. Enquanto estiver ouvindo com sucesso, pode gastar +1 Glamour e 1 Força de Vontade para se teleportar instantaneamente até a conversa; o Contrato então termina.",
+      "Quando seu nome verdadeiro é pronunciado a até Fado × 2 milhas, percebe isso e pode testar Raciocínio + Investigação + Fado contra Compostura + Fado do falante para ouvir a conversa por 1 turno. Enquanto escuta, não ouve fala ao seu redor. Proteções sobrenaturais contra espionagem exigem Confronto de Vontades. Em sucesso excepcional, escuta por turnos iguais aos sucessos excedentes. Enquanto estiver ouvindo com sucesso, pode gastar +1 Glamour e 1 Força de Vontade para se teleportar instantaneamente até a conversa; o Contrato então termina.",
     exceptionalSuccess: "",
     page: 62,
   },
@@ -1360,7 +1360,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Fado turnos em cena de ação ou Fado minutos fora dela",
     success:
-      "A partir do turno seguinte, percebe perfeitamente o espaço físico em raio de Fado × 10 metros. Atravessa automaticamente ocultação e surpresa mundanas e recebe Manto dados para contestar versões sobrenaturais. Ignora penalidades de escuridão/baixa visibilidade, é imune a Cego e Surdo e anula até Manto dados de penalidades circunstanciais em ataques à distância. Recebe +Manto em Iniciativa e +metade do Manto, arredondada para cima, em Defesa, salvo contra alvos fora do alcance ou emboscadas bem-sucedidas. Barreira à prova de som bloqueia o efeito. Ruído alto dentro do alcance exige Raciocínio + Autocontrole + Manto para manter o Contrato.",
+      "A partir do turno seguinte, percebe perfeitamente o espaço físico em raio de Fado × 10 metros. Atravessa automaticamente ocultação e surpresa mundanas e recebe Manto dados para contestar versões sobrenaturais. Ignora penalidades de escuridão/baixa visibilidade, é imune a Cego e Surdo e anula até Manto dados de penalidades circunstanciais em ataques à distância. Recebe +Manto em Iniciativa e +metade do Manto, arredondada para cima, em Defesa, salvo contra alvos fora do alcance ou emboscadas bem-sucedidas. Barreira à prova de som bloqueia o efeito. Ruído alto dentro do alcance exige Raciocínio + Compostura + Manto para manter o Contrato.",
     exceptionalSuccess: "",
     page: 27,
   },
@@ -1393,7 +1393,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma cena",
     success:
-      "Revela o mien feérico sem causar perda de Lucidez. Recebe o equivalente a Aparência Marcante ••••, cumulativo com o Mérito existente. Enquanto não empunhar arma nem tentar ferir alguém, humanos comuns não podem atacá-lo diretamente. Seres sobrenaturais precisam passar em Perseverança + Autocontrole reflexivo antes de cada ataque. Atacar ou empunhar arma de forma ameaçadora encerra o Contrato. Câmeras e dispositivos eletrônicos não registram sua forma verdadeira; após o efeito, humanos racionalizam ou esquecem seus aspectos inumanos.",
+      "Revela o mien feérico sem causar perda de Lucidez. Recebe o equivalente a Aparência Marcante ••••, cumulativo com o Mérito existente. Enquanto não empunhar arma nem tentar ferir alguém, humanos comuns não podem atacá-lo diretamente. Seres sobrenaturais precisam passar em Perseverança + Compostura reflexivo antes de cada ataque. Atacar ou empunhar arma de forma ameaçadora encerra o Contrato. Câmeras e dispositivos eletrônicos não registram sua forma verdadeira; após o efeito, humanos racionalizam ou esquecem seus aspectos inumanos.",
     exceptionalSuccess:
       "Dura até o próximo nascer ou pôr do sol, o que ocorrer primeiro.",
     page: 125,
@@ -1461,7 +1461,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Manto × 2 horas",
     success:
-      "Se obtiver ao menos 1 sucesso após subtrair a maior Autocontrole dos perseguidores, eles ficam incapazes de seguir o changeling na Sebe ou no mundo mortal. Também pode afetar alguém na linha de visão, impedindo-o de alcançar um destino escolhido durante a duração. O efeito não força o alvo a entrar deliberadamente em perigos evidentes.",
+      "Se obtiver ao menos 1 sucesso após subtrair a maior Compostura dos perseguidores, eles ficam incapazes de seguir o changeling na Sebe ou no mundo mortal. Também pode afetar alguém na linha de visão, impedindo-o de alcançar um destino escolhido durante a duração. O efeito não força o alvo a entrar deliberadamente em perigos evidentes.",
     exceptionalSuccess:
       "O alvo esquece a perseguição e não a retoma por 24 horas.",
     page: 132,
@@ -1630,7 +1630,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma semana ou um mês",
     success:
-      "Por 2 Glamour, assombra uma área de até uma casa grande, ou Fado × 10 m² ao ar livre, com fenômenos audiovisuais. Intrusos não designados resistem com Perseverança + Autocontrole contra Presença + Intimidação + Fado: a primeira falha causa Assustado, a segunda Abalado e a terceira Aterrorizado e força a fuga. Três sucessos de resistência tornam o intruso imune. Cada Glamour adicional impõe -1 à resistência, até -5. Dura uma semana no mundo mortal ou um mês na Sebe/Hollow.",
+      "Por 2 Glamour, assombra uma área de até uma casa grande, ou Fado × 10 m² ao ar livre, com fenômenos audiovisuais. Intrusos não designados resistem com Perseverança + Compostura contra Presença + Intimidação + Fado: a primeira falha causa Assustado, a segunda Abalado e a terceira Aterrorizado e força a fuga. Três sucessos de resistência tornam o intruso imune. Cada Glamour adicional impõe -1 à resistência, até -5. Dura uma semana no mundo mortal ou um mês na Sebe/Hollow.",
     exceptionalSuccess: "",
     page: 144,
   },
@@ -1826,7 +1826,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Instantânea",
     success:
-      "Deve estar ao ar livre e exposto a uma tempestade ou céu completamente nublado. Desaparece quando um raio atinge sua posição e reaparece com outro raio em qualquer ponto externo sob a mesma tempestade a até Manto × 2 quilômetros. Qualquer outro atingido pelo raio sofre Manto + Fado de dano contundente. Em clima calmo, pode levar até Manto pessoas que o estejam tocando, protegendo-as do raio. Em tempestade, partida e chegada produzem ondas de choque em Manto × 3 metros; quem não superar Manto em um teste reflexivo de Destreza + Esportes recebe Derrubado.",
+      "Deve estar ao ar livre e exposto a uma tempestade ou céu completamente nublado. Desaparece quando um raio atinge sua posição e reaparece com outro raio em qualquer ponto externo sob a mesma tempestade a até Manto × 2 quilômetros. Qualquer outro atingido pelo raio sofre Manto + Fado de dano contundente. Em clima calmo, pode levar até Manto pessoas que o estejam tocando, protegendo-as do raio. Em tempestade, partida e chegada produzem ondas de choque em Manto × 3 metros; quem não superar Manto em um teste reflexivo de Destreza + Atletismo recebe Derrubado.",
     exceptionalSuccess: "",
     page: 112,
   },
@@ -1842,7 +1842,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Disputada",
     duration: "Uma semana ou um capítulo, o que for menor",
     success:
-      "Nomeia uma categoria geral de pessoa para redefinir a identidade social do alvo. Outros o percebem como membro dessa categoria; mesmo amigos próximos precisam passar em Raciocínio + Autocontrole com penalidade igual ao Manto para reconhecê-lo. O mundo também acompanha a identidade alternativa: o alvo recebe temporariamente pontos de Méritos iguais a 2 × Manto para distribuir em Méritos apropriados à nova persona e perde acesso aos Méritos incompatíveis, podendo realocá-los temporariamente pela Santidade dos Méritos. O changeling e sua motley não são afetados e reconhecem o alvo normalmente.",
+      "Nomeia uma categoria geral de pessoa para redefinir a identidade social do alvo. Outros o percebem como membro dessa categoria; mesmo amigos próximos precisam passar em Raciocínio + Compostura com penalidade igual ao Manto para reconhecê-lo. O mundo também acompanha a identidade alternativa: o alvo recebe temporariamente pontos de Méritos iguais a 2 × Manto para distribuir em Méritos apropriados à nova persona e perde acesso aos Méritos incompatíveis, podendo realocá-los temporariamente pela Santidade dos Méritos. O changeling e sua motley não são afetados e reconhecem o alvo normalmente.",
     exceptionalSuccess:
       "A identidade redefinida persiste por uma história ou uma semana, o que for maior. Em casos raros, partes desse destino alternativo podem tornar-se permanentes se o jogador adquirir os Méritos com Experiência ou a critério do Narrador.",
     page: 115,
@@ -2343,7 +2343,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action:
       "Instantânea",
     duration: "",
-    success: "Cria, dentro de uma zona de desastre, um bolsão de segurança de até Fado metros quadrados de diâmetro. Inclinações Ambientais e ambientes extremos ao redor ficam suprimidos dentro da área e sobre quem estiver nela. O caos externo abafa pedidos de socorro e dificulta enxergar para dentro ou para fora. Entrar ou sair sem permissão exige Vigor + Esportes contra Força + Fado do Disaster; cada tentativa, bem-sucedida ou não, causa 1 dano letal.",
+    success: "Cria, dentro de uma zona de desastre, um bolsão de segurança de até Fado metros quadrados de diâmetro. Inclinações Ambientais e ambientes extremos ao redor ficam suprimidos dentro da área e sobre quem estiver nela. O caos externo abafa pedidos de socorro e dificulta enxergar para dentro ou para fora. Entrar ou sair sem permissão exige Vigor + Atletismo contra Força + Fado do Disaster; cada tentativa, bem-sucedida ou não, causa 1 dano letal.",
     exceptionalSuccess: "",
     page: 145,
   },

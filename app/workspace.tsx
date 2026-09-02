@@ -1583,7 +1583,7 @@ function CombatPage({
             <p>
               Desarmado: Força + Briga − Defesa. Corpo a corpo: Força + Armas
               Brancas − Defesa. Distância: Destreza + Armas de Fogo. Arremesso:
-              Destreza + Esportes − Defesa.
+              Destreza + Atletismo − Defesa.
             </p>
           </article>
           <article>
@@ -4531,12 +4531,12 @@ function recalculateCtlDerived(sheet: CharacterSheet) {
     Tamanho: 5,
     Vitalidade: 5 + Number(a.Vigor ?? 1),
     Deslocamento: 5 + Number(a.Força ?? 1) + Number(a.Destreza ?? 1),
-    ForçaDeVontade: Number(a.Perseverança ?? 1) + Number(a.Autocontrole ?? 1),
-    Iniciativa: Number(a.Destreza ?? 1) + Number(a.Autocontrole ?? 1),
+    ForçaDeVontade: Number(a.Perseverança ?? 1) + Number(a.Compostura ?? 1),
+    Iniciativa: Number(a.Destreza ?? 1) + Number(a.Compostura ?? 1),
     Defesa:
       Math.min(Number(a.Destreza ?? 1), Number(a.Raciocínio ?? 1)) +
-      Number(s.Esportes ?? 0),
-    LucidezMaxima: Number(a.Raciocínio ?? 1) + Number(a.Autocontrole ?? 1),
+      Number(s.Atletismo ?? 0),
+    LucidezMaxima: Number(a.Raciocínio ?? 1) + Number(a.Compostura ?? 1),
   };
 }
 function derivedWithPermanentMerits(character: CharacterSheet) {
@@ -4548,7 +4548,7 @@ function derivedWithPermanentMerits(character: CharacterSheet) {
       : {}
   ) as Record<string, number>;
   derived.Defesa =
-    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Esportes) || 0);
+    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Atletismo) || 0);
   const merit = (name: string) =>
     character.merits.find((item) => item.name === name);
   const fastReflexes = merit("Fast Reflexes");
