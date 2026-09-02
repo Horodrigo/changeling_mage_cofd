@@ -111,6 +111,8 @@ import {
   normalizeClarityDamage,
   normalizeDamage,
   powerResourceLimits,
+  permanentClarityBonus,
+  changePermanentClarity,
   woundPenalty,
   type ClarityDamageLevel,
   type DamageLevel,
@@ -129,6 +131,8 @@ import { HomebrewsPage } from "./homebrews";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHomebrews } from "@/lib/homebrews";
 import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
+import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
+import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
 
 type View = "inicio" | "personagens" | "homebrews";
 type CatalogRule = {
@@ -2699,11 +2703,13 @@ type ExperienceUndo =
       name: string;
       previousDots: number | null;
       instanceIndex?: number;
+      instanceId?: string;
     }
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "contract"; id: string }
   | { kind: "benefit"; contractId: string; seeming: string }
   | { kind: "wyrd"; previous: number }
+  | { kind: "clarityGain" }
   | { kind: "willpower"; previousLost: number }
   | { kind: "willpowerLoss"; previousLost: number };
 type ExperienceEntry = {
@@ -2926,6 +2932,20 @@ function ExperiencePanel({
       "Perda permanente de Força de Vontade registrada no histórico.",
     );
   }
+  function gainClarity() {
+    const next = structuredClone(character);
+    next.current_state = changePermanentClarity(next.current_state, 1);
+    append({
+      id: crypto.randomUUID(),
+      kind: "spend",
+      description: "Ganho permanente de uma caixa de Lucidez",
+      experience: 0,
+      createdAt: new Date().toISOString(),
+      undo: { kind: "clarityGain" },
+    }, next.current_state);
+    updateSheet(next);
+    setFeedback("Uma caixa permanente de Lucidez adicionada, sem custo de EXP.");
+  }
   function spend(
     cost: number,
     description: string,
@@ -2964,24 +2984,16 @@ function ExperiencePanel({
     );
   }
   function revertPurchase(entry: ExperienceEntry) {
+    if (!history.some(item => item.id === entry.id)) return;
     if (!entry.undo)
       return setFeedback(
         "Esta compra antiga não contém dados suficientes para ser revertida.",
       );
     const next = structuredClone(character);
     const undo = entry.undo;
-    if (undo.kind === "trait") next[undo.group][undo.name] = undo.previous;
+    if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], 1, undo.group === "attributes" ? 1 : 0);
     else if (undo.kind === "merit") {
-      const indexed = undo.instanceIndex ?? -1,
-        index =
-          indexed >= 0 && next.merits[indexed]?.name === undo.name
-            ? indexed
-            : next.merits.findIndex(
-                (item) => item.name === undo.name && !item.grantedBy,
-              );
-      if (undo.previousDots === null) {
-        if (index >= 0) next.merits.splice(index, 1);
-      } else if (index >= 0) next.merits[index].dots = undo.previousDots;
+      refundMeritDots(next, undo.name, Math.abs(entry.experience), undo.instanceId, undo.instanceIndex);
     } else if (undo.kind === "specialty") {
       const index = next.specializations
         .map((item) => `${item.skill}::${item.name}`)
@@ -3007,12 +3019,19 @@ function ExperiencePanel({
             ),
         ),
       };
-    else if (undo.kind === "wyrd")
-      next.line_data = { ...next.line_data, wyrd: undo.previous, frailties: normalizeChangelingFrailties(next.line_data.frailties, undo.previous) };
+    else if (undo.kind === "clarityGain") {
+      next.current_state = changePermanentClarity(next.current_state, -1);
+      const maximum = Number(derivedWithPermanentMerits(next).LucidezMaxima ?? 1);
+      next.current_state.clarity_damage = normalizeClarityDamage(next.current_state.clarity_damage, maximum);
+    }
+    else if (undo.kind === "wyrd") {
+      next.line_data = refundPowerRating(next, "wyrd");
+      next.line_data.frailties = normalizeChangelingFrailties(next.line_data.frailties, Number(next.line_data.wyrd));
+    }
     else
       next.current_state = {
         ...next.current_state,
-        willpower_lost_dots: undo.previousLost,
+        willpower_lost_dots: Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? 1 : -1)),
       };
     const refund = Math.abs(entry.experience);
     const nextAvailable = available + refund;
@@ -3075,6 +3094,7 @@ function ExperiencePanel({
         return setFeedback("Este Mérito não possui outro nível disponível.");
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
+      const instanceId = ownedMerit?.instanceId ?? crypto.randomUUID();
       const targetIndex = ownedMerit
         ? character.merits.indexOf(ownedMerit)
         : character.merits.length;
@@ -3086,13 +3106,16 @@ function ExperiencePanel({
           name: selectedMerit.name,
           previousDots: ownedMerit?.dots ?? null,
           instanceIndex: targetIndex,
+          instanceId,
         },
         (next) => {
           const found = ownedMerit ? next.merits[targetIndex] : undefined;
-          if (found && found.name === selectedMerit.name)
+          if (found && found.name === selectedMerit.name) {
+            found.instanceId = instanceId;
             found.dots = nextMeritRating;
-          else
+          } else
             next.merits.push({
+              instanceId,
               name: selectedMerit.name,
               dots: nextMeritRating,
               sourceId: selectedMerit.sourceId,
@@ -3160,7 +3183,7 @@ function ExperiencePanel({
     if (purchaseType === "Fado") {
       if (wyrd >= 10) return setFeedback("Fado já atingiu 10.");
       spend(5, `Fado ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
-        next.line_data = { ...next.line_data, wyrd: wyrd + 1, frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
+        next.line_data = { ...withPowerRating(next, "wyrd", wyrd + 1), frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
       });
       return;
     }
@@ -3396,14 +3419,11 @@ function ExperiencePanel({
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={markWillpowerLoss}
-        >
-          Registrar perda permanente de FV
-        </Button>
+        <div className="permanent-resource-actions">
+          <Button type="button" variant="ghost" size="sm" onClick={gainClarity}>Ganhar Lucidez</Button>
+          <span aria-hidden="true">|</span>
+          <Button type="button" variant="ghost" size="sm" onClick={markWillpowerLoss}>Perder FV</Button>
+        </div>
       </div>
       {feedback && <p className="experience-feedback compact">{feedback}</p>}
       <details className="experience-history">
@@ -3447,6 +3467,7 @@ type MageXpSnapshot = {
   line_data: Record<string, unknown>;
 };
 type MageXpEntry = {
+  undo?: MageAdvancementUndo;
   id: string;
   description: string;
   regular: number;
@@ -3633,6 +3654,13 @@ function MageExperiencePanel({
       setFeedback("Experiência insuficiente ou compra indisponível.");
       return;
     }
+    const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
+    if ((purchase === "Gnose" && Number(character.line_data.gnosis ?? 1) >= 10) ||
+        (purchase === "Sabedoria" && Number(character.line_data.wisdom ?? 7) >= 10) ||
+        (purchase === "Arcano" && Number(arcana[target] ?? 0) >= 10) ||
+        (purchase === "Atributo" && Number(character.attributes[target] ?? 1) >= traitMaximum) ||
+        (purchase === "Perícia" && Number(character.skills[target] ?? 0) >= traitMaximum))
+      return setFeedback("Esta característica já atingiu seu limite de pontos.");
     if (
       (purchase === "Rota" || purchase === "Práxis") &&
       (!selectedSpell ||
@@ -3681,10 +3709,7 @@ function MageExperiencePanel({
         arcana: { ...arcana, [target]: Number(arcana[target] ?? 0) + 1 },
       };
     else if (purchase === "Gnose")
-      next.line_data = {
-        ...next.line_data,
-        gnosis: Number(next.line_data.gnosis ?? 1) + 1,
-      };
+      next.line_data = withPowerRating(next, "gnosis", Number(next.line_data.gnosis ?? 1) + 1);
     else if (purchase === "Rota" && selectedSpell)
       next.line_data = {
         ...next.line_data,
@@ -3715,7 +3740,24 @@ function MageExperiencePanel({
         ),
       };
     recalculateCtlDerived(next);
+    let undo: MageAdvancementUndo;
+    if (purchase === "Atributo" || purchase === "Perícia")
+      undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: target };
+    else if (purchase === "Arcano") undo = { kind: "arcana", name: target };
+    else if (purchase === "Gnose") undo = { kind: "gnosis" };
+    else if (purchase === "Sabedoria") undo = { kind: "wisdom" };
+    else if (purchase === "Mérito") {
+      const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
+      if (index < 0) return setFeedback("Não foi possível identificar o Mérito adquirido.");
+      const instanceId = next.merits[index].instanceId ?? crypto.randomUUID();
+      next.merits[index].instanceId = instanceId;
+      undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId };
+    } else if (purchase === "Especialização") undo = { kind: "specialty", skill: target, name: "Nova Especialização" };
+    else if (purchase === "Rota" || purchase === "Práxis")
+      undo = { kind: "spell", key: purchase === "Rota" ? "learned_rotes" : "learned_praxes", id: selectedSpell.id };
+    else undo = { kind: "willpower" };
     const entry: MageXpEntry = {
+      undo,
       id: crypto.randomUUID(),
       description: label,
       regular: splitRegular,
@@ -3752,6 +3794,7 @@ function MageExperiencePanel({
     const entry: MageXpEntry = {
       id: crypto.randomUUID(),
       description: "Perda permanente de um ponto de Força de Vontade",
+      undo: { kind: "willpowerLoss" },
       regular: 0,
       arcane: 0,
       createdAt: new Date().toISOString(),
@@ -3769,16 +3812,35 @@ function MageExperiencePanel({
     );
   }
   function revert(entry: MageXpEntry) {
+    if (!history.some(item => item.id === entry.id)) return;
+    let undo = entry.undo;
+    // Older purchases lack a delta record; recognize only unambiguous targets.
+    if (!undo) {
+      if (/^Gnose \d+$/.test(entry.description)) undo = { kind: "gnosis" };
+      else if (/^Sabedoria \d+$/.test(entry.description)) undo = { kind: "wisdom" };
+      else if (Object.values(ATTRIBUTES).flat().some(name => name === entry.description))
+        undo = { kind: "trait", group: "attributes", name: entry.description };
+      else if (Object.values(SKILLS).flat().some(name => name === entry.description) && entry.regular + entry.arcane === 2)
+        undo = { kind: "trait", group: "skills", name: entry.description };
+      else if (entry.previousLostWillpower !== undefined) undo = { kind: "willpowerLoss" };
+      else if (entry.description === "Recuperar ponto perdido de Força de Vontade") undo = { kind: "willpower" };
+      else {
+        const arcanaName = Object.keys(arcana).find(name => entry.description.startsWith(`${name} `) && /^\d+$/.test(entry.description.slice(name.length + 1)));
+        const merit = merits.find(item => item.translatedName === entry.description);
+        const spell = spells.find(item => item.name === entry.description);
+        if (arcanaName) undo = { kind: "arcana", name: arcanaName };
+        else if (merit && character.merits.filter(item => item.name === merit.name && !item.grantedBy).length === 1)
+          undo = { kind: "merit", name: merit.name, dots: entry.regular + entry.arcane };
+        else if (spell) undo = { kind: "spell", id: spell.id, key: entry.arcane > 0 ? "learned_praxes" : "learned_rotes" };
+        else if (Object.values(SKILLS).flat().some(name => name === entry.description))
+          undo = { kind: "specialty", skill: entry.description, name: "Nova Especialização" };
+      }
+    }
+    if (!undo) return setFeedback("Esta compra antiga não identifica com segurança o avanço a reembolsar.");
     const next = structuredClone(character);
-    next.attributes = entry.before.attributes;
-    next.skills = entry.before.skills;
-    next.merits = entry.before.merits;
-    next.specializations = entry.before.specializations;
-    next.line_data = entry.before.line_data;
+    refundMageAdvancement(next, undo);
     next.current_state = {
       ...next.current_state,
-      willpower_lost_dots:
-        entry.previousLostWillpower ?? next.current_state?.willpower_lost_dots,
       mage_experience_available: regular + entry.regular,
       arcane_experience_available: arcane + entry.arcane,
       mage_experience_spent: Math.max(0, spentRegular - entry.regular),
@@ -4541,6 +4603,8 @@ function recalculateCtlDerived(sheet: CharacterSheet) {
 }
 function derivedWithPermanentMerits(character: CharacterSheet) {
   const derived = { ...character.derived };
+  if (character.game_line === "CtL")
+    derived.LucidezMaxima = Number(derived.LucidezMaxima ?? derived.ClarezaMaxima ?? 1) + permanentClarityBonus(character.current_state);
   const grantedSkills = (
     character.line_data.merit_granted_skill_bonuses &&
     typeof character.line_data.merit_granted_skill_bonuses === "object"
@@ -4878,6 +4942,7 @@ function normalizeStoredSheet(value: CharacterSheet): CharacterSheet {
             : (item?.name ?? ""),
         ),
         dots: Number(item?.dots ?? 1),
+        instanceId: item?.instanceId ? String(item.instanceId) : undefined,
         sourceId: item?.sourceId ? String(item.sourceId) : undefined,
         source: item?.source ? String(item.source) : undefined,
         configuration: normalizeMeritConfiguration(item?.configuration),

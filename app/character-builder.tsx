@@ -56,6 +56,7 @@ import {
 } from "@/lib/merits";
 import { CONTRACTS, type ContractDefinition } from "@/lib/contracts";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
+import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
 import {
   arcanaCreationErrors,
   canSelectInitialContract,
@@ -76,6 +77,7 @@ import { SKILL_SPECIALTY_SUGGESTIONS } from "@/lib/skill-specialties";
 
 export type Specialty = { skill: string; name: string; grantedBy?: string };
 export type MeritSelection = {
+  instanceId?: string;
   name: string;
   dots: number;
   sourceId?: string;
@@ -255,7 +257,8 @@ export function CharacterBuilder({
   const [touchstone, setTouchstone] = useState(
     String(initial?.line_data.touchstone ?? ""),
   );
-  const [wyrd, setWyrd] = useState(Number(initial?.line_data.wyrd ?? 1));
+  const wyrdProgression = powerProgression(initial, "wyrd");
+  const [wyrd, setWyrd] = useState(wyrdProgression.creation);
   const [secondRegalia, setSecondRegalia] = useState(
     translateRegalia(String(initial?.line_data.second_regalia ?? "")),
   );
@@ -280,7 +283,8 @@ export function CharacterBuilder({
   const [resistanceBonus, setResistanceBonus] = useState(
     String(initial?.line_data.resistance_bonus ?? ""),
   );
-  const [gnosis, setGnosis] = useState(Number(initial?.line_data.gnosis ?? 1));
+  const gnosisProgression = powerProgression(initial, "gnosis");
+  const [gnosis, setGnosis] = useState(gnosisProgression.creation);
   const [arcana, setArcana] = useState<Record<string, number>>(
     normalizeArcana(initial?.line_data.arcana),
   );
@@ -292,7 +296,8 @@ export function CharacterBuilder({
   );
   const [error, setError] = useState("");
 
-  const meritBudget = 10 - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
+  const meritAllowance = creationMeritAllowance(initial, line === "CtL" ? "wyrd" : "gnosis");
+  const meritBudget = meritAllowance - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
   const meritCatalog = useMemo(() => {
     const merged = new Map(
       getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map((item) => [item.name.toLocaleLowerCase(), item]),
@@ -309,7 +314,7 @@ export function CharacterBuilder({
     MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
   const maximumPowerFromMerits = Math.max(
     1,
-    Math.min(3, 1 + Math.floor(Math.max(0, 10 - meritSpent) / 5)),
+    Math.min(3, 1 + Math.floor(Math.max(0, meritAllowance - meritSpent) / 5)),
   );
   useEffect(() => {
     if (line === "CtL" && wyrd > maximumPowerFromMerits)
@@ -537,8 +542,9 @@ export function CharacterBuilder({
             needle,
             thread,
             touchstone,
-            wyrd,
-            frailties: normalizeChangelingFrailties(initial?.line_data.frailties, wyrd),
+            creation_wyrd: wyrd,
+            wyrd: Math.min(10, wyrd + wyrdProgression.advancement),
+            frailties: normalizeChangelingFrailties(initial?.line_data.frailties, wyrd + wyrdProgression.advancement),
             custom_court: customCourt,
             kith_custom: customKith,
             kith_skill: customKith
@@ -574,7 +580,8 @@ export function CharacterBuilder({
             nimbus,
             dedicated_tool: tool,
             resistance_bonus: resistanceBonus,
-            gnosis,
+            creation_gnosis: gnosis,
+            gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
             wisdom: 7,
             aspirations,
             arcana,
@@ -767,6 +774,7 @@ export function CharacterBuilder({
                 setTouchstone,
                 wyrd,
                 setWyrd,
+                powerAdvancement: wyrdProgression.advancement,
                 secondRegalia,
                 setSecondRegalia,
                 favoredAttribute,
@@ -808,6 +816,7 @@ export function CharacterBuilder({
                 setResistanceBonus,
                 gnosis,
                 setGnosis,
+                powerAdvancement: gnosisProgression.advancement,
                 arcana,
                 setArcana,
                 rotes,
@@ -838,8 +847,8 @@ export function CharacterBuilder({
             merits={merits}
             lineData={
               line === "CtL"
-                ? { seeming, kith, court, needle, thread, wyrd }
-                : { path, order, gnosis }
+                ? { seeming, kith, court, needle, thread, wyrd: Math.min(10, wyrd + wyrdProgression.advancement) }
+                : { path, order, gnosis: Math.min(10, gnosis + gnosisProgression.advancement) }
             }
           />
         )}
@@ -1119,14 +1128,14 @@ function CtlStep(props: any) {
           invalid={props.missing("secondRegalia")}
         />
         <Choice
-          label="Fado"
+          label={props.powerAdvancement ? "Fado na criação" : "Fado"}
           value={String(props.wyrd)}
           setValue={(value) => props.setWyrd(Number(value))}
           options={powerOptions}
         />
       </div>
       <p className="rule-callout">
-        <ShieldCheck /> Regalia da Feição:{" "}
+        <ShieldCheck /> {props.powerAdvancement > 0 && <>Fado atual: <strong>{Math.min(10, props.wyrd + props.powerAdvancement)}</strong> ({props.powerAdvancement} por experiência preservados) · </>}Regalia da Feição:{" "}
         <strong>{seemingData?.regalia ?? "selecione a Feição"}</strong> ·
         Méritos disponíveis: <strong>{props.meritBudget}</strong>
       </p>
@@ -1926,7 +1935,7 @@ function MtaStep(props: any) {
         />
         <OrderSelector {...props} invalid={props.missing("order")} />
         <Choice
-          label="Gnose"
+          label={props.powerAdvancement ? "Gnose na criação" : "Gnose"}
           value={String(props.gnosis)}
           setValue={(value: string) => props.setGnosis(Number(value))}
           options={powerOptions}
@@ -1972,7 +1981,7 @@ function MtaStep(props: any) {
         </label>
       </div>
       <p className="rule-callout">
-        <ShieldCheck /> Regentes:{" "}
+        <ShieldCheck /> {props.powerAdvancement > 0 && <>Gnose atual: <strong>{Math.min(10, props.gnosis + props.powerAdvancement)}</strong> ({props.powerAdvancement} por experiência preservados) · </>}Regentes:{" "}
         <strong>{pathData?.ruling.join(" e ") ?? "selecione o Caminho"}</strong>{" "}
         · Inferior: <strong>{pathData?.inferior ?? "—"}</strong> · Méritos
         disponíveis: <strong>{props.meritBudget}</strong>

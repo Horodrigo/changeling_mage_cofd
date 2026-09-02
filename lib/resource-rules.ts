@@ -1,6 +1,15 @@
 export type DamageLevel = "bashing" | "lethal" | "aggravated";
 export type ClarityDamageLevel = "mild" | "severe";
 
+export function permanentClarityBonus(state: Record<string, unknown>) {
+  const value = Number(state.clarity_bonus ?? 0);
+  return Number.isFinite(value) ? Math.max(0, Math.trunc(value)) : 0;
+}
+
+export function changePermanentClarity(state: Record<string, unknown>, delta: 1 | -1) {
+  return { ...state, clarity_bonus: Math.max(0, permanentClarityBonus(state) + delta) };
+}
+
 const POWER_LIMITS: Record<number, { maximum: number; perTurn: number }> = {
   1: { maximum: 10, perTurn: 1 },
   2: { maximum: 11, perTurn: 2 },

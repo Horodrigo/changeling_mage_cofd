@@ -64,7 +64,9 @@ export function normalizeChangelingFrailties(value: unknown, wyrd: number) {
 
 export function wyrdSummary(wyrd: number) {
   const rating = Math.max(1, Math.min(10, Math.trunc(wyrd)));
-  return `Fado ${rating} (-${Math.floor(rating / 2)} Fadiga/Doenças; ${3 + rating * 2} Frutas)`;
+  const penaltyReduction = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4][rating - 1];
+  const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "ilimitadas"][rating - 1];
+  return `Fado ${rating} (-${penaltyReduction} Fadiga/Doenças; ${typeof fruits === "number" ? `${fruits} Frutas` : `Frutas ${fruits}`})`;
 }
 
 export const MTA_PATHS = {

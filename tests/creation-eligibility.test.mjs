@@ -29,7 +29,11 @@ test("cria e remove Fragilidades conforme os níveis pares de Fado", () => {
 });
 
 test("resume os benefícios de Fado para mouse, foco e toque", () => {
-  assert.equal(creationRules.wyrdSummary(5), "Fado 5 (-2 Fadiga/Doenças; 13 Frutas)");
+  const reductions = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4];
+  const fruits = ["3 Frutas", "7 Frutas", "7 Frutas", "13 Frutas", "13 Frutas", "13 Frutas", "29 Frutas", "29 Frutas", "101 Frutas", "Frutas ilimitadas"];
+  for (let level = 1; level <= 10; level++) {
+    assert.equal(creationRules.wyrdSummary(level), `Fado ${level} (-${reductions[level - 1]} Fadiga/Doenças; ${fruits[level - 1]})`);
+  }
 });
 
 test("explica separadamente cada erro na distribuição inicial de Arcana", () => {
