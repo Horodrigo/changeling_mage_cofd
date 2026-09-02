@@ -101,7 +101,7 @@ import {
   REPEATABLE_MERITS,
   type MeritDefinition,
 } from "@/lib/merits";
-import { findKith } from "@/lib/changeling-kiths";
+import { findKith, kithDisplayName } from "@/lib/changeling-kiths";
 import {
   CONTRACTS,
   findContract,
@@ -880,7 +880,7 @@ function CharacterPaper({
               />
               <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Fio" value={data.thread} />
-              <SheetField label="Fratria" value={data.kith} />
+              <SheetField label="Fratria" value={kithDisplayName(data.kith, Boolean(data.kith_custom))} />
               <SheetField label="Crônica" value="" />
               <SheetField
                 label="Conceito"
@@ -5398,8 +5398,8 @@ function SeemingLore({ seeming }: { seeming: string }) {
   );
 }
 function KithLore({ data }: { data: Record<string, unknown> }) {
-  const definition = findKith(data.kith);
-  const name = String(data.kith ?? "");
+  const definition = data.kith_custom ? undefined : findKith(data.kith);
+  const name = kithDisplayName(data.kith, Boolean(data.kith_custom));
   const skill = String(data.kith_skill ?? definition?.skill ?? "");
   const description = String(
     data.kith_description ?? definition?.description ?? "",

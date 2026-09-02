@@ -1,5 +1,11 @@
 // Gerado exclusivamente dos 13 PDFs locais por work/extract-rule-fields.mjs.
 export const MERIT_PREREQUISITES_PT: Record<string, string> = {
+  "ctl-hedge:hedge-sorcerer": "Ocultismo •, Mentor ••",
+  "ctl-hedge:frightful-incantation": "Feiticeiro do Espinheiro ••••, Perseverança ••, Manto •• que permita impor Condições de Desvario baseadas em medo",
+  "ctl-hedge:magic-dreams": "Feiticeiro do Espinheiro ••••, Ocultismo •••",
+  "ctl-2ed:manymask": "Fado ••, Manipulação •••",
+  "ctl-2ed:rigid-mask": "Subterfúgio ••",
+  "ctl-dark-eras:oath-blood-liege": "Juramento a um vampiro",
   "core-2ed:area-of-expertise": "Perseverança •• e uma Especialização de Perícia",
   "core-2ed:eye-for-the-strange": "Perseverança ••, Ocultismo •",
   "core-2ed:fast-reflexes": "Raciocínio ••• ou Destreza •••",
@@ -102,7 +108,7 @@ export const MERIT_PREREQUISITES_PT: Record<string, string> = {
   "h-courts:acquired-taste": "Ocultismo ••",
   "h-courts:can-t-spook-a-spooker": "Manto de Outono ••",
   "h-courts:favored-phobia": "Intimidação ••",
-  "h-courts:hedgewalker": "Sentido do Espinheiro, Wyrd •••",
+  "h-courts:hedgewalker": "Sentido da Sebe, Wyrd •••",
   "h-courts:i-love-a-good-scare": "Não pode possuir Habituado ao Terror",
   "h-courts:intuitive-artificer": "Ocultismo ••",
   "h-courts:inured-to-terror": "Não pode possuir Adoro um Bom Susto",

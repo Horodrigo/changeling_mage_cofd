@@ -1,6 +1,7 @@
 export type KithDefinition = {
   id: string;
   name: string;
+  translatedName?: string;
   skill: string;
   description: string;
   blessing: string;
@@ -8,8 +9,36 @@ export type KithDefinition = {
   page: number;
 };
 
+// Names and IDs stay stable for existing sheets; localization only changes presentation.
+export const KITH_NAMES_PT: Record<string, string> = {
+  Absinthial: "Absintial", Airtouched: "Tocado pelo Ar", Antiquarian: "Antiquário",
+  Apoptosome: "Apoptossomo", Artist: "Artista", Asclepian: "Asclepiano",
+  Bearskin: "Pele de Urso", Beastcaller: "Chamador de Feras", Becquerel: "Becquerel",
+  Blightbent: "Corrompido", Bricoleur: "Artífice", Bridgeguard: "Guardião da Ponte",
+  "Bright One": "Resplandecente", Chalomot: "Calomote", Chatelaine: "Castelão",
+  Chevalier: "Cavaleiro", Chimera: "Quimera", Cleverquick: "Astuto",
+  Climacteric: "Climatérico", Cloakskin: "Pele de Manto", Concubus: "Côncubo",
+  Cyclopean: "Ciclópico", Delver: "Escavador", Doppelganger: "Sósia",
+  Draconic: "Dracônico", Dryad: "Dríade", Enkrateia: "Autodomínio",
+  Farwalker: "Andarilho Distante", Flowering: "Florescente", Flickerflash: "Relampejante",
+  Ghostheart: "Coração Fantasma", Glimmerwisp: "Névoa Cintilante", Gravewight: "Espectro Tumular",
+  Gremlin: "Gremlin", Gristlegrinder: "Triturador de Cartilagem", Helldiver: "Mergulhador Infernal",
+  Hunterheart: "Coração de Caçador", Leechfinger: "Dedos de Sanguessuga", Lethipomp: "Condutor do Esquecimento",
+  Levinquick: "Veloz como o Raio", Librorum: "Guardião dos Livros", Liminal: "Liminar",
+  Lullescent: "Sussurrante", Manikin: "Manequim", Mirrorskin: "Pele de Espelho",
+  Moonborn: "Nascido da Lua", Muse: "Musa", Nightsinger: "Cantor Noturno",
+  Notary: "Tabelião", Nymph: "Ninfa", Oculus: "Óculo", Playmate: "Companheiro de Brincadeiras",
+  Plaguesmith: "Forjador de Pragas", Polychromatic: "Policromático", Razorhand: "Mão de Navalha",
+  Reborn: "Renascido", Riddleseeker: "Buscador de Enigmas", Sandharrowed: "Flagelado pela Areia",
+  Shadowsoul: "Alma Sombria", Sideromancer: "Sideromante", Snowskin: "Pele de Neve",
+  Spiegelbild: "Reflexo", Stoneflesh: "Carne de Pedra", Swarmflight: "Voo de Enxame",
+  Swimmerskin: "Pele de Nadador", Telluric: "Telúrico", Uttervoice: "Voz Absoluta",
+  Valkyrie: "Valquíria", Veneficus: "Venéfico", Venombite: "Mordida Venenosa",
+  Whisperwisp: "Sussurro Fugaz", Wisewitch: "Bruxo Sábio", Witchtooth: "Dente de Bruxa",
+};
+
 const kith = (name:string, skill:string, description:string, blessing:string, source:string, page:number):KithDefinition => ({
-  id: name.toLocaleLowerCase("en-US").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""), name, skill, description, blessing, source, page,
+  id: name.toLocaleLowerCase("en-US").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""), name, translatedName: KITH_NAMES_PT[name] ?? name, skill, description, blessing, source, page,
 });
 
 export const KITHS: KithDefinition[] = [
@@ -89,6 +118,15 @@ export const KITHS: KithDefinition[] = [
 ];
 
 export function findKith(name:unknown) {
-  const wanted=String(name??"").trim().toLocaleLowerCase("en-US");
-  return KITHS.find((item)=>item.name.toLocaleLowerCase("en-US")===wanted);
+  const wanted=kithSearchText(String(name??""));
+  return KITHS.find((item)=>[item.id, item.name, item.translatedName].some(value=>value && kithSearchText(value)===wanted));
+}
+
+export function kithSearchText(value: string) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("pt-BR");
+}
+
+export function kithDisplayName(name: unknown, custom = false) {
+  const value = String(name ?? "");
+  return custom ? value : findKith(value)?.translatedName ?? value;
 }

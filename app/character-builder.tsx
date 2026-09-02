@@ -62,7 +62,7 @@ import {
   canSelectInitialContract,
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
-import { KITHS, findKith, type KithDefinition } from "@/lib/changeling-kiths";
+import { KITHS, findKith, kithDisplayName, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
@@ -847,7 +847,7 @@ export function CharacterBuilder({
             merits={merits}
             lineData={
               line === "CtL"
-                ? { seeming, kith, court, needle, thread, wyrd: Math.min(10, wyrd + wyrdProgression.advancement) }
+                ? { seeming, kith: kithDisplayName(kith, customKith), court, needle, thread, wyrd: Math.min(10, wyrd + wyrdProgression.advancement) }
                 : { path, order, gnosis: Math.min(10, gnosis + gnosisProgression.advancement) }
             }
           />
@@ -1335,14 +1335,13 @@ function CourtSelector(props: any) {
 function KithSelector(props: any) {
   const [search, setSearch] = useState("");
   const [creating, setCreating] = useState(Boolean(props.customKith));
-  const normalized = search.trim().toLocaleLowerCase("pt-BR");
-  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...KITHS, ...(props.kithCatalog ?? [])];
-  const selected = allKiths.find(item=>item.name===props.kith);
+  const normalized = kithSearchText(search);
+  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...KITHS, ...(props.kithCatalog ?? [])].sort((a,b)=>(a.translatedName ?? a.name).localeCompare(b.translatedName ?? b.name,"pt-BR"));
+  const selected = props.customKith ? allKiths.find(item=>item.homebrew && item.name===props.kith) : findKith(props.kith);
   const filtered = allKiths.filter(
     (item) =>
       !normalized ||
-      `${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`
-        .toLocaleLowerCase("pt-BR")
+      kithSearchText(`${item.translatedName ?? ""} ${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`)
         .includes(normalized),
   );
   const choose = (item: KithDefinition & {homebrew?:true}) => {
@@ -1361,7 +1360,7 @@ function KithSelector(props: any) {
     <div className="kith-field">
       <span>Fratria</span>
       <div className="kith-current">
-        <strong>{props.kith || "Nenhuma selecionada"}</strong>
+        <strong>{kithDisplayName(props.kith, props.customKith) || "Nenhuma selecionada"}</strong>
         <small>
           {props.customKith
             ? `${props.customKithSkill || "Perícia não escolhida"} · Criação do jogador`
@@ -1442,7 +1441,7 @@ function KithSelector(props: any) {
               <div>
                 {filtered.map((item) => {
                   const isSelected =
-                    !props.customKith && props.kith === item.name;
+                    selected?.id === item.id;
                   return (
                     <article
                       className={
@@ -1451,7 +1450,8 @@ function KithSelector(props: any) {
                       key={item.id}
                     >
                       <div>
-                        <strong>{item.name}</strong>
+                        <strong>{item.translatedName ?? item.name}</strong>
+                        {item.translatedName && item.translatedName !== item.name && <small>{item.name}</small>}
                         <small>
                           {item.skill} · {item.source} · p. {item.page}
                         </small>

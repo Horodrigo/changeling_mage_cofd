@@ -96,7 +96,7 @@ const CTL_PRIMARY = [
   ["Faerie Favor", fixed(3)], ["Fair Harvest", fixed(1,2)], ["Firebrand", fixed(2)], ["Glamour Fasting", fixed(1)],
   ["Goblin Bounty", range(1,5)], ["Gentrified Bearing", fixed(2)], ["Grounded", fixed(3)], ["Hedge Brawler", fixed(2)],
   ["Hedge Duelist", range(1,3)], ["Hedge Sense", fixed(1)], ["Hob Kin", fixed(1)], ["Hollow", range(1,5)],
-  ["Lethal Mien", fixed(2)], ["Mantle", range(1,5)], ["Market Sense", fixed(1)], ["Noblesse Oblige", range(1,3)],
+  ["Lethal Mien", fixed(2)], ["Mantle", range(1,5)], ["Manymask", fixed(3)], ["Rigid Mask", fixed(3)], ["Market Sense", fixed(1)], ["Noblesse Oblige", range(1,3)],
   ["Pandemoniacal", range(1,3)], ["Parallel Lives", fixed(3)], ["Stable Trod", range(1,5)], ["Token", range(1,5)],
   ["Touchstone", range(1,5)], ["Warded Dreams", range(1,3)], ["Workshop", range(1,5)],
 ].map(([name, ratings]) => m(name as string, ratings as number[], "CtL", "ctl-2ed", "Changeling the Lost", "Changeling", 3));
@@ -116,8 +116,8 @@ const CTL_LOCAL_OVERRIDES = [
 const CTL_SUPPLEMENTS = [
   ...[["Regalia Manifestation", range(1,5)], ["Dramaturge", fixed(3)], ["Understudy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-kith-kin","Kith and Kin","Changeling",2)),
   ...[["Baron of the Lesser Ones", fixed(4)], ["Dauphines of Wayward Children", fixed(4)], ["Master of Keys", fixed(4)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-oak-ash-thorn","Oak, Ash, and Thorn","Entitlement",2)),
-  ...[["Holding", range(1,5)], ["Thistle Guardian", fixed(3)], ["Dream-Tripper", fixed(3)], ["Dream Ghost", fixed(2)], ["Twice Shy", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-hedge","The Hedge","Changeling",2)),
-  ...[["Hedgewise", fixed(2)], ["Librarian", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-dark-eras","Dark Eras Changeling","Historical",2)),
+  ...[["Holding", range(1,5)], ["Thistle Guardian", fixed(3)], ["Dream-Tripper", fixed(3)], ["Dream Ghost", fixed(2)], ["Twice Shy", fixed(3)], ["Hedge Sorcerer", fixed(4)], ["Frightful Incantation", fixed(4)], ["Magic Dreams", fixed(5)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-hedge","The Hedge","Changeling",2)),
+  ...[["Hedgewise", fixed(2)], ["Librarian", fixed(3)], ["Oath: Blood Liege", fixed(3)]].map(([n,r]) => m(n as string,r as number[],"CtL","ctl-dark-eras","DE:CtL","Historical",2)),
   ...[
     ["Bedside Manner",fixed(3)],["Dressed to Kill",fixed(2)],["Friends in Low Places",range(1,3)],["Spring-Loaded",fixed(1)],["I Meant to Do That",fixed(1)],["Host with the Most",fixed(3)],
     ["Beware of Dog",fixed(2)],["No Rest for the Wicked",fixed(3)],["Challenge Accepted",fixed(1)],["Street Pharmacist",fixed(1)],["Don't Mess with Jim",fixed(1)],["Sucker Born Every Minute",fixed(1)],

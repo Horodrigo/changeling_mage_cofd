@@ -1210,9 +1210,9 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Disputada",
     duration: "Uma história",
     success:
-      "Proíbe uma ação Instantânea específica. Se o alvo a realizar durante a história, sofre 1 dano letal e recebe Comatoso. Não-changelings só podem resolver Comatoso se alguém entrar em seus sonhos e convencê-los de que estão sonhando, ou se outro poder sobrenatural os despertar vencendo Confronto de Vontades. Se permanecer Comatoso até o fim da história, acorda e a Condição desaparece sem resolução nem Beat.",
+      "Proíbe uma ação Instantânea específica. Se o alvo a realizar durante a história, sofre 1 dano letal e recebe Comatose. Não-changelings só podem resolver Comatose se alguém entrar em seus sonhos e convencê-los de que estão sonhando, ou se outro poder sobrenatural os despertar vencendo Confronto de Vontades. Se permanecer Comatose até o fim da história, acorda e a Condição desaparece sem resolução nem Beat.",
     exceptionalSuccess:
-      "Comatoso deve ser resolvido normalmente e não desaparece ao fim da história.",
+      "Comatose deve ser resolvido normalmente e não desaparece ao fim da história.",
     page: 58,
   },
   "ctl-kith-kin:shrike-s-larder": {

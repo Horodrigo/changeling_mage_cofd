@@ -475,12 +475,12 @@ export const CONTRACTS: ContractDefinition[] = [
   },
   {
     id: "ctl-2ed:hedgewall",
-    name: "Muralha do Espinheiro",
+    name: "Muralha da Sebe",
     originalName: "Hedgewall",
     type: "Real",
     regalia: "Escudo",
     description:
-      "Ergue uma muralha viva do Espinheiro, resistente e perigosa, para bloquear passagem e proteger uma área.",
+      "Ergue uma muralha viva da Sebe, resistente e perigosa, para bloquear passagem e proteger uma área.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 142,
@@ -564,7 +564,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Corcel",
     description:
-      "Revela a direção ou rota mais adequada até um destino, inclusive através do Espinheiro, embora não elimine perigos do percurso.",
+      "Revela a direção ou rota mais adequada até um destino, inclusive através da Sebe, embora não elimine perigos do percurso.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 144,
@@ -1970,7 +1970,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Reveste o changeling na autoridade protetora de um enviado real, fortalecendo sua Defesa e dificultando ataques enquanto cumpre uma missão declarada.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 125,
   },
   {
@@ -1982,7 +1982,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Sussurros lisonjeiros fazem o alvo sentir-se valorizado e inclinado a confiar, facilitando Manobra Social e pedidos aparentemente inocentes.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 126,
   },
   {
@@ -1994,7 +1994,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Concede por uma cena domínio excepcional de uma capacidade escolhida, elevando a atuação do alvo ao padrão ideal imaginado pelo changeling.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 127,
   },
   {
@@ -2006,7 +2006,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Fragmenta a compreensão linguística numa área, fazendo palavras parecerem estranhas e dificultando comunicação coordenada entre os afetados.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 128,
   },
   {
@@ -2018,7 +2018,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Oculta informação em um padrão lógico mutável, permitindo ao changeling cifrar mensagens ou confundir sistemas e mentes que tentem interpretá-las.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 128,
   },
   {
@@ -2030,7 +2030,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Fecha sobrenaturalmente uma passagem e reforça sua resistência, exigindo que intrusos superem a vontade do changeling ou encontrem outro caminho.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 130,
   },
   {
@@ -2042,7 +2042,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Inverte temporariamente o significado percebido de pureza e corrupção, fazendo perigos repulsivos parecerem seguros e proteções parecerem ameaçadoras.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 130,
   },
   {
@@ -2054,7 +2054,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Protege uma conversa ou recinto contra escuta, gravação e espionagem sobrenatural, abafando palavras para quem não foi autorizado.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 131,
   },
   {
@@ -2066,7 +2066,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Desvia um viajante de sua rota e o conduz a um encontro ou local escolhido, desde que exista um caminho plausível entre ambos.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 132,
   },
   {
@@ -2078,7 +2078,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Permite atravessar terreno natural e Espinheiro sem impedimento, ignorando vegetação, lama e outros obstáculos de movimento.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 133,
   },
   {
@@ -2090,7 +2090,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Transforma o changeling em fumaça e o transporta por frestas, chaminés ou entre nuvens conectadas antes que reassuma forma sólida.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 134,
   },
   {
@@ -2102,7 +2102,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Abre uma passagem que conduz o alvo para perto de algo que deseja intensamente, embora o destino reflita o desejo e não necessariamente sua segurança.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 135,
   },
   {
@@ -2114,7 +2114,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Cria comida e bebida encantadas que satisfazem desejos sensoriais, fortalecem celebrações e podem facilitar a colheita de Glamour.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 135,
   },
   {
@@ -2126,7 +2126,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Quem partilha a bebida preparada pelo changeling encontra dificuldade para ocultar desejos e verdades emocionais durante a conversa.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 136,
   },
   {
@@ -2138,7 +2138,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Desperta lembranças guardadas em pedra, permitindo perceber acontecimentos marcantes ocorridos em seu contato ou proximidade.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 136,
   },
   {
@@ -2150,7 +2150,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Interroga a memória lenta de uma árvore para descobrir pessoas, clima e eventos que ela testemunhou ao seu redor.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 136,
   },
   {
@@ -2162,7 +2162,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Cria instantaneamente uma atmosfera de reencontro amistoso, melhorando impressões e reduzindo hostilidade inicial entre os presentes.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 137,
   },
   {
@@ -2174,7 +2174,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Revela beleza feérica avassaladora que fascina e assusta observadores, impondo reverência e dificultando que ajam contra o changeling.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 138,
   },
   {
@@ -2186,7 +2186,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Produz um clarão súbito de luz solar que cega inimigos e pode afetar criaturas sobrenaturalmente vulneráveis ao sol.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 139,
   },
   {
@@ -2198,7 +2198,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Transforma ira em proteção física, reduzindo dano enquanto o changeling persegue a fonte declarada de sua fúria.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 139,
   },
   {
@@ -2210,7 +2210,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "A luz extrema do solstício revela seres escondidos, ilusões e segredos numa área, expondo-os à percepção dos presentes.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 140,
   },
   {
@@ -2222,7 +2222,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Amaldiçoa a fala do alvo para que seja mal compreendida, causando medo, suspeita e conflito sempre que tenta comunicar-se.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 140,
   },
   {
@@ -2234,7 +2234,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Faz restos ou pertences de um morto relatarem fragmentos de sua história e das circunstâncias que cercaram sua morte.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 141,
   },
   {
@@ -2246,7 +2246,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Concede ao changeling aspecto e propriedades de um fantasma, permitindo assustar observadores e interagir com fenômenos crepusculares.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 141,
   },
   {
@@ -2258,7 +2258,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Abre temporariamente uma passagem para um domínio dos mortos ou permite atravessar uma fronteira associada à morte e ao retorno.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 141,
   },
   {
@@ -2270,7 +2270,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Um grito sobrenatural causa terror e sofrimento físico a todos que o ouvem, podendo anunciar morte iminente.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 142,
   },
   {
@@ -2282,7 +2282,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Prende uma lembrança, emoção ou pensamento em pequeno objeto, removendo-o temporariamente do dono e permitindo que outro o experimente.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 143,
   },
   {
@@ -2294,7 +2294,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Um ataque feérico derruba o alvo em sono ou torpor semelhante à morte, resistente a tentativas mundanas de despertá-lo.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 143,
   },
   {
@@ -2306,7 +2306,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Infesta um edifício com manifestações fantasmagóricas e perigos sobrenaturais que obedecem ao tema definido pelo changeling.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 144,
   },
   {
@@ -2318,7 +2318,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Chama um morto de volta à atividade por tempo limitado, como espírito ou cadáver animado, para responder ou cumprir uma tarefa.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 144,
   },
   {
@@ -2330,7 +2330,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Espalha mensagens e sugestões por sombras próximas, alcançando ouvintes sem revelar a origem e alimentando seus temores.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 146,
   },
   {
@@ -2342,7 +2342,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Um olhar acelera decadência e envelhecimento no alvo ou objeto, causando fraqueza e dano conforme sua natureza.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 146,
   },
   {
@@ -2354,7 +2354,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Apaga o changeling da atenção consciente de um alvo, fazendo-o ignorar sua presença sem torná-lo fisicamente invisível.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 147,
   },
   {
@@ -2366,7 +2366,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Cobre o alvo de tristeza que distorce percepção e torna difícil notar esperança, aliados ou saídas da situação.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 147,
   },
   {
@@ -2378,7 +2378,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Faz o alvo desaparecer gradualmente da memória e dos registros, reduzindo sua presença social e os vínculos que o sustentam.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 147,
   },
   {
@@ -2390,7 +2390,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Transforma pesar em proteção, reduzindo dano e influência emocional enquanto o changeling contempla a fonte de sua tristeza.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 148,
   },
   {
@@ -2402,7 +2402,7 @@ export const CONTRACTS: ContractDefinition[] = [
     description:
       "Congela a essência emocional do alvo, drenando Força de Vontade e impedindo-o de obter conforto ou inspiração.",
     sourceId: "h-beyond-hedge",
-    source: "Além do Espinheiro",
+    source: "Beyond the Hedge",
     page: 148,
   },
   {
@@ -3174,7 +3174,7 @@ const ORIGINAL_SOURCE_TITLES: Record<string, string> = {
   "ctl-2ed": "Changeling the Lost",
   "ctl-kith-kin": "Kith and Kin",
   "ctl-oak-ash-thorn": "Oak, Ash, and Thorn",
-  "ctl-dark-eras": "Dark Eras Changeling",
+  "ctl-dark-eras": "DE:CtL",
   "h-beyond-hedge": "Beyond the Hedge",
   "h-courts": "Book of Courts",
   "h-seemings": "Book of Seemings",

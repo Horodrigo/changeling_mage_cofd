@@ -101,7 +101,7 @@ export const SOURCE_CATALOG = [
   { id: "ctl-kith-kin", title: "Kith and Kin", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "ctl-oak-ash-thorn", title: "Oak, Ash, and Thorn", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "ctl-hedge", title: "The Hedge", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
-  { id: "ctl-dark-eras", title: "Dark Eras Changeling", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
+  { id: "ctl-dark-eras", title: "Dark Eras Changeling (DE:CtL)", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "mta-signs", title: "Signs of Sorcery", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "mta-pentacle", title: "Tome of the Pentacle", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "nh-nameless", title: "Nameless and Accursed", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "ADJACENT" },

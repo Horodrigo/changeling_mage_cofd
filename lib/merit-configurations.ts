@@ -66,6 +66,8 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [
     fields: [text("skill", "Perícia escolhida", "Briga ou Armas Brancas")],
   },
   { name: "Fame", fields: [text("field", "Área da fama")] },
+  { name: "Elemental Warrior", fields: [text("element", "Elemento escolhido")] },
+  { name: "Oath: Blood Liege", fields: [text("liege", "Vampiro a quem jurou lealdade"), area("oath", "Juramento e obrigações")] },
   {
     name: "Fighting Finesse",
     fields: [text("weapon", "Arma ou Briga escolhida")],
