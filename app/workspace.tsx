@@ -102,6 +102,8 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName } from "@/lib/changeling-kiths";
+import { contractOutcomeSections } from "@/lib/contract-presentation";
+import { alphabetical } from "@/lib/option-order";
 import {
   CONTRACTS,
   findContract,
@@ -1744,7 +1746,7 @@ function LoadoutCatalog<T extends { id: string; name: string }>({
   onChange: (value: string[]) => void;
 }) {
   const [search, setSearch] = useState("");
-  const filtered = items.filter((item) =>
+  const filtered = alphabetical(items, item => item.name).filter((item) =>
     `${item.name} ${describe(item)} ${details(item)}`
       .toLocaleLowerCase("pt-BR")
       .includes(search.toLocaleLowerCase("pt-BR")),
@@ -2101,7 +2103,7 @@ function MeritCompanionCard({
           Derrubado).
         </p>
         <div className="companion-options">
-          {FAE_MOUNT_ABILITIES.map(([id, label, description]) => {
+          {alphabetical(FAE_MOUNT_ABILITIES, item => item[1]).map(([id, label, description]) => {
             const active = abilities.includes(id);
             return (
               <label key={id} className={active ? "selected" : ""}>
@@ -2267,7 +2269,7 @@ function MeritCompanionCard({
         Numina ({numina.length}/{numinaLimit})
       </strong>
       <div className="companion-options numina-options">
-        {FAMILIAR_NUMINA.map((item) => {
+        {alphabetical(FAMILIAR_NUMINA, item => item).map((item) => {
           const active = numina.includes(item);
           return (
             <label key={item} className={active ? "selected" : ""}>
@@ -2501,7 +2503,7 @@ function ConditionManager({
     "Todas",
     ...Array.from(new Set(catalog.map((item) => item.category))),
   ];
-  const filtered = catalog.filter(
+  const filtered = alphabetical(catalog, item => item.name).filter(
     (condition) =>
       (category === "Todas" || condition.category === category) &&
       `${condition.name} ${condition.originalName} ${condition.description} ${condition.penalty ?? ""} ${condition.sourceCode}`
@@ -4202,7 +4204,7 @@ function ExperiencePowerPicker({
     "Todos",
     ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),
   ] as string[];
-  const visible = items.filter(
+  const visible = alphabetical(items, item => item.name).filter(
     (item) =>
       (category === "Todas" || item.category === category) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
@@ -4298,12 +4300,12 @@ function ExperienceMeritPicker({
   const homebrews = useHomebrews();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
-  const catalog = [
+  const catalog = alphabetical([
       ...getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
       ...homebrews.merits.filter(
         (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
       ),
-    ],
+    ], item => item.translatedName || item.name),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),
     categories = ["Todas", ...new Set(catalog.map((item) => item.category))];
@@ -4458,6 +4460,10 @@ function RuleSelect({
   options: Array<{ value: string; label: string; group?: string }>;
 }) {
   const safe = options.length ? value || options[0].value : "__none";
+  // These two lists deliberately follow the character sheet's trait groups.
+  if (options !== ATTRIBUTE_OPTIONS && options !== SKILL_OPTIONS) {
+    options = alphabetical(options, item => item.label);
+  }
   const groups = [...new Set(options.map((item) => item.group).filter(Boolean))];
   return (
     <Select value={safe} onValueChange={onChange} disabled={!options.length}>
@@ -5298,18 +5304,11 @@ function ContractPowerList({
                 {definition.regalia} · {definition.source} · p.{" "}
                 {definition.page}
               </small>
-              <p>{definition.description}</p>
-              {definition.success && (
-                <p className="rule-detail">
-                  <strong>Efeito / Sucesso:</strong> {definition.success}
+              {contractOutcomeSections(definition).map((section) => (
+                <p className="rule-detail" key={section.label}>
+                  <strong>{section.label}:</strong> {section.text}
                 </p>
-              )}
-              {definition.exceptionalSuccess && (
-                <p className="rule-detail">
-                  <strong>Sucesso excepcional:</strong>{" "}
-                  {definition.exceptionalSuccess}
-                </p>
-              )}
+              ))}
               {definition.options?.length && (
                 <div className="contract-options">
                   <strong>Opções</strong>
@@ -5400,13 +5399,13 @@ function SeemingLore({ seeming }: { seeming: string }) {
 function KithLore({ data }: { data: Record<string, unknown> }) {
   const definition = data.kith_custom ? undefined : findKith(data.kith);
   const name = kithDisplayName(data.kith, Boolean(data.kith_custom));
-  const skill = String(data.kith_skill ?? definition?.skill ?? "");
+  const skill = String(definition?.skill ?? data.kith_skill ?? "");
   const description = String(
-    data.kith_description ?? definition?.description ?? "",
+    definition?.description ?? data.kith_description ?? "",
   );
-  const blessing = String(data.kith_blessing ?? definition?.blessing ?? "");
-  const source = String(data.kith_source ?? definition?.source ?? "");
-  const page = Number(data.kith_page ?? definition?.page ?? 0);
+  const blessing = String(definition?.blessing ?? data.kith_blessing ?? "");
+  const source = String(definition?.source ?? data.kith_source ?? "");
+  const page = Number(definition?.page ?? data.kith_page ?? 0);
   if (!name)
     return (
       <LorePanel

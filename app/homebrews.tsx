@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { alphabetical } from "@/lib/option-order";
 import { CONTRACTS } from "@/lib/contracts";
 import { RAW_MERITS } from "@/lib/merits";
 import { ARCANA, CTL_COURTS, CTL_SEEMINGS, REGALIA, SKILLS } from "@/lib/creation-rules";
@@ -108,7 +109,7 @@ export function HomebrewsPage({
         return setError("Informe nome, categoria e Loophole do Contrato.");
       if (contract.hasRoll && (!contract.dicePool?.trim() || !contract.success?.trim()))
         return setError("Contratos com jogada precisam de parada de dados e efeito de Sucesso.");
-      const item = { ...contract, name: contract.name.trim(), originalName: contract.name.trim(), regalia: contract.categoryKind === "Independente" ? "Independente" : contract.regalia.trim(), cost: contract.costs.join(" + ") };
+      const item = { ...contract, name: contract.name.trim(), originalName: contract.name.trim(), regalia: contract.categoryKind === "Independente" ? "Independente" : contract.regalia.trim(), cost: contract.costs.join(" + "), ...(!contract.hasRoll ? {dicePool:"Nenhum",success:undefined,exceptionalSuccess:undefined,failure:undefined,dramaticFailure:undefined} : {}) };
       commit({ ...catalog, contracts: upsert(catalog.contracts, item) });
     }
     if (editor === "spell") {
@@ -187,12 +188,17 @@ function Field({label,children,wide=false}:{label:string;children:ReactNode;wide
 function ContractForm({value,onChange,knownRegalia,knownCourts}:{value:HomebrewContract;onChange:(v:HomebrewContract)=>void;knownRegalia:string[];knownCourts:string[]}) {
   return <div className="homebrew-form">
     <Field label="Nome"><Input value={value.name} onChange={e=>onChange({...value,name:e.target.value})}/></Field>
-    <Field label="Tipo"><select value={value.type} onChange={e=>onChange({...value,type:e.target.value as "Comum"|"Real"})}><option>Comum</option><option>Real</option></select></Field><Field label="Categoria"><select value={value.categoryKind} onChange={e=>{const categoryKind=e.target.value as HomebrewContract["categoryKind"];onChange({...value,categoryKind,regalia:categoryKind==="Independente"?"Independente":""})}}><option>Regalia</option><option>Corte</option><option>Independente</option></select></Field>
+    <Field label="Tipo"><select value={value.type} onChange={e=>onChange({...value,type:e.target.value as "Comum"|"Real"})}><option>Comum</option><option>Real</option></select></Field><Field label="Categoria"><select value={value.categoryKind} onChange={e=>{const categoryKind=e.target.value as HomebrewContract["categoryKind"];onChange({...value,categoryKind,regalia:categoryKind==="Independente"?"Independente":""})}}><option>Corte</option><option>Independente</option><option>Regalia</option></select></Field>
     {value.categoryKind === "Regalia" && <CategoryPicker key={`${value.id}:regalia`} label="Regalia" value={value.regalia} options={knownRegalia} onChange={regalia=>onChange({...value,regalia})} allowCustom />}
     {value.categoryKind === "Corte" && <CategoryPicker key={`${value.id}:court`} label="Corte" value={value.regalia} options={knownCourts} onChange={regalia=>onChange({...value,regalia})} />}
     <Field label="Custos (um por linha)" wide><Textarea value={value.costs.join("\n")} onChange={e=>onChange({...value,costs:e.target.value.split("\n").map(x=>x.trim()).filter(Boolean)})} placeholder={'1 Glamour\n1 Força de Vontade'}/></Field>
-    <Field label="Possui jogada de dados"><select value={value.hasRoll?"sim":"nao"} onChange={e=>onChange({...value,hasRoll:e.target.value==="sim"})}><option value="sim">Sim</option><option value="nao">Não</option></select></Field>{value.hasRoll && <Field label="Parada de dados"><Input value={value.dicePool??""} onChange={e=>onChange({...value,dicePool:e.target.value})}/></Field>}
-    {value.hasRoll ? <><Field label="Sucesso" wide><Textarea value={value.success??""} onChange={e=>onChange({...value,success:e.target.value,description:e.target.value})}/></Field><Field label="Sucesso Excepcional" wide><Textarea value={value.exceptionalSuccess??""} onChange={e=>onChange({...value,exceptionalSuccess:e.target.value})}/></Field></> : <Field label="Efeito" wide><Textarea value={value.description} onChange={e=>onChange({...value,description:e.target.value,success:undefined,exceptionalSuccess:undefined})}/></Field>}
+    <Field label="Possui jogada de dados"><select value={value.hasRoll?"sim":"nao"} onChange={e=>onChange({...value,hasRoll:e.target.value==="sim"})}><option value="nao">Não</option><option value="sim">Sim</option></select></Field>{value.hasRoll && <Field label="Parada de dados"><Input value={value.dicePool??""} onChange={e=>onChange({...value,dicePool:e.target.value})}/></Field>}
+    {value.hasRoll ? <>
+      <Field label="Sucesso" wide><Textarea value={value.success??""} onChange={e=>onChange({...value,success:e.target.value,description:e.target.value})}/></Field>
+      <Field label="Sucesso Excepcional" wide><Textarea value={value.exceptionalSuccess??""} onChange={e=>onChange({...value,exceptionalSuccess:e.target.value})}/></Field>
+      <Field label="Falha" wide><Textarea value={value.failure??""} onChange={e=>onChange({...value,failure:e.target.value})}/></Field>
+      <Field label="Falha Dramática" wide><Textarea value={value.dramaticFailure??""} onChange={e=>onChange({...value,dramaticFailure:e.target.value})}/></Field>
+    </> : <Field label="Efeito" wide><Textarea value={value.description} onChange={e=>onChange({...value,description:e.target.value,success:undefined,exceptionalSuccess:undefined,failure:undefined,dramaticFailure:undefined})}/></Field>}
     <Field label="Opções (uma por linha)" wide><Textarea value={(value.options??[]).join("\n")} onChange={e=>onChange({...value,options:e.target.value.split("\n").map(x=>x.trim()).filter(Boolean)})}/></Field>
     {value.categoryKind !== "Corte" && <Field label="Benefícios de Feição (Feição: benefício)" wide><Textarea value={formatNamedText(value.seemingBenefits as Record<string,string>)} onChange={e=>onChange({...value,seemingBenefits:parseNamedText(e.target.value)})} placeholder={`${Object.keys(CTL_SEEMINGS)[0]}: benefício`}/></Field>}
     {value.categoryKind === "Corte" && <Field label="Benefícios de Corte (Corte: benefício)" wide><Textarea value={formatNamedText(value.courtBenefits)} onChange={e=>onChange({...value,courtBenefits:parseNamedText(e.target.value)})}/></Field>}
@@ -204,15 +210,15 @@ const ARCANA_KEYS:Record<string,string>={Morte:"Death",Destino:"Fate","Forças":
 const ALL_SKILLS=Object.values(SKILLS).flat();
 function SpellForm({value,onChange}:{value:HomebrewSpell;onChange:(v:HomebrewSpell)=>void}) { const arcana=Object.keys(value.requirements)[0]??""; return <div className="homebrew-form">
   <Field label="Nome"><Input value={value.name} onChange={e=>onChange({...value,name:e.target.value})}/></Field>
-  <Field label="Arcano"><select value={arcana} onChange={e=>{const level=PRACTICES.find(p=>p.name===value.practice)?.level??1;onChange({...value,requirements:e.target.value?{[e.target.value]:level}:{}})}}><option value="">Selecione</option>{ARCANA.map(name=><option key={name} value={ARCANA_KEYS[name]}>{name}</option>)}</select></Field>
-  <Field label="Prática"><select value={value.practice} onChange={e=>{const practice=e.target.value;const level=PRACTICES.find(p=>p.name===practice)?.level??1;onChange({...value,practice,requirements:arcana?{[arcana]:level}:{}})}}>{PRACTICES.map(p=><option key={p.name} value={p.name}>{p.name} (Arcano {p.level})</option>)}</select></Field>
-  <Field label="Fator Primário"><select value={value.primaryFactor} onChange={e=>onChange({...value,primaryFactor:e.target.value})}><option>Potência</option><option>Duração</option></select></Field>
+  <Field label="Arcano"><select value={arcana} onChange={e=>{const level=PRACTICES.find(p=>p.name===value.practice)?.level??1;onChange({...value,requirements:e.target.value?{[e.target.value]:level}:{}})}}><option value="">Selecione</option>{alphabetical(ARCANA, name=>name).map(name=><option key={name} value={ARCANA_KEYS[name]}>{name}</option>)}</select></Field>
+  <Field label="Prática"><select value={value.practice} onChange={e=>{const practice=e.target.value;const level=PRACTICES.find(p=>p.name===practice)?.level??1;onChange({...value,practice,requirements:arcana?{[arcana]:level}:{}})}}>{alphabetical(PRACTICES, p=>p.name).map(p=><option key={p.name} value={p.name}>{p.name} (Arcano {p.level})</option>)}</select></Field>
+  <Field label="Fator Primário"><select value={value.primaryFactor} onChange={e=>onChange({...value,primaryFactor:e.target.value})}><option>Duração</option><option>Potência</option></select></Field>
   <Field label="Resistência"><select value={value.withstand} onChange={e=>onChange({...value,withstand:e.target.value})}><option value="">Nenhuma</option><option>Perseverança</option><option>Vigor</option><option>Compostura</option></select></Field>
   <Field label="Perícia de Rota"><select value={value.roteSkills[0]??""} onChange={e=>onChange({...value,roteSkills:e.target.value?[e.target.value]:[]})}><option value="">Selecione</option>{ALL_SKILLS.map(skill=><option key={skill}>{skill}</option>)}</select></Field>
   <Field label="Descrição / Efeito" wide><Textarea value={value.description??""} onChange={e=>onChange({...value,description:e.target.value})}/></Field>
   </div>; }
 function MeritForm({value,onChange,categories}:{value:HomebrewMerit;onChange:(v:HomebrewMerit)=>void;categories:string[]}) { const contiguous=value.ratings.length>0&&value.ratings.every((rating,index)=>rating===index+1);const [ratingMode,setRatingMode]=useState<"range"|"custom">(contiguous?"range":"custom");useEffect(()=>setRatingMode(contiguous?"range":"custom"),[value.id]);const hasLevelBenefits=value.hasLevelBenefits??Boolean(value.levels?.length);const setRatings=(ratings:number[])=>onChange({...value,ratings,levels:(value.levels??[]).filter(level=>ratings.includes(level.rating))}); return <div className="homebrew-form">
-  <Field label="Nome"><Input value={value.translatedName} onChange={e=>onChange({...value,translatedName:e.target.value})}/></Field><Field label="Disponível para"><select value={value.line} onChange={e=>onChange({...value,line:e.target.value as HomebrewMerit["line"]})}><option value="Core">Todos</option><option value="CtL">Changeling</option><option value="MtA">Mago</option></select></Field><CategoryPicker key={value.id} label="Categoria" value={value.category} options={categories} onChange={category=>onChange({...value,category})} allowCustom />
+  <Field label="Nome"><Input value={value.translatedName} onChange={e=>onChange({...value,translatedName:e.target.value})}/></Field><Field label="Disponível para"><select value={value.line} onChange={e=>onChange({...value,line:e.target.value as HomebrewMerit["line"]})}><option value="CtL">Changeling</option><option value="MtA">Mago</option><option value="Core">Todos</option></select></Field><CategoryPicker key={value.id} label="Categoria" value={value.category} options={categories} onChange={category=>onChange({...value,category})} allowCustom />
   <Field label="Formato dos níveis"><select value={ratingMode} onChange={e=>{const mode=e.target.value as "range"|"custom";setRatingMode(mode);if(mode==="range")setRatings(Array.from({length:Math.max(...value.ratings,1)},(_,index)=>index+1))}}><option value="range">De 1 até X</option><option value="custom">Níveis personalizados</option></select></Field>
   {ratingMode==="range"?<Field label="Nível máximo"><select value={Math.max(...value.ratings,1)} onChange={e=>setRatings(Array.from({length:Number(e.target.value)},(_,index)=>index+1))}>{[1,2,3,4,5].map(n=><option key={n}>{n}</option>)}</select></Field>:<Field label="Níveis disponíveis" wide><div className="homebrew-checks">{[1,2,3,4,5].map(n=><label key={n}><input type="checkbox" checked={value.ratings.includes(n)} onChange={e=>setRatings(e.target.checked?[...value.ratings,n].sort():value.ratings.filter(x=>x!==n))}/>{n} •</label>)}</div></Field>}
   <Field label="Repetível"><select value={value.repeatable?"sim":"nao"} onChange={e=>onChange({...value,repeatable:e.target.value==="sim"})}><option value="nao">Não</option><option value="sim">Sim</option></select></Field>
@@ -234,7 +240,7 @@ function CategoryPicker({ label, value, options, onChange, allowCustom = false }
       else { setCustom(false); onChange(event.target.value); }
     }}>
       <option value="">Selecione</option>
-      {options.map((option) => <option key={option}>{option}</option>)}
+      {alphabetical(options, option=>option).map((option) => <option key={option}>{option}</option>)}
       {allowCustom && <option value="__custom">Criar nova…</option>}
     </select>
     {custom && <Input value={value} onChange={(event) => onChange(event.target.value)} placeholder={`Nome da nova ${label.toLocaleLowerCase("pt-BR")}`} />}

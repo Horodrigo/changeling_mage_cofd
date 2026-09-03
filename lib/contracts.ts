@@ -10,6 +10,7 @@ export type ContractDefinition = {
   type: "Comum" | "Real";
   regalia: string;
   description: string;
+  hasRoll?: boolean;
   dicePool?: string;
   loophole?: string;
   seemingBenefits?: Partial<Record<SeemingKey, string>>;
@@ -19,6 +20,8 @@ export type ContractDefinition = {
   duration?: string;
   success?: string;
   exceptionalSuccess?: string;
+  failure?: string;
+  dramaticFailure?: string;
   options?: string[];
   goblinDebt?: string;
   sourceId: string;
@@ -46,7 +49,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Coroa",
     description:
-      "Quem vê o changeling acredita que ele é um membro respeitado de uma organização presente, concedendo-lhe Status efetivo igual à Presença enquanto sustentar o papel.",
+      "Quem vê o changeling acredita que ele ocupa uma posição respeitada em uma organização presente na cena. Enquanto sustentar esse papel, ele possui Status efetivo igual à sua Presença.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 128,
@@ -58,7 +61,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Coroa",
     description:
-      "A magnificência terrível do changeling domina um alvo que lhe dê atenção. Em caso de sucesso, a vítima sofre a Inclinação Insensível; um sucesso excepcional também a deixa Intimidada.",
+      "A magnificência terrível do changeling subjuga um alvo que lhe dê atenção. Em caso de sucesso, a vítima sofre a Inclinação Insensato; um sucesso excepcional também impõe a Condição Acovardado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 129,
@@ -94,7 +97,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Coroa",
     description:
-      "Retira de um recipiente um objeto funcional que já tenha visto ou manuseado, ou chama um hobgoblin por uma porta para realizar uma tarefa. A criatura ou objeto permanece apenas enquanto recebe atenção, em geral até o fim da cena.",
+      "Retira de um recipiente um objeto funcional que já tenha visto ou manuseado, ou convoca um hobgoblin por uma porta para realizar uma tarefa. A criatura ou o objeto permanece apenas enquanto recebe atenção, em geral até o fim da cena.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 130,
@@ -118,7 +121,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Coroa",
     description:
-      "Toca uma flauta de prata para convocar animais de uma espécie em grande área e lhes dar ordens simples. Animais hostis podem resistir; num sucesso excepcional, permanecem sob comando por um dia e uma noite.",
+      "Ao tocar uma flauta de prata, o changeling convoca os animais de uma espécie em uma grande área e lhes dá ordens simples. Animais hostis podem resistir; com um sucesso excepcional, permanecem sob seu comando por um dia e uma noite.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 131,
@@ -130,7 +133,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Coroa",
     description:
-      "Impõe ao ambiente a santidade e a paz de uma corte feérica, transformando o local em território submetido à autoridade do changeling e dificultando violência e desordem enquanto o efeito durar.",
+      "Protege uma reunião contra violência física entre os participantes. Não interrompe uma luta já iniciada; tentativas de forçar violência por meios sobrenaturais provocam um Confronto de Vontades.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 131,
@@ -142,7 +145,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Joias",
     description:
-      "Orienta o futuro de um alvo para uma experiência provável no mês seguinte. Ações que conduzem ao evento recebem bônus e as que o impedem sofrem penalidade; o Contrato cria o encontro, não determina seu resultado.",
+      "Orienta o futuro de um alvo para uma experiência provável no mês seguinte. As ações que conduzem ao evento recebem bônus, enquanto as que o impedem sofrem penalidades. O Contrato cria o encontro, mas não determina seu resultado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 132,
@@ -154,7 +157,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Joias",
     description:
-      "Abençoa por uma ação um objeto ou o trabalho de outra pessoa. O bônus de equipamento do objeto, ou a Perícia usada em Ofícios, Medicina ou Informática, é substituído pelo Wyrd do changeling.",
+      "Abençoa um objeto ou o trabalho de outra pessoa durante uma ação. O Fado do changeling substitui o bônus de equipamento do objeto ou o valor da Perícia utilizada em uma ação de Ofícios, Medicina ou Computação.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 132,
@@ -202,7 +205,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Joias",
     description:
-      "Recobre um objeto mundano pequeno com a Máscara e altera seus aspectos visuais. A ilusão engana plenamente os sentidos mortais, mas não muda a forma básica nem a função real do objeto.",
+      "Altera a aparência de um objeto pequeno por meio de uma ilusão semelhante à Máscara, sem mudar suas propriedades físicas ou sua forma básica.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 133,
@@ -214,7 +217,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Joias",
     description:
-      "Manipula o tempo de um objeto: restaura dano e peças, acelera sua deterioração ou o congela no tempo e no espaço, tornando-o imóvel e imune a dano durante o capítulo.",
+      "Manipula o tempo de um objeto: repara danos e restaura peças, acelera sua deterioração ou o congela no tempo e no espaço, tornando-o imóvel e imune a dano durante o capítulo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 134,
@@ -238,7 +241,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Joias",
     description:
-      "Declara uma alteração impossível porém limitada na realidade percebida, fazendo o mundo e seus observadores aceitarem temporariamente a nova condição como verdadeira.",
+      "Altera um detalhe ainda não observado de um objeto inanimado, como se ele sempre tivesse sido assim. Não pode contradizer algo que alguém já tenha visto nesta cena.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 134,
@@ -262,7 +265,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espelho",
     description:
-      "Transforma materiais improvisados e sucata em equipamento útil, fazendo substitutos feéricos funcionarem como as ferramentas ou objetos desejados durante o efeito.",
+      "Permite improvisar equipamento mundano em um único turno, sem as ferramentas ou peças normalmente necessárias. Reduz a penalidade de improvisação e produz um objeto funcional.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 135,
@@ -274,7 +277,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espelho",
     description:
-      "Usa uma superfície refletora para observar à distância outra pessoa, lugar ou reflexo ligado ao alvo, oferecendo uma janela sensorial remota.",
+      "Permite observar, através de uma superfície refletora, outra superfície que já tenha refletido o rosto do changeling. A visão aparece para todos que olharem o reflexo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 136,
@@ -286,7 +289,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espelho",
     description:
-      "Estuda um rival e percebe suas capacidades relevantes, revelando forças, fraquezas ou vantagens que ajudam o changeling a enfrentá-lo em uma disputa.",
+      "Ao vencer um jogo disputado por pelo menos dez minutos, revela a Virtude, o Vício ou seus equivalentes e uma Aspiração do adversário. Um sucesso excepcional revela uma segunda Aspiração.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 136,
@@ -298,7 +301,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espelho",
     description:
-      "Interpreta sinais no reflexo para receber uma visão simbólica sobre perigos, oportunidades ou acontecimentos ligados a uma pergunta do changeling.",
+      "Revela um acontecimento significativo ou uma promessa do passado do alvo, ou um evento ou acordo importante de seu futuro próximo. As visões do futuro indicam possibilidades, não um destino imutável.",
     options: [
       "Passado: O jogador vê uma visão do evento mais importante já ocorrido com o alvo, relevante aos interesses atuais do jogador. Isso independe das memórias do alvo — pode ser algo esquecido ou reprimido. Alternativamente, pode ver a última promessa ou acordo feito pelo alvo.",
       "Futuro: O jogador vê o evento, promessa ou acordo mais importante que vai acontecer com o alvo nos próximos dias. O futuro não é fixo, e a interferência do jogador pode alterá-lo. O jogador, e o alvo (caso seja informado), recebem a Condição Informado.",
@@ -314,7 +317,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espelho",
     description:
-      "Lê no rosto e no reflexo de alguém a estabilidade de sua identidade, revelando sua Clareza ou característica equivalente e condições que a estejam abalando.",
+      "Revela a Lucidez máxima e atual do alvo, além de suas Condições de Lucidez. Um sucesso excepcional também mostra as circunstâncias de seu dano de Lucidez mais recente.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 137,
@@ -346,7 +349,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espelho",
     description:
-      "Reveste uma área com um cenário ilusório convincente, alterando a aparência e a percepção de objetos e arredores como se o mundo fosse um palco.",
+      "Transforma o próprio changeling em um objeto inanimado. Os sucessos podem aprimorar a Durabilidade da forma assumida, permitir movimento ou aumentar seu Tamanho.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 138,
@@ -365,12 +368,12 @@ export const CONTRACTS: ContractDefinition[] = [
   },
   {
     id: "ctl-2ed:riddle-kith",
-    name: "Enigma do Kith",
+    name: "Enigma da Frátria",
     originalName: "Riddle-Kith",
     type: "Real",
     regalia: "Espelho",
     description:
-      "Imita temporariamente a bênção de outro Kith após compreender e representar um aspecto de sua natureza feérica.",
+      "Altera a Aparência feérica de um changeling para que pareça pertencer a outra Frátria, sem mudar sua Máscara, Feição ou Bênção. A mudança real de Frátria é um benefício específico, não o efeito básico.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 139,
@@ -394,7 +397,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espelho",
     description:
-      "Enxerga os fios que sustentam uma transformação ou efeito sobrenatural e tenta desfazê-lo por meio de um Confronto de Vontades.",
+      "Retrocede os últimos dez segundos, ou um turno, permitindo ao changeling mudar suas ações enquanto os demais repetem as próprias. Uma vez por história, pode ser ativado automaticamente para evitar sua morte, se ele puder pagar o custo.",
     action: "Reflexiva",
     duration: "Instantânea",
     sourceId: "ctl-2ed",
@@ -408,7 +411,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Escudo",
     description:
-      "Envolve o changeling em escuridão protetora, dificultando que inimigos o percebam ou atinjam enquanto permanece nas sombras.",
+      "Facilita esconder-se na penumbra e permite ocultar aliados com o mesmo teste de Furtividade. O changeling recebe um bônus baseado em seu Fado e pode tentar se esconder reflexivamente uma vez por turno.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 140,
@@ -420,7 +423,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Escudo",
     description:
-      "Reproduz a resistência traiçoeira dos Fae, reduzindo o dano de um ataque por meio de uma defesa sobrenatural acionada no momento do impacto.",
+      "Permite aplicar a Defesa contra Armas de Fogo e mantê-la mesmo quando surpreendido. Ao Esquivar-se com sucesso, o changeling pode redirecionar o ataque contra outro alvo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 140,
@@ -432,7 +435,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Escudo",
     description:
-      "Divide com aliados próximos dano, fadiga ou outra aflição, distribuindo o sofrimento para impedir que uma única pessoa suporte todo o efeito.",
+      "Ao sofrer um ponto de dano letal, o changeling cura dois pontos de dano de outra pessoa, começando pelo contundente e depois pelo letal. Não cura dano agravado, e o ferimento assumido não pode ser curado por magia.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 140,
@@ -444,7 +447,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Escudo",
     description:
-      "Faz vegetação espinhosa brotar e formar uma barreira que restringe movimento, oferece cobertura e fere quem tenta atravessá-la.",
+      "Cria uma área de espinhos com um efeito escolhido ao invocar o Contrato: drenar Glamour, imobilizar ou atacar. Fora da Sebe, a área acompanha o changeling; dentro dela, permanece fixa e também pode afetá-lo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 141,
@@ -456,7 +459,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Escudo",
     description:
-      "Cria ou encontra um esconderijo impossível em uma superfície próxima, permitindo ao changeling ocultar-se de perseguidores por um curto período.",
+      "Oculta uma abertura existente depois que o changeling passa por ela, fazendo-a parecer ausente ou intransponível. Não cria uma passagem nova.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 142,
@@ -468,7 +471,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Escudo",
     description:
-      "A presença do changeling fortalece aliados, concedendo resistência contra medo, coerção e ataques que abalariam sua determinação.",
+      "Após uma cena de interação significativa, cura dois pontos de dano leve ou um de dano grave à Lucidez de outro changeling. Um sucesso excepcional também permite atuar como Pilar temporário.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 142,
@@ -480,19 +483,19 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Escudo",
     description:
-      "Ergue uma muralha viva da Sebe, resistente e perigosa, para bloquear passagem e proteger uma área.",
+      "Ergue uma fortificação de espinhos que dificulta ataques à distância e fere quem tenta escalá-la. Seu diâmetro depende do Fado do changeling.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 142,
   },
   {
     id: "ctl-2ed:pure-clarity",
-    name: "Clareza Pura",
+    name: "Lucidez Pura",
     originalName: "Pure Clarity",
     type: "Real",
     regalia: "Escudo",
     description:
-      "Purifica temporariamente a percepção do changeling ou de um aliado, protegendo a Clareza e afastando ilusões, confusão e influência mental.",
+      "Permite realizar uma ação que normalmente causaria um ponto de ruptura sem sofrê-lo. Pode ser usado uma vez por cena, inclusive após a ação, desde que ela tenha ocorrido nessa mesma cena.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 143,
@@ -504,7 +507,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Escudo",
     description:
-      "O changeling proclama um voto inabalável e recebe proteção sobrenatural enquanto não ceder nem agir contra a resolução declarada.",
+      "Ao tocar alguém e fazer uma promessa, transforma um ponto de dano agravado do alvo em letal e concede ao changeling a Condição Estoico. Pode ser usado sobre si mesmo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 143,
@@ -516,7 +519,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Escudo",
     description:
-      "Invoca a renovação do amanhecer para afastar influências persistentes, recuperar aliados e oferecer alívio de condições nocivas.",
+      "Torna o changeling e seu equipamento intangíveis, permitindo atravessar barreiras físicas. Ele não pode tocar nem atacar seres materiais, mas ainda interage com seres feéricos incorpóreos; isso não concede acesso ao Crepúsculo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 143,
@@ -540,7 +543,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Corcel",
     description:
-      "Entra ou sai de sonhos e percorre distâncias oníricas, usando o vínculo entre o sonhador e a paisagem como caminho.",
+      "Ao tocar uma pessoa adormecida, permite entrar no Bastião dela pelo Portão de Marfim. Um sucesso excepcional reduz a Fortificação do Bastião até que o sonhador desperte.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 144,
@@ -552,7 +555,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Corcel",
     description:
-      "Apaga ou falsifica rastros deixados pelo changeling e seus companheiros, tornando sua trilha extremamente difícil de seguir.",
+      "Apaga ou disfarça as pegadas do próprio changeling, impedindo rastreamento mundano. Rastreamento sobrenatural exige um Confronto de Vontades; as marcas alteradas continuam assim após o término do Contrato.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 144,
@@ -564,7 +567,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Corcel",
     description:
-      "Revela a direção ou rota mais adequada até um destino, inclusive através da Sebe, embora não elimine perigos do percurso.",
+      "Revela a direção e a distância até a ocorrência mais próxima de uma característica escolhida da Sebe, como um Refúgio, Mercado Goblin ou árvore de frutas goblins. O efeito básico não localiza criaturas.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 144,
@@ -576,7 +579,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Corcel",
     description:
-      "Realiza um salto sobrenaturalmente longo e preciso, cobrindo grandes distâncias e superando obstáculos físicos em um instante.",
+      "Permite realizar um salto com trajetória de até dez metros por ponto de Fado, mediante um teste de Força + Atletismo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 145,
@@ -588,7 +591,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Corcel",
     description:
-      "Envolve o changeling em uma metamorfose protetora e faz emergir uma forma adequada à viagem, fuga ou ambiente enfrentado.",
+      "Transforma o changeling em uma de duas formas animais escolhidas ao aprender o Contrato. Ele adquire as características físicas, os sentidos e os modos naturais de locomoção da forma, mas não poderes sobrenaturais.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 145,
@@ -600,7 +603,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Corcel",
     description:
-      "Distorce o ritmo do tempo ao redor do changeling, acelerando seus movimentos e permitindo realizar mais antes que o mundo o acompanhe.",
+      "Acelera ou desacelera o tempo de viagem na Sebe para o dobro ou a metade do ritmo normal, afetando o changeling e, com custo adicional, seus acompanhantes. Os alvos acelerados também recebem benefícios em corridas e perseguições.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 146,
@@ -612,7 +615,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Corcel",
     description:
-      "Transforma um salto em deslocamento impossível, transportando o changeling e possíveis companheiros para um ponto distante associado ao horizonte.",
+      "Envia uma pessoa ou objeto para o futuro, por até um dia por sucesso. O alvo desaparece e retorna ao mesmo lugar sem perceber a passagem do tempo; o changeling não pode antecipar seu retorno.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 146,
@@ -624,7 +627,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Corcel",
     description:
-      "Entra em uma superfície refletora e emerge de outro espelho conhecido, usando os reflexos como passagem entre lugares.",
+      "Abre uma passagem entre superfícies refletoras, desde que o changeling já tenha tocado a superfície de saída. Pode levar companheiros de mãos dadas ou alcançar um objeto do outro lado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 146,
@@ -636,7 +639,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Corcel",
     description:
-      "Concede características predatórias de uma fera, como garras, asas ou sentidos de caça, transformando o changeling em combatente sobrenatural.",
+      "Concede adaptações animais, escolhidas separadamente: locomoção mais rápida, sentidos aguçados ou garras que causam dano letal. Cada opção tem seu próprio custo de Glamour.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 147,
@@ -648,19 +651,19 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espada",
     description:
-      "Reveste uma arma ou os próprios golpes com um elemento escolhido, aumentando o dano e produzindo efeitos naturais coerentes com fogo, gelo, eletricidade ou outra afinidade.",
+      "Molda um elemento próximo em uma arma, como uma espada de gelo ou uma lança de relâmpagos. Os sucessos podem aumentar o dano ou o alcance, ou reduzir a penalidade de Iniciativa.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 147,
   },
   {
     id: "ctl-2ed:might-of-the-terrible-brute",
-    name: "Força da Fera Terrível",
+    name: "Força do Bruto Terrível",
     originalName: "Might of the Terrible Brute",
     type: "Comum",
     regalia: "Espada",
     description:
-      "Amplia sobrenaturalmente a força física do changeling para uma ação, permitindo feitos brutais, romper obstáculos e dominar adversários.",
+      "Permite roubar um ponto de Força do adversário como manobra após vencer um teste disputado de agarrar, acumulando até cinco pontos. Um alvo reduzido a Força zero fica Imobilizado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 148,
@@ -672,7 +675,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espada",
     description:
-      "Projeta terror feérico sobre um adversário, impondo medo e prejudicando sua capacidade de atacar ou enfrentar o changeling.",
+      "Ao observar o alvo enquanto destrói metodicamente um objeto, o changeling lhe impõe medo sobrenatural. Um sucesso excepcional permite invocar o Contrato novamente sem Glamour no próximo encontro após seu término.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 148,
@@ -684,7 +687,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espada",
     description:
-      "Manifesta a majestade selvagem do changeling, fortalecendo presença física e capacidades de combate durante a cena.",
+      "Concede imunidade ao dano mundano de um elemento escolhido e reduz pela metade o dano de fontes mágicas desse elemento. Também fornece armadura 1/1 que causa dano letal a quem enfrenta o changeling em combate corpo a corpo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 148,
@@ -696,7 +699,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espada",
     description:
-      "Canaliza ira por um toque, ferindo o alvo ou inflamando nele uma fúria difícil de controlar.",
+      "Danifica um objeto tocado, causando um ponto de dano por sucesso. Um sucesso excepcional ignora a Durabilidade do objeto.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 148,
@@ -708,7 +711,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espada",
     description:
-      "Libera uma manifestação destrutiva de um elemento sobre uma área ou inimigo, causando dano e Inclinações ambientais apropriadas.",
+      "Impõe Inclinações Ambientais em uma área ao redor do changeling, que é imune aos próprios efeitos. Glamour adicional permite acrescentar Inclinações ou ampliar a área.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 149,
@@ -720,7 +723,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espada",
     description:
-      "Invoca o Wyrd contra alguém que rompeu uma promessa, impondo uma punição poderosa cuja severidade reflete a traição cometida.",
+      "Revela a promessa mais grave que o alvo quebrou sem reparar o dano e permite criar pesadelos em vigília ligados à traição. Esses pesadelos podem ocorrer ao longo de duas semanas e admitem oniromancia.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 149,
@@ -732,7 +735,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espada",
     description:
-      "Transforma ferimentos e sangue derramado em força retaliatória, tornando o changeling mais perigoso contra quem o machucou.",
+      "Concede +3 à Iniciativa, à Intimidação e aos Atributos Físicos, além de armadura 3/3. O changeling também recebe a Condição Berserk.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 149,
@@ -744,7 +747,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espada",
     description:
-      "Marca uma presa e permite persegui-la sem descanso, superando distância, obstáculos e tentativas mundanas de despistar o caçador.",
+      "Revela a direção e a distância aproximada de uma presa até a próxima passagem do sol pelo horizonte. Se ela estiver em outro reino, revela qual; ocultação sobrenatural provoca um Confronto de Vontades.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 150,
@@ -756,7 +759,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espada",
     description:
-      "Arranca temporariamente a razão de um alvo, impondo confusão, comportamento irracional e grave vulnerabilidade mental.",
+      "Usa os sucessos da invocação para atacar a Lucidez do alvo. Se causar dano, também retira um ponto de Força de Vontade e constitui um ponto de ruptura para o changeling; em outros seres, o dano à característica equivalente é temporário.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 150,
@@ -768,7 +771,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Desperta atração ou desejo em um alvo por alguém ou algo indicado, criando impulso emocional sem garantir consentimento ou lealdade.",
+      "Revela o maior desejo do alvo e as Condições e Inclinações associadas. Pode redirecionar esse desejo para outro objeto durante a cena; um sucesso excepcional também revela os obstáculos à sua realização.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 151,
@@ -780,7 +783,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Desperta plantas e solo adormecidos, fazendo a vegetação crescer, florescer ou revelar o que percebeu em seu repouso.",
+      "Faz um alvo visível adormecer por um número de minutos igual aos sucessos; somente dano letal o desperta antes do fim. Um sucesso excepcional prolonga o sono mágico por toda a cena.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 151,
@@ -792,7 +795,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Sopra calor e vitalidade sobre um alvo, estabilizando-o e acelerando a recuperação de ferimentos ou condições físicas.",
+      "Ao tocar um alvo voluntário, remove todas as penalidades de fadiga, Inclinações ligadas à fadiga ou a enfermidades temporárias e todo o dano contundente.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 151,
@@ -804,7 +807,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Um toque ou beijo restaura frescor, beleza e vigor, removendo sinais de cansaço e ajudando o alvo a recuperar-se.",
+      "Faz chover em uma área cujo alcance, em milhas, é igual ao Manto. Pode impor Chuva Forte e, com um ponto adicional de Glamour, Inundação.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 151,
@@ -816,7 +819,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Ajusta a aparência e o comportamento percebidos para corresponder ao desejo do observador, facilitando aproximação e sedução.",
+      "Assume a aparência de quem o alvo mais deseja ver. Observadores veem a mesma pessoa; agir de modo incompatível pode exigir testes Sociais, com bônus igual ao Manto.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 152,
@@ -828,7 +831,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Primavera",
     description:
-      "Concede a um alvo renovação profunda, recuperando sua vitalidade e favorecendo crescimento, esperança e novos começos.",
+      "Um preparado acelera o crescimento e cura ferimentos, doenças passageiras e venenos. A cura e o crescimento duram uma cena; depois, os danos retornam. Em changelings, também remove temporariamente uma Condição de Lucidez e cura um ponto de dano de Lucidez.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 152,
@@ -840,7 +843,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Primavera",
     description:
-      "Restaura vida ao corpo por meio do calor da Primavera, curando ferimentos graves e podendo salvar alguém à beira da morte.",
+      "Cada sucesso reduz em um grau um ferimento: agravado para letal, letal para contundente ou contundente para curado. Um sucesso excepcional também cura todo o dano contundente restante.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 152,
@@ -852,7 +855,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Primavera",
     description:
-      "Liberta desejos guardados de uma pessoa ou grupo, fazendo impulsos reprimidos manifestarem-se intensamente durante a cena.",
+      "Permite fabricar, na metade do tempo normal, um objeto desejado pelo alvo. O objeto dura até a próxima passagem do sol pelo horizonte e concede +3 para usá-lo como incentivo em uma negociação.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 152,
@@ -864,7 +867,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Verão",
     description:
-      "Invoca vegetação vigorosa que obedece ao cortesão, prendendo inimigos, protegendo aliados ou remodelando uma área.",
+      "Anima plantas para agarrar inimigos próximos. Permite uma nova tentativa de agarrar por turno em vez do movimento, com tentativas adicionais ao sacrificar a ação ou a Defesa; os testes dos agarrões já mantidos são reflexivos.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 153,
@@ -876,7 +879,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Verão",
     description:
-      "Desperta temporariamente a natureza feérica latente de um aliado, concedendo vigor, coragem e capacidades extraordinárias.",
+      "Impõe ao alvo a Condição Devasso e permite recuperar um ponto de Força de Vontade, uma vez por cena durante a história, ao tentá-lo com sucesso. Um sucesso excepcional também impõe Obsessão Persistente por seu maior desejo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 153,
@@ -888,7 +891,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Verão",
     description:
-      "Percebe hostilidade, armas e intenções violentas ao redor, permitindo ao changeling identificar ameaças antes do ataque.",
+      "Revela a principal causa da raiva do alvo e as Condições e Inclinações ligadas a ela. Pode redirecionar essa raiva para outro alvo durante a cena.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 153,
@@ -900,7 +903,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Verão",
     description:
-      "Torna-se imune ao calor e ao fogo e move-se entre chamas sem sofrer dano, refletindo a proteção antiga da lareira.",
+      "Impõe Calor Extremo ou Frio Extremo em uma área do tamanho de um cômodo grande. O changeling é imune ao efeito e remove de si as versões pessoais dessas Inclinações.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 154,
@@ -912,7 +915,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Verão",
     description:
-      "Emite luz solar intensa que ilumina, cega adversários e afeta criaturas vulneráveis ao sol conforme sua natureza.",
+      "Emite luz solar que ilumina uma área de até Manto × 20 metros de diâmetro e cega quem olha diretamente para o changeling. Criaturas vulneráveis à luz solar sofrem metade do dano habitual, arredondada para baixo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 154,
@@ -924,7 +927,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Verão",
     description:
-      "Infunde entusiasmo guerreiro em aliados, ajudando-os a superar medo, dor e hesitação durante um confronto.",
+      "Quando um adversário tenta fugir de um conflito violento já iniciado, exige que ele gaste um ponto de Força de Vontade para fazê-lo. Caso contrário, ele deve continuar lutando e não pode sofrer a Inclinação Subjugado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 155,
@@ -936,7 +939,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Verão",
     description:
-      "Mantém o cortesão pronto para a batalha, melhorando percepção de perigos, Iniciativa e reação contra emboscadas.",
+      "Detecta automaticamente emboscadas, armadilhas ocultas e ataques-surpresa. Concede à Iniciativa um bônus igual ao Manto.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 155,
@@ -948,7 +951,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Verão",
     description:
-      "Transforma palavras em discurso ardente que mobiliza ouvintes, fortalece aliados e provoca ação imediata.",
+      "Uma repreensão causa dano contundente igual aos sucessos, ou letal contra seres feéricos. Remove duas Portas em manobras sociais, mas torna a impressão do alvo imediatamente Hostil.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 155,
@@ -960,7 +963,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Verão",
     description:
-      "Convoca fogo abrasador de Verão sobre uma área ou inimigo, causando dano letal e espalhando chamas mundanas.",
+      "Concede +2 aos testes Físicos, ignora penalidades por ferimentos e dispensa o teste de Vigor para permanecer consciente com a última caixa de Vitalidade preenchida. Um sucesso excepcional também fortalece ataques desarmados com chamas.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 155,
@@ -972,7 +975,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Verão",
     description:
-      "Concentra a luz do sol como punição contra um alvo, queimando-o e expondo aquilo que tenta ocultar.",
+      "Cria uma arma de arremesso de luz solar verdadeira, com dano letal igual ao Manto, que retorna à mão a cada turno. Um ponto adicional de Força de Vontade torna o dano agravado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 155,
@@ -984,7 +987,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "No limiar entre estações, revela um segredo ou verdade oculta sobre o alvo e mostra indícios de suas consequências.",
+      "Ilumina uma área de trinta metros de raio, revelando ocultações e disfarces mundanos que falhem no teste de resistência e impedindo novas tentativas de esconder-se. Ocultações sobrenaturais provocam Confronto de Vontades; a Máscara também pode ser percebida.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 156,
@@ -996,7 +999,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Consome esperança e conforto com o calor moribundo do ano, impondo medo e desolação emocional ao alvo.",
+      "Impõe a Condição Berserk ao alvo e concede um bônus igual ao Manto para direcionar sua fúria contra outra pessoa.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 156,
@@ -1008,7 +1011,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Outono",
     description:
-      "Exala uma tempestade que impõe Chuva Forte e Vento Forte numa área móvel. Com Glamour adicional, relâmpagos atacam todos os inimigos dentro dela enquanto o changeling permanece ileso no olho da tormenta.",
+      "Cria uma tempestade móvel com Chuva Forte e Vento Forte. Com Glamour adicional, relâmpagos atacam todos na área, exceto o próprio changeling.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 156,
@@ -1020,7 +1023,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Outono",
     description:
-      "Sussurra segredos ao alvo e recebe novamente os resultados 9 na próxima colheita de Glamour dele, ou novamente os resultados 8 se a emoção corresponder à Corte.",
+      "Concede 9-novamente à próxima colheita de Glamour de um alvo, ou 8-novamente se a emoção corresponder à Corte. Só pode ser usado uma vez por capítulo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 156,
@@ -1032,7 +1035,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Outono",
     description:
-      "Conta uma história aterrorizante e contesta cada ouvinte para impor a Condição Abalado; com sucesso excepcional, os afetados precisam gastar Força de Vontade para agir contra o narrador.",
+      "Conta uma história aterrorizante e disputa um teste com cada ouvinte para impor a Condição Abalado. Com um sucesso excepcional, os afetados precisam gastar Força de Vontade para agir contra quem contou a história.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 157,
@@ -1044,7 +1047,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Outono",
     description:
-      "Escolhe uma circunstância, evento ou vida. Uma criatura de presságio visita o changeling treze minutos — ou três turnos numa cena de ação — antes do evento ocorrer.",
+      "Escolhe uma circunstância, evento ou vida já existente. Um presságio avisa treze minutos antes de seu término, ou três turnos antes em uma cena de ação.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 157,
@@ -1068,7 +1071,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Lê presságios e permite fazer uma pergunta de sim ou não por sucesso sobre a situação; uma resposta é falsa, salvo com sucesso excepcional, quando todas são verdadeiras.",
+      "Permite fazer uma pergunta de sim ou não por sucesso sobre a situação atual. Uma resposta é falsa, exceto se houver apenas um sucesso ou um sucesso excepcional; nesses casos, todas são verdadeiras.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 157,
@@ -1080,7 +1083,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Surge fora da vista do alvo com a aparência de seu maior medo, impondo Amedrontado e exigindo Força de Vontade para ações; um sucesso excepcional também o Imobiliza.",
+      "Longe dos olhos do alvo, o changeling assume a aparência do maior medo dele. Ao se revelar, impõe Amedrontado e exige gasto de Força de Vontade para agir; um sucesso excepcional também deixa o alvo Imobilizado.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 158,
@@ -1092,7 +1095,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Transforma o changeling num turbilhão de folhas outonais capaz de voar, atravessar frestas e Esquivar reflexivamente de ataques que não poderiam ferir folhas.",
+      "Transforma o changeling em um turbilhão de folhas outonais capaz de voar, atravessar frestas e realizar uma Esquiva reflexiva contra ataques que não poderiam ferir folhas.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 158,
@@ -1104,7 +1107,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Ao tocar o oponente, drena pontos de Glamour ou de outra reserva sobrenatural iguais aos sucessos; um sucesso excepcional também o deixa Acuado diante do changeling.",
+      "Ao tocar o oponente, drena uma quantidade de pontos de Glamour ou de outra reserva sobrenatural igual aos sucessos. Um sucesso excepcional também deixa o alvo Acovardado diante do changeling.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 158,
@@ -1116,7 +1119,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Aliados confessam seus medos e o changeling os consome, concedendo coragem e resistência contra terror aos alvos, inclusive a si mesmo.",
+      "O changeling consome os medos que seus aliados confessam, concedendo aos alvos — inclusive a si mesmo — coragem e resistência ao terror.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 158,
@@ -1140,7 +1143,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Inverno",
     description:
-      "Congela literalmente o coração e torna o changeling imune ao frio, gelo e condições ambientais não baseadas em calor, além de impedir Condições emocionais durante o efeito.",
+      "Congela literalmente o coração do changeling e o torna imune ao frio, ao gelo e às condições ambientais não baseadas em calor. Também impede que ele receba Condições emocionais enquanto o efeito durar.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 159,
@@ -1152,7 +1155,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Inverno",
     description:
-      "Invoca fantasmas do inverno e cria ao redor de um ponto uma área com a Inclinação Nevasca, da qual o changeling é imune.",
+      "Invoca fantasmas do inverno e cria, ao redor de um ponto, uma área afetada pela Inclinação Nevasca. O changeling é imune aos efeitos dessa nevasca.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 159,
@@ -1164,7 +1167,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Inverno",
     description:
-      "Após conversar por uma cena, consome os arrependimentos do alvo e torna sua lembrança emocionalmente vazia, impondo-lhe Enamorado em relação ao changeling.",
+      "Após conversar com o alvo por uma cena, o changeling consome seus arrependimentos e esvazia a carga emocional da lembrança, impondo ao alvo a Condição Enamorado em relação a ele.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 159,
@@ -1176,7 +1179,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Inverno",
     description:
-      "Congela uma massa de líquido a partir do toque, expandindo a área a cada turno e formando superfície capaz de sustentar pessoas conforme o Manto.",
+      "Congela uma massa de líquido a partir do ponto tocado, expandindo a área a cada turno. O gelo forma uma superfície capaz de sustentar pessoas conforme o Manto.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 160,
@@ -1188,7 +1191,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Inverno",
     description:
-      "Ao vestir branco, mistura-se ao ambiente: recebe +3 em Furtividade, impõe -3 a ataques contra si e se torna mais difícil de rastrear por seres feéricos.",
+      "Ao vestir branco, o changeling se mistura ao ambiente: recebe +3 em Furtividade, impõe −3 aos ataques contra si e se torna mais difícil de rastrear por seres feéricos.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 160,
@@ -1224,7 +1227,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Inverno",
     description:
-      "Cria uma aura móvel de frio extremo. Penalidades dentro dela crescem a cada turno até causarem dano letal e poderem encerrar vítimas em gelo.",
+      "Cria uma aura móvel de frio extremo. As penalidades dentro dela aumentam a cada turno, até que a exposição cause dano letal e possa aprisionar as vítimas no gelo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 161,
@@ -1236,7 +1239,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Inverno",
     description:
-      "Congela o coração do alvo, impedindo cooperação, gasto e recuperação de Força de Vontade e interesse por aliados ou Aspirações; o changeling torna-se a única influência social privilegiada.",
+      "Impede o alvo de cooperar, gastar Força de Vontade ou recuperá-la por Linha, Virtude ou equivalente. Ele abandona aliados e Aspirações; pontos de ruptura ficam adiados até o fim do efeito, e o changeling recebe vantagens para influenciá-lo.",
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 161,
@@ -1248,7 +1251,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Cálice",
     description:
-      "Reabastece um recipiente com alimento ou bebida simples e nutritiva, suficiente para sustentar os presentes e expressar hospitalidade feérica.",
+      "Reabastece um recipiente com comida ou bebida simples e nutritiva, em quantidade suficiente para sustentar os presentes e expressar a hospitalidade feérica.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 35,
@@ -1344,7 +1347,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Moeda",
     description:
-      "Quem partilha uma bebida participa de um vínculo de troca: recursos, benefícios ou sofrimentos podem ser redistribuídos entre os participantes conforme os termos declarados.",
+      "Aqueles que partilham uma bebida estabelecem um vínculo de troca. Recursos, benefícios ou sofrimentos podem ser redistribuídos entre eles conforme os termos declarados.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 39,
@@ -1368,7 +1371,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Moeda",
     description:
-      "Realiza uma troca sobrenatural entre dois participantes, transferindo temporariamente uma capacidade, recurso ou condição aceita por ambos.",
+      "Realiza uma troca sobrenatural entre dois participantes, transferindo temporariamente uma capacidade, um recurso ou uma condição, com a concordância de ambos.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 41,
@@ -1416,7 +1419,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Moeda",
     description:
-      "Converte dano ou sacrifício sofrido numa dívida vinculante contra o responsável, fortalecendo a cobrança e a retaliação enquanto permanecer sem reparação.",
+      "Converte o dano ou o sacrifício sofrido em uma dívida vinculante contra o responsável. Enquanto a dívida não for reparada, fortalece a cobrança e a retaliação.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 43,
@@ -1500,7 +1503,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Cetro",
     description:
-      "Nomeia competidores e revela a posição relativa de cada um, oferecendo informação e impulso para superar o rival escolhido.",
+      "Nomeia os competidores e revela a posição relativa de cada um, oferecendo informações e um incentivo para superar o rival escolhido.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 46,
@@ -1572,7 +1575,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Estrelas",
     description:
-      "Impõe disciplina sobrenatural a quem desobedece uma orientação declarada, aplicando punição e reforçando futuras tentativas de seguir o caminho indicado.",
+      "Impõe disciplina sobrenatural a quem desobedece a uma orientação declarada, aplicando uma punição e reforçando futuras tentativas de seguir o caminho indicado.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 49,
@@ -1596,7 +1599,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Estrelas",
     description:
-      "Faz uma pessoa tornar-se centro das atenções, atraindo olhares e influência social para ela e afastando-os de outros presentes.",
+      "Torna uma pessoa o centro das atenções, direcionando olhares e influência social para ela e afastando-os dos demais presentes.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 50,
@@ -1644,7 +1647,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Estrelas",
     description:
-      "Invoca luz que iniciou sua viagem eras atrás para revelar verdades antigas, dissipar ocultação e iluminar o presente com conhecimento do passado.",
+      "Invoca a luz que iniciou sua viagem eras atrás para revelar verdades antigas, dissipar ocultações e iluminar o presente com o conhecimento do passado.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 52,
@@ -1668,7 +1671,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espinho",
     description:
-      "Envia uma mensagem por espinhos e vegetação até um destinatário ligado ao Espinheiro, que percebe a advertência na forma escolhida pelo changeling.",
+      "Envia uma mensagem por espinhos e vegetação até um destinatário ligado à Sebe. Ele recebe a advertência na forma escolhida pelo changeling.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 54,
@@ -1704,7 +1707,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Espinho",
     description:
-      "Amaldiçoa uma parte do corpo do alvo com dor cortante, impondo penalidades e possível Inclinação até que a condição da maldição seja satisfeita.",
+      "Amaldiçoa uma parte do corpo do alvo com dor cortante, impondo penalidades e, possivelmente, uma Inclinação, até que a exigência da maldição seja cumprida.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 55,
@@ -1740,7 +1743,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Espinho",
     description:
-      "Desperta uma passagem adormecida para o Espinheiro ou concede consciência temporária a um portal, permitindo abri-lo, interrogá-lo ou negociar travessia.",
+      "Desperta uma passagem adormecida para a Sebe ou concede consciência temporária a um portal, permitindo abri-lo, interrogá-lo ou negociar a travessia.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 57,
@@ -1848,7 +1851,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Independente",
     description:
-      "O vento carrega sons distantes até o changeling, permitindo escutar conversas e acontecimentos em lugares por onde ele possa circular.",
+      "O vento carrega sons distantes até o changeling, permitindo-lhe escutar conversas e acontecimentos em lugares por onde o próprio vento possa circular.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 62,
@@ -1884,7 +1887,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Independente",
     description:
-      "Move solo e pedra de forma controlada para abrir passagem, erguer pequenas formas ou deslocar objetos sem violência.",
+      "Move solo e pedra de forma controlada para abrir passagens, erguer pequenas estruturas ou deslocar objetos sem violência.",
     sourceId: "ctl-kith-kin",
     source: "Kith & Kin",
     page: 64,
@@ -1939,12 +1942,12 @@ export const CONTRACTS: ContractDefinition[] = [
   },
   {
     id: "ctl-oak-ash-thorn:the-widening-gyre",
-    name: "O Giro que se Alarga",
+    name: "A Espiral que se Alarga",
     originalName: "The Widening Gyre",
     type: "Real",
     regalia: "Independente",
     description:
-      "Amplia progressivamente a área e intensidade de um fenômeno feérico em movimento, fazendo seus efeitos se espalharem em espiral pelo ambiente.",
+      "Amplia progressivamente a área e a intensidade de um fenômeno feérico em movimento, fazendo seus efeitos se espalharem em espiral pelo ambiente.",
     sourceId: "ctl-oak-ash-thorn",
     source: "Carvalho, Freixo e Espinho",
     page: 28,
@@ -1956,7 +1959,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Independente",
     description:
-      "Declara uma regra fundamental para a cena e fortalece ações coerentes com ela, enquanto quem a viola enfrenta a resistência do Wyrd.",
+      "Declara uma regra fundamental para a cena e fortalece as ações coerentes com ela, enquanto quem a viola enfrenta a resistência do Fado.",
     sourceId: "ctl-oak-ash-thorn",
     source: "Carvalho, Freixo e Espinho",
     page: 30,
@@ -1968,7 +1971,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Coroa",
     description:
-      "Reveste o changeling na autoridade protetora de um enviado real, fortalecendo sua Defesa e dificultando ataques enquanto cumpre uma missão declarada.",
+      "Reveste o changeling com a autoridade protetora de um enviado real, fortalecendo sua Defesa e dificultando ataques contra ele enquanto cumpre uma missão declarada.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 125,
@@ -1980,7 +1983,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Coroa",
     description:
-      "Sussurros lisonjeiros fazem o alvo sentir-se valorizado e inclinado a confiar, facilitando Manobra Social e pedidos aparentemente inocentes.",
+      "Sussurros lisonjeiros fazem o alvo sentir-se valorizado e mais disposto a confiar, facilitando Manobras Sociais e pedidos aparentemente inocentes.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 126,
@@ -2076,7 +2079,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Corcel",
     description:
-      "Permite atravessar terreno natural e Espinheiro sem impedimento, ignorando vegetação, lama e outros obstáculos de movimento.",
+      "Permite atravessar terrenos naturais e a Sebe sem impedimentos, ignorando vegetação, lama e outros obstáculos ao movimento.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 133,
@@ -2100,7 +2103,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Abre uma passagem que conduz o alvo para perto de algo que deseja intensamente, embora o destino reflita o desejo e não necessariamente sua segurança.",
+      "Abre uma passagem que conduz o alvo para perto de algo que ele deseja intensamente. O destino corresponde ao desejo, mas não garante sua segurança.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 135,
@@ -2136,7 +2139,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Desperta lembranças guardadas em pedra, permitindo perceber acontecimentos marcantes ocorridos em seu contato ou proximidade.",
+      "Desperta lembranças guardadas na pedra, permitindo perceber acontecimentos marcantes que ocorreram em contato com ela ou nas proximidades.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 136,
@@ -2148,7 +2151,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Primavera",
     description:
-      "Interroga a memória lenta de uma árvore para descobrir pessoas, clima e eventos que ela testemunhou ao seu redor.",
+      "Interroga a memória lenta de uma árvore para descobrir quais pessoas, condições climáticas e acontecimentos ela testemunhou.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 136,
@@ -2280,7 +2283,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Prende uma lembrança, emoção ou pensamento em pequeno objeto, removendo-o temporariamente do dono e permitindo que outro o experimente.",
+      "Prende uma lembrança, emoção ou pensamento em um pequeno objeto, removendo-o temporariamente de seu dono e permitindo que outra pessoa o experimente.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 143,
@@ -2340,7 +2343,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Outono",
     description:
-      "Um olhar acelera decadência e envelhecimento no alvo ou objeto, causando fraqueza e dano conforme sua natureza.",
+      "Um olhar acelera a decadência e o envelhecimento de uma criatura ou de um objeto, causando fraqueza e dano conforme sua natureza.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 146,
@@ -2364,7 +2367,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Comum",
     regalia: "Inverno",
     description:
-      "Cobre o alvo de tristeza que distorce percepção e torna difícil notar esperança, aliados ou saídas da situação.",
+      "Envolve o alvo em uma tristeza que distorce sua percepção e dificulta reconhecer motivos de esperança, aliados ou saídas para a situação.",
     sourceId: "h-beyond-hedge",
     source: "Beyond the Hedge",
     page: 147,
@@ -2484,7 +2487,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Suspende uma pessoa, objeto ou acontecimento num instante imóvel até o fim do efeito ou ruptura sobrenatural.",
+      "Suspende uma pessoa, um objeto ou um acontecimento em um instante imóvel, até que o efeito termine ou seja rompido sobrenaturalmente.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 108,
@@ -2604,7 +2607,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Cria ambiente de comunhão e idealismo que facilita cooperação, compartilhamento e ruptura temporária de hierarquias.",
+      "Cria um ambiente de comunhão e idealismo que facilita a cooperação, a partilha e a ruptura temporária de hierarquias.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 115,
@@ -2628,19 +2631,19 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Faz uma sequência de elementos transformar-se de um em outro, permitindo adaptar ataques, defesas e ambiente a cada etapa.",
+      "Transforma sucessivamente um elemento em outro, permitindo adaptar os ataques, as defesas e o ambiente a cada etapa do ciclo.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 116,
   },
   {
     id: "h-courts:restringing-the-loom",
-    name: "Retecer o Tear",
+    name: "Recompor os Fios do Tear",
     originalName: "Restringing the Loom",
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Reorganiza vínculos e circunstâncias de um acontecimento, alterando quais pessoas ou escolhas conduzem ao resultado previsto.",
+      "Reorganiza os vínculos e as circunstâncias de um acontecimento, alterando quais pessoas ou escolhas conduzem ao resultado previsto.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 116,
@@ -2688,7 +2691,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Revela e protege o caminho mais rápido para abandonar uma ameaça, favorecendo o changeling e companheiros em perseguição.",
+      "Revela e protege o caminho mais rápido para escapar de uma ameaça, favorecendo o changeling e seus companheiros durante uma perseguição.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 134,
@@ -2700,7 +2703,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Transforma uma área em labirinto sobrenatural que confunde direção, separa grupos e prolonga qualquer tentativa de atravessá-la.",
+      "Transforma uma área em um labirinto sobrenatural que desorienta, separa grupos e prolonga qualquer tentativa de travessia.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 135,
@@ -2832,14 +2835,14 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Cortes Adicionais",
     description:
-      "Garante recursos líquidos suficientes para uma compra ou dívida imediata, embora o Wyrd cobre posteriormente o valor obtido.",
+      "Garante recursos financeiros disponíveis para uma compra ou uma dívida imediata, embora o Fado cobre posteriormente o valor obtido.",
     sourceId: "h-courts",
     source: "Livro das Cortes",
     page: 146,
   },
   {
     id: "h-courts:cook-the-books",
-    name: "Maquiar os Livros",
+    name: "Maquiar as Contas",
     originalName: "Cook the Books",
     type: "Real",
     regalia: "Cortes Adicionais",
@@ -2863,7 +2866,7 @@ export const CONTRACTS: ContractDefinition[] = [
   },
   {
     id: "h-courts:raise-the-band",
-    name: "Erguer o Bando",
+    name: "Reunir o Bando",
     originalName: "Raise the Band",
     type: "Real",
     regalia: "Cortes Adicionais",
@@ -2952,7 +2955,7 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Coroa",
     description:
-      "O Fairest torna-se símbolo de salvação para aliados, restaurando determinação e permitindo-lhes continuar quando já teriam sucumbido.",
+      "O Belíssimo se torna um símbolo de salvação para os aliados, restaurando sua determinação e permitindo-lhes continuar quando já teriam sucumbido.",
     sourceId: "h-seemings",
     source: "Book of Seemings",
     page: 145,
@@ -2964,13 +2967,17 @@ export const CONTRACTS: ContractDefinition[] = [
     type: "Real",
     regalia: "Escudo",
     description:
-      "O Ogre reivindica uma passagem e exige preço de quem a cruza; o Wyrd bloqueia ou pune aqueles que recusam pagar.",
+      "O Ogro reivindica uma passagem e exige um pagamento de quem a cruza. O Fado bloqueia ou pune aqueles que se recusam a pagar.",
     sourceId: "h-seemings",
     source: "Book of Seemings",
     page: 160,
   },
   {
     id: "ctl-2ed:blessing-of-forgetfulness",
+    success: "Apaga permanentemente um acontecimento contínuo de até uma cena; a mente do alvo cria uma lembrança plausível para substituí-lo. Evidências conclusivas podem convencê-lo de que esqueceu o evento.",
+    exceptionalSuccess: "Nenhuma persuasão ou evidência mundana convence o alvo de que o evento ocorreu.",
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling esquece os últimos cinco minutos.",
     name: "Bênção do Esquecimento",
     originalName: "Blessing of Forgetfulness",
     type: "Comum",
@@ -3051,6 +3058,10 @@ export const CONTRACTS: ContractDefinition[] = [
   },
   {
     id: "ctl-2ed:huntsmans-clarion",
+    success: "Invocado na Sebe, detecta a presença de Fae Verdadeiros, Caçadores, outros habitantes de Arcádia e do próprio simulacro a até Fado milhas, sem localizá-los. Não é necessário permanecer na Sebe após a invocação.",
+    exceptionalSuccess: "O efeito dura até a próxima passagem do sol pelo horizonte.",
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Caçado e passa a ser perseguido por um agente dos Fae ou pelo próprio Guardião.",
     name: "Clarim do Caçador",
     originalName: "Huntsman’s Clarion",
     type: "Comum",
@@ -3061,7 +3072,7 @@ export const CONTRACTS: ContractDefinition[] = [
     action: "Instantânea",
     duration: "Cena",
     description:
-      "Invocado na Sebe, revela automaticamente se um Fae Verdadeiro, Caçador, outro habitante de Arcádia ou o próprio simulacro está a até Fado milhas, sem indicar sua posição.",
+      "Quando invocado na Sebe, revela automaticamente se um Fae Verdadeiro, um Caçador, outro habitante de Arcádia ou o simulacro do próprio changeling está dentro de um raio, em milhas, igual ao Fado, sem indicar sua posição.",
     loophole:
       "O changeling permanece vendado durante toda a duração do Contrato.",
     goblinDebt: "Uma invocação bem-sucedida gera 1 ponto de Débito Goblin.",
@@ -3101,7 +3112,7 @@ export const CONTRACTS: ContractDefinition[] = [
     action: "Instantânea",
     duration: "Cena",
     description:
-      "Diminui cosmeticamente o Manto verdadeiro e imita o Manto de outra Corte até o nível do original, ou faz o changeling parecer Sem Corte.",
+      "Reduz apenas a aparência do Manto verdadeiro e imita o Manto de outra Corte, até o nível do original, ou faz o changeling parecer Sem Corte.",
     loophole:
       "Imediatamente antes da invocação, o changeling decora a pele com símbolos da Corte cujo Manto deseja imitar.",
     goblinDebt: "Uma invocação bem-sucedida gera 1 ponto de Débito Goblin.",
@@ -3217,7 +3228,9 @@ for (const contract of CONTRACTS) {
   contract.success = result
     ? result.success || contract.description
     : contract.success;
-  contract.exceptionalSuccess = result?.exceptionalSuccess;
+  contract.exceptionalSuccess = result?.exceptionalSuccess ?? contract.exceptionalSuccess;
+  contract.failure = result?.failure ?? contract.failure;
+  contract.dramaticFailure = result?.dramaticFailure ?? contract.dramaticFailure;
   contract.page = result?.page ?? contract.page;
   contract.dicePool =
     detail?.dicePool ??
@@ -3228,10 +3241,23 @@ for (const contract of CONTRACTS) {
   contract.seemingBenefits = detail?.seemingBenefits ?? {};
 }
 
+// Preserve references in older sheets when only the displayed translation changes.
+export const CONTRACT_NAME_ALIASES: Record<string, string> = {
+  "Enigma do Kith": "ctl-2ed:riddle-kith",
+  "Clareza Pura": "ctl-2ed:pure-clarity",
+  "Força da Fera Terrível": "ctl-2ed:might-of-the-terrible-brute",
+  "O Giro que se Alarga": "ctl-oak-ash-thorn:the-widening-gyre",
+  "Retecer o Tear": "h-courts:restringing-the-loom",
+  "Maquiar os Livros": "h-courts:cook-the-books",
+  "Erguer o Bando": "h-courts:raise-the-band"
+};
+
 export function findContract(name: string) {
+  const id = CONTRACT_NAME_ALIASES[name];
   return CONTRACTS.find(
     (contract) =>
       contract.id === name ||
+      contract.id === id ||
       contract.name === name ||
       contract.originalName === name,
   );

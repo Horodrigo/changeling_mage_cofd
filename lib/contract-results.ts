@@ -3,6 +3,8 @@ export interface ContractResultDetail {
   duration?: string;
   success?: string;
   exceptionalSuccess?: string;
+  failure?: string;
+  dramaticFailure?: string;
   page?: number;
 }
 export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
@@ -10,11 +12,13 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Ignora sistemas de segurança mundanos; portas se abrem automaticamente, e animais ou sentinelas hobgoblins não impedem a passagem. Estende o efeito a até Presença companheiros na linha de visão. Habitações sobrenaturais exigem Confronto de Vontades com o proprietário ou residente principal. Não funciona se esse personagem também conhecer Aquisição Hostil.",
+      "Ignora sistemas de segurança mundanos; portas se abrem automaticamente, e animais ou sentinelas hobgoblins não impedem a passagem. Estende o efeito a até Presença companheiros na linha de visão. Habitações sobrenaturais exigem Confronto de Vontades com o proprietário ou residente principal. Não funciona se esse personagem também conhecer Tomada Hostil.",
     exceptionalSuccess: "",
     page: 128,
   },
   "ctl-2ed:mask-of-superiority": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Os membros da organização tornam-se imediatamente hostis ao changeling.",
     action: "Instantânea",
     duration: "",
     success:
@@ -24,6 +28,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 128,
   },
   "ctl-2ed:paralyzing-presence": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Abalado.",
     action: "Disputada",
     duration: "",
     success:
@@ -40,6 +46,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 129,
   },
   "ctl-2ed:tumult": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe uma das Condições listadas no efeito, à escolha do jogador.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -48,6 +56,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 129,
   },
   "ctl-2ed:discreet-summons": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O objeto recebe a Condição Volátil, ou o hobgoblin convocado deseja prejudicar o changeling e pode ocultar sua hostilidade.",
     action: "Instantânea (objeto) ou Disputada (hobgoblin)",
     duration: "",
     success:
@@ -56,7 +66,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "O objeto pode ter Tamanho e Disponibilidade até 5. O hobgoblin tenta cumprir a intenção da tarefa e alerta o changeling sobre perigos relevantes.",
     page: 130,
   },
-  "ctl-2ed:mastermind-s-gambit": {
+  "ctl-2ed:masterminds-gambit": {
     action: "Instantânea",
     duration: "Um Capítulo",
     success:
@@ -65,6 +75,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 130,
   },
   "ctl-2ed:pipes-of-the-beastcaller": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Convoca um animal hostil ou um enxame que ataca o changeling.",
     action: "Instantânea (disposto) ou Disputada (hostil)",
     duration: "",
     success:
@@ -82,6 +94,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 131,
   },
   "ctl-2ed:spinning-wheel": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling sofre uma falha dramática em um teste crucial escolhido pelo Narrador durante o próximo capítulo.",
     action: "Prolongada (cada teste leva 10 minutos; sucessos necessários = maior entre Fado ou Perseverança do alvo)",
     duration: "Até o fim do mês lunar ou até o evento ocorrer",
     success:
@@ -93,11 +107,13 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma ação",
     success:
-      "Em um objeto, substitui o bônus de equipamento pelo Fado do changeling. Em uma ação de Ofícios, Medicina ou Informática de outra pessoa, substitui a Habilidade usada pelo Fado do changeling.",
+      "Em um objeto, substitui o bônus de equipamento pelo Fado do changeling. Em uma ação de Ofícios, Medicina ou Computação de outra pessoa, substitui a Perícia usada pelo Fado do changeling.",
     exceptionalSuccess: "",
     page: 132,
   },
   "ctl-2ed:changing-fortunes": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O efeito volta-se contra o changeling, com as alterações escolhidas pelo Narrador.",
     action: "Instantânea",
     duration: "Uma ação",
     success:
@@ -115,6 +131,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 133,
   },
   "ctl-2ed:murkblur": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Desorientado.",
     action: "Disputada",
     duration: "Um turno",
     success:
@@ -140,6 +158,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 134,
   },
   "ctl-2ed:dance-of-the-toys": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O dispositivo ganha vida, mas se volta contra o changeling.",
     action: "Instantânea",
     duration: "",
     success:
@@ -157,6 +177,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 134,
   },
   "ctl-2ed:stealing-the-solid-reflection": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "A superfície refletora se quebra e o objeto original sofre dano igual ao Fado do changeling, ignorando Durabilidade.",
     action: "Instantânea",
     duration: "",
     success:
@@ -165,7 +187,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "O reflexo permanece sólido até o sol cruzar o horizonte.",
     page: 135,
   },
-  "ctl-2ed:tatterdemalion-s-workshop": {
+  "ctl-2ed:tatterdemalions-workshop": {
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -182,22 +204,28 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 136,
   },
   "ctl-2ed:know-the-competition": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O adversário vence o jogo e descobre Agulha, Linha e uma Aspiração do changeling.",
     action: "Disputada",
     duration: "Instantânea",
     success:
-      "Após pelo menos 10 minutos jogando contra o alvo, descobre sua Virtude e Vício, ou Âncoras equivalentes, e uma Aspiração.",
+      "Após disputar um jogo por pelo menos dez minutos e vencer, descobre Virtude, Vício ou Âncoras equivalentes e uma Aspiração do adversário.",
     exceptionalSuccess: "Também descobre uma segunda Aspiração.",
     page: 136,
   },
   "ctl-2ed:portents-and-visions": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling vê um evento falso e sinais da aproximação dos Fae Verdadeiros; recebe a Condição Paranoico.",
     action: "Disputada (leva pelo menos 1 minuto)",
     duration: "Instantânea",
     success:
-      "Escolhe passado ou futuro e deve ver o alvo; pode usar em si olhando para um espelho.",
+      "Observe o alvo, escolhendo passado ou futuro; pode usar em si com um espelho. Revela um evento significativo do passado ou a última promessa feita, ou um evento importante ou acordo dos próximos dias. Visões do futuro concedem Informado, mas podem mudar.",
     exceptionalSuccess: "Pode provocar no alvo uma emoção associada ao evento, concedendo uma Condição apropriada.",
     page: 137,
   },
   "ctl-2ed:read-lucidity": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling obtém informações incorretas sobre os níveis de Lucidez do alvo, sem perceber o erro.",
     action: "Disputada",
     duration: "Instantânea",
     success:
@@ -215,6 +243,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 138,
   },
   "ctl-2ed:props-and-scenery": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling sofre um ataque à Lucidez com parada igual à metade de seu Fado, arredondada para cima.",
     action: "Instantânea",
     duration: "",
     success:
@@ -224,6 +254,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 138,
   },
   "ctl-2ed:reflections-of-the-past": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling vê um evento falso e sinais da aproximação dos Fae Verdadeiros; recebe a Condição Paranoico.",
     action: "Instantânea",
     duration: "",
     success:
@@ -232,10 +264,12 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 138,
   },
   "ctl-2ed:riddle-kith": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O alvo perde todos os benefícios de sua Frátria durante a cena, sem adquirir os de outra.",
     action: "Instantânea ou Disputada",
     duration: "",
     success:
-      "Altera o mien feérico do alvo para aparentar outro kith, sem conceder suas bênçãos. Características gerais e Seeming permanecem. Alvo involuntário pode contestar; impor a mudança também causa um ponto de ruptura com parada de 3 dados. Não pode copiar o mien de um changeling específico.",
+      "Altera a Aparência feérica do alvo para parecer de outra Frátria, sem mudar Máscara, Feição ou Bênção. Alvos involuntários podem disputar; impor a mudança causa um ponto de ruptura com parada de três dados. Não copia a aparência de um changeling específico.",
     exceptionalSuccess:
       "Se o próprio changeling for o alvo, pode gastar 1 Força de Vontade para tornar a duração indefinida.",
     page: 139,
@@ -244,16 +278,18 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Copia a aparência externa de um alvo que já encontrou fisicamente; se o alvo for changeling, copia Máscara e mien. Imitar comportamento ainda exige testes Sociais. Se copiar alguém que represente como seria sua aparência humana atual, recupera 1 Força de Vontade.",
+      "Copia a aparência externa de um alvo que já encontrou fisicamente; se o alvo for changeling, copia Máscara e Aparência feérica. Imitar comportamento ainda exige testes Sociais. Se copiar alguém que represente como seria sua aparência humana atual, recupera 1 Força de Vontade.",
     exceptionalSuccess: "",
     page: 139,
   },
   "ctl-2ed:unravel-the-tapestry": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Inclinação Insensato. Se voltar a agir em tempo de ação nesta cena, terá automaticamente a menor Iniciativa.",
     action: "Reflexiva",
     duration: "Instantânea",
     success:
-      "Repete os últimos 10 segundos ou retorna ao topo da Iniciativa do turno anterior. Pode mudar as próprias ações; os demais repetem as ações originais, salvo quem usou poder semelhante. Se morrer e puder pagar o custo, ativa automaticamente; se sobreviver, recebe a Condição Assustado. A ativação automática só ocorre uma vez por história.",
-    exceptionalSuccess: "Recebe 8-de-novo em todos os testes feitos durante o tempo repetido.",
+      "Retrocede dez segundos ou até o início do turno anterior. Pode mudar suas ações; os demais repetem as originais, salvo poderes semelhantes. Ao morrer, ativa automaticamente se puder pagar: caso sobreviva, recebe Assombrado. A ativação automática só ocorre uma vez por história.",
+    exceptionalSuccess: "Recebe 8-novamente nos testes realizados durante o tempo repetido.",
     page: 140,
   },
   "ctl-2ed:cloak-of-night": {
@@ -284,11 +320,11 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Cria sarças em raio igual ao Fado em metros, que acompanham o changeling fora da Sebe. Escolhe um efeito: Leechweed — quem se move acima de Velocidade 2 perde 1 Glamour por turno, até Fado por vítima; Briarpatch — quem falhar em Destreza + Atletismo reflexivo ao se mover recebe Imobilizado, e as sarças têm Durabilidade igual ao Fado; Field of Thorns — atacam quem tenta atravessar com parada igual ao Fado, arma perfurante +0L, no máximo uma vez por turno por personagem. Na Sebe, não acompanham o changeling e também o ameaçam.",
+      "Cria sarças em um raio de Fado metros. Escolha: drenar 1 Glamour por turno de quem se move acima de Deslocamento 2, até Fado por vítima; imobilizar quem falhar em Destreza + Atletismo ao se mover, com Durabilidade igual ao Fado; ou atacar quem atravessa, uma vez por turno, com parada igual ao Fado e arma perfurante +0L. Fora da Sebe, acompanha o changeling; nela, fica imóvel e também o ameaça.",
     exceptionalSuccess: "",
     page: 141,
   },
-  "ctl-2ed:trapdoor-spider-s-trick": {
+  "ctl-2ed:trapdoor-spiders-trick": {
     action: "Instantânea",
     duration: "Uma cena; até o próximo nascer ou pôr do sol se gastar +1 Força de Vontade",
     success:
@@ -297,25 +333,31 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 142,
   },
   "ctl-2ed:fortifying-presence": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling sofre um ataque à Lucidez com parada de dois dados.",
     action: "Disputada",
     duration: "Instantânea",
     success:
       "Exige uma cena inteira de interação e o alvo não pode abrir mão da disputa. Cura 2 pontos de dano leve de Lucidez ou 1 ponto de dano grave; não remove Condições de Lucidez.",
     exceptionalSuccess:
-      "Também se torna Touchstone temporário do alvo até depois do próximo ataque de Lucidez que ele sofrer.",
+      "Também se torna um Pilar temporário do alvo até depois do próximo ataque à Lucidez que ele sofrer.",
     page: 142,
   },
   "ctl-2ed:hedgewall": {
+    failure: "O Contrato falha. Na Sebe, trate como falha dramática.",
+    dramaticFailure: "O labirinto impõe a Condição Perdido ao changeling e aos aliados. Na Sebe, também alerta um hobgoblin hostil.",
     action:
       "Prolongada (5 sucessos; cada teste representa 1 turno)",
     duration: "",
     success:
       "Cria uma fortificação de sarças com diâmetro de 10 metros por ponto de Fado. Concede cobertura substancial contra ataques à distância externos. Cada parede tem Durabilidade 3 e Tamanho 8 e impede passagem até ser removida; escalá-la sem proteção causa 1 dano letal por turno. O changeling define o layout, mas passagens devem comportar facilmente Tamanho 4.",
     exceptionalSuccess:
-      "Adiciona gratuitamente um dos efeitos de Thorns and Brambles à fortificação.",
+      "Adiciona gratuitamente à fortificação um dos efeitos de Espinhos e Sarças.",
     page: 142,
   },
   "ctl-2ed:pure-clarity": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe uma Condição de Lucidez escolhida pelo Narrador; resolvê-la não cura dano de Lucidez.",
     action: "Instantânea",
     duration: "",
     success:
@@ -344,11 +386,13 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Move-se normalmente por paredes, tetos, superfícies escorregadias ou outras superfícies sólidas capazes de sustentar seu peso. Mantém Velocidade normal e age sem impedimento.",
+      "Move-se normalmente por paredes, tetos, superfícies escorregadias ou outras superfícies sólidas capazes de sustentar seu peso. Mantém Deslocamento normal e age sem impedimento.",
     exceptionalSuccess: "",
     page: 144,
   },
   "ctl-2ed:dreamsteps": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Entra no sonho, mas recebe a Inclinação Carne Sólida Demais (Flesh Too Solid); o Bastião ganha +1 à Fortificação até o sonhador despertar.",
     action: "Disputada",
     duration: "Instantânea",
     success:
@@ -385,7 +429,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Ao adquirir o Contrato, escolhe dois animais já vistos, inclusive por representação fiel, de Tamanho 1–7. Ao ativar, assume uma dessas formas e copia Atributos Físicos, Tamanho, Velocidade, Vitalidade, sentidos mundanos e modos de locomoção. Pode comunicar-se com animais da espécie assumida. Formas míticas não concedem poderes sobrenaturais.",
+      "Ao adquirir o Contrato, escolhe dois animais já vistos, inclusive por representação fiel, de Tamanho 1–7. Ao ativar, assume uma dessas formas e copia Atributos Físicos, Tamanho, Deslocamento, Vitalidade, sentidos mundanos e modos de locomoção. Pode comunicar-se com animais da espécie assumida. Formas míticas não concedem poderes sobrenaturais.",
     exceptionalSuccess: "",
     page: 145,
   },
@@ -398,6 +442,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 146,
   },
   "ctl-2ed:leaping-toward-nightfall": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Envia ao futuro um alvo aleatório escolhido pelo Narrador, podendo ser o próprio changeling. Ao chegar, objetos recebem Volátil e personagens recebem Assombrado.",
     action: "Instantânea ou Disputada",
     duration: "Especial",
     success:
@@ -407,6 +453,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 146,
   },
   "ctl-2ed:mirror-walk": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling fica Perdido no espaço entre espelhos. Se estava apenas alcançando um objeto, deixa-o cair nesse espaço.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -419,11 +467,13 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Por 1 Glamour por efeito, cumulativamente: recebe modo de locomoção animal e +10 Velocidade; recebe sentidos animais, +3 dados em Percepção e ignora penalidades de pouca luz/escuridão; ou recebe garras, tornando ataques desarmados de Briga +0L, ou agravados se já causavam letal.",
+      "Por 1 Glamour por efeito, cumulativamente: recebe modo de locomoção animal e +10 Deslocamento; recebe sentidos animais, +3 dados em Percepção e ignora penalidades de pouca luz/escuridão; ou recebe garras, tornando ataques desarmados de Briga +0L, ou agravados se já causavam letal.",
     exceptionalSuccess: "",
     page: 147,
   },
   "ctl-2ed:elemental-weapon": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O elemento impõe ao changeling uma Inclinação apropriada, escolhida pelo Narrador.",
     action: "Instantânea",
     duration: "",
     success:
@@ -440,6 +490,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 148,
   },
   "ctl-2ed:overpowering-dread": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Assombrado.",
     action: "Disputada",
     duration: "Instantânea",
     success:
@@ -457,6 +509,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 148,
   },
   "ctl-2ed:touch-of-wrath": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Afeta um objeto não pretendido, escolhido pelo Narrador, e lhe impõe a Condição Volátil.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -472,7 +526,9 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 149,
   },
-  "ctl-2ed:oathbreaker-s-punishment": {
+  "ctl-2ed:oathbreakers-punishment": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O alvo descobre o juramento ou acordo mais importante que o changeling quebrou.",
     action: "Instantânea",
     duration: "Duas semanas ou até ser usado",
     success:
@@ -498,6 +554,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 150,
   },
   "ctl-2ed:thief-of-reason": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Dissociação.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -505,7 +563,9 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "O ataque de Lucidez recebe os dados adicionais decorrentes dos sucessos excedentes.",
     page: 150,
   },
-  "ctl-2ed:cupid-s-arrow": {
+  "ctl-2ed:cupids-arrow": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling interpreta o desejo do alvo incorretamente, conforme definido pelo Narrador ou pelo jogador do alvo.",
     action: "Disputada",
     duration: "",
     success:
@@ -515,6 +575,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 151,
   },
   "ctl-2ed:dreams-of-the-earth": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling adormece magicamente por um número de minutos igual ao seu Manto.",
     action: "Disputada",
     duration: "Minutos iguais aos sucessos obtidos",
     success:
@@ -530,7 +592,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 151,
   },
-  "ctl-2ed:spring-s-kiss": {
+  "ctl-2ed:springs-kiss": {
     action: "Instantânea",
     duration: "",
     success:
@@ -539,6 +601,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 151,
   },
   "ctl-2ed:wyrd-faced-stranger": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Sem perceber, o changeling assume a aparência de quem o alvo menos deseja ver.",
     action: "Disputada",
     duration: "",
     success:
@@ -547,6 +611,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 152,
   },
   "ctl-2ed:blessing-of-spring": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Criaturas afetadas recebem a Condição Fatigado; plantas murcham.",
     action: "Instantânea ou Disputada",
     duration: "",
     success:
@@ -556,6 +622,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 152,
   },
   "ctl-2ed:gift-of-warm-blood": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Um ponto de dano contundente torna-se letal; se todo o dano já for letal, um ponto torna-se agravado. Se isso mataria o paciente, o changeling pode gastar mais um ponto de Força de Vontade para impedir o agravamento.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -564,7 +632,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Também cura todo dano contundente restante.",
     page: 152,
   },
-  "ctl-2ed:pandora-s-gift": {
+  "ctl-2ed:pandoras-gift": {
     action: "Instantânea",
     duration: "Até o sol cruzar o horizonte",
     success:
@@ -573,6 +641,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 152,
   },
   "ctl-2ed:prince-of-ivy": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "As plantas atacam o changeling e seus aliados, com Iniciativa própria, por um número de turnos igual ao Manto.",
     action: "Instantânea",
     duration: "",
     success:
@@ -582,15 +652,19 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 153,
   },
   "ctl-2ed:waking-the-inner-fae": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Imprudente e não pode recuperar Força de Vontade pela Linha durante o restante da cena.",
     action: "Disputada",
     duration: "Instantânea",
     success:
-      "O alvo recebe a Condição Wanton. Uma vez por cena pelo restante da história atual, quando o changeling conseguir tentá-lo a fazer algo, recupera 1 Força de Vontade. Só pode ter um alvo designado para esse benefício por vez.",
+      "O alvo recebe a Condição Devasso. Uma vez por cena pelo restante da história atual, quando o changeling conseguir tentá-lo a fazer algo, recupera 1 Força de Vontade. Só pode ter um alvo designado para esse benefício por vez.",
     exceptionalSuccess:
       "O alvo também recebe a Condição Persistente Obsessão em relação ao seu maior desejo atual.",
     page: 153,
   },
   "ctl-2ed:baleful-sense": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling sofre −2 nos próximos testes, em quantidade igual ao seu Manto.",
     action: "Disputada",
     duration: "",
     success:
@@ -614,7 +688,9 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 154,
   },
-  "ctl-2ed:high-summer-s-zeal": {
+  "ctl-2ed:high-summers-zeal": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O adversário cura dano igual ao Manto do changeling e recebe +1 à Iniciativa.",
     action: "Reflexiva e Disputada",
     duration: "",
     success:
@@ -632,6 +708,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 155,
   },
   "ctl-2ed:fiery-tongue": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Mudo até o fim da cena.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -641,6 +719,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 155,
   },
   "ctl-2ed:flames-of-summer": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "A Força do changeling cai para 1 por um número de turnos igual ao Manto.",
     action: "Instantânea",
     duration: "",
     success:
@@ -650,6 +730,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 155,
   },
   "ctl-2ed:helios-judgment": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O raio solar cai no chão e provoca a Inclinação Terremoto.",
     action: "Instantânea",
     duration: "",
     success:
@@ -667,6 +749,8 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 156,
   },
   "ctl-2ed:sunburnt-heart": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Na próxima ação contra o changeling, o alvo obtém sucesso excepcional com três sucessos, em vez de cinco.",
     action: "Disputada",
     duration: "",
     success:
@@ -675,7 +759,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Pode afetar um segundo alvo; cada um contesta separadamente.",
     page: 156,
   },
-  "ctl-2ed:autumn-s-fury": {
+  "ctl-2ed:autumns-fury": {
     action: "Instantânea",
     duration: "",
     success:
@@ -687,11 +771,13 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma tentativa de colheita",
     success:
-      "Recebe 9-de-novo no próximo teste para colher Glamour do alvo, ou 8-de-novo se a emoção ressoar com sua Corte. Só pode usar este Contrato uma vez por capítulo.",
+      "Recebe 9-novamente no próximo teste para colher Glamour do alvo, ou 8-novamente se a emoção ressoar com sua Corte. Só pode usar este Contrato uma vez por capítulo.",
     exceptionalSuccess: "",
     page: 156,
   },
   "ctl-2ed:tale-of-the-baba-yaga": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Abalado.",
     action: "Disputada",
     duration: "",
     success:
@@ -700,16 +786,18 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Alvos afetados também devem gastar 1 Força de Vontade para agir contra o changeling durante a duração.",
     page: 157,
   },
-  "ctl-2ed:twilight-s-harbinger": {
+  "ctl-2ed:twilights-harbinger": {
     action: "Instantânea",
     duration:
       "Até o mês lunar terminar ou o desfecho ocorrer, o que vier primeiro",
     success:
-      "Escolhe uma circunstância ou evento existente. Treze minutos antes de terminar — ou três turnos em uma cena de ação — recebe um aviso sobrenatural, independentemente de onde esteja.",
+      "Escolha uma circunstância, evento ou vida já existente. Um presságio avisa treze minutos antes de seu término, ou três turnos antes em tempo de ação.",
     exceptionalSuccess: "",
     page: 157,
   },
   "ctl-2ed:witches-intuition": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling revela ao alvo um medo seu que ele ainda não conhecia.",
     action: "Disputada",
     duration: "",
     success:
@@ -718,34 +806,42 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Também descobre o que originou o medo e o que poderia agravá-lo ou reduzi-lo.",
     page: 157,
   },
-  "ctl-2ed:famine-s-bulwark": {
+  "ctl-2ed:famines-bulwark": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Recebe um presságio falso e Obsessão temporária por ele. A Condição se resolve quando sua busca coloca o changeling ou seus aliados em apuros.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
-      "Por sucesso na ativação, faz ao Narrador uma pergunta de sim ou não sobre a situação atual. Todas as respostas são verdadeiras, exceto uma; se houver apenas 1 sucesso, a única resposta é falsa.",
+      "Faça uma pergunta de sim ou não por sucesso sobre a situação atual. Uma resposta será falsa, exceto se houver apenas um sucesso.",
     exceptionalSuccess:
-      "Todas as respostas são verdadeiras. Também percebe o caminho até o fenômeno ou ser sobrenatural não-fae mais próximo, desde que faça a viagem na mesma cena.",
+      "Todas as respostas são verdadeiras. Também percebe o caminho até o fenômeno ou ser sobrenatural não feérico mais próximo, desde que faça a viagem nesta cena.",
     page: 157,
   },
   "ctl-2ed:mien-of-the-baba-yaga": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling vê o alvo como seu próprio maior medo e recebe a Condição Assombrado.",
     action: "Disputada",
     duration: "",
     success:
-      "Quando entra na linha de visão do alvo, aparece como seu maior medo. O alvo recebe imediatamente a Condição Assustado e deve gastar 1 Força de Vontade para realizar qualquer ação que exija dados durante a duração. Changelings podem sofrer ataque de Lucidez, conforme o medo evocado. O changeling pode permitir que observadores também vejam essa forma.",
+      "Ao entrar na visão do alvo, aparece como seu maior medo. Impõe Amedrontado e exige 1 Força de Vontade para cada ação que requeira dados. O medo pode causar ataque à Lucidez de changelings; observadores também podem ver a forma, se desejar.",
     exceptionalSuccess:
       "O alvo também recebe Imobilizado por um número de turnos igual ao Manto.",
     page: 158,
   },
   "ctl-2ed:riding-the-falling-leaves": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling fica Imobilizado por um número de turnos igual ao Manto.",
     action: "Instantânea",
     duration: "",
     success:
-      "Pode Esquivar reflexivamente uma vez por turno, exceto contra ataques capazes de ferir uma pilha de folhas. Se a Esquiva tiver sucesso, pode gastar 1 Glamour para infligir Assustado no atacante. Voa a Velocidade -3, atravessa pequenas aberturas e não pode manipular objetos nem atacar fisicamente.",
+      "Transforma-se em folhas. Pode Esquivar-se reflexivamente uma vez por turno, exceto de ataques capazes de feri-las; com sucesso, pode gastar 1 Glamour para impor Assombrado ao atacante. Voa com Deslocamento −3 e atravessa frestas, mas não manipula objetos nem ataca.",
     exceptionalSuccess:
-      "Voa à Velocidade total e pode carregar pelo ar até Manto objetos, cada um de no máximo Tamanho 1.",
+      "Voa à Deslocamento total e pode carregar pelo ar até Manto objetos, cada um de no máximo Tamanho 1.",
     page: 158,
   },
-  "ctl-2ed:sorcerer-s-rebuke": {
+  "ctl-2ed:sorcerers-rebuke": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Assombrado.",
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -755,15 +851,19 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 158,
   },
   "ctl-2ed:tasting-the-harvest": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "Todos os alvos recebem a Condição Abalado.",
     action: "Instantânea",
     duration: "",
     success:
       "Alvos ficam imunes ao medo natural e recebem Manto dados bônus para contestar medo sobrenatural. Pode direcionar a coragem contra uma fonte de medo, concedendo +1 dado em ações contra ela.",
     exceptionalSuccess:
-      "Ao contestar efeitos sobrenaturais de medo, obtêm sucesso excepcional com 3 sucessos em vez de 5.",
+      "Ao resistir ao medo sobrenatural, os alvos obtêm sucesso excepcional com três sucessos. Ataques direcionados pelo changeling também recebem +1 ao modificador da arma.",
     page: 158,
   },
   "ctl-2ed:the-dragon-knows": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Desmoralizado.",
     action: "Disputada",
     duration: "",
     success:
@@ -780,7 +880,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 159,
   },
-  "ctl-2ed:ice-queen-s-call": {
+  "ctl-2ed:ice-queens-call": {
     action: "Instantânea",
     duration: "",
     success:
@@ -789,14 +889,18 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 159,
   },
   "ctl-2ed:slipknot-dreams": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O alvo recusa-se a conversar voluntariamente com o changeling por um capítulo.",
     action: "Disputada",
     duration: "Instantânea",
     success:
       "Remove a carga emocional dos arrependimentos do alvo sem apagar suas memórias. O alvo recebe a Condição Enamorado em relação ao changeling.",
-    exceptionalSuccess: "",
+    exceptionalSuccess: "Pode gastar 1 Força de Vontade para apagar a memória que causou o arrependimento ou alterá-la para incluir o changeling como uma influência positiva. A mudança é permanente, salvo reversão sobrenatural.",
     page: 159,
   },
   "ctl-2ed:touch-of-winter": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling sofre dano contundente igual ao seu Manto.",
     action: "Instantânea",
     duration: "",
     success:
@@ -805,7 +909,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Pode restaurar o líquido congelado à forma original ou impor a Inclinação Gelo; o changeling não é afetado por ela.",
     page: 160,
   },
-  "ctl-2ed:ermine-s-winter-coat": {
+  "ctl-2ed:ermines-winter-coat": {
     action: "Instantânea",
     duration: "",
     success:
@@ -814,15 +918,19 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     page: 160,
   },
   "ctl-2ed:fallow-fields": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Arrasado.",
     action: "Disputada",
     duration: "Dias iguais ao Manto do changeling",
     success:
-      "O alvo não pode recuperar Força de Vontade por Virtude/Vício ou Âncoras equivalentes e recebe a Condição Quebrado.",
+      "Impõe Arrasado e impede recuperar Força de Vontade por Virtude, Vício ou Âncoras equivalentes.",
     exceptionalSuccess:
-      "Em algum momento da mesma história, o changeling pode fazê-lo sentir novamente a perda e recuperar a Condição Quebrado com uma única palavra.",
+      "Pode impor Arrasado novamente com uma palavra, em um momento escolhido da mesma história.",
     page: 161,
   },
   "ctl-2ed:field-of-regret": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Desorientado.",
     action: "Instantânea",
     duration: "",
     success:
@@ -838,7 +946,9 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 161,
   },
-  "ctl-2ed:winter-s-curse": {
+  "ctl-2ed:winters-curse": {
+    failure: "O Contrato falha.",
+    dramaticFailure: "O changeling recebe a Condição Estoico.",
     action: "Disputada",
     duration: "",
     success:
@@ -856,7 +966,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 35,
   },
-  "ctl-kith-kin:sleep-s-sweet-embrace": {
+  "ctl-kith-kin:sleeps-sweet-embrace": {
     action: "Instantânea ou Resistida",
     duration: "Número de dias igual aos sucessos",
     success:
@@ -865,7 +975,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Dissociação só ocorre se o efeito durar mais de 3 dias.",
     page: 36,
   },
-  "ctl-kith-kin:curse-s-cure": {
+  "ctl-kith-kin:curses-cure": {
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -873,15 +983,15 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "Cura o veneno completamente e de forma imediata.",
     page: 37,
   },
-  "ctl-kith-kin:dreamer-s-phalanx": {
+  "ctl-kith-kin:dreamers-phalanx": {
     action: "Instantânea",
     duration: "Um capítulo ou até todos acordarem",
     success:
-      "Liga os Bastiões de todos os participantes dispostos, incluindo o changeling, em um sonho compartilhado. Cada Bastião mantém entrada e saída próprias, mas conta como um único Bastião para oniromancia e navegação. Cada Bastião recebe +1 Fortificação por sonhador, máximo +5, contra oniropompos externos. Ações de trabalho em equipe entre participantes dentro dos Bastiões recebem 8-de-novo. Mudanças de localização podem mover afetados entre Bastiões. Se um participante acordar naturalmente, seu Bastião desaparece; se for despertado à força por magia, todos os Bastiões compartilhados são destruídos.",
+      "Liga os Bastiões de todos os participantes dispostos, incluindo o changeling, em um sonho compartilhado. Cada Bastião mantém entrada e saída próprias, mas conta como um único Bastião para oniromancia e navegação. Cada Bastião recebe +1 Fortificação por sonhador, máximo +5, contra oniropompos externos. Ações de trabalho em equipe entre participantes dentro dos Bastiões recebem 8-novamente. Mudanças de localização podem mover afetados entre Bastiões. Se um participante acordar naturalmente, seu Bastião desaparece; se for despertado à força por magia, todos os Bastiões compartilhados são destruídos.",
     exceptionalSuccess: "",
     page: 37,
   },
-  "ctl-kith-kin:closing-death-s-door": {
+  "ctl-kith-kin:closing-deaths-door": {
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -978,7 +1088,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Até um capítulo",
     success:
-      "Com consentimento de outro changeling, toma emprestado um Contrato Comum conhecido por ele. Usa apenas bônus de Seeming aos quais normalmente teria acesso e não pode usar a Brecha. O alvo perde acesso ao Contrato emprestado e recebe temporariamente Exchange of Gilded Contracts apenas para encerrar reflexivamente a troca, devolvendo ambos os Contratos.",
+      "Com consentimento de outro changeling, toma emprestado um Contrato Comum conhecido por ele. Usa apenas bônus de Feição aos quais normalmente teria acesso e não pode usar a Brecha. O alvo perde acesso ao Contrato emprestado e recebe temporariamente Exchange of Gilded Contracts apenas para encerrar reflexivamente a troca, devolvendo ambos os Contratos.",
     exceptionalSuccess: "",
     page: 43,
   },
@@ -1031,7 +1141,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "Sucessos adicionais apenas concedem mais informações.",
     page: 46,
   },
-  "ctl-kith-kin:knight-s-oath": {
+  "ctl-kith-kin:knights-oath": {
     action: "Instantânea",
     duration: "Um capítulo",
     success:
@@ -1056,7 +1166,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 47,
   },
-  "ctl-kith-kin:tempter-s-quest": {
+  "ctl-kith-kin:tempters-quest": {
     action: "Disputada",
     duration: "Uma história",
     success:
@@ -1143,12 +1253,12 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea (alvo disposto) ou Disputada (hostil)",
     duration: "Um capítulo ou até Delirante ser resolvida",
     success:
-      "Cria uma criatura semelhante a um fetch com Ecos em número igual ao Fado e a vincula como Touchstone do alvo. Se o alvo não usar Touchstones, torna-se mentor, amigo próximo ou vínculo equivalente. O alvo recebe Delirante Persistente em relação à criatura. O changeling pode afetar a si mesmo, mas esquece que criou o simulacro. Ao fim do capítulo, a criatura se desfaz e a perda do Touchstone provoca as consequências normais. Usar este Contrato é ponto de ruptura com 3 dados, ou 4 se o alvo for changeling.",
+      "Cria uma criatura semelhante a um fetch com Ecos em número igual ao Fado e a vincula como Pilar do alvo. Se o alvo não usar Pilars, torna-se mentor, amigo próximo ou vínculo equivalente. O alvo recebe Delirante Persistente em relação à criatura. O changeling pode afetar a si mesmo, mas esquece que criou o simulacro. Ao fim do capítulo, a criatura se desfaz e a perda do Pilar provoca as consequências normais. Usar este Contrato é ponto de ruptura com 3 dados, ou 4 se o alvo for changeling.",
     exceptionalSuccess:
       "A criatura também se integra às memórias dos amigos e entes queridos mais próximos do alvo, embora eles não recebam Delirante.",
     page: 53,
   },
-  "ctl-kith-kin:briar-s-herald": {
+  "ctl-kith-kin:briars-herald": {
     action: "Instantânea",
     duration: "Um capítulo",
     success:
@@ -1165,7 +1275,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 55,
   },
-  "ctl-kith-kin:thistle-s-rebuke": {
+  "ctl-kith-kin:thistles-rebuke": {
     action: "Instantânea",
     duration: "Uma cena",
     success:
@@ -1190,11 +1300,11 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 56,
   },
-  "ctl-kith-kin:acantha-s-fury": {
+  "ctl-kith-kin:acanthas-fury": {
     action: "Disputada",
     duration: "Uma cena",
     success:
-      "Transforma gradualmente o alvo em planta espinhosa de Tamanho 4–12 ao longo de 8 minutos, um estágio por minuto. A cada estágio, oferece uma tarefa possível, segura e concluível em uma cena; se o alvo prometer cumpri-la, regride um estágio por minuto. Se não cumprir até o fim do capítulo, a transformação recomeça. Estágios: -2 em ações não reflexivas, Velocidade, Defesa e Iniciativa fora de luz solar direta; -2 Vigor, mínimo 1, ajustando Vitalidade; quatro estágios tornam um membro por vez Braço/Perna Arruinado; depois Imobilizado por raízes; por fim, transformação completa, sem movimento, fala ou ações além de ações Mentais sem movimento. É ponto de ruptura com 4 dados.",
+      "Transforma gradualmente o alvo em planta espinhosa de Tamanho 4–12 ao longo de 8 minutos, um estágio por minuto. A cada estágio, oferece uma tarefa possível, segura e concluível em uma cena; se o alvo prometer cumpri-la, regride um estágio por minuto. Se não cumprir até o fim do capítulo, a transformação recomeça. Estágios: -2 em ações não reflexivas, Deslocamento, Defesa e Iniciativa fora de luz solar direta; -2 Vigor, mínimo 1, ajustando Vitalidade; quatro estágios tornam um membro por vez Braço/Perna Arruinado; depois Imobilizado por raízes; por fim, transformação completa, sem movimento, fala ou ações além de ações Mentais sem movimento. É ponto de ruptura com 4 dados.",
     exceptionalSuccess: "Quando o alvo cumpre uma promessa feita durante a transformação, o changeling recupera 1 Força de Vontade.",
     page: 56,
   },
@@ -1202,7 +1312,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Um capítulo",
     success:
-      "Concede senciência temporária a uma entrada, passagem, Hedgeway dormente ou acesso a Bastião/Recanto. O portal não se move nem realiza ações físicas ou que exijam fala, mas percebe como o changeling e pode comunicar-se mentalmente com ele a qualquer distância. O changeling pode usar Kenning pela perspectiva do portal, deixando de perceber o próprio ambiente enquanto o faz. O portal tem Inteligência 2, Raciocínio 2, Perseverança 5; Presença 2, Manipulação 1, Compostura 2; Ocultismo 2, Intimidação 3; Fado 2; Glamour 7/2 por turno; Força de Vontade 7; Iniciativa 3; Defesa 0; Armadura 3/3; Velocidade 0; Vitalidade 10; fraqueza apenas a ferro frio; Overpowering Dread, Thorns and Brambles; Influência (Sarças) 2 e Know Soul.",
+      "Concede senciência temporária a uma entrada, passagem, Hedgeway dormente ou acesso a Bastião/Recanto. O portal não se move nem realiza ações físicas ou que exijam fala, mas percebe como o changeling e pode comunicar-se mentalmente com ele a qualquer distância. O changeling pode usar Kenning pela perspectiva do portal, deixando de perceber o próprio ambiente enquanto o faz. O portal tem Inteligência 2, Raciocínio 2, Perseverança 5; Presença 2, Manipulação 1, Compostura 2; Ocultismo 2, Intimidação 3; Fado 2; Glamour 7/2 por turno; Força de Vontade 7; Iniciativa 3; Defesa 0; Armadura 3/3; Deslocamento 0; Vitalidade 10; fraqueza apenas a ferro frio; Overpowering Dread, Thorns and Brambles; Influência (Sarças) 2 e Know Soul.",
     exceptionalSuccess: "",
     page: 57,
   },
@@ -1215,15 +1325,15 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Comatose deve ser resolvido normalmente e não desaparece ao fim da história.",
     page: 58,
   },
-  "ctl-kith-kin:shrike-s-larder": {
+  "ctl-kith-kin:shrikes-larder": {
     action: "Instantânea",
     duration: "Uma cena",
     success:
-      "Por 1 Glamour por efeito, até 3 Glamour no mesmo alvo, acumula: • em perseguições, -2 em testes de movimento e não pode ter a Vantagem; pode gastar 1 Força de Vontade para ignorar por 1 turno; • -3 em Iniciativa; • reduz Velocidade à metade, arredondada para baixo; pode sofrer voluntariamente 1 dano contundente para ignorar este efeito por 1 turno.",
+      "Por 1 Glamour por efeito, até 3 Glamour no mesmo alvo, acumula: • em perseguições, -2 em testes de movimento e não pode ter a Vantagem; pode gastar 1 Força de Vontade para ignorar por 1 turno; • -3 em Iniciativa; • reduz Deslocamento à metade, arredondada para baixo; pode sofrer voluntariamente 1 dano contundente para ignorar este efeito por 1 turno.",
     exceptionalSuccess: "",
     page: 58,
   },
-  "ctl-kith-kin:witch-s-brambles": {
+  "ctl-kith-kin:witchs-brambles": {
     action: "Reflexiva",
     duration: "Instantânea",
     success:
@@ -1273,7 +1383,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "A troca ou espionagem também inflige Confuso ao fetch.",
     page: 61,
   },
-  "ctl-kith-kin:listen-with-the-wind-s-ears": {
+  "ctl-kith-kin:listen-with-the-winds-ears": {
     action: "Instantânea",
     duration: "Uma cena ou até usar o teleporte",
     success:
@@ -1285,7 +1395,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "Uma cena; pode estender por 1 Força de Vontade por cena",
     success:
-      "Por sucesso, escolhe um efeito: encerra 1 Inclinação pessoal; ignora penalidades de ferimentos; protege a caixa de Vitalidade não protegida mais à direita contra dano agravado; ignora 1 toxina ou doença; ou ignora 1 Condição Persistente, que não pode resolver nem gerar Beats durante o efeito. Opções repetíveis podem ser escolhidas várias vezes quando aplicável. Dano agravado já presente em caixa protegida é ignorado, não curado. Enquanto durar, não cura naturalmente, não recupera Força de Vontade por descanso, não recupera Lucidez por Touchstones, não gasta Experiências e não envelhece. Após a primeira cena consecutiva de uso, sofre ponto de ruptura ao final de cada cena com parada de 1 + número de cenas consecutivas. Pode estender o efeito pagando 1 Força de Vontade ao fim de cada cena.",
+      "Por sucesso, escolhe um efeito: encerra 1 Inclinação pessoal; ignora penalidades de ferimentos; protege a caixa de Vitalidade não protegida mais à direita contra dano agravado; ignora 1 toxina ou doença; ou ignora 1 Condição Persistente, que não pode resolver nem gerar Beats durante o efeito. Opções repetíveis podem ser escolhidas várias vezes quando aplicável. Dano agravado já presente em caixa protegida é ignorado, não curado. Enquanto durar, não cura naturalmente, não recupera Força de Vontade por descanso, não recupera Lucidez por Pilars, não gasta Experiências e não envelhece. Após a primeira cena consecutiva de uso, sofre ponto de ruptura ao final de cada cena com parada de 1 + número de cenas consecutivas. Pode estender o efeito pagando 1 Força de Vontade ao fim de cada cena.",
     exceptionalSuccess: "Sucessos adicionais apenas concedem mais escolhas.",
     page: 62,
   },
@@ -1298,7 +1408,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Pode comprar permanentemente os pontos roubados por 2 Experiências cada, até o total roubado. Mantém-os após retornarem ao alvo. Limite permanente: metade do Fado em pontos de uma mesma Influência.",
     page: 63,
   },
-  "ctl-kith-kin:earth-s-gentle-movements": {
+  "ctl-kith-kin:earths-gentle-movements": {
     action: "Instantânea",
     duration: "Instantânea",
     success:
@@ -1306,7 +1416,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "Pode dividir os sucessos para criar dois efeitos diferentes dentro da área.",
     page: 64,
   },
-  "ctl-kith-kin:earth-s-impenetrable-walls": {
+  "ctl-kith-kin:earths-impenetrable-walls": {
     action: "Instantânea (leva 5 turnos ou 30 segundos para concluir)",
     duration: "Um capítulo",
     success:
@@ -1322,7 +1432,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "Quem vê a imagem recorda imediatamente quando e onde viu o criminoso pela última vez, sujeito a Confronto de Vontades contra efeitos que bloqueiem a memória, e recebe Informado sobre o criminoso.",
     page: 241,
   },
-  "ctl-dark-eras:peacemaker-s-dra-w": {
+  "ctl-dark-eras:peacemakers-draw": {
     action: "Reflexiva e Disputada",
     duration: "Instantânea",
     success:
@@ -1352,7 +1462,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Disputada",
     duration: "",
     success:
-      "Em um trod do BriarNet, abre Hedgeway digital para um repositório eletrônico e transforma o changeling e acompanhantes em dados. Cada repositório funciona como Bastião com Fortificação baseada na segurança; proteção sobrenatural adiciona metade da Tolerância Sobrenatural do usuário, arredondada para cima. Pode ler Fortificação usando Informática no lugar de Empatia, fortalecer repositório conhecido como próprio Bastião, e usar Hedgespinning para atravessar segurança e alterar dados, programas e configurações. Ao terminar, pode reativar para continuar em forma digital; caso contrário, todos emergem fisicamente do dispositivo. Pode viajar pela representação BriarNet de redes conectadas e reativar o Contrato para alcançar outro repositório conectado.",
+      "Em um trod do BriarNet, abre Hedgeway digital para um repositório eletrônico e transforma o changeling e acompanhantes em dados. Cada repositório funciona como Bastião com Fortificação baseada na segurança; proteção sobrenatural adiciona metade da Tolerância Sobrenatural do usuário, arredondada para cima. Pode ler Fortificação usando Computação no lugar de Empatia, fortalecer repositório conhecido como próprio Bastião, e usar Hedgespinning para atravessar segurança e alterar dados, programas e configurações. Ao terminar, pode reativar para continuar em forma digital; caso contrário, todos emergem fisicamente do dispositivo. Pode viajar pela representação BriarNet de redes conectadas e reativar o Contrato para alcançar outro repositório conectado.",
     exceptionalSuccess: "",
     page: 25,
   },
@@ -1368,7 +1478,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Disputada",
     duration: "",
     success:
-      "Cria vórtice em raio de Fado × 10 metros. Cada personagem no alcance contesta separadamente; pode excluir alvos percebidos por +1 Glamour cada. Alvos afetados devem usar seu movimento normal de cada turno para avançar Velocidade total em direção ao changeling, salvo se gastarem 1 Força de Vontade naquele turno para se ancorar. Ainda podem usar a ação Instantânea para mover novamente. Quem chegar ao alcance corpo a corpo recebe Derrubado. O vórtice acompanha o changeling; quem entrar depois também contesta.",
+      "Cria vórtice em raio de Fado × 10 metros. Cada personagem no alcance contesta separadamente; pode excluir alvos percebidos por +1 Glamour cada. Alvos afetados devem usar seu movimento normal de cada turno para avançar Deslocamento total em direção ao changeling, salvo se gastarem 1 Força de Vontade naquele turno para se ancorar. Ainda podem usar a ação Instantânea para mover novamente. Quem chegar ao alcance corpo a corpo recebe Derrubado. O vórtice acompanha o changeling; quem entrar depois também contesta.",
     exceptionalSuccess: "Quem ficar caído dentro do alcance corpo a corpo também recebe Imobilizado.",
     page: 28,
   },
@@ -1376,7 +1486,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Disputada",
     duration: "Instantânea",
     success:
-      "Exige prova, evidência ou confissão de que outro changeling traiu, enganou ou praticou conduta empresarial desonesta/antiética contra o usuário ou membro da Casa de In, ou pretende fazê-lo, e exige apertar sua mão. Inflige versão temporária de Quebrador de Juramento que não requer perdão adicional do Fado para ser resolvida; a Condição altera perceptivelmente o mien do alvo de acordo com a transgressão.",
+      "Exige prova, evidência ou confissão de que outro changeling traiu, enganou ou praticou conduta empresarial desonesta/antiética contra o usuário ou membro da Casa de In, ou pretende fazê-lo, e exige apertar sua mão. Inflige versão temporária de Quebrador de Juramento que não requer perdão adicional do Fado para ser resolvida; a Condição altera perceptivelmente a Aparência feérica do alvo de acordo com a transgressão.",
     exceptionalSuccess:
       "O alvo também não consegue dizer nada que não acredite ser verdade até o fim do capítulo.",
     page: 30,
@@ -1389,11 +1499,11 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "O fantasma já está disposto a cooperar e não precisa ser convencido.",
     page: 29,
   },
-  "h-beyond-hedge:crown-envoy-s-splendid-defense": {
+  "h-beyond-hedge:crown-envoys-splendid-defense": {
     action: "Instantânea",
     duration: "Uma cena",
     success:
-      "Revela o mien feérico sem causar perda de Lucidez. Recebe o equivalente a Aparência Marcante ••••, cumulativo com o Mérito existente. Enquanto não empunhar arma nem tentar ferir alguém, humanos comuns não podem atacá-lo diretamente. Seres sobrenaturais precisam passar em Perseverança + Compostura reflexivo antes de cada ataque. Atacar ou empunhar arma de forma ameaçadora encerra o Contrato. Câmeras e dispositivos eletrônicos não registram sua forma verdadeira; após o efeito, humanos racionalizam ou esquecem seus aspectos inumanos.",
+      "Revela a Aparência feérica sem causar perda de Lucidez. Recebe o equivalente a Aparência Marcante ••••, cumulativo com o Mérito existente. Enquanto não empunhar arma nem tentar ferir alguém, humanos comuns não podem atacá-lo diretamente. Seres sobrenaturais precisam passar em Perseverança + Compostura reflexivo antes de cada ataque. Atacar ou empunhar arma de forma ameaçadora encerra o Contrato. Câmeras e dispositivos eletrônicos não registram sua forma verdadeira; após o efeito, humanos racionalizam ou esquecem seus aspectos inumanos.",
     exceptionalSuccess:
       "Dura até o próximo nascer ou pôr do sol, o que ocorrer primeiro.",
     page: 125,
@@ -1424,7 +1534,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 128,
   },
-  "h-beyond-hedge:turing-s-enigma": {
+  "h-beyond-hedge:turings-enigma": {
     action: "Instantânea ou Disputada",
     duration: "",
     success:
@@ -1575,7 +1685,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "O alvo também sofre a Condição Sinestesia durante o efeito.",
     page: 140,
   },
-  "h-beyond-hedge:dead-men-s-tales": {
+  "h-beyond-hedge:dead-mens-tales": {
     action: "Prolongada",
     duration: "Uma cena",
     success:
@@ -1592,7 +1702,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 141,
   },
-  "h-beyond-hedge:persephone-s-doorway": {
+  "h-beyond-hedge:persephones-doorway": {
     action: "Instantânea",
     duration: "Uma noite por sucesso",
     success:
@@ -1600,7 +1710,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "Pode proteger o portal com uma senha ou frase, exigida de qualquer pessoa que tente atravessá-lo em qualquer direção.",
     page: 141,
   },
-  "h-beyond-hedge:banshee-s-wail": {
+  "h-beyond-hedge:banshees-wail": {
     action: "Disputada",
     duration: "",
     success:
@@ -1719,7 +1829,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 105,
   },
-  "h-courts:celestial-m-ight": {
+  "h-courts:celestial-might": {
     action: "Instantânea",
     duration: "Turnos iguais ao Manto",
     success:
@@ -1760,7 +1870,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "A vítima também sofre a Condição Abalado.",
     page: 108,
   },
-  "h-courts:hearth-s-respite": {
+  "h-courts:hearths-respite": {
     action: "Instantânea",
     duration: "Uma semana",
     success:
@@ -1778,12 +1888,12 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "O mortal também recebe 1 ponto de armadura geral contra dano mundano.",
     page: 109,
   },
-  "h-courts:shared-remem-brance": {
+  "h-courts:shared-remembrance": {
     action: "Disputada",
     duration:
       "Até uma hora ou a duração da memória, o que for menor",
     success:
-      "O changeling vivencia uma memória pelos olhos do alvo. Pode escolher uma memória da qual tenha conhecimento por data/hora ou conteúdo, ou a memória emocionalmente intensa mais recente do alvo. Recebe 8-again em testes de Empatia envolvendo esse alvo pelo restante do capítulo.",
+      "O changeling vivencia uma memória pelos olhos do alvo. Pode escolher uma memória da qual tenha conhecimento por data/hora ou conteúdo, ou a memória emocionalmente intensa mais recente do alvo. Recebe 8-novamente em testes de Empatia envolvendo esse alvo pelo restante do capítulo.",
     exceptionalSuccess: "Pode observar até três horas de memória.",
     page: 109,
   },
@@ -1791,7 +1901,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Uma névoa cobre uma área externa de Manto × 2 quilômetros e pode entrar em ambientes internos por aberturas. Ela impõe penalidade de Percepção igual ao Manto e bônus equivalente em ações mundanas de Furtividade. O changeling e até Manto indivíduos escolhidos ignoram a penalidade de Percepção. Contratos e outros efeitos sobrenaturais de ocultação ou disfarce recebem 9-again dentro da névoa. Mortais com Perseverança menor que o Manto racionalizam encontros sobrenaturais ocorridos nela como truques da mente.",
+      "Uma névoa cobre uma área externa de Manto × 2 quilômetros e pode entrar em ambientes internos por aberturas. Ela impõe penalidade de Percepção igual ao Manto e bônus equivalente em ações mundanas de Furtividade. O changeling e até Manto indivíduos escolhidos ignoram a penalidade de Percepção. Contratos e outros efeitos sobrenaturais de ocultação ou disfarce recebem 9-novamente dentro da névoa. Mortais com Perseverança menor que o Manto racionalizam encontros sobrenaturais ocorridos nela como truques da mente.",
     exceptionalSuccess: "",
     page: 110,
   },
@@ -1847,7 +1957,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "A identidade redefinida persiste por uma história ou uma semana, o que for maior. Em casos raros, partes desse destino alternativo podem tornar-se permanentes se o jogador adquirir os Méritos com Experiência ou a critério do Narrador.",
     page: 115,
   },
-  "h-courts:assuming-the-stellar-m-antle": {
+  "h-courts:assuming-the-stellar-mantle": {
     action: "Instantânea",
     duration: "Uma semana",
     success:
@@ -1938,7 +2048,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Para cada ponto de Manto + 1, o changeling pode transferir um ponto de Defesa, Iniciativa ou Velocidade de um personagem disposto para outro desses mesmos traços, inclusive os seus. Nenhum traço pode ser reduzido a zero, e um personagem só pode ser afetado uma vez por cena. O Contrato afeta apenas valores naturais, não bônus de drogas ou poderes sobrenaturais. Sociedade da Manhã: ao usá-lo em outra pessoa, aprende sua Agulha e Fio ou equivalente. Sociedade do Dia: também pode transferir pontos de Habilidades, mas apenas dentro da mesma categoria. Sociedade da Noite: também pode comprar armadura geral, ao custo de dois pontos transferidos por nível.",
+      "Para cada ponto de Manto + 1, o changeling pode transferir um ponto de Defesa, Iniciativa ou Deslocamento de um personagem disposto para outro desses mesmos traços, inclusive os seus. Nenhum traço pode ser reduzido a zero, e um personagem só pode ser afetado uma vez por cena. O Contrato afeta apenas valores naturais, não bônus de drogas ou poderes sobrenaturais. Sociedade da Manhã: ao usá-lo em outra pessoa, aprende sua Agulha e Fio ou equivalente. Sociedade do Dia: também pode transferir pontos de Habilidades, mas apenas dentro da mesma categoria. Sociedade da Noite: também pode comprar armadura geral, ao custo de dois pontos transferidos por nível.",
     exceptionalSuccess: "",
     page: 138,
   },
@@ -1951,7 +2061,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Pode escolher uma segunda categoria de Habilidades para ser afetada.",
     page: 138,
   },
-  "h-courts:weaponize-m-ob": {
+  "h-courts:weaponize-mob": {
     action: "Instantânea",
     duration: "",
     success:
@@ -1985,7 +2095,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     exceptionalSuccess: "",
     page: 142,
   },
-  "h-courts:red-sky-at-m-orning": {
+  "h-courts:red-sky-at-morning": {
     action: "Instantânea",
     duration: "Até o próximo nascer do sol",
     success:
@@ -2307,10 +2417,10 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
       "Recupera 1 Força de Vontade.",
     page: 140,
   },
-  "h-seemings:starvation-s-savagery": {
+  "h-seemings:starvations-savagery": {
     action: "Disputada",
     duration: "",
-    success: "O alvo recebe Berserk, +1 em paradas Físicas, 8-again em agarrões e ignora penalidades de ferimento. Permanece assim até o efeito terminar ou consumir Tamanho 2 de carne fresca. Pode usar em si mesmo sem teste de resistência. Criaturas com fomes sobrenaturais entram ou podem entrar em seus estados equivalentes, conforme suas regras.",
+    success: "O alvo recebe Berserk, +1 em paradas Físicas, 8-novamente em agarrões e ignora penalidades de ferimento. Permanece assim até o efeito terminar ou consumir Tamanho 2 de carne fresca. Pode usar em si mesmo sem teste de resistência. Criaturas com fomes sobrenaturais entram ou podem entrar em seus estados equivalentes, conforme suas regras.",
     exceptionalSuccess: "Para encerrar o efeito comendo, o alvo precisa consumir Tamanho 4 de carne.",
     page: 140,
   },
@@ -2335,7 +2445,7 @@ export const CONTRACT_RESULTS: Record<string, ContractResultDetail> = {
     action: "Instantânea",
     duration: "",
     success:
-      "Com um toque, identifica falhas do alvo. Em objeto: descobre Durabilidade, Estrutura, qualidade de fabricação e natureza real se estiver disfarçado; seus ataques contra ele ignoram Durabilidade igual ao Fado. Em changeling: descobre Agulha, Fio, dano atual de Lucidez, maior Fragilidade, um Touchstone escolhido pelo Narrador e se possui Dependência ou Obsessão, incluindo o objeto dessas Condições. Em outros seres, substitui por traços equivalentes.",
+      "Com um toque, identifica falhas do alvo. Em objeto: descobre Durabilidade, Estrutura, qualidade de fabricação e natureza real se estiver disfarçado; seus ataques contra ele ignoram Durabilidade igual ao Fado. Em changeling: descobre Agulha, Fio, dano atual de Lucidez, maior Fragilidade, um Pilar escolhido pelo Narrador e se possui Dependência ou Obsessão, incluindo o objeto dessas Condições. Em outros seres, substitui por traços equivalentes.",
     exceptionalSuccess: "",
     page: 150,
   },

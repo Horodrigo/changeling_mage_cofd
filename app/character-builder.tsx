@@ -54,7 +54,9 @@ import {
   REPEATABLE_MERITS,
   type MeritDefinition,
 } from "@/lib/merits";
-import { CONTRACTS, type ContractDefinition } from "@/lib/contracts";
+import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
+import { contractOutcomeSections } from "@/lib/contract-presentation";
+import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
 import {
@@ -94,6 +96,7 @@ export type ContractSelection = Pick<
   | "regalia"
   | "description"
   | "dicePool"
+  | "hasRoll"
   | "loophole"
   | "seemingBenefits"
   | "goblin"
@@ -102,6 +105,8 @@ export type ContractSelection = Pick<
   | "duration"
   | "success"
   | "exceptionalSuccess"
+  | "failure"
+  | "dramaticFailure"
   | "options"
   | "goblinDebt"
   | "sourceId"
@@ -1040,7 +1045,7 @@ function TraitsStep(props: any) {
                   disabled={!value.skill}
                 />
                 <datalist id={listId}>
-                  {(SKILL_SPECIALTY_SUGGESTIONS[value.skill] ?? []).map(
+                  {alphabetical(SKILL_SPECIALTY_SUGGESTIONS[value.skill] ?? [], name => name).map(
                     (item) => (
                       <option value={item} key={item} />
                     ),
@@ -1515,7 +1520,7 @@ function ContractSelector({
 }) {
   const [search, setSearch] = useState("");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
-  const availableContracts = catalog.filter((contract) =>
+  const availableContracts = alphabetical(catalog, item => item.name).filter((contract) =>
     canSelectInitialContract(
       contract,
       [primaryRegalia, secondRegalia].filter(Boolean),
@@ -1528,7 +1533,7 @@ function ContractSelector({
       (item) => !REGALIA.includes(item),
     ),
   ];
-  const groups = [...new Set(contractGroups)]
+  const groups = alphabetical([...new Set(contractGroups)], value => value)
     .map((regalia) => ({
       regalia,
       items: availableContracts.filter(
@@ -1673,19 +1678,11 @@ function ContractSelector({
                             {contract.goblin ? "Goblin · Comum" : contract.type}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
-                          <p>{contract.description}</p>
-                          {contract.success && (
-                            <p className="rule-detail">
-                              <strong>Efeito / Sucesso:</strong>{" "}
-                              {contract.success}
+                          {contractOutcomeSections(contract).map((section) => (
+                            <p className="rule-detail" key={section.label}>
+                              <strong>{section.label}:</strong> {section.text}
                             </p>
-                          )}
-                          {contract.exceptionalSuccess && (
-                            <p className="rule-detail">
-                              <strong>Sucesso excepcional:</strong>{" "}
-                              {contract.exceptionalSuccess}
-                            </p>
-                          )}
+                          ))}
                           {contract.options?.length && (
                             <div className="contract-options">
                               <strong>Opções</strong>
@@ -2092,7 +2089,7 @@ function SpellSelector({
   const [search, setSearch] = useState("");
   const normalized = search.toLocaleLowerCase("pt-BR");
   const selectedIds = values.filter(Boolean).map((item) => item!.id);
-  const filtered = catalog.filter(
+  const filtered = alphabetical(catalog, item => item.name).filter(
     (spell) =>
       meetsArcanaRequirements(spell.requirements, arcana) &&
       (!normalized ||
@@ -2466,7 +2463,7 @@ function Choice({
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
+          {orderedChoiceOptions(options, optionLabels).map((option) => (
             <SelectItem key={option} value={option}>
               {optionLabels[option] ?? option}
             </SelectItem>
@@ -2515,7 +2512,7 @@ function Merits({
   budget += spent;
   const [search, setSearch] = useState("");
   const categories = [...new Set(catalog.map((merit) => merit.category))].sort(
-    (a, b) => meritCategoryRank(a) - meritCategoryRank(b) || a.localeCompare(b),
+    (a, b) => compareOptionLabels(meritCategoryLabel(a), meritCategoryLabel(b)),
   );
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   function addMerit(definition: MeritDefinition) {
@@ -2637,7 +2634,7 @@ function Merits({
           </label>
           <div className="merit-catalog">
             {categories.map((category) => {
-              const items = catalog.filter(
+              const items = alphabetical(catalog, item => item.translatedName || item.name).filter(
                 (item) =>
                   item.category === category &&
                   (!normalizedSearch ||
@@ -3360,6 +3357,7 @@ function contractTooltip(
     ContractDefinition,
     | "description"
     | "dicePool"
+    | "hasRoll"
     | "loophole"
     | "seemingBenefits"
     | "goblin"
@@ -3369,6 +3367,8 @@ function contractTooltip(
     | "duration"
     | "success"
     | "exceptionalSuccess"
+    | "failure"
+    | "dramaticFailure"
   >,
   seeming: string,
 ) {
@@ -3377,7 +3377,7 @@ function contractTooltip(
       seeming as keyof typeof contract.seemingBenefits
     ];
   return contract.description
-    ? `${contract.description}${contract.success ? `\nEfeito / Sucesso: ${contract.success}` : ""}${contract.exceptionalSuccess ? `\nSucesso excepcional: ${contract.exceptionalSuccess}` : ""}${contract.cost ? `\nCusto: ${contract.cost} · Ação: ${contract.action} · Duração: ${contract.duration}` : ""}\nParada de dados: ${contract.dicePool ?? "Não informada"}\nBrecha: ${contract.loophole ?? "Não informada"}${contract.goblin ? `\nDébito Goblin: ${contract.goblinDebt}` : ""}${benefit ? `\nBenefício de ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`
+    ? `${contractOutcomeSections(contract).map(({label, text}) => `${label}: ${text}`).join("\n")}${contract.cost ? `\nCusto: ${contract.cost} · Ação: ${contract.action} · Duração: ${contract.duration}` : ""}\nParada de dados: ${contract.dicePool ?? "Não informada"}\nBrecha: ${contract.loophole ?? "Não informada"}${contract.goblin ? `\nDébito Goblin: ${contract.goblinDebt}` : ""}${benefit ? `\nBenefício de ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`
     : "";
 }
 function formatRequirements(requirements: Record<string, number>) {
@@ -3559,12 +3559,7 @@ function readContracts(initial: CharacterSheet | null | undefined) {
   return Array.from({ length: 6 }, (_, index) => {
     const raw = saved[index];
     if (!raw) return emptyContract(index < 4 ? "Comum" : "Real");
-    const found = CONTRACTS.find(
-      (item) =>
-        item.id === raw.id ||
-        item.name === raw.name ||
-        item.originalName === raw.name,
-    );
+    const found = findContract(String(raw.id ?? "")) ?? findContract(String(raw.name ?? ""));
     return found
       ? { ...found }
       : {
