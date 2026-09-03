@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Dialog,
   DialogClose,
@@ -742,6 +743,55 @@ function DeleteCharacterDialog({
   );
 }
 
+function SwipeableSheetTabs({
+  tabs,
+  children,
+}: {
+  tabs: Array<{ value: string; label: string }>;
+  children: Record<string, ReactNode>;
+}) {
+  const [active, setActive] = useState(tabs[0]?.value ?? "");
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const select = (value: string) => {
+    setActive(value);
+    requestAnimationFrame(() =>
+      document.querySelector(`[data-mobile-tab="${value}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }),
+    );
+  };
+  return (
+    <Tabs value={active} onValueChange={select} className="ctl-sheet-tabs mobile-sheet-tabs">
+      <TabsList className="ctl-sheet-tab-list" aria-label="Seções da ficha">
+        {tabs.map((tab) => <TabsTrigger key={tab.value} value={tab.value} data-mobile-tab={tab.value}>{tab.label}</TabsTrigger>)}
+      </TabsList>
+      <div
+        className="mobile-swipe-area"
+        onTouchStart={(event) => {
+          const touch = event.changedTouches[0];
+          touchStart.current = { x: touch.clientX, y: touch.clientY };
+        }}
+        onTouchEnd={(event) => {
+          const start = touchStart.current;
+          touchStart.current = null;
+          if (!start) return;
+          const touch = event.changedTouches[0];
+          const dx = touch.clientX - start.x;
+          const dy = touch.clientY - start.y;
+          if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+          const index = tabs.findIndex((tab) => tab.value === active);
+          const next = dx < 0 ? index + 1 : index - 1;
+          if (tabs[next]) select(tabs[next].value);
+        }}
+      >
+        {tabs.map((tab) => (
+          <TabsContent key={tab.value} value={tab.value} className="ctl-sheet-page mobile-sheet-page">
+            {children[tab.value]}
+          </TabsContent>
+        ))}
+      </div>
+    </Tabs>
+  );
+}
+
 function CharacterPaper({
   character,
   updateState,
@@ -753,6 +803,7 @@ function CharacterPaper({
   updateSheet: (sheet: CharacterSheet) => void;
   printLayout?: boolean;
 }) {
+  const isMobile = useIsMobile();
   const homebrews = useHomebrews();
   const isExpanded = (name: string) =>
     isExpandedMerit(name) ||
@@ -852,6 +903,96 @@ function CharacterPaper({
   const notes = String(character.current_state?.notes ?? "");
   const setState = (key: string, value: unknown) =>
     updateState({ ...character.current_state, [key]: value });
+
+  if (isMobile && !printLayout) {
+    const identity = isCtl
+      ? [
+          ["Nome", character.character.name], ["Jogador", character.character.player],
+          ["Crônica", character.character.chronicle], ["Agulha", data.needle], ["Fio", data.thread],
+          ["Conceito", character.character.concept],
+          ["Feição", CTL_SEEMING_LABELS[String(data.seeming)] ?? data.seeming],
+          ["Frátria", kithDisplayName(data.kith, Boolean(data.kith_custom))], ["Corte", data.court],
+        ]
+      : [
+          ["Nome", character.character.name], ["Jogador", character.character.player],
+          ["Crônica", character.character.chronicle], ["Vício", data.vice], ["Virtude", data.virtue],
+          ["Conceito", character.character.concept], ["Nome das Sombras", data.shadow_name],
+          ["Caminho", data.path], ["Ordem", MTA_ORDER_LABELS[String(data.order)] ?? data.order],
+        ];
+    const paradoxConditions = MAGE_CONDITIONS.filter((condition) =>
+      `${condition.name} ${condition.description} ${condition.penalty}`.toLocaleLowerCase("pt-BR").includes("paradoxo"),
+    );
+    return (
+      <article className={`cod-sheet mobile-character-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}`}>
+        <header className="cod-sheet-title">
+          <div><span>{isCtl ? "CHANGELING" : "MAGO"}</span><strong>{isCtl ? "OS PERDIDOS" : "O DESPERTAR"}</strong></div>
+          <p>CRÔNICAS DAS TREVAS</p>
+        </header>
+        <SwipeableSheetTabs tabs={[
+          { value: "resumo", label: "Resumo" }, { value: "atributos", label: "Atributos" },
+          { value: "pericias", label: "Perícias" }, { value: "detalhes", label: "Detalhes" },
+          { value: "poderes", label: "Poderes" }, { value: "combate", label: "Combate" },
+          { value: "companheiros", label: "Companheiros" }, { value: "anotacoes", label: "Anotações" },
+        ]}>
+          {{
+            resumo: <>
+              <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}</section>
+              <SheetHeading>Experiência</SheetHeading>
+              {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
+            </>,
+            atributos: <div className="mobile-trait-stack">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} />)}</div>,
+            pericias: <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} />)}</div>,
+            detalhes: isCtl ? <>
+              <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={principalMerits} line={character.game_line} />
+              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
+              <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
+              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder="Escreva uma Aspiração" onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+              <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
+              <SheetHeading>Pedras de Contato</SheetHeading><LineList items={[String(data.touchstone ?? "")]} />
+              <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)} />
+              <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={CHANGELING_CONDITIONS} onChange={(value) => setState("conditions", value)} />
+            </> : <>
+              <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits} line="MtA" />
+              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
+              <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
+              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder="Escreva uma Aspiração" onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+              <SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={Math.max(1, Math.ceil(gnosis / 3))} placeholder="Escreva uma Obsessão" onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)} />
+              <SheetHeading>Nimbus</SheetHeading><LineList items={[String(data.nimbus ?? "")]} />
+              <SheetHeading>Sabedoria</SheetHeading><CompactValues values={{ Sabedoria: Number(data.wisdom ?? 7) }} />
+              <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value) => setState("conditions", value)} />
+              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={Math.max(gnosis, 4)} placeholder="Feitiço ativo" onChange={(value) => setState("active_spells", value)} />
+            </>,
+            poderes: isCtl ? <>
+              <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
+              <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
+              <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} />
+              <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
+              <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder="Escreva um Juramento" onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
+              <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CustomCourtLore data={data} merits={character.merits} />
+            </> : <>
+              <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
+              <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} />)}</div>
+              <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
+              <SheetHeading>Práxis</SheetHeading><SpellColumn items={praxes} />
+              <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
+              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder="Ferramenta mágica" onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
+              <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder="Descrição da Inclinação do Nimbus" onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
+              <SheetHeading>Itens Encantados</SheetHeading><EditableList values={stringList(data.enchanted_items)} minimum={4} placeholder="Tipo · Poder · Parada de Dados · Mana" onChange={(value) => updateLineData(updateSheet, character, "enchanted_items", value)} />
+              <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
+              <CustomOrderLore data={data} />
+            </>,
+            combate: <>
+              <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} />
+              <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} />
+              <CombatPage character={character} derived={derived} updateSheet={updateSheet} />
+            </>,
+            companheiros: <CompanionPage character={character} updateSheet={updateSheet} />,
+            anotacoes: <><SheetHeading>Anotações</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></>,
+          }}
+        </SwipeableSheetTabs>
+      </article>
+    );
+  }
   return (
     <article className={`cod-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}${printLayout ? " print-layout" : ""}`}>
       <header className="cod-sheet-title">
@@ -883,7 +1024,7 @@ function CharacterPaper({
               <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Fio" value={data.thread} />
               <SheetField label="Fratria" value={kithDisplayName(data.kith, Boolean(data.kith_custom))} />
-              <SheetField label="Crônica" value="" />
+              <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField
                 label="Conceito"
                 value={character.character.concept}
@@ -1073,6 +1214,7 @@ function CharacterPaper({
           <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
+              <SheetField label="Nome das Sombras" value={data.shadow_name} />
               <SheetField label="Caminho" value={data.path} />
               <SheetField
                 label="Ordem"
@@ -1081,7 +1223,7 @@ function CharacterPaper({
               <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Virtude" value={data.virtue} />
               <SheetField label="Vício" value={data.vice} />
-              <SheetField label="Crônica" value="" />
+              <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField
                 label="Conceito"
                 value={character.character.concept}

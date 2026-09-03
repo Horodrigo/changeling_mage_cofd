@@ -131,7 +131,7 @@ export type CharacterSheet = {
   system: "chronicles-of-darkness";
   game_line: "CtL" | "MtA";
   ruleset: { id: string; version: number };
-  character: { name: string; concept: string; player: string };
+  character: { name: string; concept: string; player: string; chronicle?: string };
   attributes: Record<string, number>;
   skills: Record<string, number>;
   specializations: Specialty[];
@@ -211,6 +211,7 @@ export function CharacterBuilder({
   const [playerName, setPlayerName] = useState(
     initial?.character.player ?? player,
   );
+  const [chronicle, setChronicle] = useState(initial?.character.chronicle ?? "");
   const [attributes, setAttributes] =
     useState<Record<string, number>>(startingAttributes);
   const [skills, setSkills] = useState<Record<string, number>>(startingSkills);
@@ -282,6 +283,7 @@ export function CharacterBuilder({
   const [virtue, setVirtue] = useState(String(initial?.line_data.virtue ?? ""));
   const [vice, setVice] = useState(String(initial?.line_data.vice ?? ""));
   const [nimbus, setNimbus] = useState(String(initial?.line_data.nimbus ?? ""));
+  const [shadowName, setShadowName] = useState(String(initial?.line_data.shadow_name ?? ""));
   const [tool, setTool] = useState(
     String(initial?.line_data.dedicated_tool ?? ""),
   );
@@ -409,6 +411,7 @@ export function CharacterBuilder({
         ["order", order, "Ordem"],
         ["virtue", virtue, "Virtude"],
         ["vice", vice, "Vício"],
+        ["shadowName", shadowName, "Nome das Sombras"],
         ["nimbus", nimbus, "Nimbus"],
         ["tool", tool, "Ferramenta Mágica Dedicada"],
         ["resistanceBonus", resistanceBonus, "Atributo de Resistência"],
@@ -468,6 +471,7 @@ export function CharacterBuilder({
     order,
     virtue,
     vice,
+    shadowName,
     nimbus,
     tool,
     resistanceBonus,
@@ -582,6 +586,7 @@ export function CharacterBuilder({
             custom_order: customOrder,
             virtue,
             vice,
+            shadow_name: shadowName,
             nimbus,
             dedicated_tool: tool,
             resistance_bonus: resistanceBonus,
@@ -612,6 +617,7 @@ export function CharacterBuilder({
         name: name.trim(),
         concept: concept.trim(),
         player: playerName.trim(),
+        chronicle: chronicle.trim(),
       },
       attributes: finalAttributes,
       skills: finalSkills,
@@ -735,6 +741,10 @@ export function CharacterBuilder({
             setConcept={setConcept}
             player={playerName}
             setPlayer={setPlayerName}
+            chronicle={chronicle}
+            setChronicle={setChronicle}
+            shadowName={shadowName}
+            setShadowName={setShadowName}
             missing={missing}
           />
         )}
@@ -888,6 +898,10 @@ function IdentityStep({
   setConcept,
   player,
   setPlayer,
+  chronicle,
+  setChronicle,
+  shadowName,
+  setShadowName,
   missing,
 }: any) {
   return (
@@ -926,6 +940,24 @@ function IdentityStep({
             placeholder="Nome do jogador"
           />
         </label>
+        <label>
+          Crônica
+          <Input
+            value={chronicle}
+            onChange={(event) => setChronicle(event.target.value)}
+            placeholder="Nome da crônica"
+          />
+        </label>
+        {line === "MtA" && (
+          <label className={missing("shadowName") ? "missing-field" : ""}>
+            Nome das Sombras
+            <Input
+              value={shadowName}
+              onChange={(event) => setShadowName(event.target.value)}
+              placeholder="Nome mágico do personagem"
+            />
+          </label>
+        )}
         <label className="full">
           Conceito
           <Input

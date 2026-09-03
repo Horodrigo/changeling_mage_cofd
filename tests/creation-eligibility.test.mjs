@@ -60,6 +60,13 @@ test("aceita feitiços apenas quando todos os requisitos de Arcana são atendido
     rules.meetsArcanaRequirements({ Fate: 2, Time: 1 }, { Fate: 3, Time: 0 }),
     false,
   );
+  assert.equal(
+    rules.meetsArcanaRequirements(
+      { Fate: 2, Time: 1 },
+      { Destino: 2, Tempo: 1 },
+    ),
+    true,
+  );
 });
 
 test("limita Contratos Reais às Regalias favorecidas e Contratos de Corte à Corte", () => {
