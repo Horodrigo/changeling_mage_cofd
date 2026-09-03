@@ -609,6 +609,11 @@ button { cursor: pointer; }
 .mobile-swipe-area { min-width:0; touch-action:pan-y; }
 .mobile-sheet-page { min-width:0; padding:12px 4px 20px; }
 .mobile-trait-stack { display:grid; gap:16px; }
+@media (max-width:640px) {
+  .permanent-resource-actions { width:100%; justify-content:center; gap:0; overflow:hidden; }
+  .permanent-resource-actions button { min-width:0; padding-inline:3px; }
+  .permanent-resource-actions > span { flex:none; margin-inline:1px; }
+}
 .merit-search { position: relative; display: block; }
 .merit-search > svg { position: absolute; z-index: 1; top: 50%; left: 12px; width: 16px; height: 16px; color: #817681; transform: translateY(-50%); }
 .merit-search input { padding-left: 38px; }
