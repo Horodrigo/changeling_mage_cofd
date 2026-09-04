@@ -158,7 +158,9 @@
 .companion-form-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
 .companion-form-grid label,.companion-field { display:grid; gap:4px; font:700 11px Inter,Arial,sans-serif; }
 .experience-merit-trigger { width:100%; justify-content:space-between; }
-.permanent-resource-actions { display:flex; align-items:center; gap:2px; flex-wrap:nowrap; white-space:nowrap; }
+.permanent-resource-actions { display:flex; align-items:center; justify-content:center; gap:0; width:100%; max-width:100%; overflow:hidden; flex-wrap:nowrap; white-space:nowrap; }
+.permanent-resource-actions button { min-width:0; width:auto; padding-inline:3px; flex:0 1 auto; }
+.permanent-resource-actions > span { flex:none; margin-inline:1px; }
 .catalog-filters { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:8px; align-items:center; }
 .catalog-filters [data-slot="select-trigger"] { min-width:130px; max-width:190px; }
 .homebrew-page { display:grid; gap:18px; min-width:0; width:100%; }
@@ -609,11 +611,6 @@ button { cursor: pointer; }
 .mobile-swipe-area { min-width:0; touch-action:pan-y; }
 .mobile-sheet-page { min-width:0; padding:12px 4px 20px; }
 .mobile-trait-stack { display:grid; gap:16px; }
-@media (max-width:640px) {
-  .permanent-resource-actions { width:100%; justify-content:center; gap:0; overflow:hidden; }
-  .permanent-resource-actions button { min-width:0; padding-inline:3px; }
-  .permanent-resource-actions > span { flex:none; margin-inline:1px; }
-}
 .merit-search { position: relative; display: block; }
 .merit-search > svg { position: absolute; z-index: 1; top: 50%; left: 12px; width: 16px; height: 16px; color: #817681; transform: translateY(-50%); }
 .merit-search input { padding-left: 38px; }
