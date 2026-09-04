@@ -5498,37 +5498,34 @@ function ContractPowerList({
                 {definition.regalia} · {definition.source} · p.{" "}
                 {definition.page}
               </small>
-              {contractOutcomeSections(definition,locale).map((section) => (
-                <p className="rule-detail" key={section.label}>
-                  <strong>{section.label}:</strong> {section.text}
-                </p>
-              ))}
-              {definition.options?.length && (
-                <div className="contract-options">
-                  <strong>{tr("Opções","Options")}</strong>
-                  <ul>
-                    {definition.options.map((option) => (
-                      <li key={option}>{option}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
               <dl>
                 <div>
-                  <dt>{tr("Custo","Cost")}</dt>
-                  <dd>{definition.cost ?? "Conforme descrição"}</dd>
+                  <dt>{tr("Resumo", "Summary")}</dt>
+                  <dd>{definition.description}</dd>
                 </div>
                 <div>
-                  <dt>{tr("Parada de dados","Dice pool")}</dt>
-                  <dd>{definition.dicePool}</dd>
+                  <dt>{tr("Parada de dados", "Dice Pool")}</dt>
+                  <dd>{definition.dicePool ?? tr("Não informada", "Not listed")}</dd>
+                </div>
+                <div>
+                  <dt>{tr("Custo", "Cost")}</dt>
+                  <dd>{definition.cost ?? tr("Conforme descrição", "As described")}</dd>
                 </div>
                 <div>
                   <dt>{tr("Ação / Duração","Action / Duration")}</dt>
                   <dd>
-                    {definition.action ?? "Instantânea"} ·{" "}
-                    {definition.duration ?? "Cena"}
+                    {definition.action ?? tr("Instantânea", "Instant")} ·{" "}
+                    {definition.duration ?? tr("Cena", "Scene")}
                   </dd>
                 </div>
+                {contractOutcomeSections(definition, locale)
+                  .filter((section) => section.text !== definition.description)
+                  .map((section) => (
+                    <div key={section.label}>
+                      <dt>{section.label}</dt>
+                      <dd>{section.text}</dd>
+                    </div>
+                  ))}
                 <div>
                   <dt>{tr("Brecha","Loophole")}</dt>
                   <dd>{definition.loophole}</dd>
@@ -5536,7 +5533,7 @@ function ContractPowerList({
                 {benefits.map((benefit) => (
                   <div key={benefit.key}>
                     <dt>
-                      Benefício de{" "}
+                      {tr("Benefício de", "Benefit for")}{" "}
                       {CTL_SEEMING_LABELS[benefit.key] ?? benefit.key}
                     </dt>
                     <dd>{benefit.text}</dd>
@@ -5544,17 +5541,27 @@ function ContractPowerList({
                 ))}
                 {courtBenefit && (
                   <div>
-                    <dt>Benefício da Corte {court}</dt>
+                    <dt>{tr("Benefício da Corte", "Court Benefit")} {court}</dt>
                     <dd>{courtBenefit}</dd>
                   </div>
                 )}
                 {definition.goblin && (
                   <div className="goblin-debt-row">
-                    <dt>Débito Goblin</dt>
+                    <dt>{tr("Débito Goblin", "Goblin Debt")}</dt>
                     <dd>{definition.goblinDebt}</dd>
                   </div>
                 )}
               </dl>
+              {definition.options?.length && (
+                <div className="contract-options">
+                  <strong>{tr("Opções", "Options")}</strong>
+                  <ul>
+                    {definition.options.map((option) => (
+                      <li key={option}>{option}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </article>
           );
         })}
@@ -5710,7 +5717,7 @@ function SpellSheetList({
       {rows.map(({ kind, item }, index) => (
         <div
           key={`${kind}-${String(item.id ?? item.name)}-${index}`}
-          title={`${String(item.description ?? "")}\nPrática: ${String(item.practice ?? "")} · Fator Primário: ${String(item.primaryFactor ?? "")}${item.withstand ? ` · Resistência: ${String(item.withstand)}` : ""}`}
+          title={`Resumo: ${spellItemSummary(item)}\nParada de dados: Gnose + ${formatSpellRequirements((item.requirements ?? {}) as Record<string, number>)}\nCusto: Conforme os Alcances e efeitos aplicados\nAção / Duração: Conjuração instantânea · Fator Primário: ${String(item.primaryFactor ?? "")}\nEfeitos: ${String(item.description ?? "Descrição não disponível.")}\nPrática: ${String(item.practice ?? "")}${item.withstand ? ` · Resistência: ${String(item.withstand)}` : ""}`}
         >
           <span>
             {kind==="Rota"?tr("Rota","Rote"):tr("Práxis","Praxis")} · {String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}
@@ -5725,6 +5732,11 @@ function SpellSheetList({
       ))}
     </div>
   );
+}
+function spellItemSummary(item: Record<string, unknown>) {
+  const description = String(item.description ?? "").trim() ||
+    "Descrição não disponível.";
+  return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
 }
 function stringList(value: unknown) {
   return Array.isArray(value) ? value.map(String) : [];
