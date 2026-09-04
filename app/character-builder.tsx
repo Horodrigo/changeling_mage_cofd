@@ -1710,7 +1710,26 @@ function ContractSelector({
                             {contract.goblin ? "Goblin · Comum" : contract.type}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
-                          {contractOutcomeSections(contract).map((section) => (
+                          <p className="rule-detail">
+                            <strong>Resumo:</strong> {contract.description}
+                          </p>
+                          <p className="rule-detail">
+                            <strong>Parada de dados:</strong>{" "}
+                            {contract.dicePool ?? "Não informada"}
+                          </p>
+                          {contract.cost && (
+                            <p className="rule-detail">
+                              <strong>Custo:</strong> {contract.cost}
+                            </p>
+                          )}
+                          <p className="rule-detail">
+                            <strong>Ação / Duração:</strong>{" "}
+                            {contract.action ?? "Instantânea"} ·{" "}
+                            {contract.duration ?? "Cena"}
+                          </p>
+                          {contractOutcomeSections(contract)
+                            .filter((section) => section.text !== contract.description)
+                            .map((section) => (
                             <p className="rule-detail" key={section.label}>
                               <strong>{section.label}:</strong> {section.text}
                             </p>
@@ -1725,17 +1744,6 @@ function ContractSelector({
                               </ul>
                             </div>
                           )}
-                          {contract.cost && (
-                            <p className="rule-detail">
-                              <strong>Custo:</strong> {contract.cost} ·{" "}
-                              <strong>Ação:</strong> {contract.action} ·{" "}
-                              <strong>Duração:</strong> {contract.duration}
-                            </p>
-                          )}
-                          <p className="rule-detail">
-                            <strong>Parada de dados:</strong>{" "}
-                            {contract.dicePool}
-                          </p>
                           <p className="rule-detail">
                             <strong>Brecha:</strong> {contract.loophole}
                           </p>
@@ -2176,10 +2184,25 @@ function SpellSelector({
             {formatRequirements(spell.requirements)} · {spell.source} · p.{" "}
             {spell.page || "—"}
           </small>
-          <p>{spell.description}</p>
           <p className="rule-detail">
-            <strong>Prática:</strong> {spell.practice} ·{" "}
-            <strong>Fator Primário:</strong> {spell.primaryFactor}
+            <strong>Resumo:</strong> {spellSummary(spell)}
+          </p>
+          <p className="rule-detail">
+            <strong>Parada de dados:</strong> Gnose +{" "}
+            {formatRequirements(spell.requirements)}
+          </p>
+          <p className="rule-detail">
+            <strong>Custo:</strong> Conforme os Alcances e efeitos aplicados
+          </p>
+          <p className="rule-detail">
+            <strong>Ação / Duração:</strong> Conjuração instantânea · Fator
+            Primário: {spell.primaryFactor}
+          </p>
+          <p className="rule-detail">
+            <strong>Efeitos:</strong> {spell.description}
+          </p>
+          <p className="rule-detail">
+            <strong>Prática:</strong> {spell.practice}
             {spell.withstand ? ` · Resistência: ${spell.withstand}` : ""}
           </p>
           <p className="rule-detail">
@@ -3418,7 +3441,13 @@ function formatRequirements(requirements: Record<string, number>) {
     .join(" + ");
 }
 function spellTooltip(spell: SpellDefinition) {
-  return `${spell.description ?? "Descrição não disponível."}\n${formatRequirements(spell.requirements)} · Prática: ${spell.practice} · Fator Primário: ${spell.primaryFactor}${spell.withstand ? ` · Resistência: ${spell.withstand}` : ""}`;
+  return `Resumo: ${spellSummary(spell)}\nParada de dados: Gnose + ${formatRequirements(spell.requirements)}\nCusto: Conforme os Alcances e efeitos aplicados\nAção / Duração: Conjuração instantânea · Fator Primário: ${spell.primaryFactor}\nEfeitos: ${spell.description ?? "Descrição não disponível."}\nPrática: ${spell.practice}${spell.withstand ? ` · Resistência: ${spell.withstand}` : ""}`;
+}
+
+function spellSummary(spell: SpellDefinition) {
+  const description = spell.description?.trim() || "Descrição não disponível.";
+  const firstSentence = description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim();
+  return firstSentence || description;
 }
 
 function meritCategoryRank(category: string) {
