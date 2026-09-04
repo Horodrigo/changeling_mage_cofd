@@ -40,6 +40,7 @@ import {
   CTL_NEEDLES,
   CTL_SEEMINGS,
   CTL_SEEMING_LABELS,
+  seemingDisplayName,
   CTL_THREADS,
   MTA_ORDERS,
   MTA_ORDER_LABELS,
@@ -1764,7 +1765,7 @@ function ContractSelector({
                             <p className="rule-detail">
                               <strong>
                                 {tr("Benefício de", "Benefit for")}{" "}
-                                {CTL_SEEMING_LABELS[seeming] ?? seeming}:
+                                {seemingDisplayName(seeming,locale)}:
                               </strong>{" "}
                               {benefit}
                             </p>
@@ -2513,7 +2514,7 @@ function Choice({
   invalid?: boolean;
 }) {
   const { locale, tr } = useLanguage();
-  const labels = Object.fromEntries(Object.entries(optionLabels).map(([key, text]) => [key, builderText(locale, text)]));
+  const labels = Object.fromEntries(Object.entries(optionLabels).map(([key, text]) => [key, key in CTL_SEEMINGS ? seemingDisplayName(key,locale) : builderText(locale, text)]));
   return (
     <label className={`choice-label ${invalid ? "missing-field" : ""}`}>
       {label}
@@ -3445,7 +3446,7 @@ function contractTooltip(
       seeming as keyof typeof contract.seemingBenefits
     ];
   return contract.description
-    ? `${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}${contract.cost ? `\n${localized(locale,"Custo","Cost")}: ${contract.cost} · ${localized(locale,"Ação","Action")}: ${contract.action} · ${localized(locale,"Duração","Duration")}: ${contract.duration}` : ""}\n${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`
+    ? `${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}${contract.cost ? `\n${localized(locale,"Custo","Cost")}: ${contract.cost} · ${localized(locale,"Ação","Action")}: ${contract.action} · ${localized(locale,"Duração","Duration")}: ${contract.duration}` : ""}\n${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
     : "";
 }
 function formatRequirements(requirements: Record<string, number>) {

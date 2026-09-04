@@ -1,6 +1,8 @@
 export type MeritText = { name: string; description: string; page: number };
 
 export const MERIT_TEXT_PT: Record<string, MeritText> = {
+  "core-2ed:greyhound": { name:"Galgo", description:"Em uma ação de perseguição, três sucessos já contam como sucesso excepcional, em vez dos cinco habituais.", page:48 },
+  "core-2ed:esoteric-armory": { name:"Arsenal Esotérico", description:"Mantém uma coleção de materiais incomuns capazes de explorar perdições de entidades efêmeras. Após pesquisar a Perdição de uma entidade, se os pontos deste Mérito forem iguais ou superiores ao Posto dela, o Arsenal contém o item necessário. Um Arsenal de um ponto cabe numa bolsa grande; um de quatro ou cinco pontos ocupa uma casa.", page:139 },
   "ctl-hedge:hedge-sorcerer": { name:"Feiticeiro do Espinheiro", description:"Permite realizar rituais de Feitiçaria do Espinheiro.", page:66 },
   "ctl-hedge:frightful-incantation": { name:"Encantamento Aterrador", description:"Substitui a hecatombe por Manto e Aparência feérica; abre até Manto Portas por história.", page:69 },
   "ctl-hedge:magic-dreams": { name:"Sonhos Mágicos", description:"Permite Feitiçaria do Espinheiro nos sonhos, usando oniromancia em lugar de tecelagem do Espinheiro.", page:69 },

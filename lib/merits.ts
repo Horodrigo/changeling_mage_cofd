@@ -56,7 +56,7 @@ const CORE = [
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Mental")),
   ...[
     ["Ambidextrous", fixed(3)], ["Automotive Genius", fixed(1)], ["Crack Driver", fixed(2,3)], ["Demolisher", range(1,3)],
-    ["Double Jointed", fixed(2)], ["Fleet of Foot", range(1,3)], ["Giant", fixed(3)], ["Hardy", range(1,3)],
+    ["Double Jointed", fixed(2)], ["Fleet of Foot", range(1,3)], ["Giant", fixed(3)], ["Greyhound", fixed(1)], ["Hardy", range(1,3)],
     ["Iron Stamina", range(1,3)], ["Parkour", range(1,5)], ["Quick Draw", fixed(1)], ["Relentless", fixed(1)],
     ["Seizing the Edge", fixed(2)], ["Sleight of Hand", fixed(2)], ["Small-Framed", fixed(2)], ["Stunt Driver", range(1,4)],
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Physical")),
@@ -71,7 +71,7 @@ const CORE = [
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Social")),
   ...[
     ["Aura Reading", fixed(3)], ["Automatic Writing", fixed(2)], ["Biokinesis", range(1,5)], ["Clairvoyance", fixed(3)],
-    ["Cursed", fixed(2)], ["Laying on Hands", fixed(3)], ["Medium", fixed(3)], ["Mind of a Madman", fixed(2)],
+    ["Cursed", fixed(2)], ["Esoteric Armory", range(1,5)], ["Laying on Hands", fixed(3)], ["Medium", fixed(3)], ["Mind of a Madman", fixed(2)],
     ["Numbing Touch", range(1,5)], ["Omen Sensitivity", fixed(3)], ["Psychokinesis", fixed(3,5)], ["Psychometry", fixed(3)],
     ["Telekinesis", range(1,5)], ["Telepathy", fixed(3,5)], ["Thief of Fate", fixed(3)], ["Unseen Sense", fixed(2)],
   ].map(([name, ratings]) => m(name as string, ratings as number[], "Core", "core-2ed", "Chronicles of Darkness", "Supernatural")),

@@ -1,5 +1,6 @@
 // Gerado exclusivamente dos 13 PDFs locais por work/extract-rule-fields.mjs.
 export const MERIT_PREREQUISITES_PT: Record<string, string> = {
+  "core-2ed:greyhound": "Atletismo •••, Raciocínio •••, Vigor •••",
   "ctl-hedge:hedge-sorcerer": "Ocultismo •, Mentor ••",
   "ctl-hedge:frightful-incantation": "Feiticeiro do Espinheiro ••••, Perseverança ••, Manto •• que permita impor Condições de Desvario baseadas em medo",
   "ctl-hedge:magic-dreams": "Feiticeiro do Espinheiro ••••, Ocultismo •••",

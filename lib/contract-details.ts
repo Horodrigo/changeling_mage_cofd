@@ -990,7 +990,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "ctl-2ed:last-harvest": {
     "dicePool": null,
-    "loophole": null,
+    "loophole": "O changeling escolhe a própria Pedra de Toque como alvo.",
     "seemingBenefits": {},
     "source": "Changeling the Lost",
     "page": 156
@@ -1613,7 +1613,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "ctl-kith-kin:cracked-mirror": {
     "dicePool": "Manipulação + Furto + Fado vs. Vigor + Fado",
-    "loophole": null,
+    "loophole": "Nenhuma.",
     "seemingBenefits": {},
     "source": "Kith and Kin",
     "page": 61
@@ -1691,14 +1691,17 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
   },
   "ctl-oak-ash-thorn:principle": {
     "dicePool": "Presença + Política + Manto vs. Perseverança + Fado",
-    "loophole": null,
+    "loophole": "Nenhuma.",
     "seemingBenefits": {},
     "source": "Oak, Ash, and Thorn",
     "page": 30
   },
   "ctl-dark-eras:peacemakers-draw": {
-    "missing": "heading",
-    "seemingBenefits": {}
+    "dicePool": "Destreza + (Armas de Fogo ou Atletismo) + Manto vs. Vigor + Fado",
+    "loophole": "O alvo rompeu um impasse com o changeling no último turno.",
+    "seemingBenefits": {},
+    "source": "DE:CtL",
+    "page": 241
   },
   "h-beyond-hedge:crown-envoys-splendid-defense": {
     "dicePool": "Presença + Expressão + Manto",
@@ -2051,8 +2054,11 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 105
   },
   "h-courts:celestial-might": {
-    "missing": "heading",
-    "seemingBenefits": {}
+    "dicePool": "Destreza + Ocultismo + Manto",
+    "loophole": "O alvo do Contrato possui uma imagem permanente do sol ou da lua apropriada, como uma gravação ou entalhe.",
+    "seemingBenefits": {},
+    "source": "Book of Courts",
+    "page": 106
   },
   "h-courts:celestial-shield": {
     "dicePool": "Nenhum",
@@ -2237,8 +2243,11 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 138
   },
   "h-courts:weaponize-mob": {
-    "missing": "heading",
-    "seemingBenefits": {}
+    "dicePool": "Presença + Expressão + Manto",
+    "loophole": "A situação já é explosiva: existe uma discussão ou outro conflito que permita ao changeling intensificá-la.",
+    "seemingBenefits": {},
+    "source": "Book of Courts",
+    "page": 138
   },
   "h-courts:davy-jones-locker": {
     "dicePool": "Presença + Sobrevivência + Manto",
@@ -2262,8 +2271,11 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "page": 142
   },
   "h-courts:red-sky-at-morning": {
-    "missing": "heading",
-    "seemingBenefits": {}
+    "dicePool": null,
+    "loophole": "O changeling emite algum sinal de alerta ao invocar o Contrato, como tocar um sino ou uma buzina de navio.",
+    "seemingBenefits": {},
+    "source": "Book of Courts",
+    "page": 143
   },
   "h-courts:red-sky-at-night": {
     "dicePool": "Nenhum",

@@ -17,8 +17,9 @@ Contrato de ativação automática em um Contrato com jogada de invocação.
   para a edição efetivamente fornecida pelo usuário.
 - Livro básico: 110 Contratos, com verificação dos resumos e preenchimento dos
   quatro resultados dos 55 Contratos com jogada de invocação (pp. 128–164).
-- Contratos dos suplementos: há ajustes de redação e reconexão de resultados
-  existentes, mas a revisão mecânica completa dos 144 restantes NÃO terminou.
+- Contratos dos suplementos: os resultados de invocação dos 151 registros atuais
+  foram reconectados e conferidos por fonte. Todos os contratos realmente rolados
+  possuem os quatro resultados; contratos automáticos exibem somente Efeito.
 - 7 nomes de Contratos ajustados com aliases para referências antigas.
 - Removida a duplicação de resumo + resultado na ficha, seleção e tooltip.
 - Adicionados os campos Falha e Falha Dramática ao editor de Contratos homebrew.
@@ -40,17 +41,17 @@ a parada oposta; o resumo explicita a omissão, sem inventar uma resistência.
 
 ## Próxima etapa pendente
 
-Revisar os 144 Contratos de Kith and Kin (55), DE:CtL (1), Oak, Ash, and Thorn
-(4), Beyond the Hedge (37), Book of Courts (40) e Book of Seemings (7). Conferir
-todos os resultados, especialmente Falhas Dramáticas ainda ausentes; não usar
-um resultado genérico para preencher uma lacuna da fonte. Revisar as Brechas e
-benefícios em contract-details, ainda fora da conferência completa desta etapa.
-Os textos legados de alguns suplementos ainda são vagos ou descrevem outro efeito.
+Auditar semanticamente os demais campos dos Contratos, especialmente duração,
+benefícios e opções. A auditoria estrutural atual não encontrou custo, ação,
+parada ou Brecha sem classificação, mas presença de texto não garante fidelidade
+ao livro. Em seguida, implementar as 20 Cortes e completar os textos ingleses de
+Méritos e Contratos conforme a ordem definida pelo usuário.
 
-As seções de resultados omitem campos ainda não cadastrados: isso NÃO significa
-que o suplemento não possua aquele resultado. O teste de completude por enquanto
-abrange o livro básico. O usuário autorizou publicar esta revisão parcial; isso
-não significa que o catálogo inteiro já tenha sido revisado.
+Exceções confirmadas em que existe uma parada ou teste relacionado, mas a fonte
+apresenta apenas Efeito: `Wyrd Debt`, `Autonomous Payload` e `Haunted House`.
+`Exchange of Gilded Contracts`, `Grand Revel of the Harvest` e `Vigil of Silver
+and Gold` também são automáticos. `Fake It ’Til You Make It` possui invocação com
+Presença + Persuasão + Fado − Perseverança e mantém os quatro resultados.
 
 ## Validação
 
@@ -71,13 +72,12 @@ ainda pode conter tradução literal, concordância ruim ou regra incorreta.
   Excepcional, Falha e Falha Dramática. Há uma Brecha ausente: `last-harvest`.
 - Os 10 Contratos básicos sem entrada em `contract-details`/`contract-results` são
   Contratos Goblin definidos diretamente em `contracts.ts`; não são lacunas por si.
-- Suplementos: 144 Contratos (89 com jogada e 55 automáticos). Todos os 89 com
-  jogada ainda precisam da conferência/preenchimento de Falha e Falha Dramática;
-  15 também não têm Sucesso Excepcional cadastrado.
+- Suplementos: 151 Contratos no catálogo atual. Todos os que possuem jogada de
+  invocação têm Sucesso, Sucesso Excepcional, Falha e Falha Dramática cadastrados.
 - Há 16 Contratos suplementares sem entrada em `contract-results`: 14 de Beyond
   the Hedge e 2 de Book of Courts.
-- Há seis Brechas suplementares ausentes: `cracked-mirror`, `peacemakers-draw`,
-  `principle`, `celestial-might`, `weaponize-mob` e `red-sky-at-morning`.
+- Não há Brechas sem classificação. Ausências explícitas na fonte são registradas
+  como “Nenhuma”, em vez de receber uma regra inventada.
 
 ### Ordem recomendada
 

@@ -15,34 +15,50 @@ export const CTL_SEEMINGS = {
     translated: "Fera", favored: "Resistance", regalia: "Corcel",
     blessing: "Enquanto não estiver amedrontado — ou ao gastar um ponto de Glamour por três turnos — causa dano letal com ataques desarmados e recebe +3 em Iniciativa e Deslocamento.",
     curse: "Arrisca dano de Lucidez igual à metade do Fado quando decisões apressadas ou descuidadas prejudicam outras pessoas.",
+    blessingEn: "Gain one additional dot in a Resistance Attribute at character creation. Gain +3 Initiative and Speed and deal lethal damage with unarmed attacks. If affected by Shaken, Spooked, or another fear Condition, spend 1 Glamour per three consecutive turns to retain these benefits.",
+    curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever acting without thinking causes significant harm or complications for someone else.",
   },
   Darkling: {
     translated: "Trevoso", favored: "Finesse", regalia: "Espelho",
     blessing: "Ao gastar Força de Vontade — e também Glamour, se houver testemunhas — pode tocar o imaterial e tornar-se imaterial por três turnos.",
     curse: "Arrisca dano de Lucidez igual à metade do Fado quando um segredo que conhece se revela falso.",
+    blessingEn: "Gain one additional dot in a Finesse Attribute at character creation. Spend 1 Willpower to touch something insubstantial and become part of it for three consecutive turns, taking a fitting ephemeral form. Also spend 1 Glamour if anyone is looking directly at you when you do so.",
+    curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever a secret or important piece of information you know turns out to be false.",
   },
   Elemental: {
     translated: "Elemental", favored: "Resistance", regalia: "Espada",
     blessing: "Quando cercado por seu elemento e com ao menos metade da Força de Vontade — ou ao gastar Glamour — pode agir através dele a até três metros de distância.",
     curse: "Arrisca dano de Lucidez igual à metade do Fado quando é intimidado ou coagido a seguir um curso de ação.",
+    blessingEn: "Gain one additional dot in a Resistance Attribute at character creation. While touching or surrounded by your element, perform mundane actions through it up to three yards away using your usual traits, including unarmed attacks but not weapon attacks. Spend 1 Glamour per action if fewer than half your maximum Willpower points remain.",
+    curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever someone browbeats, coerces, or forces you to act against your will.",
   },
   Fairest: {
     translated: "Belíssimo", favored: "Power", regalia: "Coroa",
     blessing: "Enquanto estiver em harmonia com seus aliados — ou ao gastar Glamour — pode gastar Força de Vontade em benefício de outro personagem.",
     curse: "Arrisca dano de Lucidez igual à metade do Fado quando suas ações são responsáveis por ferir seus aliados.",
+    blessingEn: "Gain one additional dot in a Power Attribute at character creation. Spend Willpower on another character's behalf for the usual three-die bonus or +2 to a Resistance trait, still limited to one Willpower point per action. Spend 1 Glamour if a Condition causing contention or mistrust is in play between you.",
+    curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever your action or inaction leads directly to misfortune for your allies.",
   },
   Ogre: {
     translated: "Ogro", favored: "Power", regalia: "Escudo",
     blessing: "Quando ataca em defesa de outra pessoa — ou ao gastar Glamour — impõe a Condição Derrotado por três turnos.",
     curse: "Arrisca dano de Lucidez igual à metade do Fado quando alguém que não é seu inimigo se encolhe de medo diante dele.",
+    blessingEn: "Gain one additional dot in a Power Attribute at character creation. Whenever you deal damage to another character, you may impose the Beaten Down Tilt for three turns. Spend 1 Glamour if the attack is on your own behalf rather than someone else's.",
+    curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever someone you do not consider an enemy flees or cowers from you.",
   },
   Wizened: {
     translated: "Mirrado", favored: "Finesse", regalia: "Joias",
     blessing: "Com as ferramentas adequadas — ou ao gastar Glamour — pode usar a ação Construir Equipamento para transformar um material em outro.",
     curse: "Arrisca dano de Lucidez igual à metade do Fado quando é pego desprevenido por uma surpresa desagradável.",
+    blessingEn: "Gain one additional dot in a Finesse Attribute at character creation. With appropriate tools, use Build Equipment to transform one material into another and count as having a five-die equipment bonus when determining required successes. Spend 1 Glamour per action when jury-rigging, which also allows improvised tools.",
+    curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever an unpleasant surprise catches you off guard.",
   },
 } as const;
 export const CTL_SEEMING_LABELS = Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([key, value]) => [key, value.translated])) as Record<string, string>;
+export function seemingDisplayName(value: unknown, locale: "pt-BR" | "en-US" = "pt-BR") {
+  const key = String(value ?? "");
+  return locale === "en-US" ? key : CTL_SEEMING_LABELS[key] ?? key;
+}
 
 export const CTL_NEEDLES = ["Bon Vivant", "Mestre de Xadrez", "Comandante", "Compositor", "Conselheiro", "Audacioso", "Dínamo", "Protetor", "Provedor", "Erudito", "Contador de Histórias", "Professor", "Tradicionalista", "Visionário"];
 export const CTL_THREADS = ["Aceitação", "Raiva", "Família", "Amizade", "Ódio", "Honra", "Alegria", "Amor", "Memória", "Vingança"];

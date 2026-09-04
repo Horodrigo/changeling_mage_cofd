@@ -11,6 +11,23 @@ const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const {findMeritConfiguration} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
+test("Greyhound e Esoteric Armory estão completos e disponíveis para Changeling",()=>{
+  const merits=getMeritsForLine("CtL");
+  const expected=[
+    ["Greyhound","Galgo",[1],48,"Atletismo •••, Raciocínio •••, Vigor •••"],
+    ["Esoteric Armory","Arsenal Esotérico",[1,2,3,4,5],139,undefined],
+  ];
+  for(const [name,translatedName,ratings,page,prerequisites] of expected){
+    const merit=merits.find(item=>item.name===name);
+    assert.ok(merit,name);
+    assert.equal(merit.translatedName,translatedName);
+    assert.deepEqual(merit.ratings,ratings);
+    assert.equal(merit.page,page);
+    assert.equal(merit.prerequisites,prerequisites);
+    assert.ok(merit.description);
+  }
+});
+
 test("os oito Méritos estão completos no catálogo Changeling, sem duplicatas ou vazamento para Mage", () => {
   const expected = [
     ["Hedge Sorcerer",[4],66], ["Frightful Incantation",[4],69], ["Magic Dreams",[5],69],

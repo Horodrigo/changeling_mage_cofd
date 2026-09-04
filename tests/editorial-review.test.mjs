@@ -28,9 +28,9 @@ test("Atributos, Perícias e marcadores de seleção mantêm suas funções", ()
   assert.deepEqual(orderedChoiceOptions(["Zelo", "__none", "Aliança"]), ["__none", "Aliança", "Zelo"]);
 });
 
-test("catálogos preservam as 254 identidades de Contratos e 73 Frátrias", () => {
-  assert.equal(CONTRACTS.length,254);
-  assert.equal(new Set(CONTRACTS.map(x=>x.id)).size,254);
+test("catálogos preservam as 261 identidades de Contratos e 73 Frátrias", () => {
+  assert.equal(CONTRACTS.length,261);
+  assert.equal(new Set(CONTRACTS.map(x=>x.id)).size,261);
   assert.equal(KITHS.length,73);
   assert.equal(new Set(KITHS.map(x=>x.id)).size,73);
   for (const [name,id] of Object.entries(CONTRACT_NAME_ALIASES)) {

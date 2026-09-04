@@ -89,7 +89,7 @@ import {
 import {
   ATTRIBUTES,
   CTL_SEEMINGS,
-  CTL_SEEMING_LABELS,
+  seemingDisplayName,
   MTA_ORDER_LABELS,
   MTA_PATHS,
   SKILLS,
@@ -570,9 +570,7 @@ function Dashboard({
                   <small>
                     {character.game_line === "CtL"
                       ? String(
-                          locale === "en-US"
-                            ? character.line_data.seeming ?? tr("Feição não definida","No Seeming selected")
-                            : CTL_SEEMING_LABELS[String(character.line_data.seeming)] ?? character.line_data.seeming ?? tr("Feição não definida","No Seeming selected"),
+                          seemingDisplayName(character.line_data.seeming,locale) || tr("Feição não definida","No Seeming selected"),
                         )
                       : String(
                           character.line_data.path ?? tr("Caminho não definido","No Path selected"),
@@ -636,7 +634,7 @@ function Characters({
                 <p>{character.character.concept}</p>
                 <small>
                   {character.game_line === "CtL"
-                    ? String(locale === "en-US" ? character.line_data.seeming ?? "Changeling" : CTL_SEEMING_LABELS[String(character.line_data.seeming)] ?? character.line_data.seeming ?? "Changeling")
+                    ? String(seemingDisplayName(character.line_data.seeming,locale) || "Changeling")
                     : String(character.line_data.path ?? "Mage")}
                 </small>
               </div>
@@ -947,7 +945,7 @@ function CharacterPaper({
           ["Nome", character.character.name], ["Jogador", character.character.player],
           ["Crônica", character.character.chronicle], ["Agulha", data.needle], ["Fio", data.thread],
           ["Conceito", character.character.concept],
-          ["Feição", CTL_SEEMING_LABELS[String(data.seeming)] ?? data.seeming],
+          ["Feição", seemingDisplayName(data.seeming,locale)],
           ["Frátria", kithDisplayName(data.kith, Boolean(data.kith_custom), locale)], ["Corte", data.court],
         ]
       : [
@@ -1056,7 +1054,7 @@ function CharacterPaper({
               <SheetField label="Agulha" value={data.needle} />
               <SheetField
                 label="Feição"
-                value={CTL_SEEMING_LABELS[String(data.seeming)] ?? data.seeming}
+                value={seemingDisplayName(data.seeming,locale)}
               />
               <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Fio" value={data.thread} />
@@ -2995,7 +2993,7 @@ function ExperiencePanel({
           )
           .map((seeming) => ({
             value: `${definition.id}::${seeming}`,
-            label: `${definition.name} · ${CTL_SEEMING_LABELS[seeming] ?? seeming}`,
+            label: `${definition.name} · ${seemingDisplayName(seeming,locale)}`,
           }))
       : [];
   });
@@ -3339,7 +3337,7 @@ function ExperiencePanel({
       const definition = findContract(chosenContract);
       spend(
         1,
-        `Benefício de ${CTL_SEEMING_LABELS[seeming] ?? seeming} · ${definition?.name ?? "Contrato"}`,
+        `Benefício de ${seemingDisplayName(seeming,locale)} · ${definition?.name ?? "Contrato"}`,
         { kind: "benefit", contractId: chosenContract, seeming },
         (next) => {
           const existing = objectList(next.line_data.extra_contract_benefits);
@@ -5429,7 +5427,7 @@ function ContractSheetList({
           return (
             <div
               key={`${String(item.name)}-${index}`}
-              title={`${description}\nParada de dados: ${dicePool}\nBrecha: ${definition?.loophole ?? "Não informada"}${benefit ? `\nBenefício de ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`}
+              title={`${description}\nParada de dados: ${dicePool}\nBrecha: ${definition?.loophole ?? "Não informada"}${benefit ? `\nBenefício de ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`}
             >
               <span>{String(locale==="en-US"?(definition?.originalName??item.originalName??item.name):(definition?.name??item.name))}</span>
               <small>
@@ -5534,7 +5532,7 @@ function ContractPowerList({
                   <div key={benefit.key}>
                     <dt>
                       {tr("Benefício de", "Benefit for")}{" "}
-                      {CTL_SEEMING_LABELS[benefit.key] ?? benefit.key}
+                      {seemingDisplayName(benefit.key,locale)}
                     </dt>
                     <dd>{benefit.text}</dd>
                   </div>
@@ -5569,7 +5567,7 @@ function ContractPowerList({
   );
 }
 function SeemingLore({ seeming }: { seeming: string }) {
-  const {tr}=useLanguage();
+  const {locale,tr}=useLanguage();
   const definition = CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS];
   if (!definition)
     return <LorePanel title={tr("Feição","Seeming")} text={tr("Nenhuma Feição selecionada.","No Seeming selected.")} />;
@@ -5587,12 +5585,12 @@ function SeemingLore({ seeming }: { seeming: string }) {
     <>
       <LorePanel
         title={tr(`Bênção de ${definition.translated}`,`${seeming} Blessing`)}
-        text={definition.blessing}
+        text={locale==="en-US"?definition.blessingEn:definition.blessing}
         source={`Changeling the Lost · p. ${page}`}
       />
       <LorePanel
         title={tr(`Maldição de ${definition.translated}`,`${seeming} Curse`)}
-        text={definition.curse}
+        text={locale==="en-US"?definition.curseEn:definition.curse}
         source={`Changeling the Lost · p. ${page}`}
       />
     </>

@@ -562,5 +562,38 @@ export const CONTRACT_TEXT_EN: Readonly<Record<string, EnglishContractText>> = {
   },
   "ctl-2ed:wayward-guide": {
     "description": "The changeling bought a bad sense of direction from a goblin. He can use it to alter signs in his path, inflicting the Lost Condition on one mortal per Glamour point spent. If he targets himself, supernatural creatures tracking him must beat his player in a Clash of Wills or lose the scent for the scene."
+  },
+  "ctl-kith-kin:frail-as-the-dying-word": {
+    "description": "Inflict one of the changeling's minor frailties on the target. If the target already possesses it, it becomes major for the duration; if the target already possesses a major version, the Contract does not function.",
+    "success": "The target gains one of the changeling's minor frailties; an existing instance becomes major for the duration. The changeling does not lose the frailty he inflicts.",
+    "exceptionalSuccess": "Inflict one major frailty or two minor frailties instead; iron counts as a major frailty.",
+    "failure": "The Contract fails.",
+    "dramaticFailure": "The Wyrd catches the forgery and inflicts a new major frailty on the changeling for the scene."
+  },
+  "ctl-kith-kin:fake-it-til-you-make-it": {
+    "description": "Make a proclamation audible within 10 yards and temporarily change the mundane world as though Hedgespinning, provided the proclamation's emotional tenor matches the desired changes. Spend invocation successes on subtle shifts; shifts affecting Hedge navigation may also affect mundane actions.",
+    "success": "Spend invocation successes on subtle shifts in reality. Gross alterations to people or carried objects are resisted, even by willing targets, and cannot instantly annihilate a character.",
+    "exceptionalSuccess": "In addition to the successes rolled, gain 1 Glamour and 1 Willpower to spend on subtle or paradigm shifts.",
+    "failure": "The Contract fails.",
+    "dramaticFailure": "As with a Hedgespinning failure, the invocation incites Bedlam in everyone present, including the changeling."
+  },
+  "ctl-kith-kin:straight-on-til-morning": {
+    "description": "Become tireless for the journey: go without rest or food and suffer no Environmental Tilts along the way. Navigation rolls on the Wishing Roads gain 8-again."
+  },
+  "ctl-kith-kin:star-light-star-bright": {
+    "description": "For 1 Glamour, learn a wish the target made within the last month; without a target, learn a random person's wish within one mile. Fulfill it by the end of the story or gain the Persistent Oathbreaker Condition. The changeling may interpret the wish with artistic license but cannot exceed her own limitations. For 1 additional Glamour, attach a drawback to the granted wish."
+  },
+  "ctl-dark-eras:draw-likeness": {
+    "description": "Name a specific or general crime and render the person sought on any flat surface. The likeness makes matching the face easier and grants a free Clue about the target's whereabouts or recent activity; for a general crime, it depicts the nearest person who committed it within the last lunar month.",
+    "success": "Render the target's likeness. Rolls to match it to a face gain the rote quality, and anyone examining it for the first time gains a free Clue about the target's whereabouts or recent activity.",
+    "exceptionalSuccess": "Anyone viewing the likeness immediately remembers when and where they last saw the target; supernatural interference prompts a Clash of Wills. The image also hints at the target's future whereabouts or activity and grants the Informed Condition regarding the criminal.",
+    "failure": "The Contract fails.",
+    "dramaticFailure": "The intended target realizes the changeling is hunting him and gains information about her as though she were the target of an exceptionally successful invocation."
+  },
+  "ctl-hedge:distill-the-hidden": {
+    "description": "Turn a personally meaningful ephemeral experience, such as true love's kiss or a baby's first laugh, into a representative physical object. The target must have witnessed or participated in the event and must willingly participate in the Contract. The target loses the memory; other meaningful participants suffer Ravaged or another appropriate effect."
+  },
+  "ctl-hedge:wyrd-debt": {
+    "description": "Inflict a Condition whose normal resolution is replaced by paying the debt: Amnesia, Bestial, Blinded, Delusional, Dream Assailant, Fatigued, Glamour Addicted, Hunted, Lethargic, Madness, Mute, or Paranoid."
   }
 } as const;
