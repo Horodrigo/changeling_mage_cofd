@@ -48,7 +48,7 @@ export const CONTRACT_DETAILS: Record<string,ContractDetail> = {
     "loophole": "O changeling realizou um favor significativo para o elemento ou material nesta cena, tais como limpar completamente uma fonte pública ou polir uma grande estátua de pedra.",
     "seemingBenefits": {
       "Elemental": "O Sprite pode se fundir com o servidor gastando outro ponto Glamour e um ponto Willpower. Ele substitui os atributos da criatura por seus lugares, torna-se imune a danos infligidos com seu elemento ou material, e adiciona + 1L ao modificador de armas em rolos de ataque.",
-      "Fairest": "O Soberano pode gastar um ponto de força de vontade para ligar o servo a sua Hollow (ou qualquer Hollow que ele compartilha). Enquanto o servo permanecer dentro da Hollow, ele permanece animado. O Fairest só pode ter um servidor de cada vez.",
+      "Fairest": "O Soberano pode gastar um ponto de força de vontade para ligar o servo ao seu Recanto (mesmo um compartilhado). Enquanto o servo permanecer dentro do Recanto, ele permanece animado. O Belíssimo só pode ter um servidor de cada vez.",
       "Beast": "O servo da Besta ganha um ponto adicional de Resistência.",
       "Darkling": "O servo do Trevoso não pode ser amarrado ou amarrado.",
       "Ogre": "O servo do Gárgula ganha um ponto adicional de Poder.",

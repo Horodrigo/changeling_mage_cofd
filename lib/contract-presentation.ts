@@ -1,4 +1,6 @@
 import type { ContractDefinition } from "./contracts";
+import type { Locale } from "./i18n";
+import { CONTRACT_TEXT_EN } from "./contracts-en";
 
 export type ContractMechanics = Pick<ContractDefinition,
   "description" | "dicePool" | "hasRoll" | "success" | "exceptionalSuccess" | "failure" | "dramaticFailure"
@@ -13,15 +15,22 @@ export function contractHasInvocationRoll(contract: Pick<ContractDefinition, "di
   return !/^(nenhum[a]?|none|sem (?:teste|jogada)|n\/?a|[-—])\.?$/.test(pool);
 }
 
-export function contractOutcomeSections(contract: ContractMechanics) {
-  const main = contract.success?.trim() || contract.description.trim();
+export function contractDisplayName(contract:Pick<ContractDefinition,"id"|"name"|"originalName">,locale:Locale="pt-BR") {
+  return locale==="en-US"?contract.originalName:contract.name;
+}
+
+export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="pt-BR") {
+  const english=locale==="en-US"&&contract.id?CONTRACT_TEXT_EN[contract.id]:undefined;
+  const description=english?.description??contract.description;
+  const success=english?.success??contract.success;
+  const main = success?.trim() || description.trim();
   if (contractHasInvocationRoll(contract) !== true) {
-    return main ? [{ label: "Efeito", text: main }] : [];
+    return main ? [{ label: locale==="en-US"?"Effect":"Efeito", text: main }] : [];
   }
   return [
-    { label: "Sucesso", text: main },
-    { label: "Sucesso Excepcional", text: contract.exceptionalSuccess?.trim() },
-    { label: "Falha", text: contract.failure?.trim() },
-    { label: "Falha Dramática", text: contract.dramaticFailure?.trim() },
+    { label: locale==="en-US"?"Success":"Sucesso", text: main },
+    { label: locale==="en-US"?"Exceptional Success":"Sucesso Excepcional", text: (english?.exceptionalSuccess??contract.exceptionalSuccess)?.trim() },
+    { label: locale==="en-US"?"Failure":"Falha", text: (english?.failure??contract.failure)?.trim() },
+    { label: locale==="en-US"?"Dramatic Failure":"Falha Dramática", text: (english?.dramaticFailure??contract.dramaticFailure)?.trim() },
   ].filter((section): section is { label: string; text: string } => Boolean(section.text));
 }

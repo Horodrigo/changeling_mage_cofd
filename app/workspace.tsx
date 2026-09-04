@@ -102,7 +102,7 @@ import {
   REPEATABLE_MERITS,
   type MeritDefinition,
 } from "@/lib/merits";
-import { findKith, kithDisplayName } from "@/lib/changeling-kiths";
+import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
 import { contractOutcomeSections } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
@@ -136,6 +136,8 @@ import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHom
 import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
 import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
 import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
+import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
+import { systemTerm } from "@/lib/system-terms";
 
 type View = "inicio" | "personagens" | "homebrews";
 type CatalogRule = {
@@ -148,10 +150,23 @@ type CatalogRule = {
   reviewStatus: string;
 };
 
+const WORKSPACE_EN:Record<string,string>={
+  "Nome":"Name","Jogador":"Player","Crônica":"Chronicle","Conceito":"Concept","Agulha":"Needle","Fio":"Thread","Feição":"Seeming","Frátria":"Kith","Corte":"Court",
+  "Vício":"Vice","Virtude":"Virtue","Nome das Sombras":"Shadow Name","Caminho":"Path","Ordem":"Order",
+  "Resumo":"Summary","Principal":"Main","Atributos":"Attributes","Perícias":"Skills","Detalhes":"Details","Poderes":"Powers","Combate":"Combat","Companheiros":"Companions","Anotações":"Notes",
+  "Experiência":"Experience","Méritos":"Merits","Méritos Expandidos":"Expanded Merits","Aspirações":"Aspirations","Obsessões":"Obsessions","Fragilidades":"Frailties","Pedras de Contato":"Touchstones","Lucidez":"Clarity","Condições":"Conditions","Nimbus":"Nimbus","Sabedoria":"Wisdom","Feitiços Ativos":"Active Spells",
+  "Regalias Favorecidas":"Favored Regalia","Contratos":"Contracts","Débito Goblin":"Goblin Debt","Juramentos":"Oaths","Arcanos":"Arcana","Rotas":"Rotes","Práxis":"Praxes","Attainments":"Attainments","Ferramentas Mágicas":"Magical Tools","Inclinação do Nimbus":"Nimbus Tilt","Itens Encantados":"Enchanted Items","Condições do Paradoxo":"Paradox Conditions",
+  "Vitalidade":"Health","Força de Vontade":"Willpower","Características da Linha":"Line Traits","Outras Características":"Other Traits","Escolhas dos Méritos":"Merit Choices","Armadura":"Armor","Armas":"Weapons","Equipamentos":"Equipment","Veículos":"Vehicles",
+  "Bênção da Fratria":"Kith Blessing","Bênção da Feição":"Seeming Blessing","Maldição da Feição":"Seeming Curse","Benefícios da Corte":"Court Benefits","Perícias de Ordem":"Order Skills",
+  "Contrato":"Contract","Rota":"Rote","Todas":"All","Todos":"All",
+  "Nenhum registro.":"No entries.","Nenhum Mérito selecionado":"No Merit selected","Nenhum Mérito Expandido adquirido.":"No Expanded Merit acquired.",
+};
+const workspaceTerm=(value:string,locale:Locale)=>locale==="en-US"?(WORKSPACE_EN[value]??systemTerm(value,locale)):value;
+
 const nav = [
-  ["inicio", "Início", LayoutDashboard],
-  ["personagens", "Personagens", UsersRound],
-  ["homebrews", "Homebrews", FlaskConical],
+  ["inicio", "home", LayoutDashboard],
+  ["personagens", "characters", UsersRound],
+  ["homebrews", "homebrews", FlaskConical],
 ] as const;
 
 export function Workspace({
@@ -161,6 +176,7 @@ export function Workspace({
   displayName: string;
   userKey: string;
 }) {
+  const {locale,setLocale,t,tr}=useLanguage();
   const [view, setView] = useState<View>("inicio");
   const [characters, setCharacters] = useState<CharacterSheet[]>([]);
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
@@ -194,14 +210,14 @@ export function Workspace({
               setCharacters(migrated);
               await setDeviceValue(storageKey, migrated);
               setNotice(
-                `${migrated.length} ficha(s) antiga(s) foram transferidas para este navegador.`,
+                tr(`${migrated.length} ficha(s) antiga(s) foram transferidas para este navegador.`,`${migrated.length} legacy character sheet(s) were transferred to this browser.`),
               );
             }
           }
         }
       } catch {
         setNotice(
-          "Não foi possível ler o armazenamento local deste navegador.",
+          tr("Não foi possível ler o armazenamento local deste navegador.","The local storage for this browser could not be read."),
         );
       }
       if (!cancelled) setReady(true);
@@ -254,7 +270,7 @@ export function Workspace({
     setSelected(sheet);
     setView("personagens");
     setNotice(
-      "Ficha salva localmente neste navegador. Exporte o JSON para manter uma cópia independente.",
+      tr("Ficha salva localmente neste navegador. Exporte o JSON para manter uma cópia independente.","Character saved locally in this browser. Export the JSON to keep an independent copy."),
     );
   }
 
@@ -287,7 +303,7 @@ export function Workspace({
     );
     setSelected(null);
     setView("personagens");
-    setNotice(`“${character.character.name}” foi excluído deste navegador.`);
+    setNotice(tr(`“${character.character.name}” foi excluído deste navegador.`,`“${character.character.name}” was deleted from this browser.`));
   }
 
   function exportCharacter(character: CharacterSheet) {
@@ -310,7 +326,7 @@ export function Workspace({
         !["CtL", "MtA"].includes(parsed.game_line)
       )
         throw new Error(
-          "O JSON não pertence a uma ficha CtL ou MtA compatível.",
+          tr("O JSON não pertence a uma ficha CtL ou MtA compatível.","The JSON is not a compatible CtL or MtA character sheet."),
         );
       const sheet =
         parsed.schema_version === 2
@@ -322,13 +338,14 @@ export function Workspace({
       ]);
       setView("personagens");
       setSelected(sheet);
-      setNotice(`“${sheet.character.name}” foi importado para este navegador.`);
+      setNotice(tr(`“${sheet.character.name}” foi importado para este navegador.`,`“${sheet.character.name}” was imported into this browser.`));
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : "JSON inválido.");
+      setNotice(error instanceof Error ? error.message : tr("JSON inválido.","Invalid JSON."));
     }
   }
 
-  const title = nav.find(([id]) => id === view)?.[1] ?? "Arquivo";
+  const titleKey = nav.find(([id]) => id === view)?.[1];
+  const title = titleKey ? t(titleKey) : "Arquivo";
   if (editing)
     return (
       <CharacterBuilder
@@ -350,8 +367,10 @@ export function Workspace({
             <span>das Trevas</span>
           </div>
           </button>
-          <nav className="top-navigation" aria-label="Navegação principal">
-          {nav.map(([id, label, Icon]) => (
+          <nav className="top-navigation" aria-label={t("mainNavigation")}>
+          {nav.map(([id, labelKey, Icon]) => {
+            const label=t(labelKey);
+            return (
             <button
               key={id}
               aria-label={label}
@@ -362,7 +381,19 @@ export function Workspace({
               <Icon />
               <span>{label}</span>
             </button>
-          ))}
+          )})}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="language-trigger" aria-label={`${t("language")}: ${locale === "pt-BR" ? t("portuguese") : t("english")}`} title={t("language")}>
+                <span aria-hidden="true">{localeFlag(locale)}</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {(["pt-BR","en-US"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
+                <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("portuguese") : t("english")}
+              </DropdownMenuItem>)}
+            </DropdownMenuContent>
+          </DropdownMenu>
           </nav>
           <div className="top-panel">
             <input
@@ -378,28 +409,28 @@ export function Workspace({
             />
             <div className="top-profile">
               <strong>{displayName}</strong>
-              <span>{characters.length} personagem(ns)</span>
+              <span>{locale === "pt-BR" ? `${characters.length} personagem(ns)` : `${characters.length} character${characters.length===1?"":"s"}`}</span>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className="sheet-actions-trigger">
-                  <MoreHorizontal /> Ações da ficha
+                  <MoreHorizontal /> {t("sheetActions")}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="sheet-actions-menu">
-                <DropdownMenuLabel>Gerenciar fichas</DropdownMenuLabel>
+                <DropdownMenuLabel>{t("manageSheets")}</DropdownMenuLabel>
                 <DropdownMenuItem onSelect={() => setEditing("new")}>
-                  <Plus /> Criar ficha
+                  <Plus /> {t("createSheet")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => fileRef.current?.click()}>
-                  <Upload /> Importar JSON
+                  <Upload /> {t("importJson")}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   disabled={!selected}
                   onSelect={() => selected && exportCharacter(selected)}
                 >
-                  <Download /> Salvar JSON
+                  <Download /> {t("saveJson")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   variant="destructive"
@@ -409,7 +440,7 @@ export function Workspace({
                     if (selected) setDeleteOpen(true);
                   }}
                 >
-                  <Trash2 /> Deletar ficha
+                  <Trash2 /> {t("deleteSheet")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -423,7 +454,7 @@ export function Workspace({
           <div className="notice" role="status">
             <ShieldCheck />
             <span>{notice}</span>
-            <button onClick={() => setNotice("")} aria-label="Fechar aviso">
+            <button onClick={() => setNotice("")} aria-label={t("closeNotice")}>
               <X />
             </button>
           </div>
@@ -474,6 +505,7 @@ function Dashboard({
   openCharacters: () => void;
   openCharacter: (item: CharacterSheet) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const changelings = characters.filter(
     (item) => item.game_line === "CtL",
   ).length;
@@ -485,14 +517,14 @@ function Dashboard({
     <div className="page-grid">
       <section className="welcome-panel practical-welcome">
         <div>
-          <Badge className="eyebrow">ARQUIVO DAS TREVAS</Badge>
-          <h2>Catálogo de Fichas</h2>
+          <Badge className="eyebrow">{tr("ARQUIVO DAS TREVAS","ARCHIVE OF DARKNESS")}</Badge>
+          <h2>{tr("Catálogo de Fichas","Character Catalog")}</h2>
           <p>
-            Quem você será desta vez?
+            {tr("Quem você será desta vez?","Who will you be this time?")}
           </p>
           <div className="welcome-actions">
             <Button variant="outline" onClick={openCharacters}>
-              Todos os personagens
+              {tr("Todos os personagens","All characters")}
             </Button>
           </div>
         </div>
@@ -501,20 +533,20 @@ function Dashboard({
         </div>
       </section>
       <section className="line-summary wide">
-        <span><strong>{characters.length}</strong> personagens</span>
+        <span><strong>{characters.length}</strong> {tr("personagens","characters")}</span>
         <span className="ctl-summary"><strong>{changelings}</strong> Changelings</span>
-        <span className="mta-summary"><strong>{mages}</strong> Magos</span>
+        <span className="mta-summary"><strong>{mages}</strong> {tr("Magos","Mages")}</span>
       </section>
       <section className="panel wide recent-panel">
         <div className="panel-heading">
           <div>
-            <span className="kicker">CONTINUAR</span>
-            <h3>Personagens recentes</h3>
-            <p>Acesse rapidamente as fichas usadas por último.</p>
+            <span className="kicker">{tr("CONTINUAR","CONTINUE")}</span>
+            <h3>{tr("Personagens recentes","Recent characters")}</h3>
+            <p>{tr("Acesse rapidamente as fichas usadas por último.","Quickly open your most recently used characters.")}</p>
           </div>
           {characters.length > 4 && (
             <Button variant="ghost" onClick={openCharacters}>
-              Ver todos
+              {tr("Ver todos","View all")}
             </Button>
           )}
         </div>
@@ -529,19 +561,21 @@ function Dashboard({
                 <CharacterLineIcon line={character.game_line} />
                 <div>
                   <Badge variant="outline">
-                    {character.game_line === "CtL" ? "Changeling" : "Mago"}
+                    {character.game_line === "CtL" ? "Changeling" : tr("Mago","Mage")}
                   </Badge>
                   <h3>{character.character.name}</h3>
                   <p>
-                    {character.character.concept || "Conceito não informado"}
+                    {character.character.concept || tr("Conceito não informado","No concept provided")}
                   </p>
                   <small>
                     {character.game_line === "CtL"
                       ? String(
-                          character.line_data.seeming ?? "Feição não definida",
+                          locale === "en-US"
+                            ? character.line_data.seeming ?? tr("Feição não definida","No Seeming selected")
+                            : CTL_SEEMING_LABELS[String(character.line_data.seeming)] ?? character.line_data.seeming ?? tr("Feição não definida","No Seeming selected"),
                         )
                       : String(
-                          character.line_data.path ?? "Caminho não definido",
+                          character.line_data.path ?? tr("Caminho não definido","No Path selected"),
                         )}
                   </small>
                 </div>
@@ -553,8 +587,8 @@ function Dashboard({
           <div className="dashboard-empty">
             <Sparkles />
             <div>
-              <strong>Comece uma nova crônica</strong>
-              <p>Use “Ações da ficha” no painel superior para criar seu primeiro personagem.</p>
+              <strong>{tr("Comece uma nova crônica","Begin a new chronicle")}</strong>
+              <p>{tr("Use “Ações da ficha” no painel superior para criar seu primeiro personagem.","Use “Character actions” in the top panel to create your first character.")}</p>
             </div>
           </div>
         )}
@@ -571,20 +605,20 @@ function Characters({
   ready: boolean;
   open: (item: CharacterSheet) => void;
 }) {
+  const {locale,tr}=useLanguage();
   return (
     <section className="panel">
       <div className="panel-heading">
         <div>
-          <span className="kicker">PERSONAGENS</span>
-          <h3>Suas fichas</h3>
+          <span className="kicker">{tr("PERSONAGENS","CHARACTERS")}</span>
+          <h3>{tr("Suas fichas","Your characters")}</h3>
           <p>
-            Abra uma ficha para jogar, atualizar características ou exportar uma
-            cópia.
+            {tr("Abra uma ficha para jogar, atualizar características ou exportar uma cópia.","Open a character to play, update traits, or export a copy.")}
           </p>
         </div>
       </div>
       {!ready ? (
-        <div className="loading-card">Carregando personagens…</div>
+        <div className="loading-card">{tr("Carregando personagens…","Loading characters…")}</div>
       ) : characters.length ? (
         <div className="character-grid">
           {characters.map((character) => (
@@ -596,13 +630,13 @@ function Characters({
               <CharacterLineIcon line={character.game_line} />
               <div>
                 <Badge variant="outline">
-                  {character.game_line === "CtL" ? "Changeling" : "Mago"}
+                  {character.game_line === "CtL" ? "Changeling" : tr("Mago","Mage")}
                 </Badge>
                 <h3>{character.character.name}</h3>
                 <p>{character.character.concept}</p>
                 <small>
                   {character.game_line === "CtL"
-                    ? String(character.line_data.seeming ?? "Changeling")
+                    ? String(locale === "en-US" ? character.line_data.seeming ?? "Changeling" : CTL_SEEMING_LABELS[String(character.line_data.seeming)] ?? character.line_data.seeming ?? "Changeling")
                     : String(character.line_data.path ?? "Mage")}
                 </small>
               </div>
@@ -612,8 +646,8 @@ function Characters({
         </div>
       ) : (
         <Empty
-          title="Nenhum personagem criado"
-          text="Use “Ações da ficha” no painel superior para criar um Changeling ou Mago."
+          title={tr("Nenhum personagem criado","No characters created")}
+          text={tr("Use “Ações da ficha” no painel superior para criar um Changeling ou Mago.","Use “Character actions” in the top panel to create a Changeling or Mage.")}
         />
       )}
     </section>
@@ -644,6 +678,7 @@ function CharacterView({
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const {tr}=useLanguage();
   const [pdfPreviewOpen, setPdfPreviewOpen] = useState(false);
   const printSheet = () => {
     setPdfPreviewOpen(false);
@@ -653,21 +688,21 @@ function CharacterView({
     <section className="sheet-editor">
       <div className="sheet-toolbar">
         <Button variant="ghost" onClick={back}>
-          ← Personagens
+          ← {tr("Personagens","Characters")}
         </Button>
         <div>
           <Badge>{character.game_line}</Badge>
-          <span>Alterações nos marcadores são salvas automaticamente</span>
+          <span>{tr("Alterações nos marcadores são salvas automaticamente","Changes to tracks are saved automatically")}</span>
         </div>
         <div className="sheet-toolbar-actions">
           <Button variant="outline" onClick={() => setPdfPreviewOpen(true)}>
-            <Eye /> Visualizar PDF
+            <Eye /> {tr("Visualizar PDF","Preview PDF")}
           </Button>
           <Button variant="outline" onClick={printSheet}>
-            <Printer /> Imprimir PDF
+            <Printer /> {tr("Imprimir PDF","Print PDF")}
           </Button>
           <Button variant="outline" onClick={edit}>
-            <Pencil /> Editar
+            <Pencil /> {tr("Editar","Edit")}
           </Button>
         </div>
       </div>
@@ -688,13 +723,13 @@ function CharacterView({
         <DialogContent className="pdf-preview-dialog">
           <DialogHeader className="pdf-preview-header">
             <div>
-              <DialogTitle>Visualização para PDF</DialogTitle>
+              <DialogTitle>{tr("Visualização para PDF","PDF preview")}</DialogTitle>
               <DialogDescription>
-                As quatro abas serão impressas como páginas separadas.
+                {tr("As quatro abas serão impressas como páginas separadas.","The four tabs will print as separate pages.")}
               </DialogDescription>
             </div>
             <Button onClick={() => window.print()}>
-              <Printer /> Imprimir ou salvar em PDF
+              <Printer /> {tr("Imprimir ou salvar em PDF","Print or save as PDF")}
             </Button>
           </DialogHeader>
           <div className="pdf-preview-scroll">
@@ -722,20 +757,20 @@ function DeleteCharacterDialog({
   name: string;
   onDelete: () => void;
 }) {
+  const {tr}=useLanguage();
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Excluir “{name}”?</AlertDialogTitle>
+          <AlertDialogTitle>{tr(`Excluir “${name}”?`,`Delete “${name}”?`)}</AlertDialogTitle>
           <AlertDialogDescription>
-            A ficha será removida do armazenamento deste navegador. Exporte o
-            JSON antes se quiser conservar uma cópia.
+            {tr("A ficha será removida do armazenamento deste navegador. Exporte o JSON antes se quiser conservar uma cópia.","This character will be removed from this browser's storage. Export the JSON first if you want to keep a copy.")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel>{tr("Cancelar","Cancel")}</AlertDialogCancel>
           <AlertDialogAction variant="destructive" onClick={onDelete}>
-            Excluir definitivamente
+            {tr("Excluir definitivamente","Delete permanently")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -750,6 +785,7 @@ function SwipeableSheetTabs({
   tabs: Array<{ value: string; label: string }>;
   children: Record<string, ReactNode>;
 }) {
+  const {tr}=useLanguage();
   const [active, setActive] = useState(tabs[0]?.value ?? "");
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const select = (value: string) => {
@@ -760,7 +796,7 @@ function SwipeableSheetTabs({
   };
   return (
     <Tabs value={active} onValueChange={select} className="ctl-sheet-tabs mobile-sheet-tabs">
-      <TabsList className="ctl-sheet-tab-list" aria-label="Seções da ficha">
+      <TabsList className="ctl-sheet-tab-list" aria-label={tr("Seções da ficha","Character sections")}>
         {tabs.map((tab) => <TabsTrigger key={tab.value} value={tab.value} data-mobile-tab={tab.value}>{tab.label}</TabsTrigger>)}
       </TabsList>
       <div
@@ -803,6 +839,7 @@ function CharacterPaper({
   updateSheet: (sheet: CharacterSheet) => void;
   printLayout?: boolean;
 }) {
+  const { locale, tr } = useLanguage();
   const isMobile = useIsMobile();
   const homebrews = useHomebrews();
   const isExpanded = (name: string) =>
@@ -911,7 +948,7 @@ function CharacterPaper({
           ["Crônica", character.character.chronicle], ["Agulha", data.needle], ["Fio", data.thread],
           ["Conceito", character.character.concept],
           ["Feição", CTL_SEEMING_LABELS[String(data.seeming)] ?? data.seeming],
-          ["Frátria", kithDisplayName(data.kith, Boolean(data.kith_custom))], ["Corte", data.court],
+          ["Frátria", kithDisplayName(data.kith, Boolean(data.kith_custom), locale)], ["Corte", data.court],
         ]
       : [
           ["Nome", character.character.name], ["Jogador", character.character.player],
@@ -925,14 +962,14 @@ function CharacterPaper({
     return (
       <article className={`cod-sheet mobile-character-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}`}>
         <header className="cod-sheet-title">
-          <div><span>{isCtl ? "CHANGELING" : "MAGO"}</span><strong>{isCtl ? "OS PERDIDOS" : "O DESPERTAR"}</strong></div>
-          <p>CRÔNICAS DAS TREVAS</p>
+          <div><span>{isCtl ? "CHANGELING" : tr("MAGO","MAGE")}</span><strong>{isCtl ? tr("OS PERDIDOS","THE LOST") : tr("O DESPERTAR","THE AWAKENING")}</strong></div>
+          <p>{tr("CRÔNICAS DAS TREVAS","CHRONICLES OF DARKNESS")}</p>
         </header>
         <SwipeableSheetTabs tabs={[
-          { value: "resumo", label: "Resumo" }, { value: "atributos", label: "Atributos" },
-          { value: "pericias", label: "Perícias" }, { value: "detalhes", label: "Detalhes" },
-          { value: "poderes", label: "Poderes" }, { value: "combate", label: "Combate" },
-          { value: "companheiros", label: "Companheiros" }, { value: "anotacoes", label: "Anotações" },
+          { value: "resumo", label: tr("Resumo","Summary") }, { value: "atributos", label: tr("Atributos","Attributes") },
+          { value: "pericias", label: tr("Perícias","Skills") }, { value: "detalhes", label: tr("Detalhes","Details") },
+          { value: "poderes", label: tr("Poderes","Powers") }, { value: "combate", label: tr("Combate","Combat") },
+          { value: "companheiros", label: tr("Companheiros","Companions") }, { value: "anotacoes", label: tr("Anotações","Notes") },
         ]}>
           {{
             resumo: <>
@@ -946,7 +983,7 @@ function CharacterPaper({
               <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={principalMerits} line={character.game_line} />
               <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
-              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder="Escreva uma Aspiração" onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
               <SheetHeading>Pedras de Contato</SheetHeading><LineList items={[String(data.touchstone ?? "")]} />
               <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)} />
@@ -955,19 +992,19 @@ function CharacterPaper({
               <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits} line="MtA" />
               <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
-              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder="Escreva uma Aspiração" onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
-              <SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={Math.max(1, Math.ceil(gnosis / 3))} placeholder="Escreva uma Obsessão" onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)} />
+              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+              <SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={Math.max(1, Math.ceil(gnosis / 3))} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)} />
               <SheetHeading>Nimbus</SheetHeading><LineList items={[String(data.nimbus ?? "")]} />
               <SheetHeading>Sabedoria</SheetHeading><CompactValues values={{ Sabedoria: Number(data.wisdom ?? 7) }} />
               <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value) => setState("conditions", value)} />
-              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={Math.max(gnosis, 4)} placeholder="Feitiço ativo" onChange={(value) => setState("active_spells", value)} />
+              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={Math.max(gnosis, 4)} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
             </>,
             poderes: isCtl ? <>
               <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
-              <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder="Escreva um Juramento" onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
+              <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento","Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
               <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CustomCourtLore data={data} merits={character.merits} />
             </> : <>
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
@@ -975,9 +1012,9 @@ function CharacterPaper({
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
               <SheetHeading>Práxis</SheetHeading><SpellColumn items={praxes} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
-              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder="Ferramenta mágica" onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
-              <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder="Descrição da Inclinação do Nimbus" onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
-              <SheetHeading>Itens Encantados</SheetHeading><EditableList values={stringList(data.enchanted_items)} minimum={4} placeholder="Tipo · Poder · Parada de Dados · Mana" onChange={(value) => updateLineData(updateSheet, character, "enchanted_items", value)} />
+              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
+              <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
+              <SheetHeading>Itens Encantados</SheetHeading><EditableList values={stringList(data.enchanted_items)} minimum={4} placeholder={tr("Tipo · Poder · Parada de Dados · Mana","Type · Power · Dice Pool · Mana")} onChange={(value) => updateLineData(updateSheet, character, "enchanted_items", value)} />
               <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
               <CustomOrderLore data={data} />
             </>,
@@ -997,21 +1034,21 @@ function CharacterPaper({
     <article className={`cod-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}${printLayout ? " print-layout" : ""}`}>
       <header className="cod-sheet-title">
         <div>
-          <span>{isCtl ? "CHANGELING" : "MAGO"}</span>
-          <strong>{isCtl ? "OS PERDIDOS" : "O DESPERTAR"}</strong>
+          <span>{isCtl ? "CHANGELING" : tr("MAGO","MAGE")}</span>
+          <strong>{isCtl ? tr("OS PERDIDOS","THE LOST") : tr("O DESPERTAR","THE AWAKENING")}</strong>
         </div>
-        <p>CRÔNICAS DAS TREVAS</p>
+        <p>{tr("CRÔNICAS DAS TREVAS","CHRONICLES OF DARKNESS")}</p>
       </header>
       {isCtl ? (
         <Tabs defaultValue="principal" className="ctl-sheet-tabs">
           <TabsList
             className="ctl-sheet-tab-list"
-            aria-label="Páginas da ficha"
+            aria-label={tr("Páginas da ficha","Character pages")}
           >
-            <TabsTrigger value="principal">Principal</TabsTrigger>
-            <TabsTrigger value="poderes">Detalhes</TabsTrigger>
-            <TabsTrigger value="combate">Combate</TabsTrigger>
-            <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
+            <TabsTrigger value="principal">{tr("Principal","Main")}</TabsTrigger>
+            <TabsTrigger value="poderes">{tr("Detalhes","Details")}</TabsTrigger>
+            <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
+            <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
           <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
@@ -1204,12 +1241,12 @@ function CharacterPaper({
         >
           <TabsList
             className="ctl-sheet-tab-list"
-            aria-label="Páginas da ficha de Mago"
+            aria-label={tr("Páginas da ficha de Mago","Mage character pages")}
           >
-            <TabsTrigger value="principal">Principal</TabsTrigger>
-            <TabsTrigger value="magia">Detalhes</TabsTrigger>
-            <TabsTrigger value="combate">Combate</TabsTrigger>
-            <TabsTrigger value="companheiros">Companheiros</TabsTrigger>
+            <TabsTrigger value="principal">{tr("Principal","Main")}</TabsTrigger>
+            <TabsTrigger value="magia">{tr("Detalhes","Details")}</TabsTrigger>
+            <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
+            <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
           <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
@@ -1437,9 +1474,10 @@ function CharacterPaper({
 }
 
 function SheetHeading({ children }: { children: ReactNode }) {
+  const {locale}=useLanguage();
   return (
     <h3 className="official-heading">
-      <span>{children}</span>
+      <span>{typeof children==="string"?workspaceTerm(children,locale):children}</span>
     </h3>
   );
 }
@@ -1450,6 +1488,7 @@ function MeritConfigurationPanel({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const { locale, tr } = useLanguage();
   const configurable = character.merits.filter(
     (item) => findMeritConfiguration(item.name) && !item.grantedBy,
   );
@@ -1463,12 +1502,12 @@ function MeritConfigurationPanel({
         <div className="merit-grant-summary">
           {conditions.length > 0 && (
             <p>
-              <strong>Condições concedidas:</strong> {conditions.join(", ")}
+              <strong>{tr("Condições concedidas:", "Granted Conditions:")}</strong> {conditions.join(", ")}
             </p>
           )}
           {attainments.length > 0 && (
             <p>
-              <strong>Attainments concedidos:</strong> {attainments.join(", ")}
+              <strong>{tr("Attainments concedidos:", "Granted Attainments:")}</strong> {attainments.join(", ")}
             </p>
           )}
         </div>
@@ -1480,7 +1519,7 @@ function MeritConfigurationPanel({
             <strong>
               {getMeritsForLine(character.game_line).find(
                 (entry) => entry.name === item.name,
-              )?.translatedName ?? item.name}
+              )?.[locale === "en-US" ? "name" : "translatedName"] ?? item.name}
             </strong>
             <MeritConfigurationEditor
               compact
@@ -1499,9 +1538,10 @@ function MeritConfigurationPanel({
   );
 }
 function SheetField({ label, value }: { label: string; value: unknown }) {
+  const {locale}=useLanguage();
   return (
     <div className="official-field">
-      <span>{label}</span>
+      <span>{workspaceTerm(label,locale)}</span>
       <strong>{String(value ?? "")}</strong>
     </div>
   );
@@ -1517,9 +1557,10 @@ function TraitBlock({
   values: Record<string, number>;
   specialties?: Array<{ skill: string; name: string }>;
 }) {
+  const {locale}=useLanguage();
   return (
     <section className="official-trait-block">
-      <h4>{title}</h4>
+      <h4>{workspaceTerm(title,locale)}</h4>
       {names.map((name) => (
         <TraitLine
           key={name}
@@ -1543,10 +1584,11 @@ function TraitLine({
   value: number;
   note?: string;
 }) {
+  const {locale}=useLanguage();
   return (
     <div className="official-trait-line">
       <span>
-        {name}
+        {systemTerm(name,locale)}
         {note && <small>{note}</small>}
       </span>
       <DotValue value={value} />
@@ -1554,9 +1596,10 @@ function TraitLine({
   );
 }
 function DotValue({ value, max = 5 }: { value: number; max?: number }) {
+  const {tr}=useLanguage();
   const total = Math.max(max, Math.ceil(value / 5) * 5);
   return (
-    <span className="official-dots" aria-label={`${value} pontos`}>
+    <span className="official-dots" aria-label={tr(`${value} pontos`,`${value} dots`)}>
       {Array.from({ length: Math.ceil(total / 5) }, (_, row) => (
         <span className="official-dot-row" key={row}>
           {Array.from({ length: 5 }, (_, column) => {
@@ -1571,24 +1614,27 @@ function DotValue({ value, max = 5 }: { value: number; max?: number }) {
 function meritLabel(
   item: CharacterSheet["merits"][number],
   line?: "CtL" | "MtA",
+  locale:Locale="pt-BR",
 ) {
   const definition = line
     ? getMeritsForLine(line).find((entry) => entry.name === item.name)
     : [...getMeritsForLine("CtL"), ...getMeritsForLine("MtA")].find(
         (entry) => entry.name === item.name,
       );
-  const base =
-      definition?.translatedName ??
+  const base = locale==="en-US"
+      ? definition?.name ?? item.name
+      : definition?.translatedName ??
       (item.name === "Hollow" ? "Recanto" : item.name),
     detail = meritConfigurationTitle(item.configuration);
   return detail ? `${base}: ${detail}` : base;
 }
 function CompactValues({ values }: { values: Record<string, number> }) {
+  const {locale}=useLanguage();
   return (
     <div className="compact-values">
       {Object.entries(values).map(([name, value]) => (
         <div key={name}>
-          <span>{pretty(name)}</span>
+          <span>{workspaceTerm(pretty(name),locale)}</span>
           <strong>{value}</strong>
         </div>
       ))}
@@ -1596,6 +1642,7 @@ function CompactValues({ values }: { values: Record<string, number> }) {
   );
 }
 function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
+  const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
   const visible = merits.filter((item) => !item.grantedBy);
   return (
@@ -1616,7 +1663,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
           ),
           title =
             homebrews.merits.find((merit) => merit.name === item.name)
-              ?.translatedName ?? meritLabel(item);
+              ?.[locale==="en-US"?"name":"translatedName"] ?? meritLabel(item,undefined,locale);
         if (!style)
           return (
             <article key={`${item.name}-${itemIndex}`}>
@@ -1634,8 +1681,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
                   ))
                 ) : (
                   <p>
-                    Consulte a descrição deste Mérito para distribuir ou usar
-                    suas características internas.
+                    {tr("Consulte a descrição deste Mérito para distribuir ou usar suas características internas.","See this Merit's description to assign or use its internal traits.")}
                   </p>
                 )}
               </div>
@@ -1678,7 +1724,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
           </article>
         );
       })}
-      {!visible.length && <em>Nenhum Mérito Expandido adquirido.</em>}
+      {!visible.length && <em>{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</em>}
     </div>
   );
 }
@@ -1691,6 +1737,7 @@ function CombatPage({
   derived: Record<string, number>;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const { tr } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
     equipmentIds = stringList(character.line_data.combat_equipment),
     armorId = String(character.line_data.combat_armor ?? "");
@@ -1720,42 +1767,24 @@ function CombatPage({
       <section>
         <SheetHeading>Outras Características</SheetHeading>
         <CompactValues values={combatValues} />
-        <p className="combat-note">
-          Os valores de Defesa e Deslocamento já incluem a armadura vestida. A
-          penalidade de Iniciativa aparece em cada arma equipada.
-        </p>
+        <p className="combat-note">{tr("Os valores de Defesa e Deslocamento já incluem a armadura vestida. A penalidade de Iniciativa aparece em cada arma equipada.", "Defense and Speed already include worn armor. Each equipped weapon shows its Initiative penalty.")}</p>
         <SheetHeading>Resumo de Combate</SheetHeading>
         <div className="combat-rules">
           <article>
-            <strong>Ataques</strong>
-            <p>
-              Desarmado: Força + Briga − Defesa. Corpo a corpo: Força + Armas
-              Brancas − Defesa. Distância: Destreza + Armas de Fogo. Arremesso:
-              Destreza + Atletismo − Defesa.
-            </p>
+            <strong>{tr("Ataques", "Attacks")}</strong>
+            <p>{tr("Desarmado: Força + Briga − Defesa. Corpo a corpo: Força + Armas Brancas − Defesa. Distância: Destreza + Armas de Fogo. Arremesso: Destreza + Atletismo − Defesa.", "Unarmed: Strength + Brawl − Defense. Melee: Strength + Weaponry − Defense. Ranged: Dexterity + Firearms. Thrown: Dexterity + Athletics − Defense.")}</p>
           </article>
           <article>
-            <strong>Dano e Defesa</strong>
-            <p>
-              Some os sucessos ao dano da arma. Defesa diminui após cada ataque
-              próximo recebido no turno; armas de fogo normalmente ignoram
-              Defesa.
-            </p>
+            <strong>{tr("Dano e Defesa", "Damage and Defense")}</strong>
+            <p>{tr("Some os sucessos ao dano da arma. Defesa diminui após cada ataque próximo recebido no turno; armas de fogo normalmente ignoram Defesa.", "Add successes to the weapon's damage. Defense decreases after each close attack received in the turn; firearms normally ignore Defense.")}</p>
           </article>
           <article>
-            <strong>Iniciativa e Esquiva</strong>
-            <p>
-              Iniciativa é 1d10 + modificador, reduzida pela arma empunhada.
-              Esquivar usa o dobro da Defesa como parada disputada.
-            </p>
+            <strong>{tr("Iniciativa e Esquiva", "Initiative and Dodge")}</strong>
+            <p>{tr("Iniciativa é 1d10 + modificador, reduzida pela arma empunhada. Esquivar usa o dobro da Defesa como parada disputada.", "Initiative is 1d10 + modifier, reduced by the wielded weapon. Dodge uses twice Defense as a contested pool.")}</p>
           </article>
           <article>
-            <strong>Armadura</strong>
-            <p>
-              Proteção geral reduz ataques comuns; proteção balística reduz
-              armas de fogo. Penalidades da armadura já aparecem nos valores
-              acima.
-            </p>
+            <strong>{tr("Armadura", "Armor")}</strong>
+            <p>{tr("Proteção geral reduz ataques comuns; proteção balística reduz armas de fogo. Penalidades da armadura já aparecem nos valores acima.", "General armor reduces ordinary attacks; ballistic armor reduces firearm attacks. Armor penalties are already included above.")}</p>
           </article>
         </div>
       </section>
@@ -1887,8 +1916,9 @@ function LoadoutCatalog<T extends { id: string; name: string }>({
   details: (item: T) => string;
   onChange: (value: string[]) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const [search, setSearch] = useState("");
-  const filtered = alphabetical(items, item => item.name).filter((item) =>
+  const filtered = alphabetical(items, item => item.name,locale).filter((item) =>
     `${item.name} ${describe(item)} ${details(item)}`
       .toLocaleLowerCase("pt-BR")
       .includes(search.toLocaleLowerCase("pt-BR")),
@@ -1898,15 +1928,14 @@ function LoadoutCatalog<T extends { id: string; name: string }>({
       <DialogTrigger asChild>
         <Button type="button" size="sm" variant="outline">
           <Plus />
-          {title}
+          {workspaceTerm(title,locale)}
         </Button>
       </DialogTrigger>
       <DialogContent className="loadout-dialog">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle>{workspaceTerm(title,locale)}</DialogTitle>
           <DialogDescription>
-            Pesquise, compare as características e marque tudo que deseja
-            adicionar à ficha.
+            {tr("Pesquise, compare as características e marque tudo que deseja adicionar à ficha.","Search, compare traits, and select everything you want to add to the character sheet.")}
           </DialogDescription>
         </DialogHeader>
         <label className="catalog-search">
@@ -1914,7 +1943,7 @@ function LoadoutCatalog<T extends { id: string; name: string }>({
           <Input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar por nome ou característica"
+            placeholder={tr("Buscar por nome ou característica","Search by name or trait")}
           />
         </label>
         <div className="loadout-catalog">
@@ -1936,7 +1965,7 @@ function LoadoutCatalog<T extends { id: string; name: string }>({
                       )
                     }
                   >
-                    {active ? "Remover" : "Adicionar"}
+                    {active ? tr("Remover","Remove") : tr("Adicionar","Add")}
                   </Button>
                 </header>
                 <small>{describe(item)}</small>
@@ -1947,7 +1976,7 @@ function LoadoutCatalog<T extends { id: string; name: string }>({
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button">Concluir</Button>
+            <Button type="button">{tr("Concluir","Done")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
@@ -1963,6 +1992,7 @@ function CompanionPage({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const { tr } = useLanguage();
   const vehicleIds = stringList(character.line_data.companion_vehicles),
     savedAnimals = objectList(character.line_data.animal_companions)
       .map((item) => ({
@@ -1988,13 +2018,9 @@ function CompanionPage({
     <div className="companions-page">
       <section>
         <SheetHeading>Veículos</SheetHeading>
-        <p className="combat-note">
-          O modificador se aplica às paradas de Destreza + Condução. Acima da
-          Velocidade segura, ele é aplicado novamente e falhas de manobra
-          tornam-se falhas dramáticas.
-        </p>
+        <p className="combat-note">{tr("O modificador se aplica às paradas de Destreza + Condução. Acima da Velocidade segura, ele é aplicado novamente e falhas de manobra tornam-se falhas dramáticas.", "The modifier applies to Dexterity + Drive pools. Above safe Speed, apply it again and failed maneuvers become dramatic failures.")}</p>
         <LoadoutCatalog
-          title="Selecionar Veículos"
+          title={tr("Selecionar Veículos", "Select Vehicles")}
           items={VEHICLES}
           selected={vehicleIds}
           describe={(item) =>
@@ -2016,7 +2042,7 @@ function CompanionPage({
                 <header>
                   <div>
                     <strong>{item.name}</strong>
-                    <small>Veículo</small>
+                    <small>{tr("Veículo", "Vehicle")}</small>
                   </div>
                   <Button
                     type="button"
@@ -2073,7 +2099,7 @@ function CompanionPage({
           <Input
             value={animalName}
             onChange={(event) => setAnimalName(event.target.value)}
-            placeholder="Nome do animal (opcional)"
+            placeholder={tr("Nome do animal (opcional)", "Animal name (optional)")}
           />
           <Button
             type="button"
@@ -2088,11 +2114,11 @@ function CompanionPage({
             }}
           >
             <Plus />
-            Adicionar animal
+            {tr("Adicionar animal", "Add animal")}
           </Button>
         </div>
         <p className="combat-note">
-          Animais comuns podem ser adicionados livremente; não exigem Mérito.
+          {tr("Animais comuns podem ser adicionados livremente; não exigem Mérito.", "Ordinary animals may be added freely; they do not require a Merit.")}
         </p>
         <div className="companion-grid">
           {savedAnimals.map((saved, index) => {
@@ -2576,6 +2602,7 @@ function ClarityTrack({
   damage: ClarityDamageLevel[];
   onChange: (value: ClarityDamageLevel[]) => void;
 }) {
+  const { tr } = useLanguage();
   const current = Math.max(0, maximum - damage.length);
   const cycle = (index: number) => {
     const slots: Array<ClarityDamageLevel | undefined> = Array.from(
@@ -2592,7 +2619,7 @@ function ClarityTrack({
       <div
         className="health-track clarity-track"
         role="group"
-        aria-label={`Lucidez atual ${current} de ${maximum}`}
+        aria-label={tr(`Lucidez atual ${current} de ${maximum}`, `Current Clarity ${current} of ${maximum}`)}
       >
         {Array.from({ length: maximum }, (_, index) => {
           const level = damage[index];
@@ -2602,7 +2629,7 @@ function ClarityTrack({
               key={index}
               className={`health-box clarity-box ${level ?? "empty"}`}
               onClick={() => cycle(index)}
-              aria-label={`Caixa ${index + 1}: ${level === "mild" ? "dano leve" : level === "severe" ? "dano grave" : "vazia"}. Clique para alterar.`}
+              aria-label={tr(`Caixa ${index + 1}: ${level === "mild" ? "dano leve" : level === "severe" ? "dano grave" : "vazia"}. Clique para alterar.`, `Box ${index + 1}: ${level === "mild" ? "mild damage" : level === "severe" ? "severe damage" : "empty"}. Press to change.`)}
             >
               <span aria-hidden="true" />
             </button>
@@ -2615,15 +2642,15 @@ function ClarityTrack({
         ))}
       </div>
       <div className="tracker-meta">
-        <span>Lucidez atual</span>
+        <span>{tr("Lucidez atual", "Current Clarity")}</span>
         <strong>
           {current} / {maximum}
         </strong>
       </div>
       <p className="tracker-help">
         <span className="legend-mark mild" />
-        Leve <span className="legend-mark severe" />
-        Grave · as três caixas à direita podem gerar Condições de Lucidez
+        {tr("Leve", "Mild")} <span className="legend-mark severe" />
+        {tr("Grave · as três caixas à direita podem gerar Condições de Lucidez", "Severe · the three rightmost boxes may cause Clarity Conditions")}
       </p>
     </div>
   );
@@ -2638,6 +2665,7 @@ function ConditionManager({
   catalog: typeof CHANGELING_CONDITIONS;
   onChange: (value: SelectedCondition[]) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const chosen = new Map(selected.map((item) => [item.id, item]));
@@ -2645,7 +2673,8 @@ function ConditionManager({
     "Todas",
     ...Array.from(new Set(catalog.map((item) => item.category))),
   ];
-  const filtered = alphabetical(catalog, item => item.name).filter(
+  const conditionName=(item:(typeof catalog)[number])=>locale==="en-US"?item.originalName:item.name;
+  const filtered = alphabetical(catalog, conditionName,locale).filter(
     (condition) =>
       (category === "Todas" || condition.category === category) &&
       `${condition.name} ${condition.originalName} ${condition.description} ${condition.penalty ?? ""} ${condition.sourceCode}`
@@ -2664,7 +2693,7 @@ function ConditionManager({
           if (!condition) return null;
           const inlinePenalty =
             condition.penalty && condition.penalty.length <= 82;
-          const tooltip = `${condition.description}${condition.penalty ? `\nEfeito: ${condition.penalty}` : ""}\nResolução: ${condition.resolution ?? "—"}${condition.beat ? `\nBeat: ${condition.beat}` : ""}\n${condition.source} · p. ${condition.page}`;
+          const tooltip = `${condition.description}${condition.penalty ? `\n${tr("Efeito","Effect")}: ${condition.penalty}` : ""}\n${tr("Resolução","Resolution")}: ${condition.resolution ?? "—"}${condition.beat ? `\nBeat: ${condition.beat}` : ""}\n${condition.source} · p. ${condition.page}`;
           return (
             <div
               key={condition.id}
@@ -2673,14 +2702,14 @@ function ConditionManager({
             >
               <span>
                 <strong>
-                  {condition.name}
+                  {conditionName(condition)}
                   {saved.persistent ? " [P]" : ""}
                 </strong>
                 {inlinePenalty && <>. {condition.penalty}</>}
                 <small>
                   {condition.sourceCode} · p. {condition.page}
                   {condition.penalty && !inlinePenalty
-                    ? " · passe o mouse para ver efeitos, resolução e Beats"
+                    ? tr(" · passe o mouse para ver efeitos, resolução e Beats"," · open for effects, resolution, and Beats")
                     : ""}
                 </small>
               </span>
@@ -2691,27 +2720,26 @@ function ConditionManager({
                 onClick={() =>
                   onChange(selected.filter((item) => item.id !== condition.id))
                 }
-                aria-label={`Remover ${condition.name}`}
+                aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}
               >
                 <X />
               </Button>
             </div>
           );
         })}
-        {!selected.length && <em>Nenhuma Condição selecionada.</em>}
+        {!selected.length && <em>{tr("Nenhuma Condição selecionada.","No Conditions selected.")}</em>}
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" size="sm" variant="outline">
-            <Plus /> Selecionar Condição
+            <Plus /> {tr("Selecionar Condição","Select Condition")}
           </Button>
         </DialogTrigger>
         <DialogContent className="condition-dialog">
           <DialogHeader>
-            <DialogTitle>Selecionar Condição</DialogTitle>
+            <DialogTitle>{tr("Selecionar Condição","Select Condition")}</DialogTitle>
             <DialogDescription>
-              Escolha uma Condição e marque-a como Persistente quando
-              necessário.
+              {tr("Escolha uma Condição e marque-a como Persistente quando necessário.","Choose a Condition and mark it Persistent when needed.")}
             </DialogDescription>
           </DialogHeader>
           <div className="condition-filters">
@@ -2720,7 +2748,7 @@ function ConditionManager({
               <Input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                placeholder="Buscar por nome, efeito ou fonte"
+                placeholder={tr("Buscar por nome, efeito ou fonte","Search by name, effect, or source")}
               />
             </label>
             <RuleSelect
@@ -2736,7 +2764,7 @@ function ConditionManager({
                 <article key={condition.id} className={saved ? "selected" : ""}>
                   <div>
                     <strong>
-                      {condition.name}
+                      {conditionName(condition)}
                       {saved?.persistent ? " [P]" : ""}
                     </strong>
                     <small>
@@ -2747,12 +2775,12 @@ function ConditionManager({
                   <p>{condition.description}</p>
                   {condition.penalty && (
                     <p className="condition-penalty">
-                      <b>Efeito:</b> {condition.penalty}
+                      <b>{tr("Efeito","Effect")}:</b> {condition.penalty}
                     </p>
                   )}
                   <p>
-                    <b>Resolução:</b>{" "}
-                    {condition.resolution ?? "Conforme a fonte indicada."}
+                    <b>{tr("Resolução","Resolution")}:</b>{" "}
+                    {condition.resolution ?? tr("Conforme a fonte indicada.","As described in the listed source.")}
                   </p>
                   {condition.beat && (
                     <p>
@@ -2778,7 +2806,7 @@ function ConditionManager({
                         );
                       }}
                     />{" "}
-                    Persistente [P]
+                    {tr("Persistente","Persistent")} [P]
                   </label>
                   <Button
                     type="button"
@@ -2798,16 +2826,16 @@ function ConditionManager({
                       )
                     }
                   >
-                    {saved ? "Remover" : "Adicionar"}
+                    {saved ? tr("Remover","Remove") : tr("Adicionar","Add")}
                   </Button>
                 </article>
               );
             })}
-            {!filtered.length && <em>Nenhuma Condição encontrada.</em>}
+            {!filtered.length && <em>{tr("Nenhuma Condição encontrada.","No Conditions found.")}</em>}
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">Concluir</Button>
+              <Button type="button">{tr("Concluir","Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -2822,16 +2850,17 @@ function NotesArea({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const {tr}=useLanguage();
   return (
     <div className="notes-area">
       <Textarea
         key={value}
         defaultValue={value}
         onBlur={(event) => onChange(event.target.value)}
-        placeholder="Escreva livremente suas anotações..."
-        aria-label="Anotações da ficha"
+        placeholder={tr("Escreva livremente suas anotações...","Write your notes freely...")}
+        aria-label={tr("Anotações da ficha","Character notes")}
       />
-      <small>Salvo automaticamente ao sair do campo.</small>
+      <small>{tr("Salvo automaticamente ao sair do campo.","Saved automatically when leaving the field.")}</small>
     </div>
   );
 }
@@ -2890,6 +2919,7 @@ function ExperiencePanel({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
   const contractsCatalog = [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))];
   const state = character.current_state ?? {};
@@ -3366,10 +3396,10 @@ function ExperiencePanel({
     <section className="experience-panel">
       <div className="experience-title">
         <div>
-          <span>Beats e Experiência</span>
-          <small>Beats são marcados separadamente da Experiência</small>
+          <span>{tr("Beats e Experiência","Beats and Experience")}</span>
+          <small>{tr("Beats são marcados separadamente da Experiência","Beats are tracked separately from Experience")}</small>
         </div>
-        <Badge variant="outline">{available} EXP disponível</Badge>
+        <Badge variant="outline">{available} {tr("EXP disponível","XP available")}</Badge>
       </div>
       <div className="experience-totals">
         <label className="experience-input">
@@ -3384,17 +3414,17 @@ function ExperiencePanel({
             onKeyDown={(event) => {
               if (event.key === "Enter") event.currentTarget.blur();
             }}
-            aria-label="Experiência disponível"
+            aria-label={tr("Experiência disponível","Available Experience")}
           />
-          <span>EXP disponível</span>
+          <span>{tr("EXP disponível","XP available")}</span>
         </label>
         <div>
           <strong>{total}</strong>
-          <span>EXP total</span>
+          <span>{tr("EXP total","Total XP")}</span>
         </div>
         <div>
           <strong>{spentXp}</strong>
-          <span>EXP gasta</span>
+          <span>{tr("EXP gasta","XP spent")}</span>
         </div>
       </div>
       <fieldset className="beat-controls">
@@ -3420,27 +3450,26 @@ function ExperiencePanel({
           disabled={!beats}
           onClick={() => setBeats(0)}
         >
-          Limpar
+          {tr("Limpar","Clear")}
         </Button>
       </fieldset>
       <div className="experience-actions">
         <Dialog>
           <DialogTrigger asChild>
             <Button type="button" variant="outline">
-              <Sparkles /> Comprar característica
+              <Sparkles /> {tr("Comprar característica","Purchase trait")}
             </Button>
           </DialogTrigger>
           <DialogContent className="experience-dialog">
             <DialogHeader>
-              <DialogTitle>Gastar Experiência</DialogTitle>
+              <DialogTitle>{tr("Gastar Experiência","Spend Experience")}</DialogTitle>
               <DialogDescription>
-                Custos de Changeling the Lost, p. 94. Cada compra registra
-                automaticamente a despesa e atualiza a ficha.
+                {tr("Custos de Changeling the Lost, p. 94. Cada compra registra automaticamente a despesa e atualiza a ficha.","Costs from Changeling: The Lost, p. 94. Each purchase records the expense and updates the character sheet.")}
               </DialogDescription>
             </DialogHeader>
             <div className="experience-purchase-form">
               <label>
-                Tipo
+                {tr("Tipo","Type")}
                 <RuleSelect
                   value={purchaseType}
                   onChange={(value) => {
@@ -3455,7 +3484,7 @@ function ExperiencePanel({
               </label>
               {purchaseType === "Atributo" && (
                 <label>
-                  Atributo
+                  {tr("Atributo","Attribute")}
                   <RuleSelect
                     value={attribute}
                     onChange={setAttribute}
@@ -3465,7 +3494,7 @@ function ExperiencePanel({
               )}
               {purchaseType === "Perícia" && (
                 <label>
-                  Perícia
+                  {tr("Perícia","Skill")}
                   <RuleSelect
                     value={skill}
                     onChange={setSkill}
@@ -3475,7 +3504,7 @@ function ExperiencePanel({
               )}
               {purchaseType === "Mérito" && (
                 <label>
-                  Mérito
+                  {tr("Mérito","Merit")}
                   <ExperienceMeritPicker
                     line="CtL"
                     character={character}
@@ -3492,7 +3521,7 @@ function ExperiencePanel({
               {purchaseType === "Especialização" && (
                 <>
                   <label>
-                    Perícia
+                    {tr("Perícia","Skill")}
                     <RuleSelect
                       value={specialtySkill}
                       onChange={setSpecialtySkill}
@@ -3500,7 +3529,7 @@ function ExperiencePanel({
                     />
                   </label>
                   <label>
-                    Especialização
+                    {tr("Especialização","Specialty")}
                     <Input
                       value={specialtyName}
                       onChange={(event) => setSpecialtyName(event.target.value)}
@@ -3511,16 +3540,16 @@ function ExperiencePanel({
               )}
               {purchaseType === "Contrato" && (
                 <label>
-                  Contrato
+                  {tr("Contrato","Contract")}
                   <ExperiencePowerPicker
                     kind="Contrato"
                     items={contractOptions.map((item) => ({
                       id: item.id,
-                      name: item.name,
-                      category: item.regalia,
-                      secondaryCategory: item.type,
-                      description: item.description,
-                      meta: `${item.type} · ${item.regalia} · ${item.source} · p. ${item.page || "—"}`,
+                      name: locale==="en-US"?item.originalName:item.name,
+                      category: systemTerm(item.regalia,locale),
+                      secondaryCategory: item.type==="Comum"?tr("Comum","Common"):tr("Real","Royal"),
+                      description: contractOutcomeSections(item,locale).map(section=>section.text).join(" "),
+                      meta: `${item.type==="Comum"?tr("Comum","Common"):tr("Real","Royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
                     }))}
                     selectedId={selectedContract?.id ?? ""}
                     onSelect={setContractId}
@@ -3529,7 +3558,7 @@ function ExperiencePanel({
               )}
               {purchaseType === "Benefício de Contrato" && (
                 <label>
-                  Benefício
+                  {tr("Benefício","Benefit")}
                   <RuleSelect
                     value={benefitKey || benefitOptions[0]?.value || ""}
                     onChange={setBenefitKey}
@@ -3541,38 +3570,38 @@ function ExperiencePanel({
             <div className="purchase-preview">
               <strong>{preview.label}</strong>
               <span>
-                {preview.cost} Experiência{preview.cost === 1 ? "" : "s"}
+                {preview.cost} {tr(preview.cost===1?"Experiência":"Experiências","Experience")}
               </span>
             </div>
             {feedback && <p className="experience-feedback">{feedback}</p>}
             <details className="experience-rules">
-              <summary>Tabela completa e formas de ganhar Beats</summary>
+              <summary>{tr("Tabela completa e formas de ganhar Beats","Full table and ways to earn Beats")}</summary>
               <ExperienceRules />
             </details>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Fechar</Button>
+                <Button variant="outline">{tr("Fechar","Close")}</Button>
               </DialogClose>
               <Button
                 type="button"
                 disabled={preview.cost < 1 || available < preview.cost}
                 onClick={buy}
               >
-                Comprar por {preview.cost} EXP
+                {tr("Comprar por","Purchase for")} {preview.cost} {tr("EXP","XP")}
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
         <div className="permanent-resource-actions">
-          <Button type="button" variant="ghost" size="sm" onClick={gainClarity}>Ganhar Lucidez</Button>
+          <Button type="button" variant="ghost" size="sm" onClick={gainClarity}>{tr("Ganhar Lucidez","Gain Clarity")}</Button>
           <span aria-hidden="true">|</span>
-          <Button type="button" variant="ghost" size="sm" onClick={markWillpowerLoss}>Perder FV</Button>
+          <Button type="button" variant="ghost" size="sm" onClick={markWillpowerLoss}>{tr("Perder FV","Lose WP")}</Button>
         </div>
       </div>
       {feedback && <p className="experience-feedback compact">{feedback}</p>}
       <details className="experience-history">
         <summary>
-          <History /> Gastos de Experiência ({history.length})
+          <History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})
         </summary>
         <div>
           {history.length ? (
@@ -3581,7 +3610,7 @@ function ExperiencePanel({
                 <span>{entry.description}</span>
                 <strong>{Math.abs(entry.experience)} EXP</strong>
                 <small>
-                  {new Date(entry.createdAt).toLocaleDateString("pt-BR")}
+                  {new Date(entry.createdAt).toLocaleDateString(locale)}
                 </small>
                 <Button
                   type="button"
@@ -3590,12 +3619,12 @@ function ExperiencePanel({
                   disabled={!entry.undo}
                   onClick={() => revertPurchase(entry)}
                 >
-                  <RotateCcw /> Reverter
+                  <RotateCcw /> {tr("Reverter","Refund")}
                 </Button>
               </p>
             ))
           ) : (
-            <em>Nenhum gasto registrado.</em>
+            <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>
           )}
         </div>
       </details>
@@ -3639,6 +3668,7 @@ function MageExperiencePanel({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
   const state = character.current_state ?? {};
   const regular = Math.max(
@@ -4003,8 +4033,8 @@ function MageExperiencePanel({
     <section className="experience-panel mage-experience">
       <div className="experience-title">
         <div>
-          <span>Experiência</span>
-          <small>Experiência comum e Arcana possuem reservas separadas</small>
+          <span>{tr("Experiência","Experience")}</span>
+          <small>{tr("Experiência comum e Arcana possuem reservas separadas","Regular and Arcane Experience use separate pools")}</small>
         </div>
       </div>
       <div className="mage-xp-balances">
@@ -4016,7 +4046,7 @@ function MageExperiencePanel({
             onChange={(e) => setRegularInput(e.target.value)}
             onBlur={commitBalances}
           />
-          <span>EXP disponível</span>
+          <span>{tr("EXP disponível","XP available")}</span>
         </label>
         <label className="experience-input">
           <Input
@@ -4026,7 +4056,7 @@ function MageExperiencePanel({
             onChange={(e) => setArcaneInput(e.target.value)}
             onBlur={commitBalances}
           />
-          <span>EXP Arcana disponível</span>
+          <span>{tr("EXP Arcana disponível","Arcane XP available")}</span>
         </label>
       </div>
       <BeatTrack
@@ -4035,27 +4065,26 @@ function MageExperiencePanel({
         onChange={(value) => saveBalances({ mage_experience_beats: value })}
       />
       <BeatTrack
-        label="Beats Arcanos"
+        label={tr("Beats Arcanos","Arcane Beats")}
         value={arcaneBeats}
         onChange={(value) => saveBalances({ arcane_experience_beats: value })}
       />
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Sparkles /> Comprar característica
+            <Sparkles /> {tr("Comprar característica","Purchase trait")}
           </Button>
         </DialogTrigger>
         <DialogContent className="experience-dialog">
           <DialogHeader>
-            <DialogTitle>Gastar Experiência de Mago</DialogTitle>
+            <DialogTitle>{tr("Gastar Experiência de Mago","Spend Mage Experience")}</DialogTitle>
             <DialogDescription>
-              Custos de Mage the Awakening, pp. 83–85. Para Gnose e Arcanos
-              dentro do limite, escolha como dividir o gasto.
+              {tr("Custos de Mage the Awakening, pp. 83–85. Para Gnose e Arcanos dentro do limite, escolha como dividir o gasto.","Costs from Mage: The Awakening, pp. 83–85. For Gnosis and Arcana within the limit, choose how to split the cost.")}
             </DialogDescription>
           </DialogHeader>
           <div className="experience-purchase-form">
             <label>
-              Tipo
+              {tr("Tipo","Type")}
               <RuleSelect
                 value={purchase}
                 onChange={(value) => {
@@ -4071,7 +4100,7 @@ function MageExperiencePanel({
             </label>
             {purchase === "Mérito" && (
               <label>
-                Mérito
+                {tr("Mérito","Merit")}
                 <ExperienceMeritPicker
                   line="MtA"
                   character={character}
@@ -4089,7 +4118,7 @@ function MageExperiencePanel({
               ((purchase === "Rota" || purchase === "Práxis") ||
                 options.length > 1) && (
               <label>
-                Característica
+                {tr("Característica","Trait")}
                 {purchase === "Rota" || purchase === "Práxis" ? (
                   <ExperiencePowerPicker
                     kind={purchase}
@@ -4100,9 +4129,9 @@ function MageExperiencePanel({
                       const [mainArcanum, level] = requirements[0] ?? ["Outro", 0];
                       return {
                         id: spell.id,
-                        name: spell.name,
-                        category: mainArcanum,
-                        secondaryCategory: `Nível ${level}`,
+                        name: locale==="en-US"?(spell.originalName||spell.name):spell.name,
+                        category: systemTerm(mainArcanum,locale),
+                        secondaryCategory: `${tr("Nível","Level")} ${level}`,
                         description: spell.description ?? "",
                         meta: `${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page || "—"}`,
                       };
@@ -4128,7 +4157,7 @@ function MageExperiencePanel({
             {mode === "either" && (
               <>
                 <label>
-                  Experiência comum
+                  {tr("Experiência comum","Regular Experience")}
                   <Input
                     type="number"
                     min={0}
@@ -4145,7 +4174,7 @@ function MageExperiencePanel({
                   />
                 </label>
                 <label>
-                  Experiência Arcana
+                  {tr("Experiência Arcana","Arcane Experience")}
                   <Input
                     type="number"
                     value={cost - Math.min(cost, regularSplit)}
@@ -4158,17 +4187,17 @@ function MageExperiencePanel({
           <div className="purchase-preview">
             <strong>{label}</strong>
             <span>
-              {splitRegular} EXP + {splitArcane} EXP Arcana
+              {splitRegular} {tr("EXP","XP")} + {splitArcane} {tr("EXP Arcana","Arcane XP")}
             </span>
           </div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
           <details className="experience-rules">
-            <summary>Tabela completa e formas de ganhar Beats</summary>
+            <summary>{tr("Tabela completa e formas de ganhar Beats","Full table and ways to earn Beats")}</summary>
             <MageExperienceRules />
           </details>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Fechar</Button>
+              <Button variant="outline">{tr("Fechar","Close")}</Button>
             </DialogClose>
             <Button
               type="button"
@@ -4177,14 +4206,14 @@ function MageExperiencePanel({
               }
               onClick={buy}
             >
-              Comprar
+              {tr("Comprar","Purchase")}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
       <details className="experience-history">
         <summary>
-          <History /> Gastos de Experiência ({history.length})
+          <History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})
         </summary>
         <div>
           {history.length ? (
@@ -4195,7 +4224,7 @@ function MageExperiencePanel({
                   {entry.regular} + {entry.arcane} Arcana
                 </strong>
                 <small>
-                  {new Date(entry.createdAt).toLocaleDateString("pt-BR")}
+                  {new Date(entry.createdAt).toLocaleDateString(locale)}
                 </small>
                 <Button
                   type="button"
@@ -4203,12 +4232,12 @@ function MageExperiencePanel({
                   variant="ghost"
                   onClick={() => revert(entry)}
                 >
-                  <RotateCcw /> Reverter
+                  <RotateCcw /> {tr("Reverter","Refund")}
                 </Button>
               </p>
             ))
           ) : (
-            <em>Nenhum gasto registrado.</em>
+            <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>
           )}
         </div>
       </details>
@@ -4224,13 +4253,14 @@ function BeatTrack({
   value: number;
   onChange: (value: number) => void;
 }) {
+  const { tr } = useLanguage();
   return (
     <div className="beat-resource">
       <span>{label}</span>
       <div
         className="resource-track"
         role="group"
-        aria-label={`${label}: ${value} de 5`}
+        aria-label={tr(`${label}: ${value} de 5`, `${label}: ${value} of 5`)}
       >
         {Array.from({ length: 5 }, (_, index) => (
           <button
@@ -4238,7 +4268,7 @@ function BeatTrack({
             key={index}
             className={index < value ? "filled" : ""}
             onClick={() => onChange(index < value ? index : index + 1)}
-            aria-label={`Definir ${label} como ${index < value ? index : index + 1}`}
+            aria-label={tr(`Definir ${label} como ${index < value ? index : index + 1}`, `Set ${label} to ${index < value ? index : index + 1}`)}
           />
         ))}
       </div>
@@ -4250,20 +4280,22 @@ function BeatTrack({
           className="mage-willpower-loss"
           onClick={() => window.dispatchEvent(new Event("mage-willpower-loss"))}
         >
-          Registrar perda permanente de FV
+          {tr("Registrar perda permanente de FV", "Record permanent Willpower loss")}
         </Button>
       )}
     </div>
   );
 }
 function MageExperienceRules() {
-  const beats = [
+  const { locale, tr } = useLanguage();
+  const beatsPt = [
     "Cumprir ou avançar uma Aspiração",
     "Resolver uma Condição",
     "Aceitar falha dramática",
     "Fim do capítulo",
   ];
-  const arcane = [
+  const beatsEn = ["Fulfill or advance an Aspiration", "Resolve a Condition", "Accept a dramatic failure", "End of the chapter"];
+  const arcanePt = [
     "Cumprir ou avançar uma Obsessão",
     "Resolver Condição criada por magia, Paradoxo ou efeito mágico",
     "Falha dramática em conjuração",
@@ -4271,7 +4303,8 @@ function MageExperienceRules() {
     "Tutoria de Legado",
     "Encontro novo e significativo com o sobrenatural",
   ];
-  const costs = [
+  const arcaneEn = ["Fulfill or advance an Obsession", "Resolve a Condition created by magic, Paradox, or a magical effect", "Dramatic failure on spellcasting", "Risk an Act of Hubris", "Legacy tutoring", "A new and significant encounter with the supernatural"];
+  const costsPt = [
     ["Atributo", "4/ponto, comum"],
     ["Perícia", "2/ponto, comum"],
     ["Mérito", "1/ponto, comum"],
@@ -4283,10 +4316,14 @@ function MageExperienceRules() {
     ["Sabedoria", "2/ponto, somente Arcana"],
     ["Força de Vontade perdida", "1, comum"],
   ];
+  const costsEn = [["Attribute", "4/dot, regular"], ["Skill", "2/dot, regular"], ["Merit", "1/dot, regular"], ["Arcanum up to the limit", "4/dot, regular and/or Arcane"], ["Arcanum above the limit", "5/dot, regular only + teacher"], ["Gnosis", "5/dot, regular and/or Arcane"], ["Rote", "1, regular"], ["Praxis", "1, Arcane only"], ["Wisdom", "2/dot, Arcane only"], ["Lost Willpower dot", "1, regular"]];
+  const beats = locale === "en-US" ? beatsEn : beatsPt;
+  const arcane = locale === "en-US" ? arcaneEn : arcanePt;
+  const costs = locale === "en-US" ? costsEn : costsPt;
   return (
     <div className="experience-rules-grid">
       <table>
-        <caption>Beats comuns e Arcanos</caption>
+        <caption>{tr("Beats comuns e Arcanos", "Regular and Arcane Beats")}</caption>
         <tbody>
           {beats.map((x) => (
             <tr key={x}>
@@ -4297,13 +4334,13 @@ function MageExperienceRules() {
           {arcane.map((x) => (
             <tr key={x}>
               <td>{x}</td>
-              <td>1 Beat Arcano</td>
+              <td>{tr("1 Beat Arcano", "1 Arcane Beat")}</td>
             </tr>
           ))}
         </tbody>
       </table>
       <table>
-        <caption>Custos</caption>
+        <caption>{tr("Custos", "Costs")}</caption>
         <tbody>
           {costs.map(([a, b]) => (
             <tr key={a}>
@@ -4336,6 +4373,7 @@ function ExperiencePowerPicker({
   selectedId: string;
   onSelect: (id: string) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const [secondary, setSecondary] = useState("Todos");
@@ -4346,7 +4384,7 @@ function ExperiencePowerPicker({
     "Todos",
     ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),
   ] as string[];
-  const visible = alphabetical(items, item => item.name).filter(
+  const visible = alphabetical(items, item => item.name,locale).filter(
     (item) =>
       (category === "Todas" || item.category === category) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
@@ -4359,15 +4397,15 @@ function ExperiencePowerPicker({
     <Dialog>
       <DialogTrigger asChild>
         <Button type="button" variant="outline" className="experience-merit-trigger">
-          <span>{selected?.name ?? `Selecionar ${kind}`}</span>
+          <span>{selected?.name ?? `${tr("Selecionar","Select")} ${workspaceTerm(kind,locale)}`}</span>
           <Search />
         </Button>
       </DialogTrigger>
       <DialogContent className="merit-dialog experience-merit-dialog">
         <DialogHeader>
-          <DialogTitle>Comprar {kind}</DialogTitle>
+          <DialogTitle>{tr("Comprar","Purchase")} {workspaceTerm(kind,locale)}</DialogTitle>
           <DialogDescription>
-            O catálogo mostra somente opções disponíveis para este personagem.
+            {tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
@@ -4376,7 +4414,7 @@ function ExperiencePowerPicker({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={`Buscar ${kind.toLocaleLowerCase("pt-BR")}, fonte ou descrição`}
+              placeholder={`${tr("Buscar","Search")} ${workspaceTerm(kind,locale).toLocaleLowerCase(locale)}, ${tr("fonte ou descrição","source, or description")}`}
             />
           </label>
           <RuleSelect
@@ -4408,17 +4446,17 @@ function ExperiencePowerPicker({
                     variant={selectedId === item.id ? "default" : "outline"}
                     onClick={() => onSelect(item.id)}
                   >
-                    Selecionar
+                    {tr("Selecionar","Select")}
                   </Button>
                 </DialogClose>
               </div>
             </article>
           ))}
-          {!visible.length && <em>Nenhuma opção corresponde aos filtros.</em>}
+          {!visible.length && <em>{tr("Nenhuma opção corresponde aos filtros.","No options match the filters.")}</em>}
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="outline">Cancelar</Button>
+            <Button type="button" variant="outline">{tr("Cancelar","Cancel")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
@@ -4439,15 +4477,17 @@ function ExperienceMeritPicker({
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
 }) {
+  const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
+  const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
   const catalog = alphabetical([
       ...getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
       ...homebrews.merits.filter(
         (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
       ),
-    ], item => item.translatedName || item.name),
+    ], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),
     categories = ["Todas", ...new Set(catalog.map((item) => item.category))];
@@ -4461,18 +4501,17 @@ function ExperienceMeritPicker({
         >
           <span>
             {selected
-              ? `${selected.translatedName} ${targetDots}`
-              : "Selecionar Mérito e pontos"}
+              ? `${meritName(selected)} ${targetDots}`
+              : tr("Selecionar Mérito e pontos","Select Merit and dots")}
           </span>
           <Search />
         </Button>
       </DialogTrigger>
       <DialogContent className="merit-dialog experience-merit-dialog">
         <DialogHeader>
-          <DialogTitle>Comprar Mérito</DialogTitle>
+          <DialogTitle>{tr("Comprar Mérito","Purchase Merit")}</DialogTitle>
           <DialogDescription>
-            Escolha o Mérito e a quantidade de pontos. Nos Méritos repetíveis,
-            escolha entre aumentar uma instância existente ou criar outra.
+            {tr("Escolha o Mérito e a quantidade de pontos. Nos Méritos repetíveis, escolha entre aumentar uma instância existente ou criar outra.","Choose the Merit and number of dots. For repeatable Merits, choose whether to improve an existing instance or create another.")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
@@ -4481,7 +4520,7 @@ function ExperienceMeritPicker({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Buscar por nome, descrição, requisito ou fonte"
+              placeholder={tr("Buscar por nome, descrição, requisito ou fonte","Search by name, description, prerequisite, or source")}
             />
           </label>
           <RuleSelect
@@ -4524,15 +4563,15 @@ function ExperienceMeritPicker({
                   className={selectedId === item.id ? "selected" : ""}
                 >
                   <div>
-                    <strong>{item.translatedName}</strong>
+                    <strong>{meritName(item)}</strong>
                     <small>
                       {item.source} · p. {item.page || "—"}
-                      {repeatable ? " · pode ser comprado várias vezes" : ""}
+                      {repeatable ? tr(" · pode ser comprado várias vezes"," · may be purchased multiple times") : ""}
                     </small>
                     <p>{item.description}</p>
                     {item.prerequisites && (
                       <p>
-                        <b>Pré-requisitos:</b> {item.prerequisites}
+                        <b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}
                       </p>
                     )}
                   </div>
@@ -4548,10 +4587,10 @@ function ExperienceMeritPicker({
                               variant="outline"
                               onClick={() => onSelect(item.id, dot, index)}
                             >
-                              Aumentar{" "}
+                              {tr("Aumentar","Raise")}{" "}
                               {meritConfigurationTitle(owned.configuration) ||
-                                `instância ${instanceNumber + 1}`}{" "}
-                              para {dot}
+                                `${tr("instância","instance")} ${instanceNumber + 1}`}{" "}
+                              {tr("para","to")} {dot}
                             </Button>
                           </DialogClose>
                         )),
@@ -4570,9 +4609,9 @@ function ExperienceMeritPicker({
                             onClick={() => onSelect(item.id, dot, -1)}
                           >
                             {repeatable && instances.length
-                              ? "Nova instância · "
+                              ? tr("Nova instância · ","New instance · ")
                               : ""}
-                            {dot} ponto{dot === 1 ? "" : "s"}
+                            {dot} {tr(dot===1?"ponto":"pontos",dot===1?"dot":"dots")}
                           </Button>
                         </DialogClose>
                       ))}
@@ -4584,7 +4623,7 @@ function ExperienceMeritPicker({
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" variant="outline">
-              Cancelar
+              {tr("Cancelar","Cancel")}
             </Button>
           </DialogClose>
         </DialogFooter>
@@ -4601,18 +4640,19 @@ function RuleSelect({
   onChange: (value: string) => void;
   options: Array<{ value: string; label: string; group?: string }>;
 }) {
+  const {locale}=useLanguage();
   const safe = options.length ? value || options[0].value : "__none";
   // These two lists deliberately follow the character sheet's trait groups.
   if (options !== ATTRIBUTE_OPTIONS && options !== SKILL_OPTIONS) {
-    options = alphabetical(options, item => item.label);
+    options = alphabetical(options, item => systemTerm(item.label,locale),locale);
   }
   const groups = [...new Set(options.map((item) => item.group).filter(Boolean))];
   return (
     <Select value={safe} onValueChange={onChange} disabled={!options.length}>
       <SelectTrigger>
         <SelectValue>
-          {options.find((item) => item.value === safe)?.label ??
-            "Nenhuma opção disponível"}
+          {systemTerm(options.find((item) => item.value === safe)?.label ??
+            "Nenhuma opção disponível",locale)}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
@@ -4621,12 +4661,12 @@ function RuleSelect({
             groups.map((group, groupIndex) => (
               <SelectGroup key={group}>
                 {groupIndex > 0 && <SelectSeparator />}
-                <SelectLabel>{group}</SelectLabel>
+                <SelectLabel>{systemTerm(group!,locale)}</SelectLabel>
                 {options
                   .filter((item) => item.group === group)
                   .map((item) => (
                     <SelectItem key={item.value} value={item.value}>
-                      {item.label}
+                      {systemTerm(item.label,locale)}
                     </SelectItem>
                   ))}
               </SelectGroup>
@@ -4634,13 +4674,13 @@ function RuleSelect({
           ) : (
             options.map((item) => (
               <SelectItem key={item.value} value={item.value}>
-                {item.label}
+                {systemTerm(item.label,locale)}
               </SelectItem>
             ))
           )
         ) : (
           <SelectItem value="__none" disabled>
-            Nenhuma opção disponível
+            {systemTerm("Nenhuma opção disponível",locale)}
           </SelectItem>
         )}
       </SelectContent>
@@ -4792,7 +4832,8 @@ function derivedWithPermanentMerits(character: CharacterSheet) {
   return derived;
 }
 function ExperienceRules() {
-  const beatRows = [
+  const { locale, tr } = useLanguage();
+  const beatRowsPt = [
     "Cumprir uma Aspiração",
     "Resolver uma Condição",
     "Aceitar uma falha dramática",
@@ -4802,7 +4843,8 @@ function ExperienceRules() {
     "Sofrer dano de Lucidez",
     "Liberar Desvario involuntariamente",
   ];
-  const costRows = [
+  const beatRowsEn = ["Fulfill an Aspiration", "Resolve a Condition", "Accept a dramatic failure", "Surrender in combat", "Take damage in the final Health boxes", "End a session", "Take Clarity damage", "Release Bedlam involuntarily"];
+  const costRowsPt = [
     ["Atributo", "4 por ponto"],
     ["Perícia", "2 por ponto"],
     ["Mérito", "1 por ponto"],
@@ -4814,10 +4856,13 @@ function ExperienceRules() {
     ["Fado", "5 por ponto"],
     ["Ponto perdido de Força de Vontade", "1"],
   ];
+  const costRowsEn = [["Attribute", "4 per dot"], ["Skill", "2 per dot"], ["Merit", "1 per dot"], ["Specialty", "1"], ["Favored Contract", "Common 2 · Royal 3"], ["Non-favored Contract", "Common 3 · Royal 4"], ["Goblin Contract", "2"], ["Benefit of another Seeming", "1"], ["Wyrd", "5 per dot"], ["Lost Willpower dot", "1"]];
+  const beatRows = locale === "en-US" ? beatRowsEn : beatRowsPt;
+  const costRows = locale === "en-US" ? costRowsEn : costRowsPt;
   return (
     <div className="experience-rules-grid">
       <table>
-        <caption>Formas de ganhar Beats</caption>
+        <caption>{tr("Formas de ganhar Beats", "Ways to earn Beats")}</caption>
         <tbody>
           {beatRows.map((label) => (
             <tr key={label}>
@@ -4828,11 +4873,11 @@ function ExperienceRules() {
         </tbody>
       </table>
       <table>
-        <caption>Tabela de custos</caption>
+        <caption>{tr("Tabela de custos", "Cost table")}</caption>
         <thead>
           <tr>
-            <th>Característica</th>
-            <th>EXP</th>
+            <th>{tr("Característica", "Trait")}</th>
+            <th>{tr("EXP", "XP")}</th>
           </tr>
         </thead>
         <tbody>
@@ -4854,13 +4899,14 @@ function GoblinDebtTrack({
   value: number;
   onChange: (value: number) => void;
 }) {
+  const {tr}=useLanguage();
   return (
     <div className="goblin-debt-block">
-      <h4>Débito Goblin</h4>
+      <h4>{tr("Débito Goblin","Goblin Debt")}</h4>
       <div
         className="goblin-debt-track"
         role="group"
-        aria-label={`Débito Goblin: ${value} de 9`}
+        aria-label={tr(`Débito Goblin: ${value} de 9`,`Goblin Debt: ${value} of 9`)}
       >
         {Array.from({ length: 9 }, (_, index) => (
           <button
@@ -4868,13 +4914,12 @@ function GoblinDebtTrack({
             key={index}
             className={index < value ? "filled" : ""}
             onClick={() => onChange(index < value ? index : index + 1)}
-            aria-label={`Definir Débito Goblin como ${index < value ? index : index + 1}`}
+            aria-label={tr(`Definir Débito Goblin como ${index < value ? index : index + 1}`,`Set Goblin Debt to ${index < value ? index : index + 1}`)}
           />
         ))}
       </div>
       <p>
-        {value}/9 · ao receber o décimo ponto, o personagem adquire a Condição
-        Habitante da Sebe.
+        {value}/9 · {tr("ao receber o décimo ponto, o personagem adquire a Condição Habitante da Sebe.","upon receiving the tenth point, the character gains the Hedge Denizen Condition.")}
       </p>
     </div>
   );
@@ -4890,13 +4935,15 @@ function ResourceTrack({
   maximum: number;
   onChange: (value: number) => void;
 }) {
+  const {locale,tr}=useLanguage();
+  const displayLabel=systemTerm(label,locale);
   return (
     <div className="tracker-block">
       <div
         className="resource-track"
         role="group"
-        data-label={label}
-        aria-label={`${label}: ${current} de ${maximum}`}
+        data-label={displayLabel}
+        aria-label={tr(`${displayLabel}: ${current} de ${maximum}`,`${displayLabel}: ${current} of ${maximum}`)}
       >
         {Array.from({ length: maximum }, (_, index) => (
           <button
@@ -4904,12 +4951,12 @@ function ResourceTrack({
             key={index}
             className={index < current ? "filled" : ""}
             onClick={() => onChange(index < current ? index : index + 1)}
-            aria-label={`Definir ${label} como ${index < current ? index : index + 1}`}
+            aria-label={tr(`Definir ${displayLabel} como ${index < current ? index : index + 1}`,`Set ${displayLabel} to ${index < current ? index : index + 1}`)}
           />
         ))}
       </div>
       <div className="tracker-meta">
-        <span>Atual</span>
+        <span>{tr("Atual","Current")}</span>
         <strong>
           {current} / {maximum}
         </strong>
@@ -4936,10 +4983,11 @@ function PowerResource({
   onChange: (value: number) => void;
   summary?: string;
 }) {
+  const {locale,tr}=useLanguage();
   return (
     <div className="power-resource">
       <div className="power-rating power-rating-summary" tabIndex={summary ? 0 : undefined} title={summary} aria-label={summary} data-tooltip={summary}>
-        <span>{name}</span>
+        <span>{systemTerm(name,locale)}</span>
         <DotValue value={rating} max={10} />
       </div>
       <ResourceTrack
@@ -4949,7 +4997,7 @@ function PowerResource({
         onChange={onChange}
       />
       <p className="tracker-help">
-        {resourceName} máximo: <strong>{maximum}</strong> · gasto por turno:{" "}
+        {tr(`${resourceName} máximo:`,`${systemTerm(resourceName,locale)} maximum:`)} <strong>{maximum}</strong> · {tr("gasto por turno:","spent per turn:")}{" "}
         <strong>{perTurn}</strong>
       </p>
     </div>
@@ -5293,6 +5341,7 @@ function SpellColumn({
   items: Array<Record<string, unknown>>;
   showSkill?: boolean;
 }) {
+  const {locale,tr}=useLanguage();
   return (
     <div className="mage-spell-lines">
       {items.map((item, index) => (
@@ -5300,7 +5349,7 @@ function SpellColumn({
           key={`${String(item.id ?? item.name)}-${index}`}
           title={String(item.description ?? "")}
         >
-          <strong>{String(item.name ?? item.originalName ?? "")}</strong>
+          <strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong>
           <small>
             {Object.entries((item.requirements ?? {}) as Record<string, number>)
               .map(([name, dots]) => `${name} ${dots}`)
@@ -5309,7 +5358,7 @@ function SpellColumn({
           </small>
         </div>
       ))}
-      {!items.length && <em>Nenhum registro.</em>}
+      {!items.length && <em>{tr("Nenhum registro.","No entries.")}</em>}
     </div>
   );
 }
@@ -5320,6 +5369,7 @@ function MeritSheetList({
   merits: CharacterSheet["merits"];
   line: "CtL" | "MtA";
 }) {
+  const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
   const catalog = [
       ...getMeritsForLine(line),
@@ -5343,13 +5393,13 @@ function MeritSheetList({
             : item.source;
           return (
             <div key={`${item.name}-${index}`} title={tooltip}>
-              <span>{meritLabel(item, line)}</span>
+              <span>{meritLabel(item,line,locale)}</span>
               <DotValue value={item.dots} max={Math.max(5, item.dots)} />
             </div>
           );
         })
       ) : (
-        <em>Nenhum Mérito selecionado</em>
+        <em>{tr("Nenhum Mérito selecionado","No Merit selected")}</em>
       )}
     </div>
   );
@@ -5361,6 +5411,7 @@ function ContractSheetList({
   contracts: Array<Record<string, unknown>>;
   seeming: string;
 }) {
+  const {locale}=useLanguage();
   return (
     <div className="official-lines">
       {contracts
@@ -5380,7 +5431,7 @@ function ContractSheetList({
               key={`${String(item.name)}-${index}`}
               title={`${description}\nParada de dados: ${dicePool}\nBrecha: ${definition?.loophole ?? "Não informada"}${benefit ? `\nBenefício de ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`}
             >
-              <span>{definition?.name ?? String(item.name)}</span>
+              <span>{String(locale==="en-US"?(definition?.originalName??item.originalName??item.name):(definition?.name??item.name))}</span>
               <small>
                 {definition?.regalia ?? String(item.regalia ?? "")} ·{" "}
                 {definition?.type ??
@@ -5404,6 +5455,7 @@ function ContractPowerList({
   court: string;
   extraBenefits?: Array<Record<string, unknown>>;
 }) {
+  const {locale,tr}=useLanguage();
   return (
     <div className="contract-power-list">
       {contracts
@@ -5437,7 +5489,7 @@ function ContractPowerList({
           return (
             <article key={`${definition.id}-${index}`}>
               <div className="contract-power-title">
-                <strong>{definition.name}</strong>
+                <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
                 <Badge variant={definition.goblin ? "default" : "outline"}>
                   {definition.goblin ? "Goblin · Comum" : definition.type}
                 </Badge>
@@ -5446,14 +5498,14 @@ function ContractPowerList({
                 {definition.regalia} · {definition.source} · p.{" "}
                 {definition.page}
               </small>
-              {contractOutcomeSections(definition).map((section) => (
+              {contractOutcomeSections(definition,locale).map((section) => (
                 <p className="rule-detail" key={section.label}>
                   <strong>{section.label}:</strong> {section.text}
                 </p>
               ))}
               {definition.options?.length && (
                 <div className="contract-options">
-                  <strong>Opções</strong>
+                  <strong>{tr("Opções","Options")}</strong>
                   <ul>
                     {definition.options.map((option) => (
                       <li key={option}>{option}</li>
@@ -5463,22 +5515,22 @@ function ContractPowerList({
               )}
               <dl>
                 <div>
-                  <dt>Custo</dt>
+                  <dt>{tr("Custo","Cost")}</dt>
                   <dd>{definition.cost ?? "Conforme descrição"}</dd>
                 </div>
                 <div>
-                  <dt>Parada de dados</dt>
+                  <dt>{tr("Parada de dados","Dice pool")}</dt>
                   <dd>{definition.dicePool}</dd>
                 </div>
                 <div>
-                  <dt>Ação / Duração</dt>
+                  <dt>{tr("Ação / Duração","Action / Duration")}</dt>
                   <dd>
                     {definition.action ?? "Instantânea"} ·{" "}
                     {definition.duration ?? "Cena"}
                   </dd>
                 </div>
                 <div>
-                  <dt>Brecha</dt>
+                  <dt>{tr("Brecha","Loophole")}</dt>
                   <dd>{definition.loophole}</dd>
                 </div>
                 {benefits.map((benefit) => (
@@ -5510,9 +5562,10 @@ function ContractPowerList({
   );
 }
 function SeemingLore({ seeming }: { seeming: string }) {
+  const {tr}=useLanguage();
   const definition = CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS];
   if (!definition)
-    return <LorePanel title="Feição" text="Nenhuma Feição selecionada." />;
+    return <LorePanel title={tr("Feição","Seeming")} text={tr("Nenhuma Feição selecionada.","No Seeming selected.")} />;
   const page = (
     {
       Beast: 22,
@@ -5526,12 +5579,12 @@ function SeemingLore({ seeming }: { seeming: string }) {
   return (
     <>
       <LorePanel
-        title={`Bênção de ${definition.translated}`}
+        title={tr(`Bênção de ${definition.translated}`,`${seeming} Blessing`)}
         text={definition.blessing}
         source={`Changeling the Lost · p. ${page}`}
       />
       <LorePanel
-        title={`Maldição de ${definition.translated}`}
+        title={tr(`Maldição de ${definition.translated}`,`${seeming} Curse`)}
         text={definition.curse}
         source={`Changeling the Lost · p. ${page}`}
       />
@@ -5539,25 +5592,25 @@ function SeemingLore({ seeming }: { seeming: string }) {
   );
 }
 function KithLore({ data }: { data: Record<string, unknown> }) {
+  const {locale,tr}=useLanguage();
   const definition = data.kith_custom ? undefined : findKith(data.kith);
-  const name = kithDisplayName(data.kith, Boolean(data.kith_custom));
-  const skill = String(definition?.skill ?? data.kith_skill ?? "");
-  const description = String(
-    definition?.description ?? data.kith_description ?? "",
-  );
-  const blessing = String(definition?.blessing ?? data.kith_blessing ?? "");
+  const presentation=data.kith_custom?undefined:kithPresentation(data.kith,locale);
+  const name = data.kith_custom?kithDisplayName(data.kith,true):presentation?.name??"";
+  const skill = String(presentation?.skill ?? definition?.skill ?? data.kith_skill ?? "");
+  const description = String(presentation?.description ?? definition?.description ?? data.kith_description ?? "");
+  const blessing = String(presentation?.blessing ?? definition?.blessing ?? data.kith_blessing ?? "");
   const source = String(definition?.source ?? data.kith_source ?? "");
   const page = Number(definition?.page ?? data.kith_page ?? 0);
   if (!name)
     return (
       <LorePanel
-        title="Bênção da Fratria"
-        text="Nenhuma Fratria selecionada."
+        title={tr("Bênção da Fratria","Kith Blessing")}
+        text={tr("Nenhuma Fratria selecionada.","No Kith selected.")}
       />
     );
   return (
     <LorePanel
-      title={`Bênção de ${name}`}
+      title={tr(`Bênção de ${name}`,`${name} Blessing`)}
       intro={data.kith_custom ? undefined : description}
       text={`${skill ? `${skill}. ` : ""}${blessing || description}`}
       source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}
@@ -5647,6 +5700,7 @@ function SpellSheetList({
   rotes: Array<Record<string, unknown>>;
   praxes: Array<Record<string, unknown>>;
 }) {
+  const {locale,tr}=useLanguage();
   const rows = [
     ...rotes.map((item) => ({ kind: "Rota", item })),
     ...praxes.map((item) => ({ kind: "Práxis", item })),
@@ -5659,11 +5713,11 @@ function SpellSheetList({
           title={`${String(item.description ?? "")}\nPrática: ${String(item.practice ?? "")} · Fator Primário: ${String(item.primaryFactor ?? "")}${item.withstand ? ` · Resistência: ${String(item.withstand)}` : ""}`}
         >
           <span>
-            {kind} · {String(item.name ?? item.originalName ?? "")}
+            {kind==="Rota"?tr("Rota","Rote"):tr("Práxis","Praxis")} · {String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}
           </span>
           <small>
             {kind === "Rota" && item.roteSkill
-              ? `Perícia: ${String(item.roteSkill)} · `
+              ? `${tr("Perícia","Skill")}: ${systemTerm(String(item.roteSkill),locale)} · `
               : ""}
             {String(item.source ?? "")} · p. {String(item.page ?? "—")}
           </small>
@@ -5714,18 +5768,16 @@ function isExpandedMerit(name: string) {
 }
 
 function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
+  const { tr } = useLanguage();
   return (
     <section className="panel">
       <div className="panel-heading">
         <div>
-          <span className="kicker">BANCO COMPARTILHADO</span>
-          <h3>Regras ativas para todos</h3>
-          <p>
-            Não há fila de aprovação. Ajustes posteriores substituem a versão
-            compartilhada.
-          </p>
+          <span className="kicker">{tr("BANCO COMPARTILHADO", "SHARED LIBRARY")}</span>
+          <h3>{tr("Regras ativas para todos", "Rules active for everyone")}</h3>
+          <p>{tr("Não há fila de aprovação. Ajustes posteriores substituem a versão compartilhada.", "There is no approval queue. Later edits replace the shared version.")}</p>
         </div>
-        <Badge className="approved-badge">ATIVAS</Badge>
+        <Badge className="approved-badge">{tr("ATIVAS", "ACTIVE")}</Badge>
       </div>
       <div className="rule-cards">
         {catalog.map((rule) => (
@@ -5737,7 +5789,7 @@ function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
             <h3>{rule.originalName}</h3>
             <p>{summarizeRule(rule)}</p>
             <small>
-              Fonte: {rule.sourceId} · {rule.reviewStatus}
+              {tr("Fonte", "Source")}: {rule.sourceId} · {rule.reviewStatus}
             </small>
           </article>
         ))}

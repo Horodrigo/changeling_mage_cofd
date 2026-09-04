@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { Download, RefreshCw, Smartphone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { APP_VERSION } from "@/lib/app-version";
+import { useLanguage } from "@/lib/i18n";
 
 type InstallPrompt = Event & { prompt: () => Promise<void>; userChoice: Promise<{outcome:"accepted"|"dismissed"}> };
 
 export function PwaManager() {
+  const {tr}=useLanguage();
   const [installPrompt, setInstallPrompt] = useState<InstallPrompt | null>(null);
   const [waiting, setWaiting] = useState<ServiceWorker | null>(null);
   const [online, setOnline] = useState(true);
@@ -59,9 +61,9 @@ export function PwaManager() {
   if (dismissed || (!installPrompt && !waiting && !newerVersion && online)) return null;
   return <aside className="pwa-notice" role="status">
     <div>{waiting || newerVersion ? <RefreshCw /> : installPrompt ? <Smartphone /> : <Download />}</div>
-    <span><strong>{waiting || newerVersion ? "Atualização disponível" : installPrompt ? "Instale o aplicativo" : "Você está offline"}</strong><small>{waiting ? `Versão ${remoteVersion} pronta para instalar.` : newerVersion ? `Preparando a versão ${remoteVersion}…` : installPrompt ? "Use o Arquivo das Trevas pela tela inicial." : "Suas fichas locais continuam disponíveis."}</small></span>
-    {waiting && <Button size="sm" onClick={() => waiting.postMessage({type:"SKIP_WAITING"})}>Atualizar agora</Button>}
-    {installPrompt && <Button size="sm" onClick={async()=>{await installPrompt.prompt();await installPrompt.userChoice;setInstallPrompt(null)}}>Instalar</Button>}
-    <button className="pwa-dismiss" onClick={()=>setDismissed(true)} aria-label="Fechar"><X /></button>
+    <span><strong>{waiting || newerVersion ? tr("Atualização disponível","Update available") : installPrompt ? tr("Instale o aplicativo","Install the app") : tr("Você está offline","You are offline")}</strong><small>{waiting ? tr(`Versão ${remoteVersion} pronta para instalar.`,`Version ${remoteVersion} is ready to install.`) : newerVersion ? tr(`Preparando a versão ${remoteVersion}…`,`Preparing version ${remoteVersion}…`) : installPrompt ? tr("Use o Arquivo das Trevas pela tela inicial.","Use Archive of Darkness from your home screen.") : tr("Suas fichas locais continuam disponíveis.","Your local character sheets remain available.")}</small></span>
+    {waiting && <Button size="sm" onClick={() => waiting.postMessage({type:"SKIP_WAITING"})}>{tr("Atualizar agora","Update now")}</Button>}
+    {installPrompt && <Button size="sm" onClick={async()=>{await installPrompt.prompt();await installPrompt.userChoice;setInstallPrompt(null)}}>{tr("Instalar","Install")}</Button>}
+    <button className="pwa-dismiss" onClick={()=>setDismissed(true)} aria-label={tr("Fechar","Close")}><X /></button>
   </aside>;
 }

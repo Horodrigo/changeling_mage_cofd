@@ -64,7 +64,7 @@ import {
   canSelectInitialContract,
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
-import { KITHS, findKith, kithDisplayName, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
+import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
@@ -76,6 +76,8 @@ import {
   type MeritConfiguration,
 } from "@/lib/merit-configurations";
 import { SKILL_SPECIALTY_SUGGESTIONS } from "@/lib/skill-specialties";
+import { localized, useLanguage, type Locale } from "@/lib/i18n";
+import { builderText } from "./character-builder-messages";
 
 export type Specialty = { skill: string; name: string; grantedBy?: string };
 export type MeritSelection = {
@@ -193,6 +195,7 @@ export function CharacterBuilder({
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
 }) {
+  const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
   const contractCatalog = useMemo(
     () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
@@ -334,34 +337,34 @@ export function CharacterBuilder({
     const issues: Array<{ step: number; key: string; label: string }> = [];
     const add = (step: number, key: string, label: string) =>
       issues.push({ step, key, label });
-    if (!name.trim()) add(1, "name", "Nome do personagem");
+    if (!name.trim()) add(1, "name", tr("Nome do personagem", "Character name"));
     const prioritiesValid = (values: string[], labels: readonly string[]) =>
       values.every(Boolean) &&
       new Set(values).size === labels.length &&
       labels.every((label) => values.includes(label));
     if (!prioritiesValid(attributePriority, attributeCategories))
-      add(2, "attribute-priority", "Prioridades de Atributos");
+      add(2, "attribute-priority", tr("Prioridades de Atributos", "Attribute priorities"));
     if (!prioritiesValid(skillPriority, skillCategories))
-      add(2, "skill-priority", "Prioridades de Perícias");
+      add(2, "skill-priority", tr("Prioridades de Perícias", "Skill priorities"));
     for (const [category, names] of Object.entries(ATTRIBUTES)) {
       const index = attributePriority.indexOf(category),
         budget = [5, 4, 3][index];
       if (index < 0 || spent(attributes, names, 1) !== budget)
-        add(2, `attribute-${category}`, `Atributos ${category}`);
+        add(2, `attribute-${category}`, `${tr("Atributos", "Attributes")} ${category}`);
     }
     for (const [category, names] of Object.entries(SKILLS)) {
       const index = skillPriority.indexOf(category),
         budget = [11, 7, 4][index];
       if (index < 0 || spent(skills, names, 0) !== budget)
-        add(2, `skill-${category}`, `Perícias ${category}`);
+        add(2, `skill-${category}`, `${tr("Perícias", "Skills")} ${category}`);
     }
     specialties.slice(0, 3).forEach((item, index) => {
       if (!item.skill || !item.name.trim())
-        add(2, `specialty-${index}`, `Especialização ${index + 1}`);
+        add(2, `specialty-${index}`, `${tr("Especialização", "Specialty")} ${index + 1}`);
     });
-    if (meritSpent > meritBudget) add(3, "merits", "Méritos acima do limite");
+    if (meritSpent > meritBudget) add(3, "merits", tr("Méritos acima do limite", "Merits exceed the limit"));
     aspirations.slice(0, 3).forEach((item, index) => {
-      if (!item.trim()) add(3, `aspiration-${index}`, `Aspiração ${index + 1}`);
+      if (!item.trim()) add(3, `aspiration-${index}`, `${tr("Aspiração", "Aspiration")} ${index + 1}`);
     });
     if (line === "CtL") {
       [
@@ -403,7 +406,7 @@ export function CharacterBuilder({
         add(
           3,
           "contracts",
-          "Quatro Contratos Comuns e dois Reais permitidos pelas Regalias e Corte",
+          tr("Quatro Contratos Comuns e dois Reais permitidos pelas Regalias e Corte", "Four Common Contracts and two Royal Contracts allowed by the selected Regalia and Court"),
         );
     } else {
       [
@@ -432,7 +435,7 @@ export function CharacterBuilder({
               meetsArcanaRequirements(item.requirements, arcana),
           ).length !== 3
       )
-        add(3, "rotes", "Três Rotas utilizáveis e suas Perícias");
+        add(3, "rotes", tr("Três Rotas utilizáveis e suas Perícias", "Three usable Rotes and their Skills"));
       if (
         praxes
           .slice(0, gnosis)
@@ -441,7 +444,7 @@ export function CharacterBuilder({
               item && meetsArcanaRequirements(item.requirements, arcana),
           ).length !== gnosis
       )
-        add(3, "praxes", `${gnosis} Práxis utilizável(is)`);
+        add(3, "praxes", `${gnosis} ${tr("Práxis utilizável(is)", "usable Praxis")}`);
     }
     return issues;
   }, [
@@ -480,6 +483,7 @@ export function CharacterBuilder({
     rotes,
     praxes,
     gnosis,
+    locale,
   ]);
   const missing = (key: string) =>
     validationIssues.some((issue) => issue.key === key);
@@ -488,7 +492,7 @@ export function CharacterBuilder({
     const current = validationIssues.filter((issue) => issue.step === step);
     if (current.length) {
       setError(
-        `Ainda falta: ${current.map((issue) => issue.label).join(", ")}.`,
+        `${tr("Ainda falta", "Still required")}: ${current.map((issue) => issue.label).join(", ")}.`,
       );
       return;
     }
@@ -500,7 +504,7 @@ export function CharacterBuilder({
     setError("");
     if (validationIssues.length) {
       setError(
-        `Ainda falta: ${validationIssues.map((issue) => issue.label).join(", ")}.`,
+        `${tr("Ainda falta", "Still required")}: ${validationIssues.map((issue) => issue.label).join(", ")}.`,
       );
       setStep(validationIssues[0].step);
       return;
@@ -681,19 +685,19 @@ export function CharacterBuilder({
     <section className="builder">
       <div className="builder-head">
         <Button variant="ghost" onClick={onCancel}>
-          <ArrowLeft /> Voltar
+          <ArrowLeft /> {tr("Voltar", "Back")}
         </Button>
         <div>
           <Badge variant="outline">{line}</Badge>
-          <span>Criação guiada · regras compartilhadas v1</span>
+          <span>{tr("Criação guiada · regras compartilhadas v1", "Guided creation · shared rules v1")}</span>
         </div>
       </div>
       <div className="stepper">
         {[
-          "Identidade",
-          "Características",
-          line === "CtL" ? "Modelo dos Perdidos" : "Modelo dos Despertos",
-          "Conferência",
+          tr("Identidade", "Identity"),
+          tr("Características", "Traits"),
+          line === "CtL" ? tr("Modelo dos Perdidos", "Lost Template") : tr("Modelo dos Despertos", "Awakened Template"),
+          tr("Conferência", "Review"),
         ].map((label, index) => (
           <div
             key={label}
@@ -715,8 +719,8 @@ export function CharacterBuilder({
           <strong>
             {validationIssues.length}{" "}
             {validationIssues.length === 1
-              ? "item pendente"
-              : "itens pendentes"}
+              ? tr("item pendente", "pending item")
+              : tr("itens pendentes", "pending items")}
           </strong>
           <span>
             {validationIssues
@@ -862,7 +866,7 @@ export function CharacterBuilder({
             merits={merits}
             lineData={
               line === "CtL"
-                ? { seeming, kith: kithDisplayName(kith, customKith), court, needle, thread, wyrd: Math.min(10, wyrd + wyrdProgression.advancement) }
+                ? { seeming, kith: kithDisplayName(kith, customKith, locale), court, needle, thread, wyrd: Math.min(10, wyrd + wyrdProgression.advancement) }
                 : { path, order, gnosis: Math.min(10, gnosis + gnosisProgression.advancement) }
             }
           />
@@ -871,17 +875,17 @@ export function CharacterBuilder({
       <div className="builder-actions">
         {step > 1 && (
           <Button variant="outline" onClick={() => setStep(step - 1)}>
-            <ArrowLeft /> Anterior
+            <ArrowLeft /> {tr("Anterior", "Previous")}
           </Button>
         )}
         <span />
         {step < 4 ? (
           <Button onClick={() => validate(step + 1)}>
-            Continuar <ArrowRight />
+            {tr("Continuar", "Continue")} <ArrowRight />
           </Button>
         ) : (
           <Button onClick={finish}>
-            <Save /> Salvar ficha localmente
+            <Save /> {tr("Salvar ficha localmente", "Save character locally")}
           </Button>
         )}
       </div>
@@ -904,11 +908,12 @@ function IdentityStep({
   setShadowName,
   missing,
 }: any) {
+  const { tr } = useLanguage();
   return (
     <div className="builder-section">
-      <span className="kicker">PASSO 1</span>
-      <h2>Quem atravessou a escuridão?</h2>
-      <p>Escolha a linha principal. Ela determina todas as próximas opções.</p>
+      <span className="kicker">{tr("PASSO 1", "STEP 1")}</span>
+      <h2>{tr("Quem atravessou a escuridão?", "Who crossed into darkness?")}</h2>
+      <p>{tr("Escolha a linha principal. Ela determina todas as próximas opções.", "Choose the main game line. It determines every option that follows.")}</p>
       <div className="line-choice">
         <button
           className={`ctl-line-choice ${line === "CtL" ? "selected" : ""}`}
@@ -916,7 +921,7 @@ function IdentityStep({
         >
           <Badge>CtL</Badge>
           <strong>Changeling the Lost</strong>
-          <small>Fonte principal: Changeling the Lost 2e</small>
+          <small>{tr("Fonte principal", "Core source")}: Changeling the Lost 2e</small>
         </button>
         <button
           className={`mta-line-choice ${line === "MtA" ? "selected" : ""}`}
@@ -924,46 +929,46 @@ function IdentityStep({
         >
           <Badge>MtA</Badge>
           <strong>Mage the Awakening</strong>
-          <small>Fonte principal: Mage the Awakening 2e</small>
+          <small>{tr("Fonte principal", "Core source")}: Mage the Awakening 2e</small>
         </button>
       </div>
       <div className="form-grid">
         <label className={missing("name") ? "missing-field" : ""}>
-          Nome
+          {tr("Nome", "Name")}
           <Input value={name} onChange={(e) => setName(e.target.value)} />
         </label>
         <label>
-          Jogador
+          {tr("Jogador", "Player")}
           <Input
             value={player}
             onChange={(event) => setPlayer(event.target.value)}
-            placeholder="Nome do jogador"
+            placeholder={tr("Nome do jogador", "Player name")}
           />
         </label>
         <label>
-          Crônica
+          {tr("Crônica", "Chronicle")}
           <Input
             value={chronicle}
             onChange={(event) => setChronicle(event.target.value)}
-            placeholder="Nome da crônica"
+            placeholder={tr("Nome da crônica", "Chronicle name")}
           />
         </label>
         {line === "MtA" && (
           <label className={missing("shadowName") ? "missing-field" : ""}>
-            Nome das Sombras
+            {tr("Nome das Sombras", "Shadow Name")}
             <Input
               value={shadowName}
               onChange={(event) => setShadowName(event.target.value)}
-              placeholder="Nome mágico do personagem"
+              placeholder={tr("Nome mágico do personagem", "Character's magical name")}
             />
           </label>
         )}
         <label className="full">
-          Conceito
+          {tr("Conceito", "Concept")}
           <Input
             value={concept}
             onChange={(e) => setConcept(e.target.value)}
-            placeholder="Uma frase curta"
+            placeholder={tr("Uma frase curta", "A short phrase")}
           />
         </label>
       </div>
@@ -986,14 +991,14 @@ function editableSkills(initial?: CharacterSheet | null) {
 }
 
 function TraitsStep(props: any) {
+  const { tr } = useLanguage();
   const allSkills = Object.values(SKILLS).flat();
   return (
     <div className="builder-section">
-      <span className="kicker">PASSO 2</span>
-      <h2>Atributos e Perícias</h2>
+      <span className="kicker">{tr("PASSO 2", "STEP 2")}</span>
+      <h2>{tr("Atributos e Perícias", "Attributes and Skills")}</h2>
       <p>
-        Defina a prioridade das categorias e distribua exatamente os pontos
-        indicados.
+        {tr("Defina a prioridade das categorias e distribua exatamente os pontos indicados.", "Set the category priorities and distribute exactly the indicated points.")}
       </p>
       <PriorityRow
         labels={attributeCategories}
@@ -1031,10 +1036,9 @@ function TraitsStep(props: any) {
         missing={props.missing}
       />
       <div className="section-divider" />
-      <h3>Especializações</h3>
+      <h3>{tr("Especializações", "Specialties")}</h3>
       <p>
-        Escolha uma Perícia e escreva a área específica. A mesma Perícia pode
-        ser escolhida mais de uma vez.
+        {tr("Escolha uma Perícia e escreva a área específica. A mesma Perícia pode ser escolhida mais de uma vez.", "Choose a Skill and enter a specific area. The same Skill may be chosen more than once.")}
       </p>
       <div className="specialty-grid">
         {props.specialties.map((value: Specialty, index: number) => {
@@ -1045,7 +1049,7 @@ function TraitsStep(props: any) {
               key={index}
             >
               <Choice
-                label={`Perícia ${index + 1}`}
+                label={`${tr("Perícia", "Skill")} ${index + 1}`}
                 value={value.skill}
                 setValue={(skill) =>
                   updateArray(props.setSpecialties, props.specialties, index, {
@@ -1057,7 +1061,7 @@ function TraitsStep(props: any) {
                 options={allSkills}
               />
               <label>
-                Especialização
+                {tr("Especialização", "Specialty")}
                 <Input
                   list={listId}
                   value={value.name}
@@ -1071,8 +1075,8 @@ function TraitsStep(props: any) {
                   }
                   placeholder={
                     value.skill
-                      ? "Escolha uma sugestão ou escreva outra"
-                      : "Selecione primeiro a Perícia"
+                      ? tr("Escolha uma sugestão ou escreva outra", "Choose a suggestion or type another")
+                      : tr("Selecione primeiro a Perícia", "Select the Skill first")
                   }
                   disabled={!value.skill}
                 />
@@ -1093,6 +1097,7 @@ function TraitsStep(props: any) {
 }
 
 function CtlStep(props: any) {
+  const { tr } = useLanguage();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
     ...REGALIA,
@@ -1110,12 +1115,12 @@ function CtlStep(props: any) {
   );
   return (
     <div className="builder-section">
-      <span className="kicker">PASSO 3 · CHANGELING</span>
-      <h2>Modelo dos Perdidos</h2>
-      <p>As escolhas e limites abaixo vêm de Changeling the Lost.</p>
+      <span className="kicker">{tr("PASSO 3 · CHANGELING", "STEP 3 · CHANGELING")}</span>
+      <h2>{tr("Modelo dos Perdidos", "Lost Template")}</h2>
+      <p>{tr("As escolhas e limites abaixo vêm de Changeling the Lost.", "The choices and limits below come from Changeling the Lost.")}</p>
       <div className="form-grid thirds">
         <Choice
-          label="Feição"
+          label={tr("Feição", "Seeming")}
           value={props.seeming}
           setValue={props.setSeeming}
           options={Object.keys(CTL_SEEMINGS)}
@@ -1128,35 +1133,35 @@ function CtlStep(props: any) {
           <CourtSelector {...props} />
         </div>
         <Choice
-          label="Agulha"
+          label={tr("Agulha", "Needle")}
           value={props.needle}
           setValue={props.setNeedle}
           options={CTL_NEEDLES}
           invalid={props.missing("needle")}
         />
         <Choice
-          label="Fio"
+          label={tr("Fio", "Thread")}
           value={props.thread}
           setValue={props.setThread}
           options={CTL_THREADS}
           invalid={props.missing("thread")}
         />
         <label className={props.missing("touchstone") ? "missing-field" : ""}>
-          Pedra de Contato
+          {tr("Pedra de Contato", "Touchstone")}
           <Input
             value={props.touchstone}
             onChange={(e) => props.setTouchstone(e.target.value)}
           />
         </label>
         <Choice
-          label="Atributo favorecido (+1)"
+          label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
           value={props.favoredAttribute}
           setValue={props.setFavoredAttribute}
           options={favored}
           invalid={props.missing("favoredAttribute")}
         />
         <Choice
-          label="Segunda Regalia favorecida"
+          label={tr("Segunda Regalia favorecida", "Second favored Regalia")}
           value={props.secondRegalia}
           setValue={props.setSecondRegalia}
           options={availableRegalia.filter(
@@ -1165,16 +1170,16 @@ function CtlStep(props: any) {
           invalid={props.missing("secondRegalia")}
         />
         <Choice
-          label={props.powerAdvancement ? "Fado na criação" : "Fado"}
+          label={props.powerAdvancement ? tr("Fado na criação", "Wyrd at creation") : tr("Fado", "Wyrd")}
           value={String(props.wyrd)}
           setValue={(value) => props.setWyrd(Number(value))}
           options={powerOptions}
         />
       </div>
       <p className="rule-callout">
-        <ShieldCheck /> {props.powerAdvancement > 0 && <>Fado atual: <strong>{Math.min(10, props.wyrd + props.powerAdvancement)}</strong> ({props.powerAdvancement} por experiência preservados) · </>}Regalia da Feição:{" "}
-        <strong>{seemingData?.regalia ?? "selecione a Feição"}</strong> ·
-        Méritos disponíveis: <strong>{props.meritBudget}</strong>
+        <ShieldCheck /> {props.powerAdvancement > 0 && <>{tr("Fado atual", "Current Wyrd")}: <strong>{Math.min(10, props.wyrd + props.powerAdvancement)}</strong> ({props.powerAdvancement} {tr("por experiência preservados", "preserved from Experiences")}) · </>}{tr("Regalia da Feição", "Seeming Regalia")}:{" "}
+        <strong>{seemingData?.regalia ?? tr("selecione a Feição", "select a Seeming")}</strong> ·
+        {tr("Méritos disponíveis", "Available Merits")}: <strong>{props.meritBudget}</strong>
       </p>
       <Aspirations
         values={props.aspirations}
@@ -1206,6 +1211,7 @@ function CtlStep(props: any) {
 }
 
 function CourtSelector(props: any) {
+  const { tr } = useLanguage();
   const [saved, setSaved] = useState<CustomCourtDefinition[]>(props.courtCatalog ?? []);
   const emptyCourt = (): CustomCourtDefinition => ({
     name: "",
@@ -1252,31 +1258,30 @@ function CourtSelector(props: any) {
   };
   return (
     <div className="kith-field">
-      <span>Corte</span>
+      <span>{tr("Corte", "Court")}</span>
       <div className="kith-current">
-        <strong>{props.court || "Nenhuma selecionada"}</strong>
+        <strong>{props.court || tr("Nenhuma selecionada", "None selected")}</strong>
         <small>
           {props.customCourt
-            ? `${props.customCourt.emotion} · Corte criada pelo jogador`
-            : "A Corte concede Manto 1 automaticamente"}
+            ? `${props.customCourt.emotion} · ${tr("Corte criada pelo jogador", "Player-created Court")}`
+            : tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}
         </small>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Search /> Selecionar Corte
+            <Search /> {tr("Selecionar Corte", "Select Court")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>Selecionar ou criar Corte</DialogTitle>
+            <DialogTitle>{tr("Selecionar ou criar Corte", "Select or create Court")}</DialogTitle>
             <DialogDescription>
-              Uma Corte personalizada precisa de sentimento e dos benefícios de
-              Manto de 1 a 5.
+              {tr("Uma Corte personalizada precisa de sentimento e dos benefícios de Manto de 1 a 5.", "A custom Court requires an emotion and Mantle benefits from 1 to 5.")}
             </DialogDescription>
           </DialogHeader>
           <Choice
-            label="Corte"
+            label={tr("Corte", "Court")}
             value={props.court || "__none"}
             setValue={(value) => select(value === "__none" ? "" : value)}
             options={[
@@ -1284,7 +1289,7 @@ function CourtSelector(props: any) {
               ...CTL_COURTS,
               ...saved.map((item) => item.name),
             ]}
-            optionLabels={{ __none: "Selecione uma Corte" }}
+            optionLabels={{ __none: tr("Selecione uma Corte", "Select a Court") }}
           />
           <Button
             type="button"
@@ -1294,12 +1299,12 @@ function CourtSelector(props: any) {
               setCreating(true);
             }}
           >
-            <Plus /> {props.customCourt ? "Editar Corte" : "Criar Corte"}
+            <Plus /> {props.customCourt ? tr("Editar Corte", "Edit Court") : tr("Criar Corte", "Create Court")}
           </Button>
           {creating && (
             <div className="custom-kith-editor">
               <label>
-                Nome da Corte
+                {tr("Nome da Corte", "Court name")}
                 <Input
                   value={draft.name}
                   maxLength={80}
@@ -1309,7 +1314,7 @@ function CourtSelector(props: any) {
                 />
               </label>
               <label>
-                Sentimento da Corte
+                {tr("Sentimento da Corte", "Court emotion")}
                 <Input
                   value={draft.emotion}
                   maxLength={80}
@@ -1323,7 +1328,7 @@ function CourtSelector(props: any) {
               </label>
               {draft.mantleBenefits.map((value, index) => (
                 <label className="full" key={index}>
-                  Manto {index + 1}
+                  {tr("Manto", "Mantle")} {index + 1}
                   <textarea
                     value={value}
                     onChange={(event) => {
@@ -1334,13 +1339,13 @@ function CourtSelector(props: any) {
                         mantleBenefits: benefits,
                       });
                     }}
-                    placeholder={`Benefício concedido por Manto ${index + 1}`}
+                    placeholder={`${tr("Benefício concedido por Manto", "Benefit granted by Mantle")} ${index + 1}`}
                   />
                 </label>
               ))}
               <div className="custom-court-actions full">
                 <Button type="button" variant="outline" onClick={cancelCreation}>
-                  <X /> Cancelar
+                  <X /> {tr("Cancelar", "Cancel")}
                 </Button>
                 <Button
                   type="button"
@@ -1351,7 +1356,7 @@ function CourtSelector(props: any) {
                     draft.mantleBenefits.some((item) => !item.trim())
                   }
                 >
-                  Salvar e selecionar Corte
+                  {tr("Salvar e selecionar Corte", "Save and select Court")}
                 </Button>
               </div>
             </div>
@@ -1359,7 +1364,7 @@ function CourtSelector(props: any) {
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline">
-                Concluir
+                {tr("Concluir", "Done")}
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -1370,10 +1375,15 @@ function CourtSelector(props: any) {
 }
 
 function KithSelector(props: any) {
+  const { locale, tr } = useLanguage();
   const [search, setSearch] = useState("");
   const [creating, setCreating] = useState(Boolean(props.customKith));
   const normalized = kithSearchText(search);
-  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...KITHS, ...(props.kithCatalog ?? [])].sort((a,b)=>(a.translatedName ?? a.name).localeCompare(b.translatedName ?? b.name,"pt-BR"));
+  const kithName = (item: KithDefinition & {homebrew?:true}) => locale === "pt-BR" ? (item.translatedName ?? item.name) : item.name;
+  const kithText = (item: KithDefinition & {homebrew?:true}) => item.homebrew
+    ? {name:item.name,description:item.description,blessing:item.blessing,skill:item.skill}
+    : kithPresentation(item.id,locale);
+  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...KITHS, ...(props.kithCatalog ?? [])].sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
   const selected = props.customKith ? allKiths.find(item=>item.homebrew && item.name===props.kith) : findKith(props.kith);
   const filtered = allKiths.filter(
     (item) =>
@@ -1395,28 +1405,28 @@ function KithSelector(props: any) {
   };
   return (
     <div className="kith-field">
-      <span>Fratria</span>
+      <span>{tr("Fratria", "Kith")}</span>
       <div className="kith-current">
-        <strong>{kithDisplayName(props.kith, props.customKith) || "Nenhuma selecionada"}</strong>
+        <strong>{(selected ? kithName(selected) : kithDisplayName(props.kith, props.customKith, locale)) || tr("Nenhuma selecionada", "None selected")}</strong>
         <small>
           {props.customKith
-            ? `${props.customKithSkill || "Perícia não escolhida"} · Criação do jogador`
+            ? `${props.customKithSkill || tr("Perícia não escolhida", "Skill not selected")} · ${tr("Criação do jogador", "Player creation")}`
             : selected
-              ? `${selected.skill} · ${selected.source} · p. ${selected.page}`
-              : "Abra o catálogo para escolher"}
+              ? `${kithText(selected).skill} · ${selected.source} · p. ${selected.page}`
+              : tr("Abra o catálogo para escolher", "Open the catalog to choose")}
         </small>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Search /> Selecionar Fratria
+            <Search /> {tr("Selecionar Fratria", "Select Kith")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog kith-dialog">
           <DialogHeader>
-            <DialogTitle>Selecionar Fratria</DialogTitle>
+            <DialogTitle>{tr("Selecionar Fratria", "Select Kith")}</DialogTitle>
             <DialogDescription>
-              Consulte descrição, Perícia e Bênção antes de escolher.
+              {tr("Consulte descrição, Perícia e Bênção antes de escolher.", "Review the description, Skill, and Blessing before choosing.")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -1424,7 +1434,7 @@ function KithSelector(props: any) {
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Buscar Fratria, Perícia ou fonte…"
+              placeholder={tr("Buscar Fratria, Perícia ou fonte…", "Search Kith, Skill, or source…")}
             />
           </label>
           <div className="kith-create-toggle">
@@ -1433,39 +1443,39 @@ function KithSelector(props: any) {
               variant={creating ? "secondary" : "outline"}
               onClick={chooseCustom}
             >
-              <Plus /> Criar Kith
+              <Plus /> {tr("Criar Kith", "Create Kith")}
             </Button>
-            {creating && <Badge variant="outline">Fratria personalizada</Badge>}
+            {creating && <Badge variant="outline">{tr("Fratria personalizada", "Custom Kith")}</Badge>}
           </div>
           {creating && (
             <div className="custom-kith-editor">
               <label>
-                Nome
+                {tr("Nome", "Name")}
                 <Input
                   value={props.kith}
                   onChange={(e) => props.setKith(e.target.value)}
                   maxLength={80}
-                  placeholder="Nome da Fratria"
+                  placeholder={tr("Nome da Fratria", "Kith name")}
                 />
               </label>
               <Choice
-                label="Perícia"
+                label={tr("Perícia", "Skill")}
                 value={props.customKithSkill}
                 setValue={props.setCustomKithSkill}
                 options={Object.values(SKILLS).flat()}
               />
               <label className="full">
-                Descrição da Bênção
+                {tr("Descrição da Bênção", "Blessing description")}
                 <textarea
                   value={props.customKithDescription}
                   onChange={(e) =>
                     props.setCustomKithDescription(e.target.value.slice(0, 350))
                   }
                   maxLength={350}
-                  placeholder="Descreva a Bênção da Fratria em até 350 caracteres."
+                  placeholder={tr("Descreva a Bênção da Fratria em até 350 caracteres.", "Describe the Kith Blessing in up to 350 characters.")}
                 />
                 <small>
-                  {props.customKithDescription.length}/350 caracteres
+                  {props.customKithDescription.length}/350 {tr("caracteres", "characters")}
                 </small>
               </label>
             </div>
@@ -1473,10 +1483,11 @@ function KithSelector(props: any) {
           <div className="merit-catalog">
             <section className="merit-category">
               <h3>
-                Fratrias <Badge variant="outline">{filtered.length}</Badge>
+                {tr("Fratrias", "Kiths")} <Badge variant="outline">{filtered.length}</Badge>
               </h3>
               <div>
                 {filtered.map((item) => {
+                  const presentation=kithText(item);
                   const isSelected =
                     selected?.id === item.id;
                   return (
@@ -1487,14 +1498,14 @@ function KithSelector(props: any) {
                       key={item.id}
                     >
                       <div>
-                        <strong>{item.translatedName ?? item.name}</strong>
-                        {item.translatedName && item.translatedName !== item.name && <small>{item.name}</small>}
+                        <strong>{kithName(item)}</strong>
+                        {locale === "pt-BR" && item.translatedName && item.translatedName !== item.name && <small>{item.name}</small>}
                         <small>
-                          {item.skill} · {item.source} · p. {item.page}
+                          {presentation.skill} · {item.source} · p. {item.page}
                         </small>
-                        <p>{item.description}</p>
+                        <p>{presentation.description}</p>
                         <p className="rule-detail">
-                          <strong>Bênção:</strong> {item.blessing}
+                          <strong>{tr("Bênção", "Blessing")}:</strong> {presentation.blessing}
                         </p>
                       </div>
                       <Button
@@ -1507,12 +1518,12 @@ function KithSelector(props: any) {
                         {isSelected ? (
                           <>
                             <Check />
-                            Selecionada
+                            {tr("Selecionada", "Selected")}
                           </>
                         ) : (
                           <>
                             <Plus />
-                            Escolher
+                            {tr("Escolher", "Choose")}
                           </>
                         )}
                       </Button>
@@ -1524,7 +1535,7 @@ function KithSelector(props: any) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">Concluir</Button>
+              <Button type="button">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -1550,9 +1561,11 @@ function ContractSelector({
   court: string;
   catalog: ContractDefinition[];
 }) {
+  const { locale, tr } = useLanguage();
+  const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
   const [search, setSearch] = useState("");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
-  const availableContracts = alphabetical(catalog, item => item.name).filter((contract) =>
+  const availableContracts = alphabetical(catalog, contractName,locale).filter((contract) =>
     canSelectInitialContract(
       contract,
       [primaryRegalia, secondRegalia].filter(Boolean),
@@ -1565,7 +1578,7 @@ function ContractSelector({
       (item) => !REGALIA.includes(item),
     ),
   ];
-  const groups = alphabetical([...new Set(contractGroups)], value => value)
+  const groups = alphabetical([...new Set(contractGroups)], value => builderText(locale,value),locale)
     .map((regalia) => ({
       regalia,
       items: availableContracts.filter(
@@ -1606,33 +1619,31 @@ function ContractSelector({
     <>
       <div className="merit-heading">
         <div>
-          <h3>Contratos iniciais</h3>
+          <h3>{tr("Contratos iniciais", "Starting Contracts")}</h3>
           <p>
-            Selecione quatro Contratos Comuns — incluindo Contratos Goblin — e
-            dois Reais. Passe o mouse sobre uma escolha para rever todos os
-            detalhes.
+            {tr("Selecione quatro Contratos Comuns — incluindo Contratos Goblin — e dois Reais. Passe o mouse sobre uma escolha para rever todos os detalhes.", "Select four Common Contracts — including Goblin Contracts — and two Royal Contracts. Hover over a choice to review all details.")}
           </p>
         </div>
         <Badge variant="outline">
-          {contracts.filter((item) => item.name).length}/6 selecionados
+          {contracts.filter((item) => item.name).length}/6 {tr("selecionados", "selected")}
         </Badge>
       </div>
       <div className="contract-grid">
         {contracts.map((item, index) => (
-          <div key={index} title={contractTooltip(item, seeming)}>
+          <div key={index} title={contractTooltip(item, seeming,locale)}>
             <Badge
               variant={
                 item.goblin ? "default" : index < 4 ? "secondary" : "outline"
               }
             >
-              {item.goblin ? "Goblin" : index < 4 ? "Comum" : "Real"}
+              {item.goblin ? "Goblin" : index < 4 ? tr("Comum", "Common") : tr("Real", "Royal")}
             </Badge>
             <div>
-              <strong>{item.name || "Vaga disponível"}</strong>
+              <strong>{item.name ? contractName(item) : tr("Vaga disponível", "Available slot")}</strong>
               <small>
                 {item.name
                   ? `${item.regalia} · ${item.source} · p. ${item.page || "—"}`
-                  : "Escolha no catálogo"}
+                  : tr("Escolha no catálogo", "Choose from the catalog")}
               </small>
             </div>
             {item.name ? (
@@ -1640,7 +1651,7 @@ function ContractSelector({
                 type="button"
                 variant="ghost"
                 size="icon"
-                aria-label={`Remover ${item.name}`}
+                aria-label={`${tr("Remover", "Remove")} ${contractName(item)}`}
                 onClick={() => removeContract(index)}
               >
                 <Trash2 />
@@ -1654,18 +1665,14 @@ function ContractSelector({
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Plus /> Selecionar contratos
+            <Plus /> {tr("Selecionar contratos", "Select Contracts")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>Selecionar contratos</DialogTitle>
+            <DialogTitle>{tr("Selecionar contratos", "Select Contracts")}</DialogTitle>
             <DialogDescription>
-              Separados por Regalia, com efeito, brecha, parada de dados e o
-              benefício da Feição atual. Contratos Goblin ocupam vagas de
-              Contrato Comum e geram Débito Goblin quando invocados com sucesso.
-              Contratos Reais respeitam suas Regalias favorecidas; Contratos de
-              Corte respeitam a Corte selecionada.
+              {tr("Separados por Regalia, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -1673,7 +1680,7 @@ function ContractSelector({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Buscar contrato, Regalia ou fonte…"
+              placeholder={tr("Buscar contrato, Regalia ou fonte…", "Search Contract, Regalia, or source…")}
             />
           </label>
           <div className="merit-catalog">
@@ -1705,19 +1712,19 @@ function ContractSelector({
                         key={contract.id}
                       >
                         <div>
-                          <strong>{contract.name}</strong>
+                          <strong>{contractName(contract)}</strong>
                           <small>
-                            {contract.goblin ? "Goblin · Comum" : contract.type}{" "}
+                            {contract.goblin ? `Goblin · ${tr("Comum", "Common")}` : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
-                          {contractOutcomeSections(contract).map((section) => (
+                          {contractOutcomeSections(contract,locale).map((section) => (
                             <p className="rule-detail" key={section.label}>
                               <strong>{section.label}:</strong> {section.text}
                             </p>
                           ))}
                           {contract.options?.length && (
                             <div className="contract-options">
-                              <strong>Opções</strong>
+                              <strong>{tr("Opções", "Options")}</strong>
                               <ul>
                                 {contract.options.map((option) => (
                                   <li key={option}>{option}</li>
@@ -1727,28 +1734,28 @@ function ContractSelector({
                           )}
                           {contract.cost && (
                             <p className="rule-detail">
-                              <strong>Custo:</strong> {contract.cost} ·{" "}
-                              <strong>Ação:</strong> {contract.action} ·{" "}
-                              <strong>Duração:</strong> {contract.duration}
+                              <strong>{tr("Custo", "Cost")}:</strong> {contract.cost} ·{" "}
+                              <strong>{tr("Ação", "Action")}:</strong> {contract.action} ·{" "}
+                              <strong>{tr("Duração", "Duration")}:</strong> {contract.duration}
                             </p>
                           )}
                           <p className="rule-detail">
-                            <strong>Parada de dados:</strong>{" "}
+                            <strong>{tr("Parada de dados", "Dice Pool")}:</strong>{" "}
                             {contract.dicePool}
                           </p>
                           <p className="rule-detail">
-                            <strong>Brecha:</strong> {contract.loophole}
+                            <strong>{tr("Brecha", "Loophole")}:</strong> {contract.loophole}
                           </p>
                           {contract.goblinDebt && (
                             <p className="rule-detail goblin-debt-note">
-                              <strong>Débito Goblin:</strong>{" "}
+                              <strong>{tr("Débito Goblin", "Goblin Debt")}:</strong>{" "}
                               {contract.goblinDebt}
                             </p>
                           )}
                           {benefit && (
                             <p className="rule-detail">
                               <strong>
-                                Benefício de{" "}
+                                {tr("Benefício de", "Benefit for")}{" "}
                                 {CTL_SEEMING_LABELS[seeming] ?? seeming}:
                               </strong>{" "}
                               {benefit}
@@ -1765,14 +1772,14 @@ function ContractSelector({
                           {selected ? (
                             <>
                               <Check />
-                              Selecionado
+                              {tr("Selecionado", "Selected")}
                             </>
                           ) : full ? (
-                            "Vagas preenchidas"
+                            tr("Vagas preenchidas", "Slots filled")
                           ) : (
                             <>
                               <Plus />
-                              Adicionar
+                              {tr("Adicionar", "Add")}
                             </>
                           )}
                         </Button>
@@ -1785,7 +1792,7 @@ function ContractSelector({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">Concluir</Button>
+              <Button type="button">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -1795,6 +1802,7 @@ function ContractSelector({
 }
 
 function OrderSelector(props: any) {
+  const { tr } = useLanguage();
   const [saved, setSaved] = useState<CustomOrderDefinition[]>(props.orderCatalog ?? []);
   const [creating, setCreating] = useState(false);
   const draft: CustomOrderDefinition = props.customOrder ?? {
@@ -1829,36 +1837,35 @@ function OrderSelector(props: any) {
   };
   return (
     <div className={`kith-field ${props.invalid ? "missing-field" : ""}`}>
-      <span>Ordem</span>
+      <span>{tr("Ordem", "Order")}</span>
       <div className="kith-current">
         <strong>
           {(MTA_ORDER_LABELS[props.order] ?? props.order) ||
-            "Nenhuma selecionada"}
+            tr("Nenhuma selecionada", "None selected")}
         </strong>
         <small>
           {props.customOrder
-            ? `${props.customOrder.roteSkills.join(", ")} · Ordem criada pelo jogador`
+            ? `${props.customOrder.roteSkills.join(", ")} · ${tr("Ordem criada pelo jogador", "Player-created Order")}`
             : props.order === "Nameless"
-              ? "Sem benefícios de Ordem"
-              : "A Ordem define três Perícias de Rota"}
+              ? tr("Sem benefícios de Ordem", "No Order benefits")
+              : tr("A Ordem define três Perícias de Rota", "The Order defines three Rote Skills")}
         </small>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Search /> Selecionar Ordem
+            <Search /> {tr("Selecionar Ordem", "Select Order")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>Selecionar ou criar Ordem</DialogTitle>
+            <DialogTitle>{tr("Selecionar ou criar Ordem", "Select or create Order")}</DialogTitle>
             <DialogDescription>
-              Uma Ordem personalizada define sua identidade e três Perícias de
-              Rota distintas.
+              {tr("Uma Ordem personalizada define sua identidade e três Perícias de Rota distintas.", "A custom Order defines its identity and three distinct Rote Skills.")}
             </DialogDescription>
           </DialogHeader>
           <Choice
-            label="Ordem"
+            label={tr("Ordem", "Order")}
             value={props.order || "__none"}
             setValue={(value: string) =>
               select(value === "__none" ? "" : value)
@@ -1869,7 +1876,7 @@ function OrderSelector(props: any) {
               ...saved.map((item) => item.name),
             ]}
             optionLabels={{
-              __none: "Selecione uma Ordem",
+              __none: tr("Selecione uma Ordem", "Select an Order"),
               ...MTA_ORDER_LABELS,
             }}
           />
@@ -1881,12 +1888,12 @@ function OrderSelector(props: any) {
               props.setCustomOrder(draft);
             }}
           >
-            <Plus /> Criar Ordem
+            <Plus /> {tr("Criar Ordem", "Create Order")}
           </Button>
           {creating && (
             <div className="custom-kith-editor">
               <label>
-                Nome da Ordem
+                {tr("Nome da Ordem", "Order name")}
                 <Input
                   value={draft.name}
                   maxLength={80}
@@ -1896,7 +1903,7 @@ function OrderSelector(props: any) {
                 />
               </label>
               <label className="full">
-                Descrição da Ordem
+                {tr("Descrição da Ordem", "Order description")}
                 <textarea
                   value={draft.description}
                   maxLength={500}
@@ -1911,7 +1918,7 @@ function OrderSelector(props: any) {
               {draft.roteSkills.map((value, index) => (
                 <Choice
                   key={index}
-                  label={`Perícia de Rota ${index + 1}`}
+                  label={`${tr("Perícia de Rota", "Rote Skill")} ${index + 1}`}
                   value={value || `__skill_${index}`}
                   setValue={(skill: string) => {
                     const skills = [...draft.roteSkills];
@@ -1920,19 +1927,19 @@ function OrderSelector(props: any) {
                   }}
                   options={[`__skill_${index}`, ...allSkills]}
                   optionLabels={{
-                    [`__skill_${index}`]: "Selecione uma Perícia",
+                    [`__skill_${index}`]: tr("Selecione uma Perícia", "Select a Skill"),
                   }}
                 />
               ))}
               <Button type="button" onClick={save} disabled={!valid}>
-                Salvar e selecionar Ordem
+                {tr("Salvar e selecionar Ordem", "Save and select Order")}
               </Button>
             </div>
           )}
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline">
-                Concluir
+                {tr("Concluir", "Done")}
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -1943,6 +1950,7 @@ function OrderSelector(props: any) {
 }
 
 function MtaStep(props: any) {
+  const { tr } = useLanguage();
   const pathData = MTA_PATHS[props.path as keyof typeof MTA_PATHS];
   const neededPraxes = props.gnosis;
   const powerOptions = Array.from(
@@ -1951,12 +1959,12 @@ function MtaStep(props: any) {
   );
   return (
     <div className="builder-section">
-      <span className="kicker">PASSO 3 · MAGO</span>
-      <h2>Modelo dos Despertos</h2>
-      <p>As escolhas e limites abaixo vêm de Mage the Awakening.</p>
+      <span className="kicker">{tr("PASSO 3 · MAGO", "STEP 3 · MAGE")}</span>
+      <h2>{tr("Modelo dos Despertos", "Awakened Template")}</h2>
+      <p>{tr("As escolhas e limites abaixo vêm de Mage the Awakening.", "The choices and limits below come from Mage the Awakening.")}</p>
       <div className="form-grid thirds">
         <Choice
-          label="Caminho"
+          label={tr("Caminho", "Path")}
           value={props.path}
           setValue={props.setPath}
           options={Object.keys(MTA_PATHS)}
@@ -1964,27 +1972,27 @@ function MtaStep(props: any) {
         />
         <OrderSelector {...props} invalid={props.missing("order")} />
         <Choice
-          label={props.powerAdvancement ? "Gnose na criação" : "Gnose"}
+          label={props.powerAdvancement ? tr("Gnose na criação", "Gnosis at creation") : tr("Gnose", "Gnosis")}
           value={String(props.gnosis)}
           setValue={(value: string) => props.setGnosis(Number(value))}
           options={powerOptions}
         />
         <label className={props.missing("virtue") ? "missing-field" : ""}>
-          Virtude
+          {tr("Virtude", "Virtue")}
           <Input
             value={props.virtue}
             onChange={(e) => props.setVirtue(e.target.value)}
           />
         </label>
         <label className={props.missing("vice") ? "missing-field" : ""}>
-          Vício
+          {tr("Vício", "Vice")}
           <Input
             value={props.vice}
             onChange={(e) => props.setVice(e.target.value)}
           />
         </label>
         <Choice
-          label="Atributo de Resistência (+1)"
+          label={tr("Atributo de Resistência (+1)", "Resistance Attribute (+1)")}
           value={props.resistanceBonus}
           setValue={props.setResistanceBonus}
           options={["Perseverança", "Vigor", "Compostura"]}
@@ -2002,7 +2010,7 @@ function MtaStep(props: any) {
         <label
           className={`full ${props.missing("tool") ? "missing-field" : ""}`}
         >
-          Ferramenta Mágica Dedicada
+          {tr("Ferramenta Mágica Dedicada", "Dedicated Magical Tool")}
           <Input
             value={props.tool}
             onChange={(e) => props.setTool(e.target.value)}
@@ -2010,17 +2018,16 @@ function MtaStep(props: any) {
         </label>
       </div>
       <p className="rule-callout">
-        <ShieldCheck /> {props.powerAdvancement > 0 && <>Gnose atual: <strong>{Math.min(10, props.gnosis + props.powerAdvancement)}</strong> ({props.powerAdvancement} por experiência preservados) · </>}Regentes:{" "}
-        <strong>{pathData?.ruling.join(" e ") ?? "selecione o Caminho"}</strong>{" "}
-        · Inferior: <strong>{pathData?.inferior ?? "—"}</strong> · Méritos
-        disponíveis: <strong>{props.meritBudget}</strong>
+        <ShieldCheck /> {props.powerAdvancement > 0 && <>{tr("Gnose atual", "Current Gnosis")}: <strong>{Math.min(10, props.gnosis + props.powerAdvancement)}</strong> ({props.powerAdvancement} {tr("por experiência preservados", "preserved from Experiences")}) · </>}{tr("Regentes", "Ruling")}:{" "}
+        <strong>{pathData?.ruling.join(tr(" e ", " and ")) ?? tr("selecione o Caminho", "select a Path")}</strong>{" "}
+        · {tr("Inferior", "Inferior")}: <strong>{pathData?.inferior ?? "—"}</strong> · {tr("Méritos disponíveis", "Available Merits")}: <strong>{props.meritBudget}</strong>
       </p>
       {props.order && (
         <p className="rule-callout">
           <ShieldCheck />{" "}
           {props.order === "Nameless"
-            ? "Sem Ordem: não recebe Alta Fala, ponto gratuito de Ocultismo ou Rotas iniciais."
-            : "Membro de Ordem: recebe Alta Fala, +1 em Ocultismo (máximo 5) e três Rotas iniciais."}
+            ? tr("Sem Ordem: não recebe Alta Fala, ponto gratuito de Ocultismo ou Rotas iniciais.", "Nameless: receives no High Speech, free Occult dot, or starting Rotes.")
+            : tr("Membro de Ordem: recebe Alta Fala, +1 em Ocultismo (máximo 5) e três Rotas iniciais.", "Order member: receives High Speech, +1 Occult (maximum 5), and three starting Rotes.")}
         </p>
       )}
       <Aspirations
@@ -2028,7 +2035,7 @@ function MtaStep(props: any) {
         setValues={props.setAspirations}
         missing={props.missing}
       />
-      <h3>Arcanos · 6 pontos</h3>
+      <h3>{tr("Arcanos · 6 pontos", "Arcana · 6 dots")}</h3>
       <div
         className={`arcana-grid ${props.missing("arcana") ? "missing-field" : ""}`}
       >
@@ -2044,9 +2051,9 @@ function MtaStep(props: any) {
             max={3}
             tag={
               pathData?.ruling.includes(item as never)
-                ? "Regente"
+                ? tr("Regente", "Ruling")
                 : pathData?.inferior === item
-                  ? "Inferior"
+                  ? tr("Inferior", "Inferior")
                   : undefined
             }
           />
@@ -2056,7 +2063,7 @@ function MtaStep(props: any) {
         <div className="rule-callout" role="alert">
           <ShieldCheck />
           <div>
-            <strong>Revise a distribuição de Arcana:</strong>
+            <strong>{tr("Revise a distribuição de Arcana:", "Review the Arcana distribution:")}</strong>
             <ul>
               {arcanaCreationErrors(props.arcana, pathData).map((message) => (
                 <li key={message}>{message}</li>
@@ -2068,7 +2075,7 @@ function MtaStep(props: any) {
       {props.order !== "Nameless" && (
         <div className={props.missing("rotes") ? "missing-field block" : ""}>
           <SpellSelector
-            title="Rotas iniciais"
+            title={tr("Rotas iniciais", "Starting Rotes")}
             count={3}
             values={props.rotes}
             setValues={props.setRotes}
@@ -2080,7 +2087,7 @@ function MtaStep(props: any) {
       )}
       <div className={props.missing("praxes") ? "missing-field block" : ""}>
         <SpellSelector
-          title={`Práxis · ${neededPraxes}`}
+          title={`${tr("Práxis", "Praxes")} · ${neededPraxes}`}
           count={neededPraxes}
           values={props.praxes}
           setValues={props.setPraxes}
@@ -2118,10 +2125,12 @@ function SpellSelector({
   arcana: Record<string, number>;
   catalog: SpellDefinition[];
 }) {
+  const { locale, tr } = useLanguage();
+  const spellName = (spell: SpellDefinition) => locale === "pt-BR" ? spell.name : (spell.originalName || spell.name);
   const [search, setSearch] = useState("");
   const normalized = search.toLocaleLowerCase("pt-BR");
   const selectedIds = values.filter(Boolean).map((item) => item!.id);
-  const filtered = alphabetical(catalog, item => item.name).filter(
+  const filtered = alphabetical(catalog, spellName,locale).filter(
     (spell) =>
       meetsArcanaRequirements(spell.requirements, arcana) &&
       (!normalized ||
@@ -2142,16 +2151,7 @@ function SpellSelector({
     setValues(next);
   };
   const arcanaLabels: Record<string, string> = {
-    Death: "Morte",
-    Fate: "Destino",
-    Forces: "Forças",
-    Life: "Vida",
-    Matter: "Matéria",
-    Mind: "Mente",
-    Prime: "Primórdio",
-    Space: "Espaço",
-    Spirit: "Espírito",
-    Time: "Tempo",
+    Death: tr("Morte", "Death"), Fate: tr("Destino", "Fate"), Forces: tr("Forças", "Forces"), Life: tr("Vida", "Life"), Matter: tr("Matéria", "Matter"), Mind: tr("Mente", "Mind"), Prime: tr("Primórdio", "Prime"), Space: tr("Espaço", "Space"), Spirit: tr("Espírito", "Spirit"), Time: tr("Tempo", "Time"),
   };
   const groups = new Map<string, SpellDefinition[]>();
   for (const spell of filtered) {
@@ -2171,19 +2171,19 @@ function SpellSelector({
         key={spell.id}
       >
         <div>
-          <strong>{spell.name}</strong>
+          <strong>{spellName(spell)}</strong>
           <small>
             {formatRequirements(spell.requirements)} · {spell.source} · p.{" "}
             {spell.page || "—"}
           </small>
           <p>{spell.description}</p>
           <p className="rule-detail">
-            <strong>Prática:</strong> {spell.practice} ·{" "}
-            <strong>Fator Primário:</strong> {spell.primaryFactor}
-            {spell.withstand ? ` · Resistência: ${spell.withstand}` : ""}
+            <strong>{tr("Prática", "Practice")}:</strong> {spell.practice} ·{" "}
+            <strong>{tr("Fator Primário", "Primary Factor")}:</strong> {spell.primaryFactor}
+            {spell.withstand ? ` · ${tr("Resistência", "Withstand")}: ${spell.withstand}` : ""}
           </p>
           <p className="rule-detail">
-            <strong>Perícias de Rota:</strong> {spell.roteSkills.join(", ")}
+            <strong>{tr("Perícias de Rota", "Rote Skills")}:</strong> {spell.roteSkills.join(", ")}
           </p>
         </div>
         <Button
@@ -2196,12 +2196,12 @@ function SpellSelector({
           {selected ? (
             <>
               <Check />
-              Selecionado
+              {tr("Selecionado", "Selected")}
             </>
           ) : (
             <>
               <Plus />
-              Adicionar
+              {tr("Adicionar", "Add")}
             </>
           )}
         </Button>
@@ -2214,8 +2214,7 @@ function SpellSelector({
         <div>
           <h3>{title}</h3>
           <p>
-            Escolha no catálogo de feitiços. Passe o mouse para consultar os
-            fatores.
+            {tr("Escolha no catálogo de feitiços. Passe o mouse para consultar os fatores.", "Choose from the spell catalog. Hover to inspect the factors.")}
           </p>
         </div>
         <Badge variant="outline">
@@ -2228,14 +2227,14 @@ function SpellSelector({
           return (
             <div key={index} title={item ? spellTooltip(item) : undefined}>
               <Badge variant={rote ? "secondary" : "outline"}>
-                {rote ? "Rota" : "Práxis"}
+                {rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}
               </Badge>
               <div>
-                <strong>{item?.name || "Vaga disponível"}</strong>
+                <strong>{item ? spellName(item) : tr("Vaga disponível", "Available slot")}</strong>
                 <small>
                   {item
                     ? `${formatRequirements(item.requirements)} · ${item.source} · p. ${item.page || "—"}`
-                    : "Escolha no catálogo"}
+                    : tr("Escolha no catálogo", "Choose from the catalog")}
                 </small>
                 {rote && item && item.roteSkills.length > 0 && (
                   <Choice
@@ -2268,14 +2267,14 @@ function SpellSelector({
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Plus /> Selecionar {rote ? "Rotas" : "Práxis"}
+            <Plus /> {tr("Selecionar", "Select")} {rote ? tr("Rotas", "Rotes") : tr("Práxis", "Praxes")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>Catálogo de feitiços</DialogTitle>
+            <DialogTitle>{tr("Catálogo de feitiços", "Spell catalog")}</DialogTitle>
             <DialogDescription>
-              Feitiços organizados por Arcano e nível de maestria.
+              {tr("Feitiços organizados por Arcano e nível de maestria.", "Spells grouped by Arcanum and mastery level.")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -2283,13 +2282,13 @@ function SpellSelector({
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar feitiço, Arcano ou fonte…"
+              placeholder={tr("Buscar feitiço, Arcano ou fonte…", "Search spell, Arcanum, or source…")}
             />
           </label>
           <div className="merit-catalog spell-groups">
             {Array.from(groups.entries())
               .sort(([a], [b]) =>
-                a.localeCompare(b, "pt-BR", { numeric: true }),
+                a.localeCompare(b, locale, { numeric: true }),
               )
               .map(([group, spells]) => (
                 <section className="merit-category" key={group}>
@@ -2302,7 +2301,7 @@ function SpellSelector({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">Concluir</Button>
+              <Button type="button">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -2320,11 +2319,12 @@ function ReviewStep({
   merits,
   lineData,
 }: any) {
+  const { tr } = useLanguage();
   return (
     <div className="builder-section">
-      <span className="kicker">PASSO 4</span>
-      <h2>Ficha pronta para salvar</h2>
-      <p>Ela ficará neste navegador e poderá ser exportada como JSON.</p>
+      <span className="kicker">{tr("PASSO 4", "STEP 4")}</span>
+      <h2>{tr("Ficha pronta para salvar", "Character ready to save")}</h2>
+      <p>{tr("Ela ficará neste navegador e poderá ser exportada como JSON.", "It will remain in this browser and can be exported as JSON.")}</p>
       <div className="review-summary">
         <div>
           <Badge>{line}</Badge>
@@ -2338,7 +2338,7 @@ function ReviewStep({
               0,
             )}
           </strong>
-          <span>pontos de Atributos</span>
+          <span>{tr("pontos de Atributos", "Attribute dots")}</span>
         </div>
         <div>
           <strong>
@@ -2347,11 +2347,11 @@ function ReviewStep({
               0,
             )}
           </strong>
-          <span>pontos de Perícias</span>
+          <span>{tr("pontos de Perícias", "Skill dots")}</span>
         </div>
         <div>
           <strong>{merits.length}</strong>
-          <span>Méritos</span>
+          <span>{tr("Méritos", "Merits")}</span>
         </div>
       </div>
       <div className="line-review">
@@ -2367,14 +2367,15 @@ function ReviewStep({
 }
 
 function PriorityRow({ labels, values, setValues, budgets, invalid }: any) {
+  const { tr } = useLanguage();
   return (
     <div className={`priority-row ${invalid ? "missing-field" : ""}`}>
       {values.map((value: string, index: number) => (
         <Choice
           key={index}
           label={
-            ["Primária", "Secundária", "Terciária"][index] +
-            ` · ${budgets[index]} pontos`
+            [tr("Primária", "Primary"), tr("Secundária", "Secondary"), tr("Terciária", "Tertiary")][index] +
+            ` · ${budgets[index]} ${tr("pontos", "dots")}`
           }
           value={value}
           setValue={(next) => {
@@ -2403,6 +2404,7 @@ function DotGroups({
   budgets,
   missing,
 }: any) {
+  const { locale } = useLanguage();
   return (
     <div className="dot-groups">
       {Object.entries(groups).map(([category, names]) => {
@@ -2414,7 +2416,7 @@ function DotGroups({
         return (
           <section key={category} className={invalid ? "missing-field" : ""}>
             <div>
-              <h3>{category}</h3>
+              <h3>{builderText(locale, category)}</h3>
               <Badge variant={used === budget ? "secondary" : "outline"}>
                 {used}/{budget ?? "—"}
               </Badge>
@@ -2438,17 +2440,19 @@ function DotGroups({
   );
 }
 function DotRow({ name, value, setValue, min, max, tag }: any) {
+  const { locale, tr } = useLanguage();
   return (
     <div className="dot-row">
       <span>
-        {name}
-        {tag && <small>{tag}</small>}
+        {builderText(locale, name)}
+        {tag && <small>{builderText(locale, tag)}</small>}
       </span>
       <div>
         <Button
           type="button"
           variant="ghost"
           size="icon-xs"
+          aria-label={`${tr("Diminuir", "Decrease")} ${builderText(locale, name)}`}
           onClick={() => setValue(Math.max(min, value - 1))}
         >
           <Minus />
@@ -2462,6 +2466,7 @@ function DotRow({ name, value, setValue, min, max, tag }: any) {
           type="button"
           variant="ghost"
           size="icon-xs"
+          aria-label={`${tr("Aumentar", "Increase")} ${builderText(locale, name)}`}
           onClick={() => setValue(Math.min(max, value + 1))}
         >
           <Plus />
@@ -2485,19 +2490,21 @@ function Choice({
   optionLabels?: Record<string, string>;
   invalid?: boolean;
 }) {
+  const { locale, tr } = useLanguage();
+  const labels = Object.fromEntries(Object.entries(optionLabels).map(([key, text]) => [key, builderText(locale, text)]));
   return (
     <label className={`choice-label ${invalid ? "missing-field" : ""}`}>
       {label}
       <Select value={value} onValueChange={setValue}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Selecione">
-            {value ? (optionLabels[value] ?? value) : undefined}
+          <SelectValue placeholder={tr("Selecione", "Select")}>
+            {value ? (labels[value] ?? builderText(locale, value)) : undefined}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          {orderedChoiceOptions(options, optionLabels).map((option) => (
+          {orderedChoiceOptions(options, labels,locale).map((option) => (
             <SelectItem key={option} value={option}>
-              {optionLabels[option] ?? option}
+              {labels[option] ?? builderText(locale, option)}
             </SelectItem>
           ))}
         </SelectContent>
@@ -2506,9 +2513,10 @@ function Choice({
   );
 }
 function Aspirations({ values, setValues, missing }: any) {
+  const { tr } = useLanguage();
   return (
     <>
-      <h3>Aspirações</h3>
+      <h3>{tr("Aspirações", "Aspirations")}</h3>
       <div className="three-inputs">
         {values.map((value: string, index: number) => (
           <div
@@ -2520,7 +2528,7 @@ function Aspirations({ values, setValues, missing }: any) {
               onChange={(e) =>
                 updateArray(setValues, values, index, e.target.value)
               }
-              placeholder={`Aspiração ${index + 1}`}
+              placeholder={`${tr("Aspiração", "Aspiration")} ${index + 1}`}
             />
           </div>
         ))}
@@ -2541,10 +2549,13 @@ function Merits({
   spent: number;
   budget: number;
 }) {
+  const { locale, tr } = useLanguage();
+  const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
+  const categoryName = (category: string) => locale === "pt-BR" ? meritCategoryLabel(category) : category;
   budget += spent;
   const [search, setSearch] = useState("");
   const categories = [...new Set(catalog.map((merit) => merit.category))].sort(
-    (a, b) => compareOptionLabels(meritCategoryLabel(a), meritCategoryLabel(b)),
+    (a, b) => compareOptionLabels(categoryName(a), categoryName(b),locale),
   );
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   function addMerit(definition: MeritDefinition) {
@@ -2568,14 +2579,13 @@ function Merits({
     <>
       <div className="merit-heading">
         <div>
-          <h3>Méritos</h3>
+          <h3>{tr("Méritos", "Merits")}</h3>
           <p>
-            Core + livros da linha, reunidos por categoria. Você pode guardar
-            pontos sem gastá-los.
+            {tr("Core + livros da linha, reunidos por categoria. Você pode guardar pontos sem gastá-los.", "Core and game-line books, grouped by category. You may leave dots unspent.")}
           </p>
         </div>
         <Badge variant={spent > budget ? "destructive" : "outline"}>
-          {spent}/{budget} pontos usados
+          {spent}/{budget} {tr("pontos usados", "dots spent")}
         </Badge>
       </div>
       <div className="merit-picker">
@@ -2592,19 +2602,19 @@ function Merits({
               <div className="merit-row-main">
                 <div>
                   <strong>
-                    {definition?.translatedName ?? selection.name}
+                    {definition ? meritName(definition) : selection.name}
                     {meritConfigurationTitle(selection.configuration)
                       ? `: ${meritConfigurationTitle(selection.configuration)}`
                       : ""}
                   </strong>
                   <small>
                     {definition
-                      ? `${meritCategoryLabel(definition.category)} · ${definition.source} · p. ${definition.page || "—"}`
+                      ? `${categoryName(definition.category)} · ${definition.source} · p. ${definition.page || "—"}`
                       : selection.source}
                   </small>
                 </div>
                 <Choice
-                  label="Pontos"
+                  label={tr("Pontos", "Dots")}
                   value={String(selection.dots)}
                   setValue={(value) => {
                     const next = [...merits];
@@ -2619,7 +2629,7 @@ function Merits({
                   type="button"
                   variant="ghost"
                   size="icon"
-                  aria-label={`Remover ${definition?.translatedName ?? selection.name}`}
+                  aria-label={`${tr("Remover", "Remove")} ${definition ? meritName(definition) : selection.name}`}
                   onClick={() =>
                     setMerits(
                       merits.filter((_, itemIndex) => itemIndex !== index),
@@ -2644,16 +2654,14 @@ function Merits({
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Plus /> Selecionar méritos
+            <Plus /> {tr("Selecionar méritos", "Select Merits")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>Selecionar méritos</DialogTitle>
+            <DialogTitle>{tr("Selecionar méritos", "Select Merits")}</DialogTitle>
             <DialogDescription>
-              Procure por nome ou navegue pelas categorias. Méritos repetíveis
-              permitem criar novas instâncias; altere os pontos na instância
-              existente para aumentá-la.
+              {tr("Procure por nome ou navegue pelas categorias. Méritos repetíveis permitem criar novas instâncias; altere os pontos na instância existente para aumentá-la.", "Search by name or browse categories. Repeatable Merits allow new instances; change the dots on an existing instance to increase it.")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -2661,12 +2669,12 @@ function Merits({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Buscar mérito por nome, pré-requisito ou fonte…"
+              placeholder={tr("Buscar mérito por nome, pré-requisito ou fonte…", "Search Merit by name, prerequisite, or source…")}
             />
           </label>
           <div className="merit-catalog">
             {categories.map((category) => {
-              const items = alphabetical(catalog, item => item.translatedName || item.name).filter(
+              const items = alphabetical(catalog, meritName,locale).filter(
                 (item) =>
                   item.category === category &&
                   (!normalizedSearch ||
@@ -2678,7 +2686,7 @@ function Merits({
               return (
                 <section className="merit-category" key={category}>
                   <h3>
-                    {meritCategoryLabel(category)}{" "}
+                    {categoryName(category)}{" "}
                     <Badge variant="outline">{items.length}</Badge>
                   </h3>
                   <div>
@@ -2695,7 +2703,7 @@ function Merits({
                           key={definition.id}
                         >
                           <div>
-                            <strong>{definition.translatedName}</strong>
+                            <strong>{meritName(definition)}</strong>
                             <small>
                               {definition.source} · p. {definition.page || "—"}{" "}
                               · {formatRatings(meritRatingsFor(definition))}
@@ -2703,7 +2711,7 @@ function Merits({
                             <p>{definition.description}</p>
                             {definition.prerequisites && (
                               <p className="rule-detail">
-                                <strong>Pré-requisitos:</strong>{" "}
+                                <strong>{tr("Pré-requisitos", "Prerequisites")}:</strong>{" "}
                                 {definition.prerequisites}
                               </p>
                             )}
@@ -2717,15 +2725,15 @@ function Merits({
                           >
                             {selected && !repeatable ? (
                               <>
-                                <Check /> Selecionado
+                                <Check /> {tr("Selecionado", "Selected")}
                               </>
                             ) : repeatable && selected ? (
                               <>
-                                <Plus /> Nova instância
+                                <Plus /> {tr("Nova instância", "New instance")}
                               </>
                             ) : (
                               <>
-                                <Plus /> Adicionar
+                                <Plus /> {tr("Adicionar", "Add")}
                               </>
                             )}
                           </Button>
@@ -2739,7 +2747,7 @@ function Merits({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">Concluir</Button>
+              <Button type="button">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -2757,6 +2765,7 @@ export function MeritConfigurationEditor({
   onChange: (value: MeritConfiguration) => void;
   compact?: boolean;
 }) {
+  const { tr } = useLanguage();
   const definition = findMeritConfiguration(merit.name);
   if (!definition) return null;
   const configuration = normalizeMeritConfiguration(merit.configuration);
@@ -2776,7 +2785,7 @@ export function MeritConfigurationEditor({
     );
   return (
     <details className={`merit-configuration${compact ? " compact" : ""}`}>
-      <summary>Configurar escolhas</summary>
+      <summary>{tr("Configurar escolhas", "Configure choices")}</summary>
       <div>
         {visible.map((field) => {
           const value = configuration[field.key];
@@ -2855,6 +2864,7 @@ function StructuredMeritEditor({
   onChange: (value: MeritConfiguration) => void;
   compact: boolean;
 }) {
+  const { tr } = useLanguage();
   const set = (key: string, value: string | string[]) =>
     onChange({ ...configuration, [key]: value });
   const value = (key: string) => String(configuration[key] ?? "");
@@ -2881,31 +2891,31 @@ function StructuredMeritEditor({
         className={`merit-configuration structured${compact ? " compact" : ""}`}
         open={!compact}
       >
-        <summary>Configurar Treinamento Profissional</summary>
+        <summary>{tr("Configurar Treinamento Profissional", "Configure Professional Training")}</summary>
         <div>
           <label>
-            Profissão
+            {tr("Profissão", "Profession")}
             <Input
               value={value("profession")}
               onChange={(event) => set("profession", event.target.value)}
-              placeholder="Ex.: Jornalista investigativo"
+              placeholder={tr("Ex.: Jornalista investigativo", "E.g.: Investigative journalist")}
             />
           </label>
           {merit.dots >= 1 && (
             <fieldset>
-              <legend>Nv 1 · Rede de Contatos</legend>
+              <legend>{tr("Nv 1 · Rede de Contatos", "Dot 1 · Contact Network")}</legend>
               <p>
-                Nomeie as duas áreas ou especialidades dos Contatos concedidos.
+                {tr("Nomeie as duas áreas ou especialidades dos Contatos concedidos.", "Name the two areas or specialties of the granted Contacts.")}
               </p>
               {[0, 1].map((index) => (
                 <label key={index}>
-                  Contato {index + 1}
+                  {tr("Contato", "Contact")} {index + 1}
                   <Input
                     value={contacts[index] ?? ""}
                     onChange={(event) =>
                       setArray("contacts", contacts, index, event.target.value)
                     }
-                    placeholder="Ex.: Polícia local"
+                    placeholder={tr("Ex.: Polícia local", "E.g.: Local police")}
                   />
                 </label>
               ))}
@@ -2914,16 +2924,15 @@ function StructuredMeritEditor({
           {assetCount > 0 && (
             <fieldset>
               <legend>
-                Nv {merit.dots >= 3 ? "2–3" : "2"} · Perícias de Ativo
+                {tr("Nv", "Dots")} {merit.dots >= 3 ? "2–3" : "2"} · {tr("Perícias de Ativo", "Asset Skills")}
               </legend>
               <p>
-                As escolhas abaixo alimentam as Especializações e o aumento dos
-                níveis posteriores.
+                {tr("As escolhas abaixo alimentam as Especializações e o aumento dos níveis posteriores.", "The choices below determine later Specialties and Skill increases.")}
               </p>
               {Array.from({ length: assetCount }, (_, index) => (
                 <SkillChoice
                   key={index}
-                  label={`Perícia de Ativo ${index + 1}`}
+                  label={`${tr("Perícia de Ativo", "Asset Skill")} ${index + 1}`}
                   value={skills[index] || ""}
                   setValue={(next) =>
                     setArray("asset_skills", skills, index, next)
@@ -2934,23 +2943,23 @@ function StructuredMeritEditor({
           )}
           {merit.dots >= 3 && (
             <fieldset>
-              <legend>Nv 3 · Especializações</legend>
+              <legend>{tr("Nv 3 · Especializações", "Dot 3 · Specialties")}</legend>
               {[1, 2].map((index) => (
                 <div className="structured-choice-row" key={index}>
                   <SkillChoice
-                    label={`Perícia ${index}`}
+                    label={`${tr("Perícia", "Skill")} ${index}`}
                     value={value(`specialty_${index}_skill`)}
                     setValue={(next) => set(`specialty_${index}_skill`, next)}
                     options={skills.filter(Boolean)}
                   />
                   <label>
-                    Especialização {index}
+                    {tr("Especialização", "Specialty")} {index}
                     <Input
                       value={value(`specialty_${index}_name`)}
                       onChange={(event) =>
                         set(`specialty_${index}_name`, event.target.value)
                       }
-                      placeholder="Nome da Especialização"
+                      placeholder={tr("Nome da Especialização", "Specialty name")}
                     />
                   </label>
                 </div>
@@ -2959,9 +2968,9 @@ function StructuredMeritEditor({
           )}
           {merit.dots >= 4 && (
             <fieldset>
-              <legend>Nv 4 · Aumento de Perícia</legend>
+              <legend>{tr("Nv 4 · Aumento de Perícia", "Dot 4 · Skill Increase")}</legend>
               <SkillChoice
-                label="Perícia de Ativo que recebe +1"
+                label={tr("Perícia de Ativo que recebe +1", "Asset Skill receiving +1")}
                 value={value("boosted_skill")}
                 setValue={(next) => set("boosted_skill", next)}
                 options={skills.filter(Boolean)}
@@ -2970,8 +2979,7 @@ function StructuredMeritEditor({
           )}
           {merit.dots >= 5 && (
             <p className="structured-rule">
-              <strong>Nv 5 · Rotina:</strong> aplica-se às Perícias de Ativo
-              escolhidas.
+              <strong>{tr("Nv 5 · Rotina", "Dot 5 · Routine")}:</strong> {tr("aplica-se às Perícias de Ativo escolhidas.", "applies to the selected Asset Skills.")}
             </p>
           )}
         </div>
@@ -2993,18 +3001,18 @@ function StructuredMeritEditor({
         className={`merit-configuration structured${compact ? " compact" : ""}`}
         open={!compact}
       >
-        <summary>Configurar Bastião dos Sonhos</summary>
+        <summary>{tr("Configurar Bastião dos Sonhos", "Configure Dream Bastion")}</summary>
         <div>
           <label>
-            Descrição e aparência do Bastião
+            {tr("Descrição e aparência do Bastião", "Bastion description and appearance")}
             <textarea
               value={value("description")}
               onChange={(event) => set("description", event.target.value)}
-              placeholder="Descreva a paisagem onírica, acessos e defesas."
+              placeholder={tr("Descreva a paisagem onírica, acessos e defesas.", "Describe the dreamscape, entrances, and defenses.")}
             />
           </label>
           <p className="structured-rule">
-            Este Mérito acrescenta +{merit.dots} à Fortificação do Bastião.
+            {tr("Este Mérito acrescenta", "This Merit adds")} +{merit.dots} {tr("à Fortificação do Bastião.", "to Bastion Fortification.")}
           </p>
         </div>
       </details>
@@ -3044,6 +3052,7 @@ function HollowEditor({
   onChange: (value: MeritConfiguration) => void;
   compact: boolean;
 }) {
+  const { tr } = useLanguage();
   const selected = Array.isArray(configuration.features)
     ? configuration.features
     : [];
@@ -3058,17 +3067,17 @@ function HollowEditor({
       className={`merit-configuration structured${compact ? " compact" : ""}`}
       open={!compact}
     >
-      <summary>Configurar Recanto</summary>
+      <summary>{tr("Configurar Recanto", "Configure Hollow")}</summary>
       <div>
         <label>
-          Nome
+          {tr("Nome", "Name")}
           <Input
             value={String(configuration.name ?? "")}
             onChange={(event) => set("name", event.target.value)}
           />
         </label>
         <label>
-          Localização e aparência
+          {tr("Localização e aparência", "Location and appearance")}
           <textarea
             value={String(configuration.location ?? "")}
             onChange={(event) => set("location", event.target.value)}
@@ -3076,7 +3085,7 @@ function HollowEditor({
         </label>
         <fieldset>
           <legend>
-            Melhorias ({used}/{merit.dots} pontos)
+            {tr("Melhorias", "Enhancements")} ({used}/{merit.dots} {tr("pontos", "dots")})
           </legend>
           <div className="structured-option-grid">
             {HOLLOW_OPTIONS.map(([name, cost]) => {
@@ -3100,7 +3109,7 @@ function HollowEditor({
                   <span>
                     <strong>{name}</strong>
                     <small>
-                      {cost} ponto{cost === 1 ? "" : "s"}
+                      {cost} {cost === 1 ? tr("ponto", "dot") : tr("pontos", "dots")}
                     </small>
                   </span>
                 </label>
@@ -3109,8 +3118,7 @@ function HollowEditor({
           </div>
         </fieldset>
         <p className="structured-rule">
-          A soma das melhorias não pode exceder os pontos de Recanto. Hob Alarm
-          exige Hob Kin.
+          {tr("A soma das melhorias não pode exceder os pontos de Recanto. Alarme de Hob exige Parentesco Hob.", "The total enhancement cost cannot exceed the Hollow dots. Hob Alarm requires Hob Kin.")}
         </p>
       </div>
     </details>
@@ -3128,6 +3136,7 @@ function CultMeritEditor({
   onChange: (value: MeritConfiguration) => void;
   compact: boolean;
 }) {
+  const { tr } = useLanguage();
   const set = (key: string, value: string | string[]) =>
     onChange({ ...configuration, [key]: value });
   const value = (key: string) => String(configuration[key] ?? "");
@@ -3136,14 +3145,14 @@ function CultMeritEditor({
       className={`merit-configuration structured${compact ? " compact" : ""}`}
       open={!compact}
     >
-      <summary>Configurar benefícios do Culto de Mistério</summary>
+      <summary>{tr("Configurar benefícios do Culto de Mistério", "Configure Mystery Cult benefits")}</summary>
       <div>
         <label>
-          Nome do culto
+          {tr("Nome do culto", "Cult name")}
           <Input
             value={value("cult")}
             onChange={(event) => set("cult", event.target.value)}
-            placeholder="Ex.: Igreja Vermelha"
+            placeholder={tr("Ex.: Igreja Vermelha", "E.g.: Red Church")}
           />
         </label>
         {Array.from({ length: merit.dots }, (_, index) => index + 1).map(
@@ -3169,6 +3178,7 @@ function CultLevelEditor({
   configuration: MeritConfiguration;
   set: (key: string, value: string | string[]) => void;
 }) {
+  const { tr } = useLanguage();
   const prefix = `level_${level}`,
     value = (suffix: string) =>
       String(configuration[`${prefix}_${suffix}`] ?? "");
@@ -3180,20 +3190,20 @@ function CultLevelEditor({
         ? ["__none", "merits", "skill", "custom"]
         : ["__none", "merits", "merit_skill", "custom"];
   const labels: Record<string, string> = {
-    __none: "Selecione o benefício",
-    specialty: "Especialização",
-    merit: "Mérito de 1 ponto",
-    merits: `Um ou mais Méritos somando até ${level === 3 ? 2 : 3} pontos`,
-    skill: "Um ponto em uma Perícia",
-    merit_skill: "Um Mérito de 1 ponto e um ponto em Perícia",
-    custom: "Escrever benefício customizado",
+    __none: tr("Selecione o benefício", "Select benefit"),
+    specialty: tr("Especialização", "Specialty"),
+    merit: tr("Mérito de 1 ponto", "One-dot Merit"),
+    merits: `${tr("Um ou mais Méritos somando até", "One or more Merits totaling up to")} ${level === 3 ? 2 : 3} ${tr("pontos", "dots")}`,
+    skill: tr("Um ponto em uma Perícia", "One Skill dot"),
+    merit_skill: tr("Um Mérito de 1 ponto e um ponto em Perícia", "One one-dot Merit and one Skill dot"),
+    custom: tr("Escrever benefício customizado", "Write a custom benefit"),
   };
   const max = level <= 2 ? 1 : level === 3 ? 2 : type === "merit_skill" ? 1 : 3;
   return (
     <fieldset>
-      <legend>Nv {level}</legend>
+      <legend>{tr("Nv", "Dot")} {level}</legend>
       <Choice
-        label="Tipo de benefício"
+        label={tr("Tipo de benefício", "Benefit type")}
         value={type || "__none"}
         setValue={(next) =>
           set(`${prefix}_type`, next === "__none" ? "" : next)
@@ -3204,18 +3214,18 @@ function CultLevelEditor({
       {type === "specialty" && (
         <div className="structured-choice-row">
           <SkillChoice
-            label="Perícia"
+            label={tr("Perícia", "Skill")}
             value={value("specialty_skill")}
             setValue={(next) => set(`${prefix}_specialty_skill`, next)}
           />
           <label>
-            Especialização
+            {tr("Especialização", "Specialty")}
             <Input
               value={value("specialty_name")}
               onChange={(event) =>
                 set(`${prefix}_specialty_name`, event.target.value)
               }
-              placeholder="Nome da Especialização"
+              placeholder={tr("Nome da Especialização", "Specialty name")}
             />
           </label>
         </div>
@@ -3233,18 +3243,18 @@ function CultLevelEditor({
       )}{" "}
       {(type === "skill" || type === "merit_skill") && (
         <SkillChoice
-          label="Perícia que recebe +1"
+          label={tr("Perícia que recebe +1", "Skill receiving +1")}
           value={value("skill")}
           setValue={(next) => set(`${prefix}_skill`, next)}
         />
       )}{" "}
       {type === "custom" && (
         <label>
-          Benefício customizado
+          {tr("Benefício customizado", "Custom benefit")}
           <textarea
             value={value("custom")}
             onChange={(event) => set(`${prefix}_custom`, event.target.value)}
-            placeholder="Descreva o benefício próprio deste nível."
+            placeholder={tr("Descreva o benefício próprio deste nível.", "Describe this dot's custom benefit.")}
           />
         </label>
       )}
@@ -3262,6 +3272,7 @@ function SkillChoice({
   setValue: (value: string) => void;
   options?: string[];
 }) {
+  const { tr } = useLanguage();
   const choices = options.length ? options : CONFIG_SKILLS;
   return (
     <Choice
@@ -3269,7 +3280,7 @@ function SkillChoice({
       value={value || "__none"}
       setValue={(next) => setValue(next === "__none" ? "" : next)}
       options={["__none", ...choices]}
-      optionLabels={{ __none: "Selecione uma Perícia" }}
+      optionLabels={{ __none: tr("Selecione uma Perícia", "Select a Skill") }}
     />
   );
 }
@@ -3282,6 +3293,7 @@ function MeritGrantPicker({
   max: number;
   onChange: (value: string[]) => void;
 }) {
+  const { locale, tr } = useLanguage();
   const rows = value.length ? value : ["|1"],
     used = rows.reduce((sum, row) => sum + (Number(row.split("|")[1]) || 1), 0);
   const update = (index: number, name: string, dots: number) => {
@@ -3292,7 +3304,7 @@ function MeritGrantPicker({
   return (
     <div className="merit-grant-picker">
       <p>
-        Distribua no máximo {max} {max === 1 ? "ponto" : "pontos"} de Méritos.
+        {tr("Distribua no máximo", "Distribute at most")} {max} {max === 1 ? tr("ponto", "dot") : tr("pontos", "dots")} {tr("de Méritos", "of Merits")}.
       </p>
       {rows.map((row, index) => {
         const [name, rawDots] = row.split("|"),
@@ -3305,7 +3317,7 @@ function MeritGrantPicker({
         return (
           <div className="structured-choice-row" key={index}>
             <label>
-              Mérito
+              {tr("Mérito", "Merit")}
               <Select
                 value={name || "__none"}
                 onValueChange={(next) => {
@@ -3319,23 +3331,23 @@ function MeritGrantPicker({
               >
                 <SelectTrigger>
                   <SelectValue>
-                    {name ? (selected?.translatedName ?? name) : "Selecione"}
+                    {name ? (selected ? (locale === "pt-BR" ? selected.translatedName : selected.name) : name) : tr("Selecione", "Select")}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__none">Selecione</SelectItem>
+                  <SelectItem value="__none">{tr("Selecione", "Select")}</SelectItem>
                   {CONFIG_MERITS.filter((item) =>
                     item.ratings.some((rating) => rating <= available),
                   ).map((item) => (
                     <SelectItem key={item.id} value={item.name}>
-                      {item.translatedName}
+                      {locale === "pt-BR" ? item.translatedName : item.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </label>
             <Choice
-              label="Pontos"
+              label={tr("Pontos", "Dots")}
               value={String(
                 dotOptions.includes(dots) ? dots : (dotOptions[0] ?? 1),
               )}
@@ -3347,7 +3359,7 @@ function MeritGrantPicker({
                 type="button"
                 variant="ghost"
                 size="icon"
-                aria-label="Remover Mérito"
+                aria-label={tr("Remover Mérito", "Remove Merit")}
                 onClick={() =>
                   onChange(rows.filter((_, item) => item !== index))
                 }
@@ -3387,6 +3399,7 @@ function meritTooltip(definition: MeritDefinition) {
 function contractTooltip(
   contract: Pick<
     ContractDefinition,
+    | "id"
     | "description"
     | "dicePool"
     | "hasRoll"
@@ -3403,13 +3416,14 @@ function contractTooltip(
     | "dramaticFailure"
   >,
   seeming: string,
+  locale:Locale="pt-BR",
 ) {
   const benefit =
     contract.seemingBenefits?.[
       seeming as keyof typeof contract.seemingBenefits
     ];
   return contract.description
-    ? `${contractOutcomeSections(contract).map(({label, text}) => `${label}: ${text}`).join("\n")}${contract.cost ? `\nCusto: ${contract.cost} · Ação: ${contract.action} · Duração: ${contract.duration}` : ""}\nParada de dados: ${contract.dicePool ?? "Não informada"}\nBrecha: ${contract.loophole ?? "Não informada"}${contract.goblin ? `\nDébito Goblin: ${contract.goblinDebt}` : ""}${benefit ? `\nBenefício de ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`
+    ? `${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}${contract.cost ? `\n${localized(locale,"Custo","Cost")}: ${contract.cost} · ${localized(locale,"Ação","Action")}: ${contract.action} · ${localized(locale,"Duração","Duration")}: ${contract.duration}` : ""}\n${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${CTL_SEEMING_LABELS[seeming] ?? seeming}: ${benefit}` : ""}`
     : "";
 }
 function formatRequirements(requirements: Record<string, number>) {

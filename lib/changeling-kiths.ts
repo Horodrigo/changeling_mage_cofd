@@ -1,3 +1,6 @@
+import type { Locale } from "./i18n";
+import { KITH_TEXT_EN } from "./changeling-kiths-en";
+
 export type KithDefinition = {
   id: string;
   name: string;
@@ -126,7 +129,18 @@ export function kithSearchText(value: string) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("pt-BR");
 }
 
-export function kithDisplayName(name: unknown, custom = false) {
+export function kithDisplayName(name: unknown, custom = false, locale:Locale="pt-BR") {
   const value = String(name ?? "");
-  return custom ? value : findKith(value)?.translatedName ?? value;
+  if(custom)return value;
+  const found=findKith(value);
+  return locale==="en-US"?(found?.name??value):(found?.translatedName??value);
+}
+
+export function kithPresentation(name:unknown,locale:Locale="pt-BR",custom=false){
+  const found=findKith(name);
+  if(custom||!found)return {name:String(name??""),description:"",blessing:"",skill:""};
+  const english=KITH_TEXT_EN[found.id];
+  return locale==="en-US"
+    ? {name:found.name,description:english?.description??found.description,blessing:english?.blessing??found.blessing,skill:english?.skill??found.skill}
+    : {name:found.translatedName??found.name,description:found.description,blessing:found.blessing,skill:found.skill};
 }

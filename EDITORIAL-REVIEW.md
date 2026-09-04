@@ -16,7 +16,7 @@ Contrato de ativação automática em um Contrato com jogada de invocação.
   DE:CtL pp. 23–24 e 222–223. Seis referências antigas a Dark Eras 2 corrigidas
   para a edição efetivamente fornecida pelo usuário.
 - Livro básico: 110 Contratos, com verificação dos resumos e preenchimento dos
-  quatro resultados dos 56 Contratos com jogada de invocação (pp. 128–164).
+  quatro resultados dos 55 Contratos com jogada de invocação (pp. 128–164).
 - Contratos dos suplementos: há ajustes de redação e reconexão de resultados
   existentes, mas a revisão mecânica completa dos 144 restantes NÃO terminou.
 - 7 nomes de Contratos ajustados com aliases para referências antigas.
@@ -60,3 +60,51 @@ ambientais conhecidas: cloudflare:workers, Fetcher e D1Database.
 
 Seletores e listas de escolha ordenados pelo rótulo em português, preservando
 a ordem de Atributos e Perícias e a progressão numérica dos níveis.
+
+## Auditoria rápida para a próxima etapa (2026-09-03)
+
+Esta contagem mede presença estrutural, não fidelidade ao PDF. Um campo preenchido
+ainda pode conter tradução literal, concordância ruim ou regra incorreta.
+
+- Livro básico: 110 Contratos (55 com jogada e 55 automáticos). Todos têm tipo de
+  ativação determinado e todos os Contratos com jogada têm Sucesso, Sucesso
+  Excepcional, Falha e Falha Dramática. Há uma Brecha ausente: `last-harvest`.
+- Os 10 Contratos básicos sem entrada em `contract-details`/`contract-results` são
+  Contratos Goblin definidos diretamente em `contracts.ts`; não são lacunas por si.
+- Suplementos: 144 Contratos (89 com jogada e 55 automáticos). Todos os 89 com
+  jogada ainda precisam da conferência/preenchimento de Falha e Falha Dramática;
+  15 também não têm Sucesso Excepcional cadastrado.
+- Há 16 Contratos suplementares sem entrada em `contract-results`: 14 de Beyond
+  the Hedge e 2 de Book of Courts.
+- Há seis Brechas suplementares ausentes: `cracked-mirror`, `peacemakers-draw`,
+  `principle`, `celestial-might`, `weaponize-mob` e `red-sky-at-morning`.
+
+### Ordem recomendada
+
+1. Fechar o livro básico: conferir a Brecha de `last-harvest`; depois auditar
+   sistematicamente Brechas, benefícios de Feição, custo, ação e duração dos 110.
+2. Revisar suplementos por fonte, sem misturar livros: Dark Eras Changeling (1),
+   Oak, Ash, and Thorn (4), Book of Seemings (7), Beyond the Hedge (37), Book of
+   Courts (40) e Kith and Kin (55).
+3. Em cada página, extrair as duas colunas separadamente e conferir visualmente
+   cabeçalhos, continuação na página seguinte e sidebars antes de editar o catálogo.
+4. Para cada Contrato, fechar uma ficha de controle: nome, resumo mecânico, custo,
+   ação, parada, duração, Sucesso, Sucesso Excepcional, Falha, Falha Dramática,
+   Brecha, opções e benefícios. Marcar explicitamente “não existe na fonte” em vez
+   de confundir ausência editorial com campo esquecido.
+5. Executar testes de completude por livro e só então fazer a revisão transversal
+   de terminologia e concordância.
+
+## Internacionalização em paralelo
+
+- Idiomas de apresentação: `pt-BR` e `en-US`, com preferência global do dispositivo.
+- IDs e valores internos das fichas permanecem invariáveis; somente rótulos e textos
+  apresentados são localizados.
+- Cada regra aprovada na revisão deve receber, no mesmo passo, o resumo mecânico em
+  português e em inglês sob o mesmo ID. Não retraduzir automaticamente o texto PT.
+- Nomes originais já preservados: 254 Contratos, 73 Frátrias, 328 Magias, 382 Méritos
+  e Condições. Os demais campos ingleses devem vir das fontes e ser resumidos.
+- Conteúdo Homebrew do jogador permanece no idioma em que foi escrito.
+- Busca considera nomes nos dois idiomas; ordenação usa os rótulos do idioma ativo.
+- Enquanto uma entrada inglesa não estiver revisada, o fallback para português deve
+  ser explícito e testável, nunca uma tradução inventada em tempo de execução.
