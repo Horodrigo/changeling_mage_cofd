@@ -56,7 +56,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
@@ -104,6 +104,8 @@ export type ContractSelection = Pick<
   | "hasRoll"
   | "loophole"
   | "seemingBenefits"
+  | "courtClauses"
+  | "courtFamily"
   | "goblin"
   | "cost"
   | "action"
@@ -585,6 +587,8 @@ export function CharacterBuilder({
             learned_contracts: initial?.line_data.learned_contracts ?? [],
             extra_contract_benefits:
               initial?.line_data.extra_contract_benefits ?? [],
+            extra_contract_clauses:
+              initial?.line_data.extra_contract_clauses ?? [],
           }
         : {
             ...(initial?.line_data ?? {}),
@@ -1733,10 +1737,10 @@ function ContractSelector({
                           {summary && <p className="rule-detail">
                             <strong>{tr("Resumo", "Summary")}:</strong> {presented.description}
                           </p>}
-                          <p className="rule-detail">
+                          {contractHasInvocationRoll(presented) === true && <p className="rule-detail">
                             <strong>{tr("Parada de dados", "Dice Pool")}:</strong>{" "}
                             {presented.dicePool ?? tr("Não informada", "Not listed")}
-                          </p>
+                          </p>}
                           {presented.cost && (
                             <p className="rule-detail">
                               <strong>{tr("Custo", "Cost")}:</strong> {presented.cost}
@@ -3486,7 +3490,7 @@ function contractTooltip(
   const displayOptions = contractDisplayOptions(contract, locale);
   const options = displayOptions.length ? `\n${localized(locale,"Opções","Options")}:\n${displayOptions.map((option) => `• ${option}`).join("\n")}` : "";
   return contract.description
-    ? `${contract.cost ? `${localized(locale,"Custo","Cost")}: ${contract.cost}\n` : ""}${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n${localized(locale,"Ação","Action")}: ${contract.action ?? localized(locale,"Instantânea","Instant")} · ${localized(locale,"Duração","Duration")}: ${contract.duration ?? localized(locale,"Cena","Scene")}${options}\n${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
+    ? `${contract.cost ? `${localized(locale,"Custo","Cost")}: ${contract.cost}\n` : ""}${contractHasInvocationRoll(contract) === true ? `${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n` : ""}${localized(locale,"Ação","Action")}: ${contract.action ?? localized(locale,"Instantânea","Instant")} · ${localized(locale,"Duração","Duration")}: ${contract.duration ?? localized(locale,"Cena","Scene")}${options}\n${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
     : "";
 }
 function formatRequirements(requirements: Record<string, number>) {

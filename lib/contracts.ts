@@ -8,10 +8,15 @@ export type ContractDefinition = {
   categoryKind?: "Corte" | "Independente" | "Regalia";
   regalia: string;
   description: string;
+  summary?: string;
+  effect?: string;
   hasRoll?: boolean;
   dicePool?: string;
   loophole?: string;
   seemingBenefits?: Partial<Record<SeemingKey, string>>;
+  /** One shared Court Contract may expose a different Clause for each member Court. Keys are canonical Court ids. */
+  courtClauses?: Record<string, string>;
+  courtFamily?: string;
   supplementalSeemingBenefits?: Record<string, Partial<Record<SeemingKey, string>>>;
   goblin?: boolean;
   cost?: string;
@@ -30,8 +35,10 @@ export type ContractDefinition = {
 
 import { KITH_AND_KIN_CONTRACTS } from "./contracts-kith-and-kin";
 import { CORE_CONTRACTS } from "./contracts-core";
+import { BOOK_OF_COURTS_CONTRACTS } from "./contracts-book-of-courts";
 
 export const CONTRACTS: ContractDefinition[] = [
+  ...BOOK_OF_COURTS_CONTRACTS,
   {
     id: "ctl-oak-ash-thorn:donning-the-grand-mantle",
     name: "Donning the Grand Mantle",

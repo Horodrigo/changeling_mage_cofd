@@ -132,6 +132,12 @@ test("Contrato Court (All) pode ser escolhido por membro de qualquer Corte", () 
   );
 });
 
+test("Contrato compartilhado de Corte usa a Clause da Corte canônica", () => {
+  const contract = { type: "Comum", categoryKind: "Corte", regalia: "Circadian", courtClauses: { sun: "A", moon: "B" } };
+  assert.equal(rules.canSelectInitialContract(contract, [], "Corte do Sol"), true);
+  assert.equal(rules.canSelectInitialContract(contract, [], "winter"), false);
+});
+
 test.skip("classifica os Contratos de Book of Seemings por Regalia real", () => {
   const seemingsContracts = CONTRACTS.filter(
     (contract) => contract.sourceId === "h-seemings",

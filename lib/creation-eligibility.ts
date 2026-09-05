@@ -71,16 +71,22 @@ export function arcanaCreationErrors(
 }
 
 export function canSelectInitialContract(
-  contract: { type: "Comum" | "Real"; regalia: string; categoryKind?: string },
+  contract: { type: "Comum" | "Real"; regalia: string; categoryKind?: string; courtClauses?: Record<string, string> },
   favoredRegalia: readonly string[],
   court: string,
 ) {
   const customKind = (contract as { categoryKind?: string }).categoryKind;
-  if (customKind === "Corte")
+  if (customKind === "Corte") {
+    if (contract.courtClauses) {
+      const normalized = courtCanonicalId(court).toLocaleLowerCase();
+      return Object.keys(contract.courtClauses).some((key) => key.toLocaleLowerCase() === normalized);
+    }
     return Boolean(court) && (contract.regalia === "All" || contract.regalia === court);
+  }
   if (customKind === "Independente") return true;
   const isCourtContract = COURT_CONTRACT_GROUPS.has(contract.regalia);
   if (isCourtContract) return Boolean(court) && contract.regalia === court;
   if (contract.type === "Real") return favoredRegalia.includes(contract.regalia);
   return true;
 }
+import { courtCanonicalId } from "./changeling-courts";

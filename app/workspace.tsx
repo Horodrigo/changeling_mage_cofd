@@ -22,7 +22,8 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { courtCanonicalId, courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -104,7 +105,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
   CONTRACTS,
@@ -1001,7 +1002,7 @@ function CharacterPaper({
             poderes: isCtl ? <>
               <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
-              <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} />
+              <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
               <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento","Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
               <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CourtLore data={data} merits={character.merits} />
@@ -1186,6 +1187,7 @@ function CharacterPaper({
               seeming={String(data.seeming ?? "")}
               court={String(data.court ?? "")}
               extraBenefits={objectList(data.extra_contract_benefits)}
+              extraClauses={objectList(data.extra_contract_clauses)}
             />
             <div className="powers-sheet-grid">
               <section>
@@ -2880,6 +2882,7 @@ type ExperienceUndo =
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "contract"; id: string }
   | { kind: "benefit"; contractId: string; seeming: string }
+  | { kind: "clause"; contractId: string; courtId: string }
   | { kind: "wyrd"; previous: number }
   | { kind: "clarityGain" }
   | { kind: "willpower"; previousLost: number }
@@ -2983,20 +2986,26 @@ function ExperiencePanel({
       (item) => `${String(item.contractId)}::${String(item.seeming)}`,
     ),
   );
+  const extraClauses = objectList(character.line_data.extra_contract_clauses);
+  const extraClauseKeys = new Set(extraClauses.map((item) => `${String(item.contractId)}::${String(item.courtId)}`));
+  const goodwill = new Map(objectList(character.line_data.court_goodwill_benefits).map((item) => [String(item.court), Number(item.dots ?? 0)]));
+  const currentCourtId = courtCanonicalId(character.line_data.court);
   const benefitOptions = ownedContracts.flatMap((saved) => {
     const definition = findContract(String(saved.id ?? saved.name ?? ""));
-    return definition
-      ? Object.keys(definition.seemingBenefits ?? {})
+    if (!definition) return [];
+    const seemingOptions = Object.keys(definition.seemingBenefits ?? {})
           .filter(
             (seeming) =>
               seeming !== String(character.line_data.seeming) &&
               !extraKeys.has(`${definition.id}::${seeming}`),
           )
           .map((seeming) => ({
-            value: `${definition.id}::${seeming}`,
+            value: `benefit::${definition.id}::${seeming}`,
             label: `${definition.name} · ${seemingDisplayName(seeming,locale)}`,
-          }))
-      : [];
+          }));
+    const clauseOptions = availableForeignClauseCourtIds(definition, currentCourtId, goodwill, extraClauseKeys)
+      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${definition.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
+    return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
   const ownedMerit =
@@ -3192,6 +3201,13 @@ function ExperiencePanel({
             ),
         ),
       };
+    else if (undo.kind === "clause")
+      next.line_data = {
+        ...next.line_data,
+        extra_contract_clauses: objectList(next.line_data.extra_contract_clauses).filter(
+          (item) => !(String(item.contractId) === undo.contractId && String(item.courtId) === undo.courtId),
+        ),
+      };
     else if (undo.kind === "clarityGain") {
       next.current_state = changePermanentClarity(next.current_state, -1);
       const maximum = Number(derivedWithPermanentMerits(next).LucidezMaxima ?? 1);
@@ -3333,21 +3349,20 @@ function ExperiencePanel({
     if (purchaseType === "Benefício de Contrato") {
       const value = benefitKey || benefitOptions[0]?.value;
       if (!value)
-        return setFeedback("Não há Benefício de outra Feição disponível.");
-      const [chosenContract, seeming] = value.split("::");
+        return setFeedback("Não há Benefício ou Clause adicional disponível.");
+      const [kind, chosenContract, choice] = value.split("::");
       const definition = findContract(chosenContract);
+      const isClause = kind === "clause";
       spend(
         1,
-        `Benefício de ${seemingDisplayName(seeming,locale)} · ${definition?.name ?? "Contrato"}`,
-        { kind: "benefit", contractId: chosenContract, seeming },
+        isClause ? `Clause de ${courtDisplayName(choice, locale)} · ${definition?.name ?? "Contrato"}` : `Benefício de ${seemingDisplayName(choice,locale)} · ${definition?.name ?? "Contrato"}`,
+        isClause ? { kind: "clause", contractId: chosenContract, courtId: choice } : { kind: "benefit", contractId: chosenContract, seeming: choice },
         (next) => {
-          const existing = objectList(next.line_data.extra_contract_benefits);
           next.line_data = {
             ...next.line_data,
-            extra_contract_benefits: [
-              ...existing,
-              { contractId: chosenContract, seeming },
-            ],
+            ...(isClause
+              ? { extra_contract_clauses: [...objectList(next.line_data.extra_contract_clauses), { contractId: chosenContract, courtId: choice }] }
+              : { extra_contract_benefits: [...objectList(next.line_data.extra_contract_benefits), { contractId: chosenContract, seeming: choice }] }),
           };
         },
       );
@@ -5451,11 +5466,13 @@ function ContractPowerList({
   seeming,
   court,
   extraBenefits = [],
+  extraClauses = [],
 }: {
   contracts: Array<Record<string, unknown>>;
   seeming: string;
   court: string;
   extraBenefits?: Array<Record<string, unknown>>;
+  extraClauses?: Array<Record<string, unknown>>;
 }) {
   const {locale,tr}=useLanguage();
   const homebrews=useHomebrews();
@@ -5491,6 +5508,11 @@ function ContractPowerList({
               courtBenefits?: Record<string, string>;
             }
           ).courtBenefits?.[court];
+          const clauseCourtIds = [
+            courtCanonicalId(court),
+            ...extraClauses.filter((extra) => String(extra.contractId) === definition.id).map((extra) => String(extra.courtId)),
+          ].filter((value, position, values) => value && values.indexOf(value) === position);
+          const clauses = clauseCourtIds.map((courtId) => ({ courtId, text: definition.courtClauses?.[courtId] })).filter((item) => item.text);
           const displayOptions = contractDisplayOptions(definition, locale);
           return (
             <article key={`${definition.id}-${index}`}>
@@ -5509,10 +5531,10 @@ function ContractPowerList({
                   <dt>{tr("Resumo", "Summary")}</dt>
                   <dd>{summary}</dd>
                 </div>}
-                <div>
+                {contractHasInvocationRoll(definition) === true && <div>
                   <dt>{tr("Parada de dados", "Dice Pool")}</dt>
                   <dd>{definition.dicePool ?? tr("Não informada", "Not listed")}</dd>
-                </div>
+                </div>}
                 <div>
                   <dt>{tr("Custo", "Cost")}</dt>
                   <dd>{definition.cost ?? tr("Conforme descrição", "As described")}</dd>
@@ -5555,6 +5577,12 @@ function ContractPowerList({
                     <dd>{courtBenefit}</dd>
                   </div>
                 )}
+                {clauses.map((clause) => (
+                  <div key={`clause-${clause.courtId}`}>
+                    <dt>Clause · {courtDisplayName(clause.courtId, locale)}</dt>
+                    <dd>{clause.text}</dd>
+                  </div>
+                ))}
                 {definition.goblin && (
                   <div className="goblin-debt-row">
                     <dt>{tr("Débito Goblin", "Goblin Debt")}</dt>

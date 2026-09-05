@@ -4,7 +4,7 @@ import { CONTRACT_TEXT_EN } from "./contracts-en";
 import { REVIEWED_CONTRACT_DETAILS_EN } from "./contract-details-reviewed";
 
 export type ContractMechanics = Pick<ContractDefinition,
-  "description" | "dicePool" | "hasRoll" | "success" | "exceptionalSuccess" | "failure" | "dramaticFailure"
+  "description" | "effect" | "dicePool" | "hasRoll" | "success" | "exceptionalSuccess" | "failure" | "dramaticFailure"
 >;
 
 // An effect may call for a later attack/skill roll without an invocation roll.
@@ -35,6 +35,7 @@ export function contractPresentation(contract:ContractDefinition,locale:Locale="
 }
 
 export function contractSummary(contract:ContractDefinition,locale:Locale="pt-BR") {
+  if (contract.summary?.trim()) return contract.summary.trim();
   if (contractHasInvocationRoll(contract) !== true) return "";
   return locale === "en-US"
     ? CONTRACT_TEXT_EN[contract.id]?.summary?.trim() ?? contract.description.trim()
@@ -53,7 +54,7 @@ export function contractOutcomeSections(contract: ContractMechanics & {id?:strin
   const english=locale==="en-US"&&contract.id?CONTRACT_TEXT_EN[contract.id]:undefined;
   const description=english?.description??contract.description;
   const success=english?.success??contract.success;
-  const main = success?.trim() || description.trim();
+  const main = contract.effect?.trim() || success?.trim() || description.trim();
   if (contractHasInvocationRoll(contract) !== true) {
     return main ? [{ label: locale==="en-US"?"Effect":"Efeito", text: main }] : [];
   }

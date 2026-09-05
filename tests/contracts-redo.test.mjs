@@ -14,8 +14,9 @@ const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("../tmp/contracts-redo/contracts-index.json", import.meta.url), "utf8"));
 
 test("catálogo contém os 180 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 180);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 180);
+  const official = CONTRACTS.filter((contract) => !contract.sourceId.startsWith("h-"));
+  assert.equal(official.length, 180);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, CONTRACTS.length);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
@@ -23,6 +24,14 @@ test("catálogo contém os 180 Contratos oficiais auditados", () => {
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 110);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
+});
+
+test("Book of Courts inicia com a família Circadian compartilhada e Clauses canônicas", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "circadian");
+  assert.equal(items.length, 10);
+  assert.deepEqual(new Set(items.flatMap((contract) => Object.keys(contract.courtClauses ?? {}))), new Set(["sun", "moon"]));
+  assert.ok(items.every((contract) => contract.summary && contract.loophole));
+  assert.equal(items.find((contract) => contract.originalName === "Frost-Fire Glance")?.hasRoll, false);
 });
 
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {

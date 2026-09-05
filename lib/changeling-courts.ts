@@ -48,6 +48,32 @@ export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [
   ], [
     "Imponha o Manto como penalidade às tentativas de percebê-lo enquanto espiona.", "Some o Manto às ações para ocultar a verdade.", "Some o Manto às ações Sociais depois de se render em uma luta.", "Gaste Glamour para impor Derrotado a um combatente, a menos que ele gaste 2 Força de Vontade.", "Ignore penalidades de ferimento e some o dano letal ou agravado sofrido como dados de bônus às ações Físicas.",
   ]),
+  court("sun", "Sun Court", "Corte do Sol", "Duty", "Dever", 78, [
+    "Add Mantle to mundane rolls to find flaws, mistakes, or exploitable gaps.",
+    "Enemies subtract Mantle from rolls to deceive or manipulate you.",
+    "During an action scene, reduce Speed to 0 to add Mantle to Defense while acting out of duty.",
+    "Ignore exhaustion, fatigue, and wound penalties while performing a personal or Sun Court duty.",
+    "Once during daylight, spend Willpower instead of rolling a non-contested, non-resisted instant action to achieve one success.",
+  ], [
+    "Some o Manto a testes mundanos para encontrar falhas, erros ou brechas exploráveis.",
+    "Inimigos subtraem seu Manto de testes para enganá-lo ou manipulá-lo.",
+    "Durante uma cena de ação, reduza o Deslocamento a 0 para somar o Manto à Defesa enquanto age por dever.",
+    "Ignore penalidades de exaustão, fadiga e ferimentos ao cumprir um dever pessoal ou da Corte do Sol.",
+    "Uma vez durante o dia, gaste Força de Vontade em vez de testar uma ação instantânea não disputada nem resistida para obter um sucesso.",
+  ], "h-courts"),
+  court("moon", "Moon Court", "Corte da Lua", "Curiosity", "Curiosidade", 81, [
+    "Add Mantle to mundane rolls to investigate something you have never seen before.",
+    "Enemies subtract Mantle from rolls to deceive or manipulate you.",
+    "Once per scene, add Mantle to a Contract roll that learns a specific piece of information.",
+    "Once per chapter, halve physical harm or Clarity damage suffered directly through your curiosity; halve a resulting Condition's duration instead when applicable.",
+    "During an evening, ignore exhaustion or Environmental Tilts for one scene a number of times equal to Mantle.",
+  ], [
+    "Some o Manto a testes mundanos para investigar algo que nunca viu antes.",
+    "Inimigos subtraem seu Manto de testes para enganá-lo ou manipulá-lo.",
+    "Uma vez por cena, some o Manto a um teste de Contrato que descubra uma informação específica.",
+    "Uma vez por capítulo, reduza à metade o dano físico ou de Lucidez sofrido diretamente por sua curiosidade; quando aplicável, reduza à metade a duração da Condição resultante.",
+    "Durante uma noite, ignore exaustão ou Inclinações Ambientais por uma cena um número de vezes igual ao Manto.",
+  ], "h-courts"),
   court("society-morning", "Society of Morning", "Sociedade da Manhã", "Discovery through reckless pursuit", "Descoberta por busca imprudente", 279, [
     "Apply Mantle as a bonus to gather information on a new subject.", "Apply Mantle as a bonus to rolls involving instability or impermanence.", "Regain Willpower when a truth implicates a friend or ally.", "Automatically persuade a changeling to share information relevant to freehold safety; supernatural resistance triggers a Clash of Wills.", "Once per session, reveal an unknown truth to shift your negative Clarity Condition to another changeling.",
   ], [
