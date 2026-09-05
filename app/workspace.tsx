@@ -5558,6 +5558,12 @@ function ContractPowerList({
                       <dd>{section.text}</dd>
                     </div>
                   ))}
+                {definition.detailTables?.map((table) => (
+                  <div className="contract-detail-table" key={table.title}>
+                    <dt>{table.title}</dt>
+                    <dd><table><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row) => <tr key={row.join("::")}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table></dd>
+                  </div>
+                ))}
                 <div>
                   <dt>{tr("Brecha","Loophole")}</dt>
                   <dd>{definition.loophole}</dd>

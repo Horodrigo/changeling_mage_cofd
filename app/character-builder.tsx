@@ -118,6 +118,7 @@ export type ContractSelection = Pick<
   | "failure"
   | "dramaticFailure"
   | "options"
+  | "detailTables"
   | "goblinDebt"
   | "sourceId"
   | "source"

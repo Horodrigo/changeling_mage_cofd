@@ -28,6 +28,7 @@ export type ContractDefinition = {
   failure?: string;
   dramaticFailure?: string;
   options?: string[];
+  detailTables?: Array<{ title: string; columns: string[]; rows: string[][] }>;
   goblinDebt?: string;
   sourceId: string;
   source: string;

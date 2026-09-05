@@ -48,6 +48,15 @@ test("família Weather possui dez Contratos, duas Clauses e dois Nothing to See 
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.originalName === "Nothing to See Here").length, 2);
 });
 
+test("família Zodiac inclui dez Contratos, quatro Clauses, Contemptuous e a tabela estelar", async () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "zodiac");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 4));
+  assert.equal(items.find((contract) => contract.originalName === "Assuming the Stellar Mantle")?.detailTables?.[0]?.rows.length, 12);
+  const { CHANGELING_CONDITIONS } = await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+  assert.ok(CHANGELING_CONDITIONS.some((condition) => condition.originalName === "Contemptuous" && condition.source === "Book of Courts"));
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
