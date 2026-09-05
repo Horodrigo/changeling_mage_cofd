@@ -28,6 +28,8 @@ export type ContractDefinition = {
   page: number;
 };
 
+import { KITH_AND_KIN_CONTRACTS } from "./contracts-kith-and-kin";
+
 export const CONTRACTS: ContractDefinition[] = [
   {
     id: "ctl-oak-ash-thorn:donning-the-grand-mantle",
@@ -253,6 +255,7 @@ export const CONTRACTS: ContractDefinition[] = [
     source: "DE:CtL",
     page: 241,
   },
+  ...KITH_AND_KIN_CONTRACTS,
 ];
 
 export const CONTRACT_NAME_ALIASES: Record<string, string> = Object.fromEntries(
