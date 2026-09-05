@@ -12,14 +12,14 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 80 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 80);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 80);
+test("catálogo contém os primeiros 90 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 90);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 90);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 59);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 10);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 20);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
@@ -65,6 +65,12 @@ test("bloco Crown do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Crown");
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[128,128,129,129,129,130,130,131,131,132]);
+});
+
+test("bloco Jewels do livro básico está completo", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels");
+  assert.equal(items.length,10);
+  assert.deepEqual(items.map((item)=>item.page),[132,132,133,133,133,134,134,134,135,135]);
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {
