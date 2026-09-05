@@ -8,7 +8,7 @@ export type CourtDefinition = {
   emotionPt: string;
   mantleBenefits: string[];
   mantleBenefitsPt: string[];
-  sourceId: "ctl-2ed" | "ctl-dark-eras";
+  sourceId: "ctl-2ed" | "ctl-dark-eras" | "h-courts";
   source: string;
   page: number;
 };
@@ -17,7 +17,15 @@ const court = (
   id: string, name: string, translatedName: string, emotion: string, emotionPt: string,
   page: number, mantleBenefits: string[], mantleBenefitsPt: string[],
   sourceId: CourtDefinition["sourceId"] = "ctl-2ed",
-): CourtDefinition => ({ id, name, translatedName, emotion, emotionPt, mantleBenefits, mantleBenefitsPt, sourceId, source: sourceId === "ctl-2ed" ? "Changeling: The Lost" : "Dark Eras Changeling (DE:CtL)", page });
+): CourtDefinition => {
+  const resolvedSourceId = sourceId === "ctl-2ed" && page >= 279 ? "h-courts" : sourceId;
+  return {
+    id, name, translatedName, emotion, emotionPt, mantleBenefits, mantleBenefitsPt,
+    sourceId: resolvedSourceId,
+    source: resolvedSourceId === "ctl-2ed" ? "Changeling: The Lost" : resolvedSourceId === "h-courts" ? "Book of Courts" : "Dark Eras Changeling (DE:CtL)",
+    page,
+  };
+};
 
 export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [
   court("spring", "Spring Court", "Primavera", "Desire", "Desejo", 35, [
@@ -144,4 +152,8 @@ export function courtPresentation(value: unknown, locale: Locale = "pt-BR") {
 
 export function courtDisplayName(value: unknown, locale: Locale = "pt-BR") {
   return courtPresentation(value, locale)?.name ?? String(value ?? "");
+}
+
+export function courtCanonicalId(value: unknown) {
+  return courtPresentation(value, "en-US")?.id ?? String(value ?? "").trim();
 }

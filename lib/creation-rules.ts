@@ -123,7 +123,6 @@ export const SOURCE_CATALOG = [
   { id: "mta-signs", title: "Signs of Sorcery", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "mta-pentacle", title: "Tome of the Pentacle", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "nh-nameless", title: "Nameless and Accursed", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
-  { id: "h-beyond-hedge", title: "Beyond the Hedge", gameLine: "CtL", edition: null, type: "HOMEBREW", role: "ADJACENT" },
   { id: "h-courts", title: "Book of Courts", gameLine: "CtL", edition: null, type: "HOMEBREW", role: "ADJACENT" },
   { id: "h-seemings", title: "Book of Seemings", gameLine: "CtL", edition: null, type: "HOMEBREW", role: "ADJACENT" },
 ] as const;

@@ -66,7 +66,7 @@ import {
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
 import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
-import { courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { CTL_COURT_DEFINITIONS, courtCanonicalId, courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
@@ -313,7 +313,7 @@ export function CharacterBuilder({
   const meritBudget = meritAllowance - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
   const meritCatalog = useMemo(() => {
     const merged = new Map(
-      getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map((item) => [item.name.toLocaleLowerCase(), item]),
+      getMeritsForLine(line).filter(item=>item.name !== "Mantle" && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
     );
     homebrews.merits
       .filter((item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id))
@@ -2798,7 +2798,8 @@ export function MeritConfigurationEditor({
   onChange: (value: MeritConfiguration) => void;
   compact?: boolean;
 }) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
+  const homebrews = useHomebrews();
   const definition = findMeritConfiguration(merit.name);
   if (!definition) return null;
   const configuration = normalizeMeritConfiguration(merit.configuration);
@@ -2822,6 +2823,30 @@ export function MeritConfigurationEditor({
       <div>
         {visible.map((field) => {
           const value = configuration[field.key];
+          if (field.kind === "court") {
+            const selected = String(value ?? "");
+            const courtOptions = alphabetical([
+              ...CTL_COURT_DEFINITIONS
+                .filter((court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"))
+                .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale) })),
+              ...homebrews.courts
+                .filter((court) => isHomebrewActive(homebrews, court.id))
+                .map((court) => ({ value: court.id, label: court.name })),
+            ], (item) => item.label, locale);
+            if (selected && !courtOptions.some((option) => option.value === selected))
+              courtOptions.push({ value: selected, label: courtDisplayName(selected, locale) });
+            return (
+              <label key={field.key}>
+                {tr(field.label, "Benefited Court")}
+                <Select value={courtCanonicalId(selected)} onValueChange={(next) => set(field.key, next)}>
+                  <SelectTrigger><SelectValue placeholder={tr("Selecione uma Corte", "Select a Court")} /></SelectTrigger>
+                  <SelectContent>
+                    {courtOptions.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </label>
+            );
+          }
           if (field.kind === "list")
             return (
               <label key={field.key}>

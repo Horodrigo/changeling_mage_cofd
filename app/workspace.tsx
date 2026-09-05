@@ -4550,6 +4550,7 @@ function ExperienceMeritPicker({
                   ),
                 repeatable = isRepeatableDefinition(item),
                 ratings = meritRatingsFor(item);
+              if (item.name === "Mantle" && !instances.length) return null;
               if (
                 !repeatable &&
                 instances.length &&
@@ -4594,7 +4595,7 @@ function ExperienceMeritPicker({
                           </DialogClose>
                         )),
                     )}
-                    {(repeatable || !instances.length) &&
+                    {item.name !== "Mantle" && (repeatable || !instances.length) &&
                       ratings.map((dot) => (
                         <DialogClose asChild key={`new-${dot}`}>
                           <Button

@@ -85,8 +85,7 @@ ainda pode conter tradução literal, concordância ruim ou regra incorreta.
    custo, ação e duração dos 110. A Brecha de `last-harvest` já está cadastrada:
    escolher a própria Pedra de Toque como alvo.
 2. Revisar suplementos por fonte, sem misturar livros: Dark Eras Changeling (1),
-   Oak, Ash, and Thorn (4), Book of Seemings (7), Beyond the Hedge (37), Book of
-   Courts (40) e Kith and Kin (55).
+   Oak, Ash, and Thorn (7), Book of Seemings, Book of Courts (80) e Kith and Kin.
 3. Em cada página, extrair as duas colunas separadamente e conferir visualmente
    cabeçalhos, continuação na página seguinte e sidebars antes de editar o catálogo.
 4. Para cada Contrato, fechar uma ficha de controle: nome, resumo mecânico, custo,

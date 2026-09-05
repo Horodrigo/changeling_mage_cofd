@@ -16,6 +16,8 @@ after(async () => vite.close());
 const homebrews = await vite.ssrLoadModule("/lib/homebrews.ts");
 const merits = await vite.ssrLoadModule("/lib/merits.ts");
 const expanded = await vite.ssrLoadModule("/lib/expanded-merits.ts");
+const meritConfigurations = await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const courts = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 
 test("interpreta benefícios e requisitos nomeados linha a linha", () => {
   assert.deepEqual(homebrews.parseNamedText("Beast: dentes\nOgre: força"), {
@@ -47,6 +49,14 @@ test("combina toggle geral e individual sem perder preferências", () => {
   assert.equal(homebrews.isHomebrewActive({ ...catalog, enabled: false }, "outro"), false);
   assert.equal(homebrews.isBuiltinHomebrew("h-seemings"), true);
   assert.equal(homebrews.isBuiltinHomebrew("ctl-2ed"), false);
+});
+
+test("Beyond the Hedge foi removido e escolhas de Court Goodwill usam Cortes canônicas", () => {
+  assert.deepEqual(homebrews.BUILTIN_HOMEBREW_SOURCES.map((source) => source.id), ["h-courts", "h-seemings"]);
+  assert.equal(meritConfigurations.findMeritConfiguration("Court Goodwill")?.fields[0]?.kind, "court");
+  assert.equal(courts.courtCanonicalId("Primavera"), "spring");
+  assert.equal(courts.courtCanonicalId("Spring Court"), "spring");
+  assert.ok(courts.CTL_COURT_DEFINITIONS.some((court) => court.sourceId === "h-courts"));
 });
 
 test("Gunslinger é um Estilo de Combate Core completo para ambas as linhas", () => {
