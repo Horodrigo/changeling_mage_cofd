@@ -107,4 +107,4 @@ The index summary contains Enchanted Bargain, teleportation, Willpower recovery,
 
 ## Import status
 
-The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **90** audited records. Kith and Kin is complete at 59/59 and the core book is at 20/110.
+The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **100** audited records. Kith and Kin is complete at 59/59 and the core book is at 30/110.
