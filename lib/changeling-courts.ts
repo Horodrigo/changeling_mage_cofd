@@ -87,6 +87,16 @@ export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [
     "Ao dormir uma noite inteira em sua própria casa, recupere 2 pontos de Força de Vontade gastos em vez de 1.",
     "Reduza em dois dados todos os ataques de Lucidez que não sejam causados por suas próprias ações.",
   ], "h-courts"),
+  court("calm", "Calm Court", "Corte da Calmaria", "Relief", "Alívio", 87, [
+    "Add Mantle to mundane rolls to ease a human or changeling's suffering.", "Add Mantle to mundane rolls to resist or help others resist intimidation and threats.", "Incite Bedlam to end a chosen emotion and accompanying Condition instead of inflicting one; supernatural emotions cause a Clash of Wills.", "Once per chapter, regain 1 Willpower after suffering a failure or dramatic failure.", "Spend 1 Glamour to create a three-meter bubble protecting you from Environmental Tilts for the scene.",
+  ], [
+    "Some o Manto a testes mundanos para aliviar o sofrimento de um humano ou changeling.", "Some o Manto a testes mundanos para resistir ou ajudar outros a resistir a intimidação e ameaças.", "Incite Bedlam para encerrar uma emoção escolhida e sua Condição em vez de impô-la; emoções sobrenaturais provocam Choque de Vontades.", "Uma vez por capítulo, recupere 1 Força de Vontade após sofrer uma falha ou falha dramática.", "Gaste 1 Glamour para criar uma bolha de três metros que o protege de Inclinações Ambientais pela cena.",
+  ], "h-courts"),
+  court("storm", "Storm Court", "Corte da Tempestade", "Courage", "Coragem", 90, [
+    "Add Mantle to mundane rolls encouraging others to push through fear.", "Mundane attempts to frighten you subtract Mantle.", "When weather would impede the senses, add Mantle to perception instead.", "Your unarmed attacks use Mantle as weapon damage while lightning crackles around your limbs.", "Spend 1 Glamour to turn action penalties from Environmental Tilts into bonuses for the scene; this does not prevent injury.",
+  ], [
+    "Some o Manto a testes mundanos para encorajar outros a superar seus medos.", "Tentativas mundanas de amedrontá-lo subtraem seu Manto.", "Quando o clima prejudicaria os sentidos, some o Manto à percepção em vez disso.", "Seus ataques desarmados usam o Manto como dano de arma enquanto relâmpagos percorrem seus membros.", "Gaste 1 Glamour para transformar penalidades de Inclinações Ambientais em bônus pela cena; isso não impede ferimentos.",
+  ], "h-courts"),
   court("society-morning", "Society of Morning", "Sociedade da Manhã", "Discovery through reckless pursuit", "Descoberta por busca imprudente", 279, [
     "Apply Mantle as a bonus to gather information on a new subject.", "Apply Mantle as a bonus to rolls involving instability or impermanence.", "Regain Willpower when a truth implicates a friend or ally.", "Automatically persuade a changeling to share information relevant to freehold safety; supernatural resistance triggers a Clash of Wills.", "Once per session, reveal an unknown truth to shift your negative Clarity Condition to another changeling.",
   ], [

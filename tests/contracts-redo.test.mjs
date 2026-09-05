@@ -41,6 +41,13 @@ test("família Undercourt possui dez Contratos e usa o identificador canônico d
   assert.equal(items.find((contract) => contract.originalName === "Family-Friendly Feud")?.hasRoll, false);
 });
 
+test("família Weather possui dez Contratos, duas Clauses e dois Nothing to See Here distintos", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "weather");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => new Set(Object.keys(contract.courtClauses ?? {})).size === 2));
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.originalName === "Nothing to See Here").length, 2);
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
