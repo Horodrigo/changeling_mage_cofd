@@ -11,17 +11,48 @@ after(async () => vite.close());
 const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/contracts.ts");
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("../tmp/contracts-redo/contracts-index.json", import.meta.url), "utf8"));
 
-test("catálogo contém 179 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 179);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 179);
+test("catálogo contém os 180 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 180);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 180);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 59);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 109);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 110);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
+});
+
+test("catálogo cobre integralmente os 173 registros do índice offline", () => {
+  const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
+  const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
+  const missing = OFFLINE_INDEX.filter((entry) => !importedNames.has(normalize(entry.name))).map((entry) => entry.name);
+  assert.deepEqual(missing, []);
+  assert.equal(OFFLINE_INDEX.length, 173);
+});
+
+test("custos e Dice Pools permanecem conciliados com o índice offline", () => {
+  const normalizeName = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
+  const normalizeMechanic = (value) => String(value ?? "").toLowerCase().replace(/−/g, "-").replace(/vs\./g, "vs").replace(/\s+/g, "").replace(/\+/g, "");
+  const byName = new Map(CONTRACTS.map((contract) => [normalizeName(contract.originalName), contract]));
+  const acceptedCostExceptions = new Set([
+    "Flickering Hours", "Momentary Respite", "Witch's Brambles",
+    "Changeling Hours", "Walls Have Ears", "Trapdoor Spider's Trick", "Talon and Wing",
+    "Elemental Fury", "Steal Influence", "Spring's Kiss", "Blessing of Spring",
+    "Helios' Judgment", "Autumn's Fury", "Tasting the Harvest", "Field of Regret", "Wayward Guide",
+  ]);
+  const acceptedPoolExceptions = new Set(["Cracked Mirror", "Witch's Brambles", "Flickering Hours"]);
+  const costMismatches = [];
+  const poolMismatches = [];
+  for (const entry of OFFLINE_INDEX) {
+    const contract = byName.get(normalizeName(entry.name));
+    if (!acceptedCostExceptions.has(entry.name) && normalizeMechanic(contract?.cost) !== normalizeMechanic(entry.cost_index)) costMismatches.push({name:entry.name,index:entry.cost_index,actual:contract?.cost});
+    if (!acceptedPoolExceptions.has(entry.name) && normalizeMechanic(contract?.dicePool) !== normalizeMechanic(entry.dice_pool_index)) poolMismatches.push({name:entry.name,index:entry.dice_pool_index,actual:contract?.dicePool});
+  }
+  assert.deepEqual(costMismatches, []);
+  assert.deepEqual(poolMismatches, []);
 });
 
 test("bloco Scepter está completo", () => {
@@ -88,10 +119,14 @@ test("bloco Shield do livro básico está completo", () => {
   assert.equal(items.find((item)=>item.originalName==="Thorns and Brambles")?.options?.length,3);
 });
 
-test("bloco Steed aguarda somente Flickering Hours", () => {
+test("bloco Steed está completo e preserva a exceção de Flickering Hours", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Steed");
-  assert.equal(items.length,9);
-  assert.ok(!items.some((item)=>item.originalName==="Flickering Hours"));
+  assert.equal(items.length,10);
+  const flickering=items.find((item)=>item.originalName==="Flickering Hours");
+  assert.equal(flickering?.hasRoll,false);
+  assert.equal(flickering?.dicePool,"None");
+  assert.equal(flickering?.cost,"●/●○");
+  assert.match(flickering?.description??"",/Resolve \+ Wyrd contested by the changeling's Wits \+ Occult \+ Wyrd/);
   assert.equal(items.find((item)=>item.originalName==="Talon and Wing")?.options?.length,3);
 });
 
@@ -195,6 +230,23 @@ test("Contratos rolados possuem os quatro resultados e Loophole definido", () =>
     assert.ok(contract.failure, contract.id);
     assert.ok(contract.dramaticFailure, contract.id);
     assert.ok(contract.loophole, contract.id);
+  }
+});
+
+test("todos os 180 Contratos possuem os campos estruturais obrigatórios", () => {
+  for (const contract of CONTRACTS) {
+    assert.ok(contract.id, "missing id");
+    assert.ok(contract.name, contract.id);
+    assert.ok(contract.originalName, contract.id);
+    assert.ok(contract.description, contract.id);
+    assert.ok(contract.cost, contract.id);
+    assert.ok(contract.action, contract.id);
+    assert.ok(contract.duration, contract.id);
+    assert.ok(contract.loophole, contract.id);
+    assert.ok(contract.sourceId, contract.id);
+    assert.ok(contract.source, contract.id);
+    assert.ok(Number.isInteger(contract.page) && contract.page > 0, contract.id);
+    assert.ok(contract.dicePool, contract.id);
   }
 });
 

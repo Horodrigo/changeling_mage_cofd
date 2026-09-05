@@ -105,7 +105,7 @@ The user supplied the complete PDF text and then confirmed that the correct init
 
 The index summary contains Enchanted Bargain, teleportation, Willpower recovery, and Beat recovery absent from pp. 51–52. Its effect was reconstructed from the PDF; the indexed name, cost, and lack of Dice Pool were retained.
 
-### Flickering Hours — Changeling: The Lost
+### Flickering Hours — resolved during import
 
 | Field | Offline index | PDF |
 | --- | --- | --- |
@@ -113,8 +113,8 @@ The index summary contains Enchanted Bargain, teleportation, Willpower recovery,
 | Cost | `●(○)` | 1 Glamour for the changeling; 1 Glamour + 1 Willpower for a group |
 | Action / Duration | — | Instant / Until the changeling exits the Hedge |
 
-The PDF uses Wits + Occult + Wyrd contested by an unwilling target's Resolve + Wyrd only when that target tries to pull free. It is not an invocation roll. The mechanically faithful representation therefore appears to be an automatic Contract with `Dice Pool: None`, cost `●/●○`, and the resistance roll described inside Effect.
+The PDF uses Wits + Occult + Wyrd contested by an unwilling target's Resolve + Wyrd only when that target tries to pull free. It is not an invocation roll. The user confirmed the mechanically faithful representation: an automatic Contract with `Dice Pool: None`, cost `●/●○`, and the resistance roll described only inside Effect.
 
 ## Import status
 
-The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **179** audited records. Kith and Kin is complete at 59/59 and the core book is at 109/110; Steed awaits only the Flickering Hours decision.
+The official catalog contains **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog contains all **180/180** audited records. Kith and Kin is complete at 59/59 and the core book is complete at 110/110.
