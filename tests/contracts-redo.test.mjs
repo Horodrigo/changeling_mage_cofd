@@ -12,13 +12,13 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 60 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 60);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 60);
+test("catálogo contém os primeiros 68 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 68);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 68);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 49);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 57);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
@@ -50,6 +50,16 @@ test("bloco Thorn está completo e preserva a correção de Witch's Brambles", (
   assert.equal(witch?.dicePool,"None");
   assert.equal(witch?.cost,"●●○/●●●○");
   assert.equal(witch?.action,"Reflexive");
+});
+
+test("bloco Independent contém os oito registros sem divergência pendente", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Independent");
+  assert.equal(items.length,8);
+  assert.deepEqual(new Set(items.map((item)=>item.originalName)),new Set([
+    "Coming Darkness","Pomp and Circumstance","Shadow Puppet","Dread Companion",
+    "Listen With Wind's Ears","Steal Influence","Earth's Gentle Movements","Earth's Impenetrable Walls",
+  ]));
+  assert.equal(items.find((item)=>item.originalName==="Listen With Wind's Ears")?.hasRoll,false);
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {
