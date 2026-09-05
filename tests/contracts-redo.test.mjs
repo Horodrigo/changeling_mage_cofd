@@ -12,14 +12,14 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 110 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 110);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 110);
+test("catálogo contém os primeiros 119 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 119);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 119);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 59);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 40);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 49);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
@@ -86,6 +86,13 @@ test("bloco Shield do livro básico está completo", () => {
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[140,140,140,141,142,142,142,143,143,143]);
   assert.equal(items.find((item)=>item.originalName==="Thorns and Brambles")?.options?.length,3);
+});
+
+test("bloco Steed aguarda somente Flickering Hours", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Steed");
+  assert.equal(items.length,9);
+  assert.ok(!items.some((item)=>item.originalName==="Flickering Hours"));
+  assert.equal(items.find((item)=>item.originalName==="Talon and Wing")?.options?.length,3);
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {
