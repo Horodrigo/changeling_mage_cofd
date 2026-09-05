@@ -81,8 +81,9 @@ ainda pode conter tradução literal, concordância ruim ou regra incorreta.
 
 ### Ordem recomendada
 
-1. Fechar o livro básico: conferir a Brecha de `last-harvest`; depois auditar
-   sistematicamente Brechas, benefícios de Feição, custo, ação e duração dos 110.
+1. Fechar o livro básico: auditar sistematicamente Brechas, benefícios de Feição,
+   custo, ação e duração dos 110. A Brecha de `last-harvest` já está cadastrada:
+   escolher a própria Pedra de Toque como alvo.
 2. Revisar suplementos por fonte, sem misturar livros: Dark Eras Changeling (1),
    Oak, Ash, and Thorn (4), Book of Seemings (7), Beyond the Hedge (37), Book of
    Courts (40) e Kith and Kin (55).
@@ -108,3 +109,13 @@ ainda pode conter tradução literal, concordância ruim ou regra incorreta.
 - Busca considera nomes nos dois idiomas; ordenação usa os rótulos do idioma ativo.
 - Enquanto uma entrada inglesa não estiver revisada, o fallback para português deve
   ser explícito e testável, nunca uma tradução inventada em tempo de execução.
+
+## Cortes (2026-09-05)
+
+- 21 Cortes pertencem às fontes fornecidas: quatro sazonais, 15 estruturas
+  alternativas de `Changeling: The Lost` e duas históricas de DE:CtL.
+- A contagem anterior de 20 excluía por engano `Court of the Leafless Tree`; a
+  coletânea DE:CtL fornecida a contém na p. 238.
+- Todas as 21 possuem nome, emoção e cinco benefícios de Manto em inglês e
+  português, com identificadores internos estáveis. `Court of the Leafless Tree`
+  foi padronizada como `Corte da Árvore Desfolhada`.

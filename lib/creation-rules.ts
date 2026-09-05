@@ -1,3 +1,5 @@
+import { CTL_COURT_DEFINITIONS } from "./changeling-courts";
+
 export const ATTRIBUTES = {
   Mental: ["Inteligência", "Raciocínio", "Perseverança"],
   Físicos: ["Força", "Destreza", "Vigor"],
@@ -62,7 +64,7 @@ export function seemingDisplayName(value: unknown, locale: "pt-BR" | "en-US" = "
 
 export const CTL_NEEDLES = ["Bon Vivant", "Mestre de Xadrez", "Comandante", "Compositor", "Conselheiro", "Audacioso", "Dínamo", "Protetor", "Provedor", "Erudito", "Contador de Histórias", "Professor", "Tradicionalista", "Visionário"];
 export const CTL_THREADS = ["Aceitação", "Raiva", "Família", "Amizade", "Ódio", "Honra", "Alegria", "Amor", "Memória", "Vingança"];
-export const CTL_COURTS = ["Sem Corte", "Primavera", "Verão", "Outono", "Inverno"];
+export const CTL_COURTS = ["Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName)];
 export const REGALIA = ["Coroa", "Joias", "Espelho", "Escudo", "Corcel", "Espada", "Cálice", "Moeda", "Cetro", "Estrelas", "Espinho", "Garganta"];
 
 export function changelingFrailtySlots(wyrd: number) {

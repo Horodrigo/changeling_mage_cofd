@@ -10,6 +10,7 @@ after(async () => vite.close());
 const { CONTRACTS, CONTRACT_NAME_ALIASES, findContract } = await vite.ssrLoadModule("/lib/contracts.ts");
 const { KITHS } = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const { contractHasInvocationRoll, contractOutcomeSections } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+const { contractDisplayOptions } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 const { alphabetical, orderedChoiceOptions } = await vite.ssrLoadModule("/lib/option-order.ts");
 const { ATTRIBUTES, SKILLS } = await vite.ssrLoadModule("/lib/creation-rules.ts");
 
@@ -80,4 +81,26 @@ test("fichas oficiais usam o catálogo atualizado e Frátrias personalizadas pre
   assert.match(ui,/data\.kith_custom \? undefined : findKith\(data\.kith\)/);
   assert.match(ui,/definition\?\.blessing \?\? data\.kith_blessing/);
   assert.match(ui,/definition\?\.description \?\? data\.kith_description/);
+});
+
+test("Opções de Contratos aparecem após Ação/Duração e antes dos resultados", () => {
+  const builder=readFileSync(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  const start=builder.indexOf("function ContractSelector");
+  const slice=builder.slice(start,builder.indexOf("function SpellSelector",start));
+  assert.ok(slice.indexOf('tr("Ação / Duração"') < slice.indexOf('tr("Opções"'));
+  assert.ok(slice.indexOf('tr("Opções"') < slice.indexOf("contractOutcomeSections"));
+  const workspace=readFileSync(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const power=workspace.slice(workspace.indexOf("function ContractPowerList"),workspace.indexOf("function SeemingLore"));
+  assert.ok(power.indexOf('tr("Ação / Duração"') < power.indexOf('tr("Opções"'));
+  assert.ok(power.indexOf('tr("Opções"') < power.indexOf("contractOutcomeSections"));
+});
+
+test("Options só repetem escolhas que não estejam incorporadas ao Efeito ou Sucesso", () => {
+  const portents=findContract("ctl-2ed:portents-and-visions");
+  assert.deepEqual(contractDisplayOptions(portents,"pt-BR"),[]);
+  assert.deepEqual(contractDisplayOptions(portents,"en-US"),[]);
+  const walls=findContract("ctl-2ed:walls-have-ears");
+  assert.equal(contractDisplayOptions(walls,"pt-BR").length,3);
+  assert.equal(contractDisplayOptions(walls,"en-US").length,3);
+  assert.match(contractDisplayOptions(walls,"en-US")[0],/Durability/);
 });

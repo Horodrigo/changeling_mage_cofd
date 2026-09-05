@@ -56,7 +56,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
-import { contractOutcomeSections } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractOutcomeSections } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
@@ -66,6 +66,7 @@ import {
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
 import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
+import { courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
@@ -1212,7 +1213,7 @@ function CtlStep(props: any) {
 }
 
 function CourtSelector(props: any) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   const [saved, setSaved] = useState<CustomCourtDefinition[]>(props.courtCatalog ?? []);
   const emptyCourt = (): CustomCourtDefinition => ({
     name: "",
@@ -1257,15 +1258,22 @@ function CourtSelector(props: any) {
     setDraft(copyCourt(props.customCourt));
     setCreating(false);
   };
+  const officialCourt = courtPresentation(props.court, locale);
+  const courtLabels = Object.fromEntries([
+    ["Sem Corte", tr("Sem Corte", "Courtless")],
+    ...CTL_COURTS.filter((name) => name !== "Sem Corte").map((name) => [name, courtDisplayName(name, locale)]),
+  ]);
   return (
     <div className="kith-field">
       <span>{tr("Corte", "Court")}</span>
       <div className="kith-current">
-        <strong>{props.court || tr("Nenhuma selecionada", "None selected")}</strong>
+        <strong>{props.court ? courtDisplayName(props.court, locale) : tr("Nenhuma selecionada", "None selected")}</strong>
         <small>
           {props.customCourt
             ? `${props.customCourt.emotion} · ${tr("Corte criada pelo jogador", "Player-created Court")}`
-            : tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}
+            : officialCourt
+              ? `${officialCourt.emotion} · ${tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}`
+              : tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}
         </small>
       </div>
       <Dialog>
@@ -1290,7 +1298,7 @@ function CourtSelector(props: any) {
               ...CTL_COURTS,
               ...saved.map((item) => item.name),
             ]}
-            optionLabels={{ __none: tr("Selecione uma Corte", "Select a Court") }}
+            optionLabels={{ __none: tr("Selecione uma Corte", "Select a Court"), ...courtLabels }}
           />
           <Button
             type="button"
@@ -1692,6 +1700,7 @@ function ContractSelector({
                 </h3>
                 <div>
                   {items.map((contract) => {
+                    const displayOptions = contractDisplayOptions(contract, locale);
                     const selected = contracts.some(
                       (item) =>
                         item.id === contract.id ||
@@ -1735,6 +1744,16 @@ function ContractSelector({
                             {contract.action ?? tr("Instantânea", "Instant")} ·{" "}
                             {contract.duration ?? tr("Cena", "Scene")}
                           </p>
+                          {displayOptions.length > 0 && (
+                            <div className="contract-options">
+                              <strong>{tr("Opções", "Options")}</strong>
+                              <ul>
+                                {displayOptions.map((option) => (
+                                  <li key={option}>{option}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                           {contractOutcomeSections(contract, locale)
                             .filter((section) => section.text !== contract.description)
                             .map((section) => (
@@ -1742,16 +1761,6 @@ function ContractSelector({
                               <strong>{section.label}:</strong> {section.text}
                             </p>
                           ))}
-                          {contract.options?.length && (
-                            <div className="contract-options">
-                              <strong>{tr("Opções", "Options")}</strong>
-                              <ul>
-                                {contract.options.map((option) => (
-                                  <li key={option}>{option}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
                           <p className="rule-detail">
                             <strong>{tr("Brecha", "Loophole")}:</strong> {contract.loophole}
                           </p>
@@ -3437,6 +3446,7 @@ function contractTooltip(
     | "exceptionalSuccess"
     | "failure"
     | "dramaticFailure"
+    | "options"
   >,
   seeming: string,
   locale:Locale="pt-BR",
@@ -3445,8 +3455,10 @@ function contractTooltip(
     contract.seemingBenefits?.[
       seeming as keyof typeof contract.seemingBenefits
     ];
+  const displayOptions = contractDisplayOptions(contract, locale);
+  const options = displayOptions.length ? `\n${localized(locale,"Opções","Options")}:\n${displayOptions.map((option) => `• ${option}`).join("\n")}` : "";
   return contract.description
-    ? `${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}${contract.cost ? `\n${localized(locale,"Custo","Cost")}: ${contract.cost} · ${localized(locale,"Ação","Action")}: ${contract.action} · ${localized(locale,"Duração","Duration")}: ${contract.duration}` : ""}\n${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
+    ? `${contract.cost ? `${localized(locale,"Custo","Cost")}: ${contract.cost}\n` : ""}${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n${localized(locale,"Ação","Action")}: ${contract.action ?? localized(locale,"Instantânea","Instant")} · ${localized(locale,"Duração","Duration")}: ${contract.duration ?? localized(locale,"Cena","Scene")}${options}\n${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
     : "";
 }
 function formatRequirements(requirements: Record<string, number>) {

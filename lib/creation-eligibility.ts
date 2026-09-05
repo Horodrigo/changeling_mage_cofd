@@ -1,9 +1,12 @@
+import { CTL_COURT_DEFINITIONS } from "./changeling-courts";
+
 const COURT_CONTRACT_GROUPS = new Set([
   "Primavera",
   "Verão",
   "Outono",
   "Inverno",
   "Cortes Adicionais",
+  ...CTL_COURT_DEFINITIONS.map((court) => court.translatedName),
 ]);
 
 export function meetsArcanaRequirements(

@@ -1,5 +1,6 @@
 export type EnglishContractText = {
   description: string;
+  options?: string[];
   success?: string;
   exceptionalSuccess?: string;
   failure?: string;
@@ -134,7 +135,12 @@ export const CONTRACT_TEXT_EN: Readonly<Record<string, EnglishContractText>> = {
     "dramaticFailure": "The character gleans the wrong Clarity levels, but doesn’t know this."
   },
   "ctl-2ed:walls-have-ears": {
-    "description": "The changeling holds an item up to his mouth, and tells it a secret from his time in Arcadia. The object tells him a secret in return. The changeling can invoke any of these effects, at a cost of one point of Glamour each: • He knows how the object is constructed and all its weak points. Halve the object’s Durability (rounded down) for any attack he makes against it, and add his Intelligence rating as bonus dice to repair or modify the object. • He knows how to use the object to its best effect, and his player gains the 9-again quality on dice rolls to wield or use it. • He sees a vision of the person who last handled or touched the object, as well as the circumstances of the scene. The vision shows anyone within three meters of the object at that time."
+    "description": "The changeling tells an object a secret from Arcadia and receives its secrets in return. Each selected option costs 1 Glamour.",
+    "options": [
+      "Learn how the object was made and its weak points: halve its Durability against the changeling's attacks and add Intelligence to rolls to repair or modify it.",
+      "Learn how to use the object to best effect: gain 9-again on rolls to wield or use it.",
+      "See the last person who handled or touched the object and the circumstances, including everyone within three yards/meters at the time."
+    ]
   },
   "ctl-2ed:props-and-scenery": {
     "description": "Glamour shapes the changeling into the desired inanimate object, with standard traits for its kind, of a Size up to his own by default. The player chooses an additional benefit per success rolled to invoke this Contract, such as: • +1 Durability; can apply multiple times • Limited mobility (he rolls himself as a rock, or uses chair legs to walk) • +/−1 Size; can apply multiple times • Other effects with Storyteller approval",

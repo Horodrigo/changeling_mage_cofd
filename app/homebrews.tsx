@@ -14,6 +14,7 @@ import { alphabetical } from "@/lib/option-order";
 import { CONTRACTS } from "@/lib/contracts";
 import { RAW_MERITS } from "@/lib/merits";
 import { ARCANA, CTL_COURTS, CTL_SEEMINGS, REGALIA, SKILLS } from "@/lib/creation-rules";
+import { courtDisplayName } from "@/lib/changeling-courts";
 import { localized, localizedCount, useLanguage, type Locale } from "@/lib/i18n";
 import {
   formatNamedText,
@@ -200,7 +201,7 @@ const RULE_LABELS_EN: Record<string,string> = {
   Coroa:"Crown", Joias:"Jewels", Espelho:"Mirror", Escudo:"Shield", Corcel:"Steed", Espada:"Sword", Cálice:"Chalice", Moeda:"Coin", Cetro:"Scepter", Estrelas:"Stars", Espinho:"Thorn", Garganta:"Maw",
   Primavera:"Spring", Verão:"Summer", Outono:"Autumn", Inverno:"Winter", Geral:"General", Mental:"Mental", Físico:"Physical", Physical:"Physical", Social:"Social", Sobrenatural:"Supernatural",
 };
-const localizedRuleLabel=(value:string,locale:Locale)=>locale==="en-US"?(RULE_LABELS_EN[value]??value):value;
+const localizedRuleLabel=(value:string,locale:Locale)=>locale==="en-US"?(RULE_LABELS_EN[value]??courtDisplayName(value,locale)):value;
 const contractTypeLabel=(value:string,locale:Locale)=>localizedRuleLabel(value,locale);
 const contractCategoryLabel=(value:string,locale:Locale)=>localizedRuleLabel(value,locale);
 const lineLabel=(value:string,locale:Locale)=>value==="Core"?localized(locale,"Todos","All"):value==="MtA"?localized(locale,"Mago","Mage"):"Changeling";

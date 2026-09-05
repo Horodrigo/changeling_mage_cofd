@@ -22,6 +22,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
+import { courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -103,7 +104,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
-import { contractOutcomeSections } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractOutcomeSections } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
   CONTRACTS,
@@ -946,7 +947,7 @@ function CharacterPaper({
           ["Crônica", character.character.chronicle], ["Agulha", data.needle], ["Fio", data.thread],
           ["Conceito", character.character.concept],
           ["Feição", seemingDisplayName(data.seeming,locale)],
-          ["Frátria", kithDisplayName(data.kith, Boolean(data.kith_custom), locale)], ["Corte", data.court],
+          [tr("Frátria", "Kith"), kithDisplayName(data.kith, Boolean(data.kith_custom), locale)], [tr("Corte", "Court"), courtDisplayName(data.court, locale)],
         ]
       : [
           ["Nome", character.character.name], ["Jogador", character.character.player],
@@ -1003,7 +1004,7 @@ function CharacterPaper({
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
               <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento","Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
-              <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CustomCourtLore data={data} merits={character.merits} />
+              <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CourtLore data={data} merits={character.merits} />
             </> : <>
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} />)}</div>
@@ -1064,7 +1065,7 @@ function CharacterPaper({
                 label="Conceito"
                 value={character.character.concept}
               />
-              <SheetField label="Corte" value={data.court} />
+              <SheetField label={tr("Corte", "Court")} value={courtDisplayName(data.court, locale)} />
             </section>
             <SheetHeading>Atributos</SheetHeading>
             <div className="official-trait-grid">
@@ -1191,7 +1192,7 @@ function CharacterPaper({
                 <SheetHeading>Outras Características</SheetHeading>
                 <SeemingLore seeming={String(data.seeming ?? "")} />
                 <KithLore data={data} />
-                <CustomCourtLore data={data} merits={character.merits} />
+                <CourtLore data={data} merits={character.merits} />
                 <GoblinDebtTrack
                   value={goblinDebt}
                   onChange={(value) => setState("goblin_debt", value)}
@@ -5484,6 +5485,7 @@ function ContractPowerList({
               courtBenefits?: Record<string, string>;
             }
           ).courtBenefits?.[court];
+          const displayOptions = contractDisplayOptions(definition, locale);
           return (
             <article key={`${definition.id}-${index}`}>
               <div className="contract-power-title">
@@ -5516,6 +5518,12 @@ function ContractPowerList({
                     {definition.duration ?? tr("Cena", "Scene")}
                   </dd>
                 </div>
+                {displayOptions.length > 0 && (
+                  <div className="contract-options">
+                    <dt>{tr("Opções", "Options")}</dt>
+                    <dd><ul>{displayOptions.map((option) => <li key={option}>{option}</li>)}</ul></dd>
+                  </div>
+                )}
                 {contractOutcomeSections(definition, locale)
                   .filter((section) => section.text !== definition.description)
                   .map((section) => (
@@ -5550,16 +5558,6 @@ function ContractPowerList({
                   </div>
                 )}
               </dl>
-              {definition.options?.length && (
-                <div className="contract-options">
-                  <strong>{tr("Opções", "Options")}</strong>
-                  <ul>
-                    {definition.options.map((option) => (
-                      <li key={option}>{option}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </article>
           );
         })}
@@ -5622,32 +5620,37 @@ function KithLore({ data }: { data: Record<string, unknown> }) {
     />
   );
 }
-function CustomCourtLore({
+function CourtLore({
   data,
   merits,
 }: {
   data: Record<string, unknown>;
   merits: CharacterSheet["merits"];
 }) {
+  const { locale, tr } = useLanguage();
   const raw = data.custom_court;
-  if (!raw || typeof raw !== "object") return null;
-  const court = raw as Record<string, unknown>,
-    benefits = Array.isArray(court.mantleBenefits)
-      ? court.mantleBenefits.map(String)
-      : [],
+  const custom = raw && typeof raw === "object" ? raw as Record<string, unknown> : undefined;
+  const official = custom ? undefined : courtPresentation(data.court, locale);
+  if (!custom && !official) return null;
+  const name = custom ? String(custom.name ?? data.court ?? "") : courtDisplayName(data.court, locale);
+  const emotion = custom ? String(custom.emotion ?? "") : String(official?.emotion ?? "");
+  const benefits = custom && Array.isArray(custom.mantleBenefits)
+      ? custom.mantleBenefits.map(String)
+      : official?.mantleBenefits ?? [],
     dots =
       merits.find(
         (item) => item.name === "Mantle" && item.grantedBy === "Corte",
       )?.dots ?? 1;
   return (
     <article className="lore-panel">
-      <h4>Manto: {String(court.name ?? data.court ?? "")}</h4>
-      <small>Sentimento da Corte: {String(court.emotion ?? "")}</small>
+      <h4>{tr("Manto", "Mantle")}: {name}</h4>
+      <small>{tr("Sentimento da Corte", "Court emotion")}: {emotion}</small>
       {benefits.slice(0, dots).map((benefit, index) => (
         <p key={index}>
-          <strong>Manto {index + 1}:</strong> {benefit}
+          <strong>{tr("Manto", "Mantle")} {index + 1}:</strong> {benefit}
         </p>
       ))}
+      {official && <small>{official.source} · p. {official.page}</small>}
     </article>
   );
 }

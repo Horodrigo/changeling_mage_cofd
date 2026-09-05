@@ -19,6 +19,11 @@ export function contractDisplayName(contract:Pick<ContractDefinition,"id"|"name"
   return locale==="en-US"?contract.originalName:contract.name;
 }
 
+export function contractDisplayOptions(contract:Pick<ContractDefinition,"id"|"options">,locale:Locale="pt-BR") {
+  if (locale === "en-US") return CONTRACT_TEXT_EN[contract.id]?.options ?? contract.options ?? [];
+  return contract.options ?? [];
+}
+
 export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="pt-BR") {
   const english=locale==="en-US"&&contract.id?CONTRACT_TEXT_EN[contract.id]:undefined;
   const description=english?.description??contract.description;

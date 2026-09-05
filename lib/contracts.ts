@@ -302,10 +302,6 @@ export const CONTRACTS: ContractDefinition[] = [
     regalia: "Espelho",
     description:
       "Revela um acontecimento significativo ou uma promessa do passado do alvo, ou um evento ou acordo importante de seu futuro próximo. As visões do futuro indicam possibilidades, não um destino imutável.",
-    options: [
-      "Passado: O jogador vê uma visão do evento mais importante já ocorrido com o alvo, relevante aos interesses atuais do jogador. Isso independe das memórias do alvo — pode ser algo esquecido ou reprimido. Alternativamente, pode ver a última promessa ou acordo feito pelo alvo.",
-      "Futuro: O jogador vê o evento, promessa ou acordo mais importante que vai acontecer com o alvo nos próximos dias. O futuro não é fixo, e a interferência do jogador pode alterá-lo. O jogador, e o alvo (caso seja informado), recebem a Condição Informado.",
-    ],
     sourceId: "ctl-2ed",
     source: "Changeling: Os Perdidos",
     page: 137,
@@ -2002,7 +1998,7 @@ export const CONTRACTS: ContractDefinition[] = [
     name: "Traçar Semelhança",
     originalName: "Draw Likeness",
     type: "Real",
-    regalia: "Corte da Árvore sem Folhas",
+    regalia: "Corte da Árvore Desfolhada",
     cost: "1 Glamour",
     dicePool: "Raciocínio + Investigação + Manto vs. Compostura + Fado",
     action: "Disputada",
