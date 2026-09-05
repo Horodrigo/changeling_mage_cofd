@@ -1,205 +1,184 @@
-# Internacionalização do Arquivo das Trevas
+# Política de conteúdo bilíngue do Arquivo das Trevas
 
 ## Objetivo
 
-Planejar a disponibilização do sistema em Português do Brasil (`pt-BR`) e Inglês (`en`) sem alterar a compatibilidade das fichas existentes e sem traduzir nomes de livros ou outras fontes bibliográficas.
+O Arquivo das Trevas deve oferecer toda a interface e todo o conteúdo oficial em Inglês dos Estados Unidos (`en-US`) e Português do Brasil (`pt-BR`).
 
-Nenhuma implementação está prevista nesta etapa. Este documento registra a direção técnica para análise futura.
+O Inglês é a base editorial e mecânica dos catálogos. Novas regras oficiais devem ser importadas primeiro em Inglês, conferidas contra as fontes e testadas. A tradução para Português ocorre depois, sem modificar a identidade do item nem sua mecânica.
 
-## Complexidade estimada
+Esse fluxo substitui o plano anterior de usar o catálogo português existente como base e preencher o Inglês por sobreposições parciais. O objetivo agora é eliminar gradualmente dados herdados inconsistentes, em vez de preservá-los por retrocompatibilidade. Enquanto não houver usuários, não há obrigação de migrar formatos antigos de catálogo ou fichas.
 
-A complexidade geral é **média-alta**.
+## Idiomas e comportamento da aplicação
 
-A internacionalização da interface — menus, botões, mensagens, títulos e validações — é relativamente simples. A maior parte do trabalho está no grande volume de conteúdo dos catálogos, incluindo:
+- Os idiomas suportados são `en-US` e `pt-BR`.
+- A escolha é geral para a aplicação e persiste no dispositivo.
+- O seletor mostra a bandeira correspondente ao idioma ativo.
+- Trocar o idioma altera interface e apresentação dos catálogos, mas nunca regras, escolhas, custos ou histórico de Experiência.
+- Conteúdo oficial sem tradução portuguesa validada permanece disponível em Inglês. A aplicação não deve inventar traduções nem confundir texto ausente com texto traduzido.
+- Nomes de livros e suplementos permanecem no idioma original.
+- Conteúdo livre e homebrew é exibido como foi escrito e não é traduzido automaticamente.
 
-- Méritos e Méritos Expandidos;
-- Contratos e Regalias;
-- Feitiços, Rotes, Praxis e Attainments;
-- Condições;
-- Feições e Fratrias;
-- armas, armaduras, veículos e equipamentos;
-- companheiros e demais regras descritivas.
+## Modelo editorial: English-first
 
-A estrutura técnica e a interface podem ser internacionalizadas em alguns dias. A revisão completa dos catálogos nos dois idiomas exigirá mais tempo, principalmente para garantir consistência terminológica e fidelidade às fontes.
-
-## Princípios arquiteturais
-
-### IDs internos estáveis
-
-Entidades de regras não devem ser identificadas pelo nome exibido ao jogador. Cada item deve possuir um identificador interno estável e independente do idioma.
-
-Exemplo conceitual:
+Cada entidade oficial deve ter um ID interno estável, independente do texto exibido. Inglês é o registro canônico; Português é uma apresentação localizada associada ao mesmo ID.
 
 ```ts
 {
-  id: "core-2ed:fast-reflexes",
-  sourceId: "core-2ed",
-  page: 54,
-  dots: [1, 2, 3],
-  translations: {
-    "pt-BR": {
-      name: "Reflexos Rápidos",
-      description: "..."
-    },
-    en: {
-      name: "Fast Reflexes",
-      description: "..."
-    }
-  }
+  id: "ctl:kith-and-kin:burning-ambition",
+  sourceId: "kith-and-kin",
+  page: 44,
+  en: { name: "Burning Ambition", summary: "...", effect: "..." },
+  "pt-BR": { name: "Ambição Ardente", summary: "...", effect: "..." }
 }
 ```
 
-As fichas devem armazenar o `id` e os dados escolhidos pelo jogador, nunca o nome traduzido como referência principal. Assim, trocar o idioma não exige migrar fichas existentes.
+A implementação física pode manter o Inglês no objeto principal e o Português em um catálogo ou overlay, desde que:
 
-### Textos da interface por chave
+- um único ID represente o mesmo item nos dois idiomas;
+- campos mecânicos equivalentes permaneçam associados;
+- a ausência de tradução seja explícita e use Inglês como fallback;
+- nomes exibidos nunca sejam usados como chave primária;
+- seletores, histórico e fichas persistam IDs ou valores canônicos estáveis.
 
-Todo texto fixo da interface deve ser substituído por uma chave estável, resolvida pelo idioma ativo.
+## Fontes e autoridade dos dados
 
-```ts
-t("character.actions.edit")
-t("character.tabs.combat")
-t("validation.skills.incomplete")
-```
+### Índice offline do Codex of Darkness
 
-Os arquivos de idioma podem ser organizados inicialmente como:
+A cópia offline do site é usada para enumerar os itens e obter nome original, livro, página, custo e Dice Pool dos Contratos. Ela funciona como índice de localização e conferência, não como autoridade final para textos extensos ou casos excepcionais.
 
-```text
-locales/
-  pt-BR/
-    interface.ts
-    rules.ts
-  en/
-    interface.ts
-    rules.ts
-```
+### PDFs dos livros
 
-O sistema deve possuir um idioma padrão e um fallback. A recomendação inicial é usar `pt-BR` como padrão e como fallback enquanto o catálogo em inglês estiver incompleto.
+Os PDFs definidos como fontes do projeto são a autoridade para Summary, Effect, Action, Duration, Options genuínas, resultados de rolagem, Loopholes, benefícios, pré-requisitos e exceções. Somente conteúdo pertencente a essas fontes entra no catálogo oficial.
 
-### Idioma persistente
+Os livros normalmente usam duas colunas por página. A extração deve respeitar cada coluna separadamente e ser comparada visualmente ou contextualmente com a página original. É proibido importar texto bruto sem revisão: quebras de página, cabeçalhos, rodapés, sidebars e a coluna vizinha podem contaminar o resultado.
 
-O seletor de idioma deve persistir a escolha no navegador. A preferência é uma configuração da aplicação, e não parte de cada personagem.
+Não é necessário reproduzir toda a prosa do livro. O aplicativo deve trazer resumos fiéis dos efeitos mecânicos, preservando condições, modificadores, escolhas, limitações e consequências relevantes.
 
-Ordem sugerida para determinar o idioma:
+## Processo de reconstrução
 
-1. preferência salva pelo usuário;
-2. idioma do navegador, caso seja suportado;
-3. fallback para `pt-BR`.
+Cada catálogo deve ser tratado em lotes pequenos e verificáveis, normalmente por livro e categoria.
 
-### Fontes bibliográficas
+1. Gerar a lista completa pelo índice offline.
+2. Limitar a lista às fontes adotadas.
+3. Comparar nomes, fontes e páginas com os PDFs.
+4. Registrar discrepâncias antes da importação e consultar o usuário quando as fontes não permitirem conclusão segura.
+5. Remover ou substituir registros herdados do escopo reconstruído, sem combinar silenciosamente texto antigo e novo.
+6. Importar o conteúdo canônico integralmente em Inglês.
+7. Validar quantidade, IDs, fontes, páginas e campos obrigatórios por testes.
+8. Revisar a apresentação em Inglês.
+9. Somente então criar e revisar a tradução portuguesa.
+10. Validar Português sem alterar o registro canônico.
 
-Nomes de livros, suplementos e outras fontes devem permanecer no idioma original, independentemente do idioma selecionado para a interface.
+Uma categoria só está completa quando todos os itens de suas fontes foram conciliados e cada campo mecânico exigido foi conferido.
 
-Exemplos:
+## Padrão de Contratos
 
-- `Changeling: The Lost Second Edition`;
-- `Mage: The Awakening Second Edition`;
-- `Chronicles of Darkness`;
-- `Kith & Kin`;
-- `Book of Seemings`.
+### Com Dice Pool e resultados
 
-Os identificadores das fontes também devem permanecer estáveis e separados dos respectivos nomes de exibição.
+1. Name e classificação (`Royal`, `Common` ou `Goblin`)
+2. Regalia ou Court e Source
+3. Summary
+4. Dice Pool
+5. Cost
+6. Action / Duration
+7. Options, somente quando genuínas e não repetidas
+8. Success
+9. Exceptional Success
+10. Failure
+11. Dramatic Failure
+12. Loophole
+13. Benefits
 
-### Conteúdo criado pelo jogador
+### Sem Dice Pool
 
-Conteúdo livre criado pelo jogador não será traduzido automaticamente. Isso inclui:
+1. Name e classificação
+2. Regalia ou Court e Source
+3. Summary
+4. Cost
+5. Action / Duration
+6. Options, somente quando genuínas e não repetidas
+7. Effect
+8. Loophole
+9. Benefits
 
-- nomes de personagens, Cortes, Ordens, Recantos e companheiros;
-- Aspirações, Obsessões, Fragilidades, Juramentos e Anotações;
-- especializações e benefícios personalizados;
-- nomes ou descrições personalizados de Méritos;
-- qualquer texto livre gravado na ficha.
+### Regras de preenchimento
 
-Esse conteúdo deve ser exibido exatamente como foi escrito, independentemente do idioma atual da aplicação.
+- A existência de Dice Pool não garante os quatro resultados tradicionais. Exceções seguem o livro e devem ser consultadas quando ainda não houver decisão.
+- `Wyrd Debt`, `Hidden Protocol` e `Autonomous Payload` são exceções conhecidas: possuem Dice Pool, mas somente `Effect`.
+- Se Action ou Duration não estiver na regra, no resumo ou no efeito, usar `Instant` e `One scene`.
+- `Options` aparece imediatamente após `Action / Duration`.
+- Não criar `Options` quando a escolha já estiver integralmente em `Effect` ou `Success`.
+- Loophole ausente após conferência é `None`; nunca se inventa texto.
+- Benefícios externos ao livro básico preservam a fonte correta; benefícios adicionais conhecidos podem vir de *Book of Seemings*.
+- Regalias são armazenadas por identidade canônica e exibidas no idioma ativo. `Maw` corresponde a `Garganta`.
+- Custos usam `●` para Glamour e `○` para Willpower.
+- Nome, custo e Dice Pool vêm do índice offline; os demais campos são confrontados com o PDF indicado.
 
-## Textos dinâmicos
+`Summary` descreve brevemente o que o Contrato faz e suas condições gerais. Ele nunca deve receber o conteúdo de `Success` por conveniência. Resultados, efeitos e benefícios permanecem em campos próprios.
 
-Textos montados a partir de dados exigem tratamento específico. Não é suficiente traduzir palavras isoladas e concatená-las, pois a ordem e a concordância podem variar entre os idiomas.
+## Tradução para Português
 
-Devem ser previstas mensagens parametrizadas:
+A tradução começa somente após o lote inglês estar estruturalmente completo. Ela deve:
 
-```ts
-t("experience.cost", { points: 3 })
-t("merit.sourceReference", { source: "Kith & Kin", page: 42 })
-```
+- traduzir sentido e mecânica, não construções literais pouco naturais;
+- padronizar Atributos, Perícias, Condições, Regalias, Seemings e ações;
+- preservar números, custos, penalidades, bônus, durações e gatilhos;
+- manter os campos separados como no original;
+- respeitar concordância, gênero e sujeito da regra;
+- distinguir corretamente personagem, jogador, changeling e alvo;
+- manter nomes de fontes no original;
+- não duplicar Options dentro de Success ou Effect;
+- passar por revisão editorial além dos testes estruturais.
 
-A camada de tradução deverá tratar:
+Traduções anteriores só podem ser reaproveitadas depois de comparadas com o registro inglês reconstruído. Texto português existente não é evidência de completude ou correção.
 
-- singular e plural;
-- números e pontuação;
-- interpolação de nomes e valores;
-- gênero gramatical quando necessário;
-- textos de validação;
-- nomes compostos gerados pelo sistema, como `Manto: Nome da Corte`;
-- descrições resultantes de escolhas configuráveis.
+## Interface e textos dinâmicos
 
-## Compatibilidade e persistência
+Textos fixos podem ser resolvidos por chaves ou pares localizados, conforme a estrutura atual. Frases complexas não devem ser montadas concatenando palavras traduzidas.
 
-Antes de alterar os catálogos, será necessário verificar quais fichas ainda armazenam nomes em vez de IDs. Uma migração controlada pode ser necessária para normalizar registros antigos.
+Mensagens variáveis devem considerar singular, plural, ordem, concordância, números, pontuação e termos de regras no idioma ativo. A responsividade deve ser verificada nos dois idiomas.
 
-Requisitos de compatibilidade:
+Listas e filtros são ordenados pelo texto efetivamente exibido, exceto Atributos e Perícias quando a regra exigir uma ordem específica.
 
-- uma ficha deve poder ser aberta em qualquer idioma suportado;
-- trocar o idioma não pode alterar escolhas, custos ou histórico de Experiência;
-- exportações e importações JSON devem usar IDs estáveis;
-- valores antigos precisam de uma estratégia de resolução por aliases;
-- traduções ausentes devem usar o fallback, sem ocultar conteúdo da ficha;
-- regras e cálculos devem permanecer separados dos textos traduzidos.
+## Persistência e homebrew
 
-## Estratégia recomendada
+- A preferência de idioma pertence à aplicação, não à ficha.
+- Fichas e histórico não duplicam dados por idioma.
+- Exportações priorizam IDs e valores canônicos.
+- Trocar idioma nunca recalcula nem altera uma ficha.
+- Homebrews ficam separados da reconstrução oficial e não recebem tradução automática.
+- Livros homebrew incluídos continuam sujeitos aos toggles geral e individual, sem entrar na auditoria dos livros oficiais.
 
-### Fase 1 — Fundação técnica
+## Validação obrigatória
 
-- inventariar textos fixos e textos dinâmicos;
-- escolher ou implementar a camada de internacionalização;
-- criar os arquivos `pt-BR` e `en`;
-- implementar resolução de idioma e fallback;
-- adicionar o seletor persistente;
-- definir convenções de chaves e testes.
+Cada lote deve verificar:
 
-### Fase 2 — Interface
+- contagem por livro e categoria;
+- IDs únicos e estáveis;
+- fonte e página válidas;
+- campos obrigatórios;
+- estrutura correta de Contratos rolados e automáticos;
+- exceções conhecidas;
+- Loopholes e Benefits;
+- ausência de dependência acidental de overlays antigos;
+- alternância de idioma sem mudança de identidade;
+- ordenação, busca e filtros nos dois idiomas.
 
-- migrar menus, botões, títulos e mensagens;
-- migrar validações e diálogos;
-- migrar criação, visualização, edição e impressão das fichas;
-- verificar responsividade nos dois idiomas, pois textos em inglês podem ocupar espaços diferentes.
+Testes estruturais não substituem a conferência editorial com o PDF. Ambos são necessários.
 
-### Fase 3 — Modelo dos catálogos
+## Ordem de trabalho atual
 
-- garantir IDs estáveis para todas as entidades;
-- separar regras mecânicas de nomes e descrições;
-- preparar aliases para dados legados;
-- adaptar seletores, tooltips e Méritos Expandidos para resolver traduções por ID.
+1. Reconstruir integralmente os Contratos oficiais de Changeling em Inglês.
+2. Conciliar discrepâncias com o usuário.
+3. Validar catálogo e interface inglesa.
+4. Traduzir os Contratos revisados.
+5. Aplicar o método a Frátrias, Méritos, Cortes e Seemings de Changeling.
+6. Avançar depois para Mage e conteúdos gerais.
 
-### Fase 4 — Conteúdo
+Até uma categoria terminar, uma publicação dessa branch é versão de teste e pode conter deliberadamente apenas os lotes auditados.
 
-- migrar cada catálogo para a estrutura multilíngue;
-- revisar terminologia por linha de jogo;
-- manter fontes no idioma original;
-- conferir descrições, pré-requisitos, custos, rolagens, efeitos e demais campos;
-- marcar traduções incompletas para usar o fallback de maneira explícita.
+## Critério de conclusão
 
-### Fase 5 — Validação
+O suporte bilíngue estará completo quando toda a interface existir nos dois idiomas, todos os catálogos oficiais possuírem registro inglês auditado, todas as traduções portuguesas tiverem sido revisadas a partir dele, não houver campos híbridos e idioma, persistência, criação, Experiência, filtros, impressão e exportação funcionarem sem divergência mecânica.
 
-- testar fichas antigas nos dois idiomas;
-- testar exportação e importação JSON;
-- testar impressão e salvamento em PDF;
-- conferir textos longos, pluralização e campos dinâmicos;
-- validar que a mudança de idioma não altera dados nem cálculos;
-- revisar terminologia de forma sistemática.
-
-## Decisões pendentes
-
-Antes da implementação, será necessário decidir:
-
-1. Se o idioma inglês utilizará exclusivamente os termos originais dos livros ou permitirá adaptações editoriais.
-2. Se exportações em PDF usarão o idioma ativo ou permitirão escolher um idioma específico no momento da exportação.
-3. Se o JSON exportado incluirá apenas IDs ou também textos de exibição para facilitar leitura humana.
-4. Como identificar visualmente itens cujo texto ainda esteja usando o idioma de fallback.
-5. Se conteúdo personalizado poderá receber versões manuais em mais de um idioma no futuro.
-6. Qual catálogo será migrado primeiro para validar a arquitetura antes da conversão completa.
-
-## Recomendação inicial
-
-Implementar primeiro a fundação técnica e a interface, mantendo o catálogo atual em `pt-BR` como fallback. Em seguida, migrar um catálogo pequeno como projeto-piloto. Depois de validar persistência, compatibilidade, seletores, impressão e textos dinâmicos, expandir o modelo para os catálogos maiores.
-
-Essa abordagem permite adicionar Inglês e outros idiomas futuramente sem migrar novamente as fichas existentes ou duplicar a lógica das regras.
+Daqui em diante, funcionalidades e regras novas são implementadas primeiro em Inglês e recebem Português como etapa editorial posterior. Isso evita traduzir dados ainda instáveis e ter de reconstruir depois a língua original.
