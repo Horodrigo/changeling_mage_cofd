@@ -29,6 +29,7 @@ export type ContractDefinition = {
 };
 
 import { KITH_AND_KIN_CONTRACTS } from "./contracts-kith-and-kin";
+import { CORE_CONTRACTS } from "./contracts-core";
 
 export const CONTRACTS: ContractDefinition[] = [
   {
@@ -256,6 +257,7 @@ export const CONTRACTS: ContractDefinition[] = [
     page: 241,
   },
   ...KITH_AND_KIN_CONTRACTS,
+  ...CORE_CONTRACTS,
 ];
 
 export const CONTRACT_NAME_ALIASES: Record<string, string> = Object.fromEntries(

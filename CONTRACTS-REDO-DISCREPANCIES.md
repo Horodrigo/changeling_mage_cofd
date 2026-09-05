@@ -84,22 +84,22 @@ The offline index identifies both Contracts of Retaliation as DE2 p. 387. In the
 
 The user supplied and approved the complete PDF text. The imported record uses page 58, cost `●●○/●●●○`, no Dice Pool, Reflexive, Instant.
 
-### Cracked Mirror — Kith and Kin
+### Cracked Mirror — resolved during import
 
 | Field | Offline index | PDF |
 | --- | --- | --- |
 | Dice Pool | Attribute + Ability + Wyrd vs. Resistance + Tolerance | Manipulation + Larceny + Wyrd vs. Stamina + Wyrd |
 
-The index appears to have replaced the specific traits with generic categories.
+The user supplied and approved the complete PDF text. The imported record uses the specific PDF pool: Manipulation + Larceny + Wyrd vs. Stamina + Wyrd.
 
-### Momentary Respite — Kith and Kin
+### Momentary Respite — resolved during import
 
 | Field | Offline index | PDF |
 | --- | --- | --- |
 | Initial cost | `●` | 2 Glamour |
 | Extension | `● + ○` per additional scene | 1 Willpower per additional scene |
 
-The PDF is internally inconsistent: its Cost block says 2 Glamour, while Success begins “For 1 Glamour.” Extending the Contract clearly costs only 1 Willpower per scene.
+The user supplied the complete PDF text and then confirmed that the correct initial cost is 1 Glamour, matching the offline index and the Success text rather than the Cost block. Each extension costs 1 Willpower.
 
 ### Star Light, Star Bright — resolved during import
 
@@ -107,4 +107,4 @@ The index summary contains Enchanted Bargain, teleportation, Willpower recovery,
 
 ## Import status
 
-The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **68** audited records. Kith and Kin is at 57/59, pending Cracked Mirror and Momentary Respite.
+The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **80** audited records. Kith and Kin is complete at 59/59 and the core book is at 10/110.
