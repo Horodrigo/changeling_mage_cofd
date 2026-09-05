@@ -64,6 +64,13 @@ test("família Directional possui dez Contratos e cinco Clauses canônicas", () 
   assert.equal(items.find((contract) => contract.originalName === "Escape Route")?.hasRoll, false);
 });
 
+test("família Dragon possui dez Contratos e três Clauses de Sociedade", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "dragon");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 3));
+  assert.ok(items.some((contract) => contract.originalName === "Weaponize Mob" && contract.success.includes("Riot")));
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
