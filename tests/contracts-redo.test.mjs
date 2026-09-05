@@ -12,13 +12,13 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 50 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 50);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 50);
+test("catálogo contém os primeiros 60 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 60);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 60);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 39);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 49);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
@@ -39,6 +39,17 @@ test("bloco Stars está completo e não herda o resumo contaminado do índice", 
   assert.equal(wish?.cost,"●/●●");
   assert.doesNotMatch(wish?.description??"",/Enchanted Bargain|teleport|regains? Willpower|Beat/i);
   assert.match(wish?.description??"",/Oathbreaker/);
+});
+
+test("bloco Thorn está completo e preserva a correção de Witch's Brambles", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Thorn");
+  assert.equal(items.length,10);
+  assert.deepEqual(items.map((item)=>item.page),[53,54,54,54,55,55,56,57,57,58]);
+  const witch=items.find((item)=>item.originalName==="Witch's Brambles");
+  assert.equal(witch?.hasRoll,false);
+  assert.equal(witch?.dicePool,"None");
+  assert.equal(witch?.cost,"●●○/●●●○");
+  assert.equal(witch?.action,"Reflexive");
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {

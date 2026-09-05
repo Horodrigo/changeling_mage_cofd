@@ -73,7 +73,7 @@ The offline index identifies both Contracts of Retaliation as DE2 p. 387. In the
 
 ## Pending decisions
 
-### Witch's Brambles — Kith and Kin
+### Witch's Brambles — resolved during import
 
 | Field | Offline index | PDF |
 | --- | --- | --- |
@@ -82,7 +82,7 @@ The offline index identifies both Contracts of Retaliation as DE2 p. 387. In the
 | Dice Pool | Presence + Occult + Wyrd vs. Resolve + Tolerance | None |
 | Action / Duration | — | Reflexive / Instant |
 
-The PDF describes a mundane action using a piercing object at −3, whose excess successes purchase shifts; it has no separate invocation roll. The PDF-faithful representation is page 58, cost `●●○/●●●○`, no Dice Pool, Reflexive, Instant.
+The user supplied and approved the complete PDF text. The imported record uses page 58, cost `●●○/●●●○`, no Dice Pool, Reflexive, Instant.
 
 ### Cracked Mirror — Kith and Kin
 
@@ -107,4 +107,4 @@ The index summary contains Enchanted Bargain, teleportation, Willpower recovery,
 
 ## Import status
 
-The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **50** audited records.
+The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **60** audited records.
