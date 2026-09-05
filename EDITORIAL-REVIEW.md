@@ -128,3 +128,13 @@ ainda pode conter tradução literal, concordância ruim ou regra incorreta.
   `Book of Seemings` não remove nem oculta os dois benefícios da fonte básica.
 - Contratos das pp. 128–132 receberam a primeira revisão semântica bilíngue de
   custos, ações, durações, Brechas e benefícios originais.
+
+## Resumo versus resultado (2026-09-05)
+
+- `Summary` e `Success` são campos independentes para Contratos com jogada.
+- Um `Success` nunca mais é reutilizado como `Summary` nem ocultado por ser igual
+  ao texto de descrição importado.
+- Contratos automáticos exibem somente `Effect`. No modo inglês, um resumo ainda
+  não revisado fica ausente em vez de repetir `Success` ou recorrer ao português.
+- `Portents and Visions` possui resumo inglês conciso e mantém integralmente os
+  quatro resultados da jogada em suas seções próprias.

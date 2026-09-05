@@ -104,7 +104,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
   CONTRACTS,
@@ -5467,6 +5467,7 @@ function ContractPowerList({
             findContract(String(item.id ?? item.name ?? "")) ??
             (item as unknown as ContractDefinition);
           const definition=contractPresentation(contractWithSupplementalBenefits(baseDefinition,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[]),locale);
+          const summary=contractSummary(baseDefinition,locale);
           if (!definition?.id) return null;
           const benefits = [
             seeming,
@@ -5503,10 +5504,10 @@ function ContractPowerList({
                 {definition.page}
               </small>
               <dl>
-                <div>
+                {summary && <div>
                   <dt>{tr("Resumo", "Summary")}</dt>
-                  <dd>{definition.description}</dd>
-                </div>
+                  <dd>{summary}</dd>
+                </div>}
                 <div>
                   <dt>{tr("Parada de dados", "Dice Pool")}</dt>
                   <dd>{definition.dicePool ?? tr("Não informada", "Not listed")}</dd>
@@ -5528,9 +5529,7 @@ function ContractPowerList({
                     <dd><ul>{displayOptions.map((option) => <li key={option}>{option}</li>)}</ul></dd>
                   </div>
                 )}
-                {contractOutcomeSections(definition, locale)
-                  .filter((section) => section.text !== definition.description)
-                  .map((section) => (
+                {contractOutcomeSections(definition, locale).map((section) => (
                     <div key={section.label}>
                       <dt>{section.label}</dt>
                       <dd>{section.text}</dd>

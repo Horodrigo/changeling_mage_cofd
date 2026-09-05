@@ -27,7 +27,16 @@ export function contractDisplayOptions(contract:Pick<ContractDefinition,"id"|"op
 
 export function contractPresentation(contract:ContractDefinition,locale:Locale="pt-BR"):ContractDefinition {
   if (locale !== "en-US") return contract;
-  return { ...contract, ...CONTRACT_TEXT_EN[contract.id], ...REVIEWED_CONTRACT_DETAILS_EN[contract.id] };
+  const english=CONTRACT_TEXT_EN[contract.id];
+  const description=contractHasInvocationRoll(contract) === true
+    ? english?.summary ?? ""
+    : english?.description ?? "";
+  return { ...contract, ...english, ...REVIEWED_CONTRACT_DETAILS_EN[contract.id], description };
+}
+
+export function contractSummary(contract:ContractDefinition,locale:Locale="pt-BR") {
+  if (contractHasInvocationRoll(contract) !== true) return "";
+  return locale === "en-US" ? CONTRACT_TEXT_EN[contract.id]?.summary?.trim() ?? "" : contract.description.trim();
 }
 
 export function contractWithSupplementalBenefits(contract:ContractDefinition,activeSourceIds:readonly string[]) {

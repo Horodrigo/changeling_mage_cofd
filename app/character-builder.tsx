@@ -56,7 +56,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
@@ -1701,6 +1701,7 @@ function ContractSelector({
                 <div>
                   {items.map((contract) => {
                     const presented = contractPresentation(contract, locale);
+                    const summary = contractSummary(contract, locale);
                     const displayOptions = contractDisplayOptions(presented, locale);
                     const selected = contracts.some(
                       (item) =>
@@ -1728,9 +1729,9 @@ function ContractSelector({
                             {contract.goblin ? `Goblin · ${tr("Comum", "Common")}` : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
-                          <p className="rule-detail">
+                          {summary && <p className="rule-detail">
                             <strong>{tr("Resumo", "Summary")}:</strong> {presented.description}
-                          </p>
+                          </p>}
                           <p className="rule-detail">
                             <strong>{tr("Parada de dados", "Dice Pool")}:</strong>{" "}
                             {presented.dicePool ?? tr("Não informada", "Not listed")}
@@ -1755,9 +1756,7 @@ function ContractSelector({
                               </ul>
                             </div>
                           )}
-                          {contractOutcomeSections(presented, locale)
-                            .filter((section) => section.text !== presented.description)
-                            .map((section) => (
+                          {contractOutcomeSections(presented, locale).map((section) => (
                             <p className="rule-detail" key={section.label}>
                               <strong>{section.label}:</strong> {section.text}
                             </p>
