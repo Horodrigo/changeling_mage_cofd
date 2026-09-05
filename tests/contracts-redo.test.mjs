@@ -86,6 +86,14 @@ test("família Traders conclui os 80 Contratos de Book of Courts", () => {
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts").length, 80);
 });
 
+test("catálogo de Tilts contém todo o Core e os três Tilts de Book of Courts", async () => {
+  const { TILTS } = await vite.ssrLoadModule("/lib/tilts.ts");
+  assert.equal(TILTS.filter((tilt) => tilt.sourceCode === "CofD").length, 21);
+  assert.deepEqual(new Set(TILTS.filter((tilt) => tilt.sourceCode === "BoC").map((tilt) => tilt.name)), new Set(["Riot", "Drowning", "Hobgoblin Band"]));
+  assert.equal(TILTS.length, 24);
+  assert.ok(TILTS.every((tilt) => tilt.description && tilt.effect && tilt.causing && tilt.ending));
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));

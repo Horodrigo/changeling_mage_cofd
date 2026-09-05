@@ -131,6 +131,7 @@ import { SPELLS } from "@/lib/spells";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
 import { ARMORS, EQUIPMENT, WEAPONS } from "@/lib/combat-equipment";
+import { TILTS, findTilt } from "@/lib/tilts";
 import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
 import { HomebrewsPage } from "./homebrews";
 import { useHomebrews } from "./use-homebrews";
@@ -1741,6 +1742,7 @@ function CombatPage({
   const { tr } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
     equipmentIds = stringList(character.line_data.combat_equipment),
+    tiltIds = stringList(character.line_data.combat_tilts),
     armorId = String(character.line_data.combat_armor ?? "");
   const armor = ARMORS.find((item) => item.id === armorId),
     weapons = weaponIds
@@ -1788,6 +1790,8 @@ function CombatPage({
             <p>{tr("Proteção geral reduz ataques comuns; proteção balística reduz armas de fogo. Penalidades da armadura já aparecem nos valores acima.", "General armor reduces ordinary attacks; ballistic armor reduces firearm attacks. Armor penalties are already included above.")}</p>
           </article>
         </div>
+        <SheetHeading>{tr("Inclinações", "Tilts")}</SheetHeading>
+        <TiltManager selected={tiltIds} onChange={(value) => setData("combat_tilts", value)} />
       </section>
       <section className="loadout-section">
         <SheetHeading>Armadura</SheetHeading>
@@ -1900,6 +1904,24 @@ function CombatPage({
       </small>
     </div>
   );
+}
+
+function TiltManager({selected,onChange}:{selected:string[];onChange:(value:string[])=>void}) {
+  const {locale,tr}=useLanguage();
+  const [search,setSearch]=useState(""), [category,setCategory]=useState("All");
+  const name=(tilt:(typeof TILTS)[number])=>locale==="en-US"?tilt.name:tilt.translatedName;
+  const filtered=alphabetical(TILTS,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
+  return <div className="tilt-manager">
+    <div className="selected-tilts">
+      {selected.map(findTilt).filter((tilt):tilt is NonNullable<typeof tilt>=>Boolean(tilt)).map((tilt)=><article key={tilt.id} className="selected-tilt"><div><strong>{name(tilt)}</strong><small>{tr(tilt.category==="Personal"?"Pessoal":"Ambiental",tilt.category)} · {tilt.sourceCode} · p. {tilt.page}</small><p>{tilt.effect}</p></div><Button type="button" size="icon" variant="ghost" onClick={()=>onChange(selected.filter((id)=>id!==tilt.id))} aria-label={`${tr("Remover","Remove")} ${name(tilt)}`}><X /></Button></article>)}
+      {!selected.length&&<em>{tr("Nenhuma Inclinação selecionada.","No Tilts selected.")}</em>}
+    </div>
+    <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline"><Plus />{tr("Adicionar Inclinação","Add Tilt")}</Button></DialogTrigger><DialogContent className="tilt-dialog"><DialogHeader><DialogTitle>{tr("Inclinações de Combate","Combat Tilts")}</DialogTitle><DialogDescription>{tr("Selecione efeitos pessoais ou ambientais ativos na cena.","Select Personal or Environmental effects active in the scene.")}</DialogDescription></DialogHeader>
+      <div className="tilt-filters"><label className="catalog-search"><Search/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar Inclinação","Search Tilts")}/></label><RuleSelect value={category} onChange={setCategory} options={[{value:"All",label:tr("Todas","All")},{value:"Personal",label:tr("Pessoais","Personal")},{value:"Environmental",label:tr("Ambientais","Environmental")}]} /></div>
+      <div className="tilt-catalog">{filtered.map((tilt)=>{const active=selected.includes(tilt.id);return <article key={tilt.id} className={active?"selected":""}><header><div><strong>{name(tilt)}</strong><small>{tr(tilt.category==="Personal"?"Pessoal":"Ambiental",tilt.category)} · {tilt.sourceCode} · p. {tilt.page}</small></div><Button type="button" size="sm" variant={active?"ghost":"outline"} onClick={()=>onChange(active?selected.filter((id)=>id!==tilt.id):[...selected,tilt.id])}>{active?tr("Remover","Remove"):tr("Adicionar","Add")}</Button></header><p>{tilt.description}</p><p><b>{tr("Efeito","Effect")}:</b> {tilt.effect}</p><p><b>{tr("Causando a Inclinação","Causing the Tilt")}:</b> {tilt.causing}</p><p><b>{tr("Encerrando a Inclinação","Ending the Tilt")}:</b> {tilt.ending}</p></article>})}</div>
+      <DialogFooter><DialogClose asChild><Button type="button">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
+    </DialogContent></Dialog>
+  </div>;
 }
 
 function LoadoutCatalog<T extends { id: string; name: string }>({
