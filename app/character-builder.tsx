@@ -79,6 +79,7 @@ import {
 } from "@/lib/merit-configurations";
 import { SKILL_SPECIALTY_SUGGESTIONS } from "@/lib/skill-specialties";
 import { localized, useLanguage, type Locale } from "@/lib/i18n";
+import { systemTerm } from "@/lib/system-terms";
 import { builderText } from "./character-builder-messages";
 
 export type Specialty = { skill: string; name: string; grantedBy?: string };
@@ -1651,7 +1652,7 @@ function ContractSelector({
               <strong>{item.name ? contractName(item) : tr("Vaga disponível", "Available slot")}</strong>
               <small>
                 {item.name
-                  ? `${item.regalia} · ${item.source} · p. ${item.page || "—"}`
+                  ? `${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`
                   : tr("Escolha no catálogo", "Choose from the catalog")}
               </small>
             </div>
@@ -1696,7 +1697,7 @@ function ContractSelector({
             {groups.map(({ regalia, items }) => (
               <section className="merit-category" key={regalia}>
                 <h3>
-                  {regalia} <Badge variant="outline">{items.length}</Badge>
+                  {systemTerm(regalia,locale)} <Badge variant="outline">{items.length}</Badge>
                 </h3>
                 <div>
                   {items.map((contract) => {

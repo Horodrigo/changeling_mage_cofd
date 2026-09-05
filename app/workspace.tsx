@@ -5434,7 +5434,7 @@ function ContractSheetList({
             >
               <span>{String(locale==="en-US"?(definition?.originalName??item.originalName??item.name):(definition?.name??item.name))}</span>
               <small>
-                {definition?.regalia ?? String(item.regalia ?? "")} ·{" "}
+                {systemTerm(definition?.regalia ?? String(item.regalia ?? ""),locale)} ·{" "}
                 {definition?.type ??
                   String(item.type ?? (index < 4 ? "Comum" : "Real"))}
               </small>
@@ -5500,7 +5500,7 @@ function ContractPowerList({
                 </Badge>
               </div>
               <small>
-                {definition.regalia} · {definition.source} · p.{" "}
+                {systemTerm(definition.regalia,locale)} · {definition.source} · p.{" "}
                 {definition.page}
               </small>
               <dl>
