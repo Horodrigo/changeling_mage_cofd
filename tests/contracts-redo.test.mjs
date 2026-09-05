@@ -12,13 +12,13 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 41 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 41);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 41);
+test("catálogo contém os primeiros 50 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 50);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 50);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 30);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 39);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
@@ -28,6 +28,17 @@ test("bloco Scepter está completo", () => {
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[44,44,45,45,46,46,46,47,48,48]);
   assert.equal(items.find((item)=>item.originalName==="Fake It ‘Til You Make It")?.dicePool,"Presence + Persuasion + Wyrd - Resolve");
+});
+
+test("bloco Stars está completo e não herda o resumo contaminado do índice", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Stars");
+  assert.equal(items.length,9);
+  assert.deepEqual(items.map((item)=>item.page),[49,49,49,50,50,51,51,51,52]);
+  const wish=items.find((item)=>item.originalName==="Star Light, Star Bright");
+  assert.equal(wish?.hasRoll,false);
+  assert.equal(wish?.cost,"●/●●");
+  assert.doesNotMatch(wish?.description??"",/Enchanted Bargain|teleport|regains? Willpower|Beat/i);
+  assert.match(wish?.description??"",/Oathbreaker/);
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {
