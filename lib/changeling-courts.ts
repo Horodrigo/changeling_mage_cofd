@@ -74,6 +74,19 @@ export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [
     "Uma vez por capítulo, reduza à metade o dano físico ou de Lucidez sofrido diretamente por sua curiosidade; quando aplicável, reduza à metade a duração da Condição resultante.",
     "Durante uma noite, ignore exaustão ou Inclinações Ambientais por uma cena um número de vezes igual ao Manto.",
   ], "h-courts"),
+  court("undercourt", "Undercourt", "Subcorte", "Comfort", "Conforto", 86, [
+    "Add Mantle to mundane rolls to convince someone that an event has a mundane explanation.",
+    "Subtract Mantle from damage rolls caused by successful Clarity attacks suffered in your own home.",
+    "Gain one dot of the ruling Court's Mantle solely to determine bonus dice in Social interactions.",
+    "When sleeping overnight in your own home, regain 2 spent Willpower instead of 1.",
+    "Reduce all Clarity attacks not caused by your own actions by two dice.",
+  ], [
+    "Some o Manto a testes mundanos para convencer alguém de que um acontecimento possui explicação mundana.",
+    "Subtraia o Manto dos testes de dano causados por ataques de Lucidez bem-sucedidos sofridos em sua própria casa.",
+    "Receba um ponto do Manto da Corte governante apenas para determinar dados de bônus em interações Sociais.",
+    "Ao dormir uma noite inteira em sua própria casa, recupere 2 pontos de Força de Vontade gastos em vez de 1.",
+    "Reduza em dois dados todos os ataques de Lucidez que não sejam causados por suas próprias ações.",
+  ], "h-courts"),
   court("society-morning", "Society of Morning", "Sociedade da Manhã", "Discovery through reckless pursuit", "Descoberta por busca imprudente", 279, [
     "Apply Mantle as a bonus to gather information on a new subject.", "Apply Mantle as a bonus to rolls involving instability or impermanence.", "Regain Willpower when a truth implicates a friend or ally.", "Automatically persuade a changeling to share information relevant to freehold safety; supernatural resistance triggers a Clash of Wills.", "Once per session, reveal an unknown truth to shift your negative Clarity Condition to another changeling.",
   ], [

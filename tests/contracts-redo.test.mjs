@@ -34,6 +34,13 @@ test("Book of Courts inicia com a família Circadian compartilhada e Clauses can
   assert.equal(items.find((contract) => contract.originalName === "Frost-Fire Glance")?.hasRoll, false);
 });
 
+test("família Undercourt possui dez Contratos e usa o identificador canônico da Corte", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "undercourt");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => contract.courtIds?.includes("undercourt")));
+  assert.equal(items.find((contract) => contract.originalName === "Family-Friendly Feud")?.hasRoll, false);
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));

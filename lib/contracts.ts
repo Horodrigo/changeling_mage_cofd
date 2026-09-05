@@ -17,6 +17,7 @@ export type ContractDefinition = {
   /** One shared Court Contract may expose a different Clause for each member Court. Keys are canonical Court ids. */
   courtClauses?: Record<string, string>;
   courtFamily?: string;
+  courtIds?: string[];
   supplementalSeemingBenefits?: Record<string, Partial<Record<SeemingKey, string>>>;
   goblin?: boolean;
   cost?: string;

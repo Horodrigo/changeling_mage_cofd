@@ -1,7 +1,8 @@
 import type { ContractDefinition } from "./contracts";
 
 const source = { categoryKind: "Corte" as const, sourceId: "h-courts", source: "Book of Courts" };
-const circadian = { ...source, regalia: "Circadian", courtFamily: "circadian" };
+const circadian = { ...source, regalia: "Circadian", courtFamily: "circadian", courtIds: ["sun", "moon"] };
+const undercourt = { ...source, regalia: "Undercourt", courtFamily: "undercourt", courtIds: ["undercourt"] };
 
 export const BOOK_OF_COURTS_CONTRACTS: ContractDefinition[] = [
   {
@@ -66,5 +67,54 @@ export const BOOK_OF_COURTS_CONTRACTS: ContractDefinition[] = [
     summary: "Ward an owned or responsible area and sense everyone crossing its boundary.", description: "Ward an owned or responsible area and sense everyone crossing its boundary.", hasRoll: false, dicePool: "None", cost: "●●", action: "Instant", duration: "Until the next sunset or sunrise",
     effect: "Trace a sun or moon in four corners of an area up to 300 square meters. Sense everyone who enters or leaves, recognizing acquaintances and receiving a broad description of strangers or supernatural beings. Supernatural concealment triggers a Clash of Wills.",
     courtClauses: { sun: "Add Mantle to Socialize rolls involving anyone detected by the Contract.", moon: "Add Mantle to Investigation rolls involving anyone detected by the Contract." }, loophole: "The changeling owns land or a building within the protected area.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:goodnight-moon", name:"Goodnight Moon", originalName:"Goodnight Moon", type:"Comum", page:106,
+    summary:"Tell a beloved childhood story to grant a companion restorative sleep.", description:"Tell a beloved childhood story to grant a companion restorative sleep.", hasRoll:true, dicePool:"Presence + Expression + Wyrd", cost:"●●", action:"Instant", duration:"Instant",
+    success:"Grant another character peaceful sleep. While sleeping, the target halves healing time for current physical damage; a changeling also heals one severe Clarity damage or all mild Clarity damage.", exceptionalSuccess:"The target also heals Conditions associated with Clarity loss.", failure:"The Contract fails.", dramaticFailure:"The sleep provides no benefit and the target wakes with one additional mild Clarity damage.", loophole:"Both changeling and target are wearing pajamas.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:pep-talk", name:"Pep Talk", originalName:"Pep Talk", type:"Comum", page:106,
+    summary:"Encourage someone to bring their best to a chosen Skill.", description:"Encourage someone to bring their best to a chosen Skill.", hasRoll:false, dicePool:"None", cost:"●", action:"Instant", duration:"Instant", effect:"After a brief encouraging conversation, the target gains Inspired regarding a Skill they choose.", loophole:"The changeling has no dots in that Skill.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:nothing-to-see-here", name:"Nothing to See Here", originalName:"Nothing to See Here", type:"Comum", page:106,
+    summary:"Reduce the emotional impact of a recent traumatic or supernatural event and support recovery.", description:"Reduce the emotional impact of a recent traumatic or supernatural event and support recovery.", hasRoll:true, dicePool:"Manipulation + Empathy + Wyrd vs. Composure + Wyrd", cost:"●", action:"Contested", duration:"Instant",
+    success:"Discuss an event from the last day. The target retains the memory but its emotional impact diminishes and their mind supplies a mundane explanation if needed. Add Mantle to later actions involving its trauma, including breaking points and insomnia.", exceptionalSuccess:"Clear Conditions caused by the event.", failure:"The Contract fails.", dramaticFailure:"The target remembers the conversation negatively, as though the changeling denied the experience.", loophole:"The changeling experienced the event with the target.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:rooted-in-the-past", name:"Rooted in the Past", originalName:"Rooted in the Past", type:"Comum", page:106,
+    summary:"Use nostalgia to ward the changeling's emotions against influence.", description:"Use nostalgia to ward the changeling's emotions against influence.", hasRoll:false, dicePool:"None", cost:"●●", action:"Reflexive", duration:"One scene",
+    effect:"Focus on a beloved person or event to become immune to emotional Conditions, including suppressing a known current Condition. Supernatural emotional influence suffers a penalty equal to Undercourt Mantle.", loophole:"The changeling eats a favorite childhood food.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:safeguarded-supplies", name:"Safeguarded Supplies", originalName:"Safeguarded Supplies", type:"Comum", page:107,
+    summary:"Protect a complex item so it continues functioning in the Hedge.", description:"Protect a complex item so it continues functioning in the Hedge.", hasRoll:true, dicePool:"Intelligence + Crafts + Mantle", cost:"●", action:"Instant", duration:"One chapter",
+    success:"A chosen complex item functions normally in the Hedge, although unavailable infrastructure such as the Internet remains unavailable.", exceptionalSuccess:"Grant the item either +1 Equipment or +1 Durability.", failure:"The Contract fails.", dramaticFailure:"The item appears functional but malfunctions at an inopportune moment.", loophole:"The changeling slept with the item under their pillow the previous night.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:family-friendly-feud", name:"Family-Friendly Feud", originalName:"Family-Friendly Feud", type:"Real", page:107,
+    summary:"Make violence in the vicinity less lethal.", description:"Make violence in the vicinity less lethal.", hasRoll:false, dicePool:"None", cost:"●●", action:"Instant", duration:"One scene",
+    effect:"Downgrade all violent damage nearby one step: aggravated becomes lethal, lethal becomes bashing, and bashing is halved, rounded up. This affects everyone present, including the changeling.", loophole:"The changeling has used no curse words within the last day.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:frozen-in-time", name:"Frozen in Time", originalName:"Frozen in Time", type:"Real", page:107,
+    summary:"Trap a listening target in a spoken memory loop.", description:"Trap a listening target in a spoken memory loop.", hasRoll:true, dicePool:"Manipulation + Occult + Mantle vs. Resolve + Wyrd", cost:"●●", action:"Contested", duration:"Wyrd turns",
+    success:"The target fixates on a spoken phrase and suffers Stunned. The target must hear the words but need not understand them; suffering lethal damage ends the effect early.", exceptionalSuccess:"The target also gains Shaken.", failure:"The Contract fails.", dramaticFailure:"The changeling suffers Stunned for one turn.", loophole:"An analog clock is visible nearby.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:hearths-respite", name:"Hearth's Respite", originalName:"Hearth's Respite", type:"Real", page:107,
+    summary:"Turn the changeling's home or establishment into a sanctuary of calm and recovery.", description:"Turn the changeling's home or establishment into a sanctuary of calm and recovery.", hasRoll:true, dicePool:"Composure + Empathy + Mantle", cost:"●○", action:"Instant", duration:"One week",
+    success:"After cleaning or redecorating an owned or inhabited place, welcomed changelings heal one mild Clarity damage per hour inside. Anyone who eats or drinks there gains either -2 to their next Clarity attack or +2 to their first Integrity breaking point during the next week. Aggressive or violent rolls inside lose 10-again.", exceptionalSuccess:"A character who heals Clarity also heals their oldest Clarity Condition.", failure:"The Contract fails.", dramaticFailure:"The Contract cannot be attempted again for one week.", loophole:"A visible picture of the changeling's mortal family hangs nearby.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:protection-of-the-innocent", name:"Protection of the Innocent", originalName:"Protection of the Innocent", type:"Real", page:108,
+    summary:"Place a mortal under strong protection against supernatural harm.", description:"Place a mortal under strong protection against supernatural harm.", hasRoll:true, dicePool:"Resolve + Medicine + Mantle", cost:"●●●○", action:"Instant", duration:"One lunar month",
+    success:"Supernatural powers targeting the mortal subtract Mantle from activation; powers without rolls fail. The mortal gains general armor equal to Mantle against supernatural damage, and mundane attacks by supernatural beings lose 10-again.", exceptionalSuccess:"The mortal also gains 1 general armor against mundane harm.", failure:"The Contract fails.", dramaticFailure:"The changeling gains Obsession concerning the mortal's safety.", loophole:"The Contract has never before been used on this mortal.",
+  },
+  {
+    ...undercourt, id:"h-courts:undercourt:shared-remembrance", name:"Shared Remembrance", originalName:"Shared Remembrance", type:"Real", page:108,
+    summary:"Experience one of the target's memories through their senses.", description:"Experience one of the target's memories through their senses.", hasRoll:true, dicePool:"Wits + Empathy + Mantle vs. Resolve + Wyrd", cost:"●●", action:"Contested", duration:"Up to one hour or the memory's length",
+    success:"View a known memory identified by time, date, or content, or the target's most recent emotionally intense memory. Gain 8-again on Empathy rolls involving the target for the rest of the chapter.", exceptionalSuccess:"View up to three hours of memory.", failure:"The Contract fails.", dramaticFailure:"Flashes of memory intrude on reality, imposing -2 on perception rolls for the scene.", loophole:"The changeling tells the target one of his own important memories.",
   },
 ];
