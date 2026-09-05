@@ -19,7 +19,7 @@ The offline index contains **173 official Contracts** from the supplied sources:
 | Hedge | 2 | The Hedge | Both entries accounted for, with page discrepancies |
 | DE2 | 2 | Dark Eras Changeling | Both entries accounted for, but source and page refer to the original collection |
 
-## Discrepancies requiring a decision
+## Resolved discrepancies
 
 ### 1. Oak, Ash, and Thorn is absent from the offline index
 
@@ -33,9 +33,9 @@ The supplied official PDF contains seven genuine Contracts that the index does n
 | Full Fathom Five | Common | 27 |
 | The Widening Gyre | Royal | 27 |
 | Upholding the Principle | Common | 29 |
-| Ancestor's Wisdom | Royal | 29 |
+| Ancestors' Wisdom | Royal | 29 |
 
-Because the index has no rows for these Contracts, it cannot supply their canonical name, cost, or dice pool under the agreed import rule.
+The user confirmed all seven as official and authorized direct PDF extraction. Their Court assignments are All, Crystal Web, Crown-of-Thorns, and House of In as recorded in the import specification.
 
 ### 2. Kith and Kin title mismatch
 
@@ -63,14 +63,14 @@ The offline index identifies both Contracts of Retaliation as DE2 p. 387. In the
 - the source should be **DE:CtL**;
 - **Draw Likeness** and **Peacemaker's Draw** are both on printed p. 241.
 
-## Proposed resolution
+## Approved resolution
 
 1. Keep the offline index's cost notation and dice pools for the 173 indexed Contracts.
 2. Use the corrected PDF titles/pages above when locating and presenting the records.
 3. Label the Retaliation Contracts as DE:CtL p. 241.
-4. Treat the seven Oak, Ash, and Thorn Contracts as an explicit exception: take name, type, cost, and dice pool directly from that PDF, or exclude them from this first import.
+4. Treat the seven Oak, Ash, and Thorn Contracts as an explicit exception and take name, type, cost, and dice pool directly from that PDF.
 5. Do not import any homebrew Contracts in this pass.
 
-## Import gate
+## Import status
 
-The 173 indexed Contracts are ready for structured extraction once the proposed handling of the title/page corrections and the seven Oak, Ash, and Thorn Contracts is approved.
+The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. PDF-corrected titles, pages, and the DE:CtL source label are approved.

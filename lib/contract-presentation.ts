@@ -29,14 +29,16 @@ export function contractPresentation(contract:ContractDefinition,locale:Locale="
   if (locale !== "en-US") return contract;
   const english=CONTRACT_TEXT_EN[contract.id];
   const description=contractHasInvocationRoll(contract) === true
-    ? english?.summary ?? ""
-    : english?.description ?? "";
+    ? english?.summary ?? contract.description
+    : english?.description ?? contract.description;
   return { ...contract, ...english, ...REVIEWED_CONTRACT_DETAILS_EN[contract.id], description };
 }
 
 export function contractSummary(contract:ContractDefinition,locale:Locale="pt-BR") {
   if (contractHasInvocationRoll(contract) !== true) return "";
-  return locale === "en-US" ? CONTRACT_TEXT_EN[contract.id]?.summary?.trim() ?? "" : contract.description.trim();
+  return locale === "en-US"
+    ? CONTRACT_TEXT_EN[contract.id]?.summary?.trim() ?? contract.description.trim()
+    : contract.description.trim();
 }
 
 export function contractWithSupplementalBenefits(contract:ContractDefinition,activeSourceIds:readonly string[]) {

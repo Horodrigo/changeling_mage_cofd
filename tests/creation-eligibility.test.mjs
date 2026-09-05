@@ -113,6 +113,25 @@ test("limita Contratos Reais às Regalias favorecidas e Contratos de Corte à Co
   );
 });
 
+test("Contrato Court (All) pode ser escolhido por membro de qualquer Corte", () => {
+  assert.equal(
+    rules.canSelectInitialContract(
+      { type: "Real", categoryKind: "Corte", regalia: "All" },
+      [],
+      "Crystal Web",
+    ),
+    true,
+  );
+  assert.equal(
+    rules.canSelectInitialContract(
+      { type: "Real", categoryKind: "Corte", regalia: "All" },
+      [],
+      "",
+    ),
+    false,
+  );
+});
+
 test.skip("classifica os Contratos de Book of Seemings por Regalia real", () => {
   const seemingsContracts = CONTRACTS.filter(
     (contract) => contract.sourceId === "h-seemings",

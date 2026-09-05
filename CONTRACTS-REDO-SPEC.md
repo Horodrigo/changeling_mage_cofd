@@ -47,3 +47,12 @@
 - A Contract with an invocation roll normally receives all four roll-result fields.
 - A Contract without an invocation roll receives only `Effect`.
 - Exceptional formats are not inferred. Each newly encountered exception requires a user decision before import.
+
+## Approved official exceptions
+
+- The seven Contracts in *Oak, Ash, and Thorn* are official and must be included even though the offline index omits them.
+- Their canonical Court assignments are: All (`Donning the Grand Mantle`), Crystal Web (`Hidden Protocol`, `Autonomous Payload`), Crown-of-Thorns (`Full Fathom Five`, `The Widening Gyre`), and House of In (`Upholding the Principle`, `Ancestors' Wisdom`).
+- `Autonomous Payload` retains its invocation Dice Pool but uses only `Effect`, matching the book's presentation.
+- `Hidden Protocol` retains its invocation Dice Pool but uses only `Effect`, matching the book's presentation.
+- `Upholding the Principle` and `Ancestors' Wisdom` use `Loophole: None`, because the book supplies no Loophole.
+- `Donning the Grand Mantle` preserves the book's explicit `Loophole: None`.
