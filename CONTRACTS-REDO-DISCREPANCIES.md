@@ -71,6 +71,40 @@ The offline index identifies both Contracts of Retaliation as DE2 p. 387. In the
 4. Treat the seven Oak, Ash, and Thorn Contracts as an explicit exception and take name, type, cost, and dice pool directly from that PDF.
 5. Do not import any homebrew Contracts in this pass.
 
+## Pending decisions
+
+### Witch's Brambles — Kith and Kin
+
+| Field | Offline index | PDF |
+| --- | --- | --- |
+| Page | 55 | 58 |
+| Cost | `●●/●●●+○` | 2–3 Glamour + 1 Willpower |
+| Dice Pool | Presence + Occult + Wyrd vs. Resolve + Tolerance | None |
+| Action / Duration | — | Reflexive / Instant |
+
+The PDF describes a mundane action using a piercing object at −3, whose excess successes purchase shifts; it has no separate invocation roll. The PDF-faithful representation is page 58, cost `●●○/●●●○`, no Dice Pool, Reflexive, Instant.
+
+### Cracked Mirror — Kith and Kin
+
+| Field | Offline index | PDF |
+| --- | --- | --- |
+| Dice Pool | Attribute + Ability + Wyrd vs. Resistance + Tolerance | Manipulation + Larceny + Wyrd vs. Stamina + Wyrd |
+
+The index appears to have replaced the specific traits with generic categories.
+
+### Momentary Respite — Kith and Kin
+
+| Field | Offline index | PDF |
+| --- | --- | --- |
+| Initial cost | `●` | 2 Glamour |
+| Extension | `● + ○` per additional scene | 1 Willpower per additional scene |
+
+The PDF is internally inconsistent: its Cost block says 2 Glamour, while Success begins “For 1 Glamour.” Extending the Contract clearly costs only 1 Willpower per scene.
+
+### Star Light, Star Bright — resolved during import
+
+The index summary contains Enchanted Bargain, teleportation, Willpower recovery, and Beat recovery absent from pp. 51–52. Its effect was reconstructed from the PDF; the indexed name, cost, and lack of Dice Pool were retained.
+
 ## Import status
 
-The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. PDF-corrected titles, pages, and the DE:CtL source label are approved.
+The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **50** audited records.
