@@ -117,4 +117,4 @@ The PDF uses Wits + Occult + Wyrd contested by an unwilling target's Resolve + W
 
 ## Import status
 
-The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **149** audited records. Kith and Kin is complete at 59/59 and the core book is at 79/110; Steed awaits only the Flickering Hours decision.
+The official catalog target is **180 Contracts**: 173 indexed records plus the seven confirmed Oak, Ash, and Thorn records. The rebuilt catalog currently contains **159** audited records. Kith and Kin is complete at 59/59 and the core book is at 89/110; Steed awaits only the Flickering Hours decision.
