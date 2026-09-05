@@ -79,6 +79,13 @@ test("família Tide possui dez Contratos, quatro Clauses e referências aos Tilt
   assert.ok(locker?.options?.some((option) => option.includes("Drowning")));
 });
 
+test("família Traders conclui os 80 Contratos de Book of Courts", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "traders");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 4));
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts").length, 80);
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
