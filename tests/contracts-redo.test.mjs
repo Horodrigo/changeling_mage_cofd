@@ -57,6 +57,13 @@ test("família Zodiac inclui dez Contratos, quatro Clauses, Contemptuous e a tab
   assert.ok(CHANGELING_CONDITIONS.some((condition) => condition.originalName === "Contemptuous" && condition.source === "Book of Courts"));
 });
 
+test("família Directional possui dez Contratos e cinco Clauses canônicas", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "directional");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 5));
+  assert.equal(items.find((contract) => contract.originalName === "Escape Route")?.hasRoll, false);
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
