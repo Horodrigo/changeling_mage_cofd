@@ -71,6 +71,14 @@ test("família Dragon possui dez Contratos e três Clauses de Sociedade", () => 
   assert.ok(items.some((contract) => contract.originalName === "Weaponize Mob" && contract.success.includes("Riot")));
 });
 
+test("família Tide possui dez Contratos, quatro Clauses e referências aos Tilts aquáticos", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts" && contract.courtFamily === "tide");
+  assert.equal(items.length, 10);
+  assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 4));
+  const locker = items.find((contract) => contract.originalName === "Davy Jones' Locker");
+  assert.ok(locker?.options?.some((option) => option.includes("Drowning")));
+});
+
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
   const normalize = (value) => value.normalize("NFKC").replace(/[‘’]/g, "'");
   const importedNames = new Set(CONTRACTS.map((contract) => normalize(contract.originalName)));
