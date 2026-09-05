@@ -1727,7 +1727,7 @@ function ContractSelector({
                         <div>
                           <strong>{contractName(contract)}</strong>
                           <small>
-                            {contract.goblin ? `Goblin · ${tr("Comum", "Common")}` : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}{" "}
+                            {contract.goblin ? "Goblin" : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
                           {summary && <p className="rule-detail">

@@ -5496,7 +5496,7 @@ function ContractPowerList({
               <div className="contract-power-title">
                 <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
                 <Badge variant={definition.goblin ? "default" : "outline"}>
-                  {definition.goblin ? "Goblin · Comum" : definition.type}
+                  {definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}
                 </Badge>
               </div>
               <small>
