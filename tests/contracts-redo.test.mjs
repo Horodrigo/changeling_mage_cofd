@@ -12,26 +12,26 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 21 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 21);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 21);
+test("catálogo contém os primeiros 31 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 31);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 31);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 10);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 20);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {
-  const chalice = CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin");
+  const chalice = CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin" && contract.regalia === "Chalice");
   assert.ok(chalice.every((contract) => contract.regalia === "Chalice"));
   assert.deepEqual(chalice.map((contract) => contract.page), [34,35,35,36,36,36,37,38,38,39]);
   assert.equal(chalice.find((contract) => contract.originalName === "Sleep's Sweet Embrace")?.cost, "●●○");
   assert.equal(chalice.find((contract) => contract.originalName === "Frail as the Dying Word")?.dicePool, "Manipulation + Occult + Wyrd vs. Composure + Tolerance");
 });
 
-test("todo Contrato Kith and Kin do lote tem mecânica, brecha e benefícios", () => {
+test("todo Contrato Kith and Kin importado tem mecânica, brecha e benefícios", () => {
   for (const contract of CONTRACTS.filter((item) => item.sourceId === "ctl-kith-and-kin")) {
     assert.ok(contract.description, contract.id);
     assert.ok(contract.loophole, contract.id);
