@@ -1,0 +1,76 @@
+# Contracts redo - official-source discrepancy audit
+
+## Method
+
+- The offline Codex of Darkness index is canonical for Contract name, classification, category, cost notation, dice pool, source, and page.
+- The supplied PDF indicated by the index is used for every remaining field.
+- PDF pages with ambiguous extraction were visually inspected in their original two-column layout.
+- The deleted legacy catalog was not accepted as a source of truth.
+- Homebrew books are outside this audit pass.
+
+## Indexed official coverage
+
+The offline index contains **173 official Contracts** from the supplied sources:
+
+| Index source | Contracts | Supplied PDF | Result |
+| --- | ---: | --- | --- |
+| CTL 2e | 110 | Changeling the Lost | All titles accounted for |
+| K&K | 59 | Kith and Kin | All entries accounted for, with one title discrepancy |
+| Hedge | 2 | The Hedge | Both entries accounted for, with page discrepancies |
+| DE2 | 2 | Dark Eras Changeling | Both entries accounted for, but source and page refer to the original collection |
+
+## Discrepancies requiring a decision
+
+### 1. Oak, Ash, and Thorn is absent from the offline index
+
+The supplied official PDF contains seven genuine Contracts that the index does not list:
+
+| PDF title | Type | Printed page |
+| --- | --- | ---: |
+| Donning the Grand Mantle | Royal | 22 |
+| Hidden Protocol | Common | 24 |
+| Autonomous Payload | Royal | 24 |
+| Full Fathom Five | Common | 27 |
+| The Widening Gyre | Royal | 27 |
+| Upholding the Principle | Common | 29 |
+| Ancestor's Wisdom | Royal | 29 |
+
+Because the index has no rows for these Contracts, it cannot supply their canonical name, cost, or dice pool under the agreed import rule.
+
+### 2. Kith and Kin title mismatch
+
+- Offline index: **Listen With Wind's Ears**, K&K p. 61.
+- PDF heading: **Listen with the Wind's Ears**, p. 61.
+
+The PDF includes the extra word **the**.
+
+### 3. Kith and Kin page mismatches
+
+- **Golden Promise**: offline index says p. 38; the PDF table of contents and Contract section place it on p. 42.
+- **Witch's Brambles**: offline index says p. 55; the PDF table of contents and Contract heading place it on p. 58.
+
+The other automatically flagged Kith and Kin entries were extraction artifacts or multi-page Contracts, not confirmed index errors.
+
+### 4. The Hedge page mismatches
+
+- **Distill the Hidden**: offline index says p. 83; the PDF Contract begins and ends on p. 81.
+- **Wyrd Debt**: offline index says p. 84; the PDF Contract begins on p. 81 and continues through p. 82.
+
+### 5. Dark Eras source and page mismatch
+
+The offline index identifies both Contracts of Retaliation as DE2 p. 387. In the supplied compilation:
+
+- the source should be **DE:CtL**;
+- **Draw Likeness** and **Peacemaker's Draw** are both on printed p. 241.
+
+## Proposed resolution
+
+1. Keep the offline index's cost notation and dice pools for the 173 indexed Contracts.
+2. Use the corrected PDF titles/pages above when locating and presenting the records.
+3. Label the Retaliation Contracts as DE:CtL p. 241.
+4. Treat the seven Oak, Ash, and Thorn Contracts as an explicit exception: take name, type, cost, and dice pool directly from that PDF, or exclude them from this first import.
+5. Do not import any homebrew Contracts in this pass.
+
+## Import gate
+
+The 173 indexed Contracts are ready for structured extraction once the proposed handling of the title/page corrections and the seven Oak, Ash, and Thorn Contracts is approved.
