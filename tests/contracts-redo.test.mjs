@@ -12,14 +12,14 @@ const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/cont
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 
-test("catálogo contém os primeiros 100 Contratos oficiais auditados", () => {
-  assert.equal(CONTRACTS.length, 100);
-  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 100);
+test("catálogo contém os primeiros 110 Contratos oficiais auditados", () => {
+  assert.equal(CONTRACTS.length, 110);
+  assert.equal(new Set(CONTRACTS.map((contract) => contract.id)).size, 110);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-oak-ash-thorn").length, 7);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-the-hedge").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 59);
-  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 30);
+  assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 40);
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
@@ -79,6 +79,13 @@ test("bloco Mirror do livro básico está completo sem Options duplicadas", () =
   assert.deepEqual(items.map((item)=>item.page),[136,136,137,137,138,138,138,139,139,139]);
   assert.equal(items.find((item)=>item.originalName==="Portents and Visions")?.options,undefined);
   assert.equal(items.find((item)=>item.originalName==="Walls Have Ears")?.options?.length,3);
+});
+
+test("bloco Shield do livro básico está completo", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Shield");
+  assert.equal(items.length,10);
+  assert.deepEqual(items.map((item)=>item.page),[140,140,140,141,142,142,142,143,143,143]);
+  assert.equal(items.find((item)=>item.originalName==="Thorns and Brambles")?.options?.length,3);
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {
