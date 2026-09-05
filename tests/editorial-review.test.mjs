@@ -10,7 +10,7 @@ after(async () => vite.close());
 const { CONTRACTS, CONTRACT_NAME_ALIASES, findContract } = await vite.ssrLoadModule("/lib/contracts.ts");
 const { KITHS } = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const { contractHasInvocationRoll, contractOutcomeSections } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
-const { contractDisplayOptions } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+const { contractDisplayOptions, contractPresentation, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 const { alphabetical, orderedChoiceOptions } = await vite.ssrLoadModule("/lib/option-order.ts");
 const { ATTRIBUTES, SKILLS } = await vite.ssrLoadModule("/lib/creation-rules.ts");
 
@@ -103,4 +103,27 @@ test("Options só repetem escolhas que não estejam incorporadas ao Efeito ou Su
   assert.equal(contractDisplayOptions(walls,"pt-BR").length,3);
   assert.equal(contractDisplayOptions(walls,"en-US").length,3);
   assert.match(contractDisplayOptions(walls,"en-US")[0],/Durability/);
+});
+
+test("benefícios básicos e extensões de Book of Seemings mantêm fontes separadas", () => {
+  const ids=["hostile-takeover","mask-of-superiority","paralyzing-presence","summon-the-loyal-servant","tumult","discreet-summons","masterminds-gambit","pipes-of-the-beastcaller","the-royal-court","spinning-wheel"];
+  for(const id of ids){
+    const contract=findContract(`ctl-2ed:${id}`);
+    assert.equal(Object.keys(contract.seemingBenefits).length,2,id);
+    assert.equal(Object.keys(contract.supplementalSeemingBenefits?.["h-seemings"]??{}).length,4,id);
+    assert.equal(Object.keys(contractWithSupplementalBenefits(contract,[]).seemingBenefits).length,2,id);
+    assert.equal(Object.keys(contractWithSupplementalBenefits(contract,["h-seemings"]).seemingBenefits).length,6,id);
+    const english=contractPresentation(contract,"en-US");
+    assert.match(english.cost,/Glamour/,id);
+    assert.ok(!/[ãç]|Nenhum|Instantânea|Cena/.test(english.loophole),id);
+  }
+});
+
+test("todos os Contratos básicos separam extensões de Book of Seemings", () => {
+  for(const contract of CONTRACTS.filter(item=>item.sourceId==="ctl-2ed")){
+    const base=Object.keys(contract.seemingBenefits??{}).length;
+    const supplement=Object.keys(contract.supplementalSeemingBenefits?.["h-seemings"]??{}).length;
+    assert.ok(base<=2,`${contract.id}: ${base} benefícios atribuídos ao básico`);
+    assert.ok(supplement===0||supplement===4,`${contract.id}: ${supplement} extensões`);
+  }
 });

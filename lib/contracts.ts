@@ -2,6 +2,7 @@ import { CONTRACT_DICE_POOLS_PT } from "./rule-details";
 import { CONTRACT_DETAILS, type SeemingKey } from "./contract-details";
 import { CONTRACT_COSTS_PT } from "./contract-costs";
 import { CONTRACT_RESULTS } from "./contract-results";
+import { REVIEWED_CONTRACT_DETAILS_PT } from "./contract-details-reviewed";
 
 export type ContractDefinition = {
   id: string;
@@ -14,6 +15,7 @@ export type ContractDefinition = {
   dicePool?: string;
   loophole?: string;
   seemingBenefits?: Partial<Record<SeemingKey, string>>;
+  supplementalSeemingBenefits?: Record<string, Partial<Record<SeemingKey,string>>>;
   goblin?: boolean;
   cost?: string;
   action?: string;
@@ -3368,16 +3370,17 @@ export const CONTRACT_REGALIA_CORRECTIONS: Record<string, string> = {
 };
 
 for (const contract of CONTRACTS) {
-  const detail = CONTRACT_DETAILS[contract.id];
+  const originalDetail = CONTRACT_DETAILS[contract.id];
+  const reviewedDetail = REVIEWED_CONTRACT_DETAILS_PT[contract.id];
+  const detail = { ...originalDetail, ...reviewedDetail };
   const result = CONTRACT_RESULTS[contract.id];
   contract.regalia =
     CONTRACT_REGALIA_CORRECTIONS[contract.originalName] ?? contract.regalia;
   contract.source =
     ORIGINAL_SOURCE_TITLES[contract.sourceId] ?? contract.source;
-  contract.cost =
-    contract.cost ?? CONTRACT_COSTS_PT[contract.id] ?? "Não informado";
-  contract.action = contract.action ?? result?.action ?? "Instantânea";
-  contract.duration = contract.duration ?? result?.duration ?? "Cena";
+  contract.cost = REVIEWED_CONTRACT_DETAILS_PT[contract.id]?.cost ?? contract.cost ?? CONTRACT_COSTS_PT[contract.id] ?? "Não informado";
+  contract.action = REVIEWED_CONTRACT_DETAILS_PT[contract.id]?.action ?? contract.action ?? result?.action ?? "Instantânea";
+  contract.duration = REVIEWED_CONTRACT_DETAILS_PT[contract.id]?.duration ?? contract.duration ?? result?.duration ?? "Cena";
   contract.success = result
     ? result.success || contract.description
     : contract.success;
@@ -3391,7 +3394,18 @@ for (const contract of CONTRACTS) {
     CONTRACT_DICE_POOLS_PT[contract.id] ??
     "Não informada";
   contract.loophole = detail?.loophole ?? contract.loophole ?? "Não informado";
-  contract.seemingBenefits = detail?.seemingBenefits ?? {};
+  const allBenefits = originalDetail?.seemingBenefits ?? {};
+  const benefitEntries = Object.entries(allBenefits) as Array<[SeemingKey,string]>;
+  if (reviewedDetail) {
+    contract.seemingBenefits = reviewedDetail.seemingBenefits;
+    const supplemental = Object.fromEntries(benefitEntries.filter(([key]) => !(key in reviewedDetail.seemingBenefits)));
+    if (Object.keys(supplemental).length) contract.supplementalSeemingBenefits = { "h-seemings": supplemental };
+  } else if (contract.sourceId === "ctl-2ed" && benefitEntries.length === 6) {
+    contract.seemingBenefits = Object.fromEntries(benefitEntries.slice(0,2));
+    contract.supplementalSeemingBenefits = { "h-seemings": Object.fromEntries(benefitEntries.slice(2)) };
+  } else {
+    contract.seemingBenefits = detail?.seemingBenefits ?? {};
+  }
 }
 
 // Preserve references in older sheets when only the displayed translation changes.

@@ -104,7 +104,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
-import { contractDisplayOptions, contractOutcomeSections } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
   CONTRACTS,
@@ -2920,7 +2920,7 @@ function ExperiencePanel({
 }) {
   const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
-  const contractsCatalog = [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))];
+  const contractsCatalog = [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map(item=>contractWithSupplementalBenefits(item,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[])), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))];
   const state = character.current_state ?? {};
   const beats = boundedNumber(state.experience_beats, 5, 0);
   const legacyTotal = Math.max(
@@ -5411,12 +5411,14 @@ function ContractSheetList({
   seeming: string;
 }) {
   const {locale}=useLanguage();
+  const homebrews=useHomebrews();
   return (
     <div className="official-lines">
       {contracts
         .filter((item) => item.name)
         .map((item, index) => {
-          const definition = findContract(String(item.id ?? item.name ?? ""));
+          const found = findContract(String(item.id ?? item.name ?? ""));
+          const definition = found ? contractPresentation(contractWithSupplementalBenefits(found,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[]),locale) : undefined;
           const description =
             definition?.description ?? String(item.description ?? "");
           const dicePool =
@@ -5455,14 +5457,16 @@ function ContractPowerList({
   extraBenefits?: Array<Record<string, unknown>>;
 }) {
   const {locale,tr}=useLanguage();
+  const homebrews=useHomebrews();
   return (
     <div className="contract-power-list">
       {contracts
         .filter((item) => item.name)
         .map((item, index) => {
-          const definition =
+          const baseDefinition =
             findContract(String(item.id ?? item.name ?? "")) ??
             (item as unknown as ContractDefinition);
+          const definition=contractPresentation(contractWithSupplementalBenefits(baseDefinition,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[]),locale);
           if (!definition?.id) return null;
           const benefits = [
             seeming,

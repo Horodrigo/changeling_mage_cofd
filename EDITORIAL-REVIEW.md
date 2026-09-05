@@ -119,3 +119,12 @@ ainda pode conter tradução literal, concordância ruim ou regra incorreta.
 - Todas as 21 possuem nome, emoção e cinco benefícios de Manto em inglês e
   português, com identificadores internos estáveis. `Court of the Leafless Tree`
   foi padronizada como `Corte da Árvore Desfolhada`.
+
+## Benefícios de Feição dos Contratos (2026-09-05)
+
+- Os dois benefícios apresentados em cada Contrato do livro básico agora ficam
+  separados das quatro extensões publicadas em `Book of Seemings`.
+- As extensões respeitam os toggles geral e individual de homebrew. Desativar
+  `Book of Seemings` não remove nem oculta os dois benefícios da fonte básica.
+- Contratos das pp. 128–132 receberam a primeira revisão semântica bilíngue de
+  custos, ações, durações, Brechas e benefícios originais.

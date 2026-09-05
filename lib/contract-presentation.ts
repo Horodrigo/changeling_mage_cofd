@@ -1,6 +1,7 @@
 import type { ContractDefinition } from "./contracts";
 import type { Locale } from "./i18n";
 import { CONTRACT_TEXT_EN } from "./contracts-en";
+import { REVIEWED_CONTRACT_DETAILS_EN } from "./contract-details-reviewed";
 
 export type ContractMechanics = Pick<ContractDefinition,
   "description" | "dicePool" | "hasRoll" | "success" | "exceptionalSuccess" | "failure" | "dramaticFailure"
@@ -22,6 +23,19 @@ export function contractDisplayName(contract:Pick<ContractDefinition,"id"|"name"
 export function contractDisplayOptions(contract:Pick<ContractDefinition,"id"|"options">,locale:Locale="pt-BR") {
   if (locale === "en-US") return CONTRACT_TEXT_EN[contract.id]?.options ?? contract.options ?? [];
   return contract.options ?? [];
+}
+
+export function contractPresentation(contract:ContractDefinition,locale:Locale="pt-BR"):ContractDefinition {
+  if (locale !== "en-US") return contract;
+  return { ...contract, ...CONTRACT_TEXT_EN[contract.id], ...REVIEWED_CONTRACT_DETAILS_EN[contract.id] };
+}
+
+export function contractWithSupplementalBenefits(contract:ContractDefinition,activeSourceIds:readonly string[]) {
+  const supplements=contract.supplementalSeemingBenefits ?? {};
+  return {
+    ...contract,
+    seemingBenefits: activeSourceIds.reduce((benefits,sourceId) => ({...benefits,...supplements[sourceId]}),{...contract.seemingBenefits}),
+  };
 }
 
 export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="pt-BR") {

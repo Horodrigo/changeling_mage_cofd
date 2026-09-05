@@ -56,7 +56,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
-import { contractDisplayOptions, contractOutcomeSections } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
 import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
@@ -200,7 +200,7 @@ export function CharacterBuilder({
   const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
   const contractCatalog = useMemo(
-    () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
+    () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map(item=>contractWithSupplementalBenefits(item,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[])), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
     [homebrews],
   );
   const spellCatalog = useMemo(
@@ -1700,7 +1700,8 @@ function ContractSelector({
                 </h3>
                 <div>
                   {items.map((contract) => {
-                    const displayOptions = contractDisplayOptions(contract, locale);
+                    const presented = contractPresentation(contract, locale);
+                    const displayOptions = contractDisplayOptions(presented, locale);
                     const selected = contracts.some(
                       (item) =>
                         item.id === contract.id ||
@@ -1711,8 +1712,8 @@ function ContractSelector({
                         ? contracts.slice(0, 4).every((item) => item.name)
                         : contracts.slice(4).every((item) => item.name);
                     const benefit =
-                      contract.seemingBenefits?.[
-                        seeming as keyof typeof contract.seemingBenefits
+                      presented.seemingBenefits?.[
+                        seeming as keyof typeof presented.seemingBenefits
                       ];
                     return (
                       <article
@@ -1728,21 +1729,21 @@ function ContractSelector({
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
                           <p className="rule-detail">
-                            <strong>{tr("Resumo", "Summary")}:</strong> {contract.description}
+                            <strong>{tr("Resumo", "Summary")}:</strong> {presented.description}
                           </p>
                           <p className="rule-detail">
                             <strong>{tr("Parada de dados", "Dice Pool")}:</strong>{" "}
-                            {contract.dicePool ?? tr("Não informada", "Not listed")}
+                            {presented.dicePool ?? tr("Não informada", "Not listed")}
                           </p>
-                          {contract.cost && (
+                          {presented.cost && (
                             <p className="rule-detail">
-                              <strong>{tr("Custo", "Cost")}:</strong> {contract.cost}
+                              <strong>{tr("Custo", "Cost")}:</strong> {presented.cost}
                             </p>
                           )}
                           <p className="rule-detail">
                             <strong>{tr("Ação / Duração", "Action / Duration")}:</strong>{" "}
-                            {contract.action ?? tr("Instantânea", "Instant")} ·{" "}
-                            {contract.duration ?? tr("Cena", "Scene")}
+                            {presented.action ?? tr("Instantânea", "Instant")} ·{" "}
+                            {presented.duration ?? tr("Cena", "Scene")}
                           </p>
                           {displayOptions.length > 0 && (
                             <div className="contract-options">
@@ -1754,15 +1755,15 @@ function ContractSelector({
                               </ul>
                             </div>
                           )}
-                          {contractOutcomeSections(contract, locale)
-                            .filter((section) => section.text !== contract.description)
+                          {contractOutcomeSections(presented, locale)
+                            .filter((section) => section.text !== presented.description)
                             .map((section) => (
                             <p className="rule-detail" key={section.label}>
                               <strong>{section.label}:</strong> {section.text}
                             </p>
                           ))}
                           <p className="rule-detail">
-                            <strong>{tr("Brecha", "Loophole")}:</strong> {contract.loophole}
+                            <strong>{tr("Brecha", "Loophole")}:</strong> {presented.loophole}
                           </p>
                           {contract.goblinDebt && (
                             <p className="rule-detail goblin-debt-note">
@@ -3451,6 +3452,8 @@ function contractTooltip(
   seeming: string,
   locale:Locale="pt-BR",
 ) {
+  const source = contract.id ? findContract(contract.id) ?? contract as ContractDefinition : contract as ContractDefinition;
+  contract = contractPresentation(source,locale);
   const benefit =
     contract.seemingBenefits?.[
       seeming as keyof typeof contract.seemingBenefits
