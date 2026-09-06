@@ -5536,6 +5536,7 @@ function ContractPowerList({
           ].filter((value, position, values) => value && values.indexOf(value) === position);
           const clauses = clauseCourtIds.map((courtId) => ({ courtId, text: definition.courtClauses?.[courtId] })).filter((item) => item.text);
           const displayOptions = contractDisplayOptions(definition, locale);
+          const outcomeSections = contractOutcomeSections(definition, locale);
           return (
             <article key={`${definition.id}-${index}`}>
               <div className="contract-power-title">
@@ -5568,22 +5569,28 @@ function ContractPowerList({
                     {definition.duration ?? tr("Cena", "Scene")}
                   </dd>
                 </div>
+                {outcomeSections.slice(0, 1).map((section) => (
+                  <div key={section.label}>
+                    <dt>{section.label}</dt>
+                    <dd>{section.text}</dd>
+                  </div>
+                ))}
                 {displayOptions.length > 0 && (
                   <div className="contract-options">
                     <dt>{tr("Opções", "Options")}</dt>
                     <dd><ul>{displayOptions.map((option) => <li key={option}>{option}</li>)}</ul></dd>
                   </div>
                 )}
-                {contractOutcomeSections(definition, locale).map((section) => (
-                    <div key={section.label}>
-                      <dt>{section.label}</dt>
-                      <dd>{section.text}</dd>
-                    </div>
-                  ))}
                 {definition.detailTables?.map((table) => (
                   <div className="contract-detail-table" key={table.title}>
                     <dt>{table.title}</dt>
                     <dd><table><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row) => <tr key={row.join("::")}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table></dd>
+                  </div>
+                ))}
+                {outcomeSections.slice(1).map((section) => (
+                  <div key={section.label}>
+                    <dt>{section.label}</dt>
+                    <dd>{section.text}</dd>
                   </div>
                 ))}
                 <div>

@@ -48,6 +48,7 @@ import {
   REGALIA,
   SKILLS,
   normalizeChangelingFrailties,
+  canIncreaseCreationDots,
 } from "@/lib/creation-rules";
 import {
   getMeritsForLine,
@@ -367,22 +368,13 @@ export function CharacterBuilder({
       if (index < 0 || spent(skills, names, 0) !== budget)
         add(2, `skill-${category}`, `${tr("Perícias", "Skills")} ${category}`);
     }
-    specialties.slice(0, 3).forEach((item, index) => {
-      if (!item.skill || !item.name.trim())
-        add(2, `specialty-${index}`, `${tr("Especialização", "Specialty")} ${index + 1}`);
-    });
     if (meritSpent > meritBudget) add(3, "merits", tr("Méritos acima do limite", "Merits exceed the limit"));
-    aspirations.slice(0, 3).forEach((item, index) => {
-      if (!item.trim()) add(3, `aspiration-${index}`, `${tr("Aspiração", "Aspiration")} ${index + 1}`);
-    });
     if (line === "CtL") {
       [
         ["seeming", seeming, "Feição"],
         ["kith", kith, "Fratria"],
-        ["court", court, "Corte"],
         ["needle", needle, "Agulha"],
         ["thread", thread, "Fio"],
-        ["touchstone", touchstone, "Pedra de Contato"],
         ["favoredAttribute", favoredAttribute, "Atributo favorecido"],
         ["secondRegalia", secondRegalia, "Segunda Regalia"],
       ].forEach(([key, value, label]) => {
@@ -560,7 +552,7 @@ export function CharacterBuilder({
             ...(initial?.line_data ?? {}),
             seeming,
             kith,
-            court,
+            court: court || "Sem Corte",
             needle,
             thread,
             touchstone,
@@ -636,7 +628,7 @@ export function CharacterBuilder({
       },
       attributes: finalAttributes,
       skills: finalSkills,
-      specializations: specialties.map((item) => ({
+      specializations: specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({
         skill: item.skill,
         name: item.name.trim(),
       })),
@@ -708,7 +700,6 @@ export function CharacterBuilder({
           tr("Identidade", "Identity"),
           tr("Características", "Traits"),
           line === "CtL" ? tr("Modelo dos Perdidos", "Lost Template") : tr("Modelo dos Despertos", "Awakened Template"),
-          tr("Conferência", "Review"),
         ].map((label, index) => (
           <div
             key={label}
@@ -784,6 +775,7 @@ export function CharacterBuilder({
               {...{
                 seeming,
                 setSeeming,
+                attributes,
                 kith,
                 setKith,
                 customKith,
@@ -867,21 +859,6 @@ export function CharacterBuilder({
               }}
             />
           ))}
-        {step === 4 && (
-          <ReviewStep
-            line={line}
-            name={name}
-            concept={concept}
-            attributes={attributes}
-            skills={skills}
-            merits={merits}
-            lineData={
-              line === "CtL"
-                ? { seeming, kith: kithDisplayName(kith, customKith, locale), court, needle, thread, wyrd: Math.min(10, wyrd + wyrdProgression.advancement) }
-                : { path, order, gnosis: Math.min(10, gnosis + gnosisProgression.advancement) }
-            }
-          />
-        )}
       </div>
       <div className="builder-actions">
         {step > 1 && (
@@ -890,7 +867,7 @@ export function CharacterBuilder({
           </Button>
         )}
         <span />
-        {step < 4 ? (
+        {step < 3 ? (
           <Button onClick={() => validate(step + 1)}>
             {tr("Continuar", "Continue")} <ArrowRight />
           </Button>
@@ -1108,7 +1085,7 @@ function TraitsStep(props: any) {
 }
 
 function CtlStep(props: any) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
     ...REGALIA,
@@ -1119,7 +1096,10 @@ function CtlStep(props: any) {
       )
       .map((item: ContractDefinition) => item.regalia),
   ].filter((item, index, values) => values.indexOf(item) === index);
-  const favored = seemingData ? favoredChoices(seemingData.favored) : [];
+  const favored = seemingData ? favoredChoices(seemingData.favored).filter((attribute) => Number(props.attributes?.[attribute] ?? 1) < 5) : [];
+  useEffect(() => {
+    if (props.favoredAttribute && !favored.includes(props.favoredAttribute)) props.setFavoredAttribute("");
+  }, [props.favoredAttribute, props.setFavoredAttribute, favored.join("|")]);
   const powerOptions = Array.from(
     { length: props.maximumPowerFromMerits },
     (_, index) => String(index + 1),
@@ -1189,7 +1169,7 @@ function CtlStep(props: any) {
       </div>
       <p className="rule-callout">
         <ShieldCheck /> {props.powerAdvancement > 0 && <>{tr("Fado atual", "Current Wyrd")}: <strong>{Math.min(10, props.wyrd + props.powerAdvancement)}</strong> ({props.powerAdvancement} {tr("por experiência preservados", "preserved from Experiences")}) · </>}{tr("Regalia da Feição", "Seeming Regalia")}:{" "}
-        <strong>{seemingData?.regalia ?? tr("selecione a Feição", "select a Seeming")}</strong> ·
+        <strong>{seemingData ? systemTerm(seemingData.regalia, locale) : tr("selecione a Feição", "select a Seeming")}</strong> ·
         {tr("Méritos disponíveis", "Available Merits")}: <strong>{props.meritBudget}</strong>
       </p>
       <Aspirations
@@ -1278,11 +1258,13 @@ function CourtSelector(props: any) {
       <div className="kith-current">
         <strong>{props.court ? courtDisplayName(props.court, locale) : tr("Nenhuma selecionada", "None selected")}</strong>
         <small>
-          {props.customCourt
+          {!props.court
+            ? tr("Nenhuma Corte selecionada: o personagem será salvo como Sem Corte.", "No Court selected: the character will be saved as Courtless.")
+            : props.customCourt
             ? `${props.customCourt.emotion} · ${tr("Corte criada pelo jogador", "Player-created Court")}`
             : officialCourt
               ? `${officialCourt.emotion} · ${tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}`
-              : tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}
+              : tr("Sem benefícios de Manto.", "No Mantle benefits.")}
         </small>
       </div>
       <Dialog>
@@ -1712,6 +1694,7 @@ function ContractSelector({
                     const presented = contractPresentation(contract, locale);
                     const summary = contractSummary(contract, locale);
                     const displayOptions = contractDisplayOptions(presented, locale);
+                    const outcomeSections = contractOutcomeSections(presented, locale);
                     const selected = contracts.some(
                       (item) =>
                         item.id === contract.id ||
@@ -1739,7 +1722,7 @@ function ContractSelector({
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
                           {summary && <p className="rule-detail">
-                            <strong>{tr("Resumo", "Summary")}:</strong> {presented.description}
+                            <strong>{tr("Resumo", "Summary")}:</strong> {summary}
                           </p>}
                           {contractHasInvocationRoll(presented) === true && <p className="rule-detail">
                             <strong>{tr("Parada de dados", "Dice Pool")}:</strong>{" "}
@@ -1755,6 +1738,11 @@ function ContractSelector({
                             {presented.action ?? tr("Instantânea", "Instant")} ·{" "}
                             {presented.duration ?? tr("Cena", "Scene")}
                           </p>
+                          {outcomeSections.slice(0, 1).map((section) => (
+                            <p className="rule-detail" key={section.label}>
+                              <strong>{section.label}:</strong> {section.text}
+                            </p>
+                          ))}
                           {displayOptions.length > 0 && (
                             <div className="contract-options">
                               <strong>{tr("Opções", "Options")}</strong>
@@ -1765,7 +1753,13 @@ function ContractSelector({
                               </ul>
                             </div>
                           )}
-                          {contractOutcomeSections(presented, locale).map((section) => (
+                          {presented.detailTables?.map((table) => (
+                            <div className="contract-detail-table" key={table.title}>
+                              <strong>{table.title}</strong>
+                              <table><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row) => <tr key={row.join("::")}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table>
+                            </div>
+                          ))}
+                          {outcomeSections.slice(1).map((section) => (
                             <p className="rule-detail" key={section.label}>
                               <strong>{section.label}:</strong> {section.text}
                             </p>
@@ -2351,62 +2345,6 @@ function SpellSelector({
   );
 }
 
-function ReviewStep({
-  line,
-  name,
-  concept,
-  attributes,
-  skills,
-  merits,
-  lineData,
-}: any) {
-  const { tr } = useLanguage();
-  return (
-    <div className="builder-section">
-      <span className="kicker">{tr("PASSO 4", "STEP 4")}</span>
-      <h2>{tr("Ficha pronta para salvar", "Character ready to save")}</h2>
-      <p>{tr("Ela ficará neste navegador e poderá ser exportada como JSON.", "It will remain in this browser and can be exported as JSON.")}</p>
-      <div className="review-summary">
-        <div>
-          <Badge>{line}</Badge>
-          <h3>{name}</h3>
-          <p>{concept}</p>
-        </div>
-        <div>
-          <strong>
-            {Object.values(attributes).reduce(
-              (a: number, b: any) => a + Number(b),
-              0,
-            )}
-          </strong>
-          <span>{tr("pontos de Atributos", "Attribute dots")}</span>
-        </div>
-        <div>
-          <strong>
-            {Object.values(skills).reduce(
-              (a: number, b: any) => a + Number(b),
-              0,
-            )}
-          </strong>
-          <span>{tr("pontos de Perícias", "Skill dots")}</span>
-        </div>
-        <div>
-          <strong>{merits.length}</strong>
-          <span>{tr("Méritos", "Merits")}</span>
-        </div>
-      </div>
-      <div className="line-review">
-        {Object.entries(lineData).map(([key, value]) => (
-          <div key={key}>
-            <span>{key}</span>
-            <strong>{String(value)}</strong>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function PriorityRow({ labels, values, setValues, budgets, invalid }: any) {
   const { tr } = useLanguage();
   return (
@@ -2467,11 +2405,14 @@ function DotGroups({
                 key={name}
                 name={name}
                 value={values[name]}
-                setValue={(value: number) =>
-                  setValues({ ...values, [name]: value })
-                }
+                setValue={(value: number) => {
+                  const delta = value - Number(values[name] ?? base);
+                  if (delta > 0 && (budget === undefined || used + delta > budget)) return;
+                  setValues({ ...values, [name]: value });
+                }}
                 min={base}
                 max={max}
+                canIncrease={canIncreaseCreationDots(used, budget, Number(values[name] ?? base), max)}
               />
             ))}
           </section>
@@ -2480,7 +2421,7 @@ function DotGroups({
     </div>
   );
 }
-function DotRow({ name, value, setValue, min, max, tag }: any) {
+function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: any) {
   const { locale, tr } = useLanguage();
   return (
     <div className="dot-row">
@@ -2508,6 +2449,7 @@ function DotRow({ name, value, setValue, min, max, tag }: any) {
           variant="ghost"
           size="icon-xs"
           aria-label={`${tr("Aumentar", "Increase")} ${builderText(locale, name)}`}
+          disabled={!canIncrease || value >= max}
           onClick={() => setValue(Math.min(max, value + 1))}
         >
           <Plus />
@@ -3493,8 +3435,11 @@ function contractTooltip(
     ];
   const displayOptions = contractDisplayOptions(contract, locale);
   const options = displayOptions.length ? `\n${localized(locale,"Opções","Options")}:\n${displayOptions.map((option) => `• ${option}`).join("\n")}` : "";
+  const outcomes = contractOutcomeSections(contract,locale);
+  const primaryOutcome = outcomes.slice(0, 1).map(({label, text}) => `${label}: ${text}`).join("\n");
+  const remainingOutcomes = outcomes.slice(1).map(({label, text}) => `${label}: ${text}`).join("\n");
   return contract.description
-    ? `${contract.cost ? `${localized(locale,"Custo","Cost")}: ${contract.cost}\n` : ""}${contractHasInvocationRoll(contract) === true ? `${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n` : ""}${localized(locale,"Ação","Action")}: ${contract.action ?? localized(locale,"Instantânea","Instant")} · ${localized(locale,"Duração","Duration")}: ${contract.duration ?? localized(locale,"Cena","Scene")}${options}\n${contractOutcomeSections(contract,locale).map(({label, text}) => `${label}: ${text}`).join("\n")}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
+    ? `${contract.cost ? `${localized(locale,"Custo","Cost")}: ${contract.cost}\n` : ""}${contractHasInvocationRoll(contract) === true ? `${localized(locale,"Parada de dados","Dice Pool")}: ${contract.dicePool ?? localized(locale,"Não informada","Not provided")}\n` : ""}${localized(locale,"Ação","Action")}: ${contract.action ?? localized(locale,"Instantânea","Instant")} · ${localized(locale,"Duração","Duration")}: ${contract.duration ?? localized(locale,"Cena","Scene")}\n${primaryOutcome}${options}${remainingOutcomes ? `\n${remainingOutcomes}` : ""}\n${localized(locale,"Brecha","Loophole")}: ${contract.loophole ?? localized(locale,"Não informada","Not provided")}${contract.goblin ? `\n${localized(locale,"Débito Goblin","Goblin Debt")}: ${contract.goblinDebt}` : ""}${benefit ? `\n${localized(locale,"Benefício de","Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`
     : "";
 }
 function formatRequirements(requirements: Record<string, number>) {
@@ -3697,19 +3642,19 @@ function translateRegalia(value: string) {
   return (
     (
       {
-        Crown: "Coroa",
-        Jewels: "Joias",
-        Mirror: "Espelho",
-        Shield: "Escudo",
-        Steed: "Corcel",
-        Sword: "Espada",
-        Chalice: "Cálice",
-        Coin: "Moeda",
-        Scepter: "Cetro",
-        Stars: "Estrelas",
-        Thorn: "Espinho",
-        Maw: "Garganta",
-        Fauce: "Garganta",
+        Coroa: "Crown",
+        Joias: "Jewels",
+        Espelho: "Mirror",
+        Escudo: "Shield",
+        Corcel: "Steed",
+        Espada: "Sword",
+        Cálice: "Chalice",
+        Moeda: "Coin",
+        Cetro: "Scepter",
+        Estrelas: "Stars",
+        Espinho: "Thorn",
+        Garganta: "Maw",
+        Fauce: "Maw",
       } as Record<string, string>
     )[value] ?? value
   );

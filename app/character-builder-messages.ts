@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { systemTerm } from "@/lib/system-terms";
 
 const english: Record<string, string> = {
   Mentais: "Mental", Físicos: "Physical", Sociais: "Social",
@@ -22,6 +23,6 @@ const english: Record<string, string> = {
 };
 
 export function builderText(locale: Locale, text: string | undefined) {
-  if (!text || locale === "pt-BR") return text ?? "";
-  return english[text] ?? text;
+  if (!text) return "";
+  return locale === "en-US" ? (english[text] ?? systemTerm(text, locale)) : systemTerm(text, locale);
 }
