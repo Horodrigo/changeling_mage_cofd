@@ -109,6 +109,22 @@ test("configurações de texto livre ficam inline e escolhas estruturadas perman
   assert.equal(isInlineMeritConfiguration("Fae Mount"), false);
 });
 
+test("compra de Mérito identifica o nível atual da instância", async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  assert.match(workspace,/meritName\(item\).*owned\.dots.*tr\("para","to"\)/s);
+  assert.doesNotMatch(workspace,/`\$\{tr\("instância","instance"\)\} \$\{instanceNumber \+ 1\}`/);
+});
+
+test("Contratos exibem Comuns antes dos Reais sem perder a ordem alfabética", async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  assert.match(builder,/alphabetical\(catalog, contractName,locale\)[\s\S]*Number\(left\.type === "Real"\)/);
+  assert.match(workspace,/sortPriority: Number\(item\.type === "Real"\)/);
+  assert.match(workspace,/alphabetical\(items, item => item\.name,locale\)[\s\S]*left\.sortPriority/);
+});
+
 test("as 73 Frátrias possuem nome localizado preservando IDs e nomes salvos", () => {
   assert.equal(KITHS.length,73);
   assert.equal(new Set(KITHS.map(x=>x.translatedName)).size,73);

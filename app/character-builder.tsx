@@ -1576,13 +1576,15 @@ function ContractSelector({
   const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
   const [search, setSearch] = useState("");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
-  const availableContracts = alphabetical(catalog, contractName,locale).filter((contract) =>
-    canSelectInitialContract(
-      contract,
-      [primaryRegalia, secondRegalia].filter(Boolean),
-      court,
-    ),
-  );
+  const availableContracts = alphabetical(catalog, contractName,locale)
+    .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
+    .filter((contract) =>
+      canSelectInitialContract(
+        contract,
+        [primaryRegalia, secondRegalia].filter(Boolean),
+        court,
+      ),
+    );
   const contractGroups = [
     ...REGALIA,
     ...availableContracts.map((item) => item.regalia).filter(

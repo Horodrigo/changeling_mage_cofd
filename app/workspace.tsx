@@ -2223,6 +2223,7 @@ function MeritCompanionCard({
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
   const { locale, tr } = useLanguage();
+  const isMobile=useIsMobile();
   const configuration = normalizeMeritConfiguration(merit.configuration),
     name = String(
       configuration.name ??
@@ -2277,7 +2278,7 @@ function MeritCompanionCard({
           onChange={(event) => save({ name: event.target.value })}
           placeholder={tr("Nome da montaria","Mount name")}
         />
-        <div className="mount-attribute-grid">{Object.entries(ATTRIBUTES).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={mountAttributes}/>)}</div>
+        <div className="mount-attribute-grid">{Object.entries(ATTRIBUTES).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={mountAttributes} compactNames={isMobile}/>)}</div>
         <p><b>{tr("Perícias", "Skills")}:</b> {tr("Atletismo 4, Briga 1 (Coice), Sobrevivência 2", "Athletics 4, Brawl 1 (Kicking), Survival 2")}{dreamspun?`, ${tr("Furtividade", "Stealth")} ${merit.dots}`:""}</p>
         <div className="mount-combat-block"><CompactValues values={{"Força de Vontade":5,Iniciativa:5+(many?merit.dots:0),Defesa:7,Deslocamento:many?38:19,Tamanho:7,"Armadura geral":generalArmor,"Armadura balística":ballisticArmor}}/><div className="mount-armor-editors"><ArmorDotPicker label={tr("Armadura geral","General Armor")} value={ownGeneral} onChange={(value)=>save({armor_general:String(value)})}/><ArmorDotPicker label={tr("Armadura balística","Ballistic Armor")} value={ownBallistic} onChange={(value)=>save({armor_ballistic:String(value)})}/></div>{armorshell&&<small>{tr("Armorshell fornece Armadura 3/2; somente o maior valor entre ela e a armadura própria é aplicado.","Armorshell provides Armor 3/2; only the higher of it and the mount's own armor applies.")}</small>}<strong>{tr("Vitalidade","Health")}</strong><HealthTrack health={health} damage={mountDamage} onChange={(value)=>save({health_damage:value})}/></div>
         <p>
@@ -3591,6 +3592,7 @@ function ExperiencePanel({
                       name: locale==="en-US"?item.originalName:item.name,
                       category: systemTerm(item.regalia,locale),
                       secondaryCategory: item.type==="Comum"?tr("Comum","Common"):tr("Real","Royal"),
+                      sortPriority: Number(item.type === "Real"),
                       description: contractOutcomeSections(item,locale).map(section=>section.text).join(" "),
                       meta: `${item.type==="Comum"?tr("Comum","Common"):tr("Real","Royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
                     }))}
@@ -4405,6 +4407,7 @@ type ExperienceCatalogItem = {
   name: string;
   category: string;
   secondaryCategory?: string;
+  sortPriority?: number;
   description: string;
   meta: string;
 };
@@ -4431,7 +4434,9 @@ function ExperiencePowerPicker({
     "Todos",
     ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),
   ] as string[];
-  const visible = alphabetical(items, item => item.name,locale).filter(
+  const visible = alphabetical(items, item => item.name,locale)
+    .sort((left, right) => (left.sortPriority ?? 0) - (right.sortPriority ?? 0))
+    .filter(
     (item) =>
       (category === "Todas" || item.category === category) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
@@ -4439,7 +4444,7 @@ function ExperiencePowerPicker({
         `${item.name} ${item.category} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
-  );
+    );
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -4624,7 +4629,7 @@ function ExperienceMeritPicker({
                     )}
                   </div>
                   <div className="experience-merit-choice">
-                    {instances.map(({ owned, index }, instanceNumber) =>
+                    {instances.map(({ owned, index }) =>
                       ratings
                         .filter((dot) => dot > owned.dots)
                         .map((dot) => (
@@ -4636,8 +4641,8 @@ function ExperienceMeritPicker({
                               onClick={() => onSelect(item.id, dot, index)}
                             >
                               {tr("Aumentar","Raise")}{" "}
-                              {meritConfigurationTitle(owned.configuration) ||
-                                `${tr("instância","instance")} ${instanceNumber + 1}`}{" "}
+                              {meritName(item)}{meritConfigurationTitle(owned.configuration)?`: ${meritConfigurationTitle(owned.configuration)}`:""}{" "}
+                              {owned.dots}{" "}
                               {tr("para","to")} {dot}
                             </Button>
                           </DialogClose>

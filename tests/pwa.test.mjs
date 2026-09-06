@@ -31,6 +31,7 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em
   ]);
   assert.match(workspace,/value: "stats", label: "Stats"/);
   assert.match(workspace,/mobile-attribute-grid/);
+  assert.match(workspace,/values=\{mountAttributes\} compactNames=\{isMobile\}/);
   assert.match(workspace,/<details className="contract-power-card"/);
   assert.match(workspace,/<summary className="contract-power-summary">/);
   assert.match(workspace,/systemTerm\(definition\.regalia,locale\).*definition\.source/);
