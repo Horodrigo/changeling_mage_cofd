@@ -825,7 +825,8 @@ button { cursor: pointer; }
 .sheet-merit-main { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .sheet-merit-row.has-inline-config { padding:4px 0; }
 .sheet-merit-row.has-inline-config .sheet-merit-main > span { flex:none; }
-.sheet-merit-row .inline-merit-input { min-width:80px; height:28px; flex:1; padding:3px 7px; font-size:13px; }
+.sheet-merit-row .inline-merit-input { min-width:80px; height:24px; flex:1; padding:1px 3px; border:0; border-bottom:1px solid #aaa8a16b; border-radius:0; background:transparent; box-shadow:none; font:italic 13px Georgia,serif; }
+.sheet-merit-row .inline-merit-input:focus-visible { border-bottom-color:var(--sheet-accent); outline:0; box-shadow:0 1px 0 var(--sheet-accent); }
 .sheet-merits em { color:#777; font-size:13px; }
 .blank-lines { display:grid; gap:9px; padding-top:6px; }.blank-lines i { height:15px; border-bottom:1px solid #aaa8a16b; }
 .merit-row [data-slot="combobox-item"] { justify-content:space-between; }.merit-row [data-slot="combobox-item"] small { margin-left:auto; color:#8a818a; font-size:11px; }

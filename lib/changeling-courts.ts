@@ -209,7 +209,10 @@ export function courtPresentation(value: unknown, locale: Locale = "pt-BR") {
 }
 
 export function courtDisplayName(value: unknown, locale: Locale = "pt-BR") {
-  return courtPresentation(value, locale)?.name ?? String(value ?? "");
+  const raw=String(value ?? "");
+  if (["sem corte","courtless"].includes(raw.trim().toLocaleLowerCase()))
+    return locale === "en-US" ? "Courtless" : "Sem Corte";
+  return courtPresentation(value, locale)?.name ?? raw;
 }
 
 export function courtCanonicalId(value: unknown) {

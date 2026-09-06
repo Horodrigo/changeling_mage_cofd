@@ -22,3 +22,13 @@ test("seletor fica após Homebrews e mantém rótulo acessível",()=>{
   assert.match(source,/aria-label=\{`\$\{t\("language"\)\}/);
   assert.match(infrastructure,/document\.documentElement\.lang/);
 });
+
+test("a ficha localiza Kith, Courtless, compras e linhas editáveis",async()=>{
+  const source=readFileSync(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const {courtDisplayName}=await vite.ssrLoadModule("/lib/changeling-courts.ts");
+  assert.equal(courtDisplayName("Sem Corte","en-US"),"Courtless");
+  assert.match(source,/label=\{tr\("Frátria", "Kith"\)\}/);
+  assert.match(source,/purchaseTypeLabel\(value,locale\)/);
+  assert.match(source,/tr\("Adicionar linha", "Add row"\)/);
+  assert.match(source,/tr\("Escreva um Juramento", "Write an Oath"\)/);
+});

@@ -1067,7 +1067,7 @@ function CharacterPaper({
               />
               <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Fio" value={data.thread} />
-              <SheetField label="Fratria" value={kithDisplayName(data.kith, Boolean(data.kith_custom))} />
+              <SheetField label={tr("Frátria", "Kith")} value={kithDisplayName(data.kith, Boolean(data.kith_custom), locale)} />
               <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField
                 label="Conceito"
@@ -1214,7 +1214,7 @@ function CharacterPaper({
                 <EditableList
                   values={oaths}
                   minimum={5}
-                  placeholder="Escreva um Juramento"
+                  placeholder={tr("Escreva um Juramento", "Write an Oath")}
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "oaths", value)
                   }
@@ -2968,6 +2968,12 @@ const PURCHASE_TYPES = [
   "Fado",
   "Ponto perdido de Força de Vontade",
 ];
+const PURCHASE_TYPE_EN:Record<string,string>={
+  Atributo:"Attribute", Perícia:"Skill", Mérito:"Merit", Especialização:"Specialty", Contrato:"Contract",
+  "Benefício de Contrato":"Contract Benefit", Fado:"Wyrd", "Ponto perdido de Força de Vontade":"Lost Willpower dot",
+  Arcano:"Arcanum", Gnose:"Gnosis", Rota:"Rote", Práxis:"Praxis", Sabedoria:"Wisdom",
+};
+const purchaseTypeLabel=(value:string,locale:Locale)=>locale==="en-US"?(PURCHASE_TYPE_EN[value]??systemTerm(value,locale)):value;
 const groupedTraitOptions = (
   groups: Record<string, readonly string[]>,
 ) =>
@@ -3455,6 +3461,7 @@ function ExperiencePanel({
     );
   }
   const preview = purchasePreview({
+    locale,
     purchaseType,
     character,
     attribute,
@@ -3555,7 +3562,7 @@ function ExperiencePanel({
                   }}
                   options={PURCHASE_TYPES.map((value) => ({
                     value,
-                    label: value,
+                    label: purchaseTypeLabel(value,locale),
                   }))}
                 />
               </label>
@@ -3839,13 +3846,17 @@ function MageExperiencePanel({
   const selectedSpell =
     availableSpells.find((item) => item.id === target) ?? availableSpells[0];
   let cost = 1,
-    label: string = target,
+    label: string = systemTerm(target,locale),
     mode: "regular" | "arcane" | "either" = "regular";
   if (purchase === "Atributo") cost = 4;
   else if (purchase === "Perícia") cost = 2;
+  else if (purchase === "Especialização") {
+    cost = 1;
+    label = `${tr("Especialização", "Specialty")}: ${systemTerm(target,locale)}`;
+  }
   else if (purchase === "Mérito") {
     cost = nextMerit ? nextMerit - (ownedMerit?.dots ?? 0) : 0;
-    label = selectedMerit?.translatedName ?? "Mérito";
+    label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? tr("Mérito","Merit");
   } else if (purchase === "Arcano") {
     const current = Number(arcana[target] ?? 0);
     const ruling = path?.ruling.includes(target as never);
@@ -3857,23 +3868,23 @@ function MageExperiencePanel({
   } else if (purchase === "Gnose") {
     cost = 5;
     mode = "either";
-    label = `Gnose ${Number(character.line_data.gnosis ?? 1) + 1}`;
+    label = `${tr("Gnose","Gnosis")} ${Number(character.line_data.gnosis ?? 1) + 1}`;
   } else if (purchase === "Rota") {
     cost = 1;
-    label = selectedSpell?.name ?? "Rota";
+    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? tr("Rota","Rote");
   } else if (purchase === "Práxis") {
     cost = 1;
     mode = "arcane";
-    label = selectedSpell?.name ?? "Práxis";
+    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? tr("Práxis","Praxis");
   } else if (purchase === "Sabedoria") {
     cost = 2;
     mode = "arcane";
-    label = `Sabedoria ${Number(character.line_data.wisdom ?? 7) + 1}`;
+    label = `${tr("Sabedoria","Wisdom")} ${Number(character.line_data.wisdom ?? 7) + 1}`;
   } else if (purchase === "Ponto perdido de Força de Vontade") {
     cost = lostWillpower ? 1 : 0;
     label = lostWillpower
-      ? "Recuperar ponto perdido de Força de Vontade"
-      : "Nenhum ponto perdido";
+      ? tr("Recuperar ponto perdido de Força de Vontade","Recover a lost Willpower dot")
+      : tr("Nenhum ponto perdido","No lost dots");
   }
   const splitRegular =
       mode === "regular"
@@ -4171,7 +4182,7 @@ function MageExperiencePanel({
                 }}
                 options={MAGE_PURCHASES.map((value) => ({
                   value,
-                  label: value,
+                  label: purchaseTypeLabel(value,locale),
                 }))}
               />
             </label>
@@ -4788,6 +4799,7 @@ function contractExperienceCost(
   return contract.type === "Comum" ? (favored ? 2 : 3) : favored ? 3 : 4;
 }
 function purchasePreview(input: {
+  locale: Locale;
   purchaseType: string;
   character: CharacterSheet;
   attribute: string;
@@ -4802,32 +4814,32 @@ function purchasePreview(input: {
   wyrd: number;
   lostWillpower: number;
 }) {
-  const { purchaseType, character } = input;
+  const { purchaseType, character, locale } = input;
   if (purchaseType === "Atributo") {
     const target = Number(character.attributes[input.attribute] ?? 1) + 1;
-    return { label: `${input.attribute} ${target}`, cost: 4 };
+    return { label: `${systemTerm(input.attribute,locale)} ${target}`, cost: 4 };
   }
   if (purchaseType === "Perícia") {
     const target = Number(character.skills[input.skill] ?? 0) + 1;
-    return { label: `${input.skill} ${target}`, cost: 2 };
+    return { label: `${systemTerm(input.skill,locale)} ${target}`, cost: 2 };
   }
   if (purchaseType === "Mérito")
     return {
       label: input.nextMeritRating
-        ? `${input.selectedMerit?.translatedName} ${input.nextMeritRating}`
-        : "Sem nível adicional",
+        ? `${locale==="en-US"?input.selectedMerit?.name:input.selectedMerit?.translatedName} ${input.nextMeritRating}`
+        : locale==="en-US"?"No additional rating":"Sem nível adicional",
       cost: input.nextMeritRating
         ? input.nextMeritRating - (input.ownedMerit?.dots ?? 0)
         : 0,
     };
   if (purchaseType === "Especialização")
     return {
-      label: `${input.specialtySkill}: ${input.specialtyName || "nova Especialização"}`,
+      label: `${systemTerm(input.specialtySkill,locale)}: ${input.specialtyName || (locale==="en-US"?"new Specialty":"nova Especialização")}`,
       cost: 1,
     };
   if (purchaseType === "Contrato")
     return {
-      label: input.selectedContract?.name ?? "Nenhum Contrato disponível",
+      label: (locale==="en-US"?input.selectedContract?.originalName:input.selectedContract?.name) ?? (locale==="en-US"?"No Contract available":"Nenhum Contrato disponível"),
       cost: input.selectedContract
         ? contractExperienceCost(input.selectedContract, character)
         : 0,
@@ -4835,19 +4847,19 @@ function purchasePreview(input: {
   if (purchaseType === "Benefício de Contrato")
     return {
       label: input.benefitKey
-        ? "Benefício de outra Feição"
-        : "Nenhum Benefício disponível",
+        ? locale==="en-US"?"Benefit from another Seeming":"Benefício de outra Feição"
+        : locale==="en-US"?"No Benefit available":"Nenhum Benefício disponível",
       cost: input.benefitKey ? 1 : 0,
     };
   if (purchaseType === "Fado")
     return {
-      label: input.wyrd < 10 ? `Fado ${input.wyrd + 1}` : "Fado máximo",
+      label: input.wyrd < 10 ? `${locale==="en-US"?"Wyrd":"Fado"} ${input.wyrd + 1}` : locale==="en-US"?"Maximum Wyrd":"Fado máximo",
       cost: input.wyrd < 10 ? 5 : 0,
     };
   return {
     label: input.lostWillpower
-      ? "Recuperar ponto perdido de Força de Vontade"
-      : "Nenhum ponto perdido",
+      ? locale==="en-US"?"Recover a lost Willpower dot":"Recuperar ponto perdido de Força de Vontade"
+      : locale==="en-US"?"No lost dots":"Nenhum ponto perdido",
     cost: input.lostWillpower ? 1 : 0,
   };
 }
@@ -5141,6 +5153,7 @@ function EditableList({
   placeholder: string;
   onChange: (value: string[]) => void;
 }) {
+  const {tr}=useLanguage();
   const rows =
     maximum === undefined ? [...values] : [...values].slice(0, maximum);
   while (rows.length < minimum) rows.push("");
@@ -5163,7 +5176,7 @@ function EditableList({
               type="button"
               size="icon"
               variant="ghost"
-              aria-label={`Remover linha ${index + 1}`}
+              aria-label={`${tr("Remover linha", "Remove row")} ${index + 1}`}
               onClick={() =>
                 onChange(rows.filter((_, itemIndex) => itemIndex !== index))
               }
@@ -5180,7 +5193,7 @@ function EditableList({
           variant="ghost"
           onClick={() => onChange([...rows, ""])}
         >
-          <Plus /> Adicionar linha
+          <Plus /> {tr("Adicionar linha", "Add row")}
         </Button>
       )}
     </div>
