@@ -637,15 +637,6 @@ button { cursor: pointer; }
   }
   .app-launch-splash img { width:min(42vw,180px); height:auto; border-radius:24%; filter:drop-shadow(0 16px 36px #000a); }
   .app-launch-splash strong { max-width:18ch; font:700 clamp(22px,7vw,34px)/1.1 Georgia,serif; letter-spacing:.02em; text-wrap:balance; }
-  .contract-power-card { overflow:hidden; border:1px solid #d8ced9; border-radius:10px; background:#fffdfb; }
-  .contract-power-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 12px; align-items:start; padding:13px 14px; cursor:pointer; list-style:none; }
-  .contract-power-summary::-webkit-details-marker { display:none; }
-  .contract-power-summary > strong { min-width:0; color:#3f3042; font:700 16px Georgia,serif; }
-  .contract-power-summary > small { grid-column:1/-1; color:#786c79; font-size:12px; }
-  .contract-power-summary [data-slot="badge"] { align-self:center; }
-  .contract-power-card[open] .contract-power-summary { border-bottom:1px solid #e4dce5; background:#f8f3f8; }
-  .contract-power-details { padding:14px; }
-  .contract-power-details > .contract-power-title,.contract-power-details > small { display:none; }
 }
 @media (prefers-reduced-motion:reduce) {
   .app-launch-splash { animation-duration:.35s; }
@@ -794,6 +785,15 @@ button { cursor: pointer; }
 .powers-page { min-height:760px; }
 .powers-sheet-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; margin-top:25px; }
 .contract-power-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.contract-power-card { overflow:hidden; border:1px solid color-mix(in srgb,var(--sheet-accent) 35%,#d8d2c8); border-radius:10px; background:#fffefa; }
+.contract-power-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 12px; align-items:start; padding:13px 14px; cursor:pointer; list-style:none; }
+.contract-power-summary::-webkit-details-marker { display:none; }
+.contract-power-summary::marker { content:""; }
+.contract-power-summary > strong { min-width:0; color:var(--sheet-ink); font:700 16px Georgia,serif; }
+.contract-power-summary > small { grid-column:1/-1; color:#756d72; font-size:12px; }
+.contract-power-summary [data-slot="badge"] { align-self:center; }
+.contract-power-card[open] .contract-power-summary { border-bottom:1px solid color-mix(in srgb,var(--sheet-accent) 22%,#e4dce5); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); }
+.contract-power-details { padding:14px; }
 .contract-options { margin:7px 0; padding:8px 10px; border-left:3px solid var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 5%,#fff); font:11px/1.45 Inter,Arial,sans-serif; }
 .contract-options ul { display:grid; gap:5px; margin:5px 0 0; padding-left:15px; list-style:disc; }
 .contract-power-list article { padding:12px; border:1px solid color-mix(in srgb,var(--sheet-accent) 35%,#d8d2c8); background:#fffefa; }
@@ -922,40 +922,4 @@ button { cursor: pointer; }
   .cod-sheet:before { opacity:.06; background-size:100% 100%; }
 }
 
-/* Visualização e exportação das quatro páginas da ficha. */
 .sheet-toolbar-actions { justify-content:flex-end; flex-wrap:wrap; }
-.pdf-print-source { display:none; }
-.pdf-preview-dialog { width:min(96vw,1180px); max-width:none; height:94vh; padding:0; overflow:hidden; }
-.pdf-preview-header { display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:18px; padding:18px 22px; border-bottom:1px solid #d9dee3; }
-.pdf-preview-header > div { min-width:0; }
-.pdf-preview-scroll { overflow:auto; padding:22px; background:#cbd3db; }
-.pdf-preview-scroll .print-layout { width:min(100%,1050px); margin:0 auto; box-shadow:0 12px 38px #17212c38; }
-.print-layout .ctl-sheet-tab-list { display:none!important; }
-.print-layout .ctl-sheet-page[hidden] { display:block!important; }
-.print-layout .ctl-sheet-page { position:relative; padding:32px 28px; background-color:#fffef9; background-image:linear-gradient(rgba(255,254,249,.91),rgba(255,254,249,.91)),var(--sheet-stamp),var(--sheet-skull); background-position:center,center,center 38%; background-repeat:no-repeat; background-size:100% 100%,100% 100%,min(70%,720px) auto; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sheet-accent) 65%,transparent); print-color-adjust:exact; -webkit-print-color-adjust:exact; }
-.print-layout .ctl-sheet-page + .ctl-sheet-page { margin-top:34px; padding-top:52px; border-top:3px double var(--sheet-accent); }
-.print-layout .ctl-sheet-page:before { content:attr(data-page-title); display:block; margin:0 0 22px; padding-bottom:7px; border-bottom:2px solid var(--sheet-accent); color:var(--sheet-accent); font:700 24px/1 Georgia,"Times New Roman",serif; letter-spacing:.12em; text-transform:uppercase; }
-
-@media (max-width:720px) {
-  .pdf-preview-dialog { width:100vw; height:100dvh; max-height:none; border-radius:0; }
-  .pdf-preview-header { align-items:stretch; flex-direction:column; padding:14px; }
-  .pdf-preview-scroll { padding:8px; }
-}
-
-@media print {
-  @page { size:A4 portrait; margin:8mm; }
-  html,body { width:auto; min-width:0; margin:0!important; padding:0!important; background:#fff!important; }
-  body * { visibility:hidden!important; }
-  .pdf-print-source,.pdf-print-source * { visibility:visible!important; }
-  .pdf-print-source { display:block!important; position:absolute; inset:0; width:100%; }
-  .pdf-print-source .cod-sheet { width:100%; margin:0; padding:0; border:0; border-radius:0; background:#fffef9!important; box-shadow:none; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
-  .pdf-print-source .cod-sheet:before,.pdf-print-source .cod-sheet:after { display:none; }
-  .pdf-print-source .cod-sheet-title { padding:5mm 7mm; background:#fffef9; }
-  .pdf-print-source .ctl-sheet-tab-list { display:none!important; }
-  .pdf-print-source .ctl-sheet-page[hidden] { display:block!important; }
-  .pdf-print-source .ctl-sheet-page { min-height:277mm; margin:0; padding:9mm 8mm; border:1px solid var(--sheet-accent); background-color:#fffef9!important; background-image:linear-gradient(rgba(255,254,249,.91),rgba(255,254,249,.91)),var(--sheet-stamp),var(--sheet-skull)!important; background-position:center,center,center 38%!important; background-repeat:no-repeat!important; background-size:100% 100%,100% 100%,72% auto!important; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sheet-accent) 45%,transparent); break-before:page; page-break-before:always; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
-  .pdf-print-source .ctl-sheet-page[data-page-title="Principal"] { break-before:auto; page-break-before:auto; }
-  .pdf-print-source .ctl-sheet-page + .ctl-sheet-page { margin-top:0; border-top:0; }
-  .pdf-print-source .ctl-sheet-page:before { margin-bottom:6mm; }
-  .pdf-print-source button,.pdf-print-source textarea,.pdf-print-source input,.pdf-print-source [role="dialog"] { pointer-events:none; }
-}

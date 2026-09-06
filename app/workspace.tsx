@@ -4,14 +4,12 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ChevronRight,
   Download,
-  Eye,
   FileJson,
   History,
   FlaskConical,
   LayoutDashboard,
   MoreHorizontal,
   Pencil,
-  Printer,
   Plus,
   RotateCcw,
   Search,
@@ -682,11 +680,6 @@ function CharacterView({
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
   const {tr}=useLanguage();
-  const [pdfPreviewOpen, setPdfPreviewOpen] = useState(false);
-  const printSheet = () => {
-    setPdfPreviewOpen(false);
-    window.setTimeout(() => window.print(), 80);
-  };
   return (
     <section className="sheet-editor">
       <div className="sheet-toolbar">
@@ -698,12 +691,6 @@ function CharacterView({
           <span>{tr("Alterações nos marcadores são salvas automaticamente","Changes to tracks are saved automatically")}</span>
         </div>
         <div className="sheet-toolbar-actions">
-          <Button variant="outline" onClick={() => setPdfPreviewOpen(true)}>
-            <Eye /> {tr("Visualizar PDF","Preview PDF")}
-          </Button>
-          <Button variant="outline" onClick={printSheet}>
-            <Printer /> {tr("Imprimir PDF","Print PDF")}
-          </Button>
           <Button variant="outline" onClick={edit}>
             <Pencil /> {tr("Editar","Edit")}
           </Button>
@@ -714,37 +701,6 @@ function CharacterView({
         updateState={updateState}
         updateSheet={updateSheet}
       />
-      <div className="pdf-print-source" aria-hidden="true">
-        <CharacterPaper
-          character={character}
-          updateState={updateState}
-          updateSheet={updateSheet}
-          printLayout
-        />
-      </div>
-      <Dialog open={pdfPreviewOpen} onOpenChange={setPdfPreviewOpen}>
-        <DialogContent className="pdf-preview-dialog">
-          <DialogHeader className="pdf-preview-header">
-            <div>
-              <DialogTitle>{tr("Visualização para PDF","PDF preview")}</DialogTitle>
-              <DialogDescription>
-                {tr("As quatro abas serão impressas como páginas separadas.","The four tabs will print as separate pages.")}
-              </DialogDescription>
-            </div>
-            <Button onClick={() => window.print()}>
-              <Printer /> {tr("Imprimir ou salvar em PDF","Print or save as PDF")}
-            </Button>
-          </DialogHeader>
-          <div className="pdf-preview-scroll">
-            <CharacterPaper
-              character={character}
-              updateState={updateState}
-              updateSheet={updateSheet}
-              printLayout
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
     </section>
   );
 }
@@ -835,12 +791,10 @@ function CharacterPaper({
   character,
   updateState,
   updateSheet,
-  printLayout = false,
 }: {
   character: CharacterSheet;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
-  printLayout?: boolean;
 }) {
   const { locale, tr } = useLanguage();
   const isMobile = useIsMobile();
@@ -944,7 +898,7 @@ function CharacterPaper({
   const setState = (key: string, value: unknown) =>
     updateState({ ...character.current_state, [key]: value });
 
-  if (isMobile && !printLayout) {
+  if (isMobile) {
     const identity = isCtl
       ? [
           ["Nome", character.character.name], ["Jogador", character.character.player],
@@ -1038,7 +992,7 @@ function CharacterPaper({
     );
   }
   return (
-    <article className={`cod-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}${printLayout ? " print-layout" : ""}`}>
+    <article className={`cod-sheet ${isCtl ? "ctl-sheet" : "mta-sheet"}`}>
       <header className="cod-sheet-title">
         <div>
           <span>{isCtl ? "CHANGELING" : tr("MAGO","MAGE")}</span>
@@ -1057,7 +1011,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
             <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
-          <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
+          <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Agulha" value={data.needle} />
@@ -1189,7 +1143,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount={printLayout ? true : undefined} value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
+          <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>Contratos</SheetHeading>
             <ContractPowerList
               contracts={contracts}
@@ -1228,7 +1182,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount={printLayout ? true : undefined} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
+          <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1236,7 +1190,6 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
-            forceMount={printLayout ? true : undefined}
             value="companheiros"
             data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
@@ -1258,7 +1211,7 @@ function CharacterPaper({
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
             <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
-          <TabsContent forceMount={printLayout ? true : undefined} value="principal" data-page-title="Principal" className="ctl-sheet-page">
+          <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Nome das Sombras" value={data.shadow_name} />
@@ -1369,7 +1322,6 @@ function CharacterPaper({
             </section>
           </TabsContent>
           <TabsContent
-            forceMount={printLayout ? true : undefined}
             value="magia"
             data-page-title="Detalhes"
             className="ctl-sheet-page powers-page mage-spell-page"
@@ -1462,7 +1414,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          <TabsContent forceMount={printLayout ? true : undefined} value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
+          <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
               derived={derived}
@@ -1470,7 +1422,6 @@ function CharacterPaper({
             />
           </TabsContent>
           <TabsContent
-            forceMount={printLayout ? true : undefined}
             value="companheiros"
             data-page-title="Companheiros"
             className="ctl-sheet-page powers-page"
@@ -5569,7 +5520,6 @@ function ContractPowerList({
   extraClauses?: Array<Record<string, unknown>>;
 }) {
   const {locale,tr}=useLanguage();
-  const isMobile=useIsMobile();
   const homebrews=useHomebrews();
   return (
     <div className="contract-power-list">
@@ -5610,18 +5560,7 @@ function ContractPowerList({
           const clauses = clauseCourtIds.map((courtId) => ({ courtId, text: definition.courtClauses?.[courtId] })).filter((item) => item.text);
           const displayOptions = contractDisplayOptions(definition, locale);
           const outcomeSections = contractOutcomeSections(definition, locale);
-          const expandedContent = <>
-              <div className="contract-power-title">
-                <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
-                <Badge variant={definition.goblin ? "default" : "outline"}>
-                  {definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}
-                </Badge>
-              </div>
-              <small>
-                {systemTerm(definition.regalia,locale)} · {definition.source} · p.{" "}
-                {definition.page}
-              </small>
-              <dl>
+          const details = <dl>
                 {summary && <div>
                   <dt>{tr("Resumo", "Summary")}</dt>
                   <dd>{summary}</dd>
@@ -5696,9 +5635,7 @@ function ContractPowerList({
                     <dd>{definition.goblinDebt}</dd>
                   </div>
                 )}
-              </dl>
-            </>;
-          if (!isMobile) return <article key={`${definition.id}-${index}`}>{expandedContent}</article>;
+              </dl>;
           return (
             <details className="contract-power-card" key={`${definition.id}-${index}`}>
               <summary className="contract-power-summary">
@@ -5706,7 +5643,7 @@ function ContractPowerList({
                 <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}</Badge>
                 <small>{systemTerm(definition.regalia,locale)} · {definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
               </summary>
-              <div className="contract-power-details">{expandedContent}</div>
+              <div className="contract-power-details">{details}</div>
             </details>
           );
         })}

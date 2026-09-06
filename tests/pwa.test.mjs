@@ -24,13 +24,27 @@ test("apresenta uma abertura de aplicativo alinhada à nova marca", async () => 
   assert.match(css,/radial-gradient/);
 });
 
-test("mantém a ficha móvel compacta e os contratos expansíveis sem botões", async () => {
-  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em todas as telas", async () => {
+  const [workspace,css]=await Promise.all([
+    readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
+    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+  ]);
   assert.match(workspace,/value: "stats", label: "Stats"/);
   assert.match(workspace,/mobile-attribute-grid/);
   assert.match(workspace,/<details className="contract-power-card"/);
   assert.match(workspace,/<summary className="contract-power-summary">/);
   assert.match(workspace,/systemTerm\(definition\.regalia,locale\).*definition\.source/);
+  assert.doesNotMatch(workspace,/if \(!isMobile\).*contract-power/);
+  assert.match(css,/\.contract-power-card \{/);
+});
+
+test("não oferece prévia, impressão ou árvore duplicada para PDF", async () => {
+  const [workspace,css]=await Promise.all([
+    readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
+    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+  ]);
+  assert.doesNotMatch(workspace,/window\.print|printLayout|pdf-preview|pdf-print-source|Preview PDF|Print PDF/);
+  assert.doesNotMatch(css,/pdf-preview|pdf-print-source|print-layout|@media print/);
 });
 
 test("service worker preserva shell offline e exige confirmação para atualizar", async () => {
