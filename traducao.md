@@ -1,8 +1,8 @@
-# Política de conteúdo bilíngue do Arquivo das Trevas
+# Política de conteúdo bilíngue de Characters of the Darkness
 
 ## Objetivo
 
-O Arquivo das Trevas deve oferecer toda a interface e todo o conteúdo oficial em Inglês dos Estados Unidos (`en-US`) e Português do Brasil (`pt-BR`).
+Characters of the Darkness deve oferecer toda a interface e todo o conteúdo oficial em Inglês dos Estados Unidos (`en-US`) e Português do Brasil (`pt-BR`).
 
 O Inglês é a base editorial e mecânica dos catálogos. Novas regras oficiais devem ser importadas primeiro em Inglês, conferidas contra as fontes e testadas. A tradução para Português ocorre depois, sem modificar a identidade do item nem sua mecânica.
 

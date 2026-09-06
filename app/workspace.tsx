@@ -350,7 +350,7 @@ export function Workspace({
   }
 
   const titleKey = nav.find(([id]) => id === view)?.[1];
-  const title = titleKey ? t(titleKey) : "Arquivo";
+  const title = titleKey ? t(titleKey) : "Characters of the Darkness";
   if (editing)
     return (
       <CharacterBuilder
@@ -368,8 +368,8 @@ export function Workspace({
           <button className="top-brand" onClick={() => navigate("inicio")}>
             <img src="/cod-emblem.png" alt="" aria-hidden="true" />
           <div>
-            <strong>Arquivo</strong>
-            <span>das Trevas</span>
+            <strong>Characters of the Darkness</strong>
+            <span>Chronicles of Darkness</span>
           </div>
           </button>
           <nav className="top-navigation" aria-label={t("mainNavigation")}>
@@ -522,7 +522,7 @@ function Dashboard({
     <div className="page-grid">
       <section className="welcome-panel practical-welcome">
         <div>
-          <Badge className="eyebrow">{tr("ARQUIVO DAS TREVAS","ARCHIVE OF DARKNESS")}</Badge>
+          <Badge className="eyebrow">CHARACTERS OF THE DARKNESS</Badge>
           <h2>{tr("Catálogo de Fichas","Character Catalog")}</h2>
           <p>
             {tr("Quem você será desta vez?","Who will you be this time?")}
@@ -969,8 +969,8 @@ function CharacterPaper({
           <p>{tr("CRÔNICAS DAS TREVAS","CHRONICLES OF DARKNESS")}</p>
         </header>
         <SwipeableSheetTabs tabs={[
-          { value: "resumo", label: tr("Resumo","Summary") }, { value: "atributos", label: tr("Atributos","Attributes") },
-          { value: "pericias", label: tr("Perícias","Skills") }, { value: "detalhes", label: tr("Detalhes","Details") },
+          { value: "resumo", label: tr("Resumo","Summary") }, { value: "stats", label: "Stats" },
+          { value: "detalhes", label: tr("Detalhes","Details") },
           { value: "poderes", label: tr("Poderes","Powers") }, { value: "combate", label: tr("Combate","Combat") },
           { value: "companheiros", label: tr("Companheiros","Companions") }, { value: "anotacoes", label: tr("Anotações","Notes") },
         ]}>
@@ -980,10 +980,14 @@ function CharacterPaper({
               <SheetHeading>Experiência</SheetHeading>
               {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
             </>,
-            atributos: <div className="mobile-trait-stack">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} />)}</div>,
-            pericias: <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} />)}</div>,
+            stats: <>
+              <SheetHeading>Atributos</SheetHeading>
+              <div className="mobile-attribute-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames />)}</div>
+              <SheetHeading>Perícias</SheetHeading>
+              <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} />)}</div>
+            </>,
             detalhes: isCtl ? <>
-              <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={principalMerits} line={character.game_line} />
+              <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} line={character.game_line} updateSheet={updateSheet} />
               <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
@@ -992,7 +996,7 @@ function CharacterPaper({
               <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)} />
               <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={CHANGELING_CONDITIONS} onChange={(value) => setState("conditions", value)} />
             </> : <>
-              <SheetHeading>Méritos</SheetHeading><MeritSheetList merits={character.merits} line="MtA" />
+              <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
               <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
@@ -1098,8 +1102,10 @@ function CharacterPaper({
               <div className="sheet-center-column">
                 <SheetHeading>Méritos</SheetHeading>
                 <MeritSheetList
+                  character={character}
                   merits={principalMerits}
                   line={character.game_line}
+                  updateSheet={updateSheet}
                 />
                 <SheetHeading>Regalias Favorecidas</SheetHeading>
                 <LineList
@@ -1297,7 +1303,7 @@ function CharacterPaper({
               </div>
               <div className="sheet-center-column">
                 <SheetHeading>Méritos</SheetHeading>
-                <MeritSheetList merits={character.merits} line="MtA" />
+                <MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
                 <SheetHeading>Arcanos</SheetHeading>
                 <div className="arcana-sheet-list">
                   {Object.entries(arcana).map(([name, value]) => (
@@ -1494,19 +1500,14 @@ function MeritConfigurationPanel({
 }) {
   const { locale, tr } = useLanguage();
   const configurable = character.merits.filter(
-    (item) => findMeritConfiguration(item.name) && item.name !== "Fae Mount" && !item.grantedBy,
+    (item) => findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && item.name !== "Fae Mount" && !item.grantedBy,
   );
   if (!configurable.length) return null;
-  const inline=configurable.filter((item)=>isInlineMeritConfiguration(item.name));
-  const choices=configurable.filter((item)=>!isInlineMeritConfiguration(item.name));
+  const choices=configurable;
   const conditions = stringList(character.line_data.merit_granted_conditions),
     attainments = stringList(character.line_data.merit_granted_attainments);
   return (
     <section className="sheet-merit-configurations">
-      {inline.map((item, configIndex) => {
-        const meritIndex=character.merits.indexOf(item);
-        return <article className="inline-merit-configuration" key={`inline-${item.name}-${configIndex}`}><strong>{getMeritsForLine(character.game_line).find((entry)=>entry.name===item.name)?.[locale==="en-US"?"name":"translatedName"]??item.name}</strong><MeritConfigurationEditor inline compact merit={item} onChange={(configuration)=>{const next=structuredClone(character);const target=next.merits[meritIndex];if(target)target.configuration=configuration;updateSheet(synchronizeMeritGrants(next));}}/></article>;
-      })}
       {choices.length > 0 && <SheetHeading>Escolhas dos Méritos</SheetHeading>}
       {(conditions.length > 0 || attainments.length > 0) && (
         <div className="merit-grant-summary">
@@ -1561,11 +1562,13 @@ function TraitBlock({
   names,
   values,
   specialties = [],
+  compactNames = false,
 }: {
   title: string;
   names: readonly string[];
   values: Record<string, number>;
   specialties?: Array<{ skill: string; name: string }>;
+  compactNames?: boolean;
 }) {
   const {locale}=useLanguage();
   return (
@@ -1576,6 +1579,7 @@ function TraitBlock({
           key={name}
           name={name}
           value={values[name] ?? 0}
+          compactName={compactNames}
           note={specialties
             .filter((item) => item.skill === name)
             .map((item) => item.name)
@@ -1589,16 +1593,19 @@ function TraitLine({
   name,
   value,
   note,
+  compactName = false,
 }: {
   name: string;
   value: number;
   note?: string;
+  compactName?: boolean;
 }) {
   const {locale}=useLanguage();
+  const localizedName=systemTerm(name,locale);
   return (
     <div className="official-trait-line">
-      <span>
-        {systemTerm(name,locale)}
+      <span title={compactName ? localizedName : undefined} aria-label={localizedName}>
+        {compactName ? localizedName.slice(0,3) : localizedName}
         {note && <small>{note}</small>}
       </span>
       <DotValue value={value} />
@@ -5435,11 +5442,15 @@ function SpellColumn({
   );
 }
 function MeritSheetList({
+  character,
   merits,
   line,
+  updateSheet,
 }: {
+  character: CharacterSheet;
   merits: CharacterSheet["merits"];
   line: "CtL" | "MtA";
+  updateSheet: (sheet: CharacterSheet) => void;
 }) {
   const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
@@ -5463,10 +5474,25 @@ function MeritSheetList({
           const tooltip = definition
             ? `${definition.description}${definition.prerequisites ? `\n${tr("Pré-requisitos", "Prerequisites")}: ${definition.prerequisites}` : ""}`
             : item.source;
+          const inline = isInlineMeritConfiguration(item.name);
+          const meritIndex = character.merits.indexOf(item);
           return (
-            <div key={`${item.name}-${index}`} title={tooltip}>
-              <span>{meritLabel(item,line,locale)}</span>
-              <DotValue value={item.dots} max={Math.max(5, item.dots)} />
+            <div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={tooltip}>
+              <div className="sheet-merit-main">
+                <span>{meritLabel(item,line,locale)}</span>
+                <DotValue value={item.dots} max={Math.max(5, item.dots)} />
+              </div>
+              {inline && <MeritConfigurationEditor
+                inline
+                compact
+                merit={item}
+                onChange={(configuration) => {
+                  const next=structuredClone(character);
+                  const target=next.merits[meritIndex];
+                  if(target) target.configuration=configuration;
+                  updateSheet(synchronizeMeritGrants(next));
+                }}
+              />}
             </div>
           );
         })
@@ -5532,6 +5558,7 @@ function ContractPowerList({
   extraClauses?: Array<Record<string, unknown>>;
 }) {
   const {locale,tr}=useLanguage();
+  const isMobile=useIsMobile();
   const homebrews=useHomebrews();
   return (
     <div className="contract-power-list">
@@ -5572,8 +5599,7 @@ function ContractPowerList({
           const clauses = clauseCourtIds.map((courtId) => ({ courtId, text: definition.courtClauses?.[courtId] })).filter((item) => item.text);
           const displayOptions = contractDisplayOptions(definition, locale);
           const outcomeSections = contractOutcomeSections(definition, locale);
-          return (
-            <article key={`${definition.id}-${index}`}>
+          const expandedContent = <>
               <div className="contract-power-title">
                 <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
                 <Badge variant={definition.goblin ? "default" : "outline"}>
@@ -5660,7 +5686,17 @@ function ContractPowerList({
                   </div>
                 )}
               </dl>
-            </article>
+            </>;
+          if (!isMobile) return <article key={`${definition.id}-${index}`}>{expandedContent}</article>;
+          return (
+            <details className="contract-power-card" key={`${definition.id}-${index}`}>
+              <summary className="contract-power-summary">
+                <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
+                <small>{definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
+                <span><b>{tr("Custo", "Cost")}:</b> {definition.cost ?? tr("Conforme descrição", "As described")}</span>
+              </summary>
+              <div className="contract-power-details">{expandedContent}</div>
+            </details>
           );
         })}
     </div>

@@ -1,7 +1,6 @@
 import type { ContractDefinition } from "./contracts";
 import type { Locale } from "./i18n";
 import { CONTRACT_TEXT_EN } from "./contracts-en";
-import { REVIEWED_CONTRACT_DETAILS_EN } from "./contract-details-reviewed";
 
 export type ContractMechanics = Pick<ContractDefinition,
   "description" | "effect" | "dicePool" | "hasRoll" | "success" | "exceptionalSuccess" | "failure" | "dramaticFailure"
@@ -31,7 +30,7 @@ export function contractPresentation(contract:ContractDefinition,locale:Locale="
   const description=contractHasInvocationRoll(contract) === true
     ? english?.summary ?? contract.description
     : english?.description ?? contract.description;
-  return { ...contract, ...english, ...REVIEWED_CONTRACT_DETAILS_EN[contract.id], description };
+  return { ...contract, ...english, description };
 }
 
 export function contractSummary(contract:ContractDefinition,locale:Locale="pt-BR") {

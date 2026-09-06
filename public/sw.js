@@ -1,10 +1,10 @@
-const VERSION = "2026.09.01-1";
-const CACHE = `arquivo-das-trevas-${VERSION}`;
+const VERSION = "2026.09.06-1";
+const CACHE = `characters-of-the-darkness-${VERSION}`;
 const SHELL = ["/", "/manifest.webmanifest", "/favicon.svg", "/app-icon-192.png", "/app-icon-512.png", "/cod-emblem.png", "/changeling-sheet-frame.png", "/changeling-skull.png", "/mage-sheet-frame.png", "/mage-skull.png", "/version.json"];
 
 self.addEventListener("install", (event) => event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL))));
 self.addEventListener("activate", (event) => event.waitUntil(Promise.all([
-  caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("arquivo-das-trevas-") && key !== CACHE).map((key) => caches.delete(key)))),
+  caches.keys().then((keys) => Promise.all(keys.filter((key) => (key.startsWith("arquivo-das-trevas-") || key.startsWith("characters-of-the-darkness-")) && key !== CACHE).map((key) => caches.delete(key)))),
   self.clients.claim(),
 ])));
 self.addEventListener("message", (event) => { if (event.data?.type === "SKIP_WAITING") self.skipWaiting(); });

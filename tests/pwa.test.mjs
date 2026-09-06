@@ -5,9 +5,31 @@ import { readFile } from "node:fs/promises";
 test("declara uma PWA standalone com ícones Android", async () => {
   const manifest=JSON.parse(await readFile(new URL("../public/manifest.webmanifest",import.meta.url),"utf8"));
   assert.equal(manifest.display,"standalone");
+  assert.equal(manifest.name,"Characters of the Darkness");
+  assert.equal(manifest.short_name,"Characters of the Darkness");
+  assert.equal(manifest.background_color,"#1b111f");
   assert.equal(manifest.start_url,"/");
   assert.ok(manifest.icons.some((icon)=>icon.sizes==="192x192"));
   assert.ok(manifest.icons.some((icon)=>icon.sizes==="512x512"));
+});
+
+test("apresenta uma abertura de aplicativo alinhada à nova marca", async () => {
+  const [layout,css]=await Promise.all([
+    readFile(new URL("../app/layout.tsx",import.meta.url),"utf8"),
+    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+  ]);
+  assert.match(layout,/Characters of the Darkness/);
+  assert.match(layout,/app-launch-splash/);
+  assert.match(css,/display-mode:standalone/);
+  assert.match(css,/radial-gradient/);
+});
+
+test("mantém a ficha móvel compacta e os contratos expansíveis sem botões", async () => {
+  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  assert.match(workspace,/value: "stats", label: "Stats"/);
+  assert.match(workspace,/mobile-attribute-grid/);
+  assert.match(workspace,/<details className="contract-power-card"/);
+  assert.match(workspace,/<summary className="contract-power-summary">/);
 });
 
 test("service worker preserva shell offline e exige confirmação para atualizar", async () => {

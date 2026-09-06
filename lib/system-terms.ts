@@ -20,7 +20,7 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Belíssimo":"Fairest", "Ogro":"Ogre", "Mirrado":"Wizened",
   "Coroa":"Crown", "Joias":"Jewels", "Espelho":"Mirror", "Escudo":"Shield",
   "Corcel":"Steed", "Espada":"Sword", "Cálice":"Chalice", "Moeda":"Coin",
-  "Cetro":"Scepter", "Estrelas":"Stars", "Espinho":"Thorn",
+  "Cetro":"Scepter", "Estrelas":"Stars", "Espinho":"Thorn", "Garganta":"Maw",
   "Mestre de Xadrez":"Chess Master", "Comandante":"Commander", "Compositor":"Composer", "Conselheiro":"Counselor", "Audacioso":"Daredevil", "Dínamo":"Dynamo", "Protetor":"Protector", "Provedor":"Provider", "Erudito":"Scholar", "Contador de Histórias":"Storyteller", "Professor":"Teacher", "Tradicionalista":"Traditionalist", "Visionário":"Visionary",
   "Aceitação":"Acceptance", "Raiva":"Anger", "Família":"Family", "Amizade":"Friendship", "Ódio":"Hate", "Honra":"Honor", "Alegria":"Joy", "Amor":"Love", "Memória":"Memory", "Vingança":"Revenge", "Ferro Frio":"Cold Iron",
   "Sem Corte":"Courtless", "Primavera":"Spring", "Verão":"Summer",

@@ -9,7 +9,7 @@ after(async () => vite.close());
 const {getMeritsForLine} = await vite.ssrLoadModule("/lib/merits.ts");
 const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
-const {findMeritConfiguration} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const {findMeritConfiguration,isInlineMeritConfiguration} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("Greyhound e Esoteric Armory estão completos e disponíveis para Changeling",()=>{
   const merits=getMeritsForLine("CtL");
@@ -59,6 +59,14 @@ test("os estilos exibem benefícios para cada nível e Guerreiro Elemental permi
     assert.ok(style.levels.every(x=>x.name && x.description));
   }
   assert.ok(findMeritConfiguration("Elemental Warrior").fields.some(x=>x.key==="element"));
+});
+
+test("configurações de texto livre ficam inline e escolhas estruturadas permanecem separadas", () => {
+  assert.equal(isInlineMeritConfiguration("Striking Looks"), true);
+  assert.equal(isInlineMeritConfiguration("Allies"), true);
+  assert.equal(isInlineMeritConfiguration("Court Goodwill"), false);
+  assert.equal(isInlineMeritConfiguration("Professional Training"), false);
+  assert.equal(isInlineMeritConfiguration("Fae Mount"), false);
 });
 
 test("as 73 Frátrias possuem nome localizado preservando IDs e nomes salvos", () => {
