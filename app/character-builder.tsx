@@ -3655,8 +3655,6 @@ function translateRegalia(value: string) {
         Cetro: "Scepter",
         Estrelas: "Stars",
         Espinho: "Thorn",
-        Garganta: "Maw",
-        Fauce: "Maw",
       } as Record<string, string>
     )[value] ?? value
   );

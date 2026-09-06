@@ -198,7 +198,7 @@ const RULE_LABELS_EN: Record<string,string> = {
   Erudição:"Academics", Computação:"Computer", Ofícios:"Crafts", Investigação:"Investigation", Medicina:"Medicine", Ocultismo:"Occult", Política:"Politics", Ciência:"Science",
   Atletismo:"Athletics", Briga:"Brawl", Condução:"Drive", "Armas de Fogo":"Firearms", Furto:"Larceny", "Armas Brancas":"Weaponry", Furtividade:"Stealth", Sobrevivência:"Survival",
   "Empatia com Animais":"Animal Ken", Empatia:"Empathy", Expressão:"Expression", Intimidação:"Intimidation", Persuasão:"Persuasion", Socialização:"Socialize", Manha:"Streetwise", Subterfúgio:"Subterfuge",
-  Coroa:"Crown", Joias:"Jewels", Espelho:"Mirror", Escudo:"Shield", Corcel:"Steed", Espada:"Sword", Cálice:"Chalice", Moeda:"Coin", Cetro:"Scepter", Estrelas:"Stars", Espinho:"Thorn", Garganta:"Maw",
+  Coroa:"Crown", Joias:"Jewels", Espelho:"Mirror", Escudo:"Shield", Corcel:"Steed", Espada:"Sword", Cálice:"Chalice", Moeda:"Coin", Cetro:"Scepter", Estrelas:"Stars", Espinho:"Thorn",
   Primavera:"Spring", Verão:"Summer", Outono:"Autumn", Inverno:"Winter", Geral:"General", Mental:"Mental", Físico:"Physical", Physical:"Physical", Social:"Social", Sobrenatural:"Supernatural",
 };
 const localizedRuleLabel=(value:string,locale:Locale)=>locale==="en-US"?(RULE_LABELS_EN[value]??courtDisplayName(value,locale)):value;

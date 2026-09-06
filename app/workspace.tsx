@@ -1861,6 +1861,7 @@ function CombatPage({
                 type="button"
                 size="icon"
                 variant="ghost"
+                aria-label={tr(`Remover ${item.name}`, `Remove ${item.name}`)}
                 onClick={() =>
                   setData(
                     "combat_weapons",
@@ -1900,6 +1901,7 @@ function CombatPage({
                 type="button"
                 size="icon"
                 variant="ghost"
+                aria-label={tr(`Remover ${item.name}`, `Remove ${item.name}`)}
                 onClick={() =>
                   setData(
                     "combat_equipment",
@@ -1914,7 +1916,7 @@ function CombatPage({
         </div>
       </section>
       <small className="combat-source">
-        Regras e equipamentos: Chronicles of Darkness · pp. 86–103 e 268–276.
+        {tr("Regras e equipamentos: Chronicles of Darkness · pp. 86–103 e 268–276.", "Rules and equipment: Chronicles of Darkness · pp. 86–103 and 268–276.")}
       </small>
     </div>
   );
@@ -2087,6 +2089,7 @@ function CompanionPage({
                     type="button"
                     size="icon"
                     variant="ghost"
+                    aria-label={tr(`Remover ${item.name}`, `Remove ${item.name}`)}
                     onClick={() =>
                       setData(
                         "companion_vehicles",
@@ -2347,20 +2350,20 @@ function MeritCompanionCard({
         </div>
         {abilities.includes("hedgefoot") && (
           <label className="companion-field">
-            Modo de Hedgefoot
+            {tr("Modo de Hedgefoot", "Hedgefoot mode")}
             <RuleSelect
               value={hedgefoot}
               onChange={(value) => save({ hedgefoot: value })}
               options={[
                 {
                   value: "water",
-                  label: "Correr sobre água no Deslocamento normal",
+                  label: tr("Correr sobre água no Deslocamento normal", "Run across water at normal Speed"),
                 },
                 {
                   value: "climb",
-                  label: "Escalar a três vezes o Deslocamento",
+                  label: tr("Escalar a três vezes o Deslocamento", "Climb at three times Speed"),
                 },
-                { value: "fly", label: "Voar uma vez por cena" },
+                { value: "fly", label: tr("Voar uma vez por cena", "Fly once per scene") },
               ]}
             />
           </label>
@@ -2380,31 +2383,31 @@ function MeritCompanionCard({
       <header>
         <div>
           <strong>{name}</strong>
-          <small>Familiar · entidade efêmera de Rank {rank}</small>
+          <small>{tr(`Familiar · entidade efêmera de Rank ${rank}`, `Familiar · Rank ${rank} ephemeral entity`)}</small>
         </div>
       </header>
       <div className="companion-form-grid">
         <label>
-          Nome
+          {tr("Nome", "Name")}
           <Input
             value={name}
             onChange={(event) => save({ name: event.target.value })}
           />
         </label>
         <label>
-          Forma
+          {tr("Forma", "Form")}
           <RuleSelect
             value={form}
             onChange={(value) => save({ form: value })}
             options={[
-              { value: "animal", label: "Animal" },
-              { value: "object", label: "Objeto" },
+              { value: "animal", label: tr("Animal", "Animal") },
+              { value: "object", label: tr("Objeto", "Object") },
             ]}
           />
         </label>
         {form === "animal" ? (
           <label>
-            Animal
+            {tr("Animal", "Animal")}
             <RuleSelect
               value={animalId}
               onChange={(value) => save({ animalId: value })}
@@ -2416,16 +2419,16 @@ function MeritCompanionCard({
           </label>
         ) : (
           <label>
-            Objeto
+            {tr("Objeto", "Object")}
             <Input
               value={String(configuration.object ?? "")}
               onChange={(event) => save({ object: event.target.value })}
-              placeholder="Descrição do fetiche"
+              placeholder={tr("Descrição do fetiche", "Fetish description")}
             />
           </label>
         )}
         <label>
-          Power
+          {tr("Poder", "Power")}
           <Input
             type="number"
             min={1}
@@ -2435,7 +2438,7 @@ function MeritCompanionCard({
           />
         </label>
         <label>
-          Finesse
+          {tr("Refinamento", "Finesse")}
           <Input
             type="number"
             min={1}
@@ -2445,7 +2448,7 @@ function MeritCompanionCard({
           />
         </label>
         <label>
-          Resistance
+          {tr("Resistência", "Resistance")}
           <Input
             type="number"
             min={1}
@@ -2455,22 +2458,22 @@ function MeritCompanionCard({
           />
         </label>
         <label>
-          Influência
+          {tr("Influência", "Influence")}
           <Input
             value={String(configuration.influence ?? "")}
             onChange={(event) => save({ influence: event.target.value })}
-            placeholder={`Nome · ${rank} ponto(s)`}
+            placeholder={tr(`Nome · ${rank} ponto(s)`, `Name · ${rank} dot${rank === 1 ? "" : "s"}`)}
           />
         </label>
         <label>
-          Ban
+          {tr("Interdição", "Ban")}
           <Input
             value={String(configuration.ban ?? "")}
             onChange={(event) => save({ ban: event.target.value })}
           />
         </label>
         <label>
-          Bane
+          {tr("Perdição", "Bane")}
           <Input
             value={String(configuration.bane ?? "")}
             onChange={(event) => save({ bane: event.target.value })}
@@ -2512,9 +2515,10 @@ function MeritCompanionCard({
         })}
       </div>
       <p className="combat-note">
-        Rank {rank}: máximo de Atributo {rank === 1 ? 5 : 7}, Influência {rank}{" "}
-        e até {numinaLimit} Numina. Complete Ban e Bane conforme a natureza da
-        entidade.
+        {tr(
+          `Rank ${rank}: máximo de Atributo ${rank === 1 ? 5 : 7}, Influência ${rank} e até ${numinaLimit} Numina. Complete Interdição e Perdição conforme a natureza da entidade.`,
+          `Rank ${rank}: maximum Attribute ${rank === 1 ? 5 : 7}, Influence ${rank}, and up to ${numinaLimit} Numina. Complete Ban and Bane according to the entity's nature.`,
+        )}
       </p>
     </article>
   );
@@ -2536,7 +2540,7 @@ function AnimalCard({
           <strong>{name || animal.name}</strong>
           <small>{name ? animal.name : tr("Companheiro animal","Animal companion")}</small>
         </div>
-        <Button type="button" size="icon" variant="ghost" onClick={onRemove}>
+          <Button type="button" size="icon" variant="ghost" onClick={onRemove} aria-label={tr(`Remover ${name || animal.name}`, `Remove ${name || animal.name}`)}>
           <X />
         </Button>
       </header>
@@ -2556,22 +2560,22 @@ function AnimalCard({
         }}
       />
       <p>
-        <b>Deslocamento:</b> {animal.speed}
+        <b>{tr("Deslocamento", "Speed")}:</b> {animal.speed}
       </p>
       <p>
-        <b>Ataques:</b>{" "}
+        <b>{tr("Ataques", "Attacks")}:</b>{" "}
         {animal.attacks.length
           ? animal.attacks
               .map(
                 (item) =>
-                  `${item.name} ${item.damage} (${item.pool} dados)${item.note ? ` — ${item.note}` : ""}`,
+                  `${item.name} ${item.damage} (${item.pool} ${tr("dados", "dice")})${item.note ? ` — ${item.note}` : ""}`,
               )
               .join("; ")
-          : "Nenhum"}
+          : tr("Nenhum", "None")}
       </p>
       {animal.special && (
         <p>
-          <b>Especial:</b> {animal.special}
+          <b>{tr("Especial", "Special")}:</b> {animal.special}
         </p>
       )}
     </article>
@@ -2731,8 +2735,8 @@ function ConditionManager({
     (condition) =>
       (category === "Todas" || condition.category === category) &&
       `${condition.name} ${condition.originalName} ${condition.description} ${condition.penalty ?? ""} ${condition.sourceCode}`
-        .toLocaleLowerCase("pt-BR")
-        .includes(search.toLocaleLowerCase("pt-BR")),
+      .toLocaleLowerCase(locale)
+      .includes(search.toLocaleLowerCase(locale)),
   );
   const find = (id: string) =>
     catalog.find((item) => item.id === id) ??
