@@ -32,3 +32,25 @@ test("a ficha localiza Kith, Courtless, compras e linhas editáveis",async()=>{
   assert.match(source,/tr\("Adicionar linha", "Add row"\)/);
   assert.match(source,/tr\("Escreva um Juramento", "Write an Oath"\)/);
 });
+
+test("Conditions de Changeling apresentam mecânicas sem português no modo inglês",async()=>{
+  const {CHANGELING_CONDITIONS,changelingConditionPresentation}=await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+  const presented=CHANGELING_CONDITIONS.map((item)=>changelingConditionPresentation(item,"en-US"));
+  assert.equal(presented.length,CHANGELING_CONDITIONS.length);
+  assert.ok(presented.every((item)=>item.name===item.originalName));
+  assert.ok(presented.every((item)=>item.description && item.resolution));
+  assert.equal(presented.find((item)=>item.id==="broken").penalty,"−2 to Social and Resolve rolls; −5 to Intimidation.");
+  assert.equal(presented.find((item)=>item.id==="blind").category,"Physical");
+  assert.match(presented.find((item)=>item.id==="contemptuous").penalty,/Gain \+2/);
+});
+
+test("equipamentos e companheiros não exibem conteúdo português no modo inglês",async()=>{
+  const combat=await vite.ssrLoadModule("/lib/combat-equipment.ts");
+  const companions=await vite.ssrLoadModule("/lib/companions.ts");
+  const portuguese=/\b(?:Armadura|Armas|Atletismo|Briga|Compostura|Destreza|Força|Furtividade|Inteligência|Manipulação|Perseverança|Presença|Raciocínio|Sobrevivência|Vigor|Mordida|Garra|Chifres|Presa|Bico|Tronco|braços|pernas|Permite|Auxilia|Causa|Reduz|Protege|voo)\b/i;
+  const withoutId=item=>JSON.stringify(Object.fromEntries(Object.entries(item).filter(([key])=>key!=="id")));
+  const combatText=[...combat.WEAPONS,...combat.ARMORS,...combat.EQUIPMENT].map(item=>withoutId(combat.combatItemPresentation(item,"en-US")));
+  const companionText=[...companions.VEHICLES.map(item=>withoutId(companions.vehiclePresentation(item,"en-US"))),...companions.ANIMALS.map(item=>withoutId(companions.animalPresentation(item,"en-US")))];
+  assert.deepEqual(combatText.filter(text=>portuguese.test(text)),[]);
+  assert.deepEqual(companionText.filter(text=>portuguese.test(text)),[]);
+});

@@ -123,6 +123,7 @@ import {
 } from "@/lib/resource-rules";
 import {
   CHANGELING_CONDITIONS,
+  changelingConditionPresentation,
   findChangelingCondition,
 } from "@/lib/changeling-conditions";
 import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
@@ -1080,7 +1081,7 @@ function CharacterPaper({
                   values={aspirations}
                   minimum={3}
                   maximum={3}
-                  placeholder="Escreva uma Aspiração"
+                  placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")}
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "aspirations", value)
                   }
@@ -2223,7 +2224,7 @@ function MeritCompanionCard({
   const configuration = normalizeMeritConfiguration(merit.configuration),
     name = String(
       configuration.name ??
-        (merit.name === "Fae Mount" ? "Montaria Feérica" : "Familiar"),
+        (merit.name === "Fae Mount" ? tr("Montaria Feérica", "Fae Mount") : "Familiar"),
     );
   const save = (patch: Record<string, string | string[]>) => {
     const next = structuredClone(character);
@@ -2684,12 +2685,17 @@ function ConditionManager({
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const chosen = new Map(selected.map((item) => [item.id, item]));
+  const present = (item: (typeof catalog)[number]) =>
+    catalog === CHANGELING_CONDITIONS
+      ? changelingConditionPresentation(item, locale)
+      : item;
+  const presentedCatalog = catalog.map(present);
   const categories = [
     "Todas",
-    ...Array.from(new Set(catalog.map((item) => item.category))),
+    ...Array.from(new Set(presentedCatalog.map((item) => item.category))),
   ];
-  const conditionName=(item:(typeof catalog)[number])=>locale==="en-US"?item.originalName:item.name;
-  const filtered = alphabetical(catalog, conditionName,locale).filter(
+  const conditionName=(item:(typeof catalog)[number])=>item.name;
+  const filtered = alphabetical(presentedCatalog, conditionName,locale).filter(
     (condition) =>
       (category === "Todas" || condition.category === category) &&
       `${condition.name} ${condition.originalName} ${condition.description} ${condition.penalty ?? ""} ${condition.sourceCode}`
@@ -2697,8 +2703,8 @@ function ConditionManager({
       .includes(search.toLocaleLowerCase(locale)),
   );
   const find = (id: string) =>
-    catalog.find((item) => item.id === id) ??
-    findChangelingCondition(id) ??
+    presentedCatalog.find((item) => item.id === id) ??
+    (findChangelingCondition(id) ? changelingConditionPresentation(findChangelingCondition(id)!, locale) : undefined) ??
     findMageCondition(id);
   return (
     <div className="condition-manager">
@@ -2769,7 +2775,7 @@ function ConditionManager({
             <RuleSelect
               value={categories.includes(category) ? category : "Todas"}
               onChange={setCategory}
-              options={categories.map((value) => ({ value, label: value }))}
+              options={categories.map((value) => ({ value, label: value === "Todas" ? tr("Todas", "All") : value }))}
             />
           </div>
           <div className="condition-catalog">
@@ -2783,7 +2789,7 @@ function ConditionManager({
                       {saved?.persistent ? " [P]" : ""}
                     </strong>
                     <small>
-                      {condition.originalName} · {condition.sourceCode} · p.{" "}
+                      {condition.originalName !== condition.name && <>{condition.originalName} · </>}{condition.sourceCode} · p.{" "}
                       {condition.page}
                     </small>
                   </div>
@@ -3101,7 +3107,7 @@ function ExperiencePanel({
       experience_history: history,
     };
     updateSheet(next);
-    setFeedback("Experiência disponível atualizada.");
+    setFeedback(tr("Experiência disponível atualizada.", "Available Experience updated."));
   }
   function append(entry: ExperienceEntry, nextState: Record<string, unknown>) {
     nextState.experience_history = [entry, ...history].slice(0, 100);
@@ -3121,7 +3127,7 @@ function ExperiencePanel({
       {
         id: crypto.randomUUID(),
         kind: "spend",
-        description: "Perda permanente de um ponto de Força de Vontade",
+        description: tr("Perda permanente de um ponto de Força de Vontade", "Permanent loss of one Willpower dot"),
         experience: 0,
         createdAt: new Date().toISOString(),
         undo: { kind: "willpowerLoss", previousLost: lostWillpower },
@@ -3131,7 +3137,7 @@ function ExperiencePanel({
     next.current_state = nextState;
     updateSheet(next);
     setFeedback(
-      "Perda permanente de Força de Vontade registrada no histórico.",
+      tr("Perda permanente de Força de Vontade registrada no histórico.", "Permanent Willpower loss recorded in history."),
     );
   }
   function gainClarity() {
@@ -3140,13 +3146,13 @@ function ExperiencePanel({
     append({
       id: crypto.randomUUID(),
       kind: "spend",
-      description: "Ganho permanente de uma caixa de Lucidez",
+      description: tr("Ganho permanente de uma caixa de Lucidez", "Permanent gain of one Clarity box"),
       experience: 0,
       createdAt: new Date().toISOString(),
       undo: { kind: "clarityGain" },
     }, next.current_state);
     updateSheet(next);
-    setFeedback("Uma caixa permanente de Lucidez adicionada, sem custo de EXP.");
+    setFeedback(tr("Uma caixa permanente de Lucidez adicionada, sem custo de EXP.", "One permanent Clarity box added at no Experience cost."));
   }
   function spend(
     cost: number,
@@ -3155,7 +3161,7 @@ function ExperiencePanel({
     apply: (next: CharacterSheet) => void,
   ) {
     if (cost < 1 || available < cost) {
-      setFeedback("Experiência disponível insuficiente para esta compra.");
+      setFeedback(tr("Experiência disponível insuficiente para esta compra.", "Not enough available Experience for this purchase."));
       return;
     }
     const next = structuredClone(character);
@@ -3182,14 +3188,14 @@ function ExperiencePanel({
     next.current_state = nextState;
     updateSheet(synchronizeMeritGrants(next));
     setFeedback(
-      `${description} adquirido por ${cost} Experiência${cost === 1 ? "" : "s"}.`,
+      tr(`${description} adquirido por ${cost} Experiência${cost === 1 ? "" : "s"}.`, `${description} purchased for ${cost} Experience.`),
     );
   }
   function revertPurchase(entry: ExperienceEntry) {
     if (!history.some(item => item.id === entry.id)) return;
     if (!entry.undo)
       return setFeedback(
-        "Esta compra antiga não contém dados suficientes para ser revertida.",
+        tr("Esta compra antiga não contém dados suficientes para ser revertida.", "This older purchase does not contain enough data to be refunded."),
       );
     const next = structuredClone(character);
     const undo = entry.undo;
@@ -3254,14 +3260,14 @@ function ExperiencePanel({
     };
     recalculateCtlDerived(next);
     updateSheet(synchronizeMeritGrants(next));
-    setFeedback(`${entry.description} foi revertido; ${refund} EXP devolvida.`);
+    setFeedback(tr(`${entry.description} foi revertido; ${refund} EXP devolvida.`, `${entry.description} was refunded; ${refund} Experience restored.`));
   }
   function buy() {
     if (purchaseType === "Atributo") {
       const current = Number(character.attributes[attribute] ?? 1);
       if (current >= traitMaximum)
         return setFeedback(
-          "Este Atributo já atingiu o máximo permitido pelo Fado.",
+          tr("Este Atributo já atingiu o máximo permitido pelo Fado.", "This Attribute has reached the maximum allowed by Wyrd."),
         );
       const target = current + 1;
       spend(
@@ -3284,7 +3290,7 @@ function ExperiencePanel({
       const current = Number(character.skills[skill] ?? 0);
       if (current >= traitMaximum)
         return setFeedback(
-          "Esta Perícia já atingiu o máximo permitido pelo Fado.",
+          tr("Esta Perícia já atingiu o máximo permitido pelo Fado.", "This Skill has reached the maximum allowed by Wyrd."),
         );
       const target = current + 1;
       spend(
@@ -3300,7 +3306,7 @@ function ExperiencePanel({
     }
     if (purchaseType === "Mérito") {
       if (!selectedMerit || !nextMeritRating)
-        return setFeedback("Este Mérito não possui outro nível disponível.");
+        return setFeedback(tr("Este Mérito não possui outro nível disponível.", "This Merit has no higher available rating."));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? crypto.randomUUID();
@@ -3337,11 +3343,11 @@ function ExperiencePanel({
     }
     if (purchaseType === "Especialização") {
       if (!specialtyName.trim())
-        return setFeedback("Informe o nome da Especialização.");
+        return setFeedback(tr("Informe o nome da Especialização.", "Enter the Specialty name."));
       const name = specialtyName.trim();
       spend(
         1,
-        `Especialização ${specialtySkill}: ${name}`,
+        `${tr("Especialização", "Specialty")} ${systemTerm(specialtySkill,locale)}: ${name}`,
         { kind: "specialty", skill: specialtySkill, name },
         (next) => next.specializations.push({ skill: specialtySkill, name }),
       );
@@ -3350,11 +3356,11 @@ function ExperiencePanel({
     }
     if (purchaseType === "Contrato") {
       if (!selectedContract)
-        return setFeedback("Não há Contrato disponível para esta compra.");
+        return setFeedback(tr("Não há Contrato disponível para esta compra.", "No Contract is available for this purchase."));
       const cost = contractExperienceCost(selectedContract, character);
       spend(
         cost,
-        `Contrato ${selectedContract.name}`,
+        `${tr("Contrato", "Contract")} ${selectedContract.name}`,
         { kind: "contract", id: selectedContract.id },
         (next) => {
           const learned = objectList(next.line_data.learned_contracts);
@@ -3369,13 +3375,13 @@ function ExperiencePanel({
     if (purchaseType === "Benefício de Contrato") {
       const value = benefitKey || benefitOptions[0]?.value;
       if (!value)
-        return setFeedback("Não há Benefício ou Clause adicional disponível.");
+        return setFeedback(tr("Não há Benefício ou Clause adicional disponível.", "No additional Benefit or Clause is available."));
       const [kind, chosenContract, choice] = value.split("::");
       const definition = findContract(chosenContract);
       const isClause = kind === "clause";
       spend(
         1,
-        isClause ? `Clause de ${courtDisplayName(choice, locale)} · ${definition?.name ?? "Contrato"}` : `Benefício de ${seemingDisplayName(choice,locale)} · ${definition?.name ?? "Contrato"}`,
+        isClause ? `${tr("Clause de", "Clause for")} ${courtDisplayName(choice, locale)} · ${definition?.name ?? tr("Contrato", "Contract")}` : `${tr("Benefício de", "Benefit for")} ${seemingDisplayName(choice,locale)} · ${definition?.name ?? tr("Contrato", "Contract")}`,
         isClause ? { kind: "clause", contractId: chosenContract, courtId: choice } : { kind: "benefit", contractId: chosenContract, seeming: choice },
         (next) => {
           next.line_data = {
@@ -3389,19 +3395,19 @@ function ExperiencePanel({
       return;
     }
     if (purchaseType === "Fado") {
-      if (wyrd >= 10) return setFeedback("Fado já atingiu 10.");
-      spend(5, `Fado ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
+      if (wyrd >= 10) return setFeedback(tr("Fado já atingiu 10.", "Wyrd has already reached 10."));
+      spend(5, `${tr("Fado", "Wyrd")} ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
         next.line_data = { ...withPowerRating(next, "wyrd", wyrd + 1), frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
       });
       return;
     }
     if (!lostWillpower)
       return setFeedback(
-        "O personagem não possui pontos permanentes de Força de Vontade perdidos.",
+        tr("O personagem não possui pontos permanentes de Força de Vontade perdidos.", "The character has no permanently lost Willpower dots."),
       );
     spend(
       1,
-      "Recuperação de um ponto perdido de Força de Vontade",
+      tr("Recuperação de um ponto perdido de Força de Vontade", "Recovery of one lost Willpower dot"),
       { kind: "willpower", previousLost: lostWillpower },
       (next) => {
         next.current_state = {

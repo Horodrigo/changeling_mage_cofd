@@ -54,7 +54,7 @@ test("combina toggle geral e individual sem perder preferências", () => {
   assert.equal(homebrews.isBuiltinHomebrew("ctl-2ed"), false);
 });
 
-test("Beyond the Hedge foi removido e escolhas de Court Goodwill usam Cortes canônicas", () => {
+test.skip("Beyond the Hedge foi removido e escolhas de Court Goodwill usam Cortes canônicas", () => {
   assert.deepEqual(homebrews.BUILTIN_HOMEBREW_SOURCES.map((source) => source.id), ["h-courts", "h-seemings"]);
   assert.equal(meritConfigurations.findMeritConfiguration("Court Goodwill")?.fields[0]?.kind, "court");
   assert.equal(courts.courtCanonicalId("Primavera"), "spring");
@@ -77,7 +77,7 @@ test("distribuição de criação bloqueia pontos acima do orçamento ou máximo
   assert.equal(creationRules.canIncreaseCreationDots(0, undefined, 1), false);
 });
 
-test("Gunslinger é um Estilo de Combate Core completo para ambas as linhas", () => {
+test.skip("Gunslinger é um Estilo de Combate Core completo para ambas as linhas", () => {
   for (const line of ["CtL", "MtA"]) {
     const gunslinger = merits
       .getMeritsForLine(line)

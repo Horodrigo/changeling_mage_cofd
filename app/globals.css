@@ -784,7 +784,7 @@ button { cursor: pointer; }
 .ctl-sheet-page { margin-top:4px; outline:none; }
 .powers-page { min-height:760px; }
 .powers-sheet-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; margin-top:25px; }
-.contract-power-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.contract-power-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; gap:12px; }
 .contract-power-card { overflow:hidden; border:1px solid color-mix(in srgb,var(--sheet-accent) 35%,#d8d2c8); border-radius:10px; background:#fffefa; }
 .contract-power-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 12px; align-items:start; padding:13px 14px; cursor:pointer; list-style:none; }
 .contract-power-summary::-webkit-details-marker { display:none; }
