@@ -1676,12 +1676,12 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
             </header>
             <div>
               {configured.length
-                ? configured.map((line, index) => (
+                ? <>{configured.map((line, index) => (
                     <section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                     </section>
-                  ))
+                  ))}{item.name==="Hedge Duelist"&&(style.levels??[]).filter((level)=>level.rating>1&&level.rating<=item.dots).map((level,index)=><section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
                 : (style.levels ?? [])
                     .filter((level) => level.rating <= item.dots)
                     .map((level, index) => (

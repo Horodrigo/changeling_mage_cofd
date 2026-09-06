@@ -6,17 +6,25 @@ import { createServer } from "vite";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false} });
 after(async () => vite.close());
-const {getMeritsForLine,RAW_MERITS} = await vite.ssrLoadModule("/lib/merits.ts");
+const {getMeritsForLine,RAW_MERITS,REPEATABLE_MERITS} = await vite.ssrLoadModule("/lib/merits.ts");
 const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const {findMeritConfiguration,isInlineMeritConfiguration} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
-  assert.equal(RAW_MERITS.length,218);
+  assert.equal(RAW_MERITS.length,219);
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Dramaturge"&&merit.source==="Kith and Kin"));
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Understudy"&&merit.source==="Kith and Kin"));
   assert.equal(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").length,39);
   assert.deepEqual([...new Set(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").map((merit)=>merit.category))],["Changeling Courts"]);
+  const hedgeDuelist=RAW_MERITS.find((merit)=>merit.name==="Hedge Duelist");
+  assert.deepEqual(hedgeDuelist?.ratings,[1,2,3,4,5]);
+  assert.equal(hedgeDuelist?.levels?.filter((level)=>level.rating===1).length,7);
+  assert.deepEqual(hedgeDuelist?.levels?.filter((level)=>level.rating>1).map((level)=>level.name),["Emerald Shield","Bite Like Thorns","Whispers Beyond the Path","Symphony of Thorns"]);
+  assert.equal(hedgeDuelist?.category,"Changeling Seemings");
+  assert.equal(hedgeDuelist?.additionalSources?.[0]?.page,101);
+  assert.equal(findMeritConfiguration("Hedge Duelist")?.fields[0]?.options?.length,7);
+  assert.ok(REPEATABLE_MERITS.has("Hedge Duelist"));
   assert.ok(findExpandedMerit("Professional Training"));
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
 });

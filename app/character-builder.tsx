@@ -2822,6 +2822,10 @@ export function MeritConfigurationEditor({
                 />
               </label>
             );
+          if (field.kind === "select") {
+            const selected=String(value??"");
+            return <label key={field.key}>{field.label}<Select value={selected} onValueChange={(next)=>set(field.key,next)}><SelectTrigger><SelectValue placeholder={field.placeholder??tr("Selecione uma opção","Select an option")}/></SelectTrigger><SelectContent>{(field.options??[]).map((option)=><SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent></Select></label>;
+          }
           if (field.kind === "textarea")
             return (
               <label key={field.key}>

@@ -19,6 +19,7 @@ export type MeritDefinition = {
   page: number;
   levels?: MeritLevel[];
   courtAccess?: { court: "Spring" | "Summer" | "Autumn" | "Winter"; mantle: number; courtGoodwill: number };
+  additionalSources?: Array<{ sourceId: string; source: string; page: number }>;
 };
 
 export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERITS_EN].map((item) => ({
@@ -38,6 +39,7 @@ export const REPEATABLE_MERITS = new Set([
   "Allies", "Alternate Identity", "Contacts", "Court Goodwill", "Fae Mount",
   "Language", "Library", "Mentor", "Retainer", "Safe Place", "Staff", "Status",
   "Token", "Touchstone",
+  "Hedge Duelist",
 ]);
 export const EXTENDED_DOT_MERITS = new Set(["Token"]);
 export const meritRatingsFor = (merit: Pick<MeritDefinition, "ratings">) => merit.ratings;

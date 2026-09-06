@@ -115,7 +115,39 @@ const COURT_MERITS_EN = [
   courtMerit("Winter",69,"Snow Cover",[2],"Winter Mantle ••","Spend Willpower to extend the penalty enemies suffer to notice the spying character to Winter Mantle allies within arm's reach. If one member is noticed, the entire group is discovered."),
 ] as const;
 
+export const HEDGE_DUELIST_VARIANTS = [
+  { value: "thousand-falling-leaves", label: "Thousand Falling Leaves", seeming: "Any", description: "Before one attack, inflict −1 Defense on the opponent; a successful attack deals only half its normal damage." },
+  { value: "once-bitten-twice-shy", label: "Once Bitten, Twice Shy", seeming: "Beast", description: "After damaging an opponent with an attack this turn, reduce their Initiative on the next turn by the character's Hedge Duelist dots." },
+  { value: "shadowplay", label: "Shadowplay", seeming: "Darkling", description: "Gain +2 Defense while in darkness or deep shadow." },
+  { value: "treacherous-ground", label: "Treacherous Ground", seeming: "Elemental", description: "Reduce an opponent's Speed by Hedge Duelist dots while that opponent touches the ground." },
+  { value: "unblemished-poise", label: "Unblemished Poise", seeming: "Fairest", description: "While no damage is marked on the character's Health track, add Hedge Duelist dots to Initiative." },
+  { value: "the-crashing-oak", label: "The Crashing Oak", seeming: "Ogre", description: "Gain +3 from an All-Out Attack instead of +2." },
+  { value: "spite-is-strength", label: "Spite is Strength", seeming: "Wizened", description: "Gain +1 to attack rolls this turn if the opponent damaged the character during the previous turn." },
+] as const;
+
+const HEDGE_DUELIST_EN = {
+  id: "ctl-2ed:hedge-duelist",
+  name: "Hedge Duelist",
+  ratings: [1,2,3,4,5],
+  line: "CtL" as const,
+  sourceId: "ctl-2ed",
+  source: "Changeling the Lost; Book of Seemings addendum",
+  category: "Changeling Seemings",
+  prerequisites: "Presence or Manipulation ••, Brawl or Weaponry ••, any Social Skill ••",
+  description: "A fae dueling Style whose maneuvers work only in the Hedge. Choose Thousand Falling Leaves or one of the six Seeming-themed alternative first-dot maneuvers. Additional first-dot variants may be purchased as separate instances for one Experience each.",
+  page: 115,
+  additionalSources: [{ sourceId: "h-seemings", source: "Book of Seemings", page: 101 }],
+  levels: [
+    ...HEDGE_DUELIST_VARIANTS.map((variant)=>({rating:1,name:`${variant.label} (${variant.seeming})`,description:variant.description})),
+    {rating:2,name:"Emerald Shield",description:"Gain Armor 2/0 in the Hedge. It stacks with worn armor, but not armor granted by Hedgespinning or Contracts."},
+    {rating:3,name:"Bite Like Thorns",description:"Add dice to attacks equal to the wound penalty currently suffered by the opponent."},
+    {rating:4,name:"Whispers Beyond the Path",description:"Instead of a physical attack, roll Presence + Intimidation or Manipulation + Subterfuge, contested by Resolve + Composure. On success, roll the difference in successes and inflict that much minor Clarity damage; the character also suffers one minor Clarity damage."},
+    {rating:5,name:"Symphony of Thorns",description:"During a Hedge Duel, attack rolls suffer no penalty for generating shaping successes through Hedgespinning."},
+  ],
+} as const;
+
 export const SUPPLEMENTAL_MERITS_EN = [
   ...KITH_AND_KIN_MERITS_EN,
   ...COURT_MERITS_EN,
+  HEDGE_DUELIST_EN,
 ] as const;

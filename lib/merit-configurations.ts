@@ -1,13 +1,15 @@
 import type { Locale } from "./i18n";
+import { HEDGE_DUELIST_VARIANTS } from "./merits-supplements-en";
 
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
 export type MeritConfigField = {
   key: string;
   label: string;
-  kind?: "text" | "textarea" | "list" | "court";
+  kind?: "text" | "textarea" | "list" | "court" | "select";
   placeholder?: string;
   minDots?: number;
+  options?: Array<{ value: string; label: string }>;
 };
 export type MeritConfigDefinition = {
   name: string;
@@ -17,8 +19,17 @@ export type MeritConfigDefinition = {
 };
 
 // Official Merit-specific configuration is rebuilt only after source audit.
-export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [];
-export const findMeritConfiguration = (_name: string): MeritConfigDefinition | undefined => undefined;
+export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
+  name: "Hedge Duelist",
+  line: "CtL",
+  fields: [{
+    key: "firstManeuver",
+    label: "First-dot maneuver",
+    kind: "select",
+    options: HEDGE_DUELIST_VARIANTS.map(({label,seeming})=>({value:label,label:`${label} (${seeming})`})),
+  }],
+}];
+export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
 export const isInlineMeritConfiguration = (_name: string) => false;
 export const isStructuredMerit = (_name: string) => false;
 export const meritConfigurationText = (value: string | undefined, _locale: Locale) => value ?? "";
@@ -42,10 +53,13 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
 }
 
 export function expandedConfigurationLines(
-  _name: string,
+  name: string,
   _dots: number,
-  _value: unknown,
+  value: unknown,
   _locale: Locale = "pt-BR",
 ): string[] {
-  return [];
+  if(name!=="Hedge Duelist") return [];
+  const selected=String(normalizeMeritConfiguration(value).firstManeuver??"");
+  const variant=HEDGE_DUELIST_VARIANTS.find((item)=>item.label===selected);
+  return variant ? [`${variant.label} (${variant.seeming}): ${variant.description}`] : [];
 }
