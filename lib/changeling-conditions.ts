@@ -14,6 +14,7 @@ export type ChangelingCondition = {
 };
 
 export const CHANGELING_CONDITIONS: ChangelingCondition[] = [
+  {id:"contemptuous",name:"Contemptuous",originalName:"Contemptuous",category:"Social",description:"You cannot stand a specified rival and enjoy opportunities to work against them.",penalty:"Gain +2 on rolls that adversely affect the specified character. Their Social maneuvering treats their impression one level lower, to Hostile. Multiple instances may name different rivals.",resolution:"Harm the rival in a way that puts you or your allies in danger.",source:"Book of Courts",sourceCode:"BoC",page:112},
   {id:"amnesia",name:"Amnésia",originalName:"Amnesia",category:"Mental",description:"Uma parte importante da memória desapareceu, trazendo dificuldades quando pessoas, inimigos ou obrigações esquecidas retornam.",persistent:true,source:"Chronicles of Darkness",sourceCode:"CofD",page:288},
   {id:"broken",name:"Quebrado",originalName:"Broken",category:"Mental",description:"O personagem perdeu a capacidade de enfrentar pressão emocional e recua diante de confrontos.",penalty:"−2 em testes Sociais e com Perseverança; −5 em Intimidação.",persistent:true,source:"Chronicles of Darkness",sourceCode:"CofD",page:288},
   {id:"deprived",name:"Privado",originalName:"Deprived",category:"Mental",description:"A abstinência de um vício impede o personagem de se concentrar e se controlar.",penalty:"−1 dado em paradas de Vigor, Perseverança e Compostura.",source:"Chronicles of Darkness",sourceCode:"CofD",page:288},

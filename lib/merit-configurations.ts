@@ -1,11 +1,12 @@
 import { getMeritsForLine } from "./merits";
+import { courtCanonicalId } from "./changeling-courts";
 
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
 export type MeritConfigField = {
   key: string;
   label: string;
-  kind?: "text" | "textarea" | "list";
+  kind?: "text" | "textarea" | "list" | "court";
   placeholder?: string;
   minDots?: number;
 };
@@ -34,6 +35,7 @@ const list = (
   placeholder?: string,
   minDots?: number,
 ): MeritConfigField => ({ key, label, kind: "list", placeholder, minDots });
+const court = (key: string, label: string): MeritConfigField => ({ key, label, kind: "court" });
 
 export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [
   {
@@ -165,7 +167,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [
   {
     name: "Court Goodwill",
     line: "CtL",
-    fields: [text("court", "Corte beneficiada")],
+    fields: [court("court", "Corte beneficiada")],
   },
   { name: "Fae Mount", line: "CtL", fields: [] },
   {
@@ -432,6 +434,8 @@ const MERIT_TITLE_KEYS = [
 ];
 export function meritConfigurationTitle(value: unknown) {
   const configuration = normalizeMeritConfiguration(value);
+  if (typeof configuration.court === "string" && configuration.court.trim())
+    return courtCanonicalId(configuration.court);
   for (const key of MERIT_TITLE_KEYS) {
     const item = configuration[key];
     if (Array.isArray(item)) {
@@ -492,7 +496,7 @@ export function synchronizeMeritGrants<T extends GrantSheet>(sheet: T): T {
       item.grantedBy === "Corte" ||
       item.grantedBy === "Ordem",
   );
-  const court = String(sheet.line_data?.court ?? "").trim();
+  const court = courtCanonicalId(sheet.line_data?.court);
   const currentMantle = sheet.merits.find(
     (item) =>
       item.name === "Mantle" &&
@@ -549,7 +553,8 @@ export function synchronizeMeritGrants<T extends GrantSheet>(sheet: T): T {
       });
     };
     if (source.name === "Court Goodwill") {
-      const court = configured(configuration, "court") || "Corte não definida";
+      const court = courtCanonicalId(configured(configuration, "court")) || "Corte não definida";
+      source.configuration = { ...configuration, court };
       const goodwillKey = `${sourceKey}:${court}`;
       const grantGoodwillMerit = (name: string, dots: number) => {
         const existing = sheet.merits.find(

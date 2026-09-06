@@ -128,7 +128,6 @@ export function readHomebrews(): HomebrewCatalog {
 }
 
 export const BUILTIN_HOMEBREW_SOURCES = [
-  { id: "h-beyond-hedge", name: "Beyond the Hedge" },
   { id: "h-courts", name: "Book of Courts" },
   { id: "h-seemings", name: "Book of Seemings" },
 ] as const;

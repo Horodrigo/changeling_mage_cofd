@@ -22,7 +22,8 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { courtCanonicalId, courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -104,7 +105,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
   CONTRACTS,
@@ -130,6 +131,7 @@ import { SPELLS } from "@/lib/spells";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
 import { ARMORS, EQUIPMENT, WEAPONS } from "@/lib/combat-equipment";
+import { TILTS, findTilt } from "@/lib/tilts";
 import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
 import { HomebrewsPage } from "./homebrews";
 import { useHomebrews } from "./use-homebrews";
@@ -1001,7 +1003,7 @@ function CharacterPaper({
             poderes: isCtl ? <>
               <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
-              <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} />
+              <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
               <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento","Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
               <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CourtLore data={data} merits={character.merits} />
@@ -1186,6 +1188,7 @@ function CharacterPaper({
               seeming={String(data.seeming ?? "")}
               court={String(data.court ?? "")}
               extraBenefits={objectList(data.extra_contract_benefits)}
+              extraClauses={objectList(data.extra_contract_clauses)}
             />
             <div className="powers-sheet-grid">
               <section>
@@ -1739,6 +1742,7 @@ function CombatPage({
   const { tr } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
     equipmentIds = stringList(character.line_data.combat_equipment),
+    tiltIds = stringList(character.line_data.combat_tilts),
     armorId = String(character.line_data.combat_armor ?? "");
   const armor = ARMORS.find((item) => item.id === armorId),
     weapons = weaponIds
@@ -1786,6 +1790,8 @@ function CombatPage({
             <p>{tr("Proteção geral reduz ataques comuns; proteção balística reduz armas de fogo. Penalidades da armadura já aparecem nos valores acima.", "General armor reduces ordinary attacks; ballistic armor reduces firearm attacks. Armor penalties are already included above.")}</p>
           </article>
         </div>
+        <SheetHeading>{tr("Inclinações", "Tilts")}</SheetHeading>
+        <TiltManager selected={tiltIds} onChange={(value) => setData("combat_tilts", value)} />
       </section>
       <section className="loadout-section">
         <SheetHeading>Armadura</SheetHeading>
@@ -1898,6 +1904,24 @@ function CombatPage({
       </small>
     </div>
   );
+}
+
+function TiltManager({selected,onChange}:{selected:string[];onChange:(value:string[])=>void}) {
+  const {locale,tr}=useLanguage();
+  const [search,setSearch]=useState(""), [category,setCategory]=useState("All");
+  const name=(tilt:(typeof TILTS)[number])=>locale==="en-US"?tilt.name:tilt.translatedName;
+  const filtered=alphabetical(TILTS,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
+  return <div className="tilt-manager">
+    <div className="selected-tilts">
+      {selected.map(findTilt).filter((tilt):tilt is NonNullable<typeof tilt>=>Boolean(tilt)).map((tilt)=><article key={tilt.id} className="selected-tilt"><div><strong>{name(tilt)}</strong><small>{tr(tilt.category==="Personal"?"Pessoal":"Ambiental",tilt.category)} · {tilt.sourceCode} · p. {tilt.page}</small><p>{tilt.effect}</p></div><Button type="button" size="icon" variant="ghost" onClick={()=>onChange(selected.filter((id)=>id!==tilt.id))} aria-label={`${tr("Remover","Remove")} ${name(tilt)}`}><X /></Button></article>)}
+      {!selected.length&&<em>{tr("Nenhuma Inclinação selecionada.","No Tilts selected.")}</em>}
+    </div>
+    <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline"><Plus />{tr("Adicionar Inclinação","Add Tilt")}</Button></DialogTrigger><DialogContent className="tilt-dialog"><DialogHeader><DialogTitle>{tr("Inclinações de Combate","Combat Tilts")}</DialogTitle><DialogDescription>{tr("Selecione efeitos pessoais ou ambientais ativos na cena.","Select Personal or Environmental effects active in the scene.")}</DialogDescription></DialogHeader>
+      <div className="tilt-filters"><label className="catalog-search"><Search/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar Inclinação","Search Tilts")}/></label><RuleSelect value={category} onChange={setCategory} options={[{value:"All",label:tr("Todas","All")},{value:"Personal",label:tr("Pessoais","Personal")},{value:"Environmental",label:tr("Ambientais","Environmental")}]} /></div>
+      <div className="tilt-catalog">{filtered.map((tilt)=>{const active=selected.includes(tilt.id);return <article key={tilt.id} className={active?"selected":""}><header><div><strong>{name(tilt)}</strong><small>{tr(tilt.category==="Personal"?"Pessoal":"Ambiental",tilt.category)} · {tilt.sourceCode} · p. {tilt.page}</small></div><Button type="button" size="sm" variant={active?"ghost":"outline"} onClick={()=>onChange(active?selected.filter((id)=>id!==tilt.id):[...selected,tilt.id])}>{active?tr("Remover","Remove"):tr("Adicionar","Add")}</Button></header><p>{tilt.description}</p><p><b>{tr("Efeito","Effect")}:</b> {tilt.effect}</p><p><b>{tr("Causando a Inclinação","Causing the Tilt")}:</b> {tilt.causing}</p><p><b>{tr("Encerrando a Inclinação","Ending the Tilt")}:</b> {tilt.ending}</p></article>})}</div>
+      <DialogFooter><DialogClose asChild><Button type="button">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
+    </DialogContent></Dialog>
+  </div>;
 }
 
 function LoadoutCatalog<T extends { id: string; name: string }>({
@@ -2880,6 +2904,7 @@ type ExperienceUndo =
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "contract"; id: string }
   | { kind: "benefit"; contractId: string; seeming: string }
+  | { kind: "clause"; contractId: string; courtId: string }
   | { kind: "wyrd"; previous: number }
   | { kind: "clarityGain" }
   | { kind: "willpower"; previousLost: number }
@@ -2983,20 +3008,26 @@ function ExperiencePanel({
       (item) => `${String(item.contractId)}::${String(item.seeming)}`,
     ),
   );
+  const extraClauses = objectList(character.line_data.extra_contract_clauses);
+  const extraClauseKeys = new Set(extraClauses.map((item) => `${String(item.contractId)}::${String(item.courtId)}`));
+  const goodwill = new Map(objectList(character.line_data.court_goodwill_benefits).map((item) => [String(item.court), Number(item.dots ?? 0)]));
+  const currentCourtId = courtCanonicalId(character.line_data.court);
   const benefitOptions = ownedContracts.flatMap((saved) => {
     const definition = findContract(String(saved.id ?? saved.name ?? ""));
-    return definition
-      ? Object.keys(definition.seemingBenefits ?? {})
+    if (!definition) return [];
+    const seemingOptions = Object.keys(definition.seemingBenefits ?? {})
           .filter(
             (seeming) =>
               seeming !== String(character.line_data.seeming) &&
               !extraKeys.has(`${definition.id}::${seeming}`),
           )
           .map((seeming) => ({
-            value: `${definition.id}::${seeming}`,
+            value: `benefit::${definition.id}::${seeming}`,
             label: `${definition.name} · ${seemingDisplayName(seeming,locale)}`,
-          }))
-      : [];
+          }));
+    const clauseOptions = availableForeignClauseCourtIds(definition, currentCourtId, goodwill, extraClauseKeys)
+      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${definition.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
+    return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
   const ownedMerit =
@@ -3192,6 +3223,13 @@ function ExperiencePanel({
             ),
         ),
       };
+    else if (undo.kind === "clause")
+      next.line_data = {
+        ...next.line_data,
+        extra_contract_clauses: objectList(next.line_data.extra_contract_clauses).filter(
+          (item) => !(String(item.contractId) === undo.contractId && String(item.courtId) === undo.courtId),
+        ),
+      };
     else if (undo.kind === "clarityGain") {
       next.current_state = changePermanentClarity(next.current_state, -1);
       const maximum = Number(derivedWithPermanentMerits(next).LucidezMaxima ?? 1);
@@ -3333,21 +3371,20 @@ function ExperiencePanel({
     if (purchaseType === "Benefício de Contrato") {
       const value = benefitKey || benefitOptions[0]?.value;
       if (!value)
-        return setFeedback("Não há Benefício de outra Feição disponível.");
-      const [chosenContract, seeming] = value.split("::");
+        return setFeedback("Não há Benefício ou Clause adicional disponível.");
+      const [kind, chosenContract, choice] = value.split("::");
       const definition = findContract(chosenContract);
+      const isClause = kind === "clause";
       spend(
         1,
-        `Benefício de ${seemingDisplayName(seeming,locale)} · ${definition?.name ?? "Contrato"}`,
-        { kind: "benefit", contractId: chosenContract, seeming },
+        isClause ? `Clause de ${courtDisplayName(choice, locale)} · ${definition?.name ?? "Contrato"}` : `Benefício de ${seemingDisplayName(choice,locale)} · ${definition?.name ?? "Contrato"}`,
+        isClause ? { kind: "clause", contractId: chosenContract, courtId: choice } : { kind: "benefit", contractId: chosenContract, seeming: choice },
         (next) => {
-          const existing = objectList(next.line_data.extra_contract_benefits);
           next.line_data = {
             ...next.line_data,
-            extra_contract_benefits: [
-              ...existing,
-              { contractId: chosenContract, seeming },
-            ],
+            ...(isClause
+              ? { extra_contract_clauses: [...objectList(next.line_data.extra_contract_clauses), { contractId: chosenContract, courtId: choice }] }
+              : { extra_contract_benefits: [...objectList(next.line_data.extra_contract_benefits), { contractId: chosenContract, seeming: choice }] }),
           };
         },
       );
@@ -4550,6 +4587,7 @@ function ExperienceMeritPicker({
                   ),
                 repeatable = isRepeatableDefinition(item),
                 ratings = meritRatingsFor(item);
+              if (item.name === "Mantle" && !instances.length) return null;
               if (
                 !repeatable &&
                 instances.length &&
@@ -4594,7 +4632,7 @@ function ExperienceMeritPicker({
                           </DialogClose>
                         )),
                     )}
-                    {(repeatable || !instances.length) &&
+                    {item.name !== "Mantle" && (repeatable || !instances.length) &&
                       ratings.map((dot) => (
                         <DialogClose asChild key={`new-${dot}`}>
                           <Button
@@ -5450,11 +5488,13 @@ function ContractPowerList({
   seeming,
   court,
   extraBenefits = [],
+  extraClauses = [],
 }: {
   contracts: Array<Record<string, unknown>>;
   seeming: string;
   court: string;
   extraBenefits?: Array<Record<string, unknown>>;
+  extraClauses?: Array<Record<string, unknown>>;
 }) {
   const {locale,tr}=useLanguage();
   const homebrews=useHomebrews();
@@ -5490,13 +5530,19 @@ function ContractPowerList({
               courtBenefits?: Record<string, string>;
             }
           ).courtBenefits?.[court];
+          const clauseCourtIds = [
+            courtCanonicalId(court),
+            ...extraClauses.filter((extra) => String(extra.contractId) === definition.id).map((extra) => String(extra.courtId)),
+          ].filter((value, position, values) => value && values.indexOf(value) === position);
+          const clauses = clauseCourtIds.map((courtId) => ({ courtId, text: definition.courtClauses?.[courtId] })).filter((item) => item.text);
           const displayOptions = contractDisplayOptions(definition, locale);
+          const outcomeSections = contractOutcomeSections(definition, locale);
           return (
             <article key={`${definition.id}-${index}`}>
               <div className="contract-power-title">
                 <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
                 <Badge variant={definition.goblin ? "default" : "outline"}>
-                  {definition.goblin ? "Goblin · Comum" : definition.type}
+                  {definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}
                 </Badge>
               </div>
               <small>
@@ -5508,10 +5554,10 @@ function ContractPowerList({
                   <dt>{tr("Resumo", "Summary")}</dt>
                   <dd>{summary}</dd>
                 </div>}
-                <div>
+                {contractHasInvocationRoll(definition) === true && <div>
                   <dt>{tr("Parada de dados", "Dice Pool")}</dt>
                   <dd>{definition.dicePool ?? tr("Não informada", "Not listed")}</dd>
-                </div>
+                </div>}
                 <div>
                   <dt>{tr("Custo", "Cost")}</dt>
                   <dd>{definition.cost ?? tr("Conforme descrição", "As described")}</dd>
@@ -5523,18 +5569,30 @@ function ContractPowerList({
                     {definition.duration ?? tr("Cena", "Scene")}
                   </dd>
                 </div>
+                {outcomeSections.slice(0, 1).map((section) => (
+                  <div key={section.label}>
+                    <dt>{section.label}</dt>
+                    <dd>{section.text}</dd>
+                  </div>
+                ))}
                 {displayOptions.length > 0 && (
                   <div className="contract-options">
                     <dt>{tr("Opções", "Options")}</dt>
                     <dd><ul>{displayOptions.map((option) => <li key={option}>{option}</li>)}</ul></dd>
                   </div>
                 )}
-                {contractOutcomeSections(definition, locale).map((section) => (
-                    <div key={section.label}>
-                      <dt>{section.label}</dt>
-                      <dd>{section.text}</dd>
-                    </div>
-                  ))}
+                {definition.detailTables?.map((table) => (
+                  <div className="contract-detail-table" key={table.title}>
+                    <dt>{table.title}</dt>
+                    <dd><table><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row) => <tr key={row.join("::")}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table></dd>
+                  </div>
+                ))}
+                {outcomeSections.slice(1).map((section) => (
+                  <div key={section.label}>
+                    <dt>{section.label}</dt>
+                    <dd>{section.text}</dd>
+                  </div>
+                ))}
                 <div>
                   <dt>{tr("Brecha","Loophole")}</dt>
                   <dd>{definition.loophole}</dd>
@@ -5554,6 +5612,12 @@ function ContractPowerList({
                     <dd>{courtBenefit}</dd>
                   </div>
                 )}
+                {clauses.map((clause) => (
+                  <div key={`clause-${clause.courtId}`}>
+                    <dt>Clause · {courtDisplayName(clause.courtId, locale)}</dt>
+                    <dd>{clause.text}</dd>
+                  </div>
+                ))}
                 {definition.goblin && (
                   <div className="goblin-debt-row">
                     <dt>{tr("Débito Goblin", "Goblin Debt")}</dt>

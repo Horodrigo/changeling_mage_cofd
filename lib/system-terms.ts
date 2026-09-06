@@ -33,6 +33,13 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Todas":"All", "Todos":"All",
 };
 
+const PORTUGUESE_TERMS: Record<string,string> = {
+  Crown:"Coroa", Jewels:"Joias", Mirror:"Espelho", Shield:"Escudo",
+  Steed:"Corcel", Sword:"Espada", Chalice:"Cálice", Coin:"Moeda",
+  Scepter:"Cetro", Stars:"Estrelas", Thorn:"Espinho", Maw:"Garganta",
+  Courtless:"Sem Corte",
+};
+
 /** Localizes presentation only. Stored character values remain unchanged. */
-export function systemTerm(value:string,locale:Locale){return locale==="en-US"?(ENGLISH_TERMS[value]??value):value}
+export function systemTerm(value:string,locale:Locale){return locale==="en-US"?(ENGLISH_TERMS[value]??value):(PORTUGUESE_TERMS[value]??value)}
 export function systemTerms(values:readonly string[],locale:Locale){return values.map(value=>systemTerm(value,locale))}

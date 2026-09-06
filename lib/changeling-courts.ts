@@ -8,7 +8,7 @@ export type CourtDefinition = {
   emotionPt: string;
   mantleBenefits: string[];
   mantleBenefitsPt: string[];
-  sourceId: "ctl-2ed" | "ctl-dark-eras";
+  sourceId: "ctl-2ed" | "ctl-dark-eras" | "h-courts";
   source: string;
   page: number;
 };
@@ -17,7 +17,15 @@ const court = (
   id: string, name: string, translatedName: string, emotion: string, emotionPt: string,
   page: number, mantleBenefits: string[], mantleBenefitsPt: string[],
   sourceId: CourtDefinition["sourceId"] = "ctl-2ed",
-): CourtDefinition => ({ id, name, translatedName, emotion, emotionPt, mantleBenefits, mantleBenefitsPt, sourceId, source: sourceId === "ctl-2ed" ? "Changeling: The Lost" : "Dark Eras Changeling (DE:CtL)", page });
+): CourtDefinition => {
+  const resolvedSourceId = sourceId === "ctl-2ed" && page >= 279 ? "h-courts" : sourceId;
+  return {
+    id, name, translatedName, emotion, emotionPt, mantleBenefits, mantleBenefitsPt,
+    sourceId: resolvedSourceId,
+    source: resolvedSourceId === "ctl-2ed" ? "Changeling: The Lost" : resolvedSourceId === "h-courts" ? "Book of Courts" : "Dark Eras Changeling (DE:CtL)",
+    page,
+  };
+};
 
 export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [
   court("spring", "Spring Court", "Primavera", "Desire", "Desejo", 35, [
@@ -40,6 +48,64 @@ export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [
   ], [
     "Imponha o Manto como penalidade às tentativas de percebê-lo enquanto espiona.", "Some o Manto às ações para ocultar a verdade.", "Some o Manto às ações Sociais depois de se render em uma luta.", "Gaste Glamour para impor Derrotado a um combatente, a menos que ele gaste 2 Força de Vontade.", "Ignore penalidades de ferimento e some o dano letal ou agravado sofrido como dados de bônus às ações Físicas.",
   ]),
+  court("sun", "Sun Court", "Corte do Sol", "Duty", "Dever", 78, [
+    "Add Mantle to mundane rolls to find flaws, mistakes, or exploitable gaps.",
+    "Enemies subtract Mantle from rolls to deceive or manipulate you.",
+    "During an action scene, reduce Speed to 0 to add Mantle to Defense while acting out of duty.",
+    "Ignore exhaustion, fatigue, and wound penalties while performing a personal or Sun Court duty.",
+    "Once during daylight, spend Willpower instead of rolling a non-contested, non-resisted instant action to achieve one success.",
+  ], [
+    "Some o Manto a testes mundanos para encontrar falhas, erros ou brechas exploráveis.",
+    "Inimigos subtraem seu Manto de testes para enganá-lo ou manipulá-lo.",
+    "Durante uma cena de ação, reduza o Deslocamento a 0 para somar o Manto à Defesa enquanto age por dever.",
+    "Ignore penalidades de exaustão, fadiga e ferimentos ao cumprir um dever pessoal ou da Corte do Sol.",
+    "Uma vez durante o dia, gaste Força de Vontade em vez de testar uma ação instantânea não disputada nem resistida para obter um sucesso.",
+  ], "h-courts"),
+  court("moon", "Moon Court", "Corte da Lua", "Curiosity", "Curiosidade", 81, [
+    "Add Mantle to mundane rolls to investigate something you have never seen before.",
+    "Enemies subtract Mantle from rolls to deceive or manipulate you.",
+    "Once per scene, add Mantle to a Contract roll that learns a specific piece of information.",
+    "Once per chapter, halve physical harm or Clarity damage suffered directly through your curiosity; halve a resulting Condition's duration instead when applicable.",
+    "During an evening, ignore exhaustion or Environmental Tilts for one scene a number of times equal to Mantle.",
+  ], [
+    "Some o Manto a testes mundanos para investigar algo que nunca viu antes.",
+    "Inimigos subtraem seu Manto de testes para enganá-lo ou manipulá-lo.",
+    "Uma vez por cena, some o Manto a um teste de Contrato que descubra uma informação específica.",
+    "Uma vez por capítulo, reduza à metade o dano físico ou de Lucidez sofrido diretamente por sua curiosidade; quando aplicável, reduza à metade a duração da Condição resultante.",
+    "Durante uma noite, ignore exaustão ou Inclinações Ambientais por uma cena um número de vezes igual ao Manto.",
+  ], "h-courts"),
+  court("undercourt", "Undercourt", "Subcorte", "Comfort", "Conforto", 86, [
+    "Add Mantle to mundane rolls to convince someone that an event has a mundane explanation.",
+    "Subtract Mantle from damage rolls caused by successful Clarity attacks suffered in your own home.",
+    "Gain one dot of the ruling Court's Mantle solely to determine bonus dice in Social interactions.",
+    "When sleeping overnight in your own home, regain 2 spent Willpower instead of 1.",
+    "Reduce all Clarity attacks not caused by your own actions by two dice.",
+  ], [
+    "Some o Manto a testes mundanos para convencer alguém de que um acontecimento possui explicação mundana.",
+    "Subtraia o Manto dos testes de dano causados por ataques de Lucidez bem-sucedidos sofridos em sua própria casa.",
+    "Receba um ponto do Manto da Corte governante apenas para determinar dados de bônus em interações Sociais.",
+    "Ao dormir uma noite inteira em sua própria casa, recupere 2 pontos de Força de Vontade gastos em vez de 1.",
+    "Reduza em dois dados todos os ataques de Lucidez que não sejam causados por suas próprias ações.",
+  ], "h-courts"),
+  court("calm", "Calm Court", "Corte da Calmaria", "Relief", "Alívio", 87, [
+    "Add Mantle to mundane rolls to ease a human or changeling's suffering.", "Add Mantle to mundane rolls to resist or help others resist intimidation and threats.", "Incite Bedlam to end a chosen emotion and accompanying Condition instead of inflicting one; supernatural emotions cause a Clash of Wills.", "Once per chapter, regain 1 Willpower after suffering a failure or dramatic failure.", "Spend 1 Glamour to create a three-meter bubble protecting you from Environmental Tilts for the scene.",
+  ], [
+    "Some o Manto a testes mundanos para aliviar o sofrimento de um humano ou changeling.", "Some o Manto a testes mundanos para resistir ou ajudar outros a resistir a intimidação e ameaças.", "Incite Bedlam para encerrar uma emoção escolhida e sua Condição em vez de impô-la; emoções sobrenaturais provocam Choque de Vontades.", "Uma vez por capítulo, recupere 1 Força de Vontade após sofrer uma falha ou falha dramática.", "Gaste 1 Glamour para criar uma bolha de três metros que o protege de Inclinações Ambientais pela cena.",
+  ], "h-courts"),
+  court("storm", "Storm Court", "Corte da Tempestade", "Courage", "Coragem", 90, [
+    "Add Mantle to mundane rolls encouraging others to push through fear.", "Mundane attempts to frighten you subtract Mantle.", "When weather would impede the senses, add Mantle to perception instead.", "Your unarmed attacks use Mantle as weapon damage while lightning crackles around your limbs.", "Spend 1 Glamour to turn action penalties from Environmental Tilts into bonuses for the scene; this does not prevent injury.",
+  ], [
+    "Some o Manto a testes mundanos para encorajar outros a superar seus medos.", "Tentativas mundanas de amedrontá-lo subtraem seu Manto.", "Quando o clima prejudicaria os sentidos, some o Manto à percepção em vez disso.", "Seus ataques desarmados usam o Manto como dano de arma enquanto relâmpagos percorrem seus membros.", "Gaste 1 Glamour para transformar penalidades de Inclinações Ambientais em bônus pela cena; isso não impede ferimentos.",
+  ], "h-courts"),
+  court("fire", "Fire Court", "Corte do Fogo", "Confidence", "Confiança", 93, ["Add Mantle to mundane rolls to project authority.","Add Mantle to mundane rolls in formal challenges.","Once per chapter, spend Willpower for temporary Allies and/or Status dots totaling Mantle for a scene, to a maximum of five.","Spend 1 Glamour to use Presence instead of a Resistance Attribute against a hostile action.","Never suffer Beaten Down."],["Some o Manto a testes mundanos para projetar autoridade.","Some o Manto a testes mundanos em desafios formais.","Uma vez por capítulo, gaste Força de Vontade para receber Aliados e/ou Status temporários somando o Manto por uma cena, até cinco.","Gaste 1 Glamour para usar Presença no lugar de um Atributo de Resistência contra uma ação hostil.","Nunca sofra Derrotado."],"h-courts"),
+  court("earth", "Earth Court", "Corte da Terra", "Determination", "Determinação", 96, ["Add Mantle to mundane rolls to hide or moderate emotions.","Add Mantle to mundane rolls to make money or acquire material resources.","Once per chapter, spend 1 Glamour to gain Steadfast.","Add half Mantle, rounded up, to maximum Willpower, even above 10.","Add Mantle to effective Resolve when contesting attempts to dissuade you from the current goal."],["Some o Manto a testes mundanos para ocultar ou moderar emoções.","Some o Manto a testes mundanos para ganhar dinheiro ou recursos materiais.","Uma vez por capítulo, gaste 1 Glamour para receber Resoluto.","Some metade do Manto, arredondada para cima, à Força de Vontade máxima, mesmo acima de 10.","Some o Manto à Perseverança efetiva contra tentativas de dissuadi-lo do objetivo atual."],"h-courts"),
+  court("air", "Air Court", "Corte do Ar", "Inspiration", "Inspiração", 99, ["Add Mantle to mundane rolls to solve a puzzle or make a Plan.","Add Mantle to mundane rolls to inspire others, including Inspiring.","Once per chapter, waive either a sealing's Glamour cost or its strengthening Willpower cost.","When spending Inspired, add dice as though Willpower were also spent.","Dream Glamour harvesting requires only a subtle shift rather than a paradigm shift."],["Some o Manto a testes mundanos para solucionar um enigma ou criar um Plano.","Some o Manto a testes mundanos para inspirar outros, incluindo Inspirador.","Uma vez por capítulo, dispense o custo de Glamour de selar ou o custo de Força de Vontade de fortalecer.","Ao gastar Inspirado, some dados como se também gastasse Força de Vontade.","Colher Glamour de sonhos exige apenas uma mudança sutil em vez de mudança de paradigma."],"h-courts"),
+  court("water", "Water Court", "Corte da Água", "Pity", "Piedade", 102, ["Add Mantle to mundane rolls to understand or uncover true feelings or pain.","Add Mantle to mundane attacks to disarm or hobble an opponent deserving pity.","Fetch Echoes used in your presence cost 1 additional Glamour; using the fetch's last Glamour this way inflicts 1 lethal damage.","Once per chapter when healing Clarity damage, heal one additional level.","Double natural healing speed; this stacks with Arcadian Metabolism."],["Some o Manto a testes mundanos para compreender ou revelar sentimentos verdadeiros ou dor.","Some o Manto a ataques mundanos para desarmar ou incapacitar alguém digno de piedade.","Ecos de simulacros usados em sua presença custam +1 Glamour; gastar assim o último Glamour causa 1 dano letal.","Uma vez por capítulo ao curar dano de Lucidez, cure um nível adicional.","Dobre a velocidade de cura natural; acumula com Metabolismo Arcadiano."],"h-courts"),
+  court("north", "North Court", "Corte do Norte", "Suffering", "Sofrimento", 129, ["Add Mantle to mundane rolls to resist fatigue, deprivation, or passing out.","Add Mantle to mundane rolls to resist torture and pain.","Gain two Beats instead of one when taking damage in the last three Health boxes.","Spend 1 Glamour to ignore a Personal Tilt for one turn.","Once per chapter, ignore all damage from one attack that does not involve cold iron."],["Some o Manto a testes mundanos para resistir a fadiga, privação ou desmaio.","Some o Manto a testes mundanos para resistir a tortura e dor.","Receba duas Batidas em vez de uma ao sofrer dano nas três últimas caixas de Vitalidade.","Gaste 1 Glamour para ignorar uma Inclinação Pessoal por um turno.","Uma vez por capítulo, ignore todo o dano de um ataque que não envolva ferro frio."],"h-courts"),
+  court("east", "East Court", "Corte do Leste", "Envy", "Inveja", 129, ["Add Mantle to mundane rolls to investigate someone currently doing business with you.","Add Mantle to mundane rolls to negotiate a deal.","Reduce Contract Glamour cost by one when swindling someone out of possessions.","While negotiating, spend 1 Glamour to inflict Wanton for the scene, once per target per story.","Physical actions gain 8-again while defending your property or possessions."],["Some o Manto a testes mundanos para investigar alguém que esteja negociando com você.","Some o Manto a testes mundanos para negociar um acordo.","Reduza em um o custo de Glamour de Contratos usados para lesar alguém e tomar suas posses.","Durante uma negociação, gaste 1 Glamour para impor Desejoso pela cena, uma vez por alvo por história.","Ações Físicas recebem 8-novamente ao defender sua propriedade ou suas posses."],"h-courts"),
+  court("south", "South Court", "Corte do Sul", "Rebellion", "Rebelião", 129, ["Add Mantle to mundane rolls to avoid or sneak past characters of higher social status.","Add Mantle to mundane rolls to undermine a law or rule.","Once per scene, regain 1 Willpower when physically or verbally attacking someone who treated you or your motley unjustly.","Once per chapter, apply the rote quality to an attempt to harvest the Court emotion.","Once per story, automatically complete a truthful one-scene Social maneuver persuading a non-hostile Storyteller character to join your cause."],["Some o Manto a testes mundanos para evitar ou passar furtivamente por personagens de status social superior.","Some o Manto a testes mundanos para enfraquecer uma lei ou regra.","Uma vez por cena, recupere 1 Força de Vontade ao atacar física ou verbalmente alguém que tratou você ou seu motley injustamente.","Uma vez por capítulo, aplique a qualidade de rota a uma tentativa de colher a emoção da Corte.","Uma vez por história, conclua automaticamente uma manobra Social verdadeira de uma cena para convencer um personagem não hostil do Narrador a aderir à sua causa."],"h-courts"),
+  court("west", "West Court", "Corte do Oeste", "Honor", "Honra", 130, ["Add Mantle to mundane rolls using one chosen weapon type.","Add Mantle to mundane rolls to strategize or employ combat tactics.","Add Mantle to Defense.","Once per chapter, apply the rote quality to an attack roll or Dodge action.","Ignore armor worn by Hedge creatures or agents of the Fae; supernatural armor triggers a Clash of Wills."],["Some o Manto a testes mundanos usando um tipo de arma escolhido.","Some o Manto a testes mundanos para elaborar estratégias ou empregar táticas de combate.","Some o Manto à Defesa.","Uma vez por capítulo, aplique a qualidade de rota a um ataque ou ação de Esquiva.","Ignore a armadura de criaturas da Sebe ou agentes das Fadas; armadura sobrenatural provoca Choque de Vontades."],"h-courts"),
+  court("center", "Center Court", "Corte do Centro", "Reflection", "Reflexão", 130, ["Add Mantle to mundane rolls to console another person.","Add Mantle to mundane rolls to discern another person's true motives or emotions.","Gain Mantle dots divided among Allies, Contacts, and Striking Looks.","While you have not lied in the scene, automatically succeed at mundane actions to appear impartial and trustworthy on one matter; later lies about it automatically fail.","Once per chapter, touch another to heal up to Mantle bashing or lethal damage, or one aggravated damage, as an instant action."],["Some o Manto a testes mundanos para consolar outra pessoa.","Some o Manto a testes mundanos para discernir as verdadeiras motivações ou emoções de alguém.","Receba pontos iguais ao Manto divididos entre Aliados, Contatos e Aparência Marcante.","Enquanto não tiver mentido na cena, obtenha sucesso automático em ações mundanas para parecer imparcial e confiável em um assunto; mentiras posteriores sobre ele falham automaticamente.","Uma vez por capítulo, toque outra pessoa para curar até Manto de dano contundente ou letal, ou um dano agravado, como ação instantânea."],"h-courts"),
   court("society-morning", "Society of Morning", "Sociedade da Manhã", "Discovery through reckless pursuit", "Descoberta por busca imprudente", 279, [
     "Apply Mantle as a bonus to gather information on a new subject.", "Apply Mantle as a bonus to rolls involving instability or impermanence.", "Regain Willpower when a truth implicates a friend or ally.", "Automatically persuade a changeling to share information relevant to freehold safety; supernatural resistance triggers a Clash of Wills.", "Once per session, reveal an unknown truth to shift your negative Clarity Condition to another changeling.",
   ], [
@@ -144,4 +210,8 @@ export function courtPresentation(value: unknown, locale: Locale = "pt-BR") {
 
 export function courtDisplayName(value: unknown, locale: Locale = "pt-BR") {
   return courtPresentation(value, locale)?.name ?? String(value ?? "");
+}
+
+export function courtCanonicalId(value: unknown) {
+  return courtPresentation(value, "en-US")?.id ?? String(value ?? "").trim();
 }
