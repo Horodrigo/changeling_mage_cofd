@@ -20,8 +20,13 @@ SOURCE = {
     "CTL 2e": ("ctl-2ed", "Changeling the Lost"),
     "Hedge": ("ctl-the-hedge", "The Hedge"),
     "MTA 2e": ("mta-2ed", "Mage the Awakening"),
+    "HL": ("hurt-locker", "Hurt Locker"),
+    "DE": ("dark-eras", "Dark Eras"),
     "DE2": ("de2", "Dark Eras 2"),
+    "DEC": ("dark-eras-companion", "Dark Eras Companion"),
 }
+
+APPROVED_UNIVERSAL_SOURCES = {"CofD", "CTL 2e", "Hedge", "HL", "DE", "DE2", "DEC"}
 
 
 def wiki_text(archive: zipfile.ZipFile, page: str) -> str:
@@ -79,7 +84,7 @@ def simple_rows(text: str, group: str) -> list[dict]:
             continue
         name, rating, prerequisites, description, book = map(clean, match.groups())
         book_code = re.sub(r"\s+\d+$", "", book)
-        allowed = book_code in {"CofD", "CTL 2e", "Hedge", "DE2"}
+        allowed = book_code in APPROVED_UNIVERSAL_SOURCES
         if group == "universal" and name == "Advanced Library" and book_code == "MTA 2e":
             allowed = True
         if not allowed:
@@ -115,7 +120,8 @@ def style_rows(text: str) -> list[dict]:
         if start:
             count, name, prerequisites, middle, book = start.groups()
             book = clean(book)
-            if not book.startswith("CofD "):
+            book_code = re.sub(r"\s+\d+$", "", book)
+            if book_code not in APPROVED_UNIVERSAL_SOURCES:
                 block = None
                 continue
             source_id, source_name, page = source(book)
@@ -153,8 +159,8 @@ def main() -> None:
         records = simple_rows(wiki_text(archive, PAGES["universal"]), "universal")
         records += simple_rows(wiki_text(archive, PAGES["changeling"]), "changeling")
         records += style_rows(wiki_text(archive, PAGES["styles"]))
-    if len(records) != 131:
-        raise RuntimeError(f"Expected 131 records, got {len(records)}")
+    if len(records) < 131:
+        raise RuntimeError(f"Expected at least the audited base 131 records, got {len(records)}")
     payload = json.dumps(records, ensure_ascii=False, indent=2)
     OUT.write_text(
         "// Generated from the supplied offline Codex of Darkness snapshot.\n"

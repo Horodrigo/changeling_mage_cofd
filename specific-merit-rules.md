@@ -8,7 +8,8 @@ This document records exceptional behavior that must survive the clean reimport 
 - Portuguese is a presentation translation added only after the English catalog has been verified.
 - The offline Codex of Darkness pages are an index, not the final rules authority. They provide the candidate list, rating, source, and page. The corresponding PDF is authoritative for mechanics.
 - Any non-supernatural Universal Merit is available to Changeling when its cited book is an approved project source, even if that book is not Chronicles of Darkness or Changeling. For example, Advanced Library from Mage the Awakening is eligible.
-- Homebrew Merits are outside the initial official reimport.
+- Entitlement Merits are outside the current reimport, including all such Merits in Oak, Ash, and Thorn and Book of Courts.
+- The approved bundled Book of Courts and Book of Seemings catalogs are imported in English from their source PDFs, but remain separately identifiable by source.
 - A Merit with a description for each dot does not have to be a Fighting Style. Per-dot benefits are modeled independently from category.
 
 ## Purchase and character-creation rules
@@ -87,7 +88,21 @@ Additional structured controls are allowed only where a specific Merit rule requ
 
 - Gunslinger retains the offline index citation `DE2 377`.
 - Oath: Blood Liege retains the offline Changeling Merit index citation `DE2 107`.
-- DE2 will be added as a project source later. Other potentially universal DE2 Merits should only be reconsidered once that source is available.
+- `HL`, `DE`, `DE2`, and `DEC` are approved source codes from this point forward. A later audit will revisit earlier catalogs; the current batch must not retroactively restart completed work.
+- Kith and Kin contributes Dramaturge (p. 69) and Understudy (p. 69).
+- Oak, Ash, and Thorn contributes no ordinary Merits in this batch; its Entitlement Merits are deferred.
+
+### Seasonal Court Merits (Book of Courts pp. 63–69)
+
+- Import only ordinary Seasonal Court Merits, never Entitlement Merits.
+- Unless a Merit states a stricter prerequisite, it requires either Mantle • for its named Seasonal Court or Court Goodwill ••• for that same Court.
+- A higher explicitly printed Mantle prerequisite replaces Mantle •, while Court Goodwill ••• remains the alternate way for an outsider to qualify unless the Merit expressly says otherwise.
+- Court prerequisites must use an existing-Court selector and canonical Court IDs rather than free text.
+
+### Seeming Merits (Book of Seemings pp. 92–101)
+
+- Preserve each printed Seeming restriction and every printed alternate prerequisite; do not infer that every Merit is exclusive merely because it appears under a Seeming heading.
+- Hedge Duelist is Changeling-only. Book of Seemings supplies alternative first-dot maneuvers plus fourth- and fifth-dot maneuvers to the base Merit; these are additions to one Merit, not separate standalone Merits.
 
 ## Eligibility and prerequisites
 

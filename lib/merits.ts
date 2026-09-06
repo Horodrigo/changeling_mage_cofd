@@ -1,4 +1,5 @@
 import { MERITS_EN } from "./merits-en.generated";
+import { SUPPLEMENTAL_MERITS_EN } from "./merits-supplements-en";
 
 export type GameLine = "CtL" | "MtA";
 export type MeritLevel = { rating: number; name: string; description: string };
@@ -19,7 +20,7 @@ export type MeritDefinition = {
   levels?: MeritLevel[];
 };
 
-export const RAW_MERITS: MeritDefinition[] = MERITS_EN.map((item) => ({
+export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERITS_EN].map((item) => ({
   ...item,
   ratings: [...item.ratings],
   levels: "levels" in item ? item.levels.map((level) => ({ ...level })) : undefined,

@@ -296,6 +296,24 @@ export const MERITS_EN = [
     "page": 46
   },
   {
+    "id": "hurt-locker:object-fetishism",
+    "name": "Object Fetishism",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Mental",
+    "prerequisites": null,
+    "description": "You obsess over a given possession relating to a chosen Specialty. Recover Willpower each session from your obsession, and spending Willpower to roll that Specialty exaggerates both failure and success.",
+    "page": 42
+  },
+  {
     "id": "core-2ed:patient",
     "name": "Patient",
     "ratings": [
@@ -308,6 +326,20 @@ export const MERITS_EN = [
     "prerequisites": null,
     "description": "Add +2 to your maximum number of allowed rolls on extended actions.",
     "page": 46
+  },
+  {
+    "id": "hurt-locker:scarred",
+    "name": "Scarred",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Mental",
+    "prerequisites": "Integrity ≤ 5",
+    "description": "Suffer a Persistent Condition which prevents you from recovering Integrity, but inures you from a particular breaking point.",
+    "page": 43
   },
   {
     "id": "core-2ed:tolerance-for-biology",
@@ -393,6 +425,20 @@ export const MERITS_EN = [
     "prerequisites": "Crafts •••, Drive •, Science •",
     "description": "Raise maximum modifications to a vehicle to thrice Crafts rating, plus number of relevant Crafts Specialties.",
     "page": 47
+  },
+  {
+    "id": "hurt-locker:covert-operative",
+    "name": "Covert Operative",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical",
+    "prerequisites": "Wits •••, Dexterity •••, Stealth ••",
+    "description": "When launching an ambush, deny 10-Again to notice it, and take +3 Initiative on the first turn.",
+    "page": 53
   },
   {
     "id": "core-2ed:crack-driver",
@@ -516,6 +562,20 @@ export const MERITS_EN = [
     "page": 48
   },
   {
+    "id": "hurt-locker:punch-drunk",
+    "name": "Punch Drunk",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical",
+    "prerequisites": "Willpower ••••••",
+    "description": "Spend Willpower to preserve your last Health point, upgrading preexisting damage instead.",
+    "page": 43
+  },
+  {
     "id": "core-2ed:quick-draw",
     "name": "Quick Draw",
     "ratings": [
@@ -542,6 +602,20 @@ export const MERITS_EN = [
     "prerequisites": "Athletics ••, Stamina •••",
     "description": "Add 2 to the successes needed against you in a chase.",
     "page": 49
+  },
+  {
+    "id": "hurt-locker:roadkill",
+    "name": "Roadkill",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical",
+    "prerequisites": "Aggressive Driving ••",
+    "description": "When you try to run someone over, Knock Down even if you miss, and double your velocity bonus.",
+    "page": 55
   },
   {
     "id": "core-2ed:seizing-the-edge",
@@ -584,6 +658,34 @@ export const MERITS_EN = [
     "prerequisites": null,
     "description": "-1 Size. Take a +2 bonus to hide, go unnoticed, or otherwise benefit from your size. Character creation only.",
     "page": 49
+  },
+  {
+    "id": "hurt-locker:survivalist",
+    "name": "Survivalist",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical",
+    "prerequisites": "Survival •••, Iron Stamina •••",
+    "description": "You can resist Extreme Cold and Extreme Heat for hours equal to your Stamina.",
+    "page": 43
+  },
+  {
+    "id": "hurt-locker:air-of-menace",
+    "name": "Air of Menace",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Social",
+    "prerequisites": "Intimidation ••",
+    "description": "You wear a history of violence on your sleeve. +2 to menace others, and less rough characters must spend Willpower to pick a fight, but social maneuvering is harder.",
+    "page": 41
   },
   {
     "id": "core-2ed:allies",
@@ -670,6 +772,22 @@ export const MERITS_EN = [
     "page": 50
   },
   {
+    "id": "hurt-locker:cohesive-unit",
+    "name": "Cohesive Unit",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Social",
+    "prerequisites": "Presence •••",
+    "description": "Confer +2 to teamwork. With two dots, confer bonus dice each scene. With three dots, confer rerolls.",
+    "page": 42
+  },
+  {
     "id": "core-2ed:contacts",
     "name": "Contacts",
     "ratings": [
@@ -686,6 +804,36 @@ export const MERITS_EN = [
     "prerequisites": null,
     "description": "Choose a group or field for each dot of Contacts. You can roll Manipulation + (relevant Social Skill) to gather information or dirt from acquaintances in any of these groups or fields.",
     "page": 50
+  },
+  {
+    "id": "hurt-locker:defender",
+    "name": "Defender",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Social",
+    "prerequisites": null,
+    "description": "Gain bonus Willpower to spend on protecting loved ones, but losing them causes a crisis of grief or retribution.",
+    "page": 42
+  },
+  {
+    "id": "hurt-locker:empath",
+    "name": "Empath",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Social",
+    "prerequisites": "Empathy ••",
+    "description": "Contest Wits + Empathy against Manipulation + Subterfuge for insight into a character's mental state, which can open Doors or ease breaking points.",
+    "page": 42
   },
   {
     "id": "core-2ed:fame",
@@ -776,6 +924,21 @@ export const MERITS_EN = [
     "prerequisites": null,
     "description": "You have a guide who expects something from you proportional to his or her influence, as measured by your dots in Mentor. Choose three traits out of the list of Skills plus the Resources Merit. Once per session, your Mentor can provide aid that falls within one of these traits, achieving automatic success.",
     "page": 51
+  },
+  {
+    "id": "hurt-locker:peacemaker",
+    "name": "Peacemaker",
+    "ratings": [
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Social",
+    "prerequisites": "Wits •••, Empathy •••",
+    "description": "You can spend Willpower to attempt to negotiate a nonviolent end to hostilities through Social Maneuvering. With three dots, you can attempt to talk down even supernatural rages.",
+    "page": 42
   },
   {
     "id": "core-2ed:pusher",
@@ -925,6 +1088,24 @@ export const MERITS_EN = [
     "page": 54
   },
   {
+    "id": "hurt-locker:support-network",
+    "name": "Support Network",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Social",
+    "prerequisites": "Appropriate Social Merit",
+    "description": "Choose a Social Merit to represent supportive ties. You can spend Willpower to turn to those ties to weather a breaking point, using this Merit as bonus dice.",
+    "page": 43
+  },
+  {
     "id": "core-2ed:sympathetic",
     "name": "Sympathetic",
     "ratings": [
@@ -1027,6 +1208,48 @@ export const MERITS_EN = [
     "page": 139
   },
   {
+    "id": "hurt-locker:armed-restraint",
+    "name": "Armed Restraint",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Staff Fighting •••",
+    "description": "Use a hooking pole when grappling to instantly Hold and penalize your opponent by its weapon rating.",
+    "page": 53
+  },
+  {
+    "id": "hurt-locker:body-as-weapon",
+    "name": "Body as Weapon",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Stamina •••, Brawl ••",
+    "description": "Unarmed strikes add one point of bashing damage on a successful hit.",
+    "page": 41
+  },
+  {
+    "id": "hurt-locker:boot-party",
+    "name": "Boot Party",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Brawl ••",
+    "description": "Attack a prone target at -3 to deal lethal damage unarmed.",
+    "page": 53
+  },
+  {
     "id": "core-2ed:cheap-shot",
     "name": "Cheap Shot",
     "ratings": [
@@ -1053,6 +1276,20 @@ export const MERITS_EN = [
     "prerequisites": "Brawl ••",
     "description": "After a successful Hold, add the Choke grapple maneuver: accumulates successes across multiple turns to knock unconscious for a few minutes.",
     "page": 61
+  },
+  {
+    "id": "hurt-locker:clinch-strike",
+    "name": "Clinch Strike",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Brawl ••",
+    "description": "Use the Damage maneuver instantly in a grapple.",
+    "page": 53
   },
   {
     "id": "core-2ed:defensive-combat",
@@ -1083,6 +1320,34 @@ export const MERITS_EN = [
     "page": 61
   },
   {
+    "id": "hurt-locker:ground-and-pound",
+    "name": "Ground and Pound",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Brawl ••",
+    "description": "Take the rote quality to strike a prone target with Brawl, falling prone yourself.",
+    "page": 54
+  },
+  {
+    "id": "hurt-locker:ground-fighter",
+    "name": "Ground Fighter",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Wits •••, Dexterity •••, Brawl ••",
+    "description": "Deny close combat bonuses from being prone, and gain the Stand Up grapple maneuver.",
+    "page": 54
+  },
+  {
     "id": "de2:gunslinger",
     "name": "Gunslinger",
     "ratings": [
@@ -1097,6 +1362,35 @@ export const MERITS_EN = [
     "prerequisites": "Wits •••, Firearms •••, Firearms(Revolvers) specialty",
     "description": "At one dot, can perform short bursts with revolvers. At three dots, can make a medium burst with revolvers, but doesn't gain an attack bonus. At five dots, with offhand revolver, medium burst can hit targets not close together, for an additional -2 penalty.",
     "page": 377
+  },
+  {
+    "id": "hurt-locker:headbutt",
+    "name": "Headbutt",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Brawl ••",
+    "description": "Gain the Headbutt grapple maneuver: inflict Stunned.",
+    "page": 54
+  },
+  {
+    "id": "hurt-locker:iron-chin",
+    "name": "Iron Chin",
+    "ratings": [
+      2,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Resolve •••, Stamina •••",
+    "description": "Don't suffer Beaten Down from bashing damage. With four dots, never suffer Beaten Down.",
+    "page": 54
   },
   {
     "id": "core-2ed:iron-skin",
@@ -1114,6 +1408,49 @@ export const MERITS_EN = [
     "page": 63
   },
   {
+    "id": "hurt-locker:loaded-for-bear",
+    "name": "Loaded for Bear",
+    "ratings": [
+      1,
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Athletics •, Survival •",
+    "description": "Gain extra reloads on weapons, including single shot weapons.",
+    "page": 143
+  },
+  {
+    "id": "hurt-locker:phalanx-fighter",
+    "name": "Phalanx Fighter",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Weapon and Shield ••, Spear and Bayonet •",
+    "description": "Wield a spear with a shield, substituting it in Weapon and Shield maneuvers.",
+    "page": 54
+  },
+  {
+    "id": "hurt-locker:retain-weapon",
+    "name": "Retain Weapon",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Wits ••, Brawl ••",
+    "description": "Reduce successes on a Control Weapon or Disarm maneuver against you by your Brawl.",
+    "page": 54
+  },
+  {
     "id": "core-2ed:shiv",
     "name": "Shiv",
     "ratings": [
@@ -1127,6 +1464,64 @@ export const MERITS_EN = [
     "prerequisites": "Street Fighting ••, Weaponry •",
     "description": "You can conceal a 0L brawling weapon with one dot, or 1L with two, on your person. Penalize rolls to detect it by your Weaponry.",
     "page": 64
+  },
+  {
+    "id": "dark-eras:subduing-strikes",
+    "name": "Subduing Strikes",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "dark-eras",
+    "source": "Dark Eras",
+    "category": "Fighting",
+    "prerequisites": "Weaponry ••",
+    "description": "You can pull blows with a weapon to deal bashing damage without spending Willpower.",
+    "page": 247
+  },
+  {
+    "id": "hurt-locker:transfer-maneuver",
+    "name": "Transfer Maneuver",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Intelligence ••, Wits •••, Brawl ••, Weaponry ••",
+    "description": "Cross-apply a Brawling maneuver to a Weaponry Style, or vice-versa.",
+    "page": 54
+  },
+  {
+    "id": "hurt-locker:trigger-discipline",
+    "name": "Trigger Discipline",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Wits ••, Firearms ••",
+    "description": "Increase a firearm's effective capacity, or allow an additional long burst at high capacity.",
+    "page": 143
+  },
+  {
+    "id": "hurt-locker:trunk-squeeze",
+    "name": "Trunk Squeeze",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting",
+    "prerequisites": "Brawl ••",
+    "description": "Gain the Trunk Squeeze grapple maneuver: deal bashing damage and cumulatively penalize the opponent's contesting rolls.",
+    "page": 54
   },
   {
     "id": "ctl-2ed:acute-senses",
@@ -1776,6 +2171,156 @@ export const MERITS_EN = [
     ]
   },
   {
+    "id": "hurt-locker:aggressive-driving",
+    "name": "Aggressive Driving",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical Styles",
+    "prerequisites": "Resolve •••, Drive •••, Fast Reflexes •••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 55,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Powerslide",
+        "description": "Take a hard turn for bonus successes in a contested pursuit by rolling Dexterity + Drive + Handling and taking a point of Structure damage."
+      },
+      {
+        "rating": 2,
+        "name": "Bump and Run",
+        "description": "Roll Dexterity + Drive + Handling - Defense to brush a car's bumper and cause a loss of traction."
+      },
+      {
+        "rating": 3,
+        "name": "J-turn",
+        "description": "Once a scene, when caught up to in a car chase, spend Willpower and roll Dexterity + Drive + Handling - 2 to swerve and restart the chase in the opposite direction."
+      },
+      {
+        "rating": 4,
+        "name": "Swoop and Squat",
+        "description": "When you accumulate a lead greater than your pursuer's Wits in successes, you may brake and force the pursuer to roll Resolve + Composure + Handling to brake in time to avoid a crash."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:drone-control",
+    "name": "Drone Control",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical Styles",
+    "prerequisites": "Intelligence •••, Computer •••, Drive ••",
+    "description": "A progressive style with 3 maneuvers.",
+    "page": 56,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Remote Immersion",
+        "description": "Take 9-Again to perception actions using your remote device."
+      },
+      {
+        "rating": 2,
+        "name": "Interface",
+        "description": "Spend a point of Willpower to perform an additional non-combat action through your device this turn."
+      },
+      {
+        "rating": 3,
+        "name": "Overclock",
+        "description": "Inflict a point of Structure damage for a +2 bonus to your device's physical actions this turn."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:falconry",
+    "name": "Falconry",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical Styles",
+    "prerequisites": "Wits •••, Animal Ken •••, Bonded Condition",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 48,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Predator's Vigil",
+        "description": "Your raptor's presence inflicts Shaken on animals its Size or smaller, and lesser predators flee."
+      },
+      {
+        "rating": 2,
+        "name": "Flyby",
+        "description": "Your bird contests Presence + Intimidation vs Resolve + Composure to inflict a -3 action penalty."
+      },
+      {
+        "rating": 3,
+        "name": "Retrieve Item",
+        "description": "Command your bird to bring you an object. Your bird can make the equivalent of an all-out attack to exceptionally Disarm an opponent."
+      },
+      {
+        "rating": 4,
+        "name": "Rake the Eyes",
+        "description": "Your bird attacks at -1 to blind a target."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:k-9",
+    "name": "K-9",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Physical Styles",
+    "prerequisites": "Wits •••, Animal Ken •••, Bonded Condition",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 49,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Detection",
+        "description": "Under direction, your dog takes the rote quality to track a chosen type of scent with Wits + Survival."
+      },
+      {
+        "rating": 2,
+        "name": "Targeted Bite",
+        "description": "Command your dog to make called shots in combat, reducing the shot penalty by -2."
+      },
+      {
+        "rating": 3,
+        "name": "Tactical Positioning",
+        "description": "When you fight one opponent in tandem, choose roles each turn for you and your dog. One takes +1 Defense, the other +2 to attack. Ignore penalties for firing into melee around your dog."
+      },
+      {
+        "rating": 4,
+        "name": "Takedown Bite",
+        "description": "Command your dog to initiate a biting grapple, immediately Holding or Dropping Prone."
+      }
+    ]
+  },
+  {
     "id": "core-2ed:parkour",
     "name": "Parkour",
     "ratings": [
@@ -1995,6 +2540,189 @@ export const MERITS_EN = [
     ]
   },
   {
+    "id": "hurt-locker:avoidance",
+    "name": "Avoidance",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Manipulation •••, Athletics ••, Stealth ••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 46,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Insignificance",
+        "description": "Roll Manipulation + Stealth - Composure to seem too helpless to bother attacking."
+      },
+      {
+        "rating": 2,
+        "name": "Coattails",
+        "description": "When you Dodge and go prone behind an ally, they may intercept attacks against you."
+      },
+      {
+        "rating": 3,
+        "name": "Whack-a-Mole",
+        "description": "Contest one attack each turn with Manipulation + Persuasion + Avoidance to confound the attack and inflict Arm Wrack."
+      },
+      {
+        "rating": 4,
+        "name": "Play Dead",
+        "description": "When you suffer lethal damage, contest Manipulation + Subterfuge vs Wits + Composure to seem dead."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:berserker",
+    "name": "Berserker",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Iron Stamina •••",
+    "description": "A progressive style with 3 maneuvers.",
+    "page": 46,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "The Red Mist",
+        "description": "Spend Willpower to rouse the Insane Tilt."
+      },
+      {
+        "rating": 2,
+        "name": "War Cry",
+        "description": "Contest Strength + Intimidation vs Resolve + Composure as an instant action to penalize non-Dodge actions."
+      },
+      {
+        "rating": 3,
+        "name": "Manic Brutality",
+        "description": "Unarmed all-out attacks take +1 to call shots. Armed all-out attacks can substitute Durability as a weapon rating at the cost of damaging the weapon."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:bowmanship",
+    "name": "Bowmanship",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Dexterity •••, Firearms ••, Trained Observer •",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 47,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Arcing Fire",
+        "description": "Double range."
+      },
+      {
+        "rating": 2,
+        "name": "Bullseye",
+        "description": "You may reduce your weapon rating for +1 and 8-Again on a called shot."
+      },
+      {
+        "rating": 3,
+        "name": "Out of Nowhere",
+        "description": "When you make an unnoticed ambush shot, roll Dexterity + Stealth to force a Wits + Composure roll, penalized by successes, to avoid being Shaken."
+      },
+      {
+        "rating": 4,
+        "name": "Death from Above",
+        "description": "Fire over unroofed cover to ignore a point of concealment for every 10 yards of added arc distance."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:boxing",
+    "name": "Boxing",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength ••, Dexterity ••, Stamina ••, Brawl ••, Athletics ••",
+    "description": "A progressive style with 5 maneuvers.",
+    "page": 47,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Head Protection",
+        "description": "+1 Defense against brawling, and -1 to strike your head."
+      },
+      {
+        "rating": 2,
+        "name": "Defensive Jab",
+        "description": "Deal piercing bashing damage when your Defense or Dodging beats a close-combat attack."
+      },
+      {
+        "rating": 3,
+        "name": "Knockout Artist",
+        "description": "Stun an opponent as if they had -1 Size, or with a called head shot, -2 Size."
+      },
+      {
+        "rating": 4,
+        "name": "Combination",
+        "description": "Successful strikes add Dexterity as bonus dice."
+      },
+      {
+        "rating": 5,
+        "name": "Out for the Count",
+        "description": "Stunning attacks stun for their damage in turns, and the opponent must spend Willpower to stay conscious."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:chain-weapons",
+    "name": "Chain Weapons",
+    "ratings": [
+      1,
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Dexterity •••, Athletics ••, Weaponry ••",
+    "description": "A progressive style with 2 maneuvers.",
+    "page": 48,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Imposing Defense",
+        "description": "Sacrifice Defense to inflict weapon rating +1 in bashing damage when struck in close combat."
+      },
+      {
+        "rating": 2,
+        "name": "Bring Down the House",
+        "description": "Attack an overhanging object, penalized by its Size, to deal its Structure in bashing damage to targets below."
+      }
+    ]
+  },
+  {
     "id": "core-2ed:close-quarters-combat",
     "name": "Close Quarters Combat",
     "ratings": [
@@ -2040,6 +2768,84 @@ export const MERITS_EN = [
     ]
   },
   {
+    "id": "hurt-locker:combat-archery",
+    "name": "Combat Archery",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Athletics ••, Quick Draw (Bow)",
+    "description": "A progressive style with 5 maneuvers.",
+    "page": 48,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Rapid Nock",
+        "description": "Ignore bow Initiative penalties. String arrows reflexively."
+      },
+      {
+        "rating": 2,
+        "name": "Reflex Aiming",
+        "description": "Ignore penalties for firing into close combat."
+      },
+      {
+        "rating": 3,
+        "name": "Parthian Shot",
+        "description": "When you Dodge, inflict threshold successes as attack damage against the first close attack you beat each turn."
+      },
+      {
+        "rating": 4,
+        "name": "Rain of Arrows",
+        "description": "Make medium autofire attacks at triple range penalties."
+      },
+      {
+        "rating": 5,
+        "name": "Trick Shot",
+        "description": "Simultaneously perform a Combat Archery attack and an Athletics action, both at -2."
+      }
+    ]
+  },
+  {
+    "id": "dark-eras:disabling-tactics",
+    "name": "Disabling Tactics",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "dark-eras",
+    "source": "Dark Eras",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Weaponry ••",
+    "description": "A progressive style with 3 maneuvers.",
+    "page": 247,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Breaking the Breach",
+        "description": "-2 to penalties to target arms, hands or legs."
+      },
+      {
+        "rating": 2,
+        "name": "Cast Like Sand",
+        "description": "When you deal damage with your weapon, spend Willpower to inflict Knocked Down."
+      },
+      {
+        "rating": 3,
+        "name": "Strike the Rising Dog",
+        "description": "When an opponent tries to rise from prone, spend Willpower to make a reflexive Weaponry attack on them. A successful strike prevents rising."
+      }
+    ]
+  },
+  {
     "id": "core-2ed:firefight",
     "name": "Firefight",
     "ratings": [
@@ -2069,76 +2875,6 @@ export const MERITS_EN = [
         "rating": 3,
         "name": "Secondary Target",
         "description": "You can attack a target with objects bounced by a shot, dealing bashing damage with no weapon rating applied, but ignoring cover."
-      }
-    ]
-  },
-  {
-    "id": "core-2ed:grappling",
-    "name": "Grappling",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
-    "line": "Core",
-    "sourceId": "core-2ed",
-    "source": "Chronicles of Darkness",
-    "category": "Fighting Styles",
-    "prerequisites": "Stamina •••, Strength ••, Athletics ••, Brawl ••",
-    "description": "A progressive style with 10 maneuvers.",
-    "page": 62,
-    "levels": [
-      {
-        "rating": 1,
-        "name": "Sprawl",
-        "description": "Deny a grappling opponent the ability to Drop Prone or Take Cover."
-      },
-      {
-        "rating": 1,
-        "name": "Standing Throw",
-        "description": "Gain the Knock Down grapple maneuver."
-      },
-      {
-        "rating": 2,
-        "name": "Small Joint Manipulation",
-        "description": "Take -2 to dislocate fingers as a maneuver, inflicting half bashing damage and debilitating pain."
-      },
-      {
-        "rating": 2,
-        "name": "Takedown",
-        "description": "Instead of starting a grapple, you can roll to knock an opponent prone, optionally dealing bashing damage with successes."
-      },
-      {
-        "rating": 3,
-        "name": "Ippon",
-        "description": "When you Takedown and follow the opponent prone, stun as if your damage were doubled."
-      },
-      {
-        "rating": 3,
-        "name": "Joint Lock",
-        "description": "Add the Joint Lock maneuver to grappling options: adds 1L to overpowering maneuver effects, does bashing damage next turn, and can set up Restrain."
-      },
-      {
-        "rating": 4,
-        "name": "Dynamic Guard",
-        "description": "When you grapple while prone, penalize your grappling opponent by your Dexterity."
-      },
-      {
-        "rating": 4,
-        "name": "Lock Flow",
-        "description": "Take +2 to grappling rolls to set up a Joint Lock."
-      },
-      {
-        "rating": 5,
-        "name": "Tap or Snap",
-        "description": "The turn after a Joint Lock, you may, as a grapple maneuver, force your opponent to choose either surrender or a broken limb and lethal damage."
-      },
-      {
-        "rating": 5,
-        "name": "Positional Dominance",
-        "description": "Grappling maneuvers deal half their successes in bonus bashing damage."
       }
     ]
   },
@@ -2217,6 +2953,45 @@ export const MERITS_EN = [
         "rating": 3,
         "name": "Breaking Point",
         "description": "When you make an all-out attack with an Always Armed weapon, sacrifice its Structure to temporarily increase its weapon rating."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:kino-mutai",
+    "name": "Kino Mutai",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Dexterity ••, Resolve •••, Brawl ••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 50,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Trained Bite",
+        "description": "Inflict +2 damage with the Damage grapple maneuver when biting, or +1 with inhuman bites."
+      },
+      {
+        "rating": 2,
+        "name": "Ripping",
+        "description": "Gain the Ripping grapple maneuver: inflict a point of bashing damage and incapacitating pain."
+      },
+      {
+        "rating": 3,
+        "name": "Trained Gouge",
+        "description": "Gain the Gouge grapple maneuver: blind the opponent while held."
+      },
+      {
+        "rating": 4,
+        "name": "Continuous Bite",
+        "description": "Inflict lethal damage with the Damage grapple maneuver when biting."
       }
     ]
   },
@@ -2305,72 +3080,41 @@ export const MERITS_EN = [
     ]
   },
   {
-    "id": "core-2ed:martial-arts",
-    "name": "Martial Arts",
+    "id": "hurt-locker:mounted-combat",
+    "name": "Mounted Combat",
     "ratings": [
       1,
       2,
       3,
-      4,
-      5
+      4
     ],
     "line": "Core",
-    "sourceId": "core-2ed",
-    "source": "Chronicles of Darkness",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
     "category": "Fighting Styles",
-    "prerequisites": "Resolve •••, Dexterity •••, Athletics ••, Brawl ••",
-    "description": "A progressive style with 10 maneuvers.",
-    "page": 63,
+    "prerequisites": "Dexterity •••, Athletics ••, Animal Ken •••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 51,
     "levels": [
       {
         "rating": 1,
-        "name": "Focused Attack",
-        "description": "Reduce called shot penalties by one die, and ignore one point of Armor."
-      },
-      {
-        "rating": 1,
-        "name": "Leg Kick",
-        "description": "Sacrifice a point of Defense to inflict Leg Wrack with a brawling attack."
+        "name": "Steady Saddle",
+        "description": "+3 to stay mounted during combat."
       },
       {
         "rating": 2,
-        "name": "Cutting Elbow",
-        "description": "Make a called shot at -2 to blind an opponent by drawing blood."
-      },
-      {
-        "rating": 2,
-        "name": "Defensive Strike",
-        "description": "Exchange up to two attack pool dice for points of Defense."
+        "name": "Fixed Charge",
+        "description": "Sacrifice Defense to combine a charge with an all-out attack."
       },
       {
         "rating": 3,
-        "name": "Trapping",
-        "description": "You may withdraw successes from a successful attack to hold them in reserve for next turn's attack."
-      },
-      {
-        "rating": 3,
-        "name": "Whirlwind Strike",
-        "description": "Inflict one point of bashing damage per turn, or two by spending Willpower, to opponents in range when your Defense is available."
+        "name": "Skirmishing",
+        "description": "Take a -2 attack penalty for +2 Defense and to attack halfway through your mount's movement."
       },
       {
         "rating": 4,
-        "name": "The Hand As Weapon",
-        "description": "Inflict lethal damage unarmed."
-      },
-      {
-        "rating": 4,
-        "name": "Inch Force",
-        "description": "Reflexively respond to one grapple attempt each turn with a Brawl attack contesting the opponent's Strength. Success breaks free and damages normally."
-      },
-      {
-        "rating": 5,
-        "name": "High Momentum Strike",
-        "description": "Prepare a counter stance as an instant action. When an opponent first fails to strike you in close combat within the stance, roll a counterattack. Success Knocks Down and deals normal damage plus Brawl damage dice."
-      },
-      {
-        "rating": 5,
-        "name": "The Touch of Death",
-        "description": "Unarmed strikes gain a 2L weapon rating."
+        "name": "Rearing Beast",
+        "description": "Roll Wits + Animal Ken as teamwork to enhance your mount's attack."
       }
     ]
   },
@@ -2404,6 +3148,117 @@ export const MERITS_EN = [
         "rating": 3,
         "name": "Speed Cuff",
         "description": "You can Restrain an immobilized opponent reflexively."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:powered-projectile",
+    "name": "Powered Projectile",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Dexterity •••, Athletics ••, Firearms ••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 51,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Quick Reload",
+        "description": "Reload your weapon one turn quicker, down to a reflexive action."
+      },
+      {
+        "rating": 2,
+        "name": "Intercept Shot",
+        "description": "When you Aim, you may make called shots against sailing projectiles to deflect their course."
+      },
+      {
+        "rating": 3,
+        "name": "Penetration",
+        "description": "Sacrifice Defense to make an attack with +2 armor piercing."
+      },
+      {
+        "rating": 4,
+        "name": "Skewer",
+        "description": "Reduce called shot penalties by two dice, and resulting Tilts persist while the projectile is enlodged."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:spear-and-bayonet",
+    "name": "Spear and Bayonet",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Dexterity ••, Weaponry ••",
+    "description": "A progressive style with 3 maneuvers.",
+    "page": 51,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Firm Footing",
+        "description": "All-out attacks and charges into your braced weapon inflict your weapon damage, which can exhaust Armor against a subsequent attack."
+      },
+      {
+        "rating": 2,
+        "name": "Keep at Bay",
+        "description": "Spend Willpower to threaten an opponent with a shorter weapon. They must retreat or dodge, or else lose Defense for a turn."
+      },
+      {
+        "rating": 3,
+        "name": "Strike and Develop",
+        "description": "Sacrifice Defense to twist an inflicted wound, causing a turn of lethal damage from bleeding for each attack success."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:staff-fighting",
+    "name": "Staff Fighting",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength ••, Dexterity •••, Weaponry ••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 51,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Short Grip",
+        "description": "You may exchange your staff's Defense bonus for a bonus attack die."
+      },
+      {
+        "rating": 2,
+        "name": "Thwack Weapon",
+        "description": "Contest Strength + Weaponry vs Strength + Athletics to disarm an opponent."
+      },
+      {
+        "rating": 3,
+        "name": "Vaulting Defense",
+        "description": "Spend Willpower to add your Melee dots as a Defense bonus against a single attack in a turn."
+      },
+      {
+        "rating": 4,
+        "name": "Tornado Strike",
+        "description": "Spin your weapon as an effective medium autofire burst against three targets in range."
       }
     ]
   },
@@ -2453,6 +3308,144 @@ export const MERITS_EN = [
     ]
   },
   {
+    "id": "hurt-locker:strength-performance",
+    "name": "Strength Performance",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Stamina ••, Athletics ••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 52,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Strength Tricks",
+        "description": "Take +1 to nonviolent feats of strength, +2 when using Expression or Intimidation."
+      },
+      {
+        "rating": 2,
+        "name": "Lifting",
+        "description": "Receive the rote quality on Strength + Stamina feats and combat actions to demolish structures."
+      },
+      {
+        "rating": 3,
+        "name": "Push/Pull",
+        "description": "Double your effective Strength to shift objects across a plane, or quintuple it with wheels or other friction reductions."
+      },
+      {
+        "rating": 4,
+        "name": "Stronger Than You",
+        "description": "Successful Strength rolls add an additional free success."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:systema",
+    "name": "Systema",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Dexterity •••, Wits ••, Athletics •••",
+    "description": "A progressive style with 3 maneuvers.",
+    "page": 52,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Rolling",
+        "description": "Ignore penalties to attack from prone, and roll Dexterity to mitigate bashing damage from impacts."
+      },
+      {
+        "rating": 2,
+        "name": "Balance",
+        "description": "Contest attempts to bring you prone with two free successes."
+      },
+      {
+        "rating": 3,
+        "name": "Combat Posture",
+        "description": "Knock Down when you roll a victim's Strength in successes to strike them in melee, or add a point of damage if already Knocking Down."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:thrown-weapons",
+    "name": "Thrown Weapons",
+    "ratings": [
+      1,
+      2
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Dexterity •••, Athletics ••, Quick Draw (Thrown)",
+    "description": "A progressive style with 2 maneuvers.",
+    "page": 52,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Practiced Toss",
+        "description": "Add Athletics as an Initiative bonus while wielding these thrown weapons."
+      },
+      {
+        "rating": 2,
+        "name": "Impalement Arts",
+        "description": "Sacrifice Defense to inflict the Impaled Tilt on a called shot."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:two-weapon-fighting",
+    "name": "Two Weapon Fighting",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Wits •••, Weaponry •••, Fighting Finesse",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 53,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Balanced Grip",
+        "description": "Don't sum Initiative penalties so long as the off-hand weapon's penalty isn't greater than the main hand weapon's."
+      },
+      {
+        "rating": 2,
+        "name": "Protective Striking",
+        "description": "Add your off-hand weapon rating, minimum +1, to your Defense against the first attack in a turn."
+      },
+      {
+        "rating": 3,
+        "name": "Dual Swipe",
+        "description": "All-out attacks with both weapons ignore a point of Defense and add the off-hand weapon rating, minimum +1. Incompatible with Double Strike."
+      },
+      {
+        "rating": 4,
+        "name": "Double Strike",
+        "description": "Spend Willpower to strike two targets simultaneously, one with each weapon. Apply the higher Defense, plus one, to both attacks."
+      }
+    ]
+  },
+  {
     "id": "core-2ed:unarmed-defense",
     "name": "Unarmed Defense",
     "ratings": [
@@ -2494,6 +3487,45 @@ export const MERITS_EN = [
         "rating": 5,
         "name": "Like the Breeze",
         "description": "Declare this maneuver at the beginning of a turn when you Dodge. You can Knock Down assailants when you beat their attack."
+      }
+    ]
+  },
+  {
+    "id": "hurt-locker:weapon-and-shield",
+    "name": "Weapon and Shield",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "Core",
+    "sourceId": "hurt-locker",
+    "source": "Hurt Locker",
+    "category": "Fighting Styles",
+    "prerequisites": "Strength •••, Stamina •••, Weaponry ••",
+    "description": "A progressive style with 4 maneuvers.",
+    "page": 53,
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Shield Bash",
+        "description": "Add your shield's Size as bonus dice when dodging. Dodge successes in excess of your opponent's inflict bashing damage."
+      },
+      {
+        "rating": 2,
+        "name": "Boar's Snout",
+        "description": "You can make all-out attacks without sacrificing the bonus Defense from your shield, adding +1 Defense to any allies also using this maneuver."
+      },
+      {
+        "rating": 3,
+        "name": "Pin Weapon",
+        "description": "Disarm assailants on missed melee attacks."
+      },
+      {
+        "rating": 4,
+        "name": "Tortoise Shell",
+        "description": "Treat your shield as protective cover with Durability equal to its Size, +1 for each adjacent shielded ally."
       }
     ]
   }

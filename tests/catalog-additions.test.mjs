@@ -11,8 +11,10 @@ const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const {findMeritConfiguration,isInlineMeritConfiguration} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
-test("catálogo English-first contém os 131 candidatos auditados",()=>{
-  assert.equal(RAW_MERITS.length,131);
+test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
+  assert.equal(RAW_MERITS.length,179);
+  assert.ok(RAW_MERITS.some((merit)=>merit.name==="Dramaturge"&&merit.source==="Kith and Kin"));
+  assert.ok(RAW_MERITS.some((merit)=>merit.name==="Understudy"&&merit.source==="Kith and Kin"));
   assert.ok(findExpandedMerit("Professional Training"));
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
 });

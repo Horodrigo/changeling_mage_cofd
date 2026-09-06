@@ -1,5 +1,7 @@
 # Official Merit Candidate Audit
 
+> Supplemental audit note (2026-09-06): HL, DE, DE2, and DEC are now approved source codes for new imports. Kith and Kin p. 69, Book of Courts pp. 63–69, and Book of Seemings pp. 92–101 are the next English-first PDF batches; Entitlement Merits remain excluded.
+
 Source index: the offline Codex of Darkness snapshot supplied with the project. This is a candidate list only; no entry should be imported until its source and rules are checked in the corresponding PDF.
 
 Included index codes: `CofD`, `CTL 2e`, `Hedge`, Changeling material labeled `DE2`, and non-supernatural Universal Merits from any approved project source. This adds `Advanced Library` from `MTA 2e`. Entries from unapproved books remain excluded.
