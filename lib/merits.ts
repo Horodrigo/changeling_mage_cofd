@@ -18,6 +18,7 @@ export type MeritDefinition = {
   prerequisites?: string;
   page: number;
   levels?: MeritLevel[];
+  courtAccess?: { court: "Spring" | "Summer" | "Autumn" | "Winter"; mantle: number; courtGoodwill: number };
 };
 
 export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERITS_EN].map((item) => ({
