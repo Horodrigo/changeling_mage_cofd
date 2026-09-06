@@ -22,6 +22,10 @@ test("catálogo contém os 180 Contratos oficiais auditados", () => {
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-dark-eras").length, 2);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-kith-and-kin").length, 59);
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "ctl-core").length, 110);
+  assert.equal(official.some((contract) => contract.regalia === "Maw"), false);
+  for (const removedName of ["Last Hope", "Find the Cracks", "Killing the Cat", "The Troll Toll"]) {
+    assert.equal(official.some((contract) => contract.originalName === removedName), false);
+  }
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
   assert.deepEqual(CONTRACT_TEXT_EN, {});
 });

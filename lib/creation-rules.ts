@@ -65,7 +65,7 @@ export function seemingDisplayName(value: unknown, locale: "pt-BR" | "en-US" = "
 export const CTL_NEEDLES = ["Bon Vivant", "Mestre de Xadrez", "Comandante", "Compositor", "Conselheiro", "Audacioso", "Dínamo", "Protetor", "Provedor", "Erudito", "Contador de Histórias", "Professor", "Tradicionalista", "Visionário"];
 export const CTL_THREADS = ["Aceitação", "Raiva", "Família", "Amizade", "Ódio", "Honra", "Alegria", "Amor", "Memória", "Vingança"];
 export const CTL_COURTS = ["Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName)];
-export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn", "Maw"];
+export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
 
 export function canIncreaseCreationDots(used:number,budget:number|undefined,current:number,maximum=5) {
   return budget !== undefined && used < budget && current < maximum;
