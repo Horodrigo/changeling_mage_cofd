@@ -64,6 +64,8 @@ test("os estilos exibem benefícios para cada nível e Guerreiro Elemental permi
 test("configurações de texto livre ficam inline e escolhas estruturadas permanecem separadas", () => {
   assert.equal(isInlineMeritConfiguration("Striking Looks"), true);
   assert.equal(isInlineMeritConfiguration("Allies"), true);
+  assert.equal(isInlineMeritConfiguration("Mentor"), false);
+  assert.equal(isInlineMeritConfiguration("Language"), false);
   assert.equal(isInlineMeritConfiguration("Court Goodwill"), false);
   assert.equal(isInlineMeritConfiguration("Professional Training"), false);
   assert.equal(isInlineMeritConfiguration("Fae Mount"), false);

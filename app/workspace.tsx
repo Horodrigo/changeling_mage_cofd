@@ -5476,23 +5476,21 @@ function MeritSheetList({
             : item.source;
           const inline = isInlineMeritConfiguration(item.name);
           const meritIndex = character.merits.indexOf(item);
+          const inlineField = inline ? findMeritConfiguration(item.name)?.fields[0] : undefined;
+          const configuration = normalizeMeritConfiguration(item.configuration);
+          const displayName = definition ? definition[locale === "en-US" ? "name" : "translatedName"] : item.name;
           return (
-            <div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={tooltip}>
+            <div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={inline ? undefined : tooltip}>
               <div className="sheet-merit-main">
-                <span>{meritLabel(item,line,locale)}</span>
-                <DotValue value={item.dots} max={Math.max(5, item.dots)} />
-              </div>
-              {inline && <MeritConfigurationEditor
-                inline
-                compact
-                merit={item}
-                onChange={(configuration) => {
+                <span>{inline ? `${displayName}:` : meritLabel(item,line,locale)}</span>
+                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${tr("descrição", "description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={tr("Escreva aqui", "Type here")} onChange={(event) => {
                   const next=structuredClone(character);
                   const target=next.merits[meritIndex];
-                  if(target) target.configuration=configuration;
+                  if(target) target.configuration={...configuration,[inlineField.key]:event.target.value};
                   updateSheet(synchronizeMeritGrants(next));
-                }}
-              />}
+                }} />}
+                <DotValue value={item.dots} max={Math.max(5, item.dots)} />
+              </div>
             </div>
           );
         })
@@ -5692,8 +5690,8 @@ function ContractPowerList({
             <details className="contract-power-card" key={`${definition.id}-${index}`}>
               <summary className="contract-power-summary">
                 <strong>{locale==="en-US"?definition.originalName??definition.name:definition.name}</strong>
-                <small>{definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
-                <span><b>{tr("Custo", "Cost")}:</b> {definition.cost ?? tr("Conforme descrição", "As described")}</span>
+                <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}</Badge>
+                <small>{systemTerm(definition.regalia,locale)} · {definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
               </summary>
               <div className="contract-power-details">{expandedContent}</div>
             </details>

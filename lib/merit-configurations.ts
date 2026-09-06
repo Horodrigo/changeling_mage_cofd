@@ -404,7 +404,8 @@ export const findMeritConfiguration = (name: string) =>
   MERIT_CONFIGURATIONS.find((item) => item.name === name);
 export const isInlineMeritConfiguration = (name:string) => {
   const definition=findMeritConfiguration(name);
-  return Boolean(definition?.fields.length && !isStructuredMerit(name) && definition.fields.every((field)=>field.kind !== "court"));
+  const field=definition?.fields[0];
+  return Boolean(definition?.fields.length === 1 && !isStructuredMerit(name) && (!field?.kind || field.kind === "text" || field.kind === "textarea"));
 };
 export const normalizeMeritConfiguration = (
   value: unknown,

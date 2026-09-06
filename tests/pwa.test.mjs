@@ -30,6 +30,7 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões", 
   assert.match(workspace,/mobile-attribute-grid/);
   assert.match(workspace,/<details className="contract-power-card"/);
   assert.match(workspace,/<summary className="contract-power-summary">/);
+  assert.match(workspace,/systemTerm\(definition\.regalia,locale\).*definition\.source/);
 });
 
 test("service worker preserva shell offline e exige confirmação para atualizar", async () => {
