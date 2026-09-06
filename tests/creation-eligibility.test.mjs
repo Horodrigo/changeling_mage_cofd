@@ -22,10 +22,10 @@ const { CONTRACTS } = await vite.ssrLoadModule("/lib/contracts.ts");
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
 
 test("cria e remove Fragilidades conforme os níveis pares de Fado", () => {
-  assert.deepEqual(creationRules.normalizeChangelingFrailties([], 1), ["Ferro Frio"]);
-  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos"], 2), ["Ferro Frio", "Espelhos"]);
-  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos", "Sinos"], 3), ["Ferro Frio", "Espelhos"]);
-  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos", "Sinos"], 4), ["Ferro Frio", "Espelhos", "Sinos"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties([], 1), ["Cold Iron"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos"], 2), ["Cold Iron", "Espelhos"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos", "Sinos"], 3), ["Cold Iron", "Espelhos"]);
+  assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos", "Sinos"], 4), ["Cold Iron", "Espelhos", "Sinos"]);
 });
 
 test("resume os benefícios de Fado para mouse, foco e toque", () => {
@@ -33,6 +33,7 @@ test("resume os benefícios de Fado para mouse, foco e toque", () => {
   const fruits = ["3 Frutas", "7 Frutas", "7 Frutas", "13 Frutas", "13 Frutas", "13 Frutas", "29 Frutas", "29 Frutas", "101 Frutas", "Frutas ilimitadas"];
   for (let level = 1; level <= 10; level++) {
     assert.equal(creationRules.wyrdSummary(level), `Fado ${level} (-${reductions[level - 1]} Fadiga/Doenças; ${fruits[level - 1]})`);
+    assert.match(creationRules.wyrdSummary(level, "en-US"), new RegExp(`^Wyrd ${level} `));
   }
 });
 

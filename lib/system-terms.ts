@@ -21,6 +21,8 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Coroa":"Crown", "Joias":"Jewels", "Espelho":"Mirror", "Escudo":"Shield",
   "Corcel":"Steed", "Espada":"Sword", "Cálice":"Chalice", "Moeda":"Coin",
   "Cetro":"Scepter", "Estrelas":"Stars", "Espinho":"Thorn", "Garganta":"Maw",
+  "Mestre de Xadrez":"Chess Master", "Comandante":"Commander", "Compositor":"Composer", "Conselheiro":"Counselor", "Audacioso":"Daredevil", "Dínamo":"Dynamo", "Protetor":"Protector", "Provedor":"Provider", "Erudito":"Scholar", "Contador de Histórias":"Storyteller", "Professor":"Teacher", "Tradicionalista":"Traditionalist", "Visionário":"Visionary",
+  "Aceitação":"Acceptance", "Raiva":"Anger", "Família":"Family", "Amizade":"Friendship", "Ódio":"Hate", "Honra":"Honor", "Alegria":"Joy", "Amor":"Love", "Memória":"Memory", "Vingança":"Revenge", "Ferro Frio":"Cold Iron",
   "Sem Corte":"Courtless", "Primavera":"Spring", "Verão":"Summer",
   "Outono":"Autumn", "Inverno":"Winter",
   "Seta Adamantina":"Adamantine Arrow", "Conselho Livre":"Free Council",
@@ -37,6 +39,8 @@ const PORTUGUESE_TERMS: Record<string,string> = {
   Crown:"Coroa", Jewels:"Joias", Mirror:"Espelho", Shield:"Escudo",
   Steed:"Corcel", Sword:"Espada", Chalice:"Cálice", Coin:"Moeda",
   Scepter:"Cetro", Stars:"Estrelas", Thorn:"Espinho", Maw:"Garganta",
+  "Chess Master":"Mestre de Xadrez", Commander:"Comandante", Composer:"Compositor", Counselor:"Conselheiro", Daredevil:"Audacioso", Dynamo:"Dínamo", Protector:"Protetor", Provider:"Provedor", Scholar:"Erudito", Storyteller:"Contador de Histórias", Teacher:"Professor", Traditionalist:"Tradicionalista", Visionary:"Visionário",
+  Acceptance:"Aceitação", Anger:"Raiva", Family:"Família", Friendship:"Amizade", Hate:"Ódio", Honor:"Honra", Joy:"Alegria", Love:"Amor", Memory:"Memória", Revenge:"Vingança", "Cold Iron":"Ferro Frio",
   Courtless:"Sem Corte",
 };
 

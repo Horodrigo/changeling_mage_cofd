@@ -148,6 +148,8 @@
 .companion-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
 .companion-card { border:1px solid color-mix(in srgb,var(--sheet-accent) 34%,#d8d2c8); background:#fffefa; padding:11px; }
 .companion-card .compact-values { margin-top:8px; grid-template-columns:repeat(5,minmax(0,1fr)); }
+.mount-attribute-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}.mount-combat-block{display:grid;gap:8px;margin-top:9px;padding:9px;border:1px solid #ded3de;background:#fff}.mount-combat-block>strong{color:var(--sheet-accent);font-size:12px;text-transform:uppercase}.mount-combat-block .tracker-meta{display:none}
+.mount-armor-editors{display:grid;grid-template-columns:repeat(2,140px);gap:8px;justify-content:start}.armor-dot-picker{display:grid;gap:4px}.armor-dot-picker>span{font-size:11px;font-weight:700}
 .animal-picker { display:grid; grid-template-columns:1fr 1.2fr auto; gap:8px; align-items:center; margin-top:8px; }
 .companion-warning { margin:8px 0; padding:8px; border-left:3px solid #b9973f; background:#fff7d8; color:#6f5a21; font-size:11px; }
 .companion-config { grid-column:1/-1; display:grid; gap:10px; }
@@ -185,7 +187,7 @@
 .experience-merit-catalog p { margin:5px 0 0; font-size:11px; line-height:1.4; }
 .experience-merit-choice { display:flex; flex-direction:column; gap:5px; align-items:stretch; }
 @media (max-width:720px){.combat-page,.combat-rules{grid-template-columns:1fr}}
-@media (max-width:720px){.loadout-catalog,.companion-grid,.animal-picker{grid-template-columns:1fr}.companion-card .compact-values{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){.loadout-catalog,.companion-grid,.animal-picker,.mount-attribute-grid,.mount-armor-editors{grid-template-columns:1fr}.companion-card .compact-values{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){
   html,body{max-width:100%;overflow-x:hidden}.content,.sheet-editor,.cod-sheet,.ctl-sheet-page{min-width:0;width:100%}
   .topbar,.sheet-toolbar,.sheet-toolbar>div{align-items:stretch;flex-direction:column}.top-actions,.sheet-toolbar>div:last-child{display:grid;grid-template-columns:1fr}.top-actions button,.sheet-toolbar button{width:100%}
@@ -638,6 +640,10 @@ button { cursor: pointer; }
 .sheet-merit-configurations { display:grid; gap:8px; margin-top:12px; }
 .sheet-merit-configurations > article { border:1px solid #ded3de; border-radius:8px; background:rgba(255,255,255,.68); padding:9px; }
 .sheet-merit-configurations > article > strong { color:#4d3a50; font-size:13px; }
+.inline-merit-configuration { display:grid; grid-template-columns:minmax(140px,.7fr) minmax(0,1.3fr); align-items:start; gap:10px; }
+.merit-configuration.inline { grid-column:auto; margin:0; border:0; padding:0; }
+.merit-configuration.inline > div { margin:0; grid-template-columns:1fr; }
+@media (width<=720px){.inline-merit-configuration{grid-template-columns:1fr}}
 .merit-grant-summary { border-left:3px solid #806286; background:#f4eef5; padding:7px 9px; color:#56465a; font-size:12px; }
 .merit-grant-summary p { margin:2px 0; }
 .review-summary { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 10px; }

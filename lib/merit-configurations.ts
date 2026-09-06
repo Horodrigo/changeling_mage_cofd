@@ -402,6 +402,10 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [
 
 export const findMeritConfiguration = (name: string) =>
   MERIT_CONFIGURATIONS.find((item) => item.name === name);
+export const isInlineMeritConfiguration = (name:string) => {
+  const definition=findMeritConfiguration(name);
+  return Boolean(definition?.fields.length && !isStructuredMerit(name) && definition.fields.every((field)=>field.kind !== "court"));
+};
 export const normalizeMeritConfiguration = (
   value: unknown,
 ): MeritConfiguration =>

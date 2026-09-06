@@ -78,7 +78,7 @@ import {
   synchronizeMeritGrants,
   type MeritConfiguration,
 } from "@/lib/merit-configurations";
-import { SKILL_SPECIALTY_SUGGESTIONS } from "@/lib/skill-specialties";
+import { skillSpecialtySuggestions } from "@/lib/skill-specialties";
 import { localized, useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { builderText } from "./character-builder-messages";
@@ -979,7 +979,7 @@ function editableSkills(initial?: CharacterSheet | null) {
 }
 
 function TraitsStep(props: any) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   const allSkills = Object.values(SKILLS).flat();
   return (
     <div className="builder-section">
@@ -1069,7 +1069,7 @@ function TraitsStep(props: any) {
                   disabled={!value.skill}
                 />
                 <datalist id={listId}>
-                  {alphabetical(SKILL_SPECIALTY_SUGGESTIONS[value.skill] ?? [], name => name).map(
+                  {alphabetical(skillSpecialtySuggestions(value.skill, locale), name => name, locale).map(
                     (item) => (
                       <option value={item} key={item} />
                     ),
@@ -2743,10 +2743,12 @@ export function MeritConfigurationEditor({
   merit,
   onChange,
   compact = false,
+  inline = false,
 }: {
   merit: MeritSelection;
   onChange: (value: MeritConfiguration) => void;
   compact?: boolean;
+  inline?: boolean;
 }) {
   const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
@@ -2768,8 +2770,8 @@ export function MeritConfigurationEditor({
       />
     );
   return (
-    <details className={`merit-configuration${compact ? " compact" : ""}`}>
-      <summary>{tr("Configurar escolhas", "Configure choices")}</summary>
+    <details open={inline || undefined} className={`merit-configuration${compact ? " compact" : ""}${inline ? " inline" : ""}`}>
+      {!inline && <summary>{tr("Configurar escolhas", "Configure choices")}</summary>}
       <div>
         {visible.map((field) => {
           const value = configuration[field.key];

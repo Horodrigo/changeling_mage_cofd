@@ -62,8 +62,8 @@ export function seemingDisplayName(value: unknown, locale: "pt-BR" | "en-US" = "
   return locale === "en-US" ? key : CTL_SEEMING_LABELS[key] ?? key;
 }
 
-export const CTL_NEEDLES = ["Bon Vivant", "Mestre de Xadrez", "Comandante", "Compositor", "Conselheiro", "Audacioso", "Dínamo", "Protetor", "Provedor", "Erudito", "Contador de Histórias", "Professor", "Tradicionalista", "Visionário"];
-export const CTL_THREADS = ["Aceitação", "Raiva", "Família", "Amizade", "Ódio", "Honra", "Alegria", "Amor", "Memória", "Vingança"];
+export const CTL_NEEDLES = ["Bon Vivant", "Chess Master", "Commander", "Composer", "Counselor", "Daredevil", "Dynamo", "Protector", "Provider", "Scholar", "Storyteller", "Teacher", "Traditionalist", "Visionary"];
+export const CTL_THREADS = ["Acceptance", "Anger", "Family", "Friendship", "Hate", "Honor", "Joy", "Love", "Memory", "Revenge"];
 export const CTL_COURTS = ["Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName)];
 export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
 
@@ -78,17 +78,18 @@ export function changelingFrailtySlots(wyrd: number) {
 export function normalizeChangelingFrailties(value: unknown, wyrd: number) {
   const slots = changelingFrailtySlots(wyrd);
   const current = Array.isArray(value) ? value.map((item) => String(item ?? "")) : [];
-  const custom = current.filter((item) => item.trim() && item.toLocaleLowerCase("pt-BR") !== "ferro frio");
-  return ["Ferro Frio", ...custom.slice(0, slots - 1)]
+  const custom = current.filter((item) => item.trim() && !["ferro frio", "cold iron"].includes(item.toLocaleLowerCase("pt-BR")));
+  return ["Cold Iron", ...custom.slice(0, slots - 1)]
     .concat(Array(Math.max(0, slots - 1 - custom.length)).fill(""))
     .slice(0, slots);
 }
 
-export function wyrdSummary(wyrd: number) {
+export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="pt-BR") {
   const rating = Math.max(1, Math.min(10, Math.trunc(wyrd)));
   const penaltyReduction = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4][rating - 1];
-  const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "ilimitadas"][rating - 1];
-  return `Fado ${rating} (-${penaltyReduction} Fadiga/Doenças; ${typeof fruits === "number" ? `${fruits} Frutas` : `Frutas ${fruits}`})`;
+  const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "Unlimited"][rating - 1];
+  if(locale==="en-US") return `Wyrd ${rating} (-${penaltyReduction} Fatigue/Disease; ${typeof fruits === "number" ? `${fruits} Goblin Fruits` : `${fruits} Goblin Fruits`})`;
+  return `Fado ${rating} (-${penaltyReduction} Fadiga/Doenças; ${typeof fruits === "number" ? `${fruits} Frutas` : "Frutas ilimitadas"})`;
 }
 
 export const MTA_PATHS = {

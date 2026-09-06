@@ -84,6 +84,7 @@ import {
 import {
   expandedConfigurationLines,
   findMeritConfiguration,
+  isInlineMeritConfiguration,
   meritConfigurationTitle,
   normalizeMeritConfiguration,
   synchronizeMeritGrants,
@@ -130,9 +131,9 @@ import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
 import { SPELLS } from "@/lib/spells";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
-import { ARMORS, EQUIPMENT, WEAPONS } from "@/lib/combat-equipment";
+import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
 import { TILTS, findTilt } from "@/lib/tilts";
-import { ANIMALS, VEHICLES, type Animal } from "@/lib/companions";
+import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation, type Animal } from "@/lib/companions";
 import { HomebrewsPage } from "./homebrews";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHomebrews } from "@/lib/homebrews";
@@ -160,6 +161,7 @@ const WORKSPACE_EN:Record<string,string>={
   "Experiência":"Experience","Méritos":"Merits","Méritos Expandidos":"Expanded Merits","Aspirações":"Aspirations","Obsessões":"Obsessions","Fragilidades":"Frailties","Pedras de Contato":"Touchstones","Lucidez":"Clarity","Condições":"Conditions","Nimbus":"Nimbus","Sabedoria":"Wisdom","Feitiços Ativos":"Active Spells",
   "Regalias Favorecidas":"Favored Regalia","Contratos":"Contracts","Débito Goblin":"Goblin Debt","Juramentos":"Oaths","Arcanos":"Arcana","Rotas":"Rotes","Práxis":"Praxes","Attainments":"Attainments","Ferramentas Mágicas":"Magical Tools","Inclinação do Nimbus":"Nimbus Tilt","Itens Encantados":"Enchanted Items","Condições do Paradoxo":"Paradox Conditions",
   "Vitalidade":"Health","Força de Vontade":"Willpower","Características da Linha":"Line Traits","Outras Características":"Other Traits","Escolhas dos Méritos":"Merit Choices","Armadura":"Armor","Armas":"Weapons","Equipamentos":"Equipment","Veículos":"Vehicles",
+  "Modificador":"Modifier","Tamanho":"Size","Durabilidade":"Durability","Estrutura":"Structure","Velocidade":"Speed","Iniciativa":"Initiative","Defesa":"Defense","Deslocamento":"Speed","Armadura geral":"General Armor","Armadura balística":"Ballistic Armor","Presença":"Presence","Manipulação":"Manipulation","Compostura":"Composure","Inteligência":"Intelligence","Raciocínio":"Wits","Perseverança":"Resolve","Força":"Strength","Destreza":"Dexterity","Vigor":"Stamina",
   "Bênção da Fratria":"Kith Blessing","Bênção da Feição":"Seeming Blessing","Maldição da Feição":"Seeming Curse","Benefícios da Corte":"Court Benefits","Perícias de Ordem":"Order Skills",
   "Contrato":"Contract","Rota":"Rote","Todas":"All","Todos":"All",
   "Nenhum registro.":"No entries.","Nenhum Mérito selecionado":"No Merit selected","Nenhum Mérito Expandido adquirido.":"No Expanded Merit acquired.",
@@ -1001,7 +1003,7 @@ function CharacterPaper({
               <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={Math.max(gnosis, 4)} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
             </>,
             poderes: isCtl ? <>
-              <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
+              <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
@@ -1150,7 +1152,7 @@ function CharacterPaper({
                 <PowerResource
                   name="Fado"
                   rating={powerRating}
-                  summary={wyrdSummary(powerRating)}
+                  summary={wyrdSummary(powerRating, locale)}
                   resourceName="Glamour"
                   current={currentResource}
                   maximum={resource.maximum}
@@ -1476,7 +1478,7 @@ function CharacterPaper({
 }
 
 function SheetHeading({ children }: { children: ReactNode }) {
-  const {locale}=useLanguage();
+  const {locale,tr}=useLanguage();
   return (
     <h3 className="official-heading">
       <span>{typeof children==="string"?workspaceTerm(children,locale):children}</span>
@@ -1492,14 +1494,20 @@ function MeritConfigurationPanel({
 }) {
   const { locale, tr } = useLanguage();
   const configurable = character.merits.filter(
-    (item) => findMeritConfiguration(item.name) && !item.grantedBy,
+    (item) => findMeritConfiguration(item.name) && item.name !== "Fae Mount" && !item.grantedBy,
   );
   if (!configurable.length) return null;
+  const inline=configurable.filter((item)=>isInlineMeritConfiguration(item.name));
+  const choices=configurable.filter((item)=>!isInlineMeritConfiguration(item.name));
   const conditions = stringList(character.line_data.merit_granted_conditions),
     attainments = stringList(character.line_data.merit_granted_attainments);
   return (
     <section className="sheet-merit-configurations">
-      <SheetHeading>Escolhas dos Méritos</SheetHeading>
+      {inline.map((item, configIndex) => {
+        const meritIndex=character.merits.indexOf(item);
+        return <article className="inline-merit-configuration" key={`inline-${item.name}-${configIndex}`}><strong>{getMeritsForLine(character.game_line).find((entry)=>entry.name===item.name)?.[locale==="en-US"?"name":"translatedName"]??item.name}</strong><MeritConfigurationEditor inline compact merit={item} onChange={(configuration)=>{const next=structuredClone(character);const target=next.merits[meritIndex];if(target)target.configuration=configuration;updateSheet(synchronizeMeritGrants(next));}}/></article>;
+      })}
+      {choices.length > 0 && <SheetHeading>Escolhas dos Méritos</SheetHeading>}
       {(conditions.length > 0 || attainments.length > 0) && (
         <div className="merit-grant-summary">
           {conditions.length > 0 && (
@@ -1514,7 +1522,7 @@ function MeritConfigurationPanel({
           )}
         </div>
       )}
-      {configurable.map((item, configIndex) => {
+      {choices.map((item, configIndex) => {
         const meritIndex = character.merits.indexOf(item);
         return (
           <article key={`${item.name}-${item.sourceId ?? ""}-${configIndex}`}>
@@ -1540,7 +1548,7 @@ function MeritConfigurationPanel({
   );
 }
 function SheetField({ label, value }: { label: string; value: unknown }) {
-  const {locale}=useLanguage();
+  const {locale,tr}=useLanguage();
   return (
     <div className="official-field">
       <span>{workspaceTerm(label,locale)}</span>
@@ -1643,10 +1651,13 @@ function CompactValues({ values }: { values: Record<string, number> }) {
     </div>
   );
 }
+function ArmorDotPicker({label,value,onChange}:{label:string;value:number;onChange:(value:number)=>void}){
+  return <label className="armor-dot-picker"><span>{label}</span><RuleSelect value={String(value)} onChange={(next)=>onChange(Number(next))} options={Array.from({length:6},(_,rating)=>({value:String(rating),label:String(rating)}))}/></label>;
+}
 function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
   const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
-  const visible = merits.filter((item) => !item.grantedBy);
+  const visible = merits.filter((item) => !item.grantedBy && item.name !== "Fae Mount");
   return (
     <div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
@@ -1739,17 +1750,20 @@ function CombatPage({
   derived: Record<string, number>;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
     equipmentIds = stringList(character.line_data.combat_equipment),
     tiltIds = stringList(character.line_data.combat_tilts),
     armorId = String(character.line_data.combat_armor ?? "");
-  const armor = ARMORS.find((item) => item.id === armorId),
+  const presentedArmors=ARMORS.map((item)=>combatItemPresentation(item,locale));
+  const presentedWeapons=WEAPONS.map((item)=>combatItemPresentation(item,locale));
+  const presentedEquipment=EQUIPMENT.map((item)=>combatItemPresentation(item,locale));
+  const armor = presentedArmors.find((item) => item.id === armorId),
     weapons = weaponIds
-      .map((id) => WEAPONS.find((item) => item.id === id))
+      .map((id) => presentedWeapons.find((item) => item.id === id))
       .filter((item): item is NonNullable<typeof item> => Boolean(item)),
     equipment = equipmentIds
-      .map((id) => EQUIPMENT.find((item) => item.id === id))
+      .map((id) => presentedEquipment.find((item) => item.id === id))
       .filter((item): item is NonNullable<typeof item> => Boolean(item));
   const setData = (key: string, value: unknown) => {
     const next = structuredClone(character);
@@ -1801,8 +1815,8 @@ function CombatPage({
             setData("combat_armor", value === "none" ? "" : value)
           }
           options={[
-            { value: "none", label: "Sem armadura" },
-            ...ARMORS.map((item) => ({
+            { value: "none", label: tr("Sem armadura", "No armor") },
+            ...presentedArmors.map((item) => ({
               value: item.id,
               label: `${item.name} · ${item.general}/${item.ballistic}`,
             })),
@@ -1812,21 +1826,21 @@ function CombatPage({
           <div className="armor-summary">
             <strong>{armor.name}</strong>
             <span>
-              Armadura {armor.general}/{armor.ballistic} · Defesa{" "}
-              {signed(armor.defense)} · Deslocamento {signed(armor.speed)} ·{" "}
+              {tr("Armadura", "Armor")} {armor.general}/{armor.ballistic} · {tr("Defesa", "Defense")}{" "}
+              {signed(armor.defense)} · {tr("Deslocamento", "Speed")} {signed(armor.speed)} ·{" "}
               {armor.coverage}
             </span>
           </div>
         )}
         <SheetHeading>Armas</SheetHeading>
         <LoadoutCatalog
-          title="Selecionar Armas"
-          items={WEAPONS}
+          title={tr("Selecionar Armas", "Select Weapons")}
+          items={presentedWeapons}
           selected={weaponIds}
           describe={(item) =>
-            `${item.kind} · Dano ${item.damage} · Iniciativa ${signed(item.initiative)} · Força ${item.strength} · Tamanho ${item.size}${item.ranges ? ` · Alcance ${item.ranges}` : ""}${item.clip ? ` · Carga ${item.clip}` : ""}`
+            `${item.kind} · ${tr("Dano", "Damage")} ${item.damage} · ${tr("Iniciativa", "Initiative")} ${signed(item.initiative)} · ${tr("Força", "Strength")} ${item.strength} · ${tr("Tamanho", "Size")} ${item.size}${item.ranges ? ` · ${tr("Alcance", "Range")} ${item.ranges}` : ""}${item.clip ? ` · ${tr("Carga", "Capacity")} ${item.clip}` : ""}`
           }
-          details={(item) => item.special ?? "Sem propriedade especial."}
+          details={(item) => item.special ?? tr("Sem propriedade especial.", "No special property.")}
           onChange={(value) => setData("combat_weapons", value)}
         />
         <div className="loadout-list">
@@ -1835,11 +1849,11 @@ function CombatPage({
               <div>
                 <strong>{item.name}</strong>
                 <small>
-                  {item.kind} · dano {item.damage} · Iniciativa{" "}
-                  {signed(item.initiative)} · Força {item.strength} · Tamanho{" "}
+                  {item.kind} · {tr("dano", "damage")} {item.damage} · {tr("Iniciativa", "Initiative")}{" "}
+                  {signed(item.initiative)} · {tr("Força", "Strength")} {item.strength} · {tr("Tamanho", "Size")}{" "}
                   {item.size}
-                  {item.ranges ? ` · alcance ${item.ranges}` : ""}
-                  {item.clip ? ` · carga ${item.clip}` : ""}
+                  {item.ranges ? ` · ${tr("alcance", "range")} ${item.ranges}` : ""}
+                  {item.clip ? ` · ${tr("carga", "capacity")} ${item.clip}` : ""}
                 </small>
                 {item.special && <p>{item.special}</p>}
               </div>
@@ -1861,11 +1875,11 @@ function CombatPage({
         </div>
         <SheetHeading>Equipamentos</SheetHeading>
         <LoadoutCatalog
-          title="Selecionar Equipamentos"
-          items={EQUIPMENT}
+          title={tr("Selecionar Equipamentos", "Select Equipment")}
+          items={presentedEquipment}
           selected={equipmentIds}
           describe={(item) =>
-            `${item.category} · Bônus ${item.bonus} · Durabilidade ${item.durability} · Tamanho ${item.size} · Estrutura ${item.structure} · Disponibilidade ${item.availability}`
+            `${item.category} · ${tr("Bônus", "Bonus")} ${item.bonus} · ${tr("Durabilidade", "Durability")} ${item.durability} · ${tr("Tamanho", "Size")} ${item.size} · ${tr("Estrutura", "Structure")} ${item.structure} · ${tr("Disponibilidade", "Availability")} ${item.availability}`
           }
           details={(item) => item.effect}
           onChange={(value) => setData("combat_equipment", value)}
@@ -1876,9 +1890,9 @@ function CombatPage({
               <div>
                 <strong>{item.name}</strong>
                 <small>
-                  {item.category} · bônus {item.bonus} · Durabilidade{" "}
-                  {item.durability} · Tamanho {item.size} · Estrutura{" "}
-                  {item.structure} · Disponibilidade {item.availability}
+                  {item.category} · {tr("bônus", "bonus")} {item.bonus} · {tr("Durabilidade", "Durability")}{" "}
+                  {item.durability} · {tr("Tamanho", "Size")} {item.size} · {tr("Estrutura", "Structure")}{" "}
+                  {item.structure} · {tr("Disponibilidade", "Availability")} {item.availability}
                 </small>
                 <p>{item.effect}</p>
               </div>
@@ -2015,7 +2029,9 @@ function CompanionPage({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
+  const presentedVehicles=VEHICLES.map((item)=>vehiclePresentation(item,locale));
+  const presentedAnimals=ANIMALS.map((item)=>animalPresentation(item,locale));
   const vehicleIds = stringList(character.line_data.companion_vehicles),
     savedAnimals = objectList(character.line_data.animal_companions)
       .map((item) => ({
@@ -2044,21 +2060,21 @@ function CompanionPage({
         <p className="combat-note">{tr("O modificador se aplica às paradas de Destreza + Condução. Acima da Velocidade segura, ele é aplicado novamente e falhas de manobra tornam-se falhas dramáticas.", "The modifier applies to Dexterity + Drive pools. Above safe Speed, apply it again and failed maneuvers become dramatic failures.")}</p>
         <LoadoutCatalog
           title={tr("Selecionar Veículos", "Select Vehicles")}
-          items={VEHICLES}
+          items={presentedVehicles}
           selected={vehicleIds}
           describe={(item) =>
-            `Modificador ${signed(item.diceModifier)} · Tamanho ${item.size} · Durabilidade ${item.durability} · Estrutura ${item.structure} · Velocidade ${item.speed}`
+            `${tr("Modificador","Modifier")} ${signed(item.diceModifier)} · ${tr("Tamanho","Size")} ${item.size} · ${tr("Durabilidade","Durability")} ${item.durability} · ${tr("Estrutura","Structure")} ${item.structure} · ${tr("Velocidade","Speed")} ${item.speed}`
           }
           details={(item) =>
             item.acceleration
-              ? `Aceleração ${item.acceleration.toLocaleLowerCase("pt-BR")}.`
-              : "Aceleração normal."
+              ? `${tr("Aceleração","Acceleration")} ${item.acceleration.toLocaleLowerCase(locale)}.`
+              : tr("Aceleração normal.","Normal acceleration.")
           }
           onChange={(value) => setData("companion_vehicles", value)}
         />
         <div className="companion-grid">
           {vehicleIds
-            .map((id) => VEHICLES.find((item) => item.id === id))
+            .map((id) => presentedVehicles.find((item) => item.id === id))
             .filter((item): item is NonNullable<typeof item> => Boolean(item))
             .map((item) => (
               <article className="companion-card" key={item.id}>
@@ -2092,8 +2108,8 @@ function CompanionPage({
                 />
                 <p>
                   {item.acceleration
-                    ? `Aceleração ${item.acceleration.toLowerCase()}.`
-                    : "Aceleração normal: +5 de Velocidade por turno."}
+                    ? `${tr("Aceleração","Acceleration")} ${item.acceleration.toLocaleLowerCase(locale)}.`
+                    : tr("Aceleração normal: +5 de Velocidade por turno.","Normal acceleration: +5 Speed per turn.")}
                 </p>
               </article>
             ))}
@@ -2114,7 +2130,7 @@ function CompanionPage({
           <RuleSelect
             value={animalChoice}
             onChange={setAnimalChoice}
-            options={ANIMALS.map((item) => ({
+            options={presentedAnimals.map((item) => ({
               value: item.id,
               label: item.name,
             }))}
@@ -2145,7 +2161,7 @@ function CompanionPage({
         </p>
         <div className="companion-grid">
           {savedAnimals.map((saved, index) => {
-            const animal = ANIMALS.find((item) => item.id === saved.animalId);
+            const animal = presentedAnimals.find((item) => item.id === saved.animalId);
             return animal ? (
               <AnimalCard
                 key={`${saved.animalId}-${index}`}
@@ -2162,11 +2178,7 @@ function CompanionPage({
           })}
         </div>
       </section>
-      <small className="combat-source">
-        Veículos: Chronicles of Darkness, regras de Veículos; valores corrigidos
-        conforme Chronicles of Darkness Rules. Animais: World of Darkness animal
-        stat blocks.
-      </small>
+      <small className="combat-source">{tr("Veículos: Chronicles of Darkness, regras de Veículos; valores corrigidos conforme Chronicles of Darkness Rules. Animais: blocos de estatísticas de animais de World of Darkness.","Vehicles: Chronicles of Darkness vehicle rules; values corrected according to Chronicles of Darkness Rules. Animals: World of Darkness animal stat blocks.")}</small>
     </div>
   );
 }
@@ -2175,38 +2187,45 @@ const FAE_MOUNT_ABILITIES = [
     "manyleague",
     "Manyleague",
     "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado.",
+    "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner.",
   ],
   [
     "chatterbox",
     "Chatterbox",
     "Fala e entende claramente o dono e transmite mensagens simples no idioma dele.",
+    "Speaks with and clearly understands its owner and conveys simple messages in the owner's language.",
   ],
   [
     "actormask",
     "Actormask",
     "Pode deixar a Sebe; por 1 Glamour por cena mantém uma Máscara no mundo mundano.",
+    "May leave the Hedge; for 1 Glamour per scene it maintains a Mask in the mundane world.",
   ],
   [
     "armorshell",
     "Armorshell",
     "Armadura 3/2 e ocultação parcial para o cavaleiro.",
+    "Gain Armor 3/2 and provide partial concealment to the rider.",
   ],
   [
     "burdenback",
     "Burdenback",
     "Carrega pessoas adicionais iguais aos pontos do Mérito e recebe +2 Vigor.",
+    "Carry additional people equal to Merit dots and gain +2 Stamina.",
   ],
   [
     "dreamspun",
     "Dreamspun",
     "Ressurge após uma noite completa de sono do dono e recebe Furtividade igual aos pontos do Mérito.",
+    "Return after the owner completes a full night's sleep and gain Stealth equal to Merit dots.",
   ],
   [
     "thornbeast",
     "Thornbeast",
     "+2 dados nos ataques e modificador de arma +2.",
+    "Gain +2 attack dice and +2 weapon damage.",
   ],
-  ["hedgefoot", "Hedgefoot", "Escolha correr sobre água, escalar ou voar."],
+  ["hedgefoot", "Hedgefoot", "Escolha correr sobre água, escalar ou voar.", "Choose to run across water, climb, or fly."],
 ] as const;
 const FAMILIAR_NUMINA = [
   "Awe",
@@ -2239,6 +2258,7 @@ function MeritCompanionCard({
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
+  const { locale, tr } = useLanguage();
   const configuration = normalizeMeritConfiguration(merit.configuration),
     name = String(
       configuration.name ??
@@ -2259,42 +2279,49 @@ function MeritCompanionCard({
       hedgefoot = String(configuration.hedgefoot ?? "water"),
       burden = abilities.includes("burdenback"),
       many = abilities.includes("manyleague"),
-      thorn = abilities.includes("thornbeast");
+      thorn = abilities.includes("thornbeast"),
+      dreamspun = abilities.includes("dreamspun"),
+      armorshell=abilities.includes("armorshell"),
+      ownGeneral=Math.max(0,Math.min(5,Number(configuration.armor_general??0))),
+      ownBallistic=Math.max(0,Math.min(5,Number(configuration.armor_ballistic??0))),
+      generalArmor=Math.max(ownGeneral,armorshell?3:0),
+      ballisticArmor=Math.max(ownBallistic,armorshell?2:0),
+      health = 12 + (burden ? 2 : 0),
+      mountDamage=stringList(configuration.health_damage).filter((value):value is DamageLevel=>["bashing","lethal","aggravated"].includes(value)).slice(0,health),
+      mountAttributes={Inteligência:1,Raciocínio:3,Perseverança:3,Força:5,Destreza:3,Vigor:5+(burden?2:0),Presença:3,Manipulação:1,Compostura:2},
+      special=[
+        tr("Pode erguer quatro vezes o peso de um humano com Força e Atletismo equivalentes.","Can lift four times as much as a human with comparable Strength and Athletics."),
+        burden?tr(`Pode carregar ${1+merit.dots} cavaleiros.`,`Can carry ${1+merit.dots} riders.`):tr("Pode carregar um cavaleiro.","Can carry one rider."),
+        abilities.includes("chatterbox")?tr("Fala com o dono e transmite mensagens simples.","Speaks with its owner and conveys simple messages."):"",
+        abilities.includes("actormask")?tr("Pode sair da Sebe e manter uma Máscara por 1 Glamour por cena.","Can leave the Hedge and maintain a Mask for 1 Glamour per scene."):"",
+        abilities.includes("dreamspun")?tr("Volta à vida após uma noite completa de sono do dono.","Returns to life after its owner completes a full night's sleep."):"",
+        armorshell?tr("Concede ocultação parcial ao cavaleiro.","Provides partial concealment to the rider."):"",
+        abilities.includes("hedgefoot")?(hedgefoot==="water"?tr("Move-se sobre a água.","Moves across water."):hedgefoot==="climb"?tr("Escala a três vezes o Deslocamento.","Climbs at three times Speed."):tr("Pode voar uma vez por cena.","Can fly once per scene.")):"",
+      ].filter(Boolean).join(" ");
     return (
       <article className="companion-card merit-companion companion-config">
         <header>
           <div>
             <strong>{name}</strong>
             <small>
-              Montaria Feérica · {merit.dots} pontos · escolha {merit.dots}{" "}
-              habilidades
+              {tr("Montaria Feérica","Fae Mount")} · {merit.dots} {tr("pontos","dots")} · {tr("escolha","choose")} {merit.dots} {tr("habilidades","abilities")}
             </small>
           </div>
         </header>
         <Input
           value={name}
           onChange={(event) => save({ name: event.target.value })}
-          placeholder="Nome da montaria"
+          placeholder={tr("Nome da montaria","Mount name")}
         />
-        <CompactValues
-          values={{
-            Força: 5,
-            Destreza: 3,
-            Vigor: 5 + (burden ? 2 : 0),
-            Iniciativa: 5 + (many ? merit.dots : 0),
-            Defesa: 7,
-            Deslocamento: many ? 38 : 19,
-            Tamanho: 7,
-            Vitalidade: 12 + (burden ? 2 : 0),
-          }}
-        />
+        <div className="mount-attribute-grid">{Object.entries(ATTRIBUTES).map(([category,names])=><TraitBlock key={category} title={category} names={names} values={mountAttributes}/>)}</div>
+        <p><b>{tr("Perícias", "Skills")}:</b> {tr("Atletismo 4, Briga 1 (Coice), Sobrevivência 2", "Athletics 4, Brawl 1 (Kicking), Survival 2")}{dreamspun?`, ${tr("Furtividade", "Stealth")} ${merit.dots}`:""}</p>
+        <div className="mount-combat-block"><CompactValues values={{"Força de Vontade":5,Iniciativa:5+(many?merit.dots:0),Defesa:7,Deslocamento:many?38:19,Tamanho:7,"Armadura geral":generalArmor,"Armadura balística":ballisticArmor}}/><div className="mount-armor-editors"><ArmorDotPicker label={tr("Armadura geral","General Armor")} value={ownGeneral} onChange={(value)=>save({armor_general:String(value)})}/><ArmorDotPicker label={tr("Armadura balística","Ballistic Armor")} value={ownBallistic} onChange={(value)=>save({armor_ballistic:String(value)})}/></div>{armorshell&&<small>{tr("Armorshell fornece Armadura 3/2; somente o maior valor entre ela e a armadura própria é aplicado.","Armorshell provides Armor 3/2; only the higher of it and the mount's own armor applies.")}</small>}<strong>{tr("Vitalidade","Health")}</strong><HealthTrack health={health} damage={mountDamage} onChange={(value)=>save({health_damage:value})}/></div>
         <p>
-          <b>Ataques:</b> Mordida +0L ({5 + (thorn ? 2 : 0)} dados); coice ou
-          garra {thorn ? "+4L" : "+2L"} ({6 + (thorn ? 2 : 0)} dados,
-          Derrubado).
+          <b>{tr("Ataques", "Attacks")}:</b> {tr("Mordida", "Bite")} {thorn ? "+2L" : "+0L"} ({5 + (thorn ? 2 : 0)} {tr("dados", "dice")}); {tr("coice ou garra", "kick or claw")} {thorn ? "+4L" : "+2L"} ({6 + (thorn ? 2 : 0)} {tr("dados", "dice")}, {tr("Derrubado", "Knocked Down")}).
         </p>
+        <p><b>{tr("Especial", "Special")}:</b> {special}</p>
         <div className="companion-options">
-          {alphabetical(FAE_MOUNT_ABILITIES, item => item[1]).map(([id, label, description]) => {
+          {alphabetical(FAE_MOUNT_ABILITIES, item => item[1]).map(([id, label, description, descriptionEn]) => {
             const active = abilities.includes(id);
             return (
               <label key={id} className={active ? "selected" : ""}>
@@ -2312,7 +2339,7 @@ function MeritCompanionCard({
                 />
                 <span>
                   <strong>{label}</strong>
-                  <small>{description}</small>
+                  <small>{locale==="en-US"?descriptionEn:description}</small>
                 </span>
               </label>
             );
@@ -2345,6 +2372,7 @@ function MeritCompanionCard({
     rank = merit.dots >= 4 ? 2 : 1,
     animalId = String(configuration.animalId ?? ANIMALS[0]?.id ?? ""),
     animal = ANIMALS.find((item) => item.id === animalId),
+    presentedAnimal = animal ? animalPresentation(animal,locale) : undefined,
     numina = stringList(configuration.numina),
     numinaLimit = rank === 1 ? 3 : 5;
   return (
@@ -2380,7 +2408,7 @@ function MeritCompanionCard({
             <RuleSelect
               value={animalId}
               onChange={(value) => save({ animalId: value })}
-              options={ANIMALS.map((item) => ({
+              options={ANIMALS.map((item) => animalPresentation(item,locale)).map((item) => ({
                 value: item.id,
                 label: item.name,
               }))}
@@ -2449,9 +2477,9 @@ function MeritCompanionCard({
           />
         </label>
       </div>
-      {form === "animal" && animal && (
+      {form === "animal" && presentedAnimal && (
         <AnimalCard
-          animal={animal}
+          animal={presentedAnimal}
           name={name}
           onRemove={() => save({ form: "object", animalId: "" })}
         />
@@ -2500,22 +2528,23 @@ function AnimalCard({
   name?: string;
   onRemove: () => void;
 }) {
+  const { tr }=useLanguage();
   return (
     <article className="companion-card">
       <header>
         <div>
           <strong>{name || animal.name}</strong>
-          <small>{name ? animal.name : "Companheiro animal"}</small>
+          <small>{name ? animal.name : tr("Companheiro animal","Animal companion")}</small>
         </div>
         <Button type="button" size="icon" variant="ghost" onClick={onRemove}>
           <X />
         </Button>
       </header>
       <p>
-        <b>Atributos:</b> {animal.attributes}
+        <b>{tr("Atributos","Attributes")}:</b> {animal.attributes}
       </p>
       <p>
-        <b>Perícias:</b> {animal.skills}
+        <b>{tr("Perícias","Skills")}:</b> {animal.skills}
       </p>
       <CompactValues
         values={{
@@ -2560,6 +2589,7 @@ function HealthTrack({
   damage: DamageLevel[];
   onChange: (value: DamageLevel[]) => void;
 }) {
+  const { tr }=useLanguage();
   const penalty = woundPenalty(damage, health);
   const cycle = (index: number) => {
     const slots: Array<DamageLevel | undefined> = Array.from(
@@ -2582,7 +2612,7 @@ function HealthTrack({
       <div
         className="health-track"
         role="group"
-        aria-label={`Vitalidade: ${damage.length} de ${health} caixas marcadas`}
+        aria-label={tr(`Vitalidade: ${damage.length} de ${health} caixas marcadas`,`Health: ${damage.length} of ${health} boxes marked`)}
       >
         {Array.from({ length: health }, (_, index) => {
           const level = damage[index];
@@ -2592,7 +2622,7 @@ function HealthTrack({
               key={index}
               className={`health-box ${level ?? "empty"}`}
               onClick={() => cycle(index)}
-              aria-label={`Caixa ${index + 1}: ${damageLabel(level)}. Clique para alterar.`}
+              aria-label={tr(`Caixa ${index + 1}: ${damageLabel(level)}. Clique para alterar.`,`Box ${index + 1}: ${level ?? "empty"}. Click to change.`)}
             >
               <span aria-hidden="true" />
             </button>
@@ -2601,17 +2631,17 @@ function HealthTrack({
       </div>
       <div className="tracker-meta">
         <span>
-          {damage.length}/{health} marcadas
+          {damage.length}/{health} {tr("marcadas","marked")}
         </span>
         <strong className={penalty < 0 ? "penalty" : ""}>
-          Penalidade {penalty || "—"}
+          {tr("Penalidade","Penalty")} {penalty || "—"}
         </strong>
       </div>
       <p className="tracker-help">
         <span className="legend-mark bashing" />
-        Contusão <span className="legend-mark lethal" />
-        Letal <span className="legend-mark aggravated" />
-        Agravado · clique para alternar
+        {tr("Contusão","Bashing")} <span className="legend-mark lethal" />
+        {tr("Letal","Lethal")} <span className="legend-mark aggravated" />
+        {tr("Agravado · clique para alternar","Aggravated · click to cycle")}
       </p>
     </div>
   );
@@ -5041,15 +5071,16 @@ function PowerResource({
   );
 }
 function FrailtyList({ values, onChange }: { values: string[]; onChange: (value: string[]) => void }) {
+  const { locale, tr } = useLanguage();
   return (
     <div className="editable-lines frailty-lines">
       {values.map((value, index) => (
         <div className="editable-line-row" key={index}>
           <Input
-            value={value}
+            value={index === 0 ? systemTerm(value, locale) : value}
             readOnly={index === 0}
-            aria-label={index === 0 ? "Fragilidade obrigatória: Ferro Frio" : `Fragilidade de Fado ${index * 2}`}
-            placeholder={index === 0 ? undefined : `Fragilidade de Fado ${index * 2}`}
+            aria-label={index === 0 ? tr("Fragilidade obrigatória: Ferro Frio", "Mandatory Frailty: Cold Iron") : tr(`Fragilidade de Fado ${index * 2}`, `Wyrd ${index * 2} Frailty`)}
+            placeholder={index === 0 ? undefined : tr(`Fragilidade de Fado ${index * 2}`, `Wyrd ${index * 2} Frailty`)}
             onChange={(event) => {
               const next = [...values];
               next[index] = event.target.value;
@@ -5426,7 +5457,7 @@ function MeritSheetList({
         visible.map((item, index) => {
           const definition = catalog.find((entry) => entry.name === item.name);
           const tooltip = definition
-            ? `${definition.description}${definition.prerequisites ? `\nPré-requisitos: ${definition.prerequisites}` : ""}`
+            ? `${definition.description}${definition.prerequisites ? `\n${tr("Pré-requisitos", "Prerequisites")}: ${definition.prerequisites}` : ""}`
             : item.source;
           return (
             <div key={`${item.name}-${index}`} title={tooltip}>
@@ -5448,7 +5479,7 @@ function ContractSheetList({
   contracts: Array<Record<string, unknown>>;
   seeming: string;
 }) {
-  const {locale}=useLanguage();
+  const {locale,tr}=useLanguage();
   const homebrews=useHomebrews();
   return (
     <div className="official-lines">
@@ -5468,7 +5499,7 @@ function ContractSheetList({
           return (
             <div
               key={`${String(item.name)}-${index}`}
-              title={`${description}\nParada de dados: ${dicePool}\nBrecha: ${definition?.loophole ?? "Não informada"}${benefit ? `\nBenefício de ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`}
+              title={`${description}\n${tr("Parada de dados", "Dice Pool")}: ${dicePool}\n${tr("Brecha", "Loophole")}: ${definition?.loophole ?? tr("Não informada", "Not listed")}${benefit ? `\n${tr("Benefício de", "Benefit for")} ${seemingDisplayName(seeming,locale)}: ${benefit}` : ""}`}
             >
               <span>{String(locale==="en-US"?(definition?.originalName??item.originalName??item.name):(definition?.name??item.name))}</span>
               <small>
@@ -5785,7 +5816,7 @@ function SpellSheetList({
       {rows.map(({ kind, item }, index) => (
         <div
           key={`${kind}-${String(item.id ?? item.name)}-${index}`}
-          title={`Resumo: ${spellItemSummary(item)}\nParada de dados: Gnose + ${formatSpellRequirements((item.requirements ?? {}) as Record<string, number>)}\nCusto: Conforme os Alcances e efeitos aplicados\nAção / Duração: Conjuração instantânea · Fator Primário: ${String(item.primaryFactor ?? "")}\nEfeitos: ${String(item.description ?? "Descrição não disponível.")}\nPrática: ${String(item.practice ?? "")}${item.withstand ? ` · Resistência: ${String(item.withstand)}` : ""}`}
+          title={`${tr("Resumo", "Summary")}: ${spellItemSummary(item)}\n${tr("Parada de dados", "Dice Pool")}: ${tr("Gnose", "Gnosis")} + ${formatSpellRequirements((item.requirements ?? {}) as Record<string, number>)}\n${tr("Custo", "Cost")}: ${tr("Conforme os Alcances e efeitos aplicados", "As determined by Reach and applied effects")}\n${tr("Ação / Duração", "Action / Duration")}: ${tr("Conjuração instantânea", "Instant casting")} · ${tr("Fator Primário", "Primary Factor")}: ${String(item.primaryFactor ?? "")}\n${tr("Efeitos", "Effects")}: ${String(item.description ?? tr("Descrição não disponível.", "Description unavailable."))}\n${tr("Prática", "Practice")}: ${String(item.practice ?? "")}${item.withstand ? ` · ${tr("Resistência", "Withstand")}: ${String(item.withstand)}` : ""}`}
         >
           <span>
             {kind==="Rota"?tr("Rota","Rote"):tr("Práxis","Praxis")} · {String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}
