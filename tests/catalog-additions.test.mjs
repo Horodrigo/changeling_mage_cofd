@@ -16,6 +16,7 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Dramaturge"&&merit.source==="Kith and Kin"));
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Understudy"&&merit.source==="Kith and Kin"));
   assert.equal(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").length,39);
+  assert.deepEqual([...new Set(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").map((merit)=>merit.category))],["Changeling Courts"]);
   assert.ok(findExpandedMerit("Professional Training"));
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
 });

@@ -50,7 +50,7 @@ function courtMerit(
     line: "CtL" as const,
     sourceId: "h-courts",
     source: "Book of Courts",
-    category: `${court} Court`,
+    category: "Changeling Courts",
     prerequisites: prerequisites ? `${access}; ${prerequisites}` : access,
     description,
     page,

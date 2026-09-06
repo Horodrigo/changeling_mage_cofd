@@ -95,12 +95,14 @@ Additional structured controls are allowed only where a specific Merit rule requ
 ### Seasonal Court Merits (Book of Courts pp. 63–69)
 
 - Import only ordinary Seasonal Court Merits, never Entitlement Merits.
+- Group every imported Seasonal Court Merit under the single display category `Changeling Courts`; retain the specific Court only in eligibility metadata and prerequisites.
 - Unless a Merit states a stricter prerequisite, it requires either Mantle • for its named Seasonal Court or Court Goodwill ••• for that same Court.
 - A higher explicitly printed Mantle prerequisite replaces Mantle •, while Court Goodwill ••• remains the alternate way for an outsider to qualify unless the Merit expressly says otherwise.
 - Court prerequisites must use an existing-Court selector and canonical Court IDs rather than free text.
 
 ### Seeming Merits (Book of Seemings pp. 92–101)
 
+- Group every Merit from this section under the single display category `Changeling Seemings`; retain the specific Seeming in eligibility metadata and prerequisites.
 - Preserve each printed Seeming restriction and every printed alternate prerequisite; do not infer that every Merit is exclusive merely because it appears under a Seeming heading.
 - Hedge Duelist is Changeling-only. Book of Seemings supplies alternative first-dot maneuvers plus fourth- and fifth-dot maneuvers to the base Merit; these are additions to one Merit, not separate standalone Merits.
 
