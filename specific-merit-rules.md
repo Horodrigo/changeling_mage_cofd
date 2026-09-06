@@ -49,6 +49,10 @@ This document records exceptional behavior that must survive the clean reimport 
 - When spending Experience on a repeatable Merit, list every owned instance separately as an upgrade target and also offer a `New Allies` option. A new instance begins without a subject so the player can specify it.
 - Refunds must identify the exact instance by stable ID and remove or decrement only that instance.
 - The exact repeatable set must still be audited from the source rules during import; do not inherit the former hard-coded set without verification.
+- Confirmed independent instances include Fae Mount, Mentor, Retainer, Safe Place, and Token. Each Token instance represents a distinct Token.
+- Striking Looks is repeatable; each distinct appearance is an independent one- or two-dot instance with its own inline description.
+- Contacts and Staff are single aggregate Merits rather than repeatable rows. They have no five-dot ceiling: every Contacts dot records another group or field, and every Staff dot records another Skill represented among the employees.
+- Touchstone is a single aggregate Merit following its published ratings; each dot records one additional Touchstone.
 
 ### Per-dot benefits and Styles
 

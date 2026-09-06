@@ -18,7 +18,7 @@ export type MeritDefinition = {
   prerequisites?: string;
   page: number;
   levels?: MeritLevel[];
-  courtAccess?: { court: "Spring" | "Summer" | "Autumn" | "Winter"; mantle: number; courtGoodwill: number };
+  courtAccess?: Array<{ court: "Spring" | "Summer" | "Autumn" | "Winter"; mantle: number; courtGoodwill?: number }>;
   additionalSources?: Array<{ sourceId: string; source: string; page: number }>;
 };
 
@@ -36,27 +36,42 @@ export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERI
 }));
 
 export const REPEATABLE_MERITS = new Set([
-  "Allies", "Alternate Identity", "Contacts", "Court Goodwill", "Fae Mount",
-  "Language", "Library", "Mentor", "Retainer", "Safe Place", "Staff", "Status",
-  "Token", "Touchstone",
+  "Allies", "Alternate Identity", "Court Goodwill", "Fae Mount",
+  "Language", "Library", "Mentor", "Retainer", "Safe Place", "Status",
+  "Striking Looks", "Token",
   "Hedge Duelist",
 ]);
+export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff"]);
 export const EXTENDED_DOT_MERITS = new Set(["Token"]);
-export const meritRatingsFor = (merit: Pick<MeritDefinition, "ratings">) => merit.ratings;
+export const meritRatingsFor = (merit: Pick<MeritDefinition, "name" | "ratings">, ceiling = Math.max(...merit.ratings)) =>
+  UNBOUNDED_MERITS.has(merit.name) ? Array.from({length:Math.max(1,ceiling)},(_,index)=>index+1) : merit.ratings;
 export const meritPrerequisitesFor = (merit: Pick<MeritDefinition, "prerequisites">) => merit.prerequisites;
 
 export type MeritPrerequisiteContext = {
   gameLine: GameLine;
   attributes?: Record<string, number>;
   skills?: Record<string, number>;
-  merits?: Array<{ name: string; dots: number }>;
+  court?: string;
+  mantle?: number;
+  merits?: Array<{ name: string; dots: number; configuration?: Record<string,string|string[]> }>;
 };
 
+const courtKey=(value:unknown)=>String(value??"").toLowerCase().replace(/^court[- ]/,"").replace(/[- ]court$/,"").replace(/[^a-z]/g,"");
+
 export function meritPrerequisitesMet(
-  merit: Pick<MeritDefinition, "name" | "prerequisites">,
+  merit: Pick<MeritDefinition, "name" | "prerequisites" | "courtAccess">,
   context: MeritPrerequisiteContext,
 ) {
   if (merit.name === "Lucid Dreamer" && context.gameLine === "CtL") return false;
+  if(merit.courtAccess?.length&&context.gameLine==="CtL"){
+    const ownCourt=courtKey(context.court);
+    const mantle=Math.max(0,Number(context.mantle??context.merits?.find((item)=>item.name==="Mantle")?.dots??0));
+    const goodwill=new Map((context.merits??[]).filter((item)=>item.name==="Court Goodwill").map((item)=>[courtKey(item.configuration?.court),Number(item.dots??0)]));
+    if(!merit.courtAccess.some((access)=>
+      (ownCourt===courtKey(access.court)&&mantle>=access.mantle)||
+      (access.courtGoodwill!==undefined&&(goodwill.get(courtKey(access.court))??0)>=access.courtGoodwill)
+    )) return false;
+  }
   return true;
 }
 

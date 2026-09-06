@@ -99,6 +99,7 @@ import {
 } from "@/lib/creation-rules";
 import {
   getMeritsForLine,
+  meritPrerequisitesMet,
   meritRatingsFor,
   REPEATABLE_MERITS,
   type MeritDefinition,
@@ -1487,6 +1488,7 @@ function MeritConfigurationPanel({
             <MeritConfigurationEditor
               compact
               merit={item}
+              currentCourt={String(character.line_data.court??"")}
               onChange={(configuration) => {
                 const next = structuredClone(character);
                 const target = next.merits[meritIndex];
@@ -3044,7 +3046,7 @@ function ExperiencePanel({
           )
         : undefined;
   const availableMeritRatings = selectedMerit
-    ? meritRatingsFor(selectedMerit).filter(
+    ? meritRatingsFor(selectedMerit,(ownedMerit?.dots??0)+1).filter(
         (rating) => rating > (ownedMerit?.dots ?? 0),
       )
     : [];
@@ -3795,7 +3797,7 @@ function MageExperiencePanel({
             )
           : undefined,
     meritRatings = selectedMerit
-      ? meritRatingsFor(selectedMerit).filter(
+      ? meritRatingsFor(selectedMerit,(ownedMerit?.dots??0)+1).filter(
           (dot) => dot > (ownedMerit?.dots ?? 0),
         )
       : [],
@@ -4528,7 +4530,7 @@ function ExperienceMeritPicker({
   const [category, setCategory] = useState("Todas");
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
   const catalog = alphabetical([
-      ...getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
+      ...getMeritsForLine(line).filter(item=>meritPrerequisitesMet(item,{gameLine:line,court:String(character.line_data.court??""),mantle:character.merits.find((owned)=>owned.name==="Mantle")?.dots,merits:character.merits})&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))),
       ...homebrews.merits.filter(
         (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
       ),
@@ -4595,7 +4597,7 @@ function ExperienceMeritPicker({
                           owned.grantedBy === "Corte")),
                   ),
                 repeatable = isRepeatableDefinition(item),
-                ratings = meritRatingsFor(item);
+                ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1)));
               if (item.name === "Mantle" && !instances.length) return null;
               if (
                 !repeatable &&
@@ -5180,14 +5182,14 @@ function normalizeStoredSheet(value: CharacterSheet): CharacterSheet {
       )
     : [];
   next.merits = Array.isArray(next.merits)
-    ? next.merits.map((item: any) => ({
+    ? next.merits.map((item: any, index: number) => ({
         name: String(
           item?.name === "Throne"
             ? "Power Behind the Throne"
             : (item?.name ?? ""),
         ),
         dots: Number(item?.dots ?? 1),
-        instanceId: item?.instanceId ? String(item.instanceId) : undefined,
+        instanceId: item?.instanceId ? String(item.instanceId) : `legacy-merit-${index}-${String(item?.name??"merit").toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
         sourceId: item?.sourceId ? String(item.sourceId) : undefined,
         source: item?.source ? String(item.source) : undefined,
         configuration: normalizeMeritConfiguration(item?.configuration),

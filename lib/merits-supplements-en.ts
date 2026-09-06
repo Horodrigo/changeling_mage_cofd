@@ -30,6 +30,7 @@ const KITH_AND_KIN_MERITS_EN = [
 
 type SeasonalCourt = "Spring" | "Summer" | "Autumn" | "Winter";
 type SupplementalLevel = { rating: number; name: string; description: string };
+type CourtAccess = { court: SeasonalCourt; mantle: number; courtGoodwill?: number };
 
 function courtMerit(
   court: SeasonalCourt,
@@ -39,10 +40,15 @@ function courtMerit(
   prerequisites: string | null,
   description: string,
   levels?: SupplementalLevel[],
+  accessOverrides?: CourtAccess[],
 ) {
   const mantleMatch = prerequisites?.match(new RegExp(`${court} Mantle ([•]+)`));
   const mantle = mantleMatch?.[1]?.length ?? 1;
-  const access = `${court} Mantle ${"•".repeat(mantle)} or ${court} Court Goodwill •••`;
+  const courtAccess = accessOverrides ?? [{ court, mantle, ...(mantle<=3?{courtGoodwill:mantle+2}:{}) }];
+  const access = courtAccess.flatMap((item)=>[
+    `${item.court} Mantle ${"•".repeat(item.mantle)}`,
+    ...(item.courtGoodwill?[`${item.court} Court Goodwill ${"•".repeat(item.courtGoodwill)}`]:[]),
+  ]).join(" or ");
   return {
     id: `h-courts:${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`,
     name,
@@ -54,14 +60,14 @@ function courtMerit(
     prerequisites: prerequisites ? `${access}; ${prerequisites}` : access,
     description,
     page,
-    courtAccess: { court, mantle, courtGoodwill: 3 },
+    courtAccess,
     ...(levels ? { levels } : {}),
   };
 }
 
 const COURT_MERITS_EN = [
   courtMerit("Spring",63,"Bedside Manner",[3],"Medicine ••","After successfully treating another character's wounds and spending at least a scene on additional care, halve that character's healing time for all current lethal and bashing damage."),
-  courtMerit("Spring",63,"Dressed to Kill",[2],"Spring Court or Summer Mantle ••; Socialize ••","Once per outfit per chapter, take an instant action to turn part of an outfit the character chose into a Durability 2 improvised weapon."),
+  courtMerit("Spring",63,"Dressed to Kill",[2],"Socialize ••","Once per outfit per chapter, take an instant action to turn part of an outfit the character chose into a Durability 2 improvised weapon.",undefined,[{court:"Spring",mantle:1,courtGoodwill:3},{court:"Summer",mantle:2,courtGoodwill:4}]),
   courtMerit("Spring",63,"Florence Nightingale Effect",[2],"Empathy •••","For one month after caring for someone, double bonuses from Social Merits when interacting with that former patient, and Social actions with them exceptionally succeed on three successes."),
   courtMerit("Spring",63,"Friends in Low Places",[1,2,3],"Barfly","Among a particular group of lowlifes, temporarily distribute Merit dots among Status, Allies, and Contacts. These may stack with existing dots but cannot raise a Merit above five; they last for the chapter."),
   courtMerit("Spring",64,"Spring-Loaded",[1],"Stamina •••","Suffer no negative Tilts from consensual intoxication and gain 9-again on Socialize while intoxicated. Rolls to avoid or resist addiction suffer −1."),
@@ -79,7 +85,7 @@ const COURT_MERITS_EN = [
   courtMerit("Summer",65,"Don't Tell Me to Calm Down",[1],"Composure •• or lower","Once per chapter, declare an intention and immediately act on it. Attempts to dissuade the character suffer −2 for the chapter, including attempts by allies."),
   courtMerit("Summer",66,"Firebrand",[2],"Presence •••","Open the first Door for free when a Social maneuver argues for one of the character's convictions. With an audience of at least ten, the first action also exceptionally succeeds on three successes."),
   courtMerit("Summer",66,"Get the Manager",[1],"Intimidation ••, Summer Mantle ••","Against mortals without authority, gain the equivalent of Status •• in the relevant area when making requests that are not blatantly illegal."),
-  courtMerit("Summer",66,"Hey, Watch This",[1],"Summer Court or Spring Mantle ••; Presence •••","Gain +2 Athletics before an audience, increased to +3 when the feat is both risky and unnecessary."),
+  courtMerit("Summer",66,"Hey, Watch This",[1],"Presence •••","Gain +2 Athletics before an audience, increased to +3 when the feat is both risky and unnecessary.",undefined,[{court:"Summer",mantle:1,courtGoodwill:3},{court:"Spring",mantle:2,courtGoodwill:4}]),
   courtMerit("Summer",66,"Locked on Target",[1,2,3,4,5],"Resolve •••, Stamina •••, Brawl or Weaponry ••","A combat Style that turns focused anger into persistence against a chosen opponent.",[
     {rating:1,name:"Dialed In",description:"Ignore distraction penalties in action scenes up to Summer Mantle."},
     {rating:2,name:"Now I'm Angry",description:"After first taking damage in an action scene, gain +1 Brawl or Weaponry attacks against the attacker."},

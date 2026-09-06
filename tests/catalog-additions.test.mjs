@@ -6,10 +6,10 @@ import { createServer } from "vite";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false} });
 after(async () => vite.close());
-const {getMeritsForLine,RAW_MERITS,REPEATABLE_MERITS} = await vite.ssrLoadModule("/lib/merits.ts");
+const {getMeritsForLine,RAW_MERITS,REPEATABLE_MERITS,UNBOUNDED_MERITS,meritRatingsFor,meritPrerequisitesMet} = await vite.ssrLoadModule("/lib/merits.ts");
 const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
-const {findMeritConfiguration,isInlineMeritConfiguration} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const {findMeritConfiguration,isInlineMeritConfiguration,synchronizeMeritGrants,expandedConfigurationLines} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
   assert.equal(RAW_MERITS.length,219);
@@ -25,6 +25,26 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.equal(hedgeDuelist?.additionalSources?.[0]?.page,101);
   assert.equal(findMeritConfiguration("Hedge Duelist")?.fields[0]?.options?.length,7);
   assert.ok(REPEATABLE_MERITS.has("Hedge Duelist"));
+  assert.equal(findMeritConfiguration("Court Goodwill")?.fields[0]?.kind,"court");
+  assert.equal(meritPrerequisitesMet({name:"Lucid Dreamer",prerequisites:"Non-changeling, Resolve •••"},{gameLine:"CtL"}),false);
+  const dressed=RAW_MERITS.find((merit)=>merit.name==="Dressed to Kill");
+  assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Spring",mantle:1,merits:[]}),true);
+  assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Summer",mantle:2,merits:[]}),true);
+  assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Courtless",mantle:0,merits:[{name:"Court Goodwill",dots:3,configuration:{court:"spring"}}]}),true);
+  assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Courtless",mantle:0,merits:[{name:"Court Goodwill",dots:4,configuration:{court:"summer"}}]}),true);
+  assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Courtless",mantle:0,merits:[{name:"Court Goodwill",dots:3,configuration:{court:"summer"}}]}),false);
+  for(const name of ["Fae Mount","Mentor","Retainer","Safe Place","Striking Looks","Token"]) assert.ok(REPEATABLE_MERITS.has(name));
+  for(const name of ["Contacts","Staff","Touchstone"]) assert.ok(!REPEATABLE_MERITS.has(name));
+  for(const name of ["Contacts","Staff"]){
+    assert.ok(UNBOUNDED_MERITS.has(name));
+    assert.equal(meritRatingsFor(RAW_MERITS.find((merit)=>merit.name===name),21).at(-1),21);
+  }
+  const sheet={game_line:"CtL",line_data:{court:"spring"},merits:[{name:"Court Goodwill",dots:4,configuration:{court:"summer"}}]};
+  synchronizeMeritGrants(sheet);
+  assert.deepEqual(sheet.line_data.court_goodwill_benefits,[{court:"summer",dots:4,mantleDots:2}]);
+  assert.equal(sheet.merits.filter((merit)=>merit.name==="Allies"||merit.name==="Mentor").length,0);
+  assert.equal(sheet.merits.find((merit)=>merit.name==="Mantle")?.dots,1);
+  assert.equal(expandedConfigurationLines("Court Goodwill",4,{court:"summer"},"en-US").length,4);
   assert.ok(findExpandedMerit("Professional Training"));
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
 });
@@ -79,11 +99,11 @@ test.skip("os estilos exibem benefícios para cada nível e Guerreiro Elemental 
   assert.ok(findMeritConfiguration("Elemental Warrior").fields.some(x=>x.key==="element"));
 });
 
-test.skip("configurações de texto livre ficam inline e escolhas estruturadas permanecem separadas", () => {
+test("configurações de texto livre ficam inline e escolhas estruturadas permanecem separadas", () => {
   assert.equal(isInlineMeritConfiguration("Striking Looks"), true);
   assert.equal(isInlineMeritConfiguration("Allies"), true);
   assert.equal(isInlineMeritConfiguration("Mentor"), false);
-  assert.equal(isInlineMeritConfiguration("Language"), false);
+  assert.equal(isInlineMeritConfiguration("Language"), true);
   assert.equal(isInlineMeritConfiguration("Court Goodwill"), false);
   assert.equal(isInlineMeritConfiguration("Professional Training"), false);
   assert.equal(isInlineMeritConfiguration("Fae Mount"), false);
