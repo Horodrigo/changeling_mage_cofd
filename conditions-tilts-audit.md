@@ -32,7 +32,7 @@ Added or corrected from the PDF audit:
 
 ## Remaining conversion work
 
-- Replace the 63 generic English resolution placeholders in the Changeling-facing official catalog with source-specific Resolution and Beat summaries from the extracted PDF pages. The exported records and names are now English-first; the old Portuguese copy survives only as presentation metadata.
+- Replace the remaining 54 generic English resolution placeholders in the Changeling-facing official catalog with source-specific Resolution and Beat summaries from the extracted PDF pages. The nine Kith and Kin Conditions are complete. Exported records and names are now English-first; the old Portuguese copy survives only as presentation metadata.
 - Move Portuguese display strings into a separate optional presentation layer rather than storing them as canonical mechanics.
 - Rebuild the 20 Portuguese-first Mage/Nameless records by the same model and verify the shared CofD/Hurt Locker selection. The four newly recovered DE/DEC records are already English-first.
 - Add catalog-level tests for exact official counts, unique IDs, required fields, source/page reconciliation, and persistence through JSON import/export.
