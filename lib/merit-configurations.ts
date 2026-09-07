@@ -69,12 +69,19 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
     {key:"name",label:"Retainer name",kind:"text"},
     {key:"purview",label:"Area of expertise",kind:"text"},
   ]},
+  {name:"Area of Expertise",fields:[{key:"specialty",label:"Specialty",kind:"text",placeholder:"Specialty receiving the increased bonus"}]},
+  {name:"Defensive Combat",fields:[{key:"skill",label:"Defense Skill",kind:"select",options:[{value:"Brawl",label:"Brawl"},{value:"Weaponry",label:"Weaponry"}]}]},
+  {name:"Fighting Finesse",fields:[{key:"skill",label:"Combat Skill",kind:"select",options:[{value:"Brawl",label:"Brawl"},{value:"Weaponry",label:"Weaponry"}]}]},
+  {name:"Multilingual",fields:[{key:"languages",label:"Additional languages",kind:"list"}]},
+  {name:"Quick Draw",fields:[{key:"specialty",label:"Weapon Specialty",kind:"text",placeholder:"Firearms or Weaponry Specialty"}]},
+  {name:"Unseen Sense",fields:[{key:"phenomenon",label:"Supernatural phenomenon",kind:"text"}]},
+  {name:"Warded Dreams",line:"CtL",fields:[]},
   {name:"Professional Training",fields:[]},
   {name:"Mystery Cult Initiation",fields:[]},
 ];
 export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
-const INLINE_MERITS=new Set(["Allies","Alternate Identity","Language","Library","Safe Place","Status","Striking Looks","Token"]);
-const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation"]);
+const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Language","Library","Quick Draw","Safe Place","Status","Striking Looks","Token","Unseen Sense"]);
+const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Warded Dreams"]);
 export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name);
 export const isStructuredMerit = (name: string) => STRUCTURED_MERITS.has(name);
 export const meritConfigurationText = (value: string | undefined, _locale: Locale) => value ?? "";
@@ -97,6 +104,8 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
   const target=sheet as T&{
     game_line?:string;
     merits?:Array<{instanceId?:string;name:string;dots:number;sourceId?:string;source?:string;configuration?:MeritConfiguration;grantedBy?:string}>;
+    specializations?:Array<{skill:string;name:string;grantedBy?:string}>;
+    skills?:Record<string,number>;
     line_data?:Record<string,unknown>;
   };
   if(target.game_line!=="CtL"||!Array.isArray(target.merits)||!target.line_data) return sheet;
@@ -117,7 +126,66 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     item.configuration={...normalizeMeritConfiguration(item.configuration),court:selected};
     return {court:selected,dots:item.dots,mantleDots:Math.max(0,item.dots-2)};
   }).filter((item)=>item.court);
-  target.line_data={...target.line_data,court_goodwill_benefits:benefits};
+  const generatedPrefix="Merit:";
+  target.merits=target.merits.filter((item)=>!item.grantedBy?.startsWith(generatedPrefix));
+  target.specializations=(target.specializations??[]).filter((item)=>!item.grantedBy?.startsWith(generatedPrefix));
+  const skillBonuses:Record<string,number>={};
+  const grantMerit=(owner:string,name:string,dots:number,index:number)=>{
+    if(!name||dots<1) return;
+    target.merits!.push({
+      instanceId:`grant-${owner}-${index}`,
+      name,
+      dots,
+      configuration:{},
+      grantedBy:`${generatedPrefix}${owner}`,
+    });
+  };
+  for(const merit of target.merits.filter((item)=>!item.grantedBy)){
+    const owner=`${merit.name}:${merit.instanceId??merit.name}`;
+    const configuration=normalizeMeritConfiguration(merit.configuration);
+    if(merit.name==="Professional Training"){
+      const contacts=Array.isArray(configuration.contacts)?configuration.contacts.filter(Boolean):[];
+      if(merit.dots>=1) target.merits.push({
+        instanceId:`grant-${owner}-contacts`,
+        name:"Contacts",
+        dots:2,
+        configuration:{groups:contacts.slice(0,2)},
+        grantedBy:`${generatedPrefix}${owner}`,
+      });
+      if(merit.dots>=3){
+        for(const index of [1,2]){
+          const skill=String(configuration[`specialty_${index}_skill`]??"");
+          const name=String(configuration[`specialty_${index}_name`]??"");
+          if(skill&&name) target.specializations!.push({skill,name,grantedBy:`${generatedPrefix}${owner}`});
+        }
+      }
+      const boosted=String(configuration.boosted_skill??"");
+      if(merit.dots>=4&&boosted) skillBonuses[boosted]=(skillBonuses[boosted]??0)+1;
+    }
+    if(merit.name==="Mystery Cult Initiation"){
+      for(let level=1;level<=Math.min(5,merit.dots);level+=1){
+        const prefix=`level_${level}`;
+        const type=String(configuration[`${prefix}_type`]??"");
+        if(type==="specialty"){
+          const skill=String(configuration[`${prefix}_specialty_skill`]??"");
+          const name=String(configuration[`${prefix}_specialty_name`]??"");
+          if(skill&&name) target.specializations!.push({skill,name,grantedBy:`${generatedPrefix}${owner}`});
+        }
+        if(type==="skill"||type==="merit_skill"){
+          const skill=String(configuration[`${prefix}_skill`]??"");
+          if(skill) skillBonuses[skill]=(skillBonuses[skill]??0)+1;
+        }
+        if(type==="merit"||type==="merits"||type==="merit_skill"){
+          const rows=Array.isArray(configuration[`${prefix}_merits`])?configuration[`${prefix}_merits`] as string[]:[];
+          rows.forEach((row,index)=>{
+            const [name,rawDots]=row.split("|");
+            grantMerit(`${owner}:${level}`,name,Math.max(1,Number(rawDots)||1),index);
+          });
+        }
+      }
+    }
+  }
+  target.line_data={...target.line_data,court_goodwill_benefits:benefits,merit_granted_skill_bonuses:skillBonuses};
   return sheet;
 }
 

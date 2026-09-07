@@ -49,6 +49,30 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
 });
 
+test("concessões de Méritos estruturados são determinísticas e reversíveis",()=>{
+  const sheet={
+    game_line:"CtL",skills:{Academics:2,Occult:1},specializations:[],line_data:{court:"Courtless"},
+    merits:[
+      {instanceId:"pt",name:"Professional Training",dots:4,configuration:{contacts:["Journalists","Police"],asset_skills:["Academics","Occult","Investigation"],specialty_1_skill:"Academics",specialty_1_name:"Research",specialty_2_skill:"Occult",specialty_2_name:"Cults",boosted_skill:"Academics"}},
+      {instanceId:"cult",name:"Mystery Cult Initiation",dots:3,configuration:{level_1_type:"specialty",level_1_specialty_skill:"Occult",level_1_specialty_name:"Rituals",level_2_type:"merit",level_2_merits:["Library|1"],level_3_type:"skill",level_3_skill:"Occult"}},
+    ],
+  };
+  synchronizeMeritGrants(sheet);
+  assert.equal(sheet.merits.find((item)=>item.name==="Contacts")?.dots,2);
+  assert.deepEqual(sheet.merits.find((item)=>item.name==="Contacts")?.configuration.groups,["Journalists","Police"]);
+  assert.equal(sheet.merits.find((item)=>item.name==="Library")?.dots,1);
+  assert.deepEqual(sheet.specializations.map((item)=>[item.skill,item.name]),[["Academics","Research"],["Occult","Cults"],["Occult","Rituals"]]);
+  assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses,{Academics:1,Occult:1});
+  synchronizeMeritGrants(sheet);
+  assert.equal(sheet.merits.filter((item)=>item.name==="Contacts").length,1);
+  sheet.merits.find((item)=>item.name==="Professional Training").dots=2;
+  sheet.merits.find((item)=>item.name==="Mystery Cult Initiation").dots=1;
+  synchronizeMeritGrants(sheet);
+  assert.deepEqual(sheet.specializations.map((item)=>[item.skill,item.name]),[["Occult","Rituals"]]);
+  assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses,{});
+  assert.equal(sheet.merits.some((item)=>item.name==="Library"),false);
+});
+
 test.skip("Greyhound e Esoteric Armory estão completos e disponíveis para Changeling",()=>{
   const merits=getMeritsForLine("CtL");
   const expected=[
@@ -107,6 +131,13 @@ test("configurações de texto livre ficam inline e escolhas estruturadas perman
   assert.equal(isInlineMeritConfiguration("Court Goodwill"), false);
   assert.equal(isInlineMeritConfiguration("Professional Training"), false);
   assert.equal(isInlineMeritConfiguration("Fae Mount"), false);
+  assert.equal(isInlineMeritConfiguration("Area of Expertise"), true);
+  assert.equal(isInlineMeritConfiguration("Quick Draw"), true);
+  assert.equal(isInlineMeritConfiguration("Unseen Sense"), true);
+  assert.equal(findMeritConfiguration("Defensive Combat")?.fields[0]?.kind,"select");
+  assert.equal(findMeritConfiguration("Fighting Finesse")?.fields[0]?.kind,"select");
+  assert.equal(findMeritConfiguration("Multilingual")?.fields[0]?.kind,"list");
+  assert.ok(findMeritConfiguration("Warded Dreams"));
 });
 
 test("compra de Mérito identifica o nível atual da instância", async()=>{

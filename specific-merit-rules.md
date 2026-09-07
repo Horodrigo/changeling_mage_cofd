@@ -48,7 +48,7 @@ This document records exceptional behavior that must survive the clean reimport 
 - Example: `Allies: Police` and `Allies: Media` are separate rows and may coexist.
 - When spending Experience on a repeatable Merit, list every owned instance separately as an upgrade target and also offer a `New Allies` option. A new instance begins without a subject so the player can specify it.
 - Refunds must identify the exact instance by stable ID and remove or decrement only that instance.
-- The exact repeatable set must still be audited from the source rules during import; do not inherit the former hard-coded set without verification.
+- Continue auditing the remaining source-defined repeatable Merits during import; do not infer repeatability merely because a Merit names a subject.
 - Confirmed independent instances include Fae Mount, Mentor, Retainer, Safe Place, and Token. Each Token instance represents a distinct Token.
 - Striking Looks is repeatable; each distinct appearance is an independent one- or two-dot instance with its own inline description.
 - Contacts and Staff are single aggregate Merits rather than repeatable rows. They have no five-dot ceiling: every Contacts dot records another group or field, and every Staff dot records another Skill represented among the employees.
@@ -65,16 +65,19 @@ This document records exceptional behavior that must survive the clean reimport 
 - For Changeling, every Merit may be acquired after character creation with Experience, regardless of a source note such as `Character creation only`.
 - Mantle is the sole exception and follows its special acquisition rule above.
 
-## Structured configurations to verify from the books
+## Structured configurations
 
-The former implementation had custom behavior for the following Merits. Each must be re-read before its schema is restored:
+Only rules-mandated choices are restored. The following configurations have been confirmed and implemented:
 
-- Allies, Contacts, Status, Staff, Mentor, Retainer, Safe Place, Resources, Language, Library, and Alternate Identity.
-- Professional Training.
-- Mystery Cult Initiation and Mystery Cult Influence.
-- Hollow and Warded Dreams.
-- Striking Looks and other single-subject free-text Merits.
-- Court Goodwill, Mantle, Token, Touchstone, and Fae Mount.
+- Subject/asset choices for Allies, Alternate Identity, Language, Library, Safe Place, Status, Striking Looks, Token, Mentor, Retainer, Contacts, Staff, and Touchstone.
+- The selected Court for Court Goodwill and the creation-derived Court for Mantle.
+- The complete Fae Mount configuration in Companions.
+- Professional Training's profession, Contacts, Asset Skills, Specialties, and fourth-dot Skill increase. Its mechanical grants are synchronized with the sheet and removed when no longer unlocked.
+- Mystery Cult Initiation's benefit at each purchased dot. Granted Specialties, Skills, and Merits are synchronized with the sheet and removed when no longer unlocked.
+- Warded Dreams' Bastion description and Fortification reminder.
+- The rules-mandated choices for Area of Expertise, Defensive Combat, Fighting Finesse, Multilingual, Quick Draw, and Unseen Sense.
+
+Hollow and Mystery Cult Influence remain pending catalog/source verification before any former custom UI is restored.
 
 ## Confirmed display fields
 
