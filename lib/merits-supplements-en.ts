@@ -152,8 +152,51 @@ const HEDGE_DUELIST_EN = {
   ],
 } as const;
 
+const ELEMENTAL_WARRIOR_EN = {
+  id:"ctl-2ed:elemental-warrior",name:"Elemental Warrior",ratings:[1,2,3,4,5],line:"CtL" as const,
+  sourceId:"ctl-2ed",source:"Changeling the Lost",category:"Fighting Styles",
+  prerequisites:"Dexterity or Wits •••; Brawl, Firearms, or Weaponry ••; Elemental Weapon or Primal Glory, or Elemental seeming",
+  description:"Choose one physical element; every maneuver applies only while commanding or attacking with that element.",page:113,
+  levels:[
+    {rating:1,name:"Wind Cuts to the Bone",description:"Pure elemental damage rolls exceptionally succeed on three successes, except Hedgespinning or dreamweaving; a weapon made solely from the element qualifies."},
+    {rating:2,name:"Defensive Flurry",description:"After doubling Defense to Dodge, add half Wyrd, rounded down, to the pool and permit Dodge against Firearms."},
+    {rating:3,name:"Hungry Leaping Flames",description:"Spend 1 Glamour for the scene to make melee attacks from 10 yards or meters away and add 10 to every range band of ranged attacks; the element may also disturb scenery."},
+    {rating:4,name:"Antaean Endurance",description:"While in significant contact with the element, gain half Wyrd Health boxes and the same bonus to resist fatigue, toxins, or unconsciousness."},
+    {rating:5,name:"Wrath of Titans",description:"Spend 1 Glamour so successful attacks inflict Blinded, Deafened, or Knocked Down for the scene; repeated attacks may affect both eyes or ears."},
+  ],
+} as const;
+const ENCHANTING_PERFORMANCE_EN = {
+  id:"ctl-2ed:enchanting-performance",name:"Enchanting Performance",ratings:[1,2,3],line:"CtL" as const,
+  sourceId:"ctl-2ed",source:"Changeling the Lost",category:"Social Styles",prerequisites:"Presence •••, Expression •••",
+  description:"A performance Style that channels fae fascination.",page:113,
+  levels:[
+    {rating:1,name:"Limerick",description:"Roll Presence + Expression, resisted by Composure, to impose the rolled successes as a penalty, maximum -5, on the target's Social rolls against observers for the scene."},
+    {rating:2,name:"Poem",description:"After opening a Door through an Expression performance, spend 1 Glamour to open another Door immediately."},
+    {rating:3,name:"Sonnet",description:"Spend 1 Glamour to give the next mundane performance-related Expression roll rote; success grants one audience member Inspired, while exceptional success grants it to everyone watching."},
+  ],
+} as const;
+const HOLLOW_EN = {
+  id:"ctl-2ed:hollow",name:"Hollow",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-2ed",source:"Changeling the Lost",category:"General",
+  prerequisites:null,description:"A private refuge inside the Hedge. Its rating penalizes attempts to learn an owner's personal information or track them inside, limits forced entry, and buys an equal value of Hollow enhancements. It may be purchased as a Motley Merit.",page:116,
+} as const;
+const MYSTERY_CULT_INFLUENCE_EN = {
+  id:"core-2ed:mystery-cult-influence",name:"Mystery Cult Influence",ratings:[3,4,5],line:"Core" as const,sourceId:"core-2ed",source:"Chronicles of Darkness",category:"Social Styles",
+  prerequisites:null,description:"Rule or exert decisive influence over a mystery cult. Gain the corresponding benefits of Mystery Cult Initiation without the responsibilities of an ordinary member.",page:51,
+  levels:[
+    {rating:1,name:"Recruit",description:"A Specialty or one-dot Merit."},
+    {rating:2,name:"Devotee",description:"A one-dot Merit."},
+    {rating:3,name:"Organizer",description:"A Skill dot or a two-dot Merit, often supernatural."},
+    {rating:4,name:"Leader",description:"A three-dot Merit, often supernatural."},
+    {rating:5,name:"Mastermind",description:"A three-dot Merit or a major advantage beyond ordinary game mechanics."},
+  ],
+} as const;
+
 export const SUPPLEMENTAL_MERITS_EN = [
   ...KITH_AND_KIN_MERITS_EN,
   ...COURT_MERITS_EN,
+  ELEMENTAL_WARRIOR_EN,
+  ENCHANTING_PERFORMANCE_EN,
+  HOLLOW_EN,
+  MYSTERY_CULT_INFLUENCE_EN,
   HEDGE_DUELIST_EN,
 ] as const;

@@ -49,6 +49,7 @@ This document records exceptional behavior that must survive the clean reimport 
 - When spending Experience on a repeatable Merit, list every owned instance separately as an upgrade target and also offer a `New Allies` option. A new instance begins without a subject so the player can specify it.
 - Refunds must identify the exact instance by stable ID and remove or decrement only that instance.
 - Continue auditing the remaining source-defined repeatable Merits during import; do not infer repeatability merely because a Merit names a subject.
+- Acquired Taste is explicitly repeatable; each instance records a different sapient supernatural kind.
 - Confirmed independent instances include Fae Mount, Mentor, Retainer, Safe Place, and Token. Each Token instance represents a distinct Token.
 - Striking Looks is repeatable; each distinct appearance is an independent one- or two-dot instance with its own inline description.
 - Contacts and Staff are single aggregate Merits rather than repeatable rows. They have no five-dot ceiling: every Contacts dot records another group or field, and every Staff dot records another Skill represented among the employees.
@@ -77,7 +78,10 @@ Only rules-mandated choices are restored. The following configurations have been
 - Warded Dreams' Bastion description and Fortification reminder.
 - The rules-mandated choices for Area of Expertise, Defensive Combat, Fighting Finesse, Multilingual, Quick Draw, and Unseen Sense.
 
-Hollow and Mystery Cult Influence remain pending catalog/source verification before any former custom UI is restored.
+- Hollow is restored from Changeling: The Lost with its rating-budgeted enhancements.
+- Mystery Cult Influence is restored as the three-to-five-dot influence variant of Mystery Cult Initiation and uses the same deterministic grant editor without ordinary membership responsibilities.
+- Fae Pet records only the name of its chosen Dread Power. A Dread Power catalog or subsystem is explicitly outside this rebuild.
+- Seasonal Court Merits persist their rules-mandated subject choices: group, desire, wrath, supernatural kind, fear, sorrow, or the entity and favor owed, as applicable.
 
 ## Confirmed display fields
 
@@ -117,4 +121,4 @@ Additional structured controls are allowed only where a specific Merit rule requ
 
 - Catalog membership and purchase eligibility are separate concerns. A valid Merit remains in the canonical catalog even when the current character cannot meet its prerequisites.
 - Lucid Dreamer must be imported with the book prerequisite `Non-changeling, Resolve •••` even though the site omitted it.
-- The future prerequisite-validation mechanism must prevent a Changeling from selecting or purchasing Lucid Dreamer, while leaving the catalog record available to eligible characters.
+- The prerequisite-validation mechanism prevents a Changeling from selecting or purchasing Lucid Dreamer while leaving the catalog record available to eligible characters. It also evaluates canonical Attributes, Skills, Wyrd, Size, Contracts, required or forbidden Merits, Seeming alternatives, and Seasonal Court Mantle/Court Goodwill access.

@@ -4535,7 +4535,7 @@ function ExperienceMeritPicker({
   const [category, setCategory] = useState("Todas");
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
   const catalog = alphabetical([
-      ...getMeritsForLine(line).filter(item=>meritPrerequisitesMet(item,{gameLine:line,court:String(character.line_data.court??""),mantle:character.merits.find((owned)=>owned.name==="Mantle")?.dots,merits:character.merits})&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))),
+      ...getMeritsForLine(line).filter(item=>meritPrerequisitesMet(item,{gameLine:line,attributes:character.attributes,skills:character.skills,seeming:String(character.line_data.seeming??""),wyrd:Number(character.line_data.wyrd??1),size:Number(character.derived.Tamanho??5),powers:[...objectList(character.line_data.contracts),...objectList(character.line_data.learned_contracts)].map((contract)=>String(contract.originalName??contract.name??"")),court:String(character.line_data.court??""),mantle:character.merits.find((owned)=>owned.name==="Mantle")?.dots,merits:character.merits})&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))),
       ...homebrews.merits.filter(
         (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
       ),

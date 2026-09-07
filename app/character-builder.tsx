@@ -323,7 +323,7 @@ export function CharacterBuilder({
   const meritBudget = meritAllowance - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
   const meritCatalog = useMemo(() => {
     const merged = new Map(
-      getMeritsForLine(line).filter(item=>item.name !== "Mantle" && meritPrerequisitesMet(item,{gameLine:line,court,mantle:line==="CtL"?(initial?.merits.find((owned)=>owned.name==="Mantle"&&owned.grantedBy==="Corte")?.dots??1):undefined,merits}) && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
+      getMeritsForLine(line).filter(item=>item.name !== "Mantle" && meritPrerequisitesMet(item,{gameLine:line,attributes,skills,seeming,wyrd:Number(initial?.line_data?.wyrd??1),court,mantle:line==="CtL"?(initial?.merits.find((owned)=>owned.name==="Mantle"&&owned.grantedBy==="Corte")?.dots??1):undefined,merits,powers:contracts.map((contract)=>contract.originalName||contract.name).filter(Boolean)}) && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
     );
     homebrews.merits
       .filter((item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id))
@@ -3043,18 +3043,18 @@ function StructuredMeritEditor({
 }
 
 const HOLLOW_OPTIONS = [
-  ["Alarme de Hob", 1],
-  ["Artigos de Luxo", 1],
-  ["Jardim de Sombras", 1],
-  ["Cabine Telefônica Fantasma", 1],
-  ["Rota Zero", 1],
-  ["Questão de Tamanho 1", 1],
-  ["Questão de Tamanho 2", 2],
-  ["Rota de Fuga 1", 1],
-  ["Rota de Fuga 2", 2],
-  ["Entrada Oculta", 2],
-  ["Acesso Fácil", 3],
-  ["Terreno Próprio", 3],
+  ["Hob Alarm", 1],
+  ["Luxury Goods", 1],
+  ["Shadow Garden", 1],
+  ["Phantom Phone Booth", 1],
+  ["Route Zero", 1],
+  ["Size Matters 1", 1],
+  ["Size Matters 2", 2],
+  ["Escape Route 1", 1],
+  ["Escape Route 2", 2],
+  ["Hidden Entry", 2],
+  ["Easy Access", 3],
+  ["Home Turf", 3],
 ] as const;
 function HollowEditor({
   merit,

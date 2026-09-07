@@ -24,6 +24,9 @@ const MENTOR_TRAITS = [
   "Athletics","Brawl","Drive","Firearms","Larceny","Stealth","Survival","Weaponry",
   "Animal Ken","Empathy","Expression","Intimidation","Persuasion","Socialize","Streetwise","Subterfuge","Resources",
 ].map((label)=>({value:label,label}));
+const SKILL_OPTIONS=MENTOR_TRAITS.filter((item)=>item.value!=="Resources");
+const PHYSICAL_SKILL_OPTIONS=SKILL_OPTIONS.filter((item)=>["Athletics","Brawl","Drive","Firearms","Larceny","Stealth","Survival","Weaponry"].includes(item.value));
+const ATTRIBUTE_OPTIONS=["Intelligence","Wits","Resolve","Strength","Dexterity","Stamina","Presence","Manipulation","Composure"].map((label)=>({value:label,label}));
 
 // Official Merit-specific configuration is rebuilt only after source audit.
 export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
@@ -76,12 +79,36 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
   {name:"Quick Draw",fields:[{key:"specialty",label:"Weapon Specialty",kind:"text",placeholder:"Firearms or Weaponry Specialty"}]},
   {name:"Unseen Sense",fields:[{key:"phenomenon",label:"Supernatural phenomenon",kind:"text"}]},
   {name:"Warded Dreams",line:"CtL",fields:[]},
+  {name:"Blood and Bone",line:"CtL",fields:[
+    {key:"skill_1",label:"Physical Skill",kind:"select",options:PHYSICAL_SKILL_OPTIONS},
+    {key:"skill_2",label:"Second Skill",kind:"select",options:SKILL_OPTIONS},
+    {key:"animal",label:"Animal reflected by the fae mien",kind:"text"},
+  ]},
+  {name:"Eerie Eyes",line:"CtL",fields:[{key:"sensory_organs",label:"Unusual sensory organs",kind:"text"}]},
+  {name:"Know-It-All",line:"CtL",fields:[{key:"skill",label:"Chosen Skill",kind:"select",options:["Academics","Occult","Politics","Science"].map((label)=>({value:label,label}))}]},
+  {name:"Material Affinity",line:"CtL",fields:[{key:"material",label:"Chosen material",kind:"text"}]},
+  {name:"Mover and Shaker",line:"CtL",fields:[{key:"subculture",label:"Subculture",kind:"text"}]},
+  {name:"Running with the Wolves",line:"CtL",fields:[{key:"animal_group",label:"Animal group",kind:"text"}]},
+  {name:"Still Waters Run Deep",line:"CtL",fields:[{key:"attribute",label:"Chosen Attribute",kind:"select",options:ATTRIBUTE_OPTIONS}]},
+  {name:"Elemental Warrior",line:"CtL",fields:[{key:"element",label:"Physical element",kind:"text"}]},
+  {name:"Fae Pet",line:"CtL",fields:[{key:"dread_power",label:"Dread Power",kind:"text",placeholder:"Name of the pet's Dread Power"}]},
+  {name:"Friends in Low Places",line:"CtL",fields:[{key:"group",label:"Group",kind:"text"}]},
+  {name:"A Taste of Honey",line:"CtL",fields:[{key:"desire",label:"Chosen desire",kind:"text"}]},
+  {name:"Rageaholic",line:"CtL",fields:[{key:"wrath",label:"Chosen form of wrath",kind:"text"}]},
+  {name:"Acquired Taste",line:"CtL",fields:[{key:"supernatural_kind",label:"Sapient supernatural kind",kind:"text"}]},
+  {name:"Favored Phobia",line:"CtL",fields:[{key:"fear",label:"Chosen fear",kind:"text"}]},
+  {name:"Grief Connoisseur",line:"CtL",fields:[{key:"sorrow",label:"Chosen sorrow",kind:"text"}]},
+  {name:"Strange Favor",line:"CtL",fields:[
+    {key:"entity",label:"Supernatural entity",kind:"text"},
+    {key:"favor",label:"Favor owed",kind:"textarea"},
+  ]},
   {name:"Professional Training",fields:[]},
   {name:"Mystery Cult Initiation",fields:[]},
+  {name:"Mystery Cult Influence",fields:[]},
 ];
 export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
-const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Language","Library","Quick Draw","Safe Place","Status","Striking Looks","Token","Unseen Sense"]);
-const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Warded Dreams"]);
+const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Fae Pet","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Token","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
+const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams"]);
 export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name);
 export const isStructuredMerit = (name: string) => STRUCTURED_MERITS.has(name);
 export const meritConfigurationText = (value: string | undefined, _locale: Locale) => value ?? "";
@@ -162,7 +189,7 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
       const boosted=String(configuration.boosted_skill??"");
       if(merit.dots>=4&&boosted) skillBonuses[boosted]=(skillBonuses[boosted]??0)+1;
     }
-    if(merit.name==="Mystery Cult Initiation"){
+    if(merit.name==="Mystery Cult Initiation"||merit.name==="Mystery Cult Influence"){
       for(let level=1;level<=Math.min(5,merit.dots);level+=1){
         const prefix=`level_${level}`;
         const type=String(configuration[`${prefix}_type`]??"");

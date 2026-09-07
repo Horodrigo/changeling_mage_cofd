@@ -1361,7 +1361,12 @@ export const MERITS_EN = [
     "category": "Fighting",
     "prerequisites": "Wits •••, Firearms •••, Firearms(Revolvers) specialty",
     "description": "At one dot, can perform short bursts with revolvers. At three dots, can make a medium burst with revolvers, but doesn't gain an attack bonus. At five dots, with offhand revolver, medium burst can hit targets not close together, for an additional -2 penalty.",
-    "page": 377
+    "page": 377,
+    "levels": [
+      { "rating": 1, "name": "Short Burst", "description": "The character may perform short bursts with revolvers." },
+      { "rating": 3, "name": "Medium Burst", "description": "The character may perform a medium burst with revolvers, but gains no attack bonus from doing so." },
+      { "rating": 5, "name": "Split Fire", "description": "While wielding an offhand revolver, a medium burst may attack targets that are not close together at an additional -2 penalty." }
+    ]
   },
   {
     "id": "hurt-locker:headbutt",
