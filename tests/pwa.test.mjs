@@ -31,11 +31,13 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em
   ]);
   assert.match(workspace,/value: "stats", label: "Stats"/);
   assert.match(workspace,/mobile-attribute-grid/);
+  assert.match(workspace,/values=\{mountAttributes\} compactNames=\{isMobile\}/);
   assert.match(workspace,/<details className="contract-power-card"/);
   assert.match(workspace,/<summary className="contract-power-summary">/);
   assert.match(workspace,/systemTerm\(definition\.regalia,locale\).*definition\.source/);
   assert.doesNotMatch(workspace,/if \(!isMobile\).*contract-power/);
   assert.match(css,/\.contract-power-card \{/);
+  assert.match(css,/\.contract-power-list \{[^}]*align-items:start/);
 });
 
 test("não oferece prévia, impressão ou árvore duplicada para PDF", async () => {

@@ -52,8 +52,10 @@ import {
 } from "@/lib/creation-rules";
 import {
   getMeritsForLine,
+  meritPrerequisitesMet,
   meritRatingsFor,
   REPEATABLE_MERITS,
+  UNBOUNDED_MERITS,
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
@@ -72,6 +74,7 @@ import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
   findMeritConfiguration,
+  isInlineMeritConfiguration,
   isStructuredMerit,
   meritConfigurationTitle,
   normalizeMeritConfiguration,
@@ -320,7 +323,7 @@ export function CharacterBuilder({
   const meritBudget = meritAllowance - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
   const meritCatalog = useMemo(() => {
     const merged = new Map(
-      getMeritsForLine(line).filter(item=>item.name !== "Mantle" && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
+      getMeritsForLine(line).filter(item=>item.name !== "Mantle" && meritPrerequisitesMet(item,{gameLine:line,attributes,skills,seeming,wyrd:Number(initial?.line_data?.wyrd??1),court,mantle:line==="CtL"?(initial?.merits.find((owned)=>owned.name==="Mantle"&&owned.grantedBy==="Corte")?.dots??1):undefined,merits,powers:contracts.map((contract)=>contract.originalName||contract.name).filter(Boolean)}) && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
     );
     homebrews.merits
       .filter((item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id))
@@ -328,7 +331,7 @@ export function CharacterBuilder({
     return [...merged.values()].sort((a, b) =>
       a.translatedName.localeCompare(b.translatedName, "pt-BR"),
     );
-  }, [homebrews, line]);
+  }, [court, homebrews, line, merits]);
   const meritSpent = merits.reduce((sum, item) => sum + item.dots, 0);
   const pathData =
     MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
@@ -647,6 +650,13 @@ export function CharacterBuilder({
         ...(line === "CtL" && court && court !== "Sem Corte"
           ? [
               {
+                instanceId:
+                  initial?.merits.find(
+                    (item) =>
+                      item.name === "Mantle" &&
+                      item.grantedBy === "Corte" &&
+                      String(item.configuration?.court ?? "") === court,
+                  )?.instanceId ?? crypto.randomUUID(),
                 name: "Mantle",
                 dots:
                   initial?.merits.find(
@@ -1195,6 +1205,7 @@ function CtlStep(props: any) {
           catalog={props.meritCatalog}
           spent={props.meritSpent}
           budget={props.meritBudget}
+          currentCourt={props.court}
         />
       </div>
     </div>
@@ -1565,13 +1576,15 @@ function ContractSelector({
   const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
   const [search, setSearch] = useState("");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
-  const availableContracts = alphabetical(catalog, contractName,locale).filter((contract) =>
-    canSelectInitialContract(
-      contract,
-      [primaryRegalia, secondRegalia].filter(Boolean),
-      court,
-    ),
-  );
+  const availableContracts = alphabetical(catalog, contractName,locale)
+    .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
+    .filter((contract) =>
+      canSelectInitialContract(
+        contract,
+        [primaryRegalia, secondRegalia].filter(Boolean),
+        court,
+      ),
+    );
   const contractGroups = [
     ...REGALIA,
     ...availableContracts.map((item) => item.regalia).filter(
@@ -2525,12 +2538,14 @@ function Merits({
   catalog,
   spent,
   budget,
+  currentCourt,
 }: {
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
   catalog: MeritDefinition[];
   spent: number;
   budget: number;
+  currentCourt?: string;
 }) {
   const { locale, tr } = useLanguage();
   const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
@@ -2550,6 +2565,7 @@ function Merits({
     setMerits([
       ...merits,
       {
+        instanceId: crypto.randomUUID(),
         name: definition.name,
         dots: meritRatingsFor(definition)[0],
         sourceId: definition.sourceId,
@@ -2604,7 +2620,7 @@ function Merits({
                     next[index] = { ...selection, dots: Number(value) };
                     setMerits(next);
                   }}
-                  options={(definition ? meritRatingsFor(definition) : [1]).map(
+                  options={(definition ? meritRatingsFor(definition,Math.max(selection.dots,budget-spent+selection.dots)) : [1]).map(
                     String,
                   )}
                 />
@@ -2624,6 +2640,8 @@ function Merits({
               </div>
               <MeritConfigurationEditor
                 merit={selection}
+                inline={isInlineMeritConfiguration(selection.name)}
+                currentCourt={currentCourt}
                 onChange={(configuration) => {
                   const next = [...merits];
                   next[index] = { ...selection, configuration };
@@ -2689,7 +2707,7 @@ function Merits({
                             <strong>{meritName(definition)}</strong>
                             <small>
                               {definition.source} · p. {definition.page || "—"}{" "}
-                              · {formatRatings(meritRatingsFor(definition))}
+                              · {UNBOUNDED_MERITS.has(definition.name)?"1+":formatRatings(meritRatingsFor(definition))}
                             </small>
                             <p>{definition.description}</p>
                             {definition.prerequisites && (
@@ -2744,11 +2762,13 @@ export function MeritConfigurationEditor({
   onChange,
   compact = false,
   inline = false,
+  currentCourt,
 }: {
   merit: MeritSelection;
   onChange: (value: MeritConfiguration) => void;
   compact?: boolean;
   inline?: boolean;
+  currentCourt?: string;
 }) {
   const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
@@ -2780,16 +2800,18 @@ export function MeritConfigurationEditor({
             const courtOptions = alphabetical([
               ...CTL_COURT_DEFINITIONS
                 .filter((court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"))
+                .filter((court) => court.id !== courtCanonicalId(currentCourt))
                 .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale) })),
               ...homebrews.courts
                 .filter((court) => isHomebrewActive(homebrews, court.id))
+                .filter((court) => court.id !== courtCanonicalId(currentCourt))
                 .map((court) => ({ value: court.id, label: court.name })),
             ], (item) => item.label, locale);
             if (selected && !courtOptions.some((option) => option.value === selected))
               courtOptions.push({ value: selected, label: courtDisplayName(selected, locale) });
             return (
               <label key={field.key}>
-                {tr(field.label, "Benefited Court")}
+                {tr("Corte beneficiada", "Benefited Court")}
                 <Select value={courtCanonicalId(selected)} onValueChange={(next) => set(field.key, next)}>
                   <SelectTrigger><SelectValue placeholder={tr("Selecione uma Corte", "Select a Court")} /></SelectTrigger>
                   <SelectContent>
@@ -2800,28 +2822,11 @@ export function MeritConfigurationEditor({
             );
           }
           if (field.kind === "list")
-            return (
-              <label key={field.key}>
-                {field.label}
-                <textarea
-                  value={
-                    Array.isArray(value)
-                      ? value.join("\n")
-                      : String(value ?? "")
-                  }
-                  placeholder={field.placeholder}
-                  onChange={(event) =>
-                    set(
-                      field.key,
-                      event.target.value
-                        .split("\n")
-                        .map((item) => item.trim())
-                        .filter(Boolean),
-                    )
-                  }
-                />
-              </label>
-            );
+            return <fieldset key={field.key}><legend>{field.label}</legend><div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=>{const values=Array.isArray(value)?value:[String(value??"")];return <Input key={index} value={values[index]??""} placeholder={`${field.placeholder??field.label} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>;})}</div></fieldset>;
+          if (field.kind === "select") {
+            const selected=String(value??"");
+            return <label key={field.key}>{field.label}<Select value={selected} onValueChange={(next)=>set(field.key,next)}><SelectTrigger><SelectValue placeholder={field.placeholder??tr("Selecione uma opção","Select an option")}/></SelectTrigger><SelectContent>{(field.options??[]).map((option)=><SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent></Select></label>;
+          }
           if (field.kind === "textarea")
             return (
               <label key={field.key}>
@@ -3038,18 +3043,18 @@ function StructuredMeritEditor({
 }
 
 const HOLLOW_OPTIONS = [
-  ["Alarme de Hob", 1],
-  ["Artigos de Luxo", 1],
-  ["Jardim de Sombras", 1],
-  ["Cabine Telefônica Fantasma", 1],
-  ["Rota Zero", 1],
-  ["Questão de Tamanho 1", 1],
-  ["Questão de Tamanho 2", 2],
-  ["Rota de Fuga 1", 1],
-  ["Rota de Fuga 2", 2],
-  ["Entrada Oculta", 2],
-  ["Acesso Fácil", 3],
-  ["Terreno Próprio", 3],
+  ["Hob Alarm", 1],
+  ["Luxury Goods", 1],
+  ["Shadow Garden", 1],
+  ["Phantom Phone Booth", 1],
+  ["Route Zero", 1],
+  ["Size Matters 1", 1],
+  ["Size Matters 2", 2],
+  ["Escape Route 1", 1],
+  ["Escape Route 2", 2],
+  ["Hidden Entry", 2],
+  ["Easy Access", 3],
+  ["Home Turf", 3],
 ] as const;
 function HollowEditor({
   merit,

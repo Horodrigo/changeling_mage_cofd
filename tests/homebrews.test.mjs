@@ -83,7 +83,7 @@ test("Gunslinger é um Estilo de Combate Core completo para ambas as linhas", ()
       .getMeritsForLine(line)
       .find((item) => item.name === "Gunslinger");
     assert.equal(gunslinger?.line, "Core");
-    assert.equal(gunslinger?.category, "Fighting Style");
+    assert.equal(gunslinger?.category, "Fighting");
     assert.deepEqual(gunslinger?.ratings, [1, 3, 5]);
   }
   assert.deepEqual(

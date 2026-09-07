@@ -2,7 +2,7 @@ export type ChangelingCondition = {
   id: string;
   name: string;
   originalName: string;
-  category: "Mental" | "Física" | "Social" | "Sobrenatural" | "Changeling";
+  category: "Mental" | "Física" | "Physical" | "Social" | "Sobrenatural" | "Supernatural" | "Changeling";
   description: string;
   penalty?: string;
   resolution?: string;
@@ -82,6 +82,89 @@ export const CHANGELING_CONDITIONS: ChangelingCondition[] = [
 
 export function findChangelingCondition(id: string) {
   return CHANGELING_CONDITIONS.find((condition) => condition.id === id);
+}
+
+type ConditionEnglishText = { description: string; penalty?: string; resolution?: string; beat?: string };
+const CONDITION_TEXT_EN: Record<string, ConditionEnglishText> = {
+  amnesia:{description:"An important part of the character's memory is missing, creating complications when forgotten people, enemies, or obligations return."},
+  broken:{description:"The character has lost the ability to withstand emotional pressure and retreats from confrontation.",penalty:"−2 to Social and Resolve rolls; −5 to Intimidation."},
+  deprived:{description:"Withdrawal from an addiction prevents the character from concentrating or controlling themself.",penalty:"−1 die to Stamina, Resolve, and Composure pools."},
+  dissociation:{description:"Reality feels distant, and the changeling experiences their own actions as a passenger in their body."},
+  fixated:{description:"A single thought or command dominates the character's attention until it is fulfilled.",penalty:"−2 to all actions until the command is fulfilled or the scene ends."},
+  fugue:{description:"Trauma causes blackouts; similar situations may give the Storyteller control of the character for a scene."},
+  guilty:{description:"Profound remorse leaves the character emotionally vulnerable.",penalty:"−2 to Resolve or Composure when defending against Subterfuge, Empathy, or Intimidation."},
+  informed:{description:"Research provides decisive information about a subject. Resolve this Condition to turn a failure into a success, or a success into an exceptional success."},
+  inspired:{description:"Inspiration guides the character's action. Resolve this Condition to achieve an exceptional success with three successes and recover Willpower."},
+  lost:{description:"The character does not know where they are or how to reach their destination and must reorient before making progress."},
+  madness:{description:"Supernatural horrors have fractured the character's grasp on reality; once per chapter, the Storyteller may impose a negative modifier.",penalty:"Up to −(10 − current Clarity) on one Mental or Social roll, once per chapter."},
+  oblivious:{description:"The character is distracted and fails to notice what is happening around them.",penalty:"−2 to Perception rolls."},
+  obsession:{description:"An obsession dominates the character's attention and favors only actions directly related to it.",penalty:"9-again while pursuing the obsession; lose 10-again on unrelated actions."},
+  reckless:{description:"The character ignores consequences and seeks danger for the thrill of acting.",penalty:"−2 to Perception and other Composure rolls made to notice something."},
+  shaken:{description:"Severe fear interferes with the character's actions. The player may choose to fail an action impaired by that fear to resolve the Condition."},
+  sleepwalking:{description:"Dream and waking blur together, causing lost time, false memories of completed tasks, and neglected obligations."},
+  spooked:{description:"Contact with the supernatural fascinates and frightens the character until they complicate the situation because of it."},
+  steadfast:{description:"Resolve this Condition after failing an action to convert that result into a single success."},
+  stoic:{description:"The character shuts down emotionally, concealing trauma while blocking Clarity healing and sincere expression.",penalty:"+2 to Subterfuge rolls to conceal emotions; −2 to Hedgespinning; cannot heal Clarity while this Condition persists."},
+  swooned:{description:"Attraction to a specified person makes the character vulnerable to influence and reluctant to harm them.",penalty:"−2 to actions that would harm the person; that person gains +2 to Social rolls against the character."},
+  withdrawn:{description:"Doubt and insecurity drive the character to seek isolation and safety.",penalty:"−2 to all rolls that require interacting with other people."},
+  "arm-disability":{description:"One or both arms do not function without appropriate treatment or assistive technology.",penalty:"One arm: off-hand penalty; both arms: chance die for manual dexterity and −3 to other Physical actions."},
+  blind:{description:"The character cannot see and must replace that sense or contend with total darkness.",penalty:"Chance die on actions that require sight; −3 when another sense can substitute."},
+  "chronic-agony":{description:"Disabling pain returns after stress or physical exertion and inflicts the Stunned Tilt.",penalty:"Stunned: lose the next action and Defense until the character can act again."},
+  "chronic-sickness":{description:"A disease or toxin persists and worsens during exertion and stress.",penalty:"−1 to all actions, increasing by −1 every two turns to a maximum of −5."},
+  deaf:{description:"Hearing in one or both ears is severely impaired.",penalty:"One ear: −3 to Perception; both ears: chance die for auditory Perception and −2 in combat."},
+  disabled:{description:"The character cannot walk effectively without a wheelchair or another mobility aid.",penalty:"Effective Speed 1; a manual wheelchair uses Strength, while a powered chair has Speed 3."},
+  fragile:{description:"Improvised or damaged equipment has lost integrity and may fall apart during use."},
+  "leg-disability":{description:"One leg does not function properly without appropriate treatment or a prosthesis.",penalty:"Half Speed and −2 to Physical actions involving movement."},
+  lethargic:{description:"Extreme exhaustion weighs on the character until they get a full night's sleep.",penalty:"Cannot spend Willpower; cumulative −1 to all actions for every six hours without sleep."},
+  mute:{description:"The character cannot speak and must communicate through writing, gestures, or sign language."},
+  numb:{description:"Trauma leaves the body numb and mundane actions imprecise, while magic seems to ease the symptoms.",penalty:"−2 to all mundane Physical actions."},
+  volatile:{description:"A piece of equipment or a plan is on the verge of catastrophic failure.",penalty:"Any failure while using the equipment becomes a dramatic failure."},
+  bonded:{description:"A deep bond with an animal strengthens influence, trust, and resistance to fear.",penalty:"+2 to influence the animal; it may use the character's Animal Ken against fear or coercion."},
+  connected:{description:"The character has established useful relationships within a specified group.",penalty:"+2 to rolls involving the group; resolve to gain an automatic exceptional success when influencing it."},
+  "embarrassing-secret":{description:"A secret could cause ostracism, blackmail, or legal consequences if revealed."},
+  hunted:{description:"A serious enemy pursues the character to harm or torment them."},
+  leveraged:{description:"Someone holds enough leverage, blackmail material, or influence to demand a favor without resistance."},
+  notoriety:{description:"A bad reputation causes revulsion and ostracism among those who know it.",penalty:"−2 to Social rolls with anyone who knows the reputation; add one Door in Social maneuvering."},
+  "reluctant-aggressor":{description:"The character was compelled to harm someone against their will and hesitates before the designated victim.",penalty:"−2 to attacks against the designated victim."},
+  surveilled:{description:"A person or organization monitors the character's movements and gathers information about them."},
+  "goblin-queen":{description:"A fragmented goblin nature binds the character to the Hedge and attracts hobgoblin followers."},
+  "hedge-denizen":{description:"Debts and bargains have transformed the character into a goblin, changing their Contracts, Court, and relationship with the Hedge."},
+  soulless:{description:"The loss of the soul slowly erodes will, identity, and the ability to resist degeneration."},
+  ravaged:{description:"Faerie predation has destroyed dreams or emotions, leaving the character empty and unable to rest.",penalty:"−2 to all rolls; cannot recover Willpower through sleep."},
+  "behind-your-eyes":{description:"A Hedge ghost, hobgoblin, or True Fae shares the changeling's senses and may uncover their secrets."},
+  comatose:{description:"At Clarity zero, the changeling retreats into a continuous dream they believe is reality."},
+  cursed:{description:"A curse imposed by another changeling persists while the victim maintains its specified routine or requirement."},
+  "deep-kenning":{description:"Restored Clarity grants a flash of insight into nearby supernatural phenomena."},
+  "dream-assailant":{description:"Excessive alterations have made the dream's eidolons hostile and resistant to further changes.",penalty:"−5 to peaceful interaction or remaining unnoticed; paradigm shifts cost +2 successes."},
+  "dream-infiltrator":{description:"A significant alteration has made the dream's eidolons suspicious of the character.",penalty:"−2 to peaceful interaction; −3 to remain unnoticed; subtle shifts cost +1 success."},
+  "dream-intruder":{description:"Multiple alterations have made the dream and its eidolons uncomfortable with the character's presence.",penalty:"−3 to peaceful interaction and −4 to remain unnoticed."},
+  egomaniac:{description:"Without Clarity, the changeling imitates the boundless ego of the True Fae and ignores other people's needs.",penalty:"Failures on Social rolls become dramatic failures without granting a Beat."},
+  "enchanted-obligation":{description:"An enchanted bargain protects the changeling while granting a mortal sight through the Mask and access to fae assistance."},
+  "glamour-addicted":{description:"The character's body deteriorates when they do not regularly consume enough Glamour."},
+  hexed:{description:"A changeling has imposed a temporary inconvenience that ends only when the specified action or mission is completed."},
+  "icon-shard":{description:"A broken oath has given malicious life to a fragment of the Icon, which now torments the changeling."},
+  indebted:{description:"The character owes a service to a fae being and may repay it by accepting damage, a detrimental Condition, or a Personal Tilt."},
+  kithseeker:{description:"The changeling must face five trials in the Hedge to find a Kith matching the call of their soul."},
+  oathbreaker:{description:"The Wyrd marks an oathbreaker and inspires distrust among changelings.",penalty:"−1 to Social actions with changelings; cannot seal statements with Glamour."},
+  obliged:{description:"A service bargain with a mortal protects the changeling from Huntsmen and Wyrd-bound pursuers."},
+  "hedge-addiction":{description:"The Hedge calls to and tempts the character, making it difficult to remain away from its paths and dangers."},
+  "arcadian-dreams":{description:"Visions of a ward trapped in Arcadia distract the character but also reveal the ward's direction within the Hedge.",penalty:"+1 to navigate the Hedge toward the ward; the player may choose to fail to represent the visions."},
+};
+
+export function changelingConditionPresentation(condition: ChangelingCondition, locale: "pt-BR" | "en-US"): ChangelingCondition {
+  if (locale === "pt-BR") return condition;
+  const english = CONDITION_TEXT_EN[condition.id];
+  return {
+    ...condition,
+    name: condition.originalName,
+    category: condition.category === "Física" ? "Physical" : condition.category === "Sobrenatural" ? "Supernatural" : condition.category,
+    description: english?.description ?? condition.description,
+    penalty: english ? english.penalty : condition.penalty,
+    resolution: english?.resolution ?? (!english && condition.resolution ? condition.resolution : condition.persistent
+      ? "Permanently remove the cause of the Condition or fulfill the recovery method established by the Storyteller and the listed source."
+      : "Fulfill the circumstance that ends the described effect or remove its cause during the story."),
+    beat: condition.persistent ? english?.beat ?? (!english && condition.beat ? condition.beat : "Gain a Beat when this Condition causes a significant complication or limitation, at most once per chapter.") : undefined,
+  };
 }
 
 // As edições de CofD sempre apresentam uma Resolução e, nas Conditions
