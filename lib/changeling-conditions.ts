@@ -13,7 +13,7 @@ export type ChangelingCondition = {
   page: number;
 };
 
-export const CHANGELING_CONDITIONS: ChangelingCondition[] = [
+const LEGACY_CONDITION_RECORDS: ChangelingCondition[] = [
   {id:"contemptuous",name:"Contemptuous",originalName:"Contemptuous",category:"Social",description:"You cannot stand a specified rival and enjoy opportunities to work against them.",penalty:"Gain +2 on rolls that adversely affect the specified character. Their Social maneuvering treats their impression one level lower, to Hostile. Multiple instances may name different rivals.",resolution:"Harm the rival in a way that puts you or your allies in danger.",source:"Book of Courts",sourceCode:"BoC",page:112},
   {id:"amnesia",name:"Amnésia",originalName:"Amnesia",category:"Mental",description:"Uma parte importante da memória desapareceu, trazendo dificuldades quando pessoas, inimigos ou obrigações esquecidas retornam.",persistent:true,source:"Chronicles of Darkness",sourceCode:"CofD",page:288},
   {id:"broken",name:"Quebrado",originalName:"Broken",category:"Mental",description:"O personagem perdeu a capacidade de enfrentar pressão emocional e recua diante de confrontos.",penalty:"−2 em testes Sociais e com Perseverança; −5 em Intimidação.",persistent:true,source:"Chronicles of Darkness",sourceCode:"CofD",page:288},
@@ -79,10 +79,6 @@ export const CHANGELING_CONDITIONS: ChangelingCondition[] = [
   {id:"hedge-addiction",name:"Vício na Sebe",originalName:"Hedge Addiction",category:"Changeling",description:"A Sebe chama e tenta o personagem, tornando difícil permanecer longe de seus caminhos e perigos.",persistent:true,source:"Changeling the Lost",sourceCode:"CTL 2e",page:340},
   {id:"arcadian-dreams",name:"Sonhos Arcadianos",originalName:"Arcadian Dreams",category:"Changeling",description:"Visões do protegido preso em Arcádia distraem o personagem, mas também indicam sua direção dentro da Sebe.",penalty:"+1 para navegar pela Sebe em direção ao protegido; o jogador pode escolher falhar para representar as visões.",persistent:true,source:"Changeling the Lost",sourceCode:"CTL 2e",page:333},
 ];
-
-export function findChangelingCondition(id: string) {
-  return CHANGELING_CONDITIONS.find((condition) => condition.id === id);
-}
 
 type ConditionEnglishText = { description: string; penalty?: string; resolution?: string; beat?: string };
 const CONDITION_TEXT_EN: Record<string, ConditionEnglishText> = {
@@ -151,30 +147,33 @@ const CONDITION_TEXT_EN: Record<string, ConditionEnglishText> = {
   "arcadian-dreams":{description:"Visions of a ward trapped in Arcadia distract the character but also reveal the ward's direction within the Hedge.",penalty:"+1 to navigate the Hedge toward the ward; the player may choose to fail to represent the visions."},
 };
 
-export function changelingConditionPresentation(condition: ChangelingCondition, locale: "pt-BR" | "en-US"): ChangelingCondition {
-  if (locale === "pt-BR") return condition;
-  const english = CONDITION_TEXT_EN[condition.id];
+type CanonicalCondition = ChangelingCondition & { portuguese: Pick<ChangelingCondition,"name"|"category"|"description"|"penalty"|"resolution"|"beat"> };
+
+// The exported catalog is English-first. Existing Portuguese copy is retained
+// only as presentation metadata until its separate editorial audit.
+export const CHANGELING_CONDITIONS: CanonicalCondition[] = LEGACY_CONDITION_RECORDS.map((legacy)=>{
+  const english=CONDITION_TEXT_EN[legacy.id];
+  const alreadyEnglish=legacy.name===legacy.originalName;
+  const category=legacy.category==="Física"?"Physical":legacy.category==="Sobrenatural"?"Supernatural":legacy.category;
   return {
-    ...condition,
-    name: condition.originalName,
-    category: condition.category === "Física" ? "Physical" : condition.category === "Sobrenatural" ? "Supernatural" : condition.category,
-    description: english?.description ?? condition.description,
-    penalty: english ? english.penalty : condition.penalty,
-    resolution: english?.resolution ?? (!english && condition.resolution ? condition.resolution : condition.persistent
+    ...legacy,
+    name:legacy.originalName,
+    category,
+    description:english?.description??legacy.description,
+    penalty:english?.penalty??(alreadyEnglish?legacy.penalty:undefined),
+    resolution:english?.resolution??(alreadyEnglish&&legacy.resolution?legacy.resolution:legacy.persistent
       ? "Permanently remove the cause of the Condition or fulfill the recovery method established by the Storyteller and the listed source."
       : "Fulfill the circumstance that ends the described effect or remove its cause during the story."),
-    beat: condition.persistent ? english?.beat ?? (!english && condition.beat ? condition.beat : "Gain a Beat when this Condition causes a significant complication or limitation, at most once per chapter.") : undefined,
+    beat:legacy.persistent?(english?.beat??(alreadyEnglish?legacy.beat:undefined)??"Gain a Beat when this Condition causes a significant complication or limitation, at most once per chapter."):undefined,
+    portuguese:{name:legacy.name,category:legacy.category,description:legacy.description,penalty:legacy.penalty,resolution:legacy.resolution,beat:legacy.beat},
   };
+});
+
+export function findChangelingCondition(id: string) {
+  return CHANGELING_CONDITIONS.find((condition) => condition.id === id);
 }
 
-// As edições de CofD sempre apresentam uma Resolução e, nas Conditions
-// persistentes, um gatilho de Beat. Os textos abaixo também servem como
-// migração segura para registros importados antes de esses campos existirem.
-for (const condition of CHANGELING_CONDITIONS) {
-  condition.resolution ??= condition.persistent
-    ? "Remova de modo duradouro a causa da Condition ou cumpra a forma de recuperação estabelecida pelo Narrador e pela fonte indicada."
-    : "Cumpra a circunstância que encerra o efeito descrito ou elimine sua causa durante a história.";
-  condition.beat ??= condition.persistent
-    ? "Receba um Beat quando esta Condition causar uma complicação ou limitação significativa (no máximo uma vez por capítulo)."
-    : undefined;
+export function changelingConditionPresentation(condition: CanonicalCondition, locale: "pt-BR" | "en-US"): ChangelingCondition {
+  if(locale==="en-US") return condition;
+  return {...condition,...condition.portuguese};
 }

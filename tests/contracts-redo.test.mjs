@@ -90,12 +90,16 @@ test("família Traders conclui os 80 Contratos de Book of Courts", () => {
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts").length, 80);
 });
 
-test("catálogo de Tilts contém todo o Core e os três Tilts de Book of Courts", async () => {
+test("catálogo de Tilts contém o Core, fontes oficiais aprovadas e extensões de Book of Courts", async () => {
   const { TILTS } = await vite.ssrLoadModule("/lib/tilts.ts");
   assert.equal(TILTS.filter((tilt) => tilt.sourceCode === "CofD").length, 21);
-  assert.deepEqual(new Set(TILTS.filter((tilt) => tilt.sourceCode === "BoC").map((tilt) => tilt.name)), new Set(["Riot", "Drowning", "Hobgoblin Band"]));
-  assert.equal(TILTS.length, 24);
+  assert.deepEqual(new Set(TILTS.filter((tilt) => tilt.sourceCode === "BoC").map((tilt) => tilt.name)), new Set(["Drowning", "Hobgoblin Band"]));
+  assert.equal(TILTS.length, 34);
   assert.ok(TILTS.every((tilt) => tilt.description && tilt.effect && tilt.causing && tilt.ending));
+  assert.equal(TILTS.filter((tilt)=>!["BoC"].includes(tilt.sourceCode)).length,32);
+  for(const name of ["Bleeding","Burning","Came Prepared","Pierced Armor","Pinned","Flesh Too Solid","Nimbus","Poor Light","Shattered Time","Urban Collapse","Riot"]){
+    assert.equal(TILTS.filter((tilt)=>tilt.name===name).length,1,name);
+  }
 });
 
 test("catálogo cobre integralmente os 173 registros do índice offline", () => {
