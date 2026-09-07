@@ -1,0 +1,167 @@
+[
+  {
+    "name": "Arm Wrack",
+    "sourceCode": "CofD",
+    "page": 280
+  },
+  {
+    "name": "Beaten Down",
+    "sourceCode": "CofD",
+    "page": 280
+  },
+  {
+    "name": "Bleeding",
+    "sourceCode": "HL",
+    "page": 143
+  },
+  {
+    "name": "Blinded",
+    "sourceCode": "CofD",
+    "page": 281
+  },
+  {
+    "name": "Blizzard",
+    "sourceCode": "CofD",
+    "page": 281
+  },
+  {
+    "name": "Burning",
+    "sourceCode": "HL",
+    "page": 143
+  },
+  {
+    "name": "Came Prepared",
+    "sourceCode": "HL",
+    "page": 61
+  },
+  {
+    "name": "Deafened",
+    "sourceCode": "CofD",
+    "page": 281
+  },
+  {
+    "name": "Drugged",
+    "sourceCode": "CofD",
+    "page": 281
+  },
+  {
+    "name": "Earthquake",
+    "sourceCode": "CofD",
+    "page": 282
+  },
+  {
+    "name": "Extreme Cold",
+    "sourceCode": "CofD",
+    "page": 282
+  },
+  {
+    "name": "Extreme Heat",
+    "sourceCode": "CofD",
+    "page": 282
+  },
+  {
+    "name": "Flesh Too Solid",
+    "sourceCode": "CTL 2e",
+    "page": 329
+  },
+  {
+    "name": "Flooded",
+    "sourceCode": "CofD",
+    "page": 282
+  },
+  {
+    "name": "Heavy Rain",
+    "sourceCode": "CofD",
+    "page": 283
+  },
+  {
+    "name": "Heavy Winds",
+    "sourceCode": "CofD",
+    "page": 283
+  },
+  {
+    "name": "Ice",
+    "sourceCode": "CofD",
+    "page": 284
+  },
+  {
+    "name": "Immobilized",
+    "sourceCode": "CofD",
+    "page": 284
+  },
+  {
+    "name": "Insane",
+    "sourceCode": "CofD",
+    "page": 285
+  },
+  {
+    "name": "Insensate",
+    "sourceCode": "CofD",
+    "page": 285
+  },
+  {
+    "name": "Knocked Down",
+    "sourceCode": "CofD",
+    "page": 285
+  },
+  {
+    "name": "Leg Wrack",
+    "sourceCode": "CofD",
+    "page": 285
+  },
+  {
+    "name": "Nimbus",
+    "sourceCode": "MTA 2e",
+    "page": 89
+  },
+  {
+    "name": "Pierced Armor",
+    "sourceCode": "HL",
+    "page": 143
+  },
+  {
+    "name": "Pinned",
+    "sourceCode": "HL",
+    "page": 143
+  },
+  {
+    "name": "Poisoned",
+    "sourceCode": "CofD",
+    "page": 286
+  },
+  {
+    "name": "Poor Light",
+    "sourceCode": "MTA 2e",
+    "page": 323
+  },
+  {
+    "name": "Riot",
+    "sourceCode": "DE",
+    "page": 576
+  },
+  {
+    "name": "Shattered Time",
+    "sourceCode": "DE",
+    "page": 46
+  },
+  {
+    "name": "Sick",
+    "sourceCode": "CofD",
+    "page": 286
+  },
+  {
+    "name": "Stunned",
+    "sourceCode": "CofD",
+    "page": 286
+  },
+  {
+    "name": "Urban Collapse",
+    "sourceCode": "DE",
+    "page": 573
+  },
+  {
+    "name": "Zombies!",
+    "sourceCode": "CofD",
+    "page": 150
+  }
+]

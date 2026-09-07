@@ -1,0 +1,437 @@
+[
+  {
+    "name": "Addicted",
+    "sourceCode": "MTA 2e",
+    "page": 314
+  },
+  {
+    "name": "Amnesia",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Broken",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Deprived",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Dissociation",
+    "sourceCode": "CTL 2e",
+    "page": 336
+  },
+  {
+    "name": "Fixated",
+    "sourceCode": "HL",
+    "page": 150
+  },
+  {
+    "name": "Fugue",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Guilty",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Informed",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Inspired",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Lost",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Madness",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Oblivious",
+    "sourceCode": "HL",
+    "page": 150
+  },
+  {
+    "name": "Obsession",
+    "sourceCode": "CofD",
+    "page": 290
+  },
+  {
+    "name": "Reckless",
+    "sourceCode": "CTL 2e",
+    "page": 344
+  },
+  {
+    "name": "Shaken",
+    "sourceCode": "CofD",
+    "page": 290
+  },
+  {
+    "name": "Sleepwalking",
+    "sourceCode": "CTL 2e",
+    "page": 344
+  },
+  {
+    "name": "Spooked",
+    "sourceCode": "CofD",
+    "page": 291
+  },
+  {
+    "name": "Steadfast",
+    "sourceCode": "CofD",
+    "page": 291
+  },
+  {
+    "name": "Stoic",
+    "sourceCode": "CTL 2e",
+    "page": 345
+  },
+  {
+    "name": "Strained",
+    "sourceCode": "MTA 2e",
+    "page": 318
+  },
+  {
+    "name": "Swooned",
+    "sourceCode": "CofD",
+    "page": 291
+  },
+  {
+    "name": "Withdrawn",
+    "sourceCode": "CTL 2e",
+    "page": 346
+  },
+  {
+    "name": "Arm Disability",
+    "sourceCode": "HL",
+    "page": 57
+  },
+  {
+    "name": "Blind",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Chronic Agony",
+    "sourceCode": "HL",
+    "page": 57
+  },
+  {
+    "name": "Chronic Sickness",
+    "sourceCode": "HL",
+    "page": 57
+  },
+  {
+    "name": "Deaf",
+    "sourceCode": "HL",
+    "page": 58
+  },
+  {
+    "name": "Disabled",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Fragile",
+    "sourceCode": "CofD",
+    "page": 102
+  },
+  {
+    "name": "Leg Disability",
+    "sourceCode": "HL",
+    "page": 58
+  },
+  {
+    "name": "Lethargic",
+    "sourceCode": "CTL 2e",
+    "page": 342
+  },
+  {
+    "name": "Mute",
+    "sourceCode": "CofD",
+    "page": 290
+  },
+  {
+    "name": "Numb",
+    "sourceCode": "CTL 2e",
+    "page": 343
+  },
+  {
+    "name": "Volatile",
+    "sourceCode": "CofD",
+    "page": 102
+  },
+  {
+    "name": "Bonded",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Connected",
+    "sourceCode": "CofD",
+    "page": 288
+  },
+  {
+    "name": "Embarrassing Secret",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Hunted",
+    "sourceCode": "CTL 2e",
+    "page": 342
+  },
+  {
+    "name": "Leveraged",
+    "sourceCode": "CofD",
+    "page": 289
+  },
+  {
+    "name": "Notoriety",
+    "sourceCode": "CofD",
+    "page": 290
+  },
+  {
+    "name": "Reluctant Aggressor",
+    "sourceCode": "HL",
+    "page": 150
+  },
+  {
+    "name": "Surveilled",
+    "sourceCode": "HL",
+    "page": 150
+  },
+  {
+    "name": "Dissonant Tuning",
+    "sourceCode": "NH-NA",
+    "page": 163
+  },
+  {
+    "name": "Goblin Queen",
+    "sourceCode": "CTL 2e",
+    "page": 339
+  },
+  {
+    "name": "Hedge Denizen",
+    "sourceCode": "CTL 2e",
+    "page": 340
+  },
+  {
+    "name": "The Sibyl's Tongue",
+    "sourceCode": "DE",
+    "page": 78
+  },
+  {
+    "name": "Soul Shocked",
+    "sourceCode": "MTA 2e",
+    "page": 318
+  },
+  {
+    "name": "Soulless",
+    "sourceCode": "CofD",
+    "page": 290
+  },
+  {
+    "name": "Thrall",
+    "sourceCode": "MTA 2e",
+    "page": 318
+  },
+  {
+    "name": "Unintended Medium",
+    "sourceCode": "DEC",
+    "page": 273
+  },
+  {
+    "name": "Charmed",
+    "sourceCode": "MTA 2e",
+    "page": 315
+  },
+  {
+    "name": "Ravaged",
+    "sourceCode": "CTL 2e",
+    "page": 344
+  },
+  {
+    "name": "Defeated",
+    "sourceCode": "MTA 2e",
+    "page": 315
+  },
+  {
+    "name": "Degenerate Mana",
+    "sourceCode": "NH-NA",
+    "page": 163
+  },
+  {
+    "name": "Humbled",
+    "sourceCode": "MTA 2e",
+    "page": 316
+  },
+  {
+    "name": "Mage Hunter",
+    "sourceCode": "NH-NA",
+    "page": 164
+  },
+  {
+    "name": "Megalomaniacal",
+    "sourceCode": "MTA 2e",
+    "page": 317
+  },
+  {
+    "name": "Mystery Commands",
+    "sourceCode": "MTA 2e",
+    "page": 317
+  },
+  {
+    "name": "Rampant",
+    "sourceCode": "MTA 2e",
+    "page": 317
+  },
+  {
+    "name": "Supernal Harrowing",
+    "sourceCode": "NH-NA",
+    "page": 164
+  },
+  {
+    "name": "Tainted Aspiration",
+    "sourceCode": "NH-NA",
+    "page": 164
+  },
+  {
+    "name": "Triumphant",
+    "sourceCode": "MTA 2e",
+    "page": 319
+  },
+  {
+    "name": "Abyssal Backlash",
+    "sourceCode": "MTA 2e",
+    "page": 117
+  },
+  {
+    "name": "Abyssal Debilitation",
+    "sourceCode": "NH-NA",
+    "page": 163
+  },
+  {
+    "name": "Abyssal Imago",
+    "sourceCode": "MTA 2e",
+    "page": 117
+  },
+  {
+    "name": "Abyssal Nimbus",
+    "sourceCode": "MTA 2e",
+    "page": 116
+  },
+  {
+    "name": "Monster",
+    "sourceCode": "DE",
+    "page": 81
+  },
+  {
+    "name": "Unclean",
+    "sourceCode": "DE",
+    "page": 81
+  },
+  {
+    "name": "Behind Your Eyes",
+    "sourceCode": "Kith",
+    "page": 140
+  },
+  {
+    "name": "Comatose",
+    "sourceCode": "CTL 2e",
+    "page": 334
+  },
+  {
+    "name": "Cursed",
+    "sourceCode": "Kith",
+    "page": 140
+  },
+  {
+    "name": "Deep Kenning",
+    "sourceCode": "Kith",
+    "page": 140
+  },
+  {
+    "name": "Dream Assailant",
+    "sourceCode": "CTL 2e",
+    "page": 336
+  },
+  {
+    "name": "Dream Infiltrator",
+    "sourceCode": "CTL 2e",
+    "page": 337
+  },
+  {
+    "name": "Dream Intruder",
+    "sourceCode": "CTL 2e",
+    "page": 338
+  },
+  {
+    "name": "Egomaniac",
+    "sourceCode": "Kith",
+    "page": 141
+  },
+  {
+    "name": "Enchanted Obligation",
+    "sourceCode": "Kith",
+    "page": 141
+  },
+  {
+    "name": "Glamour Addicted",
+    "sourceCode": "CTL 2e",
+    "page": 339
+  },
+  {
+    "name": "Hexed",
+    "sourceCode": "Kith",
+    "page": 141
+  },
+  {
+    "name": "Icon Shard",
+    "sourceCode": "Kith",
+    "page": 141
+  },
+  {
+    "name": "Indebted",
+    "sourceCode": "Kith",
+    "page": 142
+  },
+  {
+    "name": "Kithseeker",
+    "sourceCode": "Kith",
+    "page": 142
+  },
+  {
+    "name": "Oathbreaker",
+    "sourceCode": "CTL 2e",
+    "page": 343
+  },
+  {
+    "name": "Obliged",
+    "sourceCode": "CTL 2e",
+    "page": 343
+  },
+  {
+    "name": "Hedge Addiction",
+    "sourceCode": "CTL 2e",
+    "page": 340
+  },
+  {
+    "name": "Arcadian Dreams",
+    "sourceCode": "CTL 2e",
+    "page": 333
+  }
+]

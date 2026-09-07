@@ -2688,10 +2688,12 @@ function ConditionManager({
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const chosen = new Map(selected.map((item) => [item.id, item]));
-  const present = (item: (typeof catalog)[number]) =>
-    catalog === CHANGELING_CONDITIONS
-      ? changelingConditionPresentation(item, locale)
+  const present = (item: (typeof catalog)[number]) => {
+    const shared = findChangelingCondition(item.id);
+    return shared?.sourceCode === item.sourceCode
+      ? changelingConditionPresentation(shared, locale)
       : item;
+  };
   const presentedCatalog = catalog.map(present);
   const categories = [
     "Todas",

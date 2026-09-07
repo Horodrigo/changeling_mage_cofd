@@ -17,7 +17,7 @@ Added from the PDF audit:
 - Monster and Unclean — Dark Eras p. 81.
 - Unintended Medium — Dark Eras Companion p. 273.
 
-The approved-source Tilt index lists 32 records after PDF reconciliation: 21 CofD, 5 Hurt Locker, 1 CtL, 2 Mage, and 3 Dark Eras. The offline index omits Burning, but Hurt Locker p. 143 presents it beside Bleeding, Pierced Armor, and Pinned, so the PDF controls.
+The approved-source Tilt catalog contains 33 records after index and PDF reconciliation: 22 CofD, 5 Hurt Locker, 1 CtL, 2 Mage, and 3 Dark Eras. The offline index omits the Hurt Locker printing of Burning because its row cites an unapproved source, but Hurt Locker p. 143 presents it beside Bleeding, Pierced Armor, and Pinned, so the approved PDF controls. The index spells Drugged's source as `CoFD`; this was normalized to `CofD`. It also calls the p. 281 Tilt `Blind`, while the PDF heading and cross-references use `Blinded`; the PDF name controls. A line-by-line comparison recovered Zombies! (CofD p. 150), which the earlier count-only audit had missed. The index citations of p. 282 for Extreme Heat and Flooded supersede the previous incorrect p. 283 metadata.
 
 Added or corrected from the PDF audit:
 
@@ -29,10 +29,16 @@ Added or corrected from the PDF audit:
 - Shattered Time — Dark Eras p. 46.
 - Urban Collapse — Dark Eras p. 573.
 - Riot — Dark Eras p. 576; this official record supersedes the source attribution previously taken from the homebrew Book of Courts implementation.
+- Zombies! — Chronicles of Darkness p. 150.
 
-## Remaining conversion work
+## Completed conversion and verification
 
-- Replace the remaining 54 generic English resolution placeholders in the Changeling-facing official catalog with source-specific Resolution and Beat summaries from the extracted PDF pages. The nine Kith and Kin Conditions are complete. Exported records and names are now English-first; the old Portuguese copy survives only as presentation metadata.
-- Move Portuguese display strings into a separate optional presentation layer rather than storing them as canonical mechanics.
-- Rebuild the 20 Portuguese-first Mage/Nameless records by the same model and verify the shared CofD/Hurt Locker selection. The four newly recovered DE/DEC records are already English-first.
-- Add catalog-level tests for exact official counts, unique IDs, required fields, source/page reconciliation, and persistence through JSON import/export.
+- All 63 Changeling-facing official Conditions now have source-specific English Resolution text; applicable Beat rules are explicit. The previous generic Resolution and Beat fallbacks were removed.
+- Canonical Changeling records are stored directly in English. The pre-existing Portuguese copy is isolated in presentation-only metadata and was not edited in this pass.
+- All 20 previously Portuguese-first Mage/Nameless records were rebuilt in English from their approved PDFs. This changes only the shared Condition catalog, not the broader Mage rules system.
+- Generated offline-index snapshots now lock every approved Condition and Tilt name/source/page triple. Tests also enforce exact per-source totals, unique IDs, English canonical names, required mechanics, removal of generic fallbacks, and JSON round-trip survival for selected Conditions and Tilts.
+
+## Deliberate exclusions
+
+- Book of Courts and Book of Seemings are homebrew and remain outside official completeness totals. Existing homebrew Conditions or Tilts are preserved but were not audited in this pass.
+- Portuguese prose was not translated or editorially revised. Existing Changeling presentation copy remains available separately; newly rebuilt Mage-specific mechanics display their canonical English until a later translation pass.
