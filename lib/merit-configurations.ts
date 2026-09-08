@@ -76,6 +76,10 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
   {name:"Quick Draw",fields:[{key:"specialty",label:"Weapon Specialty",kind:"text",placeholder:"Firearms or Weaponry Specialty"}]},
   {name:"Unseen Sense",fields:[{key:"phenomenon",label:"Supernatural phenomenon",kind:"text"}]},
   {name:"Warded Dreams",line:"CtL",fields:[]},
+  {name:"Hollow",line:"CtL",fields:[]},
+  {name:"Stable Trod",line:"CtL",fields:[]},
+  {name:"Workshop",line:"CtL",fields:[]},
+  {name:"Shared Bastion",line:"CtL",fields:[]},
   {name:"Blood and Bone",line:"CtL",fields:[
     {key:"skill_1",label:"Physical Skill",kind:"select",options:PHYSICAL_SKILL_OPTIONS},
     {key:"skill_2",label:"Second Skill",kind:"select",options:SKILL_OPTIONS},
@@ -105,7 +109,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
 ];
 export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
 const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Fae Pet","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Token","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
-const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams"]);
+const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Stable Trod","Workshop","Shared Bastion"]);
 export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name);
 export const isStructuredMerit = (name: string) => STRUCTURED_MERITS.has(name);
 export const meritConfigurationText = (value: string | undefined, _locale: Locale) => value ?? "";
@@ -219,6 +223,27 @@ export function expandedConfigurationLines(
   value: unknown,
   locale: Locale = "pt-BR",
 ): string[] {
+  if(name==="Hollow"||name==="Shared Bastion"){
+    const configuration=normalizeMeritConfiguration(value), lines:string[]=[];
+    const configuredName=String(configuration.name??"").trim();
+    const location=String(configuration.location??"").trim();
+    const features=Array.isArray(configuration.features)?configuration.features:[];
+    if(configuredName) lines.push(`${locale==="en-US"?"Name":"Nome"}: ${configuredName}`);
+    if(location) lines.push(`${locale==="en-US"?"Location and appearance":"Localização e aparência"}: ${location}`);
+    if(features.length) lines.push(`${locale==="en-US"?"Features":"Características"}: ${features.map((item)=>String(item).split("|")[0]).join(", ")}`);
+    return lines;
+  }
+  if(name==="Stable Trod"){
+    const configuration=normalizeMeritConfiguration(value), lines:string[]=[];
+    const configuredName=String(configuration.name??"").trim(), enhancement=String(configuration.enhancement??"").trim();
+    if(configuredName) lines.push(`${locale==="en-US"?"Trod":"Trilha"}: ${configuredName}`);
+    if(enhancement) lines.push(`${locale==="en-US"?"Shared Hollow enhancement":"Melhoria compartilhada de Recanto"}: ${enhancement}`);
+    return lines;
+  }
+  if(name==="Workshop"){
+    const configuration=normalizeMeritConfiguration(value), specialties=Array.isArray(configuration.specialties)?configuration.specialties.filter(Boolean):[];
+    return specialties.length?[`${locale==="en-US"?"Craft Specialties":"Especializações de Ofícios"}: ${specialties.join(", ")}`]:[];
+  }
   if(name==="Court Goodwill"){
     const court=courtDisplayName(normalizeMeritConfiguration(value).court,locale)|| (locale==="en-US"?"Not selected":"Não selecionada");
     const mantle=Math.max(0,dots-2);

@@ -12,7 +12,7 @@ const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite
 const {findMeritConfiguration,isInlineMeritConfiguration,synchronizeMeritGrants,expandedConfigurationLines} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
-  assert.equal(RAW_MERITS.length,285);
+  assert.equal(RAW_MERITS.length,291);
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Dramaturge"&&merit.source==="Kith and Kin"));
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Understudy"&&merit.source==="Kith and Kin"));
   assert.equal(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").length,39);
@@ -58,6 +58,21 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
     ["Cult: Silver Ladder","Dot 1: Specialty: Occult (Rituals)","Dot 2: Library •","Dot 3: Occult +1"],
   );
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
+  const locationMerits=[
+    ["Stable Trod","Changeling the Lost",119,[1,2,3,4,5]],
+    ["Workshop","Changeling the Lost",120,[1,2,3,4,5]],
+    ["Shared Bastion","The Hedge",115,[1,2,3,4,5]],
+    ["Calming Eidolons","The Hedge",118,[1,2,3]],
+    ["Motley Awareness","The Hedge",119,[1,3]],
+    ["Somnambulation","The Hedge",119,[3,4]],
+  ];
+  for(const [name,source,page,ratings] of locationMerits){const merit=RAW_MERITS.find((item)=>item.name===name);assert.equal(merit?.source,source,name);assert.equal(merit?.page,page,name);assert.deepEqual(merit?.ratings,ratings,name);assert.ok(merit?.description,name);}
+  assert.ok(findMeritConfiguration("Hollow"));
+  assert.ok(findMeritConfiguration("Shared Bastion"));
+  assert.ok(findMeritConfiguration("Stable Trod"));
+  assert.ok(findMeritConfiguration("Workshop"));
+  assert.match(expandedConfigurationLines("Hollow",3,{name:"Briar House",features:["Hob Alarm|1","Hidden Entry|2"]},"en-US").join("\n"),/Hob Alarm, Hidden Entry/);
+  assert.match(expandedConfigurationLines("Shared Bastion",2,{features:["Buttressed Dreaming|1","Guardian Eidolon|1"]},"en-US").join("\n"),/Buttressed Dreaming, Guardian Eidolon/);
 });
 
 test("Book of Seemings contém os 62 Méritos ingleses e respeita acesso por Seeming",()=>{

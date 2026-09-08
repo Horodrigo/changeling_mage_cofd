@@ -179,6 +179,32 @@ const HOLLOW_EN = {
   id:"ctl-2ed:hollow",name:"Hollow",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-2ed",source:"Changeling the Lost",category:"Changeling",
   prerequisites:null,description:"A private refuge inside the Hedge. Its rating penalizes attempts to learn an owner's personal information or track them inside, limits forced entry, and buys an equal value of Hollow enhancements. It may be purchased as a Motley Merit.",page:116,
 } as const;
+const LOCATION_MERITS_EN = [
+  {
+    id:"ctl-2ed:stable-trod",name:"Stable Trod",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-2ed",source:"Changeling the Lost",category:"Changeling",
+    prerequisites:null,description:"The freehold maintains a trod with a rating equal to this Merit. Up to Stable Trod dots Hollows along it gain the same additional one-dot Hollow enhancement, even above their normal budget. Once per story, roll Stable Trod; each success produces one additional generic goblin fruit containing 1 Glamour.",page:119,
+  },
+  {
+    id:"ctl-2ed:workshop",name:"Workshop",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-2ed",source:"Changeling the Lost",category:"Changeling",
+    prerequisites:"Hollow",description:"The character maintains specialized tools inside her Hollow. Each dot supplies equipment for one Craft Specialty. Building Equipment or making another Crafts roll with one of those Specialties gains a bonus equal to Workshop dots.",page:120,
+  },
+  {
+    id:"ctl-hedge:shared-bastion",name:"Shared Bastion",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-the-hedge",source:"The Hedge",category:"Changeling",
+    prerequisites:null,description:"The character and her motley maintain a permanent shared Bastion. Members wake without finding an exit, its rating penalizes attempts to alter their destiny or minds and to track sleepers within it, and only intruders with greater Wyrd or Supernatural Tolerance may force entry. Its rating also buys an equal value of Bastion features.",page:115,
+  },
+  {
+    id:"ctl-hedge:calming-eidolons",name:"Calming Eidolons",ratings:[1,2,3],line:"CtL" as const,sourceId:"ctl-the-hedge",source:"The Hedge",category:"Changeling",
+    prerequisites:"Shared Bastion",description:"Reduce the dreamer's Composure penalty against Subtle Shifts performed by owners of the shared Bastion by this Merit’s dots, to a minimum penalty of one die.",page:118,
+  },
+  {
+    id:"ctl-hedge:motley-awareness",name:"Motley Awareness",ratings:[1,3],line:"CtL" as const,sourceId:"ctl-the-hedge",source:"The Hedge",category:"Changeling",
+    prerequisites:"Shared Bastion",description:"At one dot, every motley member gains +1 on Social rolls with the others while anyone owns this Merit. At three dots, the owner senses every motley member's general mood and major changes at any distance and may send private three-word messages; she also suffers the highest Clarity perception penalty in the motley.",page:119,
+  },
+  {
+    id:"ctl-hedge:somnambulation",name:"Somnambulation",ratings:[3,4],line:"CtL" as const,sourceId:"ctl-the-hedge",source:"The Hedge",category:"Changeling",
+    prerequisites:"Shared Bastion",description:"An eidolon tends the sleeping character's body while she travels dreams. At three dots it handles basic self-care; at four it performs simple mundane tasks requiring no roll. Going without REM sleep drains Willpower, and at four dots sleeping at 0 Willpower may inflict Comatose on a failed Clarity roll.",page:119,
+  },
+] as const;
 const MYSTERY_CULT_INFLUENCE_EN = {
   id:"core-2ed:mystery-cult-influence",name:"Mystery Cult Influence",ratings:[3,4,5],line:"Core" as const,sourceId:"core-2ed",source:"Chronicles of Darkness",category:"Social Styles",
   prerequisites:null,description:"Rule or exert decisive influence over a mystery cult. Gain the corresponding benefits of Mystery Cult Initiation without the responsibilities of an ordinary member.",page:51,
@@ -197,6 +223,7 @@ export const SUPPLEMENTAL_MERITS_EN = [
   ELEMENTAL_WARRIOR_EN,
   ENCHANTING_PERFORMANCE_EN,
   HOLLOW_EN,
+  ...LOCATION_MERITS_EN,
   MYSTERY_CULT_INFLUENCE_EN,
   HEDGE_DUELIST_EN,
 ] as const;
