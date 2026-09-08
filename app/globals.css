@@ -662,6 +662,9 @@ button { cursor: pointer; }
 .merit-row-main > div:first-child { min-width:0; display:grid; }
 .merit-configuration { grid-column:1/-1; margin-top:8px; border-top:1px solid #e7dfe7; padding-top:7px; }
 .merit-configuration summary { cursor:pointer; color:#6b556e; font-size:13px; font-weight:700; }
+.contacts-config-field legend { font-size:11px; }
+.multilingual-config-list { display:grid; gap:7px; }
+.multilingual-config-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
 .merit-configuration > div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
 .merit-configuration label { display:grid; gap:4px; color:#625963; font-size:12px; font-weight:700; }
 .merit-configuration textarea { min-height:64px; resize:vertical; border:1px solid #ded4df; border-radius:7px; background:white; padding:8px; color:#332b34; font-size:13px; }

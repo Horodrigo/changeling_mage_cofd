@@ -46,6 +46,8 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.equal(sheet.merits.filter((merit)=>merit.name==="Allies"||merit.name==="Mentor").length,0);
   assert.equal(sheet.merits.find((merit)=>merit.name==="Mantle")?.dots,1);
   assert.equal(expandedConfigurationLines("Court Goodwill",4,{court:"summer"},"en-US").length,4);
+  assert.equal(expandedConfigurationLines("Court Goodwill",1,{court:"leafless-tree"},"en-US")[0],"Court: Court of the Leafless Tree.");
+  assert.deepEqual(expandedConfigurationLines("Contacts",2,{groups:["Police","Anna"]},"en-US"),["Contact 1: Police","Contact 2: Anna"]);
   assert.ok(findExpandedMerit("Professional Training"));
   assert.equal(findMeritConfiguration("Touchstone"),undefined);
   assert.equal(findMeritConfiguration("Mentor")?.fields[0]?.key,"name");
@@ -165,6 +167,8 @@ test("configurações de texto livre ficam inline e escolhas estruturadas perman
   assert.equal(findMeritConfiguration("Defensive Combat")?.fields[0]?.kind,"select");
   assert.equal(findMeritConfiguration("Fighting Finesse")?.fields[0]?.kind,"select");
   assert.equal(findMeritConfiguration("Multilingual")?.fields[0]?.kind,"list");
+  assert.deepEqual(getMeritsForLine("CtL").find((item)=>item.name==="Multilingual")?.ratings,[1,2,3,4,5]);
+  assert.deepEqual(expandedConfigurationLines("Multilingual",2,{languages:["French","German","Japanese","Arabic"]},"en-US"),["Languages: French, German, Japanese, Arabic"]);
   assert.ok(findMeritConfiguration("Warded Dreams"));
   assert.equal(findMeritConfiguration("Blood and Bone")?.fields[0]?.options?.length,8);
   assert.equal(findMeritConfiguration("Still Waters Run Deep")?.fields[0]?.options?.length,9);

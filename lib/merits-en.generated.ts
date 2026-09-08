@@ -285,14 +285,18 @@ export const MERITS_EN = [
     "id": "core-2ed:multilingual",
     "name": "Multilingual",
     "ratings": [
-      1
+      1,
+      2,
+      3,
+      4,
+      5
     ],
     "line": "Core",
     "sourceId": "core-2ed",
     "source": "Chronicles of Darkness",
     "category": "Mental",
     "prerequisites": null,
-    "description": "You can speak conversationally in two chosen languages. Roll Intelligence + Academics for reading comprehension.",
+    "description": "For each dot, choose two languages you can speak conversationally. Roll Intelligence + Academics for reading comprehension.",
     "page": 46
   },
   {

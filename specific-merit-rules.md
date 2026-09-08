@@ -54,6 +54,7 @@ This document records exceptional behavior that must survive the clean reimport 
 - Striking Looks is repeatable; each distinct appearance is an independent one- or two-dot instance with its own inline description.
 - Contacts and Staff are single aggregate Merits rather than repeatable rows. They have no five-dot ceiling: every Contacts dot records another group or field, and every Staff dot records another Skill represented among the employees.
 - Touchstone is a single aggregate Merit following its published ratings. Each dot adds one directly editable row to the character's Touchstones section; it does not create a separate Merit Choices editor. Refunding dots removes the newest rows first.
+- Multilingual is implemented as one aggregate Merit rated from one to five dots. Every dot records two additional languages in a paired row, and all recorded languages appear in Expanded Merits.
 
 ### Per-dot benefits and Styles
 

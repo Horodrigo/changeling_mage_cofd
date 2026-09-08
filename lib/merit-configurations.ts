@@ -44,7 +44,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
   fields: [{ key: "court", label: "Court", kind: "court" }],
 },{
   name: "Contacts",
-  fields: [{ key: "groups", label: "Groups or fields", kind: "list" }],
+  fields: [{ key: "groups", label: "Groups, organizations or contact name", kind: "list" }],
 },{
   name: "Staff",
   fields: [{ key: "skills", label: "Staff Skills", kind: "list" }],
@@ -250,6 +250,16 @@ export function expandedConfigurationLines(
     const boosted=String(configuration.boosted_skill??"").trim();
     if(dots>=4&&boosted) lines.push(`${locale==="en-US"?"Skill Increase":"Aumento de Perícia"}: ${boosted} +1`);
     return lines;
+  }
+  if(name==="Contacts"){
+    const groups=normalizeMeritConfiguration(value).groups;
+    const choices=Array.isArray(groups)?groups.filter(Boolean):String(groups??"").trim()?[String(groups)]:[];
+    return choices.map((choice,index)=>`${locale==="en-US"?"Contact":"Contato"} ${index+1}: ${choice}`);
+  }
+  if(name==="Multilingual"){
+    const configured=normalizeMeritConfiguration(value).languages;
+    const languages=Array.isArray(configured)?configured.filter(Boolean):String(configured??"").trim()?[String(configured)]:[];
+    return languages.length?[`${locale==="en-US"?"Languages":"Idiomas"}: ${languages.join(", ")}`]:[];
   }
   if(name==="Mystery Cult Initiation"||name==="Mystery Cult Influence"){
     const configuration=normalizeMeritConfiguration(value), lines:string[]=[];

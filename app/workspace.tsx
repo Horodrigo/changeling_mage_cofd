@@ -803,6 +803,8 @@ function CharacterPaper({
   const homebrews = useHomebrews();
   const isExpanded = (name: string) =>
     isExpandedMerit(name) ||
+    name === "Contacts" ||
+    name === "Multilingual" ||
     Boolean(homebrews.merits.find((item) => item.name === name)?.levels?.length);
   const isCtl = character.game_line === "CtL";
   const data = character.line_data;

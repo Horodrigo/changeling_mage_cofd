@@ -246,7 +246,7 @@ export function CharacterBuilder({
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
 }) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
   const contractCatalog = useMemo(
     () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map(item=>contractWithSupplementalBenefits(item,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[])), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
@@ -1030,7 +1030,7 @@ function editableSkills(initial?: CharacterSheet | null) {
 }
 
 function TraitsStep(props: TraitsStepProps) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   const allSkills = Object.values(SKILLS).flat();
   return (
     <div className="builder-section">
@@ -2819,6 +2819,7 @@ export function MeritConfigurationEditor({
   const visible = definition.fields.filter(
     (field) => (field.minDots ?? 0) <= merit.dots,
   );
+  if (!visible.length && !isStructuredMerit(merit.name)) return null;
   const set = (key: string, value: string | string[]) =>
     onChange({ ...configuration, [key]: value });
   if (isStructuredMerit(merit.name))
@@ -2841,11 +2842,9 @@ export function MeritConfigurationEditor({
             const courtOptions = alphabetical([
               ...CTL_COURT_DEFINITIONS
                 .filter((court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"))
-                .filter((court) => court.id !== courtCanonicalId(currentCourt))
                 .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale) })),
               ...homebrews.courts
                 .filter((court) => isHomebrewActive(homebrews, court.id))
-                .filter((court) => court.id !== courtCanonicalId(currentCourt))
                 .map((court) => ({ value: court.id, label: court.name })),
             ], (item) => item.label, locale);
             if (selected && !courtOptions.some((option) => option.value === selected))
@@ -2854,7 +2853,7 @@ export function MeritConfigurationEditor({
               <label key={field.key}>
                 {tr("Corte beneficiada", "Benefited Court")}
                 <Select value={courtCanonicalId(selected)} onValueChange={(next) => set(field.key, next)}>
-                  <SelectTrigger><SelectValue placeholder={tr("Selecione uma Corte", "Select a Court")} /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={tr("Selecione uma Corte", "Select a Court")}>{selected ? courtDisplayName(selected, locale) : undefined}</SelectValue></SelectTrigger>
                   <SelectContent>
                     {courtOptions.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}
                   </SelectContent>
@@ -2862,8 +2861,12 @@ export function MeritConfigurationEditor({
               </label>
             );
           }
-          if (field.kind === "list")
-            return <fieldset key={field.key}><legend>{field.label}</legend><div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=>{const values=Array.isArray(value)?value:[String(value??"")];return <Input key={index} value={values[index]??""} placeholder={`${field.placeholder??field.label} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>;})}</div></fieldset>;
+          if (field.kind === "list") {
+            const fieldLabel=merit.name==="Contacts"?tr("Grupos, organizações ou nome do contato","Groups, organizations or contact name"):merit.name==="Multilingual"?tr("Idiomas adicionais","Additional languages"):field.label;
+            const values=Array.isArray(value)?value:[String(value??"")];
+            if(merit.name==="Multilingual") return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="multilingual-config-list">{Array.from({length:merit.dots},(_,row)=><div className="multilingual-config-row" key={row}>{[0,1].map((column)=>{const index=row*2+column;return <Input key={index} value={values[index]??""} placeholder={`${tr("Idioma","Language")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots*2},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>;})}</div>)}</div></fieldset>;
+            return <fieldset className={merit.name==="Contacts"?"contacts-config-field":undefined} key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=><Input key={index} value={values[index]??""} placeholder={`${field.placeholder??fieldLabel} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>)}</div></fieldset>;
+          }
           if (field.kind === "select") {
             const selected=String(value??"");
             return <label key={field.key}>{field.label}<Select value={selected} onValueChange={(next)=>set(field.key,next)}><SelectTrigger><SelectValue placeholder={field.placeholder??tr("Selecione uma opção","Select an option")}/></SelectTrigger><SelectContent>{(field.options??[]).map((option)=><SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent></Select></label>;
