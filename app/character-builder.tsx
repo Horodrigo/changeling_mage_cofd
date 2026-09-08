@@ -1634,7 +1634,11 @@ function ContractSelector({
   const { locale, tr } = useLanguage();
   const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
   const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [regaliaFilter, setRegaliaFilter] = useState("all");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
+  const commonFull = contracts.slice(0, 4).every((item) => item.name);
+  const royalFull = contracts.slice(4).every((item) => item.name);
   const availableContracts = alphabetical(catalog, contractName,locale)
     .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
     .filter((contract) =>
@@ -1642,7 +1646,10 @@ function ContractSelector({
         contract,
         [primaryRegalia, secondRegalia].filter(Boolean),
         court,
-      ),
+      ) &&
+      (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&
+      (regaliaFilter === "all" || contract.regalia === regaliaFilter) &&
+      (!((contract.type === "Comum" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName)),
     );
   const contractGroups = [
     ...REGALIA,
@@ -1689,6 +1696,7 @@ function ContractSelector({
   }
   return (
     <>
+      <Dialog>
       <div className="merit-heading">
         <div>
           <h3>{tr("Contratos iniciais", "Starting Contracts")}</h3>
@@ -1696,10 +1704,44 @@ function ContractSelector({
             {tr("Selecione quatro Contratos Comuns — incluindo Contratos Goblin — e dois Reais. Passe o mouse sobre uma escolha para rever todos os detalhes.", "Select four Common Contracts — including Goblin Contracts — and two Royal Contracts. Hover over a choice to review all details.")}
           </p>
         </div>
-        <Badge variant="outline">
+        <div className="merit-heading-actions"><Badge variant="outline">
           {contracts.filter((item) => item.name).length}/6 {tr("selecionados", "selected")}
-        </Badge>
+        </Badge><DialogTrigger asChild><Button type="button" variant="outline" size="sm">{tr("Adicionar Contrato", "Add Contract")}</Button></DialogTrigger></div>
       </div>
+      <DialogContent className="merit-dialog">
+        <DialogHeader>
+          <DialogTitle>{tr("Adicionar Contrato", "Add Contract")}</DialogTitle>
+          <DialogDescription>
+            {tr("Separados por Regalia, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="catalog-filters">
+          <label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={tr("Buscar contrato, Regalia ou fonte…", "Search Contract, Regalia, or source…")} /></label>
+          <Choice value={typeFilter} setValue={setTypeFilter} options={["all","common","royal"]} optionLabels={{all:tr("Todos os tipos","All types"),common:tr("Comum","Common"),royal:tr("Real","Royal")}} />
+          <Choice value={regaliaFilter} setValue={setRegaliaFilter} options={["all",...alphabetical([...new Set(catalog.map((item)=>item.regalia))],(item)=>systemTerm(item,locale),locale)]} optionLabels={{all:tr("Todas as categorias","All categories"),...Object.fromEntries(catalog.map((item)=>[item.regalia,systemTerm(item.regalia,locale)]))}} />
+        </div>
+        <div className="merit-catalog">
+          {groups.map(({ regalia, items }) => (
+            <section className="merit-category" key={regalia}>
+              <h3>{systemTerm(regalia,locale)} <Badge variant="outline">{items.length}</Badge></h3>
+              <div>
+                {items.map((contract) => {
+                  const presented = contractPresentation(contract, locale);
+                  const summary = contractSummary(contract, locale);
+                  const displayOptions = contractDisplayOptions(presented, locale);
+                  const outcomeSections = contractOutcomeSections(presented, locale);
+                  const selected = contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName);
+                  const full = contract.type === "Comum" ? commonFull : royalFull;
+                  const benefit = presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
+                  return <article className={selected ? "merit-option selected" : "merit-option"} key={contract.id}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{tr("Resumo", "Summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{tr("Parada de dados", "Dice Pool")}:</strong> {presented.dicePool ?? tr("Não informada", "Not listed")}</p>}{presented.cost && <p className="rule-detail"><strong>{tr("Custo", "Cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{tr("Opções", "Options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{tr("Benefício", "Benefit")}:</strong> {benefit}</p>}</div><Button type="button" size="sm" variant={selected ? "secondary" : "outline"} disabled={selected || full} onClick={() => addContract(contract)}>{selected ? tr("Selecionado", "Selected") : tr("Adicionar", "Add")}</Button></article>;
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="outline">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
+      </DialogContent>
+      </Dialog>
       <div className="contract-grid">
         {contracts.map((item, index) => (
           <div key={index} title={contractTooltip(item, seeming,locale)}>
@@ -1735,11 +1777,6 @@ function ContractSelector({
         ))}
       </div>
       <Dialog>
-        <DialogTrigger asChild>
-          <Button type="button" variant="outline">
-            <Plus /> {tr("Selecionar contratos", "Select Contracts")}
-          </Button>
-        </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
             <DialogTitle>{tr("Selecionar contratos", "Select Contracts")}</DialogTitle>
@@ -2611,6 +2648,8 @@ function Merits({
   const categoryName = (category: string) => locale === "pt-BR" ? meritCategoryLabel(category) : category;
   const totalBudget = budget + spent;
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("all");
+  const [catalogOpen, setCatalogOpen] = useState(false);
   const categories = [...new Set(catalog.map((merit) => merit.category))].sort(
     (a, b) => compareOptionLabels(categoryName(a), categoryName(b),locale),
   );
@@ -2642,9 +2681,9 @@ function Merits({
             {tr("Core + livros da linha, reunidos por categoria. Você pode guardar pontos sem gastá-los.", "Core and game-line books, grouped by category. You may leave dots unspent.")}
           </p>
         </div>
-        <Badge variant={spent > totalBudget ? "destructive" : "outline"}>
+        <div className="merit-heading-actions"><Badge variant={spent > totalBudget ? "destructive" : "outline"}>
           {spent}/{totalBudget} {tr("pontos usados", "dots spent")}
-        </Badge>
+        </Badge><Button type="button" variant="outline" size="sm" onClick={() => setCatalogOpen(true)}>{tr("Adicionar Mérito", "Add Merit")}</Button></div>
       </div>
       <div className="merit-picker">
         {merits.map((selection, index) => {
@@ -2661,8 +2700,8 @@ function Merits({
                 <div>
                   <strong>
                     {definition ? meritName(definition) : selection.name}
-                    {meritConfigurationTitle(selection.configuration)
-                      ? `: ${meritConfigurationTitle(selection.configuration)}`
+                    {meritConfigurationTitle(selection.configuration, locale)
+                      ? `: ${meritConfigurationTitle(selection.configuration, locale)}`
                       : ""}
                   </strong>
                   <small>
@@ -2711,12 +2750,7 @@ function Merits({
           );
         })}
       </div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button type="button" variant="outline">
-            <Plus /> {tr("Selecionar méritos", "Select Merits")}
-          </Button>
-        </DialogTrigger>
+      <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}>
         <DialogContent className="merit-dialog">
           <DialogHeader>
             <DialogTitle>{tr("Selecionar méritos", "Select Merits")}</DialogTitle>
@@ -2724,19 +2758,20 @@ function Merits({
               {tr("Procure por nome ou navegue pelas categorias. Méritos repetíveis permitem criar novas instâncias; altere os pontos na instância existente para aumentá-la.", "Search by name or browse categories. Repeatable Merits allow new instances; change the dots on an existing instance to increase it.")}
             </DialogDescription>
           </DialogHeader>
-          <label className="merit-search">
+          <div className="catalog-filters"><label className="merit-search">
             <Search aria-hidden="true" />
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder={tr("Buscar mérito por nome, pré-requisito ou fonte…", "Search Merit by name, prerequisite, or source…")}
             />
-          </label>
+          </label><Choice value={category} setValue={setCategory} options={["all",...categories]} optionLabels={{all:tr("Todas as categorias","All categories"),...Object.fromEntries(categories.map((item)=>[item,categoryName(item)]))}} /></div>
           <div className="merit-catalog">
-            {categories.map((category) => {
+            {categories.map((catalogCategory) => {
               const items = alphabetical(catalog, meritName,locale).filter(
                 (item) =>
-                  item.category === category &&
+                  item.category === catalogCategory &&
+                  (category === "all" || item.category === category) &&
                   (!normalizedSearch ||
                     `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""}`
                       .toLocaleLowerCase("pt-BR")
@@ -2744,9 +2779,9 @@ function Merits({
               );
               if (!items.length) return null;
               return (
-                <section className="merit-category" key={category}>
+                <section className="merit-category" key={catalogCategory}>
                   <h3>
-                    {categoryName(category)}{" "}
+                    {categoryName(catalogCategory)}{" "}
                     <Badge variant="outline">{items.length}</Badge>
                   </h3>
                   <div>
@@ -2919,7 +2954,7 @@ function CourtGoodwillPicker({ value, currentCourt, homebrews, onSelect }: {
       <span>{tr("Corte beneficiada", "Benefited Court")}</span>
       {selected && <small>{selected.label} · {selected.detail}</small>}
       <Dialog>
-        <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {selected ? tr("Alterar Corte", "Change Court") : tr("Selecionar Corte", "Select Court")}</Button></DialogTrigger>
+        <DialogTrigger asChild><Button type="button" variant="outline" size="sm"><Search /> {selected ? tr("Alterar Corte", "Change Court") : tr("Selecionar Corte", "Select Court")}</Button></DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader><DialogTitle>{tr("Selecionar Corte para Court Goodwill", "Select Court for Court Goodwill")}</DialogTitle><DialogDescription>{tr("Sua própria Corte não pode ser escolhida para este Mérito.", "Your own Court cannot be selected for this Merit.")}</DialogDescription></DialogHeader>
           <div className="court-catalog-filters">

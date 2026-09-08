@@ -115,11 +115,11 @@ export const normalizeMeritConfiguration = (value: unknown): MeritConfiguration 
     ? Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key,item]) => [key,Array.isArray(item) ? item.map(String) : String(item ?? "")]))
     : {};
 
-export function meritConfigurationTitle(value: unknown) {
+export function meritConfigurationTitle(value: unknown, locale: Locale = "en-US") {
   const configuration = normalizeMeritConfiguration(value);
   for (const key of ["subject","identity","language","place","group","appearance","name","court","firstManeuver","cult","profession"]) {
     const item=configuration[key];
-    if (typeof item === "string" && item.trim()) return item.trim();
+    if (typeof item === "string" && item.trim()) return key === "court" ? courtDisplayName(item, locale) : item.trim();
   }
   return "";
 }

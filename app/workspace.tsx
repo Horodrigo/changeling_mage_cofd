@@ -1605,7 +1605,7 @@ function meritLabel(
       ? definition?.name ?? item.name
       : definition?.translatedName ??
       (item.name === "Hollow" ? "Recanto" : item.name),
-    detail = meritConfigurationTitle(item.configuration);
+    detail = meritConfigurationTitle(item.configuration, locale);
   return detail ? `${base}: ${detail}` : base;
 }
 function CompactValues({ values }: { values: Record<string, number> }) {
@@ -4663,7 +4663,7 @@ function ExperienceMeritPicker({
                               onClick={() => onSelect(item.id, dot, index)}
                             >
                               {tr("Aumentar","Raise")}{" "}
-                              {meritName(item)}{meritConfigurationTitle(owned.configuration)?`: ${meritConfigurationTitle(owned.configuration)}`:""}{" "}
+                              {meritName(item)}{meritConfigurationTitle(owned.configuration,locale)?`: ${meritConfigurationTitle(owned.configuration,locale)}`:""}{" "}
                               {owned.dots}{" "}
                               {tr("para","to")} {dot}
                             </Button>
