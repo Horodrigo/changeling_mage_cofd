@@ -913,7 +913,7 @@ function CharacterPaper({
     const identity = isCtl
       ? [
           ["Nome", character.character.name], ["Jogador", character.character.player],
-          ["Crônica", character.character.chronicle], ["Agulha", data.needle], ["Fio", data.thread],
+          ["Crônica", character.character.chronicle], ["Agulha", systemTerm(String(data.needle ?? ""),locale)], ["Fio", systemTerm(String(data.thread ?? ""),locale)],
           ["Conceito", character.character.concept],
           ["Feição", seemingDisplayName(data.seeming,locale)],
           [tr("Frátria", "Kith"), kithDisplayName(data.kith, Boolean(data.kith_custom), locale)], [tr("Corte", "Court"), courtDisplayName(data.court, locale)],
@@ -1025,13 +1025,13 @@ function CharacterPaper({
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
-              <SheetField label="Agulha" value={data.needle} />
+              <SheetField label="Agulha" value={systemTerm(String(data.needle ?? ""),locale)} />
               <SheetField
                 label="Feição"
                 value={seemingDisplayName(data.seeming,locale)}
               />
               <SheetField label="Jogador" value={character.character.player} />
-              <SheetField label="Fio" value={data.thread} />
+              <SheetField label="Fio" value={systemTerm(String(data.thread ?? ""),locale)} />
               <SheetField label={tr("Frátria", "Kith")} value={kithDisplayName(data.kith, Boolean(data.kith_custom), locale)} />
               <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField
@@ -4643,12 +4643,12 @@ function ExperienceMeritPicker({
                       {item.source} · p. {item.page || "—"}
                       {repeatable ? tr(" · pode ser comprado várias vezes"," · may be purchased multiple times") : ""}
                     </small>
-                    <p>{item.description}</p>
                     {item.prerequisites && (
                       <p>
                         <b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}
                       </p>
                     )}
+                    <p>{item.description}</p>
                   </div>
                   <div className="experience-merit-choice">
                     {instances.map(({ owned, index }) =>
@@ -5476,7 +5476,7 @@ function MeritSheetList({
         visible.map((item, index) => {
           const definition = catalog.find((entry) => entry.name === item.name);
           const tooltip = definition
-            ? `${definition.description}${definition.prerequisites ? `\n${tr("Pré-requisitos", "Prerequisites")}: ${definition.prerequisites}` : ""}`
+            ? `${definition.prerequisites ? `${tr("Pré-requisitos", "Prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
             : item.source;
           const inline = isInlineMeritConfiguration(item.name);
           const meritIndex = character.merits.indexOf(item);

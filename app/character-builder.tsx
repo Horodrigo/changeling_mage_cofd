@@ -2803,13 +2803,13 @@ function Merits({
                               {definition.source} · p. {definition.page || "—"}{" "}
                               · {UNBOUNDED_MERITS.has(definition.name)?"1+":formatRatings(meritRatingsFor(definition))}
                             </small>
-                            <p>{definition.description}</p>
                             {definition.prerequisites && (
                               <p className="rule-detail">
                                 <strong>{tr("Pré-requisitos", "Prerequisites")}:</strong>{" "}
                                 {definition.prerequisites}
                               </p>
                             )}
+                            <p>{definition.description}</p>
                           </div>
                           <Button
                             type="button"
@@ -3495,7 +3495,7 @@ function MeritGrantSelectionDialog({name,dots,available,onSelect}:{name:string;d
         <Choice label={tr("Categoria","Category")} value={category} setValue={setCategory} options={["__all",...categories]} optionLabels={{__all:tr("Todas as categorias","All categories"),...Object.fromEntries(categories.map((value)=>[value,locale==="pt-BR"?meritCategoryLabel(value):value]))}}/>
       </div>
       <div className="experience-merit-catalog">
-        {visible.map((item)=><article key={item.id}><div><strong>{label(item)}</strong><small>{item.source} · p. {item.page||"—"}</small><p>{item.description}</p>{item.prerequisites&&<p><b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}</p>}</div><div className="experience-merit-choice">{item.ratings.filter((rating)=>rating<=available).map((rating)=><DialogClose asChild key={rating}><Button type="button" size="sm" variant={name===item.name&&dots===rating?"default":"outline"} onClick={()=>onSelect(item.name,rating)}>{rating} {tr(rating===1?"ponto":"pontos",rating===1?"dot":"dots")}</Button></DialogClose>)}</div></article>)}
+        {visible.map((item)=><article key={item.id}><div><strong>{label(item)}</strong><small>{item.source} · p. {item.page||"—"}</small>{item.prerequisites&&<p><b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}</p>}<p>{item.description}</p></div><div className="experience-merit-choice">{item.ratings.filter((rating)=>rating<=available).map((rating)=><DialogClose asChild key={rating}><Button type="button" size="sm" variant={name===item.name&&dots===rating?"default":"outline"} onClick={()=>onSelect(item.name,rating)}>{rating} {tr(rating===1?"ponto":"pontos",rating===1?"dot":"dots")}</Button></DialogClose>)}</div></article>)}
         {!visible.length&&<em>{tr("Nenhuma opção corresponde aos filtros.","No options match the filters.")}</em>}
       </div>
       <DialogFooter><DialogClose asChild><Button type="button" variant="outline">{tr("Cancelar","Cancel")}</Button></DialogClose></DialogFooter>
@@ -3511,7 +3511,7 @@ function isRepeatableDefinition(definition: MeritDefinition) {
 }
 function meritTooltip(definition: MeritDefinition) {
   return definition.prerequisites
-    ? `${definition.description}\nPré-requisitos: ${definition.prerequisites}`
+    ? `Pré-requisitos: ${definition.prerequisites}\n${definition.description}`
     : definition.description;
 }
 function contractTooltip(
@@ -3805,16 +3805,16 @@ function translateThread(value: string) {
   return (
     (
       {
-        Acceptance: "Aceitação",
-        Anger: "Raiva",
-        Family: "Família",
-        Friendship: "Amizade",
-        Hate: "Ódio",
-        Honor: "Honra",
-        Joy: "Alegria",
-        Love: "Amor",
-        Memory: "Memória",
-        Revenge: "Vingança",
+        Aceitação: "Acceptance",
+        Raiva: "Anger",
+        Família: "Family",
+        Amizade: "Friendship",
+        Ódio: "Hate",
+        Honra: "Honor",
+        Alegria: "Joy",
+        Amor: "Love",
+        Memória: "Memory",
+        Vingança: "Revenge",
       } as Record<string, string>
     )[value] ?? value
   );
