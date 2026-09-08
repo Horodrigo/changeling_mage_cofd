@@ -36,7 +36,6 @@ import {
 import {
   ARCANA,
   ATTRIBUTES,
-  CTL_COURTS,
   CTL_NEEDLES,
   CTL_SEEMINGS,
   CTL_SEEMING_LABELS,
@@ -1243,6 +1242,9 @@ function CtlStep(props: CtlStepProps) {
 
 function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"|"setCustomCourt"|"courtCatalog">) {
   const { locale, tr } = useLanguage();
+  const homebrews = useHomebrews();
+  const [courtSearch, setCourtSearch] = useState("");
+  const [courtSource, setCourtSource] = useState("all");
   const [saved, setSaved] = useState<CustomCourtDefinition[]>(props.courtCatalog ?? []);
   const emptyCourt = (): CustomCourtDefinition => ({
     name: "",
@@ -1288,10 +1290,29 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
     setCreating(false);
   };
   const officialCourt = courtPresentation(props.court, locale);
-  const courtLabels = Object.fromEntries([
-    ["Sem Corte", tr("Sem Corte", "Courtless")],
-    ...CTL_COURTS.filter((name) => name !== "Sem Corte").map((name) => [name, courtDisplayName(name, locale)]),
-  ]);
+  const officialCourts = CTL_COURT_DEFINITIONS.filter(
+    (court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"),
+  );
+  const courtOptions = alphabetical([
+    ...officialCourts.map((court) => ({
+      value: court.id,
+      label: courtDisplayName(court.id, locale),
+      detail: `${locale === "pt-BR" ? court.emotionPt : court.emotion} · ${court.source} · p. ${court.page}`,
+      source: court.source,
+    })),
+    ...saved.map((court) => ({
+      value: court.name,
+      label: court.name,
+      detail: `${court.emotion} · ${tr("Corte criada pelo jogador", "Player-created Court")}`,
+      source: tr("Criação do jogador", "Player-created"),
+    })),
+  ], (court) => court.label, locale);
+  const courtSources = alphabetical([...new Set(courtOptions.map((court) => court.source))], (source) => source, locale);
+  const normalizedCourtSearch = courtSearch.trim().toLocaleLowerCase(locale);
+  const filteredCourts = courtOptions.filter((court) =>
+    (courtSource === "all" || court.source === courtSource) &&
+    (!normalizedCourtSearch || `${court.label} ${court.detail}`.toLocaleLowerCase(locale).includes(normalizedCourtSearch)),
+  );
   return (
     <div className="kith-field">
       <span>{tr("Corte", "Court")}</span>
@@ -1320,17 +1341,26 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
               {tr("Uma Corte personalizada precisa de sentimento e dos benefícios de Manto de 1 a 5.", "A custom Court requires an emotion and Mantle benefits from 1 to 5.")}
             </DialogDescription>
           </DialogHeader>
-          <Choice
-            label={tr("Corte", "Court")}
-            value={props.court || "__none"}
-            setValue={(value) => select(value === "__none" ? "" : value)}
-            options={[
-              "__none",
-              ...CTL_COURTS,
-              ...saved.map((item) => item.name),
-            ]}
-            optionLabels={{ __none: tr("Selecione uma Corte", "Select a Court"), ...courtLabels }}
-          />
+          <div className="court-catalog-filters">
+            <label className="merit-search">
+              <Search aria-hidden="true" />
+              <Input value={courtSearch} onChange={(event) => setCourtSearch(event.target.value)} placeholder={tr("Buscar Corte…", "Search Court…")} />
+            </label>
+            <Choice label={tr("Fonte", "Source")} value={courtSource} setValue={setCourtSource} options={["all", ...courtSources]} optionLabels={{ all: tr("Todas", "All") }} />
+          </div>
+          <div className="court-catalog">
+            <button type="button" className={!props.court ? "court-option selected" : "court-option"} onClick={() => select("")}>
+              <strong>{tr("Sem Corte", "Courtless")}</strong>
+              <small>{tr("O personagem não pertence a uma Corte.", "The character does not belong to a Court.")}</small>
+            </button>
+            {filteredCourts.map((court) => (
+              <button type="button" className={courtCanonicalId(props.court) === courtCanonicalId(court.value) ? "court-option selected" : "court-option"} key={court.value} onClick={() => select(court.value)}>
+                <strong>{court.label}</strong>
+                <small>{court.detail}</small>
+              </button>
+            ))}
+            {!filteredCourts.length && <p className="empty-state">{tr("Nenhuma Corte encontrada.", "No Courts found.")}</p>}
+          </div>
           <Button
             type="button"
             variant={creating ? "secondary" : "outline"}
@@ -2824,30 +2854,14 @@ export function MeritConfigurationEditor({
       {visible.map((field) => {
         const value = configuration[field.key];
         if (field.kind === "court") {
-          const selectedId = courtCanonicalId(value);
-          const rawCourtOptions = [
-            ...CTL_COURT_DEFINITIONS
-              .filter((court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"))
-              .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale) })),
-            ...homebrews.courts
-              .filter((court) => isHomebrewActive(homebrews, court.id))
-              .map((court) => ({ value: court.id, label: court.name })),
-          ];
-          const courtOptions = alphabetical(
-            [...new Map(rawCourtOptions.map((option)=>[courtCanonicalId(option.value),{...option,value:courtCanonicalId(option.value)}])).values()],
-            (item) => item.label,
-            locale,
-          );
-          if (selectedId && !courtOptions.some((option) => option.value === selectedId))
-            courtOptions.push({ value: selectedId, label: courtDisplayName(selectedId, locale) });
           return (
-            <label key={field.key}>
-              {tr("Corte beneficiada", "Benefited Court")}
-              <select className="merit-court-select" value={selectedId} onChange={(event)=>set(field.key,event.target.value)}>
-                <option value="">{tr("Selecione uma Corte", "Select a Court")}</option>
-                {courtOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-              </select>
-            </label>
+            <CourtGoodwillPicker
+              key={field.key}
+              value={Array.isArray(value) ? "" : String(value ?? "")}
+              currentCourt={currentCourt}
+              homebrews={homebrews}
+              onSelect={(court) => set(field.key, court)}
+            />
           );
         }
         if (field.kind === "list") {
@@ -2871,6 +2885,54 @@ export function MeritConfigurationEditor({
       <summary>{tr("Configurar escolhas", "Configure choices")}</summary>
       {fields}
     </details>
+  );
+}
+
+function CourtGoodwillPicker({ value, currentCourt, homebrews, onSelect }: {
+  value: string;
+  currentCourt?: string;
+  homebrews: ReturnType<typeof useHomebrews>;
+  onSelect: (value: string) => void;
+}) {
+  const { locale, tr } = useLanguage();
+  const [search, setSearch] = useState("");
+  const [source, setSource] = useState("all");
+  const ownCustomCourt = homebrews.courts.find((court) => court.id === currentCourt || court.name === currentCourt);
+  const ownCourtId = ownCustomCourt?.id ?? courtCanonicalId(currentCourt ?? "");
+  useEffect(() => {
+    if (ownCourtId && courtCanonicalId(value) === ownCourtId) onSelect("");
+  }, [ownCourtId, value, onSelect]);
+  const options = alphabetical([
+    ...CTL_COURT_DEFINITIONS
+      .filter((court) => (court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts")) && court.id !== ownCourtId)
+      .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale), source: court.source, detail: locale === "pt-BR" ? court.emotionPt : court.emotion })),
+    ...homebrews.courts
+      .filter((court) => isHomebrewActive(homebrews, court.id) && courtCanonicalId(court.id) !== ownCourtId)
+      .map((court) => ({ value: court.id, label: court.name, source: tr("Criação do jogador", "Player-created"), detail: court.emotion })),
+  ], (court) => court.label, locale);
+  const sources = alphabetical([...new Set(options.map((court) => court.source))], (item) => item, locale);
+  const normalized = search.trim().toLocaleLowerCase(locale);
+  const filtered = options.filter((court) => (source === "all" || court.source === source) && (!normalized || `${court.label} ${court.detail} ${court.source}`.toLocaleLowerCase(locale).includes(normalized)));
+  const selected = options.find((court) => courtCanonicalId(court.value) === courtCanonicalId(value));
+  return (
+    <div className="merit-court-picker">
+      <span>{tr("Corte beneficiada", "Benefited Court")}</span>
+      {selected && <small>{selected.label} · {selected.detail}</small>}
+      <Dialog>
+        <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {selected ? tr("Alterar Corte", "Change Court") : tr("Selecionar Corte", "Select Court")}</Button></DialogTrigger>
+        <DialogContent className="merit-dialog">
+          <DialogHeader><DialogTitle>{tr("Selecionar Corte para Court Goodwill", "Select Court for Court Goodwill")}</DialogTitle><DialogDescription>{tr("Sua própria Corte não pode ser escolhida para este Mérito.", "Your own Court cannot be selected for this Merit.")}</DialogDescription></DialogHeader>
+          <div className="court-catalog-filters">
+            <label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={tr("Buscar Corte…", "Search Court…")} /></label>
+            <Choice label={tr("Fonte", "Source")} value={source} setValue={setSource} options={["all", ...sources]} optionLabels={{ all: tr("Todas", "All") }} />
+          </div>
+          <div className="court-catalog">
+            {filtered.map((court) => <DialogClose asChild key={court.value}><button type="button" className={courtCanonicalId(value) === courtCanonicalId(court.value) ? "court-option selected" : "court-option"} onClick={() => onSelect(court.value)}><strong>{court.label}</strong><small>{court.detail} · {court.source}</small></button></DialogClose>)}
+            {!filtered.length && <p className="empty-state">{tr("Nenhuma Corte encontrada.", "No Courts found.")}</p>}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 

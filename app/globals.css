@@ -523,6 +523,16 @@ button { cursor: pointer; }
 .custom-kith-editor textarea { min-height:82px; resize:vertical; padding:9px 11px; border:1px solid #d7cdd9; border-radius:8px; background:#fff; color:#312b33; font:14px/1.45 Inter,Arial,sans-serif; }
 .custom-kith-editor small { justify-self:end; color:#817681; font-weight:400; }
 .custom-court-actions { display:flex; justify-content:flex-end; gap:8px; }
+.court-catalog-filters { display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,260px); gap:10px; align-items:end; }
+.court-catalog { min-height:0; overflow:auto; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; padding:2px; }
+.court-option { display:grid; gap:4px; align-content:start; padding:11px 12px; border:1px solid #ded5df; border-radius:10px; background:#fff; color:#312b33; text-align:left; cursor:pointer; }
+.court-option:hover,.court-option.selected { border-color:#78597d; background:#f5eef6; }
+.court-option strong,.court-option small { display:block; }
+.court-option small { color:#776d78; font-size:11px; font-weight:400; line-height:1.35; }
+.merit-court-picker { display:grid; gap:6px; }
+.merit-court-picker > span { color:#504851; font-size:13px; font-weight:700; }
+.merit-court-picker > small { color:#776d78; font-size:11px; }
+@media (max-width:720px){.court-catalog-filters,.court-catalog{grid-template-columns:1fr}}
 
 /* Navegação CofD: um único painel superior, sem catálogo lateral. */
 .app-shell { display:block; min-height:100vh; }
