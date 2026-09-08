@@ -207,8 +207,8 @@ export function Workspace({
         } else {
           const legacy = await fetch("/api/characters", { cache: "no-store" });
           if (legacy.ok) {
-            const data = await legacy.json();
-            const migrated = (data.characters ?? []).map((item: any) =>
+            const data = await legacy.json() as {characters?: unknown[]};
+            const migrated = (data.characters ?? []).map((item) =>
               migrateLegacy(item, displayName),
             );
             if (migrated.length && !cancelled) {
@@ -4698,26 +4698,26 @@ function RuleSelect({
   const {locale}=useLanguage();
   const safe = options.length ? value || options[0].value : "__none";
   // These two lists deliberately follow the character sheet's trait groups.
-  if (options !== ATTRIBUTE_OPTIONS && options !== SKILL_OPTIONS) {
-    options = alphabetical(options, item => systemTerm(item.label,locale),locale);
-  }
-  const groups = [...new Set(options.map((item) => item.group).filter(Boolean))];
+  const sortedOptions = options !== ATTRIBUTE_OPTIONS && options !== SKILL_OPTIONS
+    ? alphabetical(options, item => systemTerm(item.label,locale),locale)
+    : options;
+  const groups = [...new Set(sortedOptions.map((item) => item.group).filter(Boolean))];
   return (
-    <Select value={safe} onValueChange={onChange} disabled={!options.length}>
+    <Select value={safe} onValueChange={onChange} disabled={!sortedOptions.length}>
       <SelectTrigger>
         <SelectValue>
-          {systemTerm(options.find((item) => item.value === safe)?.label ??
+          {systemTerm(sortedOptions.find((item) => item.value === safe)?.label ??
             "Nenhuma opção disponível",locale)}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {options.length ? (
+        {sortedOptions.length ? (
           groups.length ? (
             groups.map((group, groupIndex) => (
               <SelectGroup key={group}>
                 {groupIndex > 0 && <SelectSeparator />}
                 <SelectLabel>{systemTerm(group!,locale)}</SelectLabel>
-                {options
+                {sortedOptions
                   .filter((item) => item.group === group)
                   .map((item) => (
                     <SelectItem key={item.value} value={item.value}>
@@ -4727,7 +4727,7 @@ function RuleSelect({
               </SelectGroup>
             ))
           ) : (
-            options.map((item) => (
+            sortedOptions.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {systemTerm(item.label,locale)}
               </SelectItem>
@@ -5177,32 +5177,37 @@ function updateLineData(
 }
 function normalizeStoredSheet(value: CharacterSheet): CharacterSheet {
   const next = structuredClone(value);
-  next.specializations = Array.isArray(next.specializations)
-    ? next.specializations.map((item: any) =>
+  const storedSpecializations: unknown[] = Array.isArray(next.specializations) ? next.specializations : [];
+  next.specializations = storedSpecializations
+    .map((item) => {
+        const record = asRecord(item);
+        return (
         typeof item === "string"
           ? { skill: "", name: item }
           : {
-              skill: String(item?.skill ?? ""),
-              name: String(item?.name ?? ""),
-              grantedBy: item?.grantedBy ? String(item.grantedBy) : undefined,
-            },
-      )
-    : [];
-  next.merits = Array.isArray(next.merits)
-    ? next.merits.map((item: any, index: number) => ({
+              skill: String(record.skill ?? ""),
+              name: String(record.name ?? ""),
+              grantedBy: record.grantedBy ? String(record.grantedBy) : undefined,
+            }
+        );
+      });
+  const storedMerits: unknown[] = Array.isArray(next.merits) ? next.merits : [];
+  next.merits = storedMerits.map((value, index: number) => {
+      const item = asRecord(value);
+      return ({
         name: String(
-          item?.name === "Throne"
+          item.name === "Throne"
             ? "Power Behind the Throne"
-            : (item?.name ?? ""),
+            : (item.name ?? ""),
         ),
-        dots: Number(item?.dots ?? 1),
-        instanceId: item?.instanceId ? String(item.instanceId) : `legacy-merit-${index}-${String(item?.name??"merit").toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
-        sourceId: item?.sourceId ? String(item.sourceId) : undefined,
-        source: item?.source ? String(item.source) : undefined,
-        configuration: normalizeMeritConfiguration(item?.configuration),
-        grantedBy: item?.grantedBy ? String(item.grantedBy) : undefined,
-      }))
-    : [];
+        dots: Number(item.dots ?? 1),
+        instanceId: item.instanceId ? String(item.instanceId) : `legacy-merit-${index}-${String(item.name??"merit").toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
+        sourceId: item.sourceId ? String(item.sourceId) : undefined,
+        source: item.source ? String(item.source) : undefined,
+        configuration: normalizeMeritConfiguration(item.configuration),
+        grantedBy: item.grantedBy ? String(item.grantedBy) : undefined,
+      });
+    });
   next.line_data =
     next.line_data && typeof next.line_data === "object" ? next.line_data : {};
   if (next.game_line === "CtL") {
@@ -5935,7 +5940,11 @@ function Empty({
   );
 }
 
-function migrateLegacy(item: any, player: string): CharacterSheet {
+function asRecord(value: unknown): Record<string, unknown> {
+  return value !== null && typeof value === "object" ? value as Record<string, unknown> : {};
+}
+function migrateLegacy(value: unknown, player: string): CharacterSheet {
+  const item = asRecord(value);
   const attributes = Object.values(ATTRIBUTES)
     .flat()
     .reduce<Record<string, number>>((acc, name) => ({ ...acc, [name]: 1 }), {});
@@ -5944,41 +5953,46 @@ function migrateLegacy(item: any, player: string): CharacterSheet {
     .reduce<Record<string, number>>((acc, name) => ({ ...acc, [name]: 0 }), {});
   const now = new Date().toISOString();
   return {
-    id: item.id ?? crypto.randomUUID(),
+    id: String(item.id ?? crypto.randomUUID()),
     schema_version: 2,
     system: "chronicles-of-darkness",
     game_line: item.gameLine === "MtA" ? "MtA" : "CtL",
     ruleset: {
-      id: item.rulesetId ?? "legacy",
-      version: item.rulesetVersion ?? 1,
+      id: String(item.rulesetId ?? "legacy"),
+      version: Number(item.rulesetVersion ?? 1),
     },
     character: {
-      name: item.name ?? "Sem nome",
-      concept: item.concept ?? "",
+      name: String(item.name ?? "Sem nome"),
+      concept: String(item.concept ?? ""),
       player,
     },
     attributes,
     skills,
     specializations: [],
     merits: [],
-    line_data: safeJson(item.characterData),
+    line_data: safeJson(String(item.characterData ?? "")),
     derived: {},
     current_state: { legacy: true },
-    created_at: item.createdAt ?? now,
+    created_at: String(item.createdAt ?? now),
     updated_at: now,
   };
 }
-function migrateJsonV1(value: any, player: string): CharacterSheet {
+function migrateJsonV1(input: unknown, player: string): CharacterSheet {
+  const value = asRecord(input);
+  const character = asRecord(value.character);
   const now = new Date().toISOString();
   const specializations = Array.isArray(value.specializations)
-    ? value.specializations.map((item: any) =>
-        typeof item === "string"
+    ? value.specializations.map((item) => {
+        const record = asRecord(item);
+        return typeof item === "string"
           ? { skill: "", name: item }
-          : { skill: String(item.skill ?? ""), name: String(item.name ?? "") },
-      )
+          : { skill: String(record.skill ?? ""), name: String(record.name ?? "") };
+      })
     : [];
   const merits = Array.isArray(value.merits)
-    ? value.merits.map((raw: any) => ({
+    ? value.merits.map((entry) => {
+      const raw = asRecord(entry);
+      return ({
         name: String(
           raw?.name === "Throne"
             ? "Power Behind the Throne"
@@ -5989,26 +6003,27 @@ function migrateJsonV1(value: any, player: string): CharacterSheet {
         source: raw?.source ? String(raw.source) : undefined,
         configuration: normalizeMeritConfiguration(raw?.configuration),
         grantedBy: raw?.grantedBy ? String(raw.grantedBy) : undefined,
-      }))
+      });
+    })
     : [];
   return synchronizeMeritGrants({
     id: crypto.randomUUID(),
     schema_version: 2,
     system: "chronicles-of-darkness",
-    game_line: value.game_line,
-    ruleset: value.ruleset ?? { id: "imported-v1", version: 1 },
+    game_line: value.game_line === "MtA" ? "MtA" : "CtL",
+    ruleset: value.ruleset && typeof value.ruleset === "object" ? value.ruleset as CharacterSheet["ruleset"] : { id: "imported-v1", version: 1 },
     character: {
-      name: value.character?.name ?? "Sem nome",
-      concept: value.character?.concept ?? "",
+      name: String(character.name ?? "Sem nome"),
+      concept: String(character.concept ?? ""),
       player,
     },
-    attributes: value.attributes ?? {},
-    skills: value.skills ?? {},
+    attributes: asRecord(value.attributes) as Record<string, number>,
+    skills: asRecord(value.skills) as Record<string, number>,
     specializations,
     merits,
-    line_data: value.line_data ?? {},
+    line_data: asRecord(value.line_data),
     derived: {},
-    current_state: value.current_state ?? {},
+    current_state: asRecord(value.current_state),
     created_at: now,
     updated_at: now,
   });

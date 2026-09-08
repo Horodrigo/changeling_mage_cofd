@@ -139,6 +139,44 @@ type CustomOrderDefinition = {
   description: string;
   roteSkills: string[];
 };
+type Setter<T> = (value: T) => void;
+type MissingCheck = (key: string) => boolean;
+type IdentityStepProps = {
+  line: "CtL" | "MtA"; setLine: Setter<"CtL" | "MtA">;
+  name: string; setName: Setter<string>; concept: string; setConcept: Setter<string>;
+  player: string; setPlayer: Setter<string>; chronicle: string; setChronicle: Setter<string>;
+  shadowName: string; setShadowName: Setter<string>; missing: MissingCheck;
+};
+type TraitsStepProps = {
+  attributePriority: string[]; setAttributePriority: Setter<string[]>;
+  skillPriority: string[]; setSkillPriority: Setter<string[]>;
+  attributes: Record<string, number>; setAttributes: Setter<Record<string, number>>;
+  skills: Record<string, number>; setSkills: Setter<Record<string, number>>;
+  specializations: Specialty[]; setSpecializations: Setter<Specialty[]>; missing: MissingCheck;
+};
+type CtlStepProps = {
+  seeming: string; setSeeming: Setter<string>; attributes: Record<string, number>;
+  contractCatalog: ContractDefinition[]; contracts: Array<ContractSelection | null>; setContracts: Setter<Array<ContractSelection | null>>;
+  favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
+  needle: string; setNeedle: Setter<string>; thread: string; setThread: Setter<string>; touchstone: string; setTouchstone: Setter<string>;
+  wyrd: number; setWyrd: Setter<number>; maximumPowerFromMerits: number; powerAdvancement: number;
+  aspirations: string[]; setAspirations: Setter<string[]>; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
+  meritSpent: number; meritBudget: number; court: string; missing: MissingCheck;
+  kith: string; setKith: Setter<string>; customKith: boolean; setCustomKith: Setter<boolean>;
+  customKithSkill: string; setCustomKithSkill: Setter<string>; customKithDescription: string; setCustomKithDescription: Setter<string>;
+  kithCatalog?: Array<KithDefinition & {homebrew?:true}>;
+  customCourt: CustomCourtDefinition | null; setCustomCourt: Setter<CustomCourtDefinition | null>; setCourt: Setter<string>; courtCatalog?: CustomCourtDefinition[];
+};
+type OrderSelectorProps = {order:string;setOrder:Setter<string>;customOrder:CustomOrderDefinition|null;setCustomOrder:Setter<CustomOrderDefinition|null>;orderCatalog?:CustomOrderDefinition[];invalid?:boolean};
+type MtaStepProps = {
+  path:string;setPath:Setter<string>;order:string;customOrder:CustomOrderDefinition|null;setCustomOrder:Setter<CustomOrderDefinition|null>;setOrder:Setter<string>;orderCatalog?:CustomOrderDefinition[];
+  gnosis:number;setGnosis:Setter<number>;maximumPowerFromMerits:number;powerAdvancement:number;virtue:string;setVirtue:Setter<string>;vice:string;setVice:Setter<string>;
+  resistanceBonus:string;setResistanceBonus:Setter<string>;nimbus:string;setNimbus:Setter<string>;tool:string;setTool:Setter<string>;
+  arcana:Record<string,number>;setArcana:Setter<Record<string,number>>;rotes:Array<SpellSelection|null>;setRotes:Setter<Array<SpellSelection|null>>;
+  praxes:Array<SpellSelection|null>;setPraxes:Setter<Array<SpellSelection|null>>;spellCatalog:SpellDefinition[];
+  aspirations:string[];setAspirations:Setter<string[]>;meritCatalog:MeritDefinition[];merits:MeritSelection[];setMerits:Setter<MeritSelection[]>;
+  meritSpent:number;meritBudget:number;missing:MissingCheck;
+};
 
 export type CharacterSheet = {
   id: string;
@@ -340,10 +378,13 @@ export function CharacterBuilder({
     Math.min(3, 1 + Math.floor(Math.max(0, meritAllowance - meritSpent) / 5)),
   );
   useEffect(() => {
-    if (line === "CtL" && wyrd > maximumPowerFromMerits)
-      setWyrd(maximumPowerFromMerits);
-    if (line === "MtA" && gnosis > maximumPowerFromMerits)
-      setGnosis(maximumPowerFromMerits);
+    const timer = window.setTimeout(() => {
+      if (line === "CtL" && wyrd > maximumPowerFromMerits)
+        setWyrd(maximumPowerFromMerits);
+      if (line === "MtA" && gnosis > maximumPowerFromMerits)
+        setGnosis(maximumPowerFromMerits);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [line, meritSpent, maximumPowerFromMerits, wyrd, gnosis]);
 
   const validationIssues = useMemo(() => {
@@ -905,7 +946,7 @@ function IdentityStep({
   shadowName,
   setShadowName,
   missing,
-}: any) {
+}: IdentityStepProps) {
   const { tr } = useLanguage();
   return (
     <div className="builder-section">
@@ -988,7 +1029,7 @@ function editableSkills(initial?: CharacterSheet | null) {
   return values;
 }
 
-function TraitsStep(props: any) {
+function TraitsStep(props: TraitsStepProps) {
   const { locale, tr } = useLanguage();
   const allSkills = Object.values(SKILLS).flat();
   return (
@@ -1094,7 +1135,7 @@ function TraitsStep(props: any) {
   );
 }
 
-function CtlStep(props: any) {
+function CtlStep(props: CtlStepProps) {
   const { locale, tr } = useLanguage();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
@@ -1212,7 +1253,7 @@ function CtlStep(props: any) {
   );
 }
 
-function CourtSelector(props: any) {
+function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"|"setCustomCourt"|"courtCatalog">) {
   const { locale, tr } = useLanguage();
   const [saved, setSaved] = useState<CustomCourtDefinition[]>(props.courtCatalog ?? []);
   const emptyCourt = (): CustomCourtDefinition => ({
@@ -1385,7 +1426,7 @@ function CourtSelector(props: any) {
   );
 }
 
-function KithSelector(props: any) {
+function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"customKith"|"setCustomKith"|"customKithSkill"|"setCustomKithSkill"|"customKithDescription"|"setCustomKithDescription"|"kithCatalog">) {
   const { locale, tr } = useLanguage();
   const [search, setSearch] = useState("");
   const [creating, setCreating] = useState(Boolean(props.customKith));
@@ -1835,7 +1876,7 @@ function ContractSelector({
   );
 }
 
-function OrderSelector(props: any) {
+function OrderSelector(props: OrderSelectorProps) {
   const { tr } = useLanguage();
   const [saved, setSaved] = useState<CustomOrderDefinition[]>(props.orderCatalog ?? []);
   const [creating, setCreating] = useState(false);
@@ -1983,7 +2024,7 @@ function OrderSelector(props: any) {
   );
 }
 
-function MtaStep(props: any) {
+function MtaStep(props: MtaStepProps) {
   const { tr } = useLanguage();
   const pathData = MTA_PATHS[props.path as keyof typeof MTA_PATHS];
   const neededPraxes = props.gnosis;
@@ -2358,7 +2399,7 @@ function SpellSelector({
   );
 }
 
-function PriorityRow({ labels, values, setValues, budgets, invalid }: any) {
+function PriorityRow({ labels, values, setValues, budgets, invalid }: {labels:readonly string[];values:string[];setValues:Setter<string[]>;budgets:number[];invalid:boolean}) {
   const { tr } = useLanguage();
   return (
     <div className={`priority-row ${invalid ? "missing-field" : ""}`}>
@@ -2395,7 +2436,7 @@ function DotGroups({
   priority,
   budgets,
   missing,
-}: any) {
+}: {groups:Record<string,readonly string[]>;values:Record<string,number>;setValues:Setter<Record<string,number>>;base:number;max:number;priority:string[];budgets:number[];missing:MissingCheck}) {
   const { locale } = useLanguage();
   return (
     <div className="dot-groups">
@@ -2434,7 +2475,7 @@ function DotGroups({
     </div>
   );
 }
-function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: any) {
+function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: {name:string;value:number;setValue:Setter<number>;min:number;max:number;tag?:string;canIncrease?:boolean}) {
   const { locale, tr } = useLanguage();
   return (
     <div className="dot-row">
@@ -2508,7 +2549,7 @@ function Choice({
     </label>
   );
 }
-function Aspirations({ values, setValues, missing }: any) {
+function Aspirations({ values, setValues, missing }: {values:string[];setValues:Setter<string[]>;missing:MissingCheck}) {
   const { tr } = useLanguage();
   return (
     <>
@@ -2550,7 +2591,7 @@ function Merits({
   const { locale, tr } = useLanguage();
   const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
   const categoryName = (category: string) => locale === "pt-BR" ? meritCategoryLabel(category) : category;
-  budget += spent;
+  const totalBudget = budget + spent;
   const [search, setSearch] = useState("");
   const categories = [...new Set(catalog.map((merit) => merit.category))].sort(
     (a, b) => compareOptionLabels(categoryName(a), categoryName(b),locale),
@@ -2583,8 +2624,8 @@ function Merits({
             {tr("Core + livros da linha, reunidos por categoria. Você pode guardar pontos sem gastá-los.", "Core and game-line books, grouped by category. You may leave dots unspent.")}
           </p>
         </div>
-        <Badge variant={spent > budget ? "destructive" : "outline"}>
-          {spent}/{budget} {tr("pontos usados", "dots spent")}
+        <Badge variant={spent > totalBudget ? "destructive" : "outline"}>
+          {spent}/{totalBudget} {tr("pontos usados", "dots spent")}
         </Badge>
       </div>
       <div className="merit-picker">
@@ -2620,7 +2661,7 @@ function Merits({
                     next[index] = { ...selection, dots: Number(value) };
                     setMerits(next);
                   }}
-                  options={(definition ? meritRatingsFor(definition,Math.max(selection.dots,budget-spent+selection.dots)) : [1]).map(
+                  options={(definition ? meritRatingsFor(definition,Math.max(selection.dots,totalBudget-spent+selection.dots)) : [1]).map(
                     String,
                   )}
                 />
@@ -3524,7 +3565,7 @@ function favoredChoices(type: string) {
       ? ["Raciocínio", "Destreza", "Manipulação"]
       : ["Perseverança", "Vigor", "Compostura"];
 }
-function updateArray(setter: any, values: any[], index: number, value: any) {
+function updateArray<T>(setter: Setter<T[]>, values: T[], index: number, value: T) {
   const next = [...values];
   next[index] = value;
   setter(next);

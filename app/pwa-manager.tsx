@@ -12,12 +12,11 @@ export function PwaManager() {
   const {tr}=useLanguage();
   const [installPrompt, setInstallPrompt] = useState<InstallPrompt | null>(null);
   const [waiting, setWaiting] = useState<ServiceWorker | null>(null);
-  const [online, setOnline] = useState(true);
+  const [online, setOnline] = useState(() => typeof navigator === "undefined" || navigator.onLine);
   const [remoteVersion, setRemoteVersion] = useState(APP_VERSION);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    setOnline(navigator.onLine);
     const connected = () => setOnline(true), disconnected = () => setOnline(false);
     const install = (event: Event) => { event.preventDefault(); setInstallPrompt(event as InstallPrompt); };
     window.addEventListener("online", connected);

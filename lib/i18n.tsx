@@ -14,12 +14,10 @@ type MessageKey = keyof typeof messages["pt-BR"];
 const LanguageContext = createContext<{locale:Locale;setLocale:(locale:Locale)=>void;t:(key:MessageKey)=>string;tr:(portuguese:string,english:string)=>string}|null>(null);
 
 export function LanguageProvider({children}:{children:ReactNode}) {
-  const [locale,setLocaleState]=useState<Locale>("pt-BR");
+  const [locale,setLocaleState]=useState<Locale>(() =>
+    typeof window !== "undefined" && window.localStorage.getItem(STORAGE_KEY) === "en-US" ? "en-US" : "pt-BR",
+  );
   const setLocale=(next:Locale)=>{setLocaleState(next);window.localStorage.setItem(STORAGE_KEY,next)};
-  useEffect(()=>{
-    const stored=window.localStorage.getItem(STORAGE_KEY);
-    if(stored==="en-US")setLocaleState("en-US");
-  },[]);
   useEffect(()=>{document.documentElement.lang=locale},[locale]);
   const tr=(portuguese:string,english:string)=>locale==="pt-BR"?portuguese:english;
   return <LanguageContext.Provider value={{locale,setLocale,t:key=>messages[locale][key],tr}}>{children}</LanguageContext.Provider>;

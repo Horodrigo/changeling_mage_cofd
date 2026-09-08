@@ -17,16 +17,6 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
   ]),
   {
-    rules: {
-      // The application predates these newly enabled checks. Keep the rest of
-      // the strict Next.js profile active while legacy flows are typed and
-      // refactored incrementally instead of changing runtime behavior here.
-      "@typescript-eslint/no-explicit-any": "off",
-      "react-hooks/immutability": "off",
-      "react-hooks/set-state-in-effect": "off",
-    },
-  },
-  {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
     rules: {
       // These files are vendored verbatim from shadcn@4.17.0. Keep the

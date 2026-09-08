@@ -11,7 +11,7 @@ after(async () => vite.close());
 const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/contracts.ts");
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
-const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("../tmp/contracts-redo/contracts-index.json", import.meta.url), "utf8"));
+const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
 
 test("catálogo contém os 180 Contratos oficiais auditados", () => {
   const official = CONTRACTS.filter((contract) => !contract.sourceId.startsWith("h-"));

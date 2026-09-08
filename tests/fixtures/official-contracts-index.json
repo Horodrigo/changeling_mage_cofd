@@ -1,0 +1,1040 @@
+[
+  {
+    "name": "Hostile Takeover",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 128"
+  },
+  {
+    "name": "Mask of Superiority",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Subterfuge + Wyrd",
+    "citation": "CTL 2e 128"
+  },
+  {
+    "name": "Paralyzing Presence",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Intimidation + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 129"
+  },
+  {
+    "name": "Summon the Loyal Servant",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 129"
+  },
+  {
+    "name": "Tumult",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Empathy + Wyrd - Resolve",
+    "citation": "CTL 2e 129"
+  },
+  {
+    "name": "Discreet Summons",
+    "cost_index": "●/●●",
+    "dice_pool_index": "Manipulation + Persuasion + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 130"
+  },
+  {
+    "name": "Mastermind's Gambit",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 130"
+  },
+  {
+    "name": "Pipes of the Beastcaller",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Animal Ken + Wyrd vs Resolve + Composure",
+    "citation": "CTL 2e 131"
+  },
+  {
+    "name": "The Royal Court",
+    "cost_index": "●●●○",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 131"
+  },
+  {
+    "name": "Spinning Wheel",
+    "cost_index": "●●●○",
+    "dice_pool_index": "Intelligence + Occult + Wyrd - Resolve",
+    "citation": "CTL 2e 132"
+  },
+  {
+    "name": "Blessing of Perfection",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 132"
+  },
+  {
+    "name": "Changing Fortunes",
+    "cost_index": "●●",
+    "dice_pool_index": "Wits + Occult + Wyrd - Resolve",
+    "citation": "CTL 2e 132"
+  },
+  {
+    "name": "Light-Shy",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 133"
+  },
+  {
+    "name": "Murkblur",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Subterfuge + Wyrd vs Wits + Tolerance",
+    "citation": "CTL 2e 133"
+  },
+  {
+    "name": "Trivial Reworking",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 133"
+  },
+  {
+    "name": "Changeling Hours",
+    "cost_index": "●, ●/5 Size",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 134"
+  },
+  {
+    "name": "Dance of the Toys",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Crafts + Wyrd",
+    "citation": "CTL 2e 134"
+  },
+  {
+    "name": "Hidden Reality",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 134"
+  },
+  {
+    "name": "Stealing the Solid Reflection",
+    "cost_index": "●○",
+    "dice_pool_index": "Strength + Larceny + Wyrd",
+    "citation": "CTL 2e 135"
+  },
+  {
+    "name": "Tatterdemalion's Workshop",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 135"
+  },
+  {
+    "name": "Glimpse of a Distant Mirror",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 136"
+  },
+  {
+    "name": "Know the Competition",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Socialize + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 136"
+  },
+  {
+    "name": "Portents and Visions",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Occult + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 137"
+  },
+  {
+    "name": "Read Lucidity",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Empathy + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 137"
+  },
+  {
+    "name": "Walls Have Ears",
+    "cost_index": "●/secret",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 138"
+  },
+  {
+    "name": "Props and Scenery",
+    "cost_index": "●○",
+    "dice_pool_index": "Manipulation + Persuasion + Wyrd",
+    "citation": "CTL 2e 138"
+  },
+  {
+    "name": "Reflections of the Past",
+    "cost_index": "● to ●●●●●",
+    "dice_pool_index": "Intelligence + Occult + Wyrd",
+    "citation": "CTL 2e 138"
+  },
+  {
+    "name": "Riddle-Kith",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Larceny + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 139"
+  },
+  {
+    "name": "Skinmask",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 139"
+  },
+  {
+    "name": "Unravel the Tapestry",
+    "cost_index": "●●○",
+    "dice_pool_index": "Wits + Occult + Wyrd",
+    "citation": "CTL 2e 139"
+  },
+  {
+    "name": "Cloak of Night",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 140"
+  },
+  {
+    "name": "Fae Cunning",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 140"
+  },
+  {
+    "name": "Shared Burden",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 140"
+  },
+  {
+    "name": "Thorns and Brambles",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 141"
+  },
+  {
+    "name": "Trapdoor Spider's Trick",
+    "cost_index": "●(○)",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 142"
+  },
+  {
+    "name": "Fortifying Presence",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Empathy + Wyrd vs Resolve + Tolerance",
+    "citation": "CTL 2e 142"
+  },
+  {
+    "name": "Hedgewall",
+    "cost_index": "●●○",
+    "dice_pool_index": "Intelligence + Survival + Wyrd",
+    "citation": "CTL 2e 142"
+  },
+  {
+    "name": "Pure Clarity",
+    "cost_index": "●●○",
+    "dice_pool_index": "Resolve + Composure + Wyrd",
+    "citation": "CTL 2e 143"
+  },
+  {
+    "name": "Vow of No Compromise",
+    "cost_index": "●○",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 143"
+  },
+  {
+    "name": "Whispers of Morning",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 143"
+  },
+  {
+    "name": "Boon of the Scuttling Spider",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 144"
+  },
+  {
+    "name": "Dreamsteps",
+    "cost_index": "●",
+    "dice_pool_index": "Intelligence + Empathy + Wyrd vs Fortification",
+    "citation": "CTL 2e 144"
+  },
+  {
+    "name": "Nevertread",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 144"
+  },
+  {
+    "name": "Pathfinder",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 144"
+  },
+  {
+    "name": "Seven-League Leap",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 145"
+  },
+  {
+    "name": "Chrysalis",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 145"
+  },
+  {
+    "name": "Flickering Hours",
+    "cost_index": "●(○)",
+    "dice_pool_index": "Wits + Occult + Wyrd vs Resolve + Tolerance",
+    "citation": "CTL 2e 146"
+  },
+  {
+    "name": "Leaping Toward Nightfall",
+    "cost_index": "●●●○",
+    "dice_pool_index": "Intelligence + Occult + Wyrd vs Resolve + Tolerance",
+    "citation": "CTL 2e 146"
+  },
+  {
+    "name": "Mirror Walk",
+    "cost_index": "●○",
+    "dice_pool_index": "Wits + Survival + Wyrd",
+    "citation": "CTL 2e 146"
+  },
+  {
+    "name": "Talon and Wing",
+    "cost_index": "●/effect",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 147"
+  },
+  {
+    "name": "Elemental Weapon",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Survival + Wyrd",
+    "citation": "CTL 2e 147"
+  },
+  {
+    "name": "Might of the Terrible Brute",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 148"
+  },
+  {
+    "name": "Overpowering Dread",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Intimidation + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 148"
+  },
+  {
+    "name": "Primal Glory",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 148"
+  },
+  {
+    "name": "Touch of Wrath",
+    "cost_index": "●",
+    "dice_pool_index": "Intelligence + Crafts + Wyrd",
+    "citation": "CTL 2e 148"
+  },
+  {
+    "name": "Elemental Fury",
+    "cost_index": "●/Tilt (●/+20 yds)",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 149"
+  },
+  {
+    "name": "Oathbreaker's Punishment",
+    "cost_index": "●●",
+    "dice_pool_index": "Wits + Empathy + Wyrd - Composure",
+    "citation": "CTL 2e 149"
+  },
+  {
+    "name": "Red Revenge",
+    "cost_index": "●●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 149"
+  },
+  {
+    "name": "Relentless Pursuit",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 150"
+  },
+  {
+    "name": "Thief of Reason",
+    "cost_index": "●○",
+    "dice_pool_index": "Presence + Subterfuge + Wyrd - Resolve",
+    "citation": "CTL 2e 150"
+  },
+  {
+    "name": "Filling the Cup",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 34"
+  },
+  {
+    "name": "Frail as the Dying Word",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Occult + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 35"
+  },
+  {
+    "name": "Sleep’s Sweet Embrace",
+    "cost_index": "●●○",
+    "dice_pool_index": "Manipulation + Expression + Wyrd - Resolve",
+    "citation": "K&K 35"
+  },
+  {
+    "name": "Curse’s Cure",
+    "cost_index": "●",
+    "dice_pool_index": "Intelligence + Medicine + Wyrd",
+    "citation": "K&K 36"
+  },
+  {
+    "name": "Dreamer’s Phalanx",
+    "cost_index": "● + ●/subject beyond 2nd",
+    "dice_pool_index": "None",
+    "citation": "K&K 36"
+  },
+  {
+    "name": "Closing Death’s Door",
+    "cost_index": "●●●○",
+    "dice_pool_index": "Manipulation + Empathy + Wyrd",
+    "citation": "K&K 36"
+  },
+  {
+    "name": "Feast of Plenty",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Socialize + Wyrd",
+    "citation": "K&K 37"
+  },
+  {
+    "name": "Still Waters Run Deep",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Subterfuge + Wyrd - Resolve",
+    "citation": "K&K 38"
+  },
+  {
+    "name": "Poison the Well",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Expression + Wyrd - Resolve + Tolerance",
+    "citation": "K&K 38"
+  },
+  {
+    "name": "Shared Cup",
+    "cost_index": "● + ●/subject beyond 2nd",
+    "dice_pool_index": "Presence + Occult + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 39"
+  },
+  {
+    "name": "Book of Black and Red",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Academics + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 39"
+  },
+  {
+    "name": "Give and Take",
+    "cost_index": "●/●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 40"
+  },
+  {
+    "name": "Beggar Knight",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Academics + Wyrd - Composure",
+    "citation": "K&K 40"
+  },
+  {
+    "name": "Coin Mark",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 41"
+  },
+  {
+    "name": "Grease the Wheels",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Persuasion + Wyrd",
+    "citation": "K&K 41"
+  },
+  {
+    "name": "Blood Debt",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 42"
+  },
+  {
+    "name": "Exchange of Gilded Contracts",
+    "cost_index": "●●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 42"
+  },
+  {
+    "name": "Golden Promise",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Socialize + Wyrd - Availability",
+    "citation": "K&K 38"
+  },
+  {
+    "name": "Grand Revel of the Harvest",
+    "cost_index": "●●●○",
+    "dice_pool_index": "None",
+    "citation": "K&K 43"
+  },
+  {
+    "name": "Thirty Pieces",
+    "cost_index": "●●●",
+    "dice_pool_index": "Wits + Empathy + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 44"
+  },
+  {
+    "name": "Burning Ambition",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 44"
+  },
+  {
+    "name": "Jealous Vengeance",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Intimidation + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 44"
+  },
+  {
+    "name": "Litany of Rivals",
+    "cost_index": "●●",
+    "dice_pool_index": "Intelligence + Occult + Wyrd",
+    "citation": "K&K 45"
+  },
+  {
+    "name": "Knight's Oath",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 45"
+  },
+  {
+    "name": "Unmask the Dark Horse",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Persuasion + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 46"
+  },
+  {
+    "name": "A Benevolent Hand",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 46"
+  },
+  {
+    "name": "Fake It ‘Til You Make It",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Persuasion + Wyrd - Resolve",
+    "citation": "K&K 46"
+  },
+  {
+    "name": "Tempter's Quest",
+    "cost_index": "●○",
+    "dice_pool_index": "Presence + Persuasion + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 47"
+  },
+  {
+    "name": "Curse of Hidden Strings",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Larceny + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 48"
+  },
+  {
+    "name": "Spare Not the Rod",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 48"
+  },
+  {
+    "name": "Pole Star",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 49"
+  },
+  {
+    "name": "Straight On ‘Til Morning",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 49"
+  },
+  {
+    "name": "Cynosure",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Empathy + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 49"
+  },
+  {
+    "name": "Shooting Star",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 50"
+  },
+  {
+    "name": "Retrograde",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Expression + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 50"
+  },
+  {
+    "name": "Frozen Star",
+    "cost_index": "●●",
+    "dice_pool_index": "Intelligence + (Empathy or Persuasion) + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 51"
+  },
+  {
+    "name": "Star Light, Star Bright",
+    "cost_index": "●/●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 51"
+  },
+  {
+    "name": "Light of Ancient Stars",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 51"
+  },
+  {
+    "name": "Pinch of Stardust",
+    "cost_index": "●●●○",
+    "dice_pool_index": "Intelligence + Crafts + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 52"
+  },
+  {
+    "name": "Briar's Herald",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Larceny + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 53"
+  },
+  {
+    "name": "By the Pricking of My Thumbs",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 54"
+  },
+  {
+    "name": "Thistle's Rebuke",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 54"
+  },
+  {
+    "name": "The Gouging Curse",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Occult + Wyrd vs Composure + Tolerance",
+    "citation": "K&K 54"
+  },
+  {
+    "name": "Embrace of Nettles",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 55"
+  },
+  {
+    "name": "Acantha's Fury",
+    "cost_index": "●●○",
+    "dice_pool_index": "Presence + Survival + Wyrd vs Stamina + Tolerance",
+    "citation": "K&K 55"
+  },
+  {
+    "name": "Awaken Portal",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 56"
+  },
+  {
+    "name": "Crown of Thorns",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Occult + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 57"
+  },
+  {
+    "name": "Shrike's Larder",
+    "cost_index": "● to ●●●",
+    "dice_pool_index": "None",
+    "citation": "K&K 57"
+  },
+  {
+    "name": "Witch's Brambles",
+    "cost_index": "●●/●●●+○",
+    "dice_pool_index": "Presence + Occult + Wyrd vs Resolve + Tolerance",
+    "citation": "K&K 55"
+  },
+  {
+    "name": "Coming Darkness",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 58"
+  },
+  {
+    "name": "Pomp and Circumstance",
+    "cost_index": "●/●○",
+    "dice_pool_index": "None",
+    "citation": "K&K 59"
+  },
+  {
+    "name": "Shadow Puppet",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "K&K 59"
+  },
+  {
+    "name": "Steal Influence",
+    "cost_index": "●/Influence Dot",
+    "dice_pool_index": "Wits + Larceny + Wyrd vs Resolve + Wyrd",
+    "citation": "K&K 62"
+  },
+  {
+    "name": "Earth's Gentle Movements",
+    "cost_index": "●",
+    "dice_pool_index": "Strength + Crafts + Wyrd",
+    "citation": "K&K 63"
+  },
+  {
+    "name": "Dread Companion",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Occult + Wyrd vs. Resistance + Wyrd",
+    "citation": "K&K 60"
+  },
+  {
+    "name": "Cracked Mirror",
+    "cost_index": "●/●○",
+    "dice_pool_index": "Attribute + Ability + Wyrd vs Resistance + Tolerance unless Fetch is willing",
+    "citation": "K&K 60"
+  },
+  {
+    "name": "Listen With Wind's Ears",
+    "cost_index": "●/●●○",
+    "dice_pool_index": "None",
+    "citation": "K&K 61"
+  },
+  {
+    "name": "Momentary Respite",
+    "cost_index": "●/● + ○ per scene extended",
+    "dice_pool_index": "Stamina + Survival + Wyrd",
+    "citation": "K&K 61"
+  },
+  {
+    "name": "Earth's Impenetrable Walls",
+    "cost_index": "●●",
+    "dice_pool_index": "Strength + Crafts + Wyrd",
+    "citation": "K&K 64"
+  },
+  {
+    "name": "Cupid's Arrow",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Empathy + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 151"
+  },
+  {
+    "name": "Dreams of the Earth",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Expression + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 151"
+  },
+  {
+    "name": "Gift of Warm Breath",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 151"
+  },
+  {
+    "name": "Spring's Kiss",
+    "cost_index": "●(●)",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 151"
+  },
+  {
+    "name": "Wyrd-Faced Stranger",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Subterfuge + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 152"
+  },
+  {
+    "name": "Blessing of Spring",
+    "cost_index": "●●(○)",
+    "dice_pool_index": "Intelligence + Medicine + Mantle vs Stamina + Tolerance",
+    "citation": "CTL 2e 152"
+  },
+  {
+    "name": "Gift of Warm Blood",
+    "cost_index": "●○",
+    "dice_pool_index": "Wits + Medicine + Mantle",
+    "citation": "CTL 2e 152"
+  },
+  {
+    "name": "Pandora's Gift",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 152"
+  },
+  {
+    "name": "Prince of Ivy",
+    "cost_index": "●●○",
+    "dice_pool_index": "Presence + Expression + Mantle",
+    "citation": "CTL 2e 153"
+  },
+  {
+    "name": "Waking the Inner Fae",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Expression + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 153"
+  },
+  {
+    "name": "Baleful Sense",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Intimidation + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 153"
+  },
+  {
+    "name": "Child of the Hearth",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 154"
+  },
+  {
+    "name": "Helios' Light",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 154"
+  },
+  {
+    "name": "High Summer's Zeal",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Persuasion + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 155"
+  },
+  {
+    "name": "Vigilance of Ares",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 155"
+  },
+  {
+    "name": "Fiery Tongue",
+    "cost_index": "●○",
+    "dice_pool_index": "Presence + Intimidation + Mantle - Resolve",
+    "citation": "CTL 2e 155"
+  },
+  {
+    "name": "Flames of Summer",
+    "cost_index": "●●",
+    "dice_pool_index": "Strength + Survival + Mantle",
+    "citation": "CTL 2e 155"
+  },
+  {
+    "name": "Helios' Judgment",
+    "cost_index": "●(○)",
+    "dice_pool_index": "Dexterity + Athletics + Mantle",
+    "citation": "CTL 2e 155"
+  },
+  {
+    "name": "Solstice Revelation",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 156"
+  },
+  {
+    "name": "Sunburnt Heart",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Persuasion + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 156"
+  },
+  {
+    "name": "Autumn's Fury",
+    "cost_index": "●●(●)",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 156"
+  },
+  {
+    "name": "Last Harvest",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 156"
+  },
+  {
+    "name": "Tale of the Baba Yaga",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Subterfuge + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 157"
+  },
+  {
+    "name": "Twilight's Harbinger",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 157"
+  },
+  {
+    "name": "Witches' Intuition",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Subterfuge + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 157"
+  },
+  {
+    "name": "Famine's Bulwark",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Occult + Mantle",
+    "citation": "CTL 2e 157"
+  },
+  {
+    "name": "Mien of the Baba Yaga",
+    "cost_index": "●●",
+    "dice_pool_index": "Presence + Intimidation + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 158"
+  },
+  {
+    "name": "Riding the Falling Leaves",
+    "cost_index": "●●",
+    "dice_pool_index": "Dexterity + Occult + Mantle",
+    "citation": "CTL 2e 158"
+  },
+  {
+    "name": "Sorcerer's Rebuke",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Occult + Mantle",
+    "citation": "CTL 2e 158"
+  },
+  {
+    "name": "Tasting the Harvest",
+    "cost_index": "●/subject",
+    "dice_pool_index": "Presence + Subterfuge + Mantle",
+    "citation": "CTL 2e 158"
+  },
+  {
+    "name": "The Dragon Knows",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Empathy + Mantle vs Composure + Tolerance",
+    "citation": "CTL 2e 159"
+  },
+  {
+    "name": "Heart of Ice",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 159"
+  },
+  {
+    "name": "Ice Queen's Call",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 159"
+  },
+  {
+    "name": "Slipknot Dreams",
+    "cost_index": "●",
+    "dice_pool_index": "Manipulation + Empathy + Mantle vs Resolve + Tolerance",
+    "citation": "CTL 2e 159"
+  },
+  {
+    "name": "Touch of Winter",
+    "cost_index": "●",
+    "dice_pool_index": "Intelligence + Science + Mantle",
+    "citation": "CTL 2e 160"
+  },
+  {
+    "name": "Ermine's Winter Coat",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 160"
+  },
+  {
+    "name": "Fallow Fields",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Empathy + Mantle vs Resolve + Tolerance",
+    "citation": "CTL 2e 161"
+  },
+  {
+    "name": "Field of Regret",
+    "cost_index": "●/target, ○",
+    "dice_pool_index": "Presence + Empathy + Mantle - Resolve",
+    "citation": "CTL 2e 161"
+  },
+  {
+    "name": "Mantle of Frost",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 161"
+  },
+  {
+    "name": "Winter's Curse",
+    "cost_index": "●●○",
+    "dice_pool_index": "Presence + Survival + Mantle vs Resolve + Tolerance",
+    "citation": "CTL 2e 161"
+  },
+  {
+    "name": "Peacemaker's Draw",
+    "cost_index": "●",
+    "dice_pool_index": "Dexterity + (Firearms or Athletics) + Mantle vs Stamina + Wyrd",
+    "citation": "DE2 387"
+  },
+  {
+    "name": "Draw Likeness",
+    "cost_index": "●",
+    "dice_pool_index": "Wits + Investigation + Mantle vs Composure + Wyrd",
+    "citation": "DE2 387"
+  },
+  {
+    "name": "Blessing of Forgetfulness",
+    "cost_index": "●●",
+    "dice_pool_index": "Manipulation + Subterfuge + Wyrd vs Composure + Tolerance",
+    "citation": "CTL 2e 162"
+  },
+  {
+    "name": "Distill the Hidden",
+    "cost_index": "●○",
+    "dice_pool_index": "None",
+    "citation": "Hedge 83"
+  },
+  {
+    "name": "Glib Tongue",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 162"
+  },
+  {
+    "name": "Goblin's Eye",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 163"
+  },
+  {
+    "name": "Goblin's Luck",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 163"
+  },
+  {
+    "name": "Huntsman's Clarion",
+    "cost_index": "●●",
+    "dice_pool_index": "Wits + Empathy + Wyrd",
+    "citation": "CTL 2e 163"
+  },
+  {
+    "name": "Lost Visage",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 163"
+  },
+  {
+    "name": "Mantle Mask",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 164"
+  },
+  {
+    "name": "Sight of Truth and Lies",
+    "cost_index": "●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 164"
+  },
+  {
+    "name": "Uncanny",
+    "cost_index": "●●",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 164"
+  },
+  {
+    "name": "Wayward Guide",
+    "cost_index": "●/subject",
+    "dice_pool_index": "None",
+    "citation": "CTL 2e 164"
+  },
+  {
+    "name": "Wyrd Debt",
+    "cost_index": "●",
+    "dice_pool_index": "Presence + Intimidation + Wyrd − Composure",
+    "citation": "Hedge 84"
+  }
+]
