@@ -56,3 +56,9 @@ test("service worker preserva shell offline e exige confirmação para atualizar
   assert.match(worker,/request\.mode === "navigate"/);
   assert.doesNotMatch(worker,/addEventListener\("install"[^;]+skipWaiting/);
 });
+
+test("aviso offline pode ser fechado durante toda a sessão", async () => {
+  const manager=await readFile(new URL("../app/pwa-manager.tsx",import.meta.url),"utf8");
+  assert.match(manager,/sessionStorage\.setItem\(DISMISSED_KEY,"1"\)/);
+  assert.match(manager,/type="button" className="pwa-dismiss"/);
+});
