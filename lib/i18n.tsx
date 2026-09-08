@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useSyncExternalStore, type ReactNode } from "react";
 
 export type Locale = "pt-BR" | "en-US";
 const STORAGE_KEY = "arquivo-das-trevas:locale:v1";
@@ -13,11 +13,28 @@ type MessageKey = keyof typeof messages["pt-BR"];
 
 const LanguageContext = createContext<{locale:Locale;setLocale:(locale:Locale)=>void;t:(key:MessageKey)=>string;tr:(portuguese:string,english:string)=>string}|null>(null);
 
+const LANGUAGE_CHANGE_EVENT = "characters-of-the-darkness:language-change";
+const serverLocale = ():Locale => "pt-BR";
+const browserLocale = ():Locale =>
+  window.localStorage.getItem(STORAGE_KEY) === "en-US" ? "en-US" : "pt-BR";
+const subscribeToLocale = (notify:()=>void) => {
+  const onStorage = (event:StorageEvent) => {
+    if (event.key === STORAGE_KEY) notify();
+  };
+  window.addEventListener("storage", onStorage);
+  window.addEventListener(LANGUAGE_CHANGE_EVENT, notify);
+  return () => {
+    window.removeEventListener("storage", onStorage);
+    window.removeEventListener(LANGUAGE_CHANGE_EVENT, notify);
+  };
+};
+
 export function LanguageProvider({children}:{children:ReactNode}) {
-  const [locale,setLocaleState]=useState<Locale>(() =>
-    typeof window !== "undefined" && window.localStorage.getItem(STORAGE_KEY) === "en-US" ? "en-US" : "pt-BR",
-  );
-  const setLocale=(next:Locale)=>{setLocaleState(next);window.localStorage.setItem(STORAGE_KEY,next)};
+  const locale=useSyncExternalStore(subscribeToLocale,browserLocale,serverLocale);
+  const setLocale=(next:Locale)=>{
+    window.localStorage.setItem(STORAGE_KEY,next);
+    window.dispatchEvent(new Event(LANGUAGE_CHANGE_EVENT));
+  };
   useEffect(()=>{document.documentElement.lang=locale},[locale]);
   const tr=(portuguese:string,english:string)=>locale==="pt-BR"?portuguese:english;
   return <LanguageContext.Provider value={{locale,setLocale,t:key=>messages[locale][key],tr}}>{children}</LanguageContext.Provider>;
