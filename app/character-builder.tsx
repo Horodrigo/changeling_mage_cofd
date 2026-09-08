@@ -1188,13 +1188,6 @@ function CtlStep(props: CtlStepProps) {
           options={CTL_THREADS}
           invalid={props.missing("thread")}
         />
-        <label className={props.missing("touchstone") ? "missing-field" : ""}>
-          {tr("Pedra de Contato", "Touchstone")}
-          <Input
-            value={props.touchstone}
-            onChange={(e) => props.setTouchstone(e.target.value)}
-          />
-        </label>
         <Choice
           label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
           value={props.favoredAttribute}
@@ -1223,11 +1216,6 @@ function CtlStep(props: CtlStepProps) {
         <strong>{seemingData ? systemTerm(seemingData.regalia, locale) : tr("selecione a Feição", "select a Seeming")}</strong> ·
         {tr("Méritos disponíveis", "Available Merits")}: <strong>{props.meritBudget}</strong>
       </p>
-      <Aspirations
-        values={props.aspirations}
-        setValues={props.setAspirations}
-        missing={props.missing}
-      />
       <div className={props.missing("contracts") ? "missing-field block" : ""}>
         <ContractSelector
           contracts={props.contracts}
@@ -2836,26 +2824,29 @@ export function MeritConfigurationEditor({
       {visible.map((field) => {
         const value = configuration[field.key];
         if (field.kind === "court") {
-          const selected = String(value ?? "");
-          const courtOptions = alphabetical([
+          const selectedId = courtCanonicalId(value);
+          const rawCourtOptions = [
             ...CTL_COURT_DEFINITIONS
               .filter((court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"))
               .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale) })),
             ...homebrews.courts
               .filter((court) => isHomebrewActive(homebrews, court.id))
               .map((court) => ({ value: court.id, label: court.name })),
-          ], (item) => item.label, locale);
-          if (selected && !courtOptions.some((option) => option.value === selected))
-            courtOptions.push({ value: selected, label: courtDisplayName(selected, locale) });
+          ];
+          const courtOptions = alphabetical(
+            [...new Map(rawCourtOptions.map((option)=>[courtCanonicalId(option.value),{...option,value:courtCanonicalId(option.value)}])).values()],
+            (item) => item.label,
+            locale,
+          );
+          if (selectedId && !courtOptions.some((option) => option.value === selectedId))
+            courtOptions.push({ value: selectedId, label: courtDisplayName(selectedId, locale) });
           return (
             <label key={field.key}>
               {tr("Corte beneficiada", "Benefited Court")}
-              <Select value={courtCanonicalId(selected)} onValueChange={(next) => set(field.key, next)}>
-                <SelectTrigger><SelectValue placeholder={tr("Selecione uma Corte", "Select a Court")}>{selected ? courtDisplayName(selected, locale) : undefined}</SelectValue></SelectTrigger>
-                <SelectContent>
-                  {courtOptions.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}
-                </SelectContent>
-              </Select>
+              <select className="merit-court-select" value={selectedId} onChange={(event)=>set(field.key,event.target.value)}>
+                <option value="">{tr("Selecione uma Corte", "Select a Court")}</option>
+                {courtOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
             </label>
           );
         }
