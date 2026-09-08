@@ -53,7 +53,7 @@ This document records exceptional behavior that must survive the clean reimport 
 - Confirmed independent instances include Fae Mount, Mentor, Retainer, Safe Place, and Token. Each Token instance represents a distinct Token.
 - Striking Looks is repeatable; each distinct appearance is an independent one- or two-dot instance with its own inline description.
 - Contacts and Staff are single aggregate Merits rather than repeatable rows. They have no five-dot ceiling: every Contacts dot records another group or field, and every Staff dot records another Skill represented among the employees.
-- Touchstone is a single aggregate Merit following its published ratings; each dot records one additional Touchstone.
+- Touchstone is a single aggregate Merit following its published ratings. Each dot adds one directly editable row to the character's Touchstones section; it does not create a separate Merit Choices editor. Refunding dots removes the newest rows first.
 
 ### Per-dot benefits and Styles
 
@@ -70,10 +70,10 @@ This document records exceptional behavior that must survive the clean reimport 
 
 Only rules-mandated choices are restored. The following configurations have been confirmed and implemented:
 
-- Subject/asset choices for Allies, Alternate Identity, Language, Library, Safe Place, Status, Striking Looks, Token, Mentor, Retainer, Contacts, Staff, and Touchstone.
+- Subject/asset choices for Allies, Alternate Identity, Language, Library, Safe Place, Status, Striking Looks, Token, Mentor, Retainer, Contacts, and Staff. Mentor records its name in addition to its three selected traits.
 - The selected Court for Court Goodwill and the creation-derived Court for Mantle.
 - The complete Fae Mount configuration in Companions.
-- Professional Training's profession, Contacts, Asset Skills, Specialties, and fourth-dot Skill increase. Its mechanical grants are synchronized with the sheet and removed when no longer unlocked.
+- Professional Training's profession, Contacts, distinct Asset Skills, Specialties, and fourth-dot Skill increase. Its fifth-dot benefit requires no choice and is therefore omitted from Merit Choices. Mechanical grants are synchronized with the sheet and removed when no longer unlocked.
 - Mystery Cult Initiation's benefit at each purchased dot. Granted Specialties, Skills, and Merits are synchronized with the sheet and removed when no longer unlocked.
 - Warded Dreams' Bastion description and Fortification reminder.
 - The rules-mandated choices for Area of Expertise, Defensive Combat, Fighting Finesse, Multilingual, Quick Draw, and Unseen Sense.

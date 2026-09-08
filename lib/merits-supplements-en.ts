@@ -176,7 +176,7 @@ const ENCHANTING_PERFORMANCE_EN = {
   ],
 } as const;
 const HOLLOW_EN = {
-  id:"ctl-2ed:hollow",name:"Hollow",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-2ed",source:"Changeling the Lost",category:"General",
+  id:"ctl-2ed:hollow",name:"Hollow",ratings:[1,2,3,4,5],line:"CtL" as const,sourceId:"ctl-2ed",source:"Changeling the Lost",category:"Changeling",
   prerequisites:null,description:"A private refuge inside the Hedge. Its rating penalizes attempts to learn an owner's personal information or track them inside, limits forced entry, and buys an equal value of Hollow enhancements. It may be purchased as a Motley Merit.",page:116,
 } as const;
 const MYSTERY_CULT_INFLUENCE_EN = {

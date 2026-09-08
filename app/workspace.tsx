@@ -832,6 +832,13 @@ function CharacterPaper({
   );
   const aspirations = stringList(data.aspirations);
   const frailties = normalizeChangelingFrailties(data.frailties, Number(data.wyrd ?? 1));
+  const touchstoneSlots = 1 + character.merits
+    .filter((merit) => merit.name === "Touchstone" && !merit.grantedBy)
+    .reduce((sum, merit) => sum + merit.dots, 0);
+  const touchstones = stringList(data.touchstones);
+  if (!touchstones.length) touchstones.push(String(data.touchstone ?? ""));
+  while (touchstones.length < touchstoneSlots) touchstones.push("");
+  touchstones.splice(touchstoneSlots);
   const oaths = stringList(data.oaths);
   const contracts = [
     ...objectList(data.contracts),
@@ -948,7 +955,7 @@ function CharacterPaper({
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
-              <SheetHeading>Pedras de Contato</SheetHeading><LineList items={[String(data.touchstone ?? "")]} />
+              <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato","Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)} />
               <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)} />
               <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={CHANGELING_CONDITIONS} onChange={(value) => setState("conditions", value)} />
             </> : <>
@@ -1094,7 +1101,7 @@ function CharacterPaper({
                   onChange={(value) => setState("clarity_damage", value)}
                 />
                 <SheetHeading>Pedras de Contato</SheetHeading>
-                <LineList items={[String(data.touchstone ?? "")]} />
+                <EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato","Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)} />
               </div>
               <div className="sheet-right-column">
                 <SheetHeading>Vitalidade</SheetHeading>
@@ -1631,6 +1638,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
             item.name,
             item.dots,
             item.configuration,
+            locale,
           ),
           cult = String(
             normalizeMeritConfiguration(item.configuration).cult ?? "",
@@ -1640,12 +1648,12 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
               ?.[locale==="en-US"?"name":"translatedName"] ?? meritLabel(item,undefined,locale);
         if (!style)
           return (
-            <article key={`${item.name}-${itemIndex}`}>
-              <header>
+            <details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
+              <summary>
                 <h4>{title}</h4>
                 <DotValue value={item.dots} />
-              </header>
-              <div>
+              </summary>
+              <div className="expanded-merit-body">
                 {configured.length ? (
                   configured.map((line, index) => (
                     <section key={`${item.name}-configured-${index}`}>
@@ -1659,24 +1667,24 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
                   </p>
                 )}
               </div>
-            </article>
+            </details>
           );
         return (
-          <article key={`${item.name}-${itemIndex}`}>
-            <header>
+          <details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
+            <summary>
               <div>
                 <h4>
                   {title}
                   {cult && !title.includes(cult) ? `: ${cult}` : ""}
                 </h4>
                 <small>
-                  {style.source} · p. {style.page} · Pré-requisitos:{" "}
-                  {style.prerequisites}
+                  {style.source} · p. {style.page} · {tr("Pré-requisitos","Prerequisites")}:{" "}
+                  {style.prerequisites || tr("Nenhum","None")}
                 </small>
               </div>
               <DotValue value={item.dots} />
-            </header>
-            <div>
+            </summary>
+            <div className="expanded-merit-body">
               {configured.length
                 ? <>{configured.map((line, index) => (
                     <section key={`${style.name}-configured-${index}`}>
@@ -1695,7 +1703,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
                       </section>
                     ))}
             </div>
-          </article>
+          </details>
         );
       })}
       {!visible.length && <em>{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</em>}
@@ -3207,6 +3215,12 @@ function ExperiencePanel({
     if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], 1, undo.group === "attributes" ? 1 : 0);
     else if (undo.kind === "merit") {
       refundMeritDots(next, undo.name, Math.abs(entry.experience), undo.instanceId, undo.instanceIndex);
+      if (undo.name === "Touchstone") {
+        const maximum = 1 + next.merits
+          .filter((merit) => merit.name === "Touchstone" && !merit.grantedBy)
+          .reduce((sum, merit) => sum + merit.dots, 0);
+        next.line_data.touchstones = stringList(next.line_data.touchstones).slice(0, maximum);
+      }
     } else if (undo.kind === "specialty") {
       const index = next.specializations
         .map((item) => `${item.skill}::${item.name}`)
@@ -3606,10 +3620,14 @@ function ExperiencePanel({
               {purchaseType === "Benefício de Contrato" && (
                 <label>
                   {tr("Benefício","Benefit")}
-                  <RuleSelect
-                    value={benefitKey || benefitOptions[0]?.value || ""}
-                    onChange={setBenefitKey}
-                    options={benefitOptions}
+                  <ExperiencePowerPicker
+                    kind="Benefício de Contrato"
+                    items={benefitOptions.map((option)=>{
+                      const [kind,contractId,choice]=option.value.split("::"), contract=findContract(contractId), isClause=kind==="clause";
+                      return {id:option.value,name:option.label,category:isClause?"Clause":tr("Benefício de Feição","Seeming Benefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??tr("Contrato","Contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
+                    })}
+                    selectedId={benefitKey || benefitOptions[0]?.value || ""}
+                    onSelect={setBenefitKey}
                   />
                 </label>
               )}
@@ -4420,7 +4438,7 @@ function ExperiencePowerPicker({
   selectedId,
   onSelect,
 }: {
-  kind: "Contrato" | "Rota" | "Práxis";
+  kind: "Contrato" | "Rota" | "Práxis" | "Benefício de Contrato";
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;

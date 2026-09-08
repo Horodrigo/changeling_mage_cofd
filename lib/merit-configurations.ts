@@ -52,10 +52,6 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
   name: "Token",
   line: "CtL",
   fields: [{ key: "name", label: "Token", kind: "text", placeholder: "Token name" }],
-},{
-  name: "Touchstone",
-  line: "CtL",
-  fields: [{ key: "touchstones", label: "Additional Touchstones", kind: "list" }],
 },{name:"Allies",fields:[{key:"subject",label:"Allied group",kind:"text"}]},
   {name:"Alternate Identity",fields:[{key:"identity",label:"Identity",kind:"text"}]},
   {name:"Language",fields:[{key:"language",label:"Language",kind:"text"}]},
@@ -64,6 +60,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
   {name:"Status",fields:[{key:"group",label:"Group",kind:"text"}]},
   {name:"Striking Looks",fields:[{key:"appearance",label:"Distinctive appearance",kind:"text"}]},
   {name:"Mentor",fields:[
+    {key:"name",label:"Mentor name",kind:"text",placeholder:"Mentor name"},
     {key:"trait_1",label:"Mentor trait 1",kind:"select",options:MENTOR_TRAITS},
     {key:"trait_2",label:"Mentor trait 2",kind:"select",options:MENTOR_TRAITS},
     {key:"trait_3",label:"Mentor trait 3",kind:"select",options:MENTOR_TRAITS},
@@ -236,6 +233,50 @@ export function expandedConfigurationLines(
       `Equivalência de Manto: ${mantle}; Benevolência da Corte só pode satisfazer pré-requisitos de Manto entre 1 e 3.`,
       "Mentor: funciona como Mentor 1 por meio do contato na Corte.",
     ];
+  }
+  if(name==="Professional Training"){
+    const configuration=normalizeMeritConfiguration(value), lines:string[]=[];
+    const profession=String(configuration.profession??"").trim();
+    const contacts=Array.isArray(configuration.contacts)?configuration.contacts.filter(Boolean):[];
+    const assets=Array.isArray(configuration.asset_skills)?configuration.asset_skills.filter(Boolean):[];
+    if(profession) lines.push(`${locale==="en-US"?"Profession":"Profissão"}: ${profession}`);
+    if(dots>=1&&contacts.length) lines.push(`${locale==="en-US"?"Contacts":"Contatos"}: ${contacts.join(", ")}`);
+    if(dots>=2&&assets.length) lines.push(`${locale==="en-US"?"Asset Skills":"Perícias de Ativo"}: ${assets.join(", ")}`);
+    for(const index of [1,2]){
+      const skill=String(configuration[`specialty_${index}_skill`]??"").trim();
+      const specialty=String(configuration[`specialty_${index}_name`]??"").trim();
+      if(dots>=3&&skill&&specialty) lines.push(`${locale==="en-US"?"Specialty":"Especialização"}: ${skill} (${specialty})`);
+    }
+    const boosted=String(configuration.boosted_skill??"").trim();
+    if(dots>=4&&boosted) lines.push(`${locale==="en-US"?"Skill Increase":"Aumento de Perícia"}: ${boosted} +1`);
+    return lines;
+  }
+  if(name==="Mystery Cult Initiation"||name==="Mystery Cult Influence"){
+    const configuration=normalizeMeritConfiguration(value), lines:string[]=[];
+    const cult=String(configuration.cult??"").trim();
+    if(cult) lines.push(`${locale==="en-US"?"Cult":"Culto"}: ${cult}`);
+    for(let level=1;level<=Math.min(5,dots);level+=1){
+      const prefix=`level_${level}`, type=String(configuration[`${prefix}_type`]??""), benefits:string[]=[];
+      if(type==="specialty"){
+        const skill=String(configuration[`${prefix}_specialty_skill`]??"").trim();
+        const specialty=String(configuration[`${prefix}_specialty_name`]??"").trim();
+        if(skill||specialty) benefits.push(`${locale==="en-US"?"Specialty":"Especialização"}: ${skill}${skill&&specialty?" (":""}${specialty}${skill&&specialty?")":""}`);
+      }
+      if(type==="skill"||type==="merit_skill"){
+        const skill=String(configuration[`${prefix}_skill`]??"").trim();
+        if(skill) benefits.push(`${skill} +1`);
+      }
+      if(type==="merit"||type==="merits"||type==="merit_skill"){
+        const merits=Array.isArray(configuration[`${prefix}_merits`])?configuration[`${prefix}_merits`] as string[]:[];
+        benefits.push(...merits.filter((row)=>row.split("|")[0]).map((row)=>{const [merit,rating]=row.split("|");return `${merit} ${"•".repeat(Math.max(1,Number(rating)||1))}`;}));
+      }
+      if(type==="custom"){
+        const custom=String(configuration[`${prefix}_custom`]??"").trim();
+        if(custom) benefits.push(custom);
+      }
+      if(benefits.length) lines.push(`${locale==="en-US"?"Dot":"Nível"} ${level}: ${benefits.join("; ")}`);
+    }
+    return lines;
   }
   if(name!=="Hedge Duelist") return [];
   const selected=String(normalizeMeritConfiguration(value).firstManeuver??"");

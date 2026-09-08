@@ -112,9 +112,11 @@
   .merit-configuration.structured > div,.structured-choice-row { grid-template-columns:1fr; }
   .structured-choice-row > button { justify-self:end; }
 }
-.expanded-merit-list,.expanded-merit-list>article>div,.loadout-list,.combat-rules { display:grid; gap:8px; }
-.expanded-merit-list>article { border:1px solid color-mix(in srgb,var(--sheet-accent) 32%,#d8d2c8); background:#fffefa; padding:11px; }
-.expanded-merit-list header { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+.expanded-merit-list,.expanded-merit-body,.loadout-list,.combat-rules { display:grid; gap:8px; }
+.expanded-merit-card { border:1px solid color-mix(in srgb,var(--sheet-accent) 32%,#d8d2c8); background:#fffefa; padding:11px; }
+.expanded-merit-card>summary { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; cursor:pointer; list-style:none; }
+.expanded-merit-card>summary::-webkit-details-marker { display:none; }
+.expanded-merit-body { margin-top:8px; }
 .expanded-merit-list h4 { color:var(--sheet-accent); margin:0; font:700 16px Georgia,serif; }
 .expanded-merit-list small { color:#756d72; font-size:10px; }
 .expanded-merit-list section { border-top:1px dotted #cfc7bd; padding-top:7px; }

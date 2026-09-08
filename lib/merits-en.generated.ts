@@ -1537,7 +1537,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Wits or Composure •••",
     "description": "Double the range and acuity of your senses. Apply your Wyrd as bonus dice to perception rolls and rolls to identify or recall details.",
     "page": 111
@@ -1551,7 +1551,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Heal bashing damage each minute of rest and lethal damage daily in the Hedge.",
     "page": 111
@@ -1565,7 +1565,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Extended actions outside the sight of witnesses occur at twice the speed (half intervals), or spend Glamour for four times the speed.",
     "page": 111
@@ -1581,7 +1581,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Autumn Mantle •••",
     "description": "Apply dots of this Merit as a penalty to supernatural abilities used to physically harm you.",
     "page": 111
@@ -1595,7 +1595,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Winter Mantle •••",
     "description": "Spend Willpower to ignore the effects of a Clarity Condition briefly.",
     "page": 111
@@ -1613,7 +1613,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You have the good favor of another Court's courtiers and patron. Functions like the Allies Merit at equal rating, the Court Mantle at two dots lower, and as a one-dot Mentor.",
     "page": 112
@@ -1627,7 +1627,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Add half Wyrd, rounded down, to your Defense in Dream Form.",
     "page": 112
@@ -1645,7 +1645,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Composure •••, Wits •••",
     "description": "Once per session for each dot in this Merit, comb your dreams for answers and ask the Storyteller a yes or no question.",
     "page": 112
@@ -1659,7 +1659,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Wyrd ••, any Social Attribute •••, Brawl or Weaponry Specialty",
     "description": "When you allocate successes from one of the named Skills in which you have a Specialty to perform subtle oneiromantic shifts in aid of combat, add a bonus success.",
     "page": 112
@@ -1673,7 +1673,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Wyrd •••",
     "description": "Once a scene, spend Willpower to achieve a dreamweaving exceptional success on a threshold of three instead of five.",
     "page": 113
@@ -1691,7 +1691,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "When you drop the Mask, open the Hedge as if your Wyrd were reduced by dots in this Merit, to a minimum of 0.",
     "page": 113
@@ -1709,7 +1709,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You've befriended and trained a loyal Hedge denizen and can call it at will there. Each dot in this Merit gives your mount one of a set of gifts, such as natural armor or the ability to exit the Hedge under a Mask.",
     "page": 113
@@ -1723,7 +1723,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You possess an owed favor from one of the Gentry in the form of a bauble, though cashing it in will render Notoriety for your questionable dealing.",
     "page": 114
@@ -1738,7 +1738,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You favor one emotional flavor of Glamour over others. Take 8-Again, or with two dots the rote quality, to harvest it, but lose 10-Again, and with two dots subtract a success, to harvest others.",
     "page": 114
@@ -1752,7 +1752,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Summer Mantle •••",
     "description": "Once a scene, recover Willpower by inciting a fight.",
     "page": 115
@@ -1766,7 +1766,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-the-hedge",
     "source": "The Hedge",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Hedge Sorcerer, Mantle •• that imposes fear-based Bedlam conditions, Resolve ••",
     "description": "Can use Mantle and Mein in place of a hecatomb, opening Doors up to Mantle rating each story.",
     "page": 69
@@ -1780,7 +1780,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Wyrd ••",
     "description": "Hobs are cautious that you might be Gentry. Add your Wyrd as an Intimidation bonus.",
     "page": 115
@@ -1794,7 +1794,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Glamour deprivation doesn't set in for one full session unless you exhaust your Willpower.",
     "page": 115
@@ -1812,7 +1812,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Each session you have access to three common goblin fruits or oddments for each dot in this Merit.",
     "page": 115
@@ -1826,7 +1826,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Spring Mantle •••",
     "description": "Apply a point of Armor against mild Clarity damage.",
     "page": 115
@@ -1840,7 +1840,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Brawl or Firearms or Weaponry ••",
     "description": "Take up to a -3 attack penalty to gain, on success, an equal number of Hedgespinning successes.",
     "page": 115
@@ -1854,7 +1854,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "+2 to navigate or search the Hedge.",
     "page": 115
@@ -1868,7 +1868,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-the-hedge",
     "source": "The Hedge",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Occult •, Mentor ••",
     "description": "You can perform Hedge Sorcery rituals.",
     "page": 66
@@ -1882,7 +1882,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "de2",
     "source": "Dark Eras 2",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "+2 to ken even magically concealed Hedgeways, and 9-Again to Hedgespinning.",
     "page": 75
@@ -1896,7 +1896,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You benefit from a better impression from hobs you meet.",
     "page": 115
@@ -1910,7 +1910,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You can deal lethal damage unarmed, or if you already have natural weapons, increase their weapon rating by +1.",
     "page": 117
@@ -1924,7 +1924,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "de2",
     "source": "Dark Eras 2",
-    "category": "General",
+    "category": "Social",
     "prerequisites": null,
     "description": "Your impression level is one higher at the first social interaction with librarians and scholars, you keep or lose the bonus depending on your behaviour on subsequent encounters. Gain two additional dice on rolls about researching written accounts.",
     "page": 75
@@ -1938,7 +1938,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-the-hedge",
     "source": "The Hedge",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Hedge Sorcerer, Occult •••",
     "description": "May use Hedge Sorcery in dreams, substituting oneiromancy for Hedgespinning.",
     "page": 69
@@ -1956,7 +1956,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Your mien is attuned to a local Court. Apply Mantle as a Social bonus among friends of the Court. Gain a source of Glamour, Mantle benefits, and Contract access as per your Court.",
     "page": 117
@@ -1970,7 +1970,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Wyrd ••, Manipulation •••",
     "description": "Once a session per dot of Wyrd, spend Glamour to change a feature of your Mask. With Wyrd 5, once per session, spend Glamour to change your Mask almost completely.",
     "page": 118
@@ -1984,7 +1984,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Pay off a Goblin Debt for free once a session through shrewd bargaining.",
     "page": 119
@@ -2000,7 +2000,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Mantle",
     "description": "Spend Willpower to confer particular bonuses to friends of your Court for a scene.",
     "page": 119
@@ -2014,7 +2014,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "de2",
     "source": "Dark Eras 2",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Swear yourself to a vampire, gain a two dot mentor. Once a lunar month, the vampire may give you a relatively task to be completed in good faith. May cancel this merit to cause a huntsman or true fae to divert their attention to the vampire.",
     "page": 107
@@ -2030,7 +2030,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Wyrd ••••••",
     "description": "Apply as bonus dice to incite Bedlam.",
     "page": 119
@@ -2044,7 +2044,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "Share a psychic link with your fetch. You take +2 to read each other's intentions or enter each other's Bastion, or spend Willpower to ride the other's senses or communicate visions telepathically.",
     "page": 119
@@ -2058,7 +2058,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "Subterfuge ••",
     "description": "Mundane humans and devices can't pierce your deceptions, while supernatural beings must force a Clash of Wills to do so. Dropping the Mask causes you lethal damage.",
     "page": 119
@@ -2091,7 +2091,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You have access to one or more Tokens of a total rating equal to dots in this Merit. Multiple characters may share this Merit.",
     "page": 119
@@ -2109,7 +2109,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": null,
     "description": "You have an additional Clarity Touchstone for each dot of this Merit.",
     "page": 120
@@ -2125,7 +2125,7 @@ export const MERITS_EN = [
     "line": "CtL",
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
-    "category": "General",
+    "category": "Changeling",
     "prerequisites": "≤ Resolve",
     "description": "Apply as a bonus to your Bastion's Fortification.",
     "page": 120

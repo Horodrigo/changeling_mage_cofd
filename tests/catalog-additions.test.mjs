@@ -47,6 +47,14 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.equal(sheet.merits.find((merit)=>merit.name==="Mantle")?.dots,1);
   assert.equal(expandedConfigurationLines("Court Goodwill",4,{court:"summer"},"en-US").length,4);
   assert.ok(findExpandedMerit("Professional Training"));
+  assert.equal(findMeritConfiguration("Touchstone"),undefined);
+  assert.equal(findMeritConfiguration("Mentor")?.fields[0]?.key,"name");
+  assert.ok(getMeritsForLine("CtL").filter((item)=>item.sourceId==="ctl-2ed"&&item.name!=="Librarian").every((item)=>item.category!=="General"));
+  assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Librarian")?.category,"Social");
+  assert.deepEqual(
+    expandedConfigurationLines("Mystery Cult Initiation",3,{cult:"Silver Ladder",level_1_type:"specialty",level_1_specialty_skill:"Occult",level_1_specialty_name:"Rituals",level_2_type:"merit",level_2_merits:["Library|1"],level_3_type:"skill",level_3_skill:"Occult"},"en-US"),
+    ["Cult: Silver Ladder","Dot 1: Specialty: Occult (Rituals)","Dot 2: Library •","Dot 3: Occult +1"],
+  );
   assert.equal(getMeritsForLine("CtL").find((item)=>item.name==="Lucid Dreamer")?.prerequisites,"Non-changeling, Resolve •••");
 });
 

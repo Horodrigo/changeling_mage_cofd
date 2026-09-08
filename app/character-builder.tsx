@@ -246,7 +246,7 @@ export function CharacterBuilder({
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
 }) {
-  const { locale, tr } = useLanguage();
+  const { tr } = useLanguage();
   const homebrews = useHomebrews();
   const contractCatalog = useMemo(
     () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map(item=>contractWithSupplementalBenefits(item,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[])), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
@@ -1030,7 +1030,7 @@ function editableSkills(initial?: CharacterSheet | null) {
 }
 
 function TraitsStep(props: TraitsStepProps) {
-  const { locale, tr } = useLanguage();
+  const { tr } = useLanguage();
   const allSkills = Object.values(SKILLS).flat();
   return (
     <div className="builder-section">
@@ -2990,6 +2990,9 @@ function StructuredMeritEditor({
                   key={index}
                   label={`${tr("Perícia de Ativo", "Asset Skill")} ${index + 1}`}
                   value={skills[index] || ""}
+                  options={CONFIG_SKILLS.filter(
+                    (skill) => skill === skills[index] || !skills.includes(skill),
+                  )}
                   setValue={(next) =>
                     setArray("asset_skills", skills, index, next)
                   }
@@ -3032,11 +3035,6 @@ function StructuredMeritEditor({
                 options={skills.filter(Boolean)}
               />
             </fieldset>
-          )}
-          {merit.dots >= 5 && (
-            <p className="structured-rule">
-              <strong>{tr("Nv 5 · Rotina", "Dot 5 · Routine")}:</strong> {tr("aplica-se às Perícias de Ativo escolhidas.", "applies to the selected Asset Skills.")}
-            </p>
           )}
         </div>
       </details>
@@ -3349,7 +3347,7 @@ function MeritGrantPicker({
   max: number;
   onChange: (value: string[]) => void;
 }) {
-  const { locale, tr } = useLanguage();
+  const { tr } = useLanguage();
   const rows = value.length ? value : ["|1"],
     used = rows.reduce((sum, row) => sum + (Number(row.split("|")[1]) || 1), 0);
   const update = (index: number, name: string, dots: number) => {
@@ -3372,43 +3370,11 @@ function MeritGrantPicker({
             : Array.from({ length: available }, (_, dot) => dot + 1);
         return (
           <div className="structured-choice-row" key={index}>
-            <label>
-              {tr("Mérito", "Merit")}
-              <Select
-                value={name || "__none"}
-                onValueChange={(next) => {
-                  const merit = CONFIG_MERITS.find(
-                      (item) => item.name === next,
-                    ),
-                    first =
-                      merit?.ratings.find((rating) => rating <= available) ?? 1;
-                  update(index, next === "__none" ? "" : next, first);
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue>
-                    {name ? (selected ? (locale === "pt-BR" ? selected.translatedName : selected.name) : name) : tr("Selecione", "Select")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__none">{tr("Selecione", "Select")}</SelectItem>
-                  {CONFIG_MERITS.filter((item) =>
-                    item.ratings.some((rating) => rating <= available),
-                  ).map((item) => (
-                    <SelectItem key={item.id} value={item.name}>
-                      {locale === "pt-BR" ? item.translatedName : item.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </label>
-            <Choice
-              label={tr("Pontos", "Dots")}
-              value={String(
-                dotOptions.includes(dots) ? dots : (dotOptions[0] ?? 1),
-              )}
-              setValue={(next) => update(index, name, Number(next))}
-              options={(dotOptions.length ? dotOptions : [1]).map(String)}
+            <MeritGrantSelectionDialog
+              name={name}
+              dots={dotOptions.includes(dots) ? dots : (dotOptions[0] ?? 1)}
+              available={available}
+              onSelect={(nextName,nextDots)=>update(index,nextName,nextDots)}
             />
             {rows.length > 1 && (
               <Button
@@ -3439,6 +3405,32 @@ function MeritGrantPicker({
       )}
     </div>
   );
+}
+
+function MeritGrantSelectionDialog({name,dots,available,onSelect}:{name:string;dots:number;available:number;onSelect:(name:string,dots:number)=>void}){
+  const {locale,tr}=useLanguage();
+  const [search,setSearch]=useState("");
+  const [category,setCategory]=useState("__all");
+  const categories=[...new Set(CONFIG_MERITS.map((item)=>item.category))].sort((a,b)=>a.localeCompare(b));
+  const normalized=search.trim().toLocaleLowerCase(locale);
+  const selected=CONFIG_MERITS.find((item)=>item.name===name);
+  const label=(item:MeritDefinition)=>locale==="pt-BR"?item.translatedName:item.name;
+  const visible=CONFIG_MERITS.filter((item)=>(category==="__all"||item.category===category)&&item.ratings.some((rating)=>rating<=available)&&(!normalized||`${item.name} ${item.translatedName} ${item.description} ${item.prerequisites??""} ${item.source}`.toLocaleLowerCase(locale).includes(normalized)));
+  return <Dialog>
+    <DialogTrigger asChild><Button type="button" variant="outline" className="experience-merit-trigger"><span>{selected?`${label(selected)} ${"•".repeat(dots)}`:tr("Selecionar Mérito","Select Merit")}</span><Search/></Button></DialogTrigger>
+    <DialogContent className="merit-dialog experience-merit-dialog">
+      <DialogHeader><DialogTitle>{tr("Selecionar benefício de Mérito","Select Merit benefit")}</DialogTitle><DialogDescription>{tr(`Escolha Méritos somando até ${available} pontos.`,`Choose Merits totaling up to ${available} dots.`)}</DialogDescription></DialogHeader>
+      <div className="catalog-filters">
+        <label className="merit-search"><Search/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar por nome, descrição, requisito ou fonte","Search by name, description, prerequisite, or source")}/></label>
+        <Choice label={tr("Categoria","Category")} value={category} setValue={setCategory} options={["__all",...categories]} optionLabels={{__all:tr("Todas as categorias","All categories"),...Object.fromEntries(categories.map((value)=>[value,locale==="pt-BR"?meritCategoryLabel(value):value]))}}/>
+      </div>
+      <div className="experience-merit-catalog">
+        {visible.map((item)=><article key={item.id}><div><strong>{label(item)}</strong><small>{item.source} · p. {item.page||"—"}</small><p>{item.description}</p>{item.prerequisites&&<p><b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}</p>}</div><div className="experience-merit-choice">{item.ratings.filter((rating)=>rating<=available).map((rating)=><DialogClose asChild key={rating}><Button type="button" size="sm" variant={name===item.name&&dots===rating?"default":"outline"} onClick={()=>onSelect(item.name,rating)}>{rating} {tr(rating===1?"ponto":"pontos",rating===1?"dot":"dots")}</Button></DialogClose>)}</div></article>)}
+        {!visible.length&&<em>{tr("Nenhuma opção corresponde aos filtros.","No options match the filters.")}</em>}
+      </div>
+      <DialogFooter><DialogClose asChild><Button type="button" variant="outline">{tr("Cancelar","Cancel")}</Button></DialogClose></DialogFooter>
+    </DialogContent>
+  </Dialog>;
 }
 
 function isRepeatableDefinition(definition: MeritDefinition) {
@@ -3533,7 +3525,7 @@ function meritCategoryLabel(category: string) {
         Social: "Sociais",
         Supernatural: "Sobrenaturais",
         "Fighting Style": "Estilos de Combate",
-        Changeling: "Perdidos",
+        Changeling: "Changeling",
         Awakened: "Despertos",
         Entitlement: "Títulos Feéricos",
         Court: "Cortes",
