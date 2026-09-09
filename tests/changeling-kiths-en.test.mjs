@@ -7,6 +7,7 @@ const vite=await createServer({appType:"custom",configFile:false,root,server:{mi
 after(async()=>vite.close());
 const {KITHS,kithPresentation,kithSkillOptions}=await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const {KITH_TEXT_EN}=await vite.ssrLoadModule("/lib/changeling-kiths-en.ts");
+const {KITH_CREATION_CHOICES}=await vite.ssrLoadModule("/lib/changeling-kith-choices.ts");
 test("all 73 official and 12 Book of Seemings Kith IDs have complete English presentation summaries",()=>{
  assert.equal(KITHS.length,85); assert.equal(KITHS.filter(x=>x.sourceId==="h-seemings").length,12); assert.deepEqual(Object.keys(KITH_TEXT_EN).sort(),KITHS.map(x=>x.id).sort());
  for(const kith of KITHS){const text=KITH_TEXT_EN[kith.id]; for(const field of ["description","blessing","skill"]) assert.ok(text[field]?.trim(),`${kith.id}.${field}`);}
@@ -28,5 +29,13 @@ test("skill filters use individual canonical English Skills",()=>{
  assert.deepEqual(kithSkillOptions(byId.bloodbrute),["Athletics","Intimidation"]);
  assert.deepEqual(kithSkillOptions(byId.fireheart),["Crafts","Survival"]);
  assert.deepEqual(kithSkillOptions(byId.moonborn),["Empathy","Intimidation"]);
+ assert.deepEqual(kithSkillOptions(byId.enkrateia),["Empathy","Persuasion","Subterfuge"]);
+ assert.ok(!KITHS.flatMap(kithSkillOptions).includes("or Subterfuge"));
  assert.ok(!kithSkillOptions(byId.bloodbrute).includes("Atletismo ou Intimidação"));
+});
+test("creation choices cover every persistent choice stated by a Kith blessing",()=>{
+ assert.deepEqual(Object.keys(KITH_CREATION_CHOICES).sort(),["artist","bearskin","bricoleur","chevalier","draconic","gravewight","hunterheart","moonborn","swarmflight","valkyrie","whisperwisp"]);
+ assert.equal(KITH_CREATION_CHOICES.bricoleur.kind,"specialty");
+ assert.equal(KITH_CREATION_CHOICES.swarmflight.kind,"text");
+ assert.deepEqual(KITH_CREATION_CHOICES.whisperwisp.options,["Stealth","Persuasion"]);
 });

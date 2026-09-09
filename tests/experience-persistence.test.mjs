@@ -9,6 +9,7 @@ const vite = await createServer({ appType: "custom", configFile: false, root,
 after(() => vite.close());
 const power = await vite.ssrLoadModule("/lib/power-progression.ts");
 const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
+const meritConfigurations = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
@@ -72,6 +73,40 @@ test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas"
       {name:"Allies",instanceId:"first",dots:4,creationDots:0,experienceDots:4}, {name:"Allies",instanceId:"second",dots:2,creationDots:2,experienceDots:0}];
     for (const index of order) refunds.refundMeritDots(current, "Allies", [2,1,1][index], "first");
     assert.deepEqual(current.merits, [{name:"Allies",instanceId:"second",dots:2,creationDots:2,experienceDots:0}]);
+  }
+});
+
+test("Mantle gratuito mantém o ponto inicial ao comprar, sincronizar e reembolsar Experiência", () => {
+  const current = sheet();
+  current.line_data.court = "Autumn";
+  current.merits = [{name:"Mantle",instanceId:"mantle-autumn",dots:1,grantedBy:"Corte",configuration:{court:"Autumn"}}];
+  merits.addExperienceMeritDots(current.merits[0], 3);
+  meritConfigurations.synchronizeMeritGrants(current);
+  assert.deepEqual(
+    {dots:current.merits[0].dots,creation:current.merits[0].creationDots,experience:current.merits[0].experienceDots},
+    {dots:4,creation:1,experience:3},
+  );
+  merits.addExperienceMeritDots(current.merits[0], 1);
+  meritConfigurations.synchronizeMeritGrants(current);
+  assert.equal(current.merits[0].dots, 5);
+  refunds.refundMeritDots(current, "Mantle", 4, "mantle-autumn");
+  meritConfigurations.synchronizeMeritGrants(current);
+  assert.deepEqual(
+    {dots:current.merits[0].dots,creation:current.merits[0].creationDots,experience:current.merits[0].experienceDots},
+    {dots:1,creation:1,experience:0},
+  );
+});
+
+test("outros Méritos gratuitos preservam o ponto inicial durante avanços", () => {
+  for (const [name, grantedBy] of [["Awakened Status","Ordem"],["Mystery Cult Initiation","Nameless Order"]]) {
+    const merit = {name,dots:1,grantedBy};
+    merits.addExperienceMeritDots(merit, 3);
+    assert.deepEqual(
+      {dots:merit.dots,creation:merit.creationDots,experience:merit.experienceDots},
+      {dots:4,creation:1,experience:3},
+    );
+    merits.removeExperienceMeritDots(merit, 3);
+    assert.equal(merit.dots, 1);
   }
 });
 

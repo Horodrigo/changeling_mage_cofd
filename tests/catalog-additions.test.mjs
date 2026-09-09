@@ -12,8 +12,8 @@ const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite
 const {findMeritConfiguration,isInlineMeritConfiguration,synchronizeMeritGrants,expandedConfigurationLines} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
-  assert.equal(RAW_MERITS.length,351);
-  assert.equal(RAW_MERITS.filter((merit)=>merit.line==="MtA").length,58);
+  assert.equal(RAW_MERITS.length,354);
+  assert.equal(RAW_MERITS.filter((merit)=>merit.line==="MtA").length,61);
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Dramaturge"&&merit.source==="Kith and Kin"));
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Understudy"&&merit.source==="Kith and Kin"));
   assert.equal(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").length,39);

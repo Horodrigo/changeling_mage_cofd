@@ -153,16 +153,24 @@ export const CTL_THREAD_DEFINITIONS: ChangelingAnchorDefinition[] = [
 
 export const CTL_NEEDLES = CTL_NEEDLE_DEFINITIONS.map((item)=>item.name);
 export const CTL_THREADS = CTL_THREAD_DEFINITIONS.map((item)=>item.name);
+const LEGACY_NEEDLE_NAMES:Record<string,string>={"Mestre de Xadrez":"Chess Master",Comandante:"Commander",Compositor:"Composer",Conselheiro:"Counselor",Audacioso:"Daredevil","Dínamo":"Dynamo",Protetor:"Protector",Provedor:"Provider",Erudito:"Scholar","Contador de Histórias":"Storyteller",Professor:"Teacher",Tradicionalista:"Traditionalist",Visionário:"Visionary"};
+const LEGACY_THREAD_NAMES:Record<string,string>={Aceitação:"Acceptance",Raiva:"Anger",Família:"Family",Amizade:"Friendship",Ódio:"Hate",Honra:"Honor",Alegria:"Joy",Amor:"Love",Memória:"Memory",Vingança:"Revenge"};
+const anchorAliases=(kind:"needle"|"thread")=>kind==="needle"?LEGACY_NEEDLE_NAMES:LEGACY_THREAD_NAMES;
+export function canonicalChangelingAnchorName(kind:"needle"|"thread",name:unknown) {
+  const value=String(name??"");
+  const definitions=kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS;
+  return definitions.find(item=>item.name===value||item.translatedName===value)?.name??anchorAliases(kind)[value]??value;
+}
 export function changelingAnchorRecovery(kind:"needle"|"thread",name:unknown,locale:"pt-BR"|"en-US"="en-US") {
-  const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===String(name??""));
+  const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===canonicalChangelingAnchorName(kind,name));
   if(!item)return "";
   const single=locale==="pt-BR"?item.singleWillpowerPt:item.singleWillpower;
   const all=locale==="pt-BR"?item.allWillpowerPt:item.allWillpower;
   return locale==="pt-BR"?`Recuperar 1 FV: ${single}\nRecuperar toda a FV: ${all}`:`Recover 1 Willpower: ${single}\nRecover all Willpower: ${all}`;
 }
 export function changelingAnchorDisplayName(kind:"needle"|"thread",name:unknown,locale:"pt-BR"|"en-US"="en-US") {
-  const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===String(name??""));
-  return locale==="pt-BR"?(item?.translatedName??item?.name??String(name??"")):(item?.name??String(name??""));
+  const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===canonicalChangelingAnchorName(kind,name));
+  return locale==="pt-BR"?(item?.translatedName??Object.entries(anchorAliases(kind)).find(([,canonical])=>canonical===item?.name)?.[0]??item?.name??String(name??"")):(item?.name??String(name??""));
 }
 export const CTL_COURTS = ["Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName)];
 export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];

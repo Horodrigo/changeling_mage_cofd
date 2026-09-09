@@ -150,7 +150,11 @@ export function kithSearchText(value: string) {
 /** Individual canonical Skill keys, not localized choice phrases. */
 export function kithSkillOptions(item: Pick<KithDefinition,"id"|"skill">): string[] {
   const text=KITH_TEXT_EN[item.id]?.skill??item.skill;
-  return [...new Set(text.split(/\s+(?:or|ou|and|e)\s+|\s*[,/]\s*/i).map(skill=>systemTerm(skill.trim(),"en-US")).filter(Boolean))];
+  return [...new Set(text
+    .split(/\s+(?:or|ou|and|e)\s+|\s*[,/]\s*/i)
+    .map(skill=>skill.trim().replace(/^(?:or|and|ou|e)\s+/i,""))
+    .map(skill=>systemTerm(skill,"en-US"))
+    .filter(Boolean))];
 }
 
 export function kithDisplayName(name: unknown, custom = false, locale:Locale="pt-BR") {

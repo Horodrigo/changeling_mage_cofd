@@ -113,6 +113,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
+import { kithCreationChoice } from "@/lib/changeling-kith-choices";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical } from "@/lib/option-order";
 import {
@@ -166,7 +167,7 @@ type CatalogRule = {
 
 const WORKSPACE_EN:Record<string,string>={
   "Nome":"Name","Jogador":"Player","Crônica":"Chronicle","Conceito":"Concept","Agulha":"Needle","Fio":"Thread","Feição":"Seeming","Frátria":"Kith","Corte":"Court",
-  "Vício":"Vice","Virtude":"Virtue","Nome das Sombras":"Shadow Name","Caminho":"Path","Ordem":"Order",
+  "Vício":"Vice","Virtude":"Virtue","Nome das Sombras":"Shadow Name","Caminho":"Path","Ordem":"Order","Legado":"Legacy",
   "Resumo":"Summary","Principal":"Main","Atributos":"Attributes","Perícias":"Skills","Detalhes":"Details","Poderes":"Powers","Combate":"Combat","Companheiros":"Companions","Anotações":"Notes",
   "Experiência":"Experience","Méritos":"Merits","Méritos Expandidos":"Expanded Merits","Aspirações":"Aspirations","Obsessões":"Obsessions","Fragilidades":"Frailties","Pedras de Contato":"Touchstones","Lucidez":"Clarity","Condições":"Conditions","Nimbus":"Nimbus","Sabedoria":"Wisdom","Feitiços Ativos":"Active Spells",
   "Regalias Favorecidas":"Favored Regalia","Contratos":"Contracts","Débito Goblin":"Goblin Debt","Juramentos":"Oaths","Arcanos":"Arcana","Rotas":"Rotes","Práxis":"Praxes","Attainments":"Attainments","Ferramentas Mágicas":"Magical Tools","Inclinação do Nimbus":"Nimbus Tilt","Itens Encantados":"Enchanted Items","Condições do Paradoxo":"Paradox Conditions",
@@ -843,6 +844,23 @@ function CharacterPaper({
       Number(value) + (Number(grantedSkillBonuses[name]) || 0),
     ]),
   );
+  const canonicalSkill = (value: unknown) => {
+    const raw = String(value ?? "").trim();
+    return Object.values(SKILLS).flat().find(
+      (skill) => skill === raw || systemTerm(skill, "en-US") === raw || systemTerm(skill, "pt-BR") === raw,
+    );
+  };
+  const kithDefinition = isCtl && !data.kith_custom ? findKith(data.kith) : undefined;
+  const kithChoiceDefinition = isCtl ? kithCreationChoice(kithDefinition?.id) : undefined;
+  const kithSkill = isCtl
+    ? canonicalSkill(kithChoiceDefinition?.kind === "skill" ? data.kith_choice : data.kith_skill ?? kithDefinition?.skill)
+    : undefined;
+  const highlightedSkills = new Set(
+    isCtl
+      ? (kithSkill ? [kithSkill] : [])
+      : stringList(data.rote_skills).map(canonicalSkill).filter((skill): skill is string => Boolean(skill)),
+  );
+  const skillHighlightTone = isCtl ? "kith" as const : "rote" as const;
   const aspirations = stringList(data.aspirations);
   const frailties = normalizeChangelingFrailties(data.frailties, Number(data.wyrd ?? 1));
   const touchstoneSlots = 1 + character.merits
@@ -866,6 +884,7 @@ function CharacterPaper({
     data.arcana && typeof data.arcana === "object" ? data.arcana : {}
   ) as Record<string, number>;
   const gnosis = Number(data.gnosis ?? 1);
+  const obsessionSlots=gnosis<=2?1:gnosis<=5?2:gnosis<=8?3:4;
   const powerRating = isCtl ? Number(data.wyrd ?? 1) : gnosis;
   const resource = powerResourceLimits(powerRating);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
@@ -945,7 +964,7 @@ function CharacterPaper({
           ["Nome", character.character.name], ["Jogador", character.character.player],
           ["Crônica", character.character.chronicle], ["Vício", data.vice], ["Virtude", data.virtue],
           ["Conceito", character.character.concept], ["Nome das Sombras", data.shadow_name],
-          ["Caminho", data.path], ["Ordem", MTA_ORDER_LABELS[String(data.order)] ?? data.order],
+          ["Caminho", data.path], ["Ordem", !data.order||data.order==="Orderless"?tr("Sem Ordem","Orderless"):data.order==="Nameless"?"Nameless":locale==="en-US"?data.order:MTA_ORDER_LABELS[String(data.order)] ?? data.order],
         ];
     const paradoxConditions = MAGE_CONDITIONS.filter((condition) =>
       `${condition.name} ${condition.description} ${condition.penalty}`.toLocaleLowerCase("pt-BR").includes("paradoxo"),
@@ -974,11 +993,11 @@ function CharacterPaper({
               <SheetHeading>Atributos</SheetHeading>
               <div className="mobile-attribute-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames />)}</div>
               <SheetHeading>Perícias</SheetHeading>
-              <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} />)}</div>
+              <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone} />)}</div>
             </>,
             detalhes: isCtl ? <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} line={character.game_line} updateSheet={updateSheet} />
-              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
+              <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} /><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} hasAdjacentContent />
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
@@ -990,11 +1009,11 @@ function CharacterPaper({
               <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
-              <SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={Math.max(1, Math.ceil(gnosis / 3))} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)} />
+              <SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)} />
               <SheetHeading>Nimbus</SheetHeading><LineList items={[String(data.nimbus ?? "")]} />
               <SheetHeading>Sabedoria</SheetHeading><CompactValues values={{ Sabedoria: Number(data.wisdom ?? 7) }} />
               <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value) => setState("conditions", value)} />
-              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={Math.max(gnosis, 4)} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
+              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
             </>,
             poderes: isCtl ? <>
               <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour?storedGlamour:undefined} storedMaximum={hasStoredGlamour?powerRating:undefined} onStoredChange={setStoredGlamour} />
@@ -1002,16 +1021,15 @@ function CharacterPaper({
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
               <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento","Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
-              <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} /><CourtLore data={data} merits={character.merits} />
+              <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} />
             </> : <>
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} />)}</div>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
-              <SheetHeading>Práxis</SheetHeading><SpellColumn items={praxes} />
+              <SheetHeading>Práxis</SheetHeading><SpellColumn items={praxes} minimumRows={gnosis} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
               <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
               <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
-              <SheetHeading>Itens Encantados</SheetHeading><EditableList values={stringList(data.enchanted_items)} minimum={4} placeholder={tr("Tipo · Poder · Parada de Dados · Mana","Type · Power · Dice Pool · Mana")} onChange={(value) => updateLineData(updateSheet, character, "enchanted_items", value)} />
               <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
               <CustomOrderLore data={data} />
             </>,
@@ -1088,6 +1106,8 @@ function CharacterPaper({
                     names={names}
                     values={effectiveSkills}
                     specialties={specialties}
+                    highlightedNames={highlightedSkills}
+                    highlightTone="kith"
                   />
                 ))}
               </div>
@@ -1195,7 +1215,6 @@ function CharacterPaper({
                 <SheetHeading>Outras Características</SheetHeading>
                 <SeemingLore seeming={String(data.seeming ?? "")} />
                 <KithLore data={data} />
-                <CourtLore data={data} merits={character.merits} />
                 <GoblinDebtTrack
                   value={goblinDebt}
                   onChange={(value) => setState("goblin_debt", value)}
@@ -1212,7 +1231,8 @@ function CharacterPaper({
                   }
                 />
                 <SheetHeading>Méritos Expandidos</SheetHeading>
-                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
+                <CourtLore data={data} merits={character.merits} />
+                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} hasAdjacentContent/>
                 <MeritConfigurationPanel
                   character={character}
                   updateSheet={updateSheet}
@@ -1252,21 +1272,14 @@ function CharacterPaper({
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
-              <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Nome das Sombras" value={data.shadow_name} />
-              <SheetField label="Caminho" value={data.path} />
-              <SheetField
-                label="Ordem"
-                value={MTA_ORDER_LABELS[String(data.order)] ?? data.order}
-              />
-              <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Virtude" value={data.virtue} />
+              <SheetField label="Caminho" value={data.path} />
+              <SheetField label="Jogador" value={character.character.player} />
               <SheetField label="Vício" value={data.vice} />
+              <SheetField label="Ordem" value={!data.order||data.order==="Orderless"?tr("Sem Ordem","Orderless"):data.order==="Nameless"?"Nameless":locale==="en-US"?data.order:MTA_ORDER_LABELS[String(data.order)] ?? data.order} />
               <SheetField label="Crônica" value={character.character.chronicle} />
-              <SheetField
-                label="Conceito"
-                value={character.character.concept}
-              />
+              <SheetField label="Conceito" value={character.character.concept} />
               <SheetField label="Legado" value={data.legacy} />
             </section>
             <SheetHeading>Atributos</SheetHeading>
@@ -1290,6 +1303,8 @@ function CharacterPaper({
                     names={names}
                     values={effectiveSkills}
                     specialties={specialties}
+                    highlightedNames={highlightedSkills}
+                    highlightTone="rote"
                   />
                 ))}
               </div>
@@ -1307,7 +1322,7 @@ function CharacterPaper({
                   values={aspirations}
                   minimum={3}
                   maximum={3}
-                  placeholder="Escreva uma Aspiração"
+                  placeholder={tr("Escreva uma Aspiração","Write an Aspiration")}
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "aspirations", value)
                   }
@@ -1315,8 +1330,9 @@ function CharacterPaper({
                 <SheetHeading>Obsessões</SheetHeading>
                 <EditableList
                   values={stringList(data.obsessions)}
-                  minimum={Math.max(1, Math.ceil(gnosis / 3))}
-                  placeholder="Escreva uma Obsessão"
+                  minimum={obsessionSlots}
+                  maximum={obsessionSlots}
+                  placeholder={tr("Escreva uma Obsessão","Write an Obsession")}
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "obsessions", value)
                   }
@@ -1368,10 +1384,7 @@ function CharacterPaper({
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
               <SheetField label="Caminho" value={data.path} />
-              <SheetField
-                label="Ordem"
-                value={MTA_ORDER_LABELS[String(data.order)] ?? data.order}
-              />
+              <SheetField label="Ordem" value={!data.order||data.order==="Orderless"?tr("Sem Ordem","Orderless"):data.order==="Nameless"?"Nameless":locale==="en-US"?data.order:MTA_ORDER_LABELS[String(data.order)] ?? data.order} />
               <SheetField label="Nimbus" value={data.nimbus} />
               <SheetField label="Sabedoria" value={data.wisdom} />
               <SheetField label="Gnose" value={gnosis} />
@@ -1382,8 +1395,9 @@ function CharacterPaper({
                 <SheetHeading>Feitiços Ativos</SheetHeading>
                 <EditableList
                   values={stringList(character.current_state?.active_spells)}
-                  minimum={Math.max(gnosis, 4)}
-                  placeholder="Feitiço ativo"
+                  minimum={gnosis}
+                  maximum={gnosis}
+                  placeholder={tr("Feitiço ativo","Active spell")}
                   onChange={(value) => setState("active_spells", value)}
                 />
                 <SheetHeading>Attainments</SheetHeading>
@@ -1396,7 +1410,7 @@ function CharacterPaper({
                       : [String(data.dedicated_tool ?? "")]
                   }
                   minimum={3}
-                  placeholder="Ferramenta mágica"
+                  placeholder={tr("Ferramenta mágica","Magical tool")}
                   onChange={(value) =>
                     updateLineData(
                       updateSheet,
@@ -1407,7 +1421,7 @@ function CharacterPaper({
                   }
                 />
                 <SheetHeading>Práxis</SheetHeading>
-                <SpellColumn items={praxes} />
+                <SpellColumn items={praxes} minimumRows={gnosis} />
               </section>
               <section className="mage-page-main">
                 <SheetHeading>Rotas</SheetHeading>
@@ -1416,23 +1430,9 @@ function CharacterPaper({
                 <EditableList
                   values={stringList(data.nimbus_tilt)}
                   minimum={2}
-                  placeholder="Descrição da Inclinação do Nimbus"
+                  placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")}
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "nimbus_tilt", value)
-                  }
-                />
-                <SheetHeading>Itens Encantados</SheetHeading>
-                <EditableList
-                  values={stringList(data.enchanted_items)}
-                  minimum={4}
-                  placeholder="Tipo · Poder · Parada de Dados · Mana"
-                  onChange={(value) =>
-                    updateLineData(
-                      updateSheet,
-                      character,
-                      "enchanted_items",
-                      value,
-                    )
                   }
                 />
                 <SheetHeading>Méritos Expandidos</SheetHeading>
@@ -1492,7 +1492,7 @@ function MeritConfigurationPanel({
 }) {
   const { locale, tr } = useLanguage();
   const configurable = character.merits.filter(
-    (item) => findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && !["Fae Mount","Entitlement"].includes(item.name) && !item.grantedBy,
+    (item) => findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && !["Fae Mount","Familiar","Entitlement"].includes(item.name) && !item.grantedBy,
   );
   if (!configurable.length) return null;
   const choices=configurable;
@@ -1559,12 +1559,16 @@ function TraitBlock({
   values,
   specialties = [],
   compactNames = false,
+  highlightedNames,
+  highlightTone,
 }: {
   title: string;
   names: readonly string[];
   values: Record<string, number>;
   specialties?: Array<{ skill: string; name: string }>;
   compactNames?: boolean;
+  highlightedNames?: ReadonlySet<string>;
+  highlightTone?: "rote" | "kith";
 }) {
   const {locale}=useLanguage();
   return (
@@ -1576,6 +1580,7 @@ function TraitBlock({
           name={name}
           value={values[name] ?? 0}
           compactName={compactNames}
+          highlightTone={highlightedNames?.has(name) ? highlightTone : undefined}
           note={specialties
             .filter((item) => item.skill === name)
             .map((item) => item.name)
@@ -1590,16 +1595,18 @@ function TraitLine({
   value,
   note,
   compactName = false,
+  highlightTone,
 }: {
   name: string;
   value: number;
   note?: string;
   compactName?: boolean;
+  highlightTone?: "rote" | "kith";
 }) {
   const {locale}=useLanguage();
   const localizedName=systemTerm(name,locale);
   return (
-    <div className="official-trait-line">
+    <div className={`official-trait-line${highlightTone ? ` skill-highlight-${highlightTone}` : ""}`}>
       <span className="official-trait-label" title={compactName ? localizedName : undefined} aria-label={note ? `${localizedName} (${note})` : localizedName}>
         {compactName ? localizedName.slice(0,3) : localizedName}
         {note && <small title={note}>({note})</small>}
@@ -1657,7 +1664,7 @@ function CompactValues({ values }: { values: Record<string, number> }) {
 function ArmorDotPicker({label,value,onChange}:{label:string;value:number;onChange:(value:number)=>void}){
   return <label className="armor-dot-picker"><span>{label}</span><RuleSelect value={String(value)} onChange={(next)=>onChange(Number(next))} options={Array.from({length:6},(_,rating)=>({value:String(rating),label:String(rating)}))}/></label>;
 }
-function ExpandedMeritList({ merits,character,updateSheet }: { merits: CharacterSheet["merits"];character?:CharacterSheet;updateSheet?:(sheet:CharacterSheet)=>void }) {
+function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=false }: { merits: CharacterSheet["merits"];character?:CharacterSheet;updateSheet?:(sheet:CharacterSheet)=>void;hasAdjacentContent?:boolean }) {
   const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
   const trifleUses=(character?.current_state.trifle_uses&&typeof character.current_state.trifle_uses==="object"&&!Array.isArray(character.current_state.trifle_uses)?character.current_state.trifle_uses:{}) as Record<string,number>;
@@ -1665,7 +1672,7 @@ function ExpandedMeritList({ merits,character,updateSheet }: { merits: Character
     if(!character||!updateSheet)return;
     updateSheet({...character,current_state:{...character.current_state,trifle_uses:{...trifleUses,[key]:Math.max(0,Math.min(3,value))}}});
   };
-  const visible = merits.filter((item) => !item.grantedBy && item.name !== "Fae Mount");
+  const visible = merits.filter((item) => !item.grantedBy && !["Fae Mount","Familiar"].includes(item.name));
   return (
     <div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
@@ -1749,7 +1756,7 @@ function ExpandedMeritList({ merits,character,updateSheet }: { merits: Character
           </details>
         );
       })}
-      {!visible.length && <em>{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</em>}
+      {!visible.length && !hasAdjacentContent && <em>{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</em>}
     </div>
   );
 }
@@ -2430,6 +2437,7 @@ function MeritCompanionCard({
     );
   }
   const form = String(configuration.form ?? "animal"),
+    entity = String(configuration.entity ?? "Spirit"),
     rank = merit.dots >= 4 ? 2 : 1,
     animalId = String(configuration.animalId ?? ANIMALS[0]?.id ?? ""),
     animal = ANIMALS.find((item) => item.id === animalId),
@@ -2461,6 +2469,14 @@ function MeritCompanionCard({
               { value: "animal", label: tr("Animal", "Animal") },
               { value: "object", label: tr("Objeto", "Object") },
             ]}
+          />
+        </label>
+        <label>
+          {tr("Tipo de entidade", "Entity type")}
+          <RuleSelect
+            value={entity}
+            onChange={(value) => save({ entity: value })}
+            options={["Ghost","Spirit","Goetia"].map((value)=>({value,label:value}))}
           />
         </label>
         {form === "animal" ? (
@@ -3704,10 +3720,7 @@ function ExperiencePanel({
               </span>
             </div>
             {feedback && <p className="experience-feedback">{feedback}</p>}
-            <details className="experience-rules">
-              <summary>{tr("Tabela completa e formas de ganhar Beats","Full table and ways to earn Beats")}</summary>
-              <ExperienceRules />
-            </details>
+            <ExperienceRules />
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline">{tr("Fechar","Close")}</Button>
@@ -3835,6 +3848,8 @@ function MageExperiencePanel({
     [arcaneInput, setArcaneInput] = useState(String(arcane));
   const [purchase, setPurchase] = useState<string>(MAGE_PURCHASES[0]),
     [target, setTarget] = useState<string>(Object.values(ATTRIBUTES).flat()[0]);
+  const [mageSpecialtySkill,setMageSpecialtySkill]=useState<string>(Object.values(SKILLS).flat()[0]);
+  const [mageSpecialtyName,setMageSpecialtyName]=useState("");
   const [meritDots, setMeritDots] = useState(0);
   const [mageMeritInstance, setMageMeritInstance] = useState(-1);
   const [mageMeritConfiguration,setMageMeritConfiguration] = useState<Record<string,string|string[]>>({});
@@ -3874,6 +3889,7 @@ function MageExperiencePanel({
             : purchase === "Rota" || purchase === "Práxis"
               ? availableSpells.map((item) => item.id)
               : [purchase];
+  const chosenTarget=target||options[0]||"";
   const selectedMerit = merits.find((item) => item.id === target) ?? merits[0],
     ownedMerit =
       mageMeritInstance >= 0 &&
@@ -3893,25 +3909,25 @@ function MageExperiencePanel({
   const selectedSpell =
     availableSpells.find((item) => item.id === target) ?? availableSpells[0];
   let cost = 1,
-    label: string = systemTerm(target,locale),
+    label: string = systemTerm(chosenTarget,locale),
     mode: "regular" | "arcane" | "either" = "regular";
   if (purchase === "Atributo") cost = 4;
   else if (purchase === "Perícia") cost = 2;
   else if (purchase === "Especialização") {
     cost = 1;
-    label = `${tr("Especialização", "Specialty")}: ${systemTerm(target,locale)}`;
+    label = `${tr("Especialização", "Specialty")} ${systemTerm(mageSpecialtySkill,locale)}: ${mageSpecialtyName.trim()||tr("nova Especialização","new Specialty")}`;
   }
   else if (purchase === "Mérito") {
     cost = nextMerit ? nextMerit - (ownedMerit?.dots ?? 0) : 0;
     label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? tr("Mérito","Merit");
   } else if (purchase === "Arcano") {
-    const current = Number(arcana[target] ?? 0);
-    const ruling = path?.ruling.includes(target as never);
-    const inferior = path?.inferior === target;
+    const current = Number(arcana[chosenTarget] ?? 0);
+    const ruling = path?.ruling.includes(chosenTarget as never);
+    const inferior = path?.inferior === chosenTarget;
     const limit = ruling ? 5 : inferior ? 2 : 4;
     cost = current < limit ? 4 : 5;
     mode = current < limit ? "either" : "regular";
-    label = `${target} ${current + 1}`;
+    label = `${systemTerm(chosenTarget,locale)} ${current + 1}`;
   } else if (purchase === "Gnose") {
     cost = 5;
     mode = "either";
@@ -3960,30 +3976,29 @@ function MageExperiencePanel({
   }
   function buy() {
     if(purchase==="Mérito"){
-      if(!selectedMerit||!nextMerit)return setFeedback("Select an available Merit.");
-      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy))return setFeedback("This Merit is already granted.");
+      if(!selectedMerit||!nextMerit)return setFeedback(tr("Selecione um Mérito disponível.","Select an available Merit."));
+      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(tr("Este Mérito já foi concedido.","This Merit is already granted."));
       const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character));
       if(problems.length)return setFeedback(problems.join(" "));
     }
+    if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(tr("Informe o nome da Especialização.","Enter the Specialty name."));
     if (cost < 1 || regular < splitRegular || arcane < splitArcane) {
-      setFeedback("Experiência insuficiente ou compra indisponível.");
+      setFeedback(tr("Experiência insuficiente ou compra indisponível.","Insufficient Experience or unavailable purchase."));
       return;
     }
     const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
     if ((purchase === "Gnose" && Number(character.line_data.gnosis ?? 1) >= 10) ||
         (purchase === "Sabedoria" && Number(character.line_data.wisdom ?? 7) >= 10) ||
-        (purchase === "Arcano" && Number(arcana[target] ?? 0) >= 10) ||
-        (purchase === "Atributo" && Number(character.attributes[target] ?? 1) >= traitMaximum) ||
-        (purchase === "Perícia" && Number(character.skills[target] ?? 0) >= traitMaximum))
-      return setFeedback("Esta característica já atingiu seu limite de pontos.");
+        (purchase === "Arcano" && Number(arcana[chosenTarget] ?? 0) >= 10) ||
+        (purchase === "Atributo" && Number(character.attributes[chosenTarget] ?? 1) >= traitMaximum) ||
+        (purchase === "Perícia" && Number(character.skills[chosenTarget] ?? 0) >= traitMaximum))
+      return setFeedback(tr("Esta característica já atingiu seu limite de pontos.","This trait has reached its dot limit."));
     if (
       (purchase === "Rota" || purchase === "Práxis") &&
       (!selectedSpell ||
         !meetsArcanaRequirements(selectedSpell.requirements, arcana))
     ) {
-      setFeedback(
-        "Não há feitiço disponível que atenda aos níveis atuais de Arcana.",
-      );
+      setFeedback(tr("Não há feitiço disponível que atenda aos níveis atuais de Arcana.","No available spell meets the current Arcana ratings."));
       return;
     }
     const next = structuredClone(character);
@@ -3995,9 +4010,9 @@ function MageExperiencePanel({
       line_data: structuredClone(next.line_data),
     };
     if (purchase === "Atributo")
-      next.attributes[target] = Number(next.attributes[target] ?? 1) + 1;
+      next.attributes[chosenTarget] = Number(next.attributes[chosenTarget] ?? 1) + 1;
     else if (purchase === "Perícia")
-      next.skills[target] = Number(next.skills[target] ?? 0) + 1;
+      next.skills[chosenTarget] = Number(next.skills[chosenTarget] ?? 0) + 1;
     else if (purchase === "Mérito" && selectedMerit && nextMerit) {
       const found =
         mageMeritInstance >= 0
@@ -4020,11 +4035,11 @@ function MageExperiencePanel({
           instanceId:crypto.randomUUID(),
         });
     } else if (purchase === "Especialização")
-      next.specializations.push({ skill: target, name: "Nova Especialização" });
+      next.specializations.push({ skill: mageSpecialtySkill, name: mageSpecialtyName.trim() });
     else if (purchase === "Arcano")
       next.line_data = {
         ...next.line_data,
-        arcana: { ...arcana, [target]: Number(arcana[target] ?? 0) + 1 },
+        arcana: { ...arcana, [chosenTarget]: Number(arcana[chosenTarget] ?? 0) + 1 },
       };
     else if (purchase === "Gnose")
       next.line_data = withPowerRating(next, "gnosis", Number(next.line_data.gnosis ?? 1) + 1);
@@ -4060,17 +4075,17 @@ function MageExperiencePanel({
     recalculateCtlDerived(next);
     let undo: MageAdvancementUndo;
     if (purchase === "Atributo" || purchase === "Perícia")
-      undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: target };
-    else if (purchase === "Arcano") undo = { kind: "arcana", name: target };
+      undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget };
+    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget };
     else if (purchase === "Gnose") undo = { kind: "gnosis" };
     else if (purchase === "Sabedoria") undo = { kind: "wisdom" };
     else if (purchase === "Mérito") {
       const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
-      if (index < 0) return setFeedback("Não foi possível identificar o Mérito adquirido.");
+      if (index < 0) return setFeedback(tr("Não foi possível identificar o Mérito adquirido.","The purchased Merit could not be identified."));
       const instanceId = next.merits[index].instanceId ?? crypto.randomUUID();
       next.merits[index].instanceId = instanceId;
       undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId };
-    } else if (purchase === "Especialização") undo = { kind: "specialty", skill: target, name: "Nova Especialização" };
+    } else if (purchase === "Especialização") undo = { kind: "specialty", skill: mageSpecialtySkill, name: mageSpecialtyName.trim() };
     else if (purchase === "Rota" || purchase === "Práxis")
       undo = { kind: "spell", key: purchase === "Rota" ? "learned_rotes" : "learned_praxes", id: selectedSpell.id };
     else undo = { kind: "willpower" };
@@ -4092,13 +4107,12 @@ function MageExperiencePanel({
       mage_experience_history: [entry, ...history].slice(0, 100),
     };
     updateSheet(synchronizeMeritGrants(next));
-    setFeedback(`${label} adquirido.`);
+    setFeedback(tr(`${label} adquirido.`,`${label} purchased.`));
+    if(purchase==="Especialização")setMageSpecialtyName("");
   }
   function markWillpowerLoss() {
     if (lostWillpower >= maximumLostWillpower) {
-      setFeedback(
-        "Não é possível perder outro ponto permanente de Força de Vontade.",
-      );
+      setFeedback(tr("Não é possível perder outro ponto permanente de Força de Vontade.","No additional permanent Willpower dot can be lost."));
       return;
     }
     const next = structuredClone(character);
@@ -4111,7 +4125,7 @@ function MageExperiencePanel({
     };
     const entry: MageXpEntry = {
       id: crypto.randomUUID(),
-      description: "Perda permanente de um ponto de Força de Vontade",
+      description: tr("Perda permanente de um ponto de Força de Vontade","Permanent loss of one Willpower dot"),
       undo: { kind: "willpowerLoss" },
       regular: 0,
       arcane: 0,
@@ -4125,9 +4139,7 @@ function MageExperiencePanel({
       mage_experience_history: [entry, ...history].slice(0, 100),
     };
     updateSheet(next);
-    setFeedback(
-      "Perda permanente de Força de Vontade registrada no histórico.",
-    );
+    setFeedback(tr("Perda permanente de Força de Vontade registrada no histórico.","Permanent Willpower loss recorded in history."));
   }
   function revert(entry: MageXpEntry) {
     if (!history.some(item => item.id === entry.id)) return;
@@ -4151,10 +4163,10 @@ function MageExperiencePanel({
           undo = { kind: "merit", name: merit.name, dots: entry.regular + entry.arcane };
         else if (spell) undo = { kind: "spell", id: spell.id, key: entry.arcane > 0 ? "learned_praxes" : "learned_rotes" };
         else if (Object.values(SKILLS).flat().some(name => name === entry.description))
-          undo = { kind: "specialty", skill: entry.description, name: "Nova Especialização" };
+          undo = { kind: "specialty", skill: entry.description, name: locale==="en-US"?"New Specialty":"Nova Especialização" };
       }
     }
-    if (!undo) return setFeedback("Esta compra antiga não identifica com segurança o avanço a reembolsar.");
+    if (!undo) return setFeedback(tr("Esta compra antiga não identifica com segurança o avanço a reembolsar.","This older purchase does not identify the advancement safely enough to refund it."));
     const next = structuredClone(character);
     refundMageAdvancement(next, undo);
     next.current_state = {
@@ -4168,11 +4180,6 @@ function MageExperiencePanel({
     recalculateCtlDerived(next);
     updateSheet(synchronizeMeritGrants(next));
   }
-  useEffect(() => {
-    const handler = () => markWillpowerLoss();
-    window.addEventListener("mage-willpower-loss", handler);
-    return () => window.removeEventListener("mage-willpower-loss", handler);
-  });
   return (
     <section className="experience-panel mage-experience">
       <div className="experience-title">
@@ -4213,7 +4220,8 @@ function MageExperiencePanel({
         value={arcaneBeats}
         onChange={(value) => saveBalances({ arcane_experience_beats: value })}
       />
-      <Dialog>
+      <div className="experience-actions mage-experience-actions">
+        <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
             <Sparkles /> {tr("Comprar característica","Purchase trait")}
@@ -4260,7 +4268,11 @@ function MageExperiencePanel({
               </label>
             )}
             {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} onChange={setMageMeritConfiguration}/>}
-            {purchase !== "Mérito" &&
+            {purchase === "Especialização" && <>
+              <label>{tr("Perícia","Skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
+              <label>{tr("Especialização","Specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>
+            </>}
+            {purchase !== "Mérito" && purchase !== "Especialização" &&
               ((purchase === "Rota" || purchase === "Práxis") ||
                 options.length > 1) && (
               <label>
@@ -4287,7 +4299,7 @@ function MageExperiencePanel({
                   />
                 ) : (
                   <RuleSelect
-                    value={target || options[0]}
+                    value={chosenTarget}
                     onChange={setTarget}
                     options={
                       purchase === "Atributo"
@@ -4301,9 +4313,9 @@ function MageExperiencePanel({
               </label>
             )}
             {mode === "either" && (
-              <>
+              <div className="mage-experience-split">
                 <label>
-                  {tr("Experiência comum","Regular Experience")}
+                  {tr("Experiência","Experience")}
                   <Input
                     type="number"
                     min={0}
@@ -4327,7 +4339,7 @@ function MageExperiencePanel({
                     readOnly
                   />
                 </label>
-              </>
+              </div>
             )}
           </div>
           <div className="purchase-preview">
@@ -4337,10 +4349,7 @@ function MageExperiencePanel({
             </span>
           </div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
-          <details className="experience-rules">
-            <summary>{tr("Tabela completa e formas de ganhar Beats","Full table and ways to earn Beats")}</summary>
-            <MageExperienceRules />
-          </details>
+          <MageExperienceRules />
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">{tr("Fechar","Close")}</Button>
@@ -4356,7 +4365,9 @@ function MageExperiencePanel({
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+        </Dialog>
+        <Button type="button" variant="ghost" onClick={markWillpowerLoss}>{tr("Perder FV","Lose WP")}</Button>
+      </div>
       <details className="experience-history">
         <summary>
           <History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})
@@ -4367,7 +4378,7 @@ function MageExperiencePanel({
               <p key={entry.id}>
                 <span>{entry.description}</span>
                 <strong>
-                  {entry.regular} + {entry.arcane} Arcana
+                  {entry.regular} {tr("EXP","XP")} + {entry.arcane} {tr("EXP Arcana","Arcane XP")}
                 </strong>
                 <small>
                   {new Date(entry.createdAt).toLocaleDateString(locale)}
@@ -4418,17 +4429,6 @@ function BeatTrack({
           />
         ))}
       </div>
-      {label === "Beats Arcanos" && (
-        <Button
-          type="button"
-          size="sm"
-          variant="ghost"
-          className="mage-willpower-loss"
-          onClick={() => window.dispatchEvent(new Event("mage-willpower-loss"))}
-        >
-          {tr("Registrar perda permanente de FV", "Record permanent Willpower loss")}
-        </Button>
-      )}
     </div>
   );
 }
@@ -4467,9 +4467,8 @@ function MageExperienceRules() {
   const arcane = locale === "en-US" ? arcaneEn : arcanePt;
   const costs = locale === "en-US" ? costsEn : costsPt;
   return (
-    <div className="experience-rules-grid">
-      <table>
-        <caption>{tr("Beats comuns e Arcanos", "Regular and Arcane Beats")}</caption>
+    <div className="experience-rule-menus">
+      <details className="experience-rules"><summary>{tr("Formas de ganhar Beats", "Ways to earn Beats")}</summary><table>
         <tbody>
           {beats.map((x) => (
             <tr key={x}>
@@ -4484,9 +4483,8 @@ function MageExperienceRules() {
             </tr>
           ))}
         </tbody>
-      </table>
-      <table>
-        <caption>{tr("Custos", "Costs")}</caption>
+      </table></details>
+      <details className="experience-rules"><summary>{tr("Tabela de custos", "Cost table")}</summary><table>
         <tbody>
           {costs.map(([a, b]) => (
             <tr key={a}>
@@ -4495,7 +4493,7 @@ function MageExperienceRules() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></details>
     </div>
   );
 }
@@ -4613,6 +4611,17 @@ function ExperiencePowerPicker({
   );
 }
 
+function canAdvanceGrantedMerit(
+  line: "CtL" | "MtA",
+  merit: CharacterSheet["merits"][number],
+) {
+  return (
+    (line === "CtL" && merit.name === "Mantle" && merit.grantedBy === "Corte") ||
+    (line === "MtA" && merit.name === "Awakened Status" && merit.grantedBy === "Ordem") ||
+    (line === "MtA" && merit.name === "Mystery Cult Initiation" && merit.grantedBy === "Nameless Order")
+  );
+}
+
 function ExperienceMeritPicker({
   line,
   character,
@@ -4694,15 +4703,12 @@ function ExperienceMeritPicker({
                   .filter(
                     ({ owned }) =>
                       owned.name === item.name &&
-                      (!owned.grantedBy ||
-                        (line === "CtL" &&
-                          owned.name === "Mantle" &&
-                          owned.grantedBy === "Corte")),
+                      (!owned.grantedBy || canAdvanceGrantedMerit(line, owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
                 ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1)));
               if (item.name === "Mantle" && !instances.length) return null;
-              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy)&&item.name!=="Mantle")return null;
+              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvanceGrantedMerit(line,owned)))return null;
               if (
                 !repeatable &&
                 instances.length &&
@@ -5008,9 +5014,8 @@ function ExperienceRules() {
   const beatRows = locale === "en-US" ? beatRowsEn : beatRowsPt;
   const costRows = locale === "en-US" ? costRowsEn : costRowsPt;
   return (
-    <div className="experience-rules-grid">
-      <table>
-        <caption>{tr("Formas de ganhar Beats", "Ways to earn Beats")}</caption>
+    <div className="experience-rule-menus">
+      <details className="experience-rules"><summary>{tr("Formas de ganhar Beats", "Ways to earn Beats")}</summary><table>
         <tbody>
           {beatRows.map((label) => (
             <tr key={label}>
@@ -5019,9 +5024,8 @@ function ExperienceRules() {
             </tr>
           ))}
         </tbody>
-      </table>
-      <table>
-        <caption>{tr("Tabela de custos", "Cost table")}</caption>
+      </table></details>
+      <details className="experience-rules"><summary>{tr("Tabela de custos", "Cost table")}</summary><table>
         <thead>
           <tr>
             <th>{tr("Característica", "Trait")}</th>
@@ -5036,7 +5040,7 @@ function ExperienceRules() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></details>
     </div>
   );
 }
@@ -5349,95 +5353,136 @@ const ARCANA_PT: Record<string, string> = {
   Espírito: "Espírito",
   Tempo: "Tempo",
 };
-const LESSER_ATTAINMENTS: Record<string, [string, string]> = {
+const LESSER_ATTAINMENTS: Record<string, [string, string, string, string]> = {
   Death: [
     "Olhos dos Mortos",
     "Percebe fantasmas, almas e fenômenos do Crepúsculo com a Visão da Morte; com Mana, pode interagir com eles pela cena.",
+    "Eyes of the Dead",
+    "Perceive ghosts, souls, and Twilight phenomena with Death Sight; by spending Mana, interact with them for the scene.",
   ],
   Fate: [
     "Duração Condicional",
     "Acrescenta a um feitiço uma condição de encerramento que amplia sua Duração.",
+    "Conditional Duration",
+    "Add a termination condition to a spell to extend its Duration.",
   ],
   Forces: [
     "Força Precisa",
     "Otimiza a aplicação deliberada de força contra objetos ou alvos imóveis.",
+    "Precise Force",
+    "Optimize the deliberate application of force against objects or stationary targets.",
   ],
   Life: [
     "Restauração Aprimorada do Padrão",
     "Cura dano com Mana de modo mais eficiente e reduz efeitos derivados do Esfolamento de Atributos Físicos.",
+    "Improved Pattern Restoration",
+    "Heal damage more efficiently with Mana and reduce effects caused by Pattern scouring Physical Attributes.",
   ],
   Matter: [
     "Permanência",
     "Permite pagar Mana, em vez de Alcance, para aplicar Duração Avançada a feitiços cujo Arcano mais alto seja Matéria.",
+    "Permanence",
+    "Spend Mana instead of Reach to apply Advanced Duration when Matter is the spell's highest Arcanum.",
   ],
   Mind: [
     "Olho da Mente",
     "Percebe Goetia, entidades Astrais e projeções no Crepúsculo; com Mana, pode interagir com elas pela cena.",
+    "Mind's Eye",
+    "Perceive Goetia, Astral entities, and projections in Twilight; by spending Mana, interact with them for the scene.",
   ],
   Prime: [
     "Contramágica Universal",
     "Permite usar Contramágica contra qualquer feitiço Desperto usando Gnose + Primórdio.",
+    "Universal Counterspell",
+    "Use Counterspell against any Awakened spell with Gnosis + Prime.",
   ],
   Space: [
     "Alcance Simpático",
     "Permite conjurar à distância por uma conexão simpática, um Yantra apropriado e Mana.",
+    "Sympathetic Range",
+    "Cast at a distance through a sympathetic connection, an appropriate Yantra, and Mana.",
   ],
   Spirit: [
     "Olhos do Espírito",
     "Percebe espíritos e fenômenos do Crepúsculo espiritual; com Mana, pode interagir com eles pela cena.",
+    "Spirit Eyes",
+    "Perceive spirits and spiritual Twilight phenomena; by spending Mana, interact with them for the scene.",
   ],
   Time: [
     "Simpatia Temporal",
     "Permite lançar determinados feitiços de Tempo sobre o passado de um alvo atual.",
+    "Temporal Sympathy",
+    "Cast certain Time spells upon the past of a present target.",
   ],
 };
-const GREATER_ATTAINMENTS: Record<string, [string, string]> = {
+const GREATER_ATTAINMENTS: Record<string, [string, string, string, string]> = {
   Death: [
     "Alma Inviolável",
     "Pode repelir reflexivamente poderes que afetem sua alma, Nimbus, aura ou tentem possuí-lo.",
+    "Inviolate Soul",
+    "Reflexively repel powers that affect the soul, Nimbus, or aura, or that attempt possession.",
   ],
   Fate: [
     "Destino Desimpedido",
     "Pode repelir juramentos, compulsões e alterações sobrenaturais impostas ao próprio destino.",
+    "Unfettered Fate",
+    "Repel oaths, compulsions, and supernatural alterations imposed on your fate.",
   ],
   Forces: [
     "Imunidade Ambiental",
     "Com Mana, ignora Inclinações Ambientais e Ambientes Extremos pela cena.",
+    "Environmental Immunity",
+    "Spend Mana to ignore Environmental Tilts and Extreme Environments for the scene.",
   ],
   Life: [
     "Autonomia Corporal",
     "Pode repelir reflexivamente poderes que alterem ou firam seu corpo ou imponham Inclinações Pessoais.",
+    "Body Autonomy",
+    "Reflexively repel powers that alter or harm the body or impose Personal Tilts.",
   ],
   Matter: [
     "Controle de Durabilidade",
     "Com Mana e toque, aumenta ou reduz a Durabilidade de um objeto pelos pontos em Matéria.",
+    "Durability Control",
+    "Spend Mana and touch an object to raise or lower its Durability by Matter dots.",
   ],
   Mind: [
     "Salto Intuitivo",
     "Com Mana, transforma três ou mais sucessos em teste Mental ou Social num sucesso excepcional.",
+    "Intuitive Leap",
+    "Spend Mana to turn three or more successes on a Mental or Social roll into an exceptional success.",
   ],
   Prime: [
     "Imbuir Item",
     "Permite criar um Item Imbuído com um feitiço que o mago saiba conjurar.",
+    "Imbue Item",
+    "Create an Imbued Item with a spell the mage can cast.",
   ],
   Space: [
     "Onipresença",
     "Permite pagar Mana, em vez de Alcance, para aplicar Escala Avançada.",
+    "Omnipresence",
+    "Spend Mana instead of Reach to apply Advanced Scale.",
   ],
   Spirit: [
     "Posto Honorário",
     "Espíritos reconhecem um Posto honorário igual a Espírito, com benefícios sociais e ofensivos.",
+    "Honorary Rank",
+    "Spirits recognize an honorary Rank equal to Spirit, with social and offensive benefits.",
   ],
   Time: [
     "Tempo numa Garrafa",
     "Permite pagar Mana, em vez de Alcance, para usar tempo de conjuração instantâneo.",
+    "Time in a Bottle",
+    "Spend Mana instead of Reach to use instant casting time.",
   ],
 };
 function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
+  const {locale,tr}=useLanguage();
   const owned = (minimum: number) =>
     Object.entries(arcana)
       .filter(([, dots]) => Number(dots) >= minimum)
-      .map(([name]) => ARCANA_PT[name] ?? name);
+      .map(([name]) => locale==="en-US"?systemTerm(name,locale):ARCANA_PT[name] ?? name);
   const rows: Array<{ name: string; arcana: string[]; description: string }> =
     [];
   const one = owned(1),
@@ -5446,47 +5491,47 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
     five = owned(5);
   if (one.length)
     rows.push({
-      name: "Contramágica",
+      name: tr("Contramágica","Counterspell"),
       arcana: one,
       description:
-        "Desfaz a Imago de um feitiço observado com Visão Mágica Ativa por meio de um Confronto de Vontades.",
+        tr("Desfaz a Imago de um feitiço observado com Visão Mágica Ativa por meio de um Confronto de Vontades.","Unravel the Imago of a spell observed with Active Mage Sight through a Clash of Wills."),
     });
   for (const [name, dots] of Object.entries(arcana)) {
     if (Number(dots) >= 2 && LESSER_ATTAINMENTS[name])
       rows.push({
-        name: LESSER_ATTAINMENTS[name][0],
-        arcana: [ARCANA_PT[name] ?? name],
-        description: LESSER_ATTAINMENTS[name][1],
+        name: LESSER_ATTAINMENTS[name][locale==="en-US"?2:0],
+        arcana: [locale==="en-US"?systemTerm(name,locale):ARCANA_PT[name] ?? name],
+        description: LESSER_ATTAINMENTS[name][locale==="en-US"?3:1],
       });
   }
   if (two.length)
     rows.push({
-      name: "Armadura do Mago",
+      name: tr("Armadura do Mago","Mage Armor"),
       arcana: two,
       description:
-        "Ativa uma proteção correspondente a um dos Arcanos dominados; somente uma forma pode permanecer ativa por vez.",
+        tr("Ativa uma proteção correspondente a um dos Arcanos dominados; somente uma forma pode permanecer ativa por vez.","Activate protection corresponding to a mastered Arcanum; only one form may remain active at a time."),
     });
   if (three.length)
     rows.push({
-      name: "Invocação Direcionada",
+      name: tr("Invocação Direcionada","Targeted Summoning"),
       arcana: three,
       description:
-        "Ao invocar um ser Superno, permite especificar um segundo Arcano para refinar o alvo da invocação.",
+        tr("Ao invocar um ser Superno, permite especificar um segundo Arcano para refinar o alvo da invocação.","When summoning a Supernal being, specify a second Arcanum to refine the target."),
     });
   for (const [name, dots] of Object.entries(arcana)) {
     if (Number(dots) >= 4 && GREATER_ATTAINMENTS[name])
       rows.push({
-        name: GREATER_ATTAINMENTS[name][0],
-        arcana: [ARCANA_PT[name] ?? name],
-        description: GREATER_ATTAINMENTS[name][1],
+        name: GREATER_ATTAINMENTS[name][locale==="en-US"?2:0],
+        arcana: [locale==="en-US"?systemTerm(name,locale):ARCANA_PT[name] ?? name],
+        description: GREATER_ATTAINMENTS[name][locale==="en-US"?3:1],
       });
   }
   if (five.length)
     rows.push({
-      name: "Criar Rota",
+      name: tr("Criar Rota","Create Rote"),
       arcana: five,
       description:
-        "Permite codificar como Rota um feitiço cujos Arcanos tenham sido dominados.",
+        tr("Permite codificar como Rota um feitiço cujos Arcanos tenham sido dominados.","Encode as a Rote a spell whose Arcana have been mastered."),
     });
   return (
     <div className="mage-attainment-list">
@@ -5501,35 +5546,37 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
           <small>{row.description}</small>
         </div>
       ))}
-      {!rows.length && <em>Nenhum Attainment adquirido.</em>}
+      {!rows.length && <em>{tr("Nenhum Attainment adquirido.","No Attainments acquired.")}</em>}
     </div>
   );
 }
 function SpellColumn({
   items,
   showSkill = false,
+  minimumRows = 0,
 }: {
   items: Array<Record<string, unknown>>;
   showSkill?: boolean;
+  minimumRows?: number;
 }) {
   const {locale,tr}=useLanguage();
   return (
     <div className="mage-spell-lines">
       {items.map((item, index) => (
-        <div
+        <details className="contract-power-card"
           key={`${String(item.id ?? item.name)}-${index}`}
-          title={String(item.description ?? "")}
         >
-          <strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong>
-          <small>
+          <summary className="contract-power-summary"><strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong><small>
             {Object.entries((item.requirements ?? {}) as Record<string, number>)
               .map(([name, dots]) => `${name} ${dots}`)
               .join(" · ")}
             {showSkill && item.roteSkill ? ` · ${String(item.roteSkill)}` : ""}
-          </small>
-        </div>
+          </small></summary>
+          <div className="contract-power-details"><p>{String(item.description ?? tr("Sem descrição.", "No description."))}</p></div>
+        </details>
       ))}
-      {!items.length && <em>{tr("Nenhum registro.","No entries.")}</em>}
+      {Array.from({length:Math.max(0,minimumRows-items.length)},(_,index)=><div className="mage-spell-empty" key={`empty-${index}`} aria-label={tr("Linha de Práxis disponível","Available Praxis slot")}>&nbsp;</div>)}
+      {!items.length&&!minimumRows && <em>{tr("Nenhum registro.","No entries.")}</em>}
     </div>
   );
 }
@@ -5818,6 +5865,11 @@ function KithLore({ data }: { data: Record<string, unknown> }) {
   const blessing = String(presentation?.blessing ?? definition?.blessing ?? data.kith_blessing ?? "");
   const source = String(definition?.source ?? data.kith_source ?? "");
   const page = Number(definition?.page ?? data.kith_page ?? 0);
+  const choice=String(data.kith_choice??"").trim();
+  const choiceDefinition=kithCreationChoice(definition?.id);
+  const choiceLabel=choiceDefinition?(locale==="pt-BR"?choiceDefinition.labelPt:choiceDefinition.labelEn):"";
+  const choiceParts=choice.split(": ");
+  const displayedChoice=choiceDefinition?.kind==="skill"?systemTerm(choice,locale):choiceDefinition?.kind==="specialty"&&choiceParts.length>1?`${systemTerm(choiceParts[0],locale)}: ${choiceParts.slice(1).join(": ")}`:choice;
   if (!name)
     return (
       <LorePanel
@@ -5829,7 +5881,7 @@ function KithLore({ data }: { data: Record<string, unknown> }) {
     <LorePanel
       title={tr(`Bênção de ${name}`,`${name} Blessing`)}
       intro={data.kith_custom ? undefined : description}
-      text={`${skill ? `${skill}. ` : ""}${blessing || description}`}
+      text={`${choice ? `${choiceLabel}: ${displayedChoice}. ` : ""}${skill ? `${skill}. ` : ""}${blessing || description}`}
       source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}
     />
   );
@@ -5869,6 +5921,7 @@ function CourtLore({
   );
 }
 function CustomOrderLore({ data }: { data: Record<string, unknown> }) {
+  const {locale,tr}=useLanguage();
   const raw = data.custom_order;
   if (!raw || typeof raw !== "object") return null;
   const order = raw as Record<string, unknown>;
@@ -5877,9 +5930,9 @@ function CustomOrderLore({ data }: { data: Record<string, unknown> }) {
     : [];
   return (
     <article className="lore-panel">
-      <h4>Ordem: {String(order.name ?? data.order ?? "")}</h4>
+      <h4>{tr("Ordem","Order")}: {String(order.name ?? data.order ?? "")}</h4>
       <p>{String(order.description ?? "")}</p>
-      <small>Perícias de Rota: {skills.join(", ")}</small>
+      <small>{tr("Perícias de Rota","Rote Skills")}: {skills.map((skill)=>systemTerm(skill,locale)).join(", ")}</small>
     </article>
   );
 }

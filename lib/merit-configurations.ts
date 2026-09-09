@@ -141,7 +141,7 @@ export function meritConfigurationTitle(value: unknown, locale: Locale = "en-US"
 export function synchronizeMeritGrants<T>(sheet: T): T {
   const target=sheet as T&{
     game_line?:string;
-    merits?:Array<{instanceId?:string;name:string;dots:number;sourceId?:string;source?:string;configuration?:MeritConfiguration;grantedBy?:string}>;
+    merits?:Array<{instanceId?:string;name:string;dots:number;creationDots?:number;experienceDots?:number;sourceId?:string;source?:string;configuration?:MeritConfiguration;grantedBy?:string}>;
     specializations?:Array<{skill:string;name:string;grantedBy?:string}>;
     skills?:Record<string,number>;
     line_data?:Record<string,unknown>;
@@ -151,9 +151,12 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
   const existing=target.merits.find((item)=>item.name==="Mantle"&&item.grantedBy==="Corte");
   target.merits=target.merits.filter((item)=>!(item.name==="Mantle"&&item.grantedBy==="Corte"));
   if(target.game_line==="CtL"&&!courtless) target.merits.push({
+    ...existing,
     instanceId:existing?.instanceId??`mantle-${court}`,
     name:"Mantle",
     dots:Math.max(1,Number(existing?.dots??1)),
+    creationDots:Math.max(1,Number(existing?.creationDots??(Number(existing?.dots??1)-Number(existing?.experienceDots??0)))),
+    experienceDots:Math.max(0,Number(existing?.experienceDots??0)),
     sourceId:"ctl-2ed",
     source:"Changeling the Lost",
     configuration:{court},

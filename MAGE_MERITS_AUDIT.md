@@ -4,7 +4,11 @@ Data: 09/09/2026. Branch: `mages-redo`.
 
 ## Decisões aprovadas e estado atual
 
-Esta auditoria foi escrita antes da implementação e permanece como registro do diagnóstico. A implementação da primeira fase agora está presente nesta branch com **58 méritos de Mage**: os 60 registros da tabela principal menos **Masque** e **Profane Tool**. **Egregore, Masque e Prelacy**, da tabela de Style Merits, também continuam adiados.
+Esta auditoria foi escrita antes da implementação e permanece como registro do diagnóstico. A implementação da primeira fase agora está presente nesta branch com **61 méritos de Mage**: os 60 registros da tabela principal menos **Masque** e **Profane Tool**, mais **Demesne**, **Hallow** e **Sanctum** da tabela separada de méritos de localização. **Egregore, Masque e Prelacy**, da tabela de Style Merits, também continuam adiados.
+
+### Auditoria dos méritos de localização
+
+A página offline `Merits, Locations (2nd Edition)` contém três entradas de Mage. Elas não estavam disponíveis como compras no catálogo e foram adicionadas com a fonte `Mage the Awakening`: **Hallow** (•–•••••, p. 101), **Sanctum** (•–•••••, p. 104) e **Demesne** (•••, p. 104; a página também remete à p. 242). Como são propriedades distintas, as três entradas permitem múltiplas instâncias. Sanctum exige e registra uma instância de Safe Place com pontuação igual ou maior; Demesne exige e registra a instância de Sanctum preparada.
 
 As decisões posteriores que substituem as pendências descritas abaixo são:
 

@@ -212,6 +212,8 @@ export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:num
     if(!(context.merits??[]).some(item=>item.instanceId===id&&names.includes(item.name)&&item.dots>=minimum)) problems.push(`Select ${names.join(" or ")} (${minimum}+ dots).`);
   };
   if(merit.name==="Infamous Mentor")linked("mentorId",["Mentor"],selection.dots);
+  if(merit.name==="Sanctum")linked("safePlaceId",["Safe Place"],selection.dots);
+  if(merit.name==="Demesne")linked("sanctumId",["Sanctum"]);
   if(merit.name==="Imbued Ally")linked("allyId",["Retainer","Familiar"]);
   if(merit.name==="Order Archive")linked("statusId",["Awakened Status","Consilium/Order Status"]);
   if(merit.name==="Awakened Status"){

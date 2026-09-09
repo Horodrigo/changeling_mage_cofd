@@ -22,6 +22,14 @@ const regaliaRules = await vite.ssrLoadModule("/lib/changeling-regalia.ts");
 const { CONTRACTS } = await vite.ssrLoadModule("/lib/contracts.ts");
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
 
+test("Needle and Thread reopen with canonical values and follow the active locale",()=>{
+  assert.equal(creationRules.canonicalChangelingAnchorName("needle","Mestre de Xadrez"),"Chess Master");
+  assert.equal(creationRules.canonicalChangelingAnchorName("thread","Aceitação"),"Acceptance");
+  assert.equal(creationRules.changelingAnchorDisplayName("needle","Mestre de Xadrez","en-US"),"Chess Master");
+  assert.equal(creationRules.changelingAnchorDisplayName("thread","Aceitação","en-US"),"Acceptance");
+  assert.equal(creationRules.changelingAnchorDisplayName("needle","Chess Master","pt-BR"),"Mestre de Xadrez");
+});
+
 test("Shadowsoul grants Mirror for creation and Experience without spending the second Regalia", () => {
   const data = {kith:"Shadowsoul", primary_regalia:"Crown", second_regalia:"Sword"};
   const favored = regaliaRules.changelingFavoredRegalia(data);

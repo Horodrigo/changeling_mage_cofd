@@ -57,6 +57,40 @@ test("service worker preserva shell offline e exige confirmação para atualizar
   assert.doesNotMatch(worker,/addEventListener\("install"[^;]+skipWaiting/);
 });
 
+test("a criação apresenta Contratos selecionados como cartões expansíveis", async () => {
+  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  assert.match(builder,/className="contract-power-list creation-contract-list"/);
+  assert.match(builder,/<details className="contract-power-card"/);
+  assert.doesNotMatch(builder,/title=\{contractTooltip/);
+  assert.match(builder,/kith_choice: customKith \? "" : kithChoice/);
+});
+
+test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência compacto", async () => {
+  const [workspace,css]=await Promise.all([
+    readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
+    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+  ]);
+  assert.match(workspace,/<SheetField label="Legado" value=\{data\.legacy\}/);
+  assert.match(workspace,/<SheetField label="Nome das Sombras"[^]*<SheetField label="Virtude"[^]*<SheetField label="Caminho"[^]*<SheetField label="Jogador"[^]*<SheetField label="Vício"[^]*<SheetField label="Ordem"[^]*<SheetField label="Crônica"[^]*<SheetField label="Conceito"[^]*<SheetField label="Legado"/);
+  assert.doesNotMatch(workspace,/placeholder="Escreva uma (?:Aspiração|Obsessão)"/);
+  assert.match(workspace,/tr\("Experiência","Experience"\)/);
+  assert.match(workspace,/className="experience-actions mage-experience-actions"/);
+  assert.match(workspace,/tr\("Perder FV","Lose WP"\)/);
+  assert.match(workspace,/tr\("EXP Arcana","Arcane XP"\)/);
+  assert.match(css,/\.mage-experience-split \{[^}]*justify-content:flex-start/);
+  assert.match(css,/\.mage-experience-split label \{ width:116px/);
+  assert.match(css,/\.experience-dialog \{ width:min\(620px/);
+  assert.match(workspace,/className="experience-rule-menus"/);
+  assert.match(workspace,/mageSpecialtySkill/);
+  assert.match(workspace,/mageSpecialtyName\.trim\(\)/);
+  assert.match(workspace,/minimum=\{obsessionSlots\} maximum=\{obsessionSlots\}/);
+  assert.match(workspace,/minimum=\{gnosis\} maximum=\{gnosis\}/);
+  assert.match(workspace,/<SpellColumn items=\{praxes\} minimumRows=\{gnosis\}/);
+  assert.doesNotMatch(workspace,/<SheetHeading>Itens Encantados<\/SheetHeading>/);
+  assert.match(workspace,/\["Fae Mount","Familiar"\]\.includes\(item\.name\)/);
+  assert.match(workspace,/tr\("Tipo de entidade", "Entity type"\)/);
+});
+
 test("aviso offline pode ser fechado durante toda a sessão", async () => {
   const manager=await readFile(new URL("../app/pwa-manager.tsx",import.meta.url),"utf8");
   assert.match(manager,/sessionStorage\.setItem\(DISMISSED_KEY,"1"\)/);

@@ -32,7 +32,7 @@ const corrections: Record<string, Partial<MageRecord>> = {
   "Techné": {repeatable:true,prerequisites:"Awakened; Free Council Status •",description:"Choose a cultural, scientific, or artistic focus. Treat its use as a Free Council Order tool, and Sleepers engaged in it as a separate tool for non-obvious magic. A ritual team sharing the same focus gains 8-again for its leader. Repeatable for different fields."},
 };
 const ancientPaths: Record<string,string>={"Fire Keeper":"Obrimos","Sea's Hunger":"Moros","Sky's Whispers":"Acanthus","Spirit Warden":"Thyrsus","Trail Walker":"Mastigos"};
-export const MAGE_MERITS: MageRecord[] = MAGE_MERIT_INDEX.map(item=>{
+const indexedMageMerits: MageRecord[] = MAGE_MERIT_INDEX.map(item=>{
   const result: MageRecord={...item,ratings:[...item.ratings],...corrections[item.name]};
   if(ancientPaths[item.name]){
     result.prerequisites=`Awakened; ${ancientPaths[item.name]}`;
@@ -40,3 +40,20 @@ export const MAGE_MERITS: MageRecord[] = MAGE_MERIT_INDEX.map(item=>{
   }
   return result;
 });
+
+const MAGE_LOCATION_MERITS: MageRecord[] = [
+  {
+    id:"mta-2ed:demesne",name:"Demesne",ratings:[3],line:"MtA",sourceId:"mta-2ed",source:"Mage the Awakening",category:"Mage Locations",
+    prerequisites:"Awakened; Sanctum",description:"A linked Sanctum has been prepared around a soul stone as a Demesne. Appropriate spells gain a +2 Yantra bonus, and spells cast within do not risk Paradox unless exposed to Sleepers.",page:104,repeatable:true,
+  },
+  {
+    id:"mta-2ed:hallow",name:"Hallow",ratings:[1,2,3,4,5],line:"MtA",sourceId:"mta-2ed",source:"Mage the Awakening",category:"Mage Locations",
+    prerequisites:"Awakened",description:"A secured geomantic wellspring produces Mana equal to its rating each day and may hold up to three times its rating as unharvested tass.",page:101,repeatable:true,
+  },
+  {
+    id:"mta-2ed:sanctum",name:"Sanctum",ratings:[1,2,3,4,5],line:"MtA",sourceId:"mta-2ed",source:"Mage the Awakening",category:"Mage Locations",
+    prerequisites:"Awakened; Safe Place (equal or higher rating)",description:"A linked Safe Place is insulated for sorcery. Add Sanctum dots to spell control while casting there; spells maintained through this extra control remain supported after leaving.",page:104,repeatable:true,
+  },
+];
+
+export const MAGE_MERITS: MageRecord[] = [...indexedMageMerits,...MAGE_LOCATION_MERITS];

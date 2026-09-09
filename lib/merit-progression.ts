@@ -2,7 +2,11 @@ import type { MeritSelection } from "../app/character-builder";
 
 const dots = (value: unknown) => Math.max(0, Math.trunc(Number(value) || 0));
 
-export const creationMeritDots = (merit: MeritSelection) => dots(merit.creationDots);
+export const creationMeritDots = (merit: MeritSelection) => {
+  if (merit.creationDots !== undefined) return dots(merit.creationDots);
+  if (merit.grantedBy) return Math.max(1, dots(merit.dots) - dots(merit.experienceDots));
+  return 0;
+};
 export const experienceMeritDots = (merit: MeritSelection) => dots(merit.experienceDots);
 
 export function creationMerits(merits: MeritSelection[] = []) {

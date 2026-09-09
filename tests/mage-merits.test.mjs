@@ -13,9 +13,29 @@ const merit=(name)=>mageCatalog.find(item=>item.name===name);
 const base={gameLine:"MtA",attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
 test("Mage catalog uses splat-specific records and leaves deferred merits out",()=>{
- assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,58);
+ assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,61);
  assert.equal(merit("Mystery Cult Influence").sourceId,"mta-2ed");
  for(const name of ["Masque","Profane Tool","Egregore","Prelacy","Protective Name"]) assert.equal(merit(name),undefined,name);
+});
+test("Mage location merits preserve sources, ratings, and linked locations",()=>{
+ const locations=[
+  ["Demesne",[3],104],
+  ["Hallow",[1,2,3,4,5],101],
+  ["Sanctum",[1,2,3,4,5],104],
+ ];
+ for(const [name,ratings,page] of locations){
+  const item=merit(name);
+  assert.equal(item.source,"Mage the Awakening",name);
+  assert.equal(item.category,"Mage Locations",name);
+  assert.deepEqual(item.ratings,ratings,name);
+  assert.equal(item.page,page,name);
+ }
+ const safePlace={instanceId:"safe-a",name:"Safe Place",dots:3};
+ assert.deepEqual(merits.meritSelectionProblems(merit("Sanctum"),{dots:3,configuration:{safePlaceId:"safe-a"}},{...base,merits:[safePlace]}),[]);
+ assert.ok(merits.meritSelectionProblems(merit("Sanctum"),{dots:4,configuration:{safePlaceId:"safe-a"}},{...base,merits:[safePlace]}).length>0);
+ const sanctum={instanceId:"sanctum-a",name:"Sanctum",dots:1};
+ assert.deepEqual(merits.meritSelectionProblems(merit("Demesne"),{dots:3,configuration:{sanctumId:"sanctum-a"}},{...base,merits:[sanctum]}),[]);
+ assert.ok(merits.meritSelectionProblems(merit("Demesne"),{dots:3,configuration:{sanctumId:"missing"}},{...base,merits:[sanctum]}).length>0);
 });
 test("Shadow Self applies Shadow Name 3 and Mind 1",()=>{
  const shadow=merit("Shadow Self"),context={...base,arcana:{Mind:1},merits:[{name:"Shadow Name",dots:3}]};
