@@ -10,8 +10,8 @@ const {ELEVENTH_QUESTION,eleventhQuestionPrerequisites,normalizeLegacyState}=awa
 const {refundMageAdvancement}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 
 const mage=(overrides={})=>({
-  skills:{Investigation:2,Academics:2},
-  line_data:{gnosis:2,path:"Moros",order:"Orderless",arcana:{Time:2},praxes:[],...overrides},
+  skills:{Investigação:2,Erudição:2},
+  line_data:{gnosis:2,path:"Moros",order:"Orderless",arcana:{Tempo:2},praxes:[],...overrides},
 });
 
 test("The Eleventh Question contains the complete five-rank progression",()=>{
@@ -25,6 +25,11 @@ test("Legacy entry accepts parentage or the Perfect Timing Praxis",()=>{
   assert.equal(eleventhQuestionPrerequisites(mage()).met,true);
   assert.equal(eleventhQuestionPrerequisites(mage({path:"Acanthus",order:"Silver Ladder"})).met,false);
   assert.equal(eleventhQuestionPrerequisites(mage({path:"Acanthus",order:"Silver Ladder",praxes:[{name:"Perfect Timing"}]})).met,true);
+});
+
+test("Legacy prerequisites read the canonical Portuguese trait keys stored by the sheet",()=>{
+  const checks=eleventhQuestionPrerequisites(mage());
+  assert.deepEqual({time:checks.time,investigation:checks.investigation,qualifying:checks.qualifying,met:checks.met},{time:true,investigation:true,qualifying:true,met:true});
 });
 
 test("Legacy state normalization preserves only valid ranks",()=>{
@@ -46,4 +51,25 @@ test("Mage sheet exposes Join/Join Create and places Legacy before Combat",async
   assert.match(workspace,/<TabsTrigger value="magia"[^]*<TabsTrigger value="legacy"[^]*<TabsTrigger value="combate"/);
   assert.match(workspace,/Estas informações não são controladas automaticamente pela ficha/);
   assert.match(workspace,/tr\("Pagamento","Payment"\)[\s\S]*options=\{method==="tutelage"\?\[\{value:"regular",label:"1 Experience"\},\{value:"arcane",label:"1 Arcane Experience"\}\]:\[\{value:"arcane",label:"1 Arcane Experience"\}\]\}/);
+});
+
+test("Legacy navigation, progression, and discard follow membership state",async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  assert.match(workspace,/LegacySheetField[^>]+onOpen=\{\(\)=>setSheetTab\("legacy"\)\}/);
+  assert.match(workspace,/hidden:!legacyState\?\.joined/);
+  assert.match(workspace,/legacyState\?\.joined&&<TabsTrigger value="legacy"/);
+  assert.match(workspace,/state\.joined\?attainment\?\.prerequisites:definition\.prerequisites/);
+  assert.match(workspace,/\(!state\.joined\|\|attainment\)&&<p className=/);
+  assert.match(workspace,/!state\.joined&&<section><h3>\{tr\("Iniciação","Initiation"\)\}/);
+  assert.match(workspace,/setDiscardOpen\(true\)/);
+  assert.match(workspace,/delete next\.line_data\.legacy_state/);
+  assert.match(workspace,/<AlertDialog open=\{discardOpen\}/);
+});
+
+test("Merit hover prerequisites follow the active locale",async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  assert.match(builder,/meritTooltip\(definition,locale\)/);
+  assert.match(builder,/locale==="pt-BR"\?"Pré-requisitos":"Prerequisites"/);
 });

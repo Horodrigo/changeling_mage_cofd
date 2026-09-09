@@ -838,7 +838,13 @@ button { cursor: pointer; }
 .legacy-requirement-list span { border:1px solid #d8ced4; border-radius:999px; padding:4px 8px; font-size:11px; }
 .legacy-requirement-list .met { border-color:#91b5a1; background:#edf6f0; color:#315f45; }
 .legacy-requirement-list .unmet { border-color:#d6a8a8; background:#fff2f2; color:#793737; }
-.legacy-reference small { display:block; margin-top:8px; color:#746d75; }
+.legacy-title { align-items:center; }
+.legacy-title > button { flex:none; }
+.legacy-reference { color:#746d75; font-size:12px; font-style:italic; line-height:1.45; }
+.legacy-reference h3 { margin:0 0 4px; color:inherit; font-size:12px; font-style:italic; }
+.legacy-reference ul { margin:0; padding-left:18px; }
+.legacy-reference small { display:block; margin-top:5px; color:inherit; font-size:10px; }
+.legacy-next-attainment { margin-top:2px; }
 .legacy-attainments details { border:1px solid #ddd3c8; background:#fff; padding:9px; opacity:.66; }
 .legacy-attainments details.active { border-color:var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 6%,#fff); opacity:1; }
 .legacy-attainments summary { display:flex; justify-content:space-between; gap:8px; cursor:pointer; }

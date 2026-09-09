@@ -80,7 +80,7 @@ import {
   type CharacterSheet,
 } from "./character-builder";
 import { ENTITLEMENTS, entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement, type EntitlementAllocation, type EntitlementState } from "@/lib/entitlements";
-import { ELEVENTH_QUESTION, eleventhQuestionPrerequisites, normalizeLegacyState } from "@/lib/legacies";
+import { ELEVENTH_QUESTION, eleventhQuestionPrerequisites, legacyArcanumRating, legacySkillRating, normalizeLegacyState } from "@/lib/legacies";
 import {
   decodeConfiguredRows,
   expandedConfigurationLines,
@@ -754,23 +754,26 @@ function DeleteCharacterDialog({
 function SwipeableSheetTabs({
   tabs,
   children,
+  value,
+  onValueChange,
 }: {
-  tabs: Array<{ value: string; label: string }>;
+  tabs: Array<{ value: string; label: string; hidden?: boolean }>;
   children: Record<string, ReactNode>;
+  value: string;
+  onValueChange: (value:string)=>void;
 }) {
   const {tr}=useLanguage();
-  const [active, setActive] = useState(tabs[0]?.value ?? "");
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const select = (value: string) => {
-    setActive(value);
+    onValueChange(value);
     requestAnimationFrame(() =>
       document.querySelector(`[data-mobile-tab="${value}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }),
     );
   };
   return (
-    <Tabs value={active} onValueChange={select} className="ctl-sheet-tabs mobile-sheet-tabs">
+    <Tabs value={value} onValueChange={select} className="ctl-sheet-tabs mobile-sheet-tabs">
       <TabsList className="ctl-sheet-tab-list" aria-label={tr("Seções da ficha","Character sections")}>
-        {tabs.map((tab) => <TabsTrigger key={tab.value} value={tab.value} data-mobile-tab={tab.value}>{tab.label}</TabsTrigger>)}
+        {tabs.filter(tab=>!tab.hidden).map((tab) => <TabsTrigger key={tab.value} value={tab.value} data-mobile-tab={tab.value}>{tab.label}</TabsTrigger>)}
       </TabsList>
       <div
         className="mobile-swipe-area"
@@ -786,9 +789,9 @@ function SwipeableSheetTabs({
           const dx = touch.clientX - start.x;
           const dy = touch.clientY - start.y;
           if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
-          const index = tabs.findIndex((tab) => tab.value === active);
+          const visibleTabs=tabs.filter(tab=>!tab.hidden),index = visibleTabs.findIndex((tab) => tab.value === value);
           const next = dx < 0 ? index + 1 : index - 1;
-          if (tabs[next]) select(tabs[next].value);
+          if (visibleTabs[next]) select(visibleTabs[next].value);
         }}
       >
         {tabs.map((tab) => (
@@ -812,6 +815,7 @@ function CharacterPaper({
 }) {
   const { locale, tr } = useLanguage();
   const isMobile = useIsMobile();
+  const [sheetTab,setSheetTab]=useState(isMobile?"resumo":"principal");
   const homebrews = useHomebrews();
   const isExpanded = (name: string) =>
     isExpandedMerit(name) ||
@@ -979,18 +983,18 @@ function CharacterPaper({
           <div><span>{isCtl ? "CHANGELING" : tr("MAGO","MAGE")}</span><strong>{isCtl ? tr("OS PERDIDOS","THE LOST") : tr("O DESPERTAR","THE AWAKENING")}</strong></div>
           <p>{tr("CRÔNICAS DAS TREVAS","CHRONICLES OF DARKNESS")}</p>
         </header>
-        <SwipeableSheetTabs tabs={[
+        <SwipeableSheetTabs value={sheetTab} onValueChange={setSheetTab} tabs={[
           { value: "resumo", label: tr("Resumo","Summary") }, { value: "stats", label: "Stats" },
           { value: "detalhes", label: tr("Detalhes","Details") },
           { value: "poderes", label: tr("Poderes","Powers") },
           ...(isCtl&&entitlementMerit?[{value:"entitlement",label:"Entitlement"}]:[]),
-          ...(!isCtl&&hasLegacyAccess?[{value:"legacy",label:"Legacy"}]:[]),
+          ...(!isCtl&&hasLegacyAccess?[{value:"legacy",label:"Legacy",hidden:!legacyState?.joined}]:[]),
           { value: "combate", label: tr("Combate","Combat") },
           { value: "companheiros", label: tr("Companheiros","Companions") }, { value: "anotacoes", label: tr("Anotações","Notes") },
         ]}>
           {{
             resumo: <>
-              <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess}/>}</section>
+              <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={()=>setSheetTab("legacy")}/>}</section>
               <SheetHeading>Experiência</SheetHeading>
               {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
             </>,
@@ -1039,7 +1043,7 @@ function CharacterPaper({
               <CustomOrderLore data={data} />
             </>,
             entitlement: <EntitlementPage character={character} updateSheet={updateSheet}/>,
-            legacy: <LegacyPage character={character} updateSheet={updateSheet}/>,
+            legacy: <LegacyPage character={character} updateSheet={updateSheet} onDiscard={()=>setSheetTab("resumo")}/>,
             combate: <>
               <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} />
               <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} />
@@ -1264,7 +1268,8 @@ function CharacterPaper({
         </Tabs>
       ) : (
         <Tabs
-          defaultValue="principal"
+          value={sheetTab}
+          onValueChange={setSheetTab}
           className="ctl-sheet-tabs mta-sheet-tabs"
         >
           <TabsList
@@ -1273,7 +1278,7 @@ function CharacterPaper({
           >
             <TabsTrigger value="principal">{tr("Principal","Main")}</TabsTrigger>
             <TabsTrigger value="magia">{tr("Detalhes","Details")}</TabsTrigger>
-            {hasLegacyAccess&&<TabsTrigger value="legacy" data-legacy-tab-trigger>Legacy</TabsTrigger>}
+            {legacyState?.joined&&<TabsTrigger value="legacy" data-legacy-tab-trigger>Legacy</TabsTrigger>}
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
             <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
@@ -1287,7 +1292,7 @@ function CharacterPaper({
               <SheetField label="Ordem" value={!data.order||data.order==="Orderless"?tr("Sem Ordem","Orderless"):data.order==="Nameless"?"Nameless":locale==="en-US"?data.order:MTA_ORDER_LABELS[String(data.order)] ?? data.order} />
               <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField label="Conceito" value={character.character.concept} />
-              <LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} />
+              <LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={()=>setSheetTab("legacy")} />
             </section>
             <SheetHeading>Atributos</SheetHeading>
             <div className="official-trait-grid">
@@ -1462,7 +1467,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          {hasLegacyAccess&&<TabsContent value="legacy" data-page-title="Legacy" className="ctl-sheet-page powers-page"><LegacyPage character={character} updateSheet={updateSheet}/></TabsContent>}
+          {hasLegacyAccess&&<TabsContent value="legacy" data-page-title="Legacy" className="ctl-sheet-page powers-page"><LegacyPage character={character} updateSheet={updateSheet} onDiscard={()=>setSheetTab("principal")}/></TabsContent>}
           <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
@@ -1561,9 +1566,8 @@ function SheetField({ label, value }: { label: string; value: unknown }) {
     </div>
   );
 }
-function LegacySheetField({value,enabled}:{value:string;enabled:boolean}) {
-  const open=()=>document.querySelector<HTMLButtonElement>('[data-legacy-tab-trigger], [data-mobile-tab="legacy"]')?.click();
-  return <div className={`official-field legacy-sheet-field${enabled?" enabled":""}`}><span>Legacy</span>{enabled?<button type="button" onClick={open}>{value}</button>:<strong>{value}</strong>}</div>;
+function LegacySheetField({value,enabled,onOpen}:{value:string;enabled:boolean;onOpen:()=>void}) {
+  return <div className={`official-field legacy-sheet-field${enabled?" enabled":""}`}><span>Legacy</span>{enabled?<button type="button" onClick={onOpen}>{value}</button>:<strong>{value}</strong>}</div>;
 }
 function TraitBlock({
   title,
@@ -1778,13 +1782,14 @@ function TrifleUseTrack({used,onChange}:{used:number;onChange:(value:number)=>vo
   return <div className="trifle-use-block"><span>{tr("Trifles usadas","Trifles used")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={tr(`${used} de 3 Trifles usadas`,`${used} of 3 Trifles used`)}>{Array.from({length:3},(_,index)=><button key={index} type="button" className={index<used?"used":""} onClick={()=>onChange(index<used?index:index+1)} aria-label={tr(`Definir Trifles usadas como ${index<used?index:index+1}`,`Set used Trifles to ${index<used?index:index+1}`)}/>)}</div></div>;
 }
 
-function LegacyPage({character,updateSheet}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void}){
+function LegacyPage({character,updateSheet,onDiscard}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;onDiscard:()=>void}){
   const {tr}=useLanguage();
   const definition=ELEVENTH_QUESTION, state=normalizeLegacyState(character.line_data.legacy_state), checks=eleventhQuestionPrerequisites(character);
   const [method,setMethod]=useState<"tutelage"|"daimonomikon"|"soul-study">("tutelage");
   const [pool,setPool]=useState<"regular"|"arcane">("regular");
   const [attainmentTraining,setAttainmentTraining]=useState<"tutor"|"self">("tutor");
   const [feedback,setFeedback]=useState("");
+  const [discardOpen,setDiscardOpen]=useState(false);
   const regular=Number(character.current_state.mage_experience_available??0),arcane=Number(character.current_state.arcane_experience_available??0);
   const gnosis=Number(character.line_data.gnosis??1),arcana=(character.line_data.arcana??{}) as Record<string,number>;
   const history=Array.isArray(character.current_state.mage_experience_history)?character.current_state.mage_experience_history as MageXpEntry[]:[];
@@ -1810,9 +1815,9 @@ function LegacyPage({character,updateSheet}:{character:CharacterSheet;updateShee
   };
   const nextRank=Math.max(1,...state.attainmentRanks)+1;
   const attainment=definition.attainments.find(item=>item.rank===nextRank);
-  const qualifyingSkills=["Academics","Larceny","Medicine","Occult","Science"].map(skill=>Number(character.skills[skill]??0)).sort((a,b)=>b-a);
+  const qualifyingSkills=["Academics","Larceny","Medicine","Occult","Science"].map(skill=>legacySkillRating(character.skills,skill)).sort((a,b)=>b-a);
   const additionalSkillMet=!attainment||attainment.rank<3?true:attainment.rank<5?(qualifyingSkills[0]>=3||qualifyingSkills[1]>=2):(qualifyingSkills[0]>=4||qualifyingSkills[1]>=3||qualifyingSkills[2]>=2);
-  const rankPrerequisites=attainment?Number(arcana.Time??0)>=attainment.rulingArcanum&&gnosis>=attainment.orthodoxGnosis&&Number(character.skills.Investigation??0)>=(attainment.rank>=4?4:attainment.rank>=2?3:2)&&additionalSkillMet:false;
+  const rankPrerequisites=attainment?legacyArcanumRating(arcana,"Time")>=attainment.rulingArcanum&&gnosis>=attainment.orthodoxGnosis&&legacySkillRating(character.skills,"Investigation")>=(attainment.rank>=4?4:attainment.rank>=2?3:2)&&additionalSkillMet:false;
   const buyAttainment=()=>{
     if(!attainment||!rankPrerequisites)return setFeedback(tr("Os pré-requisitos do próximo Attainment ainda não foram atendidos.","The next Attainment's prerequisites are not yet met."));
     const effectivePool=attainmentTraining==="self"?"arcane":pool,regularCost=effectivePool==="regular"?1:0,arcaneCost=effectivePool==="arcane"?1:0;if(regular<regularCost||arcane<arcaneCost)return setFeedback(tr("Experiência insuficiente.","Insufficient Experience."));
@@ -1820,15 +1825,18 @@ function LegacyPage({character,updateSheet}:{character:CharacterSheet;updateShee
     const next=structuredClone(character);removePraxis(next,praxis);next.line_data.legacy_state={...state,attainmentRanks:[...state.attainmentRanks,attainment.rank]};
     savePurchase(next,`${definition.name} · ${attainment.name}`,regularCost,arcaneCost,{kind:"legacyAttainment",rank:attainment.rank,removedPraxis:praxis,creditedRegular:0,creditedArcane:0,creditedArcaneBeats:0},praxis?{arcane:1,beats:1}:{});
   };
+  const discard=()=>{const next=structuredClone(character);delete next.line_data.legacy_state;updateSheet(next);onDiscard();};
   return <div className="entitlement-page legacy-page">
-    <header className="entitlement-title"><div><h2>{definition.name}</h2><p>{definition.source} · p. {definition.page}–202 · {tr("Arcano Regente","Ruling Arcanum")}: {definition.rulingArcanum}</p></div></header>
-    <p className={`entitlement-prerequisites ${checks.met?"met":"unmet"}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {definition.prerequisites}</p>
-    {!state.joined&&<section className="legacy-join"><h3>{tr("Entrar na Legacy","Join the Legacy")}</h3><div className="legacy-requirement-list">{[[checks.gnosis,"Gnosis 2"],[checks.time,"Time 2"],[checks.investigation,"Investigation 2"],[checks.qualifying,"Qualifying Skill 2"],[checks.parentage||checks.praxis,"Moros, Guardian/Mysterium, or Perfect Timing Praxis"]].map(([met,label])=><span className={met?"met":"unmet"} key={String(label)}>{met?"✓":"×"} {label}</span>)}</div><div className="legacy-join-controls"><label>{tr("Método de iniciação","Initiation method")}<RuleSelect value={method} onChange={(value)=>{const next=value as typeof method;setMethod(next);if(next!=="tutelage")setPool("arcane");}} options={[{value:"tutelage",label:"Tutelage"},{value:"daimonomikon",label:"Daimonomikon"},{value:"soul-study",label:"Soul or Soul Stone Study"}]}/></label><label>{tr("Pagamento","Payment")}<RuleSelect value={method==="tutelage"?pool:"arcane"} onChange={(value)=>setPool(value as typeof pool)} options={method==="tutelage"?[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]:[{value:"arcane",label:"1 Arcane Experience"}]}/></label></div><Button type="button" size="sm" className="builder-add-action legacy-join-button" disabled={!checks.met} onClick={join}>{tr("Entrar em The Eleventh Question","Join The Eleventh Question")}</Button>{gnosis>=3&&<details className="experience-rules"><summary>{tr("Criar uma Legacy","Create a Legacy")}</summary><p>{tr("Gnosis 3 permite fundar uma Legacy por 1 Arcane Experience. A criação das definições personalizadas será adicionada em uma etapa posterior.","Gnosis 3 permits founding a Legacy for 1 Arcane Experience. Authoring custom Legacy definitions will be added in a later phase.")}</p></details>}</section>}
-    <div className="entitlement-overview"><section><h3>{tr("Iniciação","Initiation")}</h3><p>{definition.initiation}</p></section><section><h3>{tr("Organização","Organization")}</h3><p>{definition.organization}</p></section><section><h3>{tr("Teoria","Theory")}</h3><p>{definition.theory}</p></section></div>
-    <div className="entitlement-overview"><section><h3>Yantras</h3><ul>{definition.yantras.map(item=><li key={item}>{item}</li>)}</ul></section><section><h3>Oblations</h3><ul>{definition.oblations.map(item=><li key={item}>{item}</li>)}</ul></section></div>
+    <header className="entitlement-title legacy-title"><div><h2>{definition.name}</h2><p>{definition.source} · p. {definition.page}–202 · {tr("Arcano Regente","Ruling Arcanum")}: {definition.rulingArcanum}</p></div>{state.joined?<Button type="button" size="sm" variant="destructive" onClick={()=>setDiscardOpen(true)}>{tr("Descartar Legacy","Discard Legacy")}</Button>:<Button type="button" size="sm" className="builder-add-action legacy-join-button" disabled={!checks.met} onClick={join}>{tr("Entrar na Legacy","Join Legacy")}</Button>}</header>
+    {(!state.joined||attainment)&&<p className={`entitlement-prerequisites ${state.joined?(rankPrerequisites?"met":"unmet"):(checks.met?"met":"unmet")}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {state.joined?attainment?.prerequisites:definition.prerequisites}</p>}
     <section className="legacy-reference"><h3>{tr("Informações de Legacy","Legacy Information")}</h3><ul><li>{tr("Tutor e aluno possuem vínculo simpático Strong.","Tutor and student have a Strong sympathetic link.")}</li><li>{tr("Após uma cena de interação mística, emocional ou íntima significativa, tutor e aluno recebem um Arcane Beat, no máximo uma vez por capítulo.","After a significant mystical, emotional, or intimate interaction scene, tutor and student earn one Arcane Beat, at most once per chapter.")}</li><li>{tr("Membros, Daimonomika e Soul Stones da mesma Legacy são Yantras simpáticos de +2 para seus membros.","Members, Daimonomika, and Soul Stones of the same Legacy are +2 sympathetic Yantras for its members.")}</li></ul><small>{tr("Estas informações não são controladas automaticamente pela ficha.","The sheet does not track these rules automatically.")}</small></section>
-    <section><h3>Attainments</h3><div className="entitlement-blessings legacy-attainments">{definition.attainments.map(item=>{const acquired=state.attainmentRanks.includes(item.rank);return <details key={item.rank} className={acquired?"active":""}><summary><strong>{item.rank}. {item.name}</strong><span>{acquired?tr("Adquirido","Acquired"):item.prerequisites}</span></summary><p>{item.description}</p>{item.optional&&<p><strong>Optional:</strong> {item.optional}</p>}</details>})}</div>{state.joined&&attainment&&<div className="legacy-attainment-purchase"><p><strong>{tr("Próximo Attainment","Next Attainment")}:</strong> {attainment.name} · 1 Experience</p><RuleSelect value={attainmentTraining} onChange={(value)=>{const training=value as typeof attainmentTraining;setAttainmentTraining(training);if(training==="self")setPool("arcane");}} options={[{value:"tutor",label:tr("Aprender com tutor","Learn from a tutor")},{value:"self",label:tr("Desenvolver sem tutor","Develop without a tutor")}]}/>{attainmentTraining==="tutor"&&<RuleSelect value={pool} onChange={(value)=>setPool(value as typeof pool)} options={[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]}/>}<Button type="button" disabled={!rankPrerequisites} onClick={buyAttainment}>{tr("Comprar Attainment","Purchase Attainment")}</Button></div>}</section>
+    {!state.joined&&<section className="legacy-join"><div className="legacy-requirement-list">{[[checks.gnosis,"Gnosis 2"],[checks.time,"Time 2"],[checks.investigation,"Investigation 2"],[checks.qualifying,"Qualifying Skill 2"],[checks.parentage||checks.praxis,"Moros, Guardian/Mysterium, or Perfect Timing Praxis"]].map(([met,label])=><span className={met?"met":"unmet"} key={String(label)}>{met?"✓":"×"} {label}</span>)}</div><div className="legacy-join-controls"><label>{tr("Método de iniciação","Initiation method")}<RuleSelect value={method} onChange={(value)=>{const next=value as typeof method;setMethod(next);if(next!=="tutelage")setPool("arcane");}} options={[{value:"tutelage",label:"Tutelage"},{value:"daimonomikon",label:"Daimonomikon"},{value:"soul-study",label:"Soul or Soul Stone Study"}]}/></label><label>{tr("Pagamento","Payment")}<RuleSelect value={method==="tutelage"?pool:"arcane"} onChange={(value)=>setPool(value as typeof pool)} options={method==="tutelage"?[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]:[{value:"arcane",label:"1 Arcane Experience"}]}/></label></div>{gnosis>=3&&<details className="experience-rules"><summary>{tr("Criar uma Legacy","Create a Legacy")}</summary><p>{tr("Gnosis 3 permite fundar uma Legacy por 1 Arcane Experience. A criação das definições personalizadas será adicionada em uma etapa posterior.","Gnosis 3 permits founding a Legacy for 1 Arcane Experience. Authoring custom Legacy definitions will be added in a later phase.")}</p></details>}</section>}
+    {state.joined&&attainment&&<section className="legacy-join legacy-next-attainment"><div className="legacy-attainment-purchase"><p><strong>{tr("Próximo Attainment","Next Attainment")}:</strong> {attainment.name} · 1 Experience</p><RuleSelect value={attainmentTraining} onChange={(value)=>{const training=value as typeof attainmentTraining;setAttainmentTraining(training);if(training==="self")setPool("arcane");}} options={[{value:"tutor",label:tr("Aprender com tutor","Learn from a tutor")},{value:"self",label:tr("Desenvolver sem tutor","Develop without a tutor")}]}/>{attainmentTraining==="tutor"&&<RuleSelect value={pool} onChange={(value)=>setPool(value as typeof pool)} options={[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]}/>}<Button type="button" size="sm" disabled={!rankPrerequisites} onClick={buyAttainment}>{tr("Comprar Attainment","Purchase Attainment")}</Button></div></section>}
+    <div className="entitlement-overview">{!state.joined&&<section><h3>{tr("Iniciação","Initiation")}</h3><p>{definition.initiation}</p></section>}<section><h3>{tr("Organização","Organization")}</h3><p>{definition.organization}</p></section><section><h3>{tr("Teoria","Theory")}</h3><p>{definition.theory}</p></section></div>
+    <div className="entitlement-overview"><section><h3>Yantras</h3><ul>{definition.yantras.map(item=><li key={item}>{item}</li>)}</ul></section><section><h3>Oblations</h3><ul>{definition.oblations.map(item=><li key={item}>{item}</li>)}</ul></section></div>
+    <section><h3>Attainments</h3><div className="entitlement-blessings legacy-attainments">{definition.attainments.map(item=>{const acquired=state.attainmentRanks.includes(item.rank);return <details key={item.rank} className={acquired?"active":""}><summary><strong>{item.rank}. {item.name}</strong><span>{acquired?tr("Adquirido","Acquired"):item.prerequisites}</span></summary><p>{item.description}</p>{item.optional&&<p><strong>Optional:</strong> {item.optional}</p>}</details>})}</div></section>
     {feedback&&<p className="experience-feedback">{feedback}</p>}
+    <AlertDialog open={discardOpen} onOpenChange={setDiscardOpen}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{tr("Descartar The Eleventh Question?","Discard The Eleventh Question?")}</AlertDialogTitle><AlertDialogDescription>{tr("A Legacy e todos os Attainments adquiridos serão removidos da ficha.","The Legacy and all acquired Attainments will be removed from the character sheet.")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>{tr("Cancelar","Cancel")}</AlertDialogCancel><AlertDialogAction variant="destructive" onClick={discard}>{tr("Descartar Legacy","Discard Legacy")}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
   </div>;
 }
 

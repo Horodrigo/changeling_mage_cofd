@@ -54,6 +54,24 @@ export const ELEVENTH_QUESTION: LegacyDefinition = {
 
 export const LEGACIES=[ELEVENTH_QUESTION] as const;
 
+const LEGACY_SKILL_ALIASES:Record<string,string[]>={
+  Academics:["Academics","Erudição"], Larceny:["Larceny","Furto"], Medicine:["Medicine","Medicina"],
+  Occult:["Occult","Ocultismo"], Science:["Science","Ciência"], Investigation:["Investigation","Investigação"],
+};
+const LEGACY_ARCANUM_ALIASES:Record<string,string[]>={Time:["Time","Tempo"],Matter:["Matter","Matéria"]};
+
+function aliasedRating(values:Record<string,number>,aliases:string[]){
+  return Math.max(0,...aliases.map(name=>Number(values[name]??0)));
+}
+
+export function legacySkillRating(skills:Record<string,number>,name:string){
+  return aliasedRating(skills,LEGACY_SKILL_ALIASES[name]??[name]);
+}
+
+export function legacyArcanumRating(arcana:Record<string,number>,name:string){
+  return aliasedRating(arcana,LEGACY_ARCANUM_ALIASES[name]??[name]);
+}
+
 export function normalizeLegacyState(value:unknown):LegacyState {
   if(!value||typeof value!=="object")return {definitionId:"",joined:false,attainmentRanks:[],initiationMethod:""};
   const state=value as Record<string,unknown>;
@@ -65,6 +83,8 @@ export function eleventhQuestionPrerequisites(character:LegacyCharacter){
   const data=character.line_data,gnosis=Number(data.gnosis??1),arcana=(data.arcana??{}) as Record<string,number>;
   const parentage=String(data.path)==="Moros"||["Guardians of the Veil","Mysterium"].includes(String(data.order));
   const praxis=[...(Array.isArray(data.praxes)?data.praxes:[]),...(Array.isArray(data.learned_praxes)?data.learned_praxes:[])].some((item)=>item&&typeof item==="object"&&String((item as Record<string,unknown>).originalName??(item as Record<string,unknown>).name)==="Perfect Timing");
-  const qualifying=["Academics","Larceny","Medicine","Occult","Science"].some(skill=>Number(character.skills[skill]??0)>=2);
-  return {gnosis:gnosis>=2,time:Number(arcana.Time??0)>=2,investigation:Number(character.skills.Investigation??0)>=2,qualifying,parentage,praxis,met:gnosis>=2&&Number(arcana.Time??0)>=2&&Number(character.skills.Investigation??0)>=2&&qualifying&&(parentage||praxis)};
+  const time=legacyArcanumRating(arcana,"Time")>=2;
+  const investigation=legacySkillRating(character.skills,"Investigation")>=2;
+  const qualifying=["Academics","Larceny","Medicine","Occult","Science"].some(skill=>legacySkillRating(character.skills,skill)>=2);
+  return {gnosis:gnosis>=2,time,investigation,qualifying,parentage,praxis,met:gnosis>=2&&time&&investigation&&qualifying&&(parentage||praxis)};
 }

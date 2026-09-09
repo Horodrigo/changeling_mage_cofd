@@ -2611,7 +2611,7 @@ function Merits({
             <div
               className="merit-row configurable"
               key={`${index}-${selection.name}`}
-              title={definition ? meritTooltip(definition) : undefined}
+              title={definition ? meritTooltip(definition,locale) : undefined}
             >
               <div className="merit-row-main">
                 <div>
@@ -3577,9 +3577,9 @@ function isRepeatableDefinition(definition: MeritDefinition) {
     Boolean((definition as MeritDefinition & { repeatable?: boolean }).repeatable)
   );
 }
-function meritTooltip(definition: MeritDefinition) {
+function meritTooltip(definition: MeritDefinition,locale:"pt-BR"|"en-US") {
   return definition.prerequisites
-    ? `Pré-requisitos: ${definition.prerequisites}\n${definition.description}`
+    ? `${locale==="pt-BR"?"Pré-requisitos":"Prerequisites"}: ${definition.prerequisites}\n${definition.description}`
     : definition.description;
 }
 function formatRequirements(requirements: Record<string, number>) {
