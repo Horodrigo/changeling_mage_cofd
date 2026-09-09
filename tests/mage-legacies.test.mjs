@@ -47,24 +47,26 @@ test("Legacy refunds restore removed Praxes and only their transaction delta",()
 test("Mage sheet exposes Join/Join Create and places Legacy before Combat",async()=>{
   const {readFile}=await import("node:fs/promises");
   const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const legacy=await readFile(new URL("../app/workspace/legacy-page.tsx",import.meta.url),"utf8");
   assert.match(workspace,/gnosis >= 3 \? tr\("Join\/Create"/);
   assert.match(workspace,/<TabsTrigger value="magia"[^]*<TabsTrigger value="legacy"[^]*<TabsTrigger value="combate"/);
-  assert.match(workspace,/Estas informações não são controladas automaticamente pela ficha/);
-  assert.match(workspace,/tr\("Pagamento","Payment"\)[\s\S]*options=\{method==="tutelage"\?\[\{value:"regular",label:"1 Experience"\},\{value:"arcane",label:"1 Arcane Experience"\}\]:\[\{value:"arcane",label:"1 Arcane Experience"\}\]\}/);
+  assert.match(legacy,/Estas informações não são controladas automaticamente pela ficha/);
+  assert.match(legacy,/tr\("Pagamento","Payment"\)[\s\S]*options=\{method==="tutelage"\?\[\{value:"regular",label:"1 Experience"\},\{value:"arcane",label:"1 Arcane Experience"\}\]:\[\{value:"arcane",label:"1 Arcane Experience"\}\]\}/);
 });
 
 test("Legacy navigation, progression, and discard follow membership state",async()=>{
   const {readFile}=await import("node:fs/promises");
   const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const legacy=await readFile(new URL("../app/workspace/legacy-page.tsx",import.meta.url),"utf8");
   assert.match(workspace,/LegacySheetField[^>]+onOpen=\{\(\)=>setSheetTab\("legacy"\)\}/);
   assert.match(workspace,/hidden:!legacyState\?\.joined/);
   assert.match(workspace,/legacyState\?\.joined&&<TabsTrigger value="legacy"/);
-  assert.match(workspace,/state\.joined\?attainment\?\.prerequisites:definition\.prerequisites/);
-  assert.match(workspace,/\(!state\.joined\|\|attainment\)&&<p className=/);
-  assert.match(workspace,/!state\.joined&&<section><h3>\{tr\("Iniciação","Initiation"\)\}/);
-  assert.match(workspace,/setDiscardOpen\(true\)/);
-  assert.match(workspace,/delete next\.line_data\.legacy_state/);
-  assert.match(workspace,/<AlertDialog open=\{discardOpen\}/);
+  assert.match(legacy,/state\.joined\?attainment\?\.prerequisites:definition\.prerequisites/);
+  assert.match(legacy,/\(!state\.joined\|\|attainment\)&&<p className=/);
+  assert.match(legacy,/!state\.joined&&<section><h3>\{tr\("Iniciação","Initiation"\)\}/);
+  assert.match(legacy,/setDiscardOpen\(true\)/);
+  assert.match(legacy,/delete next\.line_data\.legacy_state/);
+  assert.match(legacy,/<AlertDialog open=\{discardOpen\}/);
 });
 
 test("Merit hover prerequisites follow the active locale",async()=>{

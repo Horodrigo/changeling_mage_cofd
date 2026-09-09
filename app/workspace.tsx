@@ -79,8 +79,8 @@ import {
   MeritConfigurationEditor,
   type CharacterSheet,
 } from "./character-builder";
-import { ENTITLEMENTS, entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement, type EntitlementAllocation, type EntitlementState } from "@/lib/entitlements";
-import { ELEVENTH_QUESTION, eleventhQuestionPrerequisites, legacyArcanumRating, legacySkillRating, normalizeLegacyState } from "@/lib/legacies";
+import { entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement } from "@/lib/entitlements";
+import { ELEVENTH_QUESTION, normalizeLegacyState } from "@/lib/legacies";
 import {
   decodeConfiguredRows,
   expandedConfigurationLines,
@@ -139,6 +139,10 @@ import {
 } from "@/lib/changeling-conditions";
 import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
 import { SPELLS } from "@/lib/spells";
+import { RuleSelect } from "./workspace/rule-select";
+import { SwipeableSheetTabs } from "./workspace/sheet-tabs";
+import { LegacyPage } from "./workspace/legacy-page";
+import { EntitlementPage } from "./workspace/entitlement-page";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { changelingFavoredRegalia, changelingContractExperienceCost } from "@/lib/changeling-regalia";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
@@ -748,59 +752,6 @@ function DeleteCharacterDialog({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-}
-
-function SwipeableSheetTabs({
-  tabs,
-  children,
-  value,
-  onValueChange,
-}: {
-  tabs: Array<{ value: string; label: string; hidden?: boolean }>;
-  children: Record<string, ReactNode>;
-  value: string;
-  onValueChange: (value:string)=>void;
-}) {
-  const {tr}=useLanguage();
-  const touchStart = useRef<{ x: number; y: number } | null>(null);
-  const select = (value: string) => {
-    onValueChange(value);
-    requestAnimationFrame(() =>
-      document.querySelector(`[data-mobile-tab="${value}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }),
-    );
-  };
-  return (
-    <Tabs value={value} onValueChange={select} className="ctl-sheet-tabs mobile-sheet-tabs">
-      <TabsList className="ctl-sheet-tab-list" aria-label={tr("Seções da ficha","Character sections")}>
-        {tabs.filter(tab=>!tab.hidden).map((tab) => <TabsTrigger key={tab.value} value={tab.value} data-mobile-tab={tab.value}>{tab.label}</TabsTrigger>)}
-      </TabsList>
-      <div
-        className="mobile-swipe-area"
-        onTouchStart={(event) => {
-          const touch = event.changedTouches[0];
-          touchStart.current = { x: touch.clientX, y: touch.clientY };
-        }}
-        onTouchEnd={(event) => {
-          const start = touchStart.current;
-          touchStart.current = null;
-          if (!start) return;
-          const touch = event.changedTouches[0];
-          const dx = touch.clientX - start.x;
-          const dy = touch.clientY - start.y;
-          if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
-          const visibleTabs=tabs.filter(tab=>!tab.hidden),index = visibleTabs.findIndex((tab) => tab.value === value);
-          const next = dx < 0 ? index + 1 : index - 1;
-          if (visibleTabs[next]) select(visibleTabs[next].value);
-        }}
-      >
-        {tabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value} className="ctl-sheet-page mobile-sheet-page">
-            {children[tab.value]}
-          </TabsContent>
-        ))}
-      </div>
-    </Tabs>
   );
 }
 
@@ -1782,103 +1733,6 @@ function TrifleUseTrack({used,onChange}:{used:number;onChange:(value:number)=>vo
   return <div className="trifle-use-block"><span>{tr("Trifles usadas","Trifles used")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={tr(`${used} de 3 Trifles usadas`,`${used} of 3 Trifles used`)}>{Array.from({length:3},(_,index)=><button key={index} type="button" className={index<used?"used":""} onClick={()=>onChange(index<used?index:index+1)} aria-label={tr(`Definir Trifles usadas como ${index<used?index:index+1}`,`Set used Trifles to ${index<used?index:index+1}`)}/>)}</div></div>;
 }
 
-function LegacyPage({character,updateSheet,onDiscard}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;onDiscard:()=>void}){
-  const {tr}=useLanguage();
-  const definition=ELEVENTH_QUESTION, state=normalizeLegacyState(character.line_data.legacy_state), checks=eleventhQuestionPrerequisites(character);
-  const [method,setMethod]=useState<"tutelage"|"daimonomikon"|"soul-study">("tutelage");
-  const [pool,setPool]=useState<"regular"|"arcane">("regular");
-  const [attainmentTraining,setAttainmentTraining]=useState<"tutor"|"self">("tutor");
-  const [feedback,setFeedback]=useState("");
-  const [discardOpen,setDiscardOpen]=useState(false);
-  const regular=Number(character.current_state.mage_experience_available??0),arcane=Number(character.current_state.arcane_experience_available??0);
-  const gnosis=Number(character.line_data.gnosis??1),arcana=(character.line_data.arcana??{}) as Record<string,number>;
-  const history=Array.isArray(character.current_state.mage_experience_history)?character.current_state.mage_experience_history as MageXpEntry[]:[];
-  const savePurchase=(next:CharacterSheet,description:string,regularCost:number,arcaneCost:number,undo:MageAdvancementUndo,credits:{regular?:number;arcane?:number;beats?:number}={})=>{
-    const creditedRegular=credits.regular??0,creditedArcane=credits.arcane??0,creditedArcaneBeats=credits.beats??0;
-    const finalUndo={...undo,creditedRegular,creditedArcane,creditedArcaneBeats} as MageAdvancementUndo;
-    const entry:MageXpEntry={id:crypto.randomUUID(),description,regular:regularCost,arcane:arcaneCost,createdAt:new Date().toISOString(),undo:finalUndo,before:{attributes:structuredClone(character.attributes),skills:structuredClone(character.skills),merits:structuredClone(character.merits),specializations:structuredClone(character.specializations),line_data:structuredClone(character.line_data)}};
-    next.current_state={...next.current_state,mage_experience_available:regular-regularCost+creditedRegular,arcane_experience_available:arcane-arcaneCost+creditedArcane,mage_experience_spent:Number(next.current_state.mage_experience_spent??0)+regularCost,arcane_experience_spent:Number(next.current_state.arcane_experience_spent??0)+arcaneCost,arcane_experience_beats:Number(next.current_state.arcane_experience_beats??0)+creditedArcaneBeats,mage_experience_history:[entry,...history].slice(0,100)};
-    updateSheet(next);
-  };
-  const findPraxis=(name:string)=>{
-    for(const key of ["praxes","learned_praxes"] as const){const list=Array.isArray(character.line_data[key])?character.line_data[key] as Record<string,unknown>[]:[];const index=list.findIndex(item=>String(item.originalName??item.name)===name);if(index>=0)return {key,index,item:list[index]};}
-  };
-  const removePraxis=(next:CharacterSheet,praxis:ReturnType<typeof findPraxis>)=>{if(!praxis)return;const list=[...(next.line_data[praxis.key] as Record<string,unknown>[])];list.splice(praxis.index,1);next.line_data[praxis.key]=list;};
-  const join=()=>{
-    if(!checks.met)return setFeedback(tr("Os pré-requisitos da Legacy ainda não foram atendidos.","The Legacy prerequisites are not yet met."));
-    const regularCost=method==="tutelage"&&pool==="regular"?1:0,arcaneCost=regularCost?0:1;
-    if(regular<regularCost||arcane<arcaneCost)return setFeedback(tr("Experiência insuficiente.","Insufficient Experience."));
-    const praxis=findPraxis("Perfect Timing"),alternative=!checks.parentage&&checks.praxis;
-    const credits=praxis?{regular:alternative?1:0,arcane:alternative?0:1,beats:1+(method==="tutelage"?1:0)}:{beats:method==="tutelage"?1:0};
-    const next=structuredClone(character);removePraxis(next,praxis);next.line_data.legacy_state={definitionId:definition.id,joined:true,attainmentRanks:[1],initiationMethod:method};
-    savePurchase(next,`${definition.name} · Initiation`,regularCost,arcaneCost,{kind:"legacyInitiation",previousState:character.line_data.legacy_state,removedPraxis:praxis,creditedRegular:0,creditedArcane:0,creditedArcaneBeats:0},credits);
-  };
-  const nextRank=Math.max(1,...state.attainmentRanks)+1;
-  const attainment=definition.attainments.find(item=>item.rank===nextRank);
-  const qualifyingSkills=["Academics","Larceny","Medicine","Occult","Science"].map(skill=>legacySkillRating(character.skills,skill)).sort((a,b)=>b-a);
-  const additionalSkillMet=!attainment||attainment.rank<3?true:attainment.rank<5?(qualifyingSkills[0]>=3||qualifyingSkills[1]>=2):(qualifyingSkills[0]>=4||qualifyingSkills[1]>=3||qualifyingSkills[2]>=2);
-  const rankPrerequisites=attainment?legacyArcanumRating(arcana,"Time")>=attainment.rulingArcanum&&gnosis>=attainment.orthodoxGnosis&&legacySkillRating(character.skills,"Investigation")>=(attainment.rank>=4?4:attainment.rank>=2?3:2)&&additionalSkillMet:false;
-  const buyAttainment=()=>{
-    if(!attainment||!rankPrerequisites)return setFeedback(tr("Os pré-requisitos do próximo Attainment ainda não foram atendidos.","The next Attainment's prerequisites are not yet met."));
-    const effectivePool=attainmentTraining==="self"?"arcane":pool,regularCost=effectivePool==="regular"?1:0,arcaneCost=effectivePool==="arcane"?1:0;if(regular<regularCost||arcane<arcaneCost)return setFeedback(tr("Experiência insuficiente.","Insufficient Experience."));
-    const spellNames:Record<number,string>={2:"Postcognition",3:"Divination",4:"Prophecy"},praxis=findPraxis(spellNames[attainment.rank]??"");
-    const next=structuredClone(character);removePraxis(next,praxis);next.line_data.legacy_state={...state,attainmentRanks:[...state.attainmentRanks,attainment.rank]};
-    savePurchase(next,`${definition.name} · ${attainment.name}`,regularCost,arcaneCost,{kind:"legacyAttainment",rank:attainment.rank,removedPraxis:praxis,creditedRegular:0,creditedArcane:0,creditedArcaneBeats:0},praxis?{arcane:1,beats:1}:{});
-  };
-  const discard=()=>{const next=structuredClone(character);delete next.line_data.legacy_state;updateSheet(next);onDiscard();};
-  return <div className="entitlement-page legacy-page">
-    <header className="entitlement-title legacy-title"><div><h2>{definition.name}</h2><p>{definition.source} · p. {definition.page}–202 · {tr("Arcano Regente","Ruling Arcanum")}: {definition.rulingArcanum}</p></div>{state.joined?<Button type="button" size="sm" variant="destructive" onClick={()=>setDiscardOpen(true)}>{tr("Descartar Legacy","Discard Legacy")}</Button>:<Button type="button" size="sm" className="builder-add-action legacy-join-button" disabled={!checks.met} onClick={join}>{tr("Entrar na Legacy","Join Legacy")}</Button>}</header>
-    {(!state.joined||attainment)&&<p className={`entitlement-prerequisites ${state.joined?(rankPrerequisites?"met":"unmet"):(checks.met?"met":"unmet")}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {state.joined?attainment?.prerequisites:definition.prerequisites}</p>}
-    <section className="legacy-reference"><h3>{tr("Informações de Legacy","Legacy Information")}</h3><ul><li>{tr("Tutor e aluno possuem vínculo simpático Strong.","Tutor and student have a Strong sympathetic link.")}</li><li>{tr("Após uma cena de interação mística, emocional ou íntima significativa, tutor e aluno recebem um Arcane Beat, no máximo uma vez por capítulo.","After a significant mystical, emotional, or intimate interaction scene, tutor and student earn one Arcane Beat, at most once per chapter.")}</li><li>{tr("Membros, Daimonomika e Soul Stones da mesma Legacy são Yantras simpáticos de +2 para seus membros.","Members, Daimonomika, and Soul Stones of the same Legacy are +2 sympathetic Yantras for its members.")}</li></ul><small>{tr("Estas informações não são controladas automaticamente pela ficha.","The sheet does not track these rules automatically.")}</small></section>
-    {!state.joined&&<section className="legacy-join"><div className="legacy-requirement-list">{[[checks.gnosis,"Gnosis 2"],[checks.time,"Time 2"],[checks.investigation,"Investigation 2"],[checks.qualifying,"Qualifying Skill 2"],[checks.parentage||checks.praxis,"Moros, Guardian/Mysterium, or Perfect Timing Praxis"]].map(([met,label])=><span className={met?"met":"unmet"} key={String(label)}>{met?"✓":"×"} {label}</span>)}</div><div className="legacy-join-controls"><label>{tr("Método de iniciação","Initiation method")}<RuleSelect value={method} onChange={(value)=>{const next=value as typeof method;setMethod(next);if(next!=="tutelage")setPool("arcane");}} options={[{value:"tutelage",label:"Tutelage"},{value:"daimonomikon",label:"Daimonomikon"},{value:"soul-study",label:"Soul or Soul Stone Study"}]}/></label><label>{tr("Pagamento","Payment")}<RuleSelect value={method==="tutelage"?pool:"arcane"} onChange={(value)=>setPool(value as typeof pool)} options={method==="tutelage"?[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]:[{value:"arcane",label:"1 Arcane Experience"}]}/></label></div>{gnosis>=3&&<details className="experience-rules"><summary>{tr("Criar uma Legacy","Create a Legacy")}</summary><p>{tr("Gnosis 3 permite fundar uma Legacy por 1 Arcane Experience. A criação das definições personalizadas será adicionada em uma etapa posterior.","Gnosis 3 permits founding a Legacy for 1 Arcane Experience. Authoring custom Legacy definitions will be added in a later phase.")}</p></details>}</section>}
-    {state.joined&&attainment&&<section className="legacy-join legacy-next-attainment"><div className="legacy-attainment-purchase"><p><strong>{tr("Próximo Attainment","Next Attainment")}:</strong> {attainment.name} · 1 Experience</p><RuleSelect value={attainmentTraining} onChange={(value)=>{const training=value as typeof attainmentTraining;setAttainmentTraining(training);if(training==="self")setPool("arcane");}} options={[{value:"tutor",label:tr("Aprender com tutor","Learn from a tutor")},{value:"self",label:tr("Desenvolver sem tutor","Develop without a tutor")}]}/>{attainmentTraining==="tutor"&&<RuleSelect value={pool} onChange={(value)=>setPool(value as typeof pool)} options={[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]}/>}<Button type="button" size="sm" disabled={!rankPrerequisites} onClick={buyAttainment}>{tr("Comprar Attainment","Purchase Attainment")}</Button></div></section>}
-    <div className="entitlement-overview">{!state.joined&&<section><h3>{tr("Iniciação","Initiation")}</h3><p>{definition.initiation}</p></section>}<section><h3>{tr("Organização","Organization")}</h3><p>{definition.organization}</p></section><section><h3>{tr("Teoria","Theory")}</h3><p>{definition.theory}</p></section></div>
-    <div className="entitlement-overview"><section><h3>Yantras</h3><ul>{definition.yantras.map(item=><li key={item}>{item}</li>)}</ul></section><section><h3>Oblations</h3><ul>{definition.oblations.map(item=><li key={item}>{item}</li>)}</ul></section></div>
-    <section><h3>Attainments</h3><div className="entitlement-blessings legacy-attainments">{definition.attainments.map(item=>{const acquired=state.attainmentRanks.includes(item.rank);return <details key={item.rank} className={acquired?"active":""}><summary><strong>{item.rank}. {item.name}</strong><span>{acquired?tr("Adquirido","Acquired"):item.prerequisites}</span></summary><p>{item.description}</p>{item.optional&&<p><strong>Optional:</strong> {item.optional}</p>}</details>})}</div></section>
-    {feedback&&<p className="experience-feedback">{feedback}</p>}
-    <AlertDialog open={discardOpen} onOpenChange={setDiscardOpen}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{tr("Descartar The Eleventh Question?","Discard The Eleventh Question?")}</AlertDialogTitle><AlertDialogDescription>{tr("A Legacy e todos os Attainments adquiridos serão removidos da ficha.","The Legacy and all acquired Attainments will be removed from the character sheet.")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>{tr("Cancelar","Cancel")}</AlertDialogCancel><AlertDialogAction variant="destructive" onClick={discard}>{tr("Descartar Legacy","Discard Legacy")}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
-  </div>;
-}
-
-function EntitlementPage({character,updateSheet}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void}){
-  const {locale,tr}=useLanguage(),homebrews=useHomebrews(),wyrd=Math.max(1,Math.min(10,Number(character.line_data.wyrd??1)));
-  const availableEntitlements=ENTITLEMENTS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
-  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd),selectedDefinition=findEntitlement(state.definitionId),definition=selectedDefinition&&availableEntitlements.some((item)=>item.id===selectedDefinition.id)?selectedDefinition:undefined;
-  const save=(nextState:EntitlementState)=>{const next=structuredClone(character);next.line_data={...next.line_data,entitlement:normalizeEntitlementState(nextState,wyrd)};const merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);if(merit)merit.configuration={...normalizeMeritConfiguration(merit.configuration),definitionId:nextState.definitionId,roleId:nextState.roleId};updateSheet(synchronizeMeritGrants(next));};
-  const patch=(next:Partial<EntitlementState>)=>save({...state,...next});
-  const choice=(key:string,value:string)=>patch({choices:{...state.choices,[key]:value}});
-  const activeBlessings=new Set(state.allocations.filter((item)=>item.target==="blessing").map((item)=>item.blessingId));
-  const nextSequence=Math.max(-1,...state.allocations.map((item)=>item.sequence))+1;
-  const changeAllocation=(allocation:EntitlementAllocation|undefined,value:string)=>{
-    let allocations=state.allocations.filter((item)=>item.id!==allocation?.id);
-    if(value!=="none") allocations=[...allocations,value==="token"?{id:allocation?.id??crypto.randomUUID(),target:"token",sequence:allocation?.sequence??nextSequence}:{id:allocation?.id??crypto.randomUUID(),target:"blessing",blessingId:value.slice(9),sequence:allocation?.sequence??nextSequence}];
-    patch({allocations});
-  };
-  const selectDefinition=(definitionId:string)=>save({...state,definitionId,roleId:"",accepted:false,touchstone:{name:"",status:"active"},allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}});
-  if(!definition)return <div className="entitlement-page"><SheetHeading>Entitlement</SheetHeading><label className="entitlement-select">{tr("Título","Title")}<Select onValueChange={selectDefinition}><SelectTrigger><SelectValue placeholder={tr("Selecione um Título","Select an Entitlement")}/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label></div>;
-  const role=definition.roles?.find((item)=>item.id===state.roleId),prerequisitesMet=entitlementPrerequisitesMet(definition,state,character);
-  const conditional=definition.blessings.filter((item)=>item.conditional&&activeBlessings.has(item.id));
-  const tokenCount=state.allocations.filter((item)=>item.target==="token").length,canAccept=prerequisitesMet&&state.touchstone.status==="active"&&Boolean(state.touchstone.name.trim()),operational=state.accepted&&canAccept;
-  const allocationRows=[...state.allocations,...(state.allocations.length<wyrd?[undefined]:[])];
-  return <div className="entitlement-page">
-    <header className="entitlement-title"><div><h2>{definition.name}</h2><p>{definition.meritName} •••• · {definition.sourceCode} p. {definition.page}</p></div><Button type="button" size="sm" variant={state.accepted?"destructive":"default"} disabled={!state.accepted&&!canAccept} onClick={()=>state.accepted?save({...state,accepted:false,allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}}):patch({accepted:true})}>{state.accepted?tr("Remover Título","Remove Entitlement"):tr("Aceitar Título","Accept Entitlement")}</Button></header>
-    {!state.accepted&&<label className="entitlement-select">{tr("Título","Title")}<Select value={definition.id} onValueChange={selectDefinition}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>}
-    {!state.accepted&&definition.roles&&<label className="entitlement-select">{tr("Papel","Role")}<Select value={state.roleId||undefined} onValueChange={(roleId)=>patch({roleId})}><SelectTrigger><SelectValue placeholder={tr("Selecione um papel","Select a role")}/></SelectTrigger><SelectContent>{definition.roles.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.prerequisites}</SelectItem>)}</SelectContent></Select></label>}
-    <p className={`entitlement-prerequisites ${prerequisitesMet?"met":"unmet"}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {role?`${definition.prerequisites} ${role.name}: ${role.prerequisites}.`:definition.prerequisites}</p>
-    <section className={`entitlement-touchstone${state.touchstone.name.trim()?"":" missing"}`}><h3>Entitlement Touchstone</h3><p>{definition.touchstone}</p><div className="entitlement-choice-row"><Input value={state.touchstone.name} onChange={(event)=>patch({touchstone:{...state.touchstone,name:event.target.value}})} placeholder={tr("Nome da Pedra de Contato","Touchstone name")}/><RuleSelect value={state.touchstone.status} onChange={(status)=>patch({touchstone:{...state.touchstone,status:status as EntitlementState["touchstone"]["status"]}})} options={[{value:"active",label:tr("Ativa","Active")},{value:"lost",label:tr("Perdida","Lost")},{value:"suspended",label:tr("Suspensa","Suspended")} ]}/></div></section>
-    <div className="entitlement-overview"><section><h3>{tr("Propósito","Purpose")}</h3><p>{definition.purpose}</p></section><section><h3>{tr("Privilégios","Privileges")}</h3><p>{definition.privileges}</p>{role&&<p><strong>{role.name}:</strong> {role.privilege}</p>}</section><section><h3>{tr("Deveres","Duties")}</h3><p>{definition.duties}</p>{role&&<p><strong>{role.name}:</strong> {role.duties}</p>}</section><section><h3>{tr("Máscara e Semblante","Mask and Mien")}</h3><p>{definition.maskAndMien}</p></section></div>
-    {definition.id==="baron-lesser-ones"&&state.allocations.length>=2&&<label className="entitlement-select">{tr(`Características goblins (até ${Math.floor(state.allocations.length/2)})`,`Goblin features (up to ${Math.floor(state.allocations.length/2)})`)}<textarea value={state.choices["goblin-features"]??""} onChange={(event)=>choice("goblin-features",event.target.value)} placeholder={tr("Uma característica por linha","One feature per line")}/></label>}
-    {definition.id==="dauphines-wayward-children"&&<label className="entitlement-select">{tr("Pupilos atuais","Current wards")}<textarea value={state.choices.wards??""} onChange={(event)=>choice("wards",event.target.value)} placeholder={tr("Um pupilo por linha","One ward per line")}/></label>}
-    <section className="entitlement-inherent"><h3>{tr("Privilégio inerente","Inherent Privilege")}</h3><p>{tr("Gaste 1 Glamour para receber +2 numa ação Social mundana contra um ser feérico, exceto Caçadores, quando a ação reforça o papel ou os deveres do Título e o alvo os conhece.","Spend 1 Glamour for +2 to a mundane Social action against a fae being, excluding Huntsmen, when the action reinforces the title's role or duties and the target knows them.")}</p></section>
-    {state.accepted&&!canAccept&&<p className="entitlement-inactive">{tr("O Título está inativo enquanto seus pré-requisitos ou sua Pedra de Contato não forem válidos.","The Entitlement is inactive while its prerequisites or Touchstone are invalid.")}</p>}
-    <section><h3>{tr("Graduações do Título","Entitlement Ranks")} · {state.allocations.length}/{wyrd}</h3><div className="entitlement-allocations">{allocationRows.map((allocation,index)=>{const current=allocation?.target==="token"?"token":allocation?.blessingId?`blessing:${allocation.blessingId}`:"none";return <label key={allocation?.id??"new"}>{tr("Graduação","Rank")} {index+1}<Select disabled={!state.accepted} value={current} onValueChange={(value)=>changeAllocation(allocation,value)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="none">{tr("Não distribuída","Unallocated")}</SelectItem>{(current==="token"||tokenCount<5)&&<SelectItem value="token">{tr("Heráldica","Heraldry Token")}</SelectItem>}{definition.blessings.filter((item)=>current===`blessing:${item.id}`||!activeBlessings.has(item.id)).map((item)=><SelectItem key={item.id} value={`blessing:${item.id}`}>{item.name}</SelectItem>)}</SelectContent></Select></label>;})}</div></section>
-    <section><h3>Blessings</h3><div className="entitlement-blessings">{definition.blessings.filter((blessing)=>!state.accepted||activeBlessings.has(blessing.id)).map((blessing)=>{const active=activeBlessings.has(blessing.id),suspended=state.suspendedBenefitIds.includes(blessing.id);return <article key={blessing.id} className={`${active?"active":""} ${suspended||active&&!operational?"suspended":""}`}><header><strong>{blessing.name}</strong><span>{active?tr("Adquirida","Acquired"):tr("Não adquirida","Not acquired")}{blessing.conditional?" · Conditional":""}</span></header><p>{blessing.description}</p>{active&&blessing.id==="inherited-expertise"&&<div className="entitlement-choice-row"><RuleSelect value={state.choices["inherited-expertise-skill"]??""} onChange={(value)=>choice("inherited-expertise-skill",value)} options={Object.values(SKILLS).flat().map((name)=>({value:name,label:systemTerm(name,"en-US")}))}/><Input value={state.choices["inherited-expertise-name"]??""} onChange={(event)=>choice("inherited-expertise-name",event.target.value)} placeholder="Specialty"/></div>}{active&&blessing.id==="inherited-token"&&<div className="entitlement-token-fields">{[["name","Name"],["cost","Cost"],["effect","Effect"],["catch","Catch"],["drawback","Drawback"]].map(([key,label])=><label key={key}>{label}<Input value={state.choices[`inherited-token-${key}`]??""} onChange={(event)=>choice(`inherited-token-${key}`,event.target.value)}/></label>)}</div>}{active&&blessing.id==="hidden-library"&&<RuleSelect value={state.choices[blessing.id]??""} onChange={(value)=>choice(blessing.id,value)} options={SKILLS.Mentais.map((name)=>({value:name,label:systemTerm(name,"en-US")}))}/>} {active&&blessing.id==="predecessors-thread"&&<label>{blessing.choiceLabel}<RuleSelect value={state.choices[blessing.id]??""} onChange={(value)=>choice(blessing.id,value)} options={CTL_THREADS.map((name)=>({value:name,label:systemTerm(name,locale)}))}/>{state.choices[blessing.id]&&<small className="entitlement-choice-help">{changelingAnchorRecovery("thread",state.choices[blessing.id],locale)}</small>}</label>}{active&&blessing.choiceLabel&&!['inherited-expertise','inherited-token','hidden-library','predecessors-thread'].includes(blessing.id)&&<label>{blessing.choiceLabel}<Input value={state.choices[blessing.id]??""} onChange={(event)=>choice(blessing.id,event.target.value)}/></label>}</article>;})}</div></section>
-    <section className={`entitlement-heraldry${operational?"":" entitlement-disabled"}`}><h3>{tr("Heráldica","Heraldry")} · {definition.token.name} {"•".repeat(tokenCount)}</h3><p><strong>{definition.heraldry}</strong> {definition.token.description}</p>{role&&<p><strong>{role.heraldryColor}:</strong> {role.tokenBonus} Drawback: {role.tokenDrawback}.</p>}<p><strong>Effect:</strong> {definition.token.effect}</p><p><strong>Catch:</strong> {definition.token.catch}</p><p><strong>Drawback:</strong> {definition.token.drawback}</p></section>
-    {conditional.length>0&&<section><h3>{tr("Benefícios condicionais","Conditional Benefits")}</h3><p>{tr("Suspenda somente os benefícios que o Narrador determinou terem sido perdidos.","Suspend only the benefits the Storyteller determined were lost.")}</p>{conditional.map((item)=><label className="entitlement-suspension" key={item.id}><input type="checkbox" checked={state.suspendedBenefitIds.includes(item.id)} onChange={(event)=>patch({suspendedBenefitIds:event.target.checked?[...state.suspendedBenefitIds,item.id]:state.suspendedBenefitIds.filter((id)=>id!==item.id)})}/>{tr("Suspender","Suspend")} {item.name}</label>)}</section>}
-    <div className="entitlement-overview"><section><h3>Curse</h3><p>{definition.curse}</p><p><strong>{tr("Dados adicionais atuais","Current additional dice")}:</strong> +{state.allocations.length}</p></section><section><h3>Beat</h3><p>{definition.beat}</p>{definition.id==="master-of-keys"&&state.allocations.length>0&&<label className="stored-glamour">{tr("Aspiração adicional","Additional Aspiration")}<Input value={state.choices["dangerous-secret-aspiration"]??""} onChange={(event)=>choice("dangerous-secret-aspiration",event.target.value)} placeholder={tr("Persiga um segredo perigoso","Pursue a dangerous secret")}/></label>}</section></div>
-    <section><h3>Legends</h3><ul>{definition.legends.map((legend)=><li key={legend}>{legend}</li>)}</ul></section>
-  </div>;
-}
 function CombatPage({
   character,
   derived,
@@ -4840,62 +4694,6 @@ function ExperienceMeritPicker({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-}
-function RuleSelect({
-  value,
-  onChange,
-  options,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  options: Array<{ value: string; label: string; group?: string }>;
-}) {
-  const {locale}=useLanguage();
-  const safe = options.length ? value || options[0].value : "__none";
-  // These two lists deliberately follow the character sheet's trait groups.
-  const sortedOptions = options !== ATTRIBUTE_OPTIONS && options !== SKILL_OPTIONS
-    ? alphabetical(options, item => systemTerm(item.label,locale),locale)
-    : options;
-  const groups = [...new Set(sortedOptions.map((item) => item.group).filter(Boolean))];
-  return (
-    <Select value={safe} onValueChange={onChange} disabled={!sortedOptions.length}>
-      <SelectTrigger>
-        <SelectValue>
-          {systemTerm(sortedOptions.find((item) => item.value === safe)?.label ??
-            "Nenhuma opção disponível",locale)}
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {sortedOptions.length ? (
-          groups.length ? (
-            groups.map((group, groupIndex) => (
-              <SelectGroup key={group}>
-                {groupIndex > 0 && <SelectSeparator />}
-                <SelectLabel>{systemTerm(group!,locale)}</SelectLabel>
-                {sortedOptions
-                  .filter((item) => item.group === group)
-                  .map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {systemTerm(item.label,locale)}
-                    </SelectItem>
-                  ))}
-              </SelectGroup>
-            ))
-          ) : (
-            sortedOptions.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {systemTerm(item.label,locale)}
-              </SelectItem>
-            ))
-          )
-        ) : (
-          <SelectItem value="__none" disabled>
-            {systemTerm("Nenhuma opção disponível",locale)}
-          </SelectItem>
-        )}
-      </SelectContent>
-    </Select>
   );
 }
 function isRepeatableDefinition(definition: MeritDefinition) {

@@ -30,3 +30,11 @@ The refactor must preserve stored character JSON, IDs, purchase history, undo be
 ## First implementation slice
 
 The first slice moves Legacy and responsive sheet navigation into feature modules. It also replaces the old DOM-query tab jump with controlled tab state. This directly addresses the current Legacy work while establishing the module pattern for the larger experience and companion extractions.
+
+### Completed
+
+- `app/workspace/legacy-page.tsx` owns Mage Legacy rules and presentation.
+- `app/workspace/entitlement-page.tsx` owns Changeling Entitlement rules and presentation.
+- `app/workspace/sheet-tabs.tsx` owns mobile tab and swipe navigation.
+- `app/workspace/rule-select.tsx` provides the shared grouped selector without importing either splat feature.
+- `workspace.tsx` now coordinates these features through explicit props and controlled tab state.
