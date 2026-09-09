@@ -60,6 +60,7 @@ import {
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
+import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
@@ -433,10 +434,10 @@ export function CharacterBuilder({
       });
       if (customKith && (!customKithSkill || !customKithDescription.trim()))
         add(3, "kith", "Fratria personalizada completa");
-      const favoredRegalia = [
-        CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia ?? "",
-        secondRegalia,
-      ].filter(Boolean);
+      const favoredRegalia = changelingFavoredRegalia({
+        primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia,
+        second_regalia: secondRegalia, kith, kith_custom: customKith,
+      });
       if (
         contracts
           .slice(0, 4)
@@ -1229,6 +1230,8 @@ function CtlStep(props: CtlStepProps) {
           seeming={props.seeming}
           primaryRegalia={seemingData?.regalia ?? ""}
           secondRegalia={props.secondRegalia}
+          kith={props.kith}
+          customKith={props.customKith}
           court={props.court}
           catalog={props.contractCatalog}
         />
@@ -1494,6 +1497,8 @@ function ContractSelector({
   seeming,
   primaryRegalia,
   secondRegalia,
+  kith,
+  customKith,
   court,
   catalog,
 }: {
@@ -1502,6 +1507,8 @@ function ContractSelector({
   seeming: string;
   primaryRegalia: string;
   secondRegalia: string;
+  kith: string;
+  customKith: boolean;
   court: string;
   catalog: ContractDefinition[];
 }) {
@@ -1518,7 +1525,7 @@ function ContractSelector({
     .filter((contract) =>
       canSelectInitialContract(
         contract,
-        [primaryRegalia, secondRegalia].filter(Boolean),
+        changelingFavoredRegalia({primary_regalia:primaryRegalia, second_regalia:secondRegalia, kith, kith_custom:customKith}),
         court,
       ) &&
       (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&

@@ -18,8 +18,45 @@ after(async () => {
 });
 
 const rules = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
+const regaliaRules = await vite.ssrLoadModule("/lib/changeling-regalia.ts");
 const { CONTRACTS } = await vite.ssrLoadModule("/lib/contracts.ts");
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
+
+test("Shadowsoul grants Mirror for creation and Experience without spending the second Regalia", () => {
+  const data = {kith:"Shadowsoul", primary_regalia:"Crown", second_regalia:"Sword"};
+  const favored = regaliaRules.changelingFavoredRegalia(data);
+  assert.deepEqual(favored, ["Crown", "Sword", "Mirror"]);
+  assert.equal(rules.canSelectInitialContract({type:"Real",regalia:"Mirror"},favored,""),true);
+  assert.equal(regaliaRules.changelingContractExperienceCost({type:"Comum",regalia:"Mirror"},data),2);
+  assert.equal(regaliaRules.changelingContractExperienceCost({type:"Real",regalia:"Mirror"},data),3);
+  assert.equal(regaliaRules.changelingContractExperienceCost({type:"Real",regalia:"Jewels"},data),4);
+  assert.equal(data.second_regalia,"Sword");
+});
+
+test("Shadowsoul does not duplicate existing Mirror and supports saved Portuguese sheets", () => {
+  for (const data of [
+    {kith:"Shadowsoul",primary_regalia:"Mirror",second_regalia:"Crown"},
+    {kith:"shadowsoul",primary_regalia:"Crown",second_regalia:"Mirror"},
+    {kith:"Alma Sombria",primary_regalia:"Coroa",second_regalia:"Espelho"},
+  ]) {
+    const favored=regaliaRules.changelingFavoredRegalia(JSON.parse(JSON.stringify(data)));
+    assert.equal(favored.length,2);
+    assert.equal(favored.filter(item=>item==="Mirror").length,1);
+  }
+});
+
+test("Changing Kith removes only its affinity; custom names grant no official blessing", () => {
+  const data={kith:"Shadowsoul",primary_regalia:"Crown",second_regalia:"Sword"};
+  for(const updated of [{...data,kith:"Snowskin"},{...data,kith_custom:true}]) {
+    const favored=regaliaRules.changelingFavoredRegalia(updated);
+    assert.deepEqual(favored,["Crown","Sword"]);
+    assert.equal(rules.canSelectInitialContract({type:"Real",regalia:"Mirror"},favored,""),false);
+    assert.equal(regaliaRules.changelingContractExperienceCost({type:"Comum",regalia:"Mirror"},updated),3);
+    assert.equal(regaliaRules.changelingContractExperienceCost({type:"Real",regalia:"Mirror"},updated),4);
+    assert.equal(regaliaRules.changelingContractExperienceCost({type:"Comum",regalia:"Mirror",goblin:true},updated),2);
+  }
+  assert.deepEqual(regaliaRules.changelingFavoredRegalia({...data,kith:"Snowskin",second_regalia:"Mirror"}),["Crown","Mirror"]);
+});
 
 test("Needles e Threads possuem gatilhos estruturados de recuperação de Willpower",()=>{
   assert.equal(creationRules.CTL_NEEDLE_DEFINITIONS.length,34);

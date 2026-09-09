@@ -136,6 +136,7 @@ import {
 import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
 import { SPELLS } from "@/lib/spells";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
+import { changelingFavoredRegalia, changelingContractExperienceCost } from "@/lib/changeling-regalia";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
 import { TILTS, findTilt } from "@/lib/tilts";
@@ -995,7 +996,7 @@ function CharacterPaper({
             </>,
             poderes: isCtl ? <>
               <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour?storedGlamour:undefined} storedMaximum={hasStoredGlamour?powerRating:undefined} onStoredChange={setStoredGlamour} />
-              <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
+              <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={changelingFavoredRegalia(data)} />
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
               <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento","Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)} />
@@ -1098,10 +1099,7 @@ function CharacterPaper({
                 />
                 <SheetHeading>Regalias Favorecidas</SheetHeading>
                 <LineList
-                  items={[
-                    String(data.primary_regalia ?? ""),
-                    String(data.second_regalia ?? ""),
-                  ]}
+                  items={changelingFavoredRegalia(data)}
                 />
                 <SheetHeading>Fragilidades</SheetHeading>
                 <FrailtyList
@@ -4840,12 +4838,7 @@ function contractExperienceCost(
   contract: ContractDefinition,
   character: CharacterSheet,
 ) {
-  if (contract.goblin) return 2;
-  const favored = [
-    String(character.line_data.primary_regalia ?? ""),
-    String(character.line_data.second_regalia ?? ""),
-  ].includes(contract.regalia);
-  return contract.type === "Comum" ? (favored ? 2 : 3) : favored ? 3 : 4;
+  return changelingContractExperienceCost(contract, character.line_data);
 }
 function purchasePreview(input: {
   locale: Locale;
