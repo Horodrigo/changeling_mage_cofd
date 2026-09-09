@@ -7,9 +7,10 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
 
-test("all six Seemings provide complete Portuguese and English mechanics",async()=>{
+test("all six official Seemings and Grimm provide complete Portuguese and English mechanics",async()=>{
   const {CTL_SEEMINGS}=await vite.ssrLoadModule("/lib/creation-rules.ts");
-  assert.deepEqual(Object.keys(CTL_SEEMINGS),["Beast","Darkling","Elemental","Fairest","Ogre","Wizened"]);
+  assert.deepEqual(Object.keys(CTL_SEEMINGS),["Beast","Darkling","Elemental","Fairest","Ogre","Wizened","Grimm"]);
+  assert.equal(CTL_SEEMINGS.Grimm.sourceId,"h-seemings");
   for(const [name,seeming] of Object.entries(CTL_SEEMINGS)){
     assert.ok(seeming.translated,`${name}: Portuguese name`);
     assert.ok(seeming.blessing,`${name}: Portuguese blessing`);

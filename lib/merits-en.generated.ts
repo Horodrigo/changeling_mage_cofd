@@ -2090,7 +2090,37 @@ export const MERITS_EN = [
       17,
       18,
       19,
-      20
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
     ],
     "line": "CtL",
     "sourceId": "ctl-2ed",
@@ -2099,6 +2129,24 @@ export const MERITS_EN = [
     "prerequisites": null,
     "description": "You have access to one or more Tokens of a total rating equal to dots in this Merit. Multiple characters may share this Merit.",
     "page": 119
+  },
+  {
+    "id": "ctl-2ed:hedgespun-item",
+    "name": "Hedgespun Item",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "CtL",
+    "sourceId": "ctl-2ed",
+    "source": "Changeling the Lost",
+    "category": "Changeling",
+    "prerequisites": null,
+    "description": "A permanently active Hedgespun object whose rating is divided among Extraordinary Equipment, Improved Alacrity, and Increased Durability. Each benefit may be selected up to three times.",
+    "page": 225
   },
   {
     "id": "ctl-2ed:touchstone",
@@ -3498,6 +3546,18 @@ export const MERITS_EN = [
         "description": "Declare this maneuver at the beginning of a turn when you Dodge. You can Knock Down assailants when you beat their attack."
       }
     ]
+  },
+  {
+    "id": "oak-ash-thorn:entitlement",
+    "name": "Entitlement",
+    "ratings": [4],
+    "line": "CtL",
+    "sourceId": "ctl-oak-ash-thorn",
+    "source": "Oak, Ash, and Thorn",
+    "category": "Entitlement",
+    "prerequisites": "Changeling; the selected title's additional prerequisites",
+    "description": "A fae title that grants heraldry, duties, a Touchstone, a curse, and ranks equal to Wyrd that may be invested in its heraldry token or blessings.",
+    "page": 33
   },
   {
     "id": "hurt-locker:weapon-and-shield",

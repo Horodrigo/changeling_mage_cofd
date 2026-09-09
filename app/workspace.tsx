@@ -20,7 +20,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { courtCanonicalId, courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation } from "@/lib/changeling-courts";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -79,17 +79,23 @@ import {
   MeritConfigurationEditor,
   type CharacterSheet,
 } from "./character-builder";
+import { ENTITLEMENTS, entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement, type EntitlementAllocation, type EntitlementState } from "@/lib/entitlements";
 import {
+  decodeConfiguredRows,
   expandedConfigurationLines,
   findMeritConfiguration,
   isInlineMeritConfiguration,
   meritConfigurationTitle,
   normalizeMeritConfiguration,
   synchronizeMeritGrants,
+  type TokenConfigurationItem,
 } from "@/lib/merit-configurations";
 import {
   ATTRIBUTES,
+  CTL_THREADS,
   CTL_SEEMINGS,
+  changelingAnchorDisplayName,
+  changelingAnchorRecovery,
   seemingDisplayName,
   MTA_ORDER_LABELS,
   MTA_PATHS,
@@ -140,6 +146,7 @@ import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHom
 import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
 import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
 import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
+import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 
@@ -808,6 +815,7 @@ function CharacterPaper({
     Boolean(homebrews.merits.find((item) => item.name === name)?.levels?.length);
   const isCtl = character.game_line === "CtL";
   const data = character.line_data;
+  const entitlementMerit=character.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);
   const derived = derivedWithPermanentMerits(character);
   const grantedSkillBonuses = (
     data.merit_granted_skill_bonuses &&
@@ -888,6 +896,18 @@ function CharacterPaper({
     resource.maximum,
     resource.maximum,
   );
+  const entitlementState=isCtl&&entitlementMerit?normalizeEntitlementState(data.entitlement,powerRating):null;
+  const hasStoredGlamour=Boolean(entitlementState?.accepted&&entitlementState.allocations.some((item)=>item.target==="blessing"&&item.blessingId==="glamour-gain")&&entitlementState.touchstone.status==="active"&&entitlementState.touchstone.name.trim()&&findEntitlement(entitlementState.definitionId)&&entitlementPrerequisitesMet(findEntitlement(entitlementState.definitionId)!,entitlementState,character));
+  const storedGlamour=hasStoredGlamour?boundedNumber(entitlementState?.token.storedGlamour,powerRating,0):0;
+  const setStoredGlamour=(value:number)=>{
+    if(!entitlementMerit||!entitlementState)return;
+    const next=structuredClone(character),merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);
+    if(!merit)return;
+    const state=normalizeEntitlementState(next.line_data.entitlement,powerRating);
+    state.token={...state.token,storedGlamour:boundedNumber(value,powerRating,0)};
+    next.line_data.entitlement=state;
+    updateSheet(synchronizeEntitlement(next));
+  };
   const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 9, 0);
   const expandedMerits = character.merits.filter(
     (item) => isExpanded(item.name) && !item.grantedBy,
@@ -913,7 +933,7 @@ function CharacterPaper({
     const identity = isCtl
       ? [
           ["Nome", character.character.name], ["Jogador", character.character.player],
-          ["Crônica", character.character.chronicle], ["Agulha", systemTerm(String(data.needle ?? ""),locale)], ["Fio", systemTerm(String(data.thread ?? ""),locale)],
+          ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle",data.needle,locale)], ["Fio", changelingAnchorDisplayName("thread",data.thread,locale)],
           ["Conceito", character.character.concept],
           ["Feição", seemingDisplayName(data.seeming,locale)],
           [tr("Frátria", "Kith"), kithDisplayName(data.kith, Boolean(data.kith_custom), locale)], [tr("Corte", "Court"), courtDisplayName(data.court, locale)],
@@ -936,7 +956,9 @@ function CharacterPaper({
         <SwipeableSheetTabs tabs={[
           { value: "resumo", label: tr("Resumo","Summary") }, { value: "stats", label: "Stats" },
           { value: "detalhes", label: tr("Detalhes","Details") },
-          { value: "poderes", label: tr("Poderes","Powers") }, { value: "combate", label: tr("Combate","Combat") },
+          { value: "poderes", label: tr("Poderes","Powers") },
+          ...(isCtl&&entitlementMerit?[{value:"entitlement",label:"Entitlement"}]:[]),
+          { value: "combate", label: tr("Combate","Combat") },
           { value: "companheiros", label: tr("Companheiros","Companions") }, { value: "anotacoes", label: tr("Anotações","Notes") },
         ]}>
           {{
@@ -953,7 +975,7 @@ function CharacterPaper({
             </>,
             detalhes: isCtl ? <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} line={character.game_line} updateSheet={updateSheet} />
-              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
+              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
@@ -962,7 +984,7 @@ function CharacterPaper({
               <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={CHANGELING_CONDITIONS} onChange={(value) => setState("conditions", value)} />
             </> : <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
-              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} />
+              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
               <SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={Math.max(1, Math.ceil(gnosis / 3))} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)} />
@@ -972,7 +994,7 @@ function CharacterPaper({
               <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={Math.max(gnosis, 4)} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
             </>,
             poderes: isCtl ? <>
-              <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
+              <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour?storedGlamour:undefined} storedMaximum={hasStoredGlamour?powerRating:undefined} onStoredChange={setStoredGlamour} />
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={[String(data.primary_regalia ?? ""), String(data.second_regalia ?? "")]} />
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)} />
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)} />
@@ -990,6 +1012,7 @@ function CharacterPaper({
               <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
               <CustomOrderLore data={data} />
             </>,
+            entitlement: <EntitlementPage character={character} updateSheet={updateSheet}/>,
             combate: <>
               <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} />
               <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} />
@@ -1019,19 +1042,20 @@ function CharacterPaper({
           >
             <TabsTrigger value="principal">{tr("Principal","Main")}</TabsTrigger>
             <TabsTrigger value="poderes">{tr("Detalhes","Details")}</TabsTrigger>
+            {entitlementMerit&&<TabsTrigger value="entitlement">Entitlement</TabsTrigger>}
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
             <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
               <SheetField label="Nome" value={character.character.name} />
-              <SheetField label="Agulha" value={systemTerm(String(data.needle ?? ""),locale)} />
+              <SheetField label="Agulha" value={changelingAnchorDisplayName("needle",data.needle,locale)} />
               <SheetField
                 label="Feição"
                 value={seemingDisplayName(data.seeming,locale)}
               />
               <SheetField label="Jogador" value={character.character.player} />
-              <SheetField label="Fio" value={systemTerm(String(data.thread ?? ""),locale)} />
+              <SheetField label="Fio" value={changelingAnchorDisplayName("thread",data.thread,locale)} />
               <SheetField label={tr("Frátria", "Kith")} value={kithDisplayName(data.kith, Boolean(data.kith_custom), locale)} />
               <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField
@@ -1129,6 +1153,9 @@ function CharacterPaper({
                   maximum={resource.maximum}
                   perTurn={resource.perTurn}
                   onChange={(value) => setState(resourceKey, value)}
+                  storedCurrent={hasStoredGlamour?storedGlamour:undefined}
+                  storedMaximum={hasStoredGlamour?powerRating:undefined}
+                  onStoredChange={setStoredGlamour}
                 />
                 <ExperiencePanel
                   character={character}
@@ -1185,7 +1212,7 @@ function CharacterPaper({
                   }
                 />
                 <SheetHeading>Méritos Expandidos</SheetHeading>
-                <ExpandedMeritList merits={expandedMerits} />
+                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
                 <MeritConfigurationPanel
                   character={character}
                   updateSheet={updateSheet}
@@ -1193,6 +1220,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
+          {entitlementMerit&&<TabsContent value="entitlement" data-page-title="Entitlement" className="ctl-sheet-page powers-page"><EntitlementPage character={character} updateSheet={updateSheet}/></TabsContent>}
           <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
@@ -1412,6 +1440,8 @@ function CharacterPaper({
                   merits={character.merits.filter((item) =>
                     isExpanded(item.name),
                   )}
+                  character={character}
+                  updateSheet={updateSheet}
                 />
                 <MeritConfigurationPanel
                   character={character}
@@ -1462,7 +1492,7 @@ function MeritConfigurationPanel({
 }) {
   const { locale, tr } = useLanguage();
   const configurable = character.merits.filter(
-    (item) => findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && item.name !== "Fae Mount" && !item.grantedBy,
+    (item) => findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && !["Fae Mount","Entitlement"].includes(item.name) && !item.grantedBy,
   );
   if (!configurable.length) return null;
   const choices=configurable;
@@ -1512,9 +1542,11 @@ function MeritConfigurationPanel({
   );
 }
 function SheetField({ label, value }: { label: string; value: unknown }) {
-  const {locale,tr}=useLanguage();
+  const {locale}=useLanguage();
+  const anchorKind=label==="Agulha"?"needle":label==="Fio"?"thread":null;
+  const tooltip=anchorKind?changelingAnchorRecovery(anchorKind,systemTerm(String(value??""),"en-US"),locale):"";
   return (
-    <div className="official-field">
+    <div className="official-field" title={tooltip||undefined} data-tooltip={tooltip||undefined} tabIndex={tooltip?0:undefined}>
       <span>{workspaceTerm(label,locale)}</span>
       <strong>{String(value ?? "")}</strong>
     </div>
@@ -1567,9 +1599,9 @@ function TraitLine({
   const localizedName=systemTerm(name,locale);
   return (
     <div className="official-trait-line">
-      <span title={compactName ? localizedName : undefined} aria-label={localizedName}>
+      <span className="official-trait-label" title={compactName ? localizedName : undefined} aria-label={note ? `${localizedName} (${note})` : localizedName}>
         {compactName ? localizedName.slice(0,3) : localizedName}
-        {note && <small>{note}</small>}
+        {note && <small title={note}>({note})</small>}
       </span>
       <DotValue value={value} />
     </div>
@@ -1624,9 +1656,14 @@ function CompactValues({ values }: { values: Record<string, number> }) {
 function ArmorDotPicker({label,value,onChange}:{label:string;value:number;onChange:(value:number)=>void}){
   return <label className="armor-dot-picker"><span>{label}</span><RuleSelect value={String(value)} onChange={(next)=>onChange(Number(next))} options={Array.from({length:6},(_,rating)=>({value:String(rating),label:String(rating)}))}/></label>;
 }
-function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
+function ExpandedMeritList({ merits,character,updateSheet }: { merits: CharacterSheet["merits"];character?:CharacterSheet;updateSheet?:(sheet:CharacterSheet)=>void }) {
   const {locale,tr}=useLanguage();
   const homebrews = useHomebrews();
+  const trifleUses=(character?.current_state.trifle_uses&&typeof character.current_state.trifle_uses==="object"&&!Array.isArray(character.current_state.trifle_uses)?character.current_state.trifle_uses:{}) as Record<string,number>;
+  const setTrifleUses=(key:string,value:number)=>{
+    if(!character||!updateSheet)return;
+    updateSheet({...character,current_state:{...character.current_state,trifle_uses:{...trifleUses,[key]:Math.max(0,Math.min(3,value))}}});
+  };
   const visible = merits.filter((item) => !item.grantedBy && item.name !== "Fae Mount");
   return (
     <div className="expanded-merit-list">
@@ -1642,12 +1679,14 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
             item.configuration,
             locale,
           ),
+          tokenItems=item.name==="Token"?decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items):[],
           cult = String(
             normalizeMeritConfiguration(item.configuration).cult ?? "",
           ),
-          title =
-            homebrews.merits.find((merit) => merit.name === item.name)
-              ?.[locale==="en-US"?"name":"translatedName"] ?? meritLabel(item,undefined,locale);
+          title = item.name === "Token"
+            ? "Tokens"
+            : homebrews.merits.find((merit) => merit.name === item.name)
+                ?.[locale==="en-US"?"name":"translatedName"] ?? meritLabel(item,undefined,locale);
         if (!style)
           return (
             <details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
@@ -1661,6 +1700,7 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
                     <section key={`${item.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
+                      {tokenItems[index]?.kind==="trifle"&&<TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId??itemIndex}:${tokenItems[index].id||index}`]??0)} onChange={(value)=>setTrifleUses(`trifle:${item.instanceId??itemIndex}:${tokenItems[index].id||index}`,value)}/>}
                     </section>
                   ))
                 ) : (
@@ -1711,6 +1751,51 @@ function ExpandedMeritList({ merits }: { merits: CharacterSheet["merits"] }) {
       {!visible.length && <em>{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</em>}
     </div>
   );
+}
+
+function TrifleUseTrack({used,onChange}:{used:number;onChange:(value:number)=>void}){
+  const {tr}=useLanguage();
+  return <div className="trifle-use-block"><span>{tr("Trifles usadas","Trifles used")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={tr(`${used} de 3 Trifles usadas`,`${used} of 3 Trifles used`)}>{Array.from({length:3},(_,index)=><button key={index} type="button" className={index<used?"used":""} onClick={()=>onChange(index<used?index:index+1)} aria-label={tr(`Definir Trifles usadas como ${index<used?index:index+1}`,`Set used Trifles to ${index<used?index:index+1}`)}/>)}</div></div>;
+}
+
+function EntitlementPage({character,updateSheet}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void}){
+  const {locale,tr}=useLanguage(),homebrews=useHomebrews(),wyrd=Math.max(1,Math.min(10,Number(character.line_data.wyrd??1)));
+  const availableEntitlements=ENTITLEMENTS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
+  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd),selectedDefinition=findEntitlement(state.definitionId),definition=selectedDefinition&&availableEntitlements.some((item)=>item.id===selectedDefinition.id)?selectedDefinition:undefined;
+  const save=(nextState:EntitlementState)=>{const next=structuredClone(character);next.line_data={...next.line_data,entitlement:normalizeEntitlementState(nextState,wyrd)};const merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);if(merit)merit.configuration={...normalizeMeritConfiguration(merit.configuration),definitionId:nextState.definitionId,roleId:nextState.roleId};updateSheet(synchronizeMeritGrants(next));};
+  const patch=(next:Partial<EntitlementState>)=>save({...state,...next});
+  const choice=(key:string,value:string)=>patch({choices:{...state.choices,[key]:value}});
+  const activeBlessings=new Set(state.allocations.filter((item)=>item.target==="blessing").map((item)=>item.blessingId));
+  const nextSequence=Math.max(-1,...state.allocations.map((item)=>item.sequence))+1;
+  const changeAllocation=(allocation:EntitlementAllocation|undefined,value:string)=>{
+    let allocations=state.allocations.filter((item)=>item.id!==allocation?.id);
+    if(value!=="none") allocations=[...allocations,value==="token"?{id:allocation?.id??crypto.randomUUID(),target:"token",sequence:allocation?.sequence??nextSequence}:{id:allocation?.id??crypto.randomUUID(),target:"blessing",blessingId:value.slice(9),sequence:allocation?.sequence??nextSequence}];
+    patch({allocations});
+  };
+  const selectDefinition=(definitionId:string)=>save({...state,definitionId,roleId:"",accepted:false,touchstone:{name:"",status:"active"},allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}});
+  if(!definition)return <div className="entitlement-page"><SheetHeading>Entitlement</SheetHeading><label className="entitlement-select">{tr("Título","Title")}<Select onValueChange={selectDefinition}><SelectTrigger><SelectValue placeholder={tr("Selecione um Título","Select an Entitlement")}/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label></div>;
+  const role=definition.roles?.find((item)=>item.id===state.roleId),prerequisitesMet=entitlementPrerequisitesMet(definition,state,character);
+  const conditional=definition.blessings.filter((item)=>item.conditional&&activeBlessings.has(item.id));
+  const tokenCount=state.allocations.filter((item)=>item.target==="token").length,canAccept=prerequisitesMet&&state.touchstone.status==="active"&&Boolean(state.touchstone.name.trim()),operational=state.accepted&&canAccept;
+  const allocationRows=[...state.allocations,...(state.allocations.length<wyrd?[undefined]:[])];
+  return <div className="entitlement-page">
+    <header className="entitlement-title"><div><h2>{definition.name}</h2><p>{definition.meritName} •••• · {definition.sourceCode} p. {definition.page}</p></div><Button type="button" size="sm" variant={state.accepted?"destructive":"default"} disabled={!state.accepted&&!canAccept} onClick={()=>state.accepted?save({...state,accepted:false,allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}}):patch({accepted:true})}>{state.accepted?tr("Remover Título","Remove Entitlement"):tr("Aceitar Título","Accept Entitlement")}</Button></header>
+    {!state.accepted&&<label className="entitlement-select">{tr("Título","Title")}<Select value={definition.id} onValueChange={selectDefinition}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>}
+    {!state.accepted&&definition.roles&&<label className="entitlement-select">{tr("Papel","Role")}<Select value={state.roleId||undefined} onValueChange={(roleId)=>patch({roleId})}><SelectTrigger><SelectValue placeholder={tr("Selecione um papel","Select a role")}/></SelectTrigger><SelectContent>{definition.roles.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.prerequisites}</SelectItem>)}</SelectContent></Select></label>}
+    <p className={`entitlement-prerequisites ${prerequisitesMet?"met":"unmet"}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {role?`${definition.prerequisites} ${role.name}: ${role.prerequisites}.`:definition.prerequisites}</p>
+    <section className={`entitlement-touchstone${state.touchstone.name.trim()?"":" missing"}`}><h3>Entitlement Touchstone</h3><p>{definition.touchstone}</p><div className="entitlement-choice-row"><Input value={state.touchstone.name} onChange={(event)=>patch({touchstone:{...state.touchstone,name:event.target.value}})} placeholder={tr("Nome da Pedra de Contato","Touchstone name")}/><RuleSelect value={state.touchstone.status} onChange={(status)=>patch({touchstone:{...state.touchstone,status:status as EntitlementState["touchstone"]["status"]}})} options={[{value:"active",label:tr("Ativa","Active")},{value:"lost",label:tr("Perdida","Lost")},{value:"suspended",label:tr("Suspensa","Suspended")} ]}/></div></section>
+    <div className="entitlement-overview"><section><h3>{tr("Propósito","Purpose")}</h3><p>{definition.purpose}</p></section><section><h3>{tr("Privilégios","Privileges")}</h3><p>{definition.privileges}</p>{role&&<p><strong>{role.name}:</strong> {role.privilege}</p>}</section><section><h3>{tr("Deveres","Duties")}</h3><p>{definition.duties}</p>{role&&<p><strong>{role.name}:</strong> {role.duties}</p>}</section><section><h3>{tr("Máscara e Semblante","Mask and Mien")}</h3><p>{definition.maskAndMien}</p></section></div>
+    {definition.id==="baron-lesser-ones"&&state.allocations.length>=2&&<label className="entitlement-select">{tr(`Características goblins (até ${Math.floor(state.allocations.length/2)})`,`Goblin features (up to ${Math.floor(state.allocations.length/2)})`)}<textarea value={state.choices["goblin-features"]??""} onChange={(event)=>choice("goblin-features",event.target.value)} placeholder={tr("Uma característica por linha","One feature per line")}/></label>}
+    {definition.id==="dauphines-wayward-children"&&<label className="entitlement-select">{tr("Pupilos atuais","Current wards")}<textarea value={state.choices.wards??""} onChange={(event)=>choice("wards",event.target.value)} placeholder={tr("Um pupilo por linha","One ward per line")}/></label>}
+    <section className="entitlement-inherent"><h3>{tr("Privilégio inerente","Inherent Privilege")}</h3><p>{tr("Gaste 1 Glamour para receber +2 numa ação Social mundana contra um ser feérico, exceto Caçadores, quando a ação reforça o papel ou os deveres do Título e o alvo os conhece.","Spend 1 Glamour for +2 to a mundane Social action against a fae being, excluding Huntsmen, when the action reinforces the title's role or duties and the target knows them.")}</p></section>
+    {state.accepted&&!canAccept&&<p className="entitlement-inactive">{tr("O Título está inativo enquanto seus pré-requisitos ou sua Pedra de Contato não forem válidos.","The Entitlement is inactive while its prerequisites or Touchstone are invalid.")}</p>}
+    <section><h3>{tr("Graduações do Título","Entitlement Ranks")} · {state.allocations.length}/{wyrd}</h3><div className="entitlement-allocations">{allocationRows.map((allocation,index)=>{const current=allocation?.target==="token"?"token":allocation?.blessingId?`blessing:${allocation.blessingId}`:"none";return <label key={allocation?.id??"new"}>{tr("Graduação","Rank")} {index+1}<Select disabled={!state.accepted} value={current} onValueChange={(value)=>changeAllocation(allocation,value)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="none">{tr("Não distribuída","Unallocated")}</SelectItem>{(current==="token"||tokenCount<5)&&<SelectItem value="token">{tr("Heráldica","Heraldry Token")}</SelectItem>}{definition.blessings.filter((item)=>current===`blessing:${item.id}`||!activeBlessings.has(item.id)).map((item)=><SelectItem key={item.id} value={`blessing:${item.id}`}>{item.name}</SelectItem>)}</SelectContent></Select></label>;})}</div></section>
+    <section><h3>Blessings</h3><div className="entitlement-blessings">{definition.blessings.filter((blessing)=>!state.accepted||activeBlessings.has(blessing.id)).map((blessing)=>{const active=activeBlessings.has(blessing.id),suspended=state.suspendedBenefitIds.includes(blessing.id);return <article key={blessing.id} className={`${active?"active":""} ${suspended||active&&!operational?"suspended":""}`}><header><strong>{blessing.name}</strong><span>{active?tr("Adquirida","Acquired"):tr("Não adquirida","Not acquired")}{blessing.conditional?" · Conditional":""}</span></header><p>{blessing.description}</p>{active&&blessing.id==="inherited-expertise"&&<div className="entitlement-choice-row"><RuleSelect value={state.choices["inherited-expertise-skill"]??""} onChange={(value)=>choice("inherited-expertise-skill",value)} options={Object.values(SKILLS).flat().map((name)=>({value:name,label:systemTerm(name,"en-US")}))}/><Input value={state.choices["inherited-expertise-name"]??""} onChange={(event)=>choice("inherited-expertise-name",event.target.value)} placeholder="Specialty"/></div>}{active&&blessing.id==="inherited-token"&&<div className="entitlement-token-fields">{[["name","Name"],["cost","Cost"],["effect","Effect"],["catch","Catch"],["drawback","Drawback"]].map(([key,label])=><label key={key}>{label}<Input value={state.choices[`inherited-token-${key}`]??""} onChange={(event)=>choice(`inherited-token-${key}`,event.target.value)}/></label>)}</div>}{active&&blessing.id==="hidden-library"&&<RuleSelect value={state.choices[blessing.id]??""} onChange={(value)=>choice(blessing.id,value)} options={SKILLS.Mentais.map((name)=>({value:name,label:systemTerm(name,"en-US")}))}/>} {active&&blessing.id==="predecessors-thread"&&<label>{blessing.choiceLabel}<RuleSelect value={state.choices[blessing.id]??""} onChange={(value)=>choice(blessing.id,value)} options={CTL_THREADS.map((name)=>({value:name,label:systemTerm(name,locale)}))}/>{state.choices[blessing.id]&&<small className="entitlement-choice-help">{changelingAnchorRecovery("thread",state.choices[blessing.id],locale)}</small>}</label>}{active&&blessing.choiceLabel&&!['inherited-expertise','inherited-token','hidden-library','predecessors-thread'].includes(blessing.id)&&<label>{blessing.choiceLabel}<Input value={state.choices[blessing.id]??""} onChange={(event)=>choice(blessing.id,event.target.value)}/></label>}</article>;})}</div></section>
+    <section className={`entitlement-heraldry${operational?"":" entitlement-disabled"}`}><h3>{tr("Heráldica","Heraldry")} · {definition.token.name} {"•".repeat(tokenCount)}</h3><p><strong>{definition.heraldry}</strong> {definition.token.description}</p>{role&&<p><strong>{role.heraldryColor}:</strong> {role.tokenBonus} Drawback: {role.tokenDrawback}.</p>}<p><strong>Effect:</strong> {definition.token.effect}</p><p><strong>Catch:</strong> {definition.token.catch}</p><p><strong>Drawback:</strong> {definition.token.drawback}</p></section>
+    {conditional.length>0&&<section><h3>{tr("Benefícios condicionais","Conditional Benefits")}</h3><p>{tr("Suspenda somente os benefícios que o Narrador determinou terem sido perdidos.","Suspend only the benefits the Storyteller determined were lost.")}</p>{conditional.map((item)=><label className="entitlement-suspension" key={item.id}><input type="checkbox" checked={state.suspendedBenefitIds.includes(item.id)} onChange={(event)=>patch({suspendedBenefitIds:event.target.checked?[...state.suspendedBenefitIds,item.id]:state.suspendedBenefitIds.filter((id)=>id!==item.id)})}/>{tr("Suspender","Suspend")} {item.name}</label>)}</section>}
+    <div className="entitlement-overview"><section><h3>Curse</h3><p>{definition.curse}</p><p><strong>{tr("Dados adicionais atuais","Current additional dice")}:</strong> +{state.allocations.length}</p></section><section><h3>Beat</h3><p>{definition.beat}</p>{definition.id==="master-of-keys"&&state.allocations.length>0&&<label className="stored-glamour">{tr("Aspiração adicional","Additional Aspiration")}<Input value={state.choices["dangerous-secret-aspiration"]??""} onChange={(event)=>choice("dangerous-secret-aspiration",event.target.value)} placeholder={tr("Persiga um segredo perigoso","Pursue a dangerous secret")}/></label>}</section></div>
+    <section><h3>Legends</h3><ul>{definition.legends.map((legend)=><li key={legend}>{legend}</li>)}</ul></section>
+  </div>;
 }
 function CombatPage({
   character,
@@ -2296,7 +2381,7 @@ function MeritCompanionCard({
         </p>
         <p><b>{tr("Especial", "Special")}:</b> {special}</p>
         <div className="companion-options">
-          {alphabetical(FAE_MOUNT_ABILITIES, item => item[1]).map(([id, label, description, descriptionEn]) => {
+          {alphabetical(FAE_MOUNT_ABILITIES, item => item[1]).filter(([id])=>abilities.length<merit.dots||abilities.includes(id)).map(([id, label, description, descriptionEn]) => {
             const active = abilities.includes(id);
             return (
               <label key={id} className={active ? "selected" : ""}>
@@ -2463,7 +2548,7 @@ function MeritCompanionCard({
         Numina ({numina.length}/{numinaLimit})
       </strong>
       <div className="companion-options numina-options">
-        {alphabetical(FAMILIAR_NUMINA, item => item).map((item) => {
+        {alphabetical(FAMILIAR_NUMINA, item => item).filter((item)=>numina.length<numinaLimit||numina.includes(item)).map((item) => {
           const active = numina.includes(item);
           return (
             <label key={item} className={active ? "selected" : ""}>
@@ -2727,40 +2812,14 @@ function ConditionManager({
         {selected.map((saved) => {
           const condition = find(saved.id);
           if (!condition) return null;
-          const inlinePenalty =
-            condition.penalty && condition.penalty.length <= 82;
-          const tooltip = `${condition.description}${condition.penalty ? `\n${tr("Efeito","Effect")}: ${condition.penalty}` : ""}\n${tr("Resolução","Resolution")}: ${condition.resolution ?? "—"}${condition.beat ? `\nBeat: ${condition.beat}` : ""}\n${condition.source} · p. ${condition.page}`;
           return (
-            <div
+            <details
               key={condition.id}
               className="selected-condition"
-              title={tooltip}
             >
-              <span>
-                <strong>
-                  {conditionName(condition)}
-                  {saved.persistent ? " [P]" : ""}
-                </strong>
-                {inlinePenalty && <>. {condition.penalty}</>}
-                <small>
-                  {condition.sourceCode} · p. {condition.page}
-                  {condition.penalty && !inlinePenalty
-                    ? tr(" · passe o mouse para ver efeitos, resolução e Beats"," · open for effects, resolution, and Beats")
-                    : ""}
-                </small>
-              </span>
-              <Button
-                type="button"
-                size="icon"
-                variant="ghost"
-                onClick={() =>
-                  onChange(selected.filter((item) => item.id !== condition.id))
-                }
-                aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}
-              >
-                <X />
-              </Button>
-            </div>
+              <summary><span><strong>{conditionName(condition)}{saved.persistent ? " [P]" : ""}</strong><small>{condition.sourceCode} · p. {condition.page}</small></span><Button type="button" size="icon" variant="ghost" onClick={(event)=>{event.preventDefault();event.stopPropagation();onChange(selected.filter((item)=>item.id!==condition.id));}} aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X /></Button></summary>
+              <div className="selected-condition-body"><p>{condition.description}</p>{condition.penalty&&<p className="condition-penalty"><b>{tr("Efeito","Effect")}:</b> {condition.penalty}</p>}<p><b>{tr("Resolução","Resolution")}:</b> {condition.resolution??tr("Conforme a fonte indicada.","As described in the listed source.")}</p>{condition.beat&&<p><b>Beat:</b> {condition.beat}</p>}</div>
+            </details>
           );
         })}
         {!selected.length && <em>{tr("Nenhuma Condição selecionada.","No Conditions selected.")}</em>}
@@ -3348,12 +3407,14 @@ function ExperiencePanel({
           const found = ownedMerit ? next.merits[targetIndex] : undefined;
           if (found && found.name === selectedMerit.name) {
             found.instanceId = instanceId;
-            found.dots = nextMeritRating;
+            addExperienceMeritDots(found, cost);
           } else
             next.merits.push({
               instanceId,
               name: selectedMerit.name,
               dots: nextMeritRating,
+              creationDots: 0,
+              experienceDots: nextMeritRating,
               sourceId: selectedMerit.sourceId,
               source: selectedMerit.source,
               configuration: {},
@@ -3937,11 +3998,13 @@ function MageExperiencePanel({
                 (item) => item.name === selectedMerit.name && !item.grantedBy,
               )
             : undefined;
-      if (found && found.name === selectedMerit.name) found.dots = nextMerit;
+      if (found && found.name === selectedMerit.name) addExperienceMeritDots(found, cost);
       else
         next.merits.push({
           name: selectedMerit.name,
           dots: nextMerit,
+          creationDots: 0,
+          experienceDots: nextMerit,
           sourceId: selectedMerit.sourceId,
           source: selectedMerit.source,
           configuration: {},
@@ -5005,11 +5068,17 @@ function ResourceTrack({
   current,
   maximum,
   onChange,
+  storedCurrent,
+  storedMaximum,
+  onStoredChange,
 }: {
   label: string;
   current: number;
   maximum: number;
   onChange: (value: number) => void;
+  storedCurrent?: number;
+  storedMaximum?: number;
+  onStoredChange?: (value:number)=>void;
 }) {
   const {locale,tr}=useLanguage();
   const displayLabel=systemTerm(label,locale);
@@ -5030,6 +5099,7 @@ function ResourceTrack({
             aria-label={tr(`Definir ${displayLabel} como ${index < current ? index : index + 1}`,`Set ${displayLabel} to ${index < current ? index : index + 1}`)}
           />
         ))}
+        {storedCurrent!==undefined&&storedMaximum!==undefined&&onStoredChange&&Array.from({length:storedMaximum},(_,index)=><button type="button" key={`stored-${index}`} className={`stored-glamour-dot${index<storedCurrent?" filled":""}`} onClick={()=>onStoredChange(index<storedCurrent?index:index+1)} aria-label={tr(`Definir Glamour armazenado como ${index<storedCurrent?index:index+1}`,`Set Stored Glamour to ${index<storedCurrent?index:index+1}`)}/>)}
       </div>
       <div className="tracker-meta">
         <span>{tr("Atual","Current")}</span>
@@ -5049,6 +5119,9 @@ function PowerResource({
   perTurn,
   onChange,
   summary,
+  storedCurrent,
+  storedMaximum,
+  onStoredChange,
 }: {
   name: string;
   rating: number;
@@ -5058,6 +5131,9 @@ function PowerResource({
   perTurn: number;
   onChange: (value: number) => void;
   summary?: string;
+  storedCurrent?: number;
+  storedMaximum?: number;
+  onStoredChange?: (value:number)=>void;
 }) {
   const {locale,tr}=useLanguage();
   return (
@@ -5071,9 +5147,12 @@ function PowerResource({
         current={current}
         maximum={maximum}
         onChange={onChange}
+        storedCurrent={storedCurrent}
+        storedMaximum={storedMaximum}
+        onStoredChange={onStoredChange}
       />
       <p className="tracker-help">
-        {tr(`${resourceName} máximo:`,`${systemTerm(resourceName,locale)} maximum:`)} <strong>{maximum}</strong> · {tr("gasto por turno:","spent per turn:")}{" "}
+        {tr(`${resourceName} máximo:`,`${systemTerm(resourceName,locale)} maximum:`)} <strong>{maximum}</strong>{storedCurrent!==undefined&&<> · {tr("Glamour armazenado:","Stored Glamour:")} <strong>{storedCurrent}</strong></>} · {tr("gasto por turno:","spent per turn:")}{" "}
         <strong>{perTurn}</strong>
       </p>
     </div>
@@ -5776,7 +5855,7 @@ function CourtLore({
           <strong>{tr("Manto", "Mantle")} {index + 1}:</strong> {benefit}
         </p>
       ))}
-      {official && <small>{official.source} · p. {official.page}</small>}
+      {official && <small>{official.source} · p. {courtPageCitation(official)}</small>}
     </article>
   );
 }

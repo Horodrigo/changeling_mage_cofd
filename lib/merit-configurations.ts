@@ -1,6 +1,7 @@
 import type { Locale } from "./i18n";
 import { HEDGE_DUELIST_VARIANTS } from "./merits-supplements-en";
 import { courtCanonicalId, courtDisplayName } from "./changeling-courts";
+import { synchronizeEntitlement } from "./entitlements";
 
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
@@ -51,7 +52,11 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
 },{
   name: "Token",
   line: "CtL",
-  fields: [{ key: "name", label: "Token", kind: "text", placeholder: "Token name" }],
+  fields: [],
+},{
+  name: "Hedgespun Item",
+  line: "CtL",
+  fields: [],
 },{name:"Allies",fields:[{key:"subject",label:"Allied group",kind:"text"}]},
   {name:"Alternate Identity",fields:[{key:"identity",label:"Identity",kind:"text"}]},
   {name:"Language",fields:[{key:"language",label:"Language",kind:"text"}]},
@@ -106,10 +111,11 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
   {name:"Professional Training",fields:[]},
   {name:"Mystery Cult Initiation",fields:[]},
   {name:"Mystery Cult Influence",fields:[]},
+  {name:"Entitlement",line:"CtL",fields:[]},
 ];
 export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
-const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Fae Pet","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Token","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
-const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Stable Trod","Workshop","Shared Bastion"]);
+const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Fae Pet","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
+const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Stable Trod","Workshop","Shared Bastion","Token","Hedgespun Item","Entitlement"]);
 export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name);
 export const isStructuredMerit = (name: string) => STRUCTURED_MERITS.has(name);
 export const meritConfigurationText = (value: string | undefined, _locale: Locale) => value ?? "";
@@ -214,7 +220,7 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     }
   }
   target.line_data={...target.line_data,court_goodwill_benefits:benefits,merit_granted_skill_bonuses:skillBonuses};
-  return sheet;
+  return synchronizeEntitlement(sheet);
 }
 
 export function expandedConfigurationLines(
@@ -223,6 +229,32 @@ export function expandedConfigurationLines(
   value: unknown,
   locale: Locale = "pt-BR",
 ): string[] {
+  if(name==="Token"){
+    const configuration=normalizeMeritConfiguration(value), items=decodeConfiguredRows<TokenConfigurationItem>(configuration.items), lines:string[]=[];
+    for(const [index,item] of items.entries()){
+      const kind=item.kind??"token",kindLabel=kind==="trifle"?(locale==="en-US"?"Trifle batch":"Lote de Bagatelas"):kind==="bauble"?"Bauble":"Token";
+      const title=item.name.trim()||`${kindLabel} ${index+1}`,rating=Math.max(1,item.rating);
+      if(kind==="trifle") lines.push(`${title} (3): ${locale==="en-US"?"Effect":"Efeito"}: ${item.effect||"—"}`);
+      else if(kind==="bauble") lines.push(`${title} (${"•".repeat(rating)}): ${locale==="en-US"?"Description":"Descrição"}: ${item.description||"—"}; Crux: ${item.crux||"—"}; Catch: ${item.catch||"—"}`);
+      else lines.push(`${title} (${"•".repeat(rating)}): ${locale==="en-US"?"Cost":"Custo"}: ${item.cost||"—"}; ${locale==="en-US"?"Effect":"Efeito"}: ${item.effect||"—"}; Catch: ${item.catch||"—"}; Drawback: ${item.drawback||"—"}`);
+    }
+    if(items.reduce((sum,item)=>sum+item.rating,0)!==dots) lines.push(`${locale==="en-US"?"Unallocated dots":"Pontos não distribuídos"}: ${Math.max(0,dots-items.reduce((sum,item)=>sum+item.rating,0))}`);
+    return lines;
+  }
+  if(name==="Hedgespun Item"){
+    const configuration=normalizeMeritConfiguration(value), item=decodeHedgespunConfiguration(configuration), lines:string[]=[];
+    const selectedBenefits=item.benefits.slice(0,Math.max(0,dots));
+    if(item.name.trim()) lines.push(`${locale==="en-US"?"Item":"Item"}: ${item.name}`);
+    if(item.description.trim()) lines.push(`${locale==="en-US"?"Mask and mien":"Máscara e semblante feérico"}: ${item.description}`);
+    const benefits=[
+      ["extraordinary",locale==="en-US"?"Extraordinary Equipment":"Equipamento Extraordinário",item.extraordinaryDetail],
+      ["alacrity",locale==="en-US"?"Improved Alacrity":"Alacridade Aprimorada","+2 Initiative and Speed"],
+      ["durability",locale==="en-US"?"Increased Durability":"Durabilidade Aumentada","+1 Durability"],
+    ] as const;
+    for(const [key,label,detail] of benefits){const count=selectedBenefits.filter((benefit)=>benefit===key).length;if(count) lines.push(`${label} ×${count}: ${detail}`);}
+    lines.push(`${locale==="en-US"?"Drawback":"Desvantagem"}: ${HEDGESPUN_DRAWBACK[locale]}`);
+    return lines;
+  }
   if(name==="Hollow"||name==="Shared Bastion"){
     const configuration=normalizeMeritConfiguration(value), lines:string[]=[];
     const configuredName=String(configuration.name??"").trim();
@@ -317,4 +349,22 @@ export function expandedConfigurationLines(
   const selected=String(normalizeMeritConfiguration(value).firstManeuver??"");
   const variant=HEDGE_DUELIST_VARIANTS.find((item)=>item.label===selected);
   return variant ? [`${variant.label} (${variant.seeming}): ${variant.description}`] : [];
+}
+
+export type TokenKind="token"|"trifle"|"bauble";
+export type TokenConfigurationItem={id:string;kind:TokenKind;name:string;rating:number;cost:string;effect:string;description:string;crux:string;catch:string;drawback:string};
+export type HedgespunBenefit="extraordinary"|"alacrity"|"durability";
+export type HedgespunConfiguration={name:string;description:string;extraordinaryDetail:string;benefits:Array<HedgespunBenefit|"">};
+export const HEDGESPUN_DRAWBACK:Record<Locale,string>={
+  "en-US":"While the item is used, attempts to go unnoticed in plain sight or deflect attention automatically fail and grant a Beat. A non-fae user suffers −1 on tasks requiring concentration or Social interaction.",
+  "pt-BR":"Enquanto o item estiver em uso, tentativas de passar despercebido à vista de todos ou desviar atenção falham automaticamente e concedem uma Batida. Um usuário não feérico sofre −1 em tarefas que exigem concentração ou interação Social.",
+};
+export function encodeConfiguredRows<T>(items:T[]){return items.map((item)=>JSON.stringify(item));}
+export function decodeConfiguredRows<T>(value:unknown):T[]{
+  if(!Array.isArray(value)) return [];
+  return value.flatMap((row)=>{try{const parsed=JSON.parse(String(row));return parsed&&typeof parsed==="object"?[parsed as T]:[];}catch{return [];}});
+}
+export function decodeHedgespunConfiguration(configuration:MeritConfiguration):HedgespunConfiguration{
+  const benefits=(Array.isArray(configuration.benefits)?configuration.benefits:[]).map((item):HedgespunBenefit|""=>["extraordinary","alacrity","durability"].includes(item)?item as HedgespunBenefit:"");
+  return {name:String(configuration.name??""),description:String(configuration.description??""),extraordinaryDetail:String(configuration.extraordinary_detail??""),benefits};
 }

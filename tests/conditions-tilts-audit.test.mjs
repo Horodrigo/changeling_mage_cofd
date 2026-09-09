@@ -17,11 +17,11 @@ const citationKey=(item)=>`${item.originalName??item.name}|${item.sourceCode}|${
 
 test("line catalogs match the approved offline Condition index",()=>{
   const changelingOfficial=CHANGELING_CONDITIONS.filter((item)=>item.sourceCode!=="BoC");
-  assert.equal(changelingOfficial.length,63);
+  assert.equal(changelingOfficial.length,65);
   assert.equal(MAGE_CONDITIONS.length,58);
   assert.ok(CHANGELING_CONDITIONS.every((item)=>item.name===item.originalName));
-  assert.deepEqual(Object.fromEntries(["CofD","HL","CTL 2e","Kith"].map((code)=>[code,changelingOfficial.filter((item)=>item.sourceCode===code).length])),{
-    CofD:25,HL:9,"CTL 2e":20,Kith:9,
+  assert.deepEqual(Object.fromEntries(["CofD","HL","CTL 2e","Kith","OA&T"].map((code)=>[code,changelingOfficial.filter((item)=>item.sourceCode===code).length])),{
+    CofD:25,HL:9,"CTL 2e":20,Kith:9,"OA&T":2,
   });
   assert.deepEqual(Object.fromEntries(["CofD","HL","MTA 2e","NH-NA","DE","DEC"].map((code)=>[code,MAGE_CONDITIONS.filter((item)=>item.sourceCode===code).length])),{
     CofD:25,HL:9,"MTA 2e":14,"NH-NA":6,DE:3,DEC:1,
@@ -73,6 +73,13 @@ test("Condition and Tilt selections survive the character JSON boundary",()=>{
   assert.deepEqual(restored.line_data.combat_tilts,sheet.line_data.combat_tilts);
   assert.ok(findById(CHANGELING_CONDITIONS,restored.current_state.conditions[0].id));
   for(const id of restored.line_data.combat_tilts) assert.ok(findById(TILTS,id));
+});
+
+test("Empty Heart e Magpie's Misfortune são Conditions persistentes de Changeling",()=>{
+  const empty=findById(CHANGELING_CONDITIONS,"empty-heart"),magpie=findById(CHANGELING_CONDITIONS,"magpies-misfortune");
+  assert.equal(empty?.persistent,true);
+  assert.equal(magpie?.persistent,true);
+  assert.match(magpie?.beat??"",/jinx/i);
 });
 
 test("official Tilt catalog reconciles every approved offline-index and PDF record",()=>{

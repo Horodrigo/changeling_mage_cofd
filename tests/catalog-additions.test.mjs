@@ -12,7 +12,7 @@ const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite
 const {findMeritConfiguration,isInlineMeritConfiguration,synchronizeMeritGrants,expandedConfigurationLines} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
-  assert.equal(RAW_MERITS.length,291);
+  assert.equal(RAW_MERITS.length,293);
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Dramaturge"&&merit.source==="Kith and Kin"));
   assert.ok(RAW_MERITS.some((merit)=>merit.name==="Understudy"&&merit.source==="Kith and Kin"));
   assert.equal(RAW_MERITS.filter((merit)=>merit.source==="Book of Courts").length,39);
@@ -34,8 +34,10 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Courtless",mantle:0,skills:socialSkills,merits:[{name:"Court Goodwill",dots:3,configuration:{court:"spring"}}]}),true);
   assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Courtless",mantle:0,skills:socialSkills,merits:[{name:"Court Goodwill",dots:4,configuration:{court:"summer"}}]}),true);
   assert.equal(meritPrerequisitesMet(dressed,{gameLine:"CtL",court:"Courtless",mantle:0,skills:socialSkills,merits:[{name:"Court Goodwill",dots:3,configuration:{court:"summer"}}]}),false);
-  for(const name of ["Fae Mount","Mentor","Retainer","Safe Place","Striking Looks","Token"]) assert.ok(REPEATABLE_MERITS.has(name));
-  for(const name of ["Contacts","Staff","Touchstone"]) assert.ok(!REPEATABLE_MERITS.has(name));
+  for(const name of ["Fae Mount","Mentor","Retainer","Safe Place","Striking Looks","Hedgespun Item"]) assert.ok(REPEATABLE_MERITS.has(name));
+  for(const name of ["Contacts","Staff","Touchstone","Token"]) assert.ok(!REPEATABLE_MERITS.has(name));
+  assert.equal(meritRatingsFor(RAW_MERITS.find((merit)=>merit.name==="Token")).at(-1),50);
+  assert.deepEqual(meritRatingsFor(RAW_MERITS.find((merit)=>merit.name==="Hedgespun Item")),[1,2,3,4,5]);
   for(const name of ["Contacts","Staff"]){
     assert.ok(UNBOUNDED_MERITS.has(name));
     assert.equal(meritRatingsFor(RAW_MERITS.find((merit)=>merit.name===name),21).at(-1),21);
@@ -73,6 +75,21 @@ test("catálogo English-first contém a base auditada e os suplementos aprovados
   assert.ok(findMeritConfiguration("Workshop"));
   assert.match(expandedConfigurationLines("Hollow",3,{name:"Briar House",features:["Hob Alarm|1","Hidden Entry|2"]},"en-US").join("\n"),/Hob Alarm, Hidden Entry/);
   assert.match(expandedConfigurationLines("Shared Bastion",2,{features:["Buttressed Dreaming|1","Guardian Eidolon|1"]},"en-US").join("\n"),/Buttressed Dreaming, Guardian Eidolon/);
+  const tokens=[
+    JSON.stringify({name:"Moon Key",rating:2,cost:"1 Glamour",effect:"Opens moonlit doors.",catch:"Sing to the lock.",drawback:"Gain Shaken."}),
+    JSON.stringify({name:"Thorn Coin",rating:1,cost:"1 Glamour",effect:"Find a market.",catch:"Give it away.",drawback:"Gain Notoriety."}),
+  ];
+  const tokenLines=expandedConfigurationLines("Token",3,{items:tokens},"en-US");
+  assert.equal(tokenLines.length,2);
+  assert.match(tokenLines[0],/Moon Key \(••\).*Opens moonlit doors/);
+  const specialTokenLines=expandedConfigurationLines("Token",3,{items:[
+    JSON.stringify({kind:"trifle",name:"Kraken Ink",rating:1,effect:"Inflicts Blinded."}),
+    JSON.stringify({kind:"bauble",name:"Lonely Key",rating:2,description:"A timeworn key.",crux:"Everyone leaves.",catch:"Abandon a companion."}),
+  ]},"en-US");
+  assert.match(specialTokenLines[0],/Kraken Ink \(3\).*Inflicts Blinded/);
+  assert.match(specialTokenLines[1],/Lonely Key \(••\).*Crux: Everyone leaves.*Catch: Abandon a companion/);
+  assert.match(expandedConfigurationLines("Hedgespun Item",3,{name:"Star Coat",description:"A coat lined with stars.",benefits:["extraordinary","alacrity","extraordinary"],extraordinary_detail:"+2 general armor"},"en-US").join("\n"),/Extraordinary Equipment ×2: \+2 general armor/);
+  assert.doesNotMatch(expandedConfigurationLines("Hedgespun Item",1,{benefits:["alacrity","durability"]},"en-US").join("\n"),/Increased Durability/);
 });
 
 test("Book of Seemings contém os 62 Méritos ingleses e respeita acesso por Seeming",()=>{
@@ -208,14 +225,16 @@ test("Contratos exibem Comuns antes dos Reais sem perder a ordem alfabética", a
   assert.match(workspace,/alphabetical\(items, item => item\.name,locale\)[\s\S]*left\.sortPriority/);
 });
 
-test("as 73 Frátrias possuem nome localizado preservando IDs e nomes salvos", () => {
-  assert.equal(KITHS.length,73);
-  assert.equal(new Set(KITHS.map(x=>x.translatedName)).size,73);
+test("as 73 Frátrias oficiais e 12 de Book of Seemings possuem nome localizado preservando IDs", () => {
+  assert.equal(KITHS.length,85);
+  assert.equal(KITHS.filter(x=>x.sourceId==="h-seemings").length,12);
+  assert.equal(new Set(KITHS.map(x=>x.id)).size,85);
   for (const item of KITHS) {
     assert.equal(item.translatedName,KITH_NAMES_PT[item.name]);
     assert.ok(item.translatedName);
-    assert.equal(item.id,item.name.toLocaleLowerCase("en-US").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""));
-    for (const alias of [item.id,item.name,item.translatedName,kithSearchText(item.translatedName)]) {
+    if(item.id!=="chimera-book-of-seemings")assert.equal(item.id,item.name.toLocaleLowerCase("en-US").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""));
+    const aliases=item.id==="chimera-book-of-seemings"?[item.id]:[item.id,item.name,item.translatedName,kithSearchText(item.translatedName)];
+    for (const alias of aliases) {
       assert.equal(findKith(alias)?.id,item.id,alias);
     }
     assert.equal(kithDisplayName(item.name),item.translatedName);

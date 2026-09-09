@@ -7,8 +7,8 @@ const vite=await createServer({appType:"custom",configFile:false,root,server:{mi
 after(async()=>vite.close());
 const {KITHS,kithPresentation}=await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 const {KITH_TEXT_EN}=await vite.ssrLoadModule("/lib/changeling-kiths-en.ts");
-test("all 73 Kith IDs have complete English presentation summaries",()=>{
- assert.equal(KITHS.length,73); assert.deepEqual(Object.keys(KITH_TEXT_EN).sort(),KITHS.map(x=>x.id).sort());
+test("all 73 official and 12 Book of Seemings Kith IDs have complete English presentation summaries",()=>{
+ assert.equal(KITHS.length,85); assert.equal(KITHS.filter(x=>x.sourceId==="h-seemings").length,12); assert.deepEqual(Object.keys(KITH_TEXT_EN).sort(),KITHS.map(x=>x.id).sort());
  for(const kith of KITHS){const text=KITH_TEXT_EN[kith.id]; for(const field of ["description","blessing","skill"]) assert.ok(text[field]?.trim(),`${kith.id}.${field}`);}
 });
 test("documented source ambiguities remain explicit",()=>{

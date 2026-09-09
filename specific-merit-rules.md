@@ -50,7 +50,13 @@ This document records exceptional behavior that must survive the clean reimport 
 - Refunds must identify the exact instance by stable ID and remove or decrement only that instance.
 - Continue auditing the remaining source-defined repeatable Merits during import; do not infer repeatability merely because a Merit names a subject.
 - Acquired Taste is explicitly repeatable; each instance records a different sapient supernatural kind.
-- Confirmed independent instances include Fae Mount, Mentor, Retainer, Safe Place, and Token. Each Token instance represents a distinct Token.
+- Confirmed independent instances include Fae Mount, Mentor, Retainer, and Safe Place. Token is a single Merit whose dots are distributed among multiple configured items.
+
+### Token item types
+
+- A standard Token records rating, name, cost, effect, Catch, and Drawback.
+- One allocated dot may instead create one batch of three Trifles. A batch records only name and effect; each Trifle costs 1 Glamour, has no Catch or individual Drawback, and is destroyed after use.
+- A Bauble records rating, name, description, Crux, and Catch. Its 1 Glamour activation cost and stolen-token nature are fixed rules rather than editable fields.
 - Striking Looks is repeatable; each distinct appearance is an independent one- or two-dot instance with its own inline description.
 - Contacts and Staff are single aggregate Merits rather than repeatable rows. They have no five-dot ceiling: every Contacts dot records another group or field, and every Staff dot records another Skill represented among the employees.
 - Touchstone is a single aggregate Merit following its published ratings. Each dot adds one directly editable row to the character's Touchstones section; it does not create a separate Merit Choices editor. Refunding dots removes the newest rows first.

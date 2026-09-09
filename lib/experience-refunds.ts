@@ -1,5 +1,6 @@
 import type { CharacterSheet } from "../app/character-builder";
 import { refundPowerRating } from "./power-progression";
+import { removeExperienceMeritDots } from "./merit-progression";
 
 export function subtractDots(value: unknown, amount = 1, minimum = 0) {
   return Math.max(minimum, (Number(value) || 0) - amount);
@@ -12,8 +13,7 @@ export function refundMeritDots(sheet: CharacterSheet, name: string, amount: num
       ? legacyIndex
       : sheet.merits.findIndex(item => item.name === name && !item.grantedBy);
   if (index < 0) return;
-  sheet.merits[index].dots = subtractDots(sheet.merits[index].dots, amount);
-  if (sheet.merits[index].dots === 0) sheet.merits.splice(index, 1);
+  if (removeExperienceMeritDots(sheet.merits[index], amount) === 0) sheet.merits.splice(index, 1);
 }
 
 export type MageAdvancementUndo =

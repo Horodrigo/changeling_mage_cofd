@@ -40,10 +40,3 @@ export function refundPowerRating(sheet: PowerSheet, key: PowerKey) {
   const { creation, current } = powerProgression(sheet, key);
   return withPowerRating(sheet, key, Math.max(creation, current - 1));
 }
-
-export function creationMeritAllowance(sheet: (PowerSheet & { merits: Array<{ dots: number; grantedBy?: string }> }) | null | undefined, key: PowerKey) {
-  if (!sheet) return 10;
-  // Existing XP merits are already paid: editing must not charge them again.
-  const spent = sheet.merits.filter(item => !item.grantedBy).reduce((sum, item) => sum + item.dots, 0);
-  return Math.max(10, spent + (powerProgression(sheet, key).creation - 1) * 5);
-}

@@ -1,4 +1,4 @@
-export type SeemingKey = "Beast" | "Darkling" | "Elemental" | "Fairest" | "Ogre" | "Wizened";
+export type SeemingKey = "Beast" | "Darkling" | "Elemental" | "Fairest" | "Grimm" | "Ogre" | "Wizened";
 
 export type ContractDefinition = {
   id: string;
@@ -38,6 +38,7 @@ export type ContractDefinition = {
 import { KITH_AND_KIN_CONTRACTS } from "./contracts-kith-and-kin";
 import { CORE_CONTRACTS } from "./contracts-core";
 import { BOOK_OF_COURTS_CONTRACTS } from "./contracts-book-of-courts";
+import { withBookOfSeemingsBenefits } from "./contracts-book-of-seemings-benefits";
 
 export const CONTRACTS: ContractDefinition[] = [
   ...BOOK_OF_COURTS_CONTRACTS,
@@ -266,7 +267,7 @@ export const CONTRACTS: ContractDefinition[] = [
     page: 241,
   },
   ...KITH_AND_KIN_CONTRACTS,
-  ...CORE_CONTRACTS,
+  ...CORE_CONTRACTS.map(withBookOfSeemingsBenefits),
 ];
 
 export const CONTRACT_NAME_ALIASES: Record<string, string> = Object.fromEntries(

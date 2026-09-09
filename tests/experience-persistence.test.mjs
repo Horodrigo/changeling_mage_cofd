@@ -8,13 +8,14 @@ const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false } });
 after(() => vite.close());
 const power = await vite.ssrLoadModule("/lib/power-progression.ts");
+const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
 
 function sheet(key = "wyrd", creation = 1) {
   return { game_line: key === "wyrd" ? "CtL" : "MtA", attributes: { Força: 1 }, skills: { Atletismo: 0 },
-    merits: [{ name: "Resources", dots: 10 }], specializations: [], derived: { LucidezMaxima: 4 },
+    merits: [{ name: "Resources", dots: 10, creationDots: 10, experienceDots: 0 }], specializations: [], derived: { LucidezMaxima: 4 },
     line_data: { [key]: creation, arcana: { Fate: 0 }, wisdom: 7 },
     current_state: { experience_available: 20, clarity_damage: ["severe", "mild"] } };
 }
@@ -26,10 +27,7 @@ for (const key of ["wyrd", "gnosis"]) for (const creation of [1,2,3]) {
     for (let i = 0; i < 3; i++) current.line_data = power.withPowerRating(current, key, current.line_data[key] + 1);
     current = JSON.parse(JSON.stringify(current));
     const progression = power.powerProgression(current, key);
-    const allowance = power.creationMeritAllowance(current, key);
-    const cap = Math.min(3, 1 + Math.floor((allowance - 10) / 5));
-    assert.equal(Math.min(progression.creation, cap) + progression.advancement, creation + 3);
-    assert.equal(allowance - (progression.creation - 1) * 5, 10);
+    assert.equal(progression.creation + progression.advancement, creation + 3);
     for (const order of permutations) {
       const copy = structuredClone(current);
       for (const _ of order) copy.line_data = power.refundPowerRating(copy, key);
@@ -71,10 +69,22 @@ test("reembolsa pontos em qualquer ordem sem restaurar snapshots de outras compr
 test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas", () => {
   for (const order of permutations) {
     const current = sheet(); current.merits = [
-      {name:"Allies",instanceId:"first",dots:4}, {name:"Allies",instanceId:"second",dots:2}];
+      {name:"Allies",instanceId:"first",dots:4,creationDots:0,experienceDots:4}, {name:"Allies",instanceId:"second",dots:2,creationDots:2,experienceDots:0}];
     for (const index of order) refunds.refundMeritDots(current, "Allies", [2,1,1][index], "first");
-    assert.deepEqual(current.merits, [{name:"Allies",instanceId:"second",dots:2}]);
+    assert.deepEqual(current.merits, [{name:"Allies",instanceId:"second",dots:2,creationDots:2,experienceDots:0}]);
   }
+});
+
+test("edição preserva Méritos de Experiência e substitui apenas a base de criação", () => {
+  const existing = [
+    {name:"Allies",instanceId:"creation",dots:4,creationDots:2,experienceDots:2,configuration:{group:"Police"}},
+    {name:"Contacts",instanceId:"xp",dots:2,creationDots:0,experienceDots:2},
+  ];
+  const edited = [{name:"Allies",instanceId:"creation",dots:1,configuration:{group:"Media"}}];
+  assert.deepEqual(merits.mergeCreationMerits(existing,edited),[
+    {name:"Contacts",instanceId:"xp",dots:2,creationDots:0,experienceDots:2},
+    {name:"Allies",instanceId:"creation",dots:3,creationDots:1,experienceDots:2,configuration:{group:"Media"}},
+  ]);
 });
 
 test("Lucidez permanente é gratuita, persistente e remove a última caixa em qualquer ordem", () => {

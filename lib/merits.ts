@@ -41,7 +41,7 @@ export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERI
 export const REPEATABLE_MERITS = new Set([
   "Allies", "Alternate Identity", "Court Goodwill", "Fae Mount",
   "Language", "Library", "Mentor", "Retainer", "Safe Place", "Status",
-  "Striking Looks", "Token",
+  "Striking Looks", "Hedgespun Item",
   "Hedge Duelist", "Hollow", "Stable Trod", "Shared Bastion", "Acquired Taste",
 ]);
 export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff"]);

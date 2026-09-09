@@ -21,6 +21,17 @@ const rules = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
 const { CONTRACTS } = await vite.ssrLoadModule("/lib/contracts.ts");
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
 
+test("Needles e Threads possuem gatilhos estruturados de recuperação de Willpower",()=>{
+  assert.equal(creationRules.CTL_NEEDLE_DEFINITIONS.length,34);
+  assert.equal(creationRules.CTL_THREAD_DEFINITIONS.length,30);
+  assert.equal(creationRules.CTL_NEEDLE_DEFINITIONS.filter((item)=>item.sourceId==="h-courts").length,8);
+  assert.equal(creationRules.CTL_NEEDLE_DEFINITIONS.filter((item)=>item.sourceId==="h-seemings").length,12);
+  assert.equal(creationRules.CTL_THREAD_DEFINITIONS.filter((item)=>item.sourceId==="h-courts").length,8);
+  assert.equal(creationRules.CTL_THREAD_DEFINITIONS.filter((item)=>item.sourceId==="h-seemings").length,12);
+  assert.match(creationRules.changelingAnchorRecovery("needle","Bon Vivant","en-US"),/Recover 1 Willpower:/);
+  assert.match(creationRules.changelingAnchorRecovery("thread","Acceptance","pt-BR"),/Recuperar toda a FV:/);
+});
+
 test("cria e remove Fragilidades conforme os níveis pares de Fado", () => {
   assert.deepEqual(creationRules.normalizeChangelingFrailties([], 1), ["Cold Iron"]);
   assert.deepEqual(creationRules.normalizeChangelingFrailties(["Ferro Frio", "Espelhos"], 2), ["Cold Iron", "Espelhos"]);
@@ -137,31 +148,4 @@ test("Contrato compartilhado de Corte usa a Clause da Corte canônica", () => {
   const contract = { type: "Comum", categoryKind: "Corte", regalia: "Circadian", courtClauses: { sun: "A", moon: "B" } };
   assert.equal(rules.canSelectInitialContract(contract, [], "Corte do Sol"), true);
   assert.equal(rules.canSelectInitialContract(contract, [], "winter"), false);
-});
-
-test.skip("classifica os Contratos de Book of Seemings por Regalia real", () => {
-  const seemingsContracts = CONTRACTS.filter(
-    (contract) => contract.sourceId === "h-seemings",
-  );
-  assert.equal(
-    seemingsContracts.some((contract) => contract.regalia === "Feições"),
-    false,
-  );
-  assert.deepEqual(
-    seemingsContracts
-      .filter((contract) => contract.page >= 139 && contract.page <= 142)
-      .map((contract) => contract.regalia),
-    ["Garganta", "Garganta", "Garganta", "Garganta", "Garganta"],
-  );
-  assert.equal(
-    seemingsContracts.find((contract) => contract.id === "h-seemings:last-hope")
-      ?.regalia,
-    "Coroa",
-  );
-  assert.equal(
-    seemingsContracts.find(
-      (contract) => contract.id === "h-seemings:the-troll-toll",
-    )?.regalia,
-    "Escudo",
-  );
 });

@@ -36,11 +36,13 @@ import {
 import {
   ARCANA,
   ATTRIBUTES,
-  CTL_NEEDLES,
+  CTL_NEEDLE_DEFINITIONS,
   CTL_SEEMINGS,
   CTL_SEEMING_LABELS,
   seemingDisplayName,
-  CTL_THREADS,
+  CTL_THREAD_DEFINITIONS,
+  changelingAnchorDisplayName,
+  changelingAnchorRecovery,
   MTA_ORDERS,
   MTA_ORDER_LABELS,
   MTA_PATHS,
@@ -61,29 +63,37 @@ import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contract
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
 import { SPELLS, type SpellDefinition } from "@/lib/spells";
-import { powerProgression, creationMeritAllowance } from "@/lib/power-progression";
+import { powerProgression } from "@/lib/power-progression";
+import { creationMerits, mergeCreationMerits } from "@/lib/merit-progression";
 import {
   arcanaCreationErrors,
   canSelectInitialContract,
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
 import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
-import { CTL_COURT_DEFINITIONS, courtCanonicalId, courtDisplayName, courtPresentation } from "@/lib/changeling-courts";
+import { CTL_COURT_DEFINITIONS, courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation } from "@/lib/changeling-courts";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
+  decodeConfiguredRows,
+  decodeHedgespunConfiguration,
+  encodeConfiguredRows,
   findMeritConfiguration,
   isInlineMeritConfiguration,
   isStructuredMerit,
   meritConfigurationTitle,
   normalizeMeritConfiguration,
   synchronizeMeritGrants,
+  type HedgespunBenefit,
   type MeritConfiguration,
+  type TokenConfigurationItem,
+  type TokenKind,
 } from "@/lib/merit-configurations";
 import { skillSpecialtySuggestions } from "@/lib/skill-specialties";
 import { localized, useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { builderText } from "./character-builder-messages";
+import { ENTITLEMENTS, findEntitlement } from "@/lib/entitlements";
 
 export type Specialty = { skill: string; name: string; grantedBy?: string };
 export type MeritSelection = {
@@ -94,6 +104,8 @@ export type MeritSelection = {
   source?: string;
   configuration?: MeritConfiguration;
   grantedBy?: string;
+  creationDots?: number;
+  experienceDots?: number;
 };
 export type ContractSelection = Pick<
   ContractDefinition,
@@ -285,7 +297,7 @@ export function CharacterBuilder({
     readArray(initial, "aspirations", ["", "", ""]),
   );
   const [merits, setMerits] = useState<MeritSelection[]>(
-    initial?.merits?.filter((item) => !item.grantedBy) ?? [],
+    creationMerits(initial?.merits),
   );
 
   const [seeming, setSeeming] = useState(
@@ -356,8 +368,7 @@ export function CharacterBuilder({
   );
   const [error, setError] = useState("");
 
-  const meritAllowance = creationMeritAllowance(initial, line === "CtL" ? "wyrd" : "gnosis");
-  const meritBudget = meritAllowance - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5);
+  const meritBudget = Math.max(0, 10 - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5));
   const meritCatalog = useMemo(() => {
     const merged = new Map(
       getMeritsForLine(line).filter(item=>item.name !== "Mantle" && meritPrerequisitesMet(item,{gameLine:line,attributes,skills,seeming,wyrd:Number(initial?.line_data?.wyrd??1),court,mantle:line==="CtL"?(initial?.merits.find((owned)=>owned.name==="Mantle"&&owned.grantedBy==="Corte")?.dots??1):undefined,merits,powers:contracts.map((contract)=>contract.originalName||contract.name).filter(Boolean)}) && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
@@ -372,10 +383,7 @@ export function CharacterBuilder({
   const meritSpent = merits.reduce((sum, item) => sum + item.dots, 0);
   const pathData =
     MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
-  const maximumPowerFromMerits = Math.max(
-    1,
-    Math.min(3, 1 + Math.floor(Math.max(0, meritAllowance - meritSpent) / 5)),
-  );
+  const maximumPowerFromMerits = Math.max(1, Math.min(3, 1 + Math.floor(Math.max(0, 10 - meritSpent) / 5)));
   useEffect(() => {
     const timer = window.setTimeout(() => {
       if (line === "CtL" && wyrd > maximumPowerFromMerits)
@@ -676,7 +684,7 @@ export function CharacterBuilder({
         name: item.name.trim(),
       })),
       merits: [
-        ...merits.map((item) => {
+        ...mergeCreationMerits(initial?.merits, merits.map((item) => {
           const definition = meritCatalog.find(
             (entry) => entry.name === item.name,
           );
@@ -686,7 +694,7 @@ export function CharacterBuilder({
             sourceId: definition?.sourceId,
             source: definition?.source,
           };
-        }),
+        })),
         ...(line === "CtL" && court && court !== "Sem Corte"
           ? [
               {
@@ -1136,6 +1144,7 @@ function TraitsStep(props: TraitsStepProps) {
 
 function CtlStep(props: CtlStepProps) {
   const { locale, tr } = useLanguage();
+  const homebrews=useHomebrews();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
     ...REGALIA,
@@ -1150,71 +1159,69 @@ function CtlStep(props: CtlStepProps) {
   useEffect(() => {
     if (props.favoredAttribute && !favored.includes(props.favoredAttribute)) props.setFavoredAttribute("");
   }, [props.favoredAttribute, props.setFavoredAttribute, favored.join("|")]);
-  const powerOptions = Array.from(
-    { length: props.maximumPowerFromMerits },
-    (_, index) => String(index + 1),
-  );
+  const secondRegaliaRoyalCount = props.contractCatalog.filter(
+    (contract) => contract.type === "Real" && contract.regalia === props.secondRegalia,
+  ).length;
   return (
     <div className="builder-section">
       <span className="kicker">{tr("PASSO 3 · CHANGELING", "STEP 3 · CHANGELING")}</span>
       <h2>{tr("Modelo dos Perdidos", "Lost Template")}</h2>
       <p>{tr("As escolhas e limites abaixo vêm de Changeling the Lost.", "The choices and limits below come from Changeling the Lost.")}</p>
-      <div className="form-grid thirds">
-        <Choice
-          label={tr("Feição", "Seeming")}
-          value={props.seeming}
-          setValue={props.setSeeming}
-          options={Object.keys(CTL_SEEMINGS)}
-          invalid={props.missing("seeming")}
-        />
-        <div className={props.missing("kith") ? "missing-field" : ""}>
-          <KithSelector {...props} />
+      <div className="ctl-template-grid">
+        <div className="ctl-template-primary">
+          <Choice
+            label={tr("Feição", "Seeming")}
+            value={props.seeming}
+            setValue={props.setSeeming}
+            options={Object.entries(CTL_SEEMINGS).filter(([,item])=>!("sourceId" in item)||isHomebrewActive(homebrews,item.sourceId)).map(([name])=>name)}
+            optionLabels={Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([name,item])=>[
+              name,
+              locale === "pt-BR"
+                ? `${seemingDisplayName(name, locale)} - favorece a ${systemTerm(item.regalia, locale)}`
+                : `${name} - favors the ${item.regalia}`,
+            ]))}
+            invalid={props.missing("seeming")}
+          />
+          <div className="ctl-favored-inline">
+            <Choice
+              label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
+              value={props.favoredAttribute}
+              setValue={props.setFavoredAttribute}
+              options={favored}
+              invalid={props.missing("favoredAttribute")}
+            />
+          </div>
+          <div className="regalia-choice-stack">
+            <span className="regalia-field-label">{tr("Segunda Regalia favorecida", "Second favored Regalia")}</span>
+            <div className="regalia-information" aria-live="polite">
+              <strong>{props.secondRegalia ? systemTerm(props.secondRegalia, locale) : tr("Segunda Regalia", "Second Regalia")}</strong>
+              <p>{props.secondRegalia
+                ? tr(
+                    `Esta Regalia favorecida libera seus Contratos Reais (${secondRegaliaRoyalCount} disponíveis nas fontes ativas). Ela não altera a bênção da Feição.`,
+                    `This favored Regalia grants access to its Royal Contracts (${secondRegaliaRoyalCount} available from active sources). It does not change the Seeming blessing.`,
+                  )
+                : tr("Escolha uma segunda Regalia favorecida para liberar outra categoria de Contratos Reais.", "Choose a second favored Regalia to unlock another category of Royal Contracts.")}</p>
+            </div>
+            <div className="regalia-select">
+              <Choice
+                label=""
+                value={props.secondRegalia}
+                setValue={props.setSecondRegalia}
+                options={availableRegalia.filter((item) => item !== seemingData?.regalia)}
+                invalid={props.missing("secondRegalia")}
+              />
+            </div>
+          </div>
         </div>
-        <div className={props.missing("court") ? "missing-field" : ""}>
-          <CourtSelector {...props} />
+        <div className="ctl-template-secondary">
+          <div className={props.missing("kith") ? "missing-field" : ""}><KithSelector {...props} /></div>
+          <ChangelingAnchorSelector kind="needle" value={props.needle} setValue={props.setNeedle} invalid={props.missing("needle")}/>
         </div>
-        <Choice
-          label={tr("Agulha", "Needle")}
-          value={props.needle}
-          setValue={props.setNeedle}
-          options={CTL_NEEDLES}
-          invalid={props.missing("needle")}
-        />
-        <Choice
-          label={tr("Fio", "Thread")}
-          value={props.thread}
-          setValue={props.setThread}
-          options={CTL_THREADS}
-          invalid={props.missing("thread")}
-        />
-        <Choice
-          label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
-          value={props.favoredAttribute}
-          setValue={props.setFavoredAttribute}
-          options={favored}
-          invalid={props.missing("favoredAttribute")}
-        />
-        <Choice
-          label={tr("Segunda Regalia favorecida", "Second favored Regalia")}
-          value={props.secondRegalia}
-          setValue={props.setSecondRegalia}
-          options={availableRegalia.filter(
-            (item) => item !== seemingData?.regalia,
-          )}
-          invalid={props.missing("secondRegalia")}
-        />
-        <Choice
-          label={props.powerAdvancement ? tr("Fado na criação", "Wyrd at creation") : tr("Fado", "Wyrd")}
-          value={String(props.wyrd)}
-          setValue={(value) => props.setWyrd(Number(value))}
-          options={powerOptions}
-        />
+        <div className="ctl-template-secondary">
+          <div className={props.missing("court") ? "missing-field" : ""}><CourtSelector {...props} /></div>
+          <ChangelingAnchorSelector kind="thread" value={props.thread} setValue={props.setThread} invalid={props.missing("thread")}/>
+        </div>
       </div>
-      <p className="rule-callout">
-        <ShieldCheck /> {props.powerAdvancement > 0 && <>{tr("Fado atual", "Current Wyrd")}: <strong>{Math.min(10, props.wyrd + props.powerAdvancement)}</strong> ({props.powerAdvancement} {tr("por experiência preservados", "preserved from Experiences")}) · </>}{tr("Regalia da Feição", "Seeming Regalia")}:{" "}
-        <strong>{seemingData ? systemTerm(seemingData.regalia, locale) : tr("selecione a Feição", "select a Seeming")}</strong> ·
-        {tr("Méritos disponíveis", "Available Merits")}: <strong>{props.meritBudget}</strong>
-      </p>
       <div className={props.missing("contracts") ? "missing-field block" : ""}>
         <ContractSelector
           contracts={props.contracts}
@@ -1234,6 +1241,8 @@ function CtlStep(props: CtlStepProps) {
           spent={props.meritSpent}
           budget={props.meritBudget}
           currentCourt={props.court}
+          wyrd={props.wyrd}
+          setWyrd={props.setWyrd}
         />
       </div>
     </div>
@@ -1245,49 +1254,9 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
   const homebrews = useHomebrews();
   const [courtSearch, setCourtSearch] = useState("");
   const [courtSource, setCourtSource] = useState("all");
-  const [saved, setSaved] = useState<CustomCourtDefinition[]>(props.courtCatalog ?? []);
-  const emptyCourt = (): CustomCourtDefinition => ({
-    name: "",
-    emotion: "",
-    mantleBenefits: ["", "", "", "", ""],
-  });
-  const copyCourt = (
-    court: CustomCourtDefinition | null | undefined,
-  ): CustomCourtDefinition =>
-    court
-      ? { ...court, mantleBenefits: [...court.mantleBenefits] }
-      : emptyCourt();
-  const [creating, setCreating] = useState(false);
-  const [draft, setDraft] = useState<CustomCourtDefinition>(() =>
-    copyCourt(props.customCourt),
-  );
-  const save = () => {
-    if (
-      !draft.name.trim() ||
-      !draft.emotion.trim() ||
-      draft.mantleBenefits.some((item) => !item.trim())
-    )
-      return;
-    const next = [...saved.filter((item) => item.name !== draft.name), draft];
-    setSaved(next);
-    localStorage.setItem(
-      "arquivo-das-trevas:custom-courts",
-      JSON.stringify(next),
-    );
-    props.setCourt(draft.name);
-    props.setCustomCourt(draft);
-    setCreating(false);
-  };
   const select = (name: string) => {
-    const custom = saved.find((item) => item.name === name) ?? null;
     props.setCourt(name);
-    props.setCustomCourt(custom);
-    setDraft(copyCourt(custom));
-    setCreating(false);
-  };
-  const cancelCreation = () => {
-    setDraft(copyCourt(props.customCourt));
-    setCreating(false);
+    props.setCustomCourt(null);
   };
   const officialCourt = courtPresentation(props.court, locale);
   const officialCourts = CTL_COURT_DEFINITIONS.filter(
@@ -1297,14 +1266,8 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
     ...officialCourts.map((court) => ({
       value: court.id,
       label: courtDisplayName(court.id, locale),
-      detail: `${locale === "pt-BR" ? court.emotionPt : court.emotion} · ${court.source} · p. ${court.page}`,
+      detail: `${locale === "pt-BR" ? court.emotionPt : court.emotion} · ${court.source} · p. ${courtPageCitation(court)}`,
       source: court.source,
-    })),
-    ...saved.map((court) => ({
-      value: court.name,
-      label: court.name,
-      detail: `${court.emotion} · ${tr("Corte criada pelo jogador", "Player-created Court")}`,
-      source: tr("Criação do jogador", "Player-created"),
     })),
   ], (court) => court.label, locale);
   const courtSources = alphabetical([...new Set(courtOptions.map((court) => court.source))], (source) => source, locale);
@@ -1321,8 +1284,6 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
         <small>
           {!props.court
             ? tr("Nenhuma Corte selecionada: o personagem será salvo como Sem Corte.", "No Court selected: the character will be saved as Courtless.")
-            : props.customCourt
-            ? `${props.customCourt.emotion} · ${tr("Corte criada pelo jogador", "Player-created Court")}`
             : officialCourt
               ? `${officialCourt.emotion} · ${tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}`
               : tr("Sem benefícios de Manto.", "No Mantle benefits.")}
@@ -1336,9 +1297,9 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Selecionar ou criar Corte", "Select or create Court")}</DialogTitle>
+            <DialogTitle>{tr("Selecionar Corte", "Select Court")}</DialogTitle>
             <DialogDescription>
-              {tr("Uma Corte personalizada precisa de sentimento e dos benefícios de Manto de 1 a 5.", "A custom Court requires an emotion and Mantle benefits from 1 to 5.")}
+              {tr("Escolha entre as Cortes consolidadas das fontes ativas.", "Choose among the consolidated Courts from active sources.")}
             </DialogDescription>
           </DialogHeader>
           <div className="court-catalog-filters">
@@ -1361,76 +1322,6 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
             ))}
             {!filteredCourts.length && <p className="empty-state">{tr("Nenhuma Corte encontrada.", "No Courts found.")}</p>}
           </div>
-          <Button
-            type="button"
-            variant={creating ? "secondary" : "outline"}
-            onClick={() => {
-              setDraft(copyCourt(props.customCourt));
-              setCreating(true);
-            }}
-          >
-            <Plus /> {props.customCourt ? tr("Editar Corte", "Edit Court") : tr("Criar Corte", "Create Court")}
-          </Button>
-          {creating && (
-            <div className="custom-kith-editor">
-              <label>
-                {tr("Nome da Corte", "Court name")}
-                <Input
-                  value={draft.name}
-                  maxLength={80}
-                  onChange={(event) =>
-                    setDraft({ ...draft, name: event.target.value })
-                  }
-                />
-              </label>
-              <label>
-                {tr("Sentimento da Corte", "Court emotion")}
-                <Input
-                  value={draft.emotion}
-                  maxLength={80}
-                  onChange={(event) =>
-                    setDraft({
-                      ...draft,
-                      emotion: event.target.value,
-                    })
-                  }
-                />
-              </label>
-              {draft.mantleBenefits.map((value, index) => (
-                <label className="full" key={index}>
-                  {tr("Manto", "Mantle")} {index + 1}
-                  <textarea
-                    value={value}
-                    onChange={(event) => {
-                      const benefits = [...draft.mantleBenefits];
-                      benefits[index] = event.target.value;
-                      setDraft({
-                        ...draft,
-                        mantleBenefits: benefits,
-                      });
-                    }}
-                    placeholder={`${tr("Benefício concedido por Manto", "Benefit granted by Mantle")} ${index + 1}`}
-                  />
-                </label>
-              ))}
-              <div className="custom-court-actions full">
-                <Button type="button" variant="outline" onClick={cancelCreation}>
-                  <X /> {tr("Cancelar", "Cancel")}
-                </Button>
-                <Button
-                  type="button"
-                  onClick={save}
-                  disabled={
-                    !draft.name.trim() ||
-                    !draft.emotion.trim() ||
-                    draft.mantleBenefits.some((item) => !item.trim())
-                  }
-                >
-                  {tr("Salvar e selecionar Corte", "Save and select Court")}
-                </Button>
-              </div>
-            </div>
-          )}
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline">
@@ -1444,34 +1335,58 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
   );
 }
 
+function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"needle"|"thread";value:string;setValue:(value:string)=>void;invalid?:boolean}) {
+  const {locale,tr}=useLanguage();
+  const homebrews=useHomebrews();
+  const [search,setSearch]=useState("");
+  const [sourceFilter,setSourceFilter]=useState("all");
+  const definitions=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
+  const sources=alphabetical([...new Set(definitions.map((item)=>item.source).filter((source):source is string=>Boolean(source)))],(source)=>source,locale);
+  const label=kind==="needle"?tr("Agulha","Needle"):tr("Fio","Thread");
+  const normalized=search.trim().toLocaleLowerCase(locale);
+  const filtered=definitions.filter((item)=>(sourceFilter==="all"||item.source===sourceFilter)&&(!normalized||`${item.name} ${changelingAnchorRecovery(kind,item.name,locale)}`.toLocaleLowerCase(locale).includes(normalized)));
+  return <div className={`kith-field anchor-field${invalid?" missing-field":""}`}>
+    <span>{label}</span>
+    <div className="kith-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):tr("Nenhuma seleção","None selected")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):tr("Consulte os gatilhos de recuperação de Força de Vontade antes de escolher.","Review the Willpower recovery triggers before choosing.")}</small></div>
+    <Dialog>
+      <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {tr(`Selecionar ${label}`,`Select ${label}`)}</Button></DialogTrigger>
+      <DialogContent className="merit-dialog anchor-dialog">
+        <DialogHeader><DialogTitle>{tr(`Selecionar ${label}`,`Select ${label}`)}</DialogTitle><DialogDescription>{tr("Cada opção recupera 1 ponto ou toda a Força de Vontade em circunstâncias diferentes.","Each option recovers either 1 point or all Willpower under different circumstances.")}</DialogDescription></DialogHeader>
+        <label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar por nome ou gatilho…","Search by name or trigger…")}/></label>
+        <div className="catalog-filters anchor-filters"><label>{tr("Fonte","Source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Fontes","All Sources")}</SelectItem>{sources.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label></div>
+        <div className="merit-catalog anchor-catalog">{filtered.map((item)=><article key={item.name} className={value===item.name?"selected":""}><div><strong>{changelingAnchorDisplayName(kind,item.name,locale)}</strong>{item.source&&<small>{item.source} · p. {item.page}</small>}<p>{changelingAnchorRecovery(kind,item.name,locale).split("\n").map((line,index)=><span key={line}>{index===0?"":""}{line}</span>)}</p></div><DialogClose asChild><Button type="button" size="sm" variant={value===item.name?"secondary":"outline"} onClick={()=>setValue(item.name)}>{value===item.name?tr("Selecionado","Selected"):tr("Selecionar","Select")}</Button></DialogClose></article>)}</div>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="outline">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
+      </DialogContent>
+    </Dialog>
+  </div>;
+}
+
 function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"customKith"|"setCustomKith"|"customKithSkill"|"setCustomKithSkill"|"customKithDescription"|"setCustomKithDescription"|"kithCatalog">) {
   const { locale, tr } = useLanguage();
+  const homebrews=useHomebrews();
   const [search, setSearch] = useState("");
-  const [creating, setCreating] = useState(Boolean(props.customKith));
+  const [skillFilter,setSkillFilter]=useState("all");
+  const [sourceFilter,setSourceFilter]=useState("all");
   const normalized = kithSearchText(search);
   const kithName = (item: KithDefinition & {homebrew?:true}) => locale === "pt-BR" ? (item.translatedName ?? item.name) : item.name;
   const kithText = (item: KithDefinition & {homebrew?:true}) => item.homebrew
     ? {name:item.name,description:item.description,blessing:item.blessing,skill:item.skill}
     : kithPresentation(item.id,locale);
-  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...KITHS, ...(props.kithCatalog ?? [])].sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
-  const selected = props.customKith ? allKiths.find(item=>item.homebrew && item.name===props.kith) : findKith(props.kith);
+  const allKiths: Array<KithDefinition & {homebrew?:true}> = KITHS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId)).sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
+  const skillOptions=alphabetical([...new Set(allKiths.map((item)=>item.skill).filter(Boolean))],(value)=>value,locale);
+  const sourceOptions=alphabetical([...new Set(allKiths.map((item)=>item.source).filter(Boolean))],(value)=>value,locale);
+  const selected = findKith(props.kith);
   const filtered = allKiths.filter(
     (item) =>
-      !normalized ||
-      kithSearchText(`${item.translatedName ?? ""} ${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`)
-        .includes(normalized),
+      (skillFilter==="all"||item.skill===skillFilter)&&
+      (sourceFilter==="all"||item.source===sourceFilter)&&
+      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`).includes(normalized)),
   );
   const choose = (item: KithDefinition & {homebrew?:true}) => {
-    props.setKith(item.name);
+    props.setKith(item.id === "chimera-book-of-seemings" ? item.id : item.name);
     props.setCustomKith(Boolean(item.homebrew));
     props.setCustomKithSkill(item.skill);
     props.setCustomKithDescription(item.description);
-    setCreating(false);
-  };
-  const chooseCustom = () => {
-    props.setCustomKith(true);
-    props.setKith(props.customKith ? props.kith : "");
-    setCreating(true);
   };
   return (
     <div className="kith-field">
@@ -1479,9 +1394,7 @@ function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"customKith"|"se
       <div className="kith-current">
         <strong>{(selected ? kithName(selected) : kithDisplayName(props.kith, props.customKith, locale)) || tr("Nenhuma selecionada", "None selected")}</strong>
         <small>
-          {props.customKith
-            ? `${props.customKithSkill || tr("Perícia não escolhida", "Skill not selected")} · ${tr("Criação do jogador", "Player creation")}`
-            : selected
+          {selected
               ? `${kithText(selected).skill} · ${selected.source} · p. ${selected.page}`
               : tr("Abra o catálogo para escolher", "Open the catalog to choose")}
         </small>
@@ -1507,49 +1420,10 @@ function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"customKith"|"se
               placeholder={tr("Buscar Fratria, Perícia ou fonte…", "Search Kith, Skill, or source…")}
             />
           </label>
-          <div className="kith-create-toggle">
-            <Button
-              type="button"
-              variant={creating ? "secondary" : "outline"}
-              onClick={chooseCustom}
-            >
-              <Plus /> {tr("Criar Kith", "Create Kith")}
-            </Button>
-            {creating && <Badge variant="outline">{tr("Fratria personalizada", "Custom Kith")}</Badge>}
+          <div className="catalog-filters kith-filters">
+            <label>{tr("Perícia","Skill")}<Select value={skillFilter} onValueChange={setSkillFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Perícias","All Skills")}</SelectItem>{skillOptions.map((skill)=><SelectItem key={skill} value={skill}>{systemTerm(skill,locale)}</SelectItem>)}</SelectContent></Select></label>
+            <label>{tr("Fonte","Source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Fontes","All Sources")}</SelectItem>{sourceOptions.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label>
           </div>
-          {creating && (
-            <div className="custom-kith-editor">
-              <label>
-                {tr("Nome", "Name")}
-                <Input
-                  value={props.kith}
-                  onChange={(e) => props.setKith(e.target.value)}
-                  maxLength={80}
-                  placeholder={tr("Nome da Fratria", "Kith name")}
-                />
-              </label>
-              <Choice
-                label={tr("Perícia", "Skill")}
-                value={props.customKithSkill}
-                setValue={props.setCustomKithSkill}
-                options={Object.values(SKILLS).flat()}
-              />
-              <label className="full">
-                {tr("Descrição da Bênção", "Blessing description")}
-                <textarea
-                  value={props.customKithDescription}
-                  onChange={(e) =>
-                    props.setCustomKithDescription(e.target.value.slice(0, 350))
-                  }
-                  maxLength={350}
-                  placeholder={tr("Descreva a Bênção da Fratria em até 350 caracteres.", "Describe the Kith Blessing in up to 350 characters.")}
-                />
-                <small>
-                  {props.customKithDescription.length}/350 {tr("caracteres", "characters")}
-                </small>
-              </label>
-            </div>
-          )}
           <div className="merit-catalog">
             <section className="merit-category">
               <h3>
@@ -1706,7 +1580,7 @@ function ContractSelector({
         </div>
         <div className="merit-heading-actions"><Badge variant="outline">
           {contracts.filter((item) => item.name).length}/6 {tr("selecionados", "selected")}
-        </Badge><DialogTrigger asChild><Button type="button" variant="outline" size="sm">{tr("Adicionar Contrato", "Add Contract")}</Button></DialogTrigger></div>
+        </Badge><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="builder-add-action">{tr("Adicionar Contrato", "Add Contract")}</Button></DialogTrigger></div>
       </div>
       <DialogContent className="merit-dialog">
         <DialogHeader>
@@ -2150,7 +2024,7 @@ function MtaStep(props: MtaStepProps) {
       <p className="rule-callout">
         <ShieldCheck /> {props.powerAdvancement > 0 && <>{tr("Gnose atual", "Current Gnosis")}: <strong>{Math.min(10, props.gnosis + props.powerAdvancement)}</strong> ({props.powerAdvancement} {tr("por experiência preservados", "preserved from Experiences")}) · </>}{tr("Regentes", "Ruling")}:{" "}
         <strong>{pathData?.ruling.join(tr(" e ", " and ")) ?? tr("selecione o Caminho", "select a Path")}</strong>{" "}
-        · {tr("Inferior", "Inferior")}: <strong>{pathData?.inferior ?? "—"}</strong> · {tr("Méritos disponíveis", "Available Merits")}: <strong>{props.meritBudget}</strong>
+        · {tr("Inferior", "Inferior")}: <strong>{pathData?.inferior ?? "—"}</strong>
       </p>
       {props.order && (
         <p className="rule-callout">
@@ -2583,7 +2457,7 @@ function Choice({
   invalid?: boolean;
 }) {
   const { locale, tr } = useLanguage();
-  const labels = Object.fromEntries(Object.entries(optionLabels).map(([key, text]) => [key, key in CTL_SEEMINGS ? seemingDisplayName(key,locale) : builderText(locale, text)]));
+  const labels = Object.fromEntries(Object.entries(optionLabels).map(([key, text]) => [key, builderText(locale, text)]));
   return (
     <label className={`choice-label ${invalid ? "missing-field" : ""}`}>
       {label}
@@ -2635,6 +2509,8 @@ function Merits({
   spent,
   budget,
   currentCourt,
+  wyrd,
+  setWyrd,
 }: {
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
@@ -2642,11 +2518,13 @@ function Merits({
   spent: number;
   budget: number;
   currentCourt?: string;
+  wyrd?: number;
+  setWyrd?: (value: number) => void;
 }) {
   const { locale, tr } = useLanguage();
   const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
   const categoryName = (category: string) => locale === "pt-BR" ? meritCategoryLabel(category) : category;
-  const totalBudget = budget + spent;
+  const totalBudget = budget;
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [catalogOpen, setCatalogOpen] = useState(false);
@@ -2683,7 +2561,15 @@ function Merits({
         </div>
         <div className="merit-heading-actions"><Badge variant={spent > totalBudget ? "destructive" : "outline"}>
           {spent}/{totalBudget} {tr("pontos usados", "dots spent")}
-        </Badge><Button type="button" variant="outline" size="sm" onClick={() => setCatalogOpen(true)}>{tr("Adicionar Mérito", "Add Merit")}</Button></div>
+        </Badge>{wyrd !== undefined && <Badge variant="outline">{tr("Fado inicial", "Wyrd at creation")}: {wyrd}</Badge>}<Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => setCatalogOpen(true)}>{tr("Adicionar Mérito", "Add Merit")}</Button>
+        {wyrd !== undefined && setWyrd && <>
+          <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={wyrd >= 3 || spent + 5 > totalBudget} onClick={() => setWyrd(wyrd + 1)}>
+            {tr("Adicionar Fado (5 pontos)", "Add Wyrd (5 dots)")}
+          </Button>
+          {wyrd > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setWyrd(wyrd - 1)}>
+            {tr("Remover Fado", "Remove Wyrd")}
+          </Button>}
+        </>}</div>
       </div>
       <div className="merit-picker">
         {merits.map((selection, index) => {
@@ -2903,6 +2789,7 @@ export function MeritConfigurationEditor({
           const fieldLabel=merit.name==="Contacts"?tr("Grupos, organizações ou nome do contato","Groups, organizations or contact name"):merit.name==="Multilingual"?tr("Idiomas adicionais","Additional languages"):field.label;
           const values=Array.isArray(value)?value:[String(value??"")];
           if(merit.name==="Multilingual") return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="multilingual-config-list">{Array.from({length:merit.dots},(_,row)=><div className="multilingual-config-row" key={row}>{[0,1].map((column)=>{const index=row*2+column;return <Input key={index} value={values[index]??""} placeholder={`${tr("Idioma","Language")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots*2},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>;})}</div>)}</div></fieldset>;
+          if(merit.name==="Contacts") return <fieldset className="contacts-config-field" key={field.key}><legend>{fieldLabel}</legend><div className="multilingual-config-list">{Array.from({length:Math.ceil(merit.dots/2)},(_,row)=><div className="multilingual-config-row" key={row}>{[0,1].flatMap((column)=>{const index=row*2+column;if(index>=merit.dots)return [];return [<Input key={index} value={values[index]??""} placeholder={`${tr("Contato","Contact")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>];})}</div>)}</div></fieldset>;
           return <fieldset className={merit.name==="Contacts"?"contacts-config-field":undefined} key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=><Input key={index} value={values[index]??""} placeholder={`${field.placeholder??fieldLabel} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>)}</div></fieldset>;
         }
         if (field.kind === "select") {
@@ -2940,7 +2827,12 @@ function CourtGoodwillPicker({ value, currentCourt, homebrews, onSelect }: {
   const options = alphabetical([
     ...CTL_COURT_DEFINITIONS
       .filter((court) => (court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts")) && court.id !== ownCourtId)
-      .map((court) => ({ value: court.id, label: courtDisplayName(court.id, locale), source: court.source, detail: locale === "pt-BR" ? court.emotionPt : court.emotion })),
+      .map((court) => ({
+        value: court.id,
+        label: courtDisplayName(court.id, locale),
+        source: court.source,
+        detail: `${locale === "pt-BR" ? court.emotionPt : court.emotion} · ${court.source} · p. ${courtPageCitation(court)}`,
+      })),
     ...homebrews.courts
       .filter((court) => isHomebrewActive(homebrews, court.id) && courtCanonicalId(court.id) !== ownCourtId)
       .map((court) => ({ value: court.id, label: court.name, source: tr("Criação do jogador", "Player-created"), detail: court.emotion })),
@@ -2994,6 +2886,12 @@ function StructuredMeritEditor({
   const set = (key: string, value: string | string[]) =>
     onChange({ ...configuration, [key]: value });
   const value = (key: string) => String(configuration[key] ?? "");
+  if (merit.name === "Token")
+    return <TokenMeritEditor merit={merit} configuration={configuration} onChange={onChange} compact={compact} />;
+  if (merit.name === "Hedgespun Item")
+    return <HedgespunItemEditor merit={merit} configuration={configuration} onChange={onChange} compact={compact} />;
+  if (merit.name === "Entitlement")
+    return <EntitlementMeritEditor configuration={configuration} onChange={onChange} compact={compact} />;
   if (merit.name === "Professional Training") {
     const contacts = Array.isArray(configuration.contacts)
       ? configuration.contacts
@@ -3157,6 +3055,68 @@ function StructuredMeritEditor({
   );
 }
 
+function EntitlementMeritEditor({configuration,onChange,compact}:{configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
+  const {tr}=useLanguage();const homebrews=useHomebrews();const selectedDefinition=findEntitlement(configuration.definitionId);
+  const availableEntitlements=ENTITLEMENTS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
+  const definition=selectedDefinition&&availableEntitlements.some((item)=>item.id===selectedDefinition.id)?selectedDefinition:undefined;
+  return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
+    <summary>{tr("Configurar Título Feérico","Configure Entitlement")}</summary><div>
+      <label>{tr("Título","Title")}<Select value={definition?.id} onValueChange={(definitionId)=>onChange({...configuration,definitionId,roleId:""})}><SelectTrigger><SelectValue placeholder={tr("Selecione um Título","Select an Entitlement")}/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>
+      {definition?.roles&&<label>{tr("Papel","Role")}<Select value={String(configuration.roleId??"")||undefined} onValueChange={(roleId)=>onChange({...configuration,roleId})}><SelectTrigger><SelectValue placeholder={tr("Selecione um papel","Select a role")}/></SelectTrigger><SelectContent>{definition.roles.map((role)=><SelectItem key={role.id} value={role.id}>{role.name} · {role.prerequisites}</SelectItem>)}</SelectContent></Select></label>}
+      {definition&&<p className="structured-rule"><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {definition.prerequisites}<br/><strong>{tr("Fonte","Source")}:</strong> {definition.source} · p. {definition.page}</p>}
+    </div>
+  </details>;
+}
+
+const EMPTY_TOKEN:TokenConfigurationItem={id:"",kind:"token",name:"",rating:1,cost:"1 Glamour",effect:"",description:"",crux:"",catch:"",drawback:""};
+function TokenMeritEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
+  const {tr}=useLanguage();
+  const [newKind,setNewKind]=useState<TokenKind>("token");
+  const items=decodeConfiguredRows<TokenConfigurationItem>(configuration.items).map((item)=>({...EMPTY_TOKEN,...item,kind:["token","trifle","bauble"].includes(item.kind)?item.kind:"token",rating:item.kind==="trifle"?1:Math.max(1,Math.min(5,Number(item.rating)||1))}));
+  const used=items.reduce((sum,item)=>sum+item.rating,0), remaining=merit.dots-used;
+  const save=(next:TokenConfigurationItem[])=>onChange({...configuration,items:encodeConfiguredRows(next)});
+  const update=(index:number,patch:Partial<TokenConfigurationItem>)=>save(items.map((item,itemIndex)=>itemIndex===index?{...item,...patch}:item));
+  return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
+    <summary>{tr("Configurar Tokens","Configure Tokens")}</summary>
+    <div className="token-merit-editor">
+      <div className="token-allocation-header">
+        <Select value={newKind} onValueChange={(value)=>setNewKind(value as TokenKind)}><SelectTrigger className="token-kind-trigger"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">Token</SelectItem><SelectItem value="trifle">Trifle</SelectItem><SelectItem value="bauble">Bauble</SelectItem></SelectContent></Select>
+        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<1} onClick={()=>save([...items,{...EMPTY_TOKEN,id:crypto.randomUUID(),kind:newKind}])}><Plus/>{tr("Adicionar","Add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
+        <p className={remaining===0?"structured-rule":"structured-rule warning"}>{tr("Pontos distribuídos","Allocated dots")}: {used}/{merit.dots}{remaining>0?` · ${remaining} ${tr("restantes","remaining")}`:remaining<0?` · ${Math.abs(remaining)} ${tr("acima do limite","over the limit")}`:""}</p>
+      </div>
+      {items.map((item,index)=>{const maximum=Math.max(1,Math.min(5,item.rating+remaining)),kindLabel=item.kind==="trifle"?"Trifle":item.kind==="bauble"?"Bauble":"Token";return <fieldset key={index}>
+        <legend>{kindLabel} {index+1} · {item.kind==="trifle"?tr("lote de 3","batch of 3"):"•".repeat(item.rating)}</legend>
+        <div className="structured-choice-row token-heading-row"><label>{tr("Tipo","Type")}<Select value={item.kind} onValueChange={(kind)=>update(index,{kind:kind as TokenKind,rating:kind==="trifle"?1:item.rating})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">Token</SelectItem><SelectItem value="trifle">Trifle</SelectItem><SelectItem value="bauble">Bauble</SelectItem></SelectContent></Select></label><label>{tr("Nome","Name")}<Input value={item.name} onChange={(event)=>update(index,{name:event.target.value})}/></label>{item.kind!=="trifle"&&<label>{tr("Pontos","Dots")}<Select value={String(item.rating)} onValueChange={(next)=>update(index,{rating:Number(next)})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{Array.from({length:maximum},(_,dot)=><SelectItem key={dot+1} value={String(dot+1)}>{dot+1}</SelectItem>)}</SelectContent></Select></label>}<Button className="token-remove-button" type="button" size="sm" variant="ghost" onClick={()=>{if(window.confirm(tr(`Remover este ${kindLabel}?`,`Remove this ${kindLabel}?`))) save(items.filter((_,itemIndex)=>itemIndex!==index));}}><Trash2/>{tr("Remover","Remove")}</Button></div>
+        {item.kind==="token"&&<><label>{tr("Custo","Cost")}<Input value={item.cost} onChange={(event)=>update(index,{cost:event.target.value})} placeholder="1 Glamour"/></label><label>{tr("Efeito","Effect")}<textarea value={item.effect} onChange={(event)=>update(index,{effect:event.target.value})}/></label><label>Catch<textarea value={item.catch} onChange={(event)=>update(index,{catch:event.target.value})}/></label><label>Drawback<textarea value={item.drawback} onChange={(event)=>update(index,{drawback:event.target.value})}/></label></>}
+        {item.kind==="trifle"&&<><label>{tr("Efeito","Effect")}<textarea value={item.effect} onChange={(event)=>update(index,{effect:event.target.value})}/></label><p className="structured-rule">{tr("Um ponto do Mérito concede três Bagatelas de função idêntica. Cada uma custa 1 Glamour, não possui Catch ou Drawback e é destruída após o uso.","One Merit dot grants three identically functioning Trifles. Each costs 1 Glamour, has no Catch or Drawback, and is destroyed after use.")}</p></>}
+        {item.kind==="bauble"&&<><label>{tr("Descrição","Description")}<textarea value={item.description} onChange={(event)=>update(index,{description:event.target.value})}/></label><label>Crux<textarea value={item.crux} onChange={(event)=>update(index,{crux:event.target.value})}/></label><label>Catch<textarea value={item.catch} onChange={(event)=>update(index,{catch:event.target.value})}/></label><p className="structured-rule">{tr("Sempre é um Token roubado. Ativar custa 1 Glamour, salvo quando a Catch é cumprida.","Always a stolen token. Activation costs 1 Glamour unless its Catch is fulfilled.")}</p></>}
+      </fieldset>;})}
+    </div>
+  </details>;
+}
+
+const HEDGESPUN_BENEFITS:Array<{value:HedgespunBenefit;label:string;labelPt:string;effect:string}>=[
+  {value:"extraordinary",label:"Extraordinary Equipment",labelPt:"Equipamento Extraordinário",effect:"+1 equipment bonus, armor rating, or weapon damage modifier"},
+  {value:"alacrity",label:"Improved Alacrity",labelPt:"Alacridade Aprimorada",effect:"+2 Initiative and Speed"},
+  {value:"durability",label:"Increased Durability",labelPt:"Durabilidade Aumentada",effect:"+1 Durability"},
+];
+function HedgespunItemEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
+  const {locale,tr}=useLanguage();const item=decodeHedgespunConfiguration(configuration);
+  const set=(patch:Partial<typeof item>)=>onChange({...configuration,name:patch.name??item.name,description:patch.description??item.description,extraordinary_detail:patch.extraordinaryDetail??item.extraordinaryDetail,benefits:patch.benefits??item.benefits});
+  const choose=(index:number,next:HedgespunBenefit)=>{const benefits=Array.from({length:merit.dots},(_,itemIndex)=>item.benefits[itemIndex]??"");benefits[index]=next;set({benefits});};
+  return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
+    <summary>{tr("Configurar Item Fiado na Sebe","Configure Hedgespun Item")}</summary><div>
+      <label>{tr("Nome do item","Item name")}<Input value={item.name} onChange={(event)=>set({name:event.target.value})}/></label>
+      <label>{tr("Máscara e semblante feérico","Mask and mien")}<textarea value={item.description} onChange={(event)=>set({description:event.target.value})}/></label>
+      <fieldset><legend>{tr("Benefícios","Benefits")} · {item.benefits.filter(Boolean).length}/{merit.dots}</legend>
+        {Array.from({length:merit.dots},(_,index)=>{const current=item.benefits[index]??"";return <label key={index}>{tr("Ponto","Dot")} {index+1}<Select value={current||undefined} onValueChange={(next)=>choose(index,next as HedgespunBenefit)}><SelectTrigger><SelectValue placeholder={tr("Selecione um benefício","Select a benefit")}/></SelectTrigger><SelectContent>{HEDGESPUN_BENEFITS.filter((benefit)=>benefit.value===current||item.benefits.filter((entry)=>entry===benefit.value).length<3).map((benefit)=><SelectItem key={benefit.value} value={benefit.value}>{locale==="en-US"?benefit.label:benefit.labelPt} · {benefit.effect}</SelectItem>)}</SelectContent></Select></label>;})}
+      </fieldset>
+      {item.benefits.includes("extraordinary")&&<label>{tr("Bônus, armadura ou dano escolhido","Chosen bonus, armor, or damage")}<Input value={item.extraordinaryDetail} onChange={(event)=>set({extraordinaryDetail:event.target.value})} placeholder={tr("Ex.: +2 armadura geral","E.g.: +2 general armor")}/></label>}
+      <p className="structured-rule">{tr("Sempre ativo; não possui custo de Glamour nem Catch.","Always active; has no Glamour cost or Catch.")}</p>
+    </div>
+  </details>;
+}
+
 const HOLLOW_OPTIONS = [
   {name:"Hob Alarm",cost:1,description:"Friendly hobgoblins prevent loss of Defense from surprise and add Hollow dots to actions during the first turn of an action scene. Requires Hob Kin and incurs 1 Goblin Debt each story."},
   {name:"Luxury Goods",cost:1,description:"Once per chapter, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes."},
@@ -3218,7 +3178,15 @@ function HollowEditor({
             {tr("Melhorias", "Enhancements")} ({used}/{merit.dots} {tr("pontos", "dots")})
           </legend>
           <div className="structured-option-grid">
-            {HOLLOW_OPTIONS.map((option) => {
+            {HOLLOW_OPTIONS.filter((option) => {
+              const key=`${option.name}|${option.cost}`;
+              if(selected.includes(key)) return true;
+              const replacedCost="group" in option?selected.reduce((sum,item)=>{
+                const selectedOption=HOLLOW_OPTIONS.find((candidate)=>`${candidate.name}|${candidate.cost}`===item);
+                return sum+(selectedOption&&"group" in selectedOption&&selectedOption.group===option.group?selectedOption.cost:0);
+              },0):0;
+              return option.cost<=merit.dots-used+replacedCost;
+            }).map((option) => {
               const {name, cost, description}=option;
               const key = `${name}|${cost}`,
                 active = selected.includes(key);
@@ -3280,7 +3248,7 @@ function SharedBastionEditor({merit,configuration,onChange,compact}:{merit:Merit
       <label>{tr("Nome","Name")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
       <label>{tr("Localização e aparência","Location and appearance")}<textarea value={String(configuration.location??"")} onChange={(event)=>set("location",event.target.value)}/></label>
       <fieldset><legend>{tr("Características","Features")} ({used}/{merit.dots} {tr("pontos","dots")})</legend><div className="structured-option-grid">
-        {SHARED_BASTION_OPTIONS.map(({name,cost,description})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} disabled={!active&&used+cost>merit.dots} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{name}</strong><small>{cost} {cost===1?tr("ponto","dot"):tr("pontos","dots")}</small><small>{description}</small></span></label>;})}
+        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=merit.dots-used).map(({name,cost,description})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{name}</strong><small>{cost} {cost===1?tr("ponto","dot"):tr("pontos","dots")}</small><small>{description}</small></span></label>;})}
       </div></fieldset>
     </div>
   </details>;

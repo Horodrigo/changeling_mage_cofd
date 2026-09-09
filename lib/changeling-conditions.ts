@@ -808,6 +808,32 @@ export const CHANGELING_CONDITIONS: ChangelingCondition[] = [
     "page": 333,
     "resolution": "Reunite with the promise-bound character, or learn immediately that they died before rescue.",
     "beat": "Choose to fail a roll because of distracting shared suffering or a reminder of the visions."
+  },
+  {
+    "id": "empty-heart",
+    "name": "Empty Heart",
+    "originalName": "Empty Heart",
+    "category": "Changeling",
+    "description": "The changeling replaced her heart with a token of rating no higher than her Wyrd through a seven-success Hedgespinning paradigm shift in the Thorns, after at least one full scene there, spending 1 Glamour and suffering 1 lethal damage. The bound token vanishes into her soul, cannot be stolen or altered, needs neither Glamour nor its Catch to activate, and its Drawback may be passed to a touched target once per chapter by spending 1 Willpower. Increase maximum Glamour and Glamour spent per turn by the token's rating. If she would die, her body dissolves and she enters her own Bastion with Lost and Soul Shocked; she must recover the token from its eidolon, reach the Hedge, and Hedgespin a new body with one seven-success paradigm shift or five three-success subtle shifts.",
+    "penalty": "Gain a new major taboo and add the bound token's rating to every Clarity-damage pool. The holder of the physical heart can seal the changeling's statements without Glamour, prevent her from refuting those sealings, spend 1 Willpower to replace one of her Aspirations for the chapter, and bind her fate to oaths sworn on it. Destruction of the heart inflicts Ravaged and 1 aggravated damage at each scene's end until she Hedgespins a replacement with nine successes and spends one permanent Willpower dot.",
+    "persistent": true,
+    "source": "Oak, Ash, and Thorn",
+    "sourceCode": "OA&T",
+    "page": 54,
+    "resolution": "After another full scene in the Thorns, perform a seven-success paradigm shift and suffer 1 lethal damage to release the token and restore the original heart. Releasing the token without the heart inflicts Soul Shocked, which cannot resolve until the hole is filled. A bound Trifle is still destroyed when used; a Bauble cannot be bound."
+  },
+  {
+    "id": "magpies-misfortune",
+    "name": "Magpie's Misfortune",
+    "originalName": "Magpie's Misfortune",
+    "category": "Changeling",
+    "description": "The character stole a changeling noble's heraldry token and suffers its curse. The Storyteller gains jinxes equal to the token's rating and may spend one per scene to turn one of the character's ordinary failures into a dramatic failure. Once all jinxes are spent, the character has one full chapter to return the heraldry; otherwise, the Storyteller gains a fresh set at the next chapter's start. A later thief also gains this Condition, but a willing recipient does not take the curse and does not free the current bearer from it.",
+    "persistent": true,
+    "source": "Oak, Ash, and Thorn",
+    "sourceCode": "OA&T",
+    "page": 34,
+    "resolution": "Return the token, or perform an appropriate act of restitution if the original noble already recovered it. The Storyteller retains and may spend any remaining jinxes after the Condition resolves.",
+    "beat": "The Storyteller inflicts a jinx."
   }
 ];
 
@@ -1165,6 +1191,20 @@ const CONDITION_PRESENTATION_PT: Record<string, PortugueseConditionPresentation>
     "category": "Changeling",
     "description": "Visões do protegido preso em Arcádia distraem o personagem, mas também indicam sua direção dentro da Sebe.",
     "penalty": "+1 para navegar pela Sebe em direção ao protegido; o jogador pode escolher falhar para representar as visões."
+  },
+  "empty-heart": {
+    "name": "Coração Vazio",
+    "category": "Changeling",
+    "description": "O changeling substituiu o coração por um Token de nível não superior ao Fado mediante uma mudança de paradigma de sete sucessos nos Espinhos, após ao menos uma cena completa ali, gastando 1 Glamour e sofrendo 1 dano letal. O Token vinculado desaparece em sua alma, não pode ser roubado ou alterado, não exige Glamour nem Catch para ativar e seu Drawback pode ser transferido a um alvo tocado uma vez por capítulo mediante o gasto de 1 Força de Vontade. Aumente o Glamour máximo e o Glamour gasto por turno pelo nível do Token. Se morrer, o corpo se desfaz e ela entra no próprio Bastião com Lost e Soul Shocked; deve recuperar o Token de seu eidolon, alcançar a Sebe e fiar um novo corpo com uma mudança de paradigma de sete sucessos ou cinco mudanças sutis de três sucessos.",
+    "penalty": "Recebe um novo tabu maior e soma o nível do Token a todas as paradas de dano de Lucidez. Quem possuir o coração físico pode selar suas declarações sem Glamour, impedir que ela refute esses selamentos, gastar 1 Força de Vontade para substituir uma de suas Aspirações pelo capítulo e vincular seu destino a juramentos feitos sobre o coração. Destruir o coração inflige Ravaged e 1 dano agravado ao fim de cada cena até que ela fie um substituto com nove sucessos e gaste um ponto permanente de Força de Vontade.",
+    "resolution": "Após outra cena completa nos Espinhos, realize uma mudança de paradigma de sete sucessos e sofra 1 dano letal para liberar o Token e restaurar o coração original. Liberar o Token sem o coração inflige Soul Shocked, que não pode ser resolvida até que o vazio seja preenchido. Uma Bagatela vinculada ainda é destruída quando usada; um Bauble não pode ser vinculado."
+  },
+  "magpies-misfortune": {
+    "name": "Infortúnio da Pega",
+    "category": "Changeling",
+    "description": "O personagem roubou o Token heráldico de um nobre changeling e sofre sua maldição. O Narrador recebe um número de azarações igual ao nível do Token e pode gastar uma por cena para transformar uma falha comum do personagem em falha dramática. Quando todas forem gastas, o personagem tem um capítulo completo para devolver a heráldica; caso contrário, o Narrador recebe um novo conjunto no início do capítulo seguinte. Um ladrão posterior também recebe esta Condição, mas um destinatário voluntário não recebe a maldição nem liberta seu portador atual.",
+    "resolution": "Devolva o Token ou realize um ato apropriado de restituição caso o nobre original já o tenha recuperado. O Narrador conserva e pode gastar normalmente quaisquer azarações restantes após a resolução.",
+    "beat": "O Narrador inflige uma azaração."
   }
 };
 
