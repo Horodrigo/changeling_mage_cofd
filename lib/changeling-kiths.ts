@@ -1,5 +1,6 @@
 import type { Locale } from "./i18n";
 import { KITH_TEXT_EN } from "./changeling-kiths-en";
+import { systemTerm } from "./system-terms";
 
 export type KithDefinition = {
   id: string;
@@ -39,7 +40,7 @@ export const KITH_NAMES_PT: Record<string, string> = {
   Swimmerskin: "Pele de Nadador", Telluric: "Telúrico", Uttervoice: "Voz Absoluta",
   Valkyrie: "Valquíria", Veneficus: "Venéfico", Venombite: "Mordida Venenosa",
   Whisperwisp: "Sussurro Fugaz", Wisewitch: "Bruxo Sábio", Witchtooth: "Dente de Bruxa",
-  Bloodbrute: "Brutamontes Sangrento", Chimera: "Quimera", Chirurgeon: "Cirurgião",
+  Bloodbrute: "Brutamontes Sangrento", Chirurgeon: "Cirurgião",
   Dancer: "Dançarino", Drudge: "Serviçal", Echoveil: "Véu de Ecos", Fireheart: "Coração de Fogo",
   Gargantuan: "Gargantuesco", Palewraith: "Espectro Pálido", Treasured: "Tesouro",
   Truefriend: "Amigo Verdadeiro", Woodblood: "Sangue de Madeira",
@@ -144,6 +145,12 @@ export function findKith(name:unknown) {
 
 export function kithSearchText(value: string) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("pt-BR");
+}
+
+/** Individual canonical Skill keys, not localized choice phrases. */
+export function kithSkillOptions(item: Pick<KithDefinition,"id"|"skill">): string[] {
+  const text=KITH_TEXT_EN[item.id]?.skill??item.skill;
+  return [...new Set(text.split(/\s+(?:or|ou|and|e)\s+|\s*[,/]\s*/i).map(skill=>systemTerm(skill.trim(),"en-US")).filter(Boolean))];
 }
 
 export function kithDisplayName(name: unknown, custom = false, locale:Locale="pt-BR") {

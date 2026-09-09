@@ -1,6 +1,8 @@
 import { MERITS_EN } from "./merits-en.generated";
 import { SUPPLEMENTAL_MERITS_EN } from "./merits-supplements-en";
 import { BOOK_OF_SEEMINGS_MERITS_EN } from "./merits-book-of-seemings-en";
+import { MAGE_MERITS } from "./merits-mage";
+import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
 
 export type GameLine = "CtL" | "MtA";
 export type MeritLevel = { rating: number; name: string; description: string };
@@ -20,17 +22,22 @@ export type MeritDefinition = {
   page: number;
   levels?: MeritLevel[];
   courtAccess?: Array<{ court: "Spring" | "Summer" | "Autumn" | "Winter"; mantle: number; courtGoodwill?: number }>;
-  additionalSources?: Array<{ sourceId: string; source: string; page: number }>;
+  additionalSources?: ReadonlyArray<{ sourceId: string; source: string; page: number }>;
   seeming?: "Beast" | "Darkling" | "Elemental" | "Fairest" | "Ogre" | "Wizened";
   alternativePrerequisites?: string;
+  requirements?: Requirement;
+  excludes?: string[];
+  kith?: string;
+  repeatable?: boolean;
+  unbounded?: boolean;
 };
 
-export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERITS_EN, ...BOOK_OF_SEEMINGS_MERITS_EN].map((item) => ({
+export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERITS_EN, ...BOOK_OF_SEEMINGS_MERITS_EN, ...MAGE_MERITS].map((item) => ({
   ...item,
   ratings: [...item.ratings],
-  levels: "levels" in item ? item.levels.map((level) => ({ ...level })) : undefined,
+  levels: "levels" in item ? item.levels?.map((level) => ({ ...level })) : undefined,
   prerequisites: item.prerequisites ?? undefined,
-  priority: item.line === "CtL" ? 2 : 1,
+  priority: item.line === "Core" ? 1 : 2,
   // English is canonical. Portuguese fields intentionally fall back to English
   // until the separately audited translation phase.
   translatedName: item.name,
@@ -44,13 +51,13 @@ export const REPEATABLE_MERITS = new Set([
   "Striking Looks", "Hedgespun Item",
   "Hedge Duelist", "Hollow", "Stable Trod", "Shared Bastion", "Acquired Taste",
 ]);
-export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff"]);
+export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff", ...MAGE_MERITS.filter(item=>item.unbounded).map(item=>item.name)]);
 export const EXTENDED_DOT_MERITS = new Set(["Token"]);
 export const meritRatingsFor = (merit: Pick<MeritDefinition, "name" | "ratings">, ceiling = Math.max(...merit.ratings)) =>
-  UNBOUNDED_MERITS.has(merit.name) ? Array.from({length:Math.max(1,ceiling)},(_,index)=>index+1) : merit.ratings;
+  UNBOUNDED_MERITS.has(merit.name) ? Array.from({length:Math.max(0,ceiling-Math.min(...merit.ratings))+1},(_,index)=>index+Math.min(...merit.ratings)) : merit.ratings;
 export const meritPrerequisitesFor = (merit: Pick<MeritDefinition, "prerequisites">) => merit.prerequisites;
 
-export type MeritPrerequisiteContext = {
+export type MeritPrerequisiteContext = RequirementContext & {
   gameLine: GameLine;
   attributes?: Record<string, number>;
   skills?: Record<string, number>;
@@ -60,15 +67,28 @@ export type MeritPrerequisiteContext = {
   powers?: string[];
   court?: string;
   mantle?: number;
-  merits?: Array<{ name: string; dots: number; configuration?: Record<string,string|string[]> }>;
+  merits?: Array<{ instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
+  selectedDots?: number;
+  configuration?: Record<string,string|string[]>;
 };
 
 const courtKey=(value:unknown)=>String(value??"").toLowerCase().replace(/^court[- ]/,"").replace(/[- ]court$/,"").replace(/[^a-z]/g,"");
 
 export function meritPrerequisitesMet(
-  merit: Pick<MeritDefinition, "name" | "prerequisites" | "courtAccess" | "seeming" | "alternativePrerequisites">,
+  merit: Pick<MeritDefinition, "name" | "prerequisites" | "courtAccess" | "seeming" | "alternativePrerequisites"> & Partial<MeritDefinition>,
   context: MeritPrerequisiteContext,
 ) {
+  if(merit.line&&merit.line!=="Core"&&merit.line!==context.gameLine) return false;
+  if(merit.kith&&!requirementMet({kith:merit.kith},context)) return false;
+  if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
+  const owned=context.merits??[];
+  const forbidden=(definition:Partial<MeritDefinition>)=>definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
+  if(forbidden(merit).some(name=>owned.some(item=>item.dots>0&&canonicalTrait(item.name)===canonicalTrait(name))))return false;
+  if(owned.some(item=>item.dots>0&&getMeritsForLine(context.gameLine).some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
+  if(merit.name==="Infamous Mentor"){
+    const id=String(context.configuration?.mentorId??"");
+    return context.gameLine==="MtA"&&owned.some(item=>item.name==="Mentor"&&item.dots>=(context.selectedDots??1)&&(!id||item.instanceId===id));
+  }
   if (merit.name === "Lucid Dreamer" && context.gameLine === "CtL") return false;
   let usedSeemingAlternative=false;
   if(merit.seeming&&context.gameLine==="CtL"&&courtKey(context.seeming)!==courtKey(merit.seeming)){
@@ -109,8 +129,12 @@ function traitValue(name:string,context:MeritPrerequisiteContext){
   const alias=traitAliases[name.replace(/\s/g,"")]??traitAliases[name]??name;
   return Number(traits[name]??traits[alias]??0);
 }
-function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext){
+function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext):boolean{
   if(!value) return true;
+  // Parse ordinary comma-separated trait and Merit clauses independently.
+  // Keep the legacy narrative/group helpers below for general-purpose special wording.
+  if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|Contract of|≤|maximum|or lower/i.test(value))
+    return textRequirementMet(value,context,getMeritsForLine(context.gameLine).map(item=>item.name));
   const text=value.replace(/≤/g," maximum ");
   if(/Non-changeling/i.test(text)&&context.gameLine==="CtL") return false;
   return text.split(";").every((rawGroup)=>{
@@ -165,6 +189,39 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
     }
     return true;
   });
+}
+
+/** Shared current-sheet context for catalog eligibility and purchase-time validation. */
+export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;line_data:Record<string,unknown>;derived?:Record<string,number>}):MeritPrerequisiteContext {
+  const data=sheet.line_data;
+  const bonus=data.merit_granted_skill_bonuses as Record<string,number>|undefined;
+  const skills={...sheet.skills};
+  for(const [name,value]of Object.entries(bonus??{})) skills[name]=(skills[name]??0)+value;
+  return {gameLine:sheet.game_line,attributes:sheet.attributes,skills,merits:sheet.merits,
+    seeming:String(data.seeming??""),kith:String(data.kith??""),path:String(data.path??""),order:String(data.order??""),
+    gnosis:Number(data.gnosis??1),arcana:(data.arcana??{}) as Record<string,number>,wyrd:Number(data.wyrd??1),
+    court:String(data.court??""),mantle:sheet.merits.find(item=>item.name==="Mantle")?.dots,size:Number(sheet.derived?.Tamanho??5),
+    powers:[...(Array.isArray(data.contracts)?data.contracts:[]),...(Array.isArray(data.learned_contracts)?data.learned_contracts:[])].map(item=>String(item.originalName??item.name??""))};
+}
+
+export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext):string[]{
+  const config=selection.configuration??{}, problems:string[]=[];
+  if(!meritPrerequisitesMet(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push(`Prerequisites not met: ${merit.prerequisites??merit.name}`);
+  const linked=(key:string,names:string[],minimum=1)=>{
+    const id=String(config[key]??"");
+    if(!(context.merits??[]).some(item=>item.instanceId===id&&names.includes(item.name)&&item.dots>=minimum)) problems.push(`Select ${names.join(" or ")} (${minimum}+ dots).`);
+  };
+  if(merit.name==="Infamous Mentor")linked("mentorId",["Mentor"],selection.dots);
+  if(merit.name==="Imbued Ally")linked("allyId",["Retainer","Familiar"]);
+  if(merit.name==="Order Archive")linked("statusId",["Awakened Status","Consilium/Order Status"]);
+  if(merit.name==="Awakened Status"){
+    const domain=String(config.domain??"");
+    if(!domain)problems.push("Select a Status domain.");
+    if(domain&&domain!=="Consilium"&&domain!==context.order&&selection.dots>1)problems.push("Status outside your own Order cannot exceed one dot.");
+  }
+  if(merit.name==="Adamant Hand"&&!requirementMet({trait:String(config.skill??""),minimum:3},context))problems.push("Choose Athletics, Brawl or Weaponry at three dots or higher.");
+  if(merit.name==="Cabal Theme"&&(!String(config.name??"").trim()||!String(config.description??"").trim()))problems.push("Enter the cabal theme name and description.");
+  return problems;
 }
 
 export function getMeritsForLine(line: GameLine) {

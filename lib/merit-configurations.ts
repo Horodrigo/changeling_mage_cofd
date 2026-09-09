@@ -2,13 +2,17 @@ import type { Locale } from "./i18n";
 import { HEDGE_DUELIST_VARIANTS } from "./merits-supplements-en";
 import { courtCanonicalId, courtDisplayName } from "./changeling-courts";
 import { synchronizeEntitlement } from "./entitlements";
+import { MAGE_MERIT_CONFIGURATIONS } from "./mage-merit-configurations";
 
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
 export type MeritConfigField = {
   key: string;
   label: string;
-  kind?: "text" | "textarea" | "list" | "court" | "select";
+  kind?: "text" | "textarea" | "list" | "court" | "select" | "merit";
+  meritNames?: string[];
+  rowsPerDot?: number;
+  fixedRows?: number;
   placeholder?: string;
   minDots?: number;
   options?: Array<{ value: string; label: string }>;
@@ -30,7 +34,7 @@ const PHYSICAL_SKILL_OPTIONS=SKILL_OPTIONS.filter((item)=>["Athletics","Brawl","
 const ATTRIBUTE_OPTIONS=["Intelligence","Wits","Resolve","Strength","Dexterity","Stamina","Presence","Manipulation","Composure"].map((label)=>({value:label,label}));
 
 // Official Merit-specific configuration is rebuilt only after source audit.
-export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
+export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [...MAGE_MERIT_CONFIGURATIONS,{
   name: "Hedge Duelist",
   line: "CtL",
   fields: [{
@@ -116,7 +120,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [{
 export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
 const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Fae Pet","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
 const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Stable Trod","Workshop","Shared Bastion","Token","Hedgespun Item","Entitlement"]);
-export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name);
+export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name)||Boolean(MAGE_MERIT_CONFIGURATIONS.find(item=>item.name===name&&item.fields.length===1&&item.fields[0].kind==="text"));
 export const isStructuredMerit = (name: string) => STRUCTURED_MERITS.has(name);
 export const meritConfigurationText = (value: string | undefined, _locale: Locale) => value ?? "";
 
@@ -127,7 +131,7 @@ export const normalizeMeritConfiguration = (value: unknown): MeritConfiguration 
 
 export function meritConfigurationTitle(value: unknown, locale: Locale = "en-US") {
   const configuration = normalizeMeritConfiguration(value);
-  for (const key of ["subject","identity","language","place","group","appearance","name","court","firstManeuver","cult","profession"]) {
+  for (const key of ["subject","identity","language","place","group","appearance","name","court","firstManeuver","cult","profession","focus","heritage","yantra","skill"]) {
     const item=configuration[key];
     if (typeof item === "string" && item.trim()) return key === "court" ? courtDisplayName(item, locale) : item.trim();
   }
@@ -142,11 +146,11 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     skills?:Record<string,number>;
     line_data?:Record<string,unknown>;
   };
-  if(target.game_line!=="CtL"||!Array.isArray(target.merits)||!target.line_data) return sheet;
+  if(!["CtL","MtA"].includes(target.game_line??"")||!Array.isArray(target.merits)||!target.line_data) return sheet;
   const court=courtCanonicalId(target.line_data.court), courtless=!court||["sem corte","courtless"].includes(court.toLowerCase());
   const existing=target.merits.find((item)=>item.name==="Mantle"&&item.grantedBy==="Corte");
   target.merits=target.merits.filter((item)=>!(item.name==="Mantle"&&item.grantedBy==="Corte"));
-  if(!courtless) target.merits.push({
+  if(target.game_line==="CtL"&&!courtless) target.merits.push({
     instanceId:existing?.instanceId??`mantle-${court}`,
     name:"Mantle",
     dots:Math.max(1,Number(existing?.dots??1)),
@@ -220,7 +224,7 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     }
   }
   target.line_data={...target.line_data,court_goodwill_benefits:benefits,merit_granted_skill_bonuses:skillBonuses};
-  return synchronizeEntitlement(sheet);
+  return target.game_line==="CtL"?synchronizeEntitlement(sheet):sheet;
 }
 
 export function expandedConfigurationLines(
@@ -229,6 +233,19 @@ export function expandedConfigurationLines(
   value: unknown,
   locale: Locale = "pt-BR",
 ): string[] {
+  const mageDefinition=MAGE_MERIT_CONFIGURATIONS.find(item=>item.name===name);
+  if(mageDefinition){
+    const config=normalizeMeritConfiguration(value);
+    const lines=mageDefinition.fields.filter(field=>field.kind!=="merit").flatMap(field=>{
+      const stored=config[field.key];
+      const text=Array.isArray(stored)?stored.slice(0,field.fixedRows??dots*(field.rowsPerDot??1)).filter(Boolean).join(", "):String(stored??"");
+      return text.trim()?[`${field.label}: ${text}`]:[];
+    });
+    if(name==="Artifact")lines.push(`Mana capacity: ${dots*2}`,`Effective Gnosis: ${Math.ceil(dots/2)}`);
+    if(name==="Mana Battery")lines.push(`Mana capacity: ${dots*2}`);
+    if(name==="Familiar"||name==="Supernal Watcher")lines.push(`Rank: ${dots/2}`);
+    return lines;
+  }
   if(name==="Token"){
     const configuration=normalizeMeritConfiguration(value), items=decodeConfiguredRows<TokenConfigurationItem>(configuration.items), lines:string[]=[];
     for(const [index,item] of items.entries()){

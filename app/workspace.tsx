@@ -106,6 +106,8 @@ import {
 import {
   getMeritsForLine,
   meritPrerequisitesMet,
+  meritContextForSheet,
+  meritSelectionProblems,
   meritRatingsFor,
   REPEATABLE_MERITS,
   type MeritDefinition,
@@ -1525,6 +1527,7 @@ function MeritConfigurationPanel({
             <MeritConfigurationEditor
               compact
               merit={item}
+              ownedMerits={character.merits}
               currentCourt={String(character.line_data.court??"")}
               onChange={(configuration) => {
                 const next = structuredClone(character);
@@ -1667,7 +1670,7 @@ function ExpandedMeritList({ merits,character,updateSheet }: { merits: Character
     <div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
         const style =
-            findExpandedMerit(item.name) ??
+            findExpandedMerit(item.name,character?.game_line) ??
             homebrews.merits.find(
               (merit) => merit.name === item.name && merit.levels?.length,
             ),
@@ -3385,6 +3388,7 @@ function ExperiencePanel({
     if (purchaseType === "Mérito") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(tr("Este Mérito não possui outro nível disponível.", "This Merit has no higher available rating."));
+      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? crypto.randomUUID();
@@ -3833,9 +3837,10 @@ function MageExperiencePanel({
     [target, setTarget] = useState<string>(Object.values(ATTRIBUTES).flat()[0]);
   const [meritDots, setMeritDots] = useState(0);
   const [mageMeritInstance, setMageMeritInstance] = useState(-1);
+  const [mageMeritConfiguration,setMageMeritConfiguration] = useState<Record<string,string|string[]>>({});
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
-  const merits = [...getMeritsForLine("MtA"), ...homebrews.merits.filter((item) => (item.line === "Core" || item.line === "MtA") && isHomebrewActive(homebrews,item.id))],
+  const merits = [...getMeritsForLine("MtA").filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character))), ...homebrews.merits.filter((item) => (item.line === "Core" || item.line === "MtA") && isHomebrewActive(homebrews,item.id))],
     spells = [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))];
   const arcana = (
     character.line_data.arcana && typeof character.line_data.arcana === "object"
@@ -3954,6 +3959,12 @@ function MageExperiencePanel({
     });
   }
   function buy() {
+    if(purchase==="Mérito"){
+      if(!selectedMerit||!nextMerit)return setFeedback("Select an available Merit.");
+      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy))return setFeedback("This Merit is already granted.");
+      const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character));
+      if(problems.length)return setFeedback(problems.join(" "));
+    }
     if (cost < 1 || regular < splitRegular || arcane < splitArcane) {
       setFeedback("Experiência insuficiente ou compra indisponível.");
       return;
@@ -3996,7 +4007,7 @@ function MageExperiencePanel({
                 (item) => item.name === selectedMerit.name && !item.grantedBy,
               )
             : undefined;
-      if (found && found.name === selectedMerit.name) addExperienceMeritDots(found, cost);
+      if (found && found.name === selectedMerit.name) {addExperienceMeritDots(found, nextMerit-found.dots);found.configuration=normalizeMeritConfiguration(mageMeritConfiguration);}
       else
         next.merits.push({
           name: selectedMerit.name,
@@ -4005,7 +4016,8 @@ function MageExperiencePanel({
           experienceDots: nextMerit,
           sourceId: selectedMerit.sourceId,
           source: selectedMerit.source,
-          configuration: {},
+          configuration: normalizeMeritConfiguration(mageMeritConfiguration),
+          instanceId:crypto.randomUUID(),
         });
     } else if (purchase === "Especialização")
       next.specializations.push({ skill: target, name: "Nova Especialização" });
@@ -4242,10 +4254,12 @@ function MageExperiencePanel({
                     setTarget(id);
                     setMeritDots(dots);
                     setMageMeritInstance(instance);
+                    setMageMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration));
                   }}
                 />
               </label>
             )}
+            {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} onChange={setMageMeritConfiguration}/>}
             {purchase !== "Mérito" &&
               ((purchase === "Rota" || purchase === "Práxis") ||
                 options.length > 1) && (
@@ -4617,8 +4631,9 @@ function ExperienceMeritPicker({
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
+  const context=meritContextForSheet(character);
   const catalog = alphabetical([
-      ...getMeritsForLine(line).filter(item=>meritPrerequisitesMet(item,{gameLine:line,attributes:character.attributes,skills:character.skills,seeming:String(character.line_data.seeming??""),wyrd:Number(character.line_data.wyrd??1),size:Number(character.derived.Tamanho??5),powers:[...objectList(character.line_data.contracts),...objectList(character.line_data.learned_contracts)].map((contract)=>String(contract.originalName??contract.name??"")),court:String(character.line_data.court??""),mantle:character.merits.find((owned)=>owned.name==="Mantle")?.dots,merits:character.merits})&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))),
+      ...getMeritsForLine(line).filter(item=>meritPrerequisitesMet(item,context)&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))),
       ...homebrews.merits.filter(
         (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
       ),
@@ -4687,6 +4702,7 @@ function ExperienceMeritPicker({
                 repeatable = isRepeatableDefinition(item),
                 ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1)));
               if (item.name === "Mantle" && !instances.length) return null;
+              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy)&&item.name!=="Mantle")return null;
               if (
                 !repeatable &&
                 instances.length &&
@@ -4714,7 +4730,7 @@ function ExperienceMeritPicker({
                   <div className="experience-merit-choice">
                     {instances.map(({ owned, index }) =>
                       ratings
-                        .filter((dot) => dot > owned.dots)
+                        .filter((dot) => dot > owned.dots && meritPrerequisitesMet(item,{...context,selectedDots:dot,configuration:owned.configuration}))
                         .map((dot) => (
                           <DialogClose asChild key={`${index}-${dot}`}>
                             <Button
@@ -4732,7 +4748,7 @@ function ExperienceMeritPicker({
                         )),
                     )}
                     {item.name !== "Mantle" && (repeatable || !instances.length) &&
-                      ratings.map((dot) => (
+                      ratings.filter(dot=>meritPrerequisitesMet(item,{...context,selectedDots:dot})).map((dot) => (
                         <DialogClose asChild key={`new-${dot}`}>
                           <Button
                             type="button"

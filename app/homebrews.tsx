@@ -53,7 +53,7 @@ const emptySpell = (): HomebrewSpell => ({
 const emptyMerit = (): HomebrewMerit => ({
   id: homebrewId("merit"), name: "", translatedName: "", ratings: [1],
   line: "Core", sourceId: "homebrew", source: "Criação do jogador",
-  category: "Geral", priority: 10, description: "", prerequisites: "",
+  category: "Geral", priority: 10, description: "", descriptionEn: "", prerequisites: "",
   page: 0, homebrew: true, repeatable: false, hasLevelBenefits: false, levels: [],
 });
 const emptyKith = (): HomebrewKith => ({ id:homebrewId("kith"),name:"",skill:"",description:"",blessing:"",source:"Criação do jogador",page:0,homebrew:true });

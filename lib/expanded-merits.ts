@@ -1,4 +1,4 @@
-import { RAW_MERITS } from "./merits";
+import { RAW_MERITS, getMeritsForLine, type GameLine } from "./merits";
 
 export type ExpandedMeritLevel = { rating: number; name: string; description: string };
 export type ExpandedMeritDefinition = {
@@ -25,4 +25,6 @@ export const EXPANDED_MERITS: ExpandedMeritDefinition[] = RAW_MERITS
     levels: item.levels!.map((level) => ({...level})),
   }));
 export const EXPANDED_MERIT_NAMES = new Set(EXPANDED_MERITS.map((item) => item.name));
-export const findExpandedMerit = (name: string) => EXPANDED_MERITS.find((item) => item.name === name);
+export const findExpandedMerit = (name: string,line?:GameLine) => line
+  ? getMeritsForLine(line).find(item=>item.name===name&&item.levels?.length)
+  : EXPANDED_MERITS.find((item) => item.name === name);

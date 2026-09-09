@@ -54,12 +54,15 @@ import {
 import {
   getMeritsForLine,
   meritPrerequisitesMet,
+  meritSelectionProblems,
+  type MeritPrerequisiteContext,
   meritRatingsFor,
   REPEATABLE_MERITS,
   UNBOUNDED_MERITS,
   type MeritDefinition,
 } from "@/lib/merits";
 import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
+import { hasPublishedMageOrder } from "@/lib/mage-orders";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
@@ -71,7 +74,7 @@ import {
   canSelectInitialContract,
   meetsArcanaRequirements,
 } from "@/lib/creation-eligibility";
-import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, type KithDefinition } from "@/lib/changeling-kiths";
+import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
 import { CTL_COURT_DEFINITIONS, courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation } from "@/lib/changeling-courts";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
@@ -164,15 +167,15 @@ type TraitsStepProps = {
   skillPriority: string[]; setSkillPriority: Setter<string[]>;
   attributes: Record<string, number>; setAttributes: Setter<Record<string, number>>;
   skills: Record<string, number>; setSkills: Setter<Record<string, number>>;
-  specializations: Specialty[]; setSpecializations: Setter<Specialty[]>; missing: MissingCheck;
+  specialties: Specialty[]; setSpecialties: Setter<Specialty[]>; missing: MissingCheck;
 };
 type CtlStepProps = {
   seeming: string; setSeeming: Setter<string>; attributes: Record<string, number>;
-  contractCatalog: ContractDefinition[]; contracts: Array<ContractSelection | null>; setContracts: Setter<Array<ContractSelection | null>>;
+  contractCatalog: ContractDefinition[]; contracts: ContractSelection[]; setContracts: Setter<ContractSelection[]>;
   favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
   needle: string; setNeedle: Setter<string>; thread: string; setThread: Setter<string>; touchstone: string; setTouchstone: Setter<string>;
   wyrd: number; setWyrd: Setter<number>; maximumPowerFromMerits: number; powerAdvancement: number;
-  aspirations: string[]; setAspirations: Setter<string[]>; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
+  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: MeritPrerequisiteContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
   meritSpent: number; meritBudget: number; court: string; missing: MissingCheck;
   kith: string; setKith: Setter<string>; customKith: boolean; setCustomKith: Setter<boolean>;
   customKithSkill: string; setCustomKithSkill: Setter<string>; customKithDescription: string; setCustomKithDescription: Setter<string>;
@@ -186,7 +189,7 @@ type MtaStepProps = {
   resistanceBonus:string;setResistanceBonus:Setter<string>;nimbus:string;setNimbus:Setter<string>;tool:string;setTool:Setter<string>;
   arcana:Record<string,number>;setArcana:Setter<Record<string,number>>;rotes:Array<SpellSelection|null>;setRotes:Setter<Array<SpellSelection|null>>;
   praxes:Array<SpellSelection|null>;setPraxes:Setter<Array<SpellSelection|null>>;spellCatalog:SpellDefinition[];
-  aspirations:string[];setAspirations:Setter<string[]>;meritCatalog:MeritDefinition[];merits:MeritSelection[];setMerits:Setter<MeritSelection[]>;
+  aspirations:string[];setAspirations:Setter<string[]>;meritContext:MeritPrerequisiteContext;meritCatalog:MeritDefinition[];merits:MeritSelection[];setMerits:Setter<MeritSelection[]>;
   meritSpent:number;meritBudget:number;missing:MissingCheck;
 };
 
@@ -370,9 +373,16 @@ export function CharacterBuilder({
   const [error, setError] = useState("");
 
   const meritBudget = Math.max(0, 10 - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5));
+  const meritContext: MeritPrerequisiteContext = {
+    gameLine:line, attributes, skills: {...skills,...(line==="MtA"&&hasPublishedMageOrder(order)?{Ocultismo:Math.min(5,(skills.Ocultismo??0)+1)}:{})},
+    seeming,kith,wyrd,gnosis,arcana,path,order,court,
+    mantle:line==="CtL"&&court&&court!=="Sem Corte"?Math.max(1,initial?.merits.find(item=>item.name==="Mantle"&&item.grantedBy==="Corte")?.dots??1):0,
+    merits:[...mergeCreationMerits(initial?.merits,merits),...(line==="MtA"&&hasPublishedMageOrder(order)?[{name:"High Speech",dots:1}]:[])],
+    powers:contracts.map(item=>item.originalName||item.name).filter(Boolean),
+  };
   const meritCatalog = useMemo(() => {
     const merged = new Map(
-      getMeritsForLine(line).filter(item=>item.name !== "Mantle" && meritPrerequisitesMet(item,{gameLine:line,attributes,skills,seeming,wyrd:Number(initial?.line_data?.wyrd??1),court,mantle:line==="CtL"?(initial?.merits.find((owned)=>owned.name==="Mantle"&&owned.grantedBy==="Corte")?.dots??1):undefined,merits,powers:contracts.map((contract)=>contract.originalName||contract.name).filter(Boolean)}) && (!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map((item) => [item.name.toLocaleLowerCase(), item]),
+      getMeritsForLine(line).filter(item=>item.name!=="Mantle"&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))).map(item=>[item.name.toLocaleLowerCase(),item]),
     );
     homebrews.merits
       .filter((item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id))
@@ -419,6 +429,10 @@ export function CharacterBuilder({
         budget = [11, 7, 4][index];
       if (index < 0 || spent(skills, names, 0) !== budget)
         add(2, `skill-${category}`, `${tr("Perícias", "Skills")} ${category}`);
+    }
+    for(const item of merits){
+      const definition=meritCatalog.find(def=>def.name===item.name);
+      if(definition) for(const message of meritSelectionProblems(definition,item,meritContext)) add(3,"merits",`${item.name}: ${message}`);
     }
     if (meritSpent > meritBudget) add(3, "merits", tr("Méritos acima do limite", "Merits exceed the limit"));
     if (line === "CtL") {
@@ -478,7 +492,7 @@ export function CharacterBuilder({
         (message) => add(3, "arcana", message),
       );
       if (
-        order !== "Nameless" &&
+        hasPublishedMageOrder(order) &&
         rotes
           .slice(0, 3)
           .filter(
@@ -574,7 +588,7 @@ export function CharacterBuilder({
         5,
         (finalAttributes[resistanceBonus] ?? 1) + 1,
       );
-    if (line === "MtA" && order !== "Nameless")
+    if (line === "MtA" && hasPublishedMageOrder(order))
       finalSkills["Ocultismo"] = Math.min(
         5,
         (finalSkills["Ocultismo"] ?? 0) + 1,
@@ -649,12 +663,13 @@ export function CharacterBuilder({
             nimbus,
             dedicated_tool: tool,
             resistance_bonus: resistanceBonus,
+            order_occult_bonus:hasPublishedMageOrder(order)?Math.max(0,Math.min(5,(skills.Ocultismo??0)+1)-(skills.Ocultismo??0)):0,
             creation_gnosis: gnosis,
             gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
             wisdom: 7,
             aspirations,
             arcana,
-            rotes: order === "Nameless" ? [] : rotes.filter(Boolean),
+            rotes: hasPublishedMageOrder(order) ? rotes.filter(Boolean) : [],
             praxes: praxes.slice(0, gnosis).filter(Boolean),
             ruling_arcana: pathData.ruling,
             inferior_arcanum: pathData.inferior,
@@ -721,7 +736,7 @@ export function CharacterBuilder({
               },
             ]
           : []),
-        ...(line === "MtA" && order && order !== "Nameless"
+        ...(line === "MtA" && hasPublishedMageOrder(order) && !merits.some(item=>item.name==="High Speech") && !initial?.merits.some(item=>item.name==="High Speech"&&item.experienceDots)
           ? [
               {
                 name: "High Speech",
@@ -870,6 +885,7 @@ export function CharacterBuilder({
                 merits,
                 setMerits,
                 meritCatalog,
+                meritContext,
                 meritBudget: Math.max(0, meritBudget - meritSpent),
                 meritSpent,
                 maximumPowerFromMerits,
@@ -911,6 +927,7 @@ export function CharacterBuilder({
                 merits,
                 setMerits,
                 meritCatalog,
+                meritContext,
                 meritBudget: Math.max(0, meritBudget - meritSpent),
                 meritSpent,
                 maximumPowerFromMerits,
@@ -1029,10 +1046,10 @@ function editableSkills(initial?: CharacterSheet | null) {
     : initialDots(SKILLS, 0);
   if (
     initial?.game_line === "MtA" &&
-    String(initial.line_data.order ?? "") !== "Nameless" &&
+    hasPublishedMageOrder(initial.line_data.order) &&
     values["Ocultismo"] > 0
   ) {
-    values["Ocultismo"] -= 1;
+    values["Ocultismo"] -= Number(initial.line_data.order_occult_bonus ?? 1);
   }
   return values;
 }
@@ -1241,6 +1258,7 @@ function CtlStep(props: CtlStepProps) {
           merits={props.merits}
           setMerits={props.setMerits}
           catalog={props.meritCatalog}
+          context={props.meritContext}
           spent={props.meritSpent}
           budget={props.meritBudget}
           currentCourt={props.court}
@@ -1376,14 +1394,14 @@ function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"customKith"|"se
     ? {name:item.name,description:item.description,blessing:item.blessing,skill:item.skill}
     : kithPresentation(item.id,locale);
   const allKiths: Array<KithDefinition & {homebrew?:true}> = KITHS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId)).sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
-  const skillOptions=alphabetical([...new Set(allKiths.map((item)=>item.skill).filter(Boolean))],(value)=>value,locale);
+  const skillOptions=alphabetical([...new Set(allKiths.flatMap(kithSkillOptions))],(value)=>systemTerm(value,locale),locale);
   const sourceOptions=alphabetical([...new Set(allKiths.map((item)=>item.source).filter(Boolean))],(value)=>value,locale);
   const selected = findKith(props.kith);
   const filtered = allKiths.filter(
     (item) =>
-      (skillFilter==="all"||item.skill===skillFilter)&&
+      (skillFilter==="all"||kithSkillOptions(item).includes(skillFilter))&&
       (sourceFilter==="all"||item.source===sourceFilter)&&
-      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${item.skill} ${item.description} ${item.blessing} ${item.source}`).includes(normalized)),
+      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${kithSkillOptions(item).join(" ")} ${item.skill} ${item.description} ${item.blessing} ${item.source}`).includes(normalized)),
   );
   const choose = (item: KithDefinition & {homebrew?:true}) => {
     props.setKith(item.id === "chimera-book-of-seemings" ? item.id : item.name);
@@ -1857,7 +1875,7 @@ function OrderSelector(props: OrderSelectorProps) {
         <small>
           {props.customOrder
             ? `${props.customOrder.roteSkills.join(", ")} · ${tr("Ordem criada pelo jogador", "Player-created Order")}`
-            : props.order === "Nameless"
+            : !hasPublishedMageOrder(props.order)
               ? tr("Sem benefícios de Ordem", "No Order benefits")
               : tr("A Ordem define três Perícias de Rota", "The Order defines three Rote Skills")}
         </small>
@@ -2036,7 +2054,7 @@ function MtaStep(props: MtaStepProps) {
       {props.order && (
         <p className="rule-callout">
           <ShieldCheck />{" "}
-          {props.order === "Nameless"
+          {!hasPublishedMageOrder(props.order)
             ? tr("Sem Ordem: não recebe Alta Fala, ponto gratuito de Ocultismo ou Rotas iniciais.", "Nameless: receives no High Speech, free Occult dot, or starting Rotes.")
             : tr("Membro de Ordem: recebe Alta Fala, +1 em Ocultismo (máximo 5) e três Rotas iniciais.", "Order member: receives High Speech, +1 Occult (maximum 5), and three starting Rotes.")}
         </p>
@@ -2083,7 +2101,7 @@ function MtaStep(props: MtaStepProps) {
           </div>
         </div>
       )}
-      {props.order !== "Nameless" && (
+      {hasPublishedMageOrder(props.order) && (
         <div className={props.missing("rotes") ? "missing-field block" : ""}>
           <SpellSelector
             title={tr("Rotas iniciais", "Starting Rotes")}
@@ -2111,6 +2129,7 @@ function MtaStep(props: MtaStepProps) {
           merits={props.merits}
           setMerits={props.setMerits}
           catalog={props.meritCatalog}
+          context={props.meritContext}
           spent={props.meritSpent}
           budget={props.meritBudget}
         />
@@ -2513,6 +2532,7 @@ function Merits({
   merits,
   setMerits,
   catalog,
+  context,
   spent,
   budget,
   currentCourt,
@@ -2522,6 +2542,7 @@ function Merits({
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
   catalog: MeritDefinition[];
+  context: MeritPrerequisiteContext;
   spent: number;
   budget: number;
   currentCourt?: string;
@@ -2540,6 +2561,7 @@ function Merits({
   );
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   function addMerit(definition: MeritDefinition) {
+    if(!meritPrerequisitesMet(definition,context)||(!isRepeatableDefinition(definition)&&context.merits?.some(item=>item.name===definition.name)))return;
     if (
       !isRepeatableDefinition(definition) &&
       merits.some((merit) => merit.name === definition.name)
@@ -2631,6 +2653,7 @@ function Merits({
               </div>
               <MeritConfigurationEditor
                 merit={selection}
+                ownedMerits={context.merits}
                 inline={isInlineMeritConfiguration(selection.name)}
                 currentCourt={currentCourt}
                 onChange={(configuration) => {
@@ -2663,7 +2686,8 @@ function Merits({
             {categories.map((catalogCategory) => {
               const items = alphabetical(catalog, meritName,locale).filter(
                 (item) =>
-                  item.category === catalogCategory &&
+                  item.category === catalogCategory && meritPrerequisitesMet(item,context) &&
+                  (isRepeatableDefinition(item)||!context.merits?.some(owned=>owned.name===item.name)||merits.some(owned=>owned.name===item.name)) &&
                   (category === "all" || item.category === category) &&
                   (!normalizedSearch ||
                     `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""}`
@@ -2750,12 +2774,14 @@ export function MeritConfigurationEditor({
   compact = false,
   inline = false,
   currentCourt,
+  ownedMerits = [],
 }: {
   merit: MeritSelection;
   onChange: (value: MeritConfiguration) => void;
   compact?: boolean;
   inline?: boolean;
   currentCourt?: string;
+  ownedMerits?: NonNullable<MeritPrerequisiteContext["merits"]>;
 }) {
   const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
@@ -2781,6 +2807,10 @@ export function MeritConfigurationEditor({
     <div>
       {visible.map((field) => {
         const value = configuration[field.key];
+        if (field.kind === "merit") {
+          const choices=ownedMerits.filter(item=>item.instanceId&&field.meritNames?.includes(item.name)&&item.dots>=(merit.name==="Infamous Mentor"?merit.dots:1));
+          return <label key={field.key}>{field.label}<select value={String(value??"")} onChange={event=>set(field.key,event.target.value)}><option value="">{tr("Selecione uma instância","Select an instance")}</option>{choices.map(item=><option key={item.instanceId} value={item.instanceId}>{item.name}: {meritConfigurationTitle(item.configuration,locale)||item.instanceId} ({item.dots})</option>)}</select></label>;
+        }
         if (field.kind === "court") {
           return (
             <CourtGoodwillPicker
@@ -2793,11 +2823,12 @@ export function MeritConfigurationEditor({
           );
         }
         if (field.kind === "list") {
+          const rowCount=field.fixedRows??merit.dots*(field.rowsPerDot??1);
           const fieldLabel=merit.name==="Contacts"?tr("Grupos, organizações ou nome do contato","Groups, organizations or contact name"):merit.name==="Multilingual"?tr("Idiomas adicionais","Additional languages"):field.label;
           const values=Array.isArray(value)?value:[String(value??"")];
           if(merit.name==="Multilingual") return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="multilingual-config-list">{Array.from({length:merit.dots},(_,row)=><div className="multilingual-config-row" key={row}>{[0,1].map((column)=>{const index=row*2+column;return <Input key={index} value={values[index]??""} placeholder={`${tr("Idioma","Language")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots*2},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>;})}</div>)}</div></fieldset>;
-          if(merit.name==="Contacts") return <fieldset className="contacts-config-field" key={field.key}><legend>{fieldLabel}</legend><div className="multilingual-config-list">{Array.from({length:Math.ceil(merit.dots/2)},(_,row)=><div className="multilingual-config-row" key={row}>{[0,1].flatMap((column)=>{const index=row*2+column;if(index>=merit.dots)return [];return [<Input key={index} value={values[index]??""} placeholder={`${tr("Contato","Contact")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>];})}</div>)}</div></fieldset>;
-          return <fieldset className={merit.name==="Contacts"?"contacts-config-field":undefined} key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=><Input key={index} value={values[index]??""} placeholder={`${field.placeholder??fieldLabel} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>)}</div></fieldset>;
+          if(merit.name==="Contacts") return <fieldset className="contacts-config-field" key={field.key}><legend>{fieldLabel}</legend><div className="multilingual-config-list">{Array.from({length:Math.ceil(merit.dots/2)},(_,row)=><div className="multilingual-config-row" key={row}>{[0,1].flatMap((column)=>{const index=row*2+column;if(index>=merit.dots)return [];return [<Input key={index} value={values[index]??""} placeholder={`${tr("Contato","Contact")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:rowCount},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>];})}</div>)}</div></fieldset>;
+          return <fieldset className={merit.name==="Contacts"?"contacts-config-field":undefined} key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({length:rowCount},(_,index)=><Input key={index} value={values[index]??""} placeholder={`${field.placeholder??fieldLabel} ${index+1}`} onChange={(event)=>{const next=Array.from({length:rowCount},(_,item)=>values[item]??"");next[index]=event.target.value;set(field.key,next);}}/>)}</div></fieldset>;
         }
         if (field.kind === "select") {
           const selected=String(value??"");
