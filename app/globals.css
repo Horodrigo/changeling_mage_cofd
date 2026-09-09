@@ -577,7 +577,7 @@ button { cursor: pointer; }
 .kith-current { min-height:40px; display:grid; align-content:center; gap:2px; padding:7px 10px; border:1px solid #ded6df; border-radius:8px; background:#fff; }
 .kith-current strong { overflow:hidden; font-size:14px; text-overflow:ellipsis; white-space:nowrap; }.kith-current small { overflow:hidden; color:#827884; font-size:11px; font-weight:400; text-overflow:ellipsis; white-space:nowrap; }
 .anchor-field .kith-current small { white-space:normal; }
-.anchor-dialog { grid-template-rows:auto auto minmax(0,1fr) auto; }
+.anchor-dialog { grid-template-rows:auto auto auto minmax(0,1fr) auto; max-height:88dvh; }
 .anchor-filters { position:static; z-index:auto; grid-template-columns:minmax(180px,260px); min-height:62px; align-items:end; }
 .anchor-filters label { display:grid; gap:5px; color:#504851; font-size:11px; font-weight:700; }
 .anchor-filters [data-slot="select-trigger"] { width:100%; max-width:none; }
@@ -607,6 +607,8 @@ button { cursor: pointer; }
 .merit-court-picker > small { color:#776d78; font-size:11px; }
 @media (max-width:720px){.court-catalog-filters,.court-catalog{grid-template-columns:1fr}}
 @media (max-width:720px){
+  .anchor-filters{grid-template-columns:minmax(0,1fr)}
+  .anchor-catalog article{grid-template-columns:minmax(0,1fr)}
   .merit-heading{flex-direction:column;align-items:stretch;gap:10px}
   .merit-heading > div{min-width:0;max-width:100%}
   .merit-heading-actions{justify-content:flex-start;flex-wrap:wrap}
