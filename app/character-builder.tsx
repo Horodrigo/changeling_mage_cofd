@@ -2166,12 +2166,20 @@ function SpellSelector({
   const { locale, tr } = useLanguage();
   const spellName = (spell: SpellDefinition) => locale === "pt-BR" ? spell.name : (spell.originalName || spell.name);
   const [search, setSearch] = useState("");
+  const [arcanaFilter, setArcanaFilter] = useState("__all");
+  const [levelFilter, setLevelFilter] = useState("__all");
+  const [sourceFilter, setSourceFilter] = useState("__all");
+  const [practiceFilter, setPracticeFilter] = useState("__all");
   const [catalogOpen, setCatalogOpen] = useState(false);
   const normalized = search.toLocaleLowerCase("pt-BR");
   const selectedIds = values.filter(Boolean).map((item) => item!.id);
   const filtered = alphabetical(catalog, spellName,locale).filter(
     (spell) =>
       meetsArcanaRequirements(spell.requirements, arcana) &&
+      (arcanaFilter === "__all" || Object.hasOwn(spell.requirements, arcanaFilter)) &&
+      (levelFilter === "__all" || Object.values(spell.requirements).includes(Number(levelFilter))) &&
+      (sourceFilter === "__all" || spell.sourceId === sourceFilter) &&
+      (practiceFilter === "__all" || spell.practice === practiceFilter) &&
       (!normalized ||
         `${spell.name} ${spell.originalName} ${spell.source} ${Object.keys(spell.requirements).join(" ")}`
           .toLocaleLowerCase("pt-BR")
@@ -2283,7 +2291,7 @@ function SpellSelector({
           if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><div><strong>{tr("Vaga disponível", "Available slot")}</strong><small>{tr("Escolha no catálogo", "Choose from the catalog")}</small></div></article>;
           return (
             <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{formatRequirements(item.requirements)} · {item.source} · p. {item.page || "—"}</small></summary>
+              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{formatRequirements(item.requirements)} · {item.source} · p. {item.page || "—"}</small>{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={tr("Perícia de Rota", "Rote Skill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
               <div className="contract-power-details">
                 <dl>
                   <div><dt>{tr("Resumo", "Summary")}</dt><dd>{spellSummary(item)}</dd></div>
@@ -2292,17 +2300,6 @@ function SpellSelector({
                   {item.withstand && <div><dt>{tr("Resistência", "Withstand")}</dt><dd>{item.withstand}</dd></div>}
                   <div><dt>{tr("Efeitos", "Effects")}</dt><dd>{item.description}</dd></div>
                 </dl>
-                {rote && item && item.roteSkills.length > 0 && (
-                  <Choice
-                    value={item.roteSkill ?? item.roteSkills[0]}
-                    setValue={(value) => {
-                      const next = [...values];
-                      next[index] = { ...item, roteSkill: value };
-                      setValues(next);
-                    }}
-                    options={item.roteSkills}
-                  />
-                )}
               </div>
             </details>
           );
@@ -2316,14 +2313,13 @@ function SpellSelector({
               {tr("Feitiços organizados por Arcano e nível de maestria.", "Spells grouped by Arcanum and mastery level.")}
             </DialogDescription>
           </DialogHeader>
-          <label className="merit-search">
-            <Search />
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={tr("Buscar feitiço, Arcano ou fonte…", "Search spell, Arcanum, or source…")}
-            />
-          </label>
+          <div className="catalog-filters spell-catalog-filters">
+            <label className="merit-search"><Search /><Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={tr("Buscar feitiço, Arcano ou fonte…", "Search spell, Arcanum, or source…")}/></label>
+            <Choice value={arcanaFilter} setValue={setArcanaFilter} options={["__all",...Object.keys(arcanaLabels)]} optionLabels={{__all:tr("Todos os Arcanos","All Arcana"),...arcanaLabels}} />
+            <Choice value={levelFilter} setValue={setLevelFilter} options={["__all","1","2","3","4","5"]} optionLabels={{__all:tr("Todos os níveis","All levels"),...Object.fromEntries([1,2,3,4,5].map(level=>[String(level),`${tr("Nível","Level")} ${level}`]))}} />
+            <Choice value={sourceFilter} setValue={setSourceFilter} options={["__all",...new Set(catalog.map(spell=>spell.sourceId))]} optionLabels={{__all:tr("Todas as fontes","All sources"),...Object.fromEntries(catalog.map(spell=>[spell.sourceId,spell.source]))}} />
+            <Choice value={practiceFilter} setValue={setPracticeFilter} options={["__all",...new Set(catalog.map(spell=>spell.practice))]} optionLabels={{__all:tr("Todas as Práticas","All Practices")}} />
+          </div>
           <div className="merit-catalog spell-groups">
             {Array.from(groups.entries())
               .sort(([a], [b]) =>

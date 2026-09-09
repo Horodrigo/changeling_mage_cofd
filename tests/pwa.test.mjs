@@ -70,8 +70,8 @@ test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência c
     readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
   ]);
-  assert.match(workspace,/<SheetField label="Legado" value=\{data\.legacy\}/);
-  assert.match(workspace,/<SheetField label="Nome das Sombras"[^]*<SheetField label="Virtude"[^]*<SheetField label="Caminho"[^]*<SheetField label="Jogador"[^]*<SheetField label="Vício"[^]*<SheetField label="Ordem"[^]*<SheetField label="Crônica"[^]*<SheetField label="Conceito"[^]*<SheetField label="Legado"/);
+  assert.match(workspace,/<LegacySheetField value=\{legacyDisplay\} enabled=\{hasLegacyAccess\}/);
+  assert.match(workspace,/<SheetField label="Nome das Sombras"[^]*<SheetField label="Virtude"[^]*<SheetField label="Caminho"[^]*<SheetField label="Jogador"[^]*<SheetField label="Vício"[^]*<SheetField label="Ordem"[^]*<SheetField label="Crônica"[^]*<SheetField label="Conceito"[^]*<LegacySheetField/);
   assert.doesNotMatch(workspace,/placeholder="Escreva uma (?:Aspiração|Obsessão)"/);
   assert.match(workspace,/tr\("Experiência","Experience"\)/);
   assert.match(workspace,/className="experience-actions mage-experience-actions"/);

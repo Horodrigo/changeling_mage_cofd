@@ -234,7 +234,15 @@
 .experience-merit-catalog article.selected { border-color:var(--sheet-accent); }
 .experience-merit-catalog strong,.experience-merit-catalog small { display:block; }.experience-merit-catalog small { color:#756d72; font-size:11px; }
 .experience-merit-catalog p { margin:5px 0 0; font-size:11px; line-height:1.4; }
-.experience-merit-choice { display:flex; flex-direction:column; gap:5px; align-items:stretch; }
+.experience-merit-choice { display:flex; flex-direction:column; gap:7px; align-items:stretch; min-width:150px; }
+.experience-merit-choice label { display:grid; gap:3px; color:#615861; font-size:11px; }
+.experience-merit-choice select { min-width:130px; height:34px; border:1px solid #bdcbd0; border-radius:8px; background:#edf3f5; padding:0 9px; color:#26333d; }
+.experience-merit-choice .merit-instance-toggle { display:flex; align-items:center; gap:7px; font-size:12px; }
+.experience-merit-choice .merit-instance-toggle input { width:16px; height:16px; }
+.merit-current-rating { font-size:12px; color:#615861; }
+.collapsed-rote-skill { display:block; margin-top:8px; max-width:260px; cursor:default; }
+.collapsed-rote-skill label { margin:0; }
+.spell-catalog-filters { grid-template-columns:minmax(220px,1fr) repeat(4,minmax(120px,auto)); }
 @media (max-width:720px){.combat-page,.combat-rules{grid-template-columns:1fr}}
 @media (max-width:720px){.loadout-catalog,.companion-grid,.animal-picker,.mount-attribute-grid,.mount-armor-editors{grid-template-columns:1fr}.companion-card .compact-values{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){
@@ -248,7 +256,7 @@
   .homebrew-settings,.homebrew-panel .panel-heading{align-items:stretch;flex-direction:column}.homebrew-panel .panel-heading button{width:100%;min-height:44px}
   .homebrew-tabs-list{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;padding-bottom:5px}.homebrew-tabs-list button{flex:0 0 auto;min-width:112px;min-height:44px;scroll-snap-align:start}
   .homebrew-dialog{width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94dvh!important;padding:14px}.homebrew-levels section{grid-template-columns:34px minmax(0,1fr)}.homebrew-levels section textarea{grid-column:1/-1}
-  .experience-merit-choice{flex-direction:row;flex-wrap:wrap}.experience-merit-choice button{flex:1 1 110px;min-height:40px}
+  .experience-merit-choice{width:100%}.experience-merit-choice button{min-height:40px}.spell-catalog-filters{grid-template-columns:1fr}
   .merit-dialog,.experience-dialog,.condition-dialog,.loadout-dialog{width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94vh!important;padding:14px}
   .companion-card .compact-values,.experience-totals{grid-template-columns:repeat(2,minmax(0,1fr))}
   button,[role="button"],input,textarea{font-size:18px}.official-field input,.companion-card input{min-height:40px}
@@ -817,6 +825,28 @@ button { cursor: pointer; }
 .official-field { display:grid; grid-template-columns:auto 1fr; align-items:end; gap:8px; min-width:0; }
 .official-field span { font-size:11px; font-weight:700; text-transform:uppercase; }
 .official-field strong { min-height:21px; overflow:hidden; border-bottom:1px solid var(--sheet-ink); font:italic 15px/20px Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
+.legacy-sheet-field button { min-width:0; min-height:21px; overflow:hidden; border:0; border-bottom:1px solid var(--sheet-ink); background:transparent; padding:0; color:var(--sheet-accent); cursor:pointer; font:italic 700 15px/20px Georgia,serif; text-align:left; text-overflow:ellipsis; white-space:nowrap; }
+.legacy-sheet-field button:hover,.legacy-sheet-field button:focus-visible { border-bottom-width:2px; outline:0; }
+.legacy-join { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:end; }
+.legacy-join h3,.legacy-join .legacy-requirement-list,.legacy-join details { grid-column:1/-1; }
+.legacy-join label { display:grid; gap:4px; font-size:11px; font-weight:700; }
+.legacy-join-controls { display:flex; align-items:end; gap:6px; }
+.legacy-join-controls label:first-child { min-width:210px; }
+.legacy-join-controls label:last-child { min-width:170px; }
+.legacy-join-button { align-self:end; width:auto; white-space:nowrap; }
+.legacy-requirement-list { display:flex; flex-wrap:wrap; gap:6px; }
+.legacy-requirement-list span { border:1px solid #d8ced4; border-radius:999px; padding:4px 8px; font-size:11px; }
+.legacy-requirement-list .met { border-color:#91b5a1; background:#edf6f0; color:#315f45; }
+.legacy-requirement-list .unmet { border-color:#d6a8a8; background:#fff2f2; color:#793737; }
+.legacy-reference small { display:block; margin-top:8px; color:#746d75; }
+.legacy-attainments details { border:1px solid #ddd3c8; background:#fff; padding:9px; opacity:.66; }
+.legacy-attainments details.active { border-color:var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 6%,#fff); opacity:1; }
+.legacy-attainments summary { display:flex; justify-content:space-between; gap:8px; cursor:pointer; }
+.legacy-attainments summary span { color:#746d75; font-size:10px; text-align:right; }
+.legacy-attainments details p { margin-top:8px; }
+.legacy-attainment-purchase { display:flex; align-items:end; gap:8px; margin-top:10px; }
+.legacy-attainment-purchase p { flex:1; }
+@media (max-width:720px){.legacy-join{grid-template-columns:1fr}.legacy-join-controls{align-items:stretch;flex-direction:column}.legacy-join-controls label{width:100%;min-width:0!important}.legacy-join-button{justify-self:start}.legacy-attainment-purchase{align-items:stretch;flex-direction:column}.legacy-attainment-purchase button{align-self:start}}
 .official-heading { display:flex; align-items:center; gap:10px; margin:18px 0 9px; color:var(--sheet-accent); font-size:19px; font-weight:400; text-align:center; }
 .official-heading:before,.official-heading:after { content:""; height:1px; flex:1; background:var(--sheet-accent); opacity:.65; }
 .official-heading span { white-space:nowrap; }
@@ -825,10 +855,13 @@ button { cursor: pointer; }
 .official-trait-line { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:7px; border-bottom:1px solid #aaa8a16b; font:14px/1.15 Georgia,serif; }
 .official-trait-line.skill-highlight-rote { border-radius:4px; box-shadow:inset 0 0 0 1px #b99435; }
 .official-trait-line.skill-highlight-kith { border-radius:4px; box-shadow:inset 0 0 0 1px #6f9877; }
+.official-trait-line.skill-highlight-legacy { border-radius:4px; background:#f3f4fb; box-shadow:inset 0 0 0 1px #6d78a8; }
 .official-trait-line.skill-highlight-rote > .official-trait-label,
-.official-trait-line.skill-highlight-kith > .official-trait-label { padding-left:4px; }
+.official-trait-line.skill-highlight-kith > .official-trait-label,
+.official-trait-line.skill-highlight-legacy > .official-trait-label { padding-left:4px; }
 .official-trait-line.skill-highlight-rote > .official-dots,
-.official-trait-line.skill-highlight-kith > .official-dots { margin-right:4px; }
+.official-trait-line.skill-highlight-kith > .official-dots,
+.official-trait-line.skill-highlight-legacy > .official-dots { margin-right:4px; }
 .official-trait-line > .official-trait-label { display:flex; min-width:0; flex:1; align-items:baseline; gap:4px; overflow:hidden; white-space:nowrap; }
 .official-trait-line small { min-width:0; overflow:hidden; color:#707671; font:italic 10px/1.2 Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
 .official-dots { display:flex!important; flex-direction:column!important; flex:none; gap:3px; }

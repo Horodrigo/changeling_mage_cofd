@@ -18,10 +18,12 @@ export function refundMeritDots(sheet: CharacterSheet, name: string, amount: num
 
 export type MageAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string }
-  | { kind: "arcana"; name: string }
+  | { kind: "arcana"; name: string; creditedArcane?: number }
   | { kind: "gnosis" | "wisdom" | "willpower" | "willpowerLoss" }
   | { kind: "merit"; name: string; dots: number; instanceId?: string; index?: number }
   | { kind: "spell"; key: "learned_rotes" | "learned_praxes"; id: string }
+  | { kind: "legacyInitiation"; previousState: unknown; removedPraxis?: {key:"praxes"|"learned_praxes";index:number;item:Record<string,unknown>}; creditedRegular:number; creditedArcane:number; creditedArcaneBeats:number }
+  | { kind: "legacyAttainment"; rank:number; removedPraxis?: {key:"praxes"|"learned_praxes";index:number;item:Record<string,unknown>}; creditedRegular:number; creditedArcane:number; creditedArcaneBeats:number }
   | { kind: "specialty"; skill: string; name: string };
 
 /** Undo only this purchase's delta, never replace the sheet with an old snapshot. */
@@ -37,6 +39,17 @@ export function refundMageAdvancement(sheet: CharacterSheet, undo: MageAdvanceme
   else if (undo.kind === "spell") {
     const spells = sheet.line_data[undo.key];
     if (Array.isArray(spells)) sheet.line_data[undo.key] = spells.filter(item => item.id !== undo.id);
+  } else if (undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment") {
+    if (undo.kind === "legacyInitiation") sheet.line_data.legacy_state = undo.previousState;
+    else {
+      const state = sheet.line_data.legacy_state as {attainmentRanks?:number[]} | undefined;
+      if (state) state.attainmentRanks = (state.attainmentRanks ?? []).filter(rank => rank !== undo.rank);
+    }
+    if (undo.removedPraxis) {
+      const list = Array.isArray(sheet.line_data[undo.removedPraxis.key]) ? [...sheet.line_data[undo.removedPraxis.key] as Record<string,unknown>[]] : [];
+      list.splice(undo.removedPraxis.index, 0, undo.removedPraxis.item);
+      sheet.line_data[undo.removedPraxis.key] = list;
+    }
   } else if (undo.kind === "specialty") {
     const index = sheet.specializations.findLastIndex(item => item.skill === undo.skill && item.name === undo.name);
     if (index >= 0) sheet.specializations.splice(index, 1);

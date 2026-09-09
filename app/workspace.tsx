@@ -80,6 +80,7 @@ import {
   type CharacterSheet,
 } from "./character-builder";
 import { ENTITLEMENTS, entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement, type EntitlementAllocation, type EntitlementState } from "@/lib/entitlements";
+import { ELEVENTH_QUESTION, eleventhQuestionPrerequisites, normalizeLegacyState } from "@/lib/legacies";
 import {
   decodeConfiguredRows,
   expandedConfigurationLines,
@@ -844,7 +845,7 @@ function CharacterPaper({
       Number(value) + (Number(grantedSkillBonuses[name]) || 0),
     ]),
   );
-  const canonicalSkill = (value: unknown) => {
+  const canonicalSkill = (value: unknown): string | undefined => {
     const raw = String(value ?? "").trim();
     return Object.values(SKILLS).flat().find(
       (skill) => skill === raw || systemTerm(skill, "en-US") === raw || systemTerm(skill, "pt-BR") === raw,
@@ -855,7 +856,7 @@ function CharacterPaper({
   const kithSkill = isCtl
     ? canonicalSkill(kithChoiceDefinition?.kind === "skill" ? data.kith_choice : data.kith_skill ?? kithDefinition?.skill)
     : undefined;
-  const highlightedSkills = new Set(
+  const highlightedSkills = new Set<string>(
     isCtl
       ? (kithSkill ? [kithSkill] : [])
       : stringList(data.rote_skills).map(canonicalSkill).filter((skill): skill is string => Boolean(skill)),
@@ -884,6 +885,9 @@ function CharacterPaper({
     data.arcana && typeof data.arcana === "object" ? data.arcana : {}
   ) as Record<string, number>;
   const gnosis = Number(data.gnosis ?? 1);
+  const legacyState = !isCtl ? normalizeLegacyState(data.legacy_state) : null;
+  const hasLegacyAccess = !isCtl && (gnosis >= 2 || Boolean(legacyState?.joined));
+  const legacyDisplay = legacyState?.joined ? ELEVENTH_QUESTION.name : gnosis >= 3 ? tr("Join/Create","Join/Create") : gnosis >= 2 ? tr("Join","Join") : "";
   const obsessionSlots=gnosis<=2?1:gnosis<=5?2:gnosis<=8?3:4;
   const powerRating = isCtl ? Number(data.wyrd ?? 1) : gnosis;
   const resource = powerResourceLimits(powerRating);
@@ -980,12 +984,13 @@ function CharacterPaper({
           { value: "detalhes", label: tr("Detalhes","Details") },
           { value: "poderes", label: tr("Poderes","Powers") },
           ...(isCtl&&entitlementMerit?[{value:"entitlement",label:"Entitlement"}]:[]),
+          ...(!isCtl&&hasLegacyAccess?[{value:"legacy",label:"Legacy"}]:[]),
           { value: "combate", label: tr("Combate","Combat") },
           { value: "companheiros", label: tr("Companheiros","Companions") }, { value: "anotacoes", label: tr("Anotações","Notes") },
         ]}>
           {{
             resumo: <>
-              <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}</section>
+              <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess}/>}</section>
               <SheetHeading>Experiência</SheetHeading>
               {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
             </>,
@@ -1024,7 +1029,7 @@ function CharacterPaper({
               <SeemingLore seeming={String(data.seeming ?? "")} /><KithLore data={data} />
             </> : <>
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
-              <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} />)}</div>
+              <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} highlightTone={legacyState?.joined&&name===ELEVENTH_QUESTION.rulingArcanum?"legacy":undefined} />)}</div>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
               <SheetHeading>Práxis</SheetHeading><SpellColumn items={praxes} minimumRows={gnosis} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
@@ -1034,6 +1039,7 @@ function CharacterPaper({
               <CustomOrderLore data={data} />
             </>,
             entitlement: <EntitlementPage character={character} updateSheet={updateSheet}/>,
+            legacy: <LegacyPage character={character} updateSheet={updateSheet}/>,
             combate: <>
               <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} />
               <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} />
@@ -1267,6 +1273,7 @@ function CharacterPaper({
           >
             <TabsTrigger value="principal">{tr("Principal","Main")}</TabsTrigger>
             <TabsTrigger value="magia">{tr("Detalhes","Details")}</TabsTrigger>
+            {hasLegacyAccess&&<TabsTrigger value="legacy" data-legacy-tab-trigger>Legacy</TabsTrigger>}
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
             <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
           </TabsList>
@@ -1280,7 +1287,7 @@ function CharacterPaper({
               <SheetField label="Ordem" value={!data.order||data.order==="Orderless"?tr("Sem Ordem","Orderless"):data.order==="Nameless"?"Nameless":locale==="en-US"?data.order:MTA_ORDER_LABELS[String(data.order)] ?? data.order} />
               <SheetField label="Crônica" value={character.character.chronicle} />
               <SheetField label="Conceito" value={character.character.concept} />
-              <SheetField label="Legado" value={data.legacy} />
+              <LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} />
             </section>
             <SheetHeading>Atributos</SheetHeading>
             <div className="official-trait-grid">
@@ -1314,7 +1321,7 @@ function CharacterPaper({
                 <SheetHeading>Arcanos</SheetHeading>
                 <div className="arcana-sheet-list">
                   {Object.entries(arcana).map(([name, value]) => (
-                    <TraitLine key={name} name={name} value={Number(value)} />
+                    <TraitLine key={name} name={name} value={Number(value)} highlightTone={legacyState?.joined&&name===ELEVENTH_QUESTION.rulingArcanum?"legacy":undefined} />
                   ))}
                 </div>
                 <SheetHeading>Aspirações</SheetHeading>
@@ -1455,6 +1462,7 @@ function CharacterPaper({
               </section>
             </div>
           </TabsContent>
+          {hasLegacyAccess&&<TabsContent value="legacy" data-page-title="Legacy" className="ctl-sheet-page powers-page"><LegacyPage character={character} updateSheet={updateSheet}/></TabsContent>}
           <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
@@ -1553,6 +1561,10 @@ function SheetField({ label, value }: { label: string; value: unknown }) {
     </div>
   );
 }
+function LegacySheetField({value,enabled}:{value:string;enabled:boolean}) {
+  const open=()=>document.querySelector<HTMLButtonElement>('[data-legacy-tab-trigger], [data-mobile-tab="legacy"]')?.click();
+  return <div className={`official-field legacy-sheet-field${enabled?" enabled":""}`}><span>Legacy</span>{enabled?<button type="button" onClick={open}>{value}</button>:<strong>{value}</strong>}</div>;
+}
 function TraitBlock({
   title,
   names,
@@ -1568,7 +1580,7 @@ function TraitBlock({
   specialties?: Array<{ skill: string; name: string }>;
   compactNames?: boolean;
   highlightedNames?: ReadonlySet<string>;
-  highlightTone?: "rote" | "kith";
+  highlightTone?: "rote" | "kith" | "legacy";
 }) {
   const {locale}=useLanguage();
   return (
@@ -1601,7 +1613,7 @@ function TraitLine({
   value: number;
   note?: string;
   compactName?: boolean;
-  highlightTone?: "rote" | "kith";
+  highlightTone?: "rote" | "kith" | "legacy";
 }) {
   const {locale}=useLanguage();
   const localizedName=systemTerm(name,locale);
@@ -1764,6 +1776,60 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
 function TrifleUseTrack({used,onChange}:{used:number;onChange:(value:number)=>void}){
   const {tr}=useLanguage();
   return <div className="trifle-use-block"><span>{tr("Trifles usadas","Trifles used")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={tr(`${used} de 3 Trifles usadas`,`${used} of 3 Trifles used`)}>{Array.from({length:3},(_,index)=><button key={index} type="button" className={index<used?"used":""} onClick={()=>onChange(index<used?index:index+1)} aria-label={tr(`Definir Trifles usadas como ${index<used?index:index+1}`,`Set used Trifles to ${index<used?index:index+1}`)}/>)}</div></div>;
+}
+
+function LegacyPage({character,updateSheet}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void}){
+  const {tr}=useLanguage();
+  const definition=ELEVENTH_QUESTION, state=normalizeLegacyState(character.line_data.legacy_state), checks=eleventhQuestionPrerequisites(character);
+  const [method,setMethod]=useState<"tutelage"|"daimonomikon"|"soul-study">("tutelage");
+  const [pool,setPool]=useState<"regular"|"arcane">("regular");
+  const [attainmentTraining,setAttainmentTraining]=useState<"tutor"|"self">("tutor");
+  const [feedback,setFeedback]=useState("");
+  const regular=Number(character.current_state.mage_experience_available??0),arcane=Number(character.current_state.arcane_experience_available??0);
+  const gnosis=Number(character.line_data.gnosis??1),arcana=(character.line_data.arcana??{}) as Record<string,number>;
+  const history=Array.isArray(character.current_state.mage_experience_history)?character.current_state.mage_experience_history as MageXpEntry[]:[];
+  const savePurchase=(next:CharacterSheet,description:string,regularCost:number,arcaneCost:number,undo:MageAdvancementUndo,credits:{regular?:number;arcane?:number;beats?:number}={})=>{
+    const creditedRegular=credits.regular??0,creditedArcane=credits.arcane??0,creditedArcaneBeats=credits.beats??0;
+    const finalUndo={...undo,creditedRegular,creditedArcane,creditedArcaneBeats} as MageAdvancementUndo;
+    const entry:MageXpEntry={id:crypto.randomUUID(),description,regular:regularCost,arcane:arcaneCost,createdAt:new Date().toISOString(),undo:finalUndo,before:{attributes:structuredClone(character.attributes),skills:structuredClone(character.skills),merits:structuredClone(character.merits),specializations:structuredClone(character.specializations),line_data:structuredClone(character.line_data)}};
+    next.current_state={...next.current_state,mage_experience_available:regular-regularCost+creditedRegular,arcane_experience_available:arcane-arcaneCost+creditedArcane,mage_experience_spent:Number(next.current_state.mage_experience_spent??0)+regularCost,arcane_experience_spent:Number(next.current_state.arcane_experience_spent??0)+arcaneCost,arcane_experience_beats:Number(next.current_state.arcane_experience_beats??0)+creditedArcaneBeats,mage_experience_history:[entry,...history].slice(0,100)};
+    updateSheet(next);
+  };
+  const findPraxis=(name:string)=>{
+    for(const key of ["praxes","learned_praxes"] as const){const list=Array.isArray(character.line_data[key])?character.line_data[key] as Record<string,unknown>[]:[];const index=list.findIndex(item=>String(item.originalName??item.name)===name);if(index>=0)return {key,index,item:list[index]};}
+  };
+  const removePraxis=(next:CharacterSheet,praxis:ReturnType<typeof findPraxis>)=>{if(!praxis)return;const list=[...(next.line_data[praxis.key] as Record<string,unknown>[])];list.splice(praxis.index,1);next.line_data[praxis.key]=list;};
+  const join=()=>{
+    if(!checks.met)return setFeedback(tr("Os pré-requisitos da Legacy ainda não foram atendidos.","The Legacy prerequisites are not yet met."));
+    const regularCost=method==="tutelage"&&pool==="regular"?1:0,arcaneCost=regularCost?0:1;
+    if(regular<regularCost||arcane<arcaneCost)return setFeedback(tr("Experiência insuficiente.","Insufficient Experience."));
+    const praxis=findPraxis("Perfect Timing"),alternative=!checks.parentage&&checks.praxis;
+    const credits=praxis?{regular:alternative?1:0,arcane:alternative?0:1,beats:1+(method==="tutelage"?1:0)}:{beats:method==="tutelage"?1:0};
+    const next=structuredClone(character);removePraxis(next,praxis);next.line_data.legacy_state={definitionId:definition.id,joined:true,attainmentRanks:[1],initiationMethod:method};
+    savePurchase(next,`${definition.name} · Initiation`,regularCost,arcaneCost,{kind:"legacyInitiation",previousState:character.line_data.legacy_state,removedPraxis:praxis,creditedRegular:0,creditedArcane:0,creditedArcaneBeats:0},credits);
+  };
+  const nextRank=Math.max(1,...state.attainmentRanks)+1;
+  const attainment=definition.attainments.find(item=>item.rank===nextRank);
+  const qualifyingSkills=["Academics","Larceny","Medicine","Occult","Science"].map(skill=>Number(character.skills[skill]??0)).sort((a,b)=>b-a);
+  const additionalSkillMet=!attainment||attainment.rank<3?true:attainment.rank<5?(qualifyingSkills[0]>=3||qualifyingSkills[1]>=2):(qualifyingSkills[0]>=4||qualifyingSkills[1]>=3||qualifyingSkills[2]>=2);
+  const rankPrerequisites=attainment?Number(arcana.Time??0)>=attainment.rulingArcanum&&gnosis>=attainment.orthodoxGnosis&&Number(character.skills.Investigation??0)>=(attainment.rank>=4?4:attainment.rank>=2?3:2)&&additionalSkillMet:false;
+  const buyAttainment=()=>{
+    if(!attainment||!rankPrerequisites)return setFeedback(tr("Os pré-requisitos do próximo Attainment ainda não foram atendidos.","The next Attainment's prerequisites are not yet met."));
+    const effectivePool=attainmentTraining==="self"?"arcane":pool,regularCost=effectivePool==="regular"?1:0,arcaneCost=effectivePool==="arcane"?1:0;if(regular<regularCost||arcane<arcaneCost)return setFeedback(tr("Experiência insuficiente.","Insufficient Experience."));
+    const spellNames:Record<number,string>={2:"Postcognition",3:"Divination",4:"Prophecy"},praxis=findPraxis(spellNames[attainment.rank]??"");
+    const next=structuredClone(character);removePraxis(next,praxis);next.line_data.legacy_state={...state,attainmentRanks:[...state.attainmentRanks,attainment.rank]};
+    savePurchase(next,`${definition.name} · ${attainment.name}`,regularCost,arcaneCost,{kind:"legacyAttainment",rank:attainment.rank,removedPraxis:praxis,creditedRegular:0,creditedArcane:0,creditedArcaneBeats:0},praxis?{arcane:1,beats:1}:{});
+  };
+  return <div className="entitlement-page legacy-page">
+    <header className="entitlement-title"><div><h2>{definition.name}</h2><p>{definition.source} · p. {definition.page}–202 · {tr("Arcano Regente","Ruling Arcanum")}: {definition.rulingArcanum}</p></div></header>
+    <p className={`entitlement-prerequisites ${checks.met?"met":"unmet"}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {definition.prerequisites}</p>
+    {!state.joined&&<section className="legacy-join"><h3>{tr("Entrar na Legacy","Join the Legacy")}</h3><div className="legacy-requirement-list">{[[checks.gnosis,"Gnosis 2"],[checks.time,"Time 2"],[checks.investigation,"Investigation 2"],[checks.qualifying,"Qualifying Skill 2"],[checks.parentage||checks.praxis,"Moros, Guardian/Mysterium, or Perfect Timing Praxis"]].map(([met,label])=><span className={met?"met":"unmet"} key={String(label)}>{met?"✓":"×"} {label}</span>)}</div><div className="legacy-join-controls"><label>{tr("Método de iniciação","Initiation method")}<RuleSelect value={method} onChange={(value)=>{const next=value as typeof method;setMethod(next);if(next!=="tutelage")setPool("arcane");}} options={[{value:"tutelage",label:"Tutelage"},{value:"daimonomikon",label:"Daimonomikon"},{value:"soul-study",label:"Soul or Soul Stone Study"}]}/></label><label>{tr("Pagamento","Payment")}<RuleSelect value={method==="tutelage"?pool:"arcane"} onChange={(value)=>setPool(value as typeof pool)} options={method==="tutelage"?[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]:[{value:"arcane",label:"1 Arcane Experience"}]}/></label></div><Button type="button" size="sm" className="builder-add-action legacy-join-button" disabled={!checks.met} onClick={join}>{tr("Entrar em The Eleventh Question","Join The Eleventh Question")}</Button>{gnosis>=3&&<details className="experience-rules"><summary>{tr("Criar uma Legacy","Create a Legacy")}</summary><p>{tr("Gnosis 3 permite fundar uma Legacy por 1 Arcane Experience. A criação das definições personalizadas será adicionada em uma etapa posterior.","Gnosis 3 permits founding a Legacy for 1 Arcane Experience. Authoring custom Legacy definitions will be added in a later phase.")}</p></details>}</section>}
+    <div className="entitlement-overview"><section><h3>{tr("Iniciação","Initiation")}</h3><p>{definition.initiation}</p></section><section><h3>{tr("Organização","Organization")}</h3><p>{definition.organization}</p></section><section><h3>{tr("Teoria","Theory")}</h3><p>{definition.theory}</p></section></div>
+    <div className="entitlement-overview"><section><h3>Yantras</h3><ul>{definition.yantras.map(item=><li key={item}>{item}</li>)}</ul></section><section><h3>Oblations</h3><ul>{definition.oblations.map(item=><li key={item}>{item}</li>)}</ul></section></div>
+    <section className="legacy-reference"><h3>{tr("Informações de Legacy","Legacy Information")}</h3><ul><li>{tr("Tutor e aluno possuem vínculo simpático Strong.","Tutor and student have a Strong sympathetic link.")}</li><li>{tr("Após uma cena de interação mística, emocional ou íntima significativa, tutor e aluno recebem um Arcane Beat, no máximo uma vez por capítulo.","After a significant mystical, emotional, or intimate interaction scene, tutor and student earn one Arcane Beat, at most once per chapter.")}</li><li>{tr("Membros, Daimonomika e Soul Stones da mesma Legacy são Yantras simpáticos de +2 para seus membros.","Members, Daimonomika, and Soul Stones of the same Legacy are +2 sympathetic Yantras for its members.")}</li></ul><small>{tr("Estas informações não são controladas automaticamente pela ficha.","The sheet does not track these rules automatically.")}</small></section>
+    <section><h3>Attainments</h3><div className="entitlement-blessings legacy-attainments">{definition.attainments.map(item=>{const acquired=state.attainmentRanks.includes(item.rank);return <details key={item.rank} className={acquired?"active":""}><summary><strong>{item.rank}. {item.name}</strong><span>{acquired?tr("Adquirido","Acquired"):item.prerequisites}</span></summary><p>{item.description}</p>{item.optional&&<p><strong>Optional:</strong> {item.optional}</p>}</details>})}</div>{state.joined&&attainment&&<div className="legacy-attainment-purchase"><p><strong>{tr("Próximo Attainment","Next Attainment")}:</strong> {attainment.name} · 1 Experience</p><RuleSelect value={attainmentTraining} onChange={(value)=>{const training=value as typeof attainmentTraining;setAttainmentTraining(training);if(training==="self")setPool("arcane");}} options={[{value:"tutor",label:tr("Aprender com tutor","Learn from a tutor")},{value:"self",label:tr("Desenvolver sem tutor","Develop without a tutor")}]}/>{attainmentTraining==="tutor"&&<RuleSelect value={pool} onChange={(value)=>setPool(value as typeof pool)} options={[{value:"regular",label:"1 Experience"},{value:"arcane",label:"1 Arcane Experience"}]}/>}<Button type="button" disabled={!rankPrerequisites} onClick={buyAttainment}>{tr("Comprar Attainment","Purchase Attainment")}</Button></div>}</section>
+    {feedback&&<p className="experience-feedback">{feedback}</p>}
+  </div>;
 }
 
 function EntitlementPage({character,updateSheet}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void}){
@@ -3864,6 +3930,7 @@ function MageExperiencePanel({
   ) as Record<string, number>;
   const path =
     MTA_PATHS[String(character.line_data.path) as keyof typeof MTA_PATHS];
+  const activeLegacy=normalizeLegacyState(character.line_data.legacy_state);
   const knownSpellIds = new Set(
     [
       ...objectList(character.line_data.rotes),
@@ -3922,7 +3989,7 @@ function MageExperiencePanel({
     label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? tr("Mérito","Merit");
   } else if (purchase === "Arcano") {
     const current = Number(arcana[chosenTarget] ?? 0);
-    const ruling = path?.ruling.includes(chosenTarget as never);
+    const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&chosenTarget===ELEVENTH_QUESTION.rulingArcanum;
     const inferior = path?.inferior === chosenTarget;
     const limit = ruling ? 5 : inferior ? 2 : 4;
     cost = current < limit ? 4 : 5;
@@ -4076,7 +4143,7 @@ function MageExperiencePanel({
     let undo: MageAdvancementUndo;
     if (purchase === "Atributo" || purchase === "Perícia")
       undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget };
-    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget };
+    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget, creditedArcane:activeLegacy.joined&&path?.ruling.includes(ELEVENTH_QUESTION.rulingArcanum as never)&&chosenTarget===ELEVENTH_QUESTION.rulingArcanum?1:0 };
     else if (purchase === "Gnose") undo = { kind: "gnosis" };
     else if (purchase === "Sabedoria") undo = { kind: "wisdom" };
     else if (purchase === "Mérito") {
@@ -4101,7 +4168,7 @@ function MageExperiencePanel({
     next.current_state = {
       ...next.current_state,
       mage_experience_available: regular - splitRegular,
-      arcane_experience_available: arcane - splitArcane,
+      arcane_experience_available: arcane - splitArcane + (undo.kind==="arcana"?undo.creditedArcane??0:0),
       mage_experience_spent: spentRegular + splitRegular,
       arcane_experience_spent: spentArcane + splitArcane,
       mage_experience_history: [entry, ...history].slice(0, 100),
@@ -4169,12 +4236,15 @@ function MageExperiencePanel({
     if (!undo) return setFeedback(tr("Esta compra antiga não identifica com segurança o avanço a reembolsar.","This older purchase does not identify the advancement safely enough to refund it."));
     const next = structuredClone(character);
     refundMageAdvancement(next, undo);
+    const legacyUndo = undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment" ? undo : undefined;
+    const creditedArcane = legacyUndo?.creditedArcane ?? (undo.kind==="arcana"?undo.creditedArcane??0:0);
     next.current_state = {
       ...next.current_state,
-      mage_experience_available: regular + entry.regular,
-      arcane_experience_available: arcane + entry.arcane,
+      mage_experience_available: regular + entry.regular - (legacyUndo?.creditedRegular ?? 0),
+      arcane_experience_available: arcane + entry.arcane - creditedArcane,
       mage_experience_spent: Math.max(0, spentRegular - entry.regular),
       arcane_experience_spent: Math.max(0, spentArcane - entry.arcane),
+      arcane_experience_beats: Math.max(0, Number(next.current_state.arcane_experience_beats??0) - (legacyUndo?.creditedArcaneBeats ?? 0)),
       mage_experience_history: history.filter((item) => item.id !== entry.id),
     };
     recalculateCtlDerived(next);
@@ -4639,6 +4709,7 @@ function ExperienceMeritPicker({
   const homebrews = useHomebrews();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
+  const [meritDrafts, setMeritDrafts] = useState<Record<string,{newInstance:boolean;instanceIndex:number;dots:number}>>({});
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
   const context=meritContextForSheet(character);
   const catalog = alphabetical([
@@ -4706,7 +4777,15 @@ function ExperienceMeritPicker({
                       (!owned.grantedBy || canAdvanceGrantedMerit(line, owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
-                ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1)));
+                ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1))),
+                draft = meritDrafts[item.id] ?? {newInstance:repeatable&&!instances.length,instanceIndex:instances[0]?.index??-1,dots:instances[0]?.owned.dots??ratings[0]??1},
+                activeInstance = instances.find(({index})=>index===draft.instanceIndex) ?? instances[0],
+                buyingNew = repeatable && draft.newInstance,
+                allowedRatings = ratings.filter((dot)=>
+                  (buyingNew || !activeInstance || dot > activeInstance.owned.dots) &&
+                  meritPrerequisitesMet(item,{...context,selectedDots:dot,configuration:buyingNew?undefined:activeInstance?.owned.configuration}),
+                ),
+                intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0];
               if (item.name === "Mantle" && !instances.length) return null;
               if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvanceGrantedMerit(line,owned)))return null;
               if (
@@ -4734,45 +4813,11 @@ function ExperienceMeritPicker({
                     <p>{item.description}</p>
                   </div>
                   <div className="experience-merit-choice">
-                    {instances.map(({ owned, index }) =>
-                      ratings
-                        .filter((dot) => dot > owned.dots && meritPrerequisitesMet(item,{...context,selectedDots:dot,configuration:owned.configuration}))
-                        .map((dot) => (
-                          <DialogClose asChild key={`${index}-${dot}`}>
-                            <Button
-                              type="button"
-                              size="sm"
-                              variant="outline"
-                              onClick={() => onSelect(item.id, dot, index)}
-                            >
-                              {tr("Aumentar","Raise")}{" "}
-                              {meritName(item)}{meritConfigurationTitle(owned.configuration,locale)?`: ${meritConfigurationTitle(owned.configuration,locale)}`:""}{" "}
-                              {owned.dots}{" "}
-                              {tr("para","to")} {dot}
-                            </Button>
-                          </DialogClose>
-                        )),
-                    )}
-                    {item.name !== "Mantle" && (repeatable || !instances.length) &&
-                      ratings.filter(dot=>meritPrerequisitesMet(item,{...context,selectedDots:dot})).map((dot) => (
-                        <DialogClose asChild key={`new-${dot}`}>
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant={
-                              selectedId === item.id && targetDots === dot
-                                ? "default"
-                                : "outline"
-                            }
-                            onClick={() => onSelect(item.id, dot, -1)}
-                          >
-                            {repeatable && instances.length
-                              ? tr("Nova instância · ","New instance · ")
-                              : ""}
-                            {dot} {tr(dot===1?"ponto":"pontos",dot===1?"dot":"dots")}
-                          </Button>
-                        </DialogClose>
-                      ))}
+                    {repeatable && item.name !== "Mantle" && <label className="merit-instance-toggle"><input type="checkbox" checked={buyingNew} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:event.target.checked,instanceIndex:event.target.checked?-1:(instances[0]?.index??-1),dots:event.target.checked?(ratings[0]??1):(instances[0]?.owned.dots??1)}}))}/><span>{tr("Nova instância","New Instance")}</span></label>}
+                    {!buyingNew && instances.length > 1 && <label><span>{tr("Instância","Instance")}</span><select value={activeInstance?.index??instances[0].index} onChange={(event)=>{const instanceIndex=Number(event.target.value), owned=instances.find(entry=>entry.index===instanceIndex)?.owned;setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:false,instanceIndex,dots:owned?.dots??1}}));}}>{instances.map(({owned,index})=><option key={index} value={index}>{meritConfigurationTitle(owned.configuration,locale)||`${meritName(item)} ${index+1}`}</option>)}</select></label>}
+                    <span className="merit-current-rating"><b>{tr("Atual","Current")}:</b> {buyingNew?0:(activeInstance?.owned.dots??0)}</span>
+                    <label><span>{tr("Pretendido","Intended")}</span><select value={intendedDots??""} disabled={!allowedRatings.length} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,dots:Number(event.target.value)}}))}>{allowedRatings.map(dot=><option key={dot} value={dot}>{dot}</option>)}</select></label>
+                    <DialogClose asChild><Button type="button" size="sm" disabled={!intendedDots} variant={selectedId===item.id&&targetDots===intendedDots?"default":"outline"} onClick={()=>intendedDots&&onSelect(item.id,intendedDots,buyingNew?-1:(activeInstance?.index??-1))}>{tr("Selecionar","Select")}</Button></DialogClose>
                   </div>
                 </article>
               );

@@ -210,11 +210,32 @@ test("configurações de texto livre ficam inline e escolhas estruturadas perman
   assert.equal(isInlineMeritConfiguration("Mover and Shaker"),true);
 });
 
-test("compra de Mérito identifica o nível atual da instância", async()=>{
+test("compra de Mérito usa uma única escolha de instância e nível por cartão", async()=>{
   const {readFile}=await import("node:fs/promises");
   const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
-  assert.match(workspace,/meritName\(item\).*owned\.dots.*tr\("para","to"\)/s);
-  assert.doesNotMatch(workspace,/`\$\{tr\("instância","instance"\)\} \$\{instanceNumber \+ 1\}`/);
+  assert.match(workspace,/tr\("Nova instância","New Instance"\)/);
+  assert.match(workspace,/tr\("Atual","Current"\)/);
+  assert.match(workspace,/tr\("Pretendido","Intended"\)/);
+  assert.match(workspace,/allowedRatings\.map\(dot=><option/);
+  assert.doesNotMatch(workspace,/tr\("Aumentar","Raise"\).*tr\("para","to"\)/s);
+});
+
+test("estado dos rascunhos de Méritos pertence ao seletor de compra", async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const pickerStart=workspace.indexOf("function ExperienceMeritPicker(");
+  const pickerEnd=workspace.indexOf("\nfunction ",pickerStart+1);
+  const picker=workspace.slice(pickerStart,pickerEnd<0?undefined:pickerEnd);
+  assert.ok(pickerStart>=0);
+  assert.match(picker,/const \[meritDrafts, setMeritDrafts\] = useState/);
+  assert.match(picker,/meritDrafts\[item\.id\]/);
+});
+
+test("catálogo de Spells filtra e mantém a Rote Skill visível no cartão fechado", async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  assert.match(builder,/arcanaFilter.*levelFilter.*sourceFilter.*practiceFilter/s);
+  assert.match(builder,/className="collapsed-rote-skill"[\s\S]*tr\("Perícia de Rota", "Rote Skill"\)/);
 });
 
 test("Contratos exibem Comuns antes dos Reais sem perder a ordem alfabética", async()=>{
