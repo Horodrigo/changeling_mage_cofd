@@ -606,7 +606,13 @@ button { cursor: pointer; }
 .merit-court-picker > span { color:#504851; font-size:13px; font-weight:700; }
 .merit-court-picker > small { color:#776d78; font-size:11px; }
 @media (max-width:720px){.court-catalog-filters,.court-catalog{grid-template-columns:1fr}}
-@media (max-width:720px){.merit-heading{align-items:flex-start;gap:10px}.merit-heading-actions{flex:none}}
+@media (max-width:720px){
+  .merit-heading{flex-direction:column;align-items:stretch;gap:10px}
+  .merit-heading > div{min-width:0;max-width:100%}
+  .merit-heading-actions{justify-content:flex-start;flex-wrap:wrap}
+  .merit-heading-actions > *{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+  .merit-heading-actions .builder-add-action{height:auto;min-height:36px;padding-block:8px;line-height:1.3}
+}
 
 /* Navegação CofD: um único painel superior, sem catálogo lateral. */
 .app-shell { display:block; min-height:100vh; }
