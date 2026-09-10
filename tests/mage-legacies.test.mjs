@@ -7,7 +7,7 @@ import {readWorkspaceSource} from "./workspace-source.mjs";
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(()=>vite.close());
-const {CHRONOLOGUE,ELEVENTH_QUESTION,eleventhQuestionPrerequisites,legacyEntryPrerequisites,legacyAttainmentPrerequisites,normalizeLegacyState}=await vite.ssrLoadModule("/lib/legacies.ts");
+const {CHRONOLOGUE,ELEVENTH_QUESTION,ENGINEERS_OF_THE_SYSTEM,LEGACIES,eleventhQuestionPrerequisites,legacyEntryPrerequisites,legacyAttainmentPrerequisites,normalizeLegacyState}=await vite.ssrLoadModule("/lib/legacies.ts");
 const {refundMageAdvancement}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const {discardLegacyAdvancements}=await vite.ssrLoadModule("/lib/legacy-progression.ts");
 const {experienceTraitDots}=await vite.ssrLoadModule("/app/character-builder.tsx");
@@ -38,6 +38,18 @@ test("Chronologue supports selection, localized sheet traits, and its printed pr
   assert.equal(legacyEntryPrerequisites(initiate,CHRONOLOGUE).met,true);
   initiate.skills.Computação=3;
   assert.equal(legacyAttainmentPrerequisites(initiate,CHRONOLOGUE,2),true);
+});
+
+test("Engineers of the System is the next selectable Legacy with its printed progression",()=>{
+  assert.deepEqual(LEGACIES.map(item=>item.name),["The Eleventh Question","Chronologue","Engineers of the System"]);
+  assert.equal(ENGINEERS_OF_THE_SYSTEM.source,"Tome of the Pentacle");
+  assert.equal(ENGINEERS_OF_THE_SYSTEM.page,157);
+  assert.deepEqual(ENGINEERS_OF_THE_SYSTEM.attainments.map(item=>item.name),["See the Bones and Gears","Rebuild the Living Machine","Become the Ecosystem"]);
+  const engineer=mage({path:"Thyrsus",order:"Orderless",arcana:{Espaço:2}});
+  engineer.skills={Investigação:2,Intimidação:2};
+  assert.equal(legacyEntryPrerequisites(engineer,ENGINEERS_OF_THE_SYSTEM).met,true);
+  engineer.skills.Investigação=3;
+  assert.equal(legacyAttainmentPrerequisites(engineer,ENGINEERS_OF_THE_SYSTEM,2),true);
 });
 
 test("Legacy prerequisites read the canonical Portuguese trait keys stored by the sheet",()=>{
