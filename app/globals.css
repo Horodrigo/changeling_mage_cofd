@@ -249,6 +249,21 @@
 .wisdom-resource>small { color:#606870; font-size:11px; line-height:1.4; }
 .inured-spell-list { display:grid; gap:4px; }
 .inured-spell-list>div { display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid #d8d2c7; padding-top:4px; }
+.wisdom-sheet-section { display:grid; gap:7px; margin-top:12px; }
+.wisdom-sheet-section>small { color:#606870; font-size:11px; line-height:1.4; }
+.mage-order-summary { display:grid; gap:4px; margin-top:10px; }
+.mage-order-summary>strong { color:var(--sheet-ink); font:700 14px Georgia,"Times New Roman",serif; }
+.mage-order-summary p { margin:0; color:#5f5b60; font-size:11px; line-height:1.4; }
+.mage-order-summary small { color:#6b676d; font-size:10px; }
+.nimbus-editor { display:grid; gap:8px; }
+.nimbus-editor article { display:grid; gap:7px; padding:9px; border:1px solid color-mix(in srgb,var(--sheet-accent) 25%,#d8d2c8); background:#fffefa; }
+.nimbus-editor header { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.nimbus-editor article>small { color:#66616a; font-size:10px; line-height:1.4; }
+.nimbus-editor input { height:30px; }
+.nimbus-effects { display:grid; gap:6px; }
+.nimbus-effects>div { display:grid; grid-template-columns:minmax(0,1fr) 82px auto; align-items:center; gap:6px; }
+.nimbus-effects [data-slot="select-trigger"] { min-width:0; height:30px; }
+@media(max-width:520px){.nimbus-effects>div{grid-template-columns:minmax(0,1fr) 72px}.nimbus-effects>div>button{grid-column:1/-1;justify-self:end}}
 .compact-remove-action { width:auto!important; min-width:0!important; height:28px!important; padding:0 8px!important; font-size:11px!important; }
 @media (max-width:760px) { .mage-bottom-grid { grid-template-columns:1fr; } }
 .sheet-heading-action .experience-merit-trigger { width:auto; min-width:0; padding-inline:12px; }

@@ -164,6 +164,7 @@ import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancem
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
+import { mageNimbusConnection, mageNimbusTiltBudget, normalizeNimbusTiltEffects } from "@/lib/mage-nimbus";
 
 export function CharacterPaper({
   character,
@@ -268,6 +269,8 @@ export function CharacterPaper({
   const setInuredSpells=(items:Array<Record<string,unknown>>)=>{const next=structuredClone(character);next.line_data.inured_spells=items;updateSheet(next);};
   const addInuredSpell=(id:string)=>{if(inuredSpells.length>=gnosis)return;const spell=[...SPELLS,...homebrews.spells].find(item=>item.id===id);if(!spell)return;setInuredSpells([...inuredSpells,{...spell}]);};
   const removeInuredSpell=(id:string)=>setInuredSpells(inuredSpells.filter(item=>String(item.id)!==id));
+  const nimbusEffects=normalizeNimbusTiltEffects(data.nimbus_tilt_effects,gnosis);
+  const setNimbusEffects=(effects:Array<{trait:string;modifier:number}>)=>{const next=structuredClone(character);next.line_data.nimbus_tilt_effects=normalizeNimbusTiltEffects(effects,gnosis);updateSheet(next);};
   const removePraxis=(item:Record<string,unknown>)=>{
     const id=String(item.id??""),next=structuredClone(character);
     const history=Array.isArray(next.current_state.mage_experience_history)?next.current_state.mage_experience_history as Array<{id:string;regular:number;arcane:number;undo?:MageAdvancementUndo}>:[];
@@ -421,7 +424,7 @@ export function CharacterPaper({
               <div className="wisdom-sheet-section"><SheetHeading>Sabedoria</SheetHeading><TraitLine name={tr("Sabedoria","Wisdom")} value={Number(data.wisdom??7)} /><div className="sheet-heading-action"><strong>{tr("Feitiços Inured","Inured Spells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length<gnosis&&<ExperiencePowerPicker kind="Feitiço" items={availableInuredSpells} selectedId="" onSelect={addInuredSpell} compact/>}</div><small>{tr("Após perder Sabedoria pelo uso de uma magia, ela pode ser Inured: usos futuros não causam essa perda, mas sempre provocam um risco básico de Paradoxo de dois dados. MtA, p. 88.","After losing Wisdom from using a spell, it may be Inured: future uses do not cause that loss, but always provoke a base two-die Paradox risk. MtA, p. 88.")}</small><div className="inured-spell-list">{inuredSpells.map(item=><div key={String(item.id)}><span>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={()=>removeInuredSpell(String(item.id))}><Trash2/> {tr("Remover","Remove")}</Button></div>)}</div></div>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
               <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={tr("Ferramenta Dedicada:","Dedicated Tool:")} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
-              <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={3} maximum={3} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
+              <SheetHeading>Inclinação do Nimbus</SheetHeading><NimbusEditor wisdom={Number(data.wisdom??7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value)=>updateLineData(updateSheet,character,"nimbus_tilt",value)} onEffectsChange={setNimbusEffects}/>
               <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div><SpellColumn items={praxes} minimumRows={gnosis} onRemove={removePraxis} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
               <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
@@ -790,15 +793,7 @@ export function CharacterPaper({
                   onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}
                 />
                 <SheetHeading>Inclinação do Nimbus</SheetHeading>
-                <EditableList
-                  values={stringList(data.nimbus_tilt)}
-                  minimum={3}
-                  maximum={3}
-                  placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")}
-                  onChange={(value) =>
-                    updateLineData(updateSheet, character, "nimbus_tilt", value)
-                  }
-                />
+                <NimbusEditor wisdom={Number(data.wisdom??7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value)=>updateLineData(updateSheet,character,"nimbus_tilt",value)} onEffectsChange={setNimbusEffects}/>
                 <SheetHeading>Méritos Expandidos</SheetHeading>
                 <ExpandedMeritList
                   merits={character.merits.filter((item) =>
@@ -1457,6 +1452,62 @@ function LineList({ items }: { items: string[] }) {
       {!items.filter(Boolean).length && <div>&nbsp;</div>}
     </div>
   );
+}
+function NimbusEditor({
+  wisdom,
+  gnosis,
+  values,
+  effects,
+  onChange,
+  onEffectsChange,
+}: {
+  wisdom:number;
+  gnosis:number;
+  values:string[];
+  effects:Array<{trait:string;modifier:number}>;
+  onChange:(value:string[])=>void;
+  onEffectsChange:(value:Array<{trait:string;modifier:number}>)=>void;
+}) {
+  const {locale,tr}=useLanguage();
+  const descriptions=[...values.slice(0,3)];
+  while(descriptions.length<3) descriptions.push("");
+  const connection=mageNimbusConnection(wisdom);
+  const connectionLabel=connection==="Strong"?tr("Forte","Strong"):connection==="Medium"?tr("Média","Medium"):tr("Fraca","Weak");
+  const budget=mageNimbusTiltBudget(gnosis);
+  const allocated=effects.reduce((total,item)=>total+Math.abs(item.modifier),0);
+  const traits=[...Object.values(ATTRIBUTES).flat(),...Object.values(SKILLS).flat()];
+  const setDescription=(index:number,value:string)=>{const next=[...descriptions];next[index]=value;onChange(next);};
+  const updateEffect=(index:number,patch:Partial<{trait:string;modifier:number}>)=>onEffectsChange(effects.map((item,itemIndex)=>itemIndex===index?{...item,...patch}:item));
+  const unused=traits.filter(trait=>!effects.some(item=>item.trait===trait));
+  return <div className="nimbus-editor">
+    <article>
+      <header><strong>{tr("Nimbus de Longo Prazo","Long-Term Nimbus")}</strong><Badge variant="outline">{tr("Conexão simpática","Sympathetic connection")}: {connectionLabel}</Badge></header>
+      <small>{tr("O alcance é calculado automaticamente a partir da Sabedoria.","Range is calculated automatically from Wisdom.")} · MtA, p. 89</small>
+      <Input value={descriptions[0]} onChange={event=>setDescription(0,event.target.value)} placeholder={tr("Coincidências e efeitos sutis ao redor do mago","Subtle coincidences and effects surrounding the mage")}/>
+    </article>
+    <article>
+      <header><strong>{tr("Nimbus Imediato","Immediate Nimbus")}</strong><Badge variant="outline">{allocated}/{budget} {tr("dados alocados","dice allocated")}</Badge></header>
+      <small>{tr("Defina a aparência e distribua bônus ou penalidades entre Atributos e Perícias.","Define its appearance and distribute bonuses or penalties among Attributes and Skills.")} · MtA, p. 90</small>
+      <Input value={descriptions[1]} onChange={event=>setDescription(1,event.target.value)} placeholder={tr("Aparência ou sensação do Nimbus e seu Tilt","Appearance or sensation of the Nimbus and its Tilt")}/>
+      <div className="nimbus-effects">
+        {effects.map((effect,index)=>{
+          const withoutCurrent=allocated-Math.abs(effect.modifier);
+          const allowed=Array.from({length:budget*2},(_,item)=>item<budget?item-budget:item-budget+1).filter(value=>withoutCurrent+Math.abs(value)<=budget);
+          return <div key={`${effect.trait}-${index}`}>
+            <Select value={effect.trait} onValueChange={value=>updateEffect(index,{trait:value})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{traits.filter(trait=>trait===effect.trait||!effects.some((item,itemIndex)=>itemIndex!==index&&item.trait===trait)).map(trait=><SelectItem key={trait} value={trait}>{systemTerm(trait,locale)}</SelectItem>)}</SelectContent></Select>
+            <Select value={String(effect.modifier)} onValueChange={value=>updateEffect(index,{modifier:Number(value)})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{allowed.map(value=><SelectItem key={value} value={String(value)}>{value>0?`+${value}`:value}</SelectItem>)}</SelectContent></Select>
+            <Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={()=>onEffectsChange(effects.filter((_,itemIndex)=>itemIndex!==index))}><Trash2/> {tr("Remover","Remove")}</Button>
+          </div>;
+        })}
+        {allocated<budget&&unused.length>0&&<Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={()=>onEffectsChange([...effects,{trait:unused[0],modifier:1}])}><Plus/> {tr("Adicionar efeito","Add effect")}</Button>}
+      </div>
+    </article>
+    <article>
+      <header><strong>{tr("Nimbus de Assinatura","Signature Nimbus")}</strong></header>
+      <small>{tr("Descreva o resíduo identificável deixado pela magia do personagem.","Describe the recognizable residue left by the character's magic.")} · MtA, pp. 89–90</small>
+      <Input value={descriptions[2]} onChange={event=>setDescription(2,event.target.value)} placeholder={tr("Descrição da assinatura mágica","Magical signature description")}/>
+    </article>
+  </div>;
 }
 function EditableList({
   values,
