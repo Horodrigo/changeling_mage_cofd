@@ -3178,7 +3178,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Study an object for one turn to learn it's intended function. If the object has no purpose that will be revealed instead. If something prevents the object from fulfilling it's function, the spell will reveal the nature of the problem +1 Reach: Learn how to use the studied object. This grants the 8-Again when using the object. Only one object can benefit from this bonus at once +2 Reach: Learn all possible uses for an object Add Fate 1: Name a task while casting the spell. All objects that could help you with this task will become obvious to you",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 154
+    "page": 154,
+    "summary": "Study an object for one turn to learn its intended purpose, whether it lacks one, and any problem preventing it from functioning. The basic spell identifies function without automatically teaching operation.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-1-detect-substance",
@@ -3198,7 +3200,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Become aware of a chosen type of substance in the area. \"Iron\", \"A knife\" and \"My hunting Knife\" are all valid choices Add Time 1: Determine if an object has been in the area Add Forces 1: Search for a specific type of electronic information",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 154
+    "page": 154,
+    "summary": "Choose a substance or type of object and sense every matching example within the area, from broad categories such as iron to a specific personal item.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-1-discern-composition",
@@ -3218,7 +3222,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Become aware of an objects weight, density and the precise elements in it's makeup +1 Reach: Also become aware of any objects hidden within the studied object +1 Reach: You know an object's structural weak points. Reduce Durability by spell Potency Add Space 2: Know not only what an object was made of but also where the materials came from",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 154
+    "page": 154,
+    "summary": "Learn an object’s weight, density, and precise material composition. The information describes what it is made from rather than its history or origin.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-1-lodestone",
@@ -3238,7 +3244,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Choose a substance or type of object. Those objects will be drawn toward you or repelled away from you",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 154
+    "page": 154,
+    "summary": "Choose a substance or type of object and compel matching matter in the area to move toward or away from the subject for the Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-1-remote-control",
@@ -3258,7 +3266,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Control a mechanical object, to make it fulfill its function +1 Reach: Perform more complex task while controlling the object",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 155
+    "page": 155,
+    "summary": "Compel a mechanical object to perform its normal function without physical operation. The basic spell handles simple actions, with complex or extended tasks requiring additional Reach.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-2-alchemist-s-touch",
@@ -3278,7 +3288,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Choose a material, you become largely immune to its deleterious effects. The material cannot inflict bashing damage and lethal damage is reduced by spell Potency. The spell does not protect against damage from a sword or gun +1 Reach: Choose an additional material to be protected against +2 Reach: Your immune to both the bashing and lethal, aggravated damage is reduced by Potency Add Forces 2: You are now also protected against the damage from the extreme temperature of a material",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 155
+    "page": 155,
+    "summary": "Choose one material and protect the subject from its direct harmful properties: it cannot inflict bashing damage and its lethal damage is reduced by Potency. The protection does not stop an object made from that material from harming through shape or force, such as a sword or bullet.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-2-find-the-balance",
@@ -3298,7 +3310,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Improve the balance and heft of an item. This grants it the 9-Again quality +1 Reach: Grant a tool the 8-Again quality instead",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 155
+    "page": 155,
+    "summary": "Perfect a tool’s balance, weight, and handling so rolls using it gain 9-Again for the Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-2-hidden-hoard",
@@ -3318,7 +3332,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Make matter difficult to detect. Mundane attempts to locate automatically fail. Supernatural power enters a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 156
+    "page": 156,
+    "summary": "Veil selected matter from detection: mundane attempts to locate it fail automatically, while supernatural searches provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-2-machine-invisibility",
@@ -3338,7 +3354,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Become invisible to mechanical sensors. Supernatural items enter a Clash of Wills +1 Reach: This spell now also works on constructs animated with magic, like zombies and golems. This triggers a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 156
+    "page": 156,
+    "summary": "Make the subject undetectable to mechanical sensors, cameras, and similar devices. Supernatural sensing devices may overcome the veil through a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-2-shaping",
@@ -3358,7 +3376,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Shape liquids and gases in any form you desire in defiance of gravity +1 Reach: Can alter solids as well. Warped tools or weapons will have their equipment bonus reduced by potency, if reduced to 0 the object becomes useless +1 Reach: If creating or repairing an object in an extended action reduce its required successes by this spell's Potency, the number cannot fall below one +2 Reach: The shaping can create an appropriate Environmental Tilt, such as Earthquake, Flooded or Howling Winds",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 156
+    "page": 156,
+    "summary": "Freely shape liquid or gaseous matter within Scale and hold it in forms that defy gravity. The spell changes form and position without transmuting the substance.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-aegis",
@@ -3378,7 +3398,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "For each level of Potency grant an object one of the following: Raise/lower ballistic Armor by 1, raise/lower general Armor by 1, raise/lower Defense penalty by 1 +1 Reach: The armor becomes immune to the Armor-Piercing effect",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 156
+    "page": 156,
+    "summary": "Modify wearable armor, spending each point of Potency to raise or lower ballistic armor, general armor, or its Defense penalty by one. Matter cannot use this spell to armor a living body directly.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-alter-conductivity",
@@ -3398,7 +3420,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Make an object more or less conductive to electricity +1 Reach: Alter an objects conductivity to other forms of energy. Each additional type is an extra Reach",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 156
+    "page": 156,
+    "summary": "Increase or decrease an object’s electrical conductivity by Potency. It can disable devices whose current cannot cause damage or modify damage conducted through the subject.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-alter-integrity",
@@ -3418,7 +3442,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Increase or decrease an objects Durability +1 Reach: Instead of increasing Durability by 1 increase structure by 2 +2 Reach: The effect is lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 156
+    "page": 156,
+    "summary": "Increase or decrease an object’s Durability by Potency, resisted by its existing Durability. Changes to Durability alter the protection against Structure damage rather than repairing damage already suffered.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-crucible",
@@ -3438,7 +3464,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Grant a tool the 8-Again for a number of turns. Valuable objects will have their Availability rating increased, this rating cannot become more than double the original rating +1 Reach: Spend one point of Mana, The object gains the rote quality for a number of rolls. So long as the durability last this effect can be recharged by spending more Mana +1 Reach: Availability may be triple the original rating",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 157
+    "page": 157,
+    "summary": "Perfect a tool to grant 8-Again on up to Potency uses, or improve a valuable substance’s Availability by Potency to no more than twice its original rating.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:matter-3-hone-the-perfected-form",
@@ -3458,7 +3486,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1 Mana* The mage takes an ordinary metal (iron, gold, silver, mercury, copper, tin or lead) and transmutes it into its perfected metal. +2 Reach: The spell may Perfect another substance like Glass or Gemstones Forces ●●●: May perfect fire",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 61
+    "page": 61,
+    "summary": "For one Mana, transmute one continuous piece of iron, gold, silver, mercury, copper, tin, or lead into its corresponding Perfected Metal for the Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-nigredo-and-albedo",
@@ -3478,7 +3508,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Repair or damage an objects Structure +1 Reach: When damaging ignore durability",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 157
+    "page": 157,
+    "summary": "Repair or damage an object’s Structure by Potency. Damage normally applies Durability, while repairs restore lost Structure without changing the object’s maximum.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-shrink-and-grow",
@@ -3498,7 +3530,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Increase or decrease an objects size Add Life 3: Can be cast on living subjects, unwilling subjects may Withstand with Stamina",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 157
+    "page": 157,
+    "summary": "Increase or decrease an object’s Size by one per Potency, resisted by Durability. Size 0 objects can shrink only to roughly the size of a dime.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:matter-3-spell-potion",
@@ -3519,7 +3553,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* Magically alters an ingested item, making it act as a storage vessel for another spell. Once the Ingested item has been primed for holding a mage may spend a Mana to cast any other spell on the item if it uses touch/self range. The cast spell doesn't take affect until the item is ingested. May store spells up to level of Potency which don't activate until either Spell Potion is canceled, the Duration ends or the food is injested",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 70
+    "page": 70,
+    "summary": "For one Mana, turn food or drink into a vessel for up to Potency touch- or self-range spells, each stored for an additional Mana. The spells remain controlled and inactive until someone consumes the potion; consuming it empty provides no nutrition, and stored spells end with Spell Potion.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-state-change",
@@ -3539,7 +3575,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Change material one step along the path from solid to liquid to gas. This does not cause any temperature change +1 Reach: You may transform solids directly int gas and vice versa Add Forces 3: You may transmute matter into plasma",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 157
+    "page": 157,
+    "summary": "Move inorganic matter one step between solid, liquid, and gas without changing its temperature. Newly solid matter has Durability equal to Potency and Structure equal to Durability + Size; when the spell ends, it returns to its natural state while retaining its current shape.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-windstrike",
@@ -3559,7 +3597,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal bashing damage +1 Reach: Create an appropriate Environmental Tilt",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 157
+    "page": 157,
+    "summary": "Drive air or another fluid into the subject as an attack, inflicting bashing damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-3-wonderful-machine",
@@ -3579,7 +3619,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Integrate multiple machines into one another Add Life 3: Machine properties can be grafted onto a living thing or vice versa",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 157
+    "page": 157,
+    "summary": "Transfer one mechanical quality per Potency from component objects into another machine, including swapping weapon characteristics or concealing a firearm within a device. The resulting machine combines functions without creating capabilities absent from its components.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-endless-bounty",
@@ -3599,7 +3641,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Never run out of small expendable items. Enchant a single item that contains a smaller expendable item. For the duration of the spell the expendable item never runs out E.g.: Money in wallet, Bullets in magazine, Gas in car tank",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 66
+    "page": 66,
+    "summary": "Enchant a container holding at least one small expendable item so its contents never run out during the spell. Each generated unit may have a value up to Resources equal to Potency, covering ammunition, cash, fuel, and similar supplies.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-forge-dumanium",
@@ -3619,7 +3663,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* Combine perfected metals into a single metal called Dumanium. The object is Durability 1 and holds 1 point of Mana. Weapons made from Dumanium can spend Mana to deal aggravated Damage for a single attack +2 Reach: The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 62
+    "page": 62,
+    "summary": "For one Mana, alloy Perfected kassiterum and siderite into dumanium with base Durability 1 and Mana capacity 1. Allocate Potency among Durability, Mana capacity, equipment bonus up to +5, or 1/1 armor; a weapon may spend stored Mana to deal aggravated damage for one attack.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-forge-sophis",
@@ -3639,7 +3685,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* Combine perfected metals into a single metal that scavenges Mana called Sophis. The object is Durability 1 and can hold 1 Mana. Potency increases this 1 for 1 for Durability and Mana. +2 Reach: The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 62
+    "page": 62,
+    "summary": "For one Mana, alloy Perfected apeiron, bronzium, and hermium into sophis with base Durability 1 and Mana capacity 1, allocating Potency between them. Once per scene, it captures one Mana when its holder spends Mana, without reducing that expenditure.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-forge-thaumium",
@@ -3659,7 +3707,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* Combine perfected metals to create Thaumium, The object is Durability 1 and holds 1 point of Mana which it spends to shield against Magic. +2 Reach: The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse Other Arcanum ●●: Thaumium can protect against other types of Magic provided they fall under the Arcanum",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 62
+    "page": 62,
+    "summary": "For one Mana, alloy Perfected orichalcum, lunargent, and hermium into thaumium with base Durability 1 and Mana capacity 1, allocating Potency between them. While charged, it spends one Mana to Clash against unwanted Supernal magic using its creator’s casting-time Gnosis + Matter.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-4-ghostwall",
@@ -3679,7 +3729,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Turn objects intangible Add Death 3, Mind 3 or Spirit 3: The object may be shifted into the Twilight, attuned to the used Arcanum",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 158
+    "page": 158,
+    "summary": "Render a volume of inert matter partly or wholly insubstantial for the Duration. It remains in place and does not enter Twilight, but ceases to register as materially real.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-4-golem",
@@ -3699,7 +3751,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Animate a statue or other object Add Death 4 or Spirit 4: A ghost or spirit may serve as the intelligence of the golem Add Mind 5: Grant true  intelligence see \"Psychic Genesis\"",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 158
+    "page": 158,
+    "summary": "Animate an object as a mindless Retainer rated equal to Potency for simple labor, combat, and similar tasks. It follows only its latest simple order, has no Defense, and retains material Durability with Structure equal to Durability + Size.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-4-piercing-earth",
@@ -3719,7 +3773,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal lethal damage +1 Reach: Create an appropriate Environmental Tilt +1 Reach: Spend a point of Mana, deal aggravated damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 158
+    "page": 158,
+    "summary": "Make solid matter rise and crush the subject as an attack, inflicting lethal damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-4-transubstantiation",
@@ -3739,7 +3795,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Transform any type of matter into another type +1 Reach: Transmute multiply substance into a single substance or vice versa Add Life 4: Transform matter into living things or vice versa",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 158
+    "page": 158,
+    "summary": "Transform one relatively pure inert substance into another, with quality or purchasing value equal to Potency. Both source and result must be coherent substances rather than intricate mixtures.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-5-annihilate-matter",
@@ -3759,7 +3817,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Destroy matter completely +1 Reach: Spend a point of Mana, can now destroy magical objects as well",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 158
+    "page": 158,
+    "summary": "Completely erase inert matter, leaving no fragments or residue, resisted by Durability. The basic spell cannot destroy magical materials or objects.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-5-ex-nihilo",
@@ -3779,7 +3839,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create an object or relatively uncomplicated tool out of nothing +1 Reach: Create a complex machine or electronic device, like a car or smartphone",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 158
+    "page": 158,
+    "summary": "Create a simple tool or relatively uncomplicated machine from nothing, with Size set by Scale. Allocate Potency between the object’s Durability and equipment bonus.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-5-self-repairing-machine",
@@ -3799,7 +3861,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cause a machine to repair Potency in Structure per day +1 Reach: The machine heals every hour +2 Reach: The machine heals every 15 minutes",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 159
+    "page": 159,
+    "summary": "Give a machine the ability to repair itself, restoring Structure equal to Potency once per day until it reaches its normal maximum.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-1-know-nature",

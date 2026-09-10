@@ -105,6 +105,22 @@ test("Life summaries are fully reviewed against the offline PDFs", () => {
   assert.deepEqual(shapechanging.roteSkills,["Animal Ken","Athletics","Science"]);
 });
 
+test("Matter summaries are fully reviewed against the offline PDFs", () => {
+  const matter=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Matter");
+  assert.equal(matter.length,32);
+  assert.ok(matter.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(matter.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),matter.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(matter.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),matter.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Craftsman's Eye","Alchemist's Touch","State Change","Spell Potion","Forge Dumanium","Forge Sophis","Forge Thaumium","Ex Nihilo"]){
+    const spell=matter.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  const exNihilo=matter.find((spell)=>spell.name==="Ex Nihilo");
+  assert.match(exNihilo.summary,/Size set by Scale/);
+  assert.match(exNihilo.summary,/Potency between.*Durability.*equipment bonus/);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");
