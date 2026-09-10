@@ -53,6 +53,7 @@ export function CompanionPage({
                 name={String(saved.animalName??"")}
                 onRemove={()=>{}}
                 removable={false}
+                onNameChange={(animalName)=>{const next=structuredClone(character),conditions=objectList(next.current_state?.conditions);next.current_state={...next.current_state,conditions:conditions.map((item,itemIndex)=>itemIndex===objectList(character.current_state?.conditions).indexOf(saved)?{...item,animalName}:item)};updateSheet(next);}}
               />
             ) : null;
           })}
@@ -427,11 +428,13 @@ function AnimalCard({
   name,
   onRemove,
   removable=true,
+  onNameChange,
 }: {
   animal: Animal;
   name?: string;
   onRemove: () => void;
   removable?: boolean;
+  onNameChange?: (value:string)=>void;
 }) {
   const { tr }=useLanguage();
   return (
@@ -445,6 +448,7 @@ function AnimalCard({
           <X />
         </Button>}
       </header>
+      {onNameChange&&<label className="companion-field">{tr("Nome","Name")}<Input value={name??""} onChange={(event)=>onNameChange(event.target.value)} placeholder={animal.name}/></label>}
       <p>
         <b>{tr("Atributos","Attributes")}:</b> {animal.attributes}
       </p>

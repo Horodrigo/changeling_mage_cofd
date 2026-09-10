@@ -104,6 +104,7 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { builderText } from "./character-builder-messages";
 import { ENTITLEMENTS, findEntitlement } from "@/lib/entitlements";
+import { ConfirmAction } from "./workspace/confirm-action";
 
 export type Specialty = { skill: string; name: string; grantedBy?: string };
 export type MeritSelection = {
@@ -2619,19 +2620,14 @@ function Merits({
                     String,
                   )}
                 />
-                {!selection.grantedBy && <Button
+                {!selection.grantedBy && ((["Fae Mount","Fae Pet","Familiar","Entitlement"].includes(selection.name))?<ConfirmAction trigger={<Button
                   type="button"
                   variant="ghost"
                   size="icon"
                   aria-label={`${tr("Remover", "Remove")} ${definition ? meritName(definition) : selection.name}`}
-                  onClick={() => {
-                    const linked=["Fae Mount","Fae Pet","Familiar"].includes(selection.name), entitlement=selection.name==="Entitlement";
-                    if((linked||entitlement)&&!window.confirm(linked?tr("Remover este Mérito também removerá o Companion vinculado. Continuar?","Removing this Merit will also remove its linked Companion. Continue?"):tr("Remover Entitlement também removerá o Título e todos os benefícios concedidos. Continuar?","Removing Entitlement will also remove the title and all granted benefits. Continue?")))return;
-                    setMerits(merits.filter((_, itemIndex) => itemIndex !== index));
-                  }}
                 >
                   <Trash2 />
-                </Button>}
+                </Button>} title={selection.name==="Entitlement"?tr("Remover Entitlement?","Remove Entitlement?"):tr(`Remover ${definition?meritName(definition):selection.name}?`,`Remove ${definition?meritName(definition):selection.name}?`)} description={selection.name==="Entitlement"?tr("O Título e todos os benefícios concedidos serão removidos.","The Entitlement and all granted benefits will be removed."):tr("O Mérito e seu Companion vinculado serão removidos.","The Merit and its linked Companion will be removed.")} action={tr("Remover","Remove")} onConfirm={()=>setMerits(merits.filter((_,itemIndex)=>itemIndex!==index))}/>:<Button type="button" variant="ghost" size="icon" aria-label={`${tr("Remover","Remove")} ${definition?meritName(definition):selection.name}`} onClick={()=>setMerits(merits.filter((_,itemIndex)=>itemIndex!==index))}><Trash2/></Button>)}
               </div>
               {selection.name !== "Familiar" && <MeritConfigurationEditor
                 merit={selection}

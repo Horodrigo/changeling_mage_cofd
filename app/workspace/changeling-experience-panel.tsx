@@ -29,6 +29,7 @@ import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { stringList } from "./sheet-primitives";
 import { workspaceTerm } from "./workspace-i18n";
+import { ConfirmAction } from "./confirm-action";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -345,8 +346,6 @@ export function ExperiencePanel({
       return setFeedback(
         tr("Esta compra antiga não contém dados suficientes para ser revertida.", "This older purchase does not contain enough data to be refunded."),
       );
-    if(entry.undo.kind==="merit"&&entry.undo.name==="Entitlement"&&!window.confirm(tr("Reembolsar Entitlement removerá o Título, suas graduações, Blessings, Heráldica e todos os benefícios concedidos. Continuar?","Refunding Entitlement will remove the title, its ranks, Blessings, Heraldry, and all granted benefits. Continue?")))return;
-    if(entry.undo.kind==="merit"&&["Fae Mount","Fae Pet","Familiar"].includes(entry.undo.name)&&!window.confirm(tr("Reembolsar este Mérito também removerá o Companion vinculado. Continuar?","Refunding this Merit will also remove its linked Companion. Continue?")))return;
     const next = structuredClone(character);
     const undo = entry.undo;
     if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], 1, undo.group === "attributes" ? 1 : 0);
@@ -814,15 +813,14 @@ export function ExperiencePanel({
                 <small>
                   {new Date(entry.createdAt).toLocaleDateString(locale)}
                 </small>
-                <Button
+                {entry.undo?.kind==="merit"&&["Entitlement","Fae Mount","Fae Pet","Familiar"].includes(entry.undo.name)?<ConfirmAction trigger={<Button
                   type="button"
                   size="sm"
                   variant="ghost"
                   disabled={!entry.undo}
-                  onClick={() => revertPurchase(entry)}
                 >
                   <RotateCcw /> {tr("Reverter","Refund")}
-                </Button>
+                </Button>} title={tr(`Reembolsar ${entry.undo.name}?`,`Refund ${entry.undo.name}?`)} description={entry.undo.name==="Entitlement"?tr("O reembolso removerá o Título, suas graduações, Blessings, Heráldica e todos os benefícios concedidos.","The refund will remove the Entitlement, its ranks, Blessings, Heraldry, and all granted benefits."):tr("O reembolso removerá o Mérito e seu Companion vinculado.","The refund will remove the Merit and its linked Companion.")} action={tr("Reembolsar","Refund")} onConfirm={()=>revertPurchase(entry)}/>:<Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={()=>revertPurchase(entry)}><RotateCcw /> {tr("Reverter","Refund")}</Button>}
               </p>
             ))
           ) : (
