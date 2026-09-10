@@ -259,6 +259,14 @@ export function CharacterPaper({
     next.line_data.learned_praxes=[...objectList(next.line_data.learned_praxes),{...spell}];
     updateSheet(next);
   };
+  const removePraxis=(item:Record<string,unknown>)=>{
+    const id=String(item.id??""),next=structuredClone(character);
+    const history=Array.isArray(next.current_state.mage_experience_history)?next.current_state.mage_experience_history as Array<{id:string;regular:number;arcane:number;undo?:MageAdvancementUndo}>:[];
+    const purchase=history.find(entry=>entry.undo?.kind==="spell"&&entry.undo.key==="learned_praxes"&&entry.undo.id===id);
+    if(purchase?.undo){refundMageAdvancement(next,purchase.undo);next.current_state.mage_experience_available=Number(next.current_state.mage_experience_available??0)+purchase.regular;next.current_state.arcane_experience_available=Number(next.current_state.arcane_experience_available??0)+purchase.arcane;next.current_state.mage_experience_spent=Math.max(0,Number(next.current_state.mage_experience_spent??0)-purchase.regular);next.current_state.arcane_experience_spent=Math.max(0,Number(next.current_state.arcane_experience_spent??0)-purchase.arcane);next.current_state.mage_experience_history=history.filter(entry=>entry.id!==purchase.id);}
+    else for(const key of ["praxes","learned_praxes"]){const list=objectList(next.line_data[key]),index=list.findIndex(candidate=>String(candidate.id??"")===id);if(index>=0){list.splice(index,1);next.line_data[key]=list;break;}}
+    updateSheet(next);
+  };
   const legacyState = !isCtl ? normalizeLegacyState(data.legacy_state) : null;
   const hasLegacyAccess = !isCtl && (gnosis >= 2 || Boolean(legacyState?.joined));
   const legacyDisplay = legacyState?.joined ? ELEVENTH_QUESTION.name : gnosis >= 3 ? tr("Join/Create","Join/Create") : gnosis >= 2 ? tr("Join","Join") : "";
@@ -405,7 +413,7 @@ export function CharacterPaper({
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} highlightTone={legacyState?.joined&&name===ELEVENTH_QUESTION.rulingArcanum?"legacy":undefined} />)}</div>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
-              <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis}/>}</div><SpellColumn items={praxes} minimumRows={gnosis} />
+              <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div><SpellColumn items={praxes} minimumRows={gnosis} onRemove={removePraxis} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
               <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
               <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
@@ -802,8 +810,8 @@ export function CharacterPaper({
                     )
                   }
                 />
-                <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis}/>}</div>
-                <SpellColumn items={praxes} minimumRows={gnosis} />
+                <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div>
+                <SpellColumn items={praxes} minimumRows={gnosis} onRemove={removePraxis} />
               </section>
               <section className="mage-page-main">
                 <SheetHeading>Rotas</SheetHeading>
@@ -1768,10 +1776,12 @@ function SpellColumn({
   items,
   showSkill = false,
   minimumRows = 0,
+  onRemove,
 }: {
   items: Array<Record<string, unknown>>;
   showSkill?: boolean;
   minimumRows?: number;
+  onRemove?: (item:Record<string,unknown>)=>void;
 }) {
   const {locale,tr}=useLanguage();
   const arcanaSource=(item:Record<string,unknown>)=>`${Object.entries((item.requirements??{}) as Record<string,number>).map(([name,dots])=>`${systemTerm(name,locale)} ${"•".repeat(dots)}`).join(" + ")} · ${String(item.source??"")} · p. ${String(item.page??"—")}`;
@@ -1781,7 +1791,7 @@ function SpellColumn({
         <details className="contract-power-card"
           key={`${String(item.id ?? item.name)}-${index}`}
         >
-          <summary className="contract-power-summary"><strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>Practice:</strong> {String(item.practice??"")} | <strong>Primary Factor:</strong> {String(item.primaryFactor??"")}</span>{Boolean(item.withstand)&&<span className="spell-card-rule-line"><strong>Withstand:</strong> {String(item.withstand)}</span>}{showSkill&&Boolean(item.roteSkill)&&<span className="spell-card-rule-line"><strong>Rote Skill:</strong> {systemTerm(String(item.roteSkill),locale)}</span>}</summary>
+          <summary className="contract-power-summary"><strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong>{onRemove&&<Button type="button" variant="ghost" size="sm" onClick={event=>{event.preventDefault();event.stopPropagation();onRemove(item);}}><Trash2/> {tr("Remover","Remove")}</Button>}<small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>Practice:</strong> {String(item.practice??"")} | <strong>Primary Factor:</strong> {String(item.primaryFactor??"")}</span>{Boolean(item.withstand)&&<span className="spell-card-rule-line"><strong>Withstand:</strong> {String(item.withstand)}</span>}{showSkill&&Boolean(item.roteSkill)&&<span className="spell-card-rule-line"><strong>Rote Skill:</strong> {systemTerm(String(item.roteSkill),locale)}</span>}</summary>
           <div className="contract-power-details"><p><strong>Summary:</strong> {spellItemSummary(item)}</p>{spellItemReach(item)&&<p><strong>Reach:</strong> {spellItemReach(item)}</p>}</div>
         </details>
       ))}

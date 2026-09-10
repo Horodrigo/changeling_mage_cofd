@@ -143,11 +143,13 @@ export function ExperiencePowerPicker({
   items,
   selectedId,
   onSelect,
+  compact = false,
 }: {
   kind: "Contrato" | "Rota" | "Práxis" | "Benefício de Contrato";
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;
+  compact?: boolean;
 }) {
   const {locale,tr}=useLanguage();
   const [search, setSearch] = useState("");
@@ -174,7 +176,7 @@ export function ExperiencePowerPicker({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="experience-merit-trigger">
+        <Button type="button" variant="outline" size={compact ? "sm" : undefined} className={compact ? "builder-add-action" : "experience-merit-trigger"}>
           <span>{selected?.name ?? `${tr("Selecionar","Select")} ${workspaceTerm(kind,locale)}`}</span>
           <Search />
         </Button>
