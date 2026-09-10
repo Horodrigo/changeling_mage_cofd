@@ -136,6 +136,22 @@ test("Mind summaries are fully reviewed against the offline PDFs", () => {
   assert.match(mind.find((spell)=>spell.name==="Goetic Evocation").summary,/Rank equal to half.*Gnosis/);
 });
 
+test("Prime summaries are fully reviewed against the offline PDFs", () => {
+  const prime=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Prime");
+  assert.equal(prime.length,50);
+  assert.ok(prime.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(prime.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),prime.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(prime.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),prime.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Dispel Magic","Shared Sight","Platonic Form","Scribe Palimpsest","Steal Mana","Blasphemy","Eidolon"]){
+    const spell=prime.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  assert.equal(prime.find((spell)=>spell.name==="Transfer Soul Stone").withstand,"Resolve of soul stone's creator");
+  assert.match(prime.find((spell)=>spell.name==="Blasphemy").summary,/Sleepers.*Enervated/);
+  assert.match(prime.find((spell)=>spell.name==="Eidolon").summary,/does not crumble.*Mana/);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");

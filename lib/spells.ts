@@ -4877,7 +4877,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Temporarily suppress or destroy an active spell Add Fate 1: Selectively suppress spell +2 Reach: Make the effect Lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 165
+    "page": 165,
+    "summary": "Suppress an active spell for the Duration, Withstood by its caster’s rating in the spell’s highest Arcanum. The casting must include one dot of every Arcanum used by the target spell.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-1-nimbus-tuning",
@@ -4897,7 +4899,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The mage can tune in more attentively to any Signature Nimbus he scrutinizes with Focused Mage sight. For Each potency learn one of the following: Gnosis, Wisdom, Virtue/Vice, An Act of Hubris resulting from cast magic, An Obsession related to the remaining Magic, Whether the Magic resulted in Paradox",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 94
+    "page": 94,
+    "summary": "While scrutinizing a Signature Nimbus with Focused Mage Sight, learn one detail per Potency: its creator’s Gnosis, Wisdom, Virtue and Vice, a related Act of Hubris or Obsession, or whether the magic caused Paradox.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-1-pierce-deception",
@@ -4917,7 +4921,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "See through falsehoods magical and mundane +1 Reach: Get a sense of the actual truth",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 165
+    "page": 165,
+    "summary": "Perceive lies, disguises, illusions, and other magical or mundane falsehoods as false for the Duration. The basic spell exposes deception without automatically revealing the underlying truth.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-1-sacred-geometry",
@@ -4937,7 +4943,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Reveal ley lines and nodes +1 Reach: Reveal Hallows Add Death 1 or Spirit 1: See Avernian Gates or Loci as well.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 166
+    "page": 166,
+    "summary": "Perceive ley lines and nodes within the area and understand their flow for the Duration. Hallows and other supernatural loci require the appropriate Reach or conjunctional Arcanum.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-1-scribe-grimoire",
@@ -4964,7 +4972,9 @@ export const SPELLS: SpellDefinition[] = [
         "source": "Signs of Sorcery",
         "page": 83
       }
-    ]
+    ],
+    "summary": "Inscribe one rote per Potency into a suitable physical medium or copy rotes between Grimoires. The casting is Withstood by the total Arcanum dots of the rote being written.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-1-shared-sight",
@@ -4984,7 +4994,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1+ Mana per Arcanum per subject* Share your Mage sight with another Mage Prime ●●●●: Can be used on a Sleepwalker under the effects of Apocalypse Other Arcanum ●: *1 Mana per Arcanum* May add or substitute Prime for another Arcanum",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 28
+    "page": 28,
+    "summary": "For at least one Mana per Arcanum per subject, share the caster’s Active Mage Sight in Prime with another mage, resisted by Resolve. Additional Arcana require their first dot and their own Mana cost.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-1-supernal-signature",
@@ -5004,7 +5016,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The Mage flares her Immediate Nimbus to imprint her signature on a subject, The signature reflects her Shadow Name and lasts for the Duration of the spell. Anyone who Studies the nimbus under focused mage sight can not only sense the details of the Nimbus but the Casters Supernal Identity. This moves the Caster one impression level up the Social Maneuvering unless the viewer succeeds a Resolve + Composure - Potency roll",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 93
+    "page": 93,
+    "summary": "Flare the mage’s Immediate Nimbus and imprint her Signature Nimbus and Supernal identity on a subject. A scrutinizing mage can identify her Shadow Name, and viewers treat her impression one level better unless they resist with Resolve + Composure − Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-1-supernal-vision",
@@ -5024,7 +5038,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Perceive the Supernal properties of a subject +1 Reach: Perceive the non-Supernal magical properties of a subject",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 166
+    "page": 166,
+    "summary": "Examine a subject’s Supernal properties, including spells, Mana, tass, enchantments, and other phenomena governed by Prime. Non-Supernal magic requires additional Reach.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-1-word-of-command",
@@ -5044,7 +5060,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Bypass triggers to activate magical effects Add Any Other Arcanum 1: Add another Arcanum to activate magical effects and objects created by other sources of power",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 166
+    "page": 166,
+    "summary": "Activate a magical object or effect by bypassing its normal trigger, provided it falls under Prime. Magic created by other supernatural forces requires one dot of an appropriate additional Arcanum.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-2-as-above-so-below",
@@ -5064,7 +5082,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Empower Yantras with 9-Again on spellcasting rolls +1 Reach: Make it 8-again",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 166
+    "page": 166,
+    "summary": "Empower a Yantra so spellcasting rolls using it gain 9-Again for the Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-2-cloak-nimbus",
@@ -5084,7 +5104,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Veil Nimbus and emotional state of auras. Attempts to see are subject to a Clash of Wills. Immediate Nimbus does not flare unless the caster chooses to. Signature Nimbus viewed by Mage Sight provokes Clash of Wills. Flaring or imprinting your Nimbus will immediately end this spell +1 Reach: Make your Nimbus appear lesser. For every Reach you may lower any of Gnosis, Mana or Arcanum to a desired lower false Trait value",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 167
+    "page": 167,
+    "summary": "Veil the subject’s Nimbus and emotional aura, suppressing involuntary Immediate Nimbus flares and forcing a Clash of Wills to read a Signature Nimbus. Deliberately flaring or imprinting the Nimbus ends the spell.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-fracture-grimoire",
@@ -5104,7 +5126,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* The mage copies one whole grimoire into two or more disparate parts that individually mean nothing. Only someone with all parts may use the rotes within the Grimoire +1 Reach: The mage may fracture the Grimoire into as many pieces as she wants.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 84
+    "page": 84,
+    "summary": "For one Mana, copy an entire Grimoire into a number of separate fragments up to Potency. No fragment is meaningful alone; a reader must assemble every part to use its rotes.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-2-invisible-runes",
@@ -5124,7 +5148,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Leave message in High Speech only visible to Mage Sight. Alteration or overwriting of these messages provokes a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 167
+    "page": 167,
+    "summary": "Write a High Speech message visible only through Mage Sight. Magical attempts to alter, erase, or overwrite the runes provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-light-under-a-bushel",
@@ -5144,7 +5170,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Adds Mages Potency to the number of rolls before Mages Nimbus leaks into a mystery",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 28
+    "page": 28,
+    "summary": "Increase by Potency the number of relevant rolls that may occur before the mage’s Nimbus contaminates a Mystery under investigation.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-nimbus-forgery",
@@ -5164,7 +5192,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Once a Mage has scrutinized an Immediate or Signature Nimbus with Focused mage sight she may cast this spell to disguise her own Nimbus as the Scrutinized one. If its the Immediate Nimbus it copies the Tilts of the Forged one instead of her own, if Signature nimbus any spell left behind holds the Forged one instead of her own until this spells duration ends. Any attempt to pierce the deception results with a Clash of Wills +1 Reach: The Mage Forges all three types of nimbus with one casting even if she's only scrutinized one.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 94
+    "page": 94,
+    "summary": "Disguise the caster’s Immediate or Signature Nimbus as one previously scrutinized with Focused Mage Sight. It reproduces the copied Immediate Tilt or leaves the copied Signature on spells, while attempts to expose the forgery provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-path-to-jerusalem",
@@ -5184,7 +5214,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Add Spell's Potency to the Opacity of the Subject Mystery +1 Reach: Every Reach spent allows mage to plant 1 falsehood of Surface or Deep information. Recognizing this is a Clash of Wills when focused on with Focused Mage Sight.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 28
+    "page": 28,
+    "summary": "Increase a Mystery’s Opacity by Potency, resisted by its existing Opacity, making Focused Mage Sight harder to complete.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-2-supernal-veil",
@@ -5204,7 +5236,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Veil supernatural phenomenon including spells. Peripheral Mage Sight will fail to detect, active attempts cause a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Hide a supernatural phenomenon, including an active spell, from Peripheral Mage Sight and other passive detection. Active supernatural examination provokes a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-sustain-nimbus",
@@ -5225,7 +5259,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The mage casts this on a Signature Nimbus she's studied under Focused Mage Sight. Rather than fading like normal the Nimbus persists for the Duration of the spell, Once the Duration expires it fades at its usual rate +2 Reach: Duration is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 93
+    "page": 93,
+    "summary": "Preserve a studied Signature Nimbus at its current strength for the spell’s Duration. Once the spell ends, the Nimbus resumes fading at its normal rate.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-2-wards-and-signs",
@@ -5245,7 +5281,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "When subject is target of a spell apply Potency as Withstand rating. Spells used near but not directly at the target are not Withstood by this spell",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Give the subject a Withstand rating equal to Potency against spells that directly target it. Area effects occurring nearby without targeting the subject bypass this protection.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-2-words-of-truth",
@@ -5265,7 +5303,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "All subjects of the spell can hear and understand the caster regardless of distance, noise or language barriers. Subjects feel what the mage says is true, but this effect only works on statements the mage knows are true. May remove one Door or improve impression level by one per Potency",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Let all selected subjects hear and understand the caster despite distance, noise, or language, and feel the weight of statements she knows to be true. Spend Potency to remove Doors or improve impression levels in Social maneuvering.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-aetheric-winds",
@@ -5285,7 +5325,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Attack with shrieking aetheric wind +1 Reach: Create Heavy Winds Environmental Tilt +1 Reach: Destroy target's Mana instead of dealing damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Strike with concentrated aetheric force as a direct attack, inflicting bashing damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-camera-obscura",
@@ -5305,7 +5347,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1 Mana* This spell enchants a Camera, video recorder or similar device and allows it to record Supernal Energies allowing a mage to study the recordings using Active and Focused mage sight. +2 Reach: 1 Mana to make the recordings Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 28
+    "page": 28,
+    "summary": "For one Mana, enchant a camera or recorder so it captures Supernal energies. Mages may later examine the recording with Active or Focused Mage Sight as though studying the recorded scene.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-channel-mana",
@@ -5325,7 +5369,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Move Mana equal to Potency between vessels(mages, Hallows, etc). This cannot exceed Gnosis-derived the Mana per turn limit though +1 Reach: Ignore Mana per turn limit for this spell",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Move Mana equal to Potency between valid vessels, including mages, Hallows, tass, and enchanted objects. Transfers remain subject to the caster’s Gnosis-derived Mana-per-turn limit.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-cleanse-pattern",
@@ -5345,7 +5391,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Remove the dramatic failure of a focused Mage Sight Revelation. This spell will also remove a mage's Signature Nimbus form the subject",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Remove the effect of a dramatic failure on a Focused Mage Sight Revelation and erase a mage’s Signature Nimbus from the subject.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-display-of-power",
@@ -5372,7 +5420,9 @@ export const SPELLS: SpellDefinition[] = [
         "source": "Dark Eras 2",
         "page": 379
       }
-    ]
+    ],
+    "summary": "Make the Imagos of spells cast in the area visible to every form of Active Mage Sight, allowing observers to perceive their construction while the spell lasts.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-ephemeral-enchantment",
@@ -5392,7 +5442,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Subject becomes solid to any and all Twilight entities +2 Reach: For one Mana, if the subject is a weapon it will inflict aggravated damage to one specified Twilight entity. Every additional entity costs one Mana",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 169
+    "page": 169,
+    "summary": "Make a material subject solid to all Twilight entities, allowing mutual physical interaction regardless of their type or attunement.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-geomancy",
@@ -5412,7 +5464,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Move ley lines within the area of effect. May also change the Resonance Keyword of a Node",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 169
+    "page": 169,
+    "summary": "Move ley lines within the affected area and reshape how their energies flow. The spell may also change a node’s Resonance Keyword.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-imbue-room",
@@ -5433,7 +5487,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows a Mage to prepare a room or space for the Imbue Item attainment. Unlike an object the room does not have Mana storage so all Mana must be spent by the user of the Imbued room",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 69
+    "page": 69,
+    "summary": "Prepare a defined room or space for the Imbue Item Attainment, using the appropriate Area Scale. Its persistent or triggered spell affects occupants, but the space stores no Mana, so each user supplies any required Mana.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-mana-battery",
@@ -5453,7 +5509,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows a Mage to prime an item to store Mana, The mage casts the spell on a subject prior to using the Attainment Imbue Item. The subject is Primed to accept a Mana pool but not a spell, the Number of successes necessary to imbue the item is equal to the Mana Pool imbued within. An Item created this way can be used to cast spells without using a Mages own Mana, and can be refilled with Mana using the spell Channel Mana",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 70
+    "page": 70,
+    "summary": "Prepare an object for Imbue Item so it receives a Mana pool instead of a spell. Required imbuement successes equal the desired capacity; the stored Mana can power spells and can be replenished with Channel Mana.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-platonic-form",
@@ -5473,7 +5531,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1+ Mana* - Create a simple Tass object or tool of Size 5 or less from Mana. Durability is 1 and contains one Mana. Potency may be allocated to the following effects: increase Durability by +1, increase Mana capacity by +1, if a tool add +1 equipment bonus though each use of the tool now uses one up Mana. When all Mana is used up the object crumbles. If the spell expires any unused Mana will be lost Add Forces ●●●: The construct is not obviously magical +1 Reach: If a tool it gains the 8-Again +2 Reach: The construct can be a complex device",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 169
+    "page": 169,
+    "summary": "For at least one Mana, create a Size 5 or smaller object of solid tass with base Durability 1 and one stored Mana. Allocate Potency to Durability, Mana capacity, or a tool bonus; each use of the bonus consumes Mana, and the construct crumbles when empty.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-primary-subject",
@@ -5493,7 +5553,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1+ Mana* This spell alters the imbument process, creating an item that will always target the user. The subject of the spell must be a mage.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 72
+    "page": 72,
+    "summary": "For at least one Mana, alter a mage’s imbuement process so an item created before the spell ends always targets its user when activated, regardless of the original spell’s intended subject.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-reveal-marks",
@@ -5514,7 +5576,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "You may discern all signature Nimbuses associated with the Subject, This spell reduces the difficulty to Focused Mage Sight to scrutinize the subject for a signature Nimbus and reveals all Nimbuses associated with the subject. Add Potency as bonus die to reveal them. +1 Reach: Add bonus dice equal to Potency to Clash of Wills to reveal an obscured Signature Nimbus",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 74
+    "page": 74,
+    "summary": "Reveal every Signature Nimbus associated with a subject and add Potency to Focused Mage Sight rolls made to scrutinize those signatures.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-scribe-palimpsest",
@@ -5534,7 +5598,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* Like \"Scribe Grimoire\" this spell gives physical form to a single rote's symbols using a Grimoire that has had its contents erased, scrubbed, scribbled out, painted over or otherwise made unreadable. The Storyteller chooses one Arcanum when the character casts this spell. Whenever a character later casts the rote from the completed Grimoire, it acts as though it incorporated dots of the chosen Arcanum equal to this spell’s Potency, creating unpredictable blended effects. +1 Reach: For 1 point of Mana, the spell's Duration is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 84
+    "page": 84,
+    "summary": "For one Mana, inscribe one rote into an erased or overwritten Grimoire. The Storyteller chooses an Arcanum, and later castings of the rote behave as though they included that Arcanum at dots equal to Potency, producing unpredictable conjunctional effects.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-spirit-vessel",
@@ -5555,7 +5621,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Prepare a Spirit for the Imbue Item Attainment. The mage must either cast the spell through the Gauntlet or the spirit must be Manifested. The subject automatically withstands the casting.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 69
+    "page": 69,
+    "summary": "Prepare a spirit for the Imbue Item Attainment. The spell must cross the Gauntlet or target a Manifested spirit, and the entity automatically Withstands with Resistance.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-steal-mana",
@@ -5575,7 +5643,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* This spell alters the imbument process resulting in an item that siphons its users Mana. When under this spell when Imbuing an item you may set a Mana capacity to the item, instead of imbuing it with that much Mana it steals it from its user. When someone goes to activate the spell it will steal mana equal to capacity, should it attempt to take more than its capacity the leftover Mana dissipates into the atmosphere. If the user doesn't have enough Mana it deals Bashing damage for each Mana it cannot siphon",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 72
+    "page": 72,
+    "summary": "For one Mana, alter a mage’s imbuement process so an item steals its Mana capacity from each user on activation. Excess stolen Mana dissipates; if the user lacks enough Mana, each missing point instead inflicts one bashing damage.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-3-stealing-fire",
@@ -5595,7 +5665,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Temporarily turn Sleeper into a Sleepwalker. Breaking points from magic will hit only when the spell expires",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 168
+    "page": 168,
+    "summary": "Temporarily make a Sleeper a Sleepwalker, allowing conscious perception of magic. Breaking points caused by witnessed magic are delayed and resolved when the spell ends.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-stored-spell",
@@ -5615,7 +5687,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "A Mage may make an item capable of holding a spell until later activation similar to the Attainment Imbue Item. Once this spell is in effect a mage may spend a Mana to cast any other spell on the item that uses touch/self range, which is contained and unactivated. Stored Spell may store spells up to its level in Potency. These spells don't activate until someone Spends a point of Mana to activate the spell, Stored Spell is canceled, The duration of Stored Spell ends or the Duration of the stored spells end",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 70
+    "page": 70,
+    "summary": "For one Mana, prepare an item to hold up to Potency touch- or self-range spells, each stored for another Mana. A stored spell activates when someone spends one Mana to use it; otherwise it ends if its own Duration or Stored Spell expires or is canceled.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-4-apocalypse",
@@ -5635,7 +5709,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Grant a Sleeper the ability to see what a Mage sees +1 Reach and Add Any Other Arcanum 1: Add the Arcanum to the granted Sight.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 169
+    "page": 169,
+    "summary": "Grant a Sleeper the ability to perceive Prime Mage Sight, resisted by Resolve. Other Arcana can be added at one dot and one Reach each to expand the granted Sight.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-4-celestial-fire",
@@ -5655,7 +5731,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Attack spell inflict Lethal equal to Potency +1 Reach: Spell ignites flammable object in the scene +1 Reach: For one Mana, spell deals aggravated damage +1 Reach: May destroy target's Mana instead of dealing damage, spend Potency between regular and Mana damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 170
+    "page": 170,
+    "summary": "Attack the subject with Supernal fire, inflicting lethal damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-4-destroy-tass",
@@ -5675,7 +5753,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Successful casting destroys Tass. Mana form the tass is not destroyed but released into the world likely to the nearest Hallow",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 170
+    "page": 170,
+    "summary": "Destroy a quantity of tass, resisted by Durability. Its Mana is not annihilated but released back into the world, typically flowing toward the nearest Hallow.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-4-hallow-dance",
@@ -5695,7 +5775,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Suppress an active Hallow or awaken a dormant one. Rousing requires Potency equal to the Hallow's rating. Dampening reduces the Hallow's dot rating by Potency, if it falls to zero or less the Hallow is rendered dormant +2 Reach: For one point of Mana the effect is Lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 170
+    "page": 170,
+    "summary": "Awaken a dormant Hallow or suppress an active one, resisted by its rating. Awakening requires Potency at least equal to that rating; suppression reduces it by Potency and makes it dormant at zero.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-4-primal-transfer",
@@ -5715,7 +5797,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "This allows a Mage to transfer spell control of a spell they've cast to another mage. The spell transfers Spells up to Potency from Caster to Subject. Once the Duration ends control returns to the Caster +2 Reach: If Primal Transfer is Imbued into an item with this effect spell control is passed to the user of the Item allowing the user to assign reach and reassign spell factors",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 71
+    "page": 71,
+    "summary": "Transfer control of up to Potency spells cast by the mage to another mage, resisted by Composure. The recipient assumes spell control for the Duration, after which control returns to the original caster.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-4-scribe-daimonomikon",
@@ -5735,7 +5819,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy +1 Reach: For 1 Mana, the Spell's Duration is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 87
+    "page": 87,
+    "summary": "For one Mana, inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet the relevant prerequisites; readers pay applicable Arcane Experience and members treat it as a +2 sympathetic Yantra.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-4-supernal-dispellation",
@@ -5755,7 +5841,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Success suppresses target spell for Supernal Dispellations Duration Add Fate 1: Selectively suppress spell +2 Reach: Make the effect Lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 170
+    "page": 170,
+    "summary": "Suppress any active Supernal spell for the Duration without needing its component Arcana, Withstood by the original caster’s highest relevant Arcanum. Unlike Dispel Magic, Prime alone is sufficient.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:prime-4-transfer-soul-stone",
@@ -5766,7 +5854,7 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Patterning",
     "primaryFactor": "Duration",
-    "withstand": "",
+    "withstand": "Resolve of soul stone's creator",
     "roteSkills": [
       "Crafts",
       "Occult",
@@ -5775,7 +5863,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "May transfer a Soul Stone from one object to another of size 2 or below +2 Reach: This spell is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 91
+    "page": 91,
+    "summary": "Move a Soul Stone from its current vessel into another object of Size 2 or smaller, Withstood by its creator’s Resolve. The old vessel retains the creator’s Signature Nimbus for one additional week.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-5-blasphemy",
@@ -5795,7 +5885,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Sever the connection to the Supernal in an area +2 Reach: Make the effect Lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 170
+    "page": 170,
+    "summary": "Sever the area’s connection to the Supernal: ley lines and nodes cease functioning, Hallows below Potency become dormant, and Sleepers who remain longer than a day gain Enervated without progressing to Thrall. Attempts to revive a Hallow add Potency to its Withstand rating.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-5-create-truth",
@@ -5815,7 +5907,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cost 5 Mana per Potency. Create Hallow with rating equal to Potency, Hallows cannot have a rating above 5 +2 Reach: For 5 Mana the effect is Lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 170
+    "page": 170,
+    "summary": "For five Mana per Potency, overwrite Fallen conditions to create a Hallow rated equal to Potency, with Resonance appropriate to its location. An existing or desired Hallow rating Withstands the casting.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-5-eidolon",
@@ -5835,7 +5929,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Like \"Platonic Form\" but can create animate Tass. May spend Potency on an additional effect: grant the mage a dot of the Retainer Merit. Construct will obey its owner's command Add Forces ●●●: The construct is not obviously magical Add Mind ●●●●●: The construct may be given a mind of its own, as per the Psychic Genesis spell",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 171
+    "page": 171,
+    "summary": "For at least one Mana, create an obviously magical tass construct that may imitate objects, creatures, fire, fog, or environments without reproducing a hazard’s damage. It follows Platonic Form’s traits, can receive Retainer dots from Potency, obeys only simple orders, has no Defense, and does not crumble when emptied of Mana.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-5-forge-purpose",
@@ -5855,7 +5951,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Subject gains one of the caster's Obsessions. If subject is a mage already possessing the maximum number of Obsessions this spell causes a Clash of Wills. If successful replace one of these Obsessions +1 Reach: Can grant a wholly new Obsession",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 171
+    "page": 171,
+    "summary": "Give the subject one of the caster’s Obsessions for the Duration, resisted by Resolve. If an Awakened subject already has the maximum number, replacing one requires a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-5-word-of-unmaking",
@@ -5875,7 +5973,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Destroy a magical item, but not artifacts +2 Reach: Item explodes violently, roll the item Merit rating or Durability. Anyone within 1 yard per dot suffers lethal damage per success",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 171
+    "page": 171,
+    "summary": "Destroy a magical item other than an Artifact, resisted by its Merit rating or Durability. The item’s enchantment and physical vessel are both unmade.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-1-correspondence",
