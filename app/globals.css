@@ -242,6 +242,9 @@
 .merit-current-rating { font-size:12px; color:#615861; }
 .collapsed-rote-skill { display:block; margin-top:8px; max-width:260px; cursor:default; }
 .spell-card-rule-line { grid-column:1/-1; color:#4d5358; font:12px/1.35 Inter,Arial,sans-serif; }
+.sheet-heading-action { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sheet-heading-action .official-heading { flex:1; }
+.sheet-heading-action .experience-merit-trigger { width:auto; min-width:0; padding-inline:12px; }
 .collapsed-rote-skill label { margin:0; }
 .spell-catalog-filters { grid-template-columns:minmax(220px,1fr) repeat(4,minmax(120px,auto)); }
 @media (max-width:720px){.combat-page,.combat-rules{grid-template-columns:1fr}}

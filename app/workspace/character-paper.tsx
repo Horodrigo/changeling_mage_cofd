@@ -149,7 +149,7 @@ import { CombatPage } from "./combat-page";
 import { CompanionPage } from "./companion-page";
 import { ExperiencePanel } from "./changeling-experience-panel";
 import { MageExperiencePanel } from "./mage-experience-panel";
-import { derivedWithPermanentMerits, formatSpellRequirements } from "./experience-shared";
+import { ExperiencePowerPicker, derivedWithPermanentMerits, formatSpellRequirements } from "./experience-shared";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { changelingFavoredRegalia, changelingContractExperienceCost } from "@/lib/changeling-regalia";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
@@ -248,6 +248,17 @@ export function CharacterPaper({
     data.arcana && typeof data.arcana === "object" ? data.arcana : {}
   ) as Record<string, number>;
   const gnosis = Number(data.gnosis ?? 1);
+  const availablePraxes = [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))]
+    .filter(spell=>meetsArcanaRequirements(spell.requirements,arcana)&&!praxes.some(item=>String(item.id)===spell.id))
+    .map(spell=>({id:spell.id,name:locale==="en-US"?spell.originalName:spell.name,category:Object.keys(spell.requirements).join(" + "),description:spell.description??"",meta:`${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page||"—"}`}));
+  const addGrantedPraxis=(id:string)=>{
+    if(praxes.length>=gnosis)return;
+    const spell=[...SPELLS,...homebrews.spells].find(item=>item.id===id);
+    if(!spell)return;
+    const next=structuredClone(character);
+    next.line_data.learned_praxes=[...objectList(next.line_data.learned_praxes),{...spell}];
+    updateSheet(next);
+  };
   const legacyState = !isCtl ? normalizeLegacyState(data.legacy_state) : null;
   const hasLegacyAccess = !isCtl && (gnosis >= 2 || Boolean(legacyState?.joined));
   const legacyDisplay = legacyState?.joined ? ELEVENTH_QUESTION.name : gnosis >= 3 ? tr("Join/Create","Join/Create") : gnosis >= 2 ? tr("Join","Join") : "";
@@ -394,7 +405,7 @@ export function CharacterPaper({
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} highlightTone={legacyState?.joined&&name===ELEVENTH_QUESTION.rulingArcanum?"legacy":undefined} />)}</div>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
-              <SheetHeading>Práxis</SheetHeading><SpellColumn items={praxes} minimumRows={gnosis} />
+              <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis}/>}</div><SpellColumn items={praxes} minimumRows={gnosis} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
               <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
               <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
@@ -791,7 +802,7 @@ export function CharacterPaper({
                     )
                   }
                 />
-                <SheetHeading>Práxis</SheetHeading>
+                <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis}/>}</div>
                 <SpellColumn items={praxes} minimumRows={gnosis} />
               </section>
               <section className="mage-page-main">
@@ -1763,19 +1774,15 @@ function SpellColumn({
   minimumRows?: number;
 }) {
   const {locale,tr}=useLanguage();
+  const arcanaSource=(item:Record<string,unknown>)=>`${Object.entries((item.requirements??{}) as Record<string,number>).map(([name,dots])=>`${systemTerm(name,locale)} ${"•".repeat(dots)}`).join(" + ")} · ${String(item.source??"")} · p. ${String(item.page??"—")}`;
   return (
     <div className="mage-spell-lines">
       {items.map((item, index) => (
         <details className="contract-power-card"
           key={`${String(item.id ?? item.name)}-${index}`}
         >
-          <summary className="contract-power-summary"><strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong><small>
-            {Object.entries((item.requirements ?? {}) as Record<string, number>)
-              .map(([name, dots]) => `${name} ${dots}`)
-              .join(" · ")}
-            {showSkill && item.roteSkill ? ` · ${String(item.roteSkill)}` : ""}
-          </small></summary>
-          <div className="contract-power-details"><p>{String(item.description ?? tr("Sem descrição.", "No description."))}</p></div>
+          <summary className="contract-power-summary"><strong>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}</strong><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>Practice:</strong> {String(item.practice??"")} | <strong>Primary Factor:</strong> {String(item.primaryFactor??"")}</span>{Boolean(item.withstand)&&<span className="spell-card-rule-line"><strong>Withstand:</strong> {String(item.withstand)}</span>}{showSkill&&Boolean(item.roteSkill)&&<span className="spell-card-rule-line"><strong>Rote Skill:</strong> {systemTerm(String(item.roteSkill),locale)}</span>}</summary>
+          <div className="contract-power-details"><p><strong>Summary:</strong> {spellItemSummary(item)}</p>{spellItemReach(item)&&<p><strong>Reach:</strong> {spellItemReach(item)}</p>}</div>
         </details>
       ))}
       {Array.from({length:Math.max(0,minimumRows-items.length)},(_,index)=><div className="mage-spell-empty" key={`empty-${index}`} aria-label={tr("Linha de Práxis disponível","Available Praxis slot")}>&nbsp;</div>)}
@@ -2209,6 +2216,7 @@ function spellItemSummary(item: Record<string, unknown>) {
     "Descrição não disponível.";
   return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
 }
+function spellItemReach(item:Record<string,unknown>){const description=String(item.description??"").trim(),index=description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i);return index<0?"":description.slice(index).replace(/\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi," · ");}
 function selectedConditionList(value: unknown): SelectedCondition[] {
   if (!Array.isArray(value)) return [];
   return value

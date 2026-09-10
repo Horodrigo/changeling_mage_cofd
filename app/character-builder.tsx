@@ -302,9 +302,7 @@ export function CharacterBuilder({
     initial ? inferredPriority(startingSkills, SKILLS, 0) : ["", "", ""],
   );
   const [specialties, setSpecialties] = useState<Specialty[]>(
-    normalizeSpecialties(
-      initial?.specializations?.filter((item) => !item.grantedBy),
-    ),
+    editableSpecialties(initial),
   );
   const [aspirations, setAspirations] = useState<string[]>(
     readArray(initial, "aspirations", ["", "", ""]),
@@ -375,7 +373,7 @@ export function CharacterBuilder({
   const gnosisProgression = powerProgression(initial, "gnosis");
   const [gnosis, setGnosis] = useState(gnosisProgression.creation);
   const [arcana, setArcana] = useState<Record<string, number>>(
-    normalizeArcana(initial?.line_data.arcana),
+    editableArcana(initial),
   );
   const [rotes, setRotes] = useState<Array<SpellSelection | null>>(
     readSpells(initial, "rotes", 3),
@@ -643,6 +641,7 @@ export function CharacterBuilder({
     }
     const finalAttributes = { ...attributes };
     const finalSkills = { ...skills };
+    const finalArcana = { ...arcana };
     if (line === "CtL")
       finalAttributes[favoredAttribute] = Math.min(
         5,
@@ -662,6 +661,8 @@ export function CharacterBuilder({
       finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills")))
       finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    for (const [name, dots] of Object.entries(experienceArcanaDots(initial)))
+      finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
     const derived = {
       Tamanho: 5,
       Vitalidade: 5 + finalAttributes["Vigor"],
@@ -734,8 +735,8 @@ export function CharacterBuilder({
             order_occult_bonus:hasCreationOrderBenefits?Math.max(0,Math.min(5,(skills.Ocultismo??0)+1)-(skills.Ocultismo??0)):0,
             creation_gnosis: gnosis,
             gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
-            wisdom: 7,
-            arcana,
+            wisdom: Number(initial?.line_data.wisdom ?? 7),
+            arcana: finalArcana,
             rotes: hasCreationOrderBenefits ? rotes.filter(Boolean) : [],
             praxes: praxes.slice(0, gnosis).filter(Boolean),
             ruling_arcana: pathData.ruling,
@@ -762,10 +763,11 @@ export function CharacterBuilder({
       },
       attributes: finalAttributes,
       skills: finalSkills,
-      specializations: specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({
-        skill: item.skill,
-        name: item.name.trim(),
-      })),
+      specializations: [
+        ...specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({skill:item.skill,name:item.name.trim()})),
+        ...experienceSpecialties(initial),
+        ...(initial?.specializations??[]).filter(item=>Boolean(item.grantedBy)),
+      ],
       merits: [
         ...mergeCreationMerits(initial?.merits, merits.map((item) => {
           const definition = meritCatalog.find(
@@ -2230,7 +2232,7 @@ function SpellSelector({
         <div>
           <strong>{spellName(spell)}</strong>
           <small>{arcanaSource(spell)}</small>
-          <p className="rule-detail">{spell.practice} | {tr("Fator Primário", "Primary Factor")}: {spell.primaryFactor}</p>
+          <p className="rule-detail"><strong>Practice:</strong> {spell.practice} | <strong>Primary Factor:</strong> {spell.primaryFactor}</p>
           {spell.withstand && <p className="rule-detail"><strong>{tr("Resistência", "Withstand")}:</strong> {spell.withstand}</p>}
           {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{tr("Perícia de Rota", "Rote Skill")}:</strong> {spell.roteSkills.join(", ")}</p>}
           <p className="rule-detail">
@@ -2282,7 +2284,7 @@ function SpellSelector({
           if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><div><strong>{tr("Vaga disponível", "Available slot")}</strong><small>{tr("Escolha no catálogo", "Choose from the catalog")}</small></div></article>;
           return (
             <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line">{item.practice} | {tr("Fator Primário", "Primary Factor")}: {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{tr("Resistência", "Withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={tr("Perícia de Rota", "Rote Skill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
+              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>Practice:</strong> {item.practice} | <strong>Primary Factor:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{tr("Resistência", "Withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={tr("Perícia de Rota", "Rote Skill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
               <div className="contract-power-details">
                 <dl>
                   <div><dt>{tr("Resumo", "Summary")}</dt><dd>{spellSummary(item)}</dd></div>
@@ -3584,6 +3586,36 @@ export function experienceTraitDots(initial: CharacterSheet | null | undefined, 
       totals[trait.name] = (totals[trait.name] ?? 0) + 1;
     return totals;
   }, {});
+}
+function mageExperienceHistory(initial: CharacterSheet | null | undefined) {
+  const history = initial?.current_state?.mage_experience_history;
+  return Array.isArray(history) ? history as Array<{undo?:Record<string,unknown>}> : [];
+}
+export function experienceArcanaDots(initial: CharacterSheet | null | undefined) {
+  return mageExperienceHistory(initial).reduce<Record<string,number>>((totals,entry)=>{
+    const undo=entry.undo;
+    if(undo?.kind==="arcana"&&typeof undo.name==="string")totals[undo.name]=(totals[undo.name]??0)+1;
+    return totals;
+  },{});
+}
+function experienceSpecialties(initial: CharacterSheet | null | undefined) {
+  return mageExperienceHistory(initial)
+    .map(entry=>entry.undo)
+    .filter((undo):undo is Record<string,unknown>=>undo?.kind==="specialty"&&typeof undo.skill==="string"&&typeof undo.name==="string")
+    .map(undo=>({skill:String(undo.skill),name:String(undo.name)}));
+}
+function editableSpecialties(initial: CharacterSheet | null | undefined) {
+  const values=(initial?.specializations??[]).filter(item=>!item.grantedBy).map(item=>({skill:item.skill,name:item.name}));
+  for(const purchased of experienceSpecialties(initial)){
+    const index=values.findLastIndex(item=>item.skill===purchased.skill&&item.name===purchased.name);
+    if(index>=0)values.splice(index,1);
+  }
+  return normalizeSpecialties(values);
+}
+function editableArcana(initial: CharacterSheet | null | undefined) {
+  const values=normalizeArcana(initial?.line_data.arcana);
+  for(const [name,dots] of Object.entries(experienceArcanaDots(initial)))values[name]=Math.max(0,Number(values[name]??0)-dots);
+  return values;
 }
 function formatRequirements(requirements: Record<string, number>) {
   return Object.entries(requirements)
