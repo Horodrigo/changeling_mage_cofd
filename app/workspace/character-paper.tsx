@@ -253,7 +253,7 @@ export function CharacterPaper({
   const gnosis = Number(data.gnosis ?? 1);
   const availablePraxes = [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))]
     .filter(spell=>meetsArcanaRequirements(spell.requirements,arcana)&&!praxes.some(item=>String(item.id)===spell.id))
-    .map(spell=>({id:spell.id,name:locale==="en-US"?spell.originalName:spell.name,category:Object.keys(spell.requirements).join(" + "),description:spell.description??"",meta:`${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page||"—"}`}));
+    .map(spell=>({id:spell.id,name:locale==="en-US"?spell.originalName:spell.name,category:Object.keys(spell.requirements).join(" + "),description:spell.summary??spell.description??"",meta:`${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page||"—"}`}));
   const addGrantedPraxis=(id:string)=>{
     if(praxes.length>=gnosis)return;
     const spell=[...SPELLS,...homebrews.spells].find(item=>item.id===id);
@@ -265,7 +265,7 @@ export function CharacterPaper({
   const inuredSpells=objectList(data.inured_spells);
   const availableInuredSpells=[...SPELLS,...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))]
     .filter(spell=>meetsArcanaRequirements(spell.requirements,arcana)&&!inuredSpells.some(item=>String(item.id)===spell.id))
-    .map(spell=>({id:spell.id,name:locale==="en-US"?spell.originalName:spell.name,category:Object.keys(spell.requirements).join(" + "),description:spell.description??"",meta:`${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page||"—"}`}));
+    .map(spell=>({id:spell.id,name:locale==="en-US"?spell.originalName:spell.name,category:Object.keys(spell.requirements).join(" + "),description:spell.summary??spell.description??"",meta:`${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page||"—"}`}));
   const setInuredSpells=(items:Array<Record<string,unknown>>)=>{const next=structuredClone(character);next.line_data.inured_spells=items;updateSheet(next);};
   const addInuredSpell=(id:string)=>{if(inuredSpells.length>=gnosis)return;const spell=[...SPELLS,...homebrews.spells].find(item=>item.id===id);if(!spell)return;setInuredSpells([...inuredSpells,{...spell}]);};
   const removeInuredSpell=(id:string)=>setInuredSpells(inuredSpells.filter(item=>String(item.id)!==id));
@@ -2253,7 +2253,7 @@ function SpellSheetList({
       {rows.map(({ kind, item }, index) => (
         <div
           key={`${kind}-${String(item.id ?? item.name)}-${index}`}
-          title={`${tr("Resumo", "Summary")}: ${spellItemSummary(item)}\n${tr("Parada de dados", "Dice Pool")}: ${tr("Gnose", "Gnosis")} + ${formatSpellRequirements((item.requirements ?? {}) as Record<string, number>)}\n${tr("Custo", "Cost")}: ${tr("Conforme os Alcances e efeitos aplicados", "As determined by Reach and applied effects")}\n${tr("Ação / Duração", "Action / Duration")}: ${tr("Conjuração instantânea", "Instant casting")} · ${tr("Fator Primário", "Primary Factor")}: ${String(item.primaryFactor ?? "")}\n${tr("Efeitos", "Effects")}: ${String(item.description ?? tr("Descrição não disponível.", "Description unavailable."))}\n${tr("Prática", "Practice")}: ${String(item.practice ?? "")}${item.withstand ? ` · ${tr("Resistência", "Withstand")}: ${String(item.withstand)}` : ""}`}
+          title={`${tr("Resumo", "Summary")}: ${spellItemSummary(item)}\n${tr("Parada de dados", "Dice Pool")}: ${tr("Gnose", "Gnosis")} + ${formatSpellRequirements((item.requirements ?? {}) as Record<string, number>)}\n${tr("Custo", "Cost")}: ${tr("Conforme os Alcances e efeitos aplicados", "As determined by Reach and applied effects")}\n${tr("Ação / Duração", "Action / Duration")}: ${tr("Conjuração instantânea", "Instant casting")} · ${tr("Fator Primário", "Primary Factor")}: ${String(item.primaryFactor ?? "")}\n${tr("Prática", "Practice")}: ${String(item.practice ?? "")}${item.withstand ? ` · ${tr("Resistência", "Withstand")}: ${String(item.withstand)}` : ""}`}
         >
           <span>
             {kind==="Rota"?tr("Rota","Rote"):tr("Práxis","Praxis")} · {String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName??"")}
@@ -2270,13 +2270,14 @@ function SpellSheetList({
   );
 }
 function spellItemSummary(item: Record<string, unknown>) {
-  const reviewedSummary = String(item.summary ?? "").trim();
+  const current=SPELLS.find(spell=>spell.id===String(item.id??"")||spell.originalName===String(item.originalName??item.name??""));
+  const reviewedSummary = String(current?.summary ?? item.summary ?? "").trim();
   if (reviewedSummary) return reviewedSummary;
-  const description = String(item.description ?? "").trim() ||
+  const description = String(current?.description ?? item.description ?? "").trim() ||
     "Descrição não disponível.";
   return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
 }
-function spellItemReach(item:Record<string,unknown>){const description=String(item.description??"").trim(),index=description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i);return index<0?"":description.slice(index).replace(/\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi," · ");}
+function spellItemReach(item:Record<string,unknown>){const current=SPELLS.find(spell=>spell.id===String(item.id??"")||spell.originalName===String(item.originalName??item.name??"")),description=String(current?.description??item.description??"").trim(),index=description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i);return index<0?"":description.slice(index).replace(/\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi," · ");}
 function selectedConditionList(value: unknown): SelectedCondition[] {
   if (!Array.isArray(value)) return [];
   return value

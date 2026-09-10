@@ -212,6 +212,14 @@ test("every catalog spell has a coherent PDF-reviewed explicit summary", () => {
   assert.deepEqual(counts,{Death:46,Fate:30,Forces:38,Life:29,Matter:32,Mind:45,Prime:50,Space:29,Spirit:36,Time:25});
 });
 
+test("Mage Details and Powers resolve saved spell snapshots through the current summaries", async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const sheet=await readFile(new URL("../app/workspace/character-paper.tsx",import.meta.url),"utf8");
+  assert.match(sheet,/current\?\.summary \?\? item\.summary/);
+  assert.match(sheet,/description:spell\.summary\?\?spell\.description/);
+  assert.doesNotMatch(sheet,/tr\("Efeitos", "Effects"\).*item\.description/);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");
