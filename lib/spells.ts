@@ -2538,7 +2538,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Observe a creature and learn information like species, age, sex and overall health. A supernatural creature's species shows up as unknown unless the mage has studied it's kind before. Can discern amount of dots in physical attributes and any illnesses, injuries, Personal Tilts and Condition on target +1 Reach: May learn a specific Physical Attribute level, rather than just the total number of dots",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 148
+    "page": 148,
+    "summary": "Observe a living subject to learn its species, age, sex, overall health, total Physical Attribute dots, and any illnesses, injuries, Personal Tilts, or Conditions. An unfamiliar supernatural species registers as unknown until the mage has studied its kind.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-1-cleanse-the-body",
@@ -2558,7 +2560,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Help subject resist any toxins in her system +1 Reach: The subject may make a resistance roll immediately, in addition to the normal ones from regular intervals",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 148
+    "page": 148,
+    "summary": "Add Potency to the subject’s resistance against drugs, poisons, and other toxins already in her system for the spell’s Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-1-heightened-senses",
@@ -2578,7 +2582,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Heighten desired senses. Grants bonus to perception roles +1 Reach: You can track by scent",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 149
+    "page": 149,
+    "summary": "Enhance selected senses and add Potency to relevant Perception rolls. The enhancement does not grant entirely new sensory capabilities by itself.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-1-speak-with-beasts",
@@ -2598,7 +2604,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Magically speak with a specific species of animal. Animals have limited ability to understand things around them, for example a rat may refer to a cat and vampire alike as simply a \"predator\" +1 Reach: May communicate with all animals rather than only a single species",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 148
+    "page": 148,
+    "summary": "Communicate with one chosen animal species for the Duration. Animals understand and describe the world through their own limited instincts and experience rather than human concepts.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-1-web-of-life",
@@ -2618,7 +2626,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Detect all forms of specified life in the spells area of effect",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 148
+    "page": 148,
+    "summary": "Detect every example of a specified form of life within the area for the Duration. When focused on individual subjects, the spell can scan them for parasites, bacteria, or pregnancy.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-2-body-control",
@@ -2638,7 +2648,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Slow Breathing, Heartbeat and/or Metabolism. Up your Initiative, eliminate or increase body odors and halve healing time for bashing damage +1 Reach: Gain 1/0 armor +2 reach: Half healing time for lethal damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 148
+    "page": 148,
+    "summary": "Consciously regulate the subject’s breathing, heartbeat, metabolism, reflexes, and bodily odors. The spell can add Potency to Initiative, halve bashing healing time, and suppress or intensify appropriate biological functions.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-2-control-instincts",
@@ -2658,7 +2670,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Trigger a specific instinctual response in animals(includes humans). Subject suffers a Condition related to the desired  instinct +1 Reach: Control instincts of living supernatural creatures",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 149
+    "page": 149,
+    "summary": "Trigger a specific instinctive response in an animal, including a human, imposing an appropriate Condition for the Duration. Ordinary living creatures are valid subjects; supernatural creatures require additional Reach.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-2-lure-and-repel",
@@ -2678,7 +2692,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a lure or repellent that works on a specific organism. Plant and bacteria have 0 resolve for the purposes of this spell +1 Reach: Lured creatures may offer food or small favors a appropriate for the animal +1 Reach: Lured creatures treat the subject good if a lure or bad if a repellent for the purposes of first impressions in Social maneuvering",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 149
+    "page": 149,
+    "summary": "Make the subject attract or repel a chosen organism. Affected creatures must resist the urge to approach or avoid it; plants and bacteria count as Resolve 0, while intelligent beings retain judgment once they confront the stimulus.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-2-mutable-mask",
@@ -2698,7 +2714,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Change a subjects appearance, apparent sex, voice, smell, etc. Changes are illusionary, bio-metric devices will still pick up the truth. Cannot imitate specific people +2 Reach: Can duplicate the appearance of a specific person, including fingerprints",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 149
+    "page": 149,
+    "summary": "Create an illusory biological disguise that changes apparent facial structure, body features, sex, voice, scent, and similar traits. Physical evidence and biometric examination still reveal the truth, and the basic spell cannot copy a specific person.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-2-purge-illness",
@@ -2718,7 +2736,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cure yourself of an illness. Compare Potency to the illness'rating if less, reduce the illness by the difference if more, eliminate the illness",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 149
+    "page": 149,
+    "summary": "Reduce a disease’s Severity by Potency; if Potency equals or exceeds its Severity, cure it completely. Otherwise the illness continues at its reduced rating.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-3-bruise-flesh",
@@ -2738,7 +2758,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal bashing damage +1 Reach: Inflict an additional -1 penalty to any wound penalties the target might have",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 150
+    "page": 150,
+    "summary": "Attack living tissue directly, inflicting bashing damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:life-3-contact-high",
@@ -2758,7 +2780,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Creates a drug that targets the nervous system. Anyone who comes into contact with the Subject is affected by this drug for one scene. The Caster determines if it increases Initiative equal to Potency or penalizes Initiative equal to Potency. The drug affects a living subject as well as any touching it +1 Reach: Living subjects are Immune but still spread the drug to anything they touch",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 65
+    "page": 65,
+    "summary": "Make the subject exude a drug that affects anyone whose bare skin touches it for one scene. The caster chooses whether it adds or subtracts Potency from Initiative, and a living carrier is also affected.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-3-degrading-the-form",
@@ -2778,7 +2802,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Reduce a targets Physical Attributes, but only one +1 Reach: Spell may effect two different Physical Attributes",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 150
+    "page": 150,
+    "summary": "Reduce one of the subject’s Physical Attributes by Potency, to a minimum of one, for the Duration. The resulting reductions affect derived traits normally.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-3-honing-the-form",
@@ -2798,7 +2824,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Raise Strength, Dexterity or Stamina, but no higher than a subjects max for these stats +1 Reach: Spell may effect two different Physical. This effect can be applied twice so that all three attributes may be affected +1 Reach: Spend a point of Mana, may increase stats beyond the allowed maximum",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 150
+    "page": 150,
+    "summary": "Increase one Physical Attribute by Potency without exceeding the subject’s normal maximum. Derived traits change with the enhanced Attribute.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-3-knit",
@@ -2818,7 +2846,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Heal 2 bashing damage per Potency +1 Reach: You can heal Personal Tilts such as Arm Wrack +1 Reach: Can heal damage done by deprivation +1 Reach: Reproduce the effect of night's rest, regain a Willpower point if appropriate +1 Reach: Heal one lethal per Potency instead of 2 Bashing",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 150
+    "page": 150,
+    "summary": "Heal two points of bashing damage per Potency by accelerating natural recovery. The spell cannot restore lethal or aggravated damage without its respective Reach effects.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:life-3-living-vessel",
@@ -2839,7 +2869,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Prepare a subject under the purview of Life for the Imbue Item Attainment. The mage can use the Attainment to imbue any living subject",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 69
+    "page": 69,
+    "summary": "Prepare any living subject for the Imbue Item Attainment. The unwilling subject Withstands with Stamina, and the imbuement must otherwise follow the Attainment’s rules.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-3-many-faces",
@@ -2859,7 +2891,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Like \"Mutable Mask\" only the changes are real rather than an illusion. Poor vision or other senses can be restored. Missing organs and limbs can not be restored however. You may also rearrange the subjects Physical Attributes Add Time 3: You can change physical age as well",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 150
+    "page": 150,
+    "summary": "Physically reshape a living subject’s appearance, sex, voice, scent, and related biology, making the changes real rather than illusory. It can restore impaired organs or senses and redistribute Physical Attribute dots, but cannot replace missing limbs or organs.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:life-3-steal-life-force",
@@ -2879,7 +2913,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "This spell is cast on a mage to alter his imbument process causing the item to damage the user. The item appears to function as normal but requires Life force to function. This item deals 1 point of Lethal damage for each point of Mana spent to cast the imbued spell, if the Item runs out of Mana it deals Lethal to the user to replenish its Mana",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 72
+    "page": 72,
+    "summary": "For one Mana, alter a mage’s imbuement process so an item created before this spell ends becomes cursed. Casting its imbued spell drains one lethal damage from the user per Mana spent; if the item has no Mana, it replenishes one Mana by inflicting one lethal damage on the next person who touches it.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-3-transform-life",
@@ -2899,7 +2935,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Give life features normally belonging to other organisms. Gills, Claws, Senses, Etc. +2 Reach: The bestowed feature, if permanent, can be passed on to a creatures descendants",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 150
+    "page": 150,
+    "summary": "Grant a living subject one biological feature per Potency from another organism, such as claws, gills, venom, limbs, lungs, or enhanced senses. Features use appropriate equipment bonuses or game traits and must remain biologically plausible.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-4-accelerate-growth",
@@ -2919,7 +2957,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cause a lifeform to rapidly grow, at the end of the duration the subject will return to their actual age. If the subject exceeds its natural lifespan, it will die of old age +1 Reach: When the spell ends the subject will rapidly de-age at an even faster rate than they grew, returning to their actual age in minutes. This puts great stress on the target. They must make a Stamina roll and on a failure they will enter a coma for a number of days.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 151
+    "page": 151,
+    "summary": "Double a living subject’s growth rate once per Potency for the Duration. The subject returns to its actual age at the normal rate afterward, but dies of old age if accelerated beyond its natural lifespan before the spell ends.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-4-animal-minion",
@@ -2939,7 +2979,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The mage takes complete bodily control of a subject. Difference in gait may be noticeable to those familiair with the subject. The mage's body will be inert while this spell is active +1 Reach: Target behaves more normally, as you understand the targets habits",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 151
+    "page": 151,
+    "summary": "Take complete bodily control of a living subject while the mage’s own body lies inert. The mage uses the target’s Physical Attributes and her own Mental and Social Attributes, but unfamiliar mannerisms may reveal the possession.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-4-life-force-assault",
@@ -2959,7 +3001,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal lethal damage +1 Reach: Inflict an additional -2 penalty to any wound penalties the target might have +1 Reach: Spend a point of Mana, deal aggravated damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 152
+    "page": 152,
+    "summary": "Attack the vital force sustaining a living subject, inflicting lethal damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:life-4-living-grimoire",
@@ -2980,7 +3024,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The Mage scribes a single rote per casting of this spell onto a living being. Casting this spell constitutes as an act of Hubris against Understanding Wisdom",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 85
+    "page": 85,
+    "summary": "For one Mana, inscribe one rote per casting into a living plant or creature, turning its body into a readable Grimoire. Unwilling subjects resist with Stamina plus the rote’s total Arcanum dots, and creating the living inscription is an Act of Hubris against Understanding Wisdom.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-4-mend",
@@ -3000,7 +3046,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Heal 2 lethal wounds per Potency +1 Reach: Can erase scars +1 Reach: Can heal damage done by deprivation +1 Reach: Reproduce the effect of night's rest, regain a Willpower point if appropriate +1 Reach: Spend a point of Mana, can heal aggravated damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 152
+    "page": 152,
+    "summary": "Heal two points of lethal damage per Potency by rewriting and closing the subject’s wounds. Aggravated damage requires Mana and the appropriate Reach.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-4-regeneration",
@@ -3020,7 +3068,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cost: 1 Mana, restore lost organs or limbs",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 152
+    "page": 152,
+    "summary": "For one Mana, regrow or replace a missing limb or organ over the spell’s Duration. The restored tissue withers rapidly when the spell expires unless the effect becomes Lasting.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-4-shapechanging",
@@ -3030,17 +3080,19 @@ export const SPELLS: SpellDefinition[] = [
       "Life": 4
     },
     "practice": "Patterning",
-    "primaryFactor": "Potency",
+    "primaryFactor": "Duration",
     "withstand": "Stamina",
     "roteSkills": [
       "Animal Ken",
-      "Science",
-      "Survival"
+      "Athletics",
+      "Science"
     ],
     "description": "Take on the form of another creature. Clothes and gear do not change with you. Instincts of the new form may need to be resisted with a Composure + Resolve roll Add Matter 4: Gear changes with you to fit the new form +1 Reach (with Matter 4): Gear becomes part of new form +1 Reach: Turn into a swarm of tiny creatures +1 Reach: Retain full control over reason",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 152
+    "page": 152,
+    "summary": "Transform the subject into another living creature while clothing and equipment remain unchanged. The new body provides its physical traits and instincts, which may require Resolve + Composure to resist; the subject retains mental identity unless instinct overwhelms it.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-5-create-life",
@@ -3060,7 +3112,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Design and create any form of life you desire. If cast with finite duration life will disappear at the end of the spell, this may count as an Act of Hubris. Add Mind 5: Give your organism a true mind as appropriate to type +1 Reach: Creature can be given additional features as per \"Transform Life\"",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 153
+    "page": 153,
+    "summary": "Design and create a plant, fungus, animal, or other living organism. Without Mind 5 it is mindless and acts only on instinct; finite-Duration life vanishes when the spell ends, while permanent creation may constitute an Act of Hubris.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-5-contagion",
@@ -3080,7 +3134,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create minor or life-threatening diseases +1 Reach: Create a never before seen disease. This is likely to be an Act of Hubris as no creature in the world could have developed any defenses against it",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 153
+    "page": 153,
+    "summary": "Create a disease with Severity equal to Potency, either inside a suitable container or in a living host. The disease may range from minor sickness to lethal plague and thereafter spreads according to its designed traits.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:life-5-salt-the-earth",
@@ -3100,7 +3156,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Destroy life-force in an area. This Creates an Extreme Environment equal to Potency +1 Reach: Individual living things that survive, will still suffer an additional -1 to any wound penalties they might have",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 153
+    "page": 153,
+    "summary": "Destroy the vitality of all life in the area, creating an Extreme Environment with a level equal to Potency. The devastation affects plants, animals, and other living organisms rather than merely damaging individual targets.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:matter-1-craftsman-s-eye",

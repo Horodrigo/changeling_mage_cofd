@@ -89,6 +89,22 @@ test("Forces summaries are fully reviewed against the offline PDFs", () => {
   assert.equal(forces.find((spell)=>spell.name==="Gravitic Supremacy").practice,"Fraying or Perfecting");
 });
 
+test("Life summaries are fully reviewed against the offline PDFs", () => {
+  const life=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Life");
+  assert.equal(life.length,29);
+  assert.ok(life.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(life.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),life.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(life.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),life.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Analyze Life","Body Control","Mutable Mask","Many Faces","Steal Life Force","Living Grimoire","Create Life"]){
+    const spell=life.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  const shapechanging=life.find((spell)=>spell.name==="Shapechanging");
+  assert.equal(shapechanging.primaryFactor,"Duration");
+  assert.deepEqual(shapechanging.roteSkills,["Animal Ken","Athletics","Science"]);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");
