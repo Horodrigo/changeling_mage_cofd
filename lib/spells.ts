@@ -1,6 +1,6 @@
 // Generated from the offline Codex of Darkness Spells, All (2nd Edition) page.
 // English is canonical; localization is intentionally deferred.
-export interface SpellDefinition { id:string; name:string; originalName:string; requirements:Record<string,number>; practice:string; primaryFactor:string; withstand:string; roteSkills:string[]; description?:string; sourceId:string; source:string; page:number; additionalSources?:Array<{sourceId:string;source:string;page:number}> }
+export interface SpellDefinition { id:string; name:string; originalName:string; requirements:Record<string,number>; practice:string; primaryFactor:string; withstand:string; roteSkills:string[]; description?:string; summary?:string; summaryReviewed?:boolean; sourceId:string; source:string; page:number; additionalSources?:Array<{sourceId:string;source:string;page:number}> }
 export const SPELLS: SpellDefinition[] = [
   {
     "id": "mta-2ed:death-1-ectoplasmic-shaping",
@@ -17,10 +17,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Larceny"
     ],
-    "description": "Shape and mold ectoplasm, or create Open Condition on an object or location for a ghost to Manifest",
+    "description": "Reshape an ectoplasmic manifestation into any desired form for the Duration; its controller may Withstand. The ectoplasm can reflect ghosts and ghostly Twilight structures, or give an object or location the Open Condition for a ghost, which loses its Manifested Condition when the spell ends.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 128
+    "page": 128,
+    "summaryReviewed": true,
+    "summary": "Reshape an ectoplasmic manifestation into any desired form for the Duration; its controller may Withstand. The ectoplasm can reflect ghosts and ghostly Twilight structures, or give an object or location the Open Condition for a ghost, which loses its Manifested Condition when the spell ends."
   },
   {
     "id": "mta-2ed:death-1-deepen-shadows",
@@ -37,10 +39,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Expression"
     ],
-    "description": "Apply Poor Light Tilt in area +1 Reach: Apply Blinded Tilt in an area",
+    "description": "Deepen existing shadows throughout the area, applying the Poor Light Tilt for the Duration. +1 Reach: Apply the Blinded Tilt instead.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 128
+    "page": 128,
+    "summaryReviewed": true,
+    "summary": "Deepen existing shadows throughout the area, applying the Poor Light Tilt for the Duration."
   },
   {
     "id": "mta-2ed:death-1-forensic-gaze",
@@ -57,10 +61,12 @@ export const SPELLS: SpellDefinition[] = [
       "Investigation",
       "Expression"
     ],
-    "description": "Learn how a subject died +1 Reach: Witness final moments of a corpse's life",
+    "description": "Determine exactly how and when a corpse died, revealing one contributing factor per Potency. +1 Reach: Witness one minute per Potency of the corpse's final moments through its eyes.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 128
+    "page": 128,
+    "summaryReviewed": true,
+    "summary": "Determine exactly how and when a corpse died, revealing one contributing factor per Potency."
   },
   {
     "id": "mta-2ed:death-1-shadow-sculpting",
@@ -77,10 +83,12 @@ export const SPELLS: SpellDefinition[] = [
       "Science",
       "Expression"
     ],
-    "description": "Shape shadows to your liking +1 Reach: Both shape and animate shadows",
+    "description": "Mold existing shadows in the area into any chosen likeness. +1 Reach: Animate the shaped shadows, which move under the caster's direction at her Speed.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 128
+    "page": 128,
+    "summaryReviewed": true,
+    "summary": "Mold existing shadows in the area into any chosen likeness."
   },
   {
     "id": "mta-2ed:death-1-soul-marks",
@@ -97,10 +105,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Empathy"
     ],
-    "description": "Learn about a subjects soul. +1 Reach: Can use spell on unattached souls",
+    "description": "Determine one fact about a subject's soul per Potency: Persistent or Paradox Conditions, Awakened or supernatural nature, soul stones, tampering, Possession, Gnosis 5+ Legacy Attainments, or consumption of another soul. +1 Reach: Examine an unattached soul and also detect its former host's Gnosis 1-4 Legacy Attainments.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 128
+    "page": 128,
+    "summaryReviewed": true,
+    "summary": "Determine one fact about a subject's soul per Potency: Persistent or Paradox Conditions, Awakened or supernatural nature, soul stones, tampering, Possession, Gnosis 5+ Legacy Attainments, or consumption of another soul."
   },
   {
     "id": "mta-2ed:death-1-speak-with-the-dead",
@@ -117,10 +127,12 @@ export const SPELLS: SpellDefinition[] = [
       "Expression",
       "Investigation"
     ],
-    "description": "Sense and communicate with ghosts in Twilight. Sense anchors and determine a ghosts rank. +1 Reach: See if an anchor is temporary or permanent +1 Reach: Can be understood by ghosts that don't share your language",
+    "description": "Sense and speak with ghosts in Twilight within the area, sense Anchors, and focus on one ghost to determine its Rank and number of Anchors. +1 Reach: Distinguish temporary from permanent Anchors. +1 Reach: Communicate across language barriers with Rank 2+ ghosts.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 128
+    "page": 128,
+    "summaryReviewed": true,
+    "summary": "Sense and speak with ghosts in Twilight within the area, sense Anchors, and focus on one ghost to determine its Rank and number of Anchors."
   },
   {
     "id": "mta-2ed:death-2-corpse-mask",
@@ -137,10 +149,12 @@ export const SPELLS: SpellDefinition[] = [
       "Crafts",
       "Medicine"
     ],
-    "description": "Alter a corpse's apparent time and cause of death. +1 Reach: Can cast this spell on injured living subjects. Turn cuts to burns etc. +1 Reach: Change corpse appearance completely even age and sex",
+    "description": "Alter a corpse's wounds and apparent time and cause of death, even under scrutiny. +1 Reach: Disguise injuries on a living subject who has suffered Health damage. +1 Reach: Completely change a corpse's appearance, including apparent age and sex.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Alter a corpse's wounds and apparent time and cause of death, even under scrutiny."
   },
   {
     "id": "mta-2ed:death-2-decay",
@@ -157,10 +171,12 @@ export const SPELLS: SpellDefinition[] = [
       "Science",
       "Occult"
     ],
-    "description": "Age an object, lowering durability +1 Reach: Decrease structure instead",
+    "description": "Age a material object rapidly, reducing Durability by 1 per Potency. +1 Reach: Reduce Structure by Potency instead, potentially destroying it.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Age a material object rapidly, reducing Durability by 1 per Potency."
   },
   {
     "id": "mta-2ed:death-2-ectoplasm",
@@ -177,10 +193,12 @@ export const SPELLS: SpellDefinition[] = [
       "Expression",
       "Academics"
     ],
-    "description": "Create ectoplasm from your own orifices or that of a corpse",
+    "description": "Produce ectoplasm from the caster's or a corpse's orifice and shape it as desired; it retains that form for the Duration.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Produce ectoplasm from the caster's or a corpse's orifice and shape it as desired; it retains that form for the Duration."
   },
   {
     "id": "mta-2ed:death-2-ghost-shield",
@@ -193,14 +211,16 @@ export const SPELLS: SpellDefinition[] = [
     "primaryFactor": "Potency",
     "withstand": "",
     "roteSkills": [
-      "Occult",
-      "Expression",
-      "Academics"
+      "Streetwise",
+      "Subterfuge",
+      "Survival"
     ],
-    "description": "Protects subject form ghostly Numina, Influences and Manifestations as well as Death-Based entities +1 Reach to protect from the physical attacks of Ghosts",
+    "description": "Protect the subject from ghostly Numina, Influences, Manifestations, Death spells, and comparable death-based supernatural powers; attempts to penetrate the shield trigger a Clash of Wills. +1 Reach: Extend protection to ghosts' physical attacks.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Protect the subject from ghostly Numina, Influences, Manifestations, Death spells, and comparable death-based supernatural powers; attempts to penetrate the shield trigger a Clash of Wills."
   },
   {
     "id": "mta-signs-of-sorcery:death-2-sacrificial-relinquishment",
@@ -217,10 +237,12 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine",
       "Streetwise"
     ],
-    "description": "Instead of spending a willpower dot to relinquish a spell you may instead make a blood sacrifice. This must be a sacrifice of Value, such as dozens of small unintelligent creatures, a few intelligent creatures or a single human",
+    "description": "While the spell remains active, the subject may safely relinquish her next spell by making a valuable blood sacrifice instead of spending a Willpower dot: dozens of small unintelligent creatures, a few intelligent animals, or one human.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 73
+    "page": 73,
+    "summaryReviewed": true,
+    "summary": "While the spell remains active, the subject may safely relinquish her next spell by making a valuable blood sacrifice instead of spending a Willpower dot: dozens of small unintelligent creatures, a few intelligent animals, or one human."
   },
   {
     "id": "mta-2ed:death-2-shape-ephemera",
@@ -237,10 +259,12 @@ export const SPELLS: SpellDefinition[] = [
       "Expression",
       "Science"
     ],
-    "description": "Shape ephemera into objects, weapons or armor.",
+    "description": "Reshape Death-attuned ephemera into a new object; an entity providing the ephemera may Withstand, and reshaping does not damage its Corpus. The object has Durability 2 and either weapon rating 2 or armor 2, and functions only against ephemera or in Twilight.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Reshape Death-attuned ephemera into a new object; an entity providing the ephemera may Withstand, and reshaping does not damage its Corpus. The object has Durability 2 and either weapon rating 2 or armor 2, and functions only against ephemera or in Twilight."
   },
   {
     "id": "mta-2ed:death-2-soul-armor",
@@ -257,10 +281,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Survival"
     ],
-    "description": "Protect soul against hostile spells",
+    "description": "Protect the subject's soul; any spell or effect that would remove, manipulate, or injure it must win a Clash of Wills.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Protect the subject's soul; any spell or effect that would remove, manipulate, or injure it must win a Clash of Wills."
   },
   {
     "id": "mta-2ed:death-2-soul-jar",
@@ -277,10 +303,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Persuasion"
     ],
-    "description": "Trap unattached soul into container +1 Reach: Bind soul to person with the soulless condition. An unwilling person may Withstand. +2 Reach: Spend a point of mana to make this spell lasting",
+    "description": "Seal a displaced soul in a liquid-holding receptacle, protecting it from escape and outside attack until the jar opens, breaks, or the spell ends. +1 Reach: Bind it to the caster or a Soulless, Enervated, or Thrall subject; unwilling hosts Withstand. +2 Reach and 1 Mana: Make the binding Lasting.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Seal a displaced soul in a liquid-holding receptacle, protecting it from escape and outside attack until the jar opens, breaks, or the spell ends."
   },
   {
     "id": "mta-2ed:death-2-suppress-aura",
@@ -297,10 +325,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Medicine"
     ],
-    "description": "Suppress Nimbus to appear as a sleeper to Mage Sight. Impose penalty to Empathy checks and supernatural attempts to read your emotional or mental state.",
+    "description": "Suppress the subject's Nimbus and magical resonances, making her appear to be a Sleeper under Mage Sight and imposing -2 on Empathy and supernatural attempts to read her emotions or mind. Magical attempts to pierce the disguise trigger a Clash of Wills.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 129
+    "page": 129,
+    "summaryReviewed": true,
+    "summary": "Suppress the subject's Nimbus and magical resonances, making her appear to be a Sleeper under Mage Sight and imposing -2 on Empathy and supernatural attempts to read her emotions or mind. Magical attempts to pierce the disguise trigger a Clash of Wills."
   },
   {
     "id": "mta-2ed:death-2-suppress-life",
@@ -317,10 +347,12 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine",
       "Academics"
     ],
-    "description": "Appear to be a corpse +2 Reach: Spend a point of Mana to cast reflexively",
+    "description": "Suppress all signs of life so the subject appears physically and magically dead, including an apparently absent soul. +2 Reach and 1 Mana: Cast reflexively in response to something that could reasonably cause the subject's death.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Suppress all signs of life so the subject appears physically and magically dead, including an apparently absent soul."
   },
   {
     "id": "mta-2ed:death-2-touch-of-the-grave",
@@ -337,10 +369,12 @@ export const SPELLS: SpellDefinition[] = [
       "Crafts",
       "Persuasion"
     ],
-    "description": "Interact with ghosts and other things in Death-attuned Twilight. Can pull objects from Twilight and make them visible and solid but with low durability",
+    "description": "Physically interact with ghosts and Death-attuned Twilight. Pull Twilight objects into visibility and solidity with Durability 1 and their normal equipment bonuses; they return to ephemera if broken or when the spell ends.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Physically interact with ghosts and Death-attuned Twilight. Pull Twilight objects into visibility and solidity with Durability 1 and their normal equipment bonuses; they return to ephemera if broken or when the spell ends."
   },
   {
     "id": "mta-2ed:death-2-without-a-trace",
@@ -357,10 +391,12 @@ export const SPELLS: SpellDefinition[] = [
       "Stealth",
       "Subterfuge"
     ],
-    "description": "Leave no forensic evidence like fingerprints",
+    "description": "Prevent the subject from leaving fingerprints, footprints, blood, skin, hair, or other forensic evidence for the Duration. Searching for such traces with Death Mage Sight triggers a Clash of Wills.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Prevent the subject from leaving fingerprints, footprints, blood, skin, hair, or other forensic evidence for the Duration. Searching for such traces with Death Mage Sight triggers a Clash of Wills."
   },
   {
     "id": "mta-2ed:death-3-cold-snap",
@@ -377,10 +413,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Science"
     ],
-    "description": "Apply Ice Tilt to area +1 Reach: Also apply Extreme Cold Tilt",
+    "description": "Drain heat from the area and apply the Ice Tilt to all surfaces for the Duration. +1 Reach: Also apply the Extreme Cold Tilt.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Drain heat from the area and apply the Ice Tilt to all surfaces for the Duration."
   },
   {
     "id": "mta-2ed:death-3-damage-ghost",
@@ -397,10 +435,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Brawl"
     ],
-    "description": "Deal bashing damage to ghost",
+    "description": "Deal one bashing damage to a ghost's Corpus per Potency.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Deal one bashing damage to a ghost's Corpus per Potency."
   },
   {
     "id": "mta-signs-of-sorcery:death-3-death-touched-item",
@@ -417,10 +457,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Subterfuge"
     ],
-    "description": "Turns ordinary objects into one capable of affecting objects of Death-attuned ephemera and shadow. It can interact with anything in Death attuned twilight or even items crafted of shadows by Death magic. It can deal damage to a Ghosts Corpus or Shadow items structure or prevent harm to the wearer. If the item is brought into twilight it doesn't lose its material form while under the effects of this spell",
+    "description": "Make an ordinary object simultaneously material, Death-attuned Twilight ephemera, and shadow, allowing it to affect ghosts, Twilight objects, and magically crafted shadows while retaining its normal equipment bonuses. It keeps its material form if taken into Twilight for the Duration.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 64
+    "page": 64,
+    "summaryReviewed": true,
+    "summary": "Make an ordinary object simultaneously material, Death-attuned Twilight ephemera, and shadow, allowing it to affect ghosts, Twilight objects, and magically crafted shadows while retaining its normal equipment bonuses. It keeps its material form if taken into Twilight for the Duration."
   },
   {
     "id": "mta-2ed:death-3-devouring-the-slain",
@@ -437,10 +479,12 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine",
       "Persuasion"
     ],
-    "description": "Can take Willpower or Scour the pattern of an injured person +1 Reach: May affect a healty person who has recently taken damage +1 Reach: Spell does not count toward limit of Scouring per day +1 Reach: Use spell on ghosts",
+    "description": "Drain one Willpower per Potency from an injured subject, or Scour one Mana per Potency while inflicting one lethal damage per Mana; choose one resource and obey the daily Scouring limit. +1 Reach: Affect a healthy subject. +1 Reach: Ignore the daily Scouring limit. +1 Reach: Affect a ghost's Corpus, taking only Willpower or only Mana.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Drain one Willpower per Potency from an injured subject, or Scour one Mana per Potency while inflicting one lethal damage per Mana; choose one resource and obey the daily Scouring limit."
   },
   {
     "id": "mta-2ed:death-3-ghost-gate",
@@ -457,10 +501,12 @@ export const SPELLS: SpellDefinition[] = [
       "Academics",
       "Expression"
     ],
-    "description": "Create a 2 dimensional gateway that converts anything passing through it into Death-attuned Twilight +1 Reach: Can transform a subject into Twilight directly without a gate",
+    "description": "Create a two-dimensional gate that converts anything passing through it into Death-attuned Twilight; carried objects lose their material forms but can later be retrieved with Touch of the Grave. +1 Reach: Transform the subject and personal possessions directly without a gate.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 130
+    "page": 130,
+    "summaryReviewed": true,
+    "summary": "Create a two-dimensional gate that converts anything passing through it into Death-attuned Twilight; carried objects lose their material forms but can later be retrieved with Touch of the Grave."
   },
   {
     "id": "mta-2ed:death-3-ghost-summons",
@@ -477,10 +523,12 @@ export const SPELLS: SpellDefinition[] = [
       "Socialize",
       "Occult"
     ],
-    "description": "Call a ghost in the local area to you +1 Reach: Spell also creates the Open Condition +1 Reach: Can give the ghost a single word command to follow +1 Reach: When near an Iris to the Underworld can call a ghost from there instead +2 Reach: Can give ghost a complex command to follow",
+    "description": "Call the nearest ghost in sensory range, a personally known ghost, or the nearest ghost matching a specified type; it cannot exceed Rank 5 or travel beyond its Anchor. +1 Reach: Create Open and make it Manifest. +1 Reach: Give a one-word command. +1 Reach near an Underworld Iris: Summon from its Underworld vicinity. +2 Reach: Give one complex task.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 131
+    "page": 131,
+    "summaryReviewed": true,
+    "summary": "Call the nearest ghost in sensory range, a personally known ghost, or the nearest ghost matching a specified type; it cannot exceed Rank 5 or travel beyond its Anchor."
   },
   {
     "id": "mta-signs-of-sorcery:death-3-reaping-relinquishment",
@@ -497,10 +545,12 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine",
       "Occult"
     ],
-    "description": "The mage destroys a soul to relinquish a spell safely instead of spending a Willpower dot. Prime ••: The caster can destroy a soul stone instead for the same effect",
+    "description": "The next time the subject destroys a soul while this spell remains active, she may safely relinquish another spell as though she spent a Willpower dot. Add Prime 2: Destroy a soul stone instead.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 73
+    "page": 73,
+    "summaryReviewed": true,
+    "summary": "The next time the subject destroys a soul while this spell remains active, she may safely relinquish another spell as though she spent a Willpower dot. Add Prime 2: Destroy a soul stone instead."
   },
   {
     "id": "mta-2ed:death-3-quicken-corpse",
@@ -517,10 +567,12 @@ export const SPELLS: SpellDefinition[] = [
       "Crafts",
       "Persuasion"
     ],
-    "description": "Create a zombie +1 Reach: Create zombie suited for combat +2 Reach: Imbue zombie with exceptional physical prowess",
+    "description": "Animate a corpse as a loyal, mindless zombie that follows simple commands and functions as a Retainer with dots equal to Potency. It has its former Health, no Defense, uses Death Mage Armor damage rules, and is destroyed only when its final Health box is aggravated. +1 Reach: Combat form with attack pool equal to rating, Defense 3, Initiative 1, Speed 6. +2 Reach and 1 Mana: Defense 5, Initiative 3, Speed 8.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 131
+    "page": 131,
+    "summaryReviewed": true,
+    "summary": "Animate a corpse as a loyal, mindless zombie that follows simple commands and functions as a Retainer with dots equal to Potency. It has its former Health, no Defense, uses Death Mage Armor damage rules, and is destroyed only when its final Health box is aggravated."
   },
   {
     "id": "mta-2ed:death-3-quicken-ghost",
@@ -531,16 +583,18 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Perfecting",
     "primaryFactor": "Potency",
-    "withstand": "Cost: One Mana(Optional)",
+    "withstand": "",
     "roteSkills": [
       "Persuasion",
       "Socialize",
       "Medicine"
     ],
-    "description": "Can boost ghost's Attributes or heal them +2 Reach: May choose to increase a ghosts Rank",
+    "description": "Increase one ghost Attribute by 1 per Potency, up to its Rank limit, or heal one Corpus per Potency. +2 Reach and 1 Mana: Increase Rank by 1, raising limits and Essence and granting one new Numen.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 131
+    "page": 131,
+    "summaryReviewed": true,
+    "summary": "Increase one ghost Attribute by 1 per Potency, up to its Rank limit, or heal one Corpus per Potency."
   },
   {
     "id": "mta-2ed:death-3-rotting-flesh",
@@ -557,10 +611,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Empathy"
     ],
-    "description": "Inflict bashing damage +1 Reach: Subject suffers penalty to Social rolls",
+    "description": "Deal one bashing damage per Potency through rapid decay. +1 Reach: Also impose -1 per Potency, maximum -3, on Social rolls for the Duration due to the subject's horrific appearance.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Deal one bashing damage per Potency through rapid decay."
   },
   {
     "id": "mta-2ed:death-3-sever-soul",
@@ -577,10 +633,12 @@ export const SPELLS: SpellDefinition[] = [
       "Athletics",
       "Expression"
     ],
-    "description": "Take the soul from a Sleeper. Inflicts the Soulless Condition +1 Reach: Skip the Soulless Condition and inflict the Enervated Condition instead. +2 Reach: Skip both the Soulless and Enervated Conditions and inflict the Thrall Condition instead.",
+    "description": "Rip a Sleeper's soul into Twilight, imposing Soulless until the spell ends and the soul can return; casting on an already Soulless subject advances it to Enervated. +1 Reach: Impose Enervated immediately. +1 additional Reach: Impose Thrall immediately.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Rip a Sleeper's soul into Twilight, imposing Soulless until the spell ends and the soul can return; casting on an already Soulless subject advances it to Enervated."
   },
   {
     "id": "mta-2ed:death-3-shadow-crafting",
@@ -597,10 +655,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Occult"
     ],
-    "description": "Shape shadows into objects, weapons or armor.",
+    "description": "Harden shadows into a solid object with Durability 2 and either weapon rating 2, armor 2, or a +2 equipment bonus. The object remains visibly shadowy and casts no shadow of its own.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Harden shadows into a solid object with Durability 2 and either weapon rating 2, armor 2, or a +2 equipment bonus. The object remains visibly shadowy and casts no shadow of its own."
   },
   {
     "id": "mta-signs-of-sorcery:death-3-unliving-vessel",
@@ -618,10 +678,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Expression"
     ],
-    "description": "Prepares a Subject under the purview of Death for the Imbue Item Attainment. Can be used on items found in Ghostly Twilight, Items made of Ectoplasm, Corpses and Ghosts which will automatically withstand this spell. The Ghost must either be cast on within Twilight or while Manifested",
+    "description": "Prepare a Death-aligned subject for the Imbue Item Attainment: a ghostly Twilight object, ghost, ectoplasmic object, or corpse. Ghosts automatically Withstand and must be Manifested or reached in ghostly Twilight.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 69
+    "page": 69,
+    "summaryReviewed": true,
+    "summary": "Prepare a Death-aligned subject for the Imbue Item Attainment: a ghostly Twilight object, ghost, ectoplasmic object, or corpse. Ghosts automatically Withstand and must be Manifested or reached in ghostly Twilight."
   },
   {
     "id": "mta-2ed:death-4-enervation",
@@ -638,10 +700,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Subterfuge"
     ],
-    "description": "Apply either the Leg Wrack Tilt or the Arm Wreck Tilt +1 Reach: Apply the Immobilized Tilt",
+    "description": "Disable the subject's muscles, applying Arm Wrack or Leg Wrack for the Duration. +1 Reach: Apply Immobilized instead.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Disable the subject's muscles, applying Arm Wrack or Leg Wrack for the Duration."
   },
   {
     "id": "mta-2ed:death-4-exorcism",
@@ -658,10 +722,12 @@ export const SPELLS: SpellDefinition[] = [
       "Expression",
       "Occult"
     ],
-    "description": "Destroy Manifestation Condition of a ghost or it's host Add Mind 2: Spell works on Goetia +1 Reach: Target cannot attempt to recreate destroyed conditions for the duration of the spell",
+    "description": "Strip Manifestation Conditions equal to Potency from a ghost or its host; the Lasting removal may normally be reestablished. Add Mind or Spirit 4: Affect Goetia or spirits. +1 Reach: The target cannot recreate those Conditions on the same victim or location for the spell's Duration.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Strip Manifestation Conditions equal to Potency from a ghost or its host; the Lasting removal may normally be reestablished. Add Mind or Spirit 4: Affect Goetia or spirits."
   },
   {
     "id": "mta-signs-of-sorcery:death-4-goetic-evocation-death-substitute",
@@ -678,10 +744,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Persuasion"
     ],
-    "description": "May convert pieces of a persons Psyche from a soul stone into a Ghost",
+    "description": "From the soul stone of a dead mage, manifest a ghost in Twilight with Rank equal to half the creator's Gnosis and traits reflecting the creator's Path, Legacy, Shadow Name, recognizable personality, and selected memories. It can provide Legacy tutoring and is absorbed back into the stone when the spell ends; unlike the Mind version, it cannot be extracted into the caster's Oneiros.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 90
+    "page": 90,
+    "summaryReviewed": true,
+    "summary": "From the soul stone of a dead mage, manifest a ghost in Twilight with Rank equal to half the creator's Gnosis and traits reflecting the creator's Path, Legacy, Shadow Name, recognizable personality, and selected memories. It can provide Legacy tutoring and is absorbed back into the stone when the spell ends; unlike the Mind version, it cannot be extracted into the caster's Oneiros."
   },
   {
     "id": "mta-signs-of-sorcery:death-4-haunted-grimoire",
@@ -699,10 +767,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Occult"
     ],
-    "description": "*Costs 1 Mana* The Mage binds a Ghost to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Ghost's numina or influences. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Ghost's Rank for Primary Factor however the Ghost has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Ghost has a chance to possess them using a CLash of Wills. This spell is a Wisdom Sin against Understanding",
+    "description": "Bind a ghost or unattached soul into a Grimoire, giving it Resonant and Open; the entity's Rank replaces the caster's Arcanum minus one when increasing a rote's Primary Factor. Whenever someone casts a rote, the ghost may escape through a Clash of Wills; when someone memorizes one, it may instead attempt Possession. Souls cannot possess readers or cause Conditions. This is an Act of Hubris against Understanding.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 86
+    "page": 86,
+    "summaryReviewed": true,
+    "summary": "Bind a ghost or unattached soul into a Grimoire, giving it Resonant and Open; the entity's Rank replaces the caster's Arcanum minus one when increasing a rote's Primary Factor. Whenever someone casts a rote, the ghost may escape through a Clash of Wills; when someone memorizes one, it may instead attempt Possession. Souls cannot possess readers or cause Conditions. This is an Act of Hubris against Understanding."
   },
   {
     "id": "mta-2ed:death-4-revenant",
@@ -719,10 +789,12 @@ export const SPELLS: SpellDefinition[] = [
       "Brawl",
       "Intimidation"
     ],
-    "description": "Grant a ghost a Manifestation condition Add Mind 4: Spell works on Goetia",
+    "description": "Grant a ghost Manifestation Conditions equal to Potency, including prerequisites; it immediately enters the chosen Manifestation and cannot leave it during the spell. This can let a ghost Possess its corpse. Add Mind or Spirit 4: Affect Goetia or spirits.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Grant a ghost Manifestation Conditions equal to Potency, including prerequisites; it immediately enters the chosen Manifestation and cannot leave it during the spell. This can let a ghost Possess its corpse. Add Mind or Spirit 4: Affect Goetia or spirits."
   },
   {
     "id": "mta-signs-of-sorcery:death-4-scribe-daimonomikon",
@@ -740,10 +812,12 @@ export const SPELLS: SpellDefinition[] = [
       "Expression",
       "Occult"
     ],
-    "description": "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy +1 Reach: For 1 Mana, the Spell's Duration is Lasting",
+    "description": "Inscribe one Legacy Attainment per casting into a vessel; the first casting includes initiation, and one to five castings can contain any consecutive portion through the fifth Attainment. The caster must have Gnosis 2, meet the inscribed level's prerequisites, and possess Arcana required for optional effects. Initiation costs 1 Arcane Experience, later Attainments use untutored costs, and the book is a +2 sympathetic Yantra for members. +1 Reach and 1 Mana: Lasting.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 87
+    "page": 87,
+    "summaryReviewed": true,
+    "summary": "Inscribe one Legacy Attainment per casting into a vessel; the first casting includes initiation, and one to five castings can contain any consecutive portion through the fifth Attainment. The caster must have Gnosis 2, meet the inscribed level's prerequisites, and possess Arcana required for optional effects. Initiation costs 1 Arcane Experience, later Attainments use untutored costs, and the book is a +2 sympathetic Yantra for members."
   },
   {
     "id": "mta-2ed:death-4-shadow-flesh",
@@ -760,10 +834,12 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine",
       "Subterfuge"
     ],
-    "description": "Transform subject into a two or three-dimensional shadow",
+    "description": "Transform the subject and personal possessions into a mass of animated shadow, either three-dimensional and insubstantial or two-dimensional and able to pass through cracks while remaining surface-bound. The subject retains traits, can move and cast but cannot take other physical actions, is immune to non-Supernal attacks, and is effectively invisible in darkness.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 132
+    "page": 132,
+    "summaryReviewed": true,
+    "summary": "Transform the subject and personal possessions into a mass of animated shadow, either three-dimensional and insubstantial or two-dimensional and able to pass through cracks while remaining surface-bound. The subject retains traits, can move and cast but cannot take other physical actions, is immune to non-Supernal attacks, and is effectively invisible in darkness."
   },
   {
     "id": "mta-signs-of-sorcery:death-4-soul-grafting",
@@ -781,10 +857,12 @@ export const SPELLS: SpellDefinition[] = [
       "Empathy",
       "Occult"
     ],
-    "description": "Graft another Mage's soul stone to your own soul, this does not increase Gnosis but grants a +_1 for soul stone or +2 for complete souls Gnosis for the purpose of Spell casting time, Determining range for Aimed spells, Clash of Wills, Mana spends per turn, spell control, combining spells and Yantras per turn. You also recieve a +2 for Soul Stone and +3 for full souls Gnosis for Calculating Paradox. This is an act against Falling wisdom",
+    "description": "Graft another mage's soul stone or unattached soul onto the subject's soul. It grants effective Gnosis +1/+2 for casting time, Aimed range, Clashes, Mana per turn, spell control, combined spells, and Yantras, but +2/+3 for Paradox and always risks Paradox; relevant Acts of Hubris affect either soul's owner. It is an Act of Hubris against Falling Wisdom.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 90
+    "page": 90,
+    "summaryReviewed": true,
+    "summary": "Graft another mage's soul stone or unattached soul onto the subject's soul. It grants effective Gnosis +1/+2 for casting time, Aimed range, Clashes, Mana per turn, spell control, combined spells, and Yantras, but +2/+3 for Paradox and always risks Paradox; relevant Acts of Hubris affect either soul's owner. It is an Act of Hubris against Falling Wisdom."
   },
   {
     "id": "mta-2ed:death-4-withering",
@@ -801,10 +879,12 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine",
       "Science"
     ],
-    "description": "Inflict lethal damage +1 Reach: Spend one Mana, Inflict aggravated damage instead",
+    "description": "Deal one lethal damage per Potency through rapid bodily atrophy. +1 Reach and 1 Mana: Deal aggravated damage instead.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Deal one lethal damage per Potency through rapid bodily atrophy."
   },
   {
     "id": "mta-2ed:death-5-create-anchor",
@@ -821,10 +901,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Persuasion"
     ],
-    "description": "Apply the Anchor Condition to a subject",
+    "description": "Apply a universal Anchor Condition to a subject that any ghost may use. If a ghost is also targeted, it becomes anchored to this new Anchor in addition to its existing Anchors.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Apply a universal Anchor Condition to a subject that any ghost may use. If a ghost is also targeted, it becomes anchored to this new Anchor in addition to its existing Anchors."
   },
   {
     "id": "mta-2ed:death-5-create-avernian-gate",
@@ -841,10 +923,12 @@ export const SPELLS: SpellDefinition[] = [
       "Crafts",
       "Persuasion"
     ],
-    "description": "Create a gateway to the upper levels of the Underworld. This gives the area a Death Resonance and the Gateway Condition +1 Reach: The gateway can lead to anywhere in the Underworld the mage has been before",
+    "description": "Open an Iris between the material world and the upper Underworld, giving the area Death Resonance and the Gateway Condition for the Duration. +1 Reach: Lead to any Underworld location the caster has previously visited.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Open an Iris between the material world and the upper Underworld, giving the area Death Resonance and the Gateway Condition for the Duration."
   },
   {
     "id": "mta-2ed:death-5-create-ghost",
@@ -861,10 +945,12 @@ export const SPELLS: SpellDefinition[] = [
       "Expression",
       "Academics"
     ],
-    "description": "Create a ghost of Rank 1. ghost is loyal to you +1 Reach: Spend one Mana, the ghost created is Rank 2",
+    "description": "Create a loyal Rank 1 ghost in Twilight, optionally fashioned as an echo of a living or dead person, and command it without further spells for the Duration. +1 Reach and 1 Mana: Create it at Rank 2.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Create a loyal Rank 1 ghost in Twilight, optionally fashioned as an echo of a living or dead person, and command it without further spells for the Duration."
   },
   {
     "id": "mta-2ed:death-5-deny-the-reaper",
@@ -881,10 +967,12 @@ export const SPELLS: SpellDefinition[] = [
       "Occult",
       "Subterfuge"
     ],
-    "description": "Reverse the effects of decay and age up to a number of months +1 Reach: Can bring the recently dead back to life. Subject suffers Soulless Condition",
+    "description": "Reverse up to one month of decay per Potency, restoring lost bodily functions and irreparable damage in living subjects or repairing age-ravaged objects. +1 Reach: Temporarily return the recently dead to life without their departed soul; they gain Soulless and die again when the spell ends.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Reverse up to one month of decay per Potency, restoring lost bodily functions and irreparable damage in living subjects or repairing age-ravaged objects."
   },
   {
     "id": "mta-2ed:death-5-empty-presence",
@@ -895,16 +983,18 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Unmaking",
     "primaryFactor": "Duration",
-    "withstand": "",
+    "withstand": "Composure",
     "roteSkills": [
       "Subterfuge",
       "Persuasion",
       "Stealth"
     ],
-    "description": "Destroys all evidence of a subjects existence and renders them invisible to the naked eye. If the subject takes violent action the spell ends immediately",
+    "description": "Erase the subject's observable presence and evidence of existence: mundane detection fails, she becomes invisible, Social Doors reset, and all non-Paradox Conditions on or belonging to her resolve without Beats. Violence or overt destruction ends the spell; Active Mage Sight triggers a Clash, and Focused Mage Sight reveals her. Conditions stay resolved, while Doors return when it ends.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Erase the subject's observable presence and evidence of existence: mundane detection fails, she becomes invisible, Social Doors reset, and all non-Paradox Conditions on or belonging to her resolve without Beats. Violence or overt destruction ends the spell; Active Mage Sight triggers a Clash, and Focused Mage Sight reveals her. Conditions stay resolved, while Doors return when it ends."
   },
   {
     "id": "mta-2ed:death-5-sever-the-awakened-soul",
@@ -921,10 +1011,12 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation",
       "Medicine"
     ],
-    "description": "Severs the soul of an Awakened mage. Inflicts the Soulless Conditions +1 Reach: Skip the Soulless Condition and inflict the Enervated Condition instead. +2 Reach: Skip both the Soulless and Enervated Conditions and inflict the Thrall Condition instead.",
+    "description": "Unmake the protections around an Awakened soul, remove it, and place it in a prepared vessel or the caster's body; otherwise it waits in Twilight. The subject gains Soulless, or advances from Soulless to Enervated. +1 Reach: Impose Enervated immediately. +1 additional Reach: Impose Thrall immediately.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 133
+    "page": 133,
+    "summaryReviewed": true,
+    "summary": "Unmake the protections around an Awakened soul, remove it, and place it in a prepared vessel or the caster's body; otherwise it waits in Twilight. The subject gains Soulless, or advances from Soulless to Enervated."
   },
   {
     "id": "mta-2ed:fate-1-interconnections",

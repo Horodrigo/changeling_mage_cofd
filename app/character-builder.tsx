@@ -3616,6 +3616,7 @@ function spellTooltip(spell: SpellDefinition) {
 }
 
 function spellSummary(spell: SpellDefinition) {
+  if (spell.summary?.trim()) return spell.summary.trim();
   const description = spell.description?.trim() || "Descrição não disponível.";
   const firstSentence = description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim();
   return firstSentence || description;

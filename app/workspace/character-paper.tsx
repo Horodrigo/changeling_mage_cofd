@@ -2270,6 +2270,8 @@ function SpellSheetList({
   );
 }
 function spellItemSummary(item: Record<string, unknown>) {
+  const reviewedSummary = String(item.summary ?? "").trim();
+  if (reviewedSummary) return reviewedSummary;
   const description = String(item.description ?? "").trim() ||
     "Descrição não disponível.";
   return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;

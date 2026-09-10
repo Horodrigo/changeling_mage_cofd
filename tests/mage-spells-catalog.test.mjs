@@ -42,6 +42,20 @@ test("PDF-verified Codex typos use their printed English names", () => {
   assert.ok(SPELLS.some((spell)=>spell.name==="Goetic Evocation (Death Substitute)"&&spell.requirements.Death===4));
 });
 
+test("Death summaries are fully reviewed against the offline PDFs", () => {
+  const death=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Death");
+  assert.equal(death.length,46);
+  assert.ok(death.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(death.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),death.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(death.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),death.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Quicken Corpse","Haunted Grimoire","Empty Presence"]){
+    const spell=death.find((candidate)=>candidate.name===name);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  for(const stale of ["Shape and mold ectoplasm","Apply Poor Light Tilt in area","Learna","reasteablished","adds"])
+    assert.ok(death.every((spell)=>!spell.description.includes(stale)),stale);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");
