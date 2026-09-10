@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
+import { readWorkspaceSource } from "./workspace-source.mjs";
 
 test("declara uma PWA standalone com ícones Android", async () => {
   const manifest=JSON.parse(await readFile(new URL("../public/manifest.webmanifest",import.meta.url),"utf8"));
@@ -26,7 +27,7 @@ test("apresenta uma abertura de aplicativo alinhada à nova marca", async () => 
 
 test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em todas as telas", async () => {
   const [workspace,css]=await Promise.all([
-    readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
+    readWorkspaceSource(),
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
   ]);
   assert.match(workspace,/value: "stats", label: "Stats"/);
@@ -42,7 +43,7 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em
 
 test("não oferece prévia, impressão ou árvore duplicada para PDF", async () => {
   const [workspace,css]=await Promise.all([
-    readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
+    readWorkspaceSource(),
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
   ]);
   assert.doesNotMatch(workspace,/window\.print|printLayout|pdf-preview|pdf-print-source|Preview PDF|Print PDF/);
@@ -67,7 +68,7 @@ test("a criação apresenta Contratos selecionados como cartões expansíveis", 
 
 test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência compacto", async () => {
   const [workspace,css]=await Promise.all([
-    readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
+    readWorkspaceSource(),
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
   ]);
   assert.match(workspace,/<LegacySheetField value=\{legacyDisplay\} enabled=\{hasLegacyAccess\}/);

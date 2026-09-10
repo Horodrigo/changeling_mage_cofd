@@ -2,7 +2,7 @@
 
 ## Current state
 
-`app/workspace.tsx` has 6,281 lines and combines the application shell with character navigation, desktop and mobile sheets, Changeling and Mage subsystems, combat, companions, experience purchasing, catalogs, persistence normalization, and legacy JSON migration.
+The original `app/workspace.tsx` had 6,281 lines and combined the application shell with character navigation, desktop and mobile sheets, Changeling and Mage subsystems, combat, companions, experience purchasing, catalogs, persistence normalization, and legacy JSON migration.
 
 The main risk is coupling through file-local components and helpers. A change to one game-line feature forces the compiler and reviewer through the entire workspace surface, and compressed JSX makes state transitions difficult to audit.
 
@@ -38,3 +38,11 @@ The first slice moves Legacy and responsive sheet navigation into feature module
 - `app/workspace/sheet-tabs.tsx` owns mobile tab and swipe navigation.
 - `app/workspace/rule-select.tsx` provides the shared grouped selector without importing either splat feature.
 - `workspace.tsx` now coordinates these features through explicit props and controlled tab state.
+- `lib/character-persistence.ts` owns stored-sheet normalization and both legacy import migrations, with direct migration tests.
+- `app/workspace/changeling-experience-panel.tsx` and `app/workspace/mage-experience-panel.tsx` own each game line's advancement flow.
+- `app/workspace/experience-shared.tsx` owns neutral purchase selectors, shared merit progression checks, and derived-trait calculations.
+- `app/workspace/combat-page.tsx` and `app/workspace/loadout-catalog.tsx` own combat and equipment selection.
+- `app/workspace/companion-page.tsx` owns animal, Fae Mount, and Familiar presentation and editing.
+- `app/workspace/character-paper.tsx` composes the character sheet features.
+- `app/workspace/sheet-primitives.tsx` and `app/workspace/workspace-i18n.ts` provide neutral rendering and localization helpers.
+- `workspace.tsx` is now the application shell, character list, route-level selection, and persistence coordinator.

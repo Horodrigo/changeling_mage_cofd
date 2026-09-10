@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test, {after} from "node:test";
 import {fileURLToPath} from "node:url";
 import {createServer} from "vite";
+import {readWorkspaceSource} from "./workspace-source.mjs";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
@@ -46,7 +47,7 @@ test("Legacy refunds restore removed Praxes and only their transaction delta",()
 
 test("Mage sheet exposes Join/Join Create and places Legacy before Combat",async()=>{
   const {readFile}=await import("node:fs/promises");
-  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const workspace=await readWorkspaceSource();
   const legacy=await readFile(new URL("../app/workspace/legacy-page.tsx",import.meta.url),"utf8");
   assert.match(workspace,/gnosis >= 3 \? tr\("Join\/Create"/);
   assert.match(workspace,/<TabsTrigger value="magia"[^]*<TabsTrigger value="legacy"[^]*<TabsTrigger value="combate"/);
@@ -56,7 +57,7 @@ test("Mage sheet exposes Join/Join Create and places Legacy before Combat",async
 
 test("Legacy navigation, progression, and discard follow membership state",async()=>{
   const {readFile}=await import("node:fs/promises");
-  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const workspace=await readWorkspaceSource();
   const legacy=await readFile(new URL("../app/workspace/legacy-page.tsx",import.meta.url),"utf8");
   assert.match(workspace,/LegacySheetField[^>]+onOpen=\{\(\)=>setSheetTab\("legacy"\)\}/);
   assert.match(workspace,/hidden:!legacyState\?\.joined/);

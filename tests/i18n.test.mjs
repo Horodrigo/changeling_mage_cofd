@@ -3,6 +3,7 @@ import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 import { createServer } from "vite";
+import { readWorkspaceSourceSync } from "./workspace-source.mjs";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
@@ -24,7 +25,7 @@ test("seletor fica após Homebrews e mantém rótulo acessível",()=>{
 });
 
 test("a ficha localiza Kith, Courtless, compras e linhas editáveis",async()=>{
-  const source=readFileSync(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const source=readWorkspaceSourceSync();
   const {courtDisplayName}=await vite.ssrLoadModule("/lib/changeling-courts.ts");
   assert.equal(courtDisplayName("Sem Corte","en-US"),"Courtless");
   assert.match(source,/label=\{tr\("Frátria", "Kith"\)\}/);

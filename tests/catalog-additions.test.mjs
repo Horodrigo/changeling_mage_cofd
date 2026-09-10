@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
+import {readWorkspaceSource} from "./workspace-source.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false} });
@@ -212,7 +213,7 @@ test("configurações de texto livre ficam inline e escolhas estruturadas perman
 
 test("compra de Mérito usa uma única escolha de instância e nível por cartão", async()=>{
   const {readFile}=await import("node:fs/promises");
-  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const workspace=await readWorkspaceSource();
   assert.match(workspace,/tr\("Nova instância","New Instance"\)/);
   assert.match(workspace,/tr\("Atual","Current"\)/);
   assert.match(workspace,/tr\("Pretendido","Intended"\)/);
@@ -222,7 +223,7 @@ test("compra de Mérito usa uma única escolha de instância e nível por cartã
 
 test("estado dos rascunhos de Méritos pertence ao seletor de compra", async()=>{
   const {readFile}=await import("node:fs/promises");
-  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const workspace=await readWorkspaceSource();
   const pickerStart=workspace.indexOf("function ExperienceMeritPicker(");
   const pickerEnd=workspace.indexOf("\nfunction ",pickerStart+1);
   const picker=workspace.slice(pickerStart,pickerEnd<0?undefined:pickerEnd);
@@ -241,7 +242,7 @@ test("catálogo de Spells filtra e mantém a Rote Skill visível no cartão fech
 test("Contratos exibem Comuns antes dos Reais sem perder a ordem alfabética", async()=>{
   const {readFile}=await import("node:fs/promises");
   const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
-  const workspace=await readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  const workspace=await readWorkspaceSource();
   assert.match(builder,/alphabetical\(catalog, contractName,locale\)[\s\S]*Number\(left\.type === "Real"\)/);
   assert.match(workspace,/sortPriority: Number\(item\.type === "Real"\)/);
   assert.match(workspace,/alphabetical\(items, item => item\.name,locale\)[\s\S]*left\.sortPriority/);
