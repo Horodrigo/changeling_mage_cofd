@@ -121,6 +121,21 @@ test("Matter summaries are fully reviewed against the offline PDFs", () => {
   assert.match(exNihilo.summary,/Potency between.*Durability.*equipment bonus/);
 });
 
+test("Mind summaries are fully reviewed against the offline PDFs", () => {
+  const mind=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Mind");
+  assert.equal(mind.length,45);
+  assert.ok(mind.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(mind.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),mind.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(mind.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),mind.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Mental Scan","Incognito Presence","Ritual Focus","Astral Grimoire","Haunted Grimoire","Goetic Evocation","Mind Wipe"]){
+    const spell=mind.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  assert.match(mind.find((spell)=>spell.name==="Mind Wipe").summary,/one continuous month.*per Potency/);
+  assert.match(mind.find((spell)=>spell.name==="Goetic Evocation").summary,/Rank equal to half.*Gnosis/);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");

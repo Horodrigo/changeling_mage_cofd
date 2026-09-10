@@ -3883,7 +3883,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Determine a subject's Virtue, Vice and Mental and Social Attribute levels +1 Reach: Also determine Aspirations and Obsessions",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 159
+    "page": 159,
+    "summary": "Observe a subject to determine Virtue, Vice, and the total dots in Mental and Social Attributes. The basic spell reveals totals rather than individual Attribute ratings.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-1-mental-scan",
@@ -3903,7 +3905,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Ask storyteller questions about a subject's mental or emotional state +1 Reach: Read surface thoughts for snippets of a subject's current ideas or words and phrases before they are actually spoken",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 159
+    "page": 159,
+    "summary": "Ask one question per Potency about the subject’s current mental or emotional state and receive brief impressions from surface thoughts. The answers reflect what the subject is thinking and feeling rather than exhaustive memories.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-1-one-mind-two-thoughts",
@@ -3923,7 +3927,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Perform two Mental or Social extended tasks at the same time. Neither can be a purely Physical task. +1 Reach: May perform two Mental instant tasks at the same time +2 Reach: If in the Astral Realms one of the actions may be \"Physical\"",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 159
+    "page": 159,
+    "summary": "Maintain two distinct trains of thought and perform two Mental or Social extended tasks simultaneously, provided neither task is purely Physical.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-1-perfect-recall",
@@ -3943,7 +3949,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Recall old memories with perfect accuracy.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Recall one memory per Potency with perfect clarity and accuracy, including details the subject consciously noticed at the time. It does not reveal information that was never perceived.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-alter-mental-pattern",
@@ -3963,7 +3971,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Add to subterfuge rolls. Supernatural powers that read surface thoughts or emotions provoke a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Disguise the subject’s thoughts and emotional responses, adding Potency to Subterfuge rolls made to conceal them. Supernatural attempts to read surface thoughts or emotions provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-dream-reaching",
@@ -3983,7 +3993,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Enter a subject's dream. You can influence but not take part in the dream. Cast on self to be able to remember your own dreams. +1 Reach: You can become an active part of the dream. Cast on self induces lucid dreaming",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Enter and observe a sleeping subject’s dream, influencing its course without appearing as an active participant. Cast on oneself, the spell guarantees recall of the mage’s own dreams.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-emotional-urging",
@@ -4003,7 +4015,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Open or close a subject's doors",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Intensify or suppress an emotion to open or close a number of Doors equal to Potency in Social maneuvering. The effect changes emotional pressure without dictating a specific action.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-first-impressions",
@@ -4023,7 +4037,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Raise or lower the first impression",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Raise or lower the subject’s impression level by Potency for Social maneuvering, resisted by Composure. The spell alters how others initially receive the subject rather than granting automatic cooperation.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-incognito-presence",
@@ -4043,7 +4059,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Costs ●. The Mage hides the Subject's Psychic Presence which Prevents people form remembering their presence or looking their way. Active attempts to do so with supernatural abilities (Including active Mage sight) provoke a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "For one Mana, veil the subject’s psychic presence so observers overlook her and have difficulty remembering that she was present. Deliberate supernatural attempts to notice or recall her, including Active Mage Sight, provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-memory-hole",
@@ -4063,7 +4081,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Hide a specific memory forgetting it completely for the duration of the spell, One memory per Potency",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Suppress one chosen memory per Potency so the subject cannot recall it during the spell. The memories return when the Duration ends.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-mental-shield",
@@ -4083,7 +4103,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Protects the Subject from Mental Attacks, Goetia Powers, Influences or Manifestations that target them. +1 Reach: Also Protects from Physical attacks of Goetia",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 160
+    "page": 160,
+    "summary": "Protect the subject from mental attacks and from Goetic Influences, Numina, or Manifestations that target the mind. Attempts covered by the ward provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-2-narcissus-mirror",
@@ -4103,7 +4125,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The mage can reflect the mental and emotional effects of a Nimbus tilt back onto its source. Whenever the Mage is subjected to a tilt that affects a Mental or Social trait this spell provokes a Clash of Wills. If the mage wins affect the instigator of the Tilt. Can be cast if the Mage is already under the effects of a tilt to immediately create a Clash of Wills Substitute Life ••: This Spell affects Nimbus Tilts relating to Physical Traits or purely Physical effects instead Add Life ••: This Spell affects all types of Nimbus Tilt Add Prime ••: Affects other type of Supernatural Auras with the appropriate kinds of effects",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 94
+    "page": 94,
+    "summary": "Reflect a Nimbus Tilt that affects the mage’s Mental or Social traits back on its source through a Clash of Wills. It can also be cast while such a Tilt is active to trigger the Clash immediately.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-psychic-domination",
@@ -4123,7 +4147,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Send one word commands to a subject that they are compelled to act upon, even against their will +1 Reach: take control of a subject, forcing him to take actions against their will. These actions cannot put him serious danger however +1 Reach: Force the subject to take an additional task",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 161
+    "page": 161,
+    "summary": "Project a one-word command as an urge the subject is compelled to follow, resisted by Resolve. The command cannot convey a sentence or complex plan through the basic spell.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-2-ritual-focus",
@@ -4143,7 +4169,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "A Variant on Telepathy linking a Mage and his Subjects allowing him to guide them as they work in unison on a particular spell (see \"Teamwork\", MtAw 2e p.119) Must have Scale to affect every other Awakened participant in Ritual. Secondary Actors in ritual add Potency to dice pool",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 55
+    "page": 55,
+    "summary": "Link the caster’s mind with every Awakened participant covered by Scale while they cooperate on a single ritual spell. Secondary actors add Potency to the primary actor’s casting pool under the teamwork rules.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-2-soul-windows",
@@ -4163,7 +4191,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "By Splitting their senses a mage may view whats happening around their Soul Stone 360° or hears the sounds in its vicinity. This doesn't require sympathetic range Add Forces ••: The mage may project their voice through the stone to speak or create a hologram of themselves +1 Reach: The mage experiences the Stone's surroundings with all their Senses +1 Reach: For each reach spent the Mage may split their senses to another Soul Stone",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 90
+    "page": 90,
+    "summary": "Split sight or hearing through one of the mage’s Soul Stones, perceiving its surroundings in every direction without sympathetic range. The mage continues to perceive through her own body while using the remote sense.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-2-telepathy",
@@ -4183,7 +4213,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Surface thoughts of the subjects play out in the each others minds. This may grant a bonus or penalty between the subjects. A deliberate message may be send along the link. +1 Reach: Only thoughts that the originating subject wants to share are shared +1 Reach: All subjects have the ability to send and receive thoughts",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 161
+    "page": 161,
+    "summary": "Link subjects so their surface thoughts play through one another’s minds and deliberate messages can pass along the connection. Shared mental noise may grant a bonus or impose a penalty depending on whether it helps the task.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-astral-grimoire",
@@ -4204,7 +4236,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* Scribe a Rote within ones own Oneiros, these can be cast from the Grimoire without needing to meditate to the Astral +1 Reach: The Mage can scribe the grimoire within the Temenos making it available to any who travel there. These can only be cast directly from the Astral representation or with its Summoned goetia +1 Reach: For 1 point of Mana the Spell's duration is lasting +2 Reach: The Mage can scribe within the Anima Mundi, these don't manifest as books or scrolls but as constellations or rock formations. Figuring these out is a mystery of itself",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 85
+    "page": 85,
+    "summary": "For one Mana, inscribe one rote per casting into the mage’s Oneiros. The mage can cast it without entering the Astral, while using its Astral representation or summoned Goetia provides a two-die equipment bonus.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-augment-mind",
@@ -4224,7 +4258,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Increase a Mental or Social Attribute by Potency, up to normal limits. +1 Reach: Divide increase between an additional Attribute. +2 Reach: for 1 Mana, go above normal limits.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 161
+    "page": 161,
+    "summary": "Increase one Mental or Social Attribute by Potency up to the subject’s normal maximum. Derived traits change with the enhanced Attribute.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-befuddle",
@@ -4244,7 +4280,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Lower a Mental or Social Attributes. One Potency equal one dot to a minimum of one. +1 Reach: May lower an additional Attribute per reach, dividing Potency among the options",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 163
+    "page": 163,
+    "summary": "Reduce one Mental or Social Attribute by Potency, to a minimum of one, resisted by Composure or Resolve as appropriate. Derived traits change with the reduced Attribute.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-broken-relinquishment",
@@ -4264,7 +4302,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "This spell creates a breaking point for the subject as a way to relinquish spells without spending a willpower dot. The next act of hubris, braking point or genre equivalent by a subject of this spell suffers penalty by Potency +1 Reach: The Subject of this spell immediately suffers a breaking point",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 73
+    "page": 73,
+    "summary": "Prepare the subject to relinquish a spell through psychic trauma instead of spending a Willpower dot. The next Act of Hubris, breaking point, or equivalent roll suffers a penalty equal to Potency and supplies the required breaking point.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-clear-thoughts",
@@ -4284,7 +4324,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Suppress a Mental Condition or Tilt per Potency, for the Duration. Can't affect Paradox Conditions; those cause by the supernatural provoke a Clash of Wills. +1 Reach: subject gains 1 Willpower. +2 Reach: effect is lasting.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 161
+    "page": 161,
+    "summary": "Suppress one Mental Condition or Tilt per Potency for the Duration. Paradox Conditions are immune, and supernatural effects that created the affliction provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-enhance-skill",
@@ -4304,7 +4346,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Increase an Skill with already at least one rank by Potency, for the Duration, up to their normal limits. +1 Reach: Divide increase between an additional Skill. + 2 Reach: for 1 Mana, go above normal limits.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 161
+    "page": 161,
+    "summary": "Increase one Skill in which the subject already has at least one dot by Potency, without exceeding the normal maximum. The spell enhances existing training rather than granting a new Skill.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-give-me-that",
@@ -4324,7 +4368,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The subject item evokes a concept of ownership. Those who do not Withstand the spell gain the Persistent Condition: Obsession with the object as their focus Space ●●●: Individuals with the Obsessed Condition to the object also gain a Strong sympathetic link to it for the spells duration",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 66
+    "page": 66,
+    "summary": "Make an item evoke overwhelming ownership in anyone who sees it. A viewer who fails to Withstand with Composure gains the Persistent Obsession Condition focused on possessing the object.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-goetic-summons",
@@ -4344,7 +4390,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Call the nearest Goetia; one personally known, specified by type of Resonance, or the nearest generally. Add Spirit or Death 2: it gains the Materialized Condition for the duration. +1 Reach: Also creates the Open Condition. +1 Reach: May give it a one-word command. +2 Reach: may give a complex but single task command. +1 Reach: summon a Goetia from the subject's Oneiros at a place one could reach the Astral. Must spend the Mana it would take to enter. +2 Reach: summon from the Temenos. +3 Reach: summon from Anima Mundi.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 162
+    "page": 162,
+    "summary": "Summon the nearest Goetia, a personally known Goetia, or one matching a specified Resonance, resisted by Rank. The basic spell calls it without Materializing it or compelling obedience.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-imposter",
@@ -4364,7 +4412,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cause the subject to believe the caster is someone else. Manipulation + Subterfuge every minute if mimicking a specific person. Can't replicate Social Merits; any Doors opened benefit the assumed identity.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 162
+    "page": 162,
+    "summary": "Make observers perceive the subject as another person or assumed identity. Mimicking a specific individual requires recurring Manipulation + Subterfuge rolls, cannot reproduce Social Merits, and any opened Doors belong to the impersonated identity.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-psychic-assault",
@@ -4384,7 +4434,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal Bashing equal to Potency, mimicking a stroke. +1 Reach: give target -1 to Mental rolls (may stack 3 times).",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 162
+    "page": 162,
+    "summary": "Overstimulate a living mind like a stroke, inflicting bashing damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-sleep-of-the-just",
@@ -4404,7 +4456,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Control sleep cycle and dreams. Anything else entering or influencing dreams provokes Clash of Wills.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 162
+    "page": 162,
+    "summary": "Control the subject’s sleep cycle and dreams, inducing or preventing sleep and shaping ordinary dreaming. Other supernatural attempts to enter or influence those dreams provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-supernal-translation",
@@ -4425,7 +4479,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the subject to comprehend and translate High Speech as they hear or read it as if they had up Mage Sight. Does not allow them to Speak or Write it back and is still subject to Dissonance and Quiescence",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 28
+    "page": 28,
+    "summary": "Allow the subject to comprehend and translate spoken or written High Speech as though using Mage Sight. The spell does not grant the ability to speak or write High Speech and does not prevent Dissonance or Quiescence.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-read-the-depths",
@@ -4445,7 +4501,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Read memories and ideas from target's subconscious. +1 Reach: modify one of the memories read, for the Duration.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 162
+    "page": 162,
+    "summary": "Search the subject’s subconscious for one memory or idea per Potency, resisted by Resolve. The mage experiences the retrieved material from the subject’s perspective rather than merely learning a factual answer.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-3-universal-language",
@@ -4465,7 +4523,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Target can understand and translate any language they are able to perceive: spoken, written, symbols, encoded signals, body language, hand symbols, or thoughts. Does not allow non-Awakened to understand High Speech.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 162
+    "page": 162,
+    "summary": "Understand and translate any perceived language or symbolic communication, including speech, writing, codes, gestures, body language, and transmitted thoughts. It does not let a non-Awakened subject understand High Speech.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-4-haunted-grimoire",
@@ -4486,7 +4546,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* The Mage binds a Goetia to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Goetia's numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Goetia Rank for Primary Factor however the Goetia has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Goetia has a chance to possess them using a Clash of Wills. This spell is a Wisdom Sin against Understanding",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 86
+    "page": 86,
+    "summary": "For one Mana, bind a Goetia into a Grimoire, making it Resonant and Open. Its Rank replaces the caster’s Arcanum minus one when increasing a rote’s Primary Factor, but casting or memorizing a rote may let it escape or possess the reader through a Clash of Wills; this is an Act of Hubris against Understanding.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-possession",
@@ -4506,7 +4568,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Can possess the subject inflicting the Possessed Condition(see p. 261)",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 165
+    "page": 165,
+    "summary": "Project the mage’s consciousness into the subject and impose Possessed, taking control of the body while the mage’s own body becomes inert. The mage uses the host’s physical capabilities but retains her own mind.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-gain-skill",
@@ -4526,7 +4590,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Increase a Skill by Potency. This cannot go above the normal maximum. +1 Reach: Divide the increase between an additional Skill. + 1 Reach: for 1 Mana, go above normal limits.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 163
+    "page": 163,
+    "summary": "Grant dots in one Skill equal to Potency up to the subject’s normal maximum, even if the subject had no prior training. The knowledge lasts only for the spell’s Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-4-goetic-evocation",
@@ -4546,7 +4612,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "May convert pieces of a persons Psyche from a soul stone into a Goetia +2 Reach: The Mage may extract the Goetia directly into his own Oneiros",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 90
+    "page": 90,
+    "summary": "Convert the soul-stuff in a Soul Stone into a Twilight Goetia with Rank equal to half its creator’s Gnosis. Its traits reflect the creator’s Path, Legacy, and Shadow Name, and its limited memories can provide Legacy tutoring; when the spell ends, it is destroyed and reabsorbed by the stone.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-hallucination",
@@ -4566,7 +4634,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create an illusion that affects all senses but touch. +1 Reach: The illusion can now be \"touched\" by the subject. It cannot harm or attack.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 163
+    "page": 163,
+    "summary": "Create a sensory illusion perceived by the subject through every sense except touch. It behaves as directed but cannot cause direct harm or physically interact.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-mind-flay",
@@ -4586,7 +4656,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal lethal damage. +1 Reach: Cause Insane Tilt +2 Reach: Spend a point of Mana, deal aggravated damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Tear apart the subject’s mind, inflicting lethal damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-psychic-projection",
@@ -4606,7 +4678,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Astral project into Twilight or into somebody's dreams. Add Spirit 2: May project into the Shadow. Withstand is Gauntlet rating.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Project the subject’s consciousness out of the body into mental Twilight or another person’s dreams, resisted by Resolve. The body remains behind and inert; projecting through the Gauntlet with Spirit is instead Withstood by the Gauntlet rating.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-psychic-reprogramming",
@@ -4626,7 +4700,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "For each point of Potency change one of the followin: Virtue, Vice, Short-Term Aspiration, Long-Term Aspiration, Obsession, a non-Physical Persistent Condition, or may move one dot between two Social Skills, or between two Mental Skills. +1 Reach: May also move between two Social Attributes, or two Mental Attributes.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Change one personality element per Potency: Virtue, Vice, an Aspiration, Obsession, a non-Physical Persistent Condition, or move one dot between two Mental Skills or two Social Skills. The changes last for the spell’s Duration and are resisted by Resolve.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:mind-4-scribe-daimonomikon",
@@ -4647,7 +4723,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy +1 Reach: For 1 Mana, the Spell's Duration is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 87
+    "page": 87,
+    "summary": "For one Mana, inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet the relevant Gnosis, Legacy, and optional-Arcanum prerequisites; readers pay applicable Arcane Experience and members treat it as a +2 sympathetic Yantra.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-4-terrorize",
@@ -4667,7 +4745,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cause the Insensate Tilt for the duration or until it's resolved +1 Reach: Inflict Broken Condition instead",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Overwhelm the subject’s mind with terror, imposing Insensate for the Duration or until resolved, resisted by Composure.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-5-amorality",
@@ -4687,7 +4767,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Remove Virtue or Vice. Without Virtue the subject regains two Willpower for indulging Vice. Without Vice the subject cannot engage in any activity that would be a breaking point or Act of Hubris",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Remove either Virtue or Vice for the Duration. Without Virtue, indulging Vice restores two Willpower; without Vice, the subject cannot willingly perform an action that would cause a breaking point or Act of Hubris.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-5-no-exit",
@@ -4707,7 +4789,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "For the duration of the spell the subject is in a catatonic state. Reading of the subjects mind or memory reveals this spell.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Trap the subject inside an inescapable internal mental world, leaving the body catatonic for the Duration. Reading the subject’s thoughts or memories reveals the presence of the constructed reality.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-5-mind-wipe",
@@ -4727,7 +4811,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Remove large portions of the subjects memories, inflicts the Amnesia Tilt for the duration of the spell. You can affect one month of time per level Potency. You can specify what portions are forgotten. +1 Reach: May specify what memories are erased, rather than just erasing a single span of time. +2 Reach: The effect is Lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 164
+    "page": 164,
+    "summary": "Impose Amnesia and erase one continuous month of the subject’s life per Potency, with the caster choosing which span is lost. The memories remain unavailable for the spell’s Duration unless made Lasting through Reach.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-5-psychic-genesis",
@@ -4747,7 +4833,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a self-aware intelligence. This is a Rank 1 Goetia in Twilight. +1 Reach: The entity works as a sleepwalker for the purposes of assisting ritual casting. +1 Reach: For one Mana, the rank is 2",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 165
+    "page": 165,
+    "summary": "Create a self-aware Rank 1 Goetia in Twilight as the mage’s loyal servant for the Duration. The mage defines its identity and directs its actions within the capabilities of a created consciousness.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:mind-5-social-networking",
@@ -4767,7 +4855,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "For every level of Potency, gain one dot in one of the following Merits: Allies, Contacts or Status",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 165
+    "page": 165,
+    "summary": "Create social ties represented by one dot of Allies, Contacts, or Status per Potency, distributed as the mage chooses. The relationships exist for the spell’s Duration and operate through plausible people and institutions.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:prime-1-dispel-magic",
