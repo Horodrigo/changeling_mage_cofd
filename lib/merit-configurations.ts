@@ -102,7 +102,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [...MAGE_MERIT_CONF
   {name:"Running with the Wolves",line:"CtL",fields:[{key:"animal_group",label:"Animal group",kind:"text"}]},
   {name:"Still Waters Run Deep",line:"CtL",fields:[{key:"attribute",label:"Chosen Attribute",kind:"select",options:ATTRIBUTE_OPTIONS}]},
   {name:"Elemental Warrior",line:"CtL",fields:[{key:"element",label:"Physical element",kind:"text"}]},
-  {name:"Fae Pet",line:"CtL",fields:[{key:"dread_power",label:"Dread Power",kind:"text",placeholder:"Name of the pet's Dread Power"}]},
+  {name:"Fae Pet",line:"CtL",fields:[{key:"name",label:"Name",kind:"text"},{key:"animalId",label:"Animal",kind:"text"},{key:"dread_power",label:"Dread Power",kind:"text",placeholder:"Name of the pet's Dread Power"}]},
   {name:"Friends in Low Places",line:"CtL",fields:[{key:"group",label:"Group",kind:"text"}]},
   {name:"A Taste of Honey",line:"CtL",fields:[{key:"desire",label:"Chosen desire",kind:"text"}]},
   {name:"Rageaholic",line:"CtL",fields:[{key:"wrath",label:"Chosen form of wrath",kind:"text"}]},
@@ -119,7 +119,7 @@ export const MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [...MAGE_MERIT_CONF
   {name:"Entitlement",line:"CtL",fields:[]},
 ];
 export const findMeritConfiguration = (name: string): MeritConfigDefinition | undefined => MERIT_CONFIGURATIONS.find((item)=>item.name===name);
-const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Fae Pet","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
+const INLINE_MERITS=new Set(["Allies","Alternate Identity","Area of Expertise","Eerie Eyes","Language","Library","Material Affinity","Mover and Shaker","Quick Draw","Running with the Wolves","Safe Place","Status","Striking Looks","Unseen Sense","Friends in Low Places","A Taste of Honey","Rageaholic","Acquired Taste","Favored Phobia","Grief Connoisseur"]);
 const STRUCTURED_MERITS=new Set(["Professional Training","Mystery Cult Initiation","Mystery Cult Influence","Hollow","Warded Dreams","Stable Trod","Workshop","Shared Bastion","Token","Hedgespun Item","Entitlement"]);
 export const isInlineMeritConfiguration = (name: string) => INLINE_MERITS.has(name)||Boolean(MAGE_MERIT_CONFIGURATIONS.find(item=>item.name===name&&item.fields.length===1&&item.fields[0].kind==="text"));
 export const isStructuredMerit = (name: string) => STRUCTURED_MERITS.has(name);

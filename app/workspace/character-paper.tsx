@@ -21,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation } from "@/lib/changeling-courts";
+import { ANIMALS, animalPresentation } from "@/lib/companions";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -187,6 +188,7 @@ export function CharacterPaper({
   const isCtl = character.game_line === "CtL";
   const data = character.line_data;
   const entitlementMerit=character.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);
+  const hasCompanions=character.merits.some((item)=>!item.grantedBy&&["Fae Mount","Fae Pet","Familiar"].includes(item.name))||selectedConditionList(character.current_state?.conditions).some(item=>item.id==="bonded");
   const derived = derivedWithPermanentMerits(character);
   const grantedSkillBonuses = (
     data.merit_granted_skill_bonuses &&
@@ -351,7 +353,7 @@ export function CharacterPaper({
     })),
   ].filter(
     (item, index, all) =>
-      all.findIndex((other) => other.id === item.id) === index,
+      item.id === "bonded" || all.findIndex((other) => other.id === item.id) === index,
   );
   const notes = String(character.current_state?.notes ?? "");
   const setState = (key: string, value: unknown) =>
@@ -389,13 +391,14 @@ export function CharacterPaper({
           ...(isCtl&&entitlementMerit?[{value:"entitlement",label:"Entitlement"}]:[]),
           ...(!isCtl&&hasLegacyAccess?[{value:"legacy",label:"Legacy",hidden:!legacyState?.joined}]:[]),
           { value: "combate", label: tr("Combate","Combat") },
-          { value: "companheiros", label: tr("Companheiros","Companions") }, { value: "anotacoes", label: tr("Anotações","Notes") },
+          ...(hasCompanions?[{ value: "companheiros", label: tr("Companheiros","Companions") }]:[]), { value: "anotacoes", label: tr("Anotações","Notes") },
         ]}>
           {{
             resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={()=>setSheetTab("legacy")}/>}</section>
               <SheetHeading>Experiência</SheetHeading>
               {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
+              {isCtl&&<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={CHANGELING_CONDITIONS} onChange={(value)=>setState("conditions",value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/></section><section><SheetHeading>Anotações</SheetHeading><NotesArea value={notes} onChange={(value)=>setState("notes",value)}/></section></div>}
               {!isCtl&&<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value)=>setState("conditions",value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value)=>updateLineData(updateSheet,character,"obsessions",value)}/></section></div>}
             </>,
             stats: <>
@@ -408,7 +411,6 @@ export function CharacterPaper({
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} line={character.game_line} updateSheet={updateSheet} />
               <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} /><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} hasAdjacentContent />
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
-              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
               <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato","Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)} />
               <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)} />
@@ -471,7 +473,7 @@ export function CharacterPaper({
             <TabsTrigger value="poderes">{tr("Detalhes","Details")}</TabsTrigger>
             {entitlementMerit&&<TabsTrigger value="entitlement">Entitlement</TabsTrigger>}
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
-            <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
+          {hasCompanions&&<TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
@@ -589,7 +591,7 @@ export function CharacterPaper({
                 />
               </div>
             </div>
-            <div className="sheet-bottom-grid">
+            <div className="sheet-bottom-grid mage-bottom-grid">
               <section>
                 <SheetHeading>Condições</SheetHeading>
                 <ConditionManager
@@ -597,6 +599,10 @@ export function CharacterPaper({
                   catalog={CHANGELING_CONDITIONS}
                   onChange={(value) => setState("conditions", value)}
                 />
+              </section>
+              <section>
+                <SheetHeading>Aspirações</SheetHeading>
+                <EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/>
               </section>
               <section>
                 <SheetHeading>Anotações</SheetHeading>
@@ -676,7 +682,7 @@ export function CharacterPaper({
             <TabsTrigger value="magia">{tr("Detalhes","Details")}</TabsTrigger>
             {legacyState?.joined&&<TabsTrigger value="legacy" data-legacy-tab-trigger>Legacy</TabsTrigger>}
             <TabsTrigger value="combate">{tr("Combate","Combat")}</TabsTrigger>
-            <TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>
+            {hasCompanions&&<TabsTrigger value="companheiros">{tr("Companheiros","Companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <section className="sheet-identity-grid">
@@ -1090,7 +1096,7 @@ function ClarityTrack({
     </div>
   );
 }
-type SelectedCondition = { id: string; persistent: boolean };
+type SelectedCondition = { id: string; persistent: boolean; instanceId?: string; animalId?: string; animalName?: string };
 function ConditionManager({
   selected,
   catalog,
@@ -1103,7 +1109,10 @@ function ConditionManager({
   const {locale,tr}=useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
+  const [bondedAnimal,setBondedAnimal]=useState(ANIMALS[0]?.id??"");
+  const [bondedAnimalName,setBondedAnimalName]=useState("");
   const chosen = new Map(selected.map((item) => [item.id, item]));
+  const bonded=selected.filter(item=>item.id==="bonded");
   const present = (item: (typeof catalog)[number]) => {
     const shared = findChangelingCondition(item.id);
     return shared?.sourceCode === item.sourceCode
@@ -1135,11 +1144,11 @@ function ConditionManager({
           if (!condition) return null;
           return (
             <details
-              key={condition.id}
+              key={saved.instanceId??`${condition.id}-${selected.indexOf(saved)}`}
               className="selected-condition"
             >
-              <summary><span><strong>{conditionName(condition)}{saved.persistent ? " [P]" : ""}</strong><small>{condition.sourceCode} · p. {condition.page}</small></span><Button type="button" size="icon" variant="ghost" onClick={(event)=>{event.preventDefault();event.stopPropagation();onChange(selected.filter((item)=>item.id!==condition.id));}} aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X /></Button></summary>
-              <div className="selected-condition-body"><p>{condition.description}</p>{condition.penalty&&<p className="condition-penalty"><b>{tr("Efeito","Effect")}:</b> {condition.penalty}</p>}<p><b>{tr("Resolução","Resolution")}:</b> {condition.resolution??tr("Conforme a fonte indicada.","As described in the listed source.")}</p>{condition.beat&&<p><b>Beat:</b> {condition.beat}</p>}</div>
+              <summary><span><strong>{conditionName(condition)}{saved.persistent ? " [P]" : ""}</strong><small>{condition.sourceCode} · p. {condition.page}</small></span><Button type="button" size="icon" variant="ghost" onClick={(event)=>{event.preventDefault();event.stopPropagation();if(saved.id!=="bonded"||window.confirm(tr("Remover Bonded também removerá o animal vinculado da aba Companions. Continuar?","Removing Bonded will also remove its linked animal from Companions. Continue?")))onChange(selected.filter((item)=>item!==saved));}} aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X /></Button></summary>
+              <div className="selected-condition-body">{saved.id==="bonded"&&<div className="companion-form-grid"><label>{tr("Animal vinculado","Bonded animal")}<RuleSelect value={saved.animalId??ANIMALS[0]?.id??""} onChange={(animalId)=>onChange(selected.map(item=>item===saved?{...item,animalId}:item))} options={ANIMALS.map(item=>animalPresentation(item,locale)).map(item=>({value:item.id,label:item.name}))}/></label><label>{tr("Nome do animal","Animal name")}<Input value={saved.animalName??""} onChange={(event)=>onChange(selected.map(item=>item===saved?{...item,animalName:event.target.value}:item))}/></label></div>}<p>{condition.description}</p>{condition.penalty&&<p className="condition-penalty"><b>{tr("Efeito","Effect")}:</b> {condition.penalty}</p>}<p><b>{tr("Resolução","Resolution")}:</b> {condition.resolution??tr("Conforme a fonte indicada.","As described in the listed source.")}</p>{condition.beat&&<p><b>Beat:</b> {condition.beat}</p>}</div>
             </details>
           );
         })}
@@ -1176,6 +1185,7 @@ function ConditionManager({
           <div className="condition-catalog">
             {filtered.map((condition) => {
               const saved = chosen.get(condition.id);
+              const isBonded=condition.id==="bonded";
               return (
                 <article key={condition.id} className={saved ? "selected" : ""}>
                   <div>
@@ -1203,7 +1213,8 @@ function ConditionManager({
                       <b>Beat:</b> {condition.beat}
                     </p>
                   )}
-                  <label className="persistent-toggle">
+                  {isBonded&&<div className="companion-form-grid"><label>{tr("Animal vinculado","Bonded animal")}<RuleSelect value={bondedAnimal} onChange={setBondedAnimal} options={ANIMALS.map(item=>animalPresentation(item,locale)).map(item=>({value:item.id,label:item.name}))}/></label><label>{tr("Nome do animal (opcional)","Animal name (optional)")}<Input value={bondedAnimalName} onChange={(event)=>setBondedAnimalName(event.target.value)}/></label></div>}
+                  {!isBonded&&<label className="persistent-toggle">
                     <input
                       type="checkbox"
                       checked={
@@ -1223,26 +1234,28 @@ function ConditionManager({
                       }}
                     />{" "}
                     {tr("Persistente","Persistent")} [P]
-                  </label>
+                  </label>}
                   <Button
                     type="button"
                     size="sm"
-                    variant={saved ? "ghost" : "outline"}
+                    variant={saved&&!isBonded ? "ghost" : "outline"}
                     onClick={() =>
                       onChange(
-                        saved
+                        saved&&!isBonded
                           ? selected.filter((item) => item.id !== condition.id)
                           : [
                               ...selected,
                               {
                                 id: condition.id,
                                 persistent: condition.persistent ?? false,
+                                instanceId: crypto.randomUUID(),
+                                ...(isBonded?{animalId:bondedAnimal,animalName:bondedAnimalName.trim()}:{}),
                               },
                             ],
                       )
                     }
                   >
-                    {saved ? tr("Remover","Remove") : tr("Adicionar","Add")}
+                    {saved&&!isBonded ? tr("Remover","Remove") : isBonded&&bonded.length?tr("Adicionar outro","Add another"):tr("Adicionar","Add")}
                   </Button>
                 </article>
               );
@@ -2294,6 +2307,9 @@ function selectedConditionList(value: unknown): SelectedCondition[] {
           ? {
               id: String((item as Record<string, unknown>).id ?? ""),
               persistent: Boolean((item as Record<string, unknown>).persistent),
+              instanceId: String((item as Record<string, unknown>).instanceId??"")||undefined,
+              animalId: String((item as Record<string, unknown>).animalId??"")||undefined,
+              animalName: String((item as Record<string, unknown>).animalName??"")||undefined,
             }
           : null,
     )

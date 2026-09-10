@@ -1,22 +1,19 @@
 "use client";
-import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { CharacterSheet } from "../character-builder";
 import { useLanguage } from "@/lib/i18n";
-import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation, type Animal } from "@/lib/companions";
+import { ANIMALS, animalPresentation, type Animal } from "@/lib/companions";
 import { normalizeMeritConfiguration } from "@/lib/merit-configurations";
 import { ATTRIBUTES } from "@/lib/creation-rules";
 import { alphabetical } from "@/lib/option-order";
 import type { DamageLevel } from "@/lib/resource-rules";
-import { ArmorDotPicker, CompactValues, HealthTrack, SheetHeading, TraitBlock, signed, stringList } from "./sheet-primitives";
-import { LoadoutCatalog } from "./loadout-catalog";
+import { ArmorDotPicker, CompactValues, HealthTrack, SheetHeading, TraitBlock, stringList } from "./sheet-primitives";
 import { RuleSelect } from "./rule-select";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
-type SavedAnimalCompanion = { animalId: string; name?: string };
 export function CompanionPage({
   character,
   updateSheet,
@@ -25,92 +22,16 @@ export function CompanionPage({
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
   const { locale, tr } = useLanguage();
-  const presentedVehicles=VEHICLES.map((item)=>vehiclePresentation(item,locale));
   const presentedAnimals=ANIMALS.map((item)=>animalPresentation(item,locale));
-  const vehicleIds = stringList(character.line_data.companion_vehicles),
-    savedAnimals = objectList(character.line_data.animal_companions)
-      .map((item) => ({
-        animalId: String(item.animalId ?? ""),
-        name: String(item.name ?? ""),
-      }))
-      .filter((item) => item.animalId);
-  const owned = character.merits.filter((item) => !item.grantedBy);
-  const [animalChoice, setAnimalChoice] = useState(ANIMALS[0]?.id ?? ""),
-    [animalName, setAnimalName] = useState("");
-  const setData = (key: string, value: unknown) => {
-    const next = structuredClone(character);
-    next.line_data = { ...next.line_data, [key]: value };
-    updateSheet(next);
-  };
+  const bonded=objectList(character.current_state?.conditions).filter((item)=>String(item.id)==="bonded"&&String(item.animalId??""));
   const configuredCompanions = character.merits
     .map((merit, index) => ({ merit, index }))
     .filter(
       ({ merit }) =>
-        !merit.grantedBy && ["Fae Mount", "Familiar"].includes(merit.name),
+        !merit.grantedBy && ["Fae Mount", "Fae Pet", "Familiar"].includes(merit.name),
     );
   return (
     <div className="companions-page">
-      <section>
-        <SheetHeading>Veículos</SheetHeading>
-        <p className="combat-note">{tr("O modificador se aplica às paradas de Destreza + Condução. Acima da Velocidade segura, ele é aplicado novamente e falhas de manobra tornam-se falhas dramáticas.", "The modifier applies to Dexterity + Drive pools. Above safe Speed, apply it again and failed maneuvers become dramatic failures.")}</p>
-        <LoadoutCatalog
-          title={tr("Selecionar Veículos", "Select Vehicles")}
-          items={presentedVehicles}
-          selected={vehicleIds}
-          describe={(item) =>
-            `${tr("Modificador","Modifier")} ${signed(item.diceModifier)} · ${tr("Tamanho","Size")} ${item.size} · ${tr("Durabilidade","Durability")} ${item.durability} · ${tr("Estrutura","Structure")} ${item.structure} · ${tr("Velocidade","Speed")} ${item.speed}`
-          }
-          details={(item) =>
-            item.acceleration
-              ? `${tr("Aceleração","Acceleration")} ${item.acceleration.toLocaleLowerCase(locale)}.`
-              : tr("Aceleração normal.","Normal acceleration.")
-          }
-          onChange={(value) => setData("companion_vehicles", value)}
-        />
-        <div className="companion-grid">
-          {vehicleIds
-            .map((id) => presentedVehicles.find((item) => item.id === id))
-            .filter((item): item is NonNullable<typeof item> => Boolean(item))
-            .map((item) => (
-              <article className="companion-card" key={item.id}>
-                <header>
-                  <div>
-                    <strong>{item.name}</strong>
-                    <small>{tr("Veículo", "Vehicle")}</small>
-                  </div>
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="ghost"
-                    aria-label={tr(`Remover ${item.name}`, `Remove ${item.name}`)}
-                    onClick={() =>
-                      setData(
-                        "companion_vehicles",
-                        vehicleIds.filter((id) => id !== item.id),
-                      )
-                    }
-                  >
-                    <X />
-                  </Button>
-                </header>
-                <CompactValues
-                  values={{
-                    Modificador: item.diceModifier,
-                    Tamanho: item.size,
-                    Durabilidade: item.durability,
-                    Estrutura: item.structure,
-                    Velocidade: item.speed,
-                  }}
-                />
-                <p>
-                  {item.acceleration
-                    ? `${tr("Aceleração","Acceleration")} ${item.acceleration.toLocaleLowerCase(locale)}.`
-                    : tr("Aceleração normal: +5 de Velocidade por turno.","Normal acceleration: +5 Speed per turn.")}
-                </p>
-              </article>
-            ))}
-        </div>
-      </section>
       <section>
         <SheetHeading>Companheiros</SheetHeading>
         {configuredCompanions.map(({ merit, index }) => (
@@ -122,59 +43,22 @@ export function CompanionPage({
             updateSheet={updateSheet}
           />
         ))}
-        <div className="animal-picker">
-          <RuleSelect
-            value={animalChoice}
-            onChange={setAnimalChoice}
-            options={presentedAnimals.map((item) => ({
-              value: item.id,
-              label: item.name,
-            }))}
-          />
-          <Input
-            value={animalName}
-            onChange={(event) => setAnimalName(event.target.value)}
-            placeholder={tr("Nome do animal (opcional)", "Animal name (optional)")}
-          />
-          <Button
-            type="button"
-            size="sm"
-            disabled={!animalChoice}
-            onClick={() => {
-              setData("animal_companions", [
-                ...savedAnimals,
-                { animalId: animalChoice, name: animalName.trim() },
-              ]);
-              setAnimalName("");
-            }}
-          >
-            <Plus />
-            {tr("Adicionar animal", "Add animal")}
-          </Button>
-        </div>
-        <p className="combat-note">
-          {tr("Animais comuns podem ser adicionados livremente; não exigem Mérito.", "Ordinary animals may be added freely; they do not require a Merit.")}
-        </p>
         <div className="companion-grid">
-          {savedAnimals.map((saved, index) => {
-            const animal = presentedAnimals.find((item) => item.id === saved.animalId);
+          {bonded.map((saved, index) => {
+            const animal = presentedAnimals.find((item) => item.id === String(saved.animalId));
             return animal ? (
               <AnimalCard
-                key={`${saved.animalId}-${index}`}
+                key={String(saved.instanceId??`${saved.animalId}-${index}`)}
                 animal={animal}
-                name={saved.name}
-                onRemove={() =>
-                  setData(
-                    "animal_companions",
-                    savedAnimals.filter((_, itemIndex) => itemIndex !== index),
-                  )
-                }
+                name={String(saved.animalName??"")}
+                onRemove={()=>{}}
+                removable={false}
               />
             ) : null;
           })}
         </div>
       </section>
-      <small className="combat-source">{tr("Veículos: Chronicles of Darkness, regras de Veículos; valores corrigidos conforme Chronicles of Darkness Rules. Animais: blocos de estatísticas de animais de World of Darkness.","Vehicles: Chronicles of Darkness vehicle rules; values corrected according to Chronicles of Darkness Rules. Animals: World of Darkness animal stat blocks.")}</small>
+      <small className="combat-source">{tr("Animais: blocos de estatísticas de animais de World of Darkness.","Animals: World of Darkness animal stat blocks.")}</small>
     </div>
   );
 }
@@ -259,7 +143,7 @@ function MeritCompanionCard({
   const configuration = normalizeMeritConfiguration(merit.configuration),
     name = String(
       configuration.name ??
-        (merit.name === "Fae Mount" ? tr("Montaria Feérica", "Fae Mount") : "Familiar"),
+        (merit.name === "Fae Mount" ? tr("Montaria Feérica", "Fae Mount") : merit.name === "Fae Pet" ? tr("Mascote Feérico", "Fae Pet") : "Familiar"),
     );
   const save = (patch: Record<string, string | string[]>) => {
     const next = structuredClone(character);
@@ -271,6 +155,18 @@ function MeritCompanionCard({
       };
     updateSheet(next);
   };
+  if (merit.name === "Fae Pet") {
+    const animalId=String(configuration.animalId??ANIMALS[0]?.id??""), animal=ANIMALS.find(item=>item.id===animalId);
+    return <article className="companion-card merit-companion companion-config">
+      <header><div><strong>{name||tr("Mascote Feérico","Fae Pet")}</strong><small>Fae Pet · {merit.dots} {tr("pontos","dots")}</small></div></header>
+      <div className="companion-form-grid">
+        <label>{tr("Nome","Name")}<Input value={name} onChange={(event)=>save({name:event.target.value})}/></label>
+        <label>{tr("Animal","Animal")}<RuleSelect value={animalId} onChange={(value)=>save({animalId:value})} options={ANIMALS.map(item=>animalPresentation(item,locale)).map(item=>({value:item.id,label:item.name}))}/></label>
+        <label>{tr("Poder Temível","Dread Power")}<Input value={String(configuration.dread_power??"")} onChange={(event)=>save({dread_power:event.target.value})}/></label>
+      </div>
+      {animal&&<AnimalCard animal={animalPresentation(animal,locale)} name={name} onRemove={()=>{}} removable={false}/>}
+    </article>;
+  }
   if (merit.name === "Fae Mount") {
     const abilities = stringList(configuration.abilities).slice(0, merit.dots),
       hedgefoot = String(configuration.hedgefoot ?? "water"),
@@ -530,10 +426,12 @@ function AnimalCard({
   animal,
   name,
   onRemove,
+  removable=true,
 }: {
   animal: Animal;
   name?: string;
   onRemove: () => void;
+  removable?: boolean;
 }) {
   const { tr }=useLanguage();
   return (
@@ -543,9 +441,9 @@ function AnimalCard({
           <strong>{name || animal.name}</strong>
           <small>{name ? animal.name : tr("Companheiro animal","Animal companion")}</small>
         </div>
-          <Button type="button" size="icon" variant="ghost" onClick={onRemove} aria-label={tr(`Remover ${name || animal.name}`, `Remove ${name || animal.name}`)}>
+          {removable&&<Button type="button" size="icon" variant="ghost" onClick={onRemove} aria-label={tr(`Remover ${name || animal.name}`, `Remove ${name || animal.name}`)}>
           <X />
-        </Button>
+        </Button>}
       </header>
       <p>
         <b>{tr("Atributos","Attributes")}:</b> {animal.attributes}

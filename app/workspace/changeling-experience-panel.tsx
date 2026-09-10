@@ -345,6 +345,8 @@ export function ExperiencePanel({
       return setFeedback(
         tr("Esta compra antiga não contém dados suficientes para ser revertida.", "This older purchase does not contain enough data to be refunded."),
       );
+    if(entry.undo.kind==="merit"&&entry.undo.name==="Entitlement"&&!window.confirm(tr("Reembolsar Entitlement removerá o Título, suas graduações, Blessings, Heráldica e todos os benefícios concedidos. Continuar?","Refunding Entitlement will remove the title, its ranks, Blessings, Heraldry, and all granted benefits. Continue?")))return;
+    if(entry.undo.kind==="merit"&&["Fae Mount","Fae Pet","Familiar"].includes(entry.undo.name)&&!window.confirm(tr("Reembolsar este Mérito também removerá o Companion vinculado. Continuar?","Refunding this Merit will also remove its linked Companion. Continue?")))return;
     const next = structuredClone(character);
     const undo = entry.undo;
     if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], 1, undo.group === "attributes" ? 1 : 0);

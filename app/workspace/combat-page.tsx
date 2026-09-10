@@ -8,6 +8,7 @@ import type { CharacterSheet } from "../character-builder";
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
+import { VEHICLES, vehiclePresentation } from "@/lib/companions";
 import { TILTS, findTilt } from "@/lib/tilts";
 import { RuleSelect } from "./rule-select";
 import { CompactValues, SheetHeading, signed, stringList } from "./sheet-primitives";
@@ -25,11 +26,13 @@ export function CombatPage({
   const { locale, tr } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
     equipmentIds = stringList(character.line_data.combat_equipment),
+    vehicleIds = stringList(character.line_data.companion_vehicles),
     tiltIds = stringList(character.line_data.combat_tilts),
     armorId = String(character.line_data.combat_armor ?? "");
   const presentedArmors=ARMORS.map((item)=>combatItemPresentation(item,locale));
   const presentedWeapons=WEAPONS.map((item)=>combatItemPresentation(item,locale));
   const presentedEquipment=EQUIPMENT.map((item)=>combatItemPresentation(item,locale));
+  const presentedVehicles=VEHICLES.map((item)=>vehiclePresentation(item,locale));
   const armor = presentedArmors.find((item) => item.id === armorId),
     weapons = weaponIds
       .map((id) => presentedWeapons.find((item) => item.id === id))
@@ -186,6 +189,10 @@ export function CombatPage({
             </article>
           ))}
         </div>
+        <SheetHeading>{tr("Veículos","Vehicles")}</SheetHeading>
+        <p className="combat-note">{tr("O modificador se aplica às paradas de Destreza + Condução. Acima da Velocidade segura, ele é aplicado novamente.","The modifier applies to Dexterity + Drive pools. Above safe Speed, apply it again.")}</p>
+        <LoadoutCatalog title={tr("Selecionar Veículos","Select Vehicles")} items={presentedVehicles} selected={vehicleIds} describe={(item)=>`${tr("Modificador","Modifier")} ${signed(item.diceModifier)} · ${tr("Tamanho","Size")} ${item.size} · ${tr("Durabilidade","Durability")} ${item.durability} · ${tr("Estrutura","Structure")} ${item.structure} · ${tr("Velocidade","Speed")} ${item.speed}`} details={(item)=>item.acceleration?`${tr("Aceleração","Acceleration")} ${item.acceleration.toLocaleLowerCase(locale)}.`:tr("Aceleração normal.","Normal acceleration.")} onChange={(value)=>setData("companion_vehicles",value)}/>
+        <div className="loadout-list">{vehicleIds.map(id=>presentedVehicles.find(item=>item.id===id)).filter((item):item is NonNullable<typeof item>=>Boolean(item)).map(item=><article key={item.id}><div><strong>{item.name}</strong><small>{tr("Modificador","Modifier")} {signed(item.diceModifier)} · {tr("Tamanho","Size")} {item.size} · {tr("Durabilidade","Durability")} {item.durability} · {tr("Estrutura","Structure")} {item.structure} · {tr("Velocidade","Speed")} {item.speed}</small></div><Button type="button" size="icon" variant="ghost" onClick={()=>setData("companion_vehicles",vehicleIds.filter(id=>id!==item.id))} aria-label={tr(`Remover ${item.name}`,`Remove ${item.name}`)}><X/></Button></article>)}</div>
       </section>
       <small className="combat-source">
         {tr("Regras e equipamentos: Chronicles of Darkness · pp. 86–103 e 268–276.", "Rules and equipment: Chronicles of Darkness · pp. 86–103 and 268–276.")}

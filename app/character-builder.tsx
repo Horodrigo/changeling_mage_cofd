@@ -2624,11 +2624,11 @@ function Merits({
                   variant="ghost"
                   size="icon"
                   aria-label={`${tr("Remover", "Remove")} ${definition ? meritName(definition) : selection.name}`}
-                  onClick={() =>
-                    setMerits(
-                      merits.filter((_, itemIndex) => itemIndex !== index),
-                    )
-                  }
+                  onClick={() => {
+                    const linked=["Fae Mount","Fae Pet","Familiar"].includes(selection.name), entitlement=selection.name==="Entitlement";
+                    if((linked||entitlement)&&!window.confirm(linked?tr("Remover este Mérito também removerá o Companion vinculado. Continuar?","Removing this Merit will also remove its linked Companion. Continue?"):tr("Remover Entitlement também removerá o Título e todos os benefícios concedidos. Continuar?","Removing Entitlement will also remove the title and all granted benefits. Continue?")))return;
+                    setMerits(merits.filter((_, itemIndex) => itemIndex !== index));
+                  }}
                 >
                   <Trash2 />
                 </Button>}
