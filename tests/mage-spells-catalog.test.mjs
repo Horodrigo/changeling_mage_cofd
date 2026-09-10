@@ -73,6 +73,22 @@ test("Fate summaries are fully reviewed against the offline PDFs", () => {
   assert.equal(fate.find((spell)=>spell.name==="Masking the False Fae").primaryFactor,"Duration");
 });
 
+test("Forces summaries are fully reviewed against the offline PDFs", () => {
+  const forces=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Forces");
+  assert.equal(forces.length,38);
+  assert.ok(forces.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(forces.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),forces.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(forces.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),forces.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Nightvision","Control Electricity","Control Sound","Environmental Shield","Energize Object","Rend Friction","Create Energy"]){
+    const spell=forces.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  assert.deepEqual(forces.find((spell)=>spell.name==="Velocity Control").roteSkills,["Athletics","Drive","Science"]);
+  assert.equal(forces.find((spell)=>spell.name==="Eradicate Energy").withstand,"Stamina");
+  assert.equal(forces.find((spell)=>spell.name==="Gravitic Supremacy").practice,"Fraying or Perfecting");
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");
