@@ -244,6 +244,13 @@
 .spell-card-rule-line { grid-column:1/-1; color:#4d5358; font:12px/1.35 Inter,Arial,sans-serif; }
 .sheet-heading-action { display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .sheet-heading-action .official-heading { flex:1; }
+.mage-bottom-grid { grid-template-columns:1fr 1fr 1fr; margin-top:18px; }
+.wisdom-resource { margin-top:14px; display:grid; gap:9px; }
+.wisdom-resource>small { color:#606870; font-size:11px; line-height:1.4; }
+.inured-spell-list { display:grid; gap:4px; }
+.inured-spell-list>div { display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid #d8d2c7; padding-top:4px; }
+.compact-remove-action { width:auto!important; min-width:0!important; height:28px!important; padding:0 8px!important; font-size:11px!important; }
+@media (max-width:760px) { .mage-bottom-grid { grid-template-columns:1fr; } }
 .sheet-heading-action .experience-merit-trigger { width:auto; min-width:0; padding-inline:12px; }
 .collapsed-rote-skill label { margin:0; }
 .spell-catalog-filters { grid-template-columns:minmax(220px,1fr) repeat(4,minmax(120px,auto)); }

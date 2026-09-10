@@ -145,7 +145,7 @@ export function ExperiencePowerPicker({
   onSelect,
   compact = false,
 }: {
-  kind: "Contrato" | "Rota" | "Práxis" | "Benefício de Contrato";
+  kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato";
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;

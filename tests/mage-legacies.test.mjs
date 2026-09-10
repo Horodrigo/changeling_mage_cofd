@@ -101,3 +101,12 @@ test("Merit hover prerequisites follow the active locale",async()=>{
   assert.match(builder,/meritTooltip\(definition,locale\)/);
   assert.match(builder,/locale==="pt-BR"\?"Pré-requisitos":"Prerequisites"/);
 });
+
+test("Mage Main exposes Wisdom and Gnosis-limited Inured Spells",async()=>{
+  const {readFile}=await import("node:fs/promises");
+  const sheet=await readFile(new URL("../app/workspace/character-paper.tsx",import.meta.url),"utf8");
+  assert.match(sheet,/inuredSpells\.length<gnosis/);
+  assert.match(sheet,/meetsArcanaRequirements\(spell\.requirements,arcana\)/);
+  assert.match(sheet,/base two-die Paradox risk/);
+  assert.match(sheet,/compact-remove-action/);
+});
