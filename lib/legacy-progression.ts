@@ -26,10 +26,12 @@ export function discardLegacyAdvancements(character: CharacterSheet) {
     const creditedRegular = Number(entry.undo.creditedRegular ?? 0);
     const creditedArcane = Number(entry.undo.creditedArcane ?? 0);
     const creditedBeats = Number(entry.undo.creditedArcaneBeats ?? 0);
-    next.current_state.mage_experience_available = Number(next.current_state.mage_experience_available ?? 0) + entry.regular - creditedRegular;
-    next.current_state.arcane_experience_available = Number(next.current_state.arcane_experience_available ?? 0) + entry.arcane - creditedArcane;
-    next.current_state.mage_experience_spent = Math.max(0, Number(next.current_state.mage_experience_spent??0)-entry.regular);
-    next.current_state.arcane_experience_spent = Math.max(0,Number(next.current_state.arcane_experience_spent??0)-entry.arcane);
+    const refundedRegular = Number(entry.regular) || 0;
+    const refundedArcane = Number(entry.arcane) || 0;
+    next.current_state.mage_experience_available = Number(next.current_state.mage_experience_available ?? 0) + refundedRegular - creditedRegular;
+    next.current_state.arcane_experience_available = Number(next.current_state.arcane_experience_available ?? 0) + refundedArcane - creditedArcane;
+    next.current_state.mage_experience_spent = Math.max(0, Number(next.current_state.mage_experience_spent??0)-refundedRegular);
+    next.current_state.arcane_experience_spent = Math.max(0,Number(next.current_state.arcane_experience_spent??0)-refundedArcane);
     next.current_state.arcane_experience_beats = Math.max(0,Number(next.current_state.arcane_experience_beats??0)-creditedBeats);
   }
 

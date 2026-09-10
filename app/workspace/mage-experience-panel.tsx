@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { History, Plus, RotateCcw, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -108,8 +108,8 @@ export function MageExperiencePanel({
   const history = Array.isArray(state.mage_experience_history)
     ? (state.mage_experience_history as MageXpEntry[])
     : [];
-  const [regularInput, setRegularInput] = useState(String(regular)),
-    [arcaneInput, setArcaneInput] = useState(String(arcane));
+  const [regularInput, setRegularInput] = useState<string | null>(null),
+    [arcaneInput, setArcaneInput] = useState<string | null>(null);
   const [purchase, setPurchase] = useState<string>(MAGE_PURCHASES[0]),
     [target, setTarget] = useState<string>(Object.values(ATTRIBUTES).flat()[0]);
   const [mageSpecialtySkill,setMageSpecialtySkill]=useState<string>(Object.values(SKILLS).flat()[0]);
@@ -228,10 +228,10 @@ export function MageExperiencePanel({
     updateSheet(next);
   };
   function commitBalances() {
-    const r = Math.max(0, Math.trunc(Number(regularInput) || 0)),
-      a = Math.max(0, Math.trunc(Number(arcaneInput) || 0));
-    setRegularInput(String(r));
-    setArcaneInput(String(a));
+    const r = Math.max(0, Math.trunc(Number(regularInput ?? regular) || 0)),
+      a = Math.max(0, Math.trunc(Number(arcaneInput ?? arcane) || 0));
+    setRegularInput(null);
+    setArcaneInput(null);
     saveBalances({
       mage_experience_available: r,
       arcane_experience_available: a,
@@ -436,12 +436,18 @@ export function MageExperiencePanel({
     refundMageAdvancement(next, undo);
     const legacyUndo = undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment" ? undo : undefined;
     const creditedArcane = legacyUndo?.creditedArcane ?? (undo.kind==="arcana"?undo.creditedArcane??0:0);
+    const refundedRegular = Number(entry.regular) || 0;
+    const refundedArcane = Number(entry.arcane) || 0;
+    const currentRegular = Number(next.current_state.mage_experience_available) || 0;
+    const currentArcane = Number(next.current_state.arcane_experience_available) || 0;
+    const currentSpentRegular = Number(next.current_state.mage_experience_spent) || 0;
+    const currentSpentArcane = Number(next.current_state.arcane_experience_spent) || 0;
     next.current_state = {
       ...next.current_state,
-      mage_experience_available: regular + entry.regular - (legacyUndo?.creditedRegular ?? 0),
-      arcane_experience_available: arcane + entry.arcane - creditedArcane,
-      mage_experience_spent: Math.max(0, spentRegular - entry.regular),
-      arcane_experience_spent: Math.max(0, spentArcane - entry.arcane),
+      mage_experience_available: currentRegular + refundedRegular - Number(legacyUndo?.creditedRegular ?? 0),
+      arcane_experience_available: currentArcane + refundedArcane - Number(creditedArcane),
+      mage_experience_spent: Math.max(0, currentSpentRegular - refundedRegular),
+      arcane_experience_spent: Math.max(0, currentSpentArcane - refundedArcane),
       arcane_experience_beats: Math.max(0, Number(next.current_state.arcane_experience_beats??0) - (legacyUndo?.creditedArcaneBeats ?? 0)),
       mage_experience_history: history.filter((item) => item.id !== entry.id),
     };
@@ -461,7 +467,7 @@ export function MageExperiencePanel({
           <Input
             type="number"
             min={0}
-            value={regularInput}
+            value={regularInput ?? String(regular)}
             onChange={(e) => setRegularInput(e.target.value)}
             onBlur={commitBalances}
           />
@@ -471,7 +477,7 @@ export function MageExperiencePanel({
           <Input
             type="number"
             min={0}
-            value={arcaneInput}
+            value={arcaneInput ?? String(arcane)}
             onChange={(e) => setArcaneInput(e.target.value)}
             onBlur={commitBalances}
           />
