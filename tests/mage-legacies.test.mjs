@@ -7,7 +7,7 @@ import {readWorkspaceSource} from "./workspace-source.mjs";
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(()=>vite.close());
-const {ELEVENTH_QUESTION,eleventhQuestionPrerequisites,normalizeLegacyState}=await vite.ssrLoadModule("/lib/legacies.ts");
+const {CHRONOLOGUE,ELEVENTH_QUESTION,eleventhQuestionPrerequisites,legacyEntryPrerequisites,legacyAttainmentPrerequisites,normalizeLegacyState}=await vite.ssrLoadModule("/lib/legacies.ts");
 const {refundMageAdvancement}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const {discardLegacyAdvancements}=await vite.ssrLoadModule("/lib/legacy-progression.ts");
 const {experienceTraitDots}=await vite.ssrLoadModule("/app/character-builder.tsx");
@@ -28,6 +28,16 @@ test("Legacy entry accepts parentage or the Perfect Timing Praxis",()=>{
   assert.equal(eleventhQuestionPrerequisites(mage()).met,true);
   assert.equal(eleventhQuestionPrerequisites(mage({path:"Acanthus",order:"Silver Ladder"})).met,false);
   assert.equal(eleventhQuestionPrerequisites(mage({path:"Acanthus",order:"Silver Ladder",praxes:[{name:"Perfect Timing"}]})).met,true);
+});
+
+test("Chronologue supports selection, localized sheet traits, and its printed progression",()=>{
+  assert.equal(CHRONOLOGUE.source,"Night Horrors: Nameless and Accursed");
+  assert.deepEqual(CHRONOLOGUE.attainments.map(item=>item.name),["If-Then-Else","Possibility Matrix"]);
+  const initiate=mage({path:"Acanthus",order:"Orderless",arcana:{Tempo:2,Destino:1}});
+  initiate.skills={Computação:2};
+  assert.equal(legacyEntryPrerequisites(initiate,CHRONOLOGUE).met,true);
+  initiate.skills.Computação=3;
+  assert.equal(legacyAttainmentPrerequisites(initiate,CHRONOLOGUE,2),true);
 });
 
 test("Legacy prerequisites read the canonical Portuguese trait keys stored by the sheet",()=>{
@@ -109,4 +119,8 @@ test("Mage Main exposes Wisdom and Gnosis-limited Inured Spells",async()=>{
   assert.match(sheet,/meetsArcanaRequirements\(spell\.requirements,arcana\)/);
   assert.match(sheet,/base two-die Paradox risk/);
   assert.match(sheet,/compact-remove-action/);
+  assert.match(sheet,/DotValue value=\{wisdom\} max=\{10\} singleRow/);
+  assert.match(sheet,/Megalomaniacal/);
+  assert.match(sheet,/Rampant/);
+  assert.match(sheet,/arcanaPresentation\(name\)/);
 });

@@ -888,12 +888,15 @@ button { cursor: pointer; }
 .official-trait-line.skill-highlight-rote { border-radius:4px; box-shadow:inset 0 0 0 1px #b99435; }
 .official-trait-line.skill-highlight-kith { border-radius:4px; box-shadow:inset 0 0 0 1px #6f9877; }
 .official-trait-line.skill-highlight-legacy { border-radius:4px; background:#f3f4fb; box-shadow:inset 0 0 0 1px #6d78a8; }
+.official-trait-line.skill-highlight-ruling { border-radius:4px; background:#fffaf0; box-shadow:inset 0 0 0 1px #b99435; }
 .official-trait-line.skill-highlight-rote > .official-trait-label,
 .official-trait-line.skill-highlight-kith > .official-trait-label,
-.official-trait-line.skill-highlight-legacy > .official-trait-label { padding-left:4px; }
+.official-trait-line.skill-highlight-legacy > .official-trait-label,
+.official-trait-line.skill-highlight-ruling > .official-trait-label { padding-left:4px; }
 .official-trait-line.skill-highlight-rote > .official-dots,
 .official-trait-line.skill-highlight-kith > .official-dots,
-.official-trait-line.skill-highlight-legacy > .official-dots { margin-right:4px; }
+.official-trait-line.skill-highlight-legacy > .official-dots,
+.official-trait-line.skill-highlight-ruling > .official-dots { margin-right:4px; }
 .official-trait-line > .official-trait-label { display:flex; min-width:0; flex:1; align-items:baseline; gap:4px; overflow:hidden; white-space:nowrap; }
 .official-trait-line small { min-width:0; overflow:hidden; color:#707671; font:italic 10px/1.2 Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
 .official-dots { display:flex!important; flex-direction:column!important; flex:none; gap:3px; }
@@ -965,6 +968,16 @@ button { cursor: pointer; }
 .sheet-bottom-grid.mage-bottom-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
 .wisdom-sheet-section { margin-top:14px; display:grid; gap:7px; }
 .wisdom-sheet-section>small { color:#606870; font-size:11px; line-height:1.4; }
+.wisdom-heading-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.wisdom-heading-row .official-heading { flex:1; margin:0; }
+.wisdom-track { display:flex; align-items:center; justify-content:flex-start; min-height:28px; border-bottom:1px solid #b9b2a5; padding:2px 4px 7px; }
+.wisdom-track .official-dots { flex-direction:row; }
+.inured-heading-row { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:2px; }
+.inured-heading-row>strong { color:#4f5962; font-family:var(--font-ui); font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; }
+.inured-spell-list>div>span { font-size:12px; }
+.hubris-dialog-options { display:grid; gap:10px; }
+.hubris-dialog-options label { display:grid; gap:5px; font-size:12px; }
+.hubris-persistent { display:flex!important; grid-template-columns:auto 1fr; align-items:center; }
 .mage-order-summary { margin-top:14px; }
 .mage-order-summary>strong { display:block; color:var(--sheet-accent); font:700 14px Georgia,"Times New Roman",serif; }
 .mage-order-summary>p { margin:4px 0; color:#555b60; font:11px/1.4 Inter,Arial,sans-serif; }

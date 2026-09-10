@@ -24,7 +24,7 @@ import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
 import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/lib/merit-configurations";
-import { ELEVENTH_QUESTION, normalizeLegacyState } from "@/lib/legacies";
+import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { stringList } from "./sheet-primitives";
@@ -129,6 +129,7 @@ export function MageExperiencePanel({
   const path =
     MTA_PATHS[String(character.line_data.path) as keyof typeof MTA_PATHS];
   const activeLegacy=normalizeLegacyState(character.line_data.legacy_state);
+  const activeLegacyDefinition=findLegacy(activeLegacy.definitionId);
   const knownSpellIds = new Set(
     [
       ...objectList(character.line_data.rotes),
@@ -187,7 +188,7 @@ export function MageExperiencePanel({
     label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? tr("Mérito","Merit");
   } else if (purchase === "Arcano") {
     const current = Number(arcana[chosenTarget] ?? 0);
-    const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&chosenTarget===ELEVENTH_QUESTION.rulingArcanum;
+    const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&activeLegacyDefinition?.rulingArcanum===systemTerm(chosenTarget,"en-US");
     const inferior = path?.inferior === chosenTarget;
     const limit = ruling ? 5 : inferior ? 2 : 4;
     cost = current < limit ? 4 : 5;
@@ -341,7 +342,7 @@ export function MageExperiencePanel({
     let undo: MageAdvancementUndo;
     if (purchase === "Atributo" || purchase === "Perícia")
       undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget };
-    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget, creditedArcane:activeLegacy.joined&&path?.ruling.includes(ELEVENTH_QUESTION.rulingArcanum as never)&&chosenTarget===ELEVENTH_QUESTION.rulingArcanum?1:0 };
+    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget, creditedArcane:activeLegacy.joined&&activeLegacyDefinition&&path?.ruling.some(item=>systemTerm(String(item),"en-US")===activeLegacyDefinition.rulingArcanum)&&systemTerm(chosenTarget,"en-US")===activeLegacyDefinition.rulingArcanum?1:0 };
     else if (purchase === "Gnose") undo = { kind: "gnosis" };
     else if (purchase === "Sabedoria") undo = { kind: "wisdom" };
     else if (purchase === "Mérito") {

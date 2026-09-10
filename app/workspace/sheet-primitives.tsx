@@ -29,7 +29,7 @@ export function TraitBlock({
   specialties?: Array<{ skill: string; name: string }>;
   compactNames?: boolean;
   highlightedNames?: ReadonlySet<string>;
-  highlightTone?: "rote" | "kith" | "legacy";
+  highlightTone?: "rote" | "kith" | "legacy" | "ruling";
 }) {
   const {locale}=useLanguage();
   return (
@@ -62,7 +62,7 @@ export function TraitLine({
   value: number;
   note?: string;
   compactName?: boolean;
-  highlightTone?: "rote" | "kith" | "legacy";
+  highlightTone?: "rote" | "kith" | "legacy" | "ruling";
 }) {
   const {locale}=useLanguage();
   const localizedName=systemTerm(name,locale);
@@ -76,12 +76,12 @@ export function TraitLine({
     </div>
   );
 }
-export function DotValue({ value, max = 5 }: { value: number; max?: number }) {
+export function DotValue({ value, max = 5, singleRow=false }: { value: number; max?: number; singleRow?:boolean }) {
   const {tr}=useLanguage();
   const total = Math.max(max, Math.ceil(value / 5) * 5);
   return (
     <span className="official-dots" aria-label={tr(`${value} pontos`,`${value} dots`)}>
-      {Array.from({ length: Math.ceil(total / 5) }, (_, row) => (
+      {singleRow?<span className="official-dot-row">{Array.from({length:total},(_,index)=><i key={index} className={index<value?"on":""}/>)}</span>:Array.from({ length: Math.ceil(total / 5) }, (_, row) => (
         <span className="official-dot-row" key={row}>
           {Array.from({ length: 5 }, (_, column) => {
             const index = row * 5 + column;
