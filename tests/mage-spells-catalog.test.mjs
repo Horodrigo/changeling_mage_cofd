@@ -56,6 +56,23 @@ test("Death summaries are fully reviewed against the offline PDFs", () => {
     assert.ok(death.every((spell)=>!spell.description.includes(stale)),stale);
 });
 
+test("Fate summaries are fully reviewed against the offline PDFs", () => {
+  const fate=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Fate");
+  assert.equal(fate.length,30);
+  assert.ok(fate.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(fate.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),fate.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(fate.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),fate.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Quantum Flux","Shifting the Odds","Sworn Oaths","Masking the False Fae","Miracle"]){
+    const spell=fate.find((candidate)=>candidate.name===name);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  const atonement=fate.find((spell)=>spell.name==="Atonement");
+  assert.equal(atonement.withstand,"Subject effect's Potency");
+  assert.deepEqual(atonement.roteSkills,["Academics","Empathy","Survival"]);
+  assert.equal(fate.find((spell)=>spell.name==="Chaos Mastery").primaryFactor,"Duration");
+  assert.equal(fate.find((spell)=>spell.name==="Masking the False Fae").primaryFactor,"Duration");
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");

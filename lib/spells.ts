@@ -1036,7 +1036,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Reveal sympathetic connections, who has violated an oath or geas and spells with conditional duration +1 Reach: Detect possession, supernatural mind control and alterations of destiny +2 Reach: Discern information about a persons destiny",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 134
+    "page": 134,
+    "summary": "Reveal marks of Fate on observed people, places, and things, one subject per turn. The mage detects sympathetic connections, violations of magical oaths, and spells with conditional Durations.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-1-oaths-fulfilled",
@@ -1056,7 +1058,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Know when the subject breaks or fulfills an oath +1 Reach: Also receive a brief vision of the subject when the oath is fullfilled +1 Reach: Track the subject of the spell +1 Reach: Trigger event may be something that could only be seen by Mage Sight",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 135
+    "page": 135,
+    "summary": "Notify the mage when a specified perceivable fate befalls the subject, whether the subject causes or experiences it. The trigger must be something the mage could perceive if present.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-1-quantum-flux",
@@ -1076,7 +1080,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Negate a number of penalties to your Mundane actions or wait a turn to receive a bonus to your next mundane action",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 135
+    "page": 135,
+    "summary": "Negate penalties equal to Potency on up to Potency mundane instant actions. Alternatively, the subject may spend a turn stationary and without Defense to gain Potency as a bonus to the next mundane instant action; extended actions and spellcasting do not benefit.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-1-reading-the-outmost-eddies",
@@ -1096,7 +1102,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Subject of spell receives a minor twist of fate positive or negative in 24 hours. Only hostile applications are Withstood +1 Reach: Spell takes effect within an hour",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 135
+    "page": 135,
+    "summary": "Draw a minor stroke of good or bad fortune to the subject within the next 24 hours. The mage may guide its general nature, but Fate determines the details; hostile castings are Withstood by Composure.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-1-serendipity",
@@ -1116,7 +1124,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Reveal what course of action will bring you closer to your goal +1 Reach: When making a roll to achieve your stated goal, you may substitute the used Skill with another of the same type (Mental, Physical, Social) +2 Reach: As above but may substitute any Skill",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 135
+    "page": 135,
+    "summary": "Receive a clear omen showing the next action that leads closer to a stated objective. It offers a meaningful step or breakthrough rather than guaranteeing immediate success.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-2-exceptional-luck",
@@ -1136,7 +1146,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Subject receives a boon or hex. A hex may be withstood +2 Reach: Boon or hex can affect spellcasting rolls +2 Reach: Spend a point of Mana. This spell can be cast reflexive",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 136
+    "page": 136,
+    "summary": "Grant the subject a boon or impose a hex, using Potency to choose and combine the standard Fate effects. A hostile hex is Withstood by Composure.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-2-fabricate-fortune",
@@ -1156,7 +1168,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Conceal and falsify a subjects fate or Destiny. This can fool spells with conditional triggers.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 136
+    "page": 136,
+    "summary": "Conceal or falsify the subject’s fate and Destiny. The deception can fool conditional Durations or triggers and create false omens under Fate scrutiny, subject to a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-2-fools-rush-in",
@@ -1176,7 +1190,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Suffer no untrained skill penalties when facing a situation unprepared +1 Reach: Also receive a dice bonus +3 Reach: As above but bonus may apply to spellcasting rolls",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 136
+    "page": 136,
+    "summary": "While entering a situation with little prior knowledge or preparation, the subject ignores untrained Skill penalties and improves first impressions by one level. Detailed reconnaissance or briefing prevents the spell from helping.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-2-lucky-number",
@@ -1196,7 +1212,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Guess the right password, phone number, etc. on the first try",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 136
+    "page": 136,
+    "summary": "Correctly guess a phone number, password, combination, or similar input on the first attempt and gain Informed on the next relevant roll. The spell manipulates random input through the device; it does not locate a target or reveal where the result leads.",
+    "summaryReviewed": true
   },
   {
     "id": "core-dark-eras-2:fate-2-malleable-thorns",
@@ -1217,7 +1235,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Mage states a goal and the Hedge alters itself to fulfill that goal. +1 Reach: Mage may also enact paradigm shifts.",
     "sourceId": "core-dark-eras-2",
     "source": "Dark Eras 2",
-    "page": 377
+    "page": 377,
+    "summary": "Gain Potency Hedgespinning successes to spend on subtle shifts while the spell lasts. The mage states a goal, but the Storyteller decides how the Hedge reshapes itself to fulfill it, often with unintended consequences.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-2-shifting-the-odds",
@@ -1237,7 +1257,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Find a particular kind of person, place or thing within 24 hours. +1 Reach: Find desired object within an hour",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 136
+    "page": 136,
+    "summary": "Find the nearest or most available person, place, or thing matching a general description within 24 hours, never a specific individual or object. Alternatively, gain temporary Allies, Contacts, Mentor, Resources, or Retainer up to Potency, usable no more than Potency times.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-2-warding-gesture",
@@ -1257,7 +1279,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Protect a subject against supernatural effect that would alter her fate including supernatural compulsion. Subject may also be excluded form any area-effect spell you may cast +1 Reach: Subject may be excluded from any spell/attainment you cast +2 Reach: Subject may be protected from any supernatural effects that target an area instead of individuals",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 136
+    "page": 136,
+    "summary": "Protect the subject against supernatural effects that manipulate fate or compel action, forcing a Clash of Wills for each attempt; existing alterations remain. The caster may also exclude protected subjects individually from her own area spells.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-3-grave-misfortune",
@@ -1277,7 +1301,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The next time the subjects suffers damage, increase the damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 137
+    "page": 137,
+    "summary": "For up to Potency attacks during the Duration, the next attack that deals at least one damage to the subject inflicts additional damage equal to Potency. The added damage keeps the original damage type.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-3-monkey-s-paw",
@@ -1297,7 +1323,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Bless or curse an object altering it's equipment bonus +1 Reach: Anybody who caries the item also receives a boon or a hex +1 Reach: Spend a point of Mana. Bonus or penalty may exceed five dice",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 137
+    "page": 137,
+    "summary": "Bless or curse an inanimate object, increasing or decreasing its equipment bonus by Potency. The result may become a dice penalty below zero, but cannot exceed a five-die bonus or penalty without further Reach.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-3-shared-fate",
@@ -1317,7 +1345,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Two or more subjects are bound together. Any damage, Tilt or Condition suffered by one will also affect the other +1 Reach: Link is only one way +2 Reach: Subject is not linked to any other subjects. Instead, she suffers any damage, Tilt or Condition she inflicts on others",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 137
+    "page": 137,
+    "summary": "Bind the fates of multiple subjects so that damage, Tilts, and unwanted Conditions suffered by one affect all others. Unless Scale is increased, the caster is one of the linked subjects.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-3-superlative-luck",
@@ -1337,7 +1367,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cost: 1 Mana, Gain the rote quality +2 Reach: Rote quality may effect ritual spellcasting but this also doubles the casting time",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 137
+    "page": 137,
+    "summary": "For one Mana, grant the rote quality to a number of mundane rolls equal to Potency. The subject chooses each affected roll before rolling.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-3-sworn-oaths",
@@ -1357,7 +1389,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Supernaturally enforce a vow. Adhere to the oath and the subject receives a boon, break an she suffers a hex +1 Reach: If spell control is maintained the mage is aware if the spell is a boon or a hex",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 137
+    "page": 137,
+    "summary": "Enforce a voluntary vow and its stated consequence. The subject receives a boon while faithful; breaking the oath imposes the agreed hex once, and the mage may Clash against powers that would force a violation.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:fate-3-the-right-tool",
@@ -1377,7 +1411,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Turn an ordinary object into the object needed to get the job done. During the duration of the spell this item could be conceivable used as the item needed to complete a task. When used for the new purpose the Items equipment bonus is increased (up to 5+) by the Potency, Items not normally used for the situation begin at 0",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 64
+    "page": 64,
+    "summary": "Temporarily make an ordinary object function as the plausible tool needed for a stated task. When used for that purpose, its equipment bonus increases by Potency to a maximum of +5; an otherwise unsuitable object begins at zero.",
+    "summaryReviewed": true
   },
   {
     "id": "core-dark-eras-2:fate-3-wyrdbound-oaths",
@@ -1398,7 +1434,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allow Mages to be valid participants in Wyrd-backed oaths. Failure to follow the oath or breaking it inflicts the Oathbreaker Condition. +2 Reach: The effect is Lasting.",
     "sourceId": "core-dark-eras-2",
     "source": "Dark Eras 2",
-    "page": 379
+    "page": 379,
+    "summary": "Make the mage a valid participant in Wyrd-backed oaths, though she cannot initiate them. Breaking the oath or letting the spell expire before fulfilling it inflicts Oathbreaker, granting subjects of her Fate spells +1 Withstand until it resolves.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-4-atonement",
@@ -1409,16 +1447,18 @@ export const SPELLS: SpellDefinition[] = [
     },
     "practice": "Unraveling",
     "primaryFactor": "Potency",
-    "withstand": "Countered effect's Potency",
+    "withstand": "Subject effect's Potency",
     "roteSkills": [
       "Academics",
-      "Occult",
-      "Subterfuge"
+      "Empathy",
+      "Survival"
     ],
     "description": "If a subject is cursed can grant them a quest that, if fulfilled, will lift the curse. Stronger curses require greater quests +1 Reach: Quest can be undertaken by another on the subjects behalf",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 137
+    "page": 137,
+    "summary": "Provide a quest capable of dispelling a Fate-enforced supernatural curse once completed. The task grows from a minor errand to a major quest according to the curse’s strength; exceptionally powerful curses may require more elaborate atonement.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-4-chaos-mastery",
@@ -1428,7 +1468,7 @@ export const SPELLS: SpellDefinition[] = [
       "Fate": 4
     },
     "practice": "Patterning",
-    "primaryFactor": "Potency",
+    "primaryFactor": "Duration",
     "withstand": "",
     "roteSkills": [
       "Empathy",
@@ -1438,7 +1478,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Can manipulate complex probabilities within subject or area of effect, dictating any physically possible outcome, no matter how unlikely. Can't create supernatural effects. Cause number of effects = Potency, such as: • narrative effect such as controlling how vehicles behave in a multiple-car crash • seizures, hallucinations, and physical events (imposing suitable Conditions) by directing once-random biochemical changes within subject • reduce subject’s next action to a chance die • attack or protect subject by directing chance around them towards or away from dangerous circumstances; not a direct-attack spell, and uses any rules for the hazard",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 138
+    "page": 138,
+    "summary": "Direct complex probability within a subject or area to produce up to Potency physically possible outcomes, however unlikely. It cannot create supernatural effects, but may control a chaotic scene, cause biological events and suitable Conditions, reduce an action to a chance die, or direct an environmental hazard.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-4-divine-intervention",
@@ -1458,7 +1500,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Replace one of the subjects Aspirations with a stated goal. Subject suffers ill luck when no pursuing this goal. This can also be reversed causing bad luck only when pursuing the goal",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 138
+    "page": 138,
+    "summary": "Replace one Aspiration with a stated goal and bind the subject’s luck to it. As a goad, failure to pursue the goal meaningfully within 24 hours causes a hex; as a ban, actively pursuing the forbidden goal causes the hex.",
+    "summaryReviewed": true
   },
   {
     "id": "core-dark-eras-2:fate-4-masking-the-false-fae",
@@ -1469,7 +1513,7 @@ export const SPELLS: SpellDefinition[] = [
       "Mind": 1
     },
     "practice": "Patterning",
-    "primaryFactor": "Duraton",
+    "primaryFactor": "Duration",
     "withstand": "Resolve",
     "roteSkills": [
       "Empathy",
@@ -1479,7 +1523,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allow Changelings to make Goblin Contracts with supernal entities. Releasing Paradox or on a critical failure the contract is made with an abyssal being. Add Death, Mind, or Spirit ••••: Allow Changelings to make Contracts with Goetia, ghosts, or spirits.",
     "sourceId": "core-dark-eras-2",
     "source": "Dark Eras 2",
-    "page": 376
+    "page": 376,
+    "summary": "Connect a Supernal entity to the Wyrd so changelings may bargain with it for unique Contracts and sufficiently powerful entities may enter court Bargains. The spell enables the agreement but does not waive persuasion, prices, Experience costs, or the resulting supernatural Debt.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:fate-4-scribe-daimonomikon",
@@ -1500,7 +1546,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy +1 Reach: For 1 Mana, the Spell's Duration is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 87
+    "page": 87,
+    "summary": "Inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet the relevant Gnosis, Legacy, and optional-Arcanum prerequisites; readers pay the applicable Arcane Experience, and members treat the vessel as a +2 sympathetic Yantra.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-4-strings-of-fate",
@@ -1520,7 +1568,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The mage can encourage a specific event to befall the subject. The event will come pass when circumstances allow. If the subject's cooperation is required opportunities for this event to come to pass will appear once a week. +1 Reach: Opportunities appear once a day",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 138
+    "page": 138,
+    "summary": "Encourage a specified event to befall the subject when circumstances permit. If cooperation is necessary, Fate presents opportunities about once per week; the spell may place the subject in danger but cannot directly deal damage.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-4-sever-oaths",
@@ -1540,7 +1590,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Can have a variety of effects such as freeing a bound ephemeral entity or dispelling a conditional trigger +2 Reach: Spell's effects are lasting",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 138
+    "page": 138,
+    "summary": "Alter or remove Fate-enforced obligations and conditions: free a bound ephemeral entity, change a boon or hex, modify or negate an oath, change or dispel a conditional trigger, or alter the Doom granted by Destiny.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-5-forge-destiny",
@@ -1560,7 +1612,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Mage can grant the subject a supernatural merit or increase and decrease an existing one. Mage can impose Aspirations, Obsessions or a Doom on the subject",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 139
+    "page": 139,
+    "summary": "Choose one transformation of the subject’s destiny: grant a Supernatural Merit with dots up to Potency, alter an existing Supernatural Merit by Potency, replace up to Potency Aspirations or Obsessions, or assign a Doom even without Destiny.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-5-miracle",
@@ -1580,7 +1634,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Mage gains a number of Intercessions that can be spend reflexively to increase/decrease dice pools or to cause likely events to happen on command +1 Reach: Spend one Intercession and Willpower to cause a low-probability event to pass +2 Reach: Spend one Intercession, Willpower and Mana to let the incredible come to pass",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 140
+    "page": 140,
+    "summary": "Gain Potency Intercessions to spend reflexively during the Duration. Each Intercession can add or remove one success after a roll, with a result below zero becoming a dramatic failure, or cause an immediately convenient and reasonably likely event within sensory range.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-5-pariah",
@@ -1600,7 +1656,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Turns the whole world against the subject +1 Reach: Mage can adjust the sensitivity of the curse",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 139
+    "page": 139,
+    "summary": "Turn the world against the subject: impressions worsen by one level, or Social actions seeking kindness take a Potency penalty. Attempts to help suffer a hex, while attempts to harm receive a boon; the caster accounts separately for Reach used by each effect.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:fate-5-swarm-of-locusts",
@@ -1620,7 +1678,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create chaotic conditions that cause Environmental Tilts of player's choosing on the area. This spell is a breaking point for most Sleepers",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 140
+    "page": 140,
+    "summary": "Create an overtly supernatural Fortean event across the area, such as a rain of frogs, swarm of locusts, or untimely eclipse. It produces Environmental Tilts chosen by the player and is a breaking point for most Sleepers.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:forces-1-influence-electricity",
