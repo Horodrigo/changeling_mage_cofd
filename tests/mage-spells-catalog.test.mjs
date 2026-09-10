@@ -184,6 +184,34 @@ test("Spirit summaries are fully reviewed against the offline PDFs", () => {
   assert.match(spirit.find((spell)=>spell.name==="Create Locus").summary,/does not generate extra Essence/);
 });
 
+test("Time summaries are fully reviewed against the offline PDFs", () => {
+  const time=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Time");
+  assert.equal(time.length,25);
+  assert.ok(time.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(time.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),time.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(time.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),time.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Divination","Perfect Timing","Postcognition","Hung Spell","Veil of Moments","Shifting Sands","Temporal Summoning","Rewrite History","Corridors of Time"]){
+    const spell=time.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  assert.match(time.find((spell)=>spell.name==="Postcognition").summary,/cannot act or cast spells and loses her Defense/);
+  assert.match(time.find((spell)=>spell.name==="Veil of Moments").summary,/cannot heal naturally, regain Willpower or Mana, or spend Experiences/);
+  assert.match(time.find((spell)=>spell.name==="Time Limit").summary,/one week per Potency/);
+});
+
+test("every catalog spell has a coherent PDF-reviewed explicit summary", () => {
+  assert.equal(SPELLS.length,360);
+  assert.ok(SPELLS.every((spell)=>spell.summaryReviewed===true),SPELLS.find((spell)=>spell.summaryReviewed!==true)?.id);
+  assert.ok(SPELLS.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),SPELLS.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(SPELLS.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),SPELLS.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  const counts=Object.fromEntries(["Death","Fate","Forces","Life","Matter","Mind","Prime","Space","Spirit","Time"].map((arcana)=>[
+    arcana,
+    SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]===arcana).length,
+  ]));
+  assert.deepEqual(counts,{Death:46,Fate:30,Forces:38,Life:29,Matter:32,Mind:45,Prime:50,Space:29,Spirit:36,Time:25});
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");

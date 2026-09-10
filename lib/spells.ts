@@ -7425,6 +7425,8 @@ export const SPELLS: SpellDefinition[] = [
       "Investigation"
     ],
     "description": "Ask a general question regarding the future with an answer of \"Yes\", \"No\" or \"Irrelevant\" +1 Reach: The questions asked can be more specific and the answer gives more information",
+    "summary": "The mage asks a general question about the future and receives a vision of the most probable answer: Yes, No, or Irrelevant. The vision reflects what is likely to happen rather than an unchangeable fate.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 186
@@ -7445,6 +7447,8 @@ export const SPELLS: SpellDefinition[] = [
       "Subterfuge"
     ],
     "description": "Cast Positively: Anything that can help the subject achieve the objective faster will happen at the exact moment to do so. Cast Negatively: Anything that can delay the target will happen at the exact moment to do so",
+    "summary": "The mage nudges the timing of ordinary events to help the subject reach a stated objective sooner or to delay it. Useful or obstructive circumstances occur at exactly the right moment, but the spell cannot produce impossible events.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 187
@@ -7465,6 +7469,8 @@ export const SPELLS: SpellDefinition[] = [
       "Survival"
     ],
     "description": "The Mage can determine if the subject will prove beneficial or baneful in the future. When acting on the information gained, the Mage can add the spell's potency to their Initiative.",
+    "summary": "The mage examines the immediate future to learn whether a chosen subject will prove beneficial or harmful. When she acts on that information, she adds the spell's Potency to her Initiative.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 187
@@ -7485,6 +7491,8 @@ export const SPELLS: SpellDefinition[] = [
       "Streetwise"
     ],
     "description": "The subject can spend a turn during the spell's duration on planning, and, in doing so, can add the spell's Potency to their next instant action.",
+    "summary": "The subject may spend a turn motionless and without Defense while planning a mundane instant action. That preparation grants a bonus equal to Potency on the next such action, but does not benefit extended actions or spellcasting.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 187
@@ -7505,6 +7513,8 @@ export const SPELLS: SpellDefinition[] = [
       "Investigation"
     ],
     "description": "The mage can see into the subject's past, wieving it all from a moment declared in \"real time\" +1 Reach: The mage can rewind, speed up, slow down and pause the vision at any given time The mage does not lose Defense when watching the vision",
+    "summary": "The mage witnesses a subject's past in real time, beginning at a moment declared when casting. During the vision she cannot act or cast spells and loses her Defense.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 187
@@ -7525,6 +7535,8 @@ export const SPELLS: SpellDefinition[] = [
       "Subterfuge"
     ],
     "description": "You may roll twice for your next mundane dice roll. Then choose which takes effect. +2 Reach: May affect rolls for spellcasting and other supernatural powers",
+    "summary": "The mage surveys possible futures and selects the most favorable course for the subject. The subject rolls the next mundane action twice, and the mage chooses which result takes effect.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 187
@@ -7545,6 +7557,8 @@ export const SPELLS: SpellDefinition[] = [
       "Survival"
     ],
     "description": "Preserve yourself against alterations to the timeline. Any alterations that would change you provoke a Clash of Wills. If you win the world will still be altered but you will not be.",
+    "summary": "The spell protects its subject from being rewritten by changes to history. A timeline alteration caused by time travel provokes a Clash of Wills; if the mage wins, the subject remembers and retains the original version of herself after history settles.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 187
@@ -7565,6 +7579,8 @@ export const SPELLS: SpellDefinition[] = [
       "Expression"
     ],
     "description": "The subject of this spell must be a mage. The subject may then spend a Mana to \"hang\" his spell. Hung Spell may hold up to a Potency in number of spells these spells still counts against the caster's spell control. Any hanged spells will not have their Durations expire but won't take effect yet either. When Hung Spell ceases all the hanged spells immediately take effect according to their own Durations and effects.",
+    "summary": "A mage subject may pay one Mana while casting another spell to suspend it within Hung Spell. It can hold spells up to its Potency; they remain under their casters' spell control but do not take effect or begin their Durations until Hung Spell ends, when all are released immediately.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 188
@@ -7585,6 +7601,8 @@ export const SPELLS: SpellDefinition[] = [
       "Subterfuge"
     ],
     "description": "Anybody trying to view the subject through time, either by looking at the presently shielded subject's future or into a past when the subject was shielded. Provokes a Clash of Wills +1 Reach: Instead of simply preventing Time magic from seeing the subject. You may show a false series of events that the magic \"discovers\". If powers would seek to pierce the illusion anyway this provokes a Clash of Wills",
+    "summary": "The mage conceals the subject from magic that looks at her through time. Attempts to view the protected interval from the future or predict the subject's future during it provoke a Clash of Wills.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 188
@@ -7605,6 +7623,8 @@ export const SPELLS: SpellDefinition[] = [
       "Investigation"
     ],
     "description": "Add or subtract Potency from a subjects Initiative. Subjects who have already taken an action this turn need to wait until the next turn to take advantage of their new Initiative",
+    "summary": "The mage briefly speeds or slows the subject's passage through time, adding or subtracting Potency from Initiative. A subject who has already acted that turn does not act again at the new Initiative rating.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 188
@@ -7625,6 +7645,8 @@ export const SPELLS: SpellDefinition[] = [
       "Subterfuge"
     ],
     "description": "Protect a subject from Time's effects. The subject will not bleed out form wounds, poison, toxins and the progression of disease are stalled. New Conditions and Tilts cannot be imposed on the subject. Supernatural powers that would anyway provoke a Clash of Wills. Downsides of the spell: you no longer heal naturally while under the spell's effect. Healing through Pattern Restoration and Life magic will still work. Willpower and Mana cannot be restored and Experiences cannot be spend. The subjects ceases aging. +1 Reach: may ignore Persistent Conditions. Time spend under this spell does not count toward any time necessary for Conditions to lapse +1 Reach: may heal naturally +1 Reach: may regain Willpower +1 Reach: may regain Mana",
+    "summary": "The spell suspends effects that worsen with time: wounds do not bleed out, poison and disease stop progressing, the subject ceases aging, and new Conditions or Tilts cannot be imposed. In exchange, the subject cannot heal naturally, regain Willpower or Mana, or spend Experiences, though Pattern Restoration and Life magic can still heal her.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 188
@@ -7645,6 +7667,8 @@ export const SPELLS: SpellDefinition[] = [
       "Stealth"
     ],
     "description": "Speed up a subjects movements. Multiply speed by Potency, apply Defense against firearms and take the first action in a turn (unless you choose to delay it). You also apply Potency to Defense buy only when dodging",
+    "summary": "The mage accelerates the subject, multiplying Speed by Potency, allowing Defense against firearms, and letting her act first each turn unless she delays. When Dodging, the subject also adds Potency to Defense.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 189
@@ -7665,6 +7689,8 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation"
     ],
     "description": "Slow a subject down. This reduces their Defense by Potency and divides their Speed by Potency, rounding down. Subject go last in a turn. +1 Reach: Spend one Mana, the subject loses all Defense against attacks +1 Reach: Multiply the time per roll of extended actions by Potency. This does not effect the ritaul casting times of mages",
+    "summary": "The subject experiences time at a crawl: Speed is divided by Potency, Defense is reduced by Potency, and she always acts last in the turn. If Speed reaches zero, she moves so slowly that she appears rooted in place.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 190
@@ -7685,6 +7711,8 @@ export const SPELLS: SpellDefinition[] = [
       "Survival"
     ],
     "description": "The subject goes back in time a number of turns equal to Potency. Any injuries and Conditions obtained or Mana and Willpower spend in the reversed turns do not change back and stay as they are. Any spells cast in the reversed time are canceled. Once the subject catches up to the present, any changes made become Lasting +1 Reach: Travel back a full scene. This Reach may be applied multiple times",
+    "summary": "The subject travels backward a number of turns equal to Potency, but retains injuries and Conditions gained and does not recover spent Mana or Willpower. Most spells from the undone interval are canceled; once the subject catches up to the present, her changes to history become Lasting.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 190
@@ -7705,6 +7733,8 @@ export const SPELLS: SpellDefinition[] = [
       "Persuasion"
     ],
     "description": "Return the subject to an younger version of itself. Buildings can be restored and injuries healed. Once the spell ends any changed made revert back to normal. Any injuries and Conditions obtained while this spell was active carry over to the subjects present self. Limits of Spell includes not being able to bring the dead back and a vampire returned to 'Childhood' becomes a vampiric child",
+    "summary": "The mage temporarily restores the subject to an earlier version of itself, allowing ruined structures to stand or injuries to disappear. The original state returns when the spell ends, while injuries and Conditions suffered during the restoration carry over; the spell cannot restore the dead to life.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 190
@@ -7726,6 +7756,8 @@ export const SPELLS: SpellDefinition[] = [
       "Survival"
     ],
     "description": "The Caster instills a time limit on the effects of an imbued spell as she relinquishes it for one week per dot of Potency. This applies to one person each use so a new user can make the item work again but only for the time limit +1 Reach: The spell's time limit is increased to one month per Potency",
+    "summary": "While another mage Imbues an Item, the caster gives its relinquished spell a finite period of operation for each user. The item functions for one week per Potency, then stops for that user; a new user receives a fresh interval of the same length.",
+    "summaryReviewed": true,
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 71
@@ -7746,6 +7778,8 @@ export const SPELLS: SpellDefinition[] = [
       "Medicine"
     ],
     "description": "An attack spell. Deal Bashing damage equal to Potency. If used on objects or structures. Apply Potency directly as damage to Structure and reduce Durability by 1 for every 2 points of Structure lost +1 Reach: For living subjects the spell also reduces Athletics by Potency",
+    "summary": "The mage rapidly ages the subject, dealing bashing damage equal to Potency. Against objects and structures, Potency damages Structure directly and every two points of Structure lost also reduce Durability by one.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 191
@@ -7766,6 +7800,8 @@ export const SPELLS: SpellDefinition[] = [
       "Streetwise"
     ],
     "description": "The subject gains the following benefits. In combat you can require that all affected characters declare their action for that turn. You do not need to declare your own and can act anywhere in the Initiative order that you want. This trumps all supernatural powers except those from the Time Arcanum, these cause a Clash of Wills. In social situations this spell removes a number of Doors equal to Potency from the subject or adds Doors to yourself when the subject performs Social maneuvering against you",
+    "summary": "The subject reacts as though the present were already remembered. In combat, she may make affected characters declare their actions first and then act at any point in the Initiative order; in Social Maneuvering, Potency removes Doors from her target or adds Doors against attempts directed at her.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 191
@@ -7786,6 +7822,8 @@ export const SPELLS: SpellDefinition[] = [
       "Investigation"
     ],
     "description": "This spell works like \"Divination\" except that you can now ask 'what if?' questions. You can ask a number of question equal to Potency +1 Reach: By applying this spell to Social interaction you may reduce a number of Doors equal to Potency",
+    "summary": "The mage explores hypothetical futures by asking a number of 'what if?' questions equal to Potency. Each answer functions like Divination, showing the most probable outcome if the proposed circumstance came to pass.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 191
@@ -7806,6 +7844,8 @@ export const SPELLS: SpellDefinition[] = [
       "Intimidation"
     ],
     "description": "An attack spell. Deal Lethal damage equal to Potency.",
+    "summary": "The mage tears years from the subject's lifespan in an instant. This attack deals lethal damage equal to Potency.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 191
@@ -7826,6 +7866,8 @@ export const SPELLS: SpellDefinition[] = [
       "Persuasion"
     ],
     "description": "Change the subject's timeline as though different choices were made. Without Temporal Sympathy only recent decisions can be rewritten. Once the spell ends the person instantly reverts to the original timeline. Memories of the time under this spell will seem hazy, distant and dreamlike but the subject will remember the time at least to some extent. Supernatural creatures are not normally affected by this spell +1 Reach: Reassign a number of the subject's Skill or Merit dot equal to Potency. These can not exceed the subject's maximum +1 Reach: Reassign a number of the subject's Attributes equal to Potency. These may no exceed the subject's natural maximum or below the character creation priorities of Primary, Secondary and Tertiary +2 Reach: This spell can affect supernatural creatures. And may revert them back to before they acquired their supernatural template",
+    "summary": "The mage replaces the subject's history with a plausible timeline based on different past choices; without Temporal Sympathy, only recent decisions can be changed. The subject reverts when the spell ends but retains hazy, dreamlike memories of the alternate life, and supernatural beings are normally unaffected.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 191
@@ -7846,6 +7888,8 @@ export const SPELLS: SpellDefinition[] = [
       "Survival"
     ],
     "description": "Throw a subject forward in time. The subject vanishes from the world and won't reappear until the spell expires. If, while reappearing, something new now occupies the space the subject used to inhabit apply the Knocked Down Tilt to whichever of the two has the least Size",
+    "summary": "The mage sends the subject forward through time, causing her to vanish until the spell expires. If she reappears in an occupied space, whichever body has the lower Size suffers the Knocked Down Tilt.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 192
@@ -7866,6 +7910,8 @@ export const SPELLS: SpellDefinition[] = [
       "Occult"
     ],
     "description": "This spell turns the next extended action into a instant action. A number of rolls for the extended action may be made in this turn equal to Potency. This spell does not affect ritual casting time for mages +2 Reach: For a point of Mana this spell can affect spellcasting times. Increase the effective Gnosis of a mage equal to Potency for calculating ritual casting times only. For every point over Gnosis 10 reduce the interval by one turn",
+    "summary": "The spell compresses the subject's next extended action into a single instant action, allowing a number of its rolls equal to Potency in one turn. It does not ordinarily shorten a mage's ritual casting interval.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 192
@@ -7886,6 +7932,8 @@ export const SPELLS: SpellDefinition[] = [
       "Persuasion"
     ],
     "description": "The Subject inhabits their own Past self and is able to Change History. Subject arrives at the Location they were in at the time chosen and is free to make different decisions. Can be viewed under active Time mage sight. Once the mage has 'Caught up' to the present or the spells duration factor is up the changes made to History become Lasting",
+    "summary": "The subject inhabits her own past self at a chosen moment and may make different decisions from that point onward. The disturbance remains visible to Active Time Mage Sight, and the altered history becomes Lasting when she catches up to the present or the spell's Duration expires.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 192
@@ -7906,6 +7954,8 @@ export const SPELLS: SpellDefinition[] = [
       "Stealth"
     ],
     "description": "Grant the subject extra time. The entire world around the subject freezes. The subject may do move and touch things freely. But physically moving, consuming or injuring anything ends the spell at the completion of such an action",
+    "summary": "The mage grants the subject extra time by freezing the world around her while she remains free to move and touch her surroundings. Physically moving, consuming, or injuring anything ends the spell after that action is completed.",
+    "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 192
