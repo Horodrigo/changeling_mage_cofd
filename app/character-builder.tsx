@@ -49,6 +49,7 @@ import {
   canonicalChangelingAnchorName,
   MTA_ORDERS,
   MTA_ORDER_LABELS,
+  MTA_ORDER_DESCRIPTIONS,
   MTA_PATHS,
   REGALIA,
   SKILLS,
@@ -395,8 +396,7 @@ export function CharacterBuilder({
             ]
           : line === "MtA" && order === "Nameless"
             ? [
-                { name: "Mystery Cult Initiation", dots: 1, grantedBy: "Nameless Order", sourceId: "core-2ed", source: "Chronicles of Darkness", configuration: { ...normalizeMeritConfiguration(customOrder?.initiation), cult: customOrder?.name ?? "" } },
-                { name: "High Speech", dots: 1, grantedBy: "Nameless Order", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {} },
+                { name: "Mystery Cult Initiation", dots: 1, grantedBy: "Nameless Order", sourceId: "core-2ed", source: "Chronicles of Darkness", configuration: { ...normalizeMeritConfiguration(customOrder?.initiation), cult: customOrder?.name ?? "", level_1_type: "merit", level_1_merits: ["High Speech|1"] } },
               ]
             : [];
     // Keep rule-granted creation Merits in the editable allocation list.
@@ -780,7 +780,7 @@ export function CharacterBuilder({
             source: definition?.source,
           };
         })),
-        ...(line === "MtA" && hasCreationOrderBenefits && !merits.some(item=>item.name==="High Speech") && !initial?.merits.some(item=>item.name==="High Speech"&&item.experienceDots)
+        ...(line === "MtA" && hasPublishedMageOrder(order) && !merits.some(item=>item.name==="High Speech") && !initial?.merits.some(item=>item.name==="High Speech"&&item.experienceDots)
           ? [
               {
                 name: "High Speech",
@@ -1879,17 +1879,6 @@ function ContractSelector({
     </>
   );
 }
-
-const MTA_ORDER_DESCRIPTIONS: Record<string, [string, string]> = {
-  "Adamantine Arrow": ["Guerreiros místicos que aperfeiçoam a si mesmos através do conflito e defendem os Despertos.", "Mystic warriors who perfect themselves through conflict and defend the Awakened."],
-  "Free Council": ["Magos modernos que buscam sabedoria na cultura humana, na democracia e na inovação.", "Modern mages who seek wisdom in human culture, democracy, and innovation."],
-  "Guardians of the Veil": ["Espiões e inquisidores que protegem os Mistérios e ocultam a magia dos indignos.", "Spies and inquisitors who protect the Mysteries and conceal magic from the unworthy."],
-  Mysterium: ["Eruditos e exploradores dedicados a preservar, estudar e compreender o conhecimento mágico.", "Scholars and explorers devoted to preserving, studying, and understanding magical knowledge."],
-  "Silver Ladder": ["Líderes que procuram unir os Despertos e elevar toda a humanidade através da magia.", "Leaders who seek to unite the Awakened and elevate all humanity through magic."],
-  "Seers of the Throne": ["Servos dos Exarcas que impõem as hierarquias do Trono sobre o mundo Caído.", "Servants of the Exarchs who impose the Throne's hierarchies upon the Fallen World."],
-  Nameless: ["Uma Ordem sem nome reconhecido entre as grandes sociedades dos Despertos.", "An Order without a recognized name among the great societies of the Awakened."],
-  Orderless: ["O mago não pertence a uma Ordem e não recebe seus benefícios iniciais.", "The mage belongs to no Order and receives no starting Order benefits."],
-};
 
 function OrderSelector(props: OrderSelectorProps) {
   const { locale, tr } = useLanguage();
@@ -3337,7 +3326,7 @@ function CultMeritEditor({
             placeholder={tr("Ex.: Igreja Vermelha", "E.g.: Red Church")}
           />
         </label>}
-        {Array.from({ length: merit.dots }, (_, index) => index + 1).map(
+        {Array.from({ length: merit.dots }, (_, index) => index + 1).filter(level=>merit.grantedBy !== "Nameless Order" || level > 1).map(
           (level) => (
             <CultLevelEditor
               key={level}

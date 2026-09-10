@@ -3,6 +3,7 @@ import { HEDGE_DUELIST_VARIANTS } from "./merits-supplements-en";
 import { courtCanonicalId, courtDisplayName } from "./changeling-courts";
 import { synchronizeEntitlement } from "./entitlements";
 import { MAGE_MERIT_CONFIGURATIONS } from "./mage-merit-configurations";
+import { hasPublishedMageOrder } from "./mage-orders";
 
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
@@ -162,6 +163,41 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     configuration:{court},
     grantedBy:"Corte",
   });
+  if(target.game_line==="MtA"){
+    const order=String(target.line_data?.order??"Orderless");
+    const automatic=target.merits.filter(item=>
+      (item.grantedBy==="Ordem"&&["Awakened Status","High Speech"].includes(item.name))||
+      (item.grantedBy==="Nameless Order"&&["Mystery Cult Initiation","High Speech"].includes(item.name))
+    );
+    target.merits=target.merits.filter(item=>!automatic.includes(item));
+    if(hasPublishedMageOrder(order)){
+      const status=automatic.find(item=>item.name==="Awakened Status");
+      target.merits.push({
+        ...status,
+        instanceId:status?.instanceId??`order-status-${order}`,
+        name:"Awakened Status",
+        dots:Math.max(1,Number(status?.dots??1)),
+        creationDots:Math.max(1,Number(status?.creationDots??(Number(status?.dots??1)-Number(status?.experienceDots??0)))),
+        experienceDots:Math.max(0,Number(status?.experienceDots??0)),
+        sourceId:"mta-2ed",source:"Mage the Awakening",configuration:{domain:order,name:order},grantedBy:"Ordem",
+      });
+      const speech=automatic.find(item=>item.name==="High Speech");
+      target.merits.push({...speech,instanceId:speech?.instanceId??`high-speech-${order}`,name:"High Speech",dots:1,creationDots:1,experienceDots:0,sourceId:"mta-2ed",source:"Mage the Awakening",configuration:{},grantedBy:"Ordem"});
+    } else if(order==="Nameless"){
+      const initiation=automatic.find(item=>item.name==="Mystery Cult Initiation");
+      const custom=target.line_data?.custom_order&&typeof target.line_data.custom_order==="object"?target.line_data.custom_order as Record<string,unknown>:{};
+      const config={...normalizeMeritConfiguration(initiation?.configuration),cult:String(custom.name??""),level_1_type:"merit",level_1_merits:["High Speech|1"]};
+      target.merits.push({
+        ...initiation,
+        instanceId:initiation?.instanceId??"nameless-order-initiation",
+        name:"Mystery Cult Initiation",
+        dots:Math.max(1,Number(initiation?.dots??1)),
+        creationDots:Math.max(1,Number(initiation?.creationDots??(Number(initiation?.dots??1)-Number(initiation?.experienceDots??0)))),
+        experienceDots:Math.max(0,Number(initiation?.experienceDots??0)),
+        sourceId:"core-2ed",source:"Chronicles of Darkness",configuration:config,grantedBy:"Nameless Order",
+      });
+    }
+  }
   const benefits=target.merits.filter((item)=>item.name==="Court Goodwill"&&!item.grantedBy).map((item)=>{
     const selected=courtCanonicalId(normalizeMeritConfiguration(item.configuration).court);
     item.configuration={...normalizeMeritConfiguration(item.configuration),court:selected};
@@ -181,9 +217,14 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
       grantedBy:`${generatedPrefix}${owner}`,
     });
   };
-  for(const merit of target.merits.filter((item)=>!item.grantedBy)){
+  for(const merit of target.merits.filter((item)=>!item.grantedBy||item.grantedBy==="Nameless Order")){
     const owner=`${merit.name}:${merit.instanceId??merit.name}`;
     const configuration=normalizeMeritConfiguration(merit.configuration);
+    if(merit.name==="Mystery Cult Initiation"&&merit.grantedBy==="Nameless Order"){
+      configuration.level_1_type="merit";
+      configuration.level_1_merits=["High Speech|1"];
+      merit.configuration=configuration;
+    }
     if(merit.name==="Professional Training"){
       const contacts=Array.isArray(configuration.contacts)?configuration.contacts.filter(Boolean):[];
       if(merit.dots>=1) target.merits.push({

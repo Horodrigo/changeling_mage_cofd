@@ -99,6 +99,8 @@ import {
   changelingAnchorRecovery,
   seemingDisplayName,
   MTA_ORDER_LABELS,
+  MTA_ORDER_DESCRIPTIONS,
+  MTA_ORDERS,
   MTA_PATHS,
   SKILLS,
   normalizeChangelingFrailties,
@@ -325,7 +327,7 @@ export function CharacterPaper({
   };
   const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 9, 0);
   const expandedMerits = character.merits.filter(
-    (item) => isExpanded(item.name) && !item.grantedBy,
+    (item) => isExpanded(item.name) && (!item.grantedBy || item.grantedBy === "Nameless Order"),
   );
   const principalMerits = character.merits.filter(
     (item) => !item.grantedBy || item.grantedBy === "Corte",
@@ -382,7 +384,7 @@ export function CharacterPaper({
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={()=>setSheetTab("legacy")}/>}</section>
               <SheetHeading>Experiência</SheetHeading>
               {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
-              {!isCtl&&<><div className="power-resource wisdom-resource"><div className="power-rating"><span>{tr("Sabedoria","Wisdom")}</span><DotValue value={Number(data.wisdom??7)} max={10}/></div><div className="sheet-heading-action"><strong>{tr("Feitiços Inured","Inured Spells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length<gnosis&&<ExperiencePowerPicker kind="Feitiço" items={availableInuredSpells} selectedId="" onSelect={addInuredSpell} compact/>}</div><small>{tr("Após perder Sabedoria pelo uso de uma magia, ela pode ser Inured: usos futuros não causam essa perda, mas sempre provocam um risco básico de Paradoxo de dois dados. MtA, p. 88.","After losing Wisdom from using a spell, it may be Inured: future uses do not cause that loss, but always provoke a base two-die Paradox risk. MtA, p. 88.")}</small><div className="inured-spell-list">{inuredSpells.map(item=><div key={String(item.id)}><span>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={()=>removeInuredSpell(String(item.id))}><Trash2/> {tr("Remover","Remove")}</Button></div>)}</div></div><div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value)=>updateLineData(updateSheet,character,"obsessions",value)}/></section><section><SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value)=>setState("conditions",value)}/></section></div></>}
+              {!isCtl&&<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value)=>updateLineData(updateSheet,character,"obsessions",value)}/></section><section><SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value)=>setState("conditions",value)}/></section></div>}
             </>,
             stats: <>
               <SheetHeading>Atributos</SheetHeading>
@@ -401,6 +403,7 @@ export function CharacterPaper({
               <SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={CHANGELING_CONDITIONS} onChange={(value) => setState("conditions", value)} />
             </> : <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
+              <MageOrderSummary data={data} />
               <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
@@ -415,13 +418,13 @@ export function CharacterPaper({
             </> : <>
               <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} />
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} highlightTone={legacyState?.joined&&name===ELEVENTH_QUESTION.rulingArcanum?"legacy":undefined} />)}</div>
+              <div className="wisdom-sheet-section"><SheetHeading>Sabedoria</SheetHeading><TraitLine name={tr("Sabedoria","Wisdom")} value={Number(data.wisdom??7)} /><div className="sheet-heading-action"><strong>{tr("Feitiços Inured","Inured Spells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length<gnosis&&<ExperiencePowerPicker kind="Feitiço" items={availableInuredSpells} selectedId="" onSelect={addInuredSpell} compact/>}</div><small>{tr("Após perder Sabedoria pelo uso de uma magia, ela pode ser Inured: usos futuros não causam essa perda, mas sempre provocam um risco básico de Paradoxo de dois dados. MtA, p. 88.","After losing Wisdom from using a spell, it may be Inured: future uses do not cause that loss, but always provoke a base two-die Paradox risk. MtA, p. 88.")}</small><div className="inured-spell-list">{inuredSpells.map(item=><div key={String(item.id)}><span>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={()=>removeInuredSpell(String(item.id))}><Trash2/> {tr("Remover","Remove")}</Button></div>)}</div></div>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} showSkill />
+              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={tr("Ferramenta Dedicada:","Dedicated Tool:")} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
+              <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={3} maximum={3} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
               <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div><SpellColumn items={praxes} minimumRows={gnosis} onRemove={removePraxis} />
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
-              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} placeholder={tr("Ferramenta mágica","Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)} />
-              <SheetHeading>Inclinação do Nimbus</SheetHeading><EditableList values={stringList(data.nimbus_tilt)} minimum={2} placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} />
               <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
-              <CustomOrderLore data={data} />
             </>,
             entitlement: <EntitlementPage character={character} updateSheet={updateSheet}/>,
             legacy: <LegacyPage character={character} updateSheet={updateSheet} onDiscard={()=>setSheetTab("resumo")}/>,
@@ -704,11 +707,19 @@ export function CharacterPaper({
               <div className="sheet-center-column">
                 <SheetHeading>Méritos</SheetHeading>
                 <MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
+                <MageOrderSummary data={data} />
                 <SheetHeading>Arcanos</SheetHeading>
                 <div className="arcana-sheet-list">
                   {Object.entries(arcana).map(([name, value]) => (
                     <TraitLine key={name} name={name} value={Number(value)} highlightTone={legacyState?.joined&&name===ELEVENTH_QUESTION.rulingArcanum?"legacy":undefined} />
                   ))}
+                </div>
+                <div className="wisdom-sheet-section">
+                  <SheetHeading>Sabedoria</SheetHeading>
+                  <TraitLine name={tr("Sabedoria","Wisdom")} value={Number(data.wisdom??7)} />
+                  <div className="sheet-heading-action"><strong>{tr("Feitiços Inured","Inured Spells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length<gnosis&&<ExperiencePowerPicker kind="Feitiço" items={availableInuredSpells} selectedId="" onSelect={addInuredSpell} compact/>}</div>
+                  <small>{tr("Após perder Sabedoria pelo uso de uma magia, ela pode ser Inured: usos futuros não causam essa perda, mas sempre provocam um risco básico de Paradoxo de dois dados. MtA, p. 88.","After losing Wisdom from using a spell, it may be Inured: future uses do not cause that loss, but always provoke a base two-die Paradox risk. MtA, p. 88.")}</small>
+                  <div className="inured-spell-list">{inuredSpells.map(item=><div key={String(item.id)}><span>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={()=>removeInuredSpell(String(item.id))}><Trash2/> {tr("Remover","Remove")}</Button></div>)}</div>
                 </div>
               </div>
               <div className="sheet-right-column">
@@ -738,12 +749,6 @@ export function CharacterPaper({
                   character={character}
                   updateSheet={updateSheet}
                 />
-                <div className="power-resource wisdom-resource">
-                  <div className="power-rating"><span>{tr("Sabedoria","Wisdom")}</span><DotValue value={Number(data.wisdom??7)} max={10}/></div>
-                  <div className="sheet-heading-action"><strong>{tr("Feitiços Inured","Inured Spells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length<gnosis&&<ExperiencePowerPicker kind="Feitiço" items={availableInuredSpells} selectedId="" onSelect={addInuredSpell} compact/>}</div>
-                  <small>{tr("Após perder Sabedoria pelo uso de uma magia, ela pode ser Inured: usos futuros não causam essa perda, mas sempre provocam um risco básico de Paradoxo de dois dados. MtA, p. 88.","After losing Wisdom from using a spell, it may be Inured: future uses do not cause that loss, but always provoke a base two-die Paradox risk. MtA, p. 88.")}</small>
-                  <div className="inured-spell-list">{inuredSpells.map(item=><div key={String(item.id)}><span>{String(locale==="en-US"?item.originalName??item.name:item.name??item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={()=>removeInuredSpell(String(item.id))}><Trash2/> {tr("Remover","Remove")}</Button></div>)}</div>
-                </div>
               </div>
             </div>
             <div className="sheet-bottom-grid mage-bottom-grid">
@@ -757,7 +762,6 @@ export function CharacterPaper({
             data-page-title="Detalhes"
             className="ctl-sheet-page powers-page mage-spell-page"
           >
-            <CustomOrderLore data={data} />
             <div className="mage-page-355-grid">
               <section className="mage-page-left">
                 <SheetHeading>Feitiços Ativos</SheetHeading>
@@ -770,34 +774,26 @@ export function CharacterPaper({
                 />
                 <SheetHeading>Attainments</SheetHeading>
                 <MageAttainmentList arcana={arcana} />
-                <SheetHeading>Ferramentas Mágicas</SheetHeading>
-                <EditableList
-                  values={
-                    stringList(data.magical_tools).length
-                      ? stringList(data.magical_tools)
-                      : [String(data.dedicated_tool ?? "")]
-                  }
-                  minimum={3}
-                  placeholder={tr("Ferramenta mágica","Magical tool")}
-                  onChange={(value) =>
-                    updateLineData(
-                      updateSheet,
-                      character,
-                      "magical_tools",
-                      value,
-                    )
-                  }
-                />
                 <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length<gnosis&&<ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div>
                 <SpellColumn items={praxes} minimumRows={gnosis} onRemove={removePraxis} />
               </section>
               <section className="mage-page-main">
                 <SheetHeading>Rotas</SheetHeading>
                 <SpellColumn items={rotes} showSkill />
+                <SheetHeading>Ferramentas Mágicas</SheetHeading>
+                <EditableList
+                  values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]}
+                  minimum={3}
+                  maximum={3}
+                  firstPrefix={tr("Ferramenta Dedicada:","Dedicated Tool:")}
+                  placeholder={tr("Ferramenta mágica","Magical tool")}
+                  onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}
+                />
                 <SheetHeading>Inclinação do Nimbus</SheetHeading>
                 <EditableList
                   values={stringList(data.nimbus_tilt)}
-                  minimum={2}
+                  minimum={3}
+                  maximum={3}
                   placeholder={tr("Descrição da Inclinação do Nimbus","Nimbus Tilt description")}
                   onChange={(value) =>
                     updateLineData(updateSheet, character, "nimbus_tilt", value)
@@ -1466,12 +1462,14 @@ function EditableList({
   values,
   minimum = 1,
   maximum,
+  firstPrefix,
   placeholder,
   onChange,
 }: {
   values: string[];
   minimum?: number;
   maximum?: number;
+  firstPrefix?: string;
   placeholder: string;
   onChange: (value: string[]) => void;
 }) {
@@ -1484,6 +1482,7 @@ function EditableList({
     <div className="editable-lines">
       {rows.map((value, index) => (
         <div className="editable-line-row" key={index}>
+          {index === 0 && firstPrefix && <strong className="editable-line-prefix">{firstPrefix}</strong>}
           <Input
             value={value}
             placeholder={placeholder}
@@ -2118,20 +2117,25 @@ function CourtLore({
     </article>
   );
 }
-function CustomOrderLore({ data }: { data: Record<string, unknown> }) {
+function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
   const {locale,tr}=useLanguage();
   const raw = data.custom_order;
-  if (!raw || typeof raw !== "object") return null;
-  const order = raw as Record<string, unknown>;
-  const skills = Array.isArray(order.roteSkills)
-    ? order.roteSkills.map(String).filter(Boolean)
-    : [];
+  const custom = raw && typeof raw === "object" ? raw as Record<string, unknown> : undefined;
+  const orderKey = String(data.order ?? "Orderless");
+  const name = orderKey === "Orderless"
+    ? tr("Sem Ordem","Orderless")
+    : String(custom?.name ?? (locale === "en-US" ? orderKey : MTA_ORDER_LABELS[orderKey] ?? orderKey));
+  const description = String(custom?.description ?? MTA_ORDER_DESCRIPTIONS[orderKey]?.[locale === "pt-BR" ? 0 : 1] ?? "");
+  const skills = Array.isArray(custom?.roteSkills)
+    ? custom.roteSkills.map(String).filter(Boolean)
+    : [...(MTA_ORDERS[orderKey as keyof typeof MTA_ORDERS] ?? [])];
   return (
-    <article className="lore-panel">
-      <h4>{tr("Ordem","Order")}: {String(order.name ?? data.order ?? "")}</h4>
-      <p>{String(order.description ?? "")}</p>
-      <small>{tr("Perícias de Rota","Rote Skills")}: {skills.map((skill)=>systemTerm(skill,locale)).join(", ")}</small>
-    </article>
+    <section className="mage-order-summary">
+      <SheetHeading>Ordem</SheetHeading>
+      <strong>{name}</strong>
+      {description && <p>{description}</p>}
+      {skills.length > 0 && <small><strong>{tr("Perícias de Rota","Rote Skills")}:</strong> {skills.map((skill)=>systemTerm(skill,locale)).join(", ")}</small>}
+    </section>
   );
 }
 function LorePanel({

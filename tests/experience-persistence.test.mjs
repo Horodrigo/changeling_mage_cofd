@@ -110,6 +110,24 @@ test("outros Méritos gratuitos preservam o ponto inicial durante avanços", () 
   }
 });
 
+test("Nameless Order derives High Speech from its first Mystery Cult benefit", () => {
+  const sheet = {
+    game_line:"MtA",
+    line_data:{order:"Nameless"},
+    merits:[{
+      name:"Mystery Cult Initiation",
+      dots:1,
+      grantedBy:"Nameless Order",
+      configuration:{cult:"The Unnamed",level_1_type:"merit",level_1_merits:["High Speech|1"]},
+    }],
+    specializations:[],
+  };
+  meritConfigurations.synchronizeMeritGrants(sheet);
+  const speech = sheet.merits.find((item)=>item.name==="High Speech");
+  assert.equal(speech?.dots,1);
+  assert.match(String(speech?.grantedBy),/^Merit:Mystery Cult Initiation:/);
+});
+
 test("edição preserva Méritos de Experiência e substitui apenas a base de criação", () => {
   const existing = [
     {name:"Allies",instanceId:"creation",dots:4,creationDots:2,experienceDots:2,configuration:{group:"Police"}},

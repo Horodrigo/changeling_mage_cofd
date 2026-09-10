@@ -947,6 +947,16 @@ button { cursor: pointer; }
 .official-lines > div { min-height:22px; overflow:hidden; border-bottom:1px solid #aaa8a16b; font:italic 12px/21px Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
 .arcana-sheet-list { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; }
 .sheet-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.sheet-bottom-grid.mage-bottom-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.wisdom-sheet-section { margin-top:14px; display:grid; gap:7px; }
+.wisdom-sheet-section>small { color:#606870; font-size:11px; line-height:1.4; }
+.mage-order-summary { margin-top:14px; }
+.mage-order-summary>strong { display:block; color:var(--sheet-accent); font:700 14px Georgia,"Times New Roman",serif; }
+.mage-order-summary>p { margin:4px 0; color:#555b60; font:11px/1.4 Inter,Arial,sans-serif; }
+.mage-order-summary>small { color:#6a6870; font:10px/1.4 Inter,Arial,sans-serif; }
+.editable-line-row:has(.editable-line-prefix) { grid-template-columns:auto minmax(0,1fr) auto; }
+.editable-line-prefix { align-self:center; color:var(--sheet-accent); font:700 11px Inter,Arial,sans-serif; white-space:nowrap; }
+@media(max-width:760px){.sheet-bottom-grid.mage-bottom-grid{grid-template-columns:1fr}}
 .ctl-sheet-tabs { position:relative; z-index:1; margin-top:12px; }
 .ctl-sheet-tab-list { width:100%; height:auto!important; padding:4px; border:1px solid color-mix(in srgb,var(--sheet-accent) 50%,transparent); border-radius:0; background:color-mix(in srgb,var(--sheet-accent) 8%,#fff); }
 .ctl-sheet-tab-list button { min-height:38px; border-radius:0; font-family:Georgia,"Times New Roman",serif; font-size:17px; letter-spacing:.08em; text-transform:uppercase; }
