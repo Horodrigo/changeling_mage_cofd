@@ -152,6 +152,22 @@ test("Prime summaries are fully reviewed against the offline PDFs", () => {
   assert.match(prime.find((spell)=>spell.name==="Eidolon").summary,/does not crumble.*Mana/);
 });
 
+test("Space summaries are fully reviewed against the offline PDFs", () => {
+  const space=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Space");
+  assert.equal(space.length,29);
+  assert.ok(space.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(space.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),space.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(space.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),space.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Isolation","The Outward and Inward Eye","Scrying","Forced Sympathy","Secret Room","Pocket Dimension","Quarantine"]){
+    const spell=space.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  assert.match(space.find((spell)=>spell.name==="Forced Sympathy").summary,/one Mana/);
+  assert.match(space.find((spell)=>spell.name==="Pocket Dimension").summary,/no native Time or Twilight/);
+  assert.match(space.find((spell)=>spell.name==="Quarantine").summary,/retains its own Time, Twilight/);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");

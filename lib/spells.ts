@@ -5995,7 +5995,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Learn one of subjects sympathetic links per Potency. The oldest and strongest are revealed first. If the link is nearby you will learn it't exact location too. +1 Reach: You can follow a link to it's other end. +1 Reach: Learn the emotional aspect of the connection. Connection \"My childhood home\" may carry notes of comfort or fear depending on the subject. +2 Reach: Specify what links you want to learn. The answer comes form the subjects perspective. +2 Reach: If used on a keyed spell or iris this spell can learn the key.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 172
+    "page": 172,
+    "summary": "Learn one of the subject’s sympathetic connections per Potency, revealing the oldest and strongest first. If the other endpoint is nearby, the mage also learns its exact location.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-1-ground-eater",
@@ -6015,7 +6017,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Add or reduce Speed by Potency. Speed cannot go below 1",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 173
+    "page": 173,
+    "summary": "Increase or decrease the subject’s Speed by Potency, resisted by Stamina. Speed cannot be reduced below one.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-1-isolation",
@@ -6035,7 +6039,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Any attempt to interact with other people costs a Willpower point. Even then, dice pools are penalized by Potency. Prolonged exposure to spell (a day per point of subject's Composure) may cause breaking points or Conditions like Shaken or Spooked",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 173
+    "page": 173,
+    "summary": "Make interaction feel impossibly distant: each attempt to engage another person costs one Willpower and then suffers a Potency penalty. After one day per dot of Composure, the isolation may cause breaking points or Conditions such as Shaken or Spooked.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-1-locate-object",
@@ -6055,7 +6061,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Can find the subject in spell area. +1 Reach: Can track the subject even if it leaves the area.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 173
+    "page": 173,
+    "summary": "Know the direction and distance to a chosen subject while it remains inside the spell’s area. The basic spell stops locating it once it leaves that area.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-1-the-outward-and-inward-eye",
@@ -6075,7 +6083,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Gain 360 degree vision and hearing. All attempts to ambush the character fail, or in the case of exceptional camouflage or distraction a chance die. Finally all penalties due to range, cover or concealment(but not darkness or other poor visibility situations) are reduced by Potency. +2 Reach: Can see through warps or shortcuts in Space. This includes Distortion Irises, additional Arcana may allow sight into other types of Irises, this is at Storyteller's discretion",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 174
+    "page": 174,
+    "summary": "Gain simultaneous 360-degree sight and hearing, causing ordinary ambushes to fail and exceptional concealment to reduce attackers to a chance die. Potency reduces penalties from range, cover, and concealment, but not darkness or poor visibility.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-borrow-threads",
@@ -6095,7 +6105,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the transfer of a number of sympathetic connections between the caster and the subject(s) of the spell equal to potency. The caster must be aware of the links, either through other magic or knowledge of the subject. +1 Reach: The caster may also transfer connections between subjects affected without being involved in the transfer. +1 Reach: The caster may copy connections instead of transferring them.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 174
+    "page": 174,
+    "summary": "Transfer up to Potency known sympathetic connections between the caster and affected subjects, resisted by the relevant Sympathy. Each transferred connection leaves its original holder for the Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-break-boundary",
@@ -6115,7 +6127,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the subject to slip past an obstacle that is obstructing a path or similar restriction of movement. +1 Reach: The subject can fit through narrow or restrictive passageways they couldn't normally fit through. +2 Reach: Subjects unable to move can pass through obstructions, appearing on the other side.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 174
+    "page": 174,
+    "summary": "Allow the subject to bypass an obstacle blocking an otherwise valid path, such as slipping around a locked door or through a barred route. The basic spell does not let an immobilized subject pass solid barriers or fit through impossibly narrow gaps.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-lying-maps",
@@ -6135,7 +6149,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Makes a subject certain that a path of the caster's choosing is the correct path to a destination.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 174
+    "page": 174,
+    "summary": "Convince the subject that a route chosen by the caster is the correct path to a stated destination, resisted by Resolve. The subject follows the false spatial certainty while the spell lasts.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-scrying",
@@ -6155,7 +6171,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the caster to remotely view a distant location, with varying effects depending on the type of Sympathetic connection. Spells can also be cast on subjects as if one were viewing them remotely. The scrying window may be invisible or visible to everyone in the vicinity. Add Fate 2: The caster can select specific people who can see the scrying window.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 174
+    "page": 174,
+    "summary": "Open a sensory window onto a distant location through a sympathetic connection. The caster can observe and cast spells through it as though present, subject to sympathetic range, and may make the window visible or invisible to nearby observers.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-secret-door",
@@ -6175,7 +6193,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the caster to hide a passageway from mundane perception, invoking Clash of Wills against magical perception. +1 Reach: A Key may be specified to allow entry.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 175
+    "page": 175,
+    "summary": "Hide a passageway from mundane perception so observers overlook or misinterpret it. Supernatural detection provokes a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-veil-sympathy",
@@ -6195,7 +6215,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Conceals one of the subject's sympathetic connections. +1 Reach: May make the subject appear to have a nonexistent connection. +1 Reach: Prevents the connection from being used as a Sympathetic Yantra. +2 Reach: The caster may suppress all of the subject's connections.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 175
+    "page": 175,
+    "summary": "Conceal one sympathetic connection belonging to the subject, resisted by its Sympathy. Attempts to perceive the hidden connection fail unless they overcome the veil.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-2-ward",
@@ -6215,7 +6237,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Prevents space from being manipulated in an area. +1 Reach: The caster may specify a Key that can allow the manipulation of space. +2 Reach: The caster may ward an Iris.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 176
+    "page": 176,
+    "summary": "Prevent spatial manipulation across or within the protected area, forcing conflicting Space effects into a Clash of Wills. Ordinary movement remains possible.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-3-ban",
@@ -6235,7 +6259,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cuts an area off from the outside world, including light, sound, and air. Add Any Arcanum 2: Exclude phenomena under that Arcanum, or only Ban phenomena of that Arcanum.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 176
+    "page": 176,
+    "summary": "Cut the affected area off from the surrounding world so light, sound, air, matter, and other phenomena cannot cross its boundary. Conditions inside persist, making an unventilated Ban potentially lethal.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-3-co-location",
@@ -6255,7 +6281,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the overlapping of multiple locations. Individuals who can perceive this overlap may switch between locations reflexively once a turn. +1 Reach: Anything in the overlapped locations may be made visible to the naked eye. +1 Reach: The caster may make the Co-Location a two-dimensional plane, creating a portal. +1 Reach: The caster may specify a Key needed to use the overlap. +2 Reach: Individuals who can perceive the overlap may reflexively switch locations twice per turn instead of once.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 176
+    "page": 176,
+    "summary": "Overlap multiple locations so someone able to perceive the effect may move reflexively from one to another once per turn. Without additional Reach, the overlap is not visible to ordinary senses and does not form an open portal.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:space-3-forced-sympathy",
@@ -6275,7 +6303,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Must be cast on a Mage to alter his imbument process. Whenever a user casts the item's spell it always targets the subject with the closest sympathy to the user. Closest sympathy is determined by the best sympathetic Yantra on the user at the time of Casting. If the user has multiple items which could be used as Sympathetic Yantras the spells effect occurs on the one in closest physical range.",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 73
+    "page": 73,
+    "summary": "For one Mana, alter a mage’s imbuement process so the resulting item gains Sympathetic Range and always targets the user’s closest sympathetic connection. The best carried Yantra determines the target, with physical proximity breaking ties; at minimum it selects the nearest person known by name.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:space-3-optimal-container",
@@ -6295,7 +6325,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Expand the dimensions within a container to allow it to hold larger objects than usual. Enhance the sized item a container can hold by its base size + Potency",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 66
+    "page": 66,
+    "summary": "Expand a container’s internal dimensions so it can hold an object with Size up to the container’s own Size plus Potency. Its exterior dimensions remain unchanged.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-3-perfect-sympathy",
@@ -6315,7 +6347,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the subject to gain 8-Again when taking an action on a subject that is one of their Strong sympathies. +1 Reach: Can redirect spells at Sympathetic Range to a Strong connection instead. +1 Reach: For one Mana, the subject gains (Potency) rote actions when taking an action on a subject that is one of their Strong sympathies. +1 Reach: The benefits extend to Medium sympathetic connections.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 176
+    "page": 176,
+    "summary": "Give the subject 8-Again on actions directed at someone or something to which she has a Strong sympathetic connection.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-3-warp",
@@ -6335,7 +6369,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deals bashing damage equal to Potency by twisting the space the subject occupies. +1 Reach: The pain inflicts the Arm Wrack or Leg Wrack Tilt.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 177
+    "page": 177,
+    "summary": "Twist the space occupied by a subject as a direct attack, inflicting bashing damage equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-3-web-weaver",
@@ -6355,7 +6391,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows bolstering of a sympathetic connection. Add Time 2: The caster may use temporal sympathy to anything the subject touched in the target time.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 177
+    "page": 177,
+    "summary": "Strengthen one of the subject’s sympathetic connections by steps equal to Potency, resisted by Composure. The connection may later weaken naturally according to events and time.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-4-alter-direction",
@@ -6375,7 +6413,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Allows the caster to change (Potency) absolute directions (e.g. north, south, up, down) in an area, or change directions relative to a chosen subject. +1 Reach: The caster can redefine directions in curves rather than just straight lines.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 177
+    "page": 177,
+    "summary": "Redefine up to Potency absolute directions within the area, such as north, south, up, or down, or redefine directions relative to a chosen subject. The basic spell redirects along straight lines.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-4-collapse",
@@ -6395,7 +6435,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Forces a subject and a chosen object to occupy the same space, dealing (Potency) lethal damage. +1 Reach: For 1 Mana, damage inflicted becomes Aggravated. +1 Reach: The co-located object remains inside the subject.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 177
+    "page": 177,
+    "summary": "Force a subject and chosen object to occupy the same space, inflicting lethal damage equal to Potency. Normally the object is displaced after the attack rather than remaining inside the target.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-4-cut-threads",
@@ -6415,7 +6457,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Destroy a sympathetic connection, effect is lasting, but connection can be restored in time. +2 Reach: Remove the subject's sympathetic name. This is not lasting and only last until the spell expires",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 177
+    "page": 177,
+    "summary": "Sever one sympathetic connection per Potency, resisted by the connection’s Sympathy. The severance is Lasting, though a relationship can form a new connection through later interaction.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-4-secret-room",
@@ -6435,7 +6479,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Enlarge or shrink a space. Making a box bigger on the inside than on the outside, for example. Scale has to encompass the targets current size. And goes up or down equal to Potency in steps along the Area Scale Factor.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 178
+    "page": 178,
+    "summary": "Increase or decrease an enclosed space along the Area Scale table by one step per Potency. Scale must encompass the space at its original size, while the exterior need not reflect its altered interior.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-4-teleportation",
@@ -6455,7 +6501,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Teleport a subject to another location. You may use the Sympathetic Range Attainment on either the subject or the location but not both. +1 Reach: You may swap the location of two subjects with no more a point of Size difference +2 Reach: You may now use two separate Sympathetic Ranges. The spell is Withstood by the worse of the two connections",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 178
+    "page": 178,
+    "summary": "Move a subject instantly to another location. Sympathetic Range may apply to either the subject or destination, but not both in the basic spell.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-5-create-sympathy",
@@ -6475,7 +6523,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a new sympathetic connection for the subject. This is Lasting, but may fade with time. +1 Reach: The created connection is Lasting and never fades. Only magic can sever it now +2 Reach: Give a subject a new sympathetic name. This is not Lasting and fades when the spell ends",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 178
+    "page": 178,
+    "summary": "Create a new sympathetic connection at a chosen strength, resisted by the desired Sympathy rating. The connection is Lasting but may weaken naturally with time and changing circumstances.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-5-forge-no-chains",
@@ -6495,7 +6545,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "For the Duration of the spell the subjects cannot create new sympathetic connection. blood, hair, etc shed during the Duration of the spell do not link back to the subject. This also has an effect on any Space spells you leave behind. Any attempt to scrutinize your spells with Mage Sight has the spell's Potency added to the Opacity",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 178
+    "page": 178,
+    "summary": "Prevent subjects from forming new sympathetic connections for the Duration; shed blood, hair, and similar traces do not link back to them. Space spells they leave behind also add Potency to their Opacity against Focused Mage Sight.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-5-pocket-dimension",
@@ -6515,7 +6567,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a space. By default this space is devoid of the other arcana: No Death or Spirit means no Twilight, No Time means things inside are held in stasis (unaging but also never growing/improving). Unless a portal connects the space to a point in the world the only way to get there is to teleport. Spells cast within never cause Paradox unless they sympathetic range is used to affect something outside of the space. The mage herself is considered a material sympathetic yantra for her own Pocket Dimension. If the space is ever destroyed or the spell expires objects within return to the exact location from which they entered the space. +1 Reach: Create an Iris to the Pocket Dimension in the physical world. For an additional Reach you may specify a Key for this Iris. Add Time 2: Time flows normally within the space mirroring time passed in the physical world. Without oxygen inside the space however this means anything inside can asphyxiate. Add Death 2, Mind 2 or Spirit 2: The space now contains a Twilight attuned to the Arcanum used",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 178
+    "page": 178,
+    "summary": "Create a featureless space outside reality with no native Time or Twilight: contents remain in stasis, and entry requires teleportation unless an Iris is added. Spells inside avoid Paradox unless cast sympathetically outside; when the realm ends, everything returns to its exact entry point.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:space-5-quarantine",
@@ -6535,7 +6589,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Remove a subject from space altogether. The world adjusts for the missing space. A Quarantined house doesn't leave behind an empty space, instead the neighboring house would now find themselves adjacent. Meanwhile those within the Quarentined space will find they cannot leave. Similar to a Pocket Dimension except it still has it's own Time, Twilight, Matter and so forth +1 Reach: Specify a Key that allows access to and from the removed area. Add Mind 4: For the Duration of the spell no one remembers the area used to exist. Those within do still remember. Add Time 5: For the duration of the spell the area and those within retroactively never existed. History rewrites itself, but returns to normal when the spell expires",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 179
+    "page": 179,
+    "summary": "Excise an area from Space so the outside world closes around its absence and nothing inside can leave. Unlike a newly created pocket, the removed place retains its own Time, Twilight, matter, and other existing properties.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:space-5-unnaming",
@@ -6555,7 +6611,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "The Mage Erases a subject's sympathetic name from existance, the exicised name is immediately replaced with one that matches whatever most sleepers would use to refer to her as. Any Sympathetic connections to the old name cease to exist as well. Any mage attempting to cast sympathetically using the mage faces a penalty until learning the new one. Add Prime •••••: The Spell can be used on an Awakened Subject's Shadow Name and Nimbus instead. The Shadow name isn't replaced immediately and the subject needs to build their Supernal identity from scratch",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 94
+    "page": 94,
+    "summary": "Erase the subject’s sympathetic name and replace it with the name most Sleepers would naturally use, resisted by Composure. Connections to the old name disappear, and sympathetic casting suffers until the caster learns the replacement.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-1-coaxing-the-spirits",
