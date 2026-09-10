@@ -6633,7 +6633,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Compel a Spirit or it's physical representation to take a single instant action that is in accordance to it's nature.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "Compel a spirit, or the spirit associated with a physical object, to perform one instant action consistent with its nature. Living or sapient subjects resist with Composure; manifested spirits resist with Rank.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-1-exorcist-s-eye",
@@ -6653,7 +6655,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "See and speak with any Spirit, be they in Twilight, slumbering in an object or possessing somebody. Can also see the conduit of any Spirit with the Reaching Manifestation +1 Reach: Can see across the Gauntlet, Withstood by Gauntlet Strength Add Death 1 or Mind 1: These benefits extend to ghost or Goetia respectively",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "See and communicate with spirits whether they are in Twilight, dormant within objects, possessing hosts, or using Reaching. The basic spell perceives the local side of the Gauntlet rather than looking through it.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-1-gremlins",
@@ -6673,7 +6677,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Cause Spirit of object to hinder it's user. Each level of Potency causes one failure with the item to become a dramatic failure. A player's character can earn a Beat from this as per normal +1 Reach: As long as the object is within sensory range, can decide what failure become dramatic failures",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "Rouse an object’s spirit to hinder its use. For up to Potency failed rolls involving the object, convert each failure into a dramatic failure, granting a Beat normally when appropriate.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-1-invoke-bane",
@@ -6693,7 +6699,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Force a Spirit to avoid it's Bane even more then normal. Spirit needs to spend a Willpower to come within the area(this is the Area factor of the spell) of it's bane and cannot touch it. Spirits above Rank 5 are unaffected by this spell",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "Intensify a spirit’s aversion to its Bane: it must spend one Willpower to enter the Bane’s affected area and cannot touch it. The spell is resisted by Rank and cannot affect spirits above Rank 5.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-1-know-spirit",
@@ -6713,7 +6721,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Learn a number of facts about the Spirit equal to Potency: Spirit's name, Rank, Manifestations, Numina, Influences and roughly how strong these are, Ban, Bane",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "Learn one fact per Potency about a spirit: its name, Rank, Manifestations, Numina, Influences and approximate ratings, Ban, or Bane. The spirit Withstands with Rank.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-cap-the-well",
@@ -6733,7 +6743,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Any attempt to feed from a source of Essence affected by this spell provokes a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "Seal a source of Essence so any spirit or other entity attempting to feed from it must overcome the spell in a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-channel-essence",
@@ -6753,7 +6765,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Move Essence equal to Potency but no higher than the Gnosis-derived Mana per turn, from a Resonant Condition or suitable receptacle to a Spirit. You can store Essence into your own Pattern which stays even after the spell has expired. You can hold an amount of Mana and Essence equal to Gnosis-derived maximum Mana Add Death 2 or Mind 2: Spell may be cast on ghosts or Goetia respectively +1 Reach: Can siphon Essence directly from a Spirit, subject may resist with Rank",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 180
+    "page": 180,
+    "summary": "Move Essence equal to Potency from a Resonant Condition or suitable vessel into a spirit, limited by the caster’s Gnosis-derived Mana per turn. The mage may instead store Essence in her own Pattern, sharing her maximum capacity between Mana and Essence.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-command-spirit",
@@ -6773,7 +6787,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Force a Spirit to undertake a number of actions equal to Potency. Spirit may/will abandon uncomplete task if the spell Duration expires. No effect on Spirits above Rank 5",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Force a spirit of Rank 5 or less to perform up to Potency discrete actions, resisted by Rank. An unfinished command ends when the spell’s Duration expires.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-ephemeral-shield",
@@ -6793,7 +6809,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Any Spirit Numina, Influences and Manifestations, Spirit Spells  and werewolf Gifts aimed at subject provoke a Clash of Wills +1 Reach: A Spirits physical attacks are likewise affected Add Death 2 or Mind 2: Shield affects ghosts or Goetia respectively",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Ward the subject against spirit Numina, Influences, Manifestations, Spirit spells, and werewolf Gifts, causing each targeted effect to provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-gossamer-touch",
@@ -6813,7 +6831,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Can interact physically with Spirits in Twilight Add Death 2 or Mind 2: Affects ghosts or Goetia respectively +1 Reach: Object you carry are likewise physical to Spirits +1 Reach: Unarmed attacks against Spirits deal Potency extra damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Make the subject physically solid to spirits in Twilight, allowing mutual touch and combat for the Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-opener-of-the-way",
@@ -6833,7 +6853,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Shift Resonant Condition to Open Condition or vice versa",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Change a subject’s Resonant Condition into Open, or an Open Condition back into Resonant, for the spell’s Duration.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-shadow-walk",
@@ -6853,7 +6875,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Subject becomes shrouded from Spirit and Spirit magics notice. Supernatural effects to detect provoke a Clash of Wills",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Veil the subject from the notice of spirits and Spirit magic. Supernatural attempts to perceive the concealed subject provoke a Clash of Wills.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-2-slumber",
@@ -6873,7 +6897,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Reduce the rate at which a hibernating Spirit regains Essence. Instead of one Essence per day the Spirit only regains one Essence per Potency days",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Slow a hibernating spirit’s recovery so it regains only one Essence every number of days equal to Potency instead of one per day. The spirit Withstands with Rank.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-bolster-spirit",
@@ -6893,7 +6919,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Heal a Spirit. Each level of Potency heals two bashing damage +1 Reach: Instead of healing, each level of Potency can increase one of the Spirit's Attributes by one for the duration of the spell +2 Reach: Spend one Mana to increase the Spirit's Rank by one.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Heal two points of bashing Corpus damage per Potency. The basic spell restores Corpus without changing Attributes or Rank.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-erode-resonance",
@@ -6913,7 +6941,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Remove a subject's Open or Resonant condition. This effect is Lasting +1 Reach: Any future attempts to create the Conditions suffers a penalty equal to Potency",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 181
+    "page": 181,
+    "summary": "Remove an Open or Resonant Condition from a subject as a Lasting effect. The underlying circumstances may create the Condition again later.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-howl-from-beyond",
@@ -6933,7 +6963,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Attack spell deal bashing damage equal to Potency. +1 Reach: the subject gains the Open Condition +1 Reach: Can target beings on the other side of the Gauntlet, but is Withstood by Gauntlet Strength",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 182
+    "page": 182,
+    "summary": "Assault a subject with spiritual force, inflicting bashing damage equal to Potency. The basic spell affects valid targets on the caster’s side of the Gauntlet.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-place-of-power",
@@ -6953,7 +6985,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Raise or lower Gauntlet Strength in spell Area by Potency +1 Reach: Alter Gauntlet independently on either side. For example making it easier to enter the Shadow but harder to leave or vice versa",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 182
+    "page": 182,
+    "summary": "Raise or lower the Gauntlet Strength in the area by Potency, resisted by its current strength. The basic spell changes passage difficulty equally in both directions.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-reaching",
@@ -6973,7 +7007,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Interact physically and magically with things on the other side of the Gauntlet +1 Reach: Open an Iris between the physical world and the Shadow, which anybody can pass through. For another Reach may specify a Key",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 182
+    "page": 182,
+    "summary": "Interact physically and magically across the Gauntlet for the Duration, resisted by Gauntlet Strength. The spell does not itself create a passage that others can cross.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-rouse-spirit",
@@ -6993,7 +7029,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Awaken a Spirit early Potency required is equal to the difference between the Spirit's current Essence and total Corpus +1 Reach: For each additional Reach, the Spirit wakes with an additional Corpus box cleared",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 182
+    "page": 182,
+    "summary": "Wake a hibernating spirit before it restores itself. Potency must equal or exceed the difference between its current Essence and full Corpus; it awakens in its current damaged state.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-3-spirit-summons",
@@ -7013,7 +7051,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Call a Spirit in the local area to you +1 Reach: Spell also creates the Open Condition +1 Reach: Can give the Spirit a single word command to follow +1 Reach: Can call a Spirit form the Shadow instead. Spell it Withstood by the greater of Rank and Gauntlet Strength +2 Reach: Can give Spirit a complex command to follow",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 182
+    "page": 182,
+    "summary": "Call the nearest local spirit, a known spirit, or one matching a specified Resonance, resisted by Rank. The basic spell brings it to the caster but neither opens it to Manifestation nor compels obedience.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:spirit-3-spiritual-tool",
@@ -7033,7 +7073,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Enhance an item to be more in-tune with the Shadow and Spirits in general. The object becomes both an item of the material world and the shadow and is able to interact with spirits both within Twilight and the Shadow. If the item is carried into either other realm it retains its material form when it returns to the material world",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 66
+    "page": 66,
+    "summary": "Make an object simultaneously material in the physical world and the Shadow, able to interact with spirits in Twilight and the Shadow. It retains its material form when carried between realms and upon returning.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-banishment",
@@ -7053,7 +7095,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Strip a number of Manifestation Conditions equal to Potency. Effect is Lasting, but Conditions may be reasteablished as normal. No effect on Spirits above Rank 5 Add Mind 4: affect Goetia Add Death4: addect Ghosts +1 Reach: Conditions cannot be reestablished until spell duration has expired",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 182
+    "page": 182,
+    "summary": "Strip up to Potency Manifestation Conditions from a spirit of Rank 5 or less, resisted by Rank. The removal is Lasting, though the entity may establish those Conditions again normally.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-bind-spirit",
@@ -7073,7 +7117,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Grant a number of Manifestation Conditions equal to Potency. No effect on Spirits above Rank 5 Add Mind 4: effect Goetia Add Death 4: effect Ghosts",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 183
+    "page": 183,
+    "summary": "Impose up to Potency Manifestation Conditions on a spirit of Rank 5 or less for the Duration, resisted by Rank.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-craft-fetish",
@@ -7093,7 +7139,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a Fetish an item that contains a Spirit. And can be used to call upon a number of one of the Spirit's Influence dots and Numina equal to Potency. These abilities cost Essence and the item has the Spirit's Essence pool. Triggering the bound Spirit's Ban or Bane destroys the fetish. A fetish without a Spirit may also be created and can hold 10+Potency Essence",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 183
+    "page": 183,
+    "summary": "Bind a hibernating spirit into an item, giving the fetish access to up to Potency of its Influence dots and Numina, powered by the spirit’s Essence pool. Triggering the bound spirit’s Ban or Bane destroys the fetish; an empty fetish instead stores 10 + Potency Essence.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-familiar",
@@ -7113,7 +7161,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2 Substitute Death 4 or Mind 4: Bind a Ghost or Goetia respectively",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 183
+    "page": 183,
+    "summary": "Create a willing familiar bond between the subject and a willing Rank 1 or 2 spirit, granting the Familiar Merit for the Duration. Either participant may end the relationship according to the Merit’s rules.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:spirit-4-haunted-grimoire",
@@ -7134,7 +7184,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Costs 1 Mana* The Mage binds a spirit to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Spirits numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Spirits Rank for Primary Factor however the Spirit has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Spirit has a chance to possess them using a CLash of Wills. This spell is a Wisdom Sin against Understanding",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 86
+    "page": 86,
+    "summary": "For one Mana, bind a spirit into a Grimoire, making it Resonant and Open. Its Rank replaces the caster’s Arcanum minus one when increasing a rote’s Primary Factor, but casting or memorizing a rote may let it escape or possess the reader through a Clash of Wills; this is an Act of Hubris against Understanding.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-signs-of-sorcery:spirit-4-scribe-daimonomikon",
@@ -7155,7 +7207,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy +1 Reach: For 1 Mana, the Spell's Duration is Lasting",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 87
+    "page": 87,
+    "summary": "For one Mana, inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet relevant prerequisites; readers pay applicable Arcane Experience and members treat it as a +2 sympathetic Yantra.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-shadow-scream",
@@ -7175,7 +7229,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Deal Lethal damage equal to Potency. Can hit targets in Twilight +1 Reach: For one point of Mana damage is aggravated +1 Reach: Can destroy Essence divide Potency between regular and Essence damage +1 Reach: Target gains Open Condition +1 Reach: Can hit target on the other side of the Gauntlet",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 183
+    "page": 183,
+    "summary": "Attack a subject with destructive spiritual force, inflicting lethal damage equal to Potency. It can affect spirits in Twilight on the caster’s side of the Gauntlet.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-shape-spirit",
@@ -7195,7 +7251,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Change a Spirit with a number of effects equal to Potency: Change nature, Redistribute Attribute dots, Heal one Lethal corpus, Redefine and redistribute Influences, Add/remove/replace one Manifestation, Add/remove/replace one Numen, Rewrite Ban or Bane. In addition can also change the Spirit's size, shape and appearance but no bigger than the spell's Scale factor. Traits must stay within Rank-derived maximums. Change revert at the end of spell duration +1 Reach: For one Mana heal aggravated damage",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 184
+    "page": 184,
+    "summary": "Apply up to Potency changes to a spirit: alter nature, redistribute Attributes or Influences, heal one lethal Corpus each, replace Manifestations or Numina, or rewrite Ban or Bane. Appearance and Size may also change within Scale, but traits remain within Rank limits and revert when the spell ends.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-twilit-body",
@@ -7215,7 +7273,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Turn yourself(and whatever you're wearing) into Spirit-attuned ephemera, and thus in Twilight +1 Reach: can become immaterial even in realms where Twilight doesn't normally exist",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 184
+    "page": 184,
+    "summary": "Transform the mage and worn equipment into Spirit-attuned ephemera, placing them in Twilight for the Duration. The subject interacts with the corresponding ephemeral state rather than becoming a spirit.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-4-world-walker",
@@ -7235,7 +7295,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Bring subject across the Gauntlet, no portal necessary +1 Reach: Give conjured Spirit Materialized Condition",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 184
+    "page": 184,
+    "summary": "Move the subject directly across the Gauntlet without opening a portal, resisted by Gauntlet Strength. The crossing carries the subject between the material world and Shadow.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-5-annihilate-spirit",
@@ -7255,7 +7317,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Utterly destroy a Spirit. The Spirit may spend an Essence to roll Power + Finesse in a Clash of Wills to prevent this. But if the spell succeeds the Spirit is destroyed even if it still has Essence it won't go into hibernation the Spirit is simply gone. Cannot affect Spirits above Rank 5",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 184
+    "page": 184,
+    "summary": "Utterly destroy a spirit of Rank 5 or less instead of reducing it to hibernation, resisted by Rank. The spirit may spend one Essence for a final Power + Finesse Clash of Wills; if it loses, no Essence or Corpus preserves it.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-5-birth-spirit",
@@ -7275,7 +7339,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a Rank 1 Spirit +1 Reach: For one Mana, create a Rank 2 Spirit",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 184
+    "page": 184,
+    "summary": "Awaken dormant Essence as a new Rank 1 spirit for the Duration. It is not controlled by the mage, though newborn spirits often feel respect or gratitude toward their creator.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-5-create-locus",
@@ -7295,7 +7361,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a Locus at a location with the Resonant Condition +1 Reach: The Locus generates Essence equal to Potency per day",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 184
+    "page": 184,
+    "summary": "Turn a location bearing Resonant into a locus for the Duration, resisted by Gauntlet Strength. The basic locus permits access to stored or naturally available Essence but does not generate extra Essence each day.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-5-essence-fountain",
@@ -7315,7 +7383,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create Essence equal to Potency. The Essence has a Resonance of your choosing, as long as you have encountered it before +1 Reach: Flavor the Essence with multiple Resonances",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 185
+    "page": 185,
+    "summary": "Create Essence equal to Potency in the subject’s Pattern with one Resonance the mage has previously encountered.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:spirit-5-spirit-manse",
@@ -7335,7 +7405,9 @@ export const SPELLS: SpellDefinition[] = [
     "description": "Create a place in the Shadow for yourself and gain the Safe Place Merit with rating equal to Potency +1 Reach: You may create an Iris between this place and the material world and may give it a key. But the spell becomes Withstood by Gauntlet Strength",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 185
+    "page": 185,
+    "summary": "Create an extradimensional Place That Isn’t in the Shadow, shaped by the mage’s Path and Nimbus and unconnected to a physical location. For the Duration, it grants Safe Place dots equal to Potency.",
+    "summaryReviewed": true
   },
   {
     "id": "mta-2ed:time-1-divination",

@@ -168,6 +168,22 @@ test("Space summaries are fully reviewed against the offline PDFs", () => {
   assert.match(space.find((spell)=>spell.name==="Quarantine").summary,/retains its own Time, Twilight/);
 });
 
+test("Spirit summaries are fully reviewed against the offline PDFs", () => {
+  const spirit=SPELLS.filter((spell)=>Object.keys(spell.requirements)[0]==="Spirit");
+  assert.equal(spirit.length,36);
+  assert.ok(spirit.every((spell)=>spell.summaryReviewed===true));
+  assert.ok(spirit.every((spell)=>typeof spell.summary==="string"&&spell.summary.trim()),spirit.find((spell)=>!spell.summary?.trim())?.id);
+  assert.ok(spirit.every((spell)=>!/(?:Add [A-Za-z]+(?: or [A-Za-z]+)?\s*[•●\d]+:\s*)?\+\d+ Reach/i.test(spell.summary)),spirit.find((spell)=>/\+\d+ Reach/i.test(spell.summary))?.id);
+  for(const name of ["Coaxing the Spirits","Channel Essence","Craft Fetish","Haunted Grimoire","Shape Spirit","Annihilate Spirit","Spirit Manse"]){
+    const spell=spirit.find((candidate)=>candidate.name===name);
+    assert.ok(spell,`Missing ${name}`);
+    assert.ok(spell.summary.split(/[.!?](?:\s|$)/).filter(Boolean).length>=2,`${name} was reduced to a single sentence`);
+  }
+  assert.match(spirit.find((spell)=>spell.name==="Annihilate Spirit").summary,/instead of reducing it to hibernation/);
+  assert.match(spirit.find((spell)=>spell.name==="Birth Spirit").summary,/not controlled by the mage/);
+  assert.match(spirit.find((spell)=>spell.name==="Create Locus").summary,/does not generate extra Essence/);
+});
+
 test("conjunctional requirements and secondary citations remain structured", () => {
   assert.equal(SPELLS.filter((spell)=>Object.keys(spell.requirements).length>1).length,24);
   const scribe=SPELLS.find((spell)=>spell.name==="Scribe Grimoire");
