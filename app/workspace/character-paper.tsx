@@ -1111,7 +1111,6 @@ function ConditionManager({
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const [bondedAnimal,setBondedAnimal]=useState(ANIMALS[0]?.id??"");
-  const [bondedAnimalName,setBondedAnimalName]=useState("");
   const chosen = new Map(selected.map((item) => [item.id, item]));
   const bonded=selected.filter(item=>item.id==="bonded");
   const present = (item: (typeof catalog)[number]) => {
@@ -1148,7 +1147,7 @@ function ConditionManager({
               key={saved.instanceId??`${condition.id}-${selected.indexOf(saved)}`}
               className="selected-condition"
             >
-              <summary><span><strong>{conditionName(condition)}{saved.id==="bonded"?`: ${animalPresentation(ANIMALS.find(item=>item.id===saved.animalId)??ANIMALS[0],locale).name}`:""}{saved.persistent ? " [P]" : ""}</strong><small>{condition.sourceCode} · p. {condition.page}</small></span>{saved.id==="bonded"?<ConfirmAction trigger={<Button type="button" size="icon" variant="ghost" onClick={(event)=>{event.preventDefault();event.stopPropagation();}} aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X/></Button>} title={tr("Remover Bonded?","Remove Bonded?")} description={tr("A Condição e o animal vinculado serão removidos da ficha e da aba Companions.","The Condition and its linked animal will be removed from the sheet and the Companions tab.")} action={tr("Remover Bonded","Remove Bonded")} onConfirm={()=>onChange(selected.filter(item=>item!==saved))}/>:<Button type="button" size="icon" variant="ghost" onClick={(event)=>{event.preventDefault();event.stopPropagation();onChange(selected.filter(item=>item!==saved));}} aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X/></Button>}</summary>
+              <summary><span><strong>{conditionName(condition)}{saved.id==="bonded"?`: ${animalPresentation(ANIMALS.find(item=>item.id===saved.animalId)??ANIMALS[0],locale).name}`:""}{saved.persistent ? " [P]" : ""}</strong><small>{condition.sourceCode} · p. {condition.page}</small></span>{saved.id==="bonded"?<ConfirmAction trigger={<Button type="button" size="icon" variant="ghost" aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X/></Button>} title={tr("Remover Bonded?","Remove Bonded?")} description={tr("A Condição e o animal vinculado serão removidos da ficha e da aba Companions.","The Condition and its linked animal will be removed from the sheet and the Companions tab.")} action={tr("Remover Bonded","Remove Bonded")} onConfirm={()=>onChange(selected.filter(item=>item!==saved))}/>:<Button type="button" size="icon" variant="ghost" onClick={(event)=>{event.preventDefault();event.stopPropagation();onChange(selected.filter(item=>item!==saved));}} aria-label={`${tr("Remover","Remove")} ${conditionName(condition)}`}><X/></Button>}</summary>
               <div className="selected-condition-body"><p>{condition.description}</p>{condition.penalty&&<p className="condition-penalty"><b>{tr("Efeito","Effect")}:</b> {condition.penalty}</p>}<p><b>{tr("Resolução","Resolution")}:</b> {condition.resolution??tr("Conforme a fonte indicada.","As described in the listed source.")}</p>{condition.beat&&<p><b>Beat:</b> {condition.beat}</p>}</div>
             </details>
           );
@@ -1214,7 +1213,7 @@ function ConditionManager({
                       <b>Beat:</b> {condition.beat}
                     </p>
                   )}
-                  {isBonded&&<div className="companion-form-grid"><label>{tr("Animal vinculado","Bonded animal")}<RuleSelect value={bondedAnimal} onChange={setBondedAnimal} options={ANIMALS.map(item=>animalPresentation(item,locale)).map(item=>({value:item.id,label:item.name}))}/></label><label>{tr("Nome do animal (opcional)","Animal name (optional)")}<Input value={bondedAnimalName} onChange={(event)=>setBondedAnimalName(event.target.value)}/></label></div>}
+                  {isBonded&&<div className="companion-form-grid"><label>{tr("Animal vinculado","Bonded animal")}<RuleSelect value={bondedAnimal} onChange={setBondedAnimal} options={ANIMALS.map(item=>animalPresentation(item,locale)).map(item=>({value:item.id,label:item.name}))}/></label></div>}
                   {!isBonded&&<label className="persistent-toggle">
                     <input
                       type="checkbox"
@@ -1250,7 +1249,7 @@ function ConditionManager({
                                 id: condition.id,
                                 persistent: condition.persistent ?? false,
                                 instanceId: crypto.randomUUID(),
-                                ...(isBonded?{animalId:bondedAnimal,animalName:bondedAnimalName.trim()}:{}),
+                                ...(isBonded?{animalId:bondedAnimal,animalName:""}:{}),
                               },
                             ],
                       )
