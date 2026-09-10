@@ -9,6 +9,8 @@ const vite=await createServer({appType:"custom",configFile:false,root,resolve:{a
 after(()=>vite.close());
 const {ELEVENTH_QUESTION,eleventhQuestionPrerequisites,normalizeLegacyState}=await vite.ssrLoadModule("/lib/legacies.ts");
 const {refundMageAdvancement}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
+const {discardLegacyAdvancements}=await vite.ssrLoadModule("/lib/legacy-progression.ts");
+const {experienceTraitDots}=await vite.ssrLoadModule("/app/character-builder.tsx");
 
 const mage=(overrides={})=>({
   skills:{Investigação:2,Erudição:2},
@@ -45,6 +47,29 @@ test("Legacy refunds restore removed Praxes and only their transaction delta",()
   assert.deepEqual(sheet.line_data.praxes,[praxis]);
 });
 
+test("discarding a Legacy refunds only Legacy purchases and removes their history",()=>{
+  const praxis={id:"perfect-timing",name:"Perfect Timing"};
+  const sheet={attributes:{},skills:{},merits:[],specializations:[],line_data:{legacy_state:{definitionId:"the-eleventh-question",joined:true,attainmentRanks:[1]},praxes:[]},current_state:{mage_experience_available:2,arcane_experience_available:1,mage_experience_spent:1,arcane_experience_spent:1,arcane_experience_beats:2,mage_experience_history:[{id:"other",regular:1,arcane:0,undo:{kind:"trait",group:"skills",name:"Occult"}},{id:"legacy",regular:1,arcane:1,undo:{kind:"legacyInitiation",previousState:undefined,removedPraxis:{key:"praxes",index:0,item:praxis},creditedRegular:0,creditedArcane:0,creditedArcaneBeats:2}}]}};
+  const discarded=discardLegacyAdvancements(sheet);
+  assert.equal(discarded.line_data.legacy_state,undefined);
+  assert.deepEqual(discarded.line_data.praxes,[praxis]);
+  assert.equal(discarded.current_state.mage_experience_available,3);
+  assert.equal(discarded.current_state.arcane_experience_available,2);
+  assert.equal(discarded.current_state.arcane_experience_beats,0);
+  assert.deepEqual(discarded.current_state.mage_experience_history.map(item=>item.id),["other"]);
+});
+
+test("character editing separates Attribute and Skill dots bought with Experience",()=>{
+  const sheet={game_line:"MtA",current_state:{mage_experience_history:[
+    {undo:{kind:"trait",group:"attributes",name:"Strength"}},
+    {undo:{kind:"trait",group:"attributes",name:"Strength"}},
+    {undo:{kind:"trait",group:"skills",name:"Occult"}},
+    {undo:{kind:"arcana",name:"Time"}},
+  ]}};
+  assert.deepEqual(experienceTraitDots(sheet,"attributes"),{Strength:2});
+  assert.deepEqual(experienceTraitDots(sheet,"skills"),{Occult:1});
+});
+
 test("Mage sheet exposes Join/Join Create and places Legacy before Combat",async()=>{
   const {readFile}=await import("node:fs/promises");
   const workspace=await readWorkspaceSource();
@@ -66,7 +91,7 @@ test("Legacy navigation, progression, and discard follow membership state",async
   assert.match(legacy,/\(!state\.joined\|\|attainment\)&&<p className=/);
   assert.match(legacy,/!state\.joined&&<section><h3>\{tr\("Iniciação","Initiation"\)\}/);
   assert.match(legacy,/setDiscardOpen\(true\)/);
-  assert.match(legacy,/delete next\.line_data\.legacy_state/);
+  assert.match(legacy,/discardLegacyAdvancements\(character\)/);
   assert.match(legacy,/<AlertDialog open=\{discardOpen\}/);
 });
 

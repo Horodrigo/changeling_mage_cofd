@@ -237,6 +237,8 @@ function editableAttributes(initial?: CharacterSheet | null) {
     ? { ...initial.attributes }
     : initialDots(ATTRIBUTES, 1);
   if (!initial) return values;
+  for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes")))
+    values[name] = Math.max(1, Number(values[name] ?? 1) - dots);
   const bonus = String(
     initial.game_line === "CtL"
       ? (initial.line_data.favored_attribute ?? "")
@@ -656,6 +658,10 @@ export function CharacterBuilder({
         5,
         (finalSkills["Ocultismo"] ?? 0) + 1,
       );
+    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes")))
+      finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills")))
+      finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     const derived = {
       Tamanho: 5,
       Vitalidade: 5 + finalAttributes["Vigor"],
@@ -1076,6 +1082,8 @@ function editableSkills(initial?: CharacterSheet | null) {
   const values = initial?.skills
     ? { ...initial.skills }
     : initialDots(SKILLS, 0);
+  for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills")))
+    values[name] = Math.max(0, Number(values[name] ?? 0) - dots);
   if (
     initial?.game_line === "MtA" &&
     (hasPublishedMageOrder(initial.line_data.order) || initial.line_data.order === "Nameless") &&
@@ -2200,6 +2208,8 @@ function SpellSelector({
   const arcanaLabels: Record<string, string> = {
     Death: tr("Morte", "Death"), Fate: tr("Destino", "Fate"), Forces: tr("Forças", "Forces"), Life: tr("Vida", "Life"), Matter: tr("Matéria", "Matter"), Mind: tr("Mente", "Mind"), Prime: tr("Primórdio", "Prime"), Space: tr("Espaço", "Space"), Spirit: tr("Espírito", "Spirit"), Time: tr("Tempo", "Time"),
   };
+  const arcanaSource = (spell: SpellDefinition) =>
+    `${Object.entries(spell.requirements).map(([name,dots])=>`${arcanaLabels[name]??name} ${"•".repeat(dots)}`).join(" + ")} · ${spell.source} · p. ${spell.page || "—"}`;
   const groups = new Map<string, SpellDefinition[]>();
   for (const spell of filtered) {
     const entries = Object.entries(spell.requirements).sort(
@@ -2219,33 +2229,14 @@ function SpellSelector({
       >
         <div>
           <strong>{spellName(spell)}</strong>
-          <small>
-            {formatRequirements(spell.requirements)} · {spell.source} · p.{" "}
-            {spell.page || "—"}
-          </small>
+          <small>{arcanaSource(spell)}</small>
+          <p className="rule-detail">{spell.practice} | {tr("Fator Primário", "Primary Factor")}: {spell.primaryFactor}</p>
+          {spell.withstand && <p className="rule-detail"><strong>{tr("Resistência", "Withstand")}:</strong> {spell.withstand}</p>}
+          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{tr("Perícia de Rota", "Rote Skill")}:</strong> {spell.roteSkills.join(", ")}</p>}
           <p className="rule-detail">
             <strong>{tr("Resumo", "Summary")}:</strong> {spellSummary(spell)}
           </p>
-          <p className="rule-detail">
-            <strong>{tr("Parada de dados", "Dice Pool")}:</strong> {tr("Gnose", "Gnosis")} +{" "}
-            {formatRequirements(spell.requirements)}
-          </p>
-          <p className="rule-detail">
-            <strong>{tr("Custo", "Cost")}:</strong> {tr("Conforme os Alcances e efeitos aplicados", "As determined by applied Reaches and effects")}
-          </p>
-          <p className="rule-detail">
-            <strong>{tr("Ação / Duração", "Action / Duration")}:</strong> {tr("Conjuração instantânea", "Instant casting")} · {tr("Fator Primário", "Primary Factor")}: {spell.primaryFactor}
-          </p>
-          <p className="rule-detail">
-            <strong>{tr("Efeitos", "Effects")}:</strong> {spell.description}
-          </p>
-          <p className="rule-detail">
-            <strong>{tr("Prática", "Practice")}:</strong> {spell.practice}
-            {spell.withstand ? ` · ${tr("Resistência", "Withstand")}: ${spell.withstand}` : ""}
-          </p>
-          <p className="rule-detail">
-            <strong>{tr("Perícias de Rota", "Rote Skills")}:</strong> {spell.roteSkills.join(", ")}
-          </p>
+          {spellReach(spell) && <p className="rule-detail"><strong>Reach:</strong> {spellReach(spell)}</p>}
         </div>
         <Button
           type="button"
@@ -2291,14 +2282,11 @@ function SpellSelector({
           if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><div><strong>{tr("Vaga disponível", "Available slot")}</strong><small>{tr("Escolha no catálogo", "Choose from the catalog")}</small></div></article>;
           return (
             <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{formatRequirements(item.requirements)} · {item.source} · p. {item.page || "—"}</small>{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={tr("Perícia de Rota", "Rote Skill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
+              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line">{item.practice} | {tr("Fator Primário", "Primary Factor")}: {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{tr("Resistência", "Withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={tr("Perícia de Rota", "Rote Skill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
               <div className="contract-power-details">
                 <dl>
                   <div><dt>{tr("Resumo", "Summary")}</dt><dd>{spellSummary(item)}</dd></div>
-                  <div><dt>{tr("Fator Primário", "Primary Factor")}</dt><dd>{item.primaryFactor}</dd></div>
-                  <div><dt>{tr("Prática", "Practice")}</dt><dd>{item.practice}</dd></div>
-                  {item.withstand && <div><dt>{tr("Resistência", "Withstand")}</dt><dd>{item.withstand}</dd></div>}
-                  <div><dt>{tr("Efeitos", "Effects")}</dt><dd>{item.description}</dd></div>
+                  {spellReach(item) && <div><dt>Reach</dt><dd>{spellReach(item)}</dd></div>}
                 </dl>
               </div>
             </details>
@@ -3582,6 +3570,21 @@ function meritTooltip(definition: MeritDefinition,locale:"pt-BR"|"en-US") {
     ? `${locale==="pt-BR"?"Pré-requisitos":"Prerequisites"}: ${definition.prerequisites}\n${definition.description}`
     : definition.description;
 }
+
+export function experienceTraitDots(initial: CharacterSheet | null | undefined, group: "attributes" | "skills") {
+  const historyKey = initial?.game_line === "MtA" ? "mage_experience_history" : "experience_history";
+  const history = initial?.current_state?.[historyKey];
+  if (!Array.isArray(history)) return {} as Record<string, number>;
+  return history.reduce<Record<string, number>>((totals, raw) => {
+    if (!raw || typeof raw !== "object") return totals;
+    const undo = (raw as { undo?: unknown }).undo;
+    if (!undo || typeof undo !== "object") return totals;
+    const trait = undo as { kind?: unknown; group?: unknown; name?: unknown };
+    if (trait.kind === "trait" && trait.group === group && typeof trait.name === "string")
+      totals[trait.name] = (totals[trait.name] ?? 0) + 1;
+    return totals;
+  }, {});
+}
 function formatRequirements(requirements: Record<string, number>) {
   return Object.entries(requirements)
     .map(([name, dots]) => `${name} ${"●".repeat(dots)}`)
@@ -3595,6 +3598,13 @@ function spellSummary(spell: SpellDefinition) {
   const description = spell.description?.trim() || "Descrição não disponível.";
   const firstSentence = description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim();
   return firstSentence || description;
+}
+
+function spellReach(spell: SpellDefinition) {
+  const description = spell.description?.trim() ?? "";
+  const firstReach = description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i);
+  if (firstReach < 0) return "";
+  return description.slice(firstReach).replace(/\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi, " · ");
 }
 
 function meritCategoryRank(category: string) {

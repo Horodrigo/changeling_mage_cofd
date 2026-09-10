@@ -7,6 +7,7 @@ import type { CharacterSheet } from "../character-builder";
 import { useLanguage } from "@/lib/i18n";
 import { ELEVENTH_QUESTION, eleventhQuestionPrerequisites, legacyArcanumRating, legacySkillRating, normalizeLegacyState } from "@/lib/legacies";
 import type { MageAdvancementUndo } from "@/lib/experience-refunds";
+import { discardLegacyAdvancements } from "@/lib/legacy-progression";
 import { RuleSelect } from "./rule-select";
 
 type MageXpEntry={undo?:MageAdvancementUndo;id:string;description:string;regular:number;arcane:number;createdAt:string;before:{attributes:Record<string,number>;skills:Record<string,number>;merits:CharacterSheet["merits"];specializations:CharacterSheet["specializations"];line_data:Record<string,unknown>};previousLostWillpower?:number};
@@ -53,7 +54,7 @@ export function LegacyPage({character,updateSheet,onDiscard}:{character:Characte
     const next=structuredClone(character);removePraxis(next,praxis);next.line_data.legacy_state={...state,attainmentRanks:[...state.attainmentRanks,attainment.rank]};
     savePurchase(next,`${definition.name} · ${attainment.name}`,regularCost,arcaneCost,{kind:"legacyAttainment",rank:attainment.rank,removedPraxis:praxis,creditedRegular:0,creditedArcane:0,creditedArcaneBeats:0},praxis?{arcane:1,beats:1}:{});
   };
-  const discard=()=>{const next=structuredClone(character);delete next.line_data.legacy_state;updateSheet(next);onDiscard();};
+  const discard=()=>{updateSheet(discardLegacyAdvancements(character));onDiscard();};
   return <div className="entitlement-page legacy-page">
     <header className="entitlement-title legacy-title"><div><h2>{definition.name}</h2><p>{definition.source} · p. {definition.page}–202 · {tr("Arcano Regente","Ruling Arcanum")}: {definition.rulingArcanum}</p></div>{state.joined?<Button type="button" size="sm" variant="destructive" onClick={()=>setDiscardOpen(true)}>{tr("Descartar Legacy","Discard Legacy")}</Button>:<Button type="button" size="sm" className="builder-add-action legacy-join-button" disabled={!checks.met} onClick={join}>{tr("Entrar na Legacy","Join Legacy")}</Button>}</header>
     {(!state.joined||attainment)&&<p className={`entitlement-prerequisites ${state.joined?(rankPrerequisites?"met":"unmet"):(checks.met?"met":"unmet")}`}><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {state.joined?attainment?.prerequisites:definition.prerequisites}</p>}
@@ -64,7 +65,6 @@ export function LegacyPage({character,updateSheet,onDiscard}:{character:Characte
     <div className="entitlement-overview"><section><h3>Yantras</h3><ul>{definition.yantras.map(item=><li key={item}>{item}</li>)}</ul></section><section><h3>Oblations</h3><ul>{definition.oblations.map(item=><li key={item}>{item}</li>)}</ul></section></div>
     <section><h3>Attainments</h3><div className="entitlement-blessings legacy-attainments">{definition.attainments.map(item=>{const acquired=state.attainmentRanks.includes(item.rank);return <details key={item.rank} className={acquired?"active":""}><summary><strong>{item.rank}. {item.name}</strong><span>{acquired?tr("Adquirido","Acquired"):item.prerequisites}</span></summary><p>{item.description}</p>{item.optional&&<p><strong>Optional:</strong> {item.optional}</p>}</details>})}</div></section>
     {feedback&&<p className="experience-feedback">{feedback}</p>}
-    <AlertDialog open={discardOpen} onOpenChange={setDiscardOpen}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{tr("Descartar The Eleventh Question?","Discard The Eleventh Question?")}</AlertDialogTitle><AlertDialogDescription>{tr("A Legacy e todos os Attainments adquiridos serão removidos da ficha.","The Legacy and all acquired Attainments will be removed from the character sheet.")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>{tr("Cancelar","Cancel")}</AlertDialogCancel><AlertDialogAction variant="destructive" onClick={discard}>{tr("Descartar Legacy","Discard Legacy")}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
+    <AlertDialog open={discardOpen} onOpenChange={setDiscardOpen}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{tr("Descartar The Eleventh Question?","Discard The Eleventh Question?")}</AlertDialogTitle><AlertDialogDescription>{tr("A Legacy e todos os Attainments adquiridos serão removidos. Seus custos de Experiência serão reembolsados e as compras sairão do histórico.","The Legacy and all acquired Attainments will be removed. Their Experience costs will be refunded and the purchases removed from history.")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>{tr("Cancelar","Cancel")}</AlertDialogCancel><AlertDialogAction variant="destructive" onClick={discard}>{tr("Descartar Legacy","Discard Legacy")}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
   </div>;
 }
-
