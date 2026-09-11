@@ -431,7 +431,7 @@ export function CharacterBuilder({
       })];
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
-  }, [line, court, order, customOrder?.name, customOrder?.initiation]);
+  }, [line, court, order, customOrder?.name, customOrder?.initiation, customOrder?.roteSkills?.join("|")]);
 
   const meritBudget = Math.max(0, 10 - (line === "CtL" ? (wyrd - 1) * 5 : (gnosis - 1) * 5));
   const meritContext: MeritPrerequisiteContext = {
@@ -549,7 +549,7 @@ export function CharacterBuilder({
       ].forEach(([key, value, label]) => {
         if (!value) add(3, key, label);
       });
-      if (order === "Nameless" && (!customOrder?.name.trim() || customOrder.roteSkills.length !== 3 || customOrder.roteSkills.some((skill) => !skill) || new Set(customOrder.roteSkills).size !== 3))
+      if (order === "Nameless" && (!customOrder?.name.trim() || customOrder?.roteSkills.length !== 3 || customOrder?.roteSkills.some((skill) => !skill) || new Set(customOrder?.roteSkills ?? []).size !== 3))
         add(3, "order", tr("Escolha nome e três Rote Skills da Nameless Order", "Choose a name and three Rote Skills for the Nameless Order"));
       arcanaCreationErrors(arcana, path ? pathData : undefined).forEach(
         (message) => add(3, "arcana", message),
@@ -614,6 +614,8 @@ export function CharacterBuilder({
     rotes,
     praxes,
     gnosis,
+    customOrder?.name,
+    customOrder?.roteSkills?.join("|"),
     locale,
   ]);
   const missing = (key: string) =>

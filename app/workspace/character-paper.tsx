@@ -1020,7 +1020,7 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
           </details>
         );
       })}
-      {!visible.length && !hasAdjacentContent && <em>{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</em>}
+      {!visible.length && !hasAdjacentContent && <p className="rule-callout expanded-merit-empty">{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</p>}
     </div>
   );
 }
