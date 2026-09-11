@@ -291,7 +291,8 @@ export function CharacterPaper({
   const arcanaPresentation=(name:string)=>{
     const pathRuling=Boolean(pathDefinition?.ruling.some(item=>sameSystemTerm(String(item),name)));
     const legacyRuling=Boolean(legacyState?.joined&&legacyDefinition&&sameSystemTerm(legacyDefinition.rulingArcanum,name));
-    return {highlightTone:legacyRuling?"legacy" as const:pathRuling?"ruling" as const:undefined,note:legacyRuling&&pathRuling?tr("Regente do Caminho · Regente da Legacy","Path Ruling · Legacy Ruling"):legacyRuling?tr("Regente da Legacy","Legacy Ruling"):pathRuling?tr("Regente","Ruling"):undefined};
+    const inferior=Boolean(pathDefinition?.inferior&&sameSystemTerm(String(pathDefinition.inferior),name));
+    return {note:legacyRuling?tr("Regente da Legacy","Legacy Ruling"):pathRuling?tr("Regente","Ruling"):inferior?tr("Inferior","Inferior"):undefined};
   };
   const obsessionSlots=gnosis<=2?1:gnosis<=5?2:gnosis<=8?3:4;
   const powerRating = isCtl ? Number(data.wyrd ?? 1) : gnosis;
@@ -341,7 +342,7 @@ export function CharacterPaper({
   };
   const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 9, 0);
   const expandedMerits = character.merits.filter(
-    (item) => isExpanded(item.name) && (!item.grantedBy || item.grantedBy === "Nameless Order"),
+    (item) => (isExpanded(item.name) || item.name === "Mystery Cult Initiation") && (!item.grantedBy || item.grantedBy === "Nameless Order"),
   );
   const principalMerits = character.merits.filter(
     (item) => !item.grantedBy || item.grantedBy === "Corte",
@@ -399,6 +400,7 @@ export function CharacterPaper({
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={()=>setSheetTab("legacy")}/>}</section>
               <SheetHeading>Experiência</SheetHeading>
               {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
+              {!isCtl&&<><SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/></>}
               {!isCtl&&<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value)=>setState("conditions",value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value)=>updateLineData(updateSheet,character,"obsessions",value)}/></section></div>}
             </>,
             stats: <>
@@ -419,7 +421,6 @@ export function CharacterPaper({
             </> : <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
               <MageOrderSummary data={data} />
-              <SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
               <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
             </>,
@@ -726,6 +727,8 @@ export function CharacterPaper({
               <div className="sheet-center-column">
                 <SheetHeading>Méritos</SheetHeading>
                 <MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
+                <SheetHeading>Méritos Expandidos</SheetHeading>
+                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/>
                 <MageOrderSummary data={data} />
                 <SheetHeading>Arcanos</SheetHeading>
                 <div className="arcana-sheet-list">
@@ -802,14 +805,6 @@ export function CharacterPaper({
                 />
                 <SheetHeading>Inclinação do Nimbus</SheetHeading>
                 <NimbusEditor wisdom={Number(data.wisdom??7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value)=>updateLineData(updateSheet,character,"nimbus_tilt",value)} onEffectsChange={setNimbusEffects}/>
-                <SheetHeading>Méritos Expandidos</SheetHeading>
-                <ExpandedMeritList
-                  merits={character.merits.filter((item) =>
-                    isExpanded(item.name),
-                  )}
-                  character={character}
-                  updateSheet={updateSheet}
-                />
                 <MeritConfigurationPanel
                   character={character}
                   updateSheet={updateSheet}
@@ -2203,8 +2198,8 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
   const orderKey = String(data.order ?? "Orderless");
   const name = orderKey === "Orderless"
     ? tr("Sem Ordem","Orderless")
-    : String(custom?.name ?? (locale === "en-US" ? orderKey : MTA_ORDER_LABELS[orderKey] ?? orderKey));
-  const description = String(custom?.description ?? MTA_ORDER_DESCRIPTIONS[orderKey]?.[locale === "pt-BR" ? 0 : 1] ?? "");
+    : String(custom?.name || (locale === "en-US" ? orderKey : MTA_ORDER_LABELS[orderKey] ?? orderKey));
+  const description = orderKey === "Nameless" ? tr("Uma Ordem sem nome reconhecido entre as grandes sociedades dos Despertos.","An Order without a recognized name among the great societies of the Awakened.") : String(custom?.description || (MTA_ORDER_DESCRIPTIONS[orderKey]?.[locale === "pt-BR" ? 0 : 1] ?? ""));
   const skills = Array.isArray(custom?.roteSkills)
     ? custom.roteSkills.map(String).filter(Boolean)
     : [...(MTA_ORDERS[orderKey as keyof typeof MTA_ORDERS] ?? [])];

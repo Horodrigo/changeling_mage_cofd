@@ -550,7 +550,7 @@ export function CharacterBuilder({
         if (!value) add(3, key, label);
       });
       if (order === "Nameless" && (!customOrder?.name.trim() || customOrder.roteSkills.length !== 3 || customOrder.roteSkills.some((skill) => !skill) || new Set(customOrder.roteSkills).size !== 3))
-        add(3, "order", tr("Definição completa da Nameless Order", "Complete Nameless Order definition"));
+        add(3, "order", tr("Escolha nome e três Rote Skills da Nameless Order", "Choose a name and three Rote Skills for the Nameless Order"));
       arcanaCreationErrors(arcana, path ? pathData : undefined).forEach(
         (message) => add(3, "arcana", message),
       );
@@ -1892,7 +1892,7 @@ function OrderSelector(props: OrderSelectorProps) {
   };
   const select = (name: string) => {
     const custom = name === "Nameless"
-      ? (props.order === "Nameless" ? props.customOrder : null) ?? { name: "", description: "", roteSkills: ["", "", ""], initiation: {} }
+      ? (props.order === "Nameless" ? props.customOrder : null) ?? { name: "", description: "An Order without a recognized name among the great societies of the Awakened.", roteSkills: ["", "", ""], initiation: {} }
       : saved.find((item) => item.name === name) ?? null;
     props.setOrder(name);
     props.setCustomOrder(custom);
