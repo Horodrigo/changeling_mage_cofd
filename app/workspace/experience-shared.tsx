@@ -276,7 +276,7 @@ export function ExperienceMeritPicker({
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
   const context=meritContextForSheet(character);
   const catalog = alphabetical([
-      ...getMeritsForLine(line).filter(item=>meritPrerequisitesMet(item,context)&&(!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId))),
+      ...getMeritsForLine(line).filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
       ...homebrews.merits.filter(
         (item) => (item.line === "Core" || item.line === line) && isHomebrewActive(homebrews,item.id),
       ),
@@ -348,7 +348,8 @@ export function ExperienceMeritPicker({
                   (buyingNew || !activeInstance || dot > activeInstance.owned.dots) &&
                   meritPrerequisitesMet(item,{...context,selectedDots:dot,configuration:buyingNew?undefined:activeInstance?.owned.configuration}),
                 ),
-                intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0];
+                intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
+                prerequisitesMet = meritPrerequisitesMet(item,context);
               if (item.name === "Mantle" && !instances.length) return null;
               if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvanceGrantedMerit(line,owned)))return null;
               if (
@@ -369,7 +370,7 @@ export function ExperienceMeritPicker({
                       {repeatable ? tr(" · pode ser comprado várias vezes"," · may be purchased multiple times") : ""}
                     </small>
                     {item.prerequisites && (
-                      <p>
+                      <p className={prerequisitesMet ? "" : "merit-prerequisites-missing"}>
                         <b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}
                       </p>
                     )}

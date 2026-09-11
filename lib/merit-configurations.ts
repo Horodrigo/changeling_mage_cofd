@@ -4,6 +4,7 @@ import { courtCanonicalId, courtDisplayName } from "./changeling-courts";
 import { synchronizeEntitlement } from "./entitlements";
 import { MAGE_MERIT_CONFIGURATIONS } from "./mage-merit-configurations";
 import { hasPublishedMageOrder } from "./mage-orders";
+import { systemTerm } from "./system-terms";
 
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
@@ -186,7 +187,9 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     } else if(order==="Nameless"){
       const initiation=automatic.find(item=>item.name==="Mystery Cult Initiation");
       const custom=target.line_data?.custom_order&&typeof target.line_data.custom_order==="object"?target.line_data.custom_order as Record<string,unknown>:{};
-      const config={...normalizeMeritConfiguration(initiation?.configuration),cult:String(custom.name??""),level_1_type:"merit",level_1_merits:["High Speech|1"]};
+      const existingConfig=normalizeMeritConfiguration(initiation?.configuration);
+      const legacyRoteSkills=Array.isArray(custom.roteSkills)?custom.roteSkills.map(String).filter(Boolean).slice(0,3):[];
+      const config={...existingConfig,cult:String(custom.name??""),level_1_type:"merit",level_1_merits:["High Speech|1"],level_2_type:"rote_skills",level_2_rote_skills:Array.isArray(existingConfig.level_2_rote_skills)?existingConfig.level_2_rote_skills:legacyRoteSkills,level_3_type:"skill",level_3_skill:"Ocultismo"};
       target.merits.push({
         ...initiation,
         instanceId:initiation?.instanceId??"nameless-order-initiation",
@@ -223,6 +226,9 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
     if(merit.name==="Mystery Cult Initiation"&&merit.grantedBy==="Nameless Order"){
       configuration.level_1_type="merit";
       configuration.level_1_merits=["High Speech|1"];
+      configuration.level_2_type="rote_skills";
+      configuration.level_3_type="skill";
+      configuration.level_3_skill="Ocultismo";
       merit.configuration=configuration;
     }
     if(merit.name==="Professional Training"){
@@ -267,7 +273,19 @@ export function synchronizeMeritGrants<T>(sheet: T): T {
       }
     }
   }
-  target.line_data={...target.line_data,court_goodwill_benefits:benefits,merit_granted_skill_bonuses:skillBonuses};
+  const namelessInitiation=target.game_line==="MtA"&&String(target.line_data.order??"")==="Nameless"
+    ? target.merits.find((item)=>item.name==="Mystery Cult Initiation"&&item.grantedBy==="Nameless Order")
+    : undefined;
+  const namelessConfiguration=normalizeMeritConfiguration(namelessInitiation?.configuration);
+  const namelessRoteSkills=namelessInitiation&&namelessInitiation.dots>=2&&Array.isArray(namelessConfiguration.level_2_rote_skills)
+    ? namelessConfiguration.level_2_rote_skills.map(String).filter(Boolean).slice(0,3)
+    : undefined;
+  target.line_data={
+    ...target.line_data,
+    court_goodwill_benefits:benefits,
+    merit_granted_skill_bonuses:skillBonuses,
+    ...(namelessInitiation?{rote_skills:namelessRoteSkills??[],order_occult_bonus:0}:{}),
+  };
   return target.game_line==="CtL"?synchronizeEntitlement(sheet):sheet;
 }
 
@@ -392,7 +410,11 @@ export function expandedConfigurationLines(
       }
       if(type==="skill"||type==="merit_skill"){
         const skill=String(configuration[`${prefix}_skill`]??"").trim();
-        if(skill) benefits.push(`${skill} +1`);
+        if(skill) benefits.push(`${systemTerm(skill,locale)} +1`);
+      }
+      if(type==="rote_skills"){
+        const skills=Array.isArray(configuration[`${prefix}_rote_skills`])?configuration[`${prefix}_rote_skills`] as string[]:[];
+        if(skills.some(Boolean)) benefits.push(`${locale==="en-US"?"Rote Skills":"Perícias de Rota"}: ${skills.filter(Boolean).map((skill)=>systemTerm(skill,locale)).join(", ")}`);
       }
       if(type==="merit"||type==="merits"||type==="merit_skill"){
         const merits=Array.isArray(configuration[`${prefix}_merits`])?configuration[`${prefix}_merits`] as string[]:[];

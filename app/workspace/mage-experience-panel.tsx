@@ -410,6 +410,10 @@ export function MageExperiencePanel({
   function revert(entry: MageXpEntry) {
     if (!history.some(item => item.id === entry.id)) return;
     let undo = entry.undo;
+    // Hubris losses were briefly stored as ordinary Wisdom purchases; treat
+    // those legacy entries as losses so reverting them restores Wisdom.
+    if (undo?.kind === "wisdom" && /Ato de Hubris|Act of Hubris/i.test(entry.description))
+      undo = { kind: "wisdomLoss" };
     // Older purchases lack a delta record; recognize only unambiguous targets.
     if (!undo) {
       if (/^Gnose \d+$/.test(entry.description)) undo = { kind: "gnosis" };

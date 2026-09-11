@@ -384,7 +384,14 @@ export function CharacterBuilder({
     readSpells(initial, "praxes", 3),
   );
   const [error, setError] = useState("");
-  const hasCreationOrderBenefits = hasPublishedMageOrder(order) || order === "Nameless";
+  const namelessInitiation = merits.find((item) => item.name === "Mystery Cult Initiation" && item.grantedBy === "Nameless Order");
+  const namelessInitiationDots = Number(namelessInitiation?.dots ?? 1);
+  const namelessConfiguration = normalizeMeritConfiguration(namelessInitiation?.configuration);
+  const namelessRoteSkills = Array.isArray(namelessConfiguration.level_2_rote_skills)
+    ? namelessConfiguration.level_2_rote_skills.map(String).filter(Boolean)
+    : [];
+  const hasCreationOrderBenefits = hasPublishedMageOrder(order) || (order === "Nameless" && namelessInitiationDots >= 2);
+  const hasOrderOccultBonus = hasPublishedMageOrder(order);
 
   useEffect(() => {
     const wanted: MeritSelection[] =
@@ -549,8 +556,10 @@ export function CharacterBuilder({
       ].forEach(([key, value, label]) => {
         if (!value) add(3, key, label);
       });
-      if (order === "Nameless" && (!customOrder?.name.trim() || customOrder?.roteSkills.length !== 3 || customOrder?.roteSkills.some((skill) => !skill) || new Set(customOrder?.roteSkills ?? []).size !== 3))
-        add(3, "order", tr("Escolha nome e três Rote Skills da Nameless Order", "Choose a name and three Rote Skills for the Nameless Order"));
+      if (order === "Nameless" && !customOrder?.name.trim())
+        add(3, "order", tr("Escolha o nome da Nameless Order", "Choose a name for the Nameless Order"));
+      if (order === "Nameless" && namelessInitiationDots >= 2 && (namelessRoteSkills.length !== 3 || new Set(namelessRoteSkills).size !== 3))
+        add(3, "merits", tr("Escolha três Perícias de Rota distintas no nível 2 de Mystery Cult Initiation", "Choose three distinct Rote Skills for Mystery Cult Initiation dot 2"));
       arcanaCreationErrors(arcana, path ? pathData : undefined).forEach(
         (message) => add(3, "arcana", message),
       );
@@ -614,6 +623,7 @@ export function CharacterBuilder({
     rotes,
     praxes,
     gnosis,
+    merits,
     customOrder?.name,
     customOrder?.roteSkills?.join("|"),
     locale,
@@ -655,7 +665,7 @@ export function CharacterBuilder({
         5,
         (finalAttributes[resistanceBonus] ?? 1) + 1,
       );
-    if (line === "MtA" && hasCreationOrderBenefits)
+    if (line === "MtA" && hasOrderOccultBonus)
       finalSkills["Ocultismo"] = Math.min(
         5,
         (finalSkills["Ocultismo"] ?? 0) + 1,
@@ -735,7 +745,7 @@ export function CharacterBuilder({
             vice,
             shadow_name: shadowName,
             resistance_bonus: resistanceBonus,
-            order_occult_bonus:hasCreationOrderBenefits?Math.max(0,Math.min(5,(skills.Ocultismo??0)+1)-(skills.Ocultismo??0)):0,
+            order_occult_bonus:hasOrderOccultBonus?Math.max(0,Math.min(5,(skills.Ocultismo??0)+1)-(skills.Ocultismo??0)):0,
             creation_gnosis: gnosis,
             gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
             wisdom: Number(initial?.line_data.wisdom ?? 7),
@@ -745,8 +755,8 @@ export function CharacterBuilder({
             ruling_arcana: pathData.ruling,
             inferior_arcanum: pathData.inferior,
             rote_skills:
-              order === "Nameless" && customOrder
-                ? customOrder.roteSkills
+              order === "Nameless"
+                ? namelessRoteSkills
                 : (MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? []),
           };
     const completed: CharacterSheet = {
@@ -1092,9 +1102,10 @@ function editableSkills(initial?: CharacterSheet | null) {
   if (
     initial?.game_line === "MtA" &&
     (hasPublishedMageOrder(initial.line_data.order) || initial.line_data.order === "Nameless") &&
+    Number(initial.line_data.order_occult_bonus ?? 0) > 0 &&
     values["Ocultismo"] > 0
   ) {
-    values["Ocultismo"] -= Number(initial.line_data.order_occult_bonus ?? 1);
+    values["Ocultismo"] -= Number(initial.line_data.order_occult_bonus ?? 0);
   }
   return values;
 }
@@ -1908,9 +1919,9 @@ function OrderSelector(props: OrderSelectorProps) {
             tr("Nenhuma selecionada", "None selected")}
         </strong>
         <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || tr("Escolha uma Ordem para consultar sua descrição.", "Choose an Order to review its description.")}</p>
-        {(props.customOrder?.roteSkills.length || hasPublishedMageOrder(props.order)) ? <small>
+        {hasPublishedMageOrder(props.order) ? <small>
           <strong>{tr("Perícias de Rota", "Rote Skills")}:</strong>{" "}
-          {(props.customOrder?.roteSkills ?? MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => builderText(locale, skill)).join(", ")}
+          {(MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => builderText(locale, skill)).join(", ")}
         </small> : null}
       </div>
       <Dialog>
@@ -1957,43 +1968,6 @@ function OrderSelector(props: OrderSelectorProps) {
                   }
                 />
               </label>
-              {draft.roteSkills.map((value, index) => {
-                const selectedElsewhere = new Set(
-                  draft.roteSkills.filter((_, skillIndex) => skillIndex !== index),
-                );
-                const placeholder = `__skill_${index}`;
-                return (
-                  <label className="choice-label" key={index}>
-                    {`${tr("Perícia de Rota", "Rote Skill")} ${index + 1}`}
-                    <Select
-                      value={value || placeholder}
-                      onValueChange={(skill) => {
-                        const skills = [...draft.roteSkills];
-                        skills[index] = skill === placeholder ? "" : skill;
-                        props.setCustomOrder({ ...draft, roteSkills: skills });
-                      }}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue>
-                          {value ? builderText(locale, value) : tr("Selecione uma Perícia", "Select a Skill")}
-                        </SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value={placeholder}>{tr("Selecione uma Perícia", "Select a Skill")}</SelectItem>
-                        {Object.entries(SKILLS).map(([group, skills], groupIndex) => (
-                          <SelectGroup key={group}>
-                            {groupIndex > 0 && <SelectSeparator />}
-                            <SelectLabel>{builderText(locale, group)}</SelectLabel>
-                            {skills.filter((skill) => !selectedElsewhere.has(skill)).map((skill) => (
-                              <SelectItem key={skill} value={skill}>{builderText(locale, skill)}</SelectItem>
-                            ))}
-                          </SelectGroup>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </label>
-                );
-              })}
               <p className="nameless-order-rule">{tr("Uma Nameless Order concede High Speech e Mystery Cult Initiation • no lugar de Awakened Status •. Configure os benefícios na seção de Méritos, conforme Mage: The Awakening, p. 106.", "A Nameless Order grants High Speech and Mystery Cult Initiation • instead of Awakened Status •. Configure its benefits in the Merits section, following Mage: The Awakening, p. 106.")}</p>
             </div>
           )}
@@ -2666,7 +2640,7 @@ function Merits({
             {categories.map((catalogCategory) => {
               const items = alphabetical(catalog, meritName,locale).filter(
                 (item) =>
-                  item.category === catalogCategory && meritPrerequisitesMet(item,context) &&
+                  item.category === catalogCategory &&
                   (isRepeatableDefinition(item)||!context.merits?.some(owned=>owned.name===item.name)||merits.some(owned=>owned.name===item.name)) &&
                   (category === "all" || item.category === category) &&
                   (!normalizedSearch ||
@@ -2686,11 +2660,12 @@ function Merits({
                       const selected = merits.some(
                           (merit) => merit.name === definition.name,
                         ),
-                        repeatable = isRepeatableDefinition(definition);
+                        repeatable = isRepeatableDefinition(definition),
+                        prerequisitesMet = meritPrerequisitesMet(definition, context);
                       return (
                         <article
                           className={
-                            selected ? "merit-option selected" : "merit-option"
+                            selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"
                           }
                           key={definition.id}
                         >
@@ -2701,7 +2676,7 @@ function Merits({
                               · {UNBOUNDED_MERITS.has(definition.name)?"1+":formatRatings(meritRatingsFor(definition))}
                             </small>
                             {definition.prerequisites && (
-                              <p className="rule-detail">
+                              <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}>
                                 <strong>{tr("Pré-requisitos", "Prerequisites")}:</strong>{" "}
                                 {definition.prerequisites}
                               </p>
@@ -2712,7 +2687,7 @@ function Merits({
                             type="button"
                             size="sm"
                             variant={selected ? "secondary" : "outline"}
-                            disabled={selected && !repeatable}
+                            disabled={!prerequisitesMet || (selected && !repeatable)}
                             onClick={() => addMerit(definition)}
                           >
                             {selected && !repeatable ? (
@@ -3324,19 +3299,34 @@ function CultMeritEditor({
             placeholder={tr("Ex.: Igreja Vermelha", "E.g.: Red Church")}
           />
         </label>}
+        {merit.grantedBy === "Nameless Order" && (
+          <fieldset>
+            <legend>{tr("Nv", "Dot")} 1</legend>
+            <p className="structured-rule">High Speech</p>
+          </fieldset>
+        )}
         {Array.from({ length: merit.dots }, (_, index) => index + 1).filter(level=>merit.grantedBy !== "Nameless Order" || level > 1).map(
           (level) => (
-            <CultLevelEditor
-              key={level}
-              level={level}
-              configuration={configuration}
-              set={set}
-            />
+            merit.grantedBy === "Nameless Order" && level <= 3
+              ? <NamelessCultLevelEditor key={level} level={level} configuration={configuration} set={set}/>
+              : <CultLevelEditor key={level} level={level} configuration={configuration} set={set}/>
           ),
         )}
       </div>
     </details>
   );
+}
+function NamelessCultLevelEditor({level,configuration,set}:{level:number;configuration:MeritConfiguration;set:(key:string,value:string|string[])=>void}) {
+  const {tr}=useLanguage();
+  if(level===3) return <fieldset><legend>{tr("Nv","Dot")} 3</legend><p className="structured-rule">{tr("+1 em Ocultismo","+1 Occult dot")}</p></fieldset>;
+  const selected=Array.isArray(configuration.level_2_rote_skills)?configuration.level_2_rote_skills.map(String):[];
+  return <fieldset><legend>{tr("Nv","Dot")} 2</legend><div className="merit-config-list">
+    {Array.from({length:3},(_,index)=>{
+      const value=selected[index]??"";
+      const unavailable=new Set(selected.filter((_,itemIndex)=>itemIndex!==index));
+      return <SkillChoice key={index} label={`${tr("Perícia de Rota","Rote Skill")} ${index+1}`} value={value} setValue={(next)=>{const skills=Array.from({length:3},(_,itemIndex)=>selected[itemIndex]??"");skills[index]=next;set("level_2_rote_skills",skills);}} options={CONFIG_SKILLS.filter((skill)=>!unavailable.has(skill))}/>;
+    })}
+  </div></fieldset>;
 }
 function CultLevelEditor({
   level,

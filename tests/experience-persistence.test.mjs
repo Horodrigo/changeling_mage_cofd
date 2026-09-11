@@ -110,10 +110,10 @@ test("outros Méritos gratuitos preservam o ponto inicial durante avanços", () 
   }
 });
 
-test("Nameless Order derives High Speech from its first Mystery Cult benefit", () => {
+test("Nameless Order applies its fixed Mystery Cult progression at the correct dots", () => {
   const sheet = {
     game_line:"MtA",
-    line_data:{order:"Nameless"},
+    line_data:{order:"Nameless",custom_order:{name:"The Unnamed"}},
     merits:[{
       name:"Mystery Cult Initiation",
       dots:1,
@@ -126,6 +126,24 @@ test("Nameless Order derives High Speech from its first Mystery Cult benefit", (
   const speech = sheet.merits.find((item)=>item.name==="High Speech");
   assert.equal(speech?.dots,1);
   assert.match(String(speech?.grantedBy),/^Merit:Mystery Cult Initiation:/);
+  assert.deepEqual(sheet.line_data.rote_skills,[]);
+  assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses,{});
+
+  const initiation=sheet.merits.find((item)=>item.name==="Mystery Cult Initiation");
+  initiation.dots=2;
+  initiation.configuration.level_2_rote_skills=["Academics","Occult","Science"];
+  meritConfigurations.synchronizeMeritGrants(sheet);
+  assert.deepEqual(sheet.line_data.rote_skills,["Academics","Occult","Science"]);
+  assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses,{});
+
+  const advancedInitiation=sheet.merits.find((item)=>item.name==="Mystery Cult Initiation");
+  advancedInitiation.dots=3;
+  meritConfigurations.synchronizeMeritGrants(sheet);
+  assert.equal(sheet.line_data.merit_granted_skill_bonuses.Ocultismo,1);
+  assert.deepEqual(
+    meritConfigurations.expandedConfigurationLines("Mystery Cult Initiation",3,advancedInitiation.configuration,"en-US"),
+    ["Cult: The Unnamed","Dot 1: High Speech •","Dot 2: Rote Skills: Academics, Occult, Science","Dot 3: Occult +1"],
+  );
 });
 
 test("edição preserva Méritos de Experiência e substitui apenas a base de criação", () => {

@@ -195,7 +195,8 @@ export function migrateCharacterHomebrews(
         homebrew: true,
       });
     const order = data.custom_order as Partial<HomebrewOrder> | undefined;
-    if (character.game_line === "MtA" && order?.name)
+    // Nameless Order is a single per-character definition, not a reusable Homebrew Order.
+    if (character.game_line === "MtA" && data.order !== "Nameless" && order?.name)
       orders.push({
         id: homebrewId("order"),
         name: String(order.name),

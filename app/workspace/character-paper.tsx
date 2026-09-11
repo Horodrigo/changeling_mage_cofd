@@ -87,6 +87,7 @@ import {
   expandedConfigurationLines,
   findMeritConfiguration,
   isInlineMeritConfiguration,
+  isStructuredMerit,
   meritConfigurationTitle,
   normalizeMeritConfiguration,
   synchronizeMeritGrants,
@@ -345,7 +346,7 @@ export function CharacterPaper({
     (item) => (isExpanded(item.name) || item.name === "Mystery Cult Initiation") && (!item.grantedBy || item.grantedBy === "Nameless Order"),
   );
   const principalMerits = character.merits.filter(
-    (item) => !item.grantedBy || item.grantedBy === "Corte",
+    (item) => !item.grantedBy || item.grantedBy === "Corte" || item.grantedBy === "Nameless Order",
   );
   const selectedConditions = [
     ...selectedConditionList(character.current_state?.conditions),
@@ -360,7 +361,35 @@ export function CharacterPaper({
   const notes = String(character.current_state?.notes ?? "");
   const setState = (key: string, value: unknown) =>
     updateState({ ...character.current_state, [key]: value });
-  const addHubrisCondition=(id:"megalomaniacal"|"rampant",persistent:boolean)=>setState("conditions",[...selectedConditionList(character.current_state?.conditions).filter(item=>item.id!==id),{id,persistent}]);
+  const addHubrisCondition=(id:"megalomaniacal"|"rampant",persistent:boolean)=>{
+    const next=structuredClone(character);
+    const history=Array.isArray(next.current_state.mage_experience_history)
+      ? next.current_state.mage_experience_history
+      : [];
+    const wisdom=Math.max(1,Number(next.line_data.wisdom??7));
+    const entry={
+      id:crypto.randomUUID(),
+      description:tr("Falha em Ato de Hubris: -1 Sabedoria","Act of Hubris failure: -1 Wisdom"),
+      regular:0,
+      arcane:0,
+      createdAt:new Date().toISOString(),
+      undo:{kind:"wisdomLoss"},
+      before:{
+        attributes:structuredClone(next.attributes),
+        skills:structuredClone(next.skills),
+        merits:structuredClone(next.merits),
+        specializations:structuredClone(next.specializations),
+        line_data:structuredClone(next.line_data),
+      },
+    };
+    next.line_data={...next.line_data,wisdom:Math.max(1,wisdom-1)};
+    next.current_state={
+      ...next.current_state,
+      conditions:[...selectedConditionList(next.current_state.conditions).filter(item=>item.id!==id),{id,persistent}],
+      mage_experience_history:[entry,...history].slice(0,100),
+    };
+    updateSheet(next);
+  };
 
   if (isMobile) {
     const identity = isCtl
@@ -412,7 +441,6 @@ export function CharacterPaper({
             detalhes: isCtl ? <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} line={character.game_line} updateSheet={updateSheet} />
               <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} /><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} hasAdjacentContent />
-              <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/>
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)} />
               <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato","Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)} />
@@ -421,7 +449,6 @@ export function CharacterPaper({
             </> : <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={character.merits} line="MtA" updateSheet={updateSheet} />
               <MageOrderSummary data={data} />
-              <MeritConfigurationPanel character={character} updateSheet={updateSheet} />
               <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo","Active spell")} onChange={(value) => setState("active_spells", value)} />
             </>,
             poderes: isCtl ? <>
@@ -647,10 +674,6 @@ export function CharacterPaper({
                 <SheetHeading>Méritos Expandidos</SheetHeading>
                 <CourtLore data={data} merits={character.merits} />
                 <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} hasAdjacentContent/>
-                <MeritConfigurationPanel
-                  character={character}
-                  updateSheet={updateSheet}
-                />
               </section>
             </div>
           </TabsContent>
@@ -805,10 +828,6 @@ export function CharacterPaper({
                 />
                 <SheetHeading>Inclinação do Nimbus</SheetHeading>
                 <NimbusEditor wisdom={Number(data.wisdom??7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value)=>updateLineData(updateSheet,character,"nimbus_tilt",value)} onEffectsChange={setNimbusEffects}/>
-                <MeritConfigurationPanel
-                  character={character}
-                  updateSheet={updateSheet}
-                />
                 <SheetHeading>Anotações</SheetHeading>
                 <NotesArea
                   value={notes}
@@ -838,65 +857,6 @@ export function CharacterPaper({
   );
 }
 
-function MeritConfigurationPanel({
-  character,
-  updateSheet,
-}: {
-  character: CharacterSheet;
-  updateSheet: (sheet: CharacterSheet) => void;
-}) {
-  const { locale, tr } = useLanguage();
-  const configurable = character.merits.filter(
-    (item) => findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && !["Fae Mount","Familiar","Entitlement"].includes(item.name) && !item.grantedBy,
-  );
-  if (!configurable.length) return null;
-  const choices=configurable;
-  const conditions = stringList(character.line_data.merit_granted_conditions),
-    attainments = stringList(character.line_data.merit_granted_attainments);
-  return (
-    <section className="sheet-merit-configurations">
-      {choices.length > 0 && <SheetHeading>Escolhas dos Méritos</SheetHeading>}
-      {(conditions.length > 0 || attainments.length > 0) && (
-        <div className="merit-grant-summary">
-          {conditions.length > 0 && (
-            <p>
-              <strong>{tr("Condições concedidas:", "Granted Conditions:")}</strong> {conditions.join(", ")}
-            </p>
-          )}
-          {attainments.length > 0 && (
-            <p>
-              <strong>{tr("Attainments concedidos:", "Granted Attainments:")}</strong> {attainments.join(", ")}
-            </p>
-          )}
-        </div>
-      )}
-      {choices.map((item, configIndex) => {
-        const meritIndex = character.merits.indexOf(item);
-        return (
-          <article key={`${item.name}-${item.sourceId ?? ""}-${configIndex}`}>
-            <strong>
-              {getMeritsForLine(character.game_line).find(
-                (entry) => entry.name === item.name,
-              )?.[locale === "en-US" ? "name" : "translatedName"] ?? item.name}
-            </strong>
-            <MeritConfigurationEditor
-              compact
-              merit={item}
-              ownedMerits={character.merits}
-              currentCourt={String(character.line_data.court??"")}
-              onChange={(configuration) => {
-                const next = structuredClone(character);
-                const target = next.merits[meritIndex];
-                if (target) target.configuration = configuration;
-                updateSheet(synchronizeMeritGrants(next));
-              }}
-            />
-          </article>
-        );
-      })}
-    </section>
-  );
-}
 function SheetField({ label, value }: { label: string; value: unknown }) {
   const {locale}=useLanguage();
   const anchorKind=label==="Agulha"?"needle":label==="Fio"?"thread":null;
@@ -936,7 +896,7 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
     if(!character||!updateSheet)return;
     updateSheet({...character,current_state:{...character.current_state,trifle_uses:{...trifleUses,[key]:Math.max(0,Math.min(3,value))}}});
   };
-  const visible = merits.filter((item) => !item.grantedBy && !["Fae Mount","Familiar"].includes(item.name));
+  const visible = merits.filter((item) => (!item.grantedBy || item.grantedBy === "Nameless Order") && !["Fae Mount","Familiar"].includes(item.name));
   return (
     <div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
@@ -958,7 +918,11 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
           title = item.name === "Token"
             ? "Tokens"
             : homebrews.merits.find((merit) => merit.name === item.name)
-                ?.[locale==="en-US"?"name":"translatedName"] ?? meritLabel(item,undefined,locale);
+                ?.[locale==="en-US"?"name":"translatedName"] ?? meritLabel(item,undefined,locale),
+          meritIndex=character?.merits.indexOf(item)??-1,
+          configurationEditor=character&&updateSheet&&findMeritConfiguration(item.name)&&!isInlineMeritConfiguration(item.name)&&!["Fae Mount","Familiar","Entitlement"].includes(item.name)
+            ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} currentCourt={String(character.line_data.court??"")} onChange={(configuration)=>{const next=structuredClone(character);const target=next.merits[meritIndex];if(target)target.configuration=configuration;updateSheet(synchronizeMeritGrants(next));}}/>
+            : null;
         if (!style)
           return (
             <details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
@@ -980,6 +944,7 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
                     {tr("Consulte a descrição deste Mérito para distribuir ou usar suas características internas.","See this Merit's description to assign or use its internal traits.")}
                   </p>
                 )}
+                {configurationEditor}
               </div>
             </details>
           );
@@ -992,14 +957,16 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
                   {cult && !title.includes(cult) ? `: ${cult}` : ""}
                 </h4>
                 <small>
-                  {style.source} · p. {style.page} · {tr("Pré-requisitos","Prerequisites")}:{" "}
-                  {style.prerequisites || tr("Nenhum","None")}
+                  {style.source} · p. {style.page}
+                  {item.grantedBy !== "Nameless Order" && <> · {tr("Pré-requisitos","Prerequisites")}: {style.prerequisites || tr("Nenhum","None")}</>}
                 </small>
               </div>
               <DotValue value={item.dots} />
             </summary>
             <div className="expanded-merit-body">
-              {configured.length
+              {item.name==="Mystery Cult Initiation"&&item.grantedBy==="Nameless Order"
+                ? <NamelessMysteryCultLevels dots={item.dots} configuration={normalizeMeritConfiguration(item.configuration)} locale={locale}/>
+                : configured.length
                 ? <>{configured.map((line, index) => (
                     <section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
@@ -1016,6 +983,7 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
                         <p>{level.description}</p>
                       </section>
                     ))}
+              {configurationEditor}
             </div>
           </details>
         );
@@ -1023,6 +991,29 @@ function ExpandedMeritList({ merits,character,updateSheet,hasAdjacentContent=fal
       {!visible.length && !hasAdjacentContent && <p className="rule-callout expanded-merit-empty">{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</p>}
     </div>
   );
+}
+
+function NamelessMysteryCultLevels({dots,configuration,locale}:{dots:number;configuration:Record<string,string|string[]>;locale:Locale}) {
+  const english=locale==="en-US";
+  const roteSkills=Array.isArray(configuration.level_2_rote_skills)
+    ? configuration.level_2_rote_skills.filter(Boolean).map((skill)=>systemTerm(String(skill),locale))
+    : [];
+  const configured=expandedConfigurationLines("Mystery Cult Initiation",dots,configuration,locale);
+  const configuredDescription=(level:number)=>{
+    const prefix=`${english?"Dot":"Nível"} ${level}:`;
+    const line=configured.find((entry)=>entry.startsWith(prefix));
+    return line?.slice(prefix.length).trim() || (english?"Configure this benefit below.":"Configure este benefício abaixo.");
+  };
+  const levels=[
+    {rating:1,name:english?"Initiate":"Iniciado",description:english?"The Awakened receives the High Speech merit.":"O Desperto recebe o mérito High Speech."},
+    {rating:2,name:english?"Attendee":"Frequentador",description:roteSkills.length===3
+      ? `${english?"Grants the Rote Skills":"Concede as Perícias de Rota"}: ${roteSkills.join(", ")}`
+      : (english?"Choose three Rote Skills below.":"Escolha três Perícias de Rota abaixo.")},
+    {rating:3,name:english?"Disciple":"Discípulo",description:english?"Bestows knowledge, gifting +1 in the Occult Skill.":"Concede conhecimento, fornecendo +1 na Perícia Ocultismo."},
+    {rating:4,name:english?"Configurable benefit":"Benefício configurável",description:configuredDescription(4)},
+    {rating:5,name:english?"Configurable benefit":"Benefício configurável",description:configuredDescription(5)},
+  ];
+  return <>{levels.filter((level)=>level.rating<=dots).map((level)=><section key={level.rating}><strong>{level.name} {"•".repeat(level.rating)}</strong><p>{level.description}</p></section>)}</>;
 }
 
 function TrifleUseTrack({used,onChange}:{used:number;onChange:(value:number)=>void}){
@@ -1874,7 +1865,7 @@ function MeritSheetList({
       (item) =>
         !item.grantedBy ||
         (line === "CtL" && item.grantedBy === "Corte") ||
-        (line === "MtA" && item.grantedBy === "Ordem"),
+        (line === "MtA" && ["Ordem", "Nameless Order"].includes(String(item.grantedBy))),
     );
   return (
     <div className="sheet-merits single-column">
@@ -2200,9 +2191,11 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
     ? tr("Sem Ordem","Orderless")
     : String(custom?.name || (locale === "en-US" ? orderKey : MTA_ORDER_LABELS[orderKey] ?? orderKey));
   const description = orderKey === "Nameless" ? tr("Uma Ordem sem nome reconhecido entre as grandes sociedades dos Despertos.","An Order without a recognized name among the great societies of the Awakened.") : String(custom?.description || (MTA_ORDER_DESCRIPTIONS[orderKey]?.[locale === "pt-BR" ? 0 : 1] ?? ""));
-  const skills = Array.isArray(custom?.roteSkills)
-    ? custom.roteSkills.map(String).filter(Boolean)
-    : [...(MTA_ORDERS[orderKey as keyof typeof MTA_ORDERS] ?? [])];
+  const skills = orderKey === "Nameless"
+    ? stringList(data.rote_skills)
+    : Array.isArray(custom?.roteSkills)
+      ? custom.roteSkills.map(String).filter(Boolean)
+      : [...(MTA_ORDERS[orderKey as keyof typeof MTA_ORDERS] ?? [])];
   return (
     <section className="mage-order-summary">
       <SheetHeading>Ordem</SheetHeading>
@@ -2315,6 +2308,7 @@ function objectList(value: unknown) {
 }
 function isExpandedMerit(name: string) {
   return (
+    (isStructuredMerit(name) && !["Entitlement", "Familiar"].includes(name)) ||
     EXPANDED_MERIT_NAMES.has(name) ||
     [
       "Hollow",
