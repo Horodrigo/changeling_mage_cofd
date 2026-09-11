@@ -1,0 +1,23 @@
+{
+	// Deploy with: npm run build && npx wrangler deploy
+	"name": "arquivo-das-trevas",
+	"compatibility_date": "2026-05-15",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "dist/server/index.js",
+	"assets": {
+		"directory": "dist/client"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "site-creator-d1",
+			"database_id": "0b09ff1f-ba22-4ec9-9015-5e7544d9b56f",
+			"migrations_dir": "drizzle"
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+}
