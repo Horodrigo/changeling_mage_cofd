@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Non-interactive shells don't source ~/.bashrc, so nvm-installed node/npm
+# would otherwise be invisible here (e.g. running under WSL from Windows npm).
+if ! command -v node >/dev/null 2>&1 && [[ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]]; then
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  # shellcheck disable=SC1091
+  . "${NVM_DIR}/nvm.sh"
+fi
+
 project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 runtime_root="${SITES_RUNTIME_ROOT:-${project_root}/.sites-runtime}"
 
