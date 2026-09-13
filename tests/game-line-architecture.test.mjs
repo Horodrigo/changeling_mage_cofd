@@ -101,6 +101,7 @@ test("line builders own independent controllers and consume scoped catalog snaps
   assert.doesNotMatch(changeling, /Component:\s*CharacterBuilder\b/);
   assert.doesNotMatch(mageClosure, /@\/app\/character-builder["']/);
   assert.doesNotMatch(changelingClosure, /@\/app\/character-builder["']/);
+  assert.doesNotMatch(changelingClosure, /useHomebrews|isHomebrewActive|@\/lib\/homebrews/);
   assert.match(mage, /catalogs\.get<[^>]+>\("mage-spells"\)/);
   assert.match(changeling, /catalogs\.get<[^>]+>\("changeling-contracts"\)/);
   assert.doesNotMatch(mageClosure, /game-lines\/changeling|@\/lib\/changeling|@\/lib\/entitlements/);

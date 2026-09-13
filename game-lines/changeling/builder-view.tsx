@@ -27,8 +27,6 @@ import { kithCreationChoice } from "@/lib/changeling-kith-choices";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary } from "@/lib/contract-presentation";
 import type { MeritSelection, Specialty } from "@/lib/core/character/character-types";
-import { useHomebrews } from "@/app/use-homebrews";
-import { isHomebrewActive } from "@/lib/homebrews";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
@@ -84,7 +82,6 @@ function courtDisplayName(catalog: readonly BuilderCourtDefinition[], value: unk
 
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, tr } = useLanguage();
-  const homebrews=useHomebrews();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
     ...REGALIA,
@@ -115,7 +112,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             label={tr("Feição", "Seeming")}
             value={props.seeming}
             setValue={props.setSeeming}
-            options={Object.entries(CTL_SEEMINGS).filter(([,item])=>!("sourceId" in item)||isHomebrewActive(homebrews,item.sourceId)).map(([name])=>name)}
+            options={Object.keys(CTL_SEEMINGS)}
             optionLabels={Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([name,item])=>[
               name,
               locale === "pt-BR"
@@ -210,7 +207,6 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
 
 function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"|"customCourt"|"setCustomCourt"|"courtCatalog">) {
   const { locale, tr } = useLanguage();
-  const homebrews = useHomebrews();
   const [courtSearch, setCourtSearch] = useState("");
   const [courtSource, setCourtSource] = useState("all");
   const select = (name: string) => {
@@ -218,9 +214,7 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
     props.setCustomCourt(null);
   };
   const officialCourt = findCourt(props.courtCatalog, props.court);
-  const officialCourts: BuilderCourtDefinition[] = props.courtCatalog.filter(
-    (court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"),
-  );
+  const officialCourts: BuilderCourtDefinition[] = props.courtCatalog;
   const courtOptions = alphabetical([
     ...officialCourts.map((court) => ({
       value: court.id ?? court.name,
@@ -296,10 +290,9 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
 
 function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"needle"|"thread";value:string;setValue:(value:string)=>void;invalid?:boolean}) {
   const {locale,tr}=useLanguage();
-  const homebrews=useHomebrews();
   const [search,setSearch]=useState("");
   const [sourceFilter,setSourceFilter]=useState("all");
-  const definitions=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
+  const definitions=kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS;
   const sources=alphabetical([...new Set(definitions.map((item)=>item.source).filter((source):source is string=>Boolean(source)))],(source)=>source,locale);
   const label=kind==="needle"?tr("Agulha","Needle"):tr("Fio","Thread");
   const normalized=search.trim().toLocaleLowerCase(locale);
@@ -322,7 +315,6 @@ function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"nee
 
 function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"kithChoice"|"setKithChoice"|"specialties"|"customKith"|"setCustomKith"|"customKithSkill"|"setCustomKithSkill"|"customKithDescription"|"setCustomKithDescription"|"kithCatalog"|"kithPresentation">) {
   const { locale, tr } = useLanguage();
-  const homebrews=useHomebrews();
   const [search, setSearch] = useState("");
   const [skillFilter,setSkillFilter]=useState("all");
   const [sourceFilter,setSourceFilter]=useState("all");
@@ -333,7 +325,7 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
     : locale === "en-US"
       ? {name:item.name,description:item.description,blessing:item.blessing,skill:item.skill}
       : (props.kithPresentation[item.id] ?? {name:item.translatedName??item.name,description:item.description,blessing:item.blessing,skill:item.skill});
-  const allKiths: Array<KithDefinition & {homebrew?:true}> = props.kithCatalog.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId)).sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
+  const allKiths: Array<KithDefinition & {homebrew?:true}> = [...props.kithCatalog].sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
   const skillOptionSet=new Set(allKiths.flatMap(kithSkillOptions));
   const skillGroups=Object.entries(SKILLS).map(([category,skills])=>({
     category,
