@@ -1,39 +1,31 @@
 "use client";
-import { useMemo, useState } from "react";
-import { History, Plus, RotateCcw, Search, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { History, RotateCcw, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { MeritConfigurationEditor } from "../character-builder";
+import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { useHomebrews } from "../use-homebrews";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { ATTRIBUTES, SKILLS, MTA_PATHS, normalizeChangelingFrailties, seemingDisplayName } from "@/lib/creation-rules";
-import { getMeritsForLine, meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, meritSelectionProblems, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
-import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
-import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/catalog/contract-catalog";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
-import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
-import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
-import { changelingContractExperienceCost } from "@/lib/changeling-regalia";
-import { SPELLS } from "@/lib/catalog/spell-catalog";
-import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
-import { powerResourceLimits, permanentClarityBonus, changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
-import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
-import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
+import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
+import { MTA_PATHS } from "@/game-lines/mage/creation-rules";
+import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
+import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
+import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
+import { meetsArcanaRequirements } from "@/game-lines/mage/builder-eligibility";
+import { withMagePowerRating } from "@/game-lines/mage/builder-power-progression";
+import { refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
-import { meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/lib/merit-configurations";
+import { MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/game-lines/mage/sheet-merit-configurations";
+import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";
 import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
-import { alphabetical } from "@/lib/option-order";
-import { RuleSelect } from "./rule-select";
-import { stringList } from "./sheet-primitives";
-import { workspaceTerm } from "./workspace-i18n";
+import { RuleSelect } from "@/app/workspace/rule-select";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, MageExperienceRules, canAdvanceGrantedMerit, formatSpellRequirements, isRepeatableDefinition, recalculateCtlDerived } from "./experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, canAdvanceGrantedMerit, isRepeatableDefinition, recalculateCoreDerived } from "@/app/workspace/experience-shared";
+import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
 const PURCHASE_TYPE_EN:Record<string,string>={Atributo:"Attribute",Perícia:"Skill",Mérito:"Merit",Especialização:"Specialty",Arcano:"Arcanum",Gnose:"Gnosis",Rota:"Rote",Práxis:"Praxis",Sabedoria:"Wisdom","Ponto perdido de Força de Vontade":"Lost Willpower dot"};
 const purchaseTypeLabel=(value:string,locale:Locale)=>locale==="en-US"?(PURCHASE_TYPE_EN[value]??systemTerm(value,locale)):value;
@@ -72,12 +64,13 @@ const MAGE_PURCHASES = [
 export function MageExperiencePanel({
   character,
   updateSheet,
+  catalogs,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
+  catalogs: CatalogSnapshot;
 }) {
   const {locale,tr}=useLanguage();
-  const homebrews = useHomebrews();
   const state = character.current_state ?? {};
   const regular = Math.max(
     0,
@@ -120,8 +113,12 @@ export function MageExperiencePanel({
   const [mageMeritConfiguration,setMageMeritConfiguration] = useState<Record<string,string|string[]>>({});
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
-  const merits = [...getMeritsForLine("MtA").filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character))), ...homebrews.merits.filter((item) => (item.line === "Core" || item.line === "MtA") && isHomebrewActive(homebrews,item.id))],
-    spells = [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))];
+  const meritCatalog = [
+      ...catalogs.get<MeritDefinition[]>("core-merits"),
+      ...catalogs.get<MeritDefinition[]>("mage-merits"),
+    ],
+    merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog))),
+    spells = catalogs.get<SpellDefinition[]>("mage-spells");
   const arcana = (
     character.line_data.arcana && typeof character.line_data.arcana === "object"
       ? character.line_data.arcana
@@ -245,7 +242,7 @@ export function MageExperiencePanel({
     if(purchase==="Mérito"){
       if(!selectedMerit||!nextMerit)return setFeedback(tr("Selecione um Mérito disponível.","Select an available Merit."));
       if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(tr("Este Mérito já foi concedido.","This Merit is already granted."));
-      const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character));
+      const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog));
       if(problems.length)return setFeedback(problems.join(" "));
     }
     if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(tr("Informe o nome da Especialização.","Enter the Specialty name."));
@@ -309,7 +306,7 @@ export function MageExperiencePanel({
         arcana: { ...arcana, [chosenTarget]: Number(arcana[chosenTarget] ?? 0) + 1 },
       };
     else if (purchase === "Gnose")
-      next.line_data = withPowerRating(next, "gnosis", Number(next.line_data.gnosis ?? 1) + 1);
+      next.line_data = withMagePowerRating(next, Number(next.line_data.gnosis ?? 1) + 1);
     else if (purchase === "Rota" && selectedSpell)
       next.line_data = {
         ...next.line_data,
@@ -339,7 +336,7 @@ export function MageExperiencePanel({
           Number(next.current_state.willpower_lost_dots ?? 0) - 1,
         ),
       };
-    recalculateCtlDerived(next);
+    recalculateCoreDerived(next);
     let undo: MageAdvancementUndo;
     if (purchase === "Atributo" || purchase === "Perícia")
       undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget };
@@ -457,7 +454,7 @@ export function MageExperiencePanel({
       arcane_experience_beats: Math.max(0, Number(next.current_state.arcane_experience_beats??0) - (legacyUndo?.creditedArcaneBeats ?? 0)),
       mage_experience_history: history.filter((item) => item.id !== entry.id),
     };
-    recalculateCtlDerived(next);
+    recalculateCoreDerived(next);
     updateSheet(synchronizeMeritGrants(next));
   }
   return (
@@ -535,6 +532,7 @@ export function MageExperiencePanel({
                 {tr("Mérito","Merit")}
                 <ExperienceMeritPicker
                   line="MtA"
+                  meritCatalog={meritCatalog}
                   character={character}
                   selectedId={selectedMerit?.id ?? ""}
                   targetDots={nextMerit ?? 0}
@@ -547,7 +545,7 @@ export function MageExperiencePanel({
                 />
               </label>
             )}
-            {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} onChange={setMageMeritConfiguration}/>}
+            {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props}/>} onChange={setMageMeritConfiguration}/>}
             {purchase === "Especialização" && <>
               <label>{tr("Perícia","Skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
               <label>{tr("Especialização","Specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>

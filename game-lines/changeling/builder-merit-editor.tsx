@@ -10,8 +10,6 @@ import type { StructuredMeritEditorProps } from "@/app/builder/merit-configurati
 import type { MeritSelection } from "@/lib/core/character/character-types";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { EntitlementDefinition } from "@/lib/entitlements";
-import { useHomebrews } from "@/app/use-homebrews";
-import { isHomebrewActive } from "@/lib/homebrews";
 import { useLanguage } from "@/lib/i18n";
 
 type TokenKind = "token" | "trifle" | "bauble";
@@ -49,8 +47,8 @@ function DreamBastionEditor({ merit, configuration, onChange, compact }: Structu
 }
 
 function EntitlementMeritEditor({configuration,onChange,compact,entitlementCatalog}:{configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean;entitlementCatalog:readonly EntitlementDefinition[]}){
-  const {tr}=useLanguage();const homebrews=useHomebrews();const selectedDefinition=entitlementCatalog.find((item)=>item.id===String(configuration.definitionId??""));
-  const availableEntitlements=entitlementCatalog.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
+  const {tr}=useLanguage();const selectedDefinition=entitlementCatalog.find((item)=>item.id===String(configuration.definitionId??""));
+  const availableEntitlements=entitlementCatalog;
   const definition=selectedDefinition&&availableEntitlements.some((item)=>item.id===selectedDefinition.id)?selectedDefinition:undefined;
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
     <summary>{tr("Configurar Título Feérico","Configure Entitlement")}</summary><div>
@@ -268,4 +266,3 @@ function WorkshopEditor({merit,configuration,onChange,compact}:{merit:MeritSelec
     </fieldset></div>
   </details>;
 }
-

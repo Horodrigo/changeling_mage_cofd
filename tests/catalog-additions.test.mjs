@@ -243,14 +243,14 @@ test("estado dos rascunhos de Méritos pertence ao seletor de compra", async()=>
 
 test("catálogo de Spells filtra e mantém a Rote Skill visível no cartão fechado", async()=>{
   const {readFile}=await import("node:fs/promises");
-  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  const builder=await readFile(new URL("../game-lines/mage/builder-view.tsx",import.meta.url),"utf8");
   assert.match(builder,/arcanaFilter.*levelFilter.*sourceFilter.*practiceFilter/s);
   assert.match(builder,/className="collapsed-rote-skill"[\s\S]*tr\("Perícia de Rota", "Rote Skill"\)/);
 });
 
 test("Contratos exibem Comuns antes dos Reais sem perder a ordem alfabética", async()=>{
   const {readFile}=await import("node:fs/promises");
-  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  const builder=await readFile(new URL("../game-lines/changeling/builder-view.tsx",import.meta.url),"utf8");
   const workspace=await readWorkspaceSource();
   assert.match(builder,/alphabetical\(catalog, contractName,locale\)[\s\S]*Number\(left\.type === "Real"\)/);
   assert.match(workspace,/sortPriority: Number\(item\.type === "Real"\)/);

@@ -174,3 +174,61 @@ test("production manifest keeps lazy builder entry closures free of opposite lin
   assert.ok(mage.every((key) => !/game-lines\/changeling|character-builder\.tsx/.test(key)));
   assert.ok(changeling.every((key) => !/game-lines\/mage|character-builder\.tsx/.test(key)));
 });
+
+test("line sheets compose a neutral paper shell and line-owned mechanics", async () => {
+  const [mageEntry, mageView, mageExperience, mageCompanions, changelingEntry, changelingView, changelingExperience, changelingCompanions, shell, commonExperience, commonConditions, commonCompanions] = await Promise.all([
+    source("game-lines/mage/sheet.tsx"),
+    source("game-lines/mage/sheet-view.tsx"),
+    source("game-lines/mage/experience-panel.tsx"),
+    source("game-lines/mage/companion-page.tsx"),
+    source("game-lines/changeling/sheet.tsx"),
+    source("game-lines/changeling/sheet-view.tsx"),
+    source("game-lines/changeling/experience-panel.tsx"),
+    source("game-lines/changeling/companion-page.tsx"),
+    source("app/workspace/character-paper-shell.tsx"),
+    source("app/workspace/experience-shared.tsx"),
+    source("app/workspace/condition-manager.tsx"),
+    source("app/workspace/companion-page.tsx"),
+  ]);
+  const mageClosure = [mageEntry, mageView, mageExperience, mageCompanions].join("\n");
+  const changelingClosure = [changelingEntry, changelingView, changelingExperience, changelingCompanions].join("\n");
+  const commonClosure = [shell, commonExperience, commonConditions, commonCompanions].join("\n");
+  assert.match(mageEntry, /MageCharacterPaper/);
+  assert.match(changelingEntry, /ChangelingCharacterPaper/);
+  assert.doesNotMatch(mageClosure, /game-lines\/changeling|@\/lib\/changeling|@\/lib\/entitlements|Fae Mount|Fae Pet/);
+  assert.doesNotMatch(changelingClosure, /game-lines\/mage|@\/lib\/mage|Familiar/);
+  assert.doesNotMatch(`${mageClosure}\n${changelingClosure}`, /use-homebrews|app\/character-builder["']|@\/lib\/merit-configurations["']/);
+  assert.match(mageView, /catalogs\.get<[^>]+>\("mage-spells"\)/);
+  assert.match(changelingView, /catalogs\.get<[^>]+>\("changeling-contracts"\)/);
+  assert.match(mageCompanions, /Familiar/);
+  assert.match(changelingCompanions, /Fae Mount/);
+  assert.match(changelingCompanions, /Fae Pet/);
+  assert.match(commonConditions, /Bonded is a repeatable general Condition/);
+  assert.match(commonCompanions, /Bonded is a general, repeatable Condition/);
+  assert.doesNotMatch(commonCompanions, /Familiar|Fae Mount|Fae Pet/);
+  assert.doesNotMatch(commonClosure, /from\s+["'](?:@\/game-lines|@\/lib\/(?:mage|changeling|entitlements))/);
+  assert.doesNotMatch(`${mageEntry}\n${changelingEntry}`, /app\/workspace\/character-paper["']/);
+});
+
+test("production manifest keeps lazy sheet closures free of opposite line entries and the mixed legacy paper", async () => {
+  const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
+  const closure = (rootKey) => {
+    const keys = new Set();
+    const visit = (key) => {
+      if (keys.has(key) || !manifest[key]) return;
+      keys.add(key);
+      for (const imported of manifest[key].imports ?? []) visit(imported);
+    };
+    visit(rootKey);
+    return [...keys];
+  };
+  const mage = closure("game-lines/mage/sheet.tsx");
+  const changeling = closure("game-lines/changeling/sheet.tsx");
+  assert.ok(mage.length > 1 && changeling.length > 1);
+  assert.ok(mage.every((key) => !/game-lines\/changeling|character-paper\.tsx/.test(key)));
+  assert.ok(changeling.every((key) => !/game-lines\/mage|character-paper\.tsx/.test(key)));
+  const mageBundle = await source(`dist/client/${manifest["game-lines/mage/sheet.tsx"].file}`);
+  const changelingBundle = await source(`dist/client/${manifest["game-lines/changeling/sheet.tsx"].file}`);
+  assert.doesNotMatch(mageBundle, /Fae Mount|Fae Pet|Entitlement|Glamour|Wyrd|Changeling/);
+  assert.doesNotMatch(changelingBundle, /Familiar|Gnosis|Arcana|Legacy|Mage/);
+});

@@ -1,5 +1,5 @@
-import { CharacterPaper } from "@/app/workspace/character-paper";
+import { MageCharacterPaper } from "./sheet-view";
 import type { GameLineSheetModule } from "@/lib/game-line-contracts/game-line-ui";
 
-/** Temporary adapter while the common sheet shell is separated from Mage UI. */
-export const mageSheet: GameLineSheetModule = { Component: CharacterPaper };
+/** Mage-owned sheet entry; its implementation closure contains no Changeling UI. */
+export const mageSheet: GameLineSheetModule = { Component: MageCharacterPaper };

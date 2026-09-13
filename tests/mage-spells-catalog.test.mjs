@@ -215,9 +215,9 @@ test("every catalog spell has a coherent PDF-reviewed explicit summary", () => {
 
 test("Mage Details and Powers resolve saved spell snapshots through the current summaries", async()=>{
   const {readFile}=await import("node:fs/promises");
-  const sheet=await readFile(new URL("../app/workspace/character-paper.tsx",import.meta.url),"utf8");
-  assert.match(sheet,/current\?\.summary \?\? item\.summary/);
-  assert.match(sheet,/description:spell\.summary\?\?spell\.description/);
+  const sheet=await readFile(new URL("../game-lines/mage/sheet-view.tsx",import.meta.url),"utf8");
+  assert.match(sheet,/current\?\.summary\s*\?\?\s*item\.summary/);
+  assert.match(sheet,/description:\s*spell\.summary\s*\?\?\s*spell\.description/);
   assert.doesNotMatch(sheet,/tr\("Efeitos", "Effects"\).*item\.description/);
 });
 

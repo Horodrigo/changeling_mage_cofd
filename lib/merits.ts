@@ -63,6 +63,7 @@ export type MeritPrerequisiteContext = RequirementContext & {
   merits?: Array<{ instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
   selectedDots?: number;
   configuration?: Record<string,string|string[]>;
+  meritCatalog?: readonly MeritDefinition[];
 };
 
 const courtKey=(value:unknown)=>String(value??"").toLowerCase().replace(/^court[- ]/,"").replace(/[- ]court$/,"").replace(/[^a-z]/g,"");
@@ -77,7 +78,8 @@ export function meritPrerequisitesMet(
   const owned=context.merits??[];
   const forbidden=(definition:Partial<MeritDefinition>)=>definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
   if(forbidden(merit).some(name=>owned.some(item=>item.dots>0&&canonicalTrait(item.name)===canonicalTrait(name))))return false;
-  if(owned.some(item=>item.dots>0&&getMeritsForLine(context.gameLine).some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
+  const catalog=context.meritCatalog??getMeritsForLine(context.gameLine);
+  if(owned.some(item=>item.dots>0&&catalog.some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
   if(merit.name==="Infamous Mentor"){
     const id=String(context.configuration?.mentorId??"");
     return context.gameLine==="MtA"&&owned.some(item=>item.name==="Mentor"&&item.dots>=(context.selectedDots??1)&&(!id||item.instanceId===id));
@@ -127,7 +129,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
   // Parse ordinary comma-separated trait and Merit clauses independently.
   // Keep the legacy narrative/group helpers below for general-purpose special wording.
   if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|Contract of|≤|maximum|or lower/i.test(value))
-    return textRequirementMet(value,context,getMeritsForLine(context.gameLine).map(item=>item.name));
+    return textRequirementMet(value,context,(context.meritCatalog??getMeritsForLine(context.gameLine)).map(item=>item.name));
   const text=value.replace(/≤/g," maximum ");
   if(/Non-changeling/i.test(text)&&context.gameLine==="CtL") return false;
   return text.split(";").every((rawGroup)=>{
@@ -142,7 +144,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
       const forbidden=group.replace(/Cannot have/i,"").trim();
       return !(context.merits??[]).some((merit)=>courtKey(merit.name)===courtKey(forbidden));
     }
-    const requiredMerits=RAW_MERITS.filter((candidate)=>
+    const requiredMerits=(context.meritCatalog??RAW_MERITS).filter((candidate)=>
       new RegExp(`\\b${candidate.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\b`,"i").test(group)
     );
     if(requiredMerits.length&&!/\bor\b/i.test(group)){
@@ -185,12 +187,12 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
 }
 
 /** Shared current-sheet context for catalog eligibility and purchase-time validation. */
-export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;line_data:Record<string,unknown>;derived?:Record<string,number>}):MeritPrerequisiteContext {
+export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;line_data:Record<string,unknown>;derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[]):MeritPrerequisiteContext {
   const data=sheet.line_data;
   const bonus=data.merit_granted_skill_bonuses as Record<string,number>|undefined;
   const skills={...sheet.skills};
   for(const [name,value]of Object.entries(bonus??{})) skills[name]=(skills[name]??0)+value;
-  return {gameLine:sheet.game_line,attributes:sheet.attributes,skills,merits:sheet.merits,
+  return {gameLine:sheet.game_line,attributes:sheet.attributes,skills,merits:sheet.merits,meritCatalog,
     seeming:String(data.seeming??""),kith:String(data.kith??""),path:String(data.path??""),order:String(data.order??""),
     gnosis:Number(data.gnosis??1),arcana:(data.arcana??{}) as Record<string,number>,wyrd:Number(data.wyrd??1),
     court:String(data.court??""),mantle:sheet.merits.find(item=>item.name==="Mantle")?.dots,size:Number(sheet.derived?.Tamanho??5),

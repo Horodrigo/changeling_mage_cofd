@@ -4,19 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { useHomebrews } from "../use-homebrews";
 import { useLanguage } from "@/lib/i18n";
-import { isHomebrewActive } from "@/lib/homebrews";
-import { ENTITLEMENTS, entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement, type EntitlementAllocation, type EntitlementState } from "@/lib/entitlements";
-import { normalizeMeritConfiguration, synchronizeMeritGrants } from "@/lib/merit-configurations";
-import { CTL_THREADS, SKILLS, changelingAnchorRecovery } from "@/lib/creation-rules";
+import { entitlementPrerequisitesMet, normalizeEntitlementState, type EntitlementAllocation, type EntitlementDefinition, type EntitlementState } from "@/lib/entitlements";
+import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } from "@/game-lines/changeling/builder-merit-grants";
+import { CTL_THREADS, changelingAnchorRecovery } from "@/game-lines/changeling/creation-rules";
+import { SKILLS } from "@/lib/core/character/creation-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { RuleSelect } from "./rule-select";
 import { ConfirmAction } from "./confirm-action";
-export function EntitlementPage({character,updateSheet}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void}){
-  const {locale,tr}=useLanguage(),homebrews=useHomebrews(),wyrd=Math.max(1,Math.min(10,Number(character.line_data.wyrd??1)));
-  const availableEntitlements=ENTITLEMENTS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId));
-  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd),selectedDefinition=findEntitlement(state.definitionId),definition=selectedDefinition&&availableEntitlements.some((item)=>item.id===selectedDefinition.id)?selectedDefinition:undefined;
+export function EntitlementPage({character,updateSheet,catalog}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;catalog:readonly EntitlementDefinition[]}){
+  const {locale,tr}=useLanguage(),wyrd=Math.max(1,Math.min(10,Number(character.line_data.wyrd??1)));
+  const availableEntitlements=catalog;
+  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd),definition=availableEntitlements.find((item)=>item.id===state.definitionId);
   const save=(nextState:EntitlementState)=>{const next=structuredClone(character);next.line_data={...next.line_data,entitlement:normalizeEntitlementState(nextState,wyrd)};const merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);if(merit)merit.configuration={...normalizeMeritConfiguration(merit.configuration),definitionId:nextState.definitionId,roleId:nextState.roleId};updateSheet(synchronizeMeritGrants(next));};
   const patch=(next:Partial<EntitlementState>)=>save({...state,...next});
   const choice=(key:string,value:string)=>patch({choices:{...state.choices,[key]:value}});

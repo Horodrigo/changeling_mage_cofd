@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Choice, DotRow } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
-import { MeritConfigurationEditor, type StructuredMeritEditorProps } from "@/app/builder/merit-configuration-editor";
+import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS } from "./creation-rules";
@@ -22,6 +22,7 @@ import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
 import { builderText } from "@/app/character-builder-messages";
+import { MageStructuredMeritEditor } from "./merit-configuration-editor";
 
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
 export type CustomOrderDefinition = { name: string; description: string; roteSkills: string[]; initiation?: MeritConfiguration };
@@ -38,32 +39,6 @@ export type MageBuilderViewProps = {
   meritSpent: number; meritBudget: number; missing: MissingCheck;
 };
 const MAGE_BUILDER_MERIT_CONFIGURATIONS = [...COMMON_MERIT_CONFIGURATIONS, ...MAGE_MERIT_CONFIGURATIONS];
-
-function MageStructuredMeritEditor(props: StructuredMeritEditorProps) {
-  const { tr } = useLanguage();
-  if (props.merit.name !== "Mystery Cult Initiation" || props.merit.grantedBy !== "Nameless Order") return null;
-  const selected = Array.isArray(props.configuration.level_2_rote_skills)
-    ? props.configuration.level_2_rote_skills.map(String)
-    : [];
-  const setRoteSkill = (index: number, value: string) => {
-    const skills = Array.from({ length: 3 }, (_, itemIndex) => selected[itemIndex] ?? "");
-    skills[index] = value;
-    props.onChange({ ...props.configuration, level_2_rote_skills: skills });
-  };
-  return <details className={`merit-configuration structured${props.compact ? " compact" : ""}`} open={!props.compact}>
-    <summary>{tr("Configurar benefícios da Ordem sem Nome", "Configure Nameless Order benefits")}</summary>
-    <div>
-      <fieldset><legend>{tr("Nv", "Dot")} 1</legend><p className="structured-rule">High Speech</p></fieldset>
-      {props.merit.dots >= 2 && <fieldset><legend>{tr("Nv", "Dot")} 2</legend><div className="merit-config-list">
-        {Array.from({ length: 3 }, (_, index) => {
-          const unavailable = new Set(selected.filter((_, itemIndex) => itemIndex !== index));
-          return <Choice key={index} label={`${tr("Perícia de Rota", "Rote Skill")} ${index + 1}`} value={selected[index] || "__none"} setValue={(value) => setRoteSkill(index, value === "__none" ? "" : value)} options={["__none", ...Object.values(SKILLS).flat().filter((skill) => !unavailable.has(skill))]} optionLabels={{ __none: tr("Selecione uma Perícia", "Select a Skill") }} />;
-        })}
-      </div></fieldset>}
-      {props.merit.dots >= 3 && <fieldset><legend>{tr("Nv", "Dot")} 3</legend><p className="structured-rule">{tr("+1 em Ocultismo", "+1 Occult dot")}</p></fieldset>}
-    </div>
-  </details>;
-}
 
 function OrderSelector(props: OrderSelectorProps) {
   const { locale, tr } = useLanguage();

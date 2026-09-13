@@ -8,3 +8,16 @@ export function changelingBuilderPowerProgression(sheet: CharacterSheet | null |
     : [];
   return creationPowerProgression(sheet, "wyrd", historicalRatings);
 }
+
+export function withChangelingPowerRating(sheet: CharacterSheet, next: number) {
+  return {
+    ...sheet.line_data,
+    creation_wyrd: changelingBuilderPowerProgression(sheet).creation,
+    wyrd: Math.max(1, Math.min(10, Math.trunc(next))),
+  };
+}
+
+export function refundChangelingPowerRating(sheet: CharacterSheet) {
+  const { creation, current } = changelingBuilderPowerProgression(sheet);
+  return withChangelingPowerRating(sheet, Math.max(creation, current - 1));
+}

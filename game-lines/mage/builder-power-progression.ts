@@ -12,3 +12,16 @@ export function mageBuilderPowerProgression(sheet: CharacterSheet | null | undef
     : [];
   return creationPowerProgression(sheet, "gnosis", historicalRatings);
 }
+
+export function withMagePowerRating(sheet: CharacterSheet, next: number) {
+  return {
+    ...sheet.line_data,
+    creation_gnosis: mageBuilderPowerProgression(sheet).creation,
+    gnosis: Math.max(1, Math.min(10, Math.trunc(next))),
+  };
+}
+
+export function refundMagePowerRating(sheet: CharacterSheet) {
+  const { creation, current } = mageBuilderPowerProgression(sheet);
+  return withMagePowerRating(sheet, Math.max(creation, current - 1));
+}

@@ -1,40 +1,34 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import { History, Plus, RotateCcw, Search, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { History, RotateCcw, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { MeritConfigurationEditor } from "../character-builder";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { useHomebrews } from "../use-homebrews";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { ATTRIBUTES, SKILLS, MTA_PATHS, normalizeChangelingFrailties, seemingDisplayName } from "@/lib/creation-rules";
-import { getMeritsForLine, meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, meritSelectionProblems, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
-import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
-import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/catalog/contract-catalog";
-import { contractDisplayOptions, contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
+import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/changeling/creation-rules";
+import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
+import { contractOutcomeSections, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
-import { changelingContractExperienceCost } from "@/lib/changeling-regalia";
-import { SPELLS } from "@/lib/catalog/spell-catalog";
-import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
-import { powerResourceLimits, permanentClarityBonus, changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
-import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
-import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
+import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
+import { changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
+import { refundChangelingPowerRating, withChangelingPowerRating } from "@/game-lines/changeling/builder-power-progression";
+import { subtractDots, refundMeritDots } from "@/lib/experience-refunds";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
-import { meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/lib/merit-configurations";
-import { ELEVENTH_QUESTION, normalizeLegacyState } from "@/lib/legacies";
-import { alphabetical } from "@/lib/option-order";
-import { RuleSelect } from "./rule-select";
-import { stringList } from "./sheet-primitives";
-import { workspaceTerm } from "./workspace-i18n";
-import { ConfirmAction } from "./confirm-action";
+import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } from "@/game-lines/changeling/builder-merit-grants";
+import { RuleSelect } from "@/app/workspace/rule-select";
+import { stringList } from "@/app/workspace/sheet-primitives";
+import { ConfirmAction } from "@/app/workspace/confirm-action";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, isRepeatableDefinition, purchasePreview, recalculateCtlDerived } from "./experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, isRepeatableDefinition } from "@/app/workspace/experience-shared";
+import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
 type ExperienceUndo =
   | {
       kind: "trait";
@@ -78,7 +72,6 @@ const PURCHASE_TYPES = [
 const PURCHASE_TYPE_EN:Record<string,string>={
   Atributo:"Attribute", Perícia:"Skill", Mérito:"Merit", Especialização:"Specialty", Contrato:"Contract",
   "Benefício de Contrato":"Contract Benefit", Fado:"Wyrd", "Ponto perdido de Força de Vontade":"Lost Willpower dot",
-  Arcano:"Arcanum", Gnose:"Gnosis", Rota:"Rote", Práxis:"Praxis", Sabedoria:"Wisdom",
 };
 const purchaseTypeLabel=(value:string,locale:Locale)=>locale==="en-US"?(PURCHASE_TYPE_EN[value]??systemTerm(value,locale)):value;
 const groupedTraitOptions = (
@@ -93,13 +86,16 @@ const SKILL_OPTIONS = groupedTraitOptions(SKILLS);
 export function ExperiencePanel({
   character,
   updateSheet,
+  catalogs,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
+  catalogs: CatalogSnapshot;
 }) {
   const {locale,tr}=useLanguage();
-  const homebrews = useHomebrews();
-  const contractsCatalog = [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map(item=>contractWithSupplementalBenefits(item,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[])), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))];
+  const contractCatalog = catalogs.get<ContractDefinition[]>("changeling-contracts");
+  const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,[]));
+  const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
   const state = character.current_state ?? {};
   const beats = boundedNumber(state.experience_beats, 5, 0);
   const legacyTotal = Math.max(
@@ -140,12 +136,11 @@ export function ExperiencePanel({
   const [contractId, setContractId] = useState("");
   const [benefitKey, setBenefitKey] = useState("");
   const [feedback, setFeedback] = useState("");
-  const merits = [
-    ...getMeritsForLine("CtL").filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)),
-    ...homebrews.merits.filter(
-      (item) => (item.line === "Core" || item.line === "CtL") && isHomebrewActive(homebrews,item.id),
-    ),
+  const meritCatalog = [
+    ...catalogs.get<MeritDefinition[]>("core-merits"),
+    ...catalogs.get<MeritDefinition[]>("changeling-merits"),
   ];
+  const merits = meritCatalog;
   const ownedContracts = [
     ...objectList(character.line_data.contracts),
     ...objectList(character.line_data.learned_contracts),
@@ -167,7 +162,7 @@ export function ExperiencePanel({
   const goodwill = new Map(objectList(character.line_data.court_goodwill_benefits).map((item) => [String(item.court), Number(item.dots ?? 0)]));
   const currentCourtId = courtCanonicalId(character.line_data.court);
   const benefitOptions = ownedContracts.flatMap((saved) => {
-    const definition = findContract(String(saved.id ?? saved.name ?? ""));
+    const definition = findContractInCatalog(String(saved.id ?? saved.name ?? ""));
     if (!definition) return [];
     const seemingOptions = Object.keys(definition.seemingBenefits ?? {})
           .filter(
@@ -396,7 +391,7 @@ export function ExperiencePanel({
       next.current_state.clarity_damage = normalizeClarityDamage(next.current_state.clarity_damage, maximum);
     }
     else if (undo.kind === "wyrd") {
-      next.line_data = refundPowerRating(next, "wyrd");
+      next.line_data = refundChangelingPowerRating(next);
       next.line_data.frailties = normalizeChangelingFrailties(next.line_data.frailties, Number(next.line_data.wyrd));
     }
     else
@@ -463,7 +458,7 @@ export function ExperiencePanel({
     if (purchaseType === "Mérito") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(tr("Este Mérito não possui outro nível disponível.", "This Merit has no higher available rating."));
-      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
+      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? crypto.randomUUID();
@@ -536,7 +531,7 @@ export function ExperiencePanel({
       if (!value)
         return setFeedback(tr("Não há Benefício ou Clause adicional disponível.", "No additional Benefit or Clause is available."));
       const [kind, chosenContract, choice] = value.split("::");
-      const definition = findContract(chosenContract);
+      const definition = findContractInCatalog(chosenContract);
       const isClause = kind === "clause";
       spend(
         1,
@@ -556,7 +551,7 @@ export function ExperiencePanel({
     if (purchaseType === "Fado") {
       if (wyrd >= 10) return setFeedback(tr("Fado já atingiu 10.", "Wyrd has already reached 10."));
       spend(5, `${tr("Fado", "Wyrd")} ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
-        next.line_data = { ...withPowerRating(next, "wyrd", wyrd + 1), frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
+        next.line_data = { ...withChangelingPowerRating(next, wyrd + 1), frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
       });
       return;
     }
@@ -707,6 +702,7 @@ export function ExperiencePanel({
                   {tr("Mérito","Merit")}
                   <ExperienceMeritPicker
                     line="CtL"
+                    meritCatalog={meritCatalog}
                     character={character}
                     selectedId={meritId}
                     targetDots={nextMeritRating ?? 0}
@@ -763,7 +759,7 @@ export function ExperiencePanel({
                   <ExperiencePowerPicker
                     kind="Benefício de Contrato"
                     items={benefitOptions.map((option)=>{
-                      const [kind,contractId,choice]=option.value.split("::"), contract=findContract(contractId), isClause=kind==="clause";
+                      const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause";
                       return {id:option.value,name:option.label,category:isClause?"Clause":tr("Benefício de Feição","Seeming Benefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??tr("Contrato","Contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
                     })}
                     selectedId={benefitKey || benefitOptions[0]?.value || ""}
@@ -814,7 +810,7 @@ export function ExperiencePanel({
                 <small>
                   {new Date(entry.createdAt).toLocaleDateString(locale)}
                 </small>
-                {entry.undo?.kind==="merit"&&["Entitlement","Fae Mount","Fae Pet","Familiar"].includes(entry.undo.name)?<ConfirmAction trigger={<Button
+                {entry.undo?.kind==="merit"&&["Entitlement","Fae Mount","Fae Pet"].includes(entry.undo.name)?<ConfirmAction trigger={<Button
                   type="button"
                   size="sm"
                   variant="ghost"

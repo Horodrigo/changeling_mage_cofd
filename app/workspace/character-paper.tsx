@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * @deprecated Mixed Mage/Changeling paper retained only as a migration reference.
+ * Registry sheet entries now load the line-owned views under `game-lines/<line>/sheet-view.tsx`.
+ * Delete this module after remaining source-oriented tests and legacy adapters are retired.
+ */
+
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ChevronRight,
@@ -80,7 +86,8 @@ import {
   MeritConfigurationEditor,
 } from "../character-builder";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement } from "@/lib/entitlements";
+import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
+import { entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement, type EntitlementDefinition } from "@/lib/entitlements";
 import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
 import {
   decodeConfiguredRows,
@@ -152,9 +159,10 @@ import { ArmorDotPicker, CompactValues, DotValue, HealthTrack, SheetHeading, Tra
 import { CombatPage } from "./combat-page";
 import { CompanionPage } from "./companion-page";
 import { ConfirmAction } from "./confirm-action";
-import { ExperiencePanel } from "./changeling-experience-panel";
-import { MageExperiencePanel } from "./mage-experience-panel";
-import { ExperiencePowerPicker, derivedWithPermanentMerits, formatSpellRequirements } from "./experience-shared";
+import { ExperiencePanel } from "@/game-lines/changeling/experience-panel";
+import { MageExperiencePanel } from "@/game-lines/mage/experience-panel";
+import { ExperiencePowerPicker, derivedWithPermanentMerits } from "./experience-shared";
+import { formatSpellRequirements } from "@/game-lines/mage/experience-shared";
 import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
 import { changelingFavoredRegalia, changelingContractExperienceCost } from "@/lib/changeling-regalia";
 import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
@@ -173,10 +181,12 @@ export function CharacterPaper({
   character,
   updateState,
   updateSheet,
+  catalogs,
 }: {
   character: CharacterSheet;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
+  catalogs: CatalogSnapshot;
 }) {
   const { locale, tr } = useLanguage();
   const isMobile = useIsMobile();
@@ -428,7 +438,7 @@ export function CharacterPaper({
             resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value} />)}{!isCtl&&<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={()=>setSheetTab("legacy")}/>}</section>
               <SheetHeading>Experiência</SheetHeading>
-              {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} />}
+              {isCtl ? <ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /> : <MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
               {!isCtl&&<><SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet}/></>}
               {!isCtl&&<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><ConditionManager selected={selectedConditions} catalog={MAGE_CONDITIONS} onChange={(value)=>setState("conditions",value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração","Write an Aspiration")} onChange={(value)=>updateLineData(updateSheet,character,"aspirations",value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão","Write an Obsession")} onChange={(value)=>updateLineData(updateSheet,character,"obsessions",value)}/></section></div>}
             </>,
@@ -469,7 +479,7 @@ export function CharacterPaper({
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana} />
               <SheetHeading>Condições do Paradoxo</SheetHeading><ConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)} />
             </>,
-            entitlement: <EntitlementPage character={character} updateSheet={updateSheet}/>,
+            entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={catalogs.get<{ entitlements: EntitlementDefinition[] }>("changeling-reference").entitlements}/>,
             legacy: <LegacyPage character={character} updateSheet={updateSheet} onDiscard={()=>setSheetTab("resumo")}/>,
             combate: <>
               <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} />
@@ -617,6 +627,7 @@ export function CharacterPaper({
                 <ExperiencePanel
                   character={character}
                   updateSheet={updateSheet}
+                  catalogs={catalogs}
                 />
               </div>
             </div>
@@ -677,7 +688,7 @@ export function CharacterPaper({
               </section>
             </div>
           </TabsContent>
-          {entitlementMerit&&<TabsContent value="entitlement" data-page-title="Entitlement" className="ctl-sheet-page powers-page"><EntitlementPage character={character} updateSheet={updateSheet}/></TabsContent>}
+          {entitlementMerit&&<TabsContent value="entitlement" data-page-title="Entitlement" className="ctl-sheet-page powers-page"><EntitlementPage character={character} updateSheet={updateSheet} catalog={catalogs.get<{ entitlements: EntitlementDefinition[] }>("changeling-reference").entitlements}/></TabsContent>}
           <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage
               character={character}
@@ -785,6 +796,7 @@ export function CharacterPaper({
                 <MageExperiencePanel
                   character={character}
                   updateSheet={updateSheet}
+                  catalogs={catalogs}
                 />
               </div>
             </div>

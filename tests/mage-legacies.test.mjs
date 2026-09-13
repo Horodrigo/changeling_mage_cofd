@@ -10,7 +10,7 @@ after(()=>vite.close());
 const {CHRONOLOGUE,ELEVENTH_QUESTION,ENGINEERS_OF_THE_SYSTEM,LEGACIES,eleventhQuestionPrerequisites,legacyEntryPrerequisites,legacyAttainmentPrerequisites,normalizeLegacyState}=await vite.ssrLoadModule("/lib/legacies.ts");
 const {refundMageAdvancement}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const {discardLegacyAdvancements}=await vite.ssrLoadModule("/lib/legacy-progression.ts");
-const {experienceTraitDots}=await vite.ssrLoadModule("/app/character-builder.tsx");
+const {experienceTraitDots}=await vite.ssrLoadModule("/app/character-builder-shell.tsx");
 
 const mage=(overrides={})=>({
   skills:{Investigação:2,Erudição:2},
@@ -88,8 +88,8 @@ test("character editing separates Attribute and Skill dots bought with Experienc
     {undo:{kind:"trait",group:"skills",name:"Occult"}},
     {undo:{kind:"arcana",name:"Time"}},
   ]}};
-  assert.deepEqual(experienceTraitDots(sheet,"attributes"),{Strength:2});
-  assert.deepEqual(experienceTraitDots(sheet,"skills"),{Occult:1});
+  assert.deepEqual(experienceTraitDots(sheet,"attributes","mage_experience_history"),{Strength:2});
+  assert.deepEqual(experienceTraitDots(sheet,"skills","mage_experience_history"),{Occult:1});
 });
 
 test("Mage sheet exposes Join/Join Create and places Legacy before Combat",async()=>{
@@ -119,16 +119,16 @@ test("Legacy navigation, progression, and discard follow membership state",async
 
 test("Merit hover prerequisites follow the active locale",async()=>{
   const {readFile}=await import("node:fs/promises");
-  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
-  assert.match(builder,/meritTooltip\(definition,locale\)/);
-  assert.match(builder,/locale==="pt-BR"\?"Pré-requisitos":"Prerequisites"/);
+  const builder=await readFile(new URL("../app/builder/merit-picker.tsx",import.meta.url),"utf8");
+  assert.match(builder,/meritTooltip\(definition,\s*locale\)/);
+  assert.match(builder,/locale === "pt-BR" \? "Pré-requisitos" : "Prerequisites"/);
 });
 
 test("Mage Main exposes Wisdom and Gnosis-limited Inured Spells",async()=>{
   const {readFile}=await import("node:fs/promises");
-  const sheet=await readFile(new URL("../app/workspace/character-paper.tsx",import.meta.url),"utf8");
-  assert.match(sheet,/inuredSpells\.length<gnosis/);
-  assert.match(sheet,/meetsArcanaRequirements\(spell\.requirements,arcana\)/);
+  const sheet=await readFile(new URL("../game-lines/mage/sheet-view.tsx",import.meta.url),"utf8");
+  assert.match(sheet,/inuredSpells\.length\s*<\s*gnosis/);
+  assert.match(sheet,/meetsArcanaRequirements\(spell\.requirements,\s*arcana\)/);
   assert.match(sheet,/base two-die Paradox risk/);
   assert.match(sheet,/compact-remove-action/);
   assert.match(sheet,/DotValue value=\{wisdom\} max=\{10\} singleRow/);

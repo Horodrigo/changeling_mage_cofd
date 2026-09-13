@@ -59,7 +59,10 @@ test("service worker preserva shell offline e exige confirmação para atualizar
 });
 
 test("a criação apresenta Contratos selecionados como cartões expansíveis", async () => {
-  const builder=await readFile(new URL("../app/character-builder.tsx",import.meta.url),"utf8");
+  const builder=(await Promise.all([
+    readFile(new URL("../game-lines/changeling/builder-view.tsx",import.meta.url),"utf8"),
+    readFile(new URL("../game-lines/changeling/builder.tsx",import.meta.url),"utf8"),
+  ])).join("\n");
   assert.match(builder,/className="contract-power-list creation-contract-list"/);
   assert.match(builder,/<details className="contract-power-card"/);
   assert.doesNotMatch(builder,/title=\{contractTooltip/);

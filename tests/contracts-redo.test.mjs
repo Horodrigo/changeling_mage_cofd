@@ -300,7 +300,7 @@ test("referências corrigidas usam as páginas impressas e DE:CtL", () => {
 });
 
 test("interface apresenta Goblin como classificação própria", () => {
-  const builder = readFileSync(new URL("../app/character-builder.tsx", import.meta.url), "utf8");
+  const builder = readFileSync(new URL("../game-lines/changeling/builder-view.tsx", import.meta.url), "utf8");
   const workspace = readFileSync(new URL("../app/workspace.tsx", import.meta.url), "utf8");
   assert.doesNotMatch(builder, /Goblin ·.*Comum/);
   assert.doesNotMatch(workspace, /Goblin · Comum/);
