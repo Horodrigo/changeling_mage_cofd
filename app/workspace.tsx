@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { CharacterSheet } from "./character-builder";
 import { seemingDisplayName } from "@/lib/seeming-presentation";
-import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
+import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { CatalogBoundary } from "./catalog-boundary";
 
@@ -121,16 +121,19 @@ export function Workspace({
   }, [storageKey, displayName]);
 
   useEffect(() => {
-    if (ready) void setDeviceValue(storageKey, characters);
+    if (!ready) return;
+    stageDeviceValue(storageKey, characters);
+    const timer = window.setTimeout(() => {
+      void setDeviceValue(storageKey, characters);
+    }, 400);
+    return () => window.clearTimeout(timer);
   }, [characters, ready, storageKey]);
-
 
   function commitCharacters(
     change: (current: CharacterSheet[]) => CharacterSheet[],
   ) {
     setCharacters((current) => {
       const next = change(current);
-      void setDeviceValue(storageKey, next);
       return next;
     });
   }
