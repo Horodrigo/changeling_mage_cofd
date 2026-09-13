@@ -1,33 +1,12 @@
 import type { CharacterSheet } from "./core/character/character-types";
-import { PERSISTED_GAME_LINE_IDS } from "./core/character/game-line-ids";
 import { normalizeMeritConfiguration } from "./core/character/merit-configuration";
+import {
+  asRecord,
+  validateCurrentCharacter,
+  type CurrentCharacterValidation,
+} from "./core/character/current-character-validation";
 
-export function asRecord(value:unknown):Record<string,unknown>{return value!==null&&typeof value==="object"?value as Record<string,unknown>:{};}
-
-/**
- * Validation is intentionally separate from current-schema normalization.
- * It rejects obsolete or malformed imports without attempting a partial load.
- */
-export type CurrentCharacterValidation = "valid" | "unsupported-schema" | "invalid-character";
-
-export function validateCurrentCharacter(value: unknown): CurrentCharacterValidation {
-  const record = asRecord(value);
-  if (record.schema_version !== 2) return "unsupported-schema";
-  if (
-    record.system !== "chronicles-of-darkness" ||
-    !PERSISTED_GAME_LINE_IDS.includes(record.game_line as CharacterSheet["game_line"])
-  ) return "invalid-character";
-  if (
-    !record.character || typeof record.character !== "object" ||
-    !record.attributes || typeof record.attributes !== "object" ||
-    !record.skills || typeof record.skills !== "object" ||
-    !Array.isArray(record.specializations) || !Array.isArray(record.merits) ||
-    !record.line_data || typeof record.line_data !== "object" ||
-    !record.derived || typeof record.derived !== "object" ||
-    !record.current_state || typeof record.current_state !== "object"
-  ) return "invalid-character";
-  return "valid";
-}
+export { asRecord, validateCurrentCharacter, type CurrentCharacterValidation };
 
 export function normalizeStoredSheet(value:CharacterSheet):CharacterSheet{
   const next=structuredClone(value),storedSpecializations:unknown[]=Array.isArray(next.specializations)?next.specializations:[];

@@ -29,6 +29,12 @@ import {
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
+import {
+  isCurrentStoredCharacter,
+  storedCharacterId,
+  summarizeStoredCharacter,
+  type StoredCharacter,
+} from "@/lib/stored-character";
 import { CatalogBoundary } from "./catalog-boundary";
 import { getGameLineRegistration, listGameLineRegistrations, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
 
@@ -68,11 +74,11 @@ export function Workspace({
 }) {
   const {locale,setLocale,t,tr}=useLanguage();
   const [view, setView] = useState<View>("inicio");
-  const [characters, setCharacters] = useState<CharacterSheet[]>([]);
+  const [characters, setCharacters] = useState<StoredCharacter[]>([]);
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
   const [ready, setReady] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const storageKey = useMemo(
@@ -84,7 +90,7 @@ export function Workspace({
     let cancelled = false;
     async function start() {
       try {
-        const stored = await getDeviceValue<CharacterSheet[]>(storageKey);
+        const stored = await getDeviceValue<StoredCharacter[]>(storageKey);
         if (Array.isArray(stored) && !cancelled) setCharacters(stored);
       } catch {
         setNotice(
@@ -109,7 +115,7 @@ export function Workspace({
   }, [characters, ready, storageKey]);
 
   function commitCharacters(
-    change: (current: CharacterSheet[]) => CharacterSheet[],
+    change: (current: StoredCharacter[]) => StoredCharacter[],
   ) {
     setCharacters((current) => {
       const next = change(current);
@@ -135,9 +141,9 @@ export function Workspace({
 
   function saveCharacter(sheet: CharacterSheet) {
     commitCharacters((current) => {
-      const exists = current.some((item) => item.id === sheet.id);
+      const exists = current.some((item) => storedCharacterId(item) === sheet.id);
       return exists
-        ? current.map((item) => (item.id === sheet.id ? sheet : item))
+        ? current.map((item) => (storedCharacterId(item) === sheet.id ? sheet : item))
         : [sheet, ...current];
     });
     setEditing(null);
@@ -158,7 +164,7 @@ export function Workspace({
       updated_at: new Date().toISOString(),
     };
     commitCharacters((current) =>
-      current.map((item) => (item.id === sheet.id ? sheet : item)),
+      current.map((item) => (storedCharacterId(item) === sheet.id ? sheet : item)),
     );
     setSelected(sheet);
   }
@@ -166,18 +172,20 @@ export function Workspace({
   function updateCharacter(sheet: CharacterSheet) {
     const updated = { ...sheet, updated_at: new Date().toISOString() };
     commitCharacters((current) =>
-      current.map((item) => (item.id === updated.id ? updated : item)),
+      current.map((item) => (storedCharacterId(item) === updated.id ? updated : item)),
     );
     setSelected(updated);
   }
 
-  function deleteCharacter(character: CharacterSheet) {
+  function deleteCharacter(character: StoredCharacter) {
+    const summary = summarizeStoredCharacter(character);
+    const id = storedCharacterId(character);
     commitCharacters((current) =>
-      current.filter((item) => item.id !== character.id),
+      current.filter((item) => item !== character && (!id || storedCharacterId(item) !== id)),
     );
     setSelected(null);
     setView("personagens");
-    setNotice(tr(`“${character.character.name}” foi excluído deste navegador.`,`“${character.character.name}” was deleted from this browser.`));
+    setNotice(tr(`“${summary.name}” foi excluído deste navegador.`,`“${summary.name}” was deleted from this browser.`));
   }
 
   function exportCharacter(character: CharacterSheet) {
@@ -207,7 +215,7 @@ export function Workspace({
       const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(parsed as CharacterSheet));
       commitCharacters((current) => [
         sheet,
-        ...current.filter((item) => item.id !== sheet.id),
+        ...current.filter((item) => storedCharacterId(item) !== sheet.id),
       ]);
       setView("personagens");
       setSelected(sheet);
@@ -319,7 +327,7 @@ export function Workspace({
                   disabled={!selected}
                   onSelect={(event) => {
                     event.preventDefault();
-                    if (selected) setDeleteOpen(true);
+                    if (selected) setDeleteTarget(selected);
                   }}
                 >
                   <Trash2 /> {t("deleteSheet")}
@@ -354,24 +362,26 @@ export function Workspace({
             characters={characters}
             openCharacters={() => navigate("personagens")}
             openCharacter={(sheet) => { void openCharacter(sheet); }}
+            deleteCharacter={setDeleteTarget}
           />
         ) : (
           <Characters
             characters={characters}
             ready={ready}
             open={(sheet) => { void openCharacter(sheet); }}
+            deleteCharacter={setDeleteTarget}
           />
         )}
       </section>
-      {deleteOpen && (
+      {deleteTarget !== null && (
         <Suspense fallback={null}>
           <DeleteCharacterDialog
-            open={deleteOpen}
-            onOpenChange={setDeleteOpen}
-            name={selected?.character.name ?? "esta ficha"}
+            open
+            onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
+            name={summarizeStoredCharacter(deleteTarget).name}
             onDelete={() => {
-              if (selected) deleteCharacter(selected);
-              setDeleteOpen(false);
+              deleteCharacter(deleteTarget);
+              setDeleteTarget(null);
             }}
           />
         </Suspense>
@@ -389,18 +399,20 @@ function Dashboard({
   characters,
   openCharacters,
   openCharacter,
+  deleteCharacter,
 }: {
-  characters: CharacterSheet[];
+  characters: StoredCharacter[];
   openCharacters: () => void;
   openCharacter: (item: CharacterSheet) => void;
+  deleteCharacter: (item: StoredCharacter) => void;
 }) {
   const {tr}=useLanguage();
   const lineCounts = listGameLineRegistrations().map((registration) => ({
     registration,
-    count: characters.filter((item) => item.game_line === registration.id).length,
+    count: characters.filter((item) => summarizeStoredCharacter(item).gameLine === registration.id).length,
   }));
   const recent = [...characters]
-    .sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at)))
+    .sort((a, b) => summarizeStoredCharacter(b).updatedAt.localeCompare(summarizeStoredCharacter(a).updatedAt))
     .slice(0, 4);
   return (
     <div className="page-grid">
@@ -444,24 +456,14 @@ function Dashboard({
         </div>
         {recent.length ? (
           <div className="character-grid compact-character-grid">
-            {recent.map((character) => {
-              const registration = getGameLineRegistration(character.game_line);
-              return <button
-                className={`character-card ${registration.cardClass}`}
-                key={character.id}
-                onClick={() => openCharacter(character)}
-              >
-                <CharacterLineIcon line={character.game_line} />
-                <div>
-                  <Badge variant="outline">{registration.label}</Badge>
-                  <h3>{character.character.name}</h3>
-                  <p>
-                    {character.character.concept || tr("Conceito não informado","No concept provided")}
-                  </p>
-                </div>
-                <ChevronRight />
-              </button>;
-            })}
+            {recent.map((character, index) => (
+              <StoredCharacterCard
+                character={character}
+                key={`${storedCharacterId(character) ?? "legacy"}-${index}`}
+                openCharacter={openCharacter}
+                deleteCharacter={deleteCharacter}
+              />
+            ))}
           </div>
         ) : (
           <div className="dashboard-empty">
@@ -480,10 +482,12 @@ function Characters({
   characters,
   ready,
   open,
+  deleteCharacter,
 }: {
-  characters: CharacterSheet[];
+  characters: StoredCharacter[];
   ready: boolean;
   open: (item: CharacterSheet) => void;
+  deleteCharacter: (item: StoredCharacter) => void;
 }) {
   const {tr}=useLanguage();
   return (
@@ -501,22 +505,14 @@ function Characters({
         <div className="loading-card">{tr("Carregando personagens…","Loading characters…")}</div>
       ) : characters.length ? (
         <div className="character-grid">
-          {characters.map((character) => {
-            const registration = getGameLineRegistration(character.game_line);
-            return <button
-              className={`character-card ${registration.cardClass}`}
-              key={character.id}
-              onClick={() => open(character)}
-            >
-              <CharacterLineIcon line={character.game_line} />
-              <div>
-                <Badge variant="outline">{registration.label}</Badge>
-                <h3>{character.character.name}</h3>
-                <p>{character.character.concept}</p>
-              </div>
-              <ChevronRight />
-            </button>;
-          })}
+          {characters.map((character, index) => (
+            <StoredCharacterCard
+              character={character}
+              key={`${storedCharacterId(character) ?? "legacy"}-${index}`}
+              openCharacter={open}
+              deleteCharacter={deleteCharacter}
+            />
+          ))}
         </div>
       ) : (
         <Empty
@@ -527,6 +523,56 @@ function Characters({
     </section>
   );
 }
+
+function StoredCharacterCard({
+  character,
+  openCharacter,
+  deleteCharacter,
+}: {
+  character: StoredCharacter;
+  openCharacter: (item: CharacterSheet) => void;
+  deleteCharacter: (item: StoredCharacter) => void;
+}) {
+  const {tr}=useLanguage();
+  const summary = summarizeStoredCharacter(character);
+  const registration = summary.gameLine ? getGameLineRegistration(summary.gameLine) : null;
+  const title = summary.isCurrent
+    ? registration?.label ?? ""
+    : tr("Ficha incompatível", "Unsupported character");
+  const concept = summary.concept || tr("Conceito não informado", "No concept provided");
+  return (
+    <article className={`character-card ${registration?.cardClass ?? "legacy-character-card"}`}>
+      <button
+        className="character-card-open"
+        disabled={!summary.isCurrent}
+        onClick={() => {
+          if (isCurrentStoredCharacter(character)) openCharacter(character);
+        }}
+        title={summary.isCurrent ? undefined : tr("Esta ficha usa um formato não suportado e não pode ser aberta.", "This character uses an unsupported format and cannot be opened.")}
+      >
+        {summary.gameLine ? <CharacterLineIcon line={summary.gameLine} /> : <div className="character-monogram">?</div>}
+        <div>
+          <Badge variant={summary.isCurrent ? "outline" : "destructive"}>{title}</Badge>
+          <h3>{summary.name}</h3>
+          <p>{concept}</p>
+          {!summary.isCurrent && <small>{tr("Formato não suportado — exclua sem abrir.", "Unsupported format — delete without opening.")}</small>}
+        </div>
+        {summary.isCurrent && <ChevronRight />}
+      </button>
+      <Button
+        className="character-card-delete"
+        variant="ghost"
+        size="icon"
+        aria-label={tr(`Excluir ${summary.name}`, `Delete ${summary.name}`)}
+        title={tr("Excluir ficha", "Delete character")}
+        onClick={() => deleteCharacter(character)}
+      >
+        <Trash2 />
+      </Button>
+    </article>
+  );
+}
+
 function CharacterLineIcon({ line }: { line: CharacterSheet["game_line"] }) {
   const registration = getGameLineRegistration(line);
   return (
