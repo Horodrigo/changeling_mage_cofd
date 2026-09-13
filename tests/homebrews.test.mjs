@@ -14,7 +14,6 @@ const vite = await createServer({
 });
 after(async () => vite.close());
 
-const homebrews = await vite.ssrLoadModule("/lib/homebrews.ts");
 const merits = await vite.ssrLoadModule("/lib/merits.ts");
 merits.replaceMeritCatalog(["core","changeling","mage"].flatMap((name) =>
   JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`, import.meta.url), "utf8")),
@@ -35,47 +34,14 @@ const contracts = {
   ),
 };
 
-test("interpreta benefícios e requisitos nomeados linha a linha", () => {
-  assert.deepEqual(homebrews.parseNamedText("Beast: dentes\nOgre: força"), {
-    Beast: "dentes",
-    Ogre: "força",
-  });
-});
-
-test("filtra Méritos homebrew por linha e preserva os Core", () => {
-  const catalog = {
-    contracts: [],
-    spells: [],
-    merits: [
-      { id: "core", line: "Core" },
-      { id: "ctl", line: "CtL" },
-      { id: "mta", line: "MtA" },
-    ],
-  };
-  assert.deepEqual(
-    homebrews.meritsForLine(catalog, "CtL").map((item) => item.id),
-    ["core", "ctl"],
-  );
-});
-
-test("combina toggle geral e individual sem perder preferências", () => {
-  const catalog = { ...homebrews.EMPTY_HOMEBREWS, disabledIds: ["h-courts", "custom"] };
-  assert.equal(homebrews.isHomebrewActive(catalog, "h-courts"), false);
-  assert.equal(homebrews.isHomebrewActive(catalog, "outro"), true);
-  assert.equal(homebrews.isHomebrewActive({ ...catalog, enabled: false }, "outro"), false);
-  assert.equal(homebrews.isBuiltinHomebrew("h-seemings"), true);
-  assert.equal(homebrews.isBuiltinHomebrew("ctl-2ed"), false);
-});
-
 test("Beyond the Hedge foi removido e escolhas de Court Goodwill usam Cortes canônicas", () => {
-  assert.deepEqual(homebrews.BUILTIN_HOMEBREW_SOURCES.map((source) => source.id), ["h-courts", "h-seemings"]);
   assert.equal(changelingMeritConfigurations.findMeritConfiguration("Court Goodwill")?.fields[0]?.kind, "court");
   assert.equal(courts.courtCanonicalId("Primavera"), "spring");
   assert.equal(courts.courtCanonicalId("Spring Court"), "spring");
   assert.ok(courts.CTL_COURT_DEFINITIONS.some((court) => court.sourceId === "h-courts"));
 });
 
-test("Book of Seemings e Book of Courts expõem todo o conteúdo novo pelo toggle da fonte",()=>{
+test("Book of Seemings e Book of Courts mantêm todo o conteúdo nos catálogos de linha",()=>{
   assert.equal(kiths.KITHS.filter((item)=>item.sourceId==="h-seemings").length,12);
   assert.equal(entitlements.filter((item)=>item.sourceId==="h-courts").length,8);
   assert.equal(entitlements.filter((item)=>item.sourceId==="h-seemings").length,13);

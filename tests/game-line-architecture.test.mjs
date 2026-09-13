@@ -72,9 +72,13 @@ test("deferred Homebrew management is not part of the main workspace route", asy
   assert.doesNotMatch(workspace, /HomebrewsScreen|\.\/homebrews/);
 });
 
-test("normal game-line surfaces do not load legacy Homebrew storage", async () => {
-  const hook = await source("app/use-homebrews.ts");
-  assert.doesNotMatch(hook, /device-storage|readHomebrews|localStorage/);
+test("deferred Homebrew modules are removed from the active source tree", async () => {
+  await Promise.all([
+    assert.rejects(access(`${root}/app/homebrews.tsx`)),
+    assert.rejects(access(`${root}/app/use-homebrews.ts`)),
+    assert.rejects(access(`${root}/lib/homebrews.ts`)),
+    assert.rejects(access(`${root}/lib/google-drive-sync.ts`)),
+  ]);
 });
 
 test("game-line contracts do not expose a deferred Homebrew surface", async () => {

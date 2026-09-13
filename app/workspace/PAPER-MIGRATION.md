@@ -22,6 +22,9 @@ Changeling.
   surfaces receive only immutable snapshots.
 - `lib/merit-configurations.ts`: removed after its remaining tests moved to the
   explicit Mage and Changeling merit implementations.
+- The deferred Homebrew UI, storage, and Google Drive adapter: removed. Their
+  catalogs remain as normal static line catalogs; a future Homebrew feature must
+  be designed against the snapshot boundary rather than restore mutable globals.
 
 ## Deferred deletion candidates
 
