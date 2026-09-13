@@ -1,4 +1,9 @@
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
+import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 
-/** Compatibility adapter; Mage hooks move here as they leave shared modules. */
-export const mageRules: GameLineRulesModule = {};
+/** Mage-owned persistence effects run only after the current schema is valid. */
+export const mageRules: GameLineRulesModule = {
+  synchronizeCharacter(character) {
+    return synchronizeMageBuilderMeritGrants(structuredClone(character));
+  },
+};

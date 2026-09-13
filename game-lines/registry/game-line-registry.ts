@@ -30,5 +30,6 @@ export function listGameLineRegistrations(): readonly GameLineRegistration[] {
  */
 export async function normalizeGameLineCharacter(character: CharacterSheet): Promise<CharacterSheet> {
   const rules = await getGameLineRegistration(character.game_line).loadRules();
-  return rules.normalizeCharacter?.(character) ?? character;
+  const normalized = rules.normalizeCharacter?.(character) ?? character;
+  return rules.synchronizeCharacter?.(normalized) ?? normalized;
 }

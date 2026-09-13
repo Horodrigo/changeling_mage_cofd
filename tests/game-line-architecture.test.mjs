@@ -43,6 +43,8 @@ test("Mage conditions do not depend on Changeling catalog state", async () => {
 test("persistence is independent of app components", async () => {
   const persistence = await source("lib/character-persistence.ts");
   assert.doesNotMatch(persistence, /from\s+["'][^"']*app\//);
+  assert.doesNotMatch(persistence, /merit-configurations/);
+  assert.doesNotMatch(persistence, /synchronizeMeritGrants/);
 });
 
 test("deferred Homebrew management is not part of the main workspace route", async () => {

@@ -1,5 +1,6 @@
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { normalizeChangelingFrailties } from "@/lib/creation-rules";
+import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 
 /** Pure normalization hook; no catalog or browser I/O is performed here. */
 export const changelingRules: GameLineRulesModule = {
@@ -12,5 +13,8 @@ export const changelingRules: GameLineRulesModule = {
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),
       },
     };
+  },
+  synchronizeCharacter(character) {
+    return synchronizeChangelingBuilderMeritGrants(structuredClone(character));
   },
 };
