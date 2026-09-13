@@ -40,6 +40,8 @@ As vinhas e folhas não devem fazer parte dos glifos. Elas devem continuar sendo
 
 ## 2. Textura de fundo com degradê verde nas bordas
 
+**Status: implementado na branch `changeling-style`.**
+
 ### Escopo
 
 Substituir ou complementar a textura atual do fundo pela textura de papel da imagem de referência, preservando o degradê verde nas bordas que já existe.
@@ -57,6 +59,17 @@ Uma solução provável seria:
 - testes em telas largas, móveis e diferentes níveis de zoom.
 
 O risco principal é a textura ficar forte demais atrás de textos e controles. Será necessário ajustar escala, repetição, opacidade e contraste sem perder a aparência de papel.
+
+### Implementação realizada
+
+- Foi criada uma textura própria de papel marfim, inspirada na referência visual, em `public/changeling-paper-texture.webp`.
+- O arquivo foi otimizado como WebP de 1024 × 1024 e recebeu tratamento gradual nas bordas para produzir repetição contínua sem criar simetria perceptível no centro.
+- A textura foi aplicada somente à ficha de Changeling; a ficha de Mage não foi alterada.
+- O degradê verde horizontal existente foi preservado como uma camada CSS independente sobre a textura.
+- A cor de fallback `#fffef9` foi mantida para o período anterior ao carregamento do asset ou para eventual falha de imagem.
+- O novo asset foi incluído no shell offline e a versão do Service Worker foi atualizada para evitar que o cache anterior esconda a mudança.
+
+O contraste foi mantido baixo para que a textura funcione como acabamento do papel e não concorra com textos, controles, stamps ou a caveira de fundo.
 
 ## 3. Divisores atuais com estilo esverdeado
 
@@ -115,7 +128,7 @@ A fonte deve ficar por último porque depende de uma decisão visual mais defini
 | Item | Esforço relativo | Principal risco |
 | --- | --- | --- |
 | Fonte maiúscula, minúscula e acentuada | Alto | Consistência tipográfica e cobertura de caracteres |
-| Textura de fundo com bordas verdes | Baixo a médio | Contraste, desempenho e excesso de textura |
+| Textura de fundo com bordas verdes | Implementado | Textura WebP repetível sob o degradê existente |
 | Divisores simples esverdeados | Baixo | Contraste e separação entre linhas de jogo |
 | Divisores de categoria ornamentados | Médio a alto | Responsividade e preservação das proporções |
 

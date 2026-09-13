@@ -798,7 +798,7 @@ button { cursor: pointer; }
 .cod-sheet.ctl-sheet:after { background-image:url('/changeling-skull.png'); }
 .cod-sheet.mta-sheet:after { background-image:url('/mage-skull.png'); }
 .cod-sheet > * { position:relative; z-index:1; }
-.ctl-sheet { --sheet-accent:#315f43; --sheet-ink:#263a2c; background:linear-gradient(90deg,#eff5e9 0,#fffef9 7%,#fffef9 93%,#eff5e9 100%); }
+.ctl-sheet { --sheet-accent:#315f43; --sheet-ink:#263a2c; background-color:#fffef9; background-image:linear-gradient(90deg,rgba(239,245,233,.94) 0,rgba(255,254,249,0) 7%,rgba(255,254,249,0) 93%,rgba(239,245,233,.94) 100%),url('/changeling-paper-texture.webp'); background-repeat:no-repeat,repeat; background-size:auto,1024px 1024px; }
 .mta-sheet { --sheet-accent:#397895; --sheet-ink:#253a47; background:linear-gradient(135deg,#eef8fb 0,#fff 13%,#fff 87%,#e9f5f8 100%); }
 .cod-sheet-title { position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:20px; padding:2px 8px 16px; border-bottom:2px solid var(--sheet-accent); text-transform:uppercase; }
 .cod-sheet-title > div { display:flex; align-items:baseline; gap:10px; }
