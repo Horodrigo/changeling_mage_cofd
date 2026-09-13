@@ -2,9 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { after } from "node:test";
+import { createServer } from "vite";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const source = (path) => readFile(`${root}/${path}`, "utf8");
+const vite = await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},resolve:{alias:{"@":root}}});
+after(() => vite.close());
 
 test("neutral contracts and core catalog infrastructure do not know concrete game lines", async () => {
   const [contracts, service] = await Promise.all([
@@ -49,4 +53,12 @@ test("deferred Homebrew management is not part of the main workspace route", asy
 test("shared creation rules do not read Changeling catalog state", async () => {
   const creationRules = await source("lib/creation-rules.ts");
   assert.doesNotMatch(creationRules, /changeling-courts/);
+});
+
+test("catalog snapshots deeply freeze static catalog data", async () => {
+  const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
+  const value = freezeCatalogData([{ id: "catalog", nested: { value: 1 } }]);
+  assert.ok(Object.isFrozen(value));
+  assert.ok(Object.isFrozen(value[0]));
+  assert.ok(Object.isFrozen(value[0].nested));
 });

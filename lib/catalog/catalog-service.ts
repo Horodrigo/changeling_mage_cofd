@@ -81,11 +81,21 @@ class ImmutableCatalogSnapshot implements CatalogSnapshot {
   entries() { return this.values.entries(); }
 }
 
+/** Static JSON is shared safely only when every returned nested value is frozen. */
+export function freezeCatalogData<T>(value: T): T {
+  if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
+  for (const child of Object.values(value as Record<string, unknown>)) freezeCatalogData(child);
+  return Object.freeze(value);
+}
+
 /** Loads declared groups without knowing game-line catalog names or data shapes. */
 async function loadGroups(
   requested: ReadonlyArray<readonly [string, CatalogGroupModule]>,
 ): Promise<CatalogSnapshot> {
-  const values = await Promise.all(requested.map(async ([id, module]) => [id, await module.load(catalogService)] as const));
+  const values = await Promise.all(requested.map(async ([id, module]) => [
+    id,
+    freezeCatalogData(await module.load(catalogService)),
+  ] as const));
   return new ImmutableCatalogSnapshot(new Map(values));
 }
 
