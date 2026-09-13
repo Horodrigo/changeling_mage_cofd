@@ -31,6 +31,11 @@ test("current game lines do not statically depend on one another", async () => {
   assert.doesNotMatch(changeling, /game-lines\/mage|\.\.\/mage\//);
 });
 
+test("Mage conditions do not depend on Changeling catalog state", async () => {
+  const mageConditions = await source("lib/mage-conditions.ts");
+  assert.doesNotMatch(mageConditions, /changeling-conditions/);
+});
+
 test("persistence is independent of app components", async () => {
   const persistence = await source("lib/character-persistence.ts");
   assert.doesNotMatch(persistence, /from\s+["'][^"']*app\//);

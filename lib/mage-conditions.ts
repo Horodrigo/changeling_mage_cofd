@@ -1,17 +1,14 @@
-import { CHANGELING_CONDITIONS, type ChangelingCondition } from "./changeling-conditions";
+import type { ConditionDefinition } from "./catalog/catalog-types";
 
-export type MageCondition = ChangelingCondition;
+export type MageCondition = ConditionDefinition;
 
 export const MAGE_CONDITIONS: MageCondition[] = [];
 
 export function replaceMageConditionCatalog(items: MageCondition[]) {
-  const common = CHANGELING_CONDITIONS.filter(
-    (item) => item.sourceCode === "CofD" || item.sourceCode === "HL",
-  );
-  const combined = [...common, ...items].filter(
+  const unique = items.filter(
     (item, index, array) => array.findIndex((other) => other.id === item.id) === index,
   );
-  MAGE_CONDITIONS.splice(0, MAGE_CONDITIONS.length, ...combined);
+  MAGE_CONDITIONS.splice(0, MAGE_CONDITIONS.length, ...unique);
 }
 
 export const findMageCondition = (id: string) =>

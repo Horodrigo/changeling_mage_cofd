@@ -1,17 +1,6 @@
-export type ChangelingCondition = {
-  id: string;
-  name: string;
-  originalName: string;
-  category: "Mental" | "Physical" | "Física" | "Social" | "Supernatural" | "Sobrenatural" | "Changeling";
-  description: string;
-  penalty?: string;
-  resolution?: string;
-  beat?: string;
-  persistent?: boolean;
-  source: string;
-  sourceCode: string;
-  page: number;
-};
+import type { ConditionDefinition } from "./catalog/catalog-types";
+
+export type ChangelingCondition = ConditionDefinition;
 
 type PortugueseConditionPresentation = Partial<Pick<ChangelingCondition, "name" | "category" | "description" | "penalty" | "resolution" | "beat">>;
 

@@ -4,6 +4,11 @@ import { replaceMageConditionCatalog, type MageCondition } from "@/lib/mage-cond
 export const mageReferenceCatalogGroup: CatalogGroupModule = {
   load: (reader) => reader.getCatalog<MageCondition[]>("mage-conditions"),
   applyLegacy(snapshot) {
-    replaceMageConditionCatalog(snapshot.get<MageCondition[]>("mage-reference"));
+    const core = snapshot.get<{ conditions: MageCondition[] }>("core-reference");
+    const mage = snapshot.get<MageCondition[]>("mage-reference");
+    replaceMageConditionCatalog([
+      ...core.conditions.filter((condition) => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
+      ...mage,
+    ]);
   },
 };

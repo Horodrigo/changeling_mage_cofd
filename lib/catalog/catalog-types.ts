@@ -9,6 +9,22 @@ export interface CatalogManifest {
   catalogs: Record<string, CatalogManifestEntry>;
 }
 
+/** Shared catalog record shape; individual lines may add their own categories. */
+export interface ConditionDefinition {
+  id: string;
+  name: string;
+  originalName: string;
+  category: string;
+  description: string;
+  penalty?: string;
+  resolution?: string;
+  beat?: string;
+  persistent?: boolean;
+  source: string;
+  sourceCode: string;
+  page: number;
+}
+
 export interface SpellDefinition {
   id: string;
   name: string;
