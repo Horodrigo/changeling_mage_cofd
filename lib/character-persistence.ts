@@ -1,5 +1,5 @@
 import type { CharacterSheet } from "./core/character/character-types";
-import { ATTRIBUTES, SKILLS, normalizeChangelingFrailties } from "./creation-rules";
+import { ATTRIBUTES, SKILLS } from "./creation-rules";
 import { normalizeMeritConfiguration, synchronizeMeritGrants } from "./merit-configurations";
 
 export function asRecord(value:unknown):Record<string,unknown>{return value!==null&&typeof value==="object"?value as Record<string,unknown>:{};}
@@ -11,7 +11,6 @@ export function normalizeStoredSheet(value:CharacterSheet):CharacterSheet{
   const storedMerits:unknown[]=Array.isArray(next.merits)?next.merits:[];
   next.merits=storedMerits.map((value,index)=>{const item=asRecord(value);return {name:String(item.name==="Throne"?"Power Behind the Throne":item.name??""),dots:Number(item.dots??1),instanceId:item.instanceId?String(item.instanceId):`legacy-merit-${index}-${String(item.name??"merit").toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,sourceId:item.sourceId?String(item.sourceId):undefined,source:item.source?String(item.source):undefined,configuration:normalizeMeritConfiguration(item.configuration),grantedBy:item.grantedBy?String(item.grantedBy):undefined};});
   next.line_data=next.line_data&&typeof next.line_data==="object"?next.line_data:{};
-  if(next.game_line==="CtL"){const wyrd=Number(next.line_data.wyrd??1);next.line_data={...next.line_data,frailties:normalizeChangelingFrailties(next.line_data.frailties,wyrd)};}
   return synchronizeMeritGrants(next);
 }
 

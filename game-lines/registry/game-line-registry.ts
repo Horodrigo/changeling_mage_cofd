@@ -1,5 +1,6 @@
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import type { GameLineRegistration } from "@/lib/game-line-contracts/game-line-registration";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { changelingRegistration } from "../changeling/registration";
 import { mageRegistration } from "../mage/registration";
 
@@ -21,4 +22,13 @@ export function getGameLineRegistration(id: PersistedGameLineId): GameLineRegist
 
 export function listGameLineRegistrations(): readonly GameLineRegistration[] {
   return registrations;
+}
+
+/**
+ * Runs an optional pure line-owned normalization hook after structural loading.
+ * Rule modules are loaded only for the selected persisted game line.
+ */
+export async function normalizeGameLineCharacter(character: CharacterSheet): Promise<CharacterSheet> {
+  const rules = await getGameLineRegistration(character.game_line).loadRules();
+  return rules.normalizeCharacter?.(character) ?? character;
 }

@@ -32,7 +32,7 @@ import { seemingDisplayName } from "@/lib/seeming-presentation";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { CatalogBoundary } from "./catalog-boundary";
-import { getGameLineRegistration } from "@/game-lines/registry/game-line-registry";
+import { getGameLineRegistration, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
 
 const CharacterBuilder = lazy(() =>
   import("./character-builder").then((module) => ({ default: module.CharacterBuilder })),
@@ -149,7 +149,7 @@ export function Workspace({
     try {
       await hydrateCharacterCatalogs(sheet.game_line);
       const { normalizeStoredSheet } = await import("@/lib/character-persistence");
-      setSelected(normalizeStoredSheet(sheet));
+      setSelected(await normalizeGameLineCharacter(normalizeStoredSheet(sheet)));
     } catch {
       setSelected(sheet);
     }
@@ -229,7 +229,7 @@ export function Workspace({
       const migratedSheet = parsed.schema_version === 2
         ? (parsed as CharacterSheet)
         : migrateJsonV1(parsed, displayName);
-      const sheet = normalizeStoredSheet(migratedSheet);
+      const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(migratedSheet));
       commitCharacters((current) => [
         sheet,
         ...current.filter((item) => item.id !== sheet.id),
