@@ -1,5 +1,5 @@
 const DATABASE_NAME = "arquivo-das-trevas";
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2;
 const STORE_NAME = "key-value";
 const pendingWrites = new Map<string, Promise<void>>();
 
@@ -9,6 +9,8 @@ function openDatabase(): Promise<IDBDatabase> {
     request.onupgradeneeded = () => {
       if (!request.result.objectStoreNames.contains(STORE_NAME))
         request.result.createObjectStore(STORE_NAME);
+      if (!request.result.objectStoreNames.contains("catalogs"))
+        request.result.createObjectStore("catalogs");
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
