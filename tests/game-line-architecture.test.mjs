@@ -38,6 +38,11 @@ test("current game lines do not statically depend on one another", async () => {
   assert.doesNotMatch(changeling, /game-lines\/mage|\.\.\/mage\//);
 });
 
+test("Changeling sheet snapshots include the core conditions they consume", async () => {
+  const registration = await source("game-lines/changeling/registration.ts");
+  assert.match(registration, /sheet:\s*\[[^\]]*"core-reference"/);
+});
+
 test("Mage conditions do not depend on Changeling catalog state", async () => {
   const mageConditions = await source("lib/mage-conditions.ts");
   assert.doesNotMatch(mageConditions, /changeling-conditions/);

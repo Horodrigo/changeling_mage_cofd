@@ -121,15 +121,13 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             ]))}
             invalid={props.missing("seeming")}
           />
-          <div className="ctl-favored-inline">
-            <Choice
-              label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
-              value={props.favoredAttribute}
-              setValue={props.setFavoredAttribute}
-              options={favored}
-              invalid={props.missing("favoredAttribute")}
-            />
-          </div>
+          <Choice
+            label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
+            value={props.favoredAttribute}
+            setValue={props.setFavoredAttribute}
+            options={favored}
+            invalid={props.missing("favoredAttribute")}
+          />
           <div className="regalia-choice-stack">
             <span className="regalia-field-label">{tr("Segunda Regalia favorecida", "Second favored Regalia")}</span>
             <div className="regalia-information" aria-live="polite">

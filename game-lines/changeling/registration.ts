@@ -10,7 +10,7 @@ export const changelingRegistration: GameLineRegistration = {
   summaryClass: "ctl-summary",
   catalogGroups: {
     builder: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-reference"],
-    sheet: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-reference"],
+    sheet: ["core-merits", "changeling-merits", "changeling-contracts", "core-reference", "changeling-reference"],
   },
   loadRules: () => import("./rules").then(({ changelingRules }) => changelingRules),
   loadBuilder: () => import("./builder").then(({ changelingBuilder }) => changelingBuilder),

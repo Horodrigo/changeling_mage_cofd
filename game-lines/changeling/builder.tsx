@@ -158,11 +158,11 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     }
     if (meritSpent > meritBudget) add(3, "merits", tr("Méritos acima do limite", "Merits exceed the limit"));
     for (const [key, value, label] of [
-      ["seeming", seeming, "Feição"], ["kith", kith, "Fratria"], ["needle", needle, "Agulha"],
-      ["thread", thread, "Fio"], ["favoredAttribute", favoredAttribute, "Atributo favorecido"], ["secondRegalia", secondRegalia, "Segunda Regalia"],
+      ["seeming", seeming, tr("Feição", "Seeming")], ["kith", kith, tr("Fratria", "Kith")], ["needle", needle, tr("Agulha", "Needle")],
+      ["thread", thread, tr("Fio", "Thread")], ["favoredAttribute", favoredAttribute, tr("Atributo favorecido", "Favored Attribute")], ["secondRegalia", secondRegalia, tr("Segunda Regalia", "Second Regalia")],
     ]) if (!value) add(3, key, label);
     const selectedKith = findKith(reference.kiths, kith);
-    if (customKith && (!customKithSkill || !customKithDescription.trim())) add(3, "kith", "Fratria personalizada completa");
+    if (customKith && (!customKithSkill || !customKithDescription.trim())) add(3, "kith", tr("Fratria personalizada completa", "Complete custom Kith"));
     if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", tr("Escolha da Bênção da Fratria", "Kith Blessing choice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
     if (

@@ -561,6 +561,7 @@ button { cursor: pointer; }
 .builder-actions { max-width: 1000px; margin: 16px auto 0; display: grid; grid-template-columns: auto 1fr auto; }
 .line-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin: 24px 0; }
 .line-choice button { min-height: 130px; display: flex; flex-direction: column; align-items: flex-start; gap: 9px; padding: 20px; border: 1px solid #ddd5cc; border-radius: 11px; background: #faf7f2; text-align: left; }
+.line-choice button img { width:64px; height:64px; object-fit:contain; }
 .line-choice button.selected { border-color: #79578d; box-shadow: inset 0 0 0 1px #79578d,0 9px 25px #5b416b12; background: #f7f0fa; }
 .line-choice strong { font:700 20px Georgia,serif; }.line-choice small { color: #7d757d; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }

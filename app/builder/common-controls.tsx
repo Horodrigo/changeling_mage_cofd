@@ -163,7 +163,7 @@ export function DotRow({ name, value, setValue, min, max, tag, canIncrease = tru
 
 export function Choice({ label = "", value, setValue, options, optionLabels = {}, invalid = false }: { label?: string; value: string; setValue: Setter<string>; options: readonly string[]; optionLabels?: Record<string, string>; invalid?: boolean }) {
   const { tr } = useLanguage();
-  return <label className={invalid ? "missing-field" : ""}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger><SelectValue placeholder={tr("Selecione", "Select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
+  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger><SelectValue placeholder={tr("Selecione", "Select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
 }
 
 export function Aspirations({ values, setValues }: { values: string[]; setValues: Setter<string[]> }) {
