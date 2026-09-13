@@ -80,6 +80,15 @@ export async function setDeviceValue<T>(key: string, value: T) {
   }
 }
 
+/** Stage the latest value synchronously so a debounced IndexedDB write is crash-safe. */
+export function stageDeviceValue<T>(key: string, value: T) {
+  const snapshot = structuredClone(value);
+  try {
+    localStorage.setItem(`${key}:pending-write`, JSON.stringify(snapshot));
+    localStorage.setItem(key, JSON.stringify(snapshot));
+  } catch {}
+}
+
 function readLegacy<T>(key: string): T | null {
   try {
     const value = localStorage.getItem(key);
