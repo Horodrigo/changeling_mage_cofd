@@ -172,6 +172,7 @@ export function canAdvanceGrantedMerit(
 
 export function ExperienceMeritPicker({
   line,
+  archetypes,
   meritCatalog,
   character,
   selectedId,
@@ -179,6 +180,7 @@ export function ExperienceMeritPicker({
   onSelect,
 }: {
   line: "CtL" | "MtA";
+  archetypes: readonly string[];
   meritCatalog: readonly MeritDefinition[];
   character: CharacterSheet;
   selectedId: string;
@@ -190,7 +192,7 @@ export function ExperienceMeritPicker({
   const [category, setCategory] = useState("Todas");
   const [meritDrafts, setMeritDrafts] = useState<Record<string,{newInstance:boolean;instanceIndex:number;dots:number}>>({});
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
-  const context=meritContextForSheet(character, meritCatalog);
+  const context=meritContextForSheet(character, meritCatalog, archetypes);
   const catalog = alphabetical([...meritCatalog], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),

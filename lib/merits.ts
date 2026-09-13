@@ -82,16 +82,16 @@ export function meritPrerequisitesMet(
   if(owned.some(item=>item.dots>0&&catalog.some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
   if(merit.name==="Infamous Mentor"){
     const id=String(context.configuration?.mentorId??"");
-    return context.gameLine==="MtA"&&owned.some(item=>item.name==="Mentor"&&item.dots>=(context.selectedDots??1)&&(!id||item.instanceId===id));
+    return owned.some(item=>item.name==="Mentor"&&item.dots>=(context.selectedDots??1)&&(!id||item.instanceId===id));
   }
-  if (merit.name === "Lucid Dreamer" && context.gameLine === "CtL") return false;
+  if (merit.name === "Lucid Dreamer" && context.archetypes?.includes("changeling")) return false;
   let usedSeemingAlternative=false;
-  if(merit.seeming&&context.gameLine==="CtL"&&courtKey(context.seeming)!==courtKey(merit.seeming)){
+  if(merit.seeming&&courtKey(context.seeming)!==courtKey(merit.seeming)){
     if(!merit.alternativePrerequisites||!simplePrerequisitesMet(merit.alternativePrerequisites,context)) return false;
     usedSeemingAlternative=true;
   }
   let printedPrerequisites=merit.prerequisites;
-  if(merit.courtAccess?.length&&context.gameLine==="CtL"){
+  if(merit.courtAccess?.length){
     const ownCourt=courtKey(context.court);
     const mantle=Math.max(0,Number(context.mantle??context.merits?.find((item)=>item.name==="Mantle")?.dots??0));
     const goodwill=new Map((context.merits??[]).filter((item)=>item.name==="Court Goodwill").map((item)=>[courtKey(item.configuration?.court),Number(item.dots??0)]));
@@ -131,7 +131,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
   if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|Contract of|≤|maximum|or lower/i.test(value))
     return textRequirementMet(value,context,(context.meritCatalog??getMeritsForLine(context.gameLine)).map(item=>item.name));
   const text=value.replace(/≤/g," maximum ");
-  if(/Non-changeling/i.test(text)&&context.gameLine==="CtL") return false;
+  if(/Non-changeling/i.test(text)&&context.archetypes?.includes("changeling")) return false;
   return text.split(";").every((rawGroup)=>{
     const group=rawGroup.trim();
     if(!group) return true;
@@ -187,14 +187,14 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
 }
 
 /** Shared current-sheet context for catalog eligibility and purchase-time validation. */
-export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;line_data:Record<string,unknown>;derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[]):MeritPrerequisiteContext {
+export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;line_data:Record<string,unknown>;derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[], archetypes?: readonly string[]):MeritPrerequisiteContext {
   const data=sheet.line_data;
   const bonus=data.merit_granted_skill_bonuses as Record<string,number>|undefined;
   const skills={...sheet.skills};
   for(const [name,value]of Object.entries(bonus??{})) skills[name]=(skills[name]??0)+value;
-  return {gameLine:sheet.game_line,attributes:sheet.attributes,skills,merits:sheet.merits,meritCatalog,
+  return {gameLine:sheet.game_line,archetypes,attributes:sheet.attributes,skills,merits:sheet.merits,meritCatalog,
     seeming:String(data.seeming??""),kith:String(data.kith??""),path:String(data.path??""),order:String(data.order??""),
-    gnosis:Number(data.gnosis??1),arcana:(data.arcana??{}) as Record<string,number>,wyrd:Number(data.wyrd??1),
+    gnosis:data.gnosis===undefined?undefined:Number(data.gnosis),arcana:(data.arcana??{}) as Record<string,number>,wyrd:data.wyrd===undefined?undefined:Number(data.wyrd),
     court:String(data.court??""),mantle:sheet.merits.find(item=>item.name==="Mantle")?.dots,size:Number(sheet.derived?.Tamanho??5),
     powers:[...(Array.isArray(data.contracts)?data.contracts:[]),...(Array.isArray(data.learned_contracts)?data.learned_contracts:[])].map(item=>String(item.originalName??item.name??""))};
 }

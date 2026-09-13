@@ -117,7 +117,7 @@ export function MageExperiencePanel({
       ...catalogs.get<MeritDefinition[]>("core-merits"),
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
     ],
-    merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog))),
+    merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog, ["awakened"]))),
     spells = catalogs.get<SpellDefinition[]>("mage-spells");
   const arcana = (
     character.line_data.arcana && typeof character.line_data.arcana === "object"
@@ -242,7 +242,7 @@ export function MageExperiencePanel({
     if(purchase==="Mérito"){
       if(!selectedMerit||!nextMerit)return setFeedback(tr("Selecione um Mérito disponível.","Select an available Merit."));
       if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(tr("Este Mérito já foi concedido.","This Merit is already granted."));
-      const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog));
+      const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]));
       if(problems.length)return setFeedback(problems.join(" "));
     }
     if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(tr("Informe o nome da Especialização.","Enter the Specialty name."));
@@ -532,6 +532,7 @@ export function MageExperiencePanel({
                 {tr("Mérito","Merit")}
                 <ExperienceMeritPicker
                   line="MtA"
+                  archetypes={["awakened"]}
                   meritCatalog={meritCatalog}
                   character={character}
                   selectedId={selectedMerit?.id ?? ""}

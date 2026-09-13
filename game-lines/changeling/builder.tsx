@@ -138,7 +138,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
   }, [wyrd, maximumPowerFromMerits]);
 
   const meritContext: MeritPrerequisiteContext = {
-    gameLine: "CtL", attributes: common.attributes, skills: common.skills,
+    gameLine: "CtL", archetypes: ["changeling"], attributes: common.attributes, skills: common.skills,
     seeming, kith, wyrd, court,
     mantle: court && court !== "Sem Corte" ? Math.max(1, initial?.merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
     merits: mergeCreationMerits(initial?.merits, common.merits),

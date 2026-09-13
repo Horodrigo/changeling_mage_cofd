@@ -460,7 +460,7 @@ export function ExperiencePanel({
     if (purchaseType === "Mérito") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(tr("Este Mérito não possui outro nível disponível.", "This Merit has no higher available rating."));
-      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
+      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? crypto.randomUUID();
@@ -704,6 +704,7 @@ export function ExperiencePanel({
                   {tr("Mérito","Merit")}
                   <ExperienceMeritPicker
                     line="CtL"
+                    archetypes={["changeling"]}
                     meritCatalog={meritCatalog}
                     character={character}
                     selectedId={meritId}

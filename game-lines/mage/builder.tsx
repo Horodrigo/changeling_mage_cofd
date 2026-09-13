@@ -170,6 +170,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
 
   const meritContext: MeritPrerequisiteContext = {
     gameLine: "MtA",
+    archetypes: ["awakened"],
     attributes: common.attributes,
     skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Ocultismo: Math.min(5, (common.skills.Ocultismo ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,

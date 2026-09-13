@@ -8,6 +8,7 @@ export type Requirement =
 
 export type RequirementContext = {
   gameLine: string; attributes?: Record<string, number>; skills?: Record<string, number>;
+  archetypes?: readonly string[];
   gnosis?: number; wyrd?: number; size?: number; arcana?: Record<string, number>;
   path?: string; order?: string; kith?: string; seeming?: string;
   merits?: Array<{ instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
@@ -20,19 +21,17 @@ const aliases: Record<string,string> = {
 };
 export function requirementTrait(name:string, context:RequirementContext):number {
   const key=canonicalTrait(name);
-  if(key==="gnosis"||key==="gnose") return context.gameLine==="MtA"?Number(context.gnosis??0):0;
-  if(key==="wyrd"||key==="fado") return context.gameLine==="CtL"?Number(context.wyrd??0):0;
+  if(key==="gnosis"||key==="gnose") return Number(context.gnosis??0);
+  if(key==="wyrd"||key==="fado") return Number(context.wyrd??0);
   if(key==="size") return Number(context.size??5);
   const keys=[key,canonicalTrait(aliases[key])];
   // Older records also use Lábia for Subterfuge.
   if(key==="subterfuge") keys.push("labia");
   const arcana=["death","fate","forces","life","matter","mind","prime","space","spirit","time"];
-  if(arcana.includes(key)&&context.gameLine!=="MtA") return 0;
-  const values={...context.attributes,...context.skills,...(context.gameLine==="MtA"?context.arcana:{})};
+  const values={...context.attributes,...context.skills,...context.arcana};
   return Math.max(0,...Object.entries(values).filter(([name])=>keys.includes(canonicalTrait(name))).map(([,value])=>Number(value)||0));
 }
 export function awakenedStatus(context:RequirementContext,domain:string):number {
-  if(context.gameLine!=="MtA") return 0;
   return Math.max(0,...(context.merits??[]).filter(item=>["Awakened Status","Consilium/Order Status"].includes(item.name)&&
     (domain==="any"||canonicalTrait(item.configuration?.domain)===canonicalTrait(domain)))
     .map(item=>item.dots));
@@ -45,9 +44,9 @@ export function requirementMet(requirement:Requirement,context:RequirementContex
   if("trait" in requirement) return requirementTrait(requirement.trait,context)>=requirement.minimum;
   if("merit" in requirement) return (context.merits??[]).some(item=>canonicalTrait(item.name)===canonicalTrait(requirement.merit)&&item.dots>=(requirement.minimum??1));
   if("status" in requirement) return awakenedStatus(context,requirement.status)>=requirement.minimum;
-  if("path" in requirement) return context.gameLine==="MtA"&&canonicalTrait(context.path)===canonicalTrait(requirement.path);
-  if("kith" in requirement) return context.gameLine==="CtL"&&canonicalTrait(context.kith)===canonicalTrait(requirement.kith);
-  return context.gameLine==="CtL"&&canonicalTrait(context.seeming)===canonicalTrait(requirement.seeming);
+  if("path" in requirement) return canonicalTrait(context.path)===canonicalTrait(requirement.path);
+  if("kith" in requirement) return canonicalTrait(context.kith)===canonicalTrait(requirement.kith);
+  return canonicalTrait(context.seeming)===canonicalTrait(requirement.seeming);
 }
 
 /** Spell out AND/OR grouping in catalog text; a shared trailing rating applies to every OR branch. */
@@ -62,10 +61,11 @@ export function textRequirementMet(text:string,context:RequirementContext,meritN
     const trailing=value.match(/(•+|\d+\+?)\s*$/)?.[1];
     return or.some(part=>textRequirementMet(trailing&&!/[•\d]/.test(part)?`${part} ${trailing}`:part,context,meritNames));
   }
-  if(/^non[- ]?(?:Awakened|mage)$/i.test(value)) return context.gameLine!=="MtA";
-  if(/^non[- ]?changeling$/i.test(value)) return context.gameLine!=="CtL";
-  if(/^Awakened|^Mage$/i.test(value)) return context.gameLine==="MtA";
-  if(/^Changeling$/i.test(value)) return context.gameLine==="CtL";
+  const hasArchetype=(archetype:string)=>(context.archetypes??[]).includes(archetype);
+  if(/^non[- ]?(?:Awakened|mage)$/i.test(value)) return !hasArchetype("awakened");
+  if(/^non[- ]?changeling$/i.test(value)) return !hasArchetype("changeling");
+  if(/^Awakened|^Mage$/i.test(value)) return hasArchetype("awakened");
+  if(/^Changeling$/i.test(value)) return hasArchetype("changeling");
   if(/^Sleepwalker$/i.test(value)) return false;
   const rating=value.match(/•+|\d+/), minimum=rating?(rating[0].startsWith("•")?rating[0].length:Number(rating[0])):1;
   const name=value.replace(/\s*(?:•+|\d+\+?).*$/,"").trim();

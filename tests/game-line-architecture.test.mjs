@@ -67,6 +67,16 @@ test("the persisted character domain does not retain the mixed merit adapter", a
   assert.doesNotMatch(domain, /merit-configurations/);
 });
 
+test("generic merit requirements do not hard-code current game-line semantics", async () => {
+  const [requirements, merits] = await Promise.all([
+    source("lib/merit-requirements.ts"),
+    source("lib/merits.ts"),
+  ]);
+  assert.doesNotMatch(requirements, /gameLine.*(?:MtA|CtL)|(?:MtA|CtL).*gameLine/);
+  assert.doesNotMatch(merits, /gameLine.*(?:MtA|CtL)|(?:MtA|CtL).*gameLine/);
+  assert.match(requirements, /archetypes\?: readonly string\[\]/);
+});
+
 test("deferred Homebrew management is not part of the main workspace route", async () => {
   const workspace = await source("app/workspace.tsx");
   assert.doesNotMatch(workspace, /HomebrewsScreen|\.\/homebrews/);
