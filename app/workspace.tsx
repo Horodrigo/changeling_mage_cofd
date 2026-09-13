@@ -33,7 +33,7 @@ import { CatalogBoundary } from "./catalog-boundary";
 import { getGameLineRegistration, listGameLineRegistrations, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
 
 const NewCharacterBuilder = lazy(() =>
-  import("./character-builder").then((module) => ({ default: module.CharacterBuilder })),
+  import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
 );
 const GameLineBuilder = lazy(() =>
   import("./game-line-builder").then((module) => ({ default: module.GameLineBuilder })),
@@ -230,7 +230,7 @@ export function Workspace({
       >
         <Suspense fallback={<WorkspaceLoading />}>
           {editing === "new" ? (
-            <NewCharacterBuilder player={displayName} initial={null} onCancel={() => setEditing(null)} onSave={saveCharacter} />
+            <NewCharacterBuilder player={displayName} onCancel={() => setEditing(null)} onSave={saveCharacter} />
           ) : (
             <GameLineBuilder gameLine={editing.game_line} player={displayName} initial={editing} onCancel={() => setEditing(null)} onSave={saveCharacter} />
           )}

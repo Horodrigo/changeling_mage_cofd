@@ -55,6 +55,13 @@ test("normal game-line surfaces do not load legacy Homebrew storage", async () =
   assert.doesNotMatch(hook, /device-storage|readHomebrews|localStorage/);
 });
 
+test("Workspace routes both existing and new character builders through shells", async () => {
+  const workspace = await source("app/workspace.tsx");
+  assert.doesNotMatch(workspace, /import\("\.\/character-builder"\)/);
+  assert.match(workspace, /import\("\.\/new-character-builder"\)/);
+  assert.match(workspace, /import\("\.\/game-line-builder"\)/);
+});
+
 test("shared creation rules do not read Changeling catalog state", async () => {
   const creationRules = await source("lib/creation-rules.ts");
   assert.doesNotMatch(creationRules, /changeling-courts/);

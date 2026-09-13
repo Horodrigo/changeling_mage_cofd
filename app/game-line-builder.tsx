@@ -18,5 +18,5 @@ export function GameLineBuilder(props: GameLineBuilderProps & { gameLine: "CtL" 
     return () => { cancelled = true; };
   }, [props.gameLine]);
 
-  return Builder ? <Builder {...props} catalogs={catalogs} /> : <div className="loading-card">Carregando…</div>;
+  return Builder ? <Builder {...props} fixedGameLine={props.gameLine} catalogs={catalogs} /> : <div className="loading-card">Carregando…</div>;
 }

@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
+import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import type { CatalogSnapshot } from "./catalog-groups";
 
 /** React-specific contracts are kept separate from the neutral rules contract. */
@@ -9,6 +10,7 @@ export type GameLineBuilderProps = {
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
   catalogs?: CatalogSnapshot;
+  fixedGameLine?: PersistedGameLineId;
 };
 
 export type GameLineSheetProps = {

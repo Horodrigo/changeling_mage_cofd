@@ -238,18 +238,20 @@ function inferredPriority(
 export function CharacterBuilder({
   player,
   initial,
+  fixedGameLine,
   onCancel,
   onSave,
 }: {
   player: string;
   initial?: CharacterSheet | null;
+  fixedGameLine?: CharacterSheet["game_line"];
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
 }) {
   const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
-  const [line, setLine] = useState<"CtL" | "MtA">(initial?.game_line ?? "CtL");
-  const [lineChosen, setLineChosen] = useState(Boolean(initial));
+  const [line, setLine] = useState<"CtL" | "MtA">(initial?.game_line ?? fixedGameLine ?? "CtL");
+  const [lineChosen, setLineChosen] = useState(Boolean(initial || fixedGameLine));
   const [catalogResult, setCatalogResult] = useState<{
     line: "CtL" | "MtA" | null;
     state: "idle" | "ready" | "error";
@@ -869,7 +871,7 @@ export function CharacterBuilder({
         {step === 1 && (
           <IdentityStep
             line={line}
-            setLine={(next) => { setLine(next); setLineChosen(true); }}
+            setLine={(next) => { if (!fixedGameLine) { setLine(next); setLineChosen(true); } }}
             lineChosen={lineChosen}
             name={name}
             setName={setName}
