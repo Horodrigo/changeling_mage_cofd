@@ -50,6 +50,11 @@ test("deferred Homebrew management is not part of the main workspace route", asy
   assert.doesNotMatch(workspace, /HomebrewsScreen|\.\/homebrews/);
 });
 
+test("normal game-line surfaces do not load legacy Homebrew storage", async () => {
+  const hook = await source("app/use-homebrews.ts");
+  assert.doesNotMatch(hook, /device-storage|readHomebrews|localStorage/);
+});
+
 test("shared creation rules do not read Changeling catalog state", async () => {
   const creationRules = await source("lib/creation-rules.ts");
   assert.doesNotMatch(creationRules, /changeling-courts/);
