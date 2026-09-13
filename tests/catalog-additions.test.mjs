@@ -19,7 +19,16 @@ kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/ch
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = kithModule;
 const courtModule = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 courtModule.replaceCourtCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")));
-const {findMeritConfiguration,isInlineMeritConfiguration,synchronizeMeritGrants,expandedConfigurationLines} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const changelingConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
+const mageConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
+const findMeritConfiguration = (name) => changelingConfigurations.findMeritConfiguration(name) ?? mageConfigurations.findMeritConfiguration(name);
+const isInlineMeritConfiguration = (name) => changelingConfigurations.isInlineMeritConfiguration(name) || mageConfigurations.isInlineMeritConfiguration(name);
+const synchronizeMeritGrants = (sheet) => sheet.game_line === "MtA"
+  ? mageConfigurations.synchronizeMeritGrants(sheet)
+  : changelingConfigurations.synchronizeMeritGrants(sheet);
+const expandedConfigurationLines = (name, dots, value, locale) => name === "Mystery Cult Initiation"
+  ? mageConfigurations.expandedConfigurationLines(name, dots, value, locale)
+  : changelingConfigurations.expandedConfigurationLines(name, dots, value, locale, courtModule.CTL_COURT_DEFINITIONS);
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{
   assert.equal(RAW_MERITS.length,354);
@@ -125,7 +134,7 @@ test("Book of Seemings contém os 62 Méritos ingleses e respeita acesso por See
 
 test("concessões de Méritos estruturados são determinísticas e reversíveis",()=>{
   const sheet={
-    game_line:"CtL",skills:{Academics:2,Occult:1},specializations:[],line_data:{court:"Courtless"},
+    game_line:"MtA",skills:{Academics:2,Occult:1},specializations:[],line_data:{court:"Courtless"},
     merits:[
       {instanceId:"pt",name:"Professional Training",dots:4,configuration:{contacts:["Journalists","Police"],asset_skills:["Academics","Occult","Investigation"],specialty_1_skill:"Academics",specialty_1_name:"Research",specialty_2_skill:"Occult",specialty_2_name:"Cults",boosted_skill:"Academics"}},
       {instanceId:"cult",name:"Mystery Cult Initiation",dots:3,configuration:{level_1_type:"specialty",level_1_specialty_skill:"Occult",level_1_specialty_name:"Rituals",level_2_type:"merit",level_2_merits:["Library|1"],level_3_type:"skill",level_3_skill:"Occult"}},

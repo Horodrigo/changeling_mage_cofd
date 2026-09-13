@@ -9,7 +9,8 @@ const vite = await createServer({ appType: "custom", configFile: false, root,
 after(() => vite.close());
 const power = await vite.ssrLoadModule("/lib/power-progression.ts");
 const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
-const meritConfigurations = await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
+const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
@@ -81,16 +82,16 @@ test("Mantle gratuito mantém o ponto inicial ao comprar, sincronizar e reembols
   current.line_data.court = "Autumn";
   current.merits = [{name:"Mantle",instanceId:"mantle-autumn",dots:1,grantedBy:"Corte",configuration:{court:"Autumn"}}];
   merits.addExperienceMeritDots(current.merits[0], 3);
-  meritConfigurations.synchronizeMeritGrants(current);
+  changelingMeritConfigurations.synchronizeMeritGrants(current);
   assert.deepEqual(
     {dots:current.merits[0].dots,creation:current.merits[0].creationDots,experience:current.merits[0].experienceDots},
     {dots:4,creation:1,experience:3},
   );
   merits.addExperienceMeritDots(current.merits[0], 1);
-  meritConfigurations.synchronizeMeritGrants(current);
+  changelingMeritConfigurations.synchronizeMeritGrants(current);
   assert.equal(current.merits[0].dots, 5);
   refunds.refundMeritDots(current, "Mantle", 4, "mantle-autumn");
-  meritConfigurations.synchronizeMeritGrants(current);
+  changelingMeritConfigurations.synchronizeMeritGrants(current);
   assert.deepEqual(
     {dots:current.merits[0].dots,creation:current.merits[0].creationDots,experience:current.merits[0].experienceDots},
     {dots:1,creation:1,experience:0},
@@ -122,7 +123,7 @@ test("Nameless Order applies its fixed Mystery Cult progression at the correct d
     }],
     specializations:[],
   };
-  meritConfigurations.synchronizeMeritGrants(sheet);
+  mageMeritConfigurations.synchronizeMeritGrants(sheet);
   const speech = sheet.merits.find((item)=>item.name==="High Speech");
   assert.equal(speech?.dots,1);
   assert.match(String(speech?.grantedBy),/^Merit:Mystery Cult Initiation:/);
@@ -132,16 +133,16 @@ test("Nameless Order applies its fixed Mystery Cult progression at the correct d
   const initiation=sheet.merits.find((item)=>item.name==="Mystery Cult Initiation");
   initiation.dots=2;
   initiation.configuration.level_2_rote_skills=["Academics","Occult","Science"];
-  meritConfigurations.synchronizeMeritGrants(sheet);
+  mageMeritConfigurations.synchronizeMeritGrants(sheet);
   assert.deepEqual(sheet.line_data.rote_skills,["Academics","Occult","Science"]);
   assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses,{});
 
   const advancedInitiation=sheet.merits.find((item)=>item.name==="Mystery Cult Initiation");
   advancedInitiation.dots=3;
-  meritConfigurations.synchronizeMeritGrants(sheet);
+  mageMeritConfigurations.synchronizeMeritGrants(sheet);
   assert.equal(sheet.line_data.merit_granted_skill_bonuses.Ocultismo,1);
   assert.deepEqual(
-    meritConfigurations.expandedConfigurationLines("Mystery Cult Initiation",3,advancedInitiation.configuration,"en-US"),
+    mageMeritConfigurations.expandedConfigurationLines("Mystery Cult Initiation",3,advancedInitiation.configuration,"en-US"),
     ["Cult: The Unnamed","Dot 1: High Speech •","Dot 2: Rote Skills: Academics, Occult, Science","Dot 3: Occult +1"],
   );
 });

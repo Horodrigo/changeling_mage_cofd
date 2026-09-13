@@ -97,6 +97,7 @@ test("obsolete mixed builder and paper implementations are removed", async () =>
   await Promise.all([
     assert.rejects(access(`${root}/app/character-builder.tsx`)),
     assert.rejects(access(`${root}/app/workspace/character-paper.tsx`)),
+    assert.rejects(access(`${root}/lib/merit-configurations.ts`)),
   ]);
 });
 

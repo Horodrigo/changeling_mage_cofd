@@ -20,12 +20,11 @@ Changeling.
 - `app/workspace/character-paper.tsx`: removed after both line sheets became active.
 - Mutable `applyLegacy` catalog adapters: removed with the mutable bridge; active
   surfaces receive only immutable snapshots.
+- `lib/merit-configurations.ts`: removed after its remaining tests moved to the
+  explicit Mage and Changeling merit implementations.
 
 ## Deferred deletion candidates
 
-- `lib/merit-configurations.ts`: no active modular surface imports this mixed
-  implementation. It remains only for legacy-focused tests and can be removed
-  once those tests target the line-owned implementations.
 - `lib/merits.ts`: active callers pass the surface snapshot into prerequisite
   evaluation, but the legacy mutable-catalog fallback remains for older callers
   and is a deletion candidate.

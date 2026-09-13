@@ -20,7 +20,7 @@ merits.replaceMeritCatalog(["core","changeling","mage"].flatMap((name) =>
   JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`, import.meta.url), "utf8")),
 ));
 const expanded = await vite.ssrLoadModule("/lib/expanded-merits.ts");
-const meritConfigurations = await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
 const courts = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 courts.replaceCourtCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")));
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
@@ -69,7 +69,7 @@ test("combina toggle geral e individual sem perder preferências", () => {
 
 test("Beyond the Hedge foi removido e escolhas de Court Goodwill usam Cortes canônicas", () => {
   assert.deepEqual(homebrews.BUILTIN_HOMEBREW_SOURCES.map((source) => source.id), ["h-courts", "h-seemings"]);
-  assert.equal(meritConfigurations.findMeritConfiguration("Court Goodwill")?.fields[0]?.kind, "court");
+  assert.equal(changelingMeritConfigurations.findMeritConfiguration("Court Goodwill")?.fields[0]?.kind, "court");
   assert.equal(courts.courtCanonicalId("Primavera"), "spring");
   assert.equal(courts.courtCanonicalId("Spring Court"), "spring");
   assert.ok(courts.CTL_COURT_DEFINITIONS.some((court) => court.sourceId === "h-courts"));
