@@ -32,6 +32,7 @@ import { seemingDisplayName } from "@/lib/seeming-presentation";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { CatalogBoundary } from "./catalog-boundary";
+import { getGameLineRegistration } from "@/game-lines/registry/game-line-registry";
 
 const CharacterBuilder = lazy(() =>
   import("./character-builder").then((module) => ({ default: module.CharacterBuilder })),
@@ -246,12 +247,10 @@ export function Workspace({
   if (editing)
     return (
       <CatalogBoundary
-        resources={
+        groups={
           editing === "new"
             ? []
-            : editing.game_line === "MtA"
-              ? ["mage-spells", "merits-mage", "core-reference"]
-              : ["changeling-contracts", "merits-changeling", "changeling-reference"]
+            : getGameLineRegistration(editing.game_line).catalogGroups.builder
         }
       >
         <Suspense fallback={<WorkspaceLoading />}>
@@ -389,11 +388,9 @@ export function Workspace({
             open={(sheet) => { void openCharacter(sheet); }}
           />
         ) : view === "homebrews" ? (
-          <CatalogBoundary resources={["mage-spells", "changeling-contracts", "merits-all", "changeling-reference"]}>
-            <Suspense fallback={<WorkspaceLoading />}>
-              <HomebrewsScreen characters={characters} />
-            </Suspense>
-          </CatalogBoundary>
+          <Suspense fallback={<WorkspaceLoading />}>
+            <HomebrewsScreen characters={characters} />
+          </Suspense>
         ) : null}
       </section>
       {deleteOpen && (
@@ -414,20 +411,8 @@ export function Workspace({
 }
 
 async function hydrateCharacterCatalogs(gameLine: CharacterSheet["game_line"]) {
-  const { catalogService } = await import("@/lib/catalog/catalog-service");
-  if (gameLine === "MtA") {
-    await Promise.all([
-      catalogService.hydrateSpells(),
-      catalogService.hydrateMerits("MtA"),
-      catalogService.hydrateCoreReference(),
-    ]);
-    return;
-  }
-  await Promise.all([
-    catalogService.hydrateContracts(),
-    catalogService.hydrateMerits("CtL"),
-    catalogService.hydrateChangelingReference(),
-  ]);
+  const { loadCatalogGroups } = await import("@/game-lines/registry/catalog-group-registry");
+  await loadCatalogGroups(getGameLineRegistration(gameLine).catalogGroups.sheet);
 }
 
 function Dashboard({
@@ -628,11 +613,7 @@ function CharacterView({
         </div>
       </div>
       <CatalogBoundary
-        resources={
-          character.game_line === "MtA"
-            ? ["mage-spells", "merits-mage", "core-reference"]
-            : ["changeling-contracts", "merits-changeling", "changeling-reference"]
-        }
+        groups={getGameLineRegistration(character.game_line).catalogGroups.sheet}
       >
         <Suspense fallback={<WorkspaceLoading />}>
           <CharacterPaper

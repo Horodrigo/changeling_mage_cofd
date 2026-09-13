@@ -2,47 +2,30 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
-
-type CatalogResource =
-  | "mage-spells"
-  | "changeling-contracts"
-  | "merits-changeling"
-  | "merits-mage"
-  | "merits-all"
-  | "changeling-reference"
-  | "core-reference";
-
-async function hydrateResource(resource: CatalogResource) {
-  const { catalogService } = await import("@/lib/catalog/catalog-service");
-  if (resource === "mage-spells") return catalogService.hydrateSpells();
-  if (resource === "changeling-contracts") return catalogService.hydrateContracts();
-  if (resource === "merits-changeling") return catalogService.hydrateMerits("CtL");
-  if (resource === "merits-mage") return catalogService.hydrateMerits("MtA");
-  if (resource === "merits-all") return catalogService.hydrateMerits("all");
-  if (resource === "changeling-reference") return catalogService.hydrateChangelingReference();
-  return catalogService.hydrateCoreReference();
-}
+import type { CatalogGroupId } from "@/lib/game-line-contracts/catalog-groups";
 
 export function CatalogBoundary({
-  resources,
+  groups,
   children,
 }: {
-  resources: CatalogResource[];
+  groups: readonly CatalogGroupId[];
   children: ReactNode;
 }) {
   const { tr } = useLanguage();
-  const resourceKey = resources.join("|");
+  const resourceKey = groups.join("|");
   const [result, setResult] = useState<{
     key: string;
     state: "loading" | "ready" | "error";
-  }>({ key: resourceKey, state: resources.length ? "loading" : "ready" });
+  }>({ key: resourceKey, state: groups.length ? "loading" : "ready" });
 
   useEffect(() => {
     let cancelled = false;
-    const requestedResources = resourceKey
-      ? (resourceKey.split("|") as CatalogResource[])
+    const requestedGroups = resourceKey
+      ? resourceKey.split("|")
       : [];
-    Promise.all(requestedResources.map(hydrateResource)).then(
+    void import("@/game-lines/registry/catalog-group-registry").then(({ loadCatalogGroups }) =>
+      loadCatalogGroups(requestedGroups),
+    ).then(
       () => { if (!cancelled) setResult({ key: resourceKey, state: "ready" }); },
       () => { if (!cancelled) setResult({ key: resourceKey, state: "error" }); },
     );

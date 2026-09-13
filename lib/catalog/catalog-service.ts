@@ -1,23 +1,10 @@
 import { getCachedCatalog, setCachedCatalog } from "./catalog-cache";
-import { replaceContractCatalog } from "./contract-catalog";
-import { replaceSpellCatalog } from "./spell-catalog";
-import { replaceMeritCatalog, type GameLine, type MeritDefinition } from "../merits";
-import {
-  replaceChangelingConditionCatalog,
-  type ChangelingCondition,
-} from "../changeling-conditions";
-import { replaceCourtCatalog, type CourtDefinition } from "../changeling-courts";
-import { replaceEntitlementCatalog, type EntitlementDefinition } from "../entitlements";
-import { replaceKithCatalog, type KithDefinition } from "../changeling-kiths";
-import { refreshCreationCourts } from "../creation-rules";
-import { replaceMageConditionCatalog, type MageCondition } from "../mage-conditions";
 import type {
-  CatalogManifest,
-  ContractDefinition,
-  ContractIndexEntry,
-  SpellDefinition,
-  SpellIndexEntry,
-} from "./catalog-types";
+  CatalogGroupLoader,
+  CatalogReader,
+  CatalogSnapshot,
+} from "@/lib/game-line-contracts/catalog-groups";
+import type { CatalogManifest } from "./catalog-types";
 
 const MANIFEST_URL = "/data/manifest.json";
 const MANIFEST_CACHE_KEY = "catalog-manifest";
@@ -36,11 +23,7 @@ async function getManifest(): Promise<CatalogManifest> {
     const cached = await getCachedCatalog<CatalogManifest>(MANIFEST_CACHE_KEY).catch(() => null);
     try {
       const manifest = await fetchJson<CatalogManifest>(MANIFEST_URL);
-      if (
-        !cached ||
-        cached.version !== manifest.catalogVersion ||
-        cached.data.schemaVersion !== manifest.schemaVersion
-      ) {
+      if (!cached || cached.version !== manifest.catalogVersion || cached.data.schemaVersion !== manifest.schemaVersion) {
         await setCachedCatalog(MANIFEST_CACHE_KEY, {
           version: manifest.catalogVersion,
           data: manifest,
@@ -57,18 +40,18 @@ async function getManifest(): Promise<CatalogManifest> {
   return pending;
 }
 
-async function getCatalog<T>(key: string): Promise<T> {
-  const existing = memory.get(key);
+async function getCatalog<T>(catalogId: string): Promise<T> {
+  const existing = memory.get(catalogId);
   if (existing) return existing as Promise<T>;
   const pending = (async () => {
     const manifest = await getManifest();
-    const definition = manifest.catalogs[key];
-    if (!definition) throw new Error(`Unknown catalog: ${key}`);
-    const cached = await getCachedCatalog<T>(key).catch(() => null);
+    const definition = manifest.catalogs[catalogId];
+    if (!definition) throw new Error(`Unknown catalog: ${catalogId}`);
+    const cached = await getCachedCatalog<T>(catalogId).catch(() => null);
     if (cached?.version === definition.version) return cached.data;
     try {
       const data = await fetchJson<T>(definition.url);
-      await setCachedCatalog(key, {
+      await setCachedCatalog(catalogId, {
         version: definition.version,
         data,
         cachedAt: new Date().toISOString(),
@@ -79,153 +62,37 @@ async function getCatalog<T>(key: string): Promise<T> {
       throw error;
     }
   })();
-  memory.set(key, pending);
+  memory.set(catalogId, pending);
   try {
     return await pending;
   } catch (error) {
-    memory.delete(key);
+    memory.delete(catalogId);
     throw error;
   }
 }
 
-async function getSpellIndex() {
-  return getCatalog<SpellIndexEntry[]>("mage-spells-index");
+class ImmutableCatalogSnapshot implements CatalogSnapshot {
+  constructor(private readonly values: ReadonlyMap<string, unknown>) {}
+  has(groupId: string) { return this.values.has(groupId); }
+  get<T>(groupId: string): T {
+    if (!this.values.has(groupId)) throw new Error(`Catalog group is absent from this snapshot: ${groupId}`);
+    return this.values.get(groupId) as T;
+  }
+  entries() { return this.values.entries(); }
 }
 
-async function getSpellsByArcana(arcana: string) {
-  const normalized = arcana.toLowerCase();
-  const index = await getSpellIndex();
-  const shards = [
-    ...new Set(
-      index
-        .filter((spell) =>
-          Object.keys(spell.requirements).some((name) => name.toLowerCase() === normalized),
-        )
-        .map((spell) => spell.shard),
-    ),
-  ];
-  const spells = (await Promise.all(
-    shards.map((shard) => getCatalog<SpellDefinition[]>(`mage-spells-${shard}`)),
-  )).flat();
-  return spells.filter((spell) =>
-    Object.keys(spell.requirements).some((name) => name.toLowerCase() === normalized),
-  );
+/** Loads declared groups without knowing game-line catalog names or data shapes. */
+async function loadGroups(
+  requested: ReadonlyArray<readonly [string, CatalogGroupLoader]>,
+): Promise<CatalogSnapshot> {
+  const modules = await Promise.all(requested.map(async ([id, loader]) => [id, await loader()] as const));
+  const values = await Promise.all(modules.map(async ([id, module]) => [id, await module.load(catalogService)] as const));
+  const snapshot = new ImmutableCatalogSnapshot(new Map(values));
+  for (const [, module] of modules) module.applyLegacy?.(snapshot);
+  return snapshot;
 }
 
-async function getAllSpells() {
-  const index = await getSpellIndex();
-  const shards = [...new Set(index.map((spell) => spell.shard))];
-  return (await Promise.all(
-    shards.map((shard) => getCatalog<SpellDefinition[]>(`mage-spells-${shard}`)),
-  )).flat();
-}
-
-async function hydrateSpells() {
-  const spells = await getAllSpells();
-  replaceSpellCatalog(spells);
-  return spells;
-}
-
-async function getContractIndex() {
-  return getCatalog<ContractIndexEntry[]>("changeling-contracts-index");
-}
-
-async function getContractsBySource(sourceId: string) {
-  return getCatalog<ContractDefinition[]>(`changeling-contracts-${sourceId}`);
-}
-
-async function getAllContracts() {
-  const index = await getContractIndex();
-  const shards = [...new Set(index.map((contract) => contract.shard))];
-  return (await Promise.all(shards.map(getContractsBySource))).flat();
-}
-
-async function hydrateContracts() {
-  const contracts = await getAllContracts();
-  replaceContractCatalog(contracts);
-  return contracts;
-}
-
-type MeritIndexEntry = Pick<
-  MeritDefinition,
-  "id" | "name" | "ratings" | "line" | "sourceId" | "source" | "category" | "priority" | "translatedName" | "page" | "repeatable" | "unbounded"
-> & { shard: "core" | "changeling" | "mage" };
-
-async function getMeritIndex() {
-  return getCatalog<MeritIndexEntry[]>("merits-index");
-}
-
-async function getMeritsForLine(line: GameLine) {
-  const suffix = line === "CtL" ? "changeling" : "mage";
-  const [core, specific] = await Promise.all([
-    getCatalog<MeritDefinition[]>("merits-core"),
-    getCatalog<MeritDefinition[]>(`merits-${suffix}`),
-  ]);
-  return [...core, ...specific];
-}
-
-async function getAllMerits() {
-  const [core, changeling, mage] = await Promise.all([
-    getCatalog<MeritDefinition[]>("merits-core"),
-    getCatalog<MeritDefinition[]>("merits-changeling"),
-    getCatalog<MeritDefinition[]>("merits-mage"),
-  ]);
-  return [...core, ...changeling, ...mage];
-}
-
-async function hydrateMerits(line: GameLine | "all") {
-  const merits = line === "all" ? await getAllMerits() : await getMeritsForLine(line);
-  replaceMeritCatalog(merits);
-  return merits;
-}
-
-async function hydrateChangelingReference() {
-  const [coreConditions, corePresentation, conditions, conditionPresentation, courts, entitlements, kiths, kithPresentation] = await Promise.all([
-    getCatalog<ChangelingCondition[]>("core-conditions"),
-    getCatalog<Record<string, Partial<ChangelingCondition>>>("core-conditions-pt"),
-    getCatalog<ChangelingCondition[]>("changeling-conditions"),
-    getCatalog<Record<string, Partial<ChangelingCondition>>>("changeling-conditions-pt"),
-    getCatalog<CourtDefinition[]>("changeling-courts"),
-    getCatalog<EntitlementDefinition[]>("changeling-entitlements"),
-    getCatalog<KithDefinition[]>("changeling-kiths"),
-    getCatalog<Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }>>("changeling-kiths-pt"),
-  ]);
-  replaceChangelingConditionCatalog(
-    [...coreConditions, ...conditions],
-    { ...corePresentation, ...conditionPresentation },
-  );
-  replaceCourtCatalog(courts);
-  refreshCreationCourts();
-  replaceEntitlementCatalog(entitlements);
-  replaceKithCatalog(kiths, kithPresentation);
-  return { conditions, courts, entitlements, kiths };
-}
-
-async function hydrateCoreReference() {
-  const [conditions, presentation, mageConditions] = await Promise.all([
-    getCatalog<ChangelingCondition[]>("core-conditions"),
-    getCatalog<Record<string, Partial<ChangelingCondition>>>("core-conditions-pt"),
-    getCatalog<MageCondition[]>("mage-conditions"),
-  ]);
-  replaceChangelingConditionCatalog(conditions, presentation);
-  replaceMageConditionCatalog(mageConditions);
-  return { conditions };
-}
-
-export const catalogService = {
-  getManifest,
-  getSpellIndex,
-  getSpellsByArcana,
-  getAllSpells,
-  hydrateSpells,
-  getContractIndex,
-  getContractsBySource,
-  getAllContracts,
-  hydrateContracts,
-  getMeritIndex,
-  getMeritsForLine,
-  getAllMerits,
-  hydrateMerits,
-  hydrateChangelingReference,
-  hydrateCoreReference,
-};
+export const catalogService: CatalogReader & {
+  getManifest: () => Promise<CatalogManifest>;
+  loadGroups: typeof loadGroups;
+} = { getManifest, getCatalog, loadGroups };

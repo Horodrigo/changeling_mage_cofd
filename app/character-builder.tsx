@@ -262,20 +262,12 @@ export function CharacterBuilder({
   useEffect(() => {
     if (!lineChosen || catalogResult.line === line) return;
     let cancelled = false;
-    void import("@/lib/catalog/catalog-service").then(async ({ catalogService }) => {
-      if (line === "MtA")
-        await Promise.all([
-          catalogService.hydrateSpells(),
-          catalogService.hydrateMerits("MtA"),
-          catalogService.hydrateCoreReference(),
-        ]);
-      else
-        await Promise.all([
-          catalogService.hydrateContracts(),
-          catalogService.hydrateMerits("CtL"),
-          catalogService.hydrateChangelingReference(),
-        ]);
-    }).then(
+    void Promise.all([
+      import("@/game-lines/registry/game-line-registry"),
+      import("@/game-lines/registry/catalog-group-registry"),
+    ]).then(([{ getGameLineRegistration }, { loadCatalogGroups }]) =>
+      loadCatalogGroups(getGameLineRegistration(line).catalogGroups.builder),
+    ).then(
       () => { if (!cancelled) setCatalogResult({ line, state: "ready" }); },
       () => { if (!cancelled) setCatalogResult({ line, state: "error" }); },
     );

@@ -6,8 +6,8 @@ export const mageRegistration: GameLineRegistration = {
   slug: "mage",
   label: "Mage: The Awakening",
   catalogGroups: {
-    builder: ["core-merits", "mage-merits", "mage-spells", "core-reference"],
-    sheet: ["core-merits", "mage-merits", "mage-spells", "core-reference"],
+    builder: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
+    sheet: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
     homebrew: ["core-merits", "mage-merits", "mage-spells"],
   },
   loadRules: () => import("./rules").then(({ mageRules }) => mageRules),
