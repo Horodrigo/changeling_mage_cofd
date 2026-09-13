@@ -409,7 +409,11 @@ button { cursor: pointer; }
 .form-stack label { display: grid; gap: 7px; font-size:14px; font-weight: 700; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 7px; }
 
-.sheet-editor { max-width: 1200px; margin: 0 auto; }
+.sheet-editor {
+  width: 100%;
+  max-width: 794px;
+  margin: 0 auto;
+}
 .sheet-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
 .sheet-toolbar > div { display: flex; gap: 8px; align-items: center; color: #7c747c; font-size:13px; }
 .sheet-editor form { border: 1px solid #d9d1c8; border-radius: 13px; background: #fffdf8; overflow: hidden; box-shadow: 0 12px 36px #35293e0c; }
@@ -792,8 +796,38 @@ button { cursor: pointer; }
 .sheet-row strong { color: #5c426a; }
 .sheet-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; border-top: 1px solid #e1dad1; }
 .sheet-lists [data-slot="badge"] { margin: 0 5px 5px 0; }
-.cod-sheet { --sheet-accent:#466f59; --sheet-ink:#25332b; position:relative; overflow:hidden; padding:32px clamp(24px,4vw,52px) 44px; border:0; border-radius:3px; background:#fffef9; color:var(--sheet-ink); box-shadow:0 18px 50px #1d172526,inset 0 0 32px #5c6f5a14; font-family:Georgia,"Times New Roman",serif; }
+.cod-sheet {
+  --sheet-accent:#466f59;
+  --sheet-ink:#25332b;
+  position:relative;
+  width:794px;
+  min-height:1123px;
+  box-sizing:border-box;
+  overflow:hidden;
+  padding:32px clamp(24px,4vw,52px) 44px;
+  border:0;
+  border-radius:3px;
+  background:#fffef9;
+  color:var(--sheet-ink);
+  box-shadow:0 18px 50px #1d172526,inset 0 0 32px #5c6f5a14;
+  font-family:Georgia,"Times New Roman",serif;
+}
 .cod-sheet:before { display:none; }
+
+/* Desktop behaves like an A4 page. At high browser zoom / narrow viewports,
+   release the fixed page width so the existing responsive/mobile rules can take over. */
+@media (max-width:850px) {
+  .sheet-editor {
+    width:100%;
+    max-width:none;
+  }
+
+  .cod-sheet {
+    width:100%;
+    min-height:0;
+  }
+}
+
 .cod-sheet:after { content:""; pointer-events:none; position:absolute; z-index:0; inset:0; background-repeat:no-repeat; background-position:center 38%; background-size:clamp(252px,40.6vw,532px) auto; opacity:.045; }
 .cod-sheet.ctl-sheet:after { background-image:url('/changeling-skull.png'); }
 .cod-sheet.mta-sheet:after { background-image:url('/mage-skull.png'); }

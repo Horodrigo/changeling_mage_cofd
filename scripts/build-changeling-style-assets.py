@@ -7,6 +7,7 @@ downloads the cropped WebP assets.  Pillow is the only required dependency.
 from __future__ import annotations
 
 from pathlib import Path
+import sys
 
 from PIL import Image
 
@@ -18,9 +19,13 @@ PUBLIC = ROOT / "public"
 INK = (23, 56, 35)
 
 
-def crop_alpha(image: Image.Image, padding: int = 0) -> Image.Image:
+def crop_alpha(image: Image.Image, padding: int = 0, alpha_threshold: int = 0) -> Image.Image:
     image = image.convert("RGBA")
-    bbox = image.getchannel("A").getbbox()
+    alpha = image.getchannel("A")
+    if alpha_threshold:
+        alpha = alpha.point(lambda value: value if value >= alpha_threshold else 0)
+        image.putalpha(alpha)
+    bbox = alpha.getbbox()
     if bbox is None:
         raise ValueError("Image contains no visible pixels")
     left, top, right, bottom = bbox
@@ -108,7 +113,22 @@ def save_public_texture_webp(image: Image.Image, name: str) -> None:
     print(f"{target.relative_to(ROOT)}: {image.width}x{image.height}")
 
 
+def build_attribute_divider_assets() -> None:
+    """Crop the manually separated pieces used by the Attributes divider."""
+
+    for name in (
+        "attributes-divider-corner.webp",
+        "attributes-divider-middle.webp",
+        "attributes-divider-leaf.webp",
+    ):
+        save_webp(crop_alpha(Image.open(SOURCE / name), padding=6, alpha_threshold=16), name)
+
+
 def main() -> None:
+    if "--attributes-only" in sys.argv:
+        build_attribute_divider_assets()
+        return
+
     corner = crop_alpha(Image.open(SOURCE / "botanical-corner.png"), padding=8)
     save_webp(fit(corner, (1024, 1024)), "botanical-corner.webp")
 
@@ -130,26 +150,6 @@ def main() -> None:
     )
     save_webp(fit(side_left, (130, 130)), "frame-star-side.webp")
 
-    original_star = crop_alpha(star_source, padding=8)
-    star_half = original_star.height // 2
-    star_center = original_star.width // 2
-    panel_node = original_star.crop(
-        (star_center - star_half, 0, star_center + star_half, original_star.height)
-    )
-    save_webp(fit(crop_alpha(panel_node, padding=4), (180, 180)), "panel-node.webp")
-
-    divider_source = Image.open(SOURCE / "section-divider.png")
-    divider_band = divider_source.crop(
-        (0, divider_source.height * 3 // 10, divider_source.width, divider_source.height * 7 // 10)
-    )
-    divider = extract_green_ink(divider_band)
-    divider = crop_alpha(divider, padding=8)
-
-    # Keep the left half.  CSS mirrors it for the right side and clips only the
-    # straight rule when less horizontal space is available around a heading.
-    arm = divider.crop((0, 0, divider.width // 2, divider.height))
-    save_webp(fit(crop_alpha(arm, padding=4), (1200, 240)), "divider-arm.webp")
-
     title = crop_alpha(clean_title(Image.open(SOURCE / "changeling-title.png")), padding=8)
     save_webp(fit(title, (1600, 560)), "changeling-title.webp")
 
@@ -159,10 +159,7 @@ def main() -> None:
     tab_texture = fit(Image.open(SOURCE / "selected-tab-texture.png"), (1280, 320))
     save_texture_webp(tab_texture, "selected-tab-texture.webp")
 
-    attributes = extract_green_ink(Image.open(SOURCE / "attributes-divider.png"))
-    attributes = crop_alpha(attributes, padding=8)
-    attributes = fit(attributes, (1800, 240))
-    save_webp(attributes, "attributes-divider.webp")
+    build_attribute_divider_assets()
 
     terminal = crop_alpha(Image.open(SOURCE / "divider-terminal.webp"), padding=2)
     save_webp(fit(terminal, (180, 180)), "divider-terminal.webp")

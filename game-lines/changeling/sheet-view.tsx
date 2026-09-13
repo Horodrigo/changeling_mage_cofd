@@ -277,12 +277,12 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <div className="sheet-center-column">
                 <SheetHeading>Méritos</SheetHeading>
                 <MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
+                <SheetHeading>Corte</SheetHeading>
+                <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>
                 <SheetHeading>Regalias Favorecidas</SheetHeading>
                 <LineList items={changelingFavoredRegalia(data)}/>
                 <SheetHeading>Fragilidades</SheetHeading>
                 <FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
-                <SheetHeading>Aspirações</SheetHeading>
-                <EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
                 <SheetHeading>Lucidez</SheetHeading>
                 <ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
                 <SheetHeading>Pedras de Contato</SheetHeading>
