@@ -3,7 +3,7 @@
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ATTRIBUTES, SKILLS, canIncreaseCreationDots } from "@/lib/core/character/creation-rules";
 import type { Specialty } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
@@ -76,7 +76,7 @@ export function TraitsStep({
   setSpecialties: Setter<Specialty[]>;
   missing: MissingCheck;
 }) {
-  const { locale, tr } = useLanguage();
+  const { tr } = useLanguage();
   const attributeCategories = Object.keys(ATTRIBUTES);
   const skillCategories = Object.keys(SKILLS);
   return <div className="builder-section">
@@ -95,12 +95,10 @@ export function TraitsStep({
     <div className="specialties-block">
       <h3>{tr("Especializações", "Specialties")}</h3>
       {specialties.map((specialty, index) => <div className="specialty-row" key={index}>
-        <Choice
+        <SkillSpecialtyChoice
           label={`${tr("Perícia", "Skill")} ${index + 1}`}
           value={specialty.skill}
           setValue={(skill) => updateArray(setSpecialties, specialties, index, { ...specialty, skill })}
-          options={Object.values(SKILLS).flat()}
-          optionLabels={Object.fromEntries(Object.values(SKILLS).flat().map((skill) => [skill, systemTerm(skill, locale)]))}
         />
         <label>{tr("Especialização", "Specialty")}<Input value={specialty.name} onChange={(event) => updateArray(setSpecialties, specialties, index, { ...specialty, name: event.target.value })} /></label>
       </div>)}
@@ -164,6 +162,18 @@ export function DotRow({ name, value, setValue, min, max, tag, canIncrease = tru
 export function Choice({ label = "", value, setValue, options, optionLabels = {}, invalid = false }: { label?: string; value: string; setValue: Setter<string>; options: readonly string[]; optionLabels?: Record<string, string>; invalid?: boolean }) {
   const { tr } = useLanguage();
   return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger><SelectValue placeholder={tr("Selecione", "Select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
+}
+
+function SkillSpecialtyChoice({ label, value, setValue }: { label: string; value: string; setValue: Setter<string> }) {
+  const { locale, tr } = useLanguage();
+  return <label className="choice-label">{label}<Select value={value || undefined} onValueChange={setValue}>
+    <SelectTrigger><SelectValue placeholder={tr("Selecione uma Perícia", "Select a Skill")} /></SelectTrigger>
+    <SelectContent>{Object.entries(SKILLS).map(([category, skills], index) => <SelectGroup key={category}>
+      {index > 0 && <SelectSeparator />}
+      <SelectLabel>{systemTerm(category, locale)}</SelectLabel>
+      {skills.map((skill) => <SelectItem key={skill} value={skill}>{systemTerm(skill, locale)}</SelectItem>)}
+    </SelectGroup>)}</SelectContent>
+  </Select></label>;
 }
 
 export function Aspirations({ values, setValues }: { values: string[]; setValues: Setter<string[]> }) {

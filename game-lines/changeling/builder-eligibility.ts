@@ -23,7 +23,7 @@ export function canSelectInitialContract(
     }
     return Boolean(court) && (contract.regalia === "All" || contract.regalia === court);
   }
-  if (contract.categoryKind === "Independente") return true;
+  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
   const isCourtContract = new Set([
     "Primavera", "Verão", "Outono", "Inverno", "Cortes Adicionais",
     ...courts.map((definition) => definition.translatedName),

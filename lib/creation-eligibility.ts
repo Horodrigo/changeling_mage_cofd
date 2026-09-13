@@ -83,7 +83,7 @@ export function canSelectInitialContract(
     }
     return Boolean(court) && (contract.regalia === "All" || contract.regalia === court);
   }
-  if (customKind === "Independente") return true;
+  if (customKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
   const isCourtContract =
     COURT_CONTRACT_GROUPS.has(contract.regalia) ||
     CTL_COURT_DEFINITIONS.some((definition) => definition.translatedName === contract.regalia);

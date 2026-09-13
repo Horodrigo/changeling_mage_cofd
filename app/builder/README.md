@@ -1,19 +1,39 @@
 # CharacterBuilder module boundary
 
-The normal creation path is composed from `character-builder-shell.tsx`, the neutral modules in this
-directory, and a lazy controller/view under `game-lines/<line>/`. Catalog data reaches a line builder
-through the immutable registry snapshot; the common modules do not import concrete line mechanics.
+The active creation path is composed from `character-builder-shell.tsx`, the neutral controls in this
+directory, and a lazy controller/view under `game-lines/<line>/`. The registry loads only the selected
+line and passes it an immutable `CatalogSnapshot`; common Builder modules do not import concrete line
+mechanics or mutable catalog state.
 
-Legacy candidates retained for later phases:
+## Active ownership
 
-- `app/character-builder.tsx`: mixed historical implementation still referenced by CharacterPaper.
-  Remove only after the paper-side Merit configuration editor has moved to its own surface.
-- `lib/creation-rules.ts`: mixed compatibility facade for older paper/experience consumers. Active line
-  builders use `lib/core/character/creation-rules.ts` and their own `creation-rules.ts` instead.
-- `lib/creation-eligibility.ts`, `lib/power-progression.ts`, and `lib/merit-configurations.ts`: mixed
-  compatibility helpers retained for non-builder consumers. Active builders use line-local eligibility
-  and power adapters plus neutral Core configuration/grant primitives.
-- Catalog `applyLegacy` adapters: still needed by deferred paper/experience surfaces; builder catalog
-  selection itself is snapshot-based.
+- `app/character-builder-shell.tsx` owns the shared creation frame and neutral trait/merit plumbing.
+- `app/builder/` owns shared controls, common merit configuration and presentation helpers.
+- `game-lines/mage/` and `game-lines/changeling/` own their controllers, eligibility, progression,
+  grants, configuration editors and views.
+- `game-lines/registry/` owns lazy line and catalog-group dispatch.
+- `lib/core/character/` owns persisted schema-v2 fields and neutral creation rules.
 
-Homebrew management and PDF/print do not participate in this boundary and remain deferred.
+The removed mixed Builder (`app/character-builder.tsx`) is not a fallback path. The same rule applies to
+the removed mixed Paper implementation under `app/workspace/character-paper.tsx`.
+
+## Catalog adapter policy
+
+Normal runtime catalog access is snapshot-only. There are four intentionally retained mutable replacement
+functions for established catalog-audit tests:
+
+- `lib/changeling-courts.ts`: `replaceCourtCatalog`
+- `lib/changeling-kiths.ts`: `replaceKithCatalog`
+- `lib/changeling-conditions.ts`: `replaceChangelingConditionCatalog`
+- `lib/mage-conditions.ts`: `replaceMageConditionCatalog`
+
+They are marked `@test-only`, are not imported by `app/`, `game-lines/` or `worker/`, and remain because
+the audit suites exercise legacy presentation/catalog exports directly. Their replacements would require
+duplicating those audited presentation paths rather than testing the real modules.
+
+The unused Spell and Contract mutation adapters were removed. Their type modules now only re-export
+catalog types; line surfaces load the actual records through `CatalogSnapshot`.
+
+`lib/creation-rules.ts`, `lib/creation-eligibility.ts` and `lib/power-progression.ts` remain only as
+compatibility/experience helpers for non-Builder consumers. Active line Builders use Core or line-local
+modules. Homebrew management and PDF/print remain outside this boundary by design.

@@ -4,6 +4,7 @@ export type MageCondition = ConditionDefinition;
 
 export const MAGE_CONDITIONS: MageCondition[] = [];
 
+/** @test-only; never import or call this from app/, game-lines/, or worker/. */
 export function replaceMageConditionCatalog(items: MageCondition[]) {
   const unique = items.filter(
     (item, index, array) => array.findIndex((other) => other.id === item.id) === index,

@@ -146,7 +146,13 @@ export function useCommonBuilderState(
 
 export function commonCreationIssues(
   state: ReturnType<typeof useCommonBuilderState>,
-  labels: { attributes: string; skills: string; attributePriorities: string; skillPriorities: string },
+  labels: {
+    attributes: string;
+    skills: string;
+    attributePriorities: string;
+    skillPriorities: string;
+    categoryLabel?: (category: string) => string;
+  },
 ) {
   const issues: BuilderValidationIssue[] = [];
   const prioritiesValid = (values: string[], categories: readonly string[]) =>
@@ -159,13 +165,15 @@ export function commonCreationIssues(
     issues.push({ step: 2, key: "skill-priority", label: labels.skillPriorities });
   for (const [category, names] of Object.entries(ATTRIBUTES)) {
     const index = state.attributePriority.indexOf(category);
+    const displayCategory = labels.categoryLabel?.(category) ?? category;
     if (index < 0 || spent(state.attributes, names, 1) !== [5, 4, 3][index])
-      issues.push({ step: 2, key: `attribute-${category}`, label: `${labels.attributes} ${category}` });
+      issues.push({ step: 2, key: `attribute-${category}`, label: `${labels.attributes} ${displayCategory}` });
   }
   for (const [category, names] of Object.entries(SKILLS)) {
     const index = state.skillPriority.indexOf(category);
+    const displayCategory = labels.categoryLabel?.(category) ?? category;
     if (index < 0 || spent(state.skills, names, 0) !== [11, 7, 4][index])
-      issues.push({ step: 2, key: `skill-${category}`, label: `${labels.skills} ${category}` });
+      issues.push({ step: 2, key: `skill-${category}`, label: `${labels.skills} ${displayCategory}` });
   }
   return issues;
 }

@@ -31,6 +31,7 @@ import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
+import { systemTerm } from "@/lib/system-terms";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -76,7 +77,7 @@ function findKith(catalog: readonly KithDefinition[], value: string) {
 }
 
 function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   if (initial && initial.game_line !== "CtL") throw new Error("Changeling builder received a non-Changeling character.");
   if (!catalogs) throw new Error("Changeling builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {
@@ -149,6 +150,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
       attributes: tr("Atributos", "Attributes"), skills: tr("Perícias", "Skills"),
       attributePriorities: tr("Prioridades de Atributos", "Attribute priorities"),
       skillPriorities: tr("Prioridades de Perícias", "Skill priorities"),
+      categoryLabel: (category) => systemTerm(category, locale),
     });
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
     if (!common.name.trim()) add(1, "name", tr("Nome do personagem", "Character name"));

@@ -193,6 +193,17 @@ test("Contrato Court (All) pode ser escolhido por membro de qualquer Corte", () 
   );
 });
 
+test("Contratos Independent não dependem de Regalia favorecida nem de Corte", () => {
+  assert.equal(
+    rules.canSelectInitialContract(
+      { type: "Real", categoryKind: "Regalia", regalia: "Independent" },
+      [],
+      "",
+    ),
+    true,
+  );
+});
+
 test("Contrato compartilhado de Corte usa a Clause da Corte canônica", () => {
   const contract = { type: "Comum", categoryKind: "Corte", regalia: "Circadian", courtClauses: { sun: "A", moon: "B" } };
   assert.equal(rules.canSelectInitialContract(contract, [], "Corte do Sol"), true);

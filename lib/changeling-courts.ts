@@ -20,8 +20,13 @@ export function courtPageCitation(court: Pick<CourtDefinition, "page" | "additio
   return [court.page, ...(court.additionalPages ?? [])].join(", ");
 }
 
+/**
+ * Test-only catalog replacement retained for legacy catalog-audit fixtures.
+ * Production builders and sheets receive courts through CatalogSnapshot.
+ */
 export const CTL_COURT_DEFINITIONS: CourtDefinition[] = [];
 
+/** @test-only; never import or call this from app/, game-lines/, or worker/. */
 export function replaceCourtCatalog(items: CourtDefinition[]) {
   CTL_COURT_DEFINITIONS.splice(0, CTL_COURT_DEFINITIONS.length, ...items);
 }

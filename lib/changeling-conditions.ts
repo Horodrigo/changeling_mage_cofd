@@ -9,6 +9,7 @@ type PortugueseConditionPresentation = Partial<Pick<ChangelingCondition, "name" 
 export const CHANGELING_CONDITIONS: ChangelingCondition[] = [];
 let CONDITION_PRESENTATION_PT: Record<string, PortugueseConditionPresentation> = {};
 
+/** @test-only; never import or call this from app/, game-lines/, or worker/. */
 export function replaceChangelingConditionCatalog(
   items: ChangelingCondition[],
   presentation: Record<string, PortugueseConditionPresentation> = {},

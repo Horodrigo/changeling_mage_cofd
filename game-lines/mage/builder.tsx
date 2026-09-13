@@ -22,6 +22,7 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
+import { systemTerm } from "@/lib/system-terms";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
   if (!value || typeof value !== "object") return null;
@@ -88,7 +89,7 @@ function readSpells(
 }
 
 function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
-  const { tr } = useLanguage();
+  const { locale, tr } = useLanguage();
   if (initial && initial.game_line !== "MtA") throw new Error("Mage builder received a non-Mage character.");
   if (!catalogs) throw new Error("Mage builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {
@@ -183,6 +184,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       attributes: tr("Atributos", "Attributes"), skills: tr("Perícias", "Skills"),
       attributePriorities: tr("Prioridades de Atributos", "Attribute priorities"),
       skillPriorities: tr("Prioridades de Perícias", "Skill priorities"),
+      categoryLabel: (category) => systemTerm(category, locale),
     });
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     for (const merit of common.merits) {

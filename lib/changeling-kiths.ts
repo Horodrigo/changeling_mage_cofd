@@ -49,6 +49,7 @@ export const KITHS: KithDefinition[] = [];
 type KithPresentation = Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string };
 let KITH_PRESENTATION_PT: Record<string, KithPresentation> = {};
 
+/** @test-only; never import or call this from app/, game-lines/, or worker/. */
 export function replaceKithCatalog(
   items: KithDefinition[],
   presentation: Record<string, KithPresentation> = {},

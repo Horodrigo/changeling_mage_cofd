@@ -29,6 +29,23 @@ test("catalog group registry retains statically analyzable lazy line loaders", a
   assert.doesNotMatch(contract, /applyLegacy/);
 });
 
+test("legacy catalog replacement adapters stay outside production surfaces", async () => {
+  const production = await Promise.all([
+    source("app/catalog-boundary.tsx"),
+    source("app/game-line-builder.tsx"),
+    source("app/workspace/game-line-sheet.tsx"),
+    source("game-lines/registry/catalog-group-registry.ts"),
+    source("game-lines/mage/builder.tsx"),
+    source("game-lines/mage/sheet-view.tsx"),
+    source("game-lines/changeling/builder.tsx"),
+    source("game-lines/changeling/sheet-view.tsx"),
+    source("worker/index.ts"),
+  ]);
+  assert.doesNotMatch(production.join("\n"), /replace(?:Court|Kith|ChangelingCondition|MageCondition|Spell|Contract)Catalog/);
+  assert.doesNotMatch(await source("lib/catalog/spell-catalog.ts"), /replaceSpellCatalog|SPELLS/);
+  assert.doesNotMatch(await source("lib/catalog/contract-catalog.ts"), /replaceContractCatalog|CONTRACTS/);
+});
+
 test("current game lines do not statically depend on one another", async () => {
   const [mage, changeling] = await Promise.all([
     source("game-lines/mage/registration.ts"),

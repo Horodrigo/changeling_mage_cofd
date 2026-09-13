@@ -31,7 +31,6 @@ import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { builderText } from "@/app/character-builder-messages";
 
 export type ContractSelection = ContractDefinition;
 export type CustomCourtDefinition = { name: string; emotion: string; mantleBenefits: string[] };
@@ -80,6 +79,13 @@ function courtDisplayName(catalog: readonly BuilderCourtDefinition[], value: unk
   return definition ? courtName(definition, locale) : raw;
 }
 
+function contractCategoryKey(contract: ContractDefinition) {
+  if (contract.goblin || contract.regalia === "Goblin") return "goblin";
+  if (contract.categoryKind === "Corte" || contract.regalia === "All" || contract.courtIds?.length || contract.courtClauses) return "court";
+  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
+  return contract.regalia;
+}
+
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, tr } = useLanguage();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
@@ -88,7 +94,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
     ...props.contractCatalog
       .filter(
         (item: ContractDefinition & { categoryKind?: string }) =>
-          item.categoryKind === "Regalia",
+          item.categoryKind === "Regalia" && !["Independent", "Independente"].includes(item.regalia),
       )
       .map((item: ContractDefinition) => item.regalia),
   ].filter((item, index, values) => values.indexOf(item) === index);
@@ -126,6 +132,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             value={props.favoredAttribute}
             setValue={props.setFavoredAttribute}
             options={favored}
+            optionLabels={Object.fromEntries(favored.map((attribute) => [attribute, systemTerm(attribute, locale)]))}
             invalid={props.missing("favoredAttribute")}
           />
           <div className="regalia-choice-stack">
@@ -486,10 +493,18 @@ function ContractSelector({
   const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
-  const [regaliaFilter, setRegaliaFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   const commonFull = contracts.slice(0, 4).every((item) => item.name);
   const royalFull = contracts.slice(4).every((item) => item.name);
+  const categoryLabel = (category: string) => category === "court"
+    ? tr("Corte", "Court")
+    : category === "independent"
+      ? tr("Independente", "Independent")
+      : category === "goblin"
+        ? tr("Goblin", "Goblin")
+        : systemTerm(category, locale);
+  const categoryOptions = alphabetical([...new Set(catalog.map(contractCategoryKey))], categoryLabel, locale);
   const availableContracts = alphabetical(catalog, contractName,locale)
     .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
     .filter((contract) =>
@@ -500,21 +515,15 @@ function ContractSelector({
         courtCatalog,
       ) &&
       (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&
-      (regaliaFilter === "all" || contract.regalia === regaliaFilter) &&
+      (categoryFilter === "all" || contractCategoryKey(contract) === categoryFilter) &&
       (!((contract.type === "Comum" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName)),
     );
-  const contractGroups = [
-    ...REGALIA,
-    ...availableContracts.map((item) => item.regalia).filter(
-      (item) => !REGALIA.includes(item),
-    ),
-  ];
-  const groups = alphabetical([...new Set(contractGroups)], value => builderText(locale,value),locale)
-    .map((regalia) => ({
-      regalia,
+  const groups = alphabetical([...new Set(availableContracts.map(contractCategoryKey))], categoryLabel, locale)
+    .map((category) => ({
+      category,
       items: availableContracts.filter(
         (item) =>
-          item.regalia === regalia &&
+          contractCategoryKey(item) === category &&
           (!normalizedSearch ||
             `${item.name} ${item.originalName} ${item.source} ${item.description} ${item.dicePool}`
               .toLocaleLowerCase("pt-BR")
@@ -564,18 +573,18 @@ function ContractSelector({
         <DialogHeader>
           <DialogTitle>{tr("Adicionar Contrato", "Add Contract")}</DialogTitle>
           <DialogDescription>
-            {tr("Separados por Regalia, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
+            {tr("Separados por Regalia, Corte ou Independente, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, Court, or Independent access, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
           <label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={tr("Buscar contrato, Regalia ou fonte…", "Search Contract, Regalia, or source…")} /></label>
           <Choice value={typeFilter} setValue={setTypeFilter} options={["all","common","royal"]} optionLabels={{all:tr("Todos os tipos","All types"),common:tr("Comum","Common"),royal:tr("Real","Royal")}} />
-          <Choice value={regaliaFilter} setValue={setRegaliaFilter} options={["all",...alphabetical([...new Set(catalog.map((item)=>item.regalia))],(item)=>systemTerm(item,locale),locale)]} optionLabels={{all:tr("Todas as categorias","All categories"),...Object.fromEntries(catalog.map((item)=>[item.regalia,systemTerm(item.regalia,locale)]))}} />
+          <Choice value={categoryFilter} setValue={setCategoryFilter} options={["all",...categoryOptions]} optionLabels={{all:tr("Todas as categorias","All categories"),...Object.fromEntries(categoryOptions.map((category)=>[category,categoryLabel(category)]))}} />
         </div>
         <div className="merit-catalog">
-          {groups.map(({ regalia, items }) => (
-            <section className="merit-category" key={regalia}>
-              <h3>{systemTerm(regalia,locale)} <Badge variant="outline">{items.length}</Badge></h3>
+          {groups.map(({ category, items }) => (
+            <section className="merit-category" key={category}>
+              <h3>{categoryLabel(category)} <Badge variant="outline">{items.length}</Badge></h3>
               <div>
                 {items.map((contract) => {
                   const presented = contractPresentation(contract, locale);
@@ -600,7 +609,7 @@ function ContractSelector({
           const presented=contractPresentation(item,locale),summary=contractSummary(item,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
           const benefit=presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
           return <details className="contract-power-card" key={`${item.id}-${index}`}>
-            <summary className="contract-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?tr("Comum","Common"):tr("Real","Royal")}</Badge><small>{systemTerm(item.regalia,locale)} · {item.source} · p. {item.page||"—"}</small></summary>
+            <summary className="contract-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?tr("Comum","Common"):tr("Real","Royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
             <div className="contract-power-details"><dl>
               {summary&&<div><dt>{tr("Resumo","Summary")}</dt><dd>{summary}</dd></div>}
               {contractHasInvocationRoll(presented)===true&&<div><dt>{tr("Parada de dados","Dice Pool")}</dt><dd>{presented.dicePool??tr("Não informada","Not listed")}</dd></div>}
@@ -612,7 +621,7 @@ function ContractSelector({
               <div><dt>{tr("Brecha","Loophole")}</dt><dd>{presented.loophole}</dd></div>
               {item.goblinDebt&&<div className="goblin-debt-row"><dt>{tr("Débito Goblin","Goblin Debt")}</dt><dd>{item.goblinDebt}</dd></div>}
               {benefit&&<div><dt>{tr("Benefício de","Benefit for")} {seemingDisplayName(seeming,locale)}</dt><dd>{benefit}</dd></div>}
-            </dl><Button type="button" variant="outline" size="sm" onClick={()=>removeContract(index)}><Trash2/>{tr("Remover Contrato","Remove Contract")}</Button></div>
+              </dl><Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={()=>removeContract(index)}><Trash2/>{tr("Remover Contrato","Remove Contract")}</Button></div>
           </details>;
         })}
       </div>
@@ -621,7 +630,7 @@ function ContractSelector({
           <DialogHeader>
             <DialogTitle>{tr("Selecionar contratos", "Select Contracts")}</DialogTitle>
             <DialogDescription>
-              {tr("Separados por Regalia, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
+              {tr("Separados por Regalia, Corte ou Independente, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, Court, or Independent access, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -633,10 +642,10 @@ function ContractSelector({
             />
           </label>
           <div className="merit-catalog">
-            {groups.map(({ regalia, items }) => (
-              <section className="merit-category" key={regalia}>
+            {groups.map(({ category, items }) => (
+              <section className="merit-category" key={category}>
                 <h3>
-                  {systemTerm(regalia,locale)} <Badge variant="outline">{items.length}</Badge>
+                  {categoryLabel(category)} <Badge variant="outline">{items.length}</Badge>
                 </h3>
                 <div>
                   {items.map((contract) => {
