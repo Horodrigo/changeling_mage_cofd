@@ -55,6 +55,15 @@ test("normal game-line surfaces do not load legacy Homebrew storage", async () =
   assert.doesNotMatch(hook, /device-storage|readHomebrews|localStorage/);
 });
 
+test("game-line contracts do not expose a deferred Homebrew surface", async () => {
+  const [registration, groups] = await Promise.all([
+    source("lib/game-line-contracts/game-line-registration.ts"),
+    source("lib/game-line-contracts/catalog-groups.ts"),
+  ]);
+  assert.doesNotMatch(registration, /loadHomebrew|GameLineHomebrew/);
+  assert.doesNotMatch(groups, /homebrew/);
+});
+
 test("Workspace routes both existing and new character builders through shells", async () => {
   const workspace = await source("app/workspace.tsx");
   assert.doesNotMatch(workspace, /import\("\.\/character-builder"\)/);

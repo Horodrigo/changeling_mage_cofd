@@ -20,8 +20,5 @@ export type GameLineSheetProps = {
   catalogs?: CatalogSnapshot;
 };
 
-export type GameLineHomebrewProps = { characters: CharacterSheet[] };
-
 export type GameLineBuilderModule = { Component: ComponentType<GameLineBuilderProps> };
 export type GameLineSheetModule = { Component: ComponentType<GameLineSheetProps> };
-export type GameLineHomebrewModule = { Component: ComponentType<GameLineHomebrewProps> };
