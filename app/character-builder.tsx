@@ -81,7 +81,7 @@ import {
 } from "@/lib/creation-eligibility";
 import { KITHS, findKith, kithDisplayName, kithPresentation, kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
 import { kithCreationChoice } from "@/lib/changeling-kith-choices";
-import { CTL_COURT_DEFINITIONS, courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation } from "@/lib/changeling-courts";
+import { CTL_COURT_DEFINITIONS, courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation, type CourtDefinition } from "@/lib/changeling-courts";
 import { useHomebrews } from "./use-homebrews";
 import { isBuiltinHomebrew, isHomebrewActive } from "@/lib/homebrews";
 import {
@@ -142,12 +142,13 @@ export type ContractSelection = Pick<
   | "page"
 >;
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
-type CustomCourtDefinition = {
+export type CustomCourtDefinition = {
   name: string;
   emotion: string;
   mantleBenefits: string[];
 };
-type CustomOrderDefinition = {
+type BuilderCourtDefinition = CustomCourtDefinition & Partial<CourtDefinition>;
+export type CustomOrderDefinition = {
   name: string;
   description: string;
   roteSkills: string[];
@@ -155,21 +156,21 @@ type CustomOrderDefinition = {
 };
 type Setter<T> = (value: T) => void;
 type MissingCheck = (key: string) => boolean;
-type IdentityStepProps = {
+export type IdentityStepProps = {
   line: "CtL" | "MtA"; setLine: Setter<"CtL" | "MtA">;
   lineChosen: boolean;
   name: string; setName: Setter<string>; concept: string; setConcept: Setter<string>;
   player: string; setPlayer: Setter<string>; chronicle: string; setChronicle: Setter<string>;
   shadowName: string; setShadowName: Setter<string>; missing: MissingCheck;
 };
-type TraitsStepProps = {
+export type TraitsStepProps = {
   attributePriority: string[]; setAttributePriority: Setter<string[]>;
   skillPriority: string[]; setSkillPriority: Setter<string[]>;
   attributes: Record<string, number>; setAttributes: Setter<Record<string, number>>;
   skills: Record<string, number>; setSkills: Setter<Record<string, number>>;
   specialties: Specialty[]; setSpecialties: Setter<Specialty[]>; missing: MissingCheck;
 };
-type CtlStepProps = {
+export type CtlStepProps = {
   seeming: string; setSeeming: Setter<string>; attributes: Record<string, number>;
   contractCatalog: ContractDefinition[]; contracts: ContractSelection[]; setContracts: Setter<ContractSelection[]>;
   favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
@@ -181,10 +182,10 @@ type CtlStepProps = {
   kithChoice: string; setKithChoice: Setter<string>; specialties: Specialty[];
   customKithSkill: string; setCustomKithSkill: Setter<string>; customKithDescription: string; setCustomKithDescription: Setter<string>;
   kithCatalog?: Array<KithDefinition & {homebrew?:true}>;
-  customCourt: CustomCourtDefinition | null; setCustomCourt: Setter<CustomCourtDefinition | null>; setCourt: Setter<string>; courtCatalog?: CustomCourtDefinition[];
+  customCourt: CustomCourtDefinition | null; setCustomCourt: Setter<CustomCourtDefinition | null>; setCourt: Setter<string>; courtCatalog?: BuilderCourtDefinition[];
 };
 type OrderSelectorProps = {order:string;setOrder:Setter<string>;customOrder:CustomOrderDefinition|null;setCustomOrder:Setter<CustomOrderDefinition|null>;orderCatalog?:CustomOrderDefinition[];invalid?:boolean};
-type MtaStepProps = {
+export type MtaStepProps = {
   path:string;setPath:Setter<string>;order:string;customOrder:CustomOrderDefinition|null;setCustomOrder:Setter<CustomOrderDefinition|null>;setOrder:Setter<string>;orderCatalog?:CustomOrderDefinition[];
   gnosis:number;setGnosis:Setter<number>;maximumPowerFromMerits:number;powerAdvancement:number;virtue:string;setVirtue:Setter<string>;vice:string;setVice:Setter<string>;
   resistanceBonus:string;setResistanceBonus:Setter<string>;nimbus:string;setNimbus:Setter<string>;tool:string;setTool:Setter<string>;
@@ -1021,7 +1022,7 @@ export function CharacterBuilder({
   );
 }
 
-function IdentityStep({
+export function IdentityStep({
   line,
   setLine,
   lineChosen,
@@ -1115,7 +1116,7 @@ function editableSkills(initial?: CharacterSheet | null) {
   return values;
 }
 
-function TraitsStep(props: TraitsStepProps) {
+export function TraitsStep(props: TraitsStepProps) {
   const { locale, tr } = useLanguage();
   const allSkills = Object.values(SKILLS).flat();
   return (
@@ -1221,7 +1222,7 @@ function TraitsStep(props: TraitsStepProps) {
   );
 }
 
-function CtlStep(props: CtlStepProps) {
+export function CtlStep(props: CtlStepProps) {
   const { locale, tr } = useLanguage();
   const homebrews=useHomebrews();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
@@ -1341,15 +1342,15 @@ function CourtSelector(props: Pick<CtlStepProps,"court"|"setCourt"|"customCourt"
     props.setCustomCourt(null);
   };
   const officialCourt = courtPresentation(props.court, locale);
-  const officialCourts = CTL_COURT_DEFINITIONS.filter(
+  const officialCourts: BuilderCourtDefinition[] = (props.courtCatalog?.length ? props.courtCatalog : CTL_COURT_DEFINITIONS).filter(
     (court) => court.sourceId !== "h-courts" || isHomebrewActive(homebrews, "h-courts"),
   );
   const courtOptions = alphabetical([
     ...officialCourts.map((court) => ({
-      value: court.id,
-      label: courtDisplayName(court.id, locale),
-      detail: `${locale === "pt-BR" ? court.emotionPt : court.emotion} · ${court.source} · p. ${courtPageCitation(court)}`,
-      source: court.source,
+      value: court.id ?? court.name,
+      label: courtDisplayName(court.id ?? court.name, locale),
+      detail: `${locale === "pt-BR" ? (court.emotionPt ?? court.emotion) : court.emotion} · ${court.source ?? ""} · p. ${courtPageCitation({ page: court.page ?? 0, additionalPages: court.additionalPages })}`,
+      source: court.source ?? "",
     })),
   ], (court) => court.label, locale);
   const courtSources = alphabetical([...new Set(courtOptions.map((court) => court.source))], (source) => source, locale);
@@ -1454,7 +1455,7 @@ function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"kithChoice"|"se
   const kithText = (item: KithDefinition & {homebrew?:true}) => item.homebrew
     ? {name:item.name,description:item.description,blessing:item.blessing,skill:item.skill}
     : kithPresentation(item.id,locale);
-  const allKiths: Array<KithDefinition & {homebrew?:true}> = KITHS.filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId)).sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
+  const allKiths: Array<KithDefinition & {homebrew?:true}> = (props.kithCatalog?.length ? props.kithCatalog : KITHS).filter((item)=>!item.sourceId||isHomebrewActive(homebrews,item.sourceId)).sort((a,b)=>kithName(a).localeCompare(kithName(b),locale));
   const skillOptionSet=new Set(allKiths.flatMap(kithSkillOptions));
   const skillGroups=Object.entries(SKILLS).map(([category,skills])=>({
     category,
@@ -1463,7 +1464,7 @@ function KithSelector(props: Pick<CtlStepProps,"kith"|"setKith"|"kithChoice"|"se
   const canonicalSkills=new Set(skillGroups.flatMap(group=>group.skills));
   const otherSkillOptions=alphabetical([...skillOptionSet].filter(skill=>!canonicalSkills.has(skill)),skill=>systemTerm(skill,locale),locale);
   const sourceOptions=alphabetical([...new Set(allKiths.map((item)=>item.source).filter(Boolean))],(value)=>value,locale);
-  const selected = findKith(props.kith);
+  const selected = allKiths.find((item) => item.id === props.kith || item.name === props.kith) ?? findKith(props.kith);
   const creationChoice=selected&&!props.customKith?kithCreationChoice(selected.id):undefined;
   const creationChoiceOptions=creationChoice?.kind==="specialty"
     ? props.specialties.filter(item=>creationChoice.skillNames?.includes(systemTerm(item.skill,"en-US"))&&item.name.trim()).map(item=>`${systemTerm(item.skill,"en-US")}: ${item.name.trim()}`)
@@ -1989,7 +1990,7 @@ function OrderSelector(props: OrderSelectorProps) {
   );
 }
 
-function MtaStep(props: MtaStepProps) {
+export function MtaStep(props: MtaStepProps) {
   const { locale, tr } = useLanguage();
   const pathData = MTA_PATHS[props.path as keyof typeof MTA_PATHS];
   const neededPraxes = props.gnosis;

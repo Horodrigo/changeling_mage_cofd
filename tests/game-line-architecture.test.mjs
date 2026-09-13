@@ -71,6 +71,22 @@ test("Workspace routes both existing and new character builders through shells",
   assert.match(workspace, /import\("\.\/game-line-builder"\)/);
 });
 
+test("line builders own independent controllers and consume scoped catalog snapshots", async () => {
+  const [mage, changeling, shell] = await Promise.all([
+    source("game-lines/mage/builder.tsx"),
+    source("game-lines/changeling/builder.tsx"),
+    source("app/character-builder-shell.tsx"),
+  ]);
+  assert.doesNotMatch(mage, /Component:\s*CharacterBuilder\b/);
+  assert.doesNotMatch(changeling, /Component:\s*CharacterBuilder\b/);
+  assert.match(mage, /catalogs\.get<[^>]+>\("mage-spells"\)/);
+  assert.match(changeling, /catalogs\.get<[^>]+>\("changeling-contracts"\)/);
+  assert.doesNotMatch(mage, /changeling-(?:contracts|merits|reference)/);
+  assert.doesNotMatch(changeling, /mage-(?:spells|merits|reference)/);
+  assert.match(shell, /useCommonBuilderState/);
+  assert.doesNotMatch(shell, /MTA_PATHS|CTL_SEEMINGS|spellCatalog|contractCatalog/);
+});
+
 test("legacy character endpoint validates persisted IDs through the core contract", async () => {
   const route = await source("app/api/characters/route.ts");
   assert.match(route, /PERSISTED_GAME_LINE_IDS/);
