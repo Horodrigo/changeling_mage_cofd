@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
-import type { CharacterSheet } from "../character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { ANIMALS, animalPresentation, type Animal } from "@/lib/companions";
 import { normalizeMeritConfiguration } from "@/lib/merit-configurations";

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AlertDialog,AlertDialogAction,AlertDialogCancel,AlertDialogContent,AlertDialogDescription,AlertDialogFooter,AlertDialogHeader,AlertDialogTitle } from "@/components/ui/alert-dialog";
-import type { CharacterSheet } from "../character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { findLegacy,LEGACIES,legacyAttainmentPrerequisites,legacyEntryPrerequisites,normalizeLegacyState } from "@/lib/legacies";
 import type { MageAdvancementUndo } from "@/lib/experience-refunds";

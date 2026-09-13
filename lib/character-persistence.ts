@@ -1,4 +1,4 @@
-import type { CharacterSheet } from "../app/character-builder";
+import type { CharacterSheet } from "./core/character/character-types";
 import { ATTRIBUTES, SKILLS, normalizeChangelingFrailties } from "./creation-rules";
 import { normalizeMeritConfiguration, synchronizeMeritGrants } from "./merit-configurations";
 

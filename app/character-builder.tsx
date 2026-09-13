@@ -105,19 +105,10 @@ import { systemTerm } from "@/lib/system-terms";
 import { builderText } from "./character-builder-messages";
 import { ENTITLEMENTS, findEntitlement } from "@/lib/entitlements";
 import { ConfirmAction } from "./workspace/confirm-action";
+import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
 
-export type Specialty = { skill: string; name: string; grantedBy?: string };
-export type MeritSelection = {
-  instanceId?: string;
-  name: string;
-  dots: number;
-  sourceId?: string;
-  source?: string;
-  configuration?: MeritConfiguration;
-  grantedBy?: string;
-  creationDots?: number;
-  experienceDots?: number;
-};
+export type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
+
 export type ContractSelection = Pick<
   ContractDefinition,
   | "id"
@@ -201,24 +192,6 @@ type MtaStepProps = {
   praxes:Array<SpellSelection|null>;setPraxes:Setter<Array<SpellSelection|null>>;spellCatalog:SpellDefinition[];
   aspirations:string[];setAspirations:Setter<string[]>;meritContext:MeritPrerequisiteContext;meritCatalog:MeritDefinition[];merits:MeritSelection[];setMerits:Setter<MeritSelection[]>;
   meritSpent:number;meritBudget:number;missing:MissingCheck;
-};
-
-export type CharacterSheet = {
-  id: string;
-  schema_version: 2;
-  system: "chronicles-of-darkness";
-  game_line: "CtL" | "MtA";
-  ruleset: { id: string; version: number };
-  character: { name: string; concept: string; player: string; chronicle?: string };
-  attributes: Record<string, number>;
-  skills: Record<string, number>;
-  specializations: Specialty[];
-  merits: MeritSelection[];
-  line_data: Record<string, unknown>;
-  derived: Record<string, number>;
-  current_state: Record<string, unknown>;
-  created_at: string;
-  updated_at: string;
 };
 
 const attributeCategories = Object.keys(ATTRIBUTES) as Array<

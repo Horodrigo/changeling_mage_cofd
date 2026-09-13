@@ -4,7 +4,7 @@ import { Plus, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import type { CharacterSheet } from "../character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
@@ -218,4 +218,3 @@ function TiltManager({selected,onChange}:{selected:string[];onChange:(value:stri
     </DialogContent></Dialog>
   </div>;
 }
-

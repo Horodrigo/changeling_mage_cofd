@@ -27,7 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { CharacterSheet } from "./character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { seemingDisplayName } from "@/lib/seeming-presentation";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";

@@ -18,7 +18,7 @@ import { KITHS } from "@/lib/changeling-kiths";
 import { ENTITLEMENTS } from "@/lib/entitlements";
 import { courtDisplayName } from "@/lib/changeling-courts";
 import { localized, localizedCount, useLanguage, type Locale } from "@/lib/i18n";
-import type { CharacterSheet } from "./character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useHomebrews } from "./use-homebrews";
 import {
   formatNamedText,

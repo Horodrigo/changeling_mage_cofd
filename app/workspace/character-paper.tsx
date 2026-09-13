@@ -78,8 +78,8 @@ import {
 import {
   CharacterBuilder,
   MeritConfigurationEditor,
-  type CharacterSheet,
 } from "../character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement } from "@/lib/entitlements";
 import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
 import {

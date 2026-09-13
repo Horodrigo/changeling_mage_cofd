@@ -1,4 +1,4 @@
-import type { CharacterSheet } from "../app/character-builder";
+import type { CharacterSheet } from "./core/character/character-types";
 import { refundPowerRating } from "./power-progression";
 import { removeExperienceMeritDots } from "./merit-progression";
 

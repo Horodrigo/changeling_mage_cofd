@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import type { CharacterSheet } from "../character-builder";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useHomebrews } from "../use-homebrews";
 import { useLanguage } from "@/lib/i18n";
 import { isHomebrewActive } from "@/lib/homebrews";
