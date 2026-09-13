@@ -18,13 +18,10 @@ def normalized(value: str) -> str:
 
 
 def read_catalog(path: Path) -> list[dict]:
-    text = path.read_text(encoding="utf-8")
-    match = re.search(
-        r"export const SPELLS: SpellDefinition\[\] = (\[.*\]);\s*$", text, re.S
-    )
-    if not match:
-        raise SystemExit(f"Could not read the generated spell array from {path}")
-    return json.loads(match.group(1))
+    shards = [candidate for candidate in path.glob("*.json") if candidate.name != "index.json"]
+    if not shards:
+        raise SystemExit(f"Could not find spell JSON shards in {path}")
+    return [item for shard in sorted(shards) for item in json.loads(shard.read_text(encoding="utf-8"))]
 
 
 def pdf_text(path: Path) -> str:
@@ -34,7 +31,7 @@ def pdf_text(path: Path) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--catalog", type=Path, default=Path("lib/spells.ts"))
+    parser.add_argument("--catalog", type=Path, default=Path("public/data/mage/spells"))
     parser.add_argument("--mage", type=Path, required=True)
     parser.add_argument("--signs", type=Path, required=True)
     parser.add_argument("--dark-eras-2", type=Path, required=True)

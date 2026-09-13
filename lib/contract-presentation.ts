@@ -1,4 +1,4 @@
-import type { ContractDefinition } from "./contracts";
+import type { ContractDefinition } from "./catalog/contract-catalog";
 import type { Locale } from "./i18n";
 import { CONTRACT_TEXT_EN } from "./contracts-en";
 

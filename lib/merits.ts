@@ -1,7 +1,3 @@
-import { MERITS_EN } from "./merits-en.generated";
-import { SUPPLEMENTAL_MERITS_EN } from "./merits-supplements-en";
-import { BOOK_OF_SEEMINGS_MERITS_EN } from "./merits-book-of-seemings-en";
-import { MAGE_MERITS } from "./merits-mage";
 import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
 
 export type GameLine = "CtL" | "MtA";
@@ -32,18 +28,7 @@ export type MeritDefinition = {
   unbounded?: boolean;
 };
 
-export const RAW_MERITS: MeritDefinition[] = [...MERITS_EN, ...SUPPLEMENTAL_MERITS_EN, ...BOOK_OF_SEEMINGS_MERITS_EN, ...MAGE_MERITS].map((item) => ({
-  ...item,
-  ratings: [...item.ratings],
-  levels: "levels" in item ? item.levels?.map((level) => ({ ...level })) : undefined,
-  prerequisites: item.prerequisites ?? undefined,
-  priority: item.line === "Core" ? 1 : 2,
-  // English is canonical. Portuguese fields intentionally fall back to English
-  // until the separately audited translation phase.
-  translatedName: item.name,
-  descriptionEn: item.description,
-  description: item.description,
-}));
+export const RAW_MERITS: MeritDefinition[] = [];
 
 export const REPEATABLE_MERITS = new Set([
   "Allies", "Alternate Identity", "Court Goodwill", "Fae Mount",
@@ -51,8 +36,16 @@ export const REPEATABLE_MERITS = new Set([
   "Striking Looks", "Hedgespun Item",
   "Hedge Duelist", "Hollow", "Stable Trod", "Shared Bastion", "Acquired Taste",
 ]);
-export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff", ...MAGE_MERITS.filter(item=>item.unbounded).map(item=>item.name)]);
+export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff"]);
 export const EXTENDED_DOT_MERITS = new Set(["Token"]);
+
+export function replaceMeritCatalog(merits: MeritDefinition[]) {
+  RAW_MERITS.splice(0, RAW_MERITS.length, ...merits);
+  UNBOUNDED_MERITS.clear();
+  UNBOUNDED_MERITS.add("Contacts");
+  UNBOUNDED_MERITS.add("Staff");
+  for (const merit of merits) if (merit.unbounded) UNBOUNDED_MERITS.add(merit.name);
+}
 export const meritRatingsFor = (merit: Pick<MeritDefinition, "name" | "ratings">, ceiling = Math.max(...merit.ratings)) =>
   UNBOUNDED_MERITS.has(merit.name) ? Array.from({length:Math.max(0,ceiling-Math.min(...merit.ratings))+1},(_,index)=>index+Math.min(...merit.ratings)) : merit.ratings;
 export const meritPrerequisitesFor = (merit: Pick<MeritDefinition, "prerequisites">) => merit.prerequisites;
@@ -234,15 +227,3 @@ export function getMeritsForLine(line: GameLine) {
   }
   return [...selected.values()].sort((a,b) => a.name.localeCompare(b.name,"en"));
 }
-
-export const MERIT_RULES = (["CtL", "MtA"] as const).map((line) => ({
-  id: `merits-${line.toLowerCase()}-shared-v2`,
-  name: `Merit catalog ${line}`,
-  gameLine: line,
-  sourceId: line === "CtL" ? "ctl-2ed" : "mta-2ed",
-  page: 0,
-  data: {
-    precedence: [line,"Core"],
-    merits: getMeritsForLine(line).map(({id,name,ratings,sourceId,source,category}) => ({id,name,ratings,sourceId,source,category})),
-  },
-}));

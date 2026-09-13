@@ -1,5 +1,5 @@
 import type { Locale } from "./i18n";
-import { HEDGE_DUELIST_VARIANTS } from "./merits-supplements-en";
+import { HEDGE_DUELIST_VARIANTS } from "./hedge-duelist-variants";
 import { courtCanonicalId, courtDisplayName } from "./changeling-courts";
 import { synchronizeEntitlement } from "./entitlements";
 import { MAGE_MERIT_CONFIGURATIONS } from "./mage-merit-configurations";

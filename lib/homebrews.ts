@@ -1,7 +1,7 @@
-import type { ContractDefinition } from "./contracts";
+import type { ContractDefinition } from "./catalog/contract-catalog";
 import type { ExpandedMeritLevel } from "./expanded-merits";
 import type { GameLine, MeritDefinition } from "./merits";
-import type { SpellDefinition } from "./spells";
+import type { SpellDefinition } from "./catalog/spell-catalog";
 import { setDeviceValue } from "./device-storage";
 
 export const HOMEBREW_STORAGE_KEY = "arquivo-das-trevas:homebrews:v1";

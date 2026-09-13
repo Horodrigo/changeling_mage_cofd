@@ -125,7 +125,7 @@ import {
   CONTRACTS,
   findContract,
   type ContractDefinition,
-} from "@/lib/contracts";
+} from "@/lib/catalog/contract-catalog";
 import {
   normalizeClarityDamage,
   normalizeDamage,
@@ -142,7 +142,7 @@ import {
   findChangelingCondition,
 } from "@/lib/changeling-conditions";
 import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
-import { SPELLS } from "@/lib/spells";
+import { SPELLS } from "@/lib/catalog/spell-catalog";
 import { RuleSelect } from "./rule-select";
 import { SwipeableSheetTabs } from "./sheet-tabs";
 import { LegacyPage } from "./legacy-page";

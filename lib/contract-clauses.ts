@@ -1,4 +1,4 @@
-import type { ContractDefinition } from "./contracts";
+import type { ContractDefinition } from "./catalog/contract-catalog";
 import { courtCanonicalId } from "./changeling-courts";
 
 export function availableForeignClauseCourtIds(

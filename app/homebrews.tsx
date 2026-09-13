@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { alphabetical } from "@/lib/option-order";
-import { CONTRACTS } from "@/lib/contracts";
+import { CONTRACTS } from "@/lib/catalog/contract-catalog";
 import { RAW_MERITS } from "@/lib/merits";
 import { ARCANA, CTL_COURTS, CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, REGALIA, SKILLS } from "@/lib/creation-rules";
 import { KITHS } from "@/lib/changeling-kiths";

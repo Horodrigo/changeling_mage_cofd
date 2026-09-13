@@ -63,11 +63,7 @@ export const CTL_SEEMINGS = {
     curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever taking an action that benefits yourself but adds nothing to the role you embody.",
   },
 } as const;
-export const CTL_SEEMING_LABELS = Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([key, value]) => [key, value.translated])) as Record<string, string>;
-export function seemingDisplayName(value: unknown, locale: "pt-BR" | "en-US" = "pt-BR") {
-  const key = String(value ?? "");
-  return locale === "en-US" ? key : CTL_SEEMING_LABELS[key] ?? key;
-}
+export { CTL_SEEMING_LABELS, seemingDisplayName } from "./seeming-presentation";
 
 export type ChangelingAnchorDefinition = {
   name: string;
@@ -172,7 +168,10 @@ export function changelingAnchorDisplayName(kind:"needle"|"thread",name:unknown,
   const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===canonicalChangelingAnchorName(kind,name));
   return locale==="pt-BR"?(item?.translatedName??Object.entries(anchorAliases(kind)).find(([,canonical])=>canonical===item?.name)?.[0]??item?.name??String(name??"")):(item?.name??String(name??""));
 }
-export const CTL_COURTS = ["Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName)];
+export const CTL_COURTS = ["Sem Corte"];
+export function refreshCreationCourts() {
+  CTL_COURTS.splice(0, CTL_COURTS.length, "Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName));
+}
 export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
 
 export function canIncreaseCreationDots(used:number,budget:number|undefined,current:number,maximum=5) {

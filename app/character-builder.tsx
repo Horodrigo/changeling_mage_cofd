@@ -66,12 +66,12 @@ import {
   UNBOUNDED_MERITS,
   type MeritDefinition,
 } from "@/lib/merits";
-import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/contracts";
+import { CONTRACTS, findContract, type ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { hasPublishedMageOrder } from "@/lib/mage-orders";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { alphabetical, compareOptionLabels, orderedChoiceOptions } from "@/lib/option-order";
-import { SPELLS, type SpellDefinition } from "@/lib/spells";
+import { SPELLS, type SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { powerProgression } from "@/lib/power-progression";
 import { creationMerits, mergeCreationMerits } from "@/lib/merit-progression";
 import {
@@ -166,6 +166,7 @@ type Setter<T> = (value: T) => void;
 type MissingCheck = (key: string) => boolean;
 type IdentityStepProps = {
   line: "CtL" | "MtA"; setLine: Setter<"CtL" | "MtA">;
+  lineChosen: boolean;
   name: string; setName: Setter<string>; concept: string; setConcept: Setter<string>;
   player: string; setPlayer: Setter<string>; chronicle: string; setChronicle: Setter<string>;
   shadowName: string; setShadowName: Setter<string>; missing: MissingCheck;
@@ -274,18 +275,50 @@ export function CharacterBuilder({
 }) {
   const { locale, tr } = useLanguage();
   const homebrews = useHomebrews();
+  const [line, setLine] = useState<"CtL" | "MtA">(initial?.game_line ?? "CtL");
+  const [lineChosen, setLineChosen] = useState(Boolean(initial));
+  const [catalogResult, setCatalogResult] = useState<{
+    line: "CtL" | "MtA" | null;
+    state: "idle" | "ready" | "error";
+  }>({ line: initial?.game_line ?? null, state: initial ? "ready" : "idle" });
+  const catalogState = !lineChosen
+    ? "idle"
+    : catalogResult.line === line
+      ? catalogResult.state
+      : "loading";
+  useEffect(() => {
+    if (!lineChosen || catalogResult.line === line) return;
+    let cancelled = false;
+    void import("@/lib/catalog/catalog-service").then(async ({ catalogService }) => {
+      if (line === "MtA")
+        await Promise.all([
+          catalogService.hydrateSpells(),
+          catalogService.hydrateMerits("MtA"),
+          catalogService.hydrateCoreReference(),
+        ]);
+      else
+        await Promise.all([
+          catalogService.hydrateContracts(),
+          catalogService.hydrateMerits("CtL"),
+          catalogService.hydrateChangelingReference(),
+        ]);
+    }).then(
+      () => { if (!cancelled) setCatalogResult({ line, state: "ready" }); },
+      () => { if (!cancelled) setCatalogResult({ line, state: "error" }); },
+    );
+    return () => { cancelled = true; };
+  }, [catalogResult.line, line, lineChosen]);
   const contractCatalog = useMemo(
     () => [...CONTRACTS.filter(item=>!isBuiltinHomebrew(item.sourceId)||isHomebrewActive(homebrews,item.sourceId)).map(item=>contractWithSupplementalBenefits(item,isHomebrewActive(homebrews,"h-seemings")?["h-seemings"]:[])), ...homebrews.contracts.filter(item=>isHomebrewActive(homebrews,item.id))],
-    [homebrews],
+    [homebrews, catalogResult.line],
   );
   const spellCatalog = useMemo(
     () => [...SPELLS, ...homebrews.spells.filter(item=>isHomebrewActive(homebrews,item.id))],
-    [homebrews],
+    [homebrews, catalogResult.line],
   );
   const startingAttributes = editableAttributes(initial);
   const startingSkills = editableSkills(initial);
   const [step, setStep] = useState(1);
-  const [line, setLine] = useState<"CtL" | "MtA">(initial?.game_line ?? "CtL");
   const [name, setName] = useState(initial?.character.name ?? "");
   const [concept, setConcept] = useState(initial?.character.concept ?? "");
   const [playerName, setPlayerName] = useState(
@@ -871,7 +904,8 @@ export function CharacterBuilder({
         {step === 1 && (
           <IdentityStep
             line={line}
-            setLine={setLine}
+            setLine={(next) => { setLine(next); setLineChosen(true); }}
+            lineChosen={lineChosen}
             name={name}
             setName={setName}
             concept={concept}
@@ -1004,7 +1038,10 @@ export function CharacterBuilder({
         )}
         <span />
         {step < 3 ? (
-          <Button onClick={() => validate(step + 1)}>
+          <Button
+            disabled={step === 1 && catalogState !== "ready"}
+            onClick={() => validate(step + 1)}
+          >
             {tr("Continuar", "Continue")} <ArrowRight />
           </Button>
         ) : (
@@ -1020,6 +1057,7 @@ export function CharacterBuilder({
 function IdentityStep({
   line,
   setLine,
+  lineChosen,
   name,
   setName,
   concept,
@@ -1040,7 +1078,7 @@ function IdentityStep({
       <p>{tr("Escolha a linha principal. Ela determina todas as próximas opções.", "Choose the main game line. It determines every option that follows.")}</p>
       <div className="line-choice">
         <button
-          className={`ctl-line-choice ${line === "CtL" ? "selected" : ""}`}
+          className={`ctl-line-choice ${lineChosen && line === "CtL" ? "selected" : ""}`}
           onClick={() => setLine("CtL")}
         >
           <Badge>CtL</Badge>
@@ -1048,7 +1086,7 @@ function IdentityStep({
           <small>{tr("Fonte principal", "Core source")}: Changeling the Lost 2e</small>
         </button>
         <button
-          className={`mta-line-choice ${line === "MtA" ? "selected" : ""}`}
+          className={`mta-line-choice ${lineChosen && line === "MtA" ? "selected" : ""}`}
           onClick={() => setLine("MtA")}
         >
           <Badge>MtA</Badge>

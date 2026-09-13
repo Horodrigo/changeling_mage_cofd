@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the English-first Mage spell catalog from the offline Codex archive."""
+"""Generate Arcana-sharded Mage spell JSON from the offline Codex archive."""
 
 from __future__ import annotations
 
@@ -109,12 +109,34 @@ def main() -> None:
     spells = parse(args.archive)
     if len(spells) != 360 or len({item["id"] for item in spells}) != 360:
         raise SystemExit(f"Expected 360 unique spell records, got {len(spells)} records/{len({item['id'] for item in spells})} IDs")
-    body = json.dumps(spells, ensure_ascii=False, indent=2)
-    args.output.write_text(
-        "// Generated from the offline Codex of Darkness Spells, All (2nd Edition) page.\n"
-        "// English is canonical; localization is intentionally deferred.\n"
-        "export interface SpellDefinition { id:string; name:string; originalName:string; requirements:Record<string,number>; practice:string; primaryFactor:string; withstand:string; roteSkills:string[]; description?:string; sourceId:string; source:string; page:number; additionalSources?:Array<{sourceId:string;source:string;page:number}> }\n"
-        f"export const SPELLS: SpellDefinition[] = {body};\n",
+    args.output.mkdir(parents=True, exist_ok=True)
+    reviewed: dict[str, dict[str, object]] = {}
+    for path in args.output.glob("*.json"):
+        if path.name == "index.json":
+            continue
+        for item in json.loads(path.read_text(encoding="utf-8")):
+            reviewed[item["id"]] = item
+    for spell in spells:
+        previous = reviewed.get(spell["id"], {})
+        for key in ("summary", "summaryReviewed"):
+            if key in previous:
+                spell[key] = previous[key]
+    for arcanum in ARCANA:
+        shard = [item for item in spells if next(iter(item["requirements"])) == arcanum]
+        (args.output / f"{arcanum.lower()}.json").write_text(
+            json.dumps(shard, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+    index = [
+        {
+            key: item[key]
+            for key in ("id", "name", "originalName", "requirements", "sourceId", "source", "page")
+        }
+        | {"shard": next(iter(item["requirements"])).lower()}
+        for item in spells
+    ]
+    (args.output / "index.json").write_text(
+        json.dumps(index, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
 

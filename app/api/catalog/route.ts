@@ -2,7 +2,26 @@ import { asc } from "drizzle-orm";
 import { getDb } from "@/db";
 import { rules, sources } from "@/db/schema";
 import { SHARED_RULES, SOURCE_CATALOG } from "@/lib/creation-rules";
-import { MERIT_RULES } from "@/lib/merits";
+import coreMerits from "@/public/data/core/merits/core.json";
+import changelingMerits from "@/public/data/core/merits/changeling.json";
+import mageMerits from "@/public/data/core/merits/mage.json";
+
+const MERIT_RULES = (["CtL", "MtA"] as const).map((line) => {
+  const merits = [...coreMerits, ...(line === "CtL" ? changelingMerits : mageMerits)];
+  return {
+    id: `merits-${line.toLowerCase()}-shared-v2`,
+    name: `Merit catalog ${line}`,
+    gameLine: line,
+    sourceId: line === "CtL" ? "ctl-2ed" : "mta-2ed",
+    page: 0,
+    data: {
+      precedence: [line, "Core"],
+      merits: merits.map(({ id, name, ratings, sourceId, source, category }) => ({
+        id, name, ratings, sourceId, source, category,
+      })),
+    },
+  };
+});
 
 export async function POST() {
   try {
