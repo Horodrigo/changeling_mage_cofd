@@ -34,11 +34,14 @@ import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { CatalogBoundary } from "./catalog-boundary";
 import { getGameLineRegistration, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
 
-const CharacterBuilder = lazy(() =>
+const NewCharacterBuilder = lazy(() =>
   import("./character-builder").then((module) => ({ default: module.CharacterBuilder })),
 );
-const CharacterPaper = lazy(() =>
-  import("./workspace/character-paper").then((module) => ({ default: module.CharacterPaper })),
+const GameLineBuilder = lazy(() =>
+  import("./game-line-builder").then((module) => ({ default: module.GameLineBuilder })),
+);
+const GameLineSheet = lazy(() =>
+  import("./workspace/game-line-sheet").then((module) => ({ default: module.GameLineSheet })),
 );
 const HomebrewsScreen = lazy(() =>
   import("./homebrews").then((module) => ({ default: module.HomebrewsScreen })),
@@ -254,12 +257,11 @@ export function Workspace({
         }
       >
         <Suspense fallback={<WorkspaceLoading />}>
-          <CharacterBuilder
-            player={displayName}
-            initial={editing === "new" ? null : editing}
-            onCancel={() => setEditing(null)}
-            onSave={saveCharacter}
-          />
+          {editing === "new" ? (
+            <NewCharacterBuilder player={displayName} initial={null} onCancel={() => setEditing(null)} onSave={saveCharacter} />
+          ) : (
+            <GameLineBuilder gameLine={editing.game_line} player={displayName} initial={editing} onCancel={() => setEditing(null)} onSave={saveCharacter} />
+          )}
         </Suspense>
       </CatalogBoundary>
     );
@@ -616,7 +618,7 @@ function CharacterView({
         groups={getGameLineRegistration(character.game_line).catalogGroups.sheet}
       >
         <Suspense fallback={<WorkspaceLoading />}>
-          <CharacterPaper
+          <GameLineSheet
             character={character}
             updateState={updateState}
             updateSheet={updateSheet}
