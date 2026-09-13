@@ -67,3 +67,30 @@ test("catalog snapshots deeply freeze static catalog data", async () => {
   assert.ok(Object.isFrozen(value[0]));
   assert.ok(Object.isFrozen(value[0].nested));
 });
+
+test("Mage and Changeling catalog group loaders request only their own catalog IDs", async () => {
+  const [mageSpells, mageMerits, changelingContracts, changelingMerits] = await Promise.all([
+    vite.ssrLoadModule("/game-lines/mage/catalogs/spells.ts"),
+    vite.ssrLoadModule("/game-lines/mage/catalogs/merits.ts"),
+    vite.ssrLoadModule("/game-lines/changeling/catalogs/contracts.ts"),
+    vite.ssrLoadModule("/game-lines/changeling/catalogs/merits.ts"),
+  ]);
+  const mageRequests = [];
+  const changelingRequests = [];
+  const reader = (requests) => ({ getCatalog: async (id) => {
+    requests.push(id);
+    return id.endsWith("-index") ? [] : [];
+  }});
+
+  await Promise.all([
+    mageSpells.mageSpellsCatalogGroup.load(reader(mageRequests)),
+    mageMerits.mageMeritsCatalogGroup.load(reader(mageRequests)),
+    changelingContracts.changelingContractsCatalogGroup.load(reader(changelingRequests)),
+    changelingMerits.changelingMeritsCatalogGroup.load(reader(changelingRequests)),
+  ]);
+
+  assert.ok(mageRequests.every((id) => !id.includes("changeling")));
+  assert.ok(changelingRequests.every((id) => !id.includes("mage")));
+  assert.deepEqual(mageRequests.sort(), ["mage-spells-index", "merits-mage"].sort());
+  assert.deepEqual(changelingRequests.sort(), ["changeling-contracts-index", "merits-changeling"].sort());
+});
