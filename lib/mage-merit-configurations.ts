@@ -1,4 +1,4 @@
-import type { MeritConfigDefinition, MeritConfigField } from "./merit-configurations";
+import type { MeritConfigDefinition, MeritConfigField } from "./core/character/merit-configuration";
 import { PUBLISHED_MAGE_ORDERS } from "./mage-orders";
 const field=(key:string,label:string,kind:"text"|"textarea"="text"):MeritConfigField=>({key,label,kind});
 const itemFields=[field("name","Item name"),field("description","Appearance and properties","textarea")];

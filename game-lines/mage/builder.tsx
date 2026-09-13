@@ -4,29 +4,23 @@ import { useEffect, useMemo, useState } from "react";
 import {
   CharacterBuilderShell,
   commonCreationIssues,
-  experienceSpecialties,
+  experienceTraitDots,
   useCommonBuilderState,
   type BuilderValidationIssue,
 } from "@/app/character-builder-shell";
-import {
-  IdentityStep,
-  MtaStep,
-  TraitsStep,
-  experienceArcanaDots,
-  experienceTraitDots,
-  type CustomOrderDefinition,
-  type SpellSelection,
-} from "@/app/character-builder";
-import { MTA_ORDERS, MTA_PATHS } from "@/lib/creation-rules";
-import { arcanaCreationErrors, meetsArcanaRequirements } from "@/lib/creation-eligibility";
+import { CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
+import { MageBuilderView, type CustomOrderDefinition, type SpellSelection } from "./builder-view";
+import { MTA_ORDERS, MTA_PATHS } from "./creation-rules";
+import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import { hasPublishedMageOrder } from "@/lib/mage-orders";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
-import { normalizeMeritConfiguration, synchronizeMeritGrants } from "@/lib/merit-configurations";
-import { powerProgression } from "@/lib/power-progression";
+import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
+import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
@@ -50,6 +44,27 @@ function editableArcana(initial: CharacterSheet | null | undefined) {
   for (const [name, dots] of Object.entries(experienceArcanaDots(initial)))
     values[name] = Math.max(0, Number(values[name] ?? 0) - dots);
   return values;
+}
+
+function experienceArcanaDots(initial: CharacterSheet | null | undefined) {
+  const history = initial?.current_state?.mage_experience_history;
+  if (!Array.isArray(history)) return {} as Record<string, number>;
+  return history.reduce<Record<string, number>>((totals, entry) => {
+    const undo = entry && typeof entry === "object" ? (entry as { undo?: Record<string, unknown> }).undo : undefined;
+    if (undo?.kind === "arcana" && typeof undo.name === "string") totals[undo.name] = (totals[undo.name] ?? 0) + 1;
+    return totals;
+  }, {});
+}
+
+function experienceSpecialties(initial: CharacterSheet | null | undefined) {
+  const history = initial?.current_state?.mage_experience_history;
+  if (!Array.isArray(history)) return [];
+  return history
+    .map((entry) => entry && typeof entry === "object" ? (entry as { undo?: Record<string, unknown> }).undo : undefined)
+    .filter((undo): undo is Record<string, unknown> =>
+      undo?.kind === "specialty" && typeof undo.skill === "string" && typeof undo.name === "string",
+    )
+    .map((undo) => ({ skill: String(undo.skill), name: String(undo.name) }));
 }
 
 function readSpells(
@@ -76,7 +91,21 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
   const { tr } = useLanguage();
   if (initial && initial.game_line !== "MtA") throw new Error("Mage builder received a non-Mage character.");
   if (!catalogs) throw new Error("Mage builder requires its catalog snapshot.");
-  const common = useCommonBuilderState(initial, player);
+  const common = useCommonBuilderState(initial, player, {
+    experienceHistoryKey: "mage_experience_history",
+    purchasedSpecialties: experienceSpecialties(initial),
+    grantedMeritSources: ["Ordem", "Nameless Order"],
+    adjustAttributes: (values) => {
+      const bonus = String(initial?.line_data.resistance_bonus ?? "");
+      if (bonus && values[bonus] > 1) values[bonus] -= 1;
+      return values;
+    },
+    adjustSkills: (values) => {
+      if (Number(initial?.line_data.order_occult_bonus ?? 0) > 0)
+        values.Ocultismo = Math.max(0, Number(values.Ocultismo ?? 0) - 1);
+      return values;
+    },
+  });
   const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
   const meritCatalog = useMemo(() => [
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
@@ -92,7 +121,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
   const [shadowName, setShadowName] = useState(String(initial?.line_data.shadow_name ?? ""));
   const [tool, setTool] = useState(String(initial?.line_data.dedicated_tool ?? ""));
   const [resistanceBonus, setResistanceBonus] = useState(String(initial?.line_data.resistance_bonus ?? ""));
-  const gnosisProgression = powerProgression(initial, "gnosis");
+  const gnosisProgression = mageBuilderPowerProgression(initial);
   const [gnosis, setGnosis] = useState(gnosisProgression.creation);
   const [arcana, setArcana] = useState<Record<string, number>>(() => editableArcana(initial));
   const [rotes, setRotes] = useState<Array<SpellSelection | null>>(() => readSpells(initial, "rotes", 3, spellCatalog));
@@ -187,8 +216,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     const finalSkills = { ...common.skills };
     const finalArcana = { ...arcana };
     if (hasOrderOccultBonus) finalSkills.Ocultismo = Math.min(5, (finalSkills.Ocultismo ?? 0) + 1);
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "mage_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "mage_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     for (const [name, dots] of Object.entries(experienceArcanaDots(initial))) finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
@@ -230,15 +259,15 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(synchronizeMeritGrants(completed));
+    onSave(synchronizeMageBuilderMeritGrants(completed));
   };
 
   return <CharacterBuilderShell
     line="MtA" templateLabel={tr("Modelo dos Despertos", "Awakened Template")} state={common} issues={issues}
     onCancel={onCancel} onFinish={finish}
-    identity={<IdentityStep line="MtA" setLine={() => {}} lineChosen name={common.name} setName={common.setName} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} shadowName={shadowName} setShadowName={setShadowName} missing={missing} />}
+    identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={tr("Nome das Sombras", "Shadow Name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
-    lineTemplate={<MtaStep path={path} setPath={setPath} order={order} setOrder={setOrder} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
+    lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
   />;
 }
 

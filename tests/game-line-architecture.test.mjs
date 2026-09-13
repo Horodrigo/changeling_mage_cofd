@@ -72,19 +72,42 @@ test("Workspace routes both existing and new character builders through shells",
 });
 
 test("line builders own independent controllers and consume scoped catalog snapshots", async () => {
-  const [mage, changeling, shell] = await Promise.all([
+  const [mage, mageView, mageGrants, mageEligibility, magePower, mageRules, changeling, changelingView, changelingEditor, changelingGrants, changelingEligibility, changelingPower, changelingRules, shell, commonControls, meritPicker, meritEditor, commonGrants] = await Promise.all([
     source("game-lines/mage/builder.tsx"),
+    source("game-lines/mage/builder-view.tsx"),
+    source("game-lines/mage/builder-merit-grants.ts"),
+    source("game-lines/mage/builder-eligibility.ts"),
+    source("game-lines/mage/builder-power-progression.ts"),
+    source("game-lines/mage/creation-rules.ts"),
     source("game-lines/changeling/builder.tsx"),
+    source("game-lines/changeling/builder-view.tsx"),
+    source("game-lines/changeling/builder-merit-editor.tsx"),
+    source("game-lines/changeling/builder-merit-grants.ts"),
+    source("game-lines/changeling/builder-eligibility.ts"),
+    source("game-lines/changeling/builder-power-progression.ts"),
+    source("game-lines/changeling/creation-rules.ts"),
     source("app/character-builder-shell.tsx"),
+    source("app/builder/common-controls.tsx"),
+    source("app/builder/merit-picker.tsx"),
+    source("app/builder/merit-configuration-editor.tsx"),
+    source("lib/core/character/synchronize-merit-grants.ts"),
   ]);
+  const mageClosure = [mage, mageView, mageGrants, mageEligibility, magePower, mageRules].join("\n");
+  const changelingClosure = [changeling, changelingView, changelingEditor, changelingGrants, changelingEligibility, changelingPower, changelingRules].join("\n");
+  const commonClosure = [shell, commonControls, meritPicker, meritEditor, commonGrants].join("\n");
   assert.doesNotMatch(mage, /Component:\s*CharacterBuilder\b/);
   assert.doesNotMatch(changeling, /Component:\s*CharacterBuilder\b/);
+  assert.doesNotMatch(mageClosure, /@\/app\/character-builder["']/);
+  assert.doesNotMatch(changelingClosure, /@\/app\/character-builder["']/);
   assert.match(mage, /catalogs\.get<[^>]+>\("mage-spells"\)/);
   assert.match(changeling, /catalogs\.get<[^>]+>\("changeling-contracts"\)/);
-  assert.doesNotMatch(mage, /changeling-(?:contracts|merits|reference)/);
-  assert.doesNotMatch(changeling, /mage-(?:spells|merits|reference)/);
+  assert.doesNotMatch(mageClosure, /game-lines\/changeling|@\/lib\/changeling|@\/lib\/entitlements/);
+  assert.doesNotMatch(changelingClosure, /game-lines\/mage|@\/lib\/mage/);
+  assert.doesNotMatch(mageClosure, /@\/lib\/(?:creation-rules|creation-eligibility|power-progression)["']/);
+  assert.doesNotMatch(changelingClosure, /@\/lib\/(?:creation-rules|creation-eligibility|power-progression)["']/);
   assert.match(shell, /useCommonBuilderState/);
-  assert.doesNotMatch(shell, /MTA_PATHS|CTL_SEEMINGS|spellCatalog|contractCatalog/);
+  assert.doesNotMatch(shell, /MTA_PATHS|CTL_SEEMINGS|spellCatalog|contractCatalog|mage_experience_history|experience_history|Nameless Order|Corte|Ordem/);
+  assert.doesNotMatch(commonClosure, /from\s+["'](?:@\/game-lines|@\/lib\/(?:mage|changeling|entitlements))/);
 });
 
 test("legacy character endpoint validates persisted IDs through the core contract", async () => {
@@ -131,4 +154,23 @@ test("Mage and Changeling catalog group loaders request only their own catalog I
   assert.ok(changelingRequests.every((id) => !id.includes("mage")));
   assert.deepEqual(mageRequests.sort(), ["mage-spells-index", "merits-mage"].sort());
   assert.deepEqual(changelingRequests.sort(), ["changeling-contracts-index", "merits-changeling"].sort());
+});
+
+test("production manifest keeps lazy builder entry closures free of opposite line entries", async () => {
+  const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
+  const closure = (rootKey) => {
+    const keys = new Set();
+    const visit = (key) => {
+      if (keys.has(key) || !manifest[key]) return;
+      keys.add(key);
+      for (const imported of manifest[key].imports ?? []) visit(imported);
+    };
+    visit(rootKey);
+    return [...keys];
+  };
+  const mage = closure("game-lines/mage/builder.tsx");
+  const changeling = closure("game-lines/changeling/builder.tsx");
+  assert.ok(mage.length > 1 && changeling.length > 1);
+  assert.ok(mage.every((key) => !/game-lines\/changeling|character-builder\.tsx/.test(key)));
+  assert.ok(changeling.every((key) => !/game-lines\/mage|character-builder\.tsx/.test(key)));
 });

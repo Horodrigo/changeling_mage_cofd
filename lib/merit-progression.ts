@@ -1,4 +1,4 @@
-import type { MeritSelection } from "../app/character-builder";
+import type { MeritSelection } from "./core/character/character-types";
 
 const dots = (value: unknown) => Math.max(0, Math.trunc(Number(value) || 0));
 

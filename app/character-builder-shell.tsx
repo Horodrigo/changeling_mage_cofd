@@ -4,18 +4,18 @@ import { useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ATTRIBUTES, SKILLS } from "@/lib/creation-rules";
+import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import { creationMerits } from "@/lib/merit-progression";
 import { useLanguage } from "@/lib/i18n";
 
 export type BuilderValidationIssue = { step: number; key: string; label: string };
 
-function experienceTraitDots(
+export function experienceTraitDots(
   initial: CharacterSheet | null | undefined,
   group: "attributes" | "skills",
+  historyKey: string,
 ) {
-  const historyKey = initial?.game_line === "MtA" ? "mage_experience_history" : "experience_history";
   const history = initial?.current_state?.[historyKey];
   if (!Array.isArray(history)) return {} as Record<string, number>;
   return history.reduce<Record<string, number>>((totals, raw) => {
@@ -39,26 +39,17 @@ function initialDots(groups: Record<string, readonly string[]>, base: number) {
 function editableTraits(
   initial: CharacterSheet | null | undefined,
   group: "attributes" | "skills",
+  historyKey: string,
+  adjust?: (values: Record<string, number>) => Record<string, number>,
 ) {
   const definitions = group === "attributes" ? ATTRIBUTES : SKILLS;
   const base = group === "attributes" ? 1 : 0;
   const stored = initial?.[group];
   const values = stored ? { ...stored } : initialDots(definitions, base);
   if (!initial) return values;
-  for (const [name, dots] of Object.entries(experienceTraitDots(initial, group)))
+  for (const [name, dots] of Object.entries(experienceTraitDots(initial, group, historyKey)))
     values[name] = Math.max(base, Number(values[name] ?? base) - dots);
-  const bonus = String(
-    initial.game_line === "CtL"
-      ? (initial.line_data.favored_attribute ?? "")
-      : (initial.line_data.resistance_bonus ?? ""),
-  );
-  if (group === "attributes" && bonus && values[bonus] > 1) values[bonus] -= 1;
-  if (
-    group === "skills" &&
-    initial.game_line === "MtA" &&
-    Number(initial.line_data.order_occult_bonus ?? 0) > 0
-  ) values.Ocultismo = Math.max(0, Number(values.Ocultismo ?? 0) - 1);
-  return values;
+  return adjust ? adjust(values) : values;
 }
 
 function spent(values: Record<string, number>, names: readonly string[], base: number) {
@@ -75,25 +66,14 @@ function inferredPriority(
   );
 }
 
-function mageExperienceHistory(initial: CharacterSheet | null | undefined) {
-  const history = initial?.current_state?.mage_experience_history;
-  return Array.isArray(history) ? history as Array<{ undo?: Record<string, unknown> }> : [];
-}
-
-export function experienceSpecialties(initial: CharacterSheet | null | undefined): Specialty[] {
-  return mageExperienceHistory(initial)
-    .map((entry) => entry.undo)
-    .filter((undo): undo is Record<string, unknown> =>
-      undo?.kind === "specialty" && typeof undo.skill === "string" && typeof undo.name === "string",
-    )
-    .map((undo) => ({ skill: String(undo.skill), name: String(undo.name) }));
-}
-
-function editableSpecialties(initial: CharacterSheet | null | undefined) {
+function editableSpecialties(
+  initial: CharacterSheet | null | undefined,
+  purchasedSpecialties: readonly Specialty[],
+) {
   const values = (initial?.specializations ?? [])
     .filter((item) => !item.grantedBy)
     .map((item) => ({ skill: item.skill, name: item.name }));
-  for (const purchased of experienceSpecialties(initial)) {
+  for (const purchased of purchasedSpecialties) {
     const index = values.findLastIndex(
       (item) => item.skill === purchased.skill && item.name === purchased.name,
     );
@@ -113,9 +93,19 @@ export function readLineArray(
 }
 
 /** Common creation state. Line modules own every line-specific state value. */
-export function useCommonBuilderState(initial: CharacterSheet | null | undefined, player: string) {
-  const startingAttributes = editableTraits(initial, "attributes");
-  const startingSkills = editableTraits(initial, "skills");
+export function useCommonBuilderState(
+  initial: CharacterSheet | null | undefined,
+  player: string,
+  options: {
+    experienceHistoryKey: string;
+    purchasedSpecialties?: readonly Specialty[];
+    adjustAttributes?: (values: Record<string, number>) => Record<string, number>;
+    adjustSkills?: (values: Record<string, number>) => Record<string, number>;
+    grantedMeritSources?: readonly string[];
+  },
+) {
+  const startingAttributes = editableTraits(initial, "attributes", options.experienceHistoryKey, options.adjustAttributes);
+  const startingSkills = editableTraits(initial, "skills", options.experienceHistoryKey, options.adjustSkills);
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
   const [name, setName] = useState(initial?.character.name ?? "");
@@ -130,14 +120,16 @@ export function useCommonBuilderState(initial: CharacterSheet | null | undefined
   const [skillPriority, setSkillPriority] = useState<string[]>(() =>
     initial ? inferredPriority(startingSkills, SKILLS, 0) : ["", "", ""],
   );
-  const [specialties, setSpecialties] = useState<Specialty[]>(() => editableSpecialties(initial));
+  const [specialties, setSpecialties] = useState<Specialty[]>(() =>
+    editableSpecialties(initial, options.purchasedSpecialties ?? []),
+  );
   const [aspirations, setAspirations] = useState<string[]>(() =>
     readLineArray(initial, "aspirations", ["", "", ""]),
   );
   const [merits, setMerits] = useState<MeritSelection[]>(() => [
     ...creationMerits(initial?.merits),
     ...(initial?.merits ?? [])
-      .filter((merit) => ["Corte", "Ordem", "Nameless Order"].includes(String(merit.grantedBy)))
+      .filter((merit) => (options.grantedMeritSources ?? []).includes(String(merit.grantedBy)))
       .map((merit) => ({
         ...merit,
         dots: Math.max(1, Number(merit.creationDots ?? merit.dots) - Number(merit.experienceDots ?? 0)),
