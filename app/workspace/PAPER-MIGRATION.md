@@ -14,10 +14,13 @@ General Conditions and their UI live in `condition-manager.tsx`. In particular,
 implemented only by Mage; `Fae Mount` and `Fae Pet` are implemented only by
 Changeling.
 
+## Completed legacy removals
+
+- `app/character-builder.tsx`: removed after both line builders became active.
+- `app/workspace/character-paper.tsx`: removed after both line sheets became active.
+
 ## Deferred deletion candidates
 
-- `character-paper.tsx`: inactive mixed implementation retained as migration
-  reference.
 - `lib/merit-configurations.ts`: no active modular surface imports this mixed
   implementation. It remains solely for inactive `character-builder.tsx`,
   inactive `character-paper.tsx`, and legacy-focused tests; remove it together

@@ -106,9 +106,9 @@ test("Legacy navigation, progression, and discard follow membership state",async
   const {readFile}=await import("node:fs/promises");
   const workspace=await readWorkspaceSource();
   const legacy=await readFile(new URL("../app/workspace/legacy-page.tsx",import.meta.url),"utf8");
-  assert.match(workspace,/LegacySheetField[^>]+onOpen=\{\(\)=>setSheetTab\("legacy"\)\}/);
-  assert.match(workspace,/hidden:!legacyState\?\.joined/);
-  assert.match(workspace,/legacyState\?\.joined&&<TabsTrigger value="legacy"/);
+  assert.match(workspace,/LegacySheetField[^>]+onOpen=\{\(\)\s*=>\s*setSheetTab\("legacy"\)\}/);
+  assert.match(workspace,/hidden:\s*!legacyState\?\.joined/);
+  assert.match(workspace,/legacyState\?\.joined\s*&&\s*<TabsTrigger value="legacy"/);
   assert.match(legacy,/state\.joined\?attainment\?\.prerequisites:definition\.prerequisites/);
   assert.match(legacy,/\(!state\.joined\|\|attainment\)&&<p className=/);
   assert.match(legacy,/!state\.joined&&<section><h3>\{tr\("Iniciação","Initiation"\)\}/);

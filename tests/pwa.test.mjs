@@ -35,7 +35,7 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em
   assert.match(workspace,/values=\{mountAttributes\} compactNames=\{isMobile\}/);
   assert.match(workspace,/<details className="contract-power-card"/);
   assert.match(workspace,/<summary className="contract-power-summary">/);
-  assert.match(workspace,/systemTerm\(definition\.regalia,locale\).*definition\.source/);
+  assert.match(workspace,/systemTerm\(definition\.regalia,\s*locale\).*definition\.source/);
   assert.doesNotMatch(workspace,/if \(!isMobile\).*contract-power/);
   assert.match(css,/\.contract-power-card \{/);
   assert.match(css,/\.contract-power-list \{[^}]*align-items:start/);
@@ -75,7 +75,8 @@ test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência c
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
   ]);
   assert.match(workspace,/<LegacySheetField value=\{legacyDisplay\} enabled=\{hasLegacyAccess\}/);
-  assert.match(workspace,/<SheetField label="Nome das Sombras"[^]*<SheetField label="Virtude"[^]*<SheetField label="Caminho"[^]*<SheetField label="Jogador"[^]*<SheetField label="Vício"[^]*<SheetField label="Ordem"[^]*<SheetField label="Crônica"[^]*<SheetField label="Conceito"[^]*<LegacySheetField/);
+  for (const label of ["Nome das Sombras", "Virtude", "Caminho", "Jogador", "Vício", "Ordem", "Crônica", "Conceito"])
+    assert.match(workspace, new RegExp(`<CommonSheetField label="${label}"`));
   assert.doesNotMatch(workspace,/placeholder="Escreva uma (?:Aspiração|Obsessão)"/);
   assert.match(workspace,/tr\("Experiência","Experience"\)/);
   assert.match(workspace,/className="experience-actions mage-experience-actions"/);
@@ -89,9 +90,10 @@ test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência c
   assert.match(workspace,/mageSpecialtyName\.trim\(\)/);
   assert.match(workspace,/minimum=\{obsessionSlots\} maximum=\{obsessionSlots\}/);
   assert.match(workspace,/minimum=\{gnosis\} maximum=\{gnosis\}/);
-  assert.match(workspace,/<SpellColumn items=\{praxes\} minimumRows=\{gnosis\}/);
+  assert.match(workspace,/<SpellColumn items=\{praxes\}[^>]*minimumRows=\{gnosis\}/);
   assert.doesNotMatch(workspace,/<SheetHeading>Itens Encantados<\/SheetHeading>/);
-  assert.match(workspace,/\["Fae Mount","Familiar"\]\.includes\(item\.name\)/);
+  assert.match(workspace,/item\.name === "Familiar"/);
+  assert.match(workspace,/\["Fae Mount", "Fae Pet"\]\.includes\(item\.name\)/);
   assert.match(workspace,/tr\("Tipo de entidade", "Entity type"\)/);
 });
 

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { after } from "node:test";
 import { createServer } from "vite";
@@ -77,6 +77,13 @@ test("Workspace routes both existing and new character builders through shells",
   assert.doesNotMatch(workspace, /import\("\.\/character-builder"\)/);
   assert.match(workspace, /import\("\.\/new-character-builder"\)/);
   assert.match(workspace, /import\("\.\/game-line-builder"\)/);
+});
+
+test("obsolete mixed builder and paper implementations are removed", async () => {
+  await Promise.all([
+    assert.rejects(access(`${root}/app/character-builder.tsx`)),
+    assert.rejects(access(`${root}/app/workspace/character-paper.tsx`)),
+  ]);
 });
 
 test("line builders own independent controllers and consume scoped catalog snapshots", async () => {
