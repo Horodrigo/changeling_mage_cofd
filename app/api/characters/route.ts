@@ -1,6 +1,7 @@
 import { desc, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { characters } from "@/db/schema";
+import { PERSISTED_GAME_LINE_IDS } from "@/lib/core/character/game-line-ids";
 
 function owner(request: Request) {
   return request.headers.get("oai-authenticated-user-email") ?? "workspace-user";
@@ -21,7 +22,9 @@ export async function POST(request: Request) {
   try {
     const payload = await request.json() as Record<string, unknown>;
     const name = typeof payload.name === "string" ? payload.name.trim() : "";
-    const gameLine = payload.game_line === "MtA" ? "MtA" : payload.game_line === "CtL" ? "CtL" : "";
+    const gameLine = typeof payload.game_line === "string" && PERSISTED_GAME_LINE_IDS.includes(
+      payload.game_line as (typeof PERSISTED_GAME_LINE_IDS)[number],
+    ) ? payload.game_line : "";
     if (!name || !gameLine) return Response.json({ error: "Nome e linha são obrigatórios." }, { status: 400 });
     const id = crypto.randomUUID();
     const rulesetId = typeof payload.ruleset_id === "string" ? payload.ruleset_id : `${gameLine.toLowerCase()}-base`;

@@ -62,6 +62,12 @@ test("Workspace routes both existing and new character builders through shells",
   assert.match(workspace, /import\("\.\/game-line-builder"\)/);
 });
 
+test("legacy character endpoint validates persisted IDs through the core contract", async () => {
+  const route = await source("app/api/characters/route.ts");
+  assert.match(route, /PERSISTED_GAME_LINE_IDS/);
+  assert.doesNotMatch(route, /payload\.game_line === ["']MtA|payload\.game_line === ["']CtL/);
+});
+
 test("shared creation rules do not read Changeling catalog state", async () => {
   const creationRules = await source("lib/creation-rules.ts");
   assert.doesNotMatch(creationRules, /changeling-courts/);
