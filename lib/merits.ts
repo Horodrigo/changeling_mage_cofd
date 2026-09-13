@@ -28,8 +28,6 @@ export type MeritDefinition = {
   unbounded?: boolean;
 };
 
-export const RAW_MERITS: MeritDefinition[] = [];
-
 export const REPEATABLE_MERITS = new Set([
   "Allies", "Alternate Identity", "Court Goodwill", "Fae Mount",
   "Language", "Library", "Mentor", "Retainer", "Safe Place", "Status",
@@ -39,15 +37,8 @@ export const REPEATABLE_MERITS = new Set([
 export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff"]);
 export const EXTENDED_DOT_MERITS = new Set(["Token"]);
 
-export function replaceMeritCatalog(merits: MeritDefinition[]) {
-  RAW_MERITS.splice(0, RAW_MERITS.length, ...merits);
-  UNBOUNDED_MERITS.clear();
-  UNBOUNDED_MERITS.add("Contacts");
-  UNBOUNDED_MERITS.add("Staff");
-  for (const merit of merits) if (merit.unbounded) UNBOUNDED_MERITS.add(merit.name);
-}
-export const meritRatingsFor = (merit: Pick<MeritDefinition, "name" | "ratings">, ceiling = Math.max(...merit.ratings)) =>
-  UNBOUNDED_MERITS.has(merit.name) ? Array.from({length:Math.max(0,ceiling-Math.min(...merit.ratings))+1},(_,index)=>index+Math.min(...merit.ratings)) : merit.ratings;
+export const meritRatingsFor = (merit: Pick<MeritDefinition, "name" | "ratings" | "unbounded">, ceiling = Math.max(...merit.ratings)) =>
+  (UNBOUNDED_MERITS.has(merit.name) || merit.unbounded) ? Array.from({length:Math.max(0,ceiling-Math.min(...merit.ratings))+1},(_,index)=>index+Math.min(...merit.ratings)) : merit.ratings;
 export const meritPrerequisitesFor = (merit: Pick<MeritDefinition, "prerequisites">) => merit.prerequisites;
 
 export type MeritPrerequisiteContext = RequirementContext & {
@@ -78,7 +69,7 @@ export function meritPrerequisitesMet(
   const owned=context.merits??[];
   const forbidden=(definition:Partial<MeritDefinition>)=>definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
   if(forbidden(merit).some(name=>owned.some(item=>item.dots>0&&canonicalTrait(item.name)===canonicalTrait(name))))return false;
-  const catalog=context.meritCatalog??getMeritsForLine(context.gameLine);
+  const catalog=context.meritCatalog??[];
   if(owned.some(item=>item.dots>0&&catalog.some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
   if(merit.name==="Infamous Mentor"){
     const id=String(context.configuration?.mentorId??"");
@@ -129,7 +120,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
   // Parse ordinary comma-separated trait and Merit clauses independently.
   // Keep the legacy narrative/group helpers below for general-purpose special wording.
   if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|Contract of|≤|maximum|or lower/i.test(value))
-    return textRequirementMet(value,context,(context.meritCatalog??getMeritsForLine(context.gameLine)).map(item=>item.name));
+    return textRequirementMet(value,context,(context.meritCatalog??[]).map(item=>item.name));
   const text=value.replace(/≤/g," maximum ");
   if(/Non-changeling/i.test(text)&&context.archetypes?.includes("changeling")) return false;
   return text.split(";").every((rawGroup)=>{
@@ -144,7 +135,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
       const forbidden=group.replace(/Cannot have/i,"").trim();
       return !(context.merits??[]).some((merit)=>courtKey(merit.name)===courtKey(forbidden));
     }
-    const requiredMerits=(context.meritCatalog??RAW_MERITS).filter((candidate)=>
+    const requiredMerits=(context.meritCatalog??[]).filter((candidate)=>
       new RegExp(`\\b${candidate.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\b`,"i").test(group)
     );
     if(requiredMerits.length&&!/\bor\b/i.test(group)){
@@ -219,13 +210,4 @@ export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:num
   if(merit.name==="Adamant Hand"&&!requirementMet({trait:String(config.skill??""),minimum:3},context))problems.push("Choose Athletics, Brawl or Weaponry at three dots or higher.");
   if(merit.name==="Cabal Theme"&&(!String(config.name??"").trim()||!String(config.description??"").trim()))problems.push("Enter the cabal theme name and description.");
   return problems;
-}
-
-export function getMeritsForLine(line: GameLine) {
-  const selected = new Map<string, MeritDefinition>();
-  for (const merit of RAW_MERITS.filter((item) => item.line === "Core" || item.line === line)) {
-    const current = selected.get(merit.name.toLocaleLowerCase("en"));
-    if (!current || merit.priority > current.priority) selected.set(merit.name.toLocaleLowerCase("en"), merit);
-  }
-  return [...selected.values()].sort((a,b) => a.name.localeCompare(b.name,"en"));
 }

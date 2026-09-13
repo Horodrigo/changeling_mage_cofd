@@ -14,11 +14,9 @@ const vite = await createServer({
 });
 after(async () => vite.close());
 
-const merits = await vite.ssrLoadModule("/lib/merits.ts");
-merits.replaceMeritCatalog(["core","changeling","mage"].flatMap((name) =>
+const meritsForLine = (line) => ["core","changeling","mage"].flatMap((name) =>
   JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`, import.meta.url), "utf8")),
-));
-const expanded = await vite.ssrLoadModule("/lib/expanded-merits.ts");
+).filter((item) => item.line === "Core" || item.line === line);
 const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
 const courts = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 courts.replaceCourtCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")));
@@ -86,15 +84,14 @@ test("distribuição de criação bloqueia pontos acima do orçamento ou máximo
 
 test("Gunslinger é um Estilo de Combate Core completo para ambas as linhas", () => {
   for (const line of ["CtL", "MtA"]) {
-    const gunslinger = merits
-      .getMeritsForLine(line)
+    const gunslinger = meritsForLine(line)
       .find((item) => item.name === "Gunslinger");
     assert.equal(gunslinger?.line, "Core");
     assert.equal(gunslinger?.category, "Fighting");
     assert.deepEqual(gunslinger?.ratings, [1, 3, 5]);
   }
   assert.deepEqual(
-    expanded.findExpandedMerit("Gunslinger").levels.map((item) => item.rating),
+    meritsForLine("CtL").find((item) => item.name === "Gunslinger").levels.map((item) => item.rating),
     [1, 3, 5],
   );
 });

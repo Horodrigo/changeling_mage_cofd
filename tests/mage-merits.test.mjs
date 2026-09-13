@@ -8,11 +8,11 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
 const merits=await vite.ssrLoadModule("/lib/merits.ts");
-merits.replaceMeritCatalog(["core","changeling","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))));
 const orders=await vite.ssrLoadModule("/lib/mage-orders.ts");
-const mageCatalog=merits.getMeritsForLine("MtA");
+const rawMageCatalog=["core","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8")));
+const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=selected.get(item.name);if(!current||item.priority>current.priority)selected.set(item.name,item);return selected;},new Map()).values()];
 const merit=(name)=>mageCatalog.find(item=>item.name===name);
-const base={gameLine:"MtA",attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
+const base={gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
 test("Mage catalog uses splat-specific records and leaves deferred merits out",()=>{
  assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,61);

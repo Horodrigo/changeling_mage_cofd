@@ -74,6 +74,7 @@ test("generic merit requirements do not hard-code current game-line semantics", 
   ]);
   assert.doesNotMatch(requirements, /gameLine.*(?:MtA|CtL)|(?:MtA|CtL).*gameLine/);
   assert.doesNotMatch(merits, /gameLine.*(?:MtA|CtL)|(?:MtA|CtL).*gameLine/);
+  assert.doesNotMatch(merits, /RAW_MERITS|replaceMeritCatalog|getMeritsForLine/);
   assert.match(requirements, /archetypes\?: readonly string\[\]/);
 });
 
@@ -112,6 +113,7 @@ test("obsolete mixed builder and paper implementations are removed", async () =>
     assert.rejects(access(`${root}/app/character-builder.tsx`)),
     assert.rejects(access(`${root}/app/workspace/character-paper.tsx`)),
     assert.rejects(access(`${root}/lib/merit-configurations.ts`)),
+    assert.rejects(access(`${root}/lib/expanded-merits.ts`)),
   ]);
 });
 

@@ -9,11 +9,19 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false} });
 after(async () => vite.close());
 const meritModule = await vite.ssrLoadModule("/lib/merits.ts");
-meritModule.replaceMeritCatalog(["core","changeling","mage"].flatMap((name) =>
+const RAW_MERITS = ["core","changeling","mage"].flatMap((name) =>
   JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`, import.meta.url), "utf8")),
-));
-const {getMeritsForLine,RAW_MERITS,REPEATABLE_MERITS,UNBOUNDED_MERITS,meritRatingsFor,meritPrerequisitesMet} = meritModule;
-const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
+);
+const getMeritsForLine = (line) => {
+  const selected = new Map();
+  for (const merit of RAW_MERITS.filter((item) => item.line === "Core" || item.line === line)) {
+    const key = merit.name.toLocaleLowerCase("en"), current = selected.get(key);
+    if (!current || merit.priority > current.priority) selected.set(key, merit);
+  }
+  return [...selected.values()].sort((a, b) => a.name.localeCompare(b.name, "en"));
+};
+const findExpandedMerit = (name) => RAW_MERITS.find((item) => item.name === name && item.levels?.length);
+const {REPEATABLE_MERITS,UNBOUNDED_MERITS,meritRatingsFor,meritPrerequisitesMet} = meritModule;
 const kithModule = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json", import.meta.url), "utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json", import.meta.url), "utf8")));
 const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = kithModule;
@@ -118,18 +126,18 @@ test("Book of Seemings contém os 62 Méritos ingleses e respeita acesso por See
   assert.deepEqual(Object.fromEntries(["Beast","Darkling","Elemental","Fairest","Ogre","Wizened"].map((name)=>[name,seemings.filter((merit)=>merit.seeming===name).length])),{Beast:11,Darkling:11,Elemental:10,Fairest:8,Ogre:10,Wizened:12});
   assert.ok(seemings.every((merit)=>merit.category==="Changeling Seemings"&&merit.description&&merit.prerequisites));
   const blood=seemings.find((merit)=>merit.name==="Blood and Bone");
-  assert.equal(meritPrerequisitesMet(blood,{gameLine:"CtL",seeming:"Beast"}),true);
-  assert.equal(meritPrerequisitesMet(blood,{gameLine:"CtL",seeming:"Fairest"}),false);
+  assert.equal(meritPrerequisitesMet(blood,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Beast"}),true);
+  assert.equal(meritPrerequisitesMet(blood,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Fairest"}),false);
   const stomach=seemings.find((merit)=>merit.name==="Stomach of Steel");
-  assert.equal(meritPrerequisitesMet(stomach,{gameLine:"CtL",seeming:"Fairest",attributes:{Stamina:3}}),true);
-  assert.equal(meritPrerequisitesMet(stomach,{gameLine:"CtL",seeming:"Fairest",attributes:{Stamina:2}}),false);
-  assert.equal(meritPrerequisitesMet(stomach,{gameLine:"CtL",seeming:"Elemental",attributes:{Stamina:1}}),true);
+  assert.equal(meritPrerequisitesMet(stomach,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Fairest",attributes:{Stamina:3}}),true);
+  assert.equal(meritPrerequisitesMet(stomach,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Fairest",attributes:{Stamina:2}}),false);
+  assert.equal(meritPrerequisitesMet(stomach,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Elemental",attributes:{Stamina:1}}),true);
   const understudy=RAW_MERITS.find((merit)=>merit.name==="Understudy");
-  assert.equal(meritPrerequisitesMet(understudy,{gameLine:"CtL",skills:{Expression:4},merits:[]}),false);
-  assert.equal(meritPrerequisitesMet(understudy,{gameLine:"CtL",skills:{Expression:4},merits:[{name:"Dramaturge",dots:3}]}),true);
+  assert.equal(meritPrerequisitesMet(understudy,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,skills:{Expression:4},merits:[]}),false);
+  assert.equal(meritPrerequisitesMet(understudy,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,skills:{Expression:4},merits:[{name:"Dramaturge",dots:3}]}),true);
   const tooSimple=seemings.find((merit)=>merit.name==="Too Simple to Fool");
-  assert.equal(meritPrerequisitesMet(tooSimple,{gameLine:"CtL",seeming:"Ogre",attributes:{Intelligence:1}}),true);
-  assert.equal(meritPrerequisitesMet(tooSimple,{gameLine:"CtL",seeming:"Ogre",attributes:{Intelligence:2}}),false);
+  assert.equal(meritPrerequisitesMet(tooSimple,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Ogre",attributes:{Intelligence:1}}),true);
+  assert.equal(meritPrerequisitesMet(tooSimple,{gameLine:"CtL",archetypes:["changeling"],meritCatalog:RAW_MERITS,seeming:"Ogre",attributes:{Intelligence:2}}),false);
 });
 
 test("concessões de Méritos estruturados são determinísticas e reversíveis",()=>{

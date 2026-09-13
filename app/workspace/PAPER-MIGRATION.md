@@ -25,11 +25,7 @@ Changeling.
 - The deferred Homebrew UI, storage, and Google Drive adapter: removed. Their
   catalogs remain as normal static line catalogs; a future Homebrew feature must
   be designed against the snapshot boundary rather than restore mutable globals.
-
-## Deferred deletion candidates
-
-- `lib/merits.ts`: active callers pass the surface snapshot into prerequisite
-  evaluation, but the legacy mutable-catalog fallback remains for older callers
-  and is a deletion candidate.
+- `RAW_MERITS`, its replacement adapter, and `expanded-merits.ts`: removed.
+  Normal merit validation receives the surface snapshot explicitly.
 
 Homebrew management and PDF/printing remain deliberately outside this boundary.
