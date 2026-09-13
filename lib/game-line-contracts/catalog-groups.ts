@@ -16,13 +16,9 @@ export interface CatalogSnapshot {
   entries(): IterableIterator<[CatalogGroupId, unknown]>;
 }
 
-/**
- * A group owns its data shape and transformations. `applyLegacy` is only a
- * transitional bridge for screens that still read the former mutable globals.
- */
+/** A group owns its data shape and immutable snapshot transformation. */
 export interface CatalogGroupModule {
   load(reader: CatalogReader): Promise<unknown>;
-  applyLegacy?(snapshot: CatalogSnapshot): void;
 }
 
 export type CatalogGroupLoader = () => Promise<CatalogGroupModule>;

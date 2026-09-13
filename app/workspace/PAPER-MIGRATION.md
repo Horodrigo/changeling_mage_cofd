@@ -18,17 +18,16 @@ Changeling.
 
 - `app/character-builder.tsx`: removed after both line builders became active.
 - `app/workspace/character-paper.tsx`: removed after both line sheets became active.
+- Mutable `applyLegacy` catalog adapters: removed with the mutable bridge; active
+  surfaces receive only immutable snapshots.
 
 ## Deferred deletion candidates
 
 - `lib/merit-configurations.ts`: no active modular surface imports this mixed
-  implementation. It remains solely for inactive `character-builder.tsx`,
-  inactive `character-paper.tsx`, and legacy-focused tests; remove it together
-  with those legacy callers during the final cleanup.
+  implementation. It remains only for legacy-focused tests and can be removed
+  once those tests target the line-owned implementations.
 - `lib/merits.ts`: active callers pass the surface snapshot into prerequisite
   evaluation, but the legacy mutable-catalog fallback remains for older callers
   and is a deletion candidate.
-- `applyLegacy` catalog adapters: inert now that the active loader returns
-  only immutable snapshots; removable with their inactive legacy callers.
 
 Homebrew management and PDF/printing remain deliberately outside this boundary.

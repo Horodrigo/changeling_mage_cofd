@@ -25,6 +25,8 @@ test("catalog group registry retains statically analyzable lazy line loaders", a
   assert.match(registry, /\(\) => import\("\.\.\/changeling\/catalogs\/contracts"\)/);
   assert.doesNotMatch(registry, /import\s+.+from\s+["']\.\.\/(mage|changeling)\/catalogs/);
   assert.doesNotMatch(registry, /applyLegacy/);
+  const contract = await source("lib/game-line-contracts/catalog-groups.ts");
+  assert.doesNotMatch(contract, /applyLegacy/);
 });
 
 test("current game lines do not statically depend on one another", async () => {
