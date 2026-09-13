@@ -6,20 +6,26 @@ import {createServer} from "vite";
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},resolve:{alias:{"@":root}}});
 after(()=>vite.close());
-const {migrateJsonV1,normalizeStoredSheet,safeJson}=await vite.ssrLoadModule("/lib/character-persistence.ts");
+const {normalizeStoredSheet,validateCurrentCharacter}=await vite.ssrLoadModule("/lib/character-persistence.ts");
 const {changelingRules}=await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
 
-test("invalid legacy JSON becomes an empty object",()=>assert.deepEqual(safeJson("{"),{}));
-test("v1 migration preserves traits and canonicalizes Throne",()=>{
-  const sheet=migrateJsonV1({game_line:"MtA",character:{name:"Test"},attributes:{Força:2},skills:{Ocultismo:3},merits:[{name:"Throne",dots:2}]},"Player");
-  assert.equal(sheet.character.name,"Test");assert.equal(sheet.merits[0].name,"Power Behind the Throne");assert.equal(sheet.skills.Ocultismo,3);
+const sheet=(game_line="MtA")=>({id:"sheet",schema_version:2,system:"chronicles-of-darkness",game_line,ruleset:{id:"current",version:1},character:{name:"Test",concept:"",player:"Player"},attributes:{Força:2},skills:{Ocultismo:3},specializations:[],merits:[{name:"Allies",dots:2}],line_data:{},derived:{},current_state:{},created_at:"2026-01-01",updated_at:"2026-01-01"});
+
+test("current schema normalization preserves character data",()=>{
+  const normalized=normalizeStoredSheet(sheet());
+  assert.equal(normalized.character.name,"Test");assert.equal(normalized.skills.Ocultismo,3);
+});
+test("validation rejects old schemas without attempting migration",()=>{
+  assert.equal(validateCurrentCharacter({...sheet(),schema_version:1}),"unsupported-schema");
+  assert.equal(validateCurrentCharacter({schema_version:2,system:"chronicles-of-darkness",game_line:"VtR"}),"invalid-character");
+  assert.equal(validateCurrentCharacter(sheet()),"valid");
 });
 test("stored sheets receive stable merit instance IDs",()=>{
-  const sheet=migrateJsonV1({character:{},merits:[{name:"Allies",dots:2}]},"Player");delete sheet.merits[0].instanceId;
-  assert.match(normalizeStoredSheet(sheet).merits[0].instanceId,/^legacy-merit-0-allies$/);
+  const current=sheet();delete current.merits[0].instanceId;
+  assert.match(normalizeStoredSheet(current).merits[0].instanceId,/^legacy-merit-0-allies$/);
 });
 test("Changeling-owned normalization preserves structural persistence boundaries",()=>{
-  const sheet=migrateJsonV1({game_line:"CtL",character:{},line_data:{wyrd:2,frailties:[]}},"Player");
-  const normalized=changelingRules.normalizeCharacter(normalizeStoredSheet(sheet));
+  const current={...sheet("CtL"),line_data:{wyrd:2,frailties:[]}};
+  const normalized=changelingRules.normalizeCharacter(normalizeStoredSheet(current));
   assert.ok(Array.isArray(normalized.line_data.frailties));
 });

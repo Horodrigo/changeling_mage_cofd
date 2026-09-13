@@ -91,26 +91,7 @@ export function Workspace({
     async function start() {
       try {
         const stored = await getDeviceValue<CharacterSheet[]>(storageKey);
-        if (stored) {
-          if (Array.isArray(stored) && !cancelled)
-            setCharacters(stored);
-        } else {
-          const legacy = await fetch("/api/characters", { cache: "no-store" });
-          if (legacy.ok) {
-            const data = await legacy.json() as {characters?: unknown[]};
-            const { migrateLegacy } = await import("@/lib/character-persistence");
-            const migrated = (data.characters ?? []).map((item) =>
-              migrateLegacy(item, displayName),
-            );
-            if (migrated.length && !cancelled) {
-              setCharacters(migrated);
-              await setDeviceValue(storageKey, migrated);
-              setNotice(
-                tr(`${migrated.length} ficha(s) antiga(s) foram transferidas para este navegador.`,`${migrated.length} legacy character sheet(s) were transferred to this browser.`),
-              );
-            }
-          }
-        }
+        if (Array.isArray(stored) && !cancelled) setCharacters(stored);
       } catch {
         setNotice(
           tr("Não foi possível ler o armazenamento local deste navegador.","The local storage for this browser could not be read."),
@@ -220,19 +201,16 @@ export function Workspace({
   async function importCharacter(file: File) {
     try {
       const parsed = JSON.parse(await file.text());
-      if (
-        parsed.system !== "chronicles-of-darkness" ||
-        !["CtL", "MtA"].includes(parsed.game_line)
-      )
+      const { normalizeStoredSheet, validateCurrentCharacter } = await import("@/lib/character-persistence");
+      const validation = validateCurrentCharacter(parsed);
+      if (validation === "unsupported-schema")
+        throw new Error(tr("Versão de schema de personagem não suportada.", "Unsupported character schema version."));
+      if (validation !== "valid")
         throw new Error(
-          tr("O JSON não pertence a uma ficha CtL ou MtA compatível.","The JSON is not a compatible CtL or MtA character sheet."),
+          tr("O JSON não representa uma ficha CtL ou MtA atual válida.","The JSON is not a valid current CtL or MtA character sheet."),
         );
       await hydrateCharacterCatalogs(parsed.game_line);
-      const { migrateJsonV1, normalizeStoredSheet } = await import("@/lib/character-persistence");
-      const migratedSheet = parsed.schema_version === 2
-        ? (parsed as CharacterSheet)
-        : migrateJsonV1(parsed, displayName);
-      const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(migratedSheet));
+      const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(parsed as CharacterSheet));
       commitCharacters((current) => [
         sheet,
         ...current.filter((item) => item.id !== sheet.id),
