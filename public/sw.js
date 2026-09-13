@@ -1,4 +1,4 @@
-const VERSION = "2026.09.12-catalogs-1";
+const VERSION = "2026.09.13-kith-stamp-1";
 const CACHE = `characters-of-the-darkness-${VERSION}`;
 const SHELL = ["/", "/manifest.webmanifest", "/data/manifest.json", "/favicon.svg", "/app-icon-192.png", "/app-icon-512.png", "/cod-emblem-256.webp", "/changeling-skull.png", "/kith-skill-stamp.webp", "/mage-skull.png", "/version.json"];
 

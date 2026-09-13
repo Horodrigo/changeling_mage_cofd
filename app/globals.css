@@ -844,9 +844,10 @@ button { cursor: pointer; }
 .official-trait-block h4 { margin:0 0 4px; color:var(--sheet-accent); font-size:14px; text-align:center; text-transform:uppercase; }
 .official-trait-line { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:7px; border-bottom:1px solid #aaa8a16b; font:14px/1.15 Georgia,serif; }
 .official-trait-line.skill-highlight-rote { border-radius:4px; box-shadow:inset 0 0 0 1px #b99435; }
-.official-trait-line.skill-highlight-kith { box-shadow:none; }
+.official-trait-line.skill-highlight-kith { position:relative; z-index:1; box-shadow:none; }
+.official-trait-line.skill-highlight-kith > .official-trait-label { overflow:visible; }
 .official-trait-line.skill-highlight-kith .official-trait-name { position:relative; isolation:isolate; display:inline-block; }
-.official-trait-line.skill-highlight-kith .official-trait-name:before { content:""; position:absolute; z-index:-1; inset:-2px -4px; pointer-events:none; background:#315f43; opacity:.8; -webkit-mask:url('/kith-skill-stamp.webp') center/100% 100% no-repeat; mask:url('/kith-skill-stamp.webp') center/100% 100% no-repeat; }
+.official-trait-line.skill-highlight-kith .official-trait-name:before { content:""; position:absolute; z-index:-1; inset:-7px -8px -6px; pointer-events:none; background:url('/kith-skill-stamp.webp') center/100% 100% no-repeat; opacity:1; }
 .official-trait-line.skill-highlight-legacy { border-radius:4px; background:#f3f4fb; box-shadow:inset 0 0 0 1px #6d78a8; }
 .official-trait-line.skill-highlight-ruling { border-radius:4px; background:#fffaf0; box-shadow:inset 0 0 0 1px #b99435; }
 .official-trait-line.skill-highlight-rote > .official-trait-label,
