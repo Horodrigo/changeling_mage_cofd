@@ -1,6 +1,6 @@
 import { getCachedCatalog, setCachedCatalog } from "./catalog-cache";
 import type {
-  CatalogGroupLoader,
+  CatalogGroupModule,
   CatalogReader,
   CatalogSnapshot,
 } from "@/lib/game-line-contracts/catalog-groups";
@@ -83,13 +83,10 @@ class ImmutableCatalogSnapshot implements CatalogSnapshot {
 
 /** Loads declared groups without knowing game-line catalog names or data shapes. */
 async function loadGroups(
-  requested: ReadonlyArray<readonly [string, CatalogGroupLoader]>,
+  requested: ReadonlyArray<readonly [string, CatalogGroupModule]>,
 ): Promise<CatalogSnapshot> {
-  const modules = await Promise.all(requested.map(async ([id, loader]) => [id, await loader()] as const));
-  const values = await Promise.all(modules.map(async ([id, module]) => [id, await module.load(catalogService)] as const));
-  const snapshot = new ImmutableCatalogSnapshot(new Map(values));
-  for (const [, module] of modules) module.applyLegacy?.(snapshot);
-  return snapshot;
+  const values = await Promise.all(requested.map(async ([id, module]) => [id, await module.load(catalogService)] as const));
+  return new ImmutableCatalogSnapshot(new Map(values));
 }
 
 export const catalogService: CatalogReader & {

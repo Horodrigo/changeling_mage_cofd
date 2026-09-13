@@ -13,10 +13,14 @@ const groupLoaders: Readonly<Record<CatalogGroupId, CatalogGroupLoader>> = {
   "changeling-reference": () => import("../changeling/catalogs/reference").then(({ changelingReferenceCatalogGroup }) => changelingReferenceCatalogGroup),
 };
 
-export function loadCatalogGroups(groupIds: readonly CatalogGroupId[]) {
-  return catalogService.loadGroups(groupIds.map((id) => {
+export async function loadCatalogGroups(groupIds: readonly CatalogGroupId[]) {
+  const modules = await Promise.all(groupIds.map(async (id) => {
     const loader = groupLoaders[id];
     if (!loader) throw new Error(`No catalog group is registered for ${id}.`);
-    return [id, loader] as const;
+    return [id, await loader()] as const;
   }));
+  const snapshot = await catalogService.loadGroups(modules);
+  // Transitional bridge for un-migrated screens only. New surfaces consume snapshots.
+  for (const [, module] of modules) module.applyLegacy?.(snapshot);
+  return snapshot;
 }
