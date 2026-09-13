@@ -25,7 +25,7 @@ Changeling.
 - `lib/merits.ts`: active callers pass the surface snapshot into prerequisite
   evaluation, but the legacy mutable-catalog fallback remains for older callers
   and is a deletion candidate.
-- `applyLegacy` catalog adapters: removable after all non-builder/non-sheet
-  consumers have migrated to snapshots.
+- `applyLegacy` catalog adapters: inert now that the active loader returns
+  only immutable snapshots; removable with their inactive legacy callers.
 
 Homebrew management and PDF/printing remain deliberately outside this boundary.

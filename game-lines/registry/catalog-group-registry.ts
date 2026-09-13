@@ -19,8 +19,7 @@ export async function loadCatalogGroups(groupIds: readonly CatalogGroupId[]) {
     if (!loader) throw new Error(`No catalog group is registered for ${id}.`);
     return [id, await loader()] as const;
   }));
-  const snapshot = await catalogService.loadGroups(modules);
-  // Transitional bridge for un-migrated screens only. New surfaces consume snapshots.
-  for (const [, module] of modules) module.applyLegacy?.(snapshot);
-  return snapshot;
+  // All active surfaces consume the returned immutable snapshot directly.
+  // Legacy adapters remain inert until their inactive callers are deleted.
+  return catalogService.loadGroups(modules);
 }
