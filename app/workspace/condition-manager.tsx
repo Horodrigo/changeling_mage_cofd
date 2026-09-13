@@ -68,7 +68,7 @@ export function ConditionManager({ selected, catalog, onChange }: {
       {!selected.length && <em>{tr("Nenhuma Condição selecionada.", "No Conditions selected.")}</em>}
     </div>
     <Dialog>
-      <DialogTrigger asChild><Button type="button" size="sm" variant="outline"><Plus /> {tr("Selecionar Condição", "Select Condition")}</Button></DialogTrigger>
+      <DialogTrigger asChild><Button type="button" size="sm" variant="outline" className="catalog-selection-action"><Plus /> {tr("Selecionar Condição", "Select Condition")}</Button></DialogTrigger>
       <DialogContent className="condition-dialog">
         <DialogHeader><DialogTitle>{tr("Selecionar Condição", "Select Condition")}</DialogTitle><DialogDescription>{tr("Escolha uma Condição e marque-a como Persistente quando necessário.", "Choose a Condition and mark it Persistent when needed.")}</DialogDescription></DialogHeader>
         <div className="condition-filters"><label><Search /><Input value={search} onChange={event => setSearch(event.target.value)} placeholder={tr("Buscar por nome, efeito ou fonte", "Search by name, effect, or source")}/></label><RuleSelect value={categories.includes(category) ? category : "Todas"} onChange={setCategory} options={categories.map(value => ({ value, label: value === "Todas" ? tr("Todas", "All") : value }))}/></div>
@@ -80,10 +80,12 @@ export function ConditionManager({ selected, catalog, onChange }: {
             <p>{condition.description}</p>{condition.penalty && <p className="condition-penalty"><b>{tr("Efeito", "Effect")}:</b> {condition.penalty}</p>}<p><b>{tr("Resolução", "Resolution")}:</b> {condition.resolution ?? tr("Conforme a fonte indicada.", "As described in the listed source.")}</p>{condition.beat && <p><b>Beat:</b> {condition.beat}</p>}
             {isBonded && <div className="companion-form-grid"><label>{tr("Animal vinculado", "Bonded animal")}<RuleSelect value={bondedAnimal} onChange={setBondedAnimal} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label></div>}
             {!isBonded && <label className="persistent-toggle"><input type="checkbox" checked={saved?.persistent ?? condition.persistent ?? false} onChange={event => { const persistent = event.target.checked; onChange(saved ? selected.map(item => item.id === condition.id ? { ...item, persistent } : item) : [...selected, { id: condition.id, persistent }]); }}/>{" "}{tr("Persistente", "Persistent")} [P]</label>}
-            <Button type="button" size="sm" variant={saved && !isBonded ? "ghost" : "outline"} onClick={() => onChange(saved && !isBonded ? selected.filter(item => item.id !== condition.id) : [...selected, { id: condition.id, persistent: condition.persistent ?? false, instanceId: crypto.randomUUID(), ...(isBonded ? { animalId: bondedAnimal, animalName: "" } : {}) }])}>{saved && !isBonded ? tr("Remover", "Remove") : isBonded && bonded.length ? tr("Adicionar outro", "Add another") : tr("Adicionar", "Add")}</Button>
+            <Button type="button" size="sm" className="catalog-selection-action" variant={saved && !isBonded ? "ghost" : "outline"} onClick={() => onChange(saved && !isBonded ? selected.filter(item => item.id !== condition.id) : [...selected, { id: condition.id, persistent: condition.persistent ?? false, instanceId: crypto.randomUUID(), ...(isBonded ? { animalId: bondedAnimal, animalName: "" } : {}) }])}>
+              {saved && !isBonded ? tr("Remover", "Remove") : isBonded && bonded.length ? tr("Adicionar outro", "Add another") : tr("Adicionar", "Add")}
+            </Button>
           </article>;
         })}{!filtered.length && <em>{tr("Nenhuma Condição encontrada.", "No Conditions found.")}</em>}</div>
-        <DialogFooter><DialogClose asChild><Button type="button">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
+        <DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
     </Dialog>
   </div>;

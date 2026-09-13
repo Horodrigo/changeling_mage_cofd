@@ -82,11 +82,10 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button">{tr("Concluir","Done")}</Button>
+            <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
-

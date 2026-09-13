@@ -37,8 +37,8 @@ export default function DeleteCharacterDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{tr("Cancelar", "Cancel")}</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" onClick={onDelete}>
+          <AlertDialogCancel size="sm" className="catalog-dialog-done">{tr("Cancelar", "Cancel")}</AlertDialogCancel>
+          <AlertDialogAction size="sm" className="catalog-dialog-done" variant="destructive" onClick={onDelete}>
             {tr("Excluir definitivamente", "Delete permanently")}
           </AlertDialogAction>
         </AlertDialogFooter>

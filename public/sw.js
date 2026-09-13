@@ -1,6 +1,6 @@
 const VERSION = "2026.09.12-catalogs-1";
 const CACHE = `characters-of-the-darkness-${VERSION}`;
-const SHELL = ["/", "/manifest.webmanifest", "/data/manifest.json", "/favicon.svg", "/app-icon-192.png", "/app-icon-512.png", "/cod-emblem-256.webp", "/changeling-sheet-frame.webp", "/changeling-skull.png", "/mage-sheet-frame.webp", "/mage-skull.png", "/version.json"];
+const SHELL = ["/", "/manifest.webmanifest", "/data/manifest.json", "/favicon.svg", "/app-icon-192.png", "/app-icon-512.png", "/cod-emblem-256.webp", "/changeling-skull.png", "/kith-skill-stamp.webp", "/mage-skull.png", "/version.json"];
 
 self.addEventListener("install", (event) => event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL))));
 self.addEventListener("activate", (event) => event.waitUntil(Promise.all([

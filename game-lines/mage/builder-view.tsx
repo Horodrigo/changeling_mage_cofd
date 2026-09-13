@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Plus, Search, ShieldCheck, Trash2 } from "lucide-react";
+import { Plus, Search, ShieldCheck, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Choice, DotRow } from "@/app/builder/common-controls";
@@ -119,7 +120,7 @@ function OrderSelector(props: OrderSelectorProps) {
           )}
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">
                 {tr("Concluir", "Done")}
               </Button>
             </DialogClose>
@@ -324,6 +325,14 @@ function SpellSelector({
     next[index] = null;
     setValues(next);
   };
+  const toggle = (spell: SpellDefinition) => {
+    const selectedIndex = values.findIndex((item) => item?.id === spell.id);
+    if (selectedIndex >= 0) {
+      remove(selectedIndex);
+      return;
+    }
+    choose(spell);
+  };
   const arcanaLabels: Record<string, string> = {
     Death: tr("Morte", "Death"), Fate: tr("Destino", "Fate"), Forces: tr("Forças", "Forces"), Life: tr("Vida", "Life"), Matter: tr("Matéria", "Matter"), Mind: tr("Mente", "Mind"), Prime: tr("Primórdio", "Prime"), Space: tr("Espaço", "Space"), Spirit: tr("Espírito", "Spirit"), Time: tr("Tempo", "Time"),
   };
@@ -357,25 +366,7 @@ function SpellSelector({
           </p>
           {spellReach(spell) && <p className="rule-detail"><strong>Reach:</strong> {spellReach(spell)}</p>}
         </div>
-        <Button
-          type="button"
-          size="sm"
-          variant={selected ? "secondary" : "outline"}
-          disabled={selected || full}
-          onClick={() => choose(spell)}
-        >
-          {selected ? (
-            <>
-              <Check />
-              {tr("Selecionado", "Selected")}
-            </>
-          ) : (
-            <>
-              <Plus />
-              {tr("Adicionar", "Add")}
-            </>
-          )}
-        </Button>
+        <Checkbox className="catalog-selection-checkbox" checked={selected} disabled={!selected && full} aria-label={spellName(spell)} onCheckedChange={() => toggle(spell)} />
       </article>
     );
   };
@@ -443,7 +434,7 @@ function SpellSelector({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">{tr("Concluir", "Done")}</Button>
+              <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Check, Plus, Search, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -127,14 +128,16 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             ]))}
             invalid={props.missing("seeming")}
           />
-          <Choice
-            label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
-            value={props.favoredAttribute}
-            setValue={props.setFavoredAttribute}
-            options={favored}
-            optionLabels={Object.fromEntries(favored.map((attribute) => [attribute, systemTerm(attribute, locale)]))}
-            invalid={props.missing("favoredAttribute")}
-          />
+          <div className="ctl-favored-inline">
+            <Choice
+              label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
+              value={props.favoredAttribute}
+              setValue={props.setFavoredAttribute}
+              options={favored}
+              optionLabels={Object.fromEntries(favored.map((attribute) => [attribute, systemTerm(attribute, locale)]))}
+              invalid={props.missing("favoredAttribute")}
+            />
+          </div>
           <div className="regalia-choice-stack">
             <span className="regalia-field-label">{tr("Segunda Regalia favorecida", "Second favored Regalia")}</span>
             <div className="regalia-information" aria-live="polite">
@@ -282,7 +285,7 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">
                 {tr("Concluir", "Done")}
               </Button>
             </DialogClose>
@@ -312,7 +315,7 @@ function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"nee
         <label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar por nome ou gatilho…","Search by name or trigger…")}/></label>
         <div className="catalog-filters anchor-filters"><label>{tr("Fonte","Source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Fontes","All Sources")}</SelectItem>{sources.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label></div>
         <div className="merit-catalog anchor-catalog">{filtered.map((item)=><article key={item.name} className={value===item.name?"selected":""}><div><strong>{changelingAnchorDisplayName(kind,item.name,locale)}</strong>{item.source&&<small>{item.source} · p. {item.page}</small>}<p>{changelingAnchorRecovery(kind,item.name,locale).split("\n").map((line,index)=><span key={line}>{index===0?"":""}{line}</span>)}</p></div><DialogClose asChild><Button type="button" size="sm" variant={value===item.name?"secondary":"outline"} onClick={()=>setValue(item.name)}>{value===item.name?tr("Selecionado","Selected"):tr("Selecionar","Select")}</Button></DialogClose></article>)}</div>
-        <DialogFooter><DialogClose asChild><Button type="button" variant="outline">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
     </Dialog>
   </div>;
@@ -457,7 +460,7 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">{tr("Concluir", "Done")}</Button>
+              <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -555,6 +558,16 @@ function ContractSelector({
     next[index] = emptyContract(index < 4 ? "Comum" : "Real");
     setContracts(next);
   }
+  function toggleContract(contract: ContractDefinition) {
+    const selectedIndex = contracts.findIndex(
+      (item) => item.id === contract.id || item.originalName === contract.originalName,
+    );
+    if (selectedIndex >= 0) {
+      removeContract(selectedIndex);
+      return;
+    }
+    addContract(contract);
+  }
   return (
     <>
       <Dialog>
@@ -594,13 +607,13 @@ function ContractSelector({
                   const selected = contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName);
                   const full = contract.type === "Comum" ? commonFull : royalFull;
                   const benefit = presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
-                  return <article className={selected ? "merit-option selected" : "merit-option"} key={contract.id}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{tr("Resumo", "Summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{tr("Parada de dados", "Dice Pool")}:</strong> {presented.dicePool ?? tr("Não informada", "Not listed")}</p>}{presented.cost && <p className="rule-detail"><strong>{tr("Custo", "Cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{tr("Opções", "Options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{tr("Benefício", "Benefit")}:</strong> {benefit}</p>}</div><Button type="button" size="sm" variant={selected ? "secondary" : "outline"} disabled={selected || full} onClick={() => addContract(contract)}>{selected ? tr("Selecionado", "Selected") : tr("Adicionar", "Add")}</Button></article>;
+                  return <article className={selected ? "merit-option selected" : "merit-option"} key={contract.id}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{tr("Resumo", "Summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{tr("Parada de dados", "Dice Pool")}:</strong> {presented.dicePool ?? tr("Não informada", "Not listed")}</p>}{presented.cost && <p className="rule-detail"><strong>{tr("Custo", "Cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{tr("Opções", "Options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{tr("Benefício", "Benefit")}:</strong> {benefit}</p>}</div><Checkbox className="catalog-selection-checkbox" checked={selected} disabled={!selected && full} aria-label={contractName(contract)} onCheckedChange={() => toggleContract(contract)} /></article>;
                 })}
               </div>
             </section>
           ))}
         </div>
-        <DialogFooter><DialogClose asChild><Button type="button" variant="outline">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
       </Dialog>
       <div className="contract-power-list creation-contract-list">
@@ -741,27 +754,7 @@ function ContractSelector({
                             </p>
                           )}
                         </div>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant={selected ? "secondary" : "outline"}
-                          disabled={selected || full}
-                          onClick={() => addContract(contract)}
-                        >
-                          {selected ? (
-                            <>
-                              <Check />
-                              {tr("Selecionado", "Selected")}
-                            </>
-                          ) : full ? (
-                            tr("Vagas preenchidas", "Slots filled")
-                          ) : (
-                            <>
-                              <Plus />
-                              {tr("Adicionar", "Add")}
-                            </>
-                          )}
-                        </Button>
+                        <Checkbox className="catalog-selection-checkbox" checked={selected} disabled={!selected && full} aria-label={contractName(contract)} onCheckedChange={() => toggleContract(contract)} />
                       </article>
                     );
                   })}
@@ -771,7 +764,7 @@ function ContractSelector({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button">{tr("Concluir", "Done")}</Button>
+              <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

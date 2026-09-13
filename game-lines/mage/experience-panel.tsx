@@ -21,6 +21,7 @@ import { MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchroni
 import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";
 import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
 import { RuleSelect } from "@/app/workspace/rule-select";
+import { ConfirmAction } from "@/app/workspace/confirm-action";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -500,7 +501,7 @@ export function MageExperiencePanel({
       <div className="experience-actions mage-experience-actions">
         <Dialog>
         <DialogTrigger asChild>
-          <Button type="button" variant="outline">
+          <Button type="button" variant="outline" size="sm" className="catalog-selection-action">
             <Sparkles /> {tr("Comprar característica","Purchase trait")}
           </Button>
         </DialogTrigger>
@@ -631,10 +632,12 @@ export function MageExperiencePanel({
           <MageExperienceRules />
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">{tr("Fechar","Close")}</Button>
+              <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar","Close")}</Button>
             </DialogClose>
             <Button
               type="button"
+              size="sm"
+              className="catalog-selection-action"
               disabled={
                 cost < 1 || regular < splitRegular || arcane < splitArcane
               }
@@ -645,7 +648,7 @@ export function MageExperiencePanel({
           </DialogFooter>
         </DialogContent>
         </Dialog>
-        <Button type="button" variant="ghost" onClick={markWillpowerLoss}>{tr("Perder FV","Lose WP")}</Button>
+        <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Perder FV","Lose WP")}</Button>} title={tr("Perder permanentemente um ponto de Força de Vontade?","Permanently lose one Willpower dot?")} description={tr("Isso reduzirá a Força de Vontade permanente em um ponto e registrará uma entrada reversível no histórico.","This reduces permanent Willpower by one dot and records a reversible history entry.")} action={tr("Perder FV","Lose WP")} onConfirm={markWillpowerLoss}/>
       </div>
       <details className="experience-history">
         <summary>

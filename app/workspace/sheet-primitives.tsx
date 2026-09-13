@@ -69,7 +69,7 @@ export function TraitLine({
   return (
     <div className={`official-trait-line${highlightTone ? ` skill-highlight-${highlightTone}` : ""}`}>
       <span className="official-trait-label" title={compactName ? localizedName : undefined} aria-label={note ? `${localizedName} (${note})` : localizedName}>
-        {compactName ? localizedName.slice(0,3) : localizedName}
+        <span className="official-trait-name">{compactName ? localizedName.slice(0,3) : localizedName}</span>
         {note && <small title={note}>({note})</small>}
       </span>
       <DotValue value={value} />
@@ -161,4 +161,3 @@ export function HealthTrack({
     </div>
   );
 }
-

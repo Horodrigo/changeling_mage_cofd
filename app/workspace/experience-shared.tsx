@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
@@ -67,6 +68,7 @@ export function ExperiencePowerPicker({
   compact?: boolean;
 }) {
   const {locale,tr}=useLanguage();
+  const kindLabel=kind==="Práxis"?tr("Práxis","Praxis"):workspaceTerm(kind,locale);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const [secondary, setSecondary] = useState("Todos");
@@ -91,14 +93,14 @@ export function ExperiencePowerPicker({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="outline" size={compact ? "sm" : undefined} className={compact ? "builder-add-action" : "experience-merit-trigger"}>
-          <span>{selected?.name ?? `${tr("Selecionar","Select")} ${workspaceTerm(kind,locale)}`}</span>
+        <Button type="button" variant="outline" size="sm" className={compact ? "builder-add-action catalog-selection-action" : "experience-merit-trigger catalog-selection-action"}>
+          <span>{selected?.name ?? `${tr("Selecionar","Select")} ${kindLabel}`}</span>
           <Search />
         </Button>
       </DialogTrigger>
       <DialogContent className="merit-dialog experience-merit-dialog">
         <DialogHeader>
-          <DialogTitle>{tr("Comprar","Purchase")} {workspaceTerm(kind,locale)}</DialogTitle>
+          <DialogTitle>{tr("Comprar","Purchase")} {kindLabel}</DialogTitle>
           <DialogDescription>
             {tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
           </DialogDescription>
@@ -109,14 +111,16 @@ export function ExperiencePowerPicker({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={`${tr("Buscar","Search")} ${workspaceTerm(kind,locale).toLocaleLowerCase(locale)}, ${tr("fonte ou descrição","source, or description")}`}
+              placeholder={`${tr("Buscar","Search")} ${kindLabel.toLocaleLowerCase(locale)}, ${tr("fonte ou descrição","source, or description")}`}
             />
           </label>
-          <RuleSelect
-            value={category}
-            onChange={setCategory}
-            options={categories.map((value) => ({ value, label: value }))}
-          />
+          {categories.length > 2 && (
+            <RuleSelect
+              value={category}
+              onChange={setCategory}
+              options={categories.map((value) => ({ value, label: value }))}
+            />
+          )}
           {secondaryCategories.length > 2 && (
             <RuleSelect
               value={secondary}
@@ -133,25 +137,19 @@ export function ExperiencePowerPicker({
                 <small>{item.meta}</small>
                 <p>{item.description}</p>
               </div>
-              <div className="experience-merit-choice">
-                <DialogClose asChild>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant={selectedId === item.id ? "default" : "outline"}
-                    onClick={() => onSelect(item.id)}
-                  >
-                    {tr("Selecionar","Select")}
-                  </Button>
-                </DialogClose>
-              </div>
+              <Checkbox
+                className="catalog-selection-checkbox"
+                checked={selectedId === item.id}
+                aria-label={`${tr("Selecionar","Select")} ${item.name}`}
+                onCheckedChange={(checked) => onSelect(checked ? item.id : "")}
+              />
             </article>
           ))}
           {!visible.length && <em>{tr("Nenhuma opção corresponde aos filtros.","No options match the filters.")}</em>}
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="outline">{tr("Cancelar","Cancel")}</Button>
+            <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
@@ -203,7 +201,8 @@ export function ExperienceMeritPicker({
         <Button
           type="button"
           variant="outline"
-          className="experience-merit-trigger"
+          size="sm"
+          className="experience-merit-trigger catalog-selection-action"
         >
           <span>
             {selected
@@ -294,7 +293,7 @@ export function ExperienceMeritPicker({
                     {!buyingNew && instances.length > 1 && <label><span>{tr("Instância","Instance")}</span><select value={activeInstance?.index??instances[0].index} onChange={(event)=>{const instanceIndex=Number(event.target.value), owned=instances.find(entry=>entry.index===instanceIndex)?.owned;setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:false,instanceIndex,dots:owned?.dots??1}}));}}>{instances.map(({owned,index})=><option key={index} value={index}>{meritConfigurationTitle(owned.configuration)||`${meritName(item)} ${index+1}`}</option>)}</select></label>}
                     <span className="merit-current-rating"><b>{tr("Atual","Current")}:</b> {buyingNew?0:(activeInstance?.owned.dots??0)}</span>
                     <label><span>{tr("Pretendido","Intended")}</span><select value={intendedDots??""} disabled={!allowedRatings.length} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,dots:Number(event.target.value)}}))}>{allowedRatings.map(dot=><option key={dot} value={dot}>{dot}</option>)}</select></label>
-                    <DialogClose asChild><Button type="button" size="sm" disabled={!intendedDots} variant={selectedId===item.id&&targetDots===intendedDots?"default":"outline"} onClick={()=>intendedDots&&onSelect(item.id,intendedDots,buyingNew?-1:(activeInstance?.index??-1))}>{tr("Selecionar","Select")}</Button></DialogClose>
+                    <DialogClose asChild><Button type="button" size="sm" className="catalog-selection-action" disabled={!intendedDots} variant={selectedId===item.id&&targetDots===intendedDots?"default":"outline"} onClick={()=>intendedDots&&onSelect(item.id,intendedDots,buyingNew?-1:(activeInstance?.index??-1))}>{tr("Selecionar","Select")}</Button></DialogClose>
                   </div>
                 </article>
               );
@@ -302,7 +301,7 @@ export function ExperienceMeritPicker({
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="outline">
+            <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">
               {tr("Cancelar","Cancel")}
             </Button>
           </DialogClose>

@@ -653,7 +653,7 @@ export function ExperiencePanel({
       <div className="experience-actions">
         <Dialog>
           <DialogTrigger asChild>
-            <Button type="button" variant="outline">
+            <Button type="button" variant="outline" size="sm" className="catalog-selection-action">
               <Sparkles /> {tr("Comprar característica","Purchase trait")}
             </Button>
           </DialogTrigger>
@@ -781,10 +781,12 @@ export function ExperiencePanel({
             <ExperienceRules />
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{tr("Fechar","Close")}</Button>
+                <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar","Close")}</Button>
               </DialogClose>
               <Button
                 type="button"
+                size="sm"
+                className="catalog-selection-action"
                 disabled={preview.cost < 1 || available < preview.cost}
                 onClick={buy}
               >
@@ -794,9 +796,9 @@ export function ExperiencePanel({
           </DialogContent>
         </Dialog>
         <div className="permanent-resource-actions">
-          <Button type="button" variant="ghost" size="sm" onClick={gainClarity}>{tr("Ganhar Lucidez","Gain Clarity")}</Button>
+          <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Ganhar Lucidez","Gain Clarity")}</Button>} title={tr("Adicionar uma caixa permanente de Lucidez?","Add a permanent Clarity box?")} description={tr("Isso adicionará uma caixa permanente de Lucidez sem custo de Experiência e registrará uma entrada reversível no histórico.","This adds one permanent Clarity box at no Experience cost and records a reversible history entry.")} action={tr("Adicionar Lucidez","Add Clarity")} destructive={false} onConfirm={gainClarity}/>
           <span aria-hidden="true">|</span>
-          <Button type="button" variant="ghost" size="sm" onClick={markWillpowerLoss}>{tr("Perder FV","Lose WP")}</Button>
+          <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Perder FV","Lose WP")}</Button>} title={tr("Perder permanentemente um ponto de Força de Vontade?","Permanently lose one Willpower dot?")} description={tr("Isso reduzirá a Força de Vontade permanente em um ponto e registrará uma entrada reversível no histórico.","This reduces permanent Willpower by one dot and records a reversible history entry.")} action={tr("Perder FV","Lose WP")} onConfirm={markWillpowerLoss}/>
         </div>
       </div>
       {feedback && <p className="experience-feedback compact">{feedback}</p>}

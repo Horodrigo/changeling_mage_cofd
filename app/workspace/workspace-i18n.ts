@@ -10,8 +10,7 @@ export const WORKSPACE_EN:Record<string,string>={
   "Vitalidade":"Health","Força de Vontade":"Willpower","Características da Linha":"Line Traits","Outras Características":"Other Traits","Escolhas dos Méritos":"Merit Choices","Armadura":"Armor","Armas":"Weapons","Equipamentos":"Equipment","Veículos":"Vehicles",
   "Modificador":"Modifier","Tamanho":"Size","Durabilidade":"Durability","Estrutura":"Structure","Velocidade":"Speed","Iniciativa":"Initiative","Defesa":"Defense","Deslocamento":"Speed","Armadura geral":"General Armor","Armadura balística":"Ballistic Armor","Presença":"Presence","Manipulação":"Manipulation","Compostura":"Composure","Inteligência":"Intelligence","Raciocínio":"Wits","Perseverança":"Resolve","Força":"Strength","Destreza":"Dexterity","Vigor":"Stamina",
   "Bênção da Fratria":"Kith Blessing","Bênção da Feição":"Seeming Blessing","Maldição da Feição":"Seeming Curse","Benefícios da Corte":"Court Benefits","Perícias de Ordem":"Order Skills",
-  "Contrato":"Contract","Rota":"Rote","Todas":"All","Todos":"All",
+  "Contrato":"Contract","Benefício de Contrato":"Contract Benefit","Rota":"Rote","Todas":"All","Todos":"All",
   "Nenhum registro.":"No entries.","Nenhum Mérito selecionado":"No Merit selected","Nenhum Mérito Expandido adquirido.":"No Expanded Merit acquired.",
 };
 export const workspaceTerm=(value:string,locale:Locale)=>locale==="en-US"?(WORKSPACE_EN[value]??systemTerm(value,locale)):value;
-
