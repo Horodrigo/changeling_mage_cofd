@@ -28,4 +28,14 @@ Changeling.
 - `RAW_MERITS`, its replacement adapter, and `expanded-merits.ts`: removed.
   Normal merit validation receives the surface snapshot explicitly.
 
+## Isolated legacy test adapters
+
+`lib/changeling-courts.ts`, `lib/changeling-kiths.ts`,
+`lib/changeling-conditions.ts`, `lib/mage-conditions.ts`, and the old spell and
+contract catalog helpers still expose mutable replacement functions for
+catalog-audit tests and inactive legacy helpers. No active builder, sheet,
+rules module, or registry loader imports them for catalog state. Remove or
+redesign them alongside their dedicated audit helpers rather than restoring
+them to a runtime path.
+
 Homebrew management and PDF/printing remain deliberately outside this boundary.
