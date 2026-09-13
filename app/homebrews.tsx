@@ -18,10 +18,13 @@ import { KITHS } from "@/lib/changeling-kiths";
 import { ENTITLEMENTS } from "@/lib/entitlements";
 import { courtDisplayName } from "@/lib/changeling-courts";
 import { localized, localizedCount, useLanguage, type Locale } from "@/lib/i18n";
+import type { CharacterSheet } from "./character-builder";
+import { useHomebrews } from "./use-homebrews";
 import {
   formatNamedText,
   BUILTIN_HOMEBREW_SOURCES,
   homebrewId,
+  migrateCharacterHomebrews,
   parseNamedText,
   saveHomebrews,
   type HomebrewCatalog,
@@ -59,6 +62,20 @@ const emptyMerit = (): HomebrewMerit => ({
 const emptyKith = (): HomebrewKith => ({ id:homebrewId("kith"),name:"",skill:"",description:"",blessing:"",source:"Criação do jogador",page:0,homebrew:true });
 const emptyCourt = (): HomebrewCourt => ({ id:homebrewId("court"),name:"",emotion:"",mantleBenefits:[],homebrew:true });
 const emptyOrder = (): HomebrewOrder => ({ id:homebrewId("order"),name:"",description:"",roteSkills:[],homebrew:true });
+
+export function HomebrewsScreen({ characters }: { characters: CharacterSheet[] }) {
+  const catalog = useHomebrews();
+  useEffect(() => {
+    const migrated = migrateCharacterHomebrews(catalog, characters);
+    if (
+      migrated.kiths.length !== catalog.kiths.length ||
+      migrated.courts.length !== catalog.courts.length ||
+      migrated.orders.length !== catalog.orders.length
+    )
+      saveHomebrews(migrated);
+  }, [catalog, characters]);
+  return <HomebrewsPage catalog={catalog} />;
+}
 
 export function HomebrewsPage({
   catalog,

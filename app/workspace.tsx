@@ -1,18 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronRight,
   Download,
   FileJson,
-  History,
   FlaskConical,
   LayoutDashboard,
   MoreHorizontal,
   Pencil,
   Plus,
-  RotateCcw,
-  Search,
   ShieldCheck,
   Sparkles,
   Trash2,
@@ -20,44 +17,8 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { courtCanonicalId, courtDisplayName, courtPageCitation, courtPresentation } from "@/lib/changeling-courts";
-import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -66,104 +27,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  CharacterBuilder,
-  MeritConfigurationEditor,
-  type CharacterSheet,
-} from "./character-builder";
-import { entitlementPrerequisitesMet, findEntitlement, normalizeEntitlementState, synchronizeEntitlement } from "@/lib/entitlements";
-import { ELEVENTH_QUESTION, normalizeLegacyState } from "@/lib/legacies";
-import {
-  decodeConfiguredRows,
-  expandedConfigurationLines,
-  findMeritConfiguration,
-  isInlineMeritConfiguration,
-  meritConfigurationTitle,
-  normalizeMeritConfiguration,
-  synchronizeMeritGrants,
-  type TokenConfigurationItem,
-} from "@/lib/merit-configurations";
-import {
-  ATTRIBUTES,
-  CTL_THREADS,
-  CTL_SEEMINGS,
-  changelingAnchorDisplayName,
-  changelingAnchorRecovery,
-  seemingDisplayName,
-  MTA_ORDER_LABELS,
-  MTA_PATHS,
-  SKILLS,
-  normalizeChangelingFrailties,
-  wyrdSummary,
-} from "@/lib/creation-rules";
-import {
-  getMeritsForLine,
-  meritPrerequisitesMet,
-  meritContextForSheet,
-  meritSelectionProblems,
-  meritRatingsFor,
-  REPEATABLE_MERITS,
-  type MeritDefinition,
-} from "@/lib/merits";
-import { findKith, kithDisplayName, kithPresentation } from "@/lib/changeling-kiths";
-import { kithCreationChoice } from "@/lib/changeling-kith-choices";
-import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
-import { alphabetical } from "@/lib/option-order";
-import {
-  CONTRACTS,
-  findContract,
-  type ContractDefinition,
-} from "@/lib/contracts";
-import {
-  normalizeClarityDamage,
-  normalizeDamage,
-  powerResourceLimits,
-  permanentClarityBonus,
-  changePermanentClarity,
-  woundPenalty,
-  type ClarityDamageLevel,
-  type DamageLevel,
-} from "@/lib/resource-rules";
-import {
-  CHANGELING_CONDITIONS,
-  changelingConditionPresentation,
-  findChangelingCondition,
-} from "@/lib/changeling-conditions";
-import { MAGE_CONDITIONS, findMageCondition } from "@/lib/mage-conditions";
-import { SPELLS } from "@/lib/spells";
-import { RuleSelect } from "./workspace/rule-select";
-import { SwipeableSheetTabs } from "./workspace/sheet-tabs";
-import { LegacyPage } from "./workspace/legacy-page";
-import { EntitlementPage } from "./workspace/entitlement-page";
-import { workspaceTerm } from "./workspace/workspace-i18n";
-import { ArmorDotPicker, CompactValues, DotValue, HealthTrack, SheetHeading, TraitBlock, TraitLine, pretty, signed, stringList } from "./workspace/sheet-primitives";
-import { CombatPage } from "./workspace/combat-page";
-import { CompanionPage } from "./workspace/companion-page";
-import { ExperiencePanel } from "./workspace/changeling-experience-panel";
-import { MageExperiencePanel } from "./workspace/mage-experience-panel";
-import { derivedWithPermanentMerits, formatSpellRequirements } from "./workspace/experience-shared";
-import { meetsArcanaRequirements } from "@/lib/creation-eligibility";
-import { changelingFavoredRegalia, changelingContractExperienceCost } from "@/lib/changeling-regalia";
-import { EXPANDED_MERIT_NAMES, findExpandedMerit } from "@/lib/expanded-merits";
-import { HomebrewsPage } from "./homebrews";
-import { CharacterPaper } from "./workspace/character-paper";
-import { useHomebrews } from "./use-homebrews";
-import { isBuiltinHomebrew, isHomebrewActive, migrateCharacterHomebrews, saveHomebrews } from "@/lib/homebrews";
+import type { CharacterSheet } from "./character-builder";
+import { seemingDisplayName } from "@/lib/seeming-presentation";
 import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
-import { withPowerRating, refundPowerRating } from "@/lib/power-progression";
-import { subtractDots, refundMeritDots, refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
-import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
-import { systemTerm } from "@/lib/system-terms";
-import { migrateJsonV1, migrateLegacy, normalizeStoredSheet } from "@/lib/character-persistence";
+import { CatalogBoundary } from "./catalog-boundary";
+
+const CharacterBuilder = lazy(() =>
+  import("./character-builder").then((module) => ({ default: module.CharacterBuilder })),
+);
+const CharacterPaper = lazy(() =>
+  import("./workspace/character-paper").then((module) => ({ default: module.CharacterPaper })),
+);
+const HomebrewsScreen = lazy(() =>
+  import("./homebrews").then((module) => ({ default: module.HomebrewsScreen })),
+);
+const DeleteCharacterDialog = lazy(() => import("./delete-character-dialog"));
 
 type View = "inicio" | "personagens" | "homebrews";
 type CatalogRule = {
@@ -197,7 +76,6 @@ export function Workspace({
   const [ready, setReady] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [notice, setNotice] = useState("");
-  const homebrews = useHomebrews();
   const fileRef = useRef<HTMLInputElement>(null);
   const storageKey = useMemo(
     () => `arquivo-das-trevas:v2:${userKey}`,
@@ -211,11 +89,12 @@ export function Workspace({
         const stored = await getDeviceValue<CharacterSheet[]>(storageKey);
         if (stored) {
           if (Array.isArray(stored) && !cancelled)
-            setCharacters(stored.map(normalizeStoredSheet));
+            setCharacters(stored);
         } else {
           const legacy = await fetch("/api/characters", { cache: "no-store" });
           if (legacy.ok) {
             const data = await legacy.json() as {characters?: unknown[]};
+            const { migrateLegacy } = await import("@/lib/character-persistence");
             const migrated = (data.characters ?? []).map((item) =>
               migrateLegacy(item, displayName),
             );
@@ -245,16 +124,6 @@ export function Workspace({
     if (ready) void setDeviceValue(storageKey, characters);
   }, [characters, ready, storageKey]);
 
-  useEffect(() => {
-    if (!ready) return;
-    const migrated = migrateCharacterHomebrews(homebrews, characters);
-    if (
-      migrated.kiths.length !== homebrews.kiths.length ||
-      migrated.courts.length !== homebrews.courts.length ||
-      migrated.orders.length !== homebrews.orders.length
-    )
-      saveHomebrews(migrated);
-  }, [characters, homebrews, ready]);
 
   function commitCharacters(
     change: (current: CharacterSheet[]) => CharacterSheet[],
@@ -270,6 +139,16 @@ export function Workspace({
     setView(next);
     setSelected(null);
     setEditing(null);
+  }
+
+  async function openCharacter(sheet: CharacterSheet) {
+    try {
+      await hydrateCharacterCatalogs(sheet.game_line);
+      const { normalizeStoredSheet } = await import("@/lib/character-persistence");
+      setSelected(normalizeStoredSheet(sheet));
+    } catch {
+      setSelected(sheet);
+    }
   }
 
   function saveCharacter(sheet: CharacterSheet) {
@@ -341,10 +220,12 @@ export function Workspace({
         throw new Error(
           tr("O JSON não pertence a uma ficha CtL ou MtA compatível.","The JSON is not a compatible CtL or MtA character sheet."),
         );
-      const sheet =
-        parsed.schema_version === 2
-          ? (parsed as CharacterSheet)
-          : migrateJsonV1(parsed, displayName);
+      await hydrateCharacterCatalogs(parsed.game_line);
+      const { migrateJsonV1, normalizeStoredSheet } = await import("@/lib/character-persistence");
+      const migratedSheet = parsed.schema_version === 2
+        ? (parsed as CharacterSheet)
+        : migrateJsonV1(parsed, displayName);
+      const sheet = normalizeStoredSheet(migratedSheet);
       commitCharacters((current) => [
         sheet,
         ...current.filter((item) => item.id !== sheet.id),
@@ -361,12 +242,24 @@ export function Workspace({
   const title = titleKey ? t(titleKey) : "Characters of the Darkness";
   if (editing)
     return (
-      <CharacterBuilder
-        player={displayName}
-        initial={editing === "new" ? null : editing}
-        onCancel={() => setEditing(null)}
-        onSave={saveCharacter}
-      />
+      <CatalogBoundary
+        resources={
+          editing === "new"
+            ? []
+            : editing.game_line === "MtA"
+              ? ["mage-spells", "merits-mage", "core-reference"]
+              : ["changeling-contracts", "merits-changeling", "changeling-reference"]
+        }
+      >
+        <Suspense fallback={<WorkspaceLoading />}>
+          <CharacterBuilder
+            player={displayName}
+            initial={editing === "new" ? null : editing}
+            onCancel={() => setEditing(null)}
+            onSave={saveCharacter}
+          />
+        </Suspense>
+      </CatalogBoundary>
     );
 
   return (
@@ -484,29 +377,54 @@ export function Workspace({
           <Dashboard
             characters={characters}
             openCharacters={() => navigate("personagens")}
-            openCharacter={setSelected}
+            openCharacter={(sheet) => { void openCharacter(sheet); }}
           />
         ) : view === "personagens" ? (
           <Characters
             characters={characters}
             ready={ready}
-            open={setSelected}
+            open={(sheet) => { void openCharacter(sheet); }}
           />
         ) : view === "homebrews" ? (
-          <HomebrewsPage catalog={homebrews} />
+          <CatalogBoundary resources={["mage-spells", "changeling-contracts", "merits-all", "changeling-reference"]}>
+            <Suspense fallback={<WorkspaceLoading />}>
+              <HomebrewsScreen characters={characters} />
+            </Suspense>
+          </CatalogBoundary>
         ) : null}
       </section>
-      <DeleteCharacterDialog
-        open={deleteOpen}
-        onOpenChange={setDeleteOpen}
-        name={selected?.character.name ?? "esta ficha"}
-        onDelete={() => {
-          if (selected) deleteCharacter(selected);
-          setDeleteOpen(false);
-        }}
-      />
+      {deleteOpen && (
+        <Suspense fallback={null}>
+          <DeleteCharacterDialog
+            open={deleteOpen}
+            onOpenChange={setDeleteOpen}
+            name={selected?.character.name ?? "esta ficha"}
+            onDelete={() => {
+              if (selected) deleteCharacter(selected);
+              setDeleteOpen(false);
+            }}
+          />
+        </Suspense>
+      )}
     </main>
   );
+}
+
+async function hydrateCharacterCatalogs(gameLine: CharacterSheet["game_line"]) {
+  const { catalogService } = await import("@/lib/catalog/catalog-service");
+  if (gameLine === "MtA") {
+    await Promise.all([
+      catalogService.hydrateSpells(),
+      catalogService.hydrateMerits("MtA"),
+      catalogService.hydrateCoreReference(),
+    ]);
+    return;
+  }
+  await Promise.all([
+    catalogService.hydrateContracts(),
+    catalogService.hydrateMerits("CtL"),
+    catalogService.hydrateChangelingReference(),
+  ]);
 }
 
 function Dashboard({
@@ -706,45 +624,28 @@ function CharacterView({
           </Button>
         </div>
       </div>
-      <CharacterPaper
-        character={character}
-        updateState={updateState}
-        updateSheet={updateSheet}
-      />
+      <CatalogBoundary
+        resources={
+          character.game_line === "MtA"
+            ? ["mage-spells", "merits-mage", "core-reference"]
+            : ["changeling-contracts", "merits-changeling", "changeling-reference"]
+        }
+      >
+        <Suspense fallback={<WorkspaceLoading />}>
+          <CharacterPaper
+            character={character}
+            updateState={updateState}
+            updateSheet={updateSheet}
+          />
+        </Suspense>
+      </CatalogBoundary>
     </section>
   );
 }
 
-function DeleteCharacterDialog({
-  open,
-  onOpenChange,
-  name,
-  onDelete,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  name: string;
-  onDelete: () => void;
-}) {
-  const {tr}=useLanguage();
-  return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{tr(`Excluir “${name}”?`,`Delete “${name}”?`)}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {tr("A ficha será removida do armazenamento deste navegador. Exporte o JSON antes se quiser conservar uma cópia.","This character will be removed from this browser's storage. Export the JSON first if you want to keep a copy.")}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{tr("Cancelar","Cancel")}</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" onClick={onDelete}>
-            {tr("Excluir definitivamente","Delete permanently")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
+function WorkspaceLoading() {
+  const { tr } = useLanguage();
+  return <div className="loading-card">{tr("Carregando…", "Loading…")}</div>;
 }
 
 function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
