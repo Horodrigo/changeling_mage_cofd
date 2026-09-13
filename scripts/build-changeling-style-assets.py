@@ -1,0 +1,178 @@
+"""Build optimized raster ornaments for the Changeling character sheet.
+
+The source PNGs are intentionally kept outside ``public`` so the browser only
+downloads the cropped WebP assets.  Pillow is the only required dependency.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from PIL import Image
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "assets" / "changeling-style" / "source"
+OUTPUT = ROOT / "public" / "changeling" / "style"
+PUBLIC = ROOT / "public"
+INK = (23, 56, 35)
+
+
+def crop_alpha(image: Image.Image, padding: int = 0) -> Image.Image:
+    image = image.convert("RGBA")
+    bbox = image.getchannel("A").getbbox()
+    if bbox is None:
+        raise ValueError("Image contains no visible pixels")
+    left, top, right, bottom = bbox
+    return image.crop(
+        (
+            max(0, left - padding),
+            max(0, top - padding),
+            min(image.width, right + padding),
+            min(image.height, bottom + padding),
+        )
+    )
+
+
+def fit(image: Image.Image, maximum: tuple[int, int]) -> Image.Image:
+    image = image.copy()
+    image.thumbnail(maximum, Image.Resampling.LANCZOS)
+    return image
+
+
+def extract_green_ink(image: Image.Image) -> Image.Image:
+    """Remove the generated checkerboard while retaining green antialiasing."""
+
+    source = image.convert("RGB")
+    result = Image.new("RGBA", source.size)
+    extracted: list[tuple[int, int, int, int]] = []
+    for red, green, blue in source.get_flattened_data():
+        chroma = max(0, green - max(red, blue))
+        alpha = max(0, min(255, (chroma - 1) * 16))
+        if alpha < 64:
+            alpha = 0
+        extracted.append((*INK, alpha))
+    result.putdata(extracted)
+    return result
+
+
+def extract_scanned_green_rule(image: Image.Image) -> Image.Image:
+    """Lift a faint green-gray rule from warm paper without flattening its ink."""
+
+    source = image.convert("RGB")
+    result = Image.new("RGBA", source.size)
+    extracted: list[tuple[int, int, int, int]] = []
+    for red, green, blue in source.get_flattened_data():
+        darkness = max(0, 225 - ((red + green + blue) // 3))
+        alpha = min(255, darkness * 4) if green >= red - 2 and green >= blue + 5 else 0
+        if alpha < 24:
+            alpha = 0
+        extracted.append((*INK, alpha))
+    result.putdata(extracted)
+    return result
+
+
+def clean_title(image: Image.Image) -> Image.Image:
+    """Discard isolated near-white export specks before calculating its bounds."""
+
+    result = image.convert("RGBA")
+    cleaned: list[tuple[int, int, int, int]] = []
+    for red, green, blue, alpha in result.get_flattened_data():
+        if alpha and red > 180 and green > 180 and blue > 180:
+            alpha = 0
+        cleaned.append((red, green, blue, alpha))
+    result.putdata(cleaned)
+    return result
+
+
+def save_webp(image: Image.Image, name: str) -> None:
+    target = OUTPUT / name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    image.save(target, "WEBP", lossless=True, method=6)
+    print(f"{target.relative_to(ROOT)}: {image.width}x{image.height}")
+
+
+def save_texture_webp(image: Image.Image, name: str) -> None:
+    """Save an opaque photographic texture without the cost of lossless WebP."""
+
+    target = OUTPUT / name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    image.convert("RGB").save(target, "WEBP", quality=90, method=6)
+    print(f"{target.relative_to(ROOT)}: {image.width}x{image.height}")
+
+
+def save_public_texture_webp(image: Image.Image, name: str) -> None:
+    target = PUBLIC / name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    image.convert("RGB").save(target, "WEBP", quality=92, method=6)
+    print(f"{target.relative_to(ROOT)}: {image.width}x{image.height}")
+
+
+def main() -> None:
+    corner = crop_alpha(Image.open(SOURCE / "botanical-corner.png"), padding=8)
+    save_webp(fit(corner, (1024, 1024)), "botanical-corner.webp")
+
+    star_source = Image.open(SOURCE / "frame-star.png").convert("RGBA")
+    star_center_x = star_source.width // 2
+
+    # Keep the center star and its two adjacent ornaments independent from the
+    # extensible rails. Their small line stubs meet the CSS rules, but no rule
+    # is ever drawn behind the star itself.
+    star = crop_alpha(
+        star_source.crop((star_center_x - 116, 195, star_center_x + 116, 525)),
+        padding=4,
+    )
+    save_webp(fit(star, (240, 340)), "frame-star-center.webp")
+
+    side_left = crop_alpha(
+        star_source.crop((star_center_x - 236, 300, star_center_x - 116, 420)),
+        padding=4,
+    )
+    save_webp(fit(side_left, (130, 130)), "frame-star-side.webp")
+
+    original_star = crop_alpha(star_source, padding=8)
+    star_half = original_star.height // 2
+    star_center = original_star.width // 2
+    panel_node = original_star.crop(
+        (star_center - star_half, 0, star_center + star_half, original_star.height)
+    )
+    save_webp(fit(crop_alpha(panel_node, padding=4), (180, 180)), "panel-node.webp")
+
+    divider_source = Image.open(SOURCE / "section-divider.png")
+    divider_band = divider_source.crop(
+        (0, divider_source.height * 3 // 10, divider_source.width, divider_source.height * 7 // 10)
+    )
+    divider = extract_green_ink(divider_band)
+    divider = crop_alpha(divider, padding=8)
+
+    # Keep the left half.  CSS mirrors it for the right side and clips only the
+    # straight rule when less horizontal space is available around a heading.
+    arm = divider.crop((0, 0, divider.width // 2, divider.height))
+    save_webp(fit(crop_alpha(arm, padding=4), (1200, 240)), "divider-arm.webp")
+
+    title = crop_alpha(clean_title(Image.open(SOURCE / "changeling-title.png")), padding=8)
+    save_webp(fit(title, (1600, 560)), "changeling-title.webp")
+
+    paper = fit(Image.open(SOURCE / "changeling-paper-texture-v2.png"), (1024, 1024))
+    save_public_texture_webp(paper, "changeling-paper-texture.webp")
+
+    tab_texture = fit(Image.open(SOURCE / "selected-tab-texture.png"), (1280, 320))
+    save_texture_webp(tab_texture, "selected-tab-texture.webp")
+
+    attributes = extract_green_ink(Image.open(SOURCE / "attributes-divider.png"))
+    attributes = crop_alpha(attributes, padding=8)
+    attributes = fit(attributes, (1800, 240))
+    save_webp(attributes, "attributes-divider.webp")
+
+    terminal = crop_alpha(Image.open(SOURCE / "divider-terminal.webp"), padding=2)
+    save_webp(fit(terminal, (180, 180)), "divider-terminal.webp")
+
+    # This source is a scan of a real inked rule.  Its center section excludes
+    # the page-edge flourishes, leaving a repeatable, slightly irregular stroke.
+    vertical_source = Image.open(SOURCE / "vertical-rule.png")
+    vertical_band = vertical_source.crop((14, 120, 27, 1000))
+    vertical_rule = crop_alpha(extract_scanned_green_rule(vertical_band), padding=2)
+    save_webp(vertical_rule, "vertical-rule.webp")
+
+if __name__ == "__main__":
+    main()

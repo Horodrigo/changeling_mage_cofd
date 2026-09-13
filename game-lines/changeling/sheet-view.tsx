@@ -210,7 +210,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               {false}
             </>,
                 stats: <>
-              <SheetHeading>Atributos</SheetHeading>
+              <SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading>
               <div className="mobile-attribute-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames/>)}</div>
               <SheetHeading>Perícias</SheetHeading>
               <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>)}</div>
@@ -265,7 +265,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetField label="Conceito" value={character.character.concept}/>
               <SheetField label={tr("Corte", "Court")} value={displayCourt(lineReference.courts, data.court, locale)}/>
             </section>
-            <SheetHeading>Atributos</SheetHeading>
+            <SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading>
             <div className="official-trait-grid">
               {Object.entries(ATTRIBUTES).map(([category, names]) => (<TraitBlock key={category} title={category} names={names} values={character.attributes}/>))}
             </div>
@@ -776,4 +776,3 @@ function selectedConditionList(value: unknown, catalog: readonly ChangelingCondi
 function objectList(value: unknown) {
     return Array.isArray(value) ? (value as Array<Record<string, unknown>>) : [];
 }
-

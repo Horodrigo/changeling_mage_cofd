@@ -26,8 +26,24 @@ export function CharacterPaperShell({
   const { tr } = useLanguage();
   return (
     <article className={`cod-sheet ${mobile ? "mobile-character-sheet " : ""}${line === "CtL" ? "ctl-sheet" : "mta-sheet"}`}>
+      {line === "CtL" && <div className="ctl-botanical-frame" aria-hidden="true">
+        <span className="ctl-frame-edge ctl-frame-edge-top" />
+        <span className="ctl-frame-edge ctl-frame-edge-bottom" />
+        <span className="ctl-frame-edge ctl-frame-edge-left" />
+        <span className="ctl-frame-edge ctl-frame-edge-right" />
+        <span className="ctl-frame-star ctl-frame-star-top" />
+        <span className="ctl-frame-star ctl-frame-star-bottom" />
+        <span className="ctl-frame-star-side ctl-frame-star-side-top-left" />
+        <span className="ctl-frame-star-side ctl-frame-star-side-top-right" />
+        <span className="ctl-frame-star-side ctl-frame-star-side-bottom-left" />
+        <span className="ctl-frame-star-side ctl-frame-star-side-bottom-right" />
+        <span className="ctl-frame-corner ctl-frame-corner-top-left" />
+        <span className="ctl-frame-corner ctl-frame-corner-top-right" />
+        <span className="ctl-frame-corner ctl-frame-corner-bottom-left" />
+        <span className="ctl-frame-corner ctl-frame-corner-bottom-right" />
+      </div>}
       <header className="cod-sheet-title">
-        <div><span>{title}</span><strong>{subtitle}</strong></div>
+        <div><span className={line === "CtL" ? "ctl-title-mark" : undefined}>{title}</span><strong>{subtitle}</strong></div>
         <p>{tr("CRÔNICAS DAS TREVAS", "CHRONICLES OF DARKNESS")}</p>
       </header>
       {children}

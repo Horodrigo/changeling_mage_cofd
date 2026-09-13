@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./changeling-sheet.css";
 import { PwaManager } from "./pwa-manager";
 import { LanguageProvider } from "@/lib/i18n";
 
