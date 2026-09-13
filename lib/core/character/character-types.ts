@@ -1,4 +1,4 @@
-import type { MeritConfiguration } from "../../merit-configurations";
+import type { MeritConfiguration } from "./merit-configuration";
 import type { PersistedGameLineId } from "./game-line-ids";
 
 /** A persisted specialty, independent of any editor implementation. */

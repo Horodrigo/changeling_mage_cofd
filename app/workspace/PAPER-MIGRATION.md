@@ -18,9 +18,13 @@ Changeling.
 
 - `character-paper.tsx`: inactive mixed implementation retained as migration
   reference.
-- `lib/merits.ts`: its active sheet callers now pass the surface snapshot into
-  prerequisite evaluation, but the legacy mutable-catalog fallback remains for
-  older callers and is a deletion candidate.
+- `lib/merit-configurations.ts`: no active modular surface imports this mixed
+  implementation. It remains solely for inactive `character-builder.tsx`,
+  inactive `character-paper.tsx`, and legacy-focused tests; remove it together
+  with those legacy callers during the final cleanup.
+- `lib/merits.ts`: active callers pass the surface snapshot into prerequisite
+  evaluation, but the legacy mutable-catalog fallback remains for older callers
+  and is a deletion candidate.
 - `applyLegacy` catalog adapters: removable after all non-builder/non-sheet
   consumers have migrated to snapshots.
 
