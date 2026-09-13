@@ -374,7 +374,7 @@ export function Workspace({
       <section className="content">
         <header className="topbar">
           <button className="top-brand" onClick={() => navigate("inicio")}>
-            <img src="/cod-emblem.png" alt="" aria-hidden="true" />
+            <img src="/cod-emblem-256.webp" alt="" aria-hidden="true" />
           <div>
             <strong>Characters of the Darkness</strong>
             <span>Chronicles of Darkness</span>
@@ -542,7 +542,7 @@ function Dashboard({
           </div>
         </div>
         <div className="sigil" aria-hidden="true">
-          <img src="/cod-emblem.png" alt="" />
+          <img src="/cod-emblem-256.webp" alt="" />
         </div>
       </section>
       <section className="line-summary wide">

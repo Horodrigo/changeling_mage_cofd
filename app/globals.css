@@ -39,8 +39,8 @@
 
 /* Mantém as novas molduras e o cabeçalho responsivo acima das regras legadas. */
 .cod-sheet { border-style:solid; border-width:28px; border-image-slice:145; border-image-width:28px; border-image-repeat:stretch; }
-.cod-sheet.ctl-sheet { border-image-source:url('/changeling-sheet-frame.png'); }
-.cod-sheet.mta-sheet { border-image-source:url('/mage-sheet-frame.png'); }
+.cod-sheet.ctl-sheet { border-image-source:url('/changeling-sheet-frame.webp'); }
+.cod-sheet.mta-sheet { border-image-source:url('/mage-sheet-frame.webp'); }
 @media (max-width:720px) {
   .topbar { min-height:auto; margin:0 -13px 18px; padding:8px 13px; align-items:center; flex-direction:row; }
   .topbar .top-brand img { width:42px; height:42px; }
@@ -61,8 +61,8 @@
   border:0;
   border-image:none;
 }
-.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.png'); --sheet-skull:url('/changeling-skull.png'); }
-.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.png'); --sheet-skull:url('/mage-skull.png'); }
+.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.webp'); --sheet-skull:url('/changeling-skull.png'); }
+.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.webp'); --sheet-skull:url('/mage-skull.png'); }
 .cod-sheet:before {
   inset:0;
   z-index:0;
@@ -84,8 +84,8 @@
   border:2px solid var(--sheet-accent);
   border-image:none;
 }
-.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.png'); }
-.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.png'); }
+.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.webp'); }
+.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.webp'); }
 .cod-sheet:before {
   inset:0;
   z-index:0;
@@ -722,8 +722,8 @@ button { cursor: pointer; }
 
 /* Molduras ilustradas geradas para cada linha; o centro permanece transparente. */
 .cod-sheet { border-style:solid; border-width:28px; border-image-slice:145; border-image-width:28px; border-image-repeat:stretch; }
-.cod-sheet.ctl-sheet { border-image-source:url('/changeling-sheet-frame.png'); }
-.cod-sheet.mta-sheet { border-image-source:url('/mage-sheet-frame.png'); }
+.cod-sheet.ctl-sheet { border-image-source:url('/changeling-sheet-frame.webp'); }
+.cod-sheet.mta-sheet { border-image-source:url('/mage-sheet-frame.webp'); }
 .cod-sheet:before { inset:1px; opacity:.34; }
 
 @media (max-width:900px) {
@@ -1126,8 +1126,8 @@ button { cursor: pointer; }
 
 /* Sobrescritas finais: ornamentações como stamps, nunca como border-image. */
 .cod-sheet { border:0; border-image:none; }
-.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.png'); }
-.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.png'); }
+.cod-sheet.ctl-sheet { --sheet-stamp:url('/changeling-sheet-frame.webp'); }
+.cod-sheet.mta-sheet { --sheet-stamp:url('/mage-sheet-frame.webp'); }
 .cod-sheet:before {
   inset:0;
   z-index:0;
