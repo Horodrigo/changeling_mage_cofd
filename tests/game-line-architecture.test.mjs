@@ -45,3 +45,8 @@ test("deferred Homebrew management is not part of the main workspace route", asy
   const workspace = await source("app/workspace.tsx");
   assert.doesNotMatch(workspace, /HomebrewsScreen|\.\/homebrews/);
 });
+
+test("shared creation rules do not read Changeling catalog state", async () => {
+  const creationRules = await source("lib/creation-rules.ts");
+  assert.doesNotMatch(creationRules, /changeling-courts/);
+});

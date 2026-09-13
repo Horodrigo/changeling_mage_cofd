@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { alphabetical } from "@/lib/option-order";
 import { CONTRACTS } from "@/lib/catalog/contract-catalog";
 import { RAW_MERITS } from "@/lib/merits";
-import { ARCANA, CTL_COURTS, CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, REGALIA, SKILLS } from "@/lib/creation-rules";
+import { ARCANA, CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, REGALIA, SKILLS } from "@/lib/creation-rules";
 import { KITHS } from "@/lib/changeling-kiths";
 import { ENTITLEMENTS } from "@/lib/entitlements";
 import { courtDisplayName } from "@/lib/changeling-courts";
@@ -97,7 +97,7 @@ export function HomebrewsPage({
     () => [...new Set([...REGALIA, ...catalog.contracts.filter(item=>item.categoryKind==="Regalia").map((item) => item.regalia).filter(Boolean)])],
     [catalog.contracts],
   );
-  const courts = useMemo(()=>[...new Set([...CTL_COURTS.filter(item=>item!=="Sem Corte"),...catalog.courts.map(item=>item.name)])],[catalog.courts]);
+  const courts = useMemo(()=>[...new Set(catalog.courts.map(item=>item.name))],[catalog.courts]);
   const meritCategories = useMemo(()=>[...new Set([...RAW_MERITS.map(item=>item.category),...catalog.merits.map(item=>item.category)])].sort((a,b)=>a.localeCompare(b,"pt-BR")),[catalog.merits]);
   const commit = (next: HomebrewCatalog) => {
     saveHomebrews(next);

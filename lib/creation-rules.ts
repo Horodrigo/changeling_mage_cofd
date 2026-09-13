@@ -1,5 +1,3 @@
-import { CTL_COURT_DEFINITIONS } from "./changeling-courts";
-
 export const ATTRIBUTES = {
   Mental: ["Inteligência", "Raciocínio", "Perseverança"],
   Físicos: ["Força", "Destreza", "Vigor"],
@@ -167,10 +165,6 @@ export function changelingAnchorRecovery(kind:"needle"|"thread",name:unknown,loc
 export function changelingAnchorDisplayName(kind:"needle"|"thread",name:unknown,locale:"pt-BR"|"en-US"="en-US") {
   const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===canonicalChangelingAnchorName(kind,name));
   return locale==="pt-BR"?(item?.translatedName??Object.entries(anchorAliases(kind)).find(([,canonical])=>canonical===item?.name)?.[0]??item?.name??String(name??"")):(item?.name??String(name??""));
-}
-export const CTL_COURTS = ["Sem Corte"];
-export function refreshCreationCourts() {
-  CTL_COURTS.splice(0, CTL_COURTS.length, "Sem Corte", ...CTL_COURT_DEFINITIONS.map((item) => item.translatedName));
 }
 export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
 

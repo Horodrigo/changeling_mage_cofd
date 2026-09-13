@@ -3,7 +3,6 @@ import { replaceChangelingConditionCatalog, type ChangelingCondition } from "@/l
 import { replaceCourtCatalog, type CourtDefinition } from "@/lib/changeling-courts";
 import { replaceEntitlementCatalog, type EntitlementDefinition } from "@/lib/entitlements";
 import { replaceKithCatalog, type KithDefinition } from "@/lib/changeling-kiths";
-import { refreshCreationCourts } from "@/lib/creation-rules";
 
 type ChangelingReference = {
   conditions: ChangelingCondition[];
@@ -31,7 +30,6 @@ export const changelingReferenceCatalogGroup: CatalogGroupModule = {
     const current = snapshot.get<ChangelingReference>("changeling-reference");
     replaceChangelingConditionCatalog([...core.conditions, ...current.conditions], { ...core.presentation, ...current.presentation });
     replaceCourtCatalog(current.courts);
-    refreshCreationCourts();
     replaceEntitlementCatalog(current.entitlements);
     replaceKithCatalog(current.kiths, current.kithPresentation);
   },
