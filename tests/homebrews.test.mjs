@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 import { createServer } from "vite";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -15,15 +16,25 @@ after(async () => vite.close());
 
 const homebrews = await vite.ssrLoadModule("/lib/homebrews.ts");
 const merits = await vite.ssrLoadModule("/lib/merits.ts");
+merits.replaceMeritCatalog(["core","changeling","mage"].flatMap((name) =>
+  JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`, import.meta.url), "utf8")),
+));
 const expanded = await vite.ssrLoadModule("/lib/expanded-merits.ts");
 const meritConfigurations = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 const courts = await vite.ssrLoadModule("/lib/changeling-courts.ts");
+courts.replaceCourtCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")));
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
 const eligibility = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
 const terms = await vite.ssrLoadModule("/lib/system-terms.ts");
 const entitlements = await vite.ssrLoadModule("/lib/entitlements.ts");
+entitlements.replaceEntitlementCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json", import.meta.url), "utf8")));
 const kiths = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
-const contracts = await vite.ssrLoadModule("/lib/contracts.ts");
+kiths.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json", import.meta.url), "utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json", import.meta.url), "utf8")));
+const contracts = {
+  CONTRACTS: ["h-courts","ctl-oak-ash-thorn","ctl-the-hedge","ctl-dark-eras","ctl-kith-and-kin","ctl-core"].flatMap((name) =>
+    JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}.json`, import.meta.url), "utf8")),
+  ),
+};
 
 test("interpreta benefícios e requisitos nomeados linha a linha", () => {
   assert.deepEqual(homebrews.parseNamedText("Beast: dentes\nOgre: força"), {

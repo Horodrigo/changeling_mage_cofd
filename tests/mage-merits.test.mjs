@@ -2,11 +2,13 @@ import assert from "node:assert/strict";
 import test, {after} from "node:test";
 import {fileURLToPath} from "node:url";
 import {createServer} from "vite";
+import {readFileSync} from "node:fs";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
 const merits=await vite.ssrLoadModule("/lib/merits.ts");
+merits.replaceMeritCatalog(["core","changeling","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))));
 const orders=await vite.ssrLoadModule("/lib/mage-orders.ts");
 const mageCatalog=merits.getMeritsForLine("MtA");
 const merit=(name)=>mageCatalog.find(item=>item.name===name);

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 
 import { createServer } from "vite";
 
@@ -19,7 +20,10 @@ after(async () => {
 
 const rules = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
 const regaliaRules = await vite.ssrLoadModule("/lib/changeling-regalia.ts");
-const { CONTRACTS } = await vite.ssrLoadModule("/lib/contracts.ts");
+const courtCatalog = await vite.ssrLoadModule("/lib/changeling-courts.ts");
+courtCatalog.replaceCourtCatalog(
+  JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")),
+);
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
 
 test("Needle and Thread reopen with canonical values and follow the active locale",()=>{

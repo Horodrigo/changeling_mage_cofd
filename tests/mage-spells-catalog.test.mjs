@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
-import test, { after } from "node:test";
-import { fileURLToPath } from "node:url";
-import { createServer } from "vite";
+import test from "node:test";
+import { readFile } from "node:fs/promises";
 
-const root = fileURLToPath(new URL("..", import.meta.url));
-const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false} });
-after(() => vite.close());
-const { SPELLS } = await vite.ssrLoadModule("/lib/spells.ts");
+const shardNames = ["death","fate","forces","life","matter","mind","prime","space","spirit","time"];
+const SPELLS = (await Promise.all(
+  shardNames.map(async (name) =>
+    JSON.parse(await readFile(new URL(`../public/data/mage/spells/${name}.json`, import.meta.url), "utf8")),
+  ),
+)).flat();
 
 const arcana = new Set(["Death","Fate","Forces","Life","Matter","Mind","Prime","Space","Spirit","Time"]);
 const skills = new Set(["Academics","Computer","Crafts","Investigation","Medicine","Occult","Politics","Science","Athletics","Brawl","Drive","Firearms","Larceny","Stealth","Survival","Weaponry","Animal Ken","Empathy","Expression","Intimidation","Persuasion","Socialize","Streetwise","Subterfuge"]);

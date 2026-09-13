@@ -8,7 +8,13 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false}, optimizeDeps:{noDiscovery:true,include:[]} });
 after(async () => vite.close());
 
-const { CONTRACTS, CONTRACT_NAME_ALIASES } = await vite.ssrLoadModule("/lib/contracts.ts");
+const contractShards = ["h-courts","ctl-oak-ash-thorn","ctl-the-hedge","ctl-dark-eras","ctl-kith-and-kin","ctl-core"];
+const CONTRACTS = contractShards.flatMap((name) =>
+  JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}.json`, import.meta.url), "utf8")),
+);
+const CONTRACT_NAME_ALIASES = Object.fromEntries(
+  CONTRACTS.flatMap((contract) => [[contract.name, contract.id], [contract.originalName, contract.id]]),
+);
 const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
 const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
@@ -57,7 +63,7 @@ test("família Zodiac inclui dez Contratos, quatro Clauses, Contemptuous e a tab
   assert.equal(items.length, 10);
   assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 4));
   assert.equal(items.find((contract) => contract.originalName === "Assuming the Stellar Mantle")?.detailTables?.[0]?.rows.length, 12);
-  const { CHANGELING_CONDITIONS } = await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+  const CHANGELING_CONDITIONS = JSON.parse(readFileSync(new URL("../public/data/changeling/conditions.json", import.meta.url), "utf8"));
   assert.ok(CHANGELING_CONDITIONS.some((condition) => condition.originalName === "Contemptuous" && condition.source === "Book of Courts"));
 });
 

@@ -2,14 +2,23 @@ import assert from "node:assert/strict";
 import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
+import { readFileSync } from "node:fs";
 import {readWorkspaceSource} from "./workspace-source.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false} });
 after(async () => vite.close());
-const {getMeritsForLine,RAW_MERITS,REPEATABLE_MERITS,UNBOUNDED_MERITS,meritRatingsFor,meritPrerequisitesMet} = await vite.ssrLoadModule("/lib/merits.ts");
+const meritModule = await vite.ssrLoadModule("/lib/merits.ts");
+meritModule.replaceMeritCatalog(["core","changeling","mage"].flatMap((name) =>
+  JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`, import.meta.url), "utf8")),
+));
+const {getMeritsForLine,RAW_MERITS,REPEATABLE_MERITS,UNBOUNDED_MERITS,meritRatingsFor,meritPrerequisitesMet} = meritModule;
 const {findExpandedMerit} = await vite.ssrLoadModule("/lib/expanded-merits.ts");
-const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
+const kithModule = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
+kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json", import.meta.url), "utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json", import.meta.url), "utf8")));
+const {KITHS,KITH_NAMES_PT,findKith,kithDisplayName,kithSearchText} = kithModule;
+const courtModule = await vite.ssrLoadModule("/lib/changeling-courts.ts");
+courtModule.replaceCourtCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")));
 const {findMeritConfiguration,isInlineMeritConfiguration,synchronizeMeritGrants,expandedConfigurationLines} = await vite.ssrLoadModule("/lib/merit-configurations.ts");
 
 test("catálogo English-first contém a base auditada e os suplementos aprovados",()=>{

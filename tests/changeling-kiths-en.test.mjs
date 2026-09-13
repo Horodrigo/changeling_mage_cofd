@@ -2,11 +2,14 @@ import assert from "node:assert/strict";
 import test, {after} from "node:test";
 import {fileURLToPath} from "node:url";
 import {createServer} from "vite";
+import {readFileSync} from "node:fs";
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
-const {KITHS,kithPresentation,kithSkillOptions}=await vite.ssrLoadModule("/lib/changeling-kiths.ts");
-const {KITH_TEXT_EN}=await vite.ssrLoadModule("/lib/changeling-kiths-en.ts");
+const kithModule=await vite.ssrLoadModule("/lib/changeling-kiths.ts");
+kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json",import.meta.url),"utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json",import.meta.url),"utf8")));
+const {KITHS,kithPresentation,kithSkillOptions}=kithModule;
+const KITH_TEXT_EN=Object.fromEntries(KITHS.map(({id,description,blessing,skill})=>[id,{description,blessing,skill}]));
 const {KITH_CREATION_CHOICES}=await vite.ssrLoadModule("/lib/changeling-kith-choices.ts");
 test("all 73 official and 12 Book of Seemings Kith IDs have complete English presentation summaries",()=>{
  assert.equal(KITHS.length,85); assert.equal(KITHS.filter(x=>x.sourceId==="h-seemings").length,12); assert.deepEqual(Object.keys(KITH_TEXT_EN).sort(),KITHS.map(x=>x.id).sort());
@@ -21,7 +24,8 @@ test("presentation switches languages without changing catalog identity",()=>{
  const source=KITHS[0],before=structuredClone(source);
  assert.equal(kithPresentation(source.id,"en-US").name,source.name);
  assert.equal(kithPresentation(source.id,"pt-BR").name,source.translatedName);
- assert.notEqual(kithPresentation(source.id,"en-US").blessing,source.blessing);
+ assert.equal(kithPresentation(source.id,"en-US").blessing,source.blessing);
+ assert.notEqual(kithPresentation(source.id,"pt-BR").blessing,source.blessing);
  assert.deepEqual(source,before);
 });
 test("skill filters use individual canonical English Skills",()=>{

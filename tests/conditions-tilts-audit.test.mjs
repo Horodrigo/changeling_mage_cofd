@@ -8,8 +8,15 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(async()=>vite.close());
 const {TILTS}=await vite.ssrLoadModule("/lib/tilts.ts");
-const {MAGE_CONDITIONS}=await vite.ssrLoadModule("/lib/mage-conditions.ts");
-const {CHANGELING_CONDITIONS}=await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+const conditionModule=await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+conditionModule.replaceChangelingConditionCatalog([
+  ...JSON.parse(readFileSync(new URL("../public/data/core/conditions.json",import.meta.url),"utf8")),
+  ...JSON.parse(readFileSync(new URL("../public/data/changeling/conditions.json",import.meta.url),"utf8")),
+]);
+const {CHANGELING_CONDITIONS}=conditionModule;
+const mageConditionModule=await vite.ssrLoadModule("/lib/mage-conditions.ts");
+mageConditionModule.replaceMageConditionCatalog(JSON.parse(readFileSync(new URL("../public/data/mage/conditions.json",import.meta.url),"utf8")));
+const {MAGE_CONDITIONS}=mageConditionModule;
 const findById=(catalog,id)=>catalog.find((item)=>item.id===id);
 const conditionIndex=JSON.parse(readFileSync(new URL("./fixtures/official-conditions-index.json",import.meta.url),"utf8"));
 const tiltIndex=JSON.parse(readFileSync(new URL("./fixtures/official-tilts-index.json",import.meta.url),"utf8"));

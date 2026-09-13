@@ -35,7 +35,15 @@ test("a ficha localiza Kith, Courtless, compras e linhas editáveis",async()=>{
 });
 
 test("Conditions de Changeling apresentam mecânicas sem português no modo inglês",async()=>{
-  const {CHANGELING_CONDITIONS,changelingConditionPresentation}=await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+  const conditionModule=await vite.ssrLoadModule("/lib/changeling-conditions.ts");
+  conditionModule.replaceChangelingConditionCatalog([
+    ...JSON.parse(readFileSync(new URL("../public/data/core/conditions.json",import.meta.url),"utf8")),
+    ...JSON.parse(readFileSync(new URL("../public/data/changeling/conditions.json",import.meta.url),"utf8")),
+  ],{
+    ...JSON.parse(readFileSync(new URL("../public/data/core/conditions-pt.json",import.meta.url),"utf8")),
+    ...JSON.parse(readFileSync(new URL("../public/data/changeling/conditions-pt.json",import.meta.url),"utf8")),
+  });
+  const {CHANGELING_CONDITIONS,changelingConditionPresentation}=conditionModule;
   const presented=CHANGELING_CONDITIONS.map((item)=>changelingConditionPresentation(item,"en-US"));
   assert.equal(presented.length,CHANGELING_CONDITIONS.length);
   assert.ok(presented.every((item)=>item.name===item.originalName));

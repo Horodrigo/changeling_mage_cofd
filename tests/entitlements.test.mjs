@@ -2,15 +2,20 @@ import assert from "node:assert/strict";
 import test,{after} from "node:test";
 import {fileURLToPath} from "node:url";
 import {createServer} from "vite";
+import {readFileSync} from "node:fs";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(async()=>vite.close());
-const {ENTITLEMENTS,normalizeEntitlementState,entitlementPrerequisitesMet}=await vite.ssrLoadModule("/lib/entitlements.ts");
+const entitlementModule=await vite.ssrLoadModule("/lib/entitlements.ts");
+entitlementModule.replaceEntitlementCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json",import.meta.url),"utf8")));
+const {ENTITLEMENTS,normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
 const {synchronizeMeritGrants}=await vite.ssrLoadModule("/lib/merit-configurations.ts");
 const {refundMeritDots}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const {refundPowerRating}=await vite.ssrLoadModule("/lib/power-progression.ts");
-const {RAW_MERITS,REPEATABLE_MERITS}=await vite.ssrLoadModule("/lib/merits.ts");
+const meritModule=await vite.ssrLoadModule("/lib/merits.ts");
+meritModule.replaceMeritCatalog(["core","changeling","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))));
+const {RAW_MERITS,REPEATABLE_MERITS}=meritModule;
 
 const allocation=(sequence,target,blessingId)=>({id:`a${sequence}`,sequence,target,...(blessingId?{blessingId}:{})});
 function sheet(){return {game_line:"CtL",attributes:{Presença:2,Manipulação:2,Compostura:2},skills:{Empatia:2,Intimidação:2,Persuasão:2,Investigação:2},specializations:[],merits:[{instanceId:"entitlement",name:"Entitlement",dots:4,configuration:{definitionId:"baron-lesser-ones"}},{name:"Hob Kin",dots:1}],line_data:{wyrd:5,entitlement:{definitionId:"baron-lesser-ones",accepted:true,touchstone:{name:"Ana",status:"active"},allocations:[allocation(0,"token"),allocation(1,"blessing","inherited-expertise"),allocation(2,"blessing","hobgoblin-allies"),allocation(3,"token"),allocation(4,"blessing","hostile-oath")],choices:{"inherited-expertise-skill":"Empatia","inherited-expertise-name":"Diplomacy","hobgoblin-allies":"Briarwolves"}}}};}
