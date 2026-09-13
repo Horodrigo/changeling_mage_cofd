@@ -10,20 +10,14 @@ export type EntitlementDefinition={
 
 export const entitlementAvailable=(definition:EntitlementDefinition,activeSourceIds:ReadonlySet<string>)=>!definition.sourceId||activeSourceIds.has(definition.sourceId);
 
-export const ENTITLEMENTS: EntitlementDefinition[] = [];
-
-export function replaceEntitlementCatalog(items: EntitlementDefinition[]) {
-  ENTITLEMENTS.splice(0, ENTITLEMENTS.length, ...items);
-}
-
-export const findEntitlement=(id:unknown)=>ENTITLEMENTS.find((item)=>item.id===String(id??""));
+export const findEntitlement=(catalog:readonly EntitlementDefinition[],id:unknown)=>catalog.find((item)=>item.id===String(id??""));
 
 export type EntitlementAllocation={id:string;target:"token"|"blessing";blessingId?:string;sequence:number};
 export type EntitlementState={definitionId:string;roleId:string;accepted:boolean;touchstone:{name:string;status:"active"|"lost"|"suspended"};suspendedBenefitIds:string[];token:{rating:number;storedGlamour:number};allocations:EntitlementAllocation[];choices:Record<string,string>};
 
 const record=(value:unknown):Record<string,unknown>=>value&&typeof value==="object"&&!Array.isArray(value)?value as Record<string,unknown>:{};
-export function normalizeEntitlementState(value:unknown,wyrd:number):EntitlementState{
-  const raw=record(value),rawTouchstone=record(raw.touchstone),rawToken=record(raw.token),definition=findEntitlement(raw.definitionId);
+export function normalizeEntitlementState(value:unknown,wyrd:number,catalog:readonly EntitlementDefinition[]=[]):EntitlementState{
+  const raw=record(value),rawTouchstone=record(raw.touchstone),rawToken=record(raw.token),definition=findEntitlement(catalog,raw.definitionId);
   const allocations=(Array.isArray(raw.allocations)?raw.allocations:[]).flatMap((value,index)=>{
     const item=record(value),target=item.target==="token"||item.target==="blessing"?item.target:null;
     if(!target)return [];
@@ -86,7 +80,7 @@ export function entitlementPrerequisitesMet(definition:EntitlementDefinition,sta
   return true;
 }
 
-export function synchronizeEntitlement<T>(sheet:T):T{
+export function synchronizeEntitlement<T>(sheet:T,catalog:readonly EntitlementDefinition[]=[]):T{
   const target=sheet as T&{game_line?:string;attributes?:Record<string,number>;skills?:Record<string,number>;merits?:Array<{instanceId?:string;name:string;dots:number;configuration?:Record<string,unknown>;grantedBy?:string}>;specializations?:Array<{skill:string;name:string;grantedBy?:string}>;line_data?:Record<string,unknown>};
   if(target.game_line!=="CtL"||!target.merits||!target.line_data)return sheet;
   target.merits=target.merits.filter((item)=>!item.grantedBy?.startsWith("Entitlement:"));
@@ -96,9 +90,9 @@ export function synchronizeEntitlement<T>(sheet:T):T{
   const configuration=record(merit.configuration),saved=record(target.line_data.entitlement),configuredDefinitionId=String(configuration.definitionId??"");
   const current=configuredDefinitionId&&saved.definitionId&&configuredDefinitionId!==saved.definitionId?{}:saved;
   const definitionId=String(configuredDefinitionId||current.definitionId||""),roleId=String(configuration.roleId||current.roleId||"");
-  const state=normalizeEntitlementState({...current,definitionId,roleId},Number(target.line_data.wyrd??1));
+  const state=normalizeEntitlementState({...current,definitionId,roleId},Number(target.line_data.wyrd??1),catalog);
   merit.configuration={...configuration,definitionId:state.definitionId,roleId:state.roleId};target.line_data.entitlement=state;
-  const definition=findEntitlement(state.definitionId);if(!definition)return sheet;
+  const definition=findEntitlement(catalog,state.definitionId);if(!definition)return sheet;
   const eligible=entitlementPrerequisitesMet(definition,state,{attributes:target.attributes??{},skills:target.skills??{},merits:target.merits,line_data:target.line_data});
   const owner=`Entitlement:${definition.id}`,active=new Set(state.accepted&&eligible&&state.touchstone.status==="active"&&Boolean(state.touchstone.name.trim())?state.allocations.filter((item)=>item.target==="blessing"&&!state.suspendedBenefitIds.includes(String(item.blessingId))).map((item)=>item.blessingId):[]);
   const grant=(name:string,dots:number,configuration:Record<string,unknown>={})=>target.merits!.push({instanceId:`grant-${owner}-${name}`,name,dots,configuration,grantedBy:owner});

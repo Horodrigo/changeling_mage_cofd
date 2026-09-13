@@ -2,9 +2,9 @@ import { courtCanonicalId } from "@/lib/changeling-courts";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
-import { synchronizeEntitlement } from "@/lib/entitlements";
+import { synchronizeEntitlement, type EntitlementDefinition } from "@/lib/entitlements";
 
-export function synchronizeChangelingBuilderMeritGrants(sheet: CharacterSheet) {
+export function synchronizeChangelingBuilderMeritGrants(sheet: CharacterSheet, entitlements?: readonly EntitlementDefinition[]) {
   const court = courtCanonicalId(sheet.line_data.court);
   const courtless = !court || ["sem corte", "courtless"].includes(court.toLowerCase());
   const existing = sheet.merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte");
@@ -18,5 +18,5 @@ export function synchronizeChangelingBuilderMeritGrants(sheet: CharacterSheet) {
   const skillBonuses = synchronizeCommonMeritGrants(sheet);
   sheet.line_data.court_goodwill_benefits = benefits;
   sheet.line_data.merit_granted_skill_bonuses = skillBonuses;
-  return synchronizeEntitlement(sheet);
+  return entitlements ? synchronizeEntitlement(sheet, entitlements) : sheet;
 }

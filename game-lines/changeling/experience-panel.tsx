@@ -15,6 +15,7 @@ import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractOutcomeSections, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
+import type { EntitlementDefinition } from "@/lib/entitlements";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
 import { refundChangelingPowerRating, withChangelingPowerRating } from "@/game-lines/changeling/builder-power-progression";
@@ -94,6 +95,7 @@ export function ExperiencePanel({
 }) {
   const {locale,tr}=useLanguage();
   const contractCatalog = catalogs.get<ContractDefinition[]>("changeling-contracts");
+  const entitlementCatalog = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,[]));
   const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
   const state = character.current_state ?? {};
@@ -331,7 +333,7 @@ export function ExperiencePanel({
       nextState,
     );
     next.current_state = nextState;
-    updateSheet(synchronizeMeritGrants(next));
+    updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
     setFeedback(
       tr(`${description} adquirido por ${cost} Experiência${cost === 1 ? "" : "s"}.`, `${description} purchased for ${cost} Experience.`),
     );
@@ -410,7 +412,7 @@ export function ExperiencePanel({
       experience_history: history.filter((item) => item.id !== entry.id),
     };
     recalculateCtlDerived(next);
-    updateSheet(synchronizeMeritGrants(next));
+    updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
     setFeedback(tr(`${entry.description} foi revertido; ${refund} EXP devolvida.`, `${entry.description} was refunded; ${refund} Experience restored.`));
   }
   function buy() {

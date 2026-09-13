@@ -8,14 +8,13 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(async()=>vite.close());
 const entitlementModule=await vite.ssrLoadModule("/lib/entitlements.ts");
-entitlementModule.replaceEntitlementCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json",import.meta.url),"utf8")));
-const {ENTITLEMENTS,normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
-const {synchronizeMeritGrants}=await vite.ssrLoadModule("/lib/merit-configurations.ts");
+const ENTITLEMENTS=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json",import.meta.url),"utf8"));
+const {normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
+const {synchronizeChangelingBuilderMeritGrants}=await vite.ssrLoadModule("/game-lines/changeling/builder-merit-grants.ts");
+const synchronizeMeritGrants=(character)=>synchronizeChangelingBuilderMeritGrants(character,ENTITLEMENTS);
 const {refundMeritDots}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const {refundPowerRating}=await vite.ssrLoadModule("/lib/power-progression.ts");
-const meritModule=await vite.ssrLoadModule("/lib/merits.ts");
-meritModule.replaceMeritCatalog(["core","changeling","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))));
-const {RAW_MERITS,REPEATABLE_MERITS}=meritModule;
+const CHANGELING_MERITS=JSON.parse(readFileSync(new URL("../public/data/core/merits/changeling.json",import.meta.url),"utf8"));
 
 const allocation=(sequence,target,blessingId)=>({id:`a${sequence}`,sequence,target,...(blessingId?{blessingId}:{})});
 function sheet(){return {game_line:"CtL",attributes:{Presença:2,Manipulação:2,Compostura:2},skills:{Empatia:2,Intimidação:2,Persuasão:2,Investigação:2},specializations:[],merits:[{instanceId:"entitlement",name:"Entitlement",dots:4,configuration:{definitionId:"baron-lesser-ones"}},{name:"Hob Kin",dots:1}],line_data:{wyrd:5,entitlement:{definitionId:"baron-lesser-ones",accepted:true,touchstone:{name:"Ana",status:"active"},allocations:[allocation(0,"token"),allocation(1,"blessing","inherited-expertise"),allocation(2,"blessing","hobgoblin-allies"),allocation(3,"token"),allocation(4,"blessing","hostile-oath")],choices:{"inherited-expertise-skill":"Empatia","inherited-expertise-name":"Diplomacy","hobgoblin-allies":"Briarwolves"}}}};}
@@ -25,8 +24,8 @@ test("catálogo contém seis Entitlements oficiais, oito de Courts e treze de Se
   assert.equal(ENTITLEMENTS.filter((item)=>item.sourceId==="h-courts").length,8);
   assert.equal(ENTITLEMENTS.filter((item)=>item.sourceId==="h-seemings").length,13);
   assert.ok(ENTITLEMENTS.some((item)=>item.name==="Companion of the Resigned"&&item.page===31));
-  const merit=RAW_MERITS.find((item)=>item.name==="Entitlement");
-  assert.deepEqual(merit?.ratings,[4]);assert.equal(merit?.source,"Oak, Ash, and Thorn");assert.equal(REPEATABLE_MERITS.has("Entitlement"),false);
+  const merit=CHANGELING_MERITS.find((item)=>item.name==="Entitlement");
+  assert.deepEqual(merit?.ratings,[4]);assert.equal(merit?.source,"Oak, Ash, and Thorn");assert.equal(Boolean(merit?.repeatable),false);
   assert.ok(ENTITLEMENTS.every((item)=>item.blessings.length===5&&item.token.catch&&item.token.drawback&&item.touchstone&&item.curse&&item.beat));
 });
 
@@ -68,26 +67,26 @@ test("benefícios únicos concedem Méritos estruturados e respeitam suspensão"
 });
 
 test("estado de Entitlement sobrevive à exportação e importação JSON",()=>{
-  const before=normalizeEntitlementState(sheet().line_data.entitlement,5);
-  const after=normalizeEntitlementState(JSON.parse(JSON.stringify(before)),5);
+  const before=normalizeEntitlementState(sheet().line_data.entitlement,5,ENTITLEMENTS);
+  const after=normalizeEntitlementState(JSON.parse(JSON.stringify(before)),5,ENTITLEMENTS);
   assert.deepEqual(after,before);
 });
 
 test("pré-requisitos específicos consideram título e papel",()=>{
   const current=sheet(),baron=ENTITLEMENTS[0],dauphines=ENTITLEMENTS[1];
-  assert.equal(entitlementPrerequisitesMet(baron,normalizeEntitlementState(current.line_data.entitlement,5),current),true);
+  assert.equal(entitlementPrerequisitesMet(baron,normalizeEntitlementState(current.line_data.entitlement,5,ENTITLEMENTS),current),true);
   current.line_data.wyrd=3;
-  assert.equal(entitlementPrerequisitesMet(dauphines,normalizeEntitlementState({definitionId:dauphines.id,roleId:"sophomore"},3),current),true);
+  assert.equal(entitlementPrerequisitesMet(dauphines,normalizeEntitlementState({definitionId:dauphines.id,roleId:"sophomore"},3,ENTITLEMENTS),current),true);
   current.attributes.Presença=1;
-  assert.equal(entitlementPrerequisitesMet(dauphines,normalizeEntitlementState({definitionId:dauphines.id,roleId:"sophomore"},3),current),false);
+  assert.equal(entitlementPrerequisitesMet(dauphines,normalizeEntitlementState({definitionId:dauphines.id,roleId:"sophomore"},3,ENTITLEMENTS),current),false);
   const master=ENTITLEMENTS[2];
   current.attributes.Presença=2;
-  assert.equal(entitlementPrerequisitesMet(master,normalizeEntitlementState({definitionId:master.id},3),current),true,"o requisito narrativo de um Mérito ligado a segredos não deve ser imposto pelo aplicativo");
+  assert.equal(entitlementPrerequisitesMet(master,normalizeEntitlementState({definitionId:master.id},3,ENTITLEMENTS),current),true,"o requisito narrativo de um Mérito ligado a segredos não deve ser imposto pelo aplicativo");
   const dancer=ENTITLEMENTS[3],fisher=ENTITLEMENTS[4],rider=ENTITLEMENTS[5];
   current.skills={...current.skills,Socialização:2,Atletismo:3,Expressão:2,Computação:3};current.attributes.Perseverança=3;
-  assert.equal(entitlementPrerequisitesMet(dancer,normalizeEntitlementState({definitionId:dancer.id},3),current),true,"a especialidade de movimento é deliberadamente adjudicada pelo Narrador");
-  assert.equal(entitlementPrerequisitesMet(fisher,normalizeEntitlementState({definitionId:fisher.id},3),current),true);
-  assert.equal(entitlementPrerequisitesMet(rider,normalizeEntitlementState({definitionId:rider.id},3),current),true);
+  assert.equal(entitlementPrerequisitesMet(dancer,normalizeEntitlementState({definitionId:dancer.id},3,ENTITLEMENTS),current),true,"a especialidade de movimento é deliberadamente adjudicada pelo Narrador");
+  assert.equal(entitlementPrerequisitesMet(fisher,normalizeEntitlementState({definitionId:fisher.id},3,ENTITLEMENTS),current),true);
+  assert.equal(entitlementPrerequisitesMet(rider,normalizeEntitlementState({definitionId:rider.id},3,ENTITLEMENTS),current),true);
 });
 
 test("Blessings dos títulos de The Hedge concedem apenas Méritos automáticos estruturados",()=>{

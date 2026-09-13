@@ -226,7 +226,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(synchronizeChangelingBuilderMeritGrants(completed));
+    onSave(synchronizeChangelingBuilderMeritGrants(completed, reference.entitlements));
   };
 
   return <CharacterBuilderShell

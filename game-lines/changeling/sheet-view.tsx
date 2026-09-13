@@ -156,7 +156,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const currentWillpower = boundedNumber(character.current_state?.willpower_current, willpower, willpower);
     const resourceKey = "glamour_current";
     const currentResource = boundedNumber(character.current_state?.[resourceKey], resource.maximum, resource.maximum);
-    const entitlementState = entitlementMerit ? normalizeEntitlementState(data.entitlement, powerRating) : null;
+    const entitlementState = entitlementMerit ? normalizeEntitlementState(data.entitlement, powerRating, lineReference.entitlements) : null;
     const entitlementDefinition = lineReference.entitlements.find((item) => item.id === entitlementState?.definitionId);
     const hasStoredGlamour = Boolean(entitlementState?.accepted && entitlementState.allocations.some((item) => item.target === "blessing" && item.blessingId === "glamour-gain") && entitlementState.touchstone.status === "active" && entitlementState.touchstone.name.trim() && entitlementDefinition && entitlementPrerequisitesMet(entitlementDefinition, entitlementState, character));
     const storedGlamour = hasStoredGlamour ? boundedNumber(entitlementState?.token.storedGlamour, powerRating, 0) : 0;
@@ -166,10 +166,10 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         const next = structuredClone(character), merit = next.merits.find((item) => item.name === "Entitlement" && !item.grantedBy);
         if (!merit)
             return;
-        const state = normalizeEntitlementState(next.line_data.entitlement, powerRating);
+        const state = normalizeEntitlementState(next.line_data.entitlement, powerRating, lineReference.entitlements);
         state.token = { ...state.token, storedGlamour: boundedNumber(value, powerRating, 0) };
         next.line_data.entitlement = state;
-        updateSheet(synchronizeEntitlement(next));
+        updateSheet(synchronizeEntitlement(next, lineReference.entitlements));
     };
     const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 9, 0);
     const expandedMerits = character.merits.filter((item) => isExpanded(item.name) && !item.grantedBy);
@@ -216,7 +216,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>)}</div>
             </>,
                 detalhes: <>
-              <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts}/>
+              <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
               <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
               <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
@@ -276,7 +276,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               </div>
               <div className="sheet-center-column">
                 <SheetHeading>Méritos</SheetHeading>
-                <MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts}/>
+                <MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
                 <SheetHeading>Regalias Favorecidas</SheetHeading>
                 <LineList items={changelingFavoredRegalia(data)}/>
                 <SheetHeading>Fragilidades</SheetHeading>
@@ -385,7 +385,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 ? "Tokens"
                 : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
-                    target.configuration = configuration; updateSheet(synchronizeMeritGrants(next)); }}/>
+                    target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>
                 : null;
             if (!style)
                 return (<details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
@@ -523,12 +523,13 @@ function LineList({ items }: {
       {!items.filter(Boolean).length && <div>&nbsp;</div>}
     </div>);
 }
-function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog, }: {
+function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog, entitlementCatalog, }: {
     character: CharacterSheet;
     merits: CharacterSheet["merits"];
     updateSheet: (sheet: CharacterSheet) => void;
     catalog: readonly MeritDefinition[];
     courtCatalog: readonly CourtDefinition[];
+    entitlementCatalog: readonly EntitlementDefinition[];
 }) {
     const { locale, tr } = useLanguage();
     const availableCatalog = catalog, visible = merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
@@ -551,7 +552,7 @@ function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog,
                         const target = next.merits[meritIndex];
                         if (target)
                             target.configuration = { ...configuration, [inlineField.key]: event.target.value };
-                        updateSheet(synchronizeMeritGrants(next));
+                        updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
                     }}/>}
                 <DotValue value={item.dots} max={Math.max(5, item.dots)}/>
               </div>

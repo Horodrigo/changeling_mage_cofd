@@ -16,8 +16,8 @@ import { ConfirmAction } from "./confirm-action";
 export function EntitlementPage({character,updateSheet,catalog}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;catalog:readonly EntitlementDefinition[]}){
   const {locale,tr}=useLanguage(),wyrd=Math.max(1,Math.min(10,Number(character.line_data.wyrd??1)));
   const availableEntitlements=catalog;
-  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd),definition=availableEntitlements.find((item)=>item.id===state.definitionId);
-  const save=(nextState:EntitlementState)=>{const next=structuredClone(character);next.line_data={...next.line_data,entitlement:normalizeEntitlementState(nextState,wyrd)};const merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);if(merit)merit.configuration={...normalizeMeritConfiguration(merit.configuration),definitionId:nextState.definitionId,roleId:nextState.roleId};updateSheet(synchronizeMeritGrants(next));};
+  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd,availableEntitlements),definition=availableEntitlements.find((item)=>item.id===state.definitionId);
+  const save=(nextState:EntitlementState)=>{const next=structuredClone(character);next.line_data={...next.line_data,entitlement:normalizeEntitlementState(nextState,wyrd,availableEntitlements)};const merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);if(merit)merit.configuration={...normalizeMeritConfiguration(merit.configuration),definitionId:nextState.definitionId,roleId:nextState.roleId};updateSheet(synchronizeMeritGrants(next,availableEntitlements));};
   const patch=(next:Partial<EntitlementState>)=>save({...state,...next});
   const choice=(key:string,value:string)=>patch({choices:{...state.choices,[key]:value}});
   const activeBlessings=new Set(state.allocations.filter((item)=>item.target==="blessing").map((item)=>item.blessingId));

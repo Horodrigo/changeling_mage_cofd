@@ -26,8 +26,7 @@ courts.replaceCourtCatalog(JSON.parse(readFileSync(new URL("../public/data/chang
 const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
 const eligibility = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
 const terms = await vite.ssrLoadModule("/lib/system-terms.ts");
-const entitlements = await vite.ssrLoadModule("/lib/entitlements.ts");
-entitlements.replaceEntitlementCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json", import.meta.url), "utf8")));
+const entitlements = JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json", import.meta.url), "utf8"));
 const kiths = await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 kiths.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json", import.meta.url), "utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json", import.meta.url), "utf8")));
 const contracts = {
@@ -78,8 +77,8 @@ test("Beyond the Hedge foi removido e escolhas de Court Goodwill usam Cortes can
 
 test("Book of Seemings e Book of Courts expõem todo o conteúdo novo pelo toggle da fonte",()=>{
   assert.equal(kiths.KITHS.filter((item)=>item.sourceId==="h-seemings").length,12);
-  assert.equal(entitlements.ENTITLEMENTS.filter((item)=>item.sourceId==="h-courts").length,8);
-  assert.equal(entitlements.ENTITLEMENTS.filter((item)=>item.sourceId==="h-seemings").length,13);
+  assert.equal(entitlements.filter((item)=>item.sourceId==="h-courts").length,8);
+  assert.equal(entitlements.filter((item)=>item.sourceId==="h-seemings").length,13);
   assert.equal(creationRules.CTL_SEEMINGS.Grimm.sourceId,"h-seemings");
   const coreContracts=contracts.CONTRACTS.filter((item)=>item.supplementalSeemingBenefits?.["h-seemings"]);
   assert.equal(coreContracts.length,60);

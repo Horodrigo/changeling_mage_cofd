@@ -43,6 +43,18 @@ test("Mage conditions do not depend on Changeling catalog state", async () => {
   assert.doesNotMatch(mageConditions, /changeling-conditions/);
 });
 
+test("Changeling entitlement mechanics receive a surface catalog instead of mutable global state", async () => {
+  const [mechanics, grants, page] = await Promise.all([
+    source("lib/entitlements.ts"),
+    source("game-lines/changeling/builder-merit-grants.ts"),
+    source("app/workspace/entitlement-page.tsx"),
+  ]);
+  assert.doesNotMatch(mechanics, /ENTITLEMENTS|replaceEntitlementCatalog/);
+  assert.match(mechanics, /catalog:readonly EntitlementDefinition\[\]/);
+  assert.match(grants, /entitlements\?: readonly EntitlementDefinition\[\]/);
+  assert.match(page, /synchronizeMeritGrants\(next,availableEntitlements\)/);
+});
+
 test("persistence is independent of app components", async () => {
   const persistence = await source("lib/character-persistence.ts");
   assert.doesNotMatch(persistence, /from\s+["'][^"']*app\//);
