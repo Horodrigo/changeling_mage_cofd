@@ -5,6 +5,9 @@ export const mageRegistration: GameLineRegistration = {
   id: "MtA",
   slug: "mage",
   label: "Mage: The Awakening",
+  iconSrc: "/mage-skull.png",
+  cardClass: "mta-card",
+  summaryClass: "mta-summary",
   catalogGroups: {
     builder: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
     sheet: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],

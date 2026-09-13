@@ -5,6 +5,9 @@ export const changelingRegistration: GameLineRegistration = {
   id: "CtL",
   slug: "changeling",
   label: "Changeling: The Lost",
+  iconSrc: "/changeling-skull.png",
+  cardClass: "ctl-card",
+  summaryClass: "ctl-summary",
   catalogGroups: {
     builder: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-reference"],
     sheet: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-reference"],

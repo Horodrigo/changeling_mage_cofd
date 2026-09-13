@@ -27,11 +27,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { seemingDisplayName } from "@/lib/seeming-presentation";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import { CatalogBoundary } from "./catalog-boundary";
-import { getGameLineRegistration, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
+import { getGameLineRegistration, listGameLineRegistrations, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
 
 const NewCharacterBuilder = lazy(() =>
   import("./character-builder").then((module) => ({ default: module.CharacterBuilder })),
@@ -395,11 +394,11 @@ function Dashboard({
   openCharacters: () => void;
   openCharacter: (item: CharacterSheet) => void;
 }) {
-  const {locale,tr}=useLanguage();
-  const changelings = characters.filter(
-    (item) => item.game_line === "CtL",
-  ).length;
-  const mages = characters.filter((item) => item.game_line === "MtA").length;
+  const {tr}=useLanguage();
+  const lineCounts = listGameLineRegistrations().map((registration) => ({
+    registration,
+    count: characters.filter((item) => item.game_line === registration.id).length,
+  }));
   const recent = [...characters]
     .sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at)))
     .slice(0, 4);
@@ -424,8 +423,11 @@ function Dashboard({
       </section>
       <section className="line-summary wide">
         <span><strong>{characters.length}</strong> {tr("personagens","characters")}</span>
-        <span className="ctl-summary"><strong>{changelings}</strong> Changelings</span>
-        <span className="mta-summary"><strong>{mages}</strong> {tr("Magos","Mages")}</span>
+        {lineCounts.map(({ registration, count }) => (
+          <span className={registration.summaryClass} key={registration.id}>
+            <strong>{count}</strong> {registration.label}
+          </span>
+        ))}
       </section>
       <section className="panel wide recent-panel">
         <div className="panel-heading">
@@ -442,34 +444,24 @@ function Dashboard({
         </div>
         {recent.length ? (
           <div className="character-grid compact-character-grid">
-            {recent.map((character) => (
-              <button
-                className={`character-card ${character.game_line === "CtL" ? "ctl-card" : "mta-card"}`}
+            {recent.map((character) => {
+              const registration = getGameLineRegistration(character.game_line);
+              return <button
+                className={`character-card ${registration.cardClass}`}
                 key={character.id}
                 onClick={() => openCharacter(character)}
               >
                 <CharacterLineIcon line={character.game_line} />
                 <div>
-                  <Badge variant="outline">
-                    {character.game_line === "CtL" ? "Changeling" : tr("Mago","Mage")}
-                  </Badge>
+                  <Badge variant="outline">{registration.label}</Badge>
                   <h3>{character.character.name}</h3>
                   <p>
                     {character.character.concept || tr("Conceito não informado","No concept provided")}
                   </p>
-                  <small>
-                    {character.game_line === "CtL"
-                      ? String(
-                          seemingDisplayName(character.line_data.seeming,locale) || tr("Feição não definida","No Seeming selected"),
-                        )
-                      : String(
-                          character.line_data.path ?? tr("Caminho não definido","No Path selected"),
-                        )}
-                  </small>
                 </div>
                 <ChevronRight />
-              </button>
-            ))}
+              </button>;
+            })}
           </div>
         ) : (
           <div className="dashboard-empty">
@@ -493,7 +485,7 @@ function Characters({
   ready: boolean;
   open: (item: CharacterSheet) => void;
 }) {
-  const {locale,tr}=useLanguage();
+  const {tr}=useLanguage();
   return (
     <section className="panel">
       <div className="panel-heading">
@@ -509,28 +501,22 @@ function Characters({
         <div className="loading-card">{tr("Carregando personagens…","Loading characters…")}</div>
       ) : characters.length ? (
         <div className="character-grid">
-          {characters.map((character) => (
-            <button
-              className={`character-card ${character.game_line === "CtL" ? "ctl-card" : "mta-card"}`}
+          {characters.map((character) => {
+            const registration = getGameLineRegistration(character.game_line);
+            return <button
+              className={`character-card ${registration.cardClass}`}
               key={character.id}
               onClick={() => open(character)}
             >
               <CharacterLineIcon line={character.game_line} />
               <div>
-                <Badge variant="outline">
-                  {character.game_line === "CtL" ? "Changeling" : tr("Mago","Mage")}
-                </Badge>
+                <Badge variant="outline">{registration.label}</Badge>
                 <h3>{character.character.name}</h3>
                 <p>{character.character.concept}</p>
-                <small>
-                  {character.game_line === "CtL"
-                    ? String(seemingDisplayName(character.line_data.seeming,locale) || "Changeling")
-                    : String(character.line_data.path ?? "Mage")}
-                </small>
               </div>
               <ChevronRight />
-            </button>
-          ))}
+            </button>;
+          })}
         </div>
       ) : (
         <Empty
@@ -541,11 +527,12 @@ function Characters({
     </section>
   );
 }
-function CharacterLineIcon({ line }: { line: "CtL" | "MtA" }) {
+function CharacterLineIcon({ line }: { line: CharacterSheet["game_line"] }) {
+  const registration = getGameLineRegistration(line);
   return (
     <div className="character-line-icon">
       <img
-        src={line === "CtL" ? "/changeling-skull.png" : "/mage-skull.png"}
+        src={registration.iconSrc}
         alt=""
         aria-hidden="true"
       />

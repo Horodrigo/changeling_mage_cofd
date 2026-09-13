@@ -16,6 +16,9 @@ export interface GameLineRegistration {
   id: PersistedGameLineId;
   slug: string;
   label: string;
+  iconSrc: string;
+  cardClass: string;
+  summaryClass: string;
   catalogGroups: CatalogGroupsBySurface;
   loadRules: () => Promise<GameLineRulesModule>;
   loadBuilder: () => Promise<GameLineBuilderModule>;
