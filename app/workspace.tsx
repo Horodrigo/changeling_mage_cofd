@@ -5,7 +5,6 @@ import {
   ChevronRight,
   Download,
   FileJson,
-  FlaskConical,
   LayoutDashboard,
   MoreHorizontal,
   Pencil,
@@ -43,12 +42,9 @@ const GameLineBuilder = lazy(() =>
 const GameLineSheet = lazy(() =>
   import("./workspace/game-line-sheet").then((module) => ({ default: module.GameLineSheet })),
 );
-const HomebrewsScreen = lazy(() =>
-  import("./homebrews").then((module) => ({ default: module.HomebrewsScreen })),
-);
 const DeleteCharacterDialog = lazy(() => import("./delete-character-dialog"));
 
-type View = "inicio" | "personagens" | "homebrews";
+type View = "inicio" | "personagens";
 type CatalogRule = {
   id: string;
   originalName: string;
@@ -62,7 +58,6 @@ type CatalogRule = {
 const nav = [
   ["inicio", "home", LayoutDashboard],
   ["personagens", "characters", UsersRound],
-  ["homebrews", "homebrews", FlaskConical],
 ] as const;
 
 export function Workspace({
@@ -361,17 +356,13 @@ export function Workspace({
             openCharacters={() => navigate("personagens")}
             openCharacter={(sheet) => { void openCharacter(sheet); }}
           />
-        ) : view === "personagens" ? (
+        ) : (
           <Characters
             characters={characters}
             ready={ready}
             open={(sheet) => { void openCharacter(sheet); }}
           />
-        ) : view === "homebrews" ? (
-          <Suspense fallback={<WorkspaceLoading />}>
-            <HomebrewsScreen characters={characters} />
-          </Suspense>
-        ) : null}
+        )}
       </section>
       {deleteOpen && (
         <Suspense fallback={null}>

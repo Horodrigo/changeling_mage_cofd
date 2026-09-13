@@ -35,3 +35,8 @@ test("persistence is independent of app components", async () => {
   const persistence = await source("lib/character-persistence.ts");
   assert.doesNotMatch(persistence, /from\s+["'][^"']*app\//);
 });
+
+test("deferred Homebrew management is not part of the main workspace route", async () => {
+  const workspace = await source("app/workspace.tsx");
+  assert.doesNotMatch(workspace, /HomebrewsScreen|\.\/homebrews/);
+});
