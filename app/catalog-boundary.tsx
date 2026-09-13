@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
-import type { CatalogGroupId } from "@/lib/game-line-contracts/catalog-groups";
+import type { CatalogGroupId, CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
+
+const CatalogSnapshotContext = createContext<CatalogSnapshot | null>(null);
+
+/** Catalog data for the active boundary; unavailable outside a loaded surface. */
+export function useCatalogSnapshot(): CatalogSnapshot {
+  const snapshot = useContext(CatalogSnapshotContext);
+  if (!snapshot) throw new Error("Catalog snapshot is unavailable outside CatalogBoundary.");
+  return snapshot;
+}
 
 export function CatalogBoundary({
   groups,
@@ -16,7 +25,8 @@ export function CatalogBoundary({
   const [result, setResult] = useState<{
     key: string;
     state: "loading" | "ready" | "error";
-  }>({ key: resourceKey, state: groups.length ? "loading" : "ready" });
+    snapshot: CatalogSnapshot | null;
+  }>({ key: resourceKey, state: groups.length ? "loading" : "ready", snapshot: null });
 
   useEffect(() => {
     let cancelled = false;
@@ -26,8 +36,8 @@ export function CatalogBoundary({
     void import("@/game-lines/registry/catalog-group-registry").then(({ loadCatalogGroups }) =>
       loadCatalogGroups(requestedGroups),
     ).then(
-      () => { if (!cancelled) setResult({ key: resourceKey, state: "ready" }); },
-      () => { if (!cancelled) setResult({ key: resourceKey, state: "error" }); },
+      (snapshot) => { if (!cancelled) setResult({ key: resourceKey, state: "ready", snapshot }); },
+      () => { if (!cancelled) setResult({ key: resourceKey, state: "error", snapshot: null }); },
     );
     return () => { cancelled = true; };
   }, [resourceKey]);
@@ -45,5 +55,5 @@ export function CatalogBoundary({
         )}
       </div>
     );
-  return children;
+  return <CatalogSnapshotContext.Provider value={result.snapshot}>{children}</CatalogSnapshotContext.Provider>;
 }
