@@ -173,7 +173,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         next.line_data.entitlement = state;
         updateSheet(synchronizeEntitlement(next, lineReference.entitlements));
     };
-    const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 9, 0);
+    const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 10, 0);
     const expandedMerits = character.merits.filter((item) => isExpanded(item.name) && !item.grantedBy);
     const principalMerits = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
     const selectedConditions = [
@@ -494,8 +494,8 @@ function GoblinDebtTrack({ value, onChange, }: {
     const { tr } = useLanguage();
     return (<div className="goblin-debt-block">
       <h4>{tr("Débito Goblin", "Goblin Debt")}</h4>
-      <div className="goblin-debt-track" role="group" aria-label={tr(`Débito Goblin: ${value} de 9`, `Goblin Debt: ${value} of 9`)}>
-        {Array.from({ length: 9 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={tr(`Definir Débito Goblin como ${index < value ? index : index + 1}`, `Set Goblin Debt to ${index < value ? index : index + 1}`)}/>))}
+      <div className="goblin-debt-track" role="group" aria-label={tr(`Débito Goblin: ${value} de 10`, `Goblin Debt: ${value} of 10`)}>
+        {Array.from({ length: 10 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={tr(`Definir Débito Goblin como ${index < value ? index : index + 1}`, `Set Goblin Debt to ${index < value ? index : index + 1}`)}/>))}
       </div>
       <p>
         {value}/9 · {tr("ao receber o décimo ponto, o personagem adquire a Condição Habitante da Sebe.", "upon receiving the tenth point, the character gains the Hedge Denizen Condition.")}

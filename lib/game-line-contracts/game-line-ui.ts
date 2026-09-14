@@ -20,5 +20,18 @@ export type GameLineSheetProps = {
   catalogs?: CatalogSnapshot;
 };
 
+export type GameLinePrintOptions = {
+  expandedMeritDetails: boolean;
+  powerDetails: boolean;
+};
+
+export type GameLinePrintSheetProps = {
+  character: CharacterSheet;
+  options: GameLinePrintOptions;
+  catalogs?: CatalogSnapshot;
+  onReadyChange?: (ready: boolean) => void;
+};
+
 export type GameLineBuilderModule = { Component: ComponentType<GameLineBuilderProps> };
 export type GameLineSheetModule = { Component: ComponentType<GameLineSheetProps> };
+export type GameLinePrintModule = { Component: ComponentType<GameLinePrintSheetProps> };

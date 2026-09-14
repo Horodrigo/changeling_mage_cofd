@@ -11,8 +11,10 @@ export const changelingRegistration: GameLineRegistration = {
   catalogGroups: {
     builder: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-reference"],
     sheet: ["core-merits", "changeling-merits", "changeling-contracts", "core-reference", "changeling-reference"],
+    print: ["core-merits", "changeling-merits", "changeling-contracts", "core-reference", "changeling-reference"],
   },
   loadRules: () => import("./rules").then(({ changelingRules }) => changelingRules),
   loadBuilder: () => import("./builder").then(({ changelingBuilder }) => changelingBuilder),
   loadSheet: () => import("./sheet").then(({ changelingSheet }) => changelingSheet),
+  loadPrintSheet: () => import("./print").then(({ changelingPrintSheet }) => changelingPrintSheet),
 };

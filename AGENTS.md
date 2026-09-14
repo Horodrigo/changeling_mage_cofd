@@ -258,11 +258,11 @@ Do not change Cloudflare bindings or configuration merely to silence local ambie
 
 ## Deferred Features
 
-Homebrew management and specialized PDF generation, printing, and print preview are currently deferred.
+Homebrew management and specialized server-side PDF generation remain deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage printing remains deferred until its own line-owned surface is implemented.
 
 Do not let removed implementations shape Core, current game-line APIs, Builder shells, or Sheet shells. When these features return, design them against the modular architecture that exists then. Do not restore old mutable global Homebrew catalogs or old mixed print/paper paths because historical code used them.
 
-Normal in-app character viewing remains independent from future print/PDF work.
+Normal in-app character viewing remains independent from print/PDF work. Shared print infrastructure may own A4 pagination and neutral static primitives, but each game line owns its printable composition and interpretation of `line_data`.
 
 ## Temporary Code Policy
 

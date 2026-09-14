@@ -567,7 +567,7 @@
   position: absolute;
   z-index: 0;
   top: calc(50% - 1px);
-  left: calc(50% + 11px);
+  left: calc(50% - 8px);
   display: flex;
   height: 38px;
   transform: translate(-50%, -50%);
@@ -584,7 +584,7 @@
 }
 
 .ctl-sheet .kith-skill-left {
-  width: calc(38px * 471 / 552);
+  width: calc(38px * 760 / 552);
   background-image: url("/changeling/style/skill-kith-left.webp");
 }
 
@@ -597,7 +597,7 @@
 .ctl-sheet .kith-skill-middle-2 { background-image: url("/changeling/style/skill-kith-middle-2.webp"); }
 
 .ctl-sheet .kith-skill-right {
-  width: calc(38px * 760 / 552);
+  width: calc(38px * 471 / 552);
   background-image: url("/changeling/style/skill-kith-right.webp");
 }
 

@@ -19,6 +19,9 @@ test("zoom da ficha respeita a largura-base e o limite do cabeçalho externo",()
   assert.equal(zoom.stepSheetZoom(1.3,"in",1200/900),1200/900);
   assert.equal(zoom.stepSheetZoom(1200/900,"out",1200/900),1.3);
   assert.equal(zoom.stepSheetZoom(1,"out",1200/900),1);
+  assert.equal(zoom.parseStoredSheetZoom("1.2"),1.2);
+  assert.equal(zoom.parseStoredSheetZoom("5"),1200/900);
+  assert.equal(zoom.parseStoredSheetZoom("invalid"),1);
 });
 
 test("zoom é exclusivo do desktop e o workspace recebe o tema da linha ativa",async()=>{
@@ -30,6 +33,9 @@ test("zoom é exclusivo do desktop e o workspace recebe o tema da linha ativa",a
   ]);
   assert.match(workspace,/className="top-sheet-tools"/);
   assert.match(workspace,/className="sheet-zoom-control"/);
+  assert.match(workspace,/localStorage\.getItem\(SHEET_ZOOM_STORAGE_KEY\)/);
+  assert.match(workspace,/localStorage\.setItem\(SHEET_ZOOM_STORAGE_KEY, String\(sheetZoom\)\)/);
+  assert.match(workspace,/matchMedia\("\(max-width: 767px\)"\)/);
   assert.match(workspace,/className="top-sheet-edit"/);
   assert.doesNotMatch(workspace,/Changes to tracks are saved automatically|Alterações nos marcadores são salvas automaticamente/);
   assert.match(workspace,/!selected && <div className="view-heading"/);

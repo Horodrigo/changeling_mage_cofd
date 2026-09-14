@@ -9,6 +9,7 @@ import {
   MoreHorizontal,
   Pencil,
   Plus,
+  Printer,
   ShieldCheck,
   Sparkles,
   Trash2,
@@ -40,7 +41,7 @@ import {
 import { CatalogBoundary } from "./catalog-boundary";
 import { getGameLineRegistration, listGameLineRegistrations, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { maximumSheetZoom, SHEET_BASE_WIDTH, stepSheetZoom } from "./workspace/sheet-zoom";
+import { maximumSheetZoom, parseStoredSheetZoom, SHEET_BASE_WIDTH, SHEET_ZOOM_STORAGE_KEY, stepSheetZoom } from "./workspace/sheet-zoom";
 
 const NewCharacterBuilder = lazy(() =>
   import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
@@ -52,6 +53,9 @@ const GameLineSheet = lazy(() =>
   import("./workspace/game-line-sheet").then((module) => ({ default: module.GameLineSheet })),
 );
 const DeleteCharacterDialog = lazy(() => import("./delete-character-dialog"));
+const CharacterPrintDialog = lazy(() =>
+  import("./workspace/character-print-dialog").then((module) => ({ default: module.CharacterPrintDialog })),
+);
 
 type View = "inicio" | "personagens";
 type CatalogRule = {
@@ -84,8 +88,12 @@ export function Workspace({
   const [ready, setReady] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
-  const [sheetZoom,setSheetZoom]=useState(1);
+  const [sheetZoom,setSheetZoom]=useState(() => {
+    if (typeof window === "undefined" || window.matchMedia("(max-width: 767px)").matches) return 1;
+    try { return parseStoredSheetZoom(window.localStorage.getItem(SHEET_ZOOM_STORAGE_KEY)); } catch { return 1; }
+  });
   const [maximumZoom,setMaximumZoom]=useState(1);
+  const [printOpen,setPrintOpen]=useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const storageKey = useMemo(
     () => `arquivo-das-trevas:v2:${userKey}`,
@@ -120,6 +128,11 @@ export function Workspace({
     return () => window.clearTimeout(timer);
   }, [characters, ready, storageKey]);
 
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 767px)").matches) return;
+    try { window.localStorage.setItem(SHEET_ZOOM_STORAGE_KEY, String(sheetZoom)); } catch { /* Zoom persistence is optional; interaction remains available. */ }
+  }, [sheetZoom]);
+
   function commitCharacters(
     change: (current: StoredCharacter[]) => StoredCharacter[],
   ) {
@@ -133,13 +146,13 @@ export function Workspace({
     setView(next);
     setSelected(null);
     setEditing(null);
-    setSheetZoom(1);
     setMaximumZoom(1);
+    setPrintOpen(false);
   }
 
   async function openCharacter(sheet: CharacterSheet) {
-    setSheetZoom(1);
     setMaximumZoom(1);
+    setPrintOpen(false);
     try {
       await hydrateCharacterCatalogs(sheet.game_line);
       const { normalizeStoredSheet } = await import("@/lib/character-persistence");
@@ -313,6 +326,9 @@ export function Workspace({
               <span>{locale === "pt-BR" ? `${characters.length} personagem(ns)` : `${characters.length} character${characters.length===1?"":"s"}`}</span>
             </div>
             {selected && <div className="top-sheet-tools">
+              {selected.game_line === "CtL" && <Button type="button" size="sm" className="top-sheet-print" onClick={()=>setPrintOpen(true)} title={tr("Imprimir ficha","Print character sheet")}>
+                <Printer /><span>{tr("Imprimir","Print")}</span>
+              </Button>}
               <div className="sheet-zoom-control" role="group" aria-label={tr("Zoom da ficha","Character sheet zoom")}>
                 <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom<=1} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"out",maximumZoom))} aria-label={tr("Diminuir ficha","Zoom out")} title={tr("Diminuir ficha","Zoom out")}><ZoomOut /></Button>
                 <button type="button" className="sheet-zoom-value" onClick={()=>setSheetZoom(1)} title={tr("Restaurar tamanho","Reset size")} aria-label={tr(`Zoom da ficha: ${Math.round(sheetZoom*100)}%. Restaurar tamanho.`,`Character sheet zoom: ${Math.round(sheetZoom*100)}%. Reset size.`)}>{Math.round(sheetZoom*100)}%</button>
@@ -376,6 +392,8 @@ export function Workspace({
             zoom={sheetZoom}
             setZoom={setSheetZoom}
             setMaximumZoom={setMaximumZoom}
+            printOpen={printOpen}
+            setPrintOpen={setPrintOpen}
             updateState={(state) => updateCharacterState(selected, state)}
             updateSheet={updateCharacter}
           />
@@ -613,6 +631,8 @@ function CharacterView({
   zoom,
   setZoom,
   setMaximumZoom,
+  printOpen,
+  setPrintOpen,
   updateState,
   updateSheet,
 }: {
@@ -620,6 +640,8 @@ function CharacterView({
   zoom: number;
   setZoom: React.Dispatch<React.SetStateAction<number>>;
   setMaximumZoom: React.Dispatch<React.SetStateAction<number>>;
+  printOpen: boolean;
+  setPrintOpen: (open: boolean) => void;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
@@ -653,8 +675,9 @@ function CharacterView({
     return()=>observer.disconnect();
   },[isMobile,zoom]);
 
+  const registration=getGameLineRegistration(character.game_line);
   const sheet=(
-    <CatalogBoundary groups={getGameLineRegistration(character.game_line).catalogGroups.sheet}>
+    <CatalogBoundary groups={registration.catalogGroups.sheet}>
       <Suspense fallback={<WorkspaceLoading />}>
         <GameLineSheet character={character} updateState={updateState} updateSheet={updateSheet}/>
       </Suspense>
@@ -665,6 +688,9 @@ function CharacterView({
       {isMobile ? sheet : <div className="sheet-zoom-viewport" style={{width:SHEET_BASE_WIDTH*zoom,height:sheetHeight?sheetHeight*zoom:undefined}}>
         <div ref={zoomSurfaceRef} className="sheet-zoom-surface" style={{transform:`scale(${zoom})`}}>{sheet}</div>
       </div>}
+      {character.game_line === "CtL" && printOpen && <CatalogBoundary groups={registration.catalogGroups.print ?? registration.catalogGroups.sheet}>
+        <Suspense fallback={<WorkspaceLoading />}><CharacterPrintDialog character={character} open onOpenChange={setPrintOpen}/></Suspense>
+      </CatalogBoundary>}
     </section>
   );
 }

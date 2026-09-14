@@ -41,13 +41,33 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em
   assert.match(css,/\.contract-power-list \{[^}]*align-items:start/);
 });
 
-test("não oferece prévia, impressão ou árvore duplicada para PDF", async () => {
-  const [workspace,css]=await Promise.all([
+test("oferece impressão CtL A4 em uma árvore estática separada", async () => {
+  const [workspace,globalCss,changelingCss]=await Promise.all([
     readWorkspaceSource(),
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/changeling-sheet.css",import.meta.url),"utf8"),
   ]);
-  assert.doesNotMatch(workspace,/window\.print|printLayout|pdf-preview|pdf-print-source|Preview PDF|Print PDF/);
-  assert.doesNotMatch(css,/pdf-preview|pdf-print-source|print-layout|@media print/);
+  const css=`${globalCss}\n${changelingCss}`;
+  assert.match(workspace,/className="top-sheet-print"/);
+  assert.match(workspace,/window\.print\(\)/);
+  assert.match(workspace,/className = "character-print-surface"/);
+  assert.match(workspace,/printSurface\.append\(printable\.cloneNode\(true\)\)/);
+  assert.match(workspace,/className="ctl-print-document"/);
+  assert.match(workspace,/powerDetails/);
+  assert.match(workspace,/expandedMeritDetails/);
+  assert.match(workspace,/minimum=\{Math\.max\(6, touchstoneSlots\)\}/);
+  assert.match(workspace,/className="ctl-print-contract-tag"/);
+  assert.match(workspace,/definition\.dicePool : "None"/);
+  assert.match(workspace,/className="ctl-print-experience-beats"/);
+  assert.match(workspace,/function PrintWritableBoxes/);
+  assert.match(workspace,/boundedNumber\(character\.current_state\?\.goblin_debt, 10, 0\)/);
+  assert.doesNotMatch(workspace,/game-lines\/mage\/print/);
+  assert.match(css,/@page\s*\{\s*size:A4 portrait/);
+  assert.match(css,/body\.character-printing > \.character-print-surface/);
+  assert.match(css,/\.ctl-print-main-grid\s*\{[^}]*grid-template-columns:1\.08fr \.96fr \.96fr/);
+  assert.match(css,/changeling\/style\/changeling-title\.webp/);
+  assert.match(css,/changeling\/style\/botanical-corner\.webp/);
+  assert.match(css,/\.ctl-print-card \{[^}]*background:transparent/);
 });
 
 test("service worker preserva shell offline e exige confirmação para atualizar", async () => {

@@ -1,6 +1,12 @@
 export const SHEET_BASE_WIDTH = 900;
 export const SHEET_MAX_WIDTH = 1200;
 export const SHEET_MAX_ZOOM = SHEET_MAX_WIDTH / SHEET_BASE_WIDTH;
+export const SHEET_ZOOM_STORAGE_KEY = "characters-of-darkness:sheet-zoom";
+
+export function parseStoredSheetZoom(value: string | null) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.max(1, Math.min(SHEET_MAX_ZOOM, parsed)) : 1;
+}
 
 export function maximumSheetZoom(availableWidth: number) {
   if (!Number.isFinite(availableWidth)) return 1;

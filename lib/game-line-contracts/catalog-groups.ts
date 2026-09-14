@@ -1,9 +1,14 @@
 /** A catalog group is a declarative, surface-specific unit of catalog loading. */
 export type CatalogGroupId = string;
 
-export type CatalogSurface = "builder" | "sheet";
+export type CatalogSurface = "builder" | "sheet" | "print";
 
-export type CatalogGroupsBySurface = Readonly<Record<CatalogSurface, readonly CatalogGroupId[]>>;
+export type CatalogGroupsBySurface = Readonly<{
+  builder: readonly CatalogGroupId[];
+  sheet: readonly CatalogGroupId[];
+  /** Optional because a line may ship its printable surface independently. */
+  print?: readonly CatalogGroupId[];
+}>;
 
 /** The read-only catalog API exposed to independently loaded group modules. */
 export interface CatalogReader {

@@ -60,6 +60,21 @@ test("Changeling sheet snapshots include the core conditions they consume", asyn
   assert.match(registration, /sheet:\s*\[[^\]]*"core-reference"/);
 });
 
+test("Changeling printing is a lazy line-owned surface while Mage remains untouched", async () => {
+  const [contract, changeling, mage, printEntry, printView] = await Promise.all([
+    source("lib/game-line-contracts/game-line-registration.ts"),
+    source("game-lines/changeling/registration.ts"),
+    source("game-lines/mage/registration.ts"),
+    source("game-lines/changeling/print.tsx"),
+    source("game-lines/changeling/print-sheet.tsx"),
+  ]);
+  assert.match(contract, /loadPrintSheet\?/);
+  assert.match(changeling, /loadPrintSheet:\s*\(\)\s*=>\s*import\("\.\/print"\)/);
+  assert.match(changeling, /print:\s*\[[^\]]*"changeling-contracts"/);
+  assert.doesNotMatch(mage, /loadPrintSheet|print:/);
+  assert.doesNotMatch(`${printEntry}\n${printView}`, /game-lines\/mage|@\/lib\/mage/);
+});
+
 test("Mage conditions do not depend on Changeling catalog state", async () => {
   const mageConditions = await source("lib/mage-conditions.ts");
   assert.doesNotMatch(mageConditions, /changeling-conditions/);

@@ -209,23 +209,54 @@ altura renderizada = 38 px
 largura fixa = (471 + 760) × 38 / 552
 largura de um segmento = 260 × 38 / 552
 largura requerida = largura do texto + 20 px
-segmentos = max(0, ceil((largura requerida - largura fixa) / largura do segmento)) + 1
+segmentos = max(0, ceil((largura requerida - largura fixa) / largura do segmento))
 ```
 
-O `+1` é uma folga deliberada. Os segmentos centrais alternam entre as versões
-1 e 2 para evitar repetição visual evidente. O posicionamento final calibrado
-está em `.kith-skill-frame`: `top: calc(50% - 1px)` e
-`left: calc(50% + 11px)`.
+A folga contínua já faz parte de `largura requerida`. Por isso, nomes curtos
+como Brawl, Drive e Crafts usam somente `left + right`; um segmento central só
+é adicionado quando a largura medida realmente ultrapassa a capacidade das duas
+extremidades. Os segmentos centrais alternam entre as versões 1 e 2 para evitar
+repetição visual evidente. O posicionamento final calibrado está em
+`.kith-skill-frame`.
 
 Para ajustar esse efeito no futuro:
 
 - altere `height` no CSS para mudar toda a escala;
 - altere `top` e `left` para posicionar sem afetar a medição;
 - altere os `20 px` no TypeScript para mudar a folga contínua em torno do texto;
-- altere o `+1` para adicionar ou remover um segmento inteiro;
+- não acrescente um segmento fixo depois do `ceil`: isso faz nomes curtos
+  escaparem para a esquerda;
 - mantenha as proporções originais nas fórmulas de largura;
 - não recorte individualmente essas quatro peças depois de prontas, pois isso
   pode quebrar os encaixes entre elas.
+
+### 2.10 Prévia e saída A4 de impressão
+
+A prévia e o documento enviado ao driver de impressão compartilham a mesma
+estrutura `.ctl-print-document`, mas não o mesmo nó nem os mesmos ancestrais.
+Ao imprimir, `CharacterPrintDialog` cria um clone novo dentro de
+`.character-print-surface`, um filho direto de `body`, e o descarta quando
+`window.print()` termina. O clone é pré-layoutado fora da tela antes da troca
+para a mídia impressa.
+
+Esse isolamento é obrigatório. Modais centralizados costumam usar `position:
+fixed`, tradução e animação de escala; alguns drivers capturam essa camada
+transformada e gravam a ficha em apenas parte da folha, mesmo quando a prévia
+HTML parece correta. Na mídia `print`:
+
+- `@page` define A4 retrato sem margens do navegador;
+- somente `.character-print-surface` permanece visível;
+- nenhuma regra posterior pode reexibir o modal ou sua prévia original, pois
+  isso duplica as páginas no PDF;
+- documento e páginas repetem explicitamente 210 × 297 mm;
+- animações, transições, transformações e sombras externas são removidas;
+- menus, modal, opções e controles do aplicativo não participam do layout.
+
+Não valide impressão apenas pela prévia do aplicativo. Salve um PDF pelo driver
+real, renderize todas as páginas e confirme: MediaBox A4, ocupação integral da
+folha, ornamentos carregados, número de páginas e ausência de vazamento entre
+páginas. A impressão de Mage deve reutilizar esse mecanismo neutro de saída,
+mas manter sua composição e interpretação dos dados dentro da própria linha.
 
 ## 3. Inventário exato de imagens
 
@@ -469,15 +500,22 @@ Para um ornamento que envolve texto dinâmico:
 5. observe mudanças de tamanho;
 6. mantenha a decoração fora da acessibilidade e dos eventos de ponteiro.
 
-### Etapa 9 — Responsividade e impressão
+### Etapa 9 — Responsividade
 
 - Desktop: composição completa e densidade próxima da referência.
 - Tablet: ornamentos menores e linhas ainda contínuas.
 - Mobile: conteúdo empilhado, abas utilizáveis e entrada em Summary.
-- Print: papel preservado com contraste controlado e sem sombras externas.
 - Alto contraste: fallback legível para lettering e linhas decorativas.
 
-### Etapa 10 — Offline
+### Etapa 10 — Impressão
+
+Implemente a impressão somente depois que o layout responsivo da linha estiver
+estável. Use a superfície direta descrita na seção 2.10, preserve A4 também
+quando o usuário abrir o aplicativo no celular e mantenha a composição impressa
+sob responsabilidade da linha. A validação deve incluir um PDF realmente salvo
+e renderizado; a prévia sozinha não é critério de aceite.
+
+### Etapa 11 — Offline
 
 Ao adicionar, substituir ou remover um asset público:
 
@@ -589,7 +627,14 @@ Antes de escrever CSS de Mage, reúna:
 - um fixture bilíngue estável;
 - uma pasta de masters, uma pasta pública e scripts de geração próprios.
 
-Depois implemente, nesta ordem: papel e tokens, fontes, moldura, cabeçalho, abas,
-divisor principal, divisores comuns, grid, estados especiais, mobile, impressão e
-offline. Essa sequência evita calibrar espaçamentos antes que as métricas de
-fonte e as dimensões reais dos assets estejam estabilizadas.
+Depois implemente em dois lotes obrigatoriamente sequenciais:
+
+1. **Atualizar o layout de Mage:** papel e tokens, fontes, moldura, cabeçalho,
+   abas, divisor principal, divisores comuns, grid, estados especiais, mobile e
+   offline.
+2. **Atualizar o layout de impressão de Mage:** composição A4 pertencente a
+   Mage, reutilizando apenas o mecanismo neutro de saída isolada e paginação.
+
+Não inicie a impressão de Mage antes de concluir e validar seu novo layout. Essa
+sequência evita transportar métricas provisórias para o PDF e previne o mesmo
+descompasso entre uma prévia visual correta e o arquivo efetivamente salvo.
