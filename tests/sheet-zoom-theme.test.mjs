@@ -28,12 +28,18 @@ test("zoom é exclusivo do desktop e o workspace recebe o tema da linha ativa",a
     readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
     readFile(new URL("../app/changeling-sheet.css",import.meta.url),"utf8"),
   ]);
-  assert.match(workspace,/!isMobile && <div className="sheet-zoom-control"/);
+  assert.match(workspace,/className="top-sheet-tools"/);
+  assert.match(workspace,/className="sheet-zoom-control"/);
+  assert.match(workspace,/className="top-sheet-edit"/);
+  assert.doesNotMatch(workspace,/Changes to tracks are saved automatically|Alterações nos marcadores são salvas automaticamente/);
+  assert.match(workspace,/!selected && <div className="view-heading"/);
   assert.match(workspace,/line-theme-\$\{selected\.game_line\.toLowerCase\(\)\}/);
   assert.match(builder,/line-theme-\$\{line\.toLowerCase\(\)\}/);
   assert.match(css,/\.line-theme-ctl \{/);
   assert.match(css,/\.line-theme-mta \{/);
   assert.match(css,/@media \(max-width:900px\) \{\s*\.sheet-zoom-control \{ display:none; \}/);
+  assert.match(css,/\.top-sheet-edit,\.sheet-actions-trigger \{ height:32px;/);
+  assert.match(css,/@media \(max-width:767px\)[\s\S]*?\.top-sheet-edit,\.sheet-actions-trigger \{ width:32px!important;/);
   assert.match(css,/@media \(max-width:767px\)[\s\S]*?\.cod-sheet \{ min-width:0; overflow:hidden; \}/);
   assert.match(changelingCss,/@media \(max-width: 767px\)[\s\S]*?\.ctl-sheet \.cod-sheet-title > div \{\s*display: grid;/);
 });

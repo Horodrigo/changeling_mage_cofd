@@ -84,6 +84,8 @@ export function Workspace({
   const [ready, setReady] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
+  const [sheetZoom,setSheetZoom]=useState(1);
+  const [maximumZoom,setMaximumZoom]=useState(1);
   const fileRef = useRef<HTMLInputElement>(null);
   const storageKey = useMemo(
     () => `arquivo-das-trevas:v2:${userKey}`,
@@ -131,9 +133,13 @@ export function Workspace({
     setView(next);
     setSelected(null);
     setEditing(null);
+    setSheetZoom(1);
+    setMaximumZoom(1);
   }
 
   async function openCharacter(sheet: CharacterSheet) {
+    setSheetZoom(1);
+    setMaximumZoom(1);
     try {
       await hydrateCharacterCatalogs(sheet.game_line);
       const { normalizeStoredSheet } = await import("@/lib/character-persistence");
@@ -306,6 +312,16 @@ export function Workspace({
               <strong>{displayName}</strong>
               <span>{locale === "pt-BR" ? `${characters.length} personagem(ns)` : `${characters.length} character${characters.length===1?"":"s"}`}</span>
             </div>
+            {selected && <div className="top-sheet-tools">
+              <div className="sheet-zoom-control" role="group" aria-label={tr("Zoom da ficha","Character sheet zoom")}>
+                <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom<=1} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"out",maximumZoom))} aria-label={tr("Diminuir ficha","Zoom out")} title={tr("Diminuir ficha","Zoom out")}><ZoomOut /></Button>
+                <button type="button" className="sheet-zoom-value" onClick={()=>setSheetZoom(1)} title={tr("Restaurar tamanho","Reset size")} aria-label={tr(`Zoom da ficha: ${Math.round(sheetZoom*100)}%. Restaurar tamanho.`,`Character sheet zoom: ${Math.round(sheetZoom*100)}%. Reset size.`)}>{Math.round(sheetZoom*100)}%</button>
+                <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom>=maximumZoom-0.001} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"in",maximumZoom))} aria-label={tr("Aumentar ficha","Zoom in")} title={tr("Aumentar ficha","Zoom in")}><ZoomIn /></Button>
+              </div>
+              <Button type="button" size="sm" className="top-sheet-edit" onClick={()=>setEditing(selected)} title={tr("Editar","Edit")}>
+                <Pencil /><span>{tr("Editar","Edit")}</span>
+              </Button>
+            </div>}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className="sheet-actions-trigger">
@@ -341,10 +357,10 @@ export function Workspace({
             </DropdownMenu>
           </div>
         </header>
-        <div className="view-heading">
+        {!selected && <div className="view-heading">
           <p>Chronicles of Darkness</p>
-          <h1>{selected ? selected.character.name : title}</h1>
-        </div>
+          <h1>{title}</h1>
+        </div>}
         {notice && (
           <div className="notice" role="status">
             <ShieldCheck />
@@ -357,8 +373,9 @@ export function Workspace({
         {selected ? (
           <CharacterView
             character={selected}
-            back={() => setSelected(null)}
-            edit={() => setEditing(selected)}
+            zoom={sheetZoom}
+            setZoom={setSheetZoom}
+            setMaximumZoom={setMaximumZoom}
             updateState={(state) => updateCharacterState(selected, state)}
             updateSheet={updateCharacter}
           />
@@ -593,49 +610,48 @@ function CharacterLineIcon({ line }: { line: CharacterSheet["game_line"] }) {
 
 function CharacterView({
   character,
-  back,
-  edit,
+  zoom,
+  setZoom,
+  setMaximumZoom,
   updateState,
   updateSheet,
 }: {
   character: CharacterSheet;
-  back: () => void;
-  edit: () => void;
+  zoom: number;
+  setZoom: React.Dispatch<React.SetStateAction<number>>;
+  setMaximumZoom: React.Dispatch<React.SetStateAction<number>>;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
-  const {tr}=useLanguage();
   const isMobile=useIsMobile();
   const editorRef=useRef<HTMLElement>(null);
   const zoomSurfaceRef=useRef<HTMLDivElement>(null);
-  const [sheetZoom,setSheetZoom]=useState(1);
-  const [availableWidth,setAvailableWidth]=useState(SHEET_BASE_WIDTH);
   const [sheetHeight,setSheetHeight]=useState(0);
-  const maximumZoom=maximumSheetZoom(availableWidth);
 
   useLayoutEffect(()=>{
     const editor=editorRef.current;
     if(!editor)return;
     const measure=()=>{
       const width=editor.getBoundingClientRect().width;
-      setAvailableWidth(width);
-      setSheetZoom((current)=>Math.min(current,maximumSheetZoom(width)));
+      const nextMaximum=maximumSheetZoom(width);
+      setMaximumZoom(nextMaximum);
+      setZoom((current)=>Math.min(current,nextMaximum));
     };
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(editor);
     return()=>observer.disconnect();
-  },[]);
+  },[setMaximumZoom,setZoom]);
 
   useLayoutEffect(()=>{
     const surface=zoomSurfaceRef.current;
     if(!surface)return;
-    const measure=()=>setSheetHeight(surface.getBoundingClientRect().height/sheetZoom);
+    const measure=()=>setSheetHeight(surface.getBoundingClientRect().height/zoom);
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(surface);
     return()=>observer.disconnect();
-  },[isMobile,sheetZoom]);
+  },[isMobile,zoom]);
 
   const sheet=(
     <CatalogBoundary groups={getGameLineRegistration(character.game_line).catalogGroups.sheet}>
@@ -646,27 +662,8 @@ function CharacterView({
   );
   return (
     <section ref={editorRef} className="sheet-editor character-sheet-editor">
-      <div className="sheet-toolbar">
-        <Button variant="ghost" onClick={back}>
-          ← {tr("Personagens","Characters")}
-        </Button>
-        <div>
-          <Badge>{character.game_line}</Badge>
-          <span>{tr("Alterações nos marcadores são salvas automaticamente","Changes to tracks are saved automatically")}</span>
-        </div>
-        <div className="sheet-toolbar-actions">
-          {!isMobile && <div className="sheet-zoom-control" role="group" aria-label={tr("Zoom da ficha","Character sheet zoom")}>
-            <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom<=1} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"out",maximumZoom))} aria-label={tr("Diminuir ficha","Zoom out")} title={tr("Diminuir ficha","Zoom out")}><ZoomOut /></Button>
-            <button type="button" className="sheet-zoom-value" onClick={()=>setSheetZoom(1)} title={tr("Restaurar tamanho","Reset size")} aria-label={tr(`Zoom da ficha: ${Math.round(sheetZoom*100)}%. Restaurar tamanho.`,`Character sheet zoom: ${Math.round(sheetZoom*100)}%. Reset size.`)}>{Math.round(sheetZoom*100)}%</button>
-            <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom>=maximumZoom-0.001} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"in",maximumZoom))} aria-label={tr("Aumentar ficha","Zoom in")} title={tr("Aumentar ficha","Zoom in")}><ZoomIn /></Button>
-          </div>}
-          <Button variant="outline" onClick={edit}>
-            <Pencil /> {tr("Editar","Edit")}
-          </Button>
-        </div>
-      </div>
-      {isMobile ? sheet : <div className="sheet-zoom-viewport" style={{width:SHEET_BASE_WIDTH*sheetZoom,height:sheetHeight?sheetHeight*sheetZoom:undefined}}>
-        <div ref={zoomSurfaceRef} className="sheet-zoom-surface" style={{transform:`scale(${sheetZoom})`}}>{sheet}</div>
+      {isMobile ? sheet : <div className="sheet-zoom-viewport" style={{width:SHEET_BASE_WIDTH*zoom,height:sheetHeight?sheetHeight*zoom:undefined}}>
+        <div ref={zoomSurfaceRef} className="sheet-zoom-surface" style={{transform:`scale(${zoom})`}}>{sheet}</div>
       </div>}
     </section>
   );
