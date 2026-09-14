@@ -11,6 +11,13 @@ function damageLabel(value:DamageLevel|undefined){return value==="bashing"?"cont
 export function pretty(value:string){return value.replace(/([A-Z])/g," $1").replace(/_/g," ").trim();}
 export function stringList(value:unknown){return Array.isArray(value)?value.map(String):[];}
 export function signed(value:number){return value>0?`+${value}`:String(value);}
+export function kithSkillMiddlePieceCount(nameWidth:number,frameHeight=38){
+  const scale=frameHeight/552;
+  const fixedWidth=(471+760)*scale;
+  const middleWidth=260*scale;
+  const requiredWidth=nameWidth+20;
+  return Math.max(0,Math.ceil((requiredWidth-fixedWidth)/middleWidth));
+}
 export function SheetHeading({children,className}:{children:ReactNode;className?:string}){const {locale}=useLanguage();return <h3 className={`official-heading${className?` ${className}`:""}`}><span>{typeof children==="string"?workspaceTerm(children,locale):children}</span></h3>;}
 export function CompactValues({values}:{values:Record<string,number>}){const {locale}=useLanguage();return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{workspaceTerm(pretty(name),locale)}</span><strong>{value}</strong></div>)}</div>;}
 
@@ -85,13 +92,7 @@ function KithSkillName({children}:{children:string}) {
     const name=nameRef.current;
     if(!name)return;
     const measure=()=>{
-      const frameHeight=38;
-      const scale=frameHeight/552;
-      const fixedWidth=(471+760)*scale;
-      const middleWidth=260*scale;
-      const requiredWidth=name.getBoundingClientRect().width+20;
-      const measuredCount=Math.max(0,Math.ceil((requiredWidth-fixedWidth)/middleWidth));
-      setMiddleCount(measuredCount+1);
+      setMiddleCount(kithSkillMiddlePieceCount(name.getBoundingClientRect().width));
     };
     measure();
     const observer=new ResizeObserver(measure);

@@ -210,7 +210,7 @@ export function CharacterBuilderShell({
     state.setError("");
     state.setStep(state.step + 1);
   };
-  return <section className="builder">
+  return <section className={`builder line-theme-${line.toLowerCase()}`}>
     <div className="builder-head">
       <Button variant="ghost" onClick={onCancel}><ArrowLeft /> {tr("Voltar", "Back")}</Button>
       <div><Badge variant="outline">{line}</Badge><span>{tr("Criação guiada · regras compartilhadas v1", "Guided creation · shared rules v1")}</span></div>

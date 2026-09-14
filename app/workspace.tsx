@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronRight,
   Download,
@@ -15,6 +15,8 @@ import {
   Upload,
   UsersRound,
   X,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +39,8 @@ import {
 } from "@/lib/stored-character";
 import { CatalogBoundary } from "./catalog-boundary";
 import { getGameLineRegistration, listGameLineRegistrations, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { maximumSheetZoom, SHEET_BASE_WIDTH, stepSheetZoom } from "./workspace/sheet-zoom";
 
 const NewCharacterBuilder = lazy(() =>
   import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
@@ -246,8 +250,9 @@ export function Workspace({
       </CatalogBoundary>
     );
 
+  const lineThemeClass = selected ? `line-theme-${selected.game_line.toLowerCase()}` : "";
   return (
-    <main className="app-shell">
+    <main className={`app-shell${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
       <section className="content">
         <header className="topbar">
           <button className="top-brand" onClick={() => navigate("inicio")}>
@@ -278,7 +283,7 @@ export function Workspace({
                 <span aria-hidden="true">{localeFlag(locale)}</span>
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className={lineThemeClass}>
               {(["pt-BR","en-US"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
                 <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("portuguese") : t("english")}
               </DropdownMenuItem>)}
@@ -307,7 +312,7 @@ export function Workspace({
                   <MoreHorizontal /> {t("sheetActions")}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="sheet-actions-menu">
+              <DropdownMenuContent align="end" className={`sheet-actions-menu${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
                 <DropdownMenuLabel>{t("manageSheets")}</DropdownMenuLabel>
                 <DropdownMenuItem onSelect={() => setEditing("new")}>
                   <Plus /> {t("createSheet")}
@@ -600,8 +605,47 @@ function CharacterView({
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
   const {tr}=useLanguage();
+  const isMobile=useIsMobile();
+  const editorRef=useRef<HTMLElement>(null);
+  const zoomSurfaceRef=useRef<HTMLDivElement>(null);
+  const [sheetZoom,setSheetZoom]=useState(1);
+  const [availableWidth,setAvailableWidth]=useState(SHEET_BASE_WIDTH);
+  const [sheetHeight,setSheetHeight]=useState(0);
+  const maximumZoom=maximumSheetZoom(availableWidth);
+
+  useLayoutEffect(()=>{
+    const editor=editorRef.current;
+    if(!editor)return;
+    const measure=()=>{
+      const width=editor.getBoundingClientRect().width;
+      setAvailableWidth(width);
+      setSheetZoom((current)=>Math.min(current,maximumSheetZoom(width)));
+    };
+    measure();
+    const observer=new ResizeObserver(measure);
+    observer.observe(editor);
+    return()=>observer.disconnect();
+  },[]);
+
+  useLayoutEffect(()=>{
+    const surface=zoomSurfaceRef.current;
+    if(!surface)return;
+    const measure=()=>setSheetHeight(surface.getBoundingClientRect().height/sheetZoom);
+    measure();
+    const observer=new ResizeObserver(measure);
+    observer.observe(surface);
+    return()=>observer.disconnect();
+  },[isMobile,sheetZoom]);
+
+  const sheet=(
+    <CatalogBoundary groups={getGameLineRegistration(character.game_line).catalogGroups.sheet}>
+      <Suspense fallback={<WorkspaceLoading />}>
+        <GameLineSheet character={character} updateState={updateState} updateSheet={updateSheet}/>
+      </Suspense>
+    </CatalogBoundary>
+  );
   return (
-    <section className="sheet-editor">
+    <section ref={editorRef} className="sheet-editor character-sheet-editor">
       <div className="sheet-toolbar">
         <Button variant="ghost" onClick={back}>
           ← {tr("Personagens","Characters")}
@@ -611,22 +655,19 @@ function CharacterView({
           <span>{tr("Alterações nos marcadores são salvas automaticamente","Changes to tracks are saved automatically")}</span>
         </div>
         <div className="sheet-toolbar-actions">
+          {!isMobile && <div className="sheet-zoom-control" role="group" aria-label={tr("Zoom da ficha","Character sheet zoom")}>
+            <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom<=1} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"out",maximumZoom))} aria-label={tr("Diminuir ficha","Zoom out")} title={tr("Diminuir ficha","Zoom out")}><ZoomOut /></Button>
+            <button type="button" className="sheet-zoom-value" onClick={()=>setSheetZoom(1)} title={tr("Restaurar tamanho","Reset size")} aria-label={tr(`Zoom da ficha: ${Math.round(sheetZoom*100)}%. Restaurar tamanho.`,`Character sheet zoom: ${Math.round(sheetZoom*100)}%. Reset size.`)}>{Math.round(sheetZoom*100)}%</button>
+            <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom>=maximumZoom-0.001} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"in",maximumZoom))} aria-label={tr("Aumentar ficha","Zoom in")} title={tr("Aumentar ficha","Zoom in")}><ZoomIn /></Button>
+          </div>}
           <Button variant="outline" onClick={edit}>
             <Pencil /> {tr("Editar","Edit")}
           </Button>
         </div>
       </div>
-      <CatalogBoundary
-        groups={getGameLineRegistration(character.game_line).catalogGroups.sheet}
-      >
-        <Suspense fallback={<WorkspaceLoading />}>
-          <GameLineSheet
-            character={character}
-            updateState={updateState}
-            updateSheet={updateSheet}
-          />
-        </Suspense>
-      </CatalogBoundary>
+      {isMobile ? sheet : <div className="sheet-zoom-viewport" style={{width:SHEET_BASE_WIDTH*sheetZoom,height:sheetHeight?sheetHeight*sheetZoom:undefined}}>
+        <div ref={zoomSurfaceRef} className="sheet-zoom-surface" style={{transform:`scale(${sheetZoom})`}}>{sheet}</div>
+      </div>}
     </section>
   );
 }

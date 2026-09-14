@@ -850,7 +850,7 @@
   .ctl-sheet .official-trait-grid > .official-trait-block { padding-inline: 12px; }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 767px) {
   .ctl-sheet {
     --ctl-frame-rail-x: 89px;
     --ctl-frame-rail-y: 13px;
@@ -878,20 +878,27 @@
   .ctl-sheet .cod-sheet-title {
     min-height: 58px;
     margin-inline: -4px;
-    padding-inline: 0;
+    padding: 0 0 10px;
   }
 
   .ctl-sheet .cod-sheet-title > div {
+    display: grid;
     width: 100%;
-    flex-direction: column;
+    justify-items: stretch;
   }
 
-  .ctl-sheet .cod-sheet-title .ctl-title-mark { width: min(100%, 380px); }
+  .ctl-sheet .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 380px;
+  }
   .ctl-sheet .cod-sheet-title strong {
     position: static;
-    align-self: flex-end;
-    margin-top: -5px;
-    font-size: 16px;
+    justify-self: end;
+    align-self: auto;
+    margin: -2px 3px 0 0;
+    transform: none;
+    font-size: clamp(13px, 4.2vw, 16px);
+    letter-spacing: .28em;
   }
 
   .ctl-sheet .official-trait-grid > .official-trait-block,
