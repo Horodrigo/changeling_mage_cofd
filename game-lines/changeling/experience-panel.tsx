@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { History, RotateCcw, Sparkles } from "lucide-react";
+import { History, RotateCcw, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage, type Locale } from "@/lib/i18n";
@@ -596,7 +595,6 @@ export function ExperiencePanel({
           <span>{tr("Beats e Experiência","Beats and Experience")}</span>
           <small>{tr("Beats são marcados separadamente da Experiência","Beats are tracked separately from Experience")}</small>
         </div>
-        <Badge variant="outline">{available} {tr("EXP disponível","XP available")}</Badge>
       </div>
       <div className="experience-totals">
         <label className="experience-input">
@@ -654,7 +652,7 @@ export function ExperiencePanel({
         <Dialog>
           <DialogTrigger asChild>
             <Button type="button" variant="outline" size="sm" className="catalog-selection-action">
-              <Sparkles /> {tr("Comprar característica","Purchase trait")}
+              <Leaf /> {tr("Comprar característica","Purchase trait")}
             </Button>
           </DialogTrigger>
           <DialogContent className="experience-dialog">

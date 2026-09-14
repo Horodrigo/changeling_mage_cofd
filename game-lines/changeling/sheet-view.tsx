@@ -94,7 +94,9 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
     const conditionCatalog = [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
     const isMobile = useIsMobile();
-    const [sheetTab, setSheetTab] = useState(isMobile ? "resumo" : "principal");
+    const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
+    const sheetTab = mobileTab.characterId === character.id ? mobileTab.value : "resumo";
+    const setSheetTab = (value: string) => setMobileTab({ characterId: character.id, value });
     const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) ||
         name === "Contacts" ||
         name === "Multilingual";
@@ -278,7 +280,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 <SheetHeading>Méritos</SheetHeading>
                 <MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
                 <SheetHeading>Corte</SheetHeading>
-                <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>
+                <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts} main/>
                 <SheetHeading>Regalias Favorecidas</SheetHeading>
                 <LineList items={changelingFavoredRegalia(data)}/>
                 <SheetHeading>Fragilidades</SheetHeading>
@@ -715,10 +717,11 @@ function KithLore({ data, reference }: {
         return (<LorePanel title={tr("Bênção da Fratria", "Kith Blessing")} text={tr("Nenhuma Fratria selecionada.", "No Kith selected.")}/>);
     return (<LorePanel title={tr(`Bênção de ${name}`, `${name} Blessing`)} intro={data.kith_custom ? undefined : description} text={`${choice ? `${choiceLabel}: ${displayedChoice}. ` : ""}${skill ? `${skill}. ` : ""}${blessing || description}`} source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}/>);
 }
-function CourtLore({ data, merits, courtCatalog, }: {
+function CourtLore({ data, merits, courtCatalog, main = false, }: {
     data: Record<string, unknown>;
     merits: CharacterSheet["merits"];
     courtCatalog: readonly CourtDefinition[];
+    main?: boolean;
 }) {
     const { locale, tr } = useLanguage();
     const raw = data.custom_court;
@@ -731,6 +734,21 @@ function CourtLore({ data, merits, courtCatalog, }: {
     const benefits = custom && Array.isArray(custom.mantleBenefits)
         ? custom.mantleBenefits.map(String)
         : official?.mantleBenefits ?? [], dots = merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte")?.dots ?? 1;
+    if (main)
+        return (<details className="expanded-merit-card court-summary-card">
+      <summary>
+        <h4>{name}</h4>
+        <DotValue value={dots}/>
+      </summary>
+      <div className="expanded-merit-body">
+        {emotion && <section><strong>{tr("Sentimento da Corte", "Court emotion")}</strong><p>{emotion}</p></section>}
+        {benefits.slice(0, 5).map((benefit, index) => (<section key={index} className={index >= dots ? "court-benefit-locked" : undefined}>
+          <strong>{tr("Manto", "Mantle")} {index + 1}</strong>
+          <p>{benefit}</p>
+        </section>))}
+        {official && <small>{official.source} · p. {[official.page, ...(official.additionalPages ?? [])].join(", ")}</small>}
+      </div>
+    </details>);
     return (<article className="lore-panel">
       <h4>{tr("Manto", "Mantle")}: {name}</h4>
       <small>{tr("Sentimento da Corte", "Court emotion")}: {emotion}</small>

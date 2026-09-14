@@ -432,15 +432,34 @@
 
 .ctl-sheet .official-heading::before,
 .ctl-sheet .official-heading::after {
-  height: 18px;
+  content: "";
+  display: block;
+
+  flex: 1 1 0;
   min-width: 24px;
+  height: 16px;
+
   background-color: transparent;
+
   background-image:
     url("/changeling/style/divider-terminal.webp"),
-    linear-gradient(transparent 47%, var(--ctl-rule) 47%, var(--ctl-rule) 53%, transparent 53%);
-  background-position: right center;
-  background-repeat: no-repeat;
-  background-size: auto 18px, calc(100% - 13px) 100%;
+    linear-gradient(
+      var(--ctl-rule),
+      var(--ctl-rule)
+    );
+
+  background-position:
+    left center,
+    right center;
+
+  background-repeat:
+    no-repeat,
+    no-repeat;
+
+  background-size:
+    auto 16px,
+    calc(100% - 18px) 1px;
+
   opacity: .9;
 }
 
@@ -530,6 +549,60 @@
   font-family: "Changeling Sheet", Georgia, serif;
   font-size: 11px;
   font-style: italic;
+}
+
+.ctl-sheet .skill-highlight-kith .official-trait-name {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  place-items: center;
+}
+
+.ctl-sheet .kith-skill-name-text {
+  position: relative;
+  z-index: 1;
+}
+
+.ctl-sheet .kith-skill-frame {
+  position: absolute;
+  z-index: 0;
+  top: calc(50% - 1px);
+  left: calc(50% + 11px);
+  display: flex;
+  height: 38px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ctl-sheet .kith-skill-piece {
+  display: block;
+  height: 100%;
+  flex: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.ctl-sheet .kith-skill-left {
+  width: calc(38px * 471 / 552);
+  background-image: url("/changeling/style/skill-kith-left.webp");
+}
+
+.ctl-sheet .kith-skill-middle-1,
+.ctl-sheet .kith-skill-middle-2 {
+  width: calc(38px * 260 / 552);
+}
+
+.ctl-sheet .kith-skill-middle-1 { background-image: url("/changeling/style/skill-kith-middle-1.webp"); }
+.ctl-sheet .kith-skill-middle-2 { background-image: url("/changeling/style/skill-kith-middle-2.webp"); }
+
+.ctl-sheet .kith-skill-right {
+  width: calc(38px * 760 / 552);
+  background-image: url("/changeling/style/skill-kith-right.webp");
+}
+
+.ctl-sheet .court-summary-card .court-benefit-locked {
+  opacity: .58;
 }
 
 .ctl-sheet .official-dots {
@@ -655,6 +728,11 @@
 .ctl-sheet .experience-panel {
   padding: 10px;
   font-family: "Changeling Sheet", Georgia, serif;
+}
+
+.ctl-sheet .experience-title {
+  justify-content: center;
+  text-align: center;
 }
 
 .ctl-sheet .experience-title span { font-size: 17px; }
@@ -828,7 +906,13 @@
   .ctl-sheet .sheet-bottom-grid > section + section { margin-top: 8px; }
   .ctl-sheet .official-heading { font-size: 21px; }
   .ctl-sheet .official-heading::before,
-  .ctl-sheet .official-heading::after { height: 16px; background-size: auto 16px, calc(100% - 12px) 100%; }
+  .ctl-sheet .official-heading::after {
+    height: 16px;
+
+    background-size:
+      auto 16px,
+      calc(100% - 18px) 1px;
+  }
 
   .ctl-sheet .official-heading.ctl-attributes-heading::before,
   .ctl-sheet .official-heading.ctl-attributes-heading::after {

@@ -124,9 +124,24 @@ def build_attribute_divider_assets() -> None:
         save_webp(crop_alpha(Image.open(SOURCE / name), padding=6, alpha_threshold=16), name)
 
 
+def build_kith_skill_assets() -> None:
+    """Preserve the four matching pieces used by the measured Kith Skill frame."""
+
+    for name in (
+        "skill-kith-left.webp",
+        "skill-kith-middle-1.webp",
+        "skill-kith-middle-2.webp",
+        "skill-kith-right.webp",
+    ):
+        save_webp(Image.open(SOURCE / name).convert("RGBA"), name)
+
+
 def main() -> None:
     if "--attributes-only" in sys.argv:
         build_attribute_divider_assets()
+        return
+    if "--kith-skill-only" in sys.argv:
+        build_kith_skill_assets()
         return
 
     corner = crop_alpha(Image.open(SOURCE / "botanical-corner.png"), padding=8)
@@ -160,6 +175,7 @@ def main() -> None:
     save_texture_webp(tab_texture, "selected-tab-texture.webp")
 
     build_attribute_divider_assets()
+    build_kith_skill_assets()
 
     terminal = crop_alpha(Image.open(SOURCE / "divider-terminal.webp"), padding=2)
     save_webp(fit(terminal, (180, 180)), "divider-terminal.webp")

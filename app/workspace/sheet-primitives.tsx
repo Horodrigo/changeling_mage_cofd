@@ -1,5 +1,5 @@
 "use client";
-import type { ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { workspaceTerm } from "./workspace-i18n";
 import { systemTerm } from "@/lib/system-terms";
@@ -66,15 +66,46 @@ export function TraitLine({
 }) {
   const {locale}=useLanguage();
   const localizedName=systemTerm(name,locale);
+  const displayedName=compactName ? localizedName.slice(0,3) : localizedName;
   return (
     <div className={`official-trait-line${highlightTone ? ` skill-highlight-${highlightTone}` : ""}`}>
       <span className="official-trait-label" title={compactName ? localizedName : undefined} aria-label={note ? `${localizedName} (${note})` : localizedName}>
-        <span className="official-trait-name">{compactName ? localizedName.slice(0,3) : localizedName}</span>
+        {highlightTone === "kith" ? <KithSkillName>{displayedName}</KithSkillName> : <span className="official-trait-name">{displayedName}</span>}
         {note && <small title={note}>({note})</small>}
       </span>
       <DotValue value={value} />
     </div>
   );
+}
+
+function KithSkillName({children}:{children:string}) {
+  const nameRef=useRef<HTMLSpanElement>(null);
+  const [middleCount,setMiddleCount]=useState(0);
+  useLayoutEffect(()=>{
+    const name=nameRef.current;
+    if(!name)return;
+    const measure=()=>{
+      const frameHeight=38;
+      const scale=frameHeight/552;
+      const fixedWidth=(471+760)*scale;
+      const middleWidth=260*scale;
+      const requiredWidth=name.getBoundingClientRect().width+20;
+      const measuredCount=Math.max(0,Math.ceil((requiredWidth-fixedWidth)/middleWidth));
+      setMiddleCount(measuredCount+1);
+    };
+    measure();
+    const observer=new ResizeObserver(measure);
+    observer.observe(name);
+    return()=>observer.disconnect();
+  },[children]);
+  return <span ref={nameRef} className="official-trait-name">
+    <span className="kith-skill-name-text">{children}</span>
+    <span className="kith-skill-frame" aria-hidden="true">
+      <span className="kith-skill-piece kith-skill-left"/>
+      {Array.from({length:middleCount},(_,index)=><span key={index} className={`kith-skill-piece kith-skill-middle-${index%2+1}`}/>)}
+      <span className="kith-skill-piece kith-skill-right"/>
+    </span>
+  </span>;
 }
 export function DotValue({ value, max = 5, singleRow=false }: { value: number; max?: number; singleRow?:boolean }) {
   const {tr}=useLanguage();
