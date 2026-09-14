@@ -32,6 +32,7 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
 import { systemTerm } from "@/lib/system-terms";
+import { createRandomId } from "@/lib/random-id";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -123,7 +124,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
       const paidWithExperience = current.some((merit) => merit.name === "Mantle" && !merit.grantedBy && Number(merit.experienceDots ?? 0) > 0);
       const next = [...retained, ...wanted.filter(() => !paidWithExperience).map((grant) => {
         const existing = current.find((merit) => merit.name === grant.name && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && Number(merit.experienceDots ?? 0) === 0)));
-        return { ...existing, instanceId: existing?.instanceId ?? crypto.randomUUID(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
+        return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
       })];
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
@@ -143,6 +144,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     seeming, kith, wyrd, court,
     mantle: court && court !== "Sem Corte" ? Math.max(1, initial?.merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    meritCatalog,
     powers: contracts.map((item) => item.originalName || item.name).filter(Boolean),
   };
   const issues = (() => {
@@ -188,7 +190,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     const selectedKith = findKith(reference.kiths, kith);
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
-      id: initial?.id ?? crypto.randomUUID(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
+      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
       ruleset: { id: "ctl-2ed-embedded", version: 1 },
       character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,

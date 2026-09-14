@@ -2,6 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { characters } from "@/db/schema";
 import { PERSISTED_GAME_LINE_IDS } from "@/lib/core/character/game-line-ids";
+import { createRandomId } from "@/lib/random-id";
 
 function owner(request: Request) {
   return request.headers.get("oai-authenticated-user-email") ?? "workspace-user";
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
       payload.game_line as (typeof PERSISTED_GAME_LINE_IDS)[number],
     ) ? payload.game_line : "";
     if (!name || !gameLine) return Response.json({ error: "Nome e linha são obrigatórios." }, { status: 400 });
-    const id = crypto.randomUUID();
+    const id = createRandomId();
     const rulesetId = typeof payload.ruleset_id === "string" ? payload.ruleset_id : `${gameLine.toLowerCase()}-base`;
     const characterData = typeof payload.character_data === "object" && payload.character_data ? payload.character_data : {};
     const [created] = await getDb().insert(characters).values({

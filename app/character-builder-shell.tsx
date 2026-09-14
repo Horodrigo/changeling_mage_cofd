@@ -8,6 +8,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import { creationMerits } from "@/lib/merit-progression";
 import { useLanguage } from "@/lib/i18n";
+import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
 export type BuilderValidationIssue = { step: number; key: string; label: string };
 
@@ -189,7 +190,7 @@ export function CharacterBuilderShell({
   onCancel,
   onFinish,
 }: {
-  line: "CtL" | "MtA";
+  line: PersistedGameLineId;
   templateLabel: string;
   state: ReturnType<typeof useCommonBuilderState>;
   issues: BuilderValidationIssue[];

@@ -8,7 +8,7 @@ The primary rule is:
 
 > Core supplies mechanisms. Game lines supply mechanics.
 
-The application currently supports the persisted game-line IDs `CtL` and `MtA`. The main boundaries are:
+The application currently supports the persisted game-line IDs `CtL`, `MtA`, and `VtR`. The main boundaries are:
 
 - `lib/core/character/`: neutral persisted character shape, current-schema validation, shared Chronicles traits, and structural normalization helpers.
 - `lib/game-line-contracts/`: neutral contracts for registrations, rule hooks, UI surfaces, and catalog snapshots.
@@ -16,6 +16,7 @@ The application currently supports the persisted game-line IDs `CtL` and `MtA`. 
 - `lib/catalog/`: generic manifest, cache, loading, deep-freezing, and immutable snapshot infrastructure.
 - `game-lines/changeling/`: Changeling rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `game-lines/mage/`: Mage rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
+- `game-lines/vampire/`: Vampire rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `app/character-builder-shell.tsx` and `app/builder/`: common creation shell and genuinely shared controls.
 - `app/workspace/character-paper-shell.tsx` and neutral workspace controls: common in-app sheet composition.
 - `lib/character-persistence.ts` and `lib/stored-character.ts`: line-neutral persistence lifecycle and safe treatment of stored values.
@@ -33,7 +34,8 @@ Core must not accumulate line-specific mechanics. These remain line-owned:
 
 - Mage: Path, Order, Gnosis, Arcana, Rotes, Praxes, Legacies, Nimbus, and Mage-specific Merit behavior.
 - Changeling: Seeming, Kith, Court, Wyrd, Clarity, Contracts, Regalia, Entitlements, and Changeling-specific Merit behavior.
-- Future Vampire, Werewolf, or other concepts: the module for that game line.
+- Vampire: Clan, Covenant, Blood Potency, Humanity, Touchstones, Disciplines, Devotions, Blood Sorcery, Coils, Scales, and Vampire-specific Merit behavior.
+- Future Werewolf or other concepts: the module for that game line.
 
 Shared visual structure does not transfer mechanical ownership to Core.
 
@@ -45,6 +47,7 @@ These constraints apply to direct and transitive imports:
 - Neutral contracts must not import concrete game lines.
 - Mage must not import Changeling implementation code.
 - Changeling must not import Mage implementation code.
+- Vampire must not import Mage or Changeling implementation code, and neither existing line may import Vampire implementation code.
 - Persistence must not import application UI.
 - Catalog infrastructure must not depend on React or concrete line catalogs.
 - The lightweight registry must not eagerly import heavy rules, Builder, Sheet, or catalog implementations.
@@ -54,10 +57,10 @@ An indirect chain such as `Mage -> shared helper -> Changeling` is still forbidd
 
 ## Adding a Game Line
 
-A new line should be primarily additive. A Vampire implementation should normally add:
+A new line should be primarily additive. A Werewolf implementation should normally add:
 
-- `game-lines/vampire/**`;
-- `public/data/vampire/**`;
+- `game-lines/werewolf/**`;
+- `public/data/werewolf/**`;
 - focused tests;
 - one explicit lightweight registry entry;
 - one persisted game-line ID entry if the product supports saving that line.
@@ -104,7 +107,7 @@ Static RPG content should remain data under `public/data/**` where practical. Ca
 
 Required invariants:
 
-- Mage runtime does not request Changeling JSON, and Changeling runtime does not request Mage JSON.
+- Each runtime requests only Core and its selected game line's JSON; CtL, MtA, and VtR catalogs remain isolated from one another.
 - Catalog snapshots are explicit, surface-scoped, deeply frozen, and consumed directly.
 - Switching lines never depends on replacing mutable global catalog state.
 - Large static datasets do not move back into application JavaScript merely for convenience.
@@ -165,7 +168,7 @@ parse
 -> runtime use
 ```
 
-Core normalization remains line-neutral. Mage normalization belongs to Mage; Changeling normalization belongs to Changeling; a future line normalizes its own data. Unsupported schema versions fail explicitly. Do not silently or partially load historical formats, and do not restore historical migrations without a concrete product requirement.
+Core normalization remains line-neutral. Mage normalization belongs to Mage; Changeling normalization belongs to Changeling; Vampire normalization belongs to Vampire; a future line normalizes its own data. Unsupported schema versions fail explicitly. Do not silently or partially load historical formats, and do not restore historical migrations without a concrete product requirement.
 
 ### Unsupported stored values
 
@@ -243,7 +246,7 @@ When relevant, also verify the production Vite manifest, recursive import closur
 
 Preserve lazy loading, dynamic chunk separation, IndexedDB catalog caching, service-worker caching, local-first behavior, and static catalog delivery.
 
-A Mage user should not pay the JavaScript or data cost of Changeling mechanics, and vice versa. Evaluate recursive production-manifest closures and actual bundle sizes rather than optimizing for file count or request count alone.
+A user should not pay the JavaScript or data cost of an inactive game line. Evaluate recursive production-manifest closures and actual bundle sizes rather than optimizing for file count or request count alone.
 
 The project must remain compatible with the existing Vinext/Vite Cloudflare deployment:
 
@@ -258,7 +261,7 @@ Do not change Cloudflare bindings or configuration merely to silence local ambie
 
 ## Deferred Features
 
-Homebrew management and specialized server-side PDF generation remain deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage printing remains deferred until its own line-owned surface is implemented.
+Homebrew management and specialized server-side PDF generation remain deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage and Vampire printing remain deferred until their own line-owned surfaces are implemented.
 
 Do not let removed implementations shape Core, current game-line APIs, Builder shells, or Sheet shells. When these features return, design them against the modular architecture that exists then. Do not restore old mutable global Homebrew catalogs or old mixed print/paper paths because historical code used them.
 
@@ -279,7 +282,7 @@ Mark test-only mutation explicitly and prevent production imports with architect
 
 Reconsider ownership before merging when:
 
-- a Core file accumulates repeated CtL/MtA/future-line branches;
+- a Core file accumulates repeated CtL/MtA/VtR/future-line branches;
 - adding one line requires edits across existing line modules;
 - a shared interface gains optional fields used by only one line;
 - a generic helper imports a concrete game-line module, directly or transitively;
@@ -301,7 +304,7 @@ For new functionality, ask:
 1. Is it true for every supported Chronicles of Darkness character? Core or a shared mechanism may own it.
 2. Is the behavior mechanical and specific to one line? That line owns it.
 3. Does Core need to execute the behavior, or only provide a hook or contract? Prefer the hook or contract.
-4. Would adding Vampire require changing this code? Decide whether that is an intentional registry/ID change or evidence of coupling.
+4. Would adding the next game line require changing this code? Decide whether that is an intentional registry/ID change or evidence of coupling.
 5. Does sharing require optional fields or switches for each line? Keep the implementations separate.
 
 ## Documentation Policy

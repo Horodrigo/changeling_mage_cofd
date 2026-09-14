@@ -11,6 +11,7 @@ import type { MeritSelection } from "@/lib/core/character/character-types";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { EntitlementDefinition } from "@/lib/entitlements";
 import { useLanguage } from "@/lib/i18n";
+import { createRandomId } from "@/lib/random-id";
 
 type TokenKind = "token" | "trifle" | "bauble";
 type TokenConfigurationItem = { id: string; kind: TokenKind; name: string; rating: number; cost: string; effect: string; description: string; crux: string; catch: string; drawback: string };
@@ -72,7 +73,7 @@ function TokenMeritEditor({merit,configuration,onChange,compact}:{merit:MeritSel
     <div className="token-merit-editor">
       <div className="token-allocation-header">
         <Select value={newKind} onValueChange={(value)=>setNewKind(value as TokenKind)}><SelectTrigger className="token-kind-trigger"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">Token</SelectItem><SelectItem value="trifle">Trifle</SelectItem><SelectItem value="bauble">Bauble</SelectItem></SelectContent></Select>
-        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<1} onClick={()=>save([...items,{...EMPTY_TOKEN,id:crypto.randomUUID(),kind:newKind}])}><Plus/>{tr("Adicionar","Add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
+        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<1} onClick={()=>save([...items,{...EMPTY_TOKEN,id:createRandomId(),kind:newKind}])}><Plus/>{tr("Adicionar","Add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
         <p className={remaining===0?"structured-rule":"structured-rule warning"}>{tr("Pontos distribuídos","Allocated dots")}: {used}/{merit.dots}{remaining>0?` · ${remaining} ${tr("restantes","remaining")}`:remaining<0?` · ${Math.abs(remaining)} ${tr("acima do limite","over the limit")}`:""}</p>
       </div>
       {items.map((item,index)=>{const maximum=Math.max(1,Math.min(5,item.rating+remaining)),kindLabel=item.kind==="trifle"?"Trifle":item.kind==="bauble"?"Bauble":"Token";return <fieldset key={index}>

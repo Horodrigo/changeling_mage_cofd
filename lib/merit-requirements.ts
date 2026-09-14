@@ -15,7 +15,7 @@ export type RequirementContext = {
 };
 export const canonicalTrait = (value: unknown) => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 const aliases: Record<string,string> = {
-  intelligence:"Inteligência", wits:"Raciocínio", resolve:"Determinação", strength:"Força", dexterity:"Destreza", stamina:"Vigor", presence:"Presença", manipulation:"Manipulação", composure:"Autocontrole",
+  intelligence:"Inteligência", wits:"Raciocínio", resolve:"Perseverança", strength:"Força", dexterity:"Destreza", stamina:"Vigor", presence:"Presença", manipulation:"Manipulação", composure:"Compostura",
   academics:"Erudição", computer:"Informática", crafts:"Ofícios", investigation:"Investigação", medicine:"Medicina", occult:"Ocultismo", politics:"Política", science:"Ciência", athletics:"Atletismo", brawl:"Briga", drive:"Condução", firearms:"Armas de Fogo", larceny:"Furto", stealth:"Furtividade", survival:"Sobrevivência", weaponry:"Armamento", animalken:"Empatia com Animais", empathy:"Empatia", expression:"Expressão", intimidation:"Intimidação", persuasion:"Persuasão", socialize:"Socialização", streetwise:"Manha", subterfuge:"Subterfúgio",
   death:"Morte", fate:"Destino", forces:"Forças", life:"Vida", matter:"Matéria", mind:"Mente", prime:"Primórdio", space:"Espaço", spirit:"Espírito", time:"Tempo",
 };
@@ -27,14 +27,26 @@ export function requirementTrait(name:string, context:RequirementContext):number
   const keys=[key,canonicalTrait(aliases[key])];
   // Older records also use Lábia for Subterfuge.
   if(key==="subterfuge") keys.push("labia");
-  const arcana=["death","fate","forces","life","matter","mind","prime","space","spirit","time"];
   const values={...context.attributes,...context.skills,...context.arcana};
   return Math.max(0,...Object.entries(values).filter(([name])=>keys.includes(canonicalTrait(name))).map(([,value])=>Number(value)||0));
 }
+/**
+ * Resolve a Status domain from any line without teaching Core which factions exist.
+ * Status Merits declare their domain in either `domain` (Mage) or `group` (generic
+ * Status/Kindred Status configuration); line modules supply the canonical label.
+ */
+export function statusRating(context:RequirementContext,domain:string):number {
+  const expected=canonicalTrait(domain);
+  return Math.max(0,...(context.merits??[]).filter(item=>/Status$/i.test(item.name)&&(
+    domain==="any"||[item.configuration?.domain,item.configuration?.group]
+      .some(value=>canonicalTrait(value)===expected)
+  )).map(item=>item.dots));
+}
 export function awakenedStatus(context:RequirementContext,domain:string):number {
-  return Math.max(0,...(context.merits??[]).filter(item=>["Awakened Status","Consilium/Order Status"].includes(item.name)&&
-    (domain==="any"||canonicalTrait(item.configuration?.domain)===canonicalTrait(domain)))
-    .map(item=>item.dots));
+  return statusRating({
+    ...context,
+    merits:(context.merits??[]).filter(item=>["Awakened Status","Consilium/Order Status"].includes(item.name)),
+  },domain);
 }
 export function requirementMet(requirement:Requirement,context:RequirementContext):boolean {
   if("all" in requirement) return requirement.all.every(item=>requirementMet(item,context));
@@ -43,7 +55,7 @@ export function requirementMet(requirement:Requirement,context:RequirementContex
   if("line" in requirement) return context.gameLine===requirement.line;
   if("trait" in requirement) return requirementTrait(requirement.trait,context)>=requirement.minimum;
   if("merit" in requirement) return (context.merits??[]).some(item=>canonicalTrait(item.name)===canonicalTrait(requirement.merit)&&item.dots>=(requirement.minimum??1));
-  if("status" in requirement) return awakenedStatus(context,requirement.status)>=requirement.minimum;
+  if("status" in requirement) return statusRating(context,requirement.status)>=requirement.minimum;
   if("path" in requirement) return canonicalTrait(context.path)===canonicalTrait(requirement.path);
   if("kith" in requirement) return canonicalTrait(context.kith)===canonicalTrait(requirement.kith);
   return canonicalTrait(context.seeming)===canonicalTrait(requirement.seeming);
@@ -73,7 +85,7 @@ export function textRequirementMet(text:string,context:RequirementContext,meritN
   if(/Status$/i.test(name)){
     const domain=name.replace(/\s*Status$/i,"");
     const domains:Record<string,string>={Arrow:"Adamantine Arrow",Ladder:"Silver Ladder",Guardian:"Guardians of the Veil",Councillor:"Free Council",Seer:"Seers of the Throne","Consilium/Order":"any"};
-    if(domain) return awakenedStatus(context,domains[domain]??domain)>=minimum;
+    if(domain) return statusRating(context,domains[domain]??domain)>=minimum;
   }
   if(aliases[key]||["gnosis","gnose","wyrd","fado","size"].includes(key)) return requirementTrait(name,context)>=minimum;
   if(/\bkith\b/i.test(name)) return requirementMet({kith:name.replace(/\bkith\b/ig,"").trim()},context);

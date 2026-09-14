@@ -9,6 +9,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { DotValue } from "./sheet-primitives";
+import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
 export function CharacterPaperShell({
   line,
@@ -17,7 +18,7 @@ export function CharacterPaperShell({
   subtitle,
   children,
 }: {
-  line: "CtL" | "MtA";
+  line: PersistedGameLineId;
   mobile?: boolean;
   title: string;
   subtitle: string;
@@ -25,7 +26,7 @@ export function CharacterPaperShell({
 }) {
   const { tr } = useLanguage();
   return (
-    <article className={`cod-sheet ${mobile ? "mobile-character-sheet " : ""}${line === "CtL" ? "ctl-sheet" : "mta-sheet"}`}>
+    <article className={`cod-sheet ${mobile ? "mobile-character-sheet " : ""}${line.toLowerCase()}-sheet`}>
       {line === "CtL" && <div className="ctl-botanical-frame" aria-hidden="true">
         <span className="ctl-frame-edge ctl-frame-edge-top" />
         <span className="ctl-frame-edge ctl-frame-edge-bottom" />

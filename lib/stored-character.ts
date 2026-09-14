@@ -1,6 +1,7 @@
 import type { CharacterSheet } from "./core/character/character-types";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import { asRecord, validateCurrentCharacter } from "./core/character/current-character-validation";
+import { PERSISTED_GAME_LINE_IDS } from "./core/character/game-line-ids";
 
 /**
  * Local storage can contain character exports from schemas we no longer
@@ -29,8 +30,8 @@ export function storedCharacterId(value: StoredCharacter): string | null {
 export function summarizeStoredCharacter(value: StoredCharacter): StoredCharacterSummary {
   const record = asRecord(value);
   const character = asRecord(record.character);
-  const gameLine = record.game_line === "CtL" || record.game_line === "MtA"
-    ? record.game_line
+  const gameLine = typeof record.game_line === "string" && PERSISTED_GAME_LINE_IDS.includes(record.game_line as PersistedGameLineId)
+    ? record.game_line as PersistedGameLineId
     : null;
   return {
     name: readableText(character.name, "Ficha sem nome"),

@@ -7,6 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
 import { workspaceTerm } from "./workspace-i18n";
+import { SelectableCatalogCard } from "../selectable-catalog-card";
 export function LoadoutCatalog<T extends { id: string; name: string }>({
   title,
   items,
@@ -56,27 +57,24 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
           {filtered.map((item) => {
             const active = selected.includes(item.id);
             return (
-              <article key={item.id} className={active ? "selected" : ""}>
+              <SelectableCatalogCard
+                key={item.id}
+                selected={active}
+                label={`${active ? tr("Remover","Remove") : tr("Adicionar","Add")} ${item.name}`}
+                onToggle={() =>
+                  onChange(
+                    active
+                      ? selected.filter((id) => id !== item.id)
+                      : [...selected, item.id],
+                  )
+                }
+              >
                 <header>
                   <strong>{item.name}</strong>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant={active ? "ghost" : "outline"}
-                    onClick={() =>
-                      onChange(
-                        active
-                          ? selected.filter((id) => id !== item.id)
-                          : [...selected, item.id],
-                      )
-                    }
-                  >
-                    {active ? tr("Remover","Remove") : tr("Adicionar","Add")}
-                  </Button>
                 </header>
                 <small>{describe(item)}</small>
                 <p>{details(item)}</p>
-              </article>
+              </SelectableCatalogCard>
             );
           })}
         </div>

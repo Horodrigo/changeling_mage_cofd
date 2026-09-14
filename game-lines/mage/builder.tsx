@@ -23,6 +23,7 @@ import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { systemTerm } from "@/lib/system-terms";
+import { createRandomId } from "@/lib/random-id";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
   if (!value || typeof value !== "object") return null;
@@ -154,7 +155,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       const retained = current.filter((merit) => !automatic.has(String(merit.grantedBy)) && !(grantedNames.has(merit.name) && Number(merit.experienceDots ?? 0) === 0));
       const next = [...retained, ...wanted.filter((merit) => !paidWithExperience(merit.name)).map((grant) => {
         const existing = current.find((merit) => merit.name === grant.name && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && Number(merit.experienceDots ?? 0) === 0)));
-        return { ...existing, instanceId: existing?.instanceId ?? crypto.randomUUID(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
+        return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
       })];
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
@@ -176,6 +177,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Ocultismo: Math.min(5, (common.skills.Ocultismo ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    meritCatalog,
     powers: [],
   };
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
@@ -224,7 +226,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     for (const [name, dots] of Object.entries(experienceArcanaDots(initial))) finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
-      id: initial?.id ?? crypto.randomUUID(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
+      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
       ruleset: { id: "mta-2ed-embedded", version: 1 },
       character: { name: shadowName.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,

@@ -11,6 +11,7 @@ import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } fro
 import { CTL_THREADS, changelingAnchorRecovery } from "@/game-lines/changeling/creation-rules";
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { systemTerm } from "@/lib/system-terms";
+import { createRandomId } from "@/lib/random-id";
 import { RuleSelect } from "./rule-select";
 import { ConfirmAction } from "./confirm-action";
 export function EntitlementPage({character,updateSheet,catalog}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;catalog:readonly EntitlementDefinition[]}){
@@ -24,7 +25,7 @@ export function EntitlementPage({character,updateSheet,catalog}:{character:Chara
   const nextSequence=Math.max(-1,...state.allocations.map((item)=>item.sequence))+1;
   const changeAllocation=(allocation:EntitlementAllocation|undefined,value:string)=>{
     let allocations=state.allocations.filter((item)=>item.id!==allocation?.id);
-    if(value!=="none") allocations=[...allocations,value==="token"?{id:allocation?.id??crypto.randomUUID(),target:"token",sequence:allocation?.sequence??nextSequence}:{id:allocation?.id??crypto.randomUUID(),target:"blessing",blessingId:value.slice(9),sequence:allocation?.sequence??nextSequence}];
+    if(value!=="none") allocations=[...allocations,value==="token"?{id:allocation?.id??createRandomId(),target:"token",sequence:allocation?.sequence??nextSequence}:{id:allocation?.id??createRandomId(),target:"blessing",blessingId:value.slice(9),sequence:allocation?.sequence??nextSequence}];
     patch({allocations});
   };
   const selectDefinition=(definitionId:string)=>save({...state,definitionId,roleId:"",accepted:false,touchstone:{name:"",status:"active"},allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}});

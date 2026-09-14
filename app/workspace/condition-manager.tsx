@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ANIMALS, animalPresentation } from "@/lib/companions";
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
+import { createRandomId } from "@/lib/random-id";
 import { ConfirmAction } from "./confirm-action";
 import { RuleSelect } from "./rule-select";
 
@@ -80,7 +81,7 @@ export function ConditionManager({ selected, catalog, onChange }: {
             <p>{condition.description}</p>{condition.penalty && <p className="condition-penalty"><b>{tr("Efeito", "Effect")}:</b> {condition.penalty}</p>}<p><b>{tr("Resolução", "Resolution")}:</b> {condition.resolution ?? tr("Conforme a fonte indicada.", "As described in the listed source.")}</p>{condition.beat && <p><b>Beat:</b> {condition.beat}</p>}
             {isBonded && <div className="companion-form-grid"><label>{tr("Animal vinculado", "Bonded animal")}<RuleSelect value={bondedAnimal} onChange={setBondedAnimal} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label></div>}
             {!isBonded && <label className="persistent-toggle"><input type="checkbox" checked={saved?.persistent ?? condition.persistent ?? false} onChange={event => { const persistent = event.target.checked; onChange(saved ? selected.map(item => item.id === condition.id ? { ...item, persistent } : item) : [...selected, { id: condition.id, persistent }]); }}/>{" "}{tr("Persistente", "Persistent")} [P]</label>}
-            <Button type="button" size="sm" className="catalog-selection-action" variant={saved && !isBonded ? "ghost" : "outline"} onClick={() => onChange(saved && !isBonded ? selected.filter(item => item.id !== condition.id) : [...selected, { id: condition.id, persistent: condition.persistent ?? false, instanceId: crypto.randomUUID(), ...(isBonded ? { animalId: bondedAnimal, animalName: "" } : {}) }])}>
+            <Button type="button" size="sm" className="catalog-selection-action" variant={saved && !isBonded ? "ghost" : "outline"} onClick={() => onChange(saved && !isBonded ? selected.filter(item => item.id !== condition.id) : [...selected, { id: condition.id, persistent: condition.persistent ?? false, instanceId: createRandomId(), ...(isBonded ? { animalId: bondedAnimal, animalName: "" } : {}) }])}>
               {saved && !isBonded ? tr("Remover", "Remove") : isBonded && bonded.length ? tr("Adicionar outro", "Add another") : tr("Adicionar", "Add")}
             </Button>
           </article>;

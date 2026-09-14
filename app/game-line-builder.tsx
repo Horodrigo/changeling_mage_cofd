@@ -3,10 +3,11 @@
 import { useEffect, useState, type ComponentType } from "react";
 import { getGameLineRegistration } from "@/game-lines/registry/game-line-registry";
 import type { GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
+import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import { useCatalogSnapshot } from "./catalog-boundary";
 
 /** Loads only the selected line's builder surface through the lightweight registry. */
-export function GameLineBuilder(props: GameLineBuilderProps & { gameLine: "CtL" | "MtA" }) {
+export function GameLineBuilder(props: GameLineBuilderProps & { gameLine: PersistedGameLineId }) {
   const catalogs = useCatalogSnapshot();
   const [Builder, setBuilder] = useState<ComponentType<GameLineBuilderProps> | null>(null);
 

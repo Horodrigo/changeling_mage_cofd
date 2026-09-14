@@ -1,6 +1,6 @@
 import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
 
-export type GameLine = "CtL" | "MtA";
+export type GameLine = "CtL" | "MtA" | "VtR";
 export type MeritLevel = { rating: number; name: string; description: string };
 export type MeritDefinition = {
   id: string;
@@ -100,7 +100,7 @@ export function meritPrerequisitesMet(
 
 const dotsIn=(value:string)=>[...value].filter((character)=>character==="•").length;
 const traitAliases:Record<string,string>={
-  Intelligence:"Inteligência",Wits:"Raciocínio",Resolve:"Determinação",Strength:"Força",Dexterity:"Destreza",Stamina:"Vigor",Presence:"Presença",Manipulation:"Manipulação",Composure:"Autocontrole",
+  Intelligence:"Inteligência",Wits:"Raciocínio",Resolve:"Perseverança",Strength:"Força",Dexterity:"Destreza",Stamina:"Vigor",Presence:"Presença",Manipulation:"Manipulação",Composure:"Compostura",
   Academics:"Erudição",Computer:"Informática",Crafts:"Ofícios",Investigation:"Investigação",Medicine:"Medicina",Occult:"Ocultismo",Politics:"Política",Science:"Ciência",Athletics:"Atletismo",Brawl:"Briga",Drive:"Condução",Firearms:"Armas de Fogo",Larceny:"Furto",Stealth:"Furtividade",Survival:"Sobrevivência",Weaponry:"Armamento",AnimalKen:"Empatia com Animais",Empathy:"Empatia",Expression:"Expressão",Intimidation:"Intimidação",Persuasion:"Persuasão",Socialize:"Socialização",Streetwise:"Manha",Subterfuge:"Lábia",
 };
 function simplePrerequisitesMet(value:string,context:MeritPrerequisiteContext){

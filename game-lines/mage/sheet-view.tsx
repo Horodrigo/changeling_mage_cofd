@@ -33,6 +33,7 @@ import { expandedConfigurationLines, findMeritConfiguration, isInlineMeritConfig
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeDamage,powerResourceLimits } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
+import { createRandomId } from "@/lib/random-id";
 import { Plus,Trash2 } from "lucide-react";
 import { useState } from "react";
 import { MageStructuredMeritEditor } from "./merit-configuration-editor";
@@ -183,7 +184,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             : [];
         const wisdom = Math.max(1, Number(next.line_data.wisdom ?? 7));
         const entry = {
-            id: crypto.randomUUID(),
+            id: createRandomId(),
             description: tr("Falha em Ato de Hubris: -1 Sabedoria", "Act of Hubris failure: -1 Wisdom"),
             regular: 0,
             arcane: 0,
@@ -885,4 +886,3 @@ for (const [translated, original] of Object.entries({ Morte: "Death", Destino: "
     LESSER_ATTAINMENTS[translated] = LESSER_ATTAINMENTS[original];
     GREATER_ATTAINMENTS[translated] = GREATER_ATTAINMENTS[original];
 }
-

@@ -24,6 +24,7 @@ import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } fro
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { stringList } from "@/app/workspace/sheet-primitives";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
+import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -271,7 +272,7 @@ export function ExperiencePanel({
     };
     append(
       {
-        id: crypto.randomUUID(),
+        id: createRandomId(),
         kind: "spend",
         description: tr("Perda permanente de um ponto de Força de Vontade", "Permanent loss of one Willpower dot"),
         experience: 0,
@@ -290,7 +291,7 @@ export function ExperiencePanel({
     const next = structuredClone(character);
     next.current_state = changePermanentClarity(next.current_state, 1);
     append({
-      id: crypto.randomUUID(),
+      id: createRandomId(),
       kind: "spend",
       description: tr("Ganho permanente de uma caixa de Lucidez", "Permanent gain of one Clarity box"),
       experience: 0,
@@ -322,7 +323,7 @@ export function ExperiencePanel({
     };
     append(
       {
-        id: crypto.randomUUID(),
+        id: createRandomId(),
         kind: "spend",
         description,
         experience: -cost,
@@ -462,7 +463,7 @@ export function ExperiencePanel({
       if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
-      const instanceId = ownedMerit?.instanceId ?? crypto.randomUUID();
+      const instanceId = ownedMerit?.instanceId ?? createRandomId();
       const targetIndex = ownedMerit
         ? character.merits.indexOf(ownedMerit)
         : character.merits.length;

@@ -5,14 +5,17 @@ import { SHARED_RULES, SOURCE_CATALOG } from "@/lib/creation-rules";
 import coreMerits from "@/public/data/core/merits/core.json";
 import changelingMerits from "@/public/data/core/merits/changeling.json";
 import mageMerits from "@/public/data/core/merits/mage.json";
+import vampireMerits from "@/public/data/vampire/merits.json";
 
-const MERIT_RULES = (["CtL", "MtA"] as const).map((line) => {
-  const merits = [...coreMerits, ...(line === "CtL" ? changelingMerits : mageMerits)];
+const LINE_MERITS = { CtL: changelingMerits, MtA: mageMerits, VtR: vampireMerits } as const;
+const LINE_SOURCE = { CtL: "ctl-2ed", MtA: "mta-2ed", VtR: "vtr-2ed" } as const;
+const MERIT_RULES = (["CtL", "MtA", "VtR"] as const).map((line) => {
+  const merits = [...coreMerits, ...LINE_MERITS[line]];
   return {
     id: `merits-${line.toLowerCase()}-shared-v2`,
     name: `Merit catalog ${line}`,
     gameLine: line,
-    sourceId: line === "CtL" ? "ctl-2ed" : "mta-2ed",
+    sourceId: LINE_SOURCE[line],
     page: 0,
     data: {
       precedence: [line, "Core"],

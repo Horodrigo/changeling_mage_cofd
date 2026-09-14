@@ -47,12 +47,14 @@ test("legacy catalog replacement adapters stay outside production surfaces", asy
 });
 
 test("current game lines do not statically depend on one another", async () => {
-  const [mage, changeling] = await Promise.all([
+  const [mage, changeling, vampire] = await Promise.all([
     source("game-lines/mage/registration.ts"),
     source("game-lines/changeling/registration.ts"),
+    source("game-lines/vampire/registration.ts"),
   ]);
-  assert.doesNotMatch(mage, /game-lines\/changeling|\.\.\/changeling\//);
-  assert.doesNotMatch(changeling, /game-lines\/mage|\.\.\/mage\//);
+  assert.doesNotMatch(mage, /game-lines\/(changeling|vampire)|\.\.\/(changeling|vampire)\//);
+  assert.doesNotMatch(changeling, /game-lines\/(mage|vampire)|\.\.\/(mage|vampire)\//);
+  assert.doesNotMatch(vampire, /game-lines\/(mage|changeling)|\.\.\/(mage|changeling)\//);
 });
 
 test("Changeling sheet snapshots include the core conditions they consume", async () => {
@@ -213,15 +215,19 @@ test("catalog snapshots deeply freeze static catalog data", async () => {
   assert.ok(Object.isFrozen(value[0].nested));
 });
 
-test("Mage and Changeling catalog group loaders request only their own catalog IDs", async () => {
-  const [mageSpells, mageMerits, changelingContracts, changelingMerits] = await Promise.all([
+test("game-line catalog group loaders request only their own catalog IDs", async () => {
+  const [mageSpells, mageMerits, changelingContracts, changelingMerits, vampireReference, vampirePowers, vampireMerits] = await Promise.all([
     vite.ssrLoadModule("/game-lines/mage/catalogs/spells.ts"),
     vite.ssrLoadModule("/game-lines/mage/catalogs/merits.ts"),
     vite.ssrLoadModule("/game-lines/changeling/catalogs/contracts.ts"),
     vite.ssrLoadModule("/game-lines/changeling/catalogs/merits.ts"),
+    vite.ssrLoadModule("/game-lines/vampire/catalogs/reference.ts"),
+    vite.ssrLoadModule("/game-lines/vampire/catalogs/powers.ts"),
+    vite.ssrLoadModule("/game-lines/vampire/catalogs/merits.ts"),
   ]);
   const mageRequests = [];
   const changelingRequests = [];
+  const vampireRequests = [];
   const reader = (requests) => ({ getCatalog: async (id) => {
     requests.push(id);
     return id.endsWith("-index") ? [] : [];
@@ -232,12 +238,17 @@ test("Mage and Changeling catalog group loaders request only their own catalog I
     mageMerits.mageMeritsCatalogGroup.load(reader(mageRequests)),
     changelingContracts.changelingContractsCatalogGroup.load(reader(changelingRequests)),
     changelingMerits.changelingMeritsCatalogGroup.load(reader(changelingRequests)),
+    vampireReference.vampireReferenceCatalogGroup.load(reader(vampireRequests)),
+    vampirePowers.vampirePowersCatalogGroup.load(reader(vampireRequests)),
+    vampireMerits.vampireMeritsCatalogGroup.load(reader(vampireRequests)),
   ]);
 
   assert.ok(mageRequests.every((id) => !id.includes("changeling")));
   assert.ok(changelingRequests.every((id) => !id.includes("mage")));
   assert.deepEqual(mageRequests.sort(), ["mage-spells-index", "merits-mage"].sort());
   assert.deepEqual(changelingRequests.sort(), ["changeling-contracts-index", "merits-changeling"].sort());
+  assert.ok(vampireRequests.every((id) => !id.includes("mage") && !id.includes("changeling")));
+  assert.deepEqual(vampireRequests.sort(), ["vampire-clans", "vampire-covenants", "vampire-anchors", "vampire-blood-potency", "vampire-torpor", "vampire-powers", "merits-vampire"].sort());
 });
 
 test("production manifest keeps lazy builder entry closures free of opposite line entries", async () => {
@@ -254,9 +265,11 @@ test("production manifest keeps lazy builder entry closures free of opposite lin
   };
   const mage = closure("game-lines/mage/builder.tsx");
   const changeling = closure("game-lines/changeling/builder.tsx");
-  assert.ok(mage.length > 1 && changeling.length > 1);
-  assert.ok(mage.every((key) => !/game-lines\/changeling|character-builder\.tsx/.test(key)));
-  assert.ok(changeling.every((key) => !/game-lines\/mage|character-builder\.tsx/.test(key)));
+  const vampire = closure("game-lines/vampire/builder.tsx");
+  assert.ok(mage.length > 1 && changeling.length > 1 && vampire.length > 1);
+  assert.ok(mage.every((key) => !/game-lines\/(changeling|vampire)|character-builder\.tsx/.test(key)));
+  assert.ok(changeling.every((key) => !/game-lines\/(mage|vampire)|character-builder\.tsx/.test(key)));
+  assert.ok(vampire.every((key) => !/game-lines\/(mage|changeling)|character-builder\.tsx/.test(key)));
 });
 
 test("line sheets compose a neutral paper shell and line-owned mechanics", async () => {
@@ -308,9 +321,11 @@ test("production manifest keeps lazy sheet closures free of opposite line entrie
   };
   const mage = closure("game-lines/mage/sheet.tsx");
   const changeling = closure("game-lines/changeling/sheet.tsx");
-  assert.ok(mage.length > 1 && changeling.length > 1);
-  assert.ok(mage.every((key) => !/game-lines\/changeling|character-paper\.tsx/.test(key)));
-  assert.ok(changeling.every((key) => !/game-lines\/mage|character-paper\.tsx/.test(key)));
+  const vampire = closure("game-lines/vampire/sheet.tsx");
+  assert.ok(mage.length > 1 && changeling.length > 1 && vampire.length > 1);
+  assert.ok(mage.every((key) => !/game-lines\/(changeling|vampire)|character-paper\.tsx/.test(key)));
+  assert.ok(changeling.every((key) => !/game-lines\/(mage|vampire)|character-paper\.tsx/.test(key)));
+  assert.ok(vampire.every((key) => !/game-lines\/(mage|changeling)|character-paper\.tsx/.test(key)));
   const mageBundle = await source(`dist/client/${manifest["game-lines/mage/sheet.tsx"].file}`);
   const changelingBundle = await source(`dist/client/${manifest["game-lines/changeling/sheet.tsx"].file}`);
   assert.doesNotMatch(mageBundle, /Fae Mount|Fae Pet|Entitlement|Glamour|Wyrd|Changeling/);

@@ -15,7 +15,7 @@ export type MeritConfigDefinition = {
   name: string;
   fields: MeritConfigField[];
   grants?: boolean;
-  line?: "CtL" | "MtA";
+  line?: "CtL" | "MtA" | "VtR";
 };
 
 export const normalizeMeritConfiguration = (value: unknown): MeritConfiguration =>

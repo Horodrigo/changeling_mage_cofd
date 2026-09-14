@@ -233,6 +233,7 @@ export const SOURCE_CATALOG = [
   { id: "core-2ed", title: "Chronicles of Darkness", gameLine: "Core", edition: 2, type: "OFFICIAL", role: "BASE" },
   { id: "ctl-2ed", title: "Changeling the Lost", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "PRIMARY" },
   { id: "mta-2ed", title: "Mage the Awakening", gameLine: "MtA", edition: 2, type: "OFFICIAL", role: "PRIMARY" },
+  { id: "vtr-2ed", title: "Vampire: The Requiem", gameLine: "VtR", edition: 2, type: "OFFICIAL", role: "PRIMARY" },
   { id: "ctl-kith-kin", title: "Kith and Kin", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "ctl-oak-ash-thorn", title: "Oak, Ash, and Thorn", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
   { id: "ctl-hedge", title: "The Hedge", gameLine: "CtL", edition: 2, type: "OFFICIAL", role: "ADJACENT" },
@@ -256,5 +257,9 @@ export const SHARED_RULES = [
   {
     id: "creation-mta-2ed", name: "Criação de Mago", gameLine: "MtA", sourceId: "mta-2ed", page: 79,
     data: { aspirations: 3, arcana: { total: 6, maxAtThree: 1, rulingMinimumEach: 1, rulingTotalRange: [3, 5], inferiorAtCreation: 0 }, rotes: 3, praxisPerGnosis: 1, merits: 10, gnosis: { base: 1, extraDotMeritCost: 5 }, wisdom: 7, resistanceAttributeDots: 1 },
+  },
+  {
+    id: "creation-vtr-2ed", name: "Criação de Vampiro", gameLine: "VtR", sourceId: "vtr-2ed", page: 79,
+    data: { aspirations: 3, disciplines: { total: 3, inClanMinimum: 2 }, merits: 10, bloodPotency: { base: 1, extraDotMeritCost: 5, creationMaximum: 3 }, humanity: 7, favoredAttributeDots: 1, touchstones: 1 },
   },
 ] as const;

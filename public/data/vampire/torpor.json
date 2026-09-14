@@ -1,0 +1,11 @@
+[
+  {"humanityMinimum":9,"humanityMaximum":10,"duration":"One night"},
+  {"humanityMinimum":8,"humanityMaximum":8,"duration":"Two nights"},
+  {"humanityMinimum":6,"humanityMaximum":7,"duration":"One week"},
+  {"humanityMinimum":5,"humanityMaximum":5,"duration":"One month"},
+  {"humanityMinimum":4,"humanityMaximum":4,"duration":"One year"},
+  {"humanityMinimum":3,"humanityMaximum":3,"duration":"Five years"},
+  {"humanityMinimum":2,"humanityMaximum":2,"duration":"Ten years"},
+  {"humanityMinimum":1,"humanityMaximum":1,"duration":"50 years"},
+  {"humanityMinimum":0,"humanityMaximum":0,"duration":"100 years"}
+]

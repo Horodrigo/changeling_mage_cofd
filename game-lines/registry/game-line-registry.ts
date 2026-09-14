@@ -3,8 +3,9 @@ import type { GameLineRegistration } from "@/lib/game-line-contracts/game-line-r
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { changelingRegistration } from "../changeling/registration";
 import { mageRegistration } from "../mage/registration";
+import { vampireRegistration } from "../vampire/registration";
 
-const registrations = [changelingRegistration, mageRegistration] as const;
+const registrations = [changelingRegistration, mageRegistration, vampireRegistration] as const;
 const registrationsById = new Map<PersistedGameLineId, GameLineRegistration>(
   registrations.map((registration) => [registration.id, registration]),
 );

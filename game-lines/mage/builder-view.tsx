@@ -4,14 +4,12 @@ import { useState } from "react";
 import { Plus, Search, ShieldCheck, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Choice, DotRow } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
-import { SKILLS } from "@/lib/core/character/creation-rules";
 import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS } from "./creation-rules";
 import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
@@ -23,6 +21,7 @@ import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
 import { builderText } from "@/app/character-builder-messages";
+import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { MageStructuredMeritEditor } from "./merit-configuration-editor";
 
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
@@ -351,9 +350,13 @@ function SpellSelector({
     const selected = selectedIds.includes(spell.id),
       full = values.slice(0, count).every(Boolean);
     return (
-      <article
-        className={selected ? "merit-option selected" : "merit-option"}
+      <SelectableCatalogCard
+        className="merit-option"
         key={spell.id}
+        selected={selected}
+        disabled={!selected && full}
+        label={spellName(spell)}
+        onToggle={() => toggle(spell)}
       >
         <div>
           <strong>{spellName(spell)}</strong>
@@ -366,8 +369,7 @@ function SpellSelector({
           </p>
           {spellReach(spell) && <p className="rule-detail"><strong>Reach:</strong> {spellReach(spell)}</p>}
         </div>
-        <Checkbox className="catalog-selection-checkbox" checked={selected} disabled={!selected && full} aria-label={spellName(spell)} onCheckedChange={() => toggle(spell)} />
-      </article>
+      </SelectableCatalogCard>
     );
   };
   return (
