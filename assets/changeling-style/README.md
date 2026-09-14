@@ -1,10 +1,13 @@
 # Changeling style raster sources
 
-These PNG files are the high-resolution source artwork for the botanical frame,
+These PNG and WebP files are the high-resolution source artwork for the botanical frame,
 masthead, selected-tab texture, hand-inked rules, and dividers used by the
 Changeling sheet. They combine user-provided artwork with an Attributes ornament
 generated from the approved visual reference. They are retained here so the
 optimized public assets can be rebuilt.
+
+The complete implementation history, asset inventory, and reuse guide for other
+game lines are documented in `docs/sheet-stylization-guide.md`.
 
 Run:
 
