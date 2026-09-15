@@ -326,13 +326,13 @@ export function recalculateCoreDerived(sheet: CharacterSheet) {
   sheet.derived = {
     ...sheet.derived,
     Tamanho: 5,
-    Vitalidade: 5 + Number(a.Vigor ?? 1),
-    Deslocamento: 5 + Number(a.Força ?? 1) + Number(a.Destreza ?? 1),
-    ForçaDeVontade: Number(a.Perseverança ?? 1) + Number(a.Compostura ?? 1),
-    Iniciativa: Number(a.Destreza ?? 1) + Number(a.Compostura ?? 1),
+    Vitalidade: 5 + Number(a.Stamina ?? 1),
+    Deslocamento: 5 + Number(a.Strength ?? 1) + Number(a.Dexterity ?? 1),
+    ForçaDeVontade: Number(a.Resolve ?? 1) + Number(a.Composure ?? 1),
+    Iniciativa: Number(a.Dexterity ?? 1) + Number(a.Composure ?? 1),
     Defesa:
-      Math.min(Number(a.Destreza ?? 1), Number(a.Raciocínio ?? 1)) +
-      Number(s.Atletismo ?? 0),
+      Math.min(Number(a.Dexterity ?? 1), Number(a.Wits ?? 1)) +
+      Number(s.Athletics ?? 0),
   };
 }
 export function derivedWithPermanentMerits(character: CharacterSheet) {
@@ -344,7 +344,7 @@ export function derivedWithPermanentMerits(character: CharacterSheet) {
       : {}
   ) as Record<string, number>;
   derived.Defesa =
-    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Atletismo) || 0);
+    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Athletics) || 0);
   const merit = (name: string) =>
     character.merits.find((item) => item.name === name);
   const fastReflexes = merit("Fast Reflexes");

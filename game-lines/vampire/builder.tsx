@@ -15,13 +15,13 @@ import { Input } from "@/components/ui/input";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, type Locale } from "@/lib/i18n";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived } from "./creation-rules";
+import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 
 function initialCreationDisciplines(initial?: CharacterSheet | null) {
@@ -196,8 +196,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     lineTemplate={<div className="builder-section vampire-builder-template">
       <span className="kicker">{tr("PASSO 3 · VAMPIRO", "STEP 3 · VAMPIRE")}</span><h2>{tr("Modelo Vampírico", "Vampire Template")}</h2>
       <div className="vampire-template-grid">
-        <SelectionCards title={tr("Clã", "Clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} />
-        <SelectionCards title="Covenant" items={reference.covenants} value={covenantId} onChange={(value) => { setCovenantId(value); setCreationCovenantPowerId(""); if (value !== "ordo-dracul") setMysteryId(""); }} locale={locale} invalid={missing("covenant")} />
+        <SelectionCards title={tr("Clã", "Clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} disciplineCatalog={powers.disciplines} />
+        <SelectionCards title="Covenant" items={reference.covenants} value={covenantId} onChange={(value) => { setCovenantId(value); setCreationCovenantPowerId(""); if (value !== "ordo-dracul") setMysteryId(""); }} locale={locale} invalid={missing("covenant")} disciplineCatalog={powers.disciplines} />
       </div>
       {selectedClan && <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>}
       <div className="vampire-anchor-grid">
@@ -222,8 +222,8 @@ function ChoiceLines({ label, values, count, placeholder, onChange }: { label: s
   return <fieldset><legend>{label}</legend>{rows.map((value, index) => <Input key={index} value={value} placeholder={`${placeholder} ${index + 1}`} onChange={(event) => { const next = [...rows]; next[index] = event.target.value; onChange(next); }} />)}</fieldset>;
 }
 
-function SelectionCards<T extends VampireClanDefinition | VampireCovenantDefinition>({ title, items, value, onChange, locale, invalid }: { title: string; items: readonly T[]; value: string; onChange: (value: string) => void; locale: string; invalid: boolean }) {
-  return <section className={invalid ? "vampire-card-selector missing-field" : "vampire-card-selector"}><h3>{title}</h3><div>{items.map((item) => <button type="button" key={item.id} className={value === item.id ? "selected" : ""} onClick={() => onChange(item.id)}><strong>{displayName(item, locale)}</strong><small>{"disciplines" in item ? item.disciplines.join(" · ") : item.advantage}</small></button>)}</div></section>;
+function SelectionCards<T extends VampireClanDefinition | VampireCovenantDefinition>({ title, items, value, onChange, locale, invalid, disciplineCatalog }: { title: string; items: readonly T[]; value: string; onChange: (value: string) => void; locale: Locale; invalid: boolean; disciplineCatalog: VampirePowers["disciplines"] }) {
+  return <section className={invalid ? "vampire-card-selector missing-field" : "vampire-card-selector"}><h3>{title}</h3><div>{items.map((item) => <button type="button" key={item.id} className={value === item.id ? "selected" : ""} onClick={() => onChange(item.id)}><strong>{displayName(item, locale)}</strong><small>{"disciplines" in item ? item.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, disciplineCatalog, locale)).join(" · ") : item.advantage}</small></button>)}</div></section>;
 }
 
 function AnchorChoice({ label, value, setValue, anchors, locale, invalid }: { label: string; value: string; setValue: (value: string) => void; anchors: VampireAnchorDefinition[]; locale: string; invalid: boolean }) {

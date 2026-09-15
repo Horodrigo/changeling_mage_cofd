@@ -286,9 +286,9 @@ test("as 73 Frátrias oficiais e 12 de Book of Seemings possuem nome localizado 
     for (const alias of aliases) {
       assert.equal(findKith(alias)?.id,item.id,alias);
     }
-    assert.equal(kithDisplayName(item.name),item.translatedName);
+    assert.equal(kithDisplayName(item.name),item.name);
   }
-  assert.equal(kithDisplayName("Artist"),"Artista");
+  assert.equal(kithDisplayName("Artist"),"Artist");
   assert.equal(kithDisplayName("Artist",true),"Artist");
   assert.equal(kithDisplayName("Minha Frátria",true),"Minha Frátria");
   assert.equal(kithDisplayName("Frátria importada desconhecida"),"Frátria importada desconhecida");

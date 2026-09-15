@@ -356,7 +356,7 @@ function SheetField({ label, value }: {
       <strong>{String(value ?? "")}</strong>
     </div>);
 }
-function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], courtCatalog: readonly CourtDefinition[], locale: Locale = "pt-BR") {
+function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], courtCatalog: readonly CourtDefinition[], locale: Locale = "en-US") {
     const definition = catalog.find((entry) => entry.name === item.name);
     const base = locale === "en-US"
         ? definition?.name ?? item.name

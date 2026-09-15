@@ -14,9 +14,11 @@ type MessageKey = keyof typeof messages["pt-BR"];
 const LanguageContext = createContext<{locale:Locale;setLocale:(locale:Locale)=>void;t:(key:MessageKey)=>string;tr:(portuguese:string,english:string)=>string}|null>(null);
 
 const LANGUAGE_CHANGE_EVENT = "characters-of-the-darkness:language-change";
-const serverLocale = ():Locale => "pt-BR";
+// English is the canonical catalog language and the first-run application
+// language. Portuguese is an opt-in presentation preference only.
+const serverLocale = ():Locale => "en-US";
 const browserLocale = ():Locale =>
-  window.localStorage.getItem(STORAGE_KEY) === "en-US" ? "en-US" : "pt-BR";
+  window.localStorage.getItem(STORAGE_KEY) === "pt-BR" ? "pt-BR" : "en-US";
 const subscribeToLocale = (notify:()=>void) => {
   const onStorage = (event:StorageEvent) => {
     if (event.key === STORAGE_KEY) notify();

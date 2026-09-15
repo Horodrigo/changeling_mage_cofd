@@ -160,7 +160,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
               label={tr("Atributo de Resistência (+1)", "Resistance Attribute (+1)")}
               value={props.resistanceBonus}
               setValue={props.setResistanceBonus}
-              options={["Perseverança", "Vigor", "Compostura"]}
+              options={["Resolve", "Stamina", "Composure"]}
               invalid={props.missing("resistanceBonus")}
             />
           </div>

@@ -21,7 +21,7 @@ import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type { VampireCondition, VampirePowers, VampireReference } from "./catalog-types";
-import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived } from "./creation-rules";
+import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
@@ -58,7 +58,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
-  const vitaeMaximum = typeof limits.vitaeMaximum === "number" ? limits.vitaeMaximum : Number(character.attributes.Vigor ?? 1) + Number(disciplines.Resilience ?? 0);
+  const vitaeMaximum = typeof limits.vitaeMaximum === "number" ? limits.vitaeMaximum : Number(character.attributes.Stamina ?? 1) + Number(disciplines.Resilience ?? 0);
   const vitae = boundedNumber(character.current_state.vitae_current, vitaeMaximum, vitaeMaximum);
   const currentWillpower = boundedNumber(character.current_state.willpower_current, willpower, willpower);
   const damage = normalizeDamage(character.current_state.health_damage, health);
@@ -73,19 +73,22 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
   const identity = <section className="sheet-identity-grid">
     <SheetField label={tr("Nome", "Name")} value={character.character.name} />
-    <SheetField label={tr("Clã", "Clan")} value={localized(clan, locale)} />
     <SheetField label="Mask" value={localized(mask, locale)} tooltip={mask?.singleWillpower} />
+    <SheetField label={tr("Clã", "Clan")} value={localized(clan, locale)} />
     <SheetField label={tr("Jogador", "Player")} value={character.character.player} />
-    <SheetField label="Covenant" value={localized(covenant, locale)} />
     <SheetField label="Dirge" value={localized(dirge, locale)} tooltip={dirge?.allWillpower} />
+    <SheetField label="Bloodline" value={String(data.bloodline ?? "")} />
     <SheetField label={tr("Crônica", "Chronicle")} value={character.character.chronicle} />
     <SheetField label={tr("Conceito", "Concept")} value={character.character.concept} />
-    <SheetField label={tr("Potência de Sangue", "Blood Potency")} value={bloodPotency} />
+    <SheetField label="Covenant" value={localized(covenant, locale)} />
   </section>;
-  const stats = <>
+  const attributes = <>
     <SheetHeading>{tr("Atributos", "Attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div>
+  </>;
+  const skills = <>
     <SheetHeading>{tr("Perícias", "Skills")}</SheetHeading><div className={isMobile ? "mobile-trait-stack" : "vampire-skill-grid"}>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations.map((item) => typeof item === "string" ? { skill: "", name: item } : item)} />)}</div>
   </>;
+  const stats = <>{attributes}{skills}</>;
   const summary = <>{identity}<SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} /><SheetHeading>{tr("Experiência", "Experience")}</SheetHeading><VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></>;
   const details = <>
     <div className="vampire-details-grid"><section><SheetHeading>{tr("Humanidade", "Humanity")}</SheetHeading><div className="humanity-track"><DotValue value={humanity} max={10} /></div><div className="vampire-reference-grid"><article className="vampire-lore-card"><strong>{tr("Torpor", "Torpor")}</strong><p>{tr("Duração-base para a Humanidade atual", "Base duration for current Humanity")}: <b>{torporReference?.duration ?? "—"}</b>. {tr("Multiplique pela Potência de Sangue.", "Multiply by Blood Potency.")}</p></article><article className="vampire-lore-card"><strong>{tr("Sol e Humanidade", "Sunlight and Humanity")}</strong><p>{tr("A luz solar causa dano agravado. Consulte a intensidade da exposição e a Humanidade para determinar o intervalo do dano.", "Sunlight causes aggravated damage. Use exposure intensity and Humanity to determine the damage interval.")}</p></article></div><SheetHeading>Touchstones</SheetHeading><TouchstoneEditor character={character} updateSheet={updateSheet} values={touchstones} /></section>
@@ -102,15 +105,36 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const covenantPage = <><SheetHeading>Covenant</SheetHeading><article className="vampire-covenant-summary"><Image src="/vampire-skull.png" width={82} height={82} alt="" aria-hidden="true" /><div><h3>{localized(covenant, locale) || tr("Sem Covenant", "Covenantless")}</h3><p>{covenant?.description ?? tr("Este Kindred não pertence a um Covenant.", "This Kindred belongs to no Covenant.")}</p><strong>{tr("Vantagem", "Advantage")}: {covenant?.advantage ?? tr("Nenhuma", "None")}</strong><span>Kindred Status: <DotValue value={covenantStatus} /></span></div></article>{covenant?.id === "ordo-dracul" && <article className="vampire-lore-card"><strong>Mystery</strong><p>{String((data.ordo_dracul as Record<string, unknown> | undefined)?.mystery_id ?? tr("Não selecionado", "Not selected"))}</p></article>}<PurchasedPowers character={character} powers={powers} locale={locale} scope="covenant" /></>;
   const combat = <><div className="vampire-track-grid"><section><SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></section><section><SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><ResourceTrack label={tr("Força de Vontade", "Willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></section></div><CombatPage character={character} derived={derived} updateSheet={updateSheet} /><SheetHeading>{tr("Referências Kindred", "Kindred References")}</SheetHeading><div className="vampire-reference-grid"><article className="vampire-lore-card"><strong>Physical Intensity</strong><p>{tr("Gaste 1 Vitae para receber +2 nas rolagens de um Atributo Físico escolhido durante o turno.", "Spend 1 Vitae for +2 on rolls using one chosen Physical Attribute for the turn.")}</p></article><article className="vampire-lore-card"><strong>{tr("Cura", "Healing")}</strong><p>{tr("1 Vitae cura dois níveis de dano contusivo ou um letal. Dano agravado exige cinco Vitae e um dia.", "1 Vitae heals two bashing or one lethal damage. Aggravated damage requires five Vitae and one day.")}</p></article><article className="vampire-lore-card"><strong>Predatory Aura</strong><p>{tr("Escolha o aspecto Monstrous, Seductive ou Competitive e resolva a interação conforme a regra da mesa.", "Choose the Monstrous, Seductive, or Competitive aspect and resolve the interaction at the table.")}</p></article><article className="vampire-lore-card"><strong>Frenzy</strong><p>{tr("A ficha mantém recursos e estados; resistência, Riding the Wave e consequências permanecem decisões da mesa.", "The sheet tracks resources and states; resistance, Riding the Wave, and consequences remain table decisions.")}</p></article></div></>;
   const records = <><VampireStateControls character={character} setState={setState} baseTorpor={torporReference?.duration ?? "—"} bloodPotency={bloodPotency} /><SheetHeading>Blood Bonds</SheetHeading><StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={tr("Estágio", "Stage")} onChange={(value) => setState("blood_bonds", value)} /><SheetHeading>{tr("Dependência de Vitae", "Vitae Addiction")}</SheetHeading><StructuredRecords values={objectArray(character.current_state.vitae_addictions)} onChange={(value) => setState("vitae_addictions", value)} /><SheetHeading>{tr("Anotações", "Notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></>;
+  const mainBody = <div className="official-sheet-body vampire-main-body">
+    <div className="sheet-skills-column">{skills}</div>
+    <div className="sheet-center-column">
+      <SheetHeading>{tr("Disciplinas", "Disciplines")}</SheetHeading>
+      <div className="vampire-main-disciplines">{VAMPIRE_DISCIPLINES.map((name) => <VampireDisciplineLine key={name} name={vampireDisciplineDisplayName(name, powers.disciplines, locale)} value={Number(disciplines[name] ?? 0)} />)}</div>
+      <SheetHeading>{tr("Méritos", "Merits")}</SheetHeading><MeritList character={character} catalog={merits} locale={locale} />
+      <SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+      <SheetHeading>{tr("Maldições", "Banes")}</SheetHeading><div className="vampire-main-banes"><article className="vampire-lore-card"><strong>{clan?.baneName ?? tr("Maldição do Clã", "Clan Bane")}</strong><p>{clan?.baneSummary ?? ""}</p></article>{objectArray(data.banes).map((bane, index) => <article className="vampire-lore-card" key={index}><strong>{String(bane.name ?? tr("Maldição", "Bane"))}</strong><p>{String(bane.notes ?? "")}</p></article>)}</div>
+    </div>
+    <div className="sheet-right-column">
+      <SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} />
+      <SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><ResourceTrack label={tr("Força de Vontade", "Willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} />
+      <PowerResource name={tr("Potência de Sangue", "Blood Potency")} rating={bloodPotency} resourceName="Vitae" current={vitae} maximum={vitaeMaximum} perTurn={limits.vitaePerTurn} onChange={(value) => setState("vitae_current", value)} summary={`${tr("Limite de Característica", "Trait maximum")}: ${limits.traitMaximum} · ${tr("Alimentação", "Feeding")}: ${limits.feedingTier}`} />
+      <SheetHeading>{tr("Humanidade", "Humanity")}</SheetHeading><div className="humanity-track"><DotValue value={humanity} max={10} /></div>
+      <VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />
+    </div>
+  </div>;
 
   if (isMobile) return <CharacterPaperShell line="VtR" mobile title="VAMPIRE" subtitle="THE REQUIEM"><SwipeableSheetTabs value={tab} onValueChange={(value) => setMobileTab({ characterId: character.id, value })} tabs={[
     { value: "summary", label: tr("Resumo", "Summary") }, { value: "stats", label: "Stats" }, { value: "details", label: tr("Detalhes", "Details") }, { value: "powers", label: tr("Poderes", "Powers") }, { value: "covenant", label: "Covenant" }, { value: "combat", label: tr("Combate", "Combat") }, { value: "records", label: tr("Registros", "Records") },
   ]}>{{ summary, stats, details, powers: powerPage, covenant: covenantPage, combat, records }}</SwipeableSheetTabs></CharacterPaperShell>;
 
   return <CharacterPaperShell line="VtR" title="VAMPIRE" subtitle="THE REQUIEM"><Tabs defaultValue="main" className="vampire-sheet-tabs"><TabsList aria-label={tr("Páginas da ficha", "Character pages")}><TabsTrigger value="main">{tr("Principal", "Main")}</TabsTrigger><TabsTrigger value="powers">{tr("Poderes", "Powers")}</TabsTrigger><TabsTrigger value="covenant">Covenant</TabsTrigger><TabsTrigger value="details">{tr("Detalhes", "Details")}</TabsTrigger><TabsTrigger value="combat">{tr("Combate", "Combat")}</TabsTrigger><TabsTrigger value="records">{tr("Registros", "Records")}</TabsTrigger></TabsList>
-    <TabsContent value="main" className="vampire-sheet-page">{identity}{stats}<div className="sheet-bottom-grid"><section><SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} /></section><section><SheetHeading>{tr("Experiência", "Experience")}</SheetHeading><VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></section></div></TabsContent>
+    <TabsContent value="main" className="vampire-sheet-page">{identity}{attributes}{mainBody}</TabsContent>
     <TabsContent value="powers" className="vampire-sheet-page">{powerPage}</TabsContent><TabsContent value="covenant" className="vampire-sheet-page">{covenantPage}</TabsContent><TabsContent value="details" className="vampire-sheet-page">{details}</TabsContent><TabsContent value="combat" className="vampire-sheet-page">{combat}</TabsContent><TabsContent value="records" className="vampire-sheet-page">{records}</TabsContent>
   </Tabs></CharacterPaperShell>;
+}
+
+function VampireDisciplineLine({ name, value }: { name: string; value: number }) {
+  return <div className="official-trait-line"><span className="official-trait-label"><span className="official-trait-name">{name}</span></span><DotValue value={value} /></div>;
 }
 
 function MeritList({ character, catalog, locale }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; locale: string }) {

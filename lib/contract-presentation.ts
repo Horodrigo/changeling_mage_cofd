@@ -15,16 +15,16 @@ export function contractHasInvocationRoll(contract: Pick<ContractDefinition, "di
   return !/^(nenhum[a]?|none|sem (?:teste|jogada)|n\/?a|[-—])\.?$/.test(pool);
 }
 
-export function contractDisplayName(contract:Pick<ContractDefinition,"id"|"name"|"originalName">,locale:Locale="pt-BR") {
+export function contractDisplayName(contract:Pick<ContractDefinition,"id"|"name"|"originalName">,locale:Locale="en-US") {
   return locale==="en-US"?contract.originalName:contract.name;
 }
 
-export function contractDisplayOptions(contract:Pick<ContractDefinition,"id"|"options">,locale:Locale="pt-BR") {
+export function contractDisplayOptions(contract:Pick<ContractDefinition,"id"|"options">,locale:Locale="en-US") {
   if (locale === "en-US") return CONTRACT_TEXT_EN[contract.id]?.options ?? contract.options ?? [];
   return contract.options ?? [];
 }
 
-export function contractPresentation(contract:ContractDefinition,locale:Locale="pt-BR"):ContractDefinition {
+export function contractPresentation(contract:ContractDefinition,locale:Locale="en-US"):ContractDefinition {
   if (locale !== "en-US") return contract;
   const english=CONTRACT_TEXT_EN[contract.id];
   const description=contractHasInvocationRoll(contract) === true
@@ -33,7 +33,7 @@ export function contractPresentation(contract:ContractDefinition,locale:Locale="
   return { ...contract, ...english, description };
 }
 
-export function contractSummary(contract:ContractDefinition,locale:Locale="pt-BR") {
+export function contractSummary(contract:ContractDefinition,locale:Locale="en-US") {
   if (contract.summary?.trim()) return contract.summary.trim();
   if (contractHasInvocationRoll(contract) !== true) return "";
   return locale === "en-US"
@@ -49,7 +49,7 @@ export function contractWithSupplementalBenefits(contract:ContractDefinition,act
   };
 }
 
-export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="pt-BR") {
+export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="en-US") {
   const english=locale==="en-US"&&contract.id?CONTRACT_TEXT_EN[contract.id]:undefined;
   const description=english?.description??contract.description;
   const success=english?.success??contract.success;

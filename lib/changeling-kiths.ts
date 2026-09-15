@@ -77,14 +77,14 @@ export function kithSkillOptions(item: Pick<KithDefinition,"id"|"skill">): strin
     .filter(Boolean))];
 }
 
-export function kithDisplayName(name: unknown, custom = false, locale:Locale="pt-BR") {
+export function kithDisplayName(name: unknown, custom = false, locale:Locale="en-US") {
   const value = String(name ?? "");
   if(custom)return value;
   const found=findKith(value);
   return locale==="en-US"?(found?.name??value):(found?.translatedName??value);
 }
 
-export function kithPresentation(name:unknown,locale:Locale="pt-BR",custom=false){
+export function kithPresentation(name:unknown,locale:Locale="en-US",custom=false){
   const found=findKith(name);
   if(custom||!found)return {name:String(name??""),description:"",blessing:"",skill:""};
   return locale==="en-US"

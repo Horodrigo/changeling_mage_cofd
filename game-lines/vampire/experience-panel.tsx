@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { BeatTrack, ExperienceMeritPicker } from "@/app/workspace/experience-shared";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
@@ -56,6 +57,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const state = character.current_state;
   const available = Math.max(0, Math.trunc(Number(state.experience_available ?? 0)));
   const spent = Math.max(0, Math.trunc(Number(state.experience_spent ?? 0)));
+  const total = Math.max(available + spent, Math.max(0, Math.trunc(Number(state.experience_total ?? 0))));
   const beats = Math.max(0, Math.min(5, Math.trunc(Number(state.beats ?? 0))));
   const history = Array.isArray(state.vampire_experience_history) ? state.vampire_experience_history as HistoryEntry[] : [];
   const reference = catalogs.get<VampireReference>("vampire-reference");
@@ -70,6 +72,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const [meritConfiguration, setMeritConfiguration] = useState<MeritConfiguration>({});
   const [teacherConfirmed, setTeacherConfirmed] = useState(false);
   const [feedback, setFeedback] = useState("");
+  useEffect(() => setAmount(String(available)), [available]);
   const clan = reference.clans.find((item) => item.id === character.line_data.clan_id);
   const covenant = String(character.line_data.covenant_id ?? "covenantless");
   const covenantDefinition = reference.covenants.find((item) => item.id === covenant);
@@ -140,19 +143,48 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       : purchase === "specialty" ? { kind: "specialty", skill: chosen, name: specialtyName.trim() }
       : undefined;
     const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), before, undo };
-    next.current_state = { ...next.current_state, experience_available: available - cost, experience_spent: spent + cost, vampire_experience_history: [...history, entry] };
+    next.current_state = { ...next.current_state, experience_available: available - cost, experience_spent: spent + cost, experience_total: total, vampire_experience_history: [...history, entry] };
     updateSheet(next); setFeedback(tr("Compra registrada.", "Purchase recorded.")); setSpecialtyName(""); setTeacherConfirmed(false);
   };
   const undo = () => {
     const last = history.at(-1);
     if (!last?.before) return;
     const restored = structuredClone(last.before);
-    restored.current_state = { ...restored.current_state, experience_available: available + last.cost, experience_spent: Math.max(0, spent - last.cost), vampire_experience_history: history.slice(0, -1) };
+    restored.current_state = { ...restored.current_state, experience_available: available + last.cost, experience_spent: Math.max(0, spent - last.cost), experience_total: total, vampire_experience_history: history.slice(0, -1) };
     updateSheet(restored);
   };
-  return <div className="experience-panel vampire-experience-panel">
-    <div className="experience-balances"><label>{tr("Experiência disponível", "Available Experience")}<Input type="number" min={0} value={amount} onChange={(event) => setAmount(event.target.value)} onBlur={() => saveState({ experience_available: Math.max(0, Math.trunc(Number(amount) || 0)), experience_total: Math.max(0, Math.trunc(Number(amount) || 0)) + spent })} /></label><BeatTrack label="Beats" value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_total: available + spent + 1 } : { beats: value })} /></div>
-    <div className="experience-purchase"><RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={PURCHASES.map((value) => ({ value, label: purchaseLabel(value, locale) }))} />{purchase === "merit" ? <ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /> : options.length > 1 || options[0]?.value !== purchase ? <RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTeacherConfirmed(false); }} options={options} /> : null}{purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}{purchase === "specialty" && <Input value={specialtyName} placeholder={tr("Nome da Especialização", "Specialty name")} onChange={(event) => setSpecialtyName(event.target.value)} />}{teacherRequired && <label className="vampire-teacher-confirmation"><Checkbox checked={teacherConfirmed} onCheckedChange={(checked) => setTeacherConfirmed(checked === true)} /><span>{tr("Confirmo professor e sangue de alguém que possui esta Disciplina.", "I confirm a teacher and blood from someone who possesses this Discipline.")}</span></label>}<Button type="button" size="sm" disabled={unavailable || available < cost} onClick={buy}><ShoppingBag /> {tr("Comprar", "Purchase")} · {cost} XP</Button></div>
-    {feedback && <small>{feedback}</small>}{history.length > 0 && <div className="experience-history"><span><History /> {history.at(-1)?.label} · {history.at(-1)?.cost} XP</span><Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {tr("Desfazer última", "Undo last")}</Button></div>}
-  </div>;
+  const commitAvailableExperience = () => {
+    const nextAvailable = Math.max(0, Math.trunc(Number(amount) || 0));
+    setAmount(String(nextAvailable));
+    saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
+  };
+  return <section className="experience-panel vampire-experience-panel">
+    <div className="experience-title"><div><span>{tr("Beats e Experiência", "Beats and Experience")}</span><small>{tr("Beats são marcados separadamente da Experiência", "Beats are tracked separately from Experience")}</small></div></div>
+    <div className="experience-totals">
+      <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmount(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={tr("Experiência disponível", "Available Experience")} /><span>{tr("EXP disponível", "XP available")}</span></label>
+      <div><strong>{total}</strong><span>{tr("EXP total", "Total XP")}</span></div>
+      <div><strong>{spent}</strong><span>{tr("EXP gasta", "XP spent")}</span></div>
+    </div>
+    <BeatTrack label="Beats" value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />
+    <div className="experience-actions">
+      <Dialog>
+        <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {tr("Gastar Experiência", "Spend Experience")}</Button></DialogTrigger>
+        <DialogContent className="experience-dialog">
+          <DialogHeader><DialogTitle>{tr("Gastar Experiência de Vampiro", "Spend Vampire Experience")}</DialogTitle><DialogDescription>{tr("Escolha uma característica e a ficha registrará o gasto e atualizará os valores automaticamente.", "Choose a trait and the sheet will record the expense and update the values automatically.")}</DialogDescription></DialogHeader>
+          <div className="experience-purchase-form">
+            <label>{tr("Tipo", "Type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={PURCHASES.map((value) => ({ value, label: purchaseLabel(value, locale) }))} /></label>
+            {purchase === "merit" ? <label>{tr("Mérito", "Merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : options.length > 1 || options[0]?.value !== purchase ? <label>{tr("Característica", "Trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTeacherConfirmed(false); }} options={options} /></label> : null}
+            {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
+            {purchase === "specialty" && <label>{tr("Especialização", "Specialty")}<Input value={specialtyName} placeholder={tr("Nome da Especialização", "Specialty name")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
+            {teacherRequired && <label className="vampire-teacher-confirmation"><Checkbox checked={teacherConfirmed} onCheckedChange={(checked) => setTeacherConfirmed(checked === true)} /><span>{tr("Confirmo professor e sangue de alguém que possui esta Disciplina.", "I confirm a teacher and blood from someone who possesses this Discipline.")}</span></label>}
+          </div>
+          <div className="purchase-preview"><strong>{options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {tr("EXP", "XP")}</span></div>
+          {feedback && <p className="experience-feedback">{feedback}</p>}
+          <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar", "Close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || available < cost} onClick={buy}>{tr("Comprar por", "Purchase for")} {cost} {tr("EXP", "XP")}</Button></DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+    {feedback && <p className="experience-feedback compact">{feedback}</p>}
+    <details className="experience-history"><summary><History /> {tr("Gastos de Experiência", "Experience Expenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {tr("Reverter", "Refund")}</Button>}</p>) : <em>{tr("Nenhum gasto registrado.", "No expenses recorded.")}</em>}</div></details>
+  </section>;
 }

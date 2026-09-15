@@ -19,7 +19,7 @@ export const isInlineMeritConfiguration = (name: string) =>
       item.name === name && item.fields.length === 1 && item.fields[0].kind === "text"),
   );
 
-export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "pt-BR") {
+export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US") {
   const mageDefinition = MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === name);
   if (mageDefinition) {
     const lines = configuredDefinitionLines(mageDefinition, dots, value);

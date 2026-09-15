@@ -24,6 +24,12 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
+    // Vinext serves RSC and browser modules through separate development
+    // environments.  Dedupe the hook runtime so a hot-reloaded client module
+    // never calls hooks through a second React dispatcher.
+    resolve: {
+      dedupe: ["react", "react-dom"],
+    },
     server: {
       host: "0.0.0.0",
       allowedHosts: ["terminal.local"],

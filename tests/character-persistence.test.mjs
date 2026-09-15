@@ -10,11 +10,11 @@ const {normalizeStoredSheet,validateCurrentCharacter}=await vite.ssrLoadModule("
 const {normalizeGameLineCharacter}=await vite.ssrLoadModule("/game-lines/registry/game-line-registry.ts");
 const {isCurrentStoredCharacter,summarizeStoredCharacter}=await vite.ssrLoadModule("/lib/stored-character.ts");
 
-const sheet=(game_line="MtA")=>({id:"sheet",schema_version:2,system:"chronicles-of-darkness",game_line,ruleset:{id:"current",version:1},character:{name:"Test",concept:"",player:"Player"},attributes:{Força:2},skills:{Ocultismo:3},specializations:[],merits:[{name:"Allies",dots:2}],line_data:{},derived:{},current_state:{},created_at:"2026-01-01",updated_at:"2026-01-01"});
+const sheet=(game_line="MtA")=>({id:"sheet",schema_version:2,system:"chronicles-of-darkness",game_line,ruleset:{id:"current",version:1},character:{name:"Test",concept:"",player:"Player"},attributes:{Strength:2},skills:{Occult:3},specializations:[],merits:[{name:"Allies",dots:2}],line_data:{},derived:{},current_state:{},created_at:"2026-01-01",updated_at:"2026-01-01"});
 
 test("current schema normalization preserves character data",()=>{
   const normalized=normalizeStoredSheet(sheet());
-  assert.equal(normalized.character.name,"Test");assert.equal(normalized.skills.Ocultismo,3);
+  assert.equal(normalized.character.name,"Test");assert.equal(normalized.skills.Occult,3);
 });
 test("validation rejects old schemas without attempting migration",()=>{
   assert.equal(validateCurrentCharacter({...sheet(),schema_version:1}),"unsupported-schema");

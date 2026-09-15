@@ -301,7 +301,7 @@ export function Workspace({
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className={lineThemeClass}>
-              {(["pt-BR","en-US"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
+              {(["en-US","pt-BR"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
                 <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("portuguese") : t("english")}
               </DropdownMenuItem>)}
             </DropdownMenuContent>
@@ -654,26 +654,37 @@ function CharacterView({
   useLayoutEffect(()=>{
     const editor=editorRef.current;
     if(!editor)return;
+    let frame=0;
     const measure=()=>{
-      const width=editor.getBoundingClientRect().width;
-      const nextMaximum=maximumSheetZoom(width);
-      setMaximumZoom(nextMaximum);
-      setZoom((current)=>Math.min(current,nextMaximum));
+      cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        const width=editor.getBoundingClientRect().width;
+        const nextMaximum=maximumSheetZoom(width);
+        setMaximumZoom((current)=>current===nextMaximum?current:nextMaximum);
+        setZoom((current)=>Math.min(current,nextMaximum));
+      });
     };
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(editor);
-    return()=>observer.disconnect();
+    return()=>{cancelAnimationFrame(frame);observer.disconnect();};
   },[setMaximumZoom,setZoom]);
 
   useLayoutEffect(()=>{
     const surface=zoomSurfaceRef.current;
     if(!surface)return;
-    const measure=()=>setSheetHeight(surface.getBoundingClientRect().height/zoom);
+    let frame=0;
+    const measure=()=>{
+      cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        const nextHeight=surface.getBoundingClientRect().height/zoom;
+        setSheetHeight((current)=>current===nextHeight?current:nextHeight);
+      });
+    };
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(surface);
-    return()=>observer.disconnect();
+    return()=>{cancelAnimationFrame(frame);observer.disconnect();};
   },[isMobile,zoom]);
 
   const registration=getGameLineRegistration(character.game_line);

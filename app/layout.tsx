@@ -15,8 +15,13 @@ export const viewport: Viewport = { themeColor: "#311c35", width: "device-width"
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="en-US">
       <body>
+        {process.env.NODE_ENV === "development" && <script
+          // A previously installed production worker can cache Vite modules
+          // before the React client starts. Clear it before those modules load.
+          dangerouslySetInnerHTML={{ __html: `if ("serviceWorker" in navigator) { navigator.serviceWorker.getRegistrations().then((registrations) => Promise.all(registrations.map((registration) => registration.unregister()))); } if ("caches" in window) { caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("characters-of-the-darkness-") || key.startsWith("arquivo-das-trevas-")).map((key) => caches.delete(key)))); }` }}
+        />}
         <div className="app-launch-splash" aria-hidden="true">
           <img src="/app-icon-192.png" alt="" />
           <strong>Characters of the Darkness</strong>

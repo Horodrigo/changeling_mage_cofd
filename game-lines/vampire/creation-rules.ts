@@ -1,5 +1,6 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import type { BloodPotencyRow, VampireReference } from "./catalog-types";
+import type { BloodPotencyRow, VampireDisciplineDefinition, VampireReference } from "./catalog-types";
+import type { Locale } from "@/lib/i18n";
 
 export const VAMPIRE_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
@@ -7,6 +8,20 @@ export const VAMPIRE_DISCIPLINES = [
 ] as const;
 
 export const ORDO_MYSTERIES = ["ascendant", "wyrm", "voivode"] as const;
+
+/**
+ * Discipline names are catalog-owned identities, not core trait terms. This is
+ * deliberately separate from `systemTerm`: the English Discipline `Vigor`
+ * must never be confused with the Portuguese storage label for Stamina.
+ */
+export function vampireDisciplineDisplayName(
+  name: string,
+  catalog: readonly VampireDisciplineDefinition[],
+  locale: Locale,
+) {
+  const definition = catalog.find((item) => item.name === name);
+  return locale === "pt-BR" ? definition?.translatedName ?? name : definition?.name ?? name;
+}
 
 export const BLOOD_POTENCY_ROWS: readonly BloodPotencyRow[] = [
   { rating: 0, traitMaximum: 5, vitaeMaximum: "Stamina", vitaePerTurn: 1, feedingTier: "Animals" },
@@ -60,16 +75,16 @@ export function vampireDerived(
   const resilience = boundedRating(disciplines.Resilience, 0, 10, 0);
   const vigor = boundedRating(disciplines.Vigor, 0, 10, 0);
   const celerity = boundedRating(disciplines.Celerity, 0, 10, 0);
-  const effectiveStamina = Number(attributes.Vigor ?? 1) + resilience;
-  const effectiveStrength = Number(attributes["Força"] ?? 1) + vigor;
+  const effectiveStamina = Number(attributes.Stamina ?? 1) + resilience;
+  const effectiveStrength = Number(attributes.Strength ?? 1) + vigor;
   const potency = reference ? bloodPotencyRow(reference, bloodPotency) : bloodPotencyLimits(bloodPotency);
   return {
     Tamanho: 5,
     Vitalidade: 5 + effectiveStamina,
-    Deslocamento: 5 + effectiveStrength + Number(attributes.Destreza ?? 1),
-    ForçaDeVontade: Number(attributes.Perseverança ?? 1) + Number(attributes.Compostura ?? 1),
-    Iniciativa: Number(attributes.Destreza ?? 1) + Number(attributes.Compostura ?? 1) + celerity,
-    Defesa: Math.min(Number(attributes.Destreza ?? 1), Number(attributes.Raciocínio ?? 1)) + Number(skills.Atletismo ?? 0) + celerity,
+    Deslocamento: 5 + effectiveStrength + Number(attributes.Dexterity ?? 1),
+    ForçaDeVontade: Number(attributes.Resolve ?? 1) + Number(attributes.Composure ?? 1),
+    Iniciativa: Number(attributes.Dexterity ?? 1) + Number(attributes.Composure ?? 1) + celerity,
+    Defesa: Math.min(Number(attributes.Dexterity ?? 1), Number(attributes.Wits ?? 1)) + Number(skills.Athletics ?? 0) + celerity,
     VitaeMaxima: typeof potency?.vitaeMaximum === "number" ? potency.vitaeMaximum : effectiveStamina,
     VitaePorTurno: potency?.vitaePerTurn ?? 1,
     LimiteDeCaracteristica: potency?.traitMaximum ?? 5,

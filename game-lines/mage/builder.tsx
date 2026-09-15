@@ -104,7 +104,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     },
     adjustSkills: (values) => {
       if (Number(initial?.line_data.order_occult_bonus ?? 0) > 0)
-        values.Ocultismo = Math.max(0, Number(values.Ocultismo ?? 0) - 1);
+        values.Occult = Math.max(0, Number(values.Occult ?? 0) - 1);
       return values;
     },
   });
@@ -174,7 +174,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     gameLine: "MtA",
     archetypes: ["awakened"],
     attributes: common.attributes,
-    skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Ocultismo: Math.min(5, (common.skills.Ocultismo ?? 0) + 1) } : {}) },
+    skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Occult: Math.min(5, (common.skills.Occult ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,
     merits: mergeCreationMerits(initial?.merits, common.merits),
     meritCatalog,
@@ -220,7 +220,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     const finalAttributes = { ...common.attributes, [resistanceBonus]: Math.min(5, (common.attributes[resistanceBonus] ?? 1) + 1) };
     const finalSkills = { ...common.skills };
     const finalArcana = { ...arcana };
-    if (hasOrderOccultBonus) finalSkills.Ocultismo = Math.min(5, (finalSkills.Ocultismo ?? 0) + 1);
+    if (hasOrderOccultBonus) finalSkills.Occult = Math.min(5, (finalSkills.Occult ?? 0) + 1);
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "mage_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "mage_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     for (const [name, dots] of Object.entries(experienceArcanaDots(initial))) finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
@@ -247,7 +247,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       line_data: {
         ...(initial?.line_data ?? {}), path, order, custom_order: customOrder, virtue, vice, shadow_name: shadowName,
         resistance_bonus: resistanceBonus,
-        order_occult_bonus: hasOrderOccultBonus ? Math.max(0, Math.min(5, (common.skills.Ocultismo ?? 0) + 1) - (common.skills.Ocultismo ?? 0)) : 0,
+        order_occult_bonus: hasOrderOccultBonus ? Math.max(0, Math.min(5, (common.skills.Occult ?? 0) + 1) - (common.skills.Occult ?? 0)) : 0,
         creation_gnosis: gnosis, gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
         wisdom: Number(initial?.line_data.wisdom ?? 7), arcana: finalArcana,
         rotes: hasCreationOrderBenefits ? rotes.filter(Boolean) : [], praxes: praxes.slice(0, gnosis).filter(Boolean),
@@ -255,11 +255,11 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
         rote_skills: order === "Nameless" ? namelessRoteSkills : (MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? []),
       },
       derived: {
-        Tamanho: 5, Vitalidade: 5 + finalAttributes.Vigor,
-        Deslocamento: 5 + finalAttributes["Força"] + finalAttributes.Destreza,
-        ForçaDeVontade: finalAttributes["Perseverança"] + finalAttributes.Compostura,
-        Iniciativa: finalAttributes.Destreza + finalAttributes.Compostura,
-        Defesa: Math.min(finalAttributes.Destreza, finalAttributes["Raciocínio"]) + finalSkills.Atletismo,
+        Tamanho: 5, Vitalidade: 5 + finalAttributes.Stamina,
+        Deslocamento: 5 + finalAttributes.Strength + finalAttributes.Dexterity,
+        ForçaDeVontade: finalAttributes.Resolve + finalAttributes.Composure,
+        Iniciativa: finalAttributes.Dexterity + finalAttributes.Composure,
+        Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
         Sabedoria: 7,
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,

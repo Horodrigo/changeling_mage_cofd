@@ -36,6 +36,9 @@ const ENGLISH_TERMS: Record<string,string> = {
 };
 
 const PORTUGUESE_TERMS: Record<string,string> = {
+  Mental:"Mental", Physical:"Físico", Social:"Social",
+  Intelligence:"Inteligência", Wits:"Raciocínio", Resolve:"Perseverança", Strength:"Força", Dexterity:"Destreza", Stamina:"Vigor", Presence:"Presença", Manipulation:"Manipulação", Composure:"Compostura",
+  Academics:"Erudição", Computer:"Computação", Crafts:"Ofícios", Investigation:"Investigação", Medicine:"Medicina", Occult:"Ocultismo", Politics:"Política", Science:"Ciência", Athletics:"Atletismo", Brawl:"Briga", Drive:"Condução", Firearms:"Armas de Fogo", Larceny:"Furto", Weaponry:"Armas Brancas", Stealth:"Furtividade", Survival:"Sobrevivência", "Animal Ken":"Empatia com Animais", Empathy:"Empatia", Expression:"Expressão", Intimidation:"Intimidação", Persuasion:"Persuasão", Socialize:"Socialização", Streetwise:"Manha", Subterfuge:"Subterfúgio",
   Crown:"Coroa", Jewels:"Joias", Mirror:"Espelho", Shield:"Escudo",
   Steed:"Corcel", Sword:"Espada", Chalice:"Cálice", Coin:"Moeda",
   Scepter:"Cetro", Stars:"Estrelas", Thorn:"Espinho",

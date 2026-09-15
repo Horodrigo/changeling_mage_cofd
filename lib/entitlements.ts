@@ -40,43 +40,43 @@ export function entitlementPrerequisitesMet(definition:EntitlementDefinition,sta
   const attribute=(...names:string[])=>Math.max(0,...names.map((name)=>Number(sheet.attributes[name]??0)));
   const skill=(...names:string[])=>Math.max(0,...names.map((name)=>Number(sheet.skills[name]??0)));
   const wyrd=Number(sheet.line_data.wyrd??1);
-  if(definition.id==="baron-lesser-ones") return Number(sheet.skills.Empatia??0)>=2&&(Number(sheet.skills.Intimidação??0)>=2||Number(sheet.skills.Persuasão??0)>=2)&&(meritNames.has("Gentrified Bearing")||meritNames.has("Hob Kin")||sheet.merits.some((item)=>item.name==="Interdisciplinary Specialty"&&JSON.stringify(item.configuration??{}).toLowerCase().includes("goblin")));
+  if(definition.id==="baron-lesser-ones") return Number(sheet.skills.Empathy??0)>=2&&(Number(sheet.skills.Intimidation??0)>=2||Number(sheet.skills.Persuasion??0)>=2)&&(meritNames.has("Gentrified Bearing")||meritNames.has("Hob Kin")||sheet.merits.some((item)=>item.name==="Interdisciplinary Specialty"&&JSON.stringify(item.configuration??{}).toLowerCase().includes("goblin")));
   if(definition.id==="dauphines-wayward-children"){
     const role=definition.roles?.find((item)=>item.id===state.roleId);if(!role||Number(sheet.line_data.wyrd??1)<3)return false;
-    const requirements:Record<string,[string,string]>={sophomore:["Presença","Persuasão"],chaperone:["Manipulação","Empatia"],dowager:["Compostura","Intimidação"]};
+    const requirements:Record<string,[string,string]>={sophomore:["Presence","Persuasion"],chaperone:["Manipulation","Empathy"],dowager:["Composure","Intimidation"]};
     const [attribute,skill]=requirements[role.id];return Number(sheet.attributes[attribute]??0)>=2&&Number(sheet.skills[skill]??0)>=2;
   }
-  if(definition.id==="master-of-keys") return Number(sheet.skills.Investigação??0)>=2&&Number(sheet.skills.Empatia??0)>=2;
-  if(definition.id==="thorn-dancer") return Number(sheet.skills.Socialização??0)>=2&&Number(sheet.skills.Atletismo??0)>=3&&Number(sheet.skills.Expressão??0)>=2;
-  if(definition.id==="sibylline-fisher") return Number(sheet.skills.Computação??0)>=3&&Number(sheet.skills.Investigação??0)>=2&&Number(sheet.line_data.wyrd??1)>=3;
-  if(definition.id==="spiderborn-rider") return Number(sheet.attributes.Perseverança??0)>=3;
-  if(definition.id==="adjudicator-wheel")return attribute("Resolve","Perseverança")>=3&&skill("Investigation","Investigação")>=2&&meritNames.has("Trained Observer");
-  if(definition.id==="blackbird-bishop")return skill("Empathy","Empatia")>=2&&attribute("Wits","Raciocínio")>=3&&attribute("Composure","Compostura")>=3;
-  if(definition.id==="diviners-worms")return skill("Occult","Ocultismo")>=2&&meritNames.has("Diviner")&&meritNames.has("Trained Observer");
-  if(definition.id==="duchess-truth-loss")return attribute("Wits","Raciocínio")>=3&&skill("Investigation","Investigação")>=2;
+  if(definition.id==="master-of-keys") return Number(sheet.skills.Investigation??0)>=2&&Number(sheet.skills.Empathy??0)>=2;
+  if(definition.id==="thorn-dancer") return Number(sheet.skills.Socialize??0)>=2&&Number(sheet.skills.Athletics??0)>=3&&Number(sheet.skills.Expression??0)>=2;
+  if(definition.id==="sibylline-fisher") return Number(sheet.skills.Computer??0)>=3&&Number(sheet.skills.Investigation??0)>=2&&Number(sheet.line_data.wyrd??1)>=3;
+  if(definition.id==="spiderborn-rider") return Number(sheet.attributes.Resolve??0)>=3;
+  if(definition.id==="adjudicator-wheel")return attribute("Resolve")>=3&&skill("Investigation")>=2&&meritNames.has("Trained Observer");
+  if(definition.id==="blackbird-bishop")return skill("Empathy")>=2&&attribute("Wits")>=3&&attribute("Composure")>=3;
+  if(definition.id==="diviners-worms")return skill("Occult")>=2&&meritNames.has("Diviner")&&meritNames.has("Trained Observer");
+  if(definition.id==="duchess-truth-loss")return attribute("Wits")>=3&&skill("Investigation")>=2;
   if(definition.id==="goldspinner-guildmaster")return sheet.merits.some((item)=>item.name==="Resources"&&Number(item.dots??0)>=3);
-  if(definition.id==="paragon-story-heroes")return attribute("Wits","Raciocínio")>=3&&skill("Academics","Erudição")>=2&&Math.max(skill("Persuasion","Persuasão"),skill("Subterfuge","Dissimulação"))>=2;
-  if(definition.id==="sacred-band-golden-standard")return attribute("Presence","Presença")>=3&&wyrd>=2&&Object.values(sheet.skills).some((value)=>Number(value)>=3);
-  if(definition.id==="squire-broken-bough")return attribute("Composure","Compostura")>=3&&attribute("Resolve","Perseverança")>=3&&skill("Weaponry","Armamento")>=2;
-  if(definition.id==="companion-resigned")return skill("Empathy","Empatia")>=3&&skill("Expression","Expressão")>=2&&skill("Stealth","Furtividade")>=2;
-  if(definition.id==="castellan-broken-cage")return attribute("Manipulation","Manipulação")>=3&&Math.max(skill("Empathy","Empatia"),skill("Socialize","Socialização"))>=2&&wyrd>=2;
-  if(definition.id==="duke-icebound-heart")return Math.max(attribute("Presence","Presença"),attribute("Manipulation","Manipulação"))>=3&&skill("Socialize","Socialização")>=2&&skill("Empathy","Empatia")>=2;
-  if(definition.id==="eternal-echo")return attribute("Resolve","Perseverança")>=3&&skill("Academics","Erudição")>=2&&skill("Expression","Expressão")>=2;
-  if(definition.id==="knights-knowledge-tongue")return attribute("Stamina","Vigor")>=3&&skill("Crafts","Ofícios")>=2;
-  if(definition.id==="legate-black-apple")return Object.values(sheet.skills).filter((value)=>Number(value)>=4).length>=2&&attribute("Composure","Compostura")+attribute("Resolve","Perseverança")>=7&&wyrd>=3;
-  if(definition.id==="lost-pantheon")return attribute("Presence","Presença")>=3&&skill("Occult","Ocultismo")>=2&&wyrd>=3;
-  if(definition.id==="magistrates-wax-mask")return attribute("Composure","Compostura")>=3&&skill("Socialize","Socialização")>=2&&skill("Subterfuge","Dissimulação")>=3;
-  if(definition.id==="magus-gilded-thorns")return attribute("Composure","Compostura")>=3&&skill("Stealth","Furtividade")>=2&&meritNames.has("Hedge Sense")&&wyrd>=2;
-  if(definition.id==="margrave-brim")return Math.max(skill("Brawl","Briga"),skill("Weaponry","Armamento"))>=3&&skill("Survival","Sobrevivência")>=2&&wyrd>=2;
+  if(definition.id==="paragon-story-heroes")return attribute("Wits")>=3&&skill("Academics")>=2&&Math.max(skill("Persuasion"),skill("Subterfuge"))>=2;
+  if(definition.id==="sacred-band-golden-standard")return attribute("Presence")>=3&&wyrd>=2&&Object.values(sheet.skills).some((value)=>Number(value)>=3);
+  if(definition.id==="squire-broken-bough")return attribute("Composure")>=3&&attribute("Resolve")>=3&&skill("Weaponry")>=2;
+  if(definition.id==="companion-resigned")return skill("Empathy")>=3&&skill("Expression")>=2&&skill("Stealth")>=2;
+  if(definition.id==="castellan-broken-cage")return attribute("Manipulation")>=3&&Math.max(skill("Empathy"),skill("Socialize"))>=2&&wyrd>=2;
+  if(definition.id==="duke-icebound-heart")return Math.max(attribute("Presence"),attribute("Manipulation"))>=3&&skill("Socialize")>=2&&skill("Empathy")>=2;
+  if(definition.id==="eternal-echo")return attribute("Resolve")>=3&&skill("Academics")>=2&&skill("Expression")>=2;
+  if(definition.id==="knights-knowledge-tongue")return attribute("Stamina")>=3&&skill("Crafts")>=2;
+  if(definition.id==="legate-black-apple")return Object.values(sheet.skills).filter((value)=>Number(value)>=4).length>=2&&attribute("Composure")+attribute("Resolve")>=7&&wyrd>=3;
+  if(definition.id==="lost-pantheon")return attribute("Presence")>=3&&skill("Occult")>=2&&wyrd>=3;
+  if(definition.id==="magistrates-wax-mask")return attribute("Composure")>=3&&skill("Socialize")>=2&&skill("Subterfuge")>=3;
+  if(definition.id==="magus-gilded-thorns")return attribute("Composure")>=3&&skill("Stealth")>=2&&meritNames.has("Hedge Sense")&&wyrd>=2;
+  if(definition.id==="margrave-brim")return Math.max(skill("Brawl"),skill("Weaponry"))>=3&&skill("Survival")>=2&&wyrd>=2;
   if(definition.id==="noble-sages"){
-    if(skill("Occult","Ocultismo")<2)return false;
-    if(state.roleId==="archivist")return attribute("Intelligence","Inteligência")>=3&&skill("Academics","Erudição")>=2;
-    if(state.roleId==="diplomat")return attribute("Wits","Raciocínio")>=3&&skill("Persuasion","Persuasão")>=2;
-    if(state.roleId==="bane")return attribute("Resolve","Perseverança")>=3&&skill("Athletics","Atletismo")>=2;
+    if(skill("Occult")<2)return false;
+    if(state.roleId==="archivist")return attribute("Intelligence")>=3&&skill("Academics")>=2;
+    if(state.roleId==="diplomat")return attribute("Wits")>=3&&skill("Persuasion")>=2;
+    if(state.roleId==="bane")return attribute("Resolve")>=3&&skill("Athletics")>=2;
     return false;
   }
-  if(definition.id==="scarecrow-minister")return attribute("Composure","Compostura")>=3&&skill("Empathy","Empatia")>=2&&skill("Intimidation","Intimidação")>=3;
-  if(definition.id==="tolltaker-knight")return attribute("Composure","Compostura")>=3&&Math.max(skill("Brawl","Briga"),skill("Weaponry","Armamento"))>=2&&skill("Intimidation","Intimidação")>=2;
+  if(definition.id==="scarecrow-minister")return attribute("Composure")>=3&&skill("Empathy")>=2&&skill("Intimidation")>=3;
+  if(definition.id==="tolltaker-knight")return attribute("Composure")>=3&&Math.max(skill("Brawl"),skill("Weaponry"))>=2&&skill("Intimidation")>=2;
   return true;
 }
 

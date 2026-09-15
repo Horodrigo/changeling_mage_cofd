@@ -767,10 +767,10 @@ function ContractSelector({
 
 function favoredChoices(type: string) {
   return type === "Power"
-    ? ["Inteligência", "Força", "Presença"]
+    ? ["Intelligence", "Strength", "Presence"]
     : type === "Finesse"
-      ? ["Raciocínio", "Destreza", "Manipulação"]
-      : ["Perseverança", "Vigor", "Compostura"];
+      ? ["Wits", "Dexterity", "Manipulation"]
+      : ["Resolve", "Stamina", "Composure"];
 }
 
 function emptyContract(type: "Comum" | "Real"): ContractSelection {

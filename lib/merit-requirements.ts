@@ -15,9 +15,9 @@ export type RequirementContext = {
 };
 export const canonicalTrait = (value: unknown) => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 const aliases: Record<string,string> = {
-  intelligence:"Inteligência", wits:"Raciocínio", resolve:"Perseverança", strength:"Força", dexterity:"Destreza", stamina:"Vigor", presence:"Presença", manipulation:"Manipulação", composure:"Compostura",
-  academics:"Erudição", computer:"Informática", crafts:"Ofícios", investigation:"Investigação", medicine:"Medicina", occult:"Ocultismo", politics:"Política", science:"Ciência", athletics:"Atletismo", brawl:"Briga", drive:"Condução", firearms:"Armas de Fogo", larceny:"Furto", stealth:"Furtividade", survival:"Sobrevivência", weaponry:"Armamento", animalken:"Empatia com Animais", empathy:"Empatia", expression:"Expressão", intimidation:"Intimidação", persuasion:"Persuasão", socialize:"Socialização", streetwise:"Manha", subterfuge:"Subterfúgio",
-  death:"Morte", fate:"Destino", forces:"Forças", life:"Vida", matter:"Matéria", mind:"Mente", prime:"Primórdio", space:"Espaço", spirit:"Espírito", time:"Tempo",
+  intelligence:"Intelligence", wits:"Wits", resolve:"Resolve", strength:"Strength", dexterity:"Dexterity", stamina:"Stamina", presence:"Presence", manipulation:"Manipulation", composure:"Composure",
+  academics:"Academics", computer:"Computer", crafts:"Crafts", investigation:"Investigation", medicine:"Medicine", occult:"Occult", politics:"Politics", science:"Science", athletics:"Athletics", brawl:"Brawl", drive:"Drive", firearms:"Firearms", larceny:"Larceny", stealth:"Stealth", survival:"Survival", weaponry:"Weaponry", animalken:"Animal Ken", empathy:"Empathy", expression:"Expression", intimidation:"Intimidation", persuasion:"Persuasion", socialize:"Socialize", streetwise:"Streetwise", subterfuge:"Subterfuge",
+  death:"Death", fate:"Fate", forces:"Forces", life:"Life", matter:"Matter", mind:"Mind", prime:"Prime", space:"Space", spirit:"Spirit", time:"Time",
 };
 export function requirementTrait(name:string, context:RequirementContext):number {
   const key=canonicalTrait(name);
@@ -25,8 +25,6 @@ export function requirementTrait(name:string, context:RequirementContext):number
   if(key==="wyrd"||key==="fado") return Number(context.wyrd??0);
   if(key==="size") return Number(context.size??5);
   const keys=[key,canonicalTrait(aliases[key])];
-  // Older records also use Lábia for Subterfuge.
-  if(key==="subterfuge") keys.push("labia");
   const values={...context.attributes,...context.skills,...context.arcana};
   return Math.max(0,...Object.entries(values).filter(([name])=>keys.includes(canonicalTrait(name))).map(([,value])=>Number(value)||0));
 }

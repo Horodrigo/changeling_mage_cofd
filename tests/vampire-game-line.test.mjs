@@ -11,8 +11,8 @@ after(() => vite.close());
 test("Vampire derived traits include physical Disciplines and audited Blood Potency limits", async () => {
   const { vampireDerived } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const derived = vampireDerived(
-    { Vigor: 3, "Força": 2, Destreza: 3, Perseverança: 2, Compostura: 3, Raciocínio: 2 },
-    { Atletismo: 2 },
+    { Stamina: 3, Strength: 2, Dexterity: 3, Resolve: 2, Composure: 3, Wits: 2 },
+    { Athletics: 2 },
     { Resilience: 2, Vigor: 3, Celerity: 1 },
     6,
   );
@@ -30,7 +30,7 @@ test("Vampire normalization owns its line_data and clamps ratings", async () => 
   const character = {
     id: "v1", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
     character: { name: "Mara", concept: "", player: "", chronicle: "" },
-    attributes: { Vigor: 2, "Força": 2, Destreza: 2, Perseverança: 2, Compostura: 2, Raciocínio: 2 }, skills: { Atletismo: 1 }, specializations: [], merits: [],
+    attributes: { Stamina: 2, Strength: 2, Dexterity: 2, Resolve: 2, Composure: 2, Wits: 2 }, skills: { Athletics: 1 }, specializations: [], merits: [],
     line_data: { blood_potency: 99, humanity: -4, disciplines: { Vigor: 12 }, discipline_choices: { protean_aspects: ["claws", 3] }, blood_sorcery: { cruac_rating: 9, cruac_rite_ids: ["rite", 2] }, ordo_dracul: { mystery_id: "wyrm", coil_ratings: { "coil-wyrm": 8 }, scale_ids: ["scale"] }, aspirations: [] }, derived: {}, current_state: { vitae_current: -3, blush_of_life_active: 1, torpor: { active: 1, notes: 4 } }, created_at: "", updated_at: "",
   };
   const normalized = vampireRules.normalizeCharacter(character);
@@ -63,13 +63,22 @@ test("Vampire core-book catalogs expose all five Clans and line-owned content", 
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
 });
 
+test("Vampire Discipline presentation never applies Attribute translations", async () => {
+  const { vampireDisciplineDisplayName } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  assert.equal(vampireDisciplineDisplayName("Vigor", powers.disciplines, "en-US"), "Vigor");
+  assert.equal(vampireDisciplineDisplayName("Vigor", powers.disciplines, "pt-BR"), "Ímpeto");
+  assert.equal(vampireDisciplineDisplayName("Auspex", powers.disciplines, "en-US"), "Auspex");
+  assert.equal(vampireDisciplineDisplayName("Auspex", powers.disciplines, "pt-BR"), "Auspícios");
+});
+
 test("Vampire Status and English trait prerequisites resolve against neutral stored fields", async () => {
   const { textRequirementMet } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
   const { vampireCovenantStatus } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const context = {
     gameLine: "VtR",
-    attributes: { Perseverança: 3, Compostura: 3 },
-    skills: { Briga: 2 },
+    attributes: { Resolve: 3, Composure: 3 },
+    skills: { Brawl: 2 },
     merits: [{ name: "Kindred Status", dots: 2, configuration: { group: "Circle of the Crone" } }],
   };
   assert.equal(textRequirementMet("Resolve •••; Composure •••", context, ["Kindred Status"]), true);

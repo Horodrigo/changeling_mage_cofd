@@ -1,13 +1,13 @@
 export const ATTRIBUTES = {
-  Mental: ["Inteligência", "Raciocínio", "Perseverança"],
-  Físicos: ["Força", "Destreza", "Vigor"],
-  Sociais: ["Presença", "Manipulação", "Compostura"],
+  Mental: ["Intelligence", "Wits", "Resolve"],
+  Physical: ["Strength", "Dexterity", "Stamina"],
+  Social: ["Presence", "Manipulation", "Composure"],
 } as const;
 
 export const SKILLS = {
-  Mentais: ["Erudição", "Computação", "Ofícios", "Investigação", "Medicina", "Ocultismo", "Política", "Ciência"],
-  Físicas: ["Atletismo", "Briga", "Condução", "Armas de Fogo", "Furto", "Armas Brancas", "Furtividade", "Sobrevivência"],
-  Sociais: ["Empatia com Animais", "Empatia", "Expressão", "Intimidação", "Persuasão", "Socialização", "Manha", "Subterfúgio"],
+  Mental: ["Academics", "Computer", "Crafts", "Investigation", "Medicine", "Occult", "Politics", "Science"],
+  Physical: ["Athletics", "Brawl", "Drive", "Firearms", "Larceny", "Weaponry", "Stealth", "Survival"],
+  Social: ["Animal Ken", "Empathy", "Expression", "Intimidation", "Persuasion", "Socialize", "Streetwise", "Subterfuge"],
 } as const;
 
 export const CTL_SEEMINGS = {
@@ -185,7 +185,7 @@ export function normalizeChangelingFrailties(value: unknown, wyrd: number) {
     .slice(0, slots);
 }
 
-export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="pt-BR") {
+export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="en-US") {
   const rating = Math.max(1, Math.min(10, Math.trunc(wyrd)));
   const penaltyReduction = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4][rating - 1];
   const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "Unlimited"][rating - 1];
@@ -194,20 +194,20 @@ export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="pt-BR") {
 }
 
 export const MTA_PATHS = {
-  Acanthus: { ruling: ["Tempo", "Destino"], inferior: "Forças" },
-  Mastigos: { ruling: ["Espaço", "Mente"], inferior: "Matéria" },
-  Moros: { ruling: ["Matéria", "Morte"], inferior: "Espírito" },
-  Obrimos: { ruling: ["Forças", "Primórdio"], inferior: "Morte" },
-  Thyrsus: { ruling: ["Vida", "Espírito"], inferior: "Mente" },
+  Acanthus: { ruling: ["Time", "Fate"], inferior: "Forces" },
+  Mastigos: { ruling: ["Space", "Mind"], inferior: "Matter" },
+  Moros: { ruling: ["Matter", "Death"], inferior: "Spirit" },
+  Obrimos: { ruling: ["Forces", "Prime"], inferior: "Death" },
+  Thyrsus: { ruling: ["Life", "Spirit"], inferior: "Mind" },
 } as const;
 
 export const MTA_ORDERS = {
-  "Adamantine Arrow": ["Atletismo", "Intimidação", "Medicina"],
-  "Free Council": ["Ofícios", "Persuasão", "Ciência"],
-  "Guardians of the Veil": ["Investigação", "Furtividade", "Subterfúgio"],
-  Mysterium: ["Investigação", "Ocultismo", "Sobrevivência"],
-  "Silver Ladder": ["Expressão", "Persuasão", "Subterfúgio"],
-  "Seers of the Throne": ["Investigação", "Ocultismo", "Persuasão"],
+  "Adamantine Arrow": ["Athletics", "Intimidation", "Medicine"],
+  "Free Council": ["Crafts", "Persuasion", "Science"],
+  "Guardians of the Veil": ["Investigation", "Stealth", "Subterfuge"],
+  Mysterium: ["Investigation", "Occult", "Survival"],
+  "Silver Ladder": ["Expression", "Persuasion", "Subterfuge"],
+  "Seers of the Throne": ["Investigation", "Occult", "Persuasion"],
   Nameless: [],
 } as const;
 export const MTA_ORDER_LABELS: Record<string, string> = {
@@ -227,7 +227,7 @@ export const MTA_ORDER_DESCRIPTIONS: Record<string, [string, string]> = {
   Orderless: ["O mago não pertence a uma Ordem e não recebe seus benefícios iniciais.", "The mage belongs to no Order and receives no starting Order benefits."],
 };
 
-export const ARCANA = ["Morte", "Destino", "Forças", "Vida", "Matéria", "Mente", "Primórdio", "Espaço", "Espírito", "Tempo"];
+export const ARCANA = ["Death", "Fate", "Forces", "Life", "Matter", "Mind", "Prime", "Space", "Spirit", "Time"];
 
 export const SOURCE_CATALOG = [
   { id: "core-2ed", title: "Chronicles of Darkness", gameLine: "Core", edition: 2, type: "OFFICIAL", role: "BASE" },

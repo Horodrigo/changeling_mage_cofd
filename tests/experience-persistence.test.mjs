@@ -16,7 +16,7 @@ const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
 
 function sheet(key = "wyrd", creation = 1) {
-  return { game_line: key === "wyrd" ? "CtL" : "MtA", attributes: { Força: 1 }, skills: { Atletismo: 0 },
+  return { game_line: key === "wyrd" ? "CtL" : "MtA", attributes: { Strength: 1 }, skills: { Athletics: 0 },
     merits: [{ name: "Resources", dots: 10, creationDots: 10, experienceDots: 0 }], specializations: [], derived: { LucidezMaxima: 4 },
     line_data: { [key]: creation, arcana: { Fate: 0 }, wisdom: 7 },
     current_state: { experience_available: 20, clarity_damage: ["severe", "mild"] } };
@@ -51,13 +51,13 @@ test("reconhece os avanços antigos pelo histórico, sem cobrar Méritos outra v
 
 test("reembolsa pontos em qualquer ordem sem restaurar snapshots de outras compras", () => {
   const undos = [
-    {kind:"trait",group:"attributes",name:"Força"},
-    {kind:"trait",group:"skills",name:"Atletismo"},
+    {kind:"trait",group:"attributes",name:"Strength"},
+    {kind:"trait",group:"skills",name:"Athletics"},
     {kind:"arcana",name:"Fate"}, {kind:"wisdom"},
   ];
   for (const undo of undos) for (const order of permutations) {
     const current = sheet("gnosis");
-    current.attributes.Força = 4; current.skills.Atletismo = 3;
+    current.attributes.Strength = 4; current.skills.Athletics = 3;
     current.line_data.arcana.Fate = 3; current.line_data.wisdom = 10;
     current.line_data.gnosis = 5;
     for (const _ of order) refunds.refundMageAdvancement(current, undo);
@@ -140,7 +140,7 @@ test("Nameless Order applies its fixed Mystery Cult progression at the correct d
   const advancedInitiation=sheet.merits.find((item)=>item.name==="Mystery Cult Initiation");
   advancedInitiation.dots=3;
   mageMeritConfigurations.synchronizeMeritGrants(sheet);
-  assert.equal(sheet.line_data.merit_granted_skill_bonuses.Ocultismo,1);
+  assert.equal(sheet.line_data.merit_granted_skill_bonuses.Occult,1);
   assert.deepEqual(
     mageMeritConfigurations.expandedConfigurationLines("Mystery Cult Initiation",3,advancedInitiation.configuration,"en-US"),
     ["Cult: The Unnamed","Dot 1: High Speech •","Dot 2: Rote Skills: Academics, Occult, Science","Dot 3: Occult +1"],

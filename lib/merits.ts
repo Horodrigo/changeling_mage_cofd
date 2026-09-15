@@ -99,10 +99,6 @@ export function meritPrerequisitesMet(
 }
 
 const dotsIn=(value:string)=>[...value].filter((character)=>character==="•").length;
-const traitAliases:Record<string,string>={
-  Intelligence:"Inteligência",Wits:"Raciocínio",Resolve:"Perseverança",Strength:"Força",Dexterity:"Destreza",Stamina:"Vigor",Presence:"Presença",Manipulation:"Manipulação",Composure:"Compostura",
-  Academics:"Erudição",Computer:"Informática",Crafts:"Ofícios",Investigation:"Investigação",Medicine:"Medicina",Occult:"Ocultismo",Politics:"Política",Science:"Ciência",Athletics:"Atletismo",Brawl:"Briga",Drive:"Condução",Firearms:"Armas de Fogo",Larceny:"Furto",Stealth:"Furtividade",Survival:"Sobrevivência",Weaponry:"Armamento",AnimalKen:"Empatia com Animais",Empathy:"Empatia",Expression:"Expressão",Intimidation:"Intimidação",Persuasion:"Persuasão",Socialize:"Socialização",Streetwise:"Manha",Subterfuge:"Lábia",
-};
 function simplePrerequisitesMet(value:string,context:MeritPrerequisiteContext){
   return catalogPrerequisitesMet(value,context);
 }
@@ -112,8 +108,7 @@ const SKILL_NAMES=["Academics","Computer","Crafts","Investigation","Medicine","O
 const SEEMING_NAMES=["Beast","Darkling","Elemental","Fairest","Ogre","Wizened"];
 function traitValue(name:string,context:MeritPrerequisiteContext){
   const traits={...(context.attributes??{}),...(context.skills??{})};
-  const alias=traitAliases[name.replace(/\s/g,"")]??traitAliases[name]??name;
-  return Number(traits[name]??traits[alias]??0);
+  return Number(traits[name]??0);
 }
 function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext):boolean{
   if(!value) return true;

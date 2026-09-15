@@ -13,8 +13,8 @@ const {discardLegacyAdvancements}=await vite.ssrLoadModule("/lib/legacy-progress
 const {experienceTraitDots}=await vite.ssrLoadModule("/app/character-builder-shell.tsx");
 
 const mage=(overrides={})=>({
-  skills:{Investigação:2,Erudição:2},
-  line_data:{gnosis:2,path:"Moros",order:"Orderless",arcana:{Tempo:2},praxes:[],...overrides},
+  skills:{Investigation:2,Academics:2},
+  line_data:{gnosis:2,path:"Moros",order:"Orderless",arcana:{Time:2},praxes:[],...overrides},
 });
 
 test("The Eleventh Question contains the complete five-rank progression",()=>{
@@ -33,10 +33,10 @@ test("Legacy entry accepts parentage or the Perfect Timing Praxis",()=>{
 test("Chronologue supports selection, localized sheet traits, and its printed progression",()=>{
   assert.equal(CHRONOLOGUE.source,"Night Horrors: Nameless and Accursed");
   assert.deepEqual(CHRONOLOGUE.attainments.map(item=>item.name),["If-Then-Else","Possibility Matrix"]);
-  const initiate=mage({path:"Acanthus",order:"Orderless",arcana:{Tempo:2,Destino:1}});
-  initiate.skills={Computação:2};
+  const initiate=mage({path:"Acanthus",order:"Orderless",arcana:{Time:2,Fate:1}});
+  initiate.skills={Computer:2};
   assert.equal(legacyEntryPrerequisites(initiate,CHRONOLOGUE).met,true);
-  initiate.skills.Computação=3;
+  initiate.skills.Computer=3;
   assert.equal(legacyAttainmentPrerequisites(initiate,CHRONOLOGUE,2),true);
 });
 
@@ -45,14 +45,14 @@ test("Engineers of the System is the next selectable Legacy with its printed pro
   assert.equal(ENGINEERS_OF_THE_SYSTEM.source,"Tome of the Pentacle");
   assert.equal(ENGINEERS_OF_THE_SYSTEM.page,157);
   assert.deepEqual(ENGINEERS_OF_THE_SYSTEM.attainments.map(item=>item.name),["See the Bones and Gears","Rebuild the Living Machine","Become the Ecosystem"]);
-  const engineer=mage({path:"Thyrsus",order:"Orderless",arcana:{Espaço:2}});
-  engineer.skills={Investigação:2,Intimidação:2};
+  const engineer=mage({path:"Thyrsus",order:"Orderless",arcana:{Space:2}});
+  engineer.skills={Investigation:2,Intimidation:2};
   assert.equal(legacyEntryPrerequisites(engineer,ENGINEERS_OF_THE_SYSTEM).met,true);
-  engineer.skills.Investigação=3;
+  engineer.skills.Investigation=3;
   assert.equal(legacyAttainmentPrerequisites(engineer,ENGINEERS_OF_THE_SYSTEM,2),true);
 });
 
-test("Legacy prerequisites read the canonical Portuguese trait keys stored by the sheet",()=>{
+test("Legacy prerequisites read canonical English trait keys stored by the sheet",()=>{
   const checks=eleventhQuestionPrerequisites(mage());
   assert.deepEqual({time:checks.time,investigation:checks.investigation,qualifying:checks.qualifying,met:checks.met},{time:true,investigation:true,qualifying:true,met:true});
 });

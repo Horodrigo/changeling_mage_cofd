@@ -362,7 +362,7 @@ function LegacySheetField({ value, enabled, onOpen }: {
 }) {
     return <div className={`official-field legacy-sheet-field${enabled ? " enabled" : ""}`}><span>Legacy</span>{enabled ? <button type="button" onClick={onOpen}>{value}</button> : <strong>{value}</strong>}</div>;
 }
-function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], locale: Locale = "pt-BR") {
+function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], locale: Locale = "en-US") {
     const definition = catalog.find((entry) => entry.name === item.name);
     const base = locale === "en-US"
         ? definition?.name ?? item.name
@@ -565,16 +565,6 @@ const ARCANA_PT: Record<string, string> = {
     Space: "Espaço",
     Spirit: "Espírito",
     Time: "Tempo",
-    Morte: "Morte",
-    Destino: "Destino",
-    Forças: "Forças",
-    Vida: "Vida",
-    Matéria: "Matéria",
-    Mente: "Mente",
-    Primórdio: "Primórdio",
-    Espaço: "Espaço",
-    Espírito: "Espírito",
-    Tempo: "Tempo",
 };
 const LESSER_ATTAINMENTS: Record<string, [
     string,
@@ -881,8 +871,4 @@ function selectedConditionList(value: unknown, catalog: readonly MageCondition[]
 }
 function objectList(value: unknown) {
     return Array.isArray(value) ? (value as Array<Record<string, unknown>>) : [];
-}
-for (const [translated, original] of Object.entries({ Morte: "Death", Destino: "Fate", Forças: "Forces", Vida: "Life", Matéria: "Matter", Mente: "Mind", Primórdio: "Prime", Espaço: "Space", Espírito: "Spirit", Tempo: "Time" })) {
-    LESSER_ATTAINMENTS[translated] = LESSER_ATTAINMENTS[original];
-    GREATER_ATTAINMENTS[translated] = GREATER_ATTAINMENTS[original];
 }

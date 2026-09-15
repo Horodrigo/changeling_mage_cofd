@@ -31,7 +31,7 @@ export function replaceCourtCatalog(items: CourtDefinition[]) {
   CTL_COURT_DEFINITIONS.splice(0, CTL_COURT_DEFINITIONS.length, ...items);
 }
 
-export function courtPresentation(value: unknown, locale: Locale = "pt-BR") {
+export function courtPresentation(value: unknown, locale: Locale = "en-US") {
   const raw = String(value ?? "");
   const normalized = raw.toLocaleLowerCase();
   const definition = CTL_COURT_DEFINITIONS.find((item) =>
@@ -46,7 +46,7 @@ export function courtPresentation(value: unknown, locale: Locale = "pt-BR") {
   };
 }
 
-export function courtDisplayName(value: unknown, locale: Locale = "pt-BR") {
+export function courtDisplayName(value: unknown, locale: Locale = "en-US") {
   const raw=String(value ?? "");
   if (["sem corte","courtless"].includes(raw.trim().toLocaleLowerCase()))
     return locale === "en-US" ? "Courtless" : "Sem Corte";

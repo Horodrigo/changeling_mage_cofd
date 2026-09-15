@@ -16,6 +16,16 @@ test("idioma usa uma preferência global separada dos dados das fichas",async()=
   assert.equal(localeFlag("en-US"),"🇺🇸");
 });
 
+test("inglês é o idioma inicial e catálogos não recorrem silenciosamente ao português",()=>{
+  const infrastructure=readFileSync(new URL("../lib/i18n.tsx",import.meta.url),"utf8");
+  const catalogs=readFileSync(new URL("../lib/localized-catalog.ts",import.meta.url),"utf8");
+  const layout=readFileSync(new URL("../app/layout.tsx",import.meta.url),"utf8");
+  assert.match(infrastructure,/const serverLocale = \(\):Locale => "en-US"/);
+  assert.match(infrastructure,/=== "pt-BR" \? "pt-BR" : "en-US"/);
+  assert.match(layout,/<html lang="en-US">/);
+  assert.match(catalogs,/fallback: CatalogFallback = "empty"/);
+});
+
 test("seletor fica após Homebrews e mantém rótulo acessível",()=>{
   const source=readFileSync(new URL("../app/workspace.tsx",import.meta.url),"utf8");
   const infrastructure=readFileSync(new URL("../lib/i18n.tsx",import.meta.url),"utf8");

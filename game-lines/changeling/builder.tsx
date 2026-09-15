@@ -41,9 +41,7 @@ type ChangelingReference = {
   kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }>;
 };
 
-function translateRegalia(value: string) {
-  return ({ Coroa: "Crown", Joias: "Jewels", Espelho: "Mirror", Escudo: "Shield", Corcel: "Steed", Espada: "Sword", Cálice: "Chalice", Moeda: "Coin", Cetro: "Scepter", Estrelas: "Stars", Espinho: "Thorn" } as Record<string, string>)[value] ?? value;
-}
+const translateRegalia = (value: string) => value;
 
 function translateCourt(value: string) {
   return ({ Courtless: "Sem Corte", Spring: "Primavera", Summer: "Verão", Autumn: "Outono", Winter: "Inverno" } as Record<string, string>)[value] ?? value;
@@ -221,12 +219,12 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
         extra_contract_clauses: initial?.line_data.extra_contract_clauses ?? [],
       },
       derived: {
-        Tamanho: 5, Vitalidade: 5 + finalAttributes.Vigor,
-        Deslocamento: 5 + finalAttributes["Força"] + finalAttributes.Destreza,
-        ForçaDeVontade: finalAttributes["Perseverança"] + finalAttributes.Compostura,
-        Iniciativa: finalAttributes.Destreza + finalAttributes.Compostura,
-        Defesa: Math.min(finalAttributes.Destreza, finalAttributes["Raciocínio"]) + finalSkills.Atletismo,
-        LucidezMaxima: finalAttributes["Raciocínio"] + finalAttributes.Compostura,
+        Tamanho: 5, Vitalidade: 5 + finalAttributes.Stamina,
+        Deslocamento: 5 + finalAttributes.Strength + finalAttributes.Dexterity,
+        ForçaDeVontade: finalAttributes.Resolve + finalAttributes.Composure,
+        Iniciativa: finalAttributes.Dexterity + finalAttributes.Composure,
+        Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
+        LucidezMaxima: finalAttributes.Wits + finalAttributes.Composure,
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
     };
