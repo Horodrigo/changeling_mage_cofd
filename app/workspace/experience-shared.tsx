@@ -62,12 +62,20 @@ export function ExperiencePowerPicker({
   selectedId,
   onSelect,
   compact = false,
+  line,
+  triggerLabel,
+  dialogTitle,
+  dialogDescription,
 }: {
   kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato";
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;
   compact?: boolean;
+  line?: PersistedGameLineId;
+  triggerLabel?: string;
+  dialogTitle?: string;
+  dialogDescription?: string;
 }) {
   const {locale,tr}=useLanguage();
   const kindLabel=kind==="Práxis"?tr("Práxis","Praxis"):workspaceTerm(kind,locale);
@@ -96,15 +104,15 @@ export function ExperiencePowerPicker({
     <Dialog>
       <DialogTrigger asChild>
         <Button type="button" variant="outline" size="sm" className={compact ? "builder-add-action catalog-selection-action" : "experience-merit-trigger catalog-selection-action"}>
-          <span>{selected?.name ?? `${tr("Selecionar","Select")} ${kindLabel}`}</span>
+          <span>{selected?.name ?? triggerLabel ?? `${tr("Selecionar","Select")} ${kindLabel}`}</span>
           <Search />
         </Button>
       </DialogTrigger>
-      <DialogContent className="merit-dialog experience-merit-dialog">
+      <DialogContent className={`merit-dialog experience-merit-dialog${line === "CtL" ? " ctl-dialog" : ""}`}>
         <DialogHeader>
-          <DialogTitle>{tr("Comprar","Purchase")} {kindLabel}</DialogTitle>
+          <DialogTitle>{dialogTitle ?? `${tr("Comprar","Purchase")} ${kindLabel}`}</DialogTitle>
           <DialogDescription>
-            {tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
+            {dialogDescription ?? tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
@@ -214,7 +222,7 @@ export function ExperienceMeritPicker({
           <Search />
         </Button>
       </DialogTrigger>
-      <DialogContent className="merit-dialog experience-merit-dialog">
+      <DialogContent className={`merit-dialog experience-merit-dialog${line === "CtL" ? " ctl-dialog" : ""}`}>
         <DialogHeader>
           <DialogTitle>{tr("Comprar Mérito","Purchase Merit")}</DialogTitle>
           <DialogDescription>

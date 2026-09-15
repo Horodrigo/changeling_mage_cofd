@@ -158,6 +158,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     setAmount(String(nextAvailable));
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
+  const historyPanel = <details className="experience-history"><summary><History /> {tr("Gastos de Experiência", "Experience Expenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {tr("Reverter", "Refund")}</Button>}</p>) : <em>{tr("Nenhum gasto registrado.", "No expenses recorded.")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
     <div className="experience-title"><div><span>{tr("Beats e Experiência", "Beats and Experience")}</span><small>{tr("Beats são marcados separadamente da Experiência", "Beats are tracked separately from Experience")}</small></div></div>
     <div className="experience-totals">
@@ -180,7 +181,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
           </div>
           <div className="purchase-preview"><strong>{options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {tr("EXP", "XP")}</span></div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
-          <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar", "Close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || available < cost} onClick={buy}>{tr("Comprar por", "Purchase for")} {cost} {tr("EXP", "XP")}</Button></DialogFooter>
+          {historyPanel}<DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar", "Close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || available < cost} onClick={buy}>{tr("Comprar por", "Purchase for")} {cost} {tr("EXP", "XP")}</Button></DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

@@ -984,6 +984,41 @@ button { cursor: pointer; }
 .vampire-experience-panel .beat-resource { justify-content:space-between; padding:6px 8px; border:1px solid #d9d3ca; background:#fff; }
 .vampire-experience-panel .experience-history { font-size:11px; }
 .vampire-experience-panel svg { width:14px; }
+
+/* Shared Chronicles first-page skeleton. Line themes may decorate these
+   regions, but the page geometry remains stable across every game line. */
+.cod-main-sheet { display:grid; gap:12px; }
+.cod-main-identity,.cod-main-attributes { min-width:0; }
+.cod-main-columns { display:grid; grid-template-columns:1.08fr .94fr .98fr; gap:25px; align-items:start; }
+.cod-main-columns > section { min-width:0; }
+.cod-main-other,.cod-main-core { display:grid; gap:3px; align-content:start; }
+.cod-main-other .official-heading,.cod-main-core .official-heading { margin:4px 0 3px; }
+.cod-main-other > [data-slot],.cod-main-core > [data-slot] { min-width:0; }
+.cod-main-derived { margin-top:2px; }
+.cod-main-derived-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 12px; }
+.cod-main-derived-grid div { display:flex; justify-content:space-between; gap:8px; min-width:0; padding:4px 0; border-bottom:1px solid #aaa8a16b; font:12px/1.2 Inter,Arial,sans-serif; }
+.cod-main-derived-grid span { color:#707671; }
+.cod-main-derived-grid strong { color:var(--sheet-accent); }
+.cod-main-power-stat { display:flex; justify-content:center; min-height:20px; padding:0; }
+.cod-main-power-stat .official-dots { flex-wrap:nowrap; }
+.cod-main-power-summary { margin:1px 0 3px; color:#707671; font:10px/1.25 Inter,Arial,sans-serif; text-align:center; }
+.cod-main-core [data-slot="fuel"] .resource-track { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:5px; }
+.cod-main-core [data-slot="fuel"] .resource-track button { width:20px; height:20px; }
+.cod-main-core [data-slot="fuel"] .resource-track button.locked { cursor:default; opacity:.38; }
+.cod-main-experience { min-width:0; }
+.cod-main-experience .experience-panel { margin-top:0; padding:8px; }
+.cod-main-experience .experience-title small { display:none; }
+.experience-panel .beat-resource .resource-track button { width:10px; height:10px; border-width:1px; }
+.experience-panel .beat-resource .resource-track { gap:3px; }
+.experience-panel > .experience-history { display:none; }
+.ctl-dialog { border-color:rgba(23,56,35,.5)!important; border-radius:0!important; background:rgba(255,254,249,.98)!important; color:var(--ctl-ink,#263a2c); font-family:"Changeling Sheet",Georgia,serif; }
+.ctl-dialog [data-slot="dialog-title"],.ctl-dialog .official-heading,.ctl-dialog strong { color:var(--ctl-ink,#263a2c); }
+.ctl-dialog input,.ctl-dialog button,.ctl-dialog [data-slot="select-trigger"] { border-color:rgba(23,56,35,.38); border-radius:2px; }
+.ctl-dialog [data-slot="button"] { font-family:"Changeling Sheet",Georgia,serif; }
+@media(max-width:767px){
+  .cod-main-columns { grid-template-columns:1fr; gap:12px; }
+  .cod-main-derived-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
 @media(max-width:767px){
   .vampire-template-grid,.vampire-anchor-grid,.vampire-discipline-grid,.vampire-skill-grid,.vampire-details-grid,.vampire-track-grid,.vampire-power-grid,.vampire-reference-grid,.vampire-protean-choices,.vampire-protean-builder,.vampire-state-controls { grid-template-columns:minmax(0,1fr); }
   .vampire-state-controls .wide { grid-column:auto; }
@@ -1117,6 +1152,10 @@ button { cursor: pointer; }
 .official-lines { display:grid; gap:2px; }
 .official-lines > div { min-height:22px; overflow:hidden; border-bottom:1px solid #aaa8a16b; font:italic 12px/21px Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
 .arcana-sheet-list { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; }
+.mage-arcana-line { min-width:0; }
+.mage-arcana-line > small { display:block; min-height:14px; padding:1px 0 3px; color:#707671; font:italic 10px/1.2 Arial,sans-serif; white-space:normal; }
+.mage-arcana-line { border-bottom:1px solid #aaa8a16b; }
+.mage-arcana-line > .official-trait-line { border-bottom:0; }
 .sheet-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
 .sheet-bottom-grid.mage-bottom-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
 .wisdom-sheet-section { margin-top:14px; display:grid; gap:7px; }

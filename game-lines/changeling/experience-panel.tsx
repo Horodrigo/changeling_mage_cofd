@@ -589,6 +589,10 @@ export function ExperiencePanel({
     wyrd,
     lostWillpower,
   });
+  const historyPanel = <details className="experience-history">
+    <summary><History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})</summary>
+    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {tr("Reverter","Refund")}</Button>} title={tr(`Reembolsar ${entry.undo.name}?`,`Refund ${entry.undo.name}?`)} description={entry.undo.name === "Entitlement" ? tr("O reembolso removerá o Título, suas graduações, Blessings, Heráldica e todos os benefícios concedidos.","The refund will remove the Entitlement, its ranks, Blessings, Heraldry, and all granted benefits.") : tr("O reembolso removerá o Mérito e seu Companion vinculado.","The refund will remove the Merit and its linked Companion.")} action={tr("Reembolsar","Refund")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {tr("Reverter","Refund")}</Button>}</p>) : <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>}</div>
+  </details>;
   return (
     <section className="experience-panel">
       <div className="experience-title">
@@ -656,7 +660,7 @@ export function ExperiencePanel({
               <Leaf /> {tr("Comprar característica","Purchase trait")}
             </Button>
           </DialogTrigger>
-          <DialogContent className="experience-dialog">
+          <DialogContent className="experience-dialog ctl-dialog">
             <DialogHeader>
               <DialogTitle>{tr("Gastar Experiência","Spend Experience")}</DialogTitle>
               <DialogDescription>
@@ -741,6 +745,7 @@ export function ExperiencePanel({
                   {tr("Contrato","Contract")}
                   <ExperiencePowerPicker
                     kind="Contrato"
+                    line="CtL"
                     items={contractOptions.map((item) => ({
                       id: item.id,
                       name: locale==="en-US"?item.originalName:item.name,
@@ -760,6 +765,7 @@ export function ExperiencePanel({
                   {tr("Benefício","Benefit")}
                   <ExperiencePowerPicker
                     kind="Benefício de Contrato"
+                    line="CtL"
                     items={benefitOptions.map((option)=>{
                       const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause";
                       return {id:option.value,name:option.label,category:isClause?"Clause":tr("Benefício de Feição","Seeming Benefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??tr("Contrato","Contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
@@ -778,6 +784,7 @@ export function ExperiencePanel({
             </div>
             {feedback && <p className="experience-feedback">{feedback}</p>}
             <ExperienceRules />
+            {historyPanel}
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar","Close")}</Button>
