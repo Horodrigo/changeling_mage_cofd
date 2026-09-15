@@ -1,0 +1,13 @@
+[
+  {"rating":0,"traitMaximum":5,"vitaeMaximum":"Stamina","vitaePerTurn":1,"feedingTier":"Animals"},
+  {"rating":1,"traitMaximum":5,"vitaeMaximum":10,"vitaePerTurn":1,"feedingTier":"Animals"},
+  {"rating":2,"traitMaximum":5,"vitaeMaximum":11,"vitaePerTurn":2,"feedingTier":"Animals"},
+  {"rating":3,"traitMaximum":5,"vitaeMaximum":12,"vitaePerTurn":3,"feedingTier":"Humans"},
+  {"rating":4,"traitMaximum":5,"vitaeMaximum":13,"vitaePerTurn":4,"feedingTier":"Humans"},
+  {"rating":5,"traitMaximum":5,"vitaeMaximum":15,"vitaePerTurn":5,"feedingTier":"Humans"},
+  {"rating":6,"traitMaximum":6,"vitaeMaximum":20,"vitaePerTurn":6,"feedingTier":"Kindred"},
+  {"rating":7,"traitMaximum":7,"vitaeMaximum":25,"vitaePerTurn":7,"feedingTier":"Kindred"},
+  {"rating":8,"traitMaximum":8,"vitaeMaximum":30,"vitaePerTurn":8,"feedingTier":"Kindred"},
+  {"rating":9,"traitMaximum":9,"vitaeMaximum":50,"vitaePerTurn":10,"feedingTier":"Kindred"},
+  {"rating":10,"traitMaximum":10,"vitaeMaximum":75,"vitaePerTurn":15,"feedingTier":"Kindred"}
+]

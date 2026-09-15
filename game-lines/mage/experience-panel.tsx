@@ -22,6 +22,7 @@ import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration
 import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
+import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -297,7 +298,7 @@ export function MageExperiencePanel({
           sourceId: selectedMerit.sourceId,
           source: selectedMerit.source,
           configuration: normalizeMeritConfiguration(mageMeritConfiguration),
-          instanceId:crypto.randomUUID(),
+          instanceId:createRandomId(),
         });
     } else if (purchase === "Especialização")
       next.specializations.push({ skill: mageSpecialtySkill, name: mageSpecialtyName.trim() });
@@ -347,7 +348,7 @@ export function MageExperiencePanel({
     else if (purchase === "Mérito") {
       const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
       if (index < 0) return setFeedback(tr("Não foi possível identificar o Mérito adquirido.","The purchased Merit could not be identified."));
-      const instanceId = next.merits[index].instanceId ?? crypto.randomUUID();
+      const instanceId = next.merits[index].instanceId ?? createRandomId();
       next.merits[index].instanceId = instanceId;
       undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId };
     } else if (purchase === "Especialização") undo = { kind: "specialty", skill: mageSpecialtySkill, name: mageSpecialtyName.trim() };
@@ -356,7 +357,7 @@ export function MageExperiencePanel({
     else undo = { kind: "willpower" };
     const entry: MageXpEntry = {
       undo,
-      id: crypto.randomUUID(),
+      id: createRandomId(),
       description: label,
       regular: splitRegular,
       arcane: splitArcane,
@@ -389,7 +390,7 @@ export function MageExperiencePanel({
       line_data: structuredClone(next.line_data),
     };
     const entry: MageXpEntry = {
-      id: crypto.randomUUID(),
+      id: createRandomId(),
       description: tr("Perda permanente de um ponto de Força de Vontade","Permanent loss of one Willpower dot"),
       undo: { kind: "willpowerLoss" },
       regular: 0,

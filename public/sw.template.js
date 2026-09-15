@@ -75,9 +75,17 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
 
+  const isDevelopmentModule =
+    url.pathname.startsWith("/node_modules/") ||
+    url.pathname.startsWith("/@") ||
+    url.pathname.startsWith("/.vite/") ||
+    url.searchParams.has("t") ||
+    url.searchParams.has("v");
+
   if (
     url.origin !== self.location.origin ||
-    url.pathname.startsWith("/api/")
+    url.pathname.startsWith("/api/") ||
+    isDevelopmentModule
   ) {
     return;
   }

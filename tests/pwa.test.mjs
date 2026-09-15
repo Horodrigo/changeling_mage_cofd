@@ -21,6 +21,7 @@ test("apresenta uma abertura de aplicativo alinhada à nova marca", async () => 
   ]);
   assert.match(layout,/Characters of the Darkness/);
   assert.match(layout,/app-launch-splash/);
+  assert.match(layout,/navigator\.serviceWorker\.getRegistrations/);
   assert.match(css,/display-mode:standalone/);
   assert.match(css,/radial-gradient/);
 });
@@ -119,6 +120,10 @@ test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência c
 
 test("aviso offline pode ser fechado durante toda a sessão", async () => {
   const manager=await readFile(new URL("../app/pwa-manager.tsx",import.meta.url),"utf8");
+  const template=await readFile(new URL("../public/sw.template.js",import.meta.url),"utf8");
   assert.match(manager,/sessionStorage\.setItem\(DISMISSED_KEY,"1"\)/);
   assert.match(manager,/type="button" className="pwa-dismiss"/);
+  assert.match(manager,/process\.env\.NODE_ENV === "production"/);
+  assert.match(template,/isDevelopmentModule/);
+  assert.match(template,/url\.searchParams\.has\("t"\)/);
 });

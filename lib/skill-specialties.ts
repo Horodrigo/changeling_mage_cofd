@@ -53,7 +53,7 @@ const ENGLISH_SPECIALTIES:Record<string,string[]>={
 };
 
 export function skillSpecialtySuggestions(skill:string,locale:"pt-BR"|"en-US") {
-  if(locale==="pt-BR") return SKILL_SPECIALTY_SUGGESTIONS[skill] ?? [];
-  const englishSkill=({"Erudição":"Academics","Computação":"Computer","Ofícios":"Crafts","Investigação":"Investigation","Medicina":"Medicine","Ocultismo":"Occult","Política":"Politics","Ciência":"Science","Atletismo":"Athletics","Briga":"Brawl","Condução":"Drive","Armas de Fogo":"Firearms","Furto":"Larceny","Furtividade":"Stealth","Sobrevivência":"Survival","Armas Brancas":"Weaponry","Empatia com Animais":"Animal Ken","Empatia":"Empathy","Expressão":"Expression","Intimidação":"Intimidation","Persuasão":"Persuasion","Socialização":"Socialize","Manha":"Streetwise","Subterfúgio":"Subterfuge"} as Record<string,string>)[skill] ?? skill;
-  return ENGLISH_SPECIALTIES[englishSkill] ?? [];
+  if(locale==="en-US") return ENGLISH_SPECIALTIES[skill] ?? [];
+  const portugueseSkill=(Object.entries({"Erudição":"Academics","Computação":"Computer","Ofícios":"Crafts","Investigação":"Investigation","Medicina":"Medicine","Ocultismo":"Occult","Política":"Politics","Ciência":"Science","Atletismo":"Athletics","Briga":"Brawl","Condução":"Drive","Armas de Fogo":"Firearms","Furto":"Larceny","Furtividade":"Stealth","Sobrevivência":"Survival","Armas Brancas":"Weaponry","Empatia com Animais":"Animal Ken","Empatia":"Empathy","Expressão":"Expression","Intimidação":"Intimidation","Persuasão":"Persuasion","Socialização":"Socialize","Manha":"Streetwise","Subterfúgio":"Subterfuge"} as Record<string,string>).find(([, english]) => english === skill)?.[0]) ?? skill;
+  return SKILL_SPECIALTY_SUGGESTIONS[portugueseSkill] ?? [];
 }

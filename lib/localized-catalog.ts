@@ -53,7 +53,7 @@ export function catalogDisplayName(
   item: CatalogIdentity,
   locale: AppLocale,
   english?: EnglishCatalogEntry,
-  fallback: CatalogFallback = "pt-BR",
+  fallback: CatalogFallback = "empty",
 ) {
   if (locale === "pt-BR") return portugueseName(item);
   return knownEnglishName(item, english) ?? (fallback === "pt-BR" ? portugueseName(item) : "");
@@ -71,7 +71,7 @@ export function localizeCatalogItem<
   locale: AppLocale,
   options: PresentationOptions<Field>,
 ): LocalizedCatalogPresentation<Field> {
-  const fallback = options.fallback ?? "pt-BR";
+  const fallback = options.fallback ?? "empty";
   const english = options.english?.[item.id];
   const fallbackFields: Array<"name" | Field> = [];
   let name = portugueseName(item);

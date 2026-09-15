@@ -92,23 +92,12 @@ export const ENGINEERS_OF_THE_SYSTEM:LegacyDefinition={
 export const LEGACIES=[ELEVENTH_QUESTION,CHRONOLOGUE,ENGINEERS_OF_THE_SYSTEM] as const;
 export const findLegacy=(id:unknown)=>LEGACIES.find(item=>item.id===String(id));
 
-const LEGACY_SKILL_ALIASES:Record<string,string[]>={
-  Academics:["Academics","Erudição"], Larceny:["Larceny","Furto"], Medicine:["Medicine","Medicina"],
-  Occult:["Occult","Ocultismo"], Science:["Science","Ciência"], Investigation:["Investigation","Investigação"], Computer:["Computer","Computação"],
-  Intimidation:["Intimidation","Intimidação"],Survival:["Survival","Sobrevivência"],Streetwise:["Streetwise","Manha"],Empathy:["Empathy","Empatia"],Athletics:["Athletics","Atletismo"],Crafts:["Crafts","Ofícios"],Socialize:["Socialize","Socialização"],Subterfuge:["Subterfuge","Dissimulação"],Stealth:["Stealth","Furtividade"],Expression:["Expression","Expressão"],Politics:["Politics","Política"],
-};
-const LEGACY_ARCANUM_ALIASES:Record<string,string[]>={Time:["Time","Tempo"],Matter:["Matter","Matéria"],Fate:["Fate","Destino"],Space:["Space","Espaço"],Prime:["Prime","Primórdio"],Spirit:["Spirit","Espírito"],Mind:["Mind","Mente"],Life:["Life","Vida"],Death:["Death","Morte"],Forces:["Forces","Forças"]};
-
-function aliasedRating(values:Record<string,number>,aliases:string[]){
-  return Math.max(0,...aliases.map(name=>Number(values[name]??0)));
-}
-
 export function legacySkillRating(skills:Record<string,number>,name:string){
-  return aliasedRating(skills,LEGACY_SKILL_ALIASES[name]??[name]);
+  return Number(skills[name]??0);
 }
 
 export function legacyArcanumRating(arcana:Record<string,number>,name:string){
-  return aliasedRating(arcana,LEGACY_ARCANUM_ALIASES[name]??[name]);
+  return Number(arcana[name]??0);
 }
 
 function legacyRequirementsMet(character:LegacyCharacter,requirements:LegacyRequirements|undefined){

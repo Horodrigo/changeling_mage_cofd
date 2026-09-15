@@ -23,6 +23,7 @@ import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { systemTerm } from "@/lib/system-terms";
+import { createRandomId } from "@/lib/random-id";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
   if (!value || typeof value !== "object") return null;
@@ -103,7 +104,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     },
     adjustSkills: (values) => {
       if (Number(initial?.line_data.order_occult_bonus ?? 0) > 0)
-        values.Ocultismo = Math.max(0, Number(values.Ocultismo ?? 0) - 1);
+        values.Occult = Math.max(0, Number(values.Occult ?? 0) - 1);
       return values;
     },
   });
@@ -154,7 +155,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       const retained = current.filter((merit) => !automatic.has(String(merit.grantedBy)) && !(grantedNames.has(merit.name) && Number(merit.experienceDots ?? 0) === 0));
       const next = [...retained, ...wanted.filter((merit) => !paidWithExperience(merit.name)).map((grant) => {
         const existing = current.find((merit) => merit.name === grant.name && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && Number(merit.experienceDots ?? 0) === 0)));
-        return { ...existing, instanceId: existing?.instanceId ?? crypto.randomUUID(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
+        return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
       })];
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
@@ -173,9 +174,10 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     gameLine: "MtA",
     archetypes: ["awakened"],
     attributes: common.attributes,
-    skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Ocultismo: Math.min(5, (common.skills.Ocultismo ?? 0) + 1) } : {}) },
+    skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Occult: Math.min(5, (common.skills.Occult ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    meritCatalog,
     powers: [],
   };
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
@@ -218,13 +220,13 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     const finalAttributes = { ...common.attributes, [resistanceBonus]: Math.min(5, (common.attributes[resistanceBonus] ?? 1) + 1) };
     const finalSkills = { ...common.skills };
     const finalArcana = { ...arcana };
-    if (hasOrderOccultBonus) finalSkills.Ocultismo = Math.min(5, (finalSkills.Ocultismo ?? 0) + 1);
+    if (hasOrderOccultBonus) finalSkills.Occult = Math.min(5, (finalSkills.Occult ?? 0) + 1);
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "mage_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "mage_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     for (const [name, dots] of Object.entries(experienceArcanaDots(initial))) finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
-      id: initial?.id ?? crypto.randomUUID(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
+      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
       ruleset: { id: "mta-2ed-embedded", version: 1 },
       character: { name: shadowName.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,
@@ -245,7 +247,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       line_data: {
         ...(initial?.line_data ?? {}), path, order, custom_order: customOrder, virtue, vice, shadow_name: shadowName,
         resistance_bonus: resistanceBonus,
-        order_occult_bonus: hasOrderOccultBonus ? Math.max(0, Math.min(5, (common.skills.Ocultismo ?? 0) + 1) - (common.skills.Ocultismo ?? 0)) : 0,
+        order_occult_bonus: hasOrderOccultBonus ? Math.max(0, Math.min(5, (common.skills.Occult ?? 0) + 1) - (common.skills.Occult ?? 0)) : 0,
         creation_gnosis: gnosis, gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
         wisdom: Number(initial?.line_data.wisdom ?? 7), arcana: finalArcana,
         rotes: hasCreationOrderBenefits ? rotes.filter(Boolean) : [], praxes: praxes.slice(0, gnosis).filter(Boolean),
@@ -253,11 +255,11 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
         rote_skills: order === "Nameless" ? namelessRoteSkills : (MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? []),
       },
       derived: {
-        Tamanho: 5, Vitalidade: 5 + finalAttributes.Vigor,
-        Deslocamento: 5 + finalAttributes["Força"] + finalAttributes.Destreza,
-        ForçaDeVontade: finalAttributes["Perseverança"] + finalAttributes.Compostura,
-        Iniciativa: finalAttributes.Destreza + finalAttributes.Compostura,
-        Defesa: Math.min(finalAttributes.Destreza, finalAttributes["Raciocínio"]) + finalSkills.Atletismo,
+        Tamanho: 5, Vitalidade: 5 + finalAttributes.Stamina,
+        Deslocamento: 5 + finalAttributes.Strength + finalAttributes.Dexterity,
+        ForçaDeVontade: finalAttributes.Resolve + finalAttributes.Composure,
+        Iniciativa: finalAttributes.Dexterity + finalAttributes.Composure,
+        Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
         Sabedoria: 7,
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,

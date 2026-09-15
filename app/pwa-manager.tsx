@@ -30,7 +30,17 @@ export function PwaManager() {
   useEffect(() => {
     const install = (event: Event) => { event.preventDefault(); setInstallPrompt(event as InstallPrompt); };
     window.addEventListener("beforeinstallprompt", install);
-    if ("serviceWorker" in navigator) {
+    if (process.env.NODE_ENV === "development" && "serviceWorker" in navigator) {
+      // A production worker must never cache Vite's mutable development
+      // modules. Remove an old registration before the dev client loads them.
+      void navigator.serviceWorker.getRegistrations().then((registrations) =>
+        Promise.all(registrations.map((registration) => registration.unregister())),
+      );
+      void caches.keys().then((keys) =>
+        Promise.all(keys.filter((key) => key.startsWith("characters-of-the-darkness-") || key.startsWith("arquivo-das-trevas-")).map((key) => caches.delete(key))),
+      );
+    }
+    if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").then((registration) => {
         const checkVersion = async () => {
           if (!navigator.onLine) return;

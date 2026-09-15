@@ -11,6 +11,10 @@ const groupLoaders: Readonly<Record<CatalogGroupId, CatalogGroupLoader>> = {
   "changeling-merits": () => import("../changeling/catalogs/merits").then(({ changelingMeritsCatalogGroup }) => changelingMeritsCatalogGroup),
   "changeling-contracts": () => import("../changeling/catalogs/contracts").then(({ changelingContractsCatalogGroup }) => changelingContractsCatalogGroup),
   "changeling-reference": () => import("../changeling/catalogs/reference").then(({ changelingReferenceCatalogGroup }) => changelingReferenceCatalogGroup),
+  "vampire-merits": () => import("../vampire/catalogs/merits").then(({ vampireMeritsCatalogGroup }) => vampireMeritsCatalogGroup),
+  "vampire-powers": () => import("../vampire/catalogs/powers").then(({ vampirePowersCatalogGroup }) => vampirePowersCatalogGroup),
+  "vampire-reference": () => import("../vampire/catalogs/reference").then(({ vampireReferenceCatalogGroup }) => vampireReferenceCatalogGroup),
+  "vampire-conditions": () => import("../vampire/catalogs/conditions").then(({ vampireConditionsCatalogGroup }) => vampireConditionsCatalogGroup),
 };
 
 export async function loadCatalogGroups(groupIds: readonly CatalogGroupId[]) {

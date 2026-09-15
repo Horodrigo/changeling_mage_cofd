@@ -206,6 +206,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           {{
                 resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value}/>)}{false}</section>
+              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
               <SheetHeading>Experiência</SheetHeading>
               {<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
               {false}
@@ -220,7 +221,6 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 detalhes: <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
               <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
-              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
               <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato", "Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
               <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
@@ -356,7 +356,7 @@ function SheetField({ label, value }: {
       <strong>{String(value ?? "")}</strong>
     </div>);
 }
-function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], courtCatalog: readonly CourtDefinition[], locale: Locale = "pt-BR") {
+function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], courtCatalog: readonly CourtDefinition[], locale: Locale = "en-US") {
     const definition = catalog.find((entry) => entry.name === item.name);
     const base = locale === "en-US"
         ? definition?.name ?? item.name
@@ -498,7 +498,7 @@ function GoblinDebtTrack({ value, onChange, }: {
         {Array.from({ length: 10 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={tr(`Definir Débito Goblin como ${index < value ? index : index + 1}`, `Set Goblin Debt to ${index < value ? index : index + 1}`)}/>))}
       </div>
       <p>
-        {value}/9 · {tr("ao receber o décimo ponto, o personagem adquire a Condição Habitante da Sebe.", "upon receiving the tenth point, the character gains the Hedge Denizen Condition.")}
+        {value}/10 · {tr("ao receber o décimo ponto, o personagem adquire a Condição Habitante da Sebe.", "upon receiving the tenth point, the character gains the Hedge Denizen Condition.")}
       </p>
     </div>);
 }

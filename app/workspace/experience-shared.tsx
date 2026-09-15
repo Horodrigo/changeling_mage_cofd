@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
@@ -12,6 +11,9 @@ import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, REPEATABL
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { workspaceTerm } from "./workspace-i18n";
+import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
+import { SelectableCatalogCard } from "../selectable-catalog-card";
+import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
 export function BeatTrack({
   label,
@@ -131,19 +133,18 @@ export function ExperiencePowerPicker({
         </div>
         <div className="experience-merit-catalog">
           {visible.map((item) => (
-            <article key={item.id} className={selectedId === item.id ? "selected" : ""}>
+            <SelectableCatalogCard
+              key={item.id}
+              selected={selectedId === item.id}
+              label={`${tr("Selecionar","Select")} ${item.name}`}
+              onToggle={() => onSelect(selectedId === item.id ? "" : item.id)}
+            >
               <div>
                 <strong>{item.name}</strong>
                 <small>{item.meta}</small>
                 <p>{item.description}</p>
               </div>
-              <Checkbox
-                className="catalog-selection-checkbox"
-                checked={selectedId === item.id}
-                aria-label={`${tr("Selecionar","Select")} ${item.name}`}
-                onCheckedChange={(checked) => onSelect(checked ? item.id : "")}
-              />
-            </article>
+            </SelectableCatalogCard>
           ))}
           {!visible.length && <em>{tr("Nenhuma opção corresponde aos filtros.","No options match the filters.")}</em>}
         </div>
@@ -158,7 +159,7 @@ export function ExperiencePowerPicker({
 }
 
 export function canAdvanceGrantedMerit(
-  line: "CtL" | "MtA",
+  line: PersistedGameLineId,
   merit: CharacterSheet["merits"][number],
 ) {
   return (
@@ -177,7 +178,7 @@ export function ExperienceMeritPicker({
   targetDots,
   onSelect,
 }: {
-  line: "CtL" | "MtA";
+  line: PersistedGameLineId;
   archetypes: readonly string[];
   meritCatalog: readonly MeritDefinition[];
   character: CharacterSheet;
@@ -188,6 +189,7 @@ export function ExperienceMeritPicker({
   const {locale,tr}=useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
+  const [showAllMerits, setShowAllMerits] = useState(false);
   const [meritDrafts, setMeritDrafts] = useState<Record<string,{newInstance:boolean;instanceIndex:number;dots:number}>>({});
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
   const context=meritContextForSheet(character, meritCatalog, archetypes);
@@ -233,11 +235,13 @@ export function ExperienceMeritPicker({
             onChange={setCategory}
             options={categories.map((value) => ({ value, label: value }))}
           />
+          <MeritCatalogVisibilityToggle showAll={showAllMerits} setShowAll={setShowAllMerits} />
         </div>
         <div className="experience-merit-catalog">
           {catalog
             .filter(
               (item) =>
+                (showAllMerits || meritPrerequisitesMet(item, context)) &&
                 (category === "Todas" || item.category === category) &&
                 `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source}`
                   .toLocaleLowerCase("pt-BR")
@@ -273,7 +277,7 @@ export function ExperienceMeritPicker({
               return (
                 <article
                   key={item.id}
-                  className={selectedId === item.id ? "selected" : ""}
+                  className={`${selectedId === item.id ? "selected" : ""}${prerequisitesMet ? "" : " merit-option-locked"}`.trim()}
                 >
                   <div>
                     <strong>{meritName(item)}</strong>
@@ -322,13 +326,13 @@ export function recalculateCoreDerived(sheet: CharacterSheet) {
   sheet.derived = {
     ...sheet.derived,
     Tamanho: 5,
-    Vitalidade: 5 + Number(a.Vigor ?? 1),
-    Deslocamento: 5 + Number(a.Força ?? 1) + Number(a.Destreza ?? 1),
-    ForçaDeVontade: Number(a.Perseverança ?? 1) + Number(a.Compostura ?? 1),
-    Iniciativa: Number(a.Destreza ?? 1) + Number(a.Compostura ?? 1),
+    Vitalidade: 5 + Number(a.Stamina ?? 1),
+    Deslocamento: 5 + Number(a.Strength ?? 1) + Number(a.Dexterity ?? 1),
+    ForçaDeVontade: Number(a.Resolve ?? 1) + Number(a.Composure ?? 1),
+    Iniciativa: Number(a.Dexterity ?? 1) + Number(a.Composure ?? 1),
     Defesa:
-      Math.min(Number(a.Destreza ?? 1), Number(a.Raciocínio ?? 1)) +
-      Number(s.Atletismo ?? 0),
+      Math.min(Number(a.Dexterity ?? 1), Number(a.Wits ?? 1)) +
+      Number(s.Athletics ?? 0),
   };
 }
 export function derivedWithPermanentMerits(character: CharacterSheet) {
@@ -340,7 +344,7 @@ export function derivedWithPermanentMerits(character: CharacterSheet) {
       : {}
   ) as Record<string, number>;
   derived.Defesa =
-    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Atletismo) || 0);
+    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Athletics) || 0);
   const merit = (name: string) =>
     character.merits.find((item) => item.name === name);
   const fastReflexes = merit("Fast Reflexes");

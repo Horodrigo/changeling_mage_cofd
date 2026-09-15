@@ -54,7 +54,7 @@ function decodeHedgespunConfiguration(configuration: MeritConfiguration) {
   };
 }
 
-export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "pt-BR", courtCatalog: readonly CourtDefinition[] = []) {
+export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = []) {
   const configuration = normalizeMeritConfiguration(value);
   if (name === "Token") {
     const items = decodeConfiguredRows<TokenConfigurationItem>(configuration.items);

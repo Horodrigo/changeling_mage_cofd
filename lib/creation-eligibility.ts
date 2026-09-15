@@ -13,21 +13,8 @@ export function meetsArcanaRequirements(
   requirements: Record<string, number>,
   arcana: Record<string, number>,
 ) {
-  const translatedArcana: Record<string, string> = {
-    Death: "Morte",
-    Fate: "Destino",
-    Forces: "Forças",
-    Life: "Vida",
-    Matter: "Matéria",
-    Mind: "Mente",
-    Prime: "Primórdio",
-    Space: "Espaço",
-    Spirit: "Espírito",
-    Time: "Tempo",
-  };
   return Object.entries(requirements).every(
-    ([arcanum, dots]) =>
-      Number(arcana[arcanum] ?? arcana[translatedArcana[arcanum]] ?? 0) >= dots,
+    ([arcanum, dots]) => Number(arcana[arcanum] ?? 0) >= dots,
   );
 }
 

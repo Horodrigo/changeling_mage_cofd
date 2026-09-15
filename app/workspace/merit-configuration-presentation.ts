@@ -23,7 +23,7 @@ export function commonExpandedConfigurationLines(
   name: string,
   dots: number,
   value: unknown,
-  locale: Locale = "pt-BR",
+  locale: Locale = "en-US",
 ): string[] | undefined {
   const configuration = normalizeMeritConfiguration(value);
   if (name === "Professional Training") {

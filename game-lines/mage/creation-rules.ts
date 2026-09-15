@@ -1,18 +1,18 @@
 export const MTA_PATHS = {
-  Acanthus: { ruling: ["Tempo", "Destino"], inferior: "Forças" },
-  Mastigos: { ruling: ["Espaço", "Mente"], inferior: "Matéria" },
-  Moros: { ruling: ["Matéria", "Morte"], inferior: "Espírito" },
-  Obrimos: { ruling: ["Forças", "Primórdio"], inferior: "Morte" },
-  Thyrsus: { ruling: ["Vida", "Espírito"], inferior: "Mente" },
+  Acanthus: { ruling: ["Time", "Fate"], inferior: "Forces" },
+  Mastigos: { ruling: ["Space", "Mind"], inferior: "Matter" },
+  Moros: { ruling: ["Matter", "Death"], inferior: "Spirit" },
+  Obrimos: { ruling: ["Forces", "Prime"], inferior: "Death" },
+  Thyrsus: { ruling: ["Life", "Spirit"], inferior: "Mind" },
 } as const;
 
 export const MTA_ORDERS = {
-  "Adamantine Arrow": ["Atletismo", "Intimidação", "Medicina"],
-  "Free Council": ["Ofícios", "Persuasão", "Ciência"],
-  "Guardians of the Veil": ["Investigação", "Furtividade", "Subterfúgio"],
-  Mysterium: ["Investigação", "Ocultismo", "Sobrevivência"],
-  "Silver Ladder": ["Expressão", "Persuasão", "Subterfúgio"],
-  "Seers of the Throne": ["Investigação", "Ocultismo", "Persuasão"],
+  "Adamantine Arrow": ["Athletics", "Intimidation", "Medicine"],
+  "Free Council": ["Crafts", "Persuasion", "Science"],
+  "Guardians of the Veil": ["Investigation", "Stealth", "Subterfuge"],
+  Mysterium: ["Investigation", "Occult", "Survival"],
+  "Silver Ladder": ["Expression", "Persuasion", "Subterfuge"],
+  "Seers of the Throne": ["Investigation", "Occult", "Persuasion"],
   Nameless: [],
 } as const;
 export const MTA_ORDER_LABELS: Record<string, string> = {
@@ -32,4 +32,4 @@ export const MTA_ORDER_DESCRIPTIONS: Record<string, [string, string]> = {
   Orderless: ["O mago não pertence a uma Ordem e não recebe seus benefícios iniciais.", "The mage belongs to no Order and receives no starting Order benefits."],
 };
 
-export const ARCANA = ["Morte", "Destino", "Forças", "Vida", "Matéria", "Mente", "Primórdio", "Espaço", "Espírito", "Tempo"];
+export const ARCANA = ["Death", "Fate", "Forces", "Life", "Matter", "Mind", "Prime", "Space", "Spirit", "Time"];

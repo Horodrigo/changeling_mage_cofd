@@ -32,6 +32,7 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
 import { systemTerm } from "@/lib/system-terms";
+import { createRandomId } from "@/lib/random-id";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -40,9 +41,7 @@ type ChangelingReference = {
   kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }>;
 };
 
-function translateRegalia(value: string) {
-  return ({ Coroa: "Crown", Joias: "Jewels", Espelho: "Mirror", Escudo: "Shield", Corcel: "Steed", Espada: "Sword", Cálice: "Chalice", Moeda: "Coin", Cetro: "Scepter", Estrelas: "Stars", Espinho: "Thorn" } as Record<string, string>)[value] ?? value;
-}
+const translateRegalia = (value: string) => value;
 
 function translateCourt(value: string) {
   return ({ Courtless: "Sem Corte", Spring: "Primavera", Summer: "Verão", Autumn: "Outono", Winter: "Inverno" } as Record<string, string>)[value] ?? value;
@@ -123,7 +122,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
       const paidWithExperience = current.some((merit) => merit.name === "Mantle" && !merit.grantedBy && Number(merit.experienceDots ?? 0) > 0);
       const next = [...retained, ...wanted.filter(() => !paidWithExperience).map((grant) => {
         const existing = current.find((merit) => merit.name === grant.name && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && Number(merit.experienceDots ?? 0) === 0)));
-        return { ...existing, instanceId: existing?.instanceId ?? crypto.randomUUID(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
+        return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
       })];
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
@@ -143,6 +142,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     seeming, kith, wyrd, court,
     mantle: court && court !== "Sem Corte" ? Math.max(1, initial?.merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    meritCatalog,
     powers: contracts.map((item) => item.originalName || item.name).filter(Boolean),
   };
   const issues = (() => {
@@ -188,7 +188,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     const selectedKith = findKith(reference.kiths, kith);
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
-      id: initial?.id ?? crypto.randomUUID(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
+      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
       ruleset: { id: "ctl-2ed-embedded", version: 1 },
       character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,
@@ -219,12 +219,12 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
         extra_contract_clauses: initial?.line_data.extra_contract_clauses ?? [],
       },
       derived: {
-        Tamanho: 5, Vitalidade: 5 + finalAttributes.Vigor,
-        Deslocamento: 5 + finalAttributes["Força"] + finalAttributes.Destreza,
-        ForçaDeVontade: finalAttributes["Perseverança"] + finalAttributes.Compostura,
-        Iniciativa: finalAttributes.Destreza + finalAttributes.Compostura,
-        Defesa: Math.min(finalAttributes.Destreza, finalAttributes["Raciocínio"]) + finalSkills.Atletismo,
-        LucidezMaxima: finalAttributes["Raciocínio"] + finalAttributes.Compostura,
+        Tamanho: 5, Vitalidade: 5 + finalAttributes.Stamina,
+        Deslocamento: 5 + finalAttributes.Strength + finalAttributes.Dexterity,
+        ForçaDeVontade: finalAttributes.Resolve + finalAttributes.Composure,
+        Iniciativa: finalAttributes.Dexterity + finalAttributes.Composure,
+        Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
+        LucidezMaxima: finalAttributes.Wits + finalAttributes.Composure,
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
     };

@@ -91,13 +91,18 @@ function KithSkillName({children}:{children:string}) {
   useLayoutEffect(()=>{
     const name=nameRef.current;
     if(!name)return;
+    let frame=0;
     const measure=()=>{
-      setMiddleCount(kithSkillMiddlePieceCount(name.getBoundingClientRect().width));
+      cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        const nextCount=kithSkillMiddlePieceCount(name.getBoundingClientRect().width);
+        setMiddleCount((current)=>current===nextCount?current:nextCount);
+      });
     };
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(name);
-    return()=>observer.disconnect();
+    return()=>{cancelAnimationFrame(frame);observer.disconnect();};
   },[children]);
   return <span ref={nameRef} className="official-trait-name">
     <span className="kith-skill-name-text">{children}</span>

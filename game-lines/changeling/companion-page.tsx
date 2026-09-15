@@ -79,7 +79,7 @@ function FaeCompanionCard({ merit, meritIndex, character, updateSheet }: {
   const ownBallistic = Math.max(0, Math.min(5, Number(configuration.armor_ballistic ?? 0)));
   const health = 12 + (burden ? 2 : 0);
   const mountDamage = stringList(configuration.health_damage).filter((value): value is DamageLevel => ["bashing", "lethal", "aggravated"].includes(value)).slice(0, health);
-  const mountAttributes = { Inteligência: 1, Raciocínio: 3, Perseverança: 3, Força: 5, Destreza: 3, Vigor: 5 + (burden ? 2 : 0), Presença: 3, Manipulação: 1, Compostura: 2 };
+  const mountAttributes = { Intelligence: 1, Wits: 3, Resolve: 3, Strength: 5, Dexterity: 3, Stamina: 5 + (burden ? 2 : 0), Presence: 3, Manipulation: 1, Composure: 2 };
   const special = [
     tr("Pode erguer quatro vezes o peso de um humano com Força e Atletismo equivalentes.", "Can lift four times as much as a human with comparable Strength and Athletics."),
     burden ? tr(`Pode carregar ${1 + merit.dots} cavaleiros.`, `Can carry ${1 + merit.dots} riders.`) : tr("Pode carregar um cavaleiro.", "Can carry one rider."),

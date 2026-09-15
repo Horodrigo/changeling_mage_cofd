@@ -24,11 +24,11 @@ test("Immediate Nimbus allocation is half Gnosis rounded up",()=>{
 
 test("Immediate Nimbus effects cannot exceed its budget or repeat a trait",()=>{
   assert.deepEqual(nimbus.normalizeNimbusTiltEffects([
-    {trait:"Presença",modifier:2},
-    {trait:"Presença",modifier:-1},
+    {trait:"Presence",modifier:2},
+    {trait:"Presence",modifier:-1},
     {trait:"Autocontrole",modifier:-3},
   ],7),[
-    {trait:"Presença",modifier:2},
+    {trait:"Presence",modifier:2},
     {trait:"Autocontrole",modifier:-2},
   ]);
 });

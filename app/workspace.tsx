@@ -2,11 +2,11 @@
 
 import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
+  ArrowDownUp,
   ChevronRight,
   Download,
   FileJson,
   LayoutDashboard,
-  MoreHorizontal,
   Pencil,
   Plus,
   Printer,
@@ -25,8 +25,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
@@ -232,7 +230,7 @@ export function Workspace({
         throw new Error(tr("Versão de schema de personagem não suportada.", "Unsupported character schema version."));
       if (validation !== "valid")
         throw new Error(
-          tr("O JSON não representa uma ficha CtL ou MtA atual válida.","The JSON is not a valid current CtL or MtA character sheet."),
+          tr("O JSON não representa uma ficha CtL, MtA ou VtR atual válida.","The JSON is not a valid current CtL, MtA, or VtR character sheet."),
         );
       await hydrateCharacterCatalogs(parsed.game_line);
       const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(parsed as CharacterSheet));
@@ -303,7 +301,7 @@ export function Workspace({
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className={lineThemeClass}>
-              {(["pt-BR","en-US"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
+              {(["en-US","pt-BR"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
                 <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("portuguese") : t("english")}
               </DropdownMenuItem>)}
             </DropdownMenuContent>
@@ -323,7 +321,6 @@ export function Workspace({
             />
             <div className="top-profile">
               <strong>{displayName}</strong>
-              <span>{locale === "pt-BR" ? `${characters.length} personagem(ns)` : `${characters.length} character${characters.length===1?"":"s"}`}</span>
             </div>
             {selected && <div className="top-sheet-tools">
               {selected.game_line === "CtL" && <Button type="button" size="sm" className="top-sheet-print" onClick={()=>setPrintOpen(true)} title={tr("Imprimir ficha","Print character sheet")}>
@@ -340,34 +337,19 @@ export function Workspace({
             </div>}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="sheet-actions-trigger">
-                  <MoreHorizontal /> {t("sheetActions")}
+                <Button className="sheet-actions-trigger" aria-label={t("sheetActions")} title={t("sheetActions")}>
+                  <ArrowDownUp /> <span>{t("sheetActions")}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className={`sheet-actions-menu${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
-                <DropdownMenuLabel>{t("manageSheets")}</DropdownMenuLabel>
-                <DropdownMenuItem onSelect={() => setEditing("new")}>
-                  <Plus /> {t("createSheet")}
-                </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => fileRef.current?.click()}>
                   <Upload /> {t("importJson")}
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem
                   disabled={!selected}
                   onSelect={() => selected && exportCharacter(selected)}
                 >
                   <Download /> {t("saveJson")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  variant="destructive"
-                  disabled={!selected}
-                  onSelect={(event) => {
-                    event.preventDefault();
-                    if (selected) setDeleteTarget(selected);
-                  }}
-                >
-                  <Trash2 /> {t("deleteSheet")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -401,6 +383,7 @@ export function Workspace({
           <Dashboard
             characters={characters}
             openCharacters={() => navigate("personagens")}
+            createCharacter={() => setEditing("new")}
             openCharacter={(sheet) => { void openCharacter(sheet); }}
             deleteCharacter={setDeleteTarget}
           />
@@ -408,6 +391,7 @@ export function Workspace({
           <Characters
             characters={characters}
             ready={ready}
+            createCharacter={() => setEditing("new")}
             open={(sheet) => { void openCharacter(sheet); }}
             deleteCharacter={setDeleteTarget}
           />
@@ -438,11 +422,13 @@ async function hydrateCharacterCatalogs(gameLine: CharacterSheet["game_line"]) {
 function Dashboard({
   characters,
   openCharacters,
+  createCharacter,
   openCharacter,
   deleteCharacter,
 }: {
   characters: StoredCharacter[];
   openCharacters: () => void;
+  createCharacter: () => void;
   openCharacter: (item: CharacterSheet) => void;
   deleteCharacter: (item: StoredCharacter) => void;
 }) {
@@ -465,7 +451,10 @@ function Dashboard({
           </p>
           <div className="welcome-actions">
             <Button variant="outline" onClick={openCharacters}>
-              {tr("Todos os personagens","All characters")}
+              {tr("Ver personagens","See Characters")}
+            </Button>
+            <Button onClick={createCharacter}>
+              <Plus /> {tr("Novo personagem","New Character")}
             </Button>
           </div>
         </div>
@@ -473,14 +462,21 @@ function Dashboard({
           <img src="/cod-emblem-256.webp" alt="" />
         </div>
       </section>
-      <section className="line-summary wide">
-        <span><strong>{characters.length}</strong> {tr("personagens","characters")}</span>
-        {lineCounts.map(({ registration, count }) => (
-          <span className={registration.summaryClass} key={registration.id}>
-            <strong>{count}</strong> {registration.label}
-          </span>
-        ))}
-      </section>
+      {lineCounts.some(({ count }) => count > 0) && (
+        <section className="line-summary wide" aria-label={tr("Personagens por linha","Characters by game line")}>
+          {lineCounts.filter(({ count }) => count > 0).map(({ registration, count }) => (
+            <span
+              className={`line-summary-item ${registration.summaryClass}`}
+              key={registration.id}
+              aria-label={`${count} ${registration.label}`}
+              title={`${count} ${registration.label}`}
+            >
+              <strong>{count}</strong>
+              <img src={registration.iconSrc} alt="" aria-hidden="true" />
+            </span>
+          ))}
+        </section>
+      )}
       <section className="panel wide recent-panel">
         <div className="panel-heading">
           <div>
@@ -510,7 +506,7 @@ function Dashboard({
             <Sparkles />
             <div>
               <strong>{tr("Comece uma nova crônica","Begin a new chronicle")}</strong>
-              <p>{tr("Use “Ações da ficha” no painel superior para criar seu primeiro personagem.","Use “Character actions” in the top panel to create your first character.")}</p>
+              <p>{tr("Crie seu primeiro personagem para começar a crônica.","Create your first character to begin the chronicle.")}</p>
             </div>
           </div>
         )}
@@ -521,18 +517,20 @@ function Dashboard({
 function Characters({
   characters,
   ready,
+  createCharacter,
   open,
   deleteCharacter,
 }: {
   characters: StoredCharacter[];
   ready: boolean;
+  createCharacter: () => void;
   open: (item: CharacterSheet) => void;
   deleteCharacter: (item: StoredCharacter) => void;
 }) {
   const {tr}=useLanguage();
   return (
     <section className="panel">
-      <div className="panel-heading">
+      <div className="panel-heading characters-panel-heading">
         <div>
           <span className="kicker">{tr("PERSONAGENS","CHARACTERS")}</span>
           <h3>{tr("Suas fichas","Your characters")}</h3>
@@ -540,6 +538,9 @@ function Characters({
             {tr("Abra uma ficha para jogar, atualizar características ou exportar uma cópia.","Open a character to play, update traits, or export a copy.")}
           </p>
         </div>
+        <Button className="characters-create-button" onClick={createCharacter}>
+          <Plus /> {tr("Criar personagem","Create Character")}
+        </Button>
       </div>
       {!ready ? (
         <div className="loading-card">{tr("Carregando personagens…","Loading characters…")}</div>
@@ -557,7 +558,7 @@ function Characters({
       ) : (
         <Empty
           title={tr("Nenhum personagem criado","No characters created")}
-          text={tr("Use “Ações da ficha” no painel superior para criar um Changeling ou Mago.","Use “Character actions” in the top panel to create a Changeling or Mage.")}
+          text={tr("Crie um Changeling, Mago ou Vampiro para começar.","Create a Changeling, Mage, or Vampire to get started.")}
         />
       )}
     </section>
@@ -653,26 +654,37 @@ function CharacterView({
   useLayoutEffect(()=>{
     const editor=editorRef.current;
     if(!editor)return;
+    let frame=0;
     const measure=()=>{
-      const width=editor.getBoundingClientRect().width;
-      const nextMaximum=maximumSheetZoom(width);
-      setMaximumZoom(nextMaximum);
-      setZoom((current)=>Math.min(current,nextMaximum));
+      cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        const width=editor.getBoundingClientRect().width;
+        const nextMaximum=maximumSheetZoom(width);
+        setMaximumZoom((current)=>current===nextMaximum?current:nextMaximum);
+        setZoom((current)=>Math.min(current,nextMaximum));
+      });
     };
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(editor);
-    return()=>observer.disconnect();
+    return()=>{cancelAnimationFrame(frame);observer.disconnect();};
   },[setMaximumZoom,setZoom]);
 
   useLayoutEffect(()=>{
     const surface=zoomSurfaceRef.current;
     if(!surface)return;
-    const measure=()=>setSheetHeight(surface.getBoundingClientRect().height/zoom);
+    let frame=0;
+    const measure=()=>{
+      cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        const nextHeight=surface.getBoundingClientRect().height/zoom;
+        setSheetHeight((current)=>current===nextHeight?current:nextHeight);
+      });
+    };
     measure();
     const observer=new ResizeObserver(measure);
     observer.observe(surface);
-    return()=>observer.disconnect();
+    return()=>{cancelAnimationFrame(frame);observer.disconnect();};
   },[isMobile,zoom]);
 
   const registration=getGameLineRegistration(character.game_line);

@@ -6,17 +6,19 @@ export type Locale = "pt-BR" | "en-US";
 const STORAGE_KEY = "arquivo-das-trevas:locale:v1";
 
 const messages = {
-  "pt-BR": { home:"Início", characters:"Personagens", homebrews:"Homebrews", mainNavigation:"Navegação principal", language:"Idioma", portuguese:"Português", english:"Inglês", sheetActions:"Ações da ficha", manageSheets:"Gerenciar fichas", createSheet:"Criar ficha", importJson:"Importar JSON", saveJson:"Salvar JSON", deleteSheet:"Deletar ficha", closeNotice:"Fechar aviso" },
-  "en-US": { home:"Home", characters:"Characters", homebrews:"Homebrews", mainNavigation:"Main navigation", language:"Language", portuguese:"Portuguese", english:"English", sheetActions:"Character actions", manageSheets:"Manage characters", createSheet:"Create character", importJson:"Import JSON", saveJson:"Save JSON", deleteSheet:"Delete character", closeNotice:"Close notice" },
+  "pt-BR": { home:"Início", characters:"Personagens", homebrews:"Homebrews", mainNavigation:"Navegação principal", language:"Idioma", portuguese:"Português", english:"Inglês", sheetActions:"Importar/Exportar", manageSheets:"Gerenciar fichas", createSheet:"Criar ficha", importJson:"Importar JSON", saveJson:"Exportar JSON", deleteSheet:"Deletar ficha", closeNotice:"Fechar aviso" },
+  "en-US": { home:"Home", characters:"Characters", homebrews:"Homebrews", mainNavigation:"Main navigation", language:"Language", portuguese:"Portuguese", english:"English", sheetActions:"Import/Export", manageSheets:"Manage characters", createSheet:"Create character", importJson:"Import JSON", saveJson:"Export JSON", deleteSheet:"Delete character", closeNotice:"Close notice" },
 } as const;
 type MessageKey = keyof typeof messages["pt-BR"];
 
 const LanguageContext = createContext<{locale:Locale;setLocale:(locale:Locale)=>void;t:(key:MessageKey)=>string;tr:(portuguese:string,english:string)=>string}|null>(null);
 
 const LANGUAGE_CHANGE_EVENT = "characters-of-the-darkness:language-change";
-const serverLocale = ():Locale => "pt-BR";
+// English is the canonical catalog language and the first-run application
+// language. Portuguese is an opt-in presentation preference only.
+const serverLocale = ():Locale => "en-US";
 const browserLocale = ():Locale =>
-  window.localStorage.getItem(STORAGE_KEY) === "en-US" ? "en-US" : "pt-BR";
+  window.localStorage.getItem(STORAGE_KEY) === "pt-BR" ? "pt-BR" : "en-US";
 const subscribeToLocale = (notify:()=>void) => {
   const onStorage = (event:StorageEvent) => {
     if (event.key === STORAGE_KEY) notify();

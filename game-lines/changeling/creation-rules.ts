@@ -135,13 +135,10 @@ export const CTL_THREAD_DEFINITIONS: ChangelingAnchorDefinition[] = [
 
 export const CTL_NEEDLES = CTL_NEEDLE_DEFINITIONS.map((item)=>item.name);
 export const CTL_THREADS = CTL_THREAD_DEFINITIONS.map((item)=>item.name);
-const LEGACY_NEEDLE_NAMES:Record<string,string>={"Mestre de Xadrez":"Chess Master",Comandante:"Commander",Compositor:"Composer",Conselheiro:"Counselor",Audacioso:"Daredevil","Dínamo":"Dynamo",Protetor:"Protector",Provedor:"Provider",Erudito:"Scholar","Contador de Histórias":"Storyteller",Professor:"Teacher",Tradicionalista:"Traditionalist",Visionário:"Visionary"};
-const LEGACY_THREAD_NAMES:Record<string,string>={Aceitação:"Acceptance",Raiva:"Anger",Família:"Family",Amizade:"Friendship",Ódio:"Hate",Honra:"Honor",Alegria:"Joy",Amor:"Love",Memória:"Memory",Vingança:"Revenge"};
-const anchorAliases=(kind:"needle"|"thread")=>kind==="needle"?LEGACY_NEEDLE_NAMES:LEGACY_THREAD_NAMES;
 export function canonicalChangelingAnchorName(kind:"needle"|"thread",name:unknown) {
   const value=String(name??"");
   const definitions=kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS;
-  return definitions.find(item=>item.name===value||item.translatedName===value)?.name??anchorAliases(kind)[value]??value;
+  return definitions.find(item=>item.name===value)?.name??value;
 }
 export function changelingAnchorRecovery(kind:"needle"|"thread",name:unknown,locale:"pt-BR"|"en-US"="en-US") {
   const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===canonicalChangelingAnchorName(kind,name));
@@ -152,7 +149,7 @@ export function changelingAnchorRecovery(kind:"needle"|"thread",name:unknown,loc
 }
 export function changelingAnchorDisplayName(kind:"needle"|"thread",name:unknown,locale:"pt-BR"|"en-US"="en-US") {
   const item=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).find((entry)=>entry.name===canonicalChangelingAnchorName(kind,name));
-  return locale==="pt-BR"?(item?.translatedName??Object.entries(anchorAliases(kind)).find(([,canonical])=>canonical===item?.name)?.[0]??item?.name??String(name??"")):(item?.name??String(name??""));
+  return locale==="pt-BR"?(item?.translatedName??item?.name??String(name??"")):(item?.name??String(name??""));
 }
 export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
 export function changelingFrailtySlots(wyrd: number) {
@@ -168,11 +165,10 @@ export function normalizeChangelingFrailties(value: unknown, wyrd: number) {
     .slice(0, slots);
 }
 
-export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="pt-BR") {
+export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="en-US") {
   const rating = Math.max(1, Math.min(10, Math.trunc(wyrd)));
   const penaltyReduction = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4][rating - 1];
   const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "Unlimited"][rating - 1];
   if(locale==="en-US") return `Wyrd ${rating} (-${penaltyReduction} Fatigue/Disease; ${typeof fruits === "number" ? `${fruits} Goblin Fruits` : `${fruits} Goblin Fruits`})`;
   return `Fado ${rating} (-${penaltyReduction} Fadiga/Doenças; ${typeof fruits === "number" ? `${fruits} Frutas` : "Frutas ilimitadas"})`;
 }
-

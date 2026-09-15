@@ -17,7 +17,7 @@ const {refundPowerRating}=await vite.ssrLoadModule("/lib/power-progression.ts");
 const CHANGELING_MERITS=JSON.parse(readFileSync(new URL("../public/data/core/merits/changeling.json",import.meta.url),"utf8"));
 
 const allocation=(sequence,target,blessingId)=>({id:`a${sequence}`,sequence,target,...(blessingId?{blessingId}:{})});
-function sheet(){return {game_line:"CtL",attributes:{Presença:2,Manipulação:2,Compostura:2},skills:{Empatia:2,Intimidação:2,Persuasão:2,Investigação:2},specializations:[],merits:[{instanceId:"entitlement",name:"Entitlement",dots:4,configuration:{definitionId:"baron-lesser-ones"}},{name:"Hob Kin",dots:1}],line_data:{wyrd:5,entitlement:{definitionId:"baron-lesser-ones",accepted:true,touchstone:{name:"Ana",status:"active"},allocations:[allocation(0,"token"),allocation(1,"blessing","inherited-expertise"),allocation(2,"blessing","hobgoblin-allies"),allocation(3,"token"),allocation(4,"blessing","hostile-oath")],choices:{"inherited-expertise-skill":"Empatia","inherited-expertise-name":"Diplomacy","hobgoblin-allies":"Briarwolves"}}}};}
+function sheet(){return {game_line:"CtL",attributes:{Presence:2,Manipulation:2,Composure:2},skills:{Empathy:2,Intimidation:2,Persuasion:2,Investigation:2},specializations:[],merits:[{instanceId:"entitlement",name:"Entitlement",dots:4,configuration:{definitionId:"baron-lesser-ones"}},{name:"Hob Kin",dots:1}],line_data:{wyrd:5,entitlement:{definitionId:"baron-lesser-ones",accepted:true,touchstone:{name:"Ana",status:"active"},allocations:[allocation(0,"token"),allocation(1,"blessing","inherited-expertise"),allocation(2,"blessing","hobgoblin-allies"),allocation(3,"token"),allocation(4,"blessing","hostile-oath")],choices:{"inherited-expertise-skill":"Empathy","inherited-expertise-name":"Diplomacy","hobgoblin-allies":"Briarwolves"}}}};}
 
 test("catálogo contém seis Entitlements oficiais, oito de Courts e treze de Seemings",()=>{
   assert.equal(ENTITLEMENTS.length,27);
@@ -57,10 +57,10 @@ test("um Título apenas visualizado não concede benefícios antes de Accept Ent
 
 test("benefícios únicos concedem Méritos estruturados e respeitam suspensão",()=>{
   const master=sheet();master.merits=[{name:"Entitlement",dots:4,configuration:{definitionId:"master-of-keys"}}];
-  master.line_data.entitlement={definitionId:"master-of-keys",accepted:true,touchstone:{name:"Jo",status:"active"},allocations:[allocation(0,"blessing","hidden-library")],choices:{"hidden-library":"Investigação"}};
+  master.line_data.entitlement={definitionId:"master-of-keys",accepted:true,touchstone:{name:"Jo",status:"active"},allocations:[allocation(0,"blessing","hidden-library")],choices:{"hidden-library":"Investigation"}};
   synchronizeMeritGrants(master);
   assert.ok(master.merits.some((item)=>item.name==="Safe Place"&&item.dots===1&&item.grantedBy==="Entitlement:master-of-keys"));
-  assert.ok(master.merits.some((item)=>item.name==="Library"&&item.dots===2&&item.configuration.subject==="Investigação"));
+  assert.ok(master.merits.some((item)=>item.name==="Library"&&item.dots===2&&item.configuration.subject==="Investigation"));
   master.line_data.entitlement.suspendedBenefitIds=["hidden-library"];
   synchronizeMeritGrants(master);
   assert.equal(master.merits.some((item)=>item.grantedBy==="Entitlement:master-of-keys"),false);
@@ -77,20 +77,20 @@ test("pré-requisitos específicos consideram título e papel",()=>{
   assert.equal(entitlementPrerequisitesMet(baron,normalizeEntitlementState(current.line_data.entitlement,5,ENTITLEMENTS),current),true);
   current.line_data.wyrd=3;
   assert.equal(entitlementPrerequisitesMet(dauphines,normalizeEntitlementState({definitionId:dauphines.id,roleId:"sophomore"},3,ENTITLEMENTS),current),true);
-  current.attributes.Presença=1;
+  current.attributes.Presence=1;
   assert.equal(entitlementPrerequisitesMet(dauphines,normalizeEntitlementState({definitionId:dauphines.id,roleId:"sophomore"},3,ENTITLEMENTS),current),false);
   const master=ENTITLEMENTS[2];
-  current.attributes.Presença=2;
+  current.attributes.Presence=2;
   assert.equal(entitlementPrerequisitesMet(master,normalizeEntitlementState({definitionId:master.id},3,ENTITLEMENTS),current),true,"o requisito narrativo de um Mérito ligado a segredos não deve ser imposto pelo aplicativo");
   const dancer=ENTITLEMENTS[3],fisher=ENTITLEMENTS[4],rider=ENTITLEMENTS[5];
-  current.skills={...current.skills,Socialização:2,Atletismo:3,Expressão:2,Computação:3};current.attributes.Perseverança=3;
+  current.skills={...current.skills,Socialize:2,Athletics:3,Expression:2,Computer:3};current.attributes.Resolve=3;
   assert.equal(entitlementPrerequisitesMet(dancer,normalizeEntitlementState({definitionId:dancer.id},3,ENTITLEMENTS),current),true,"a especialidade de movimento é deliberadamente adjudicada pelo Narrador");
   assert.equal(entitlementPrerequisitesMet(fisher,normalizeEntitlementState({definitionId:fisher.id},3,ENTITLEMENTS),current),true);
   assert.equal(entitlementPrerequisitesMet(rider,normalizeEntitlementState({definitionId:rider.id},3,ENTITLEMENTS),current),true);
 });
 
 test("Blessings dos títulos de The Hedge concedem apenas Méritos automáticos estruturados",()=>{
-  const current=sheet();current.attributes.Perseverança=3;current.skills={...current.skills,Socialização:2,Atletismo:3,Expressão:2};
+  const current=sheet();current.attributes.Resolve=3;current.skills={...current.skills,Socialize:2,Athletics:3,Expression:2};
   current.merits=[{name:"Entitlement",dots:4,configuration:{definitionId:"thorn-dancer"}}];
   current.line_data.entitlement={definitionId:"thorn-dancer",accepted:true,touchstone:{name:"First Song",status:"active"},allocations:[allocation(0,"blessing","hedge-native-merits")]};
   synchronizeMeritGrants(current);
