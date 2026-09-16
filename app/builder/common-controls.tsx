@@ -106,18 +106,55 @@ export function TraitsStep({
   </div>;
 }
 
-function PriorityRow({ labels, values, setValues, budgets, invalid }: { labels: readonly string[]; values: string[]; setValues: Setter<string[]>; budgets: number[]; invalid: boolean }) {
+function PriorityRow({
+  labels,
+  values,
+  setValues,
+  budgets,
+  invalid,
+}: {
+  labels: readonly string[];
+  values: string[];
+  setValues: Setter<string[]>;
+  budgets: number[];
+  invalid: boolean;
+}) {
   const { locale, tr } = useLanguage();
-  return <div className={invalid ? "priority-row missing-field" : "priority-row"}>
-    {values.map((value, index) => <Choice
-      key={index}
-      label={`${index === 0 ? tr("Primária", "Primary") : index === 1 ? tr("Secundária", "Secondary") : tr("Terciária", "Tertiary")} · ${budgets[index]}`}
-      value={value}
-      setValue={(next) => updateArray(setValues, values, index, next)}
-      options={labels.filter((label) => label === value || !values.includes(label))}
-      optionLabels={Object.fromEntries(labels.map((label) => [label, builderText(locale, label)]))}
-    />)}
-  </div>;
+
+  const setPriority = (index: number, next: string) => {
+    const updated = [...values];
+    const previous = updated[index];
+    const otherIndex = updated.indexOf(next);
+
+    if (otherIndex !== -1 && otherIndex !== index) {
+      updated[otherIndex] = previous;
+    }
+
+    updated[index] = next;
+    setValues(updated);
+  };
+
+  return (
+    <div className={invalid ? "priority-row missing-field" : "priority-row"}>
+      {values.map((value, index) => (
+        <Choice
+          key={index}
+          label={`${index === 0
+            ? tr("Primária", "Primary")
+            : index === 1
+              ? tr("Secundária", "Secondary")
+              : tr("Terciária", "Tertiary")
+          } · ${budgets[index]}`}
+          value={value}
+          setValue={(next) => setPriority(index, next)}
+          options={labels}
+          optionLabels={Object.fromEntries(
+            labels.map((label) => [label, builderText(locale, label)]),
+          )}
+        />
+      ))}
+    </div>
+  );
 }
 
 function DotGroups({ groups, values, setValues, base, maximum, priorities, budgets, missing, prefix }: {
