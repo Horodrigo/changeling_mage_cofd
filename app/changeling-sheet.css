@@ -536,7 +536,7 @@
 }
 
 .ctl-sheet .official-trait-line {
-  min-height: 23px;
+  min-height: 26px;
   border-bottom-color: var(--ctl-rule);
   color: var(--ctl-ink);
   font-family: "Changeling Sheet", Georgia, serif;
@@ -626,10 +626,6 @@
   box-shadow: inset 0 0 0 1.5px #f5f0df;
 }
 
-.ctl-sheet .official-sheet-body {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-}
 
 .ctl-sheet .official-sheet-body > div {
   min-width: 0;

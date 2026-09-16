@@ -200,7 +200,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           <DotRow
             key={item}
             name={item}
-            value={props.arcana[item]}
+            value={props.arcana[item] ?? 0}
             setValue={(value: number) =>
               props.setArcana({ ...props.arcana, [item]: value })
             }
@@ -216,13 +216,13 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           />
         ))}
       </div>
-      {arcanaCreationErrors(props.arcana, pathData).length > 0 && (
+      {arcanaCreationErrors(props.arcana, pathData, locale).length > 0 && (
         <div className="rule-callout" role="alert">
           <ShieldCheck />
           <div>
             <strong>{tr("Revise a distribuição de Arcana:", "Review the Arcana distribution:")}</strong>
             <ul>
-              {arcanaCreationErrors(props.arcana, pathData).map((message) => (
+              {arcanaCreationErrors(props.arcana, pathData, locale).map((message) => (
                 <li key={message}>{message}</li>
               ))}
             </ul>

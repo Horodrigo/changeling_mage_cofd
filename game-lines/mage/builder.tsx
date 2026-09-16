@@ -10,7 +10,7 @@ import {
 } from "@/app/character-builder-shell";
 import { CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
 import { MageBuilderView, type CustomOrderDefinition, type SpellSelection } from "./builder-view";
-import { MTA_ORDERS, MTA_PATHS } from "./creation-rules";
+import { ARCANA, MTA_ORDERS, MTA_PATHS } from "./creation-rules";
 import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -40,9 +40,13 @@ function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
 
 function editableArcana(initial: CharacterSheet | null | undefined) {
   const raw = initial?.line_data.arcana;
-  const values = raw && typeof raw === "object"
-    ? Object.fromEntries(Object.entries(raw as Record<string, unknown>).map(([name, dots]) => [name, Number(dots) || 0]))
-    : {};
+  const values: Record<string, number> = Object.fromEntries(ARCANA.map((name) => [name, 0]));
+  if (raw && typeof raw === "object") {
+    for (const [name, dots] of Object.entries(raw as Record<string, unknown>)) {
+      const numericDots = Number(dots);
+      if (Number.isFinite(numericDots)) values[name] = Math.max(0, numericDots);
+    }
+  }
   for (const [name, dots] of Object.entries(experienceArcanaDots(initial)))
     values[name] = Math.max(0, Number(values[name] ?? 0) - dots);
   return values;
@@ -202,7 +206,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
     if (order === "Nameless" && !customOrder?.name.trim()) add("order", tr("Escolha o nome da Nameless Order", "Choose a name for the Nameless Order"));
     if (order === "Nameless" && namelessInitiationDots >= 2 && (namelessRoteSkills.length !== 3 || new Set(namelessRoteSkills).size !== 3))
       add("merits", tr("Escolha três Perícias de Rota distintas no nível 2 de Mystery Cult Initiation", "Choose three distinct Rote Skills for Mystery Cult Initiation dot 2"));
-    arcanaCreationErrors(arcana, path ? pathData : undefined).forEach((message) => add("arcana", message));
+    arcanaCreationErrors(arcana, path ? pathData : undefined, locale).forEach((message) => add("arcana", message));
     if (hasCreationOrderBenefits && rotes.slice(0, 3).filter((item) => item?.roteSkill && meetsArcanaRequirements(item.requirements, arcana)).length !== 3)
       add("rotes", tr("Três Rotas utilizáveis e suas Perícias", "Three usable Rotes and their Skills"));
     if (praxes.slice(0, gnosis).filter((item) => item && meetsArcanaRequirements(item.requirements, arcana)).length !== gnosis)

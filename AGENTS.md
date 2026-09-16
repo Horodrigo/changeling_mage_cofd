@@ -87,6 +87,7 @@ common Sheet shell   -> selected line Sheet
 - The common Builder owns shared identity, trait allocation, navigation, and generic Merit UI plumbing.
 - Each line Builder owns all line state, eligibility, validation, grants, progression, and final `line_data` construction.
 - The common Sheet owns neutral paper layout and reusable controls.
+- The common Main Sheet owns the shared first-page skeleton: identity/header, Attributes, Skills, Other Traits, Core/Line Traits, Derived Stats, and Experience. Game lines provide the slot content, labels, values, limits, and interactions for their own mechanics; they do not recreate the page geometry.
 - Each line Sheet owns its sections, mechanics, experience flow, and line-specific companions or powers.
 - Inactive line mechanics must not be instantiated or executed.
 - A future line supplies its own Builder and Sheet through the registry.
