@@ -10,10 +10,21 @@ const vite=await createServer({appType:"custom",configFile:false,root,resolve:{a
 after(async()=>vite.close());
 
 test("idioma usa uma preferência global separada dos dados das fichas",async()=>{
-  const {languageStorageKey,localeFlag}=await vite.ssrLoadModule("/lib/i18n.tsx");
+  const {languageStorageKey,localeFlag,translate}=await vite.ssrLoadModule("/lib/i18n.tsx");
   assert.equal(languageStorageKey,"arquivo-das-trevas:locale:v1");
   assert.equal(localeFlag("pt-BR"),"🇧🇷");
   assert.equal(localeFlag("en-US"),"🇺🇸");
+  assert.equal(translate("pt-BR","builder.eligibility.requiredPoints",{required:5}),"Distribua 5 pontos.");
+  assert.equal(translate("en-US","builder.eligibility.requiredPoints",{required:5}),"Allocate 5 points.");
+  assert.equal(translate("en-US","sheet.clna"),"[missing translation: sheet.clna]");
+});
+
+test("todos os locales possuem exatamente as mesmas chaves de mensagem",async()=>{
+  const {messages}=await vite.ssrLoadModule("/lib/i18n.tsx");
+  const keys=(value,prefix="")=>Object.entries(value).flatMap(([key,child])=>
+    typeof child==="string"?[`${prefix}${key}`]:keys(child,`${prefix}${key}.`),
+  ).sort();
+  assert.deepEqual(keys(messages["pt-BR"]),keys(messages["en-US"]));
 });
 
 test("inglês é o idioma inicial e catálogos não recorrem silenciosamente ao português",()=>{
@@ -30,7 +41,7 @@ test("seletor fica após Homebrews e mantém rótulo acessível",()=>{
   const source=readFileSync(new URL("../app/workspace.tsx",import.meta.url),"utf8");
   const infrastructure=readFileSync(new URL("../lib/i18n.tsx",import.meta.url),"utf8");
   assert.ok(source.indexOf("nav.map")<source.indexOf("language-trigger"));
-  assert.match(source,/aria-label=\{`\$\{t\("language"\)\}/);
+  assert.match(source,/aria-label=\{t\("workspace\.languageCurrent"/);
   assert.match(infrastructure,/document\.documentElement\.lang/);
 });
 

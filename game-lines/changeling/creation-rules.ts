@@ -165,10 +165,34 @@ export function normalizeChangelingFrailties(value: unknown, wyrd: number) {
     .slice(0, slots);
 }
 
-export function wyrdSummary(wyrd: number, locale:"pt-BR"|"en-US"="en-US") {
+export function wyrdSummary(
+  wyrd: number,
+  locale: "pt-BR" | "en-US" = "en-US"
+) {
   const rating = Math.max(1, Math.min(10, Math.trunc(wyrd)));
-  const penaltyReduction = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4][rating - 1];
-  const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "Unlimited"][rating - 1];
-  if(locale==="en-US") return `Wyrd ${rating} (-${penaltyReduction} Fatigue/Disease; ${typeof fruits === "number" ? `${fruits} Goblin Fruits` : `${fruits} Goblin Fruits`})`;
-  return `Fado ${rating} (-${penaltyReduction} Fadiga/Doenças; ${typeof fruits === "number" ? `${fruits} Frutas` : "Frutas ilimitadas"})`;
+
+  const penaltyReduction = Math.ceil(rating / 3);
+
+  const fruitLimits = [
+    [10, "Unlimited"],
+    [9, 101],
+    [7, 29],
+    [4, 13],
+    [2, 7],
+  ] as const;
+
+  const fruits =
+    fruitLimits.find(([level]) => rating >= level)?.[1] ?? 3;
+
+  if (locale === "en-US") {
+    const fruitText =
+      typeof fruits === "number" ? fruits : "Unlimited";
+
+    return `Illness/Fatigue: −${penaltyReduction} penalty reduction, +${penaltyReduction} resistance \n Goblin Fruits: ${fruitText}`;
+  }
+
+  const fruitText =
+    typeof fruits === "number" ? fruits : "Ilimitadas";
+
+  return `Doenças/Fadiga: Redução de −${penaltyReduction} na penalidade, +${penaltyReduction} de resistência \n Frutas Goblin: ${fruitText}`;
 }

@@ -40,7 +40,7 @@ function selectedConditions(value: unknown): SelectedCondition[] {
 
 export function VampireCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
   if (!catalogs) throw new Error("Vampire sheet requires its catalog snapshot.");
-  const { locale, tr } = useLanguage();
+  const { locale, t, tr } = useLanguage();
   const isMobile = useIsMobile();
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
@@ -56,6 +56,11 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const limits = bloodPotencyRow(reference, bloodPotency);
+  const feedingTierLabel = {
+    Animals: tr("Animais", "Animals"),
+    Humans: tr("Humanos", "Humans"),
+    Kindred: tr("Vampiros", "Kindred"),
+  } satisfies Record<typeof limits.feedingTier, string>;
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
@@ -74,21 +79,42 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
   const identity = <section className="sheet-identity-grid">
     <SheetField label={tr("Nome", "Name")} value={character.character.name} />
-    <SheetField label="Mask" value={localized(mask, locale)} tooltip={mask?.singleWillpower} />
-    <SheetField label={tr("Clã", "Clan")} value={localized(clan, locale)} />
+    <SheetField label={t("sheet.mask")} value={localized(mask, locale)} tooltip={mask?.singleWillpower} />
+    <SheetField label={t("sheet.clan")} value={localized(clan, locale)} />
     <SheetField label={tr("Jogador", "Player")} value={character.character.player} />
-    <SheetField label="Dirge" value={localized(dirge, locale)} tooltip={dirge?.allWillpower} />
-    <SheetField label="Bloodline" value={String(data.bloodline ?? "")} />
+    <SheetField label={t("sheet.dirge")} value={localized(dirge, locale)} tooltip={dirge?.allWillpower} />
+    <SheetField label={t("sheet.bloodline")} value={String(data.bloodline ?? "")} />
     <SheetField label={tr("Crônica", "Chronicle")} value={character.character.chronicle} />
     <SheetField label={tr("Conceito", "Concept")} value={character.character.concept} />
-    <SheetField label="Covenant" value={localized(covenant, locale)} />
+    <SheetField label={t("sheet.covenant")} value={localized(covenant, locale)} />
   </section>;
   const attributes = <>
     <SheetHeading>{tr("Atributos", "Attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div>
   </>;
   const skills = <>
-    <SheetHeading>{tr("Perícias", "Skills")}</SheetHeading><div className={isMobile ? "mobile-trait-stack" : "vampire-skill-grid"}>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations.map((item) => typeof item === "string" ? { skill: "", name: item } : item)} />)}</div>
-  </>;
+  <SheetHeading>{tr("Perícias", "Skills")}</SheetHeading>
+
+  <div className={isMobile ? "mobile-trait-stack" : "vampire-skill-grid"}>
+    {Object.entries(SKILLS).map(([category, names]) =>
+      <TraitBlock
+        key={category}
+        title={category}
+        subtitle={
+          category === "Mental"
+            ? tr("(-3 se não treinado)", "(-3 if Untrained)")
+            : tr("(-1 se não treinado)", "(-1 if Untrained)")
+        }
+        names={names}
+        values={character.skills}
+        specialties={character.specializations.map((item) =>
+          typeof item === "string"
+            ? { skill: "", name: item }
+            : item
+        )}
+      />
+    )}
+  </div>
+</>;
   const stats = <>{attributes}{skills}</>;
   const summary = <>{identity}<SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} /><SheetHeading>{tr("Experiência", "Experience")}</SheetHeading><VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></>;
   const details = <>
@@ -97,7 +123,16 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetHeading>{tr("Condições", "Conditions")}</SheetHeading><ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />
   </>;
   const powerPage = <>
-    <PowerResource name={tr("Potência de Sangue", "Blood Potency")} rating={bloodPotency} resourceName="Vitae" current={vitae} maximum={vitaeMaximum} perTurn={limits.vitaePerTurn} onChange={(value) => setState("vitae_current", value)} summary={`${tr("Limite de Característica", "Trait maximum")}: ${limits.traitMaximum} · ${tr("Alimentação", "Feeding")}: ${limits.feedingTier}`} />
+    <PowerResource
+      name={tr("Potência de Sangue", "Blood Potency")}
+      rating={bloodPotency}
+      resourceName="Vitae"
+      current={vitae}
+      maximum={vitaeMaximum}
+      perTurn={limits.vitaePerTurn}
+      onChange={(value) => setState("vitae_current", value)}
+      summary={`${tr("Pode se alimentar de", "Can feed from")}: ${feedingTierLabel[limits.feedingTier]}`}
+    />
     <SheetHeading>{tr("Disciplinas", "Disciplines")}</SheetHeading><div className="vampire-power-grid">{powers.disciplines.filter((item) => disciplines[item.name] > 0).map((item) => <article key={item.id}><header><strong>{localized(item, locale)}</strong><DotValue value={disciplines[item.name]} /></header><p>{item.summary}</p>{item.levels.filter((level) => level.rating <= disciplines[item.name]).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>)}</div>
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
     <PurchasedPowers character={character} powers={powers} locale={locale} scope="devotions" />
@@ -107,13 +142,35 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const combat = <><div className="vampire-track-grid"><section><SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></section><section><SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><ResourceTrack label={tr("Força de Vontade", "Willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></section></div><CombatPage character={character} derived={derived} updateSheet={updateSheet} /><SheetHeading>{tr("Referências Kindred", "Kindred References")}</SheetHeading><div className="vampire-reference-grid"><article className="vampire-lore-card"><strong>Physical Intensity</strong><p>{tr("Gaste 1 Vitae para receber +2 nas rolagens de um Atributo Físico escolhido durante o turno.", "Spend 1 Vitae for +2 on rolls using one chosen Physical Attribute for the turn.")}</p></article><article className="vampire-lore-card"><strong>{tr("Cura", "Healing")}</strong><p>{tr("1 Vitae cura dois níveis de dano contusivo ou um letal. Dano agravado exige cinco Vitae e um dia.", "1 Vitae heals two bashing or one lethal damage. Aggravated damage requires five Vitae and one day.")}</p></article><article className="vampire-lore-card"><strong>Predatory Aura</strong><p>{tr("Escolha o aspecto Monstrous, Seductive ou Competitive e resolva a interação conforme a regra da mesa.", "Choose the Monstrous, Seductive, or Competitive aspect and resolve the interaction at the table.")}</p></article><article className="vampire-lore-card"><strong>Frenzy</strong><p>{tr("A ficha mantém recursos e estados; resistência, Riding the Wave e consequências permanecem decisões da mesa.", "The sheet tracks resources and states; resistance, Riding the Wave, and consequences remain table decisions.")}</p></article></div></>;
   const records = <><VampireStateControls character={character} setState={setState} baseTorpor={torporReference?.duration ?? "—"} bloodPotency={bloodPotency} /><SheetHeading>Blood Bonds</SheetHeading><StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={tr("Estágio", "Stage")} onChange={(value) => setState("blood_bonds", value)} /><SheetHeading>{tr("Dependência de Vitae", "Vitae Addiction")}</SheetHeading><StructuredRecords values={objectArray(character.current_state.vitae_addictions)} onChange={(value) => setState("vitae_addictions", value)} /><SheetHeading>{tr("Anotações", "Notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></>;
   const mainBody = <MainSheet className="vampire-main-body" identity={identity} attributes={attributes} skills={skills}
-    specificPowers={<div className="vampire-main-disciplines">{VAMPIRE_DISCIPLINES.map((name) => <VampireDisciplineLine key={name} name={vampireDisciplineDisplayName(name, powers.disciplines, locale)} value={Number(disciplines[name] ?? 0)} />)}</div>}
+   specificPowers={
+      <div className="vampire-main-disciplines">
+        {VAMPIRE_DISCIPLINES
+          .filter((name) =>
+            clan?.disciplines.includes(name) ||
+            Number(disciplines[name] ?? 0) > 0
+          )
+          .map((name) => (
+            <VampireDisciplineLine
+              key={name}
+              name={vampireDisciplineDisplayName(name, powers.disciplines, locale)}
+              value={Number(disciplines[name] ?? 0)}
+            />
+          ))}
+      </div>
+    }
     merits={<MeritList character={character} catalog={merits} locale={locale} />}
     aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />}
     conditions={<ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />}
     health={<><SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></>}
     willpower={<><SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><ResourceTrack label={tr("Força de Vontade", "Willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>}
-    specificPowersTitle={tr("Disciplinas", "Disciplines")} powerStat={<MainPowerStat label={tr("Potência de Sangue", "Blood Potency")} value={bloodPotency} summary={`${tr("Limite de Característica", "Trait maximum")}: ${limits.traitMaximum} · ${tr("Alimentação", "Feeding")}: ${limits.feedingTier}`} />}
+    specificPowersTitle={tr("Disciplinas", "Disciplines")}
+    powerStat={
+      <MainPowerStat
+        label={tr("Potência de Sangue", "Blood Potency")}
+        value={bloodPotency}
+        summary={`${tr("Pode se alimentar de", "Can feed from")}: ${feedingTierLabel[limits.feedingTier]}`}
+      />
+    }
     fuel={<MainFuel label="Vitae" current={vitae} maximum={vitaeMaximum} onChange={(value) => setState("vitae_current", value)} />}
     stability={<><SheetHeading>{tr("Humanidade", "Humanity")}</SheetHeading><div className="humanity-track"><DotValue value={humanity} max={10} /></div></>}
     derived={derived} experience={<VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />} />;
@@ -145,6 +202,7 @@ function TouchstoneEditor({ character, updateSheet, values }: { character: Chara
 }
 
 function PurchasedPowers({ character, powers, locale, scope = "all" }: { character: CharacterSheet; powers: VampirePowers; locale: string; scope?: "all" | "devotions" | "covenant" }) {
+  const { t } = useLanguage();
   const ids = new Set(stringList(character.line_data.devotion_ids));
   const sorcery = character.line_data.blood_sorcery && typeof character.line_data.blood_sorcery === "object" && !Array.isArray(character.line_data.blood_sorcery) ? character.line_data.blood_sorcery as Record<string, unknown> : {};
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" && !Array.isArray(character.line_data.ordo_dracul) ? character.line_data.ordo_dracul as Record<string, unknown> : {};
@@ -153,7 +211,7 @@ function PurchasedPowers({ character, powers, locale, scope = "all" }: { charact
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" && !Array.isArray(ordo.coil_ratings) ? ordo.coil_ratings as Record<string, unknown> : {};
   const selected = [...(scope !== "covenant" ? powers.devotions.filter((item) => ids.has(item.id)) : []), ...(scope !== "devotions" ? [...powers.cruacRites, ...powers.thebanMiracles].filter((item) => sorceryIds.has(item.id)) : []), ...(scope !== "devotions" ? powers.coils.filter((item) => Number(coilRatings[item.id] ?? 0) > 0) : []), ...(scope !== "devotions" ? powers.scales.filter((item) => scaleIds.has(item.id)) : [])];
   if (!selected.length) return null;
-  return <><SheetHeading>{locale === "pt-BR" ? "Outros Poderes" : "Other Powers"}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => { const rating = item.kind === "coil" ? Number(coilRatings[item.id] ?? 0) : item.rating; return <article key={item.id}><header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header><small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small><p>{item.summary}</p>{item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>; })}</div></>;
+  return <><SheetHeading>{t("sheet.otherPowers")}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => { const rating = item.kind === "coil" ? Number(coilRatings[item.id] ?? 0) : item.rating; return <article key={item.id}><header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header><small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small><p>{item.summary}</p>{item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>; })}</div></>;
 }
 
 function ProteanChoicesEditor({ character, updateSheet, rating }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; rating: number }) {

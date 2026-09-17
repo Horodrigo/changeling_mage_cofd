@@ -29,35 +29,50 @@
   --ctl-paper: #eee6d2;
   --ctl-paper-light: rgba(255, 254, 249, .62);
   --ctl-ornament-fill: #e7eadf;
-  --ctl-frame-rail-x: 160px;
+
+  --ctl-frame-rail-x: 150px;
   --ctl-frame-rail-y: 25px;
   --ctl-frame-side-x: 25px;
   --ctl-frame-corner-depth: 133px;
-  --ctl-frame-center-gap: 45px;
+  --ctl-frame-center-gap: 25px;
   --ctl-frame-star-width: 44px;
-  --ctl-frame-star-height: 63px;
+  --ctl-frame-star-height: 64px;
   --ctl-frame-star-half-height: 30px;
-  --ctl-frame-star-side-offset: 35px;
-  --ctl-frame-star-side-width: 21px;
-  --ctl-frame-star-side-height: 23px;
+  --ctl-frame-star-side-offset: 20px;
+  --ctl-frame-star-side-width: 11px;
+  --ctl-frame-star-side-height: 24px;
   --ctl-frame-star-side-half-height: 9.5px;
+
   --sheet-accent: var(--ctl-ink);
   --sheet-ink: var(--ctl-ink);
+
   padding: 48px 52px 60px;
+
+  border: 2px solid rgba(23, 56, 35, .45);
   border-radius: 0;
+
   background-color: var(--ctl-paper);
-  background-image:
-    linear-gradient(90deg, rgba(202, 219, 190, .58) 0, rgba(239, 231, 211, 0) 7%, rgba(239, 231, 211, 0) 93%, rgba(202, 219, 190, .58) 100%),
-    url("/changeling-paper-texture.webp");
-  background-repeat: no-repeat, repeat;
-  background-size: auto, 1024px 1024px;
-  box-shadow: 0 16px 48px rgba(19, 39, 27, .16), inset 0 0 42px rgba(49, 95, 67, .08);
+  background-image: url("/changeling/style/changeling-paper-texture.webp");
+  background-repeat: repeat;
+  background-size: 1024px 1024px;
+
+  box-shadow:
+    0 16px 48px rgba(19, 39, 27, .16);
+
   font-family: "Changeling Sheet", Georgia, "Times New Roman", serif;
   font-synthesis: none;
 }
 
 .ctl-sheet > :not(.ctl-botanical-frame) {
   z-index: 2;
+}
+
+.ctl-sheet::after {
+  background-image: url("/changeling/style/background-changeling.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+   background-size: 55% 55%;
+  opacity: .20;
 }
 
 .ctl-botanical-frame {
@@ -134,7 +149,8 @@
   height: var(--ctl-frame-star-height);
   background-image: url("/changeling/style/frame-star-center.webp");
   background-position: center;
-  background-size: contain;
+  background-size: 50%;
+  background-repeat: no-repeat; 
   transform: translateX(-50%);
 }
 
@@ -259,7 +275,7 @@
 .ctl-sheet .cod-sheet-title .ctl-title-mark {
   display: block;
 
-  width: 330px;
+  width: 380px;
   max-width: 100%;
   aspect-ratio: 998 / 190;
   overflow: hidden;
@@ -286,11 +302,13 @@
 
 .ctl-sheet .cod-sheet-title strong {
   position: absolute;
-  top: 70%;
-  left: 310px;
-  transform: translateY(-50%);
+  top: 65%;
+  left: 350px;
+
+  transform: translateY(-50%) scaleY(1.05);
+
   white-space: nowrap;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
   letter-spacing: .22em;
 }
@@ -401,22 +419,30 @@
 
 .ctl-sheet .official-field span {
   color: var(--ctl-ink);
-  font-family: "Changeling Sheet Small Caps", "Changeling Sheet", Georgia, serif;
+
+  font-family: "Changeling Sheet", Georgia, serif;
   font-size: 16px;
   font-weight: 400;
-  letter-spacing: .01em;
+
+  font-variant-caps: small-caps;
   text-transform: none;
+
+  letter-spacing: .02em;
 }
 
 .ctl-sheet .official-field strong,
 .ctl-sheet .legacy-sheet-field button {
   min-height: 22px;
+
   border-bottom-color: rgba(23, 56, 35, .66);
-  color: var(--ctl-ink);
-  font-family: "Changeling Sheet", Georgia, serif;
-  font-size: 16px;
+
+  color: #191914;
+
+  font-family: "Changeling Sheet", Georgia, "Times New Roman", serif;
+  font-size: 17px;
   font-style: italic;
   font-weight: 400;
+
   line-height: 21px;
 }
 
@@ -443,6 +469,41 @@
 
   background-image:
     url("/changeling/style/divider-terminal.webp"),
+    linear-gradient(var(--ctl-rule), var(--ctl-rule)),
+    linear-gradient(var(--ctl-rule), var(--ctl-rule));
+
+  background-position:
+    left center,
+    right calc(50% - 1px),
+    right calc(50% + 1px);
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+  background-size:
+    auto 16px,
+    calc(100% - 18px) 1px,
+    calc(100% - 18px) 1px;
+
+  opacity: .9;
+}
+
+/* Headings com apenas uma linha */
+.ctl-sheet .official-heading.ctl-single-divider::before,
+.ctl-sheet .official-heading.ctl-single-divider::after,
+
+.ctl-sheet .official-heading.main-sheet-merits-heading::before,
+.ctl-sheet .official-heading.main-sheet-merits-heading::after,
+
+.ctl-sheet .official-heading.main-sheet-aspirations-heading::before,
+.ctl-sheet .official-heading.main-sheet-aspirations-heading::after,
+
+.ctl-sheet .official-heading.main-sheet-conditions-heading::before,
+.ctl-sheet .official-heading.main-sheet-conditions-heading::after {
+  background-image:
+    url("/changeling/style/divider-terminal.webp"),
     linear-gradient(
       var(--ctl-rule),
       var(--ctl-rule)
@@ -459,8 +520,6 @@
   background-size:
     auto 16px,
     calc(100% - 18px) 1px;
-
-  opacity: .9;
 }
 
 .ctl-sheet .official-heading::after {
@@ -477,8 +536,9 @@
   position: relative;
   isolation: isolate;
   justify-content: center;
-  min-height: 54px;
-  margin-top: 13px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .ctl-sheet .official-heading.ctl-attributes-heading::before,
@@ -489,14 +549,19 @@
   width: calc(50% - 72px);
   height: 54px;
   min-width: 0;
+
   background-image:
-    url("/changeling/style/attributes-divider-corner.webp"),
-    url("/changeling/style/attributes-divider-middle.webp"),
     url("/changeling/style/attributes-divider-leaf.webp"),
-    linear-gradient(transparent 49%, var(--ctl-rule) 49%, var(--ctl-rule) 52%, transparent 52%);
-  background-position: left center, 46% center, right center, center;
-  background-repeat: no-repeat;
-  background-size: auto 34px, auto 36px, auto 40px, 100% 100%;
+    url("/changeling/style/attributes-divider.webp");
+
+  background-position:
+  100% center,
+  left center;
+
+background-size:
+  auto 26px,
+  calc(100% - 55px) auto;
+
   opacity: 1;
 }
 
@@ -526,26 +591,39 @@
 }
 
 .ctl-sheet .official-trait-block h4 {
-  margin: 0 0 3px;
+  margin: 0 0 -5px;
   color: var(--ctl-ink);
-  font-family: "Changeling Sheet Small Caps", "Changeling Sheet", Georgia, serif;
+
+  font-family:
+    "Changeling Sheet",
+    Georgia,
+    "Times New Roman",
+    serif;
   font-size: 17px;
+
   font-weight: 400;
   letter-spacing: .01em;
   text-transform: none;
 }
 
+.ctl-sheet .official-trait-grid .official-trait-block h4 {
+  font-size: 20px;
+}
+
 .ctl-sheet .official-trait-line {
   min-height: 26px;
   border-bottom-color: var(--ctl-rule);
-  color: var(--ctl-ink);
+
+  color: #1d1b16;
+
   font-family: "Changeling Sheet", Georgia, serif;
   font-size: 15px;
   line-height: 1.05;
 }
 
 .ctl-sheet .official-trait-line small {
-  color: rgba(23, 56, 35, .66);
+  color: #777169;
+
   font-family: "Changeling Sheet", Georgia, serif;
   font-size: 11px;
   font-style: italic;
@@ -626,21 +704,29 @@
   box-shadow: inset 0 0 0 1.5px #f5f0df;
 }
 
+.ctl-sheet .official-sheet-body {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
 
-.ctl-sheet .official-sheet-body > div {
+.ctl-sheet .official-sheet-body > section {
   min-width: 0;
   padding: 0 15px;
 }
 
-.ctl-sheet .official-sheet-body > div:first-child { padding-left: 0px; }
-.ctl-sheet .official-sheet-body > div:last-child { padding-right: 0px; }
-.ctl-sheet .official-sheet-body > div + div {
-  border-left: 0;
-  background-image: url("/changeling/style/vertical-rule.webp");
-  background-position: left center;
-  background-repeat: repeat-y;
-  background-size: 3px auto;
+.ctl-sheet .official-sheet-body > section:first-child {
+  padding-left: 0;
 }
+
+.ctl-sheet .official-sheet-body > section:last-child {
+  padding-right: 0;
+}
+
+.ctl-sheet .official-sheet-body > section + section {
+  border-left: 1px solid rgba(23, 56, 35, .35);
+  background-image: none;
+}
+
 .ctl-sheet .sheet-skills-column .official-trait-block { margin-bottom: 13px; }
 
 .ctl-sheet .official-lines > div,
@@ -687,19 +773,138 @@
 
 .ctl-sheet .power-resource,
 .ctl-sheet .experience-panel {
+  --panel-notch: 8px;
+
   position: relative;
-  border: 1px solid rgba(23, 56, 35, .58);
+  isolation: isolate;
+
+  border: 0;
   border-radius: 0;
-  background-color: rgba(243, 239, 226, .34);
-  background-image:
-    url("/changeling/style/frame-star-side.webp"),
-    url("/changeling/style/frame-star-side.webp"),
-    url("/changeling/style/frame-star-side.webp"),
-    url("/changeling/style/frame-star-side.webp");
-  background-position: -6px -6px, calc(100% + 6px) -6px, -6px calc(100% + 6px), calc(100% + 6px) calc(100% + 6px);
-  background-repeat: no-repeat;
-  background-size: 15px 15px;
+
+  background: transparent;
   box-shadow: none;
+}
+
+/* Moldura externa */
+.ctl-sheet .power-resource::before,
+.ctl-sheet .experience-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  background: rgba(23, 56, 35, .40);
+
+  -webkit-mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    );
+
+  mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--panel-notch),
+      #000 calc(var(--panel-notch) + .5px)
+    );
+
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+
+  pointer-events: none;
+}
+
+/* Fundo interno */
+.ctl-sheet .power-resource::after,
+.ctl-sheet .experience-panel::after {
+  --panel-inner-notch: 7px;
+
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+
+  background: var(--ctl-paper);
+
+  -webkit-mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    );
+
+  mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--panel-inner-notch),
+      #000 calc(var(--panel-inner-notch) + .5px)
+    );
+
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+
+  pointer-events: none;
 }
 
 .ctl-sheet .power-resource {
@@ -781,6 +986,147 @@
   background: rgba(210, 226, 218, .72);
 }
 
+.ctl-sheet .experience-actions button.ctl-purchase-trait-button {
+  --notch: 7px;
+
+  position: relative;
+  isolation: isolate;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  width: auto;
+  min-width: 0;
+  height: 30px;
+  min-height: 30px;
+
+  padding: 0 20px;
+
+  border: 0;
+  border-radius: 0;
+
+  color: var(--ctl-ink);
+  background: transparent;
+  box-shadow: none;
+
+  font-family: "Changeling Sheet", Georgia, serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+
+  overflow: visible;
+}
+
+/* Moldura externa */
+.ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  background: rgba(23, 56, 35, .58);
+
+  -webkit-mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    );
+
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Interior do botão */
+.ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+
+  --inner-notch: 7px;
+
+  background: rgba(238, 239, 226, .88);
+
+  -webkit-mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    );
+
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Ícone */
+.ctl-sheet .ctl-purchase-trait-icon {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+
+  background:
+    url("/changeling/style/purchase-trait-icon.webp")
+    center / contain no-repeat;
+}
+
+/* Hover */
+.ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover {
+  color: var(--ctl-ink);
+  background: transparent;
+}
+
+.ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
+  background: rgba(228, 234, 220, .95);
+}
+
+.ctl-sheet .permanent-resource-actions .catalog-selection-action {
+  color: var(--ctl-ink);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  padding-inline: 4px;
+}
+
+.ctl-sheet .permanent-resource-actions .catalog-selection-action:hover {
+  color: var(--ctl-ink);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
 .ctl-sheet .contract-power-card,
 .ctl-sheet .selected-condition,
 .ctl-sheet .selected-tilt {
@@ -838,12 +1184,22 @@
     --ctl-frame-star-side-width: 18px;
     --ctl-frame-star-side-height: 16px;
     --ctl-frame-star-side-half-height: 8px;
+
     padding-inline: 42px;
   }
 
-  .ctl-frame-corner { width: 150px; }
-  .ctl-sheet .official-sheet-body > div { padding-inline: 11px; }
-  .ctl-sheet .official-trait-grid > .official-trait-block { padding-inline: 12px; }
+  .ctl-frame-corner {
+    width: 150px;
+  }
+
+  /* O MainSheet atual usa <section>, não <div>. */
+  .ctl-sheet .official-sheet-body > section {
+    padding-inline: 11px;
+  }
+
+  .ctl-sheet .official-trait-grid > .official-trait-block {
+    padding-inline: 12px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -860,17 +1216,39 @@
     --ctl-frame-star-side-width: 16px;
     --ctl-frame-star-side-height: 14px;
     --ctl-frame-star-side-half-height: 7px;
+
     padding: 28px 20px 34px;
   }
 
-  .ctl-frame-corner { width: 92px; opacity: .82; }
-  .ctl-frame-corner-top-left,
-  .ctl-frame-corner-top-right { height: 86px; }
-  .ctl-frame-corner-bottom-left,
-  .ctl-frame-corner-bottom-right { height: 101px; }
-  .ctl-frame-edge-left,
-  .ctl-frame-edge-right { opacity: .68; }
+  /* Mantém a marca d'água central em uma escala adequada ao celular. */
+  .ctl-sheet::after {
+    background-position: center 42%;
+    background-size: 72% auto;
+    opacity: .17;
+  }
 
+  /* Moldura externa */
+  .ctl-frame-corner {
+    width: 92px;
+    opacity: .82;
+  }
+
+  .ctl-frame-corner-top-left,
+  .ctl-frame-corner-top-right {
+    height: 86px;
+  }
+
+  .ctl-frame-corner-bottom-left,
+  .ctl-frame-corner-bottom-right {
+    height: 101px;
+  }
+
+  .ctl-frame-edge-left,
+  .ctl-frame-edge-right {
+    opacity: .68;
+  }
+
+  /* Título */
   .ctl-sheet .cod-sheet-title {
     min-height: 58px;
     margin-inline: -4px;
@@ -887,47 +1265,231 @@
     width: 100%;
     max-width: 380px;
   }
+
   .ctl-sheet .cod-sheet-title strong {
     position: static;
     justify-self: end;
     align-self: auto;
+
     margin: -2px 3px 0 0;
+
     transform: none;
+
     font-size: clamp(13px, 4.2vw, 16px);
     letter-spacing: .28em;
   }
 
+  .ctl-sheet .cod-sheet-title p {
+    font-size: 10px;
+    letter-spacing: .20em;
+  }
+
+  /* Campos de identidade */
+  .ctl-sheet .sheet-identity-grid {
+    gap: 6px 14px;
+    padding: 14px 3px 6px;
+  }
+
+  .ctl-sheet .official-field {
+    gap: 5px;
+  }
+
+  .ctl-sheet .official-field span {
+    font-size: 15px;
+  }
+
+  .ctl-sheet .official-field strong,
+  .ctl-sheet .legacy-sheet-field button {
+    min-height: 21px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  /*
+   * No celular as colunas deixam de funcionar como as três colunas
+   * paralelas do desktop. Remove divisores verticais e padding lateral
+   * herdado desses layouts.
+   */
   .ctl-sheet .official-trait-grid > .official-trait-block,
-  .ctl-sheet .official-sheet-body > div,
+  .ctl-sheet .official-sheet-body > section,
   .ctl-sheet .sheet-bottom-grid > section {
     padding-inline: 0;
     border-left: 0 !important;
     background-image: none;
   }
 
-  .ctl-sheet .sheet-bottom-grid.mage-bottom-grid { grid-template-columns: 1fr; }
-  .ctl-sheet .sheet-bottom-grid > section + section { margin-top: 8px; }
-  .ctl-sheet .official-heading { font-size: 21px; }
+  .ctl-sheet .official-sheet-body {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ctl-sheet .official-sheet-body > section + section {
+    margin-top: 8px;
+  }
+
+  .ctl-sheet .sheet-bottom-grid.mage-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctl-sheet .sheet-bottom-grid > section + section {
+    margin-top: 8px;
+  }
+
+  /* Headings */
+  .ctl-sheet .official-heading {
+    gap: 7px;
+    margin: 15px 0 7px;
+    font-size: 21px;
+  }
+
+  .ctl-sheet .experience-actions button.ctl-purchase-trait-button {
+    gap: 7px;
+    min-height: 30px;
+    padding-inline: 16px;
+    font-size: 14px;
+  }
+
+  .ctl-sheet .ctl-purchase-trait-icon {
+    width: 19px;
+    height: 19px;
+    min-width: 19px;
+    flex: 0 0 19px;
+  }
+
+  /*
+   * Headings padrão continuam com as duas linhas,
+   * como no desktop.
+   */
   .ctl-sheet .official-heading::before,
   .ctl-sheet .official-heading::after {
-    height: 16px;
+    min-width: 18px;
+    height: 15px;
 
     background-size:
-      auto 16px,
-      calc(100% - 18px) 1px;
+      auto 15px,
+      calc(100% - 17px) 1px,
+      calc(100% - 17px) 1px;
+  }
+
+  /*
+   * As exceções que usam uma linha no desktop continuam com
+   * uma única linha também no celular.
+   */
+  .ctl-sheet .official-heading.ctl-single-divider::before,
+  .ctl-sheet .official-heading.ctl-single-divider::after,
+  .ctl-sheet .official-heading.main-sheet-merits-heading::before,
+  .ctl-sheet .official-heading.main-sheet-merits-heading::after,
+  .ctl-sheet .official-heading.main-sheet-aspirations-heading::before,
+  .ctl-sheet .official-heading.main-sheet-aspirations-heading::after,
+  .ctl-sheet .official-heading.main-sheet-conditions-heading::before,
+  .ctl-sheet .official-heading.main-sheet-conditions-heading::after {
+    background-size:
+      auto 15px,
+      calc(100% - 17px) 1px;
+  }
+
+  /*
+   * Atributos no celular:
+   * usa SOMENTE attributes-divider-leaf.webp.
+   * attributes-divider.webp não é carregado neste breakpoint.
+   */
+  .ctl-sheet .official-heading.ctl-attributes-heading {
+    margin-top: 1px;
+    margin-bottom: 1px;
   }
 
   .ctl-sheet .official-heading.ctl-attributes-heading::before,
   .ctl-sheet .official-heading.ctl-attributes-heading::after {
-    width: calc(50% - 62px);
-    background-size: auto 27px, auto 28px, auto 31px, 100% 100%;
+    top: 50%;
+    width: calc(50% - 60px);
+    height: 38px;
+
+    background-image:
+      url("/changeling/style/attributes-divider-leaf.webp");
+
+    background-position:
+      right center;
+
+    background-repeat:
+      no-repeat;
+
+    background-size:
+      auto 24px;
+
+    opacity: 1;
+  }
+
+  .ctl-sheet .official-heading.ctl-attributes-heading::before {
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  .ctl-sheet .official-heading.ctl-attributes-heading::after {
+    right: 0;
+    transform: translateY(-50%) scaleX(-1);
+  }
+
+  /* Traits */
+  .ctl-sheet .official-trait-block h4 {
+    margin-bottom: -3px;
+    font-size: 18px;
+  }
+
+  .ctl-sheet .official-trait-grid .official-trait-block h4 {
+    font-size: 19px;
+  }
+
+  .ctl-sheet .official-trait-line {
+    min-height: 25px;
+    font-size: 15px;
+  }
+
+  .ctl-sheet .official-trait-line small {
+    font-size: 10px;
+  }
+
+  /* Recursos e painéis */
+  .ctl-sheet .power-resource,
+  .ctl-sheet .experience-panel {
+    --panel-notch: 7px;
+  }
+
+  .ctl-sheet .power-resource {
+    padding: 8px;
+  }
+
+  .ctl-sheet .experience-panel {
+    padding: 9px;
+  }
+
+  .ctl-sheet .experience-actions button.ctl-purchase-trait-button {
+    min-height: 30px;
+    padding-inline: 16px;
+    font-size: 14px;
+  }
+
+  .ctl-sheet .ctl-purchase-trait-icon {
+    width: 19px;
+    height: 19px;
+    flex-basis: 19px;
+  }
+
+  /* Conteúdo longo */
+  .ctl-sheet .contract-power-card,
+  .ctl-sheet .selected-condition,
+  .ctl-sheet .selected-tilt {
+    max-width: 100%;
+  }
+
+  .ctl-sheet .notes-area textarea {
+    font-size: 13px;
   }
 }
 
 @media print {
   .ctl-sheet {
     box-shadow: none;
-    background-image: linear-gradient(90deg, rgba(202, 219, 190, .46) 0, rgba(239, 231, 211, 0) 7%, rgba(239, 231, 211, 0) 93%, rgba(202, 219, 190, .46) 100%), url("/changeling-paper-texture.webp");
+    background-image: url("/changeling/style/changeling-paper-texture.webp");
   }
 
   .ctl-sheet .cod-sheet-title span,

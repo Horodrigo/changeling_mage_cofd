@@ -268,14 +268,13 @@ de Skill de Kith.
 
 | Grupo | Asset público | Dimensão | Canal | Propósito |
 | --- | --- | ---: | --- | --- |
-| Papel | `public/changeling-paper-texture.webp` | 1024 × 1024 | RGB | Textura repetível do fundo da folha. |
+| Papel | `public/paper-texture.webp` | 1024 × 1024 | RGB | Textura repetível do fundo da folha. |
 | Moldura | `public/changeling/style/botanical-corner.webp` | 1229 × 1280 | RGBA | Um canto botânico reutilizado nas quatro quinas por transformação CSS. |
 | Moldura | `public/changeling/style/frame-star-center.webp` | 232 × 314 | RGBA | Estrela central superior; rotacionada para a inferior. |
 | Moldura | `public/changeling/style/frame-star-side.webp` | 120 × 103 | RGBA | Um ornamento lateral reutilizado ao redor das duas estrelas e nos cantos de painéis. |
 | Cabeçalho | `public/changeling/style/changeling-title.webp` | 998 × 190 | RGBA | Lettering ilustrado da marca Changeling. |
 | Abas | `public/changeling/style/selected-tab-texture.webp` | 1280 × 320 | RGB | Tinta orgânica da aba ativa; aplicada com `background-size: cover`. |
-| Attributes | `public/changeling/style/attributes-divider-corner.webp` | 644 × 422 | RGBA | Terminal externo do divisor principal. |
-| Attributes | `public/changeling/style/attributes-divider-middle.webp` | 1182 × 499 | RGBA | Medalhão/trecho intermediário do divisor principal. |
+| Attributes | `public/changeling/style/attributes-divider.webp` | 1182 × 499 | RGBA | Medalhão/trecho intermediário do divisor. |
 | Attributes | `public/changeling/style/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
 | Seções | `public/changeling/style/divider-terminal.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
 | Grid | `public/changeling/style/vertical-rule.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |

@@ -12,7 +12,6 @@ import { VEHICLES, vehiclePresentation } from "@/lib/companions";
 import { TILTS, findTilt } from "@/lib/tilts";
 import { RuleSelect } from "./rule-select";
 import { CompactValues, SheetHeading, signed, stringList } from "./sheet-primitives";
-import { workspaceTerm } from "./workspace-i18n";
 import { LoadoutCatalog } from "./loadout-catalog";
 export function CombatPage({
   character,
@@ -23,7 +22,7 @@ export function CombatPage({
   derived: Record<string, number>;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
     equipmentIds = stringList(character.line_data.combat_equipment),
     vehicleIds = stringList(character.line_data.companion_vehicles),
@@ -45,6 +44,12 @@ export function CombatPage({
     next.line_data = { ...next.line_data, [key]: value };
     updateSheet(next);
   };
+  const weaponDetails = (item: (typeof presentedWeapons)[number]) => {
+    const params = { kind: item.kind, damage: item.damage, initiative: signed(item.initiative), strength: item.strength, size: item.size, range: item.ranges ?? "", capacity: item.clip ?? "" };
+    return item.ranges && item.clip ? t("combat.weaponDetailsRangeCapacity", params) : item.ranges ? t("combat.weaponDetailsRange", params) : item.clip ? t("combat.weaponDetailsCapacity", params) : t("combat.weaponDetails", params);
+  };
+  const equipmentDetails = (item: (typeof presentedEquipment)[number]) => t("combat.equipmentDetails", { category: item.category, bonus: item.bonus, durability: item.durability, size: item.size, structure: item.structure, availability: item.availability });
+  const vehicleDetails = (item: (typeof presentedVehicles)[number]) => t("combat.vehicleDetails", { modifier: signed(item.diceModifier), size: item.size, durability: item.durability, structure: item.structure, speed: item.speed });
   const combatValues = {
     Defesa: Number(derived.Defesa ?? 0) + (armor?.defense ?? 0),
     Iniciativa: Number(derived.Iniciativa ?? 0),
@@ -57,40 +62,40 @@ export function CombatPage({
   return (
     <div className="combat-page">
       <section>
-        <SheetHeading>Outras Características</SheetHeading>
+        <SheetHeading>{t("combat.otherTraits")}</SheetHeading>
         <CompactValues values={combatValues} />
-        <p className="combat-note">{tr("Os valores de Defesa e Deslocamento já incluem a armadura vestida. A penalidade de Iniciativa aparece em cada arma equipada.", "Defense and Speed already include worn armor. Each equipped weapon shows its Initiative penalty.")}</p>
-        <SheetHeading>Resumo de Combate</SheetHeading>
+        <p className="combat-note">{t("combat.defenseSpeedNote")}</p>
+        <SheetHeading>{t("combat.combatSummary")}</SheetHeading>
         <div className="combat-rules">
           <article>
-            <strong>{tr("Ataques", "Attacks")}</strong>
-            <p>{tr("Desarmado: Força + Briga − Defesa. Corpo a corpo: Força + Armas Brancas − Defesa. Distância: Destreza + Armas de Fogo. Arremesso: Destreza + Atletismo − Defesa.", "Unarmed: Strength + Brawl − Defense. Melee: Strength + Weaponry − Defense. Ranged: Dexterity + Firearms. Thrown: Dexterity + Athletics − Defense.")}</p>
+            <strong>{t("combat.attacks")}</strong>
+            <p>{t("combat.attacksDescription")}</p>
           </article>
           <article>
-            <strong>{tr("Dano e Defesa", "Damage and Defense")}</strong>
-            <p>{tr("Some os sucessos ao dano da arma. Defesa diminui após cada ataque próximo recebido no turno; armas de fogo normalmente ignoram Defesa.", "Add successes to the weapon's damage. Defense decreases after each close attack received in the turn; firearms normally ignore Defense.")}</p>
+            <strong>{t("combat.damageDefense")}</strong>
+            <p>{t("combat.damageDefenseDescription")}</p>
           </article>
           <article>
-            <strong>{tr("Iniciativa e Esquiva", "Initiative and Dodge")}</strong>
-            <p>{tr("Iniciativa é 1d10 + modificador, reduzida pela arma empunhada. Esquivar usa o dobro da Defesa como parada disputada.", "Initiative is 1d10 + modifier, reduced by the wielded weapon. Dodge uses twice Defense as a contested pool.")}</p>
+            <strong>{t("combat.initiativeDodge")}</strong>
+            <p>{t("combat.initiativeDodgeDescription")}</p>
           </article>
           <article>
-            <strong>{tr("Armadura", "Armor")}</strong>
-            <p>{tr("Proteção geral reduz ataques comuns; proteção balística reduz armas de fogo. Penalidades da armadura já aparecem nos valores acima.", "General armor reduces ordinary attacks; ballistic armor reduces firearm attacks. Armor penalties are already included above.")}</p>
+            <strong>{t("combat.armor")}</strong>
+            <p>{t("combat.armorDescription")}</p>
           </article>
         </div>
-        <SheetHeading>{tr("Inclinações", "Tilts")}</SheetHeading>
+        <SheetHeading>{t("combat.tilts")}</SheetHeading>
         <TiltManager selected={tiltIds} onChange={(value) => setData("combat_tilts", value)} />
       </section>
       <section className="loadout-section">
-        <SheetHeading>Armadura</SheetHeading>
+        <SheetHeading>{t("combat.armor")}</SheetHeading>
         <RuleSelect
           value={armorId || "none"}
           onChange={(value) =>
             setData("combat_armor", value === "none" ? "" : value)
           }
           options={[
-            { value: "none", label: tr("Sem armadura", "No armor") },
+            { value: "none", label: t("combat.noArmor") },
             ...presentedArmors.map((item) => ({
               value: item.id,
               label: `${item.name} · ${item.general}/${item.ballistic}`,
@@ -100,22 +105,16 @@ export function CombatPage({
         {armor && (
           <div className="armor-summary">
             <strong>{armor.name}</strong>
-            <span>
-              {tr("Armadura", "Armor")} {armor.general}/{armor.ballistic} · {tr("Defesa", "Defense")}{" "}
-              {signed(armor.defense)} · {tr("Deslocamento", "Speed")} {signed(armor.speed)} ·{" "}
-              {armor.coverage}
-            </span>
+            <span>{t("combat.armorSummary", { general: armor.general, ballistic: armor.ballistic, defense: signed(armor.defense), speed: signed(armor.speed), coverage: armor.coverage })}</span>
           </div>
         )}
-        <SheetHeading>Armas</SheetHeading>
+        <SheetHeading>{t("combat.weapons")}</SheetHeading>
         <LoadoutCatalog
-          title={tr("Selecionar Armas", "Select Weapons")}
+          title={t("combat.selectWeapons")}
           items={presentedWeapons}
           selected={weaponIds}
-          describe={(item) =>
-            `${item.kind} · ${tr("Dano", "Damage")} ${item.damage} · ${tr("Iniciativa", "Initiative")} ${signed(item.initiative)} · ${tr("Força", "Strength")} ${item.strength} · ${tr("Tamanho", "Size")} ${item.size}${item.ranges ? ` · ${tr("Alcance", "Range")} ${item.ranges}` : ""}${item.clip ? ` · ${tr("Carga", "Capacity")} ${item.clip}` : ""}`
-          }
-          details={(item) => item.special ?? tr("Sem propriedade especial.", "No special property.")}
+          describe={weaponDetails}
+          details={(item) => item.special ?? t("combat.noSpecialProperty")}
           onChange={(value) => setData("combat_weapons", value)}
         />
         <div className="loadout-list">
@@ -123,20 +122,14 @@ export function CombatPage({
             <article key={item.id}>
               <div>
                 <strong>{item.name}</strong>
-                <small>
-                  {item.kind} · {tr("dano", "damage")} {item.damage} · {tr("Iniciativa", "Initiative")}{" "}
-                  {signed(item.initiative)} · {tr("Força", "Strength")} {item.strength} · {tr("Tamanho", "Size")}{" "}
-                  {item.size}
-                  {item.ranges ? ` · ${tr("alcance", "range")} ${item.ranges}` : ""}
-                  {item.clip ? ` · ${tr("carga", "capacity")} ${item.clip}` : ""}
-                </small>
+                <small>{weaponDetails(item)}</small>
                 {item.special && <p>{item.special}</p>}
               </div>
               <Button
                 type="button"
                 size="icon"
                 variant="ghost"
-                aria-label={tr(`Remover ${item.name}`, `Remove ${item.name}`)}
+                aria-label={t("combat.removeNamed", { name: item.name })}
                 onClick={() =>
                   setData(
                     "combat_weapons",
@@ -149,14 +142,12 @@ export function CombatPage({
             </article>
           ))}
         </div>
-        <SheetHeading>Equipamentos</SheetHeading>
+        <SheetHeading>{t("combat.equipment")}</SheetHeading>
         <LoadoutCatalog
-          title={tr("Selecionar Equipamentos", "Select Equipment")}
+          title={t("combat.selectEquipment")}
           items={presentedEquipment}
           selected={equipmentIds}
-          describe={(item) =>
-            `${item.category} · ${tr("Bônus", "Bonus")} ${item.bonus} · ${tr("Durabilidade", "Durability")} ${item.durability} · ${tr("Tamanho", "Size")} ${item.size} · ${tr("Estrutura", "Structure")} ${item.structure} · ${tr("Disponibilidade", "Availability")} ${item.availability}`
-          }
+          describe={equipmentDetails}
           details={(item) => item.effect}
           onChange={(value) => setData("combat_equipment", value)}
         />
@@ -165,18 +156,14 @@ export function CombatPage({
             <article key={item.id}>
               <div>
                 <strong>{item.name}</strong>
-                <small>
-                  {item.category} · {tr("bônus", "bonus")} {item.bonus} · {tr("Durabilidade", "Durability")}{" "}
-                  {item.durability} · {tr("Tamanho", "Size")} {item.size} · {tr("Estrutura", "Structure")}{" "}
-                  {item.structure} · {tr("Disponibilidade", "Availability")} {item.availability}
-                </small>
+                <small>{equipmentDetails(item)}</small>
                 <p>{item.effect}</p>
               </div>
               <Button
                 type="button"
                 size="icon"
                 variant="ghost"
-                aria-label={tr(`Remover ${item.name}`, `Remove ${item.name}`)}
+                aria-label={t("combat.removeNamed", { name: item.name })}
                 onClick={() =>
                   setData(
                     "combat_equipment",
@@ -189,32 +176,34 @@ export function CombatPage({
             </article>
           ))}
         </div>
-        <SheetHeading>{tr("Veículos","Vehicles")}</SheetHeading>
-        <p className="combat-note">{tr("O modificador se aplica às paradas de Destreza + Condução. Acima da Velocidade segura, ele é aplicado novamente.","The modifier applies to Dexterity + Drive pools. Above safe Speed, apply it again.")}</p>
-        <LoadoutCatalog title={tr("Selecionar Veículos","Select Vehicles")} items={presentedVehicles} selected={vehicleIds} describe={(item)=>`${tr("Modificador","Modifier")} ${signed(item.diceModifier)} · ${tr("Tamanho","Size")} ${item.size} · ${tr("Durabilidade","Durability")} ${item.durability} · ${tr("Estrutura","Structure")} ${item.structure} · ${tr("Velocidade","Speed")} ${item.speed}`} details={(item)=>item.acceleration?`${tr("Aceleração","Acceleration")} ${item.acceleration.toLocaleLowerCase(locale)}.`:tr("Aceleração normal.","Normal acceleration.")} onChange={(value)=>setData("companion_vehicles",value)}/>
-        <div className="loadout-list">{vehicleIds.map(id=>presentedVehicles.find(item=>item.id===id)).filter((item):item is NonNullable<typeof item>=>Boolean(item)).map(item=><article key={item.id}><div><strong>{item.name}</strong><small>{tr("Modificador","Modifier")} {signed(item.diceModifier)} · {tr("Tamanho","Size")} {item.size} · {tr("Durabilidade","Durability")} {item.durability} · {tr("Estrutura","Structure")} {item.structure} · {tr("Velocidade","Speed")} {item.speed}</small></div><Button type="button" size="icon" variant="ghost" onClick={()=>setData("companion_vehicles",vehicleIds.filter(id=>id!==item.id))} aria-label={tr(`Remover ${item.name}`,`Remove ${item.name}`)}><X/></Button></article>)}</div>
+        <SheetHeading>{t("combat.vehicles")}</SheetHeading>
+        <p className="combat-note">{t("combat.vehicleModifierNote")}</p>
+        <LoadoutCatalog title={t("combat.selectVehicles")} items={presentedVehicles} selected={vehicleIds} describe={vehicleDetails} details={(item)=>item.acceleration?t("combat.accelerationDetails", { acceleration: item.acceleration.toLocaleLowerCase(locale) }):t("combat.normalAcceleration")} onChange={(value)=>setData("companion_vehicles",value)}/>
+        <div className="loadout-list">{vehicleIds.map(id=>presentedVehicles.find(item=>item.id===id)).filter((item):item is NonNullable<typeof item>=>Boolean(item)).map(item=><article key={item.id}><div><strong>{item.name}</strong><small>{vehicleDetails(item)}</small></div><Button type="button" size="icon" variant="ghost" onClick={()=>setData("companion_vehicles",vehicleIds.filter(id=>id!==item.id))} aria-label={t("combat.removeNamed", { name: item.name })}><X/></Button></article>)}</div>
       </section>
       <small className="combat-source">
-        {tr("Regras e equipamentos: Chronicles of Darkness · pp. 86–103 e 268–276.", "Rules and equipment: Chronicles of Darkness · pp. 86–103 and 268–276.")}
+        {t("combat.combatSource")}
       </small>
     </div>
   );
 }
 
 function TiltManager({selected,onChange}:{selected:string[];onChange:(value:string[])=>void}) {
-  const {locale,tr}=useLanguage();
+  const {locale,t}=useLanguage();
   const [search,setSearch]=useState(""), [category,setCategory]=useState("All");
   const name=(tilt:(typeof TILTS)[number])=>locale==="en-US"?tilt.name:tilt.translatedName;
   const filtered=alphabetical(TILTS,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
+  const categoryLabel=(category:string)=>category === "Personal" ? t("combat.personal") : t("combat.environmental");
+  const metadata=(tilt:(typeof TILTS)[number])=>t("combat.tiltMetadata", { category: categoryLabel(tilt.category), source: tilt.sourceCode, page: tilt.page });
   return <div className="tilt-manager">
     <div className="selected-tilts">
-      {selected.map(findTilt).filter((tilt):tilt is NonNullable<typeof tilt>=>Boolean(tilt)).map((tilt)=><article key={tilt.id} className="selected-tilt"><div><strong>{name(tilt)}</strong><small>{tr(tilt.category==="Personal"?"Pessoal":"Ambiental",tilt.category)} · {tilt.sourceCode} · p. {tilt.page}</small><p>{tilt.effect}</p></div><Button type="button" size="icon" variant="ghost" onClick={()=>onChange(selected.filter((id)=>id!==tilt.id))} aria-label={`${tr("Remover","Remove")} ${name(tilt)}`}><X /></Button></article>)}
-      {!selected.length&&<em>{tr("Nenhuma Inclinação selecionada.","No Tilts selected.")}</em>}
+      {selected.map(findTilt).filter((tilt):tilt is NonNullable<typeof tilt>=>Boolean(tilt)).map((tilt)=><article key={tilt.id} className="selected-tilt"><div><strong>{name(tilt)}</strong><small>{metadata(tilt)}</small><p>{tilt.effect}</p></div><Button type="button" size="icon" variant="ghost" onClick={()=>onChange(selected.filter((id)=>id!==tilt.id))} aria-label={t("combat.removeNamed", { name: name(tilt) })}><X /></Button></article>)}
+      {!selected.length&&<em>{t("combat.noTilts")}</em>}
     </div>
-    <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline"><Plus />{tr("Adicionar Inclinação","Add Tilt")}</Button></DialogTrigger><DialogContent className="tilt-dialog"><DialogHeader><DialogTitle>{tr("Inclinações de Combate","Combat Tilts")}</DialogTitle><DialogDescription>{tr("Selecione efeitos pessoais ou ambientais ativos na cena.","Select Personal or Environmental effects active in the scene.")}</DialogDescription></DialogHeader>
-      <div className="tilt-filters"><label className="catalog-search"><Search/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar Inclinação","Search Tilts")}/></label><RuleSelect value={category} onChange={setCategory} options={[{value:"All",label:tr("Todas","All")},{value:"Personal",label:tr("Pessoais","Personal")},{value:"Environmental",label:tr("Ambientais","Environmental")}]} /></div>
-      <div className="tilt-catalog">{filtered.map((tilt)=>{const active=selected.includes(tilt.id);return <article key={tilt.id} className={active?"selected":""}><header><div><strong>{name(tilt)}</strong><small>{tr(tilt.category==="Personal"?"Pessoal":"Ambiental",tilt.category)} · {tilt.sourceCode} · p. {tilt.page}</small></div><Button type="button" size="sm" variant={active?"ghost":"outline"} onClick={()=>onChange(active?selected.filter((id)=>id!==tilt.id):[...selected,tilt.id])}>{active?tr("Remover","Remove"):tr("Adicionar","Add")}</Button></header><p>{tilt.description}</p><p><b>{tr("Efeito","Effect")}:</b> {tilt.effect}</p><p><b>{tr("Causando a Inclinação","Causing the Tilt")}:</b> {tilt.causing}</p><p><b>{tr("Encerrando a Inclinação","Ending the Tilt")}:</b> {tilt.ending}</p></article>})}</div>
-      <DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
+    <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline"><Plus />{t("combat.addTilt")}</Button></DialogTrigger><DialogContent className="tilt-dialog"><DialogHeader><DialogTitle>{t("combat.combatTilts")}</DialogTitle><DialogDescription>{t("combat.tiltDescription")}</DialogDescription></DialogHeader>
+      <div className="tilt-filters"><label className="catalog-search"><Search/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={t("combat.searchTilts")}/></label><RuleSelect value={category} onChange={setCategory} options={[{value:"All",label:t("combat.all")},{value:"Personal",label:t("combat.personal")},{value:"Environmental",label:t("combat.environmental")}]}/></div>
+      <div className="tilt-catalog">{filtered.map((tilt)=>{const active=selected.includes(tilt.id);return <article key={tilt.id} className={active?"selected":""}><header><div><strong>{name(tilt)}</strong><small>{metadata(tilt)}</small></div><Button type="button" size="sm" variant={active?"ghost":"outline"} onClick={()=>onChange(active?selected.filter((id)=>id!==tilt.id):[...selected,tilt.id])}>{active?t("combat.remove"):t("combat.add")}</Button></header><p>{tilt.description}</p><p><b>{t("combat.effectLabel")}</b> {tilt.effect}</p><p><b>{t("combat.causingTiltLabel")}</b> {tilt.causing}</p><p><b>{t("combat.endingTiltLabel")}</b> {tilt.ending}</p></article>})}</div>
+      <DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("combat.done")}</Button></DialogClose></DialogFooter>
     </DialogContent></Dialog>
   </div>;
 }
