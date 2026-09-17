@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CharacterBuilderShell,
   commonCreationIssues,
@@ -12,6 +12,7 @@ import { Aspirations, Choice, CommonIdentityStep, DotRow, TraitsStep } from "@/a
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { MeritPicker } from "@/app/builder/merit-picker";
 import { Input } from "@/components/ui/input";
+import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -47,6 +48,117 @@ function displayName(item: { name: string; translatedName: string }, locale: str
   return locale === "pt-BR" ? item.translatedName : item.name;
 }
 
+type TouchstoneMeritPoint = {
+  key: string;
+  meritInstanceId: string;
+  dot: number;
+  slot: number;
+};
+
+function touchstoneMeritPoints(merits: CharacterSheet["merits"], baseSlot: number): TouchstoneMeritPoint[] {
+  const minimumSlot = baseSlot === 7 ? 2 : 1;
+  const points: TouchstoneMeritPoint[] = [];
+  let offset = 0;
+
+  merits.forEach((merit, meritIndex) => {
+    if (merit.name !== "Touchstone") return;
+
+    const meritInstanceId = String(merit.instanceId ?? `touchstone-merit-${meritIndex}`);
+    const dots = Math.max(0, Math.floor(Number(merit.dots ?? 0)));
+
+    for (let dot = 1; dot <= dots; dot += 1) {
+      offset += 1;
+      const slot = baseSlot - offset;
+      if (slot < minimumSlot) continue;
+      points.push({
+        key: `${meritInstanceId}:${dot}`,
+        meritInstanceId,
+        dot,
+        slot,
+      });
+    }
+  });
+
+  return points;
+}
+
+function existingTouchstoneRows(initial?: CharacterSheet | null): Record<string, unknown>[] {
+  const value = initial?.line_data.touchstones;
+  if (!Array.isArray(value)) return [];
+  return value.filter((row): row is Record<string, unknown> => Boolean(row) && typeof row === "object" && !Array.isArray(row));
+}
+
+function reconcileTouchstones(
+  initial: CharacterSheet | null | undefined,
+  merits: CharacterSheet["merits"],
+  baseSlot: number,
+  baseName: string,
+): Record<string, unknown>[] {
+  const rows = existingTouchstoneRows(initial);
+  const baseRow = rows.find((row) => !String(row.merit_point_key ?? ""));
+  const points = touchstoneMeritPoints(merits, baseSlot);
+  const activePoints = new Map(points.map((point) => [point.key, point]));
+
+  const nextRows: Record<string, unknown>[] = [{
+    ...(baseRow ?? {}),
+    id: String(baseRow?.id ?? createRandomId()),
+    name: baseName.trim(),
+    humanity_slot: baseSlot,
+    notes: String(baseRow?.notes ?? ""),
+  }];
+
+  for (const row of rows) {
+    const key = String(row.merit_point_key ?? "");
+    if (!key) continue;
+
+    const point = activePoints.get(key);
+    if (!point) continue;
+
+    nextRows.push({
+      ...row,
+      humanity_slot: point.slot,
+      merit_point_key: point.key,
+      merit_instance_id: point.meritInstanceId,
+      merit_dot: point.dot,
+    });
+  }
+
+  return nextRows;
+}
+
+function reconcileTraitAllocation(
+  values: Record<string, number>,
+  groups: Record<string, readonly string[]>,
+  priorities: string[],
+  base: number,
+  budgets: readonly number[],
+) {
+  const next = { ...values };
+
+  for (const [category, names] of Object.entries(groups)) {
+    const priorityIndex = priorities.indexOf(category);
+    if (priorityIndex < 0) continue;
+
+    const budget = budgets[priorityIndex] ?? 0;
+    let spent = names.reduce((sum, name) => sum + Math.max(0, Number(next[name] ?? base) - base), 0);
+
+    // If the priority order changes after dots were assigned, keep as many
+    // existing dots as possible while bringing the category back under its
+    // new creation budget.
+    for (let index = names.length - 1; spent > budget && index >= 0; index -= 1) {
+      const name = names[index];
+      const current = Math.max(base, Number(next[name] ?? base));
+      const removable = Math.min(current - base, spent - budget);
+      if (removable > 0) {
+        next[name] = current - removable;
+        spent -= removable;
+      }
+    }
+  }
+
+  return next;
+}
+
 function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
   const { locale, tr } = useLanguage();
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
@@ -71,7 +183,10 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
   const [covenantId, setCovenantId] = useState(String(initial?.line_data.covenant_id ?? "covenantless"));
   const [maskId, setMaskId] = useState(String(initial?.line_data.mask_id ?? ""));
   const [dirgeId, setDirgeId] = useState(String(initial?.line_data.dirge_id ?? ""));
-  const [touchstone, setTouchstone] = useState(String((initial?.line_data.touchstones as Array<{ name?: string }> | undefined)?.[0]?.name ?? ""));
+  const [touchstone, setTouchstone] = useState(() => {
+    const baseTouchstone = existingTouchstoneRows(initial).find((row) => !String(row.merit_point_key ?? ""));
+    return String(baseTouchstone?.name ?? "");
+  });
   const [bloodPotency, setBloodPotency] = useState(Number(initial?.line_data.creation_blood_potency ?? initial?.line_data.blood_potency ?? 1));
   const [disciplines, setDisciplines] = useState<Record<string, number>>(() => initialCreationDisciplines(initial));
   const initialChoices = initial?.line_data.discipline_choices && typeof initial.line_data.discipline_choices === "object" && !Array.isArray(initial.line_data.discipline_choices) ? initial.line_data.discipline_choices as Record<string, unknown> : {};
@@ -91,6 +206,15 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
   const meritSpent = common.merits.reduce((sum, merit) => sum + Number(merit.dots ?? 0), 0);
   const meritBudget = Math.max(0, 10 - (bloodPotency - 1) * 5);
   const maxBloodPotency = Math.max(1, Math.min(3, 1 + Math.floor(Math.max(0, 10 - meritSpent) / 5)));
+  const setAttributePriority = (priorities: string[]) => {
+    common.setAttributePriority(priorities);
+    common.setAttributes((values) => reconcileTraitAllocation(values, ATTRIBUTES, priorities, 1, [5, 4, 3]));
+  };
+  const setSkillPriority = (priorities: string[]) => {
+    common.setSkillPriority(priorities);
+    common.setSkills((values) => reconcileTraitAllocation(values, SKILLS, priorities, 0, [11, 7, 4]));
+  };
+
   const meritContext: MeritPrerequisiteContext = {
     gameLine: "VtR", archetypes: ["vampire", clanId, covenantId], attributes: common.attributes,
     skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits), meritCatalog,
@@ -105,8 +229,6 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     });
     const add = (key: string, label: string, step = 3) => result.push({ step, key, label });
     if (!common.name.trim()) add("name", tr("Nome", "Name"), 1);
-    if (common.specialties.filter((item) => item.skill && item.name.trim()).length !== 3) add("specialties", tr("Três Especializações", "Three Specialties"), 2);
-    if (common.aspirations.filter((item) => item.trim()).length !== 3) add("aspirations", tr("Três Aspirações", "Three Aspirations"));
     if (!selectedClan) add("clan", tr("Clã", "Clan"));
     if (!selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", tr("Atributo favorecido do Clã", "Clan favored Attribute"));
     if (!reference.covenants.some((item) => item.id === covenantId)) add("covenant", "Covenant");
@@ -129,11 +251,58 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     return result;
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
+  
+  const [nosferatuEasterEgg, setNosferatuEasterEgg] = useState(false);
+
+  useEffect(() => {
+    if (!nosferatuEasterEgg) return;
+
+    const timeout = window.setTimeout(() => {
+      setNosferatuEasterEgg(false);
+    }, 15000);
+
+    const prevent = (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    window.addEventListener("keydown", prevent, true);
+    window.addEventListener("wheel", prevent, {
+      passive: false,
+      capture: true,
+    });
+    window.addEventListener("touchmove", prevent, {
+      passive: false,
+      capture: true,
+    });
+
+    return () => {
+      window.clearTimeout(timeout);
+
+      document.body.style.overflow = previousOverflow;
+
+      window.removeEventListener("keydown", prevent, true);
+      window.removeEventListener("wheel", prevent, true);
+      window.removeEventListener("touchmove", prevent, true);
+    };
+  }, [nosferatuEasterEgg]);
+
   const chooseClan = (value: string) => {
-    setClanId(value);
-    const clan = reference.clans.find((item) => item.id === value);
-    if (!clan?.favoredAttributes.includes(favoredAttribute)) setFavoredAttribute("");
-  };
+  setClanId(value);
+
+  const clan = reference.clans.find((item) => item.id === value);
+
+  if (!clan?.favoredAttributes.includes(favoredAttribute)) {
+    setFavoredAttribute("");
+  }
+
+  if (value === "nosferatu") {
+    setNosferatuEasterEgg(true);
+  }
+};
   const finish = () => {
     if (issues.length) {
       common.setError(`${tr("Ainda falta", "Still required")}: ${issues.map((issue) => issue.label).join(", ")}.`);
@@ -157,6 +326,11 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     const startingCoil = powers.coils.some((item) => item.id === creationCovenantPowerId);
     const bloodSorcery = initial ? existingBloodSorcery : startingRite ? { cruac_rating: 1, cruac_rite_ids: [creationCovenantPowerId], theban_rating: 0, theban_miracle_ids: [] } : startingMiracle ? { cruac_rating: 0, cruac_rite_ids: [], theban_rating: 1, theban_miracle_ids: [creationCovenantPowerId] } : {};
     const ordoDracul = { ...initialOrdo, mystery_id: covenantId === "ordo-dracul" ? mysteryId : initialOrdo.mystery_id ?? "", coil_ratings: initial ? existingCoils : startingCoil ? { [creationCovenantPowerId]: 1 } : {} };
+    const finalMerits = mergeCreationMerits(initial?.merits, common.merits.map((merit) => {
+      const definition = meritCatalog.find((item) => item.name === merit.name);
+      return { ...merit, sourceId: definition?.sourceId, source: definition?.source, configuration: normalizeMeritConfiguration(merit.configuration) };
+    }));
+    const finalTouchstones = reconcileTouchstones(initial, finalMerits, touchstoneSlot, touchstone);
     const completed: CharacterSheet = {
       id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR",
       ruleset: { id: "vtr-2ed-embedded", version: 1 },
@@ -167,13 +341,10 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
         ...experienceSpecialties(initial),
         ...(initial?.specializations ?? []).filter((item) => typeof item !== "string" && Boolean(item.grantedBy)),
       ],
-      merits: mergeCreationMerits(initial?.merits, common.merits.map((merit) => {
-        const definition = meritCatalog.find((item) => item.name === merit.name);
-        return { ...merit, sourceId: definition?.sourceId, source: definition?.source, configuration: normalizeMeritConfiguration(merit.configuration) };
-      })),
+      merits: finalMerits,
       line_data: {
         ...(initial?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, covenant_id: covenantId,
-        mask_id: maskId, dirge_id: dirgeId, aspirations: common.aspirations.map((item) => item.trim()),
+        mask_id: maskId, dirge_id: dirgeId, aspirations: common.aspirations.map((item) => item.trim()).filter(Boolean),
         creation_blood_potency: bloodPotency, blood_potency: finalBloodPotency, creation_covenant_power_id: hasCreationCovenantPower ? creationCovenantPowerId : "",
         creation_disciplines: disciplines, disciplines: finalDisciplines, humanity: Number(initial?.line_data.humanity ?? 7),
         discipline_choices: {
@@ -182,7 +353,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
           protean_forms: proteanForms.map((value) => value.trim()).filter(Boolean),
           protean_unnatural_aspect: proteanUnnatural.map((value) => value.trim()).filter(Boolean),
         },
-        touchstones: [{ id: String((initial?.line_data.touchstones as Array<{ id?: string }> | undefined)?.[0]?.id ?? createRandomId()), name: touchstone.trim(), humanity_slot: touchstoneSlot, notes: "" }],
+        touchstones: finalTouchstones,
         devotion_ids: initial?.line_data.devotion_ids ?? [], blood_sorcery: bloodSorcery, ordo_dracul: ordoDracul, banes: initial?.line_data.banes ?? [],
       },
       derived: vampireDerived(finalAttributes, finalSkills, finalDisciplines, finalBloodPotency, reference),
@@ -190,9 +361,23 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     };
     onSave(completed);
   };
-  return <CharacterBuilderShell line="VtR" templateLabel={tr("Modelo Vampírico", "Vampire Template")} state={common} issues={issues} onCancel={onCancel} onFinish={finish}
+  return (
+    <>
+    {nosferatuEasterEgg && (
+      <div className="nosferatu-easter-egg">
+        <video
+          src="/vampire/easter-eggs/nosferatu.webm"
+          autoPlay
+          playsInline
+          controls={false}
+          disablePictureInPicture
+        />
+      </div>
+    )}
+  
+  <CharacterBuilderShell line="VtR" templateLabel={tr("Modelo Vampírico", "Vampire Template")} state={common} issues={issues} onCancel={onCancel} onFinish={finish}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={tr("Nome", "Name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
-    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
+    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<div className="builder-section vampire-builder-template">
       <span className="kicker">{tr("PASSO 3 · VAMPIRO", "STEP 3 · VAMPIRE")}</span><h2>{tr("Modelo Vampírico", "Vampire Template")}</h2>
       <div className="vampire-template-grid">
@@ -214,7 +399,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
       <Aspirations values={common.aspirations} setValues={common.setAspirations} />
       <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={tr("Potência de Sangue", "Blood Potency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} /></div>
     </div>}
-  />;
+  />
+  </>);
 }
 
 function ChoiceLines({ label, values, count, placeholder, onChange }: { label: string; values: string[]; count: number; placeholder: string; onChange: (value: string[]) => void }) {

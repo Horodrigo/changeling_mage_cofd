@@ -28,8 +28,8 @@ test("zoom é exclusivo do desktop e o workspace recebe o tema da linha ativa",a
   const [workspace,builder,css,changelingCss]=await Promise.all([
     readFile(new URL("../app/workspace.tsx",import.meta.url),"utf8"),
     readFile(new URL("../app/character-builder-shell.tsx",import.meta.url),"utf8"),
-    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
-    readFile(new URL("../app/changeling-sheet.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/globals.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/changeling-sheet.css",import.meta.url),"utf8"),
   ]);
   assert.match(workspace,/className="top-sheet-tools"/);
   assert.match(workspace,/className="sheet-zoom-control"/);

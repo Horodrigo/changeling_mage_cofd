@@ -17,7 +17,7 @@ test("declara uma PWA standalone com ícones Android", async () => {
 test("apresenta uma abertura de aplicativo alinhada à nova marca", async () => {
   const [layout,css]=await Promise.all([
     readFile(new URL("../app/layout.tsx",import.meta.url),"utf8"),
-    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/globals.css",import.meta.url),"utf8"),
   ]);
   assert.match(layout,/Characters of the Darkness/);
   assert.match(layout,/app-launch-splash/);
@@ -29,7 +29,7 @@ test("apresenta uma abertura de aplicativo alinhada à nova marca", async () => 
 test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em todas as telas", async () => {
   const [workspace,css]=await Promise.all([
     readWorkspaceSource(),
-    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/globals.css",import.meta.url),"utf8"),
   ]);
   assert.match(workspace,/value: "stats", label: "Stats"/);
   assert.match(workspace,/mobile-attribute-grid/);
@@ -45,8 +45,8 @@ test("mantém a ficha móvel compacta e os contratos expansíveis sem botões em
 test("oferece impressão CtL A4 em uma árvore estática separada", async () => {
   const [workspace,globalCss,changelingCss]=await Promise.all([
     readWorkspaceSource(),
-    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
-    readFile(new URL("../app/changeling-sheet.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/globals.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/changeling-sheet.css",import.meta.url),"utf8"),
   ]);
   const css=`${globalCss}\n${changelingCss}`;
   assert.match(workspace,/className="top-sheet-print"/);
@@ -93,7 +93,7 @@ test("a criação apresenta Contratos selecionados como cartões expansíveis", 
 test("a ficha de Mage localiza seus campos e mantém o divisor de Experiência compacto", async () => {
   const [workspace,css]=await Promise.all([
     readWorkspaceSource(),
-    readFile(new URL("../app/globals.css",import.meta.url),"utf8"),
+    readFile(new URL("../app/css/globals.css",import.meta.url),"utf8"),
   ]);
   assert.match(workspace,/<LegacySheetField value=\{legacyDisplay\} enabled=\{hasLegacyAccess\}/);
   for (const label of ["Nome das Sombras", "Virtude", "Caminho", "Jogador", "Vício", "Ordem", "Crônica", "Conceito"])
