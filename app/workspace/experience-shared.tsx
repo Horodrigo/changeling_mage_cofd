@@ -7,7 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { useLanguage } from "@/lib/i18n";
-import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { workspaceTerm } from "./workspace-i18n";
@@ -264,7 +264,12 @@ export function ExperienceMeritPicker({
                       (!owned.grantedBy || canAdvanceGrantedMerit(line, owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
-                ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1))),
+                ratings = UNBOUNDED_MERITS.has(item.name)
+                ? meritRatingsFor(
+                    item,
+                    Math.max(1, ...instances.map(({ owned }) => owned.dots + 1)),
+                  )
+                : meritRatingsFor(item),
                 draft = meritDrafts[item.id] ?? {newInstance:repeatable&&!instances.length,instanceIndex:instances[0]?.index??-1,dots:instances[0]?.owned.dots??ratings[0]??1},
                 activeInstance = instances.find(({index})=>index===draft.instanceIndex) ?? instances[0],
                 buyingNew = repeatable && draft.newInstance,
