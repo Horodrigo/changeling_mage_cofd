@@ -644,8 +644,8 @@ background-size:
 .ctl-sheet .kith-skill-frame {
   position: absolute;
   z-index: 0;
-  top: calc(50% - 1px);
-  left: calc(50% - 8px);
+  top: calc(50% - 3px);
+  left: calc(50% - 5px);
   display: flex;
   height: 38px;
   transform: translate(-50%, -50%);
@@ -1049,6 +1049,27 @@ background-size:
       transparent 0 var(--notch),
       #000 calc(var(--notch) + .5px)
     );
+    mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--notch),
+      #000 calc(var(--notch) + .5px)
+    );
 
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -1066,6 +1087,27 @@ background-size:
   background: rgba(238, 239, 226, .88);
 
   -webkit-mask:
+    radial-gradient(
+      circle at 0 0,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 0,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 0 100%,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      transparent 0 var(--inner-notch),
+      #000 calc(var(--inner-notch) + .5px)
+    );
+  mask:
     radial-gradient(
       circle at 0 0,
       transparent 0 var(--inner-notch),
@@ -1204,17 +1246,17 @@ background-size:
 
 @media (max-width: 767px) {
   .ctl-sheet {
-    --ctl-frame-rail-x: 89px;
-    --ctl-frame-rail-y: 13px;
-    --ctl-frame-side-x: 12px;
-    --ctl-frame-corner-depth: 82px;
-    --ctl-frame-center-gap: 34px;
+    --ctl-frame-rail-x: 77px;
+    --ctl-frame-rail-y: 12px;
+    --ctl-frame-side-x: 8px;
+    --ctl-frame-corner-depth: 75px;
+    --ctl-frame-center-gap: 20px;
     --ctl-frame-star-width: 32px;
     --ctl-frame-star-height: 44px;
     --ctl-frame-star-half-height: 22px;
-    --ctl-frame-star-side-offset: 27px;
-    --ctl-frame-star-side-width: 16px;
-    --ctl-frame-star-side-height: 14px;
+    --ctl-frame-star-side-offset: 20px;
+    --ctl-frame-star-side-width: 12px;
+    --ctl-frame-star-side-height: 18px;
     --ctl-frame-star-side-half-height: 7px;
 
     padding: 28px 20px 34px;
@@ -1271,11 +1313,11 @@ background-size:
     justify-self: end;
     align-self: auto;
 
-    margin: -2px 3px 0 0;
+    margin: -10px 35px 0 0;
 
     transform: none;
 
-    font-size: clamp(13px, 4.2vw, 16px);
+    font-size: clamp(20px, 4.2vw, 16px);
     letter-spacing: .28em;
   }
 
@@ -1447,6 +1489,57 @@ background-size:
   .ctl-sheet .official-trait-line small {
     font-size: 10px;
   }
+
+  /* Atributos mobile */
+.ctl-sheet .mobile-attribute-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+
+.ctl-sheet .mobile-attribute-grid .official-trait-block {
+  min-width: 0;
+  padding-inline: 6px;
+}
+
+.ctl-sheet .mobile-attribute-grid .official-trait-block:first-child {
+  padding-left: 0;
+}
+
+.ctl-sheet .mobile-attribute-grid .official-trait-block:last-child {
+  padding-right: 0;
+}
+
+.ctl-sheet .mobile-attribute-grid .official-trait-line {
+  display: grid;
+  grid-template-columns: minmax(26px, 1fr) auto;
+  align-items: center;
+  column-gap: 3px;
+
+  min-width: 0;
+}
+
+/* Nome abreviado do atributo */
+.ctl-sheet .mobile-attribute-grid .official-trait-name {
+  min-width: 0;
+
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: clip;
+
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Os círculos nunca comprimem o nome */
+.ctl-sheet .mobile-attribute-grid .official-dots {
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.ctl-sheet .mobile-attribute-grid .official-dots i {
+  width: 9px;
+  height: 9px;
+}
 
   /* Recursos e painéis */
   .ctl-sheet .power-resource,
