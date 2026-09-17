@@ -117,8 +117,7 @@ def build_attribute_divider_assets() -> None:
     """Crop the manually separated pieces used by the Attributes divider."""
 
     for name in (
-        "attributes-divider-corner.webp",
-        "attributes-divider-middle.webp",
+        "attributes-divider.webp",
         "attributes-divider-leaf.webp",
     ):
         save_webp(crop_alpha(Image.open(SOURCE / name), padding=6, alpha_threshold=16), name)
@@ -169,7 +168,7 @@ def main() -> None:
     save_webp(fit(title, (1600, 560)), "changeling-title.webp")
 
     paper = fit(Image.open(SOURCE / "changeling-paper-texture-v2.png"), (1024, 1024))
-    save_public_texture_webp(paper, "changeling-paper-texture.webp")
+    save_public_texture_webp(paper, "paper-texture.webp")
 
     tab_texture = fit(Image.open(SOURCE / "selected-tab-texture.png"), (1280, 320))
     save_texture_webp(tab_texture, "selected-tab-texture.webp")

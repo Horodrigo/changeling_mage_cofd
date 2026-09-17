@@ -1,6 +1,7 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import noUntranslatedUiText from "./eslint-rules/no-untranslated-ui-text.mjs";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -16,6 +17,17 @@ const eslintConfig = defineConfig([
     "tmp/**",
     "next-env.d.ts",
   ]),
+  {
+    files: ["app/**/*.{ts,tsx}", "game-lines/**/*.{ts,tsx}"],
+    plugins: {
+      i18n: {
+        rules: { "no-untranslated-ui-text": noUntranslatedUiText },
+      },
+    },
+    rules: {
+      "i18n/no-untranslated-ui-text": "warn",
+    },
+  },
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
     rules: {

@@ -77,10 +77,26 @@ export function MainSheet({
       <section className="cod-main-skills sheet-skills-column" data-slot="skills">{skills}</section>
       <section className="cod-main-other sheet-center-column" data-slot="other-traits">
         <div data-slot="specific-powers">{specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? tr("Poderes Específicos", "Specific Powers")}</SheetHeading>}{specificPowers}</div>
-        <div data-slot="merits"><SheetHeading>{tr("Méritos", "Merits")}</SheetHeading>{merits}</div>
-        <div data-slot="aspirations"><SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading>{aspirations}</div>
+        <div data-slot="merits">
+  <SheetHeading className="main-sheet-merits-heading">
+    {tr("Méritos", "Merits")}
+  </SheetHeading>
+  {merits}
+</div>
+
+<div data-slot="aspirations">
+  <SheetHeading className="main-sheet-aspirations-heading">
+    {tr("Aspirações", "Aspirations")}
+  </SheetHeading>
+  {aspirations}
+</div>
         {obsessions !== undefined && <div data-slot="obsessions"><SheetHeading>{tr("Obsessões", "Obsessions")}</SheetHeading>{obsessions}</div>}
-        <div data-slot="conditions"><SheetHeading>{tr("Condições", "Conditions")}</SheetHeading>{conditions}</div>
+        <div data-slot="conditions">
+  <SheetHeading className="main-sheet-conditions-heading">
+    {tr("Condições", "Conditions")}
+  </SheetHeading>
+  {conditions}
+</div>
       </section>
       <section className="cod-main-core sheet-right-column" data-slot="core-line-traits">
         <div data-slot="health">{health}</div>

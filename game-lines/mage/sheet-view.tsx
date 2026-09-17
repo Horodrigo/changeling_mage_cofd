@@ -245,7 +245,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
               <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo", "Active spell")} onChange={(value) => setState("active_spells", value)}/>
             </>,
                 poderes: <>
-              <PowerResource name="Gnose" rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>
+              <PowerResource name={tr("Gnose", "Gnosis")} rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} {...arcanaPresentation(name)}/>)}</div>
               <MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
@@ -280,7 +280,27 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             <MainSheet className="mage-main-body"
               identity={<section className="sheet-identity-grid"><CommonSheetField label="Nome das Sombras" value={data.shadow_name}/><CommonSheetField label="Virtude" value={data.virtue}/><CommonSheetField label="Caminho" value={data.path}/><CommonSheetField label="Jogador" value={character.character.player}/><CommonSheetField label="Vício" value={data.vice}/><CommonSheetField label="Ordem" value={!data.order || data.order === "Orderless" ? tr("Sem Ordem", "Orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label="Crônica" value={character.character.chronicle}/><CommonSheetField label="Conceito" value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/></section>}
               attributes={<><SheetHeading>Atributos</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
-              skills={<><SheetHeading>Perícias</SheetHeading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone="rote"/>)}</>}
+              skills={
+                <>
+                    <SheetHeading>Perícias</SheetHeading>
+                    {Object.entries(SKILLS).map(([category, names]) => (
+                    <TraitBlock
+                        key={category}
+                        title={category}
+                        subtitle={
+                        category === "Mental"
+                            ? tr("(-3 se não treinado)", "(-3 if Untrained)")
+                            : tr("(-1 se não treinado)", "(-1 if Untrained)")
+                        }
+                        names={names}
+                        values={effectiveSkills}
+                        specialties={specialties}
+                        highlightedNames={highlightedSkills}
+                        highlightTone="rote"
+                    />
+                    ))}
+                </>
+                }
               specificPowers={<MageArcanaList arcana={arcana} presentation={arcanaPresentation}/>}
               merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}

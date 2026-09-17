@@ -89,10 +89,12 @@ test("cria e remove Fragilidades conforme os níveis pares de Fado", () => {
 
 test("resume os benefícios de Fado para mouse, foco e toque", () => {
   const reductions = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4];
-  const fruits = ["3 Frutas", "7 Frutas", "7 Frutas", "13 Frutas", "13 Frutas", "13 Frutas", "29 Frutas", "29 Frutas", "101 Frutas", "Frutas ilimitadas"];
+  const fruits = [3, 7, 7, 13, 13, 13, 29, 29, 101, "Unlimited"];
   for (let level = 1; level <= 10; level++) {
-    assert.match(creationRules.wyrdSummary(level), new RegExp(`^Wyrd ${level} `));
-    assert.equal(creationRules.wyrdSummary(level, "pt-BR"), `Fado ${level} (-${reductions[level - 1]} Fadiga/Doenças; ${fruits[level - 1]})`);
+    const reduction = reductions[level - 1];
+    const fruit = fruits[level - 1];
+    assert.equal(creationRules.wyrdSummary(level), `Illness/Fatigue: −${reduction} penalty reduction, +${reduction} resistance • Goblin Fruits: ${fruit}`);
+    assert.equal(creationRules.wyrdSummary(level, "pt-BR"), `Doenças/Fadiga: Redução de −${reduction} na penalidade, +${reduction} de resistência • Frutas Goblin: ${fruit === "Unlimited" ? "Ilimitadas" : fruit}`);
   }
 });
 

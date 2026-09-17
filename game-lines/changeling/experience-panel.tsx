@@ -656,9 +656,15 @@ export function ExperiencePanel({
       <div className="experience-actions">
         <Dialog>
           <DialogTrigger asChild>
-            <Button type="button" variant="outline" size="sm" className="catalog-selection-action">
-              <Leaf /> {tr("Comprar característica","Purchase trait")}
-            </Button>
+            <Button
+  type="button"
+  variant="outline"
+  size="sm"
+  className="catalog-selection-action ctl-purchase-trait-button"
+>
+  <span className="ctl-purchase-trait-icon" aria-hidden="true" />
+  {tr("Comprar característica", "Purchase trait")}
+</Button>
           </DialogTrigger>
           <DialogContent className="experience-dialog ctl-dialog">
             <DialogHeader>
