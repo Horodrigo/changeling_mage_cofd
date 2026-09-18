@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   ArrowDownUp,
   ChevronRight,
@@ -28,7 +28,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import {
   isCurrentStoredCharacter,
@@ -37,9 +36,18 @@ import {
   type StoredCharacter,
 } from "@/lib/stored-character";
 import { CatalogBoundary } from "./catalog-boundary";
-import { getGameLineRegistration, listGameLineRegistrations, normalizeGameLineCharacter } from "@/game-lines/registry/game-line-registry";
+import { getGameLineRegistration, listGameLineRegistrations } from "@/game-lines/registry/game-line-registry";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { maximumSheetZoom, parseStoredSheetZoom, SHEET_BASE_WIDTH, SHEET_ZOOM_STORAGE_KEY, stepSheetZoom } from "./workspace/sheet-zoom";
+import {
+  CharacterLifecycleError,
+  importCharacterFile,
+  prepareCharacterForOpen,
+  prepareCharacterForSave,
+  prepareCharacterForUpdate,
+  updateCharacterState as applyCharacterState,
+} from "./workspace/character-lifecycle";
+import { useCharacterRepository } from "./workspace/character-repository";
 
 const NewCharacterBuilder = lazy(() =>
   import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
@@ -71,12 +79,18 @@ export function Workspace({
 }) {
   const {locale,setLocale,t}=useLanguage();
   const [view, setView] = useState<View>("inicio");
-  const [characters, setCharacters] = useState<StoredCharacter[]>([]);
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
-  const [ready, setReady] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
+  const {
+    characters,
+    ready,
+    readFailed,
+    upsertCharacter,
+    replaceCharacter,
+    removeCharacter,
+  } = useCharacterRepository(userKey);
   const [sheetZoom,setSheetZoom]=useState(() => {
     if (typeof window === "undefined" || window.matchMedia("(max-width: 767px)").matches) return 1;
     try { return parseStoredSheetZoom(window.localStorage.getItem(SHEET_ZOOM_STORAGE_KEY)); } catch { return 1; }
@@ -84,52 +98,16 @@ export function Workspace({
   const [maximumZoom,setMaximumZoom]=useState(1);
   const [printOpen,setPrintOpen]=useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-  const storageKey = useMemo(
-    () => `arquivo-das-trevas:v2:${userKey}`,
-    [userKey],
-  );
 
+  const storageReadFailedMessage = t("workspace.storageReadFailed");
   useEffect(() => {
-    let cancelled = false;
-    async function start() {
-      try {
-        const stored = await getDeviceValue<StoredCharacter[]>(storageKey);
-        if (Array.isArray(stored) && !cancelled) setCharacters(stored);
-      } catch {
-        setNotice(
-          t("workspace.storageReadFailed"),
-        );
-      }
-      if (!cancelled) setReady(true);
-    }
-    void start();
-    return () => {
-      cancelled = true;
-    };
-  }, [storageKey, displayName]);
-
-  useEffect(() => {
-    if (!ready) return;
-    stageDeviceValue(storageKey, characters);
-    const timer = window.setTimeout(() => {
-      void setDeviceValue(storageKey, characters);
-    }, 400);
-    return () => window.clearTimeout(timer);
-  }, [characters, ready, storageKey]);
+    if (readFailed) setNotice(storageReadFailedMessage);
+  }, [readFailed, storageReadFailedMessage]);
 
   useEffect(() => {
     if (window.matchMedia("(max-width: 767px)").matches) return;
     try { window.localStorage.setItem(SHEET_ZOOM_STORAGE_KEY, String(sheetZoom)); } catch { /* Zoom persistence is optional; interaction remains available. */ }
   }, [sheetZoom]);
-
-  function commitCharacters(
-    change: (current: StoredCharacter[]) => StoredCharacter[],
-  ) {
-    setCharacters((current) => {
-      const next = change(current);
-      return next;
-    });
-  }
 
   function navigate(next: View) {
     setView(next);
@@ -143,9 +121,7 @@ export function Workspace({
     setMaximumZoom(1);
     setPrintOpen(false);
     try {
-      await hydrateCharacterCatalogs(sheet.game_line);
-      const { normalizeStoredSheet } = await import("@/lib/character-persistence");
-      setSelected(await normalizeGameLineCharacter(normalizeStoredSheet(sheet)));
+      setSelected(await prepareCharacterForOpen(sheet));
     } catch {
       setSelected(null);
       setNotice(t("workspace.invalidCharacterJson"));
@@ -154,14 +130,8 @@ export function Workspace({
 
   async function saveCharacter(sheet: CharacterSheet) {
     try {
-      const { normalizeStoredSheet } = await import("@/lib/character-persistence");
-      const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(sheet));
-      commitCharacters((current) => {
-        const exists = current.some((item) => storedCharacterId(item) === normalized.id);
-        return exists
-          ? current.map((item) => (storedCharacterId(item) === normalized.id ? normalized : item))
-          : [normalized, ...current];
-      });
+      const normalized = await prepareCharacterForSave(sheet);
+      upsertCharacter(normalized);
       setEditing(null);
       setSelected(normalized);
       setView("personagens");
@@ -175,25 +145,15 @@ export function Workspace({
     character: CharacterSheet,
     currentState: Record<string, unknown>,
   ) {
-    const sheet = {
-      ...character,
-      current_state: currentState,
-      updated_at: new Date().toISOString(),
-    };
-    commitCharacters((current) =>
-      current.map((item) => (storedCharacterId(item) === sheet.id ? sheet : item)),
-    );
-    setSelected(sheet);
+    const updated = applyCharacterState(character, currentState);
+    replaceCharacter(updated);
+    setSelected(updated);
   }
 
   async function updateCharacter(sheet: CharacterSheet) {
     try {
-      const updated = { ...sheet, updated_at: new Date().toISOString() };
-      const { normalizeStoredSheet } = await import("@/lib/character-persistence");
-      const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(updated));
-      commitCharacters((current) =>
-        current.map((item) => (storedCharacterId(item) === normalized.id ? normalized : item)),
-      );
+      const normalized = await prepareCharacterForUpdate(sheet);
+      replaceCharacter(normalized);
       setSelected(normalized);
     } catch {
       setNotice(t("workspace.invalidCharacterJson"));
@@ -202,10 +162,7 @@ export function Workspace({
 
   function deleteCharacter(character: StoredCharacter) {
     const summary = summarizeStoredCharacter(character);
-    const id = storedCharacterId(character);
-    commitCharacters((current) =>
-      current.filter((item) => item !== character && (!id || storedCharacterId(item) !== id)),
-    );
+    removeCharacter(character);
     setSelected(null);
     setView("personagens");
     setNotice(t("workspace.characterDeleted", { name: summary.name }));
@@ -225,25 +182,22 @@ export function Workspace({
 
   async function importCharacter(file: File) {
     try {
-      const parsed = JSON.parse(await file.text());
-      const { normalizeStoredSheet, validateCurrentCharacter } = await import("@/lib/character-persistence");
-      const validation = validateCurrentCharacter(parsed);
-      if (validation === "unsupported-schema")
-        throw new Error(t("workspace.unsupportedSchema"));
-      if (validation !== "valid")
-        throw new Error(
-          t("workspace.invalidCharacterJson"),
-        );
-      await hydrateCharacterCatalogs(parsed.game_line);
-      const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(parsed as CharacterSheet));
-      commitCharacters((current) => [
-        sheet,
-        ...current.filter((item) => storedCharacterId(item) !== sheet.id),
-      ]);
+      const sheet = await importCharacterFile(file);
+      upsertCharacter(sheet);
       setView("personagens");
       setSelected(sheet);
       setNotice(t("workspace.characterImported", { name: sheet.character.name }));
     } catch (error) {
+      if (error instanceof CharacterLifecycleError) {
+        const messageKey =
+          error.code === "unsupported-schema"
+            ? "workspace.unsupportedSchema"
+            : error.code === "invalid-json"
+              ? "workspace.invalidJson"
+              : "workspace.invalidCharacterJson";
+        setNotice(t(messageKey));
+        return;
+      }
       setNotice(error instanceof Error ? error.message : t("workspace.invalidJson"));
     }
   }
@@ -415,11 +369,6 @@ export function Workspace({
       )}
     </main>
   );
-}
-
-async function hydrateCharacterCatalogs(gameLine: CharacterSheet["game_line"]) {
-  const { loadCatalogGroups } = await import("@/game-lines/registry/catalog-group-registry");
-  await loadCatalogGroups(getGameLineRegistration(gameLine).catalogGroups.sheet);
 }
 
 function Dashboard({

@@ -14,9 +14,9 @@ import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS
 import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
-import { hasPublishedMageOrder } from "@/lib/mage-orders";
+import { hasPublishedMageOrder } from "./orders";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
-import { MAGE_MERIT_CONFIGURATIONS } from "@/lib/mage-merit-configurations";
+import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";

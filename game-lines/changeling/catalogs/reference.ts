@@ -1,12 +1,12 @@
 import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-groups";
-import type { ChangelingCondition } from "@/lib/changeling-conditions";
+import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { EntitlementDefinition } from "@/lib/entitlements";
 import type { KithDefinition } from "@/lib/changeling-kiths";
 
 type ChangelingReference = {
-  conditions: ChangelingCondition[];
-  presentation: Record<string, Partial<ChangelingCondition>>;
+  conditions: ConditionDefinition[];
+  presentation: Record<string, Partial<ConditionDefinition>>;
   courts: CourtDefinition[];
   entitlements: EntitlementDefinition[];
   kiths: KithDefinition[];
@@ -16,8 +16,8 @@ type ChangelingReference = {
 export const changelingReferenceCatalogGroup: CatalogGroupModule = {
   async load(reader): Promise<ChangelingReference> {
     const [conditions, presentation, courts, entitlements, kiths, kithPresentation] = await Promise.all([
-      reader.getCatalog<ChangelingCondition[]>("changeling-conditions"),
-      reader.getCatalog<Record<string, Partial<ChangelingCondition>>>("changeling-conditions-pt"),
+      reader.getCatalog<ConditionDefinition[]>("changeling-conditions"),
+      reader.getCatalog<Record<string, Partial<ConditionDefinition>>>("changeling-conditions-pt"),
       reader.getCatalog<CourtDefinition[]>("changeling-courts"),
       reader.getCatalog<EntitlementDefinition[]>("changeling-entitlements"),
       reader.getCatalog<KithDefinition[]>("changeling-kiths"),

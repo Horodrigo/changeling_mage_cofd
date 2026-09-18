@@ -8,7 +8,7 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
 const merits=await vite.ssrLoadModule("/lib/merits.ts");
-const orders=await vite.ssrLoadModule("/lib/mage-orders.ts");
+const orders=await vite.ssrLoadModule("/game-lines/mage/orders.ts");
 const rawMageCatalog=["core","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8")));
 const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=selected.get(item.name);if(!current||item.priority>current.priority)selected.set(item.name,item);return selected;},new Map()).values()];
 const merit=(name)=>mageCatalog.find(item=>item.name===name);

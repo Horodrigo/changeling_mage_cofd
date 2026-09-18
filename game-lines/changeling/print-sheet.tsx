@@ -4,9 +4,9 @@ import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "reac
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
 import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList } from "@/app/workspace/sheet-primitives";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
-import type { ChangelingCondition } from "@/lib/changeling-conditions";
+import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
-import { kithCreationChoice } from "@/lib/changeling-kith-choices";
+import { kithCreationChoice } from "./kith-choices";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
@@ -25,8 +25,8 @@ import { derivedWithPermanentMerits } from "./experience-shared";
 import { expandedConfigurationLines, meritConfigurationTitle } from "./sheet-merit-configurations";
 
 type ChangelingReference = {
-  conditions: ChangelingCondition[];
-  presentation: Record<string, Partial<ChangelingCondition>>;
+  conditions: ConditionDefinition[];
+  presentation: Record<string, Partial<ConditionDefinition>>;
   courts: CourtDefinition[];
   entitlements: EntitlementDefinition[];
   kiths: Array<{ id: string; name: string; translatedName?: string; skill: string; description: string; blessing: string; source: string; page: number }>;
@@ -241,7 +241,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const coreMerits = catalogs.get<readonly MeritDefinition[]>("core-merits");
   const changelingMerits = catalogs.get<readonly MeritDefinition[]>("changeling-merits");
   const meritCatalog = useMemo(() => [...coreMerits, ...changelingMerits], [changelingMerits, coreMerits]);
-  const coreReference = catalogs.get<{ conditions: ChangelingCondition[]; presentation: Record<string, Partial<ChangelingCondition>> }>("core-reference");
+  const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const reference = catalogs.get<ChangelingReference>("changeling-reference");
   const conditions = useMemo(() => [...coreReference.conditions, ...reference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id], ...reference.presentation[condition.id] } : condition), [coreReference, locale, reference]);
   const data = character.line_data;
@@ -279,7 +279,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
       ...stringList(character.current_state?.conditions),
       ...stringList(data.merit_granted_conditions),
     ].filter(Boolean);
-    return [...new Set(ids)].map((id) => conditions.find((condition) => condition.id === id)).filter((item): item is ChangelingCondition => Boolean(item));
+    return [...new Set(ids)].map((id) => conditions.find((condition) => condition.id === id)).filter((item): item is ConditionDefinition => Boolean(item));
   }, [character.current_state?.conditions, conditions, data.merit_granted_conditions]);
   const identity = [
     [t("ui.name"), character.character.name], [t("ui.needle"), changelingAnchorDisplayName("needle", data.needle, locale)], [t("ui.seeming"), seemingDisplayName(data.seeming, locale)],

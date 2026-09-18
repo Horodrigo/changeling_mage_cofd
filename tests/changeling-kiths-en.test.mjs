@@ -10,7 +10,7 @@ const kithModule=await vite.ssrLoadModule("/lib/changeling-kiths.ts");
 kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json",import.meta.url),"utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json",import.meta.url),"utf8")));
 const {KITHS,kithPresentation,kithSkillOptions}=kithModule;
 const KITH_TEXT_EN=Object.fromEntries(KITHS.map(({id,description,blessing,skill})=>[id,{description,blessing,skill}]));
-const {KITH_CREATION_CHOICES}=await vite.ssrLoadModule("/lib/changeling-kith-choices.ts");
+const {KITH_CREATION_CHOICES}=await vite.ssrLoadModule("/game-lines/changeling/kith-choices.ts");
 test("all 73 official and 12 Book of Seemings Kith IDs have complete English presentation summaries",()=>{
  assert.equal(KITHS.length,85); assert.equal(KITHS.filter(x=>x.sourceId==="h-seemings").length,12); assert.deepEqual(Object.keys(KITH_TEXT_EN).sort(),KITHS.map(x=>x.id).sort());
  for(const kith of KITHS){const text=KITH_TEXT_EN[kith.id]; for(const field of ["description","blessing","skill"]) assert.ok(text[field]?.trim(),`${kith.id}.${field}`);}

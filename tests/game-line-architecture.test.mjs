@@ -105,6 +105,41 @@ test("line-owned rule modules do not reach back into legacy line-specific lib mo
   }
 });
 
+test("migrated line-owned modules stay out of lib and inside their owning game line", async () => {
+  const moved = [
+    ["lib/seeming-presentation.ts", "game-lines/changeling/seeming-presentation.ts"],
+    ["lib/changeling-kith-choices.ts", "game-lines/changeling/kith-choices.ts"],
+    ["lib/hedge-duelist-variants.ts", "game-lines/changeling/hedge-duelist-variants.ts"],
+    ["lib/mage-nimbus.ts", "game-lines/mage/nimbus.ts"],
+    ["lib/mage-orders.ts", "game-lines/mage/orders.ts"],
+    ["lib/mage-merit-configurations.ts", "game-lines/mage/merit-configurations.ts"],
+  ];
+
+  for (const [legacyPath, ownedPath] of moved) {
+    await assertMissing(legacyPath);
+    await access(join(root, ownedPath));
+  }
+
+  await Promise.all([
+    assertMissing("lib/changeling-conditions.ts"),
+    assertMissing("lib/mage-conditions.ts"),
+  ]);
+
+  const lineSources = (
+    await Promise.all([
+      sourceFiles("game-lines/changeling"),
+      sourceFiles("game-lines/mage"),
+    ])
+  ).flat();
+  const content = (await Promise.all(lineSources.map(source))).join("\n");
+
+  assert.doesNotMatch(
+    content,
+    /@\/lib\/(?:seeming-presentation|changeling-kith-choices|hedge-duelist-variants|mage-nimbus|mage-orders|mage-merit-configurations|changeling-conditions|mage-conditions)/,
+    "a migrated game-line dependency still reaches back into lib/",
+  );
+});
+
 test("current game-line source trees do not statically import one another", async () => {
   const lines = ["mage", "changeling", "vampire"];
 

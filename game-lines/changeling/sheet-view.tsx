@@ -17,9 +17,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs,TabsContent,TabsList,TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
-import type { ChangelingCondition } from "@/lib/changeling-conditions";
+import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
-import { kithCreationChoice } from "@/lib/changeling-kith-choices";
+import { kithCreationChoice } from "./kith-choices";
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSections,contractPresentation,contractSummary,contractWithSupplementalBenefits } from "@/lib/contract-presentation";
@@ -36,8 +36,8 @@ import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 
 type ChangelingReference = {
-    conditions: ChangelingCondition[];
-    presentation: Record<string, Partial<ChangelingCondition>>;
+    conditions: ConditionDefinition[];
+    presentation: Record<string, Partial<ConditionDefinition>>;
     courts: CourtDefinition[];
     entitlements: EntitlementDefinition[];
     kiths: KithDefinition[];
@@ -89,7 +89,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
     const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")];
     const { locale, t } = useLanguage();
-    const coreReference = catalogs.get<{ conditions: ChangelingCondition[]; presentation: Record<string, Partial<ChangelingCondition>> }>("core-reference");
+    const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
     const lineReference = catalogs.get<ChangelingReference>("changeling-reference");
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
     const conditionCatalog = [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
@@ -745,7 +745,7 @@ function LorePanel({ title, intro, text, source, }: {
       {source && <small>{source}</small>}
     </article>);
 }
-function selectedConditionList(value: unknown, catalog: readonly ChangelingCondition[]): CoreSelectedCondition[] {
+function selectedConditionList(value: unknown, catalog: readonly ConditionDefinition[]): CoreSelectedCondition[] {
     if (!Array.isArray(value))
         return [];
     return value

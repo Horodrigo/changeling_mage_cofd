@@ -2,7 +2,7 @@ import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@
 import { commonExpandedConfigurationLines, decodeConfiguredRows } from "@/app/workspace/merit-configuration-presentation";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { meritConfigurationTitle as coreMeritConfigurationTitle, normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
-import { HEDGE_DUELIST_VARIANTS } from "@/lib/hedge-duelist-variants";
+import { HEDGE_DUELIST_VARIANTS } from "./hedge-duelist-variants";
 import type { Locale } from "@/lib/i18n";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";

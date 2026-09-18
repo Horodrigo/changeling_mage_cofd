@@ -1,4 +1,4 @@
-import { HEDGE_DUELIST_VARIANTS } from "@/lib/hedge-duelist-variants";
+import { HEDGE_DUELIST_VARIANTS } from "./hedge-duelist-variants";
 import type { MeritConfigDefinition } from "@/lib/core/character/merit-configuration";
 
 const SKILLS = ["Academics", "Computer", "Crafts", "Investigation", "Medicine", "Occult", "Politics", "Science", "Athletics", "Brawl", "Drive", "Firearms", "Larceny", "Stealth", "Survival", "Weaponry", "Animal Ken", "Empathy", "Expression", "Intimidation", "Persuasion", "Socialize", "Streetwise", "Subterfuge"];

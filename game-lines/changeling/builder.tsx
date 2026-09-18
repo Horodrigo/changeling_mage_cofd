@@ -23,7 +23,7 @@ import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { EntitlementDefinition } from "@/lib/entitlements";
-import { kithCreationChoice } from "@/lib/changeling-kith-choices";
+import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";

@@ -15,7 +15,7 @@ import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibi
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
-import { hasPublishedMageOrder } from "@/lib/mage-orders";
+import { hasPublishedMageOrder } from "./orders";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";

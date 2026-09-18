@@ -1,5 +1,5 @@
-import type { MeritConfigDefinition, MeritConfigField } from "./core/character/merit-configuration";
-import { PUBLISHED_MAGE_ORDERS } from "./mage-orders";
+import type { MeritConfigDefinition, MeritConfigField } from "@/lib/core/character/merit-configuration";
+import { PUBLISHED_MAGE_ORDERS } from "./orders";
 const field=(key:string,label:string,kind:"text"|"textarea"="text"):MeritConfigField=>({key,label,kind});
 const itemFields=[field("name","Item name"),field("description","Appearance and properties","textarea")];
 const spellFields=[field("spell","Spell and Arcana"),field("trigger","Activation trigger"),field("mana","Mana capacity")];

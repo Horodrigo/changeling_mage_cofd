@@ -3,6 +3,8 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 
 const workspaceUrl = new URL("../app/workspace.tsx", import.meta.url);
+const lifecycleUrl = new URL("../app/workspace/character-lifecycle.ts", import.meta.url);
+const repositoryUrl = new URL("../app/workspace/character-repository.ts", import.meta.url);
 const persistenceUrl = new URL("../lib/character-persistence.ts", import.meta.url);
 const registryUrl = new URL("../game-lines/registry/game-line-registry.ts", import.meta.url);
 
@@ -13,35 +15,26 @@ function functionBody(source, name, nextName) {
   return source.slice(start, end >= 0 ? end : source.length);
 }
 
-test("character import validates schema before applying common and line normalization", async () => {
-  const workspace = await readFile(workspaceUrl, "utf8");
-  const body = functionBody(workspace, "importCharacter", "Dashboard");
+test("character import validates schema before common and line normalization", async () => {
+  const lifecycle = await readFile(lifecycleUrl, "utf8");
+  const body = functionBody(lifecycle, "importCharacterFile");
 
   const validate = body.indexOf("validateCurrentCharacter(parsed)");
-  const normalizeExpression = body.search(
-    /normalizeGameLineCharacter\(normalizeStoredSheet\(parsed\s+as\s+CharacterSheet\)\)/,
-  );
+  const prepare = body.indexOf("prepareCharacterForOpen(parsed as CharacterSheet)");
 
   assert.ok(validate >= 0, "import must validate the parsed character");
-  assert.ok(
-    normalizeExpression > validate,
-    "normalization must happen only after schema validation",
-  );
+  assert.ok(prepare > validate, "normalization must happen only after schema validation");
   assert.match(body, /validation === "unsupported-schema"/);
   assert.match(body, /validation !== "valid"/);
 });
 
-test("opening a character never bypasses normalization after a failure", async () => {
+test("opening a character delegates to lifecycle normalization and never falls back raw", async () => {
   const workspace = await readFile(workspaceUrl, "utf8");
   const body = functionBody(workspace, "openCharacter", "saveCharacter");
 
-  assert.match(body, /normalizeStoredSheet\(sheet\)/);
-  assert.match(body, /normalizeGameLineCharacter\(/);
-  assert.doesNotMatch(
-    body,
-    /catch\s*\{[\s\S]*?setSelected\(sheet\)/,
-    "raw stored characters must not be opened when catalog hydration or normalization fails",
-  );
+  assert.match(body, /setSelected\(await prepareCharacterForOpen\(sheet\)\)/);
+  assert.match(body, /catch\s*\{[\s\S]*?setSelected\(null\)/);
+  assert.doesNotMatch(body, /setSelected\(sheet\)/);
 });
 
 test("common persistence normalization stays line-neutral", async () => {
@@ -53,7 +46,7 @@ test("common persistence normalization stays line-neutral", async () => {
   assert.match(persistence, /normalizeStoredSheet/);
 });
 
-test("registry applies selected line normalize then synchronize hooks", async () => {
+test("registry applies selected line normalize then synchronize then derive hooks", async () => {
   const registry = await readFile(registryUrl, "utf8");
 
   const normalizeIndex = registry.indexOf("rules.normalizeCharacter");
@@ -62,6 +55,53 @@ test("registry applies selected line normalize then synchronize hooks", async ()
   assert.ok(normalizeIndex >= 0);
   assert.ok(synchronizeIndex > normalizeIndex);
   assert.ok(deriveIndex > synchronizeIndex);
+});
+
+test("current-state updates are an explicit transient fast path", async () => {
+  const lifecycle = await readFile(lifecycleUrl, "utf8");
+  const body = functionBody(lifecycle, "updateCharacterState", "importCharacterFile");
+
+  assert.match(body, /current_state:\s*structuredClone\(currentState\)/);
+  assert.match(body, /updated_at:\s*new Date\(\)\.toISOString\(\)/);
+  assert.doesNotMatch(
+    body,
+    /normalizeStoredSheet|normalizeGameLineCharacter|hydrateCharacterCatalogs|loadRules/,
+    "transient play-state updates must not re-run the structural character pipeline",
+  );
+});
+
+test("repository owns local persistence and stored-character collection mutation", async () => {
+  const [workspace, repository] = await Promise.all([
+    readFile(workspaceUrl, "utf8"),
+    readFile(repositoryUrl, "utf8"),
+  ]);
+
+  assert.match(workspace, /useCharacterRepository\(userKey\)/);
+  assert.doesNotMatch(workspace, /@\/lib\/device-storage|getDeviceValue|setDeviceValue|stageDeviceValue/);
+
+  assert.match(repository, /from\s+["']@\/lib\/device-storage["']/);
+  assert.match(repository, /getDeviceValue<StoredCharacter\[\]>\(storageKey\)/);
+  assert.match(repository, /stageDeviceValue\(storageKey,\s*characters\)/);
+  assert.match(repository, /setDeviceValue\(storageKey,\s*characters\)/);
+  assert.match(repository, /upsertStoredCharacter/);
+  assert.match(repository, /replaceStoredCharacter/);
+  assert.match(repository, /removeStoredCharacter/);
+});
+
+test("workspace delegates structural character lifecycle instead of implementing it", async () => {
+  const workspace = await readFile(workspaceUrl, "utf8");
+
+  assert.match(workspace, /prepareCharacterForOpen/);
+  assert.match(workspace, /prepareCharacterForSave/);
+  assert.match(workspace, /prepareCharacterForUpdate/);
+  assert.match(workspace, /applyCharacterState/);
+  assert.match(workspace, /importCharacterFile/);
+
+  assert.doesNotMatch(
+    workspace,
+    /normalizeStoredSheet|normalizeGameLineCharacter|validateCurrentCharacter|hydrateCharacterCatalogs/,
+    "Workspace should orchestrate UI, not implement persistence normalization",
+  );
 });
 
 test("workspace contains no dead server-catalog presentation path", async () => {

@@ -98,17 +98,23 @@ test("production source tree does not import Drizzle or Cloudflare D1", async ()
   assert.deepEqual(violations, []);
 });
 
-test("browser character persistence is local-first and does not call a character API", async () => {
-  const [workspace, storage] = await Promise.all([
+test("browser character persistence is local-first behind CharacterRepository", async () => {
+  const [workspace, repository, storage] = await Promise.all([
     source("app/workspace.tsx"),
+    source("app/workspace/character-repository.ts"),
     source("lib/device-storage.ts"),
   ]);
 
-  assert.match(workspace, /from\s+["']@\/lib\/device-storage["']/);
-  assert.match(workspace, /getDeviceValue<StoredCharacter\[\]>/);
-  assert.match(workspace, /stageDeviceValue\(storageKey,\s*characters\)/);
-  assert.match(workspace, /setDeviceValue\(storageKey,\s*characters\)/);
+  assert.match(workspace, /from\s+["']\.\/workspace\/character-repository["']/);
+  assert.match(workspace, /useCharacterRepository\(userKey\)/);
   assert.doesNotMatch(workspace, /\/api\/characters|fetch\([^)]*characters/i);
+  assert.doesNotMatch(workspace, /@\/lib\/device-storage/);
+
+  assert.match(repository, /from\s+["']@\/lib\/device-storage["']/);
+  assert.match(repository, /getDeviceValue<StoredCharacter\[\]>/);
+  assert.match(repository, /stageDeviceValue\(storageKey,\s*characters\)/);
+  assert.match(repository, /setDeviceValue\(storageKey,\s*characters\)/);
+  assert.doesNotMatch(repository, /\/api\/characters|fetch\([^)]*characters/i);
 
   assert.match(storage, /indexedDB\.open\(/);
   assert.match(storage, /pending-write/);

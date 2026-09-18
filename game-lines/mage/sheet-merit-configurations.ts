@@ -2,7 +2,7 @@ import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@
 import { commonExpandedConfigurationLines, configuredDefinitionLines } from "@/app/workspace/merit-configuration-presentation";
 import { meritConfigurationTitle, normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { Locale } from "@/lib/i18n";
-import { MAGE_MERIT_CONFIGURATIONS } from "@/lib/mage-merit-configurations";
+import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 
 export const MAGE_SHEET_MERIT_CONFIGURATIONS = [

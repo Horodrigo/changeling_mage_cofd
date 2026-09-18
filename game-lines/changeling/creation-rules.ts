@@ -49,7 +49,7 @@ export const CTL_SEEMINGS = {
     curseEn: "Risk Clarity damage with a dice pool equal to half Wyrd, rounded up, whenever taking an action that benefits yourself but adds nothing to the role you embody.",
   },
 } as const;
-export { CTL_SEEMING_LABELS, seemingDisplayName } from "../../lib/seeming-presentation";
+export { CTL_SEEMING_LABELS, seemingDisplayName } from "./seeming-presentation";
 
 export type ChangelingAnchorDefinition = {
   name: string;

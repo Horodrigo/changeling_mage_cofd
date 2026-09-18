@@ -1,16 +1,16 @@
 import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-groups";
-import type { ChangelingCondition } from "@/lib/changeling-conditions";
+import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 
 type CoreReference = {
-  conditions: ChangelingCondition[];
-  presentation: Record<string, Partial<ChangelingCondition>>;
+  conditions: ConditionDefinition[];
+  presentation: Record<string, Partial<ConditionDefinition>>;
 };
 
 export const coreReferenceCatalogGroup: CatalogGroupModule = {
   async load(reader): Promise<CoreReference> {
     const [conditions, presentation] = await Promise.all([
-      reader.getCatalog<ChangelingCondition[]>("core-conditions"),
-      reader.getCatalog<Record<string, Partial<ChangelingCondition>>>("core-conditions-pt"),
+      reader.getCatalog<ConditionDefinition[]>("core-conditions"),
+      reader.getCatalog<Record<string, Partial<ConditionDefinition>>>("core-conditions-pt"),
     ]);
     return { conditions, presentation };
   },

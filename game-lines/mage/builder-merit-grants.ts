@@ -1,7 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
-import { hasPublishedMageOrder } from "@/lib/mage-orders";
+import { hasPublishedMageOrder } from "./orders";
 
 export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
   const order = String(sheet.line_data.order ?? "Orderless");

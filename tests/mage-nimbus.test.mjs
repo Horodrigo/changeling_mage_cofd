@@ -5,7 +5,7 @@ import {createServer} from "vite";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
-const nimbus=await vite.ssrLoadModule("/lib/mage-nimbus.ts");
+const nimbus=await vite.ssrLoadModule("/game-lines/mage/nimbus.ts");
 test.after(()=>vite.close());
 
 test("Long-Term Nimbus range follows Wisdom tiers",()=>{

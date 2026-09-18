@@ -28,8 +28,8 @@ import { refundMageAdvancement,type MageAdvancementUndo } from "@/lib/experience
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage,type Locale } from "@/lib/i18n";
 import { findLegacy,normalizeLegacyState } from "@/lib/legacies";
-import type { MageCondition } from "@/lib/mage-conditions";
-import { mageNimbusConnection,mageNimbusTiltBudget,normalizeNimbusTiltEffects } from "@/lib/mage-nimbus";
+import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
+import { mageNimbusConnection,mageNimbusTiltBudget,normalizeNimbusTiltEffects } from "./nimbus";
 import { expandedConfigurationLines, findMeritConfiguration, isInlineMeritConfiguration, meritConfigurationTitle, MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeDamage,powerResourceLimits } from "@/lib/resource-rules";
@@ -45,8 +45,8 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
     const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")];
     const conditionCatalog = [
-        ...catalogs.get<{ conditions: MageCondition[] }>("core-reference").conditions.filter((condition) => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
-        ...catalogs.get<readonly MageCondition[]>("mage-reference"),
+        ...catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions.filter((condition) => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
+        ...catalogs.get<readonly ConditionDefinition[]>("mage-reference"),
     ];
     const { locale, t } = useLanguage();
     const isMobile = useIsMobile();
@@ -843,7 +843,7 @@ function spellItemSummary(item: Record<string, unknown>, catalog: readonly Spell
     return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
 }
 function spellItemReach(item: Record<string, unknown>, catalog: readonly SpellDefinition[]) { const current = catalog.find(spell => spell.id === String(item.id ?? "") || spell.originalName === String(item.originalName ?? item.name ?? "")), description = String(current?.description ?? item.description ?? "").trim(), index = description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i); return index < 0 ? "" : description.slice(index).replace(/\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi, " · "); }
-function selectedConditionList(value: unknown, catalog: readonly MageCondition[]): CoreSelectedCondition[] {
+function selectedConditionList(value: unknown, catalog: readonly ConditionDefinition[]): CoreSelectedCondition[] {
     if (!Array.isArray(value))
         return [];
     return value
