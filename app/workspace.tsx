@@ -56,15 +56,6 @@ const CharacterPrintDialog = lazy(() =>
 );
 
 type View = "inicio" | "personagens";
-type CatalogRule = {
-  id: string;
-  originalName: string;
-  gameLine: string;
-  sourceId: string | null;
-  sourcePage: number | null;
-  structuredData: string;
-  reviewStatus: string;
-};
 
 const nav = [
   ["inicio", "workspace.home", LayoutDashboard],
@@ -279,6 +270,7 @@ export function Workspace({
     );
 
   const lineThemeClass = selected ? `line-theme-${selected.game_line.toLowerCase()}` : "";
+  const selectedRegistration = selected ? getGameLineRegistration(selected.game_line) : null;
   return (
     <main className={`app-shell${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
       <section className="content">
@@ -334,7 +326,7 @@ export function Workspace({
               <strong>{displayName}</strong>
             </div>
             {selected && <div className="top-sheet-tools">
-              {selected.game_line === "CtL" && <Button type="button" size="sm" className="top-sheet-print" onClick={()=>setPrintOpen(true)} title={t("workspace.printSheet")}>
+              {selectedRegistration?.loadPrintSheet && <Button type="button" size="sm" className="top-sheet-print" onClick={()=>setPrintOpen(true)} title={t("workspace.printSheet")}>
                 <Printer /><span>{t("workspace.print")}</span>
               </Button>}
               <div className="sheet-zoom-control" role="group" aria-label={t("workspace.sheetZoom")}>
@@ -525,6 +517,7 @@ function Dashboard({
     </div>
   );
 }
+
 function Characters({
   characters,
   ready,
@@ -711,7 +704,7 @@ function CharacterView({
       {isMobile ? sheet : <div className="sheet-zoom-viewport" style={{width:SHEET_BASE_WIDTH*zoom,height:sheetHeight?sheetHeight*zoom:undefined}}>
         <div ref={zoomSurfaceRef} className="sheet-zoom-surface" style={{transform:`scale(${zoom})`}}>{sheet}</div>
       </div>}
-      {character.game_line === "CtL" && printOpen && <CatalogBoundary groups={registration.catalogGroups.print ?? registration.catalogGroups.sheet}>
+      {registration.loadPrintSheet && printOpen && <CatalogBoundary groups={registration.catalogGroups.print ?? registration.catalogGroups.sheet}>
         <Suspense fallback={<WorkspaceLoading />}><CharacterPrintDialog character={character} open onOpenChange={setPrintOpen}/></Suspense>
       </CatalogBoundary>}
     </section>
@@ -721,35 +714,6 @@ function CharacterView({
 function WorkspaceLoading() {
   const { t } = useLanguage();
   return <div className="loading-card">{t("workspace.loading")}</div>;
-}
-
-function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
-  const { t } = useLanguage();
-  return (
-    <section className="panel">
-      <div className="panel-heading">
-        <div>
-          <span className="kicker">{t("workspace.sharedLibrary")}</span>
-          <h3>{t("workspace.activeRules")}</h3>
-          <p>{t("workspace.activeRulesDescription")}</p>
-        </div>
-        <Badge className="approved-badge">{t("workspace.active")}</Badge>
-      </div>
-      <div className="rule-cards">
-        {catalog.map((rule) => (
-          <article key={rule.id}>
-            <div>
-              <Badge>{rule.gameLine}</Badge>
-              <Badge variant="outline">{t("workspace.page", { page: rule.sourcePage ?? "" })}</Badge>
-            </div>
-            <h3>{rule.originalName}</h3>
-            <p>{summarizeRule(rule, t)}</p>
-            <small>{t("workspace.sourceDetail", { source: rule.sourceId ?? "", status: rule.reviewStatus })}</small>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
 }
 
 function Empty({
@@ -774,13 +738,4 @@ function Empty({
       )}
     </div>
   );
-}
-
-function summarizeRule(rule: CatalogRule, t: ReturnType<typeof useLanguage>["t"]) {
-  try {
-    const data = JSON.parse(rule.structuredData);
-    return t("workspace.structuredRuleSummary", { count: Object.keys(data).length });
-  } catch {
-    return t("workspace.sharedRuleActive");
-  }
 }

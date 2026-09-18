@@ -147,17 +147,34 @@ test("workspace routes builder and sheet surfaces through the registry shells", 
   assert.doesNotMatch(workspace, /import\(["'][^"']*game-lines\/(?:mage|changeling|vampire)/);
 });
 
-test("workspace print capability is driven by registration instead of a concrete line ID", async () => {
-  const [workspace, contract] = await Promise.all([
+test("workspace print capability is driven entirely by registration", async () => {
+  const [workspace, contract, changeling, mage, vampire] = await Promise.all([
     source("app/workspace.tsx"),
     source("lib/game-line-contracts/game-line-registration.ts"),
+    source("game-lines/changeling/registration.ts"),
+    source("game-lines/mage/registration.ts"),
+    source("game-lines/vampire/registration.ts"),
   ]);
 
   assert.match(contract, /loadPrintSheet\?/);
+  assert.match(changeling, /loadPrintSheet\s*:/);
+  assert.doesNotMatch(mage, /loadPrintSheet\s*:/);
+  assert.doesNotMatch(vampire, /loadPrintSheet\s*:/);
+
+  assert.match(
+    workspace,
+    /selectedRegistration\?\.loadPrintSheet\s*&&/,
+    "top-level print action must depend on the selected registration capability",
+  );
+  assert.match(
+    workspace,
+    /registration\.loadPrintSheet\s*&&\s*printOpen/,
+    "print dialog must depend on the active registration capability",
+  );
   assert.doesNotMatch(
     workspace,
-    /character\.game_line\s*===\s*["']CtL["']/,
-    "the shell still hard-codes Changeling printing instead of using registration capability",
+    /(?:selected|character)\.game_line\s*===\s*["'](?:CtL|MtA|VtR)["']/,
+    "workspace must not hard-code a concrete line to decide print support",
   );
 });
 

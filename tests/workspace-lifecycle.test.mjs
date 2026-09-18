@@ -67,9 +67,17 @@ test("registry applies selected line normalize then synchronize hooks", async ()
 test("workspace contains no dead server-catalog presentation path", async () => {
   const workspace = await readFile(workspaceUrl, "utf8");
 
+  for (const legacySymbol of ["CatalogRule", "RulesCatalog", "summarizeRule"]) {
+    assert.equal(
+      workspace.includes(legacySymbol),
+      false,
+      `${legacySymbol} from the removed server catalog path remains in Workspace`,
+    );
+  }
+
   assert.doesNotMatch(
     workspace,
-    /\btype CatalogRule\b|\bfunction RulesCatalog\b|\bfunction summarizeRule\b/,
-    "server/D1-era rules catalog presentation remains dead inside Workspace",
+    /workspace\.(?:sharedLibrary|activeRules|activeRulesDescription|structuredRuleSummary|sharedRuleActive|sourceDetail)/,
+    "D1-era catalog presentation copy remains reachable from Workspace",
   );
 });
