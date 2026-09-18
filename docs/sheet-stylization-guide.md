@@ -34,9 +34,9 @@ comparação usada no início do trabalho está em
 
 ### 2.1 Isolamento por linha
 
-As regras específicas foram concentradas em `app/changeling-sheet.css` e todas
+As regras específicas foram concentradas em `app/css/changeling-sheet.css` e todas
 partem de `.ctl-sheet`. O arquivo é importado por `app/layout.tsx` depois de
-`globals.css`, permitindo que a linha especialize as primitivas comuns sem
+`css/globals.css`, permitindo que a linha especialize as primitivas comuns sem
 alterar intencionalmente Mage.
 
 A classe da linha já é aplicada por `CharacterPaperShell`:
@@ -60,10 +60,10 @@ Changeling passou a usar:
 - sombra externa suave e sombra interna esverdeada.
 
 Os tokens estão no primeiro bloco `.ctl-sheet` de
-`app/changeling-sheet.css`. Esse é o lugar correto para calibrar cor, opacidade,
+`app/css/changeling-sheet.css`. Esse é o lugar correto para calibrar cor, opacidade,
 padding e geometria da moldura.
 
-O contêiner comum `.cod-sheet`, em `app/globals.css`, foi ajustado para a
+O contêiner comum `.cod-sheet`, em `app/css/globals.css`, foi ajustado para a
 proporção de trabalho adotada durante o fine tuning: `min-width: 900px` e
 `min-height: 1059px`. A largura deixa de ser rígida abaixo de 850 px, quando as
 regras responsivas assumem o layout. Como esse seletor é compartilhado, uma
@@ -268,14 +268,13 @@ de Skill de Kith.
 
 | Grupo | Asset público | Dimensão | Canal | Propósito |
 | --- | --- | ---: | --- | --- |
-| Papel | `public/changeling-paper-texture.webp` | 1024 × 1024 | RGB | Textura repetível do fundo da folha. |
+| Papel | `public/paper-texture.webp` | 1024 × 1024 | RGB | Textura repetível do fundo da folha. |
 | Moldura | `public/changeling/style/botanical-corner.webp` | 1229 × 1280 | RGBA | Um canto botânico reutilizado nas quatro quinas por transformação CSS. |
 | Moldura | `public/changeling/style/frame-star-center.webp` | 232 × 314 | RGBA | Estrela central superior; rotacionada para a inferior. |
 | Moldura | `public/changeling/style/frame-star-side.webp` | 120 × 103 | RGBA | Um ornamento lateral reutilizado ao redor das duas estrelas e nos cantos de painéis. |
 | Cabeçalho | `public/changeling/style/changeling-title.webp` | 998 × 190 | RGBA | Lettering ilustrado da marca Changeling. |
 | Abas | `public/changeling/style/selected-tab-texture.webp` | 1280 × 320 | RGB | Tinta orgânica da aba ativa; aplicada com `background-size: cover`. |
-| Attributes | `public/changeling/style/attributes-divider-corner.webp` | 644 × 422 | RGBA | Terminal externo do divisor principal. |
-| Attributes | `public/changeling/style/attributes-divider-middle.webp` | 1182 × 499 | RGBA | Medalhão/trecho intermediário do divisor principal. |
+| Attributes | `public/changeling/style/attributes-divider.webp` | 1182 × 499 | RGBA | Medalhão/trecho intermediário do divisor. |
 | Attributes | `public/changeling/style/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
 | Seções | `public/changeling/style/divider-terminal.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
 | Grid | `public/changeling/style/vertical-rule.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
@@ -438,11 +437,11 @@ raster restaurado.
 
 ### Etapa 3 — Criar a camada da linha
 
-1. Crie `app/mage-sheet.css` ou o equivalente da nova linha.
+1. Crie `app/css/mage-sheet.css` ou o equivalente da nova linha.
 2. Escopo obrigatório: `.mta-sheet` para Mage.
-3. Importe a folha depois de `globals.css`.
+3. Importe a folha depois de `css/globals.css`.
 4. Defina tokens de tinta, papel, regras, opacidades e geometria.
-5. Mantenha os seletores compartilhados em `globals.css` neutros.
+5. Mantenha os seletores compartilhados em `css/globals.css` neutros.
 
 Não copie `.ctl-sheet` para `.mta-sheet` por busca e substituição. Use os mesmos
 mecanismos somente onde a linguagem visual de Mage pedir o mesmo comportamento.
@@ -532,7 +531,7 @@ ou quebrar a instalação offline.
 
 | Resultado visual | Arquivo e seletor/parâmetro |
 | --- | --- |
-| Cor, textura, padding e sombra da folha | `app/changeling-sheet.css`: `.ctl-sheet` |
+| Cor, textura, padding e sombra da folha | `app/css/changeling-sheet.css`: `.ctl-sheet` |
 | Encontro das linhas externas | variáveis `--ctl-frame-rail-*`, `--ctl-frame-side-x`, `--ctl-frame-corner-depth` |
 | Escala da estrela por viewport | `--ctl-frame-star-*` nos blocos base, 980 px e 720 px |
 | Distância dos enfeites da estrela | `--ctl-frame-star-side-*` |
@@ -546,7 +545,7 @@ ou quebrar a instalação offline.
 | Divisor de Attributes | `.ctl-attributes-heading` e seus pseudo-elementos |
 | Linhas verticais | backgrounds de `.official-trait-grid`, `.official-sheet-body` e `.sheet-bottom-grid` |
 | Moldura da Skill de Kith | `.kith-skill-frame`, fórmulas das peças e `KithSkillName` |
-| Altura/largura global da folha | `.cod-sheet` em `app/globals.css` |
+| Altura/largura global da folha | `.cod-sheet` em `app/css/globals.css` |
 
 Concentre mudanças em tokens e seletores de alto nível. Compensações diferentes
 para cada canto ou título normalmente indicam que o asset ainda tem margem

@@ -7,7 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { useLanguage } from "@/lib/i18n";
-import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { workspaceTerm } from "./workspace-i18n";
@@ -62,12 +62,20 @@ export function ExperiencePowerPicker({
   selectedId,
   onSelect,
   compact = false,
+  line,
+  triggerLabel,
+  dialogTitle,
+  dialogDescription,
 }: {
   kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato";
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;
   compact?: boolean;
+  line?: PersistedGameLineId;
+  triggerLabel?: string;
+  dialogTitle?: string;
+  dialogDescription?: string;
 }) {
   const {locale,tr}=useLanguage();
   const kindLabel=kind==="Práxis"?tr("Práxis","Praxis"):workspaceTerm(kind,locale);
@@ -96,15 +104,15 @@ export function ExperiencePowerPicker({
     <Dialog>
       <DialogTrigger asChild>
         <Button type="button" variant="outline" size="sm" className={compact ? "builder-add-action catalog-selection-action" : "experience-merit-trigger catalog-selection-action"}>
-          <span>{selected?.name ?? `${tr("Selecionar","Select")} ${kindLabel}`}</span>
+          <span>{selected?.name ?? triggerLabel ?? `${tr("Selecionar","Select")} ${kindLabel}`}</span>
           <Search />
         </Button>
       </DialogTrigger>
-      <DialogContent className="merit-dialog experience-merit-dialog">
+      <DialogContent className={`merit-dialog experience-merit-dialog${line === "CtL" ? " ctl-dialog" : ""}`}>
         <DialogHeader>
-          <DialogTitle>{tr("Comprar","Purchase")} {kindLabel}</DialogTitle>
+          <DialogTitle>{dialogTitle ?? `${tr("Comprar","Purchase")} ${kindLabel}`}</DialogTitle>
           <DialogDescription>
-            {tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
+            {dialogDescription ?? tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
@@ -214,7 +222,7 @@ export function ExperienceMeritPicker({
           <Search />
         </Button>
       </DialogTrigger>
-      <DialogContent className="merit-dialog experience-merit-dialog">
+      <DialogContent className={`merit-dialog experience-merit-dialog${line === "CtL" ? " ctl-dialog" : ""}`}>
         <DialogHeader>
           <DialogTitle>{tr("Comprar Mérito","Purchase Merit")}</DialogTitle>
           <DialogDescription>
@@ -256,7 +264,12 @@ export function ExperienceMeritPicker({
                       (!owned.grantedBy || canAdvanceGrantedMerit(line, owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
-                ratings = meritRatingsFor(item,Math.max(1,...instances.map(({owned})=>owned.dots+1))),
+                ratings = UNBOUNDED_MERITS.has(item.name)
+                ? meritRatingsFor(
+                    item,
+                    Math.max(1, ...instances.map(({ owned }) => owned.dots + 1)),
+                  )
+                : meritRatingsFor(item),
                 draft = meritDrafts[item.id] ?? {newInstance:repeatable&&!instances.length,instanceIndex:instances[0]?.index??-1,dots:instances[0]?.owned.dots??ratings[0]??1},
                 activeInstance = instances.find(({index})=>index===draft.instanceIndex) ?? instances[0],
                 buyingNew = repeatable && draft.newInstance,

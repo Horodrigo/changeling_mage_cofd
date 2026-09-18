@@ -32,7 +32,7 @@ test("filtered non-Merit catalogs use the whole card as the selection target", a
 test("Changeling mobile Summary owns Aspirations and compact Attributes fit their dots", async () => {
   const [sheet, css] = await Promise.all([
     source("game-lines/changeling/sheet-view.tsx"),
-    source("app/globals.css"),
+    source("app/css/globals.css"),
   ]);
   const mobileStart = sheet.indexOf("if (isMobile)");
   const desktopStart = sheet.indexOf("return (<>", mobileStart);

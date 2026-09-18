@@ -256,7 +256,7 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
             <Search /> {tr("Selecionar Corte", "Select Court")}
           </Button>
         </DialogTrigger>
-        <DialogContent className="merit-dialog">
+        <DialogContent className="merit-dialog ctl-dialog">
           <DialogHeader>
             <DialogTitle>{tr("Selecionar Corte", "Select Court")}</DialogTitle>
             <DialogDescription>
@@ -310,7 +310,7 @@ function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"nee
     <div className="kith-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):tr("Nenhuma seleção","None selected")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):tr("Consulte os gatilhos de recuperação de Força de Vontade antes de escolher.","Review the Willpower recovery triggers before choosing.")}</small></div>
     <Dialog>
       <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {tr(`Selecionar ${label}`,`Select ${label}`)}</Button></DialogTrigger>
-      <DialogContent className="merit-dialog anchor-dialog">
+      <DialogContent className="merit-dialog anchor-dialog ctl-dialog">
         <DialogHeader><DialogTitle>{tr(`Selecionar ${label}`,`Select ${label}`)}</DialogTitle><DialogDescription>{tr("Cada opção recupera 1 ponto ou toda a Força de Vontade em circunstâncias diferentes.","Each option recovers either 1 point or all Willpower under different circumstances.")}</DialogDescription></DialogHeader>
         <label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar por nome ou gatilho…","Search by name or trigger…")}/></label>
         <div className="catalog-filters anchor-filters"><label>{tr("Fonte","Source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Fontes","All Sources")}</SelectItem>{sources.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label></div>
@@ -386,7 +386,7 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
             <Search /> {tr("Selecionar Fratria", "Select Kith")}
           </Button>
         </DialogTrigger>
-        <DialogContent className="merit-dialog kith-dialog">
+        <DialogContent className="merit-dialog kith-dialog ctl-dialog">
           <DialogHeader>
             <DialogTitle>{tr("Selecionar Fratria", "Select Kith")}</DialogTitle>
             <DialogDescription>
@@ -571,7 +571,7 @@ function ContractSelector({
           {contracts.filter((item) => item.name).length}/6 {tr("selecionados", "selected")}
         </Badge><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="builder-add-action">{tr("Adicionar Contrato", "Add Contract")}</Button></DialogTrigger></div>
       </div>
-      <DialogContent className="merit-dialog">
+      <DialogContent className="merit-dialog ctl-dialog">
         <DialogHeader>
           <DialogTitle>{tr("Adicionar Contrato", "Add Contract")}</DialogTitle>
           <DialogDescription>
@@ -628,7 +628,7 @@ function ContractSelector({
         })}
       </div>
       <Dialog>
-        <DialogContent className="merit-dialog">
+        <DialogContent className="merit-dialog ctl-dialog">
           <DialogHeader>
             <DialogTitle>{tr("Selecionar contratos", "Select Contracts")}</DialogTitle>
             <DialogDescription>

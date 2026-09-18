@@ -67,8 +67,8 @@ type CatalogRule = {
 };
 
 const nav = [
-  ["inicio", "home", LayoutDashboard],
-  ["personagens", "characters", UsersRound],
+  ["inicio", "workspace.home", LayoutDashboard],
+  ["personagens", "workspace.characters", UsersRound],
 ] as const;
 
 export function Workspace({
@@ -78,7 +78,7 @@ export function Workspace({
   displayName: string;
   userKey: string;
 }) {
-  const {locale,setLocale,t,tr}=useLanguage();
+  const {locale,setLocale,t}=useLanguage();
   const [view, setView] = useState<View>("inicio");
   const [characters, setCharacters] = useState<StoredCharacter[]>([]);
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
@@ -106,7 +106,7 @@ export function Workspace({
         if (Array.isArray(stored) && !cancelled) setCharacters(stored);
       } catch {
         setNotice(
-          tr("Não foi possível ler o armazenamento local deste navegador.","The local storage for this browser could not be read."),
+          t("workspace.storageReadFailed"),
         );
       }
       if (!cancelled) setReady(true);
@@ -171,7 +171,7 @@ export function Workspace({
     setSelected(sheet);
     setView("personagens");
     setNotice(
-      tr("Ficha salva localmente neste navegador. Exporte o JSON para manter uma cópia independente.","Character saved locally in this browser. Export the JSON to keep an independent copy."),
+      t("workspace.characterSaved"),
     );
   }
 
@@ -206,7 +206,7 @@ export function Workspace({
     );
     setSelected(null);
     setView("personagens");
-    setNotice(tr(`“${summary.name}” foi excluído deste navegador.`,`“${summary.name}” was deleted from this browser.`));
+    setNotice(t("workspace.characterDeleted", { name: summary.name }));
   }
 
   function exportCharacter(character: CharacterSheet) {
@@ -227,10 +227,10 @@ export function Workspace({
       const { normalizeStoredSheet, validateCurrentCharacter } = await import("@/lib/character-persistence");
       const validation = validateCurrentCharacter(parsed);
       if (validation === "unsupported-schema")
-        throw new Error(tr("Versão de schema de personagem não suportada.", "Unsupported character schema version."));
+        throw new Error(t("workspace.unsupportedSchema"));
       if (validation !== "valid")
         throw new Error(
-          tr("O JSON não representa uma ficha CtL, MtA ou VtR atual válida.","The JSON is not a valid current CtL, MtA, or VtR character sheet."),
+          t("workspace.invalidCharacterJson"),
         );
       await hydrateCharacterCatalogs(parsed.game_line);
       const sheet = await normalizeGameLineCharacter(normalizeStoredSheet(parsed as CharacterSheet));
@@ -240,14 +240,14 @@ export function Workspace({
       ]);
       setView("personagens");
       setSelected(sheet);
-      setNotice(tr(`“${sheet.character.name}” foi importado para este navegador.`,`“${sheet.character.name}” was imported into this browser.`));
+      setNotice(t("workspace.characterImported", { name: sheet.character.name }));
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : tr("JSON inválido.","Invalid JSON."));
+      setNotice(error instanceof Error ? error.message : t("workspace.invalidJson"));
     }
   }
 
   const titleKey = nav.find(([id]) => id === view)?.[1];
-  const title = titleKey ? t(titleKey) : "Characters of the Darkness";
+  const title = t(titleKey ?? "workspace.charactersOfTheDarkness");
   if (editing)
     return (
       <CatalogBoundary
@@ -275,11 +275,11 @@ export function Workspace({
           <button className="top-brand" onClick={() => navigate("inicio")}>
             <img src="/cod-emblem-256.webp" alt="" aria-hidden="true" />
           <div>
-            <strong>Characters of the Darkness</strong>
-            <span>Chronicles of Darkness</span>
+            <strong>{t("workspace.charactersOfTheDarkness")}</strong>
+            <span>{t("workspace.chroniclesOfDarkness")}</span>
           </div>
           </button>
-          <nav className="top-navigation" aria-label={t("mainNavigation")}>
+          <nav className="top-navigation" aria-label={t("workspace.mainNavigation")}>
           {nav.map(([id, labelKey, Icon]) => {
             const label=t(labelKey);
             return (
@@ -296,13 +296,13 @@ export function Workspace({
           )})}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="language-trigger" aria-label={`${t("language")}: ${locale === "pt-BR" ? t("portuguese") : t("english")}`} title={t("language")}>
+              <button className="language-trigger" aria-label={t("workspace.languageCurrent", { language: locale === "pt-BR" ? t("workspace.portuguese") : t("workspace.english") })} title={t("workspace.language")}>
                 <span aria-hidden="true">{localeFlag(locale)}</span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className={lineThemeClass}>
               {(["en-US","pt-BR"] as Locale[]).map(option=><DropdownMenuItem key={option} onSelect={()=>setLocale(option)}>
-                <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("portuguese") : t("english")}
+                <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("workspace.portuguese") : t("workspace.english")}
               </DropdownMenuItem>)}
             </DropdownMenuContent>
           </DropdownMenu>
@@ -323,47 +323,47 @@ export function Workspace({
               <strong>{displayName}</strong>
             </div>
             {selected && <div className="top-sheet-tools">
-              {selected.game_line === "CtL" && <Button type="button" size="sm" className="top-sheet-print" onClick={()=>setPrintOpen(true)} title={tr("Imprimir ficha","Print character sheet")}>
-                <Printer /><span>{tr("Imprimir","Print")}</span>
+              {selected.game_line === "CtL" && <Button type="button" size="sm" className="top-sheet-print" onClick={()=>setPrintOpen(true)} title={t("workspace.printSheet")}>
+                <Printer /><span>{t("workspace.print")}</span>
               </Button>}
-              <div className="sheet-zoom-control" role="group" aria-label={tr("Zoom da ficha","Character sheet zoom")}>
-                <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom<=1} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"out",maximumZoom))} aria-label={tr("Diminuir ficha","Zoom out")} title={tr("Diminuir ficha","Zoom out")}><ZoomOut /></Button>
-                <button type="button" className="sheet-zoom-value" onClick={()=>setSheetZoom(1)} title={tr("Restaurar tamanho","Reset size")} aria-label={tr(`Zoom da ficha: ${Math.round(sheetZoom*100)}%. Restaurar tamanho.`,`Character sheet zoom: ${Math.round(sheetZoom*100)}%. Reset size.`)}>{Math.round(sheetZoom*100)}%</button>
-                <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom>=maximumZoom-0.001} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"in",maximumZoom))} aria-label={tr("Aumentar ficha","Zoom in")} title={tr("Aumentar ficha","Zoom in")}><ZoomIn /></Button>
+              <div className="sheet-zoom-control" role="group" aria-label={t("workspace.sheetZoom")}>
+                <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom<=1} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"out",maximumZoom))} aria-label={t("workspace.zoomOut")} title={t("workspace.zoomOut")}><ZoomOut /></Button>
+                <button type="button" className="sheet-zoom-value" onClick={()=>setSheetZoom(1)} title={t("workspace.resetSize")} aria-label={t("workspace.resetZoom", { percent: Math.round(sheetZoom * 100) })}>{t("workspace.zoomPercent", { percent: Math.round(sheetZoom * 100) })}</button>
+                <Button type="button" variant="ghost" size="icon-xs" disabled={sheetZoom>=maximumZoom-0.001} onClick={()=>setSheetZoom(stepSheetZoom(sheetZoom,"in",maximumZoom))} aria-label={t("workspace.zoomIn")} title={t("workspace.zoomIn")}><ZoomIn /></Button>
               </div>
-              <Button type="button" size="sm" className="top-sheet-edit" onClick={()=>setEditing(selected)} title={tr("Editar","Edit")}>
-                <Pencil /><span>{tr("Editar","Edit")}</span>
+              <Button type="button" size="sm" className="top-sheet-edit" onClick={()=>setEditing(selected)} title={t("workspace.edit")}>
+                <Pencil /><span>{t("workspace.edit")}</span>
               </Button>
             </div>}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="sheet-actions-trigger" aria-label={t("sheetActions")} title={t("sheetActions")}>
-                  <ArrowDownUp /> <span>{t("sheetActions")}</span>
+                <Button className="sheet-actions-trigger" aria-label={t("workspace.sheetActions")} title={t("workspace.sheetActions")}>
+                  <ArrowDownUp /> <span>{t("workspace.sheetActions")}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className={`sheet-actions-menu${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
                 <DropdownMenuItem onSelect={() => fileRef.current?.click()}>
-                  <Upload /> {t("importJson")}
+                  <Upload /> {t("workspace.importJson")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   disabled={!selected}
                   onSelect={() => selected && exportCharacter(selected)}
                 >
-                  <Download /> {t("saveJson")}
+                  <Download /> {t("workspace.saveJson")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </header>
         {!selected && <div className="view-heading">
-          <p>Chronicles of Darkness</p>
+          <p>{t("workspace.chroniclesOfDarkness")}</p>
           <h1>{title}</h1>
         </div>}
         {notice && (
           <div className="notice" role="status">
             <ShieldCheck />
             <span>{notice}</span>
-            <button onClick={() => setNotice("")} aria-label={t("closeNotice")}>
+            <button onClick={() => setNotice("")} aria-label={t("workspace.closeNotice")}>
               <X />
             </button>
           </div>
@@ -432,7 +432,7 @@ function Dashboard({
   openCharacter: (item: CharacterSheet) => void;
   deleteCharacter: (item: StoredCharacter) => void;
 }) {
-  const {tr}=useLanguage();
+  const {t}=useLanguage();
   const lineCounts = listGameLineRegistrations().map((registration) => ({
     registration,
     count: characters.filter((item) => summarizeStoredCharacter(item).gameLine === registration.id).length,
@@ -444,17 +444,17 @@ function Dashboard({
     <div className="page-grid">
       <section className="welcome-panel practical-welcome">
         <div>
-          <Badge className="eyebrow">CHARACTERS OF THE DARKNESS</Badge>
-          <h2>{tr("Catálogo de Fichas","Character Catalog")}</h2>
+          <Badge className="eyebrow">{t("workspace.charactersOfTheDarkness")}</Badge>
+          <h2>{t("workspace.characterCatalog")}</h2>
           <p>
-            {tr("Quem você será desta vez?","Who will you be this time?")}
+            {t("workspace.whoWillYouBe")}
           </p>
           <div className="welcome-actions">
             <Button variant="outline" onClick={openCharacters}>
-              {tr("Ver personagens","See Characters")}
+              {t("workspace.seeCharacters")}
             </Button>
             <Button onClick={createCharacter}>
-              <Plus /> {tr("Novo personagem","New Character")}
+              <Plus /> {t("workspace.newCharacter")}
             </Button>
           </div>
         </div>
@@ -463,13 +463,13 @@ function Dashboard({
         </div>
       </section>
       {lineCounts.some(({ count }) => count > 0) && (
-        <section className="line-summary wide" aria-label={tr("Personagens por linha","Characters by game line")}>
+        <section className="line-summary wide" aria-label={t("workspace.charactersByLine")}>
           {lineCounts.filter(({ count }) => count > 0).map(({ registration, count }) => (
             <span
               className={`line-summary-item ${registration.summaryClass}`}
               key={registration.id}
-              aria-label={`${count} ${registration.label}`}
-              title={`${count} ${registration.label}`}
+              aria-label={t("workspace.lineCount", { count, line: registration.label })}
+              title={t("workspace.lineCount", { count, line: registration.label })}
             >
               <strong>{count}</strong>
               <img src={registration.iconSrc} alt="" aria-hidden="true" />
@@ -480,13 +480,13 @@ function Dashboard({
       <section className="panel wide recent-panel">
         <div className="panel-heading">
           <div>
-            <span className="kicker">{tr("CONTINUAR","CONTINUE")}</span>
-            <h3>{tr("Personagens recentes","Recent characters")}</h3>
-            <p>{tr("Acesse rapidamente as fichas usadas por último.","Quickly open your most recently used characters.")}</p>
+            <span className="kicker">{t("workspace.continue")}</span>
+            <h3>{t("workspace.recentCharacters")}</h3>
+            <p>{t("workspace.recentCharactersDescription")}</p>
           </div>
           {characters.length > 4 && (
             <Button variant="ghost" onClick={openCharacters}>
-              {tr("Ver todos","View all")}
+              {t("workspace.viewAll")}
             </Button>
           )}
         </div>
@@ -505,8 +505,8 @@ function Dashboard({
           <div className="dashboard-empty">
             <Sparkles />
             <div>
-              <strong>{tr("Comece uma nova crônica","Begin a new chronicle")}</strong>
-              <p>{tr("Crie seu primeiro personagem para começar a crônica.","Create your first character to begin the chronicle.")}</p>
+              <strong>{t("workspace.beginChronicle")}</strong>
+              <p>{t("workspace.beginChronicleDescription")}</p>
             </div>
           </div>
         )}
@@ -527,23 +527,23 @@ function Characters({
   open: (item: CharacterSheet) => void;
   deleteCharacter: (item: StoredCharacter) => void;
 }) {
-  const {tr}=useLanguage();
+  const {t}=useLanguage();
   return (
     <section className="panel">
       <div className="panel-heading characters-panel-heading">
         <div>
-          <span className="kicker">{tr("PERSONAGENS","CHARACTERS")}</span>
-          <h3>{tr("Suas fichas","Your characters")}</h3>
+          <span className="kicker">{t("workspace.characters")}</span>
+          <h3>{t("workspace.yourCharacters")}</h3>
           <p>
-            {tr("Abra uma ficha para jogar, atualizar características ou exportar uma cópia.","Open a character to play, update traits, or export a copy.")}
+            {t("workspace.yourCharactersDescription")}
           </p>
         </div>
         <Button className="characters-create-button" onClick={createCharacter}>
-          <Plus /> {tr("Criar personagem","Create Character")}
+          <Plus /> {t("workspace.createCharacter")}
         </Button>
       </div>
       {!ready ? (
-        <div className="loading-card">{tr("Carregando personagens…","Loading characters…")}</div>
+        <div className="loading-card">{t("workspace.loadingCharacters")}</div>
       ) : characters.length ? (
         <div className="character-grid">
           {characters.map((character, index) => (
@@ -557,8 +557,8 @@ function Characters({
         </div>
       ) : (
         <Empty
-          title={tr("Nenhum personagem criado","No characters created")}
-          text={tr("Crie um Changeling, Mago ou Vampiro para começar.","Create a Changeling, Mage, or Vampire to get started.")}
+          title={t("workspace.noCharacters")}
+          text={t("workspace.noCharactersDescription")}
         />
       )}
     </section>
@@ -574,13 +574,13 @@ function StoredCharacterCard({
   openCharacter: (item: CharacterSheet) => void;
   deleteCharacter: (item: StoredCharacter) => void;
 }) {
-  const {tr}=useLanguage();
+  const {t}=useLanguage();
   const summary = summarizeStoredCharacter(character);
   const registration = summary.gameLine ? getGameLineRegistration(summary.gameLine) : null;
   const title = summary.isCurrent
     ? registration?.label ?? ""
-    : tr("Ficha incompatível", "Unsupported character");
-  const concept = summary.concept || tr("Conceito não informado", "No concept provided");
+    : t("workspace.unsupportedCharacter");
+  const concept = summary.concept || t("workspace.noConcept");
   return (
     <article className={`character-card ${registration?.cardClass ?? "legacy-character-card"}`}>
       <button
@@ -589,14 +589,14 @@ function StoredCharacterCard({
         onClick={() => {
           if (isCurrentStoredCharacter(character)) openCharacter(character);
         }}
-        title={summary.isCurrent ? undefined : tr("Esta ficha usa um formato não suportado e não pode ser aberta.", "This character uses an unsupported format and cannot be opened.")}
+        title={summary.isCurrent ? undefined : t("workspace.unsupportedCharacterTitle")}
       >
-        {summary.gameLine ? <CharacterLineIcon line={summary.gameLine} /> : <div className="character-monogram">?</div>}
+        {summary.gameLine ? <CharacterLineIcon line={summary.gameLine} /> : <div className="character-monogram">{t("workspace.unknownLine")}</div>}
         <div>
           <Badge variant={summary.isCurrent ? "outline" : "destructive"}>{title}</Badge>
           <h3>{summary.name}</h3>
           <p>{concept}</p>
-          {!summary.isCurrent && <small>{tr("Formato não suportado — exclua sem abrir.", "Unsupported format — delete without opening.")}</small>}
+          {!summary.isCurrent && <small>{t("workspace.unsupportedCharacterDescription")}</small>}
         </div>
         {summary.isCurrent && <ChevronRight />}
       </button>
@@ -604,8 +604,8 @@ function StoredCharacterCard({
         className="character-card-delete"
         variant="ghost"
         size="icon"
-        aria-label={tr(`Excluir ${summary.name}`, `Delete ${summary.name}`)}
-        title={tr("Excluir ficha", "Delete character")}
+        aria-label={t("workspace.deleteCharacterNamed", { name: summary.name })}
+        title={t("workspace.deleteCharacter")}
         onClick={() => deleteCharacter(character)}
       >
         <Trash2 />
@@ -708,34 +708,32 @@ function CharacterView({
 }
 
 function WorkspaceLoading() {
-  const { tr } = useLanguage();
-  return <div className="loading-card">{tr("Carregando…", "Loading…")}</div>;
+  const { t } = useLanguage();
+  return <div className="loading-card">{t("workspace.loading")}</div>;
 }
 
 function RulesCatalog({ catalog }: { catalog: CatalogRule[] }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   return (
     <section className="panel">
       <div className="panel-heading">
         <div>
-          <span className="kicker">{tr("BANCO COMPARTILHADO", "SHARED LIBRARY")}</span>
-          <h3>{tr("Regras ativas para todos", "Rules active for everyone")}</h3>
-          <p>{tr("Não há fila de aprovação. Ajustes posteriores substituem a versão compartilhada.", "There is no approval queue. Later edits replace the shared version.")}</p>
+          <span className="kicker">{t("workspace.sharedLibrary")}</span>
+          <h3>{t("workspace.activeRules")}</h3>
+          <p>{t("workspace.activeRulesDescription")}</p>
         </div>
-        <Badge className="approved-badge">{tr("ATIVAS", "ACTIVE")}</Badge>
+        <Badge className="approved-badge">{t("workspace.active")}</Badge>
       </div>
       <div className="rule-cards">
         {catalog.map((rule) => (
           <article key={rule.id}>
             <div>
               <Badge>{rule.gameLine}</Badge>
-              <Badge variant="outline">p. {rule.sourcePage}</Badge>
+              <Badge variant="outline">{t("workspace.page", { page: rule.sourcePage ?? "" })}</Badge>
             </div>
             <h3>{rule.originalName}</h3>
-            <p>{summarizeRule(rule)}</p>
-            <small>
-              {tr("Fonte", "Source")}: {rule.sourceId} · {rule.reviewStatus}
-            </small>
+            <p>{summarizeRule(rule, t)}</p>
+            <small>{t("workspace.sourceDetail", { source: rule.sourceId ?? "", status: rule.reviewStatus })}</small>
           </article>
         ))}
       </div>
@@ -752,6 +750,7 @@ function Empty({
   text: string;
   action?: () => void;
 }) {
+  const { t } = useLanguage();
   return (
     <div className="empty-state">
       <FileJson />
@@ -759,18 +758,18 @@ function Empty({
       <p>{text}</p>
       {action && (
         <Button onClick={action}>
-          <Plus /> Criar ficha
+          <Plus /> {t("workspace.createSheet")}
         </Button>
       )}
     </div>
   );
 }
 
-function summarizeRule(rule: CatalogRule) {
+function summarizeRule(rule: CatalogRule, t: ReturnType<typeof useLanguage>["t"]) {
   try {
     const data = JSON.parse(rule.structuredData);
-    return `${Object.keys(data).length} blocos mecânicos estruturados e aplicados pelo criador de fichas.`;
+    return t("workspace.structuredRuleSummary", { count: Object.keys(data).length });
   } catch {
-    return "Regra compartilhada ativa.";
+    return t("workspace.sharedRuleActive");
   }
 }

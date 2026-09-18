@@ -1,0 +1,1381 @@
+/* Vampire: The Requiem specific styles extracted from the global stylesheet. */
+
+.character-card.vtr-card { border-color:#c9a7a7; background:linear-gradient(135deg,#fcf7f5,#f3e4e2); }
+
+.character-card.vtr-card:hover { border-color:#7d2b2f; box-shadow:0 12px 28px #5b171d26; }
+
+.vtr-card .character-line-icon { background:#d9babc; }
+
+.line-theme-vtr {
+  --primary:#742d31;
+  --secondary:#eadcda;
+  --secondary-foreground:#552126;
+  --accent:#ead4d2;
+  --accent-foreground:#5d2025;
+  --ring:#8b3c43;
+  --line-accent:#742d31;
+  --line-strong:#45161b;
+  --line-soft:#f2e7e5;
+  --line-border:#caa9a8;
+  --line-topbar-start:#250b0e;
+  --line-topbar-middle:#48171c;
+  --line-topbar-end:#6b292d;
+  --line-topbar-muted:#d4b9b8;
+}
+
+.app-shell.line-theme-vtr { background:color-mix(in srgb,var(--line-accent) 5%,var(--background)); }
+
+.line-summary .vtr-summary { border-left:4px solid #742d31; }
+
+.vampire-sheet-page { min-width:0; padding-top:5px; outline:none; }
+
+.vampire-skill-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+
+.vampire-details-grid, .vampire-track-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
+
+.vampire-power-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+
+.vampire-power-grid > article, .vampire-lore-card { min-width:0; padding:13px; border:1px solid #9e777570; border-radius:3px; background:#fff9; }
+
+.vampire-power-grid header { display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid #8b4a4d55; padding-bottom:7px; }
+
+.vampire-power-grid p, .vampire-lore-card p { margin:7px 0 0; color:#5f5050; font-size:12px; line-height:1.45; }
+
+.vampire-power-level { display:grid; gap:2px; border-top:1px dotted #aa8e8d; padding:7px 0; font-size:11px; }
+
+.vampire-power-level span { color:#675657; }
+
+.vampire-reference-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:10px 0; }
+
+.vampire-protean-choices, .vampire-protean-builder { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+
+.vampire-protean-choices > section, .vampire-protean-builder > fieldset { min-width:0; padding:11px; border:1px solid #9e777570; border-radius:4px; background:#fff8; }
+
+.vampire-protean-builder > h3 { grid-column:1/-1; margin-bottom:0; }
+
+.vampire-protean-builder fieldset { display:grid; gap:6px; }
+
+.vampire-state-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 14px; padding:12px; border:1px solid #9e777570; background:#fff8; }
+
+.vampire-state-controls > label { display:flex; align-items:center; justify-content:space-between; gap:10px; min-width:0; font-size:11px; font-weight:700; }
+
+.vampire-state-controls > label:has(input) { display:grid; justify-content:stretch; }
+
+.vampire-state-controls .wide { grid-column:1/-1; }
+
+.vampire-state-controls p { margin:0; color:#675657; font-size:11px; }
+
+.vampire-teacher-confirmation { display:flex; align-items:center; gap:7px; max-width:390px; font-size:11px; line-height:1.35; }
+
+.vampire-covenant-summary { display:grid; grid-template-columns:92px minmax(0,1fr); gap:18px; align-items:center; padding:16px; border:1px solid #9e777570; background:linear-gradient(110deg,#fff9,#eadbd680); }
+
+.vampire-covenant-summary img { width:82px; height:82px; object-fit:contain; opacity:.7; }
+
+.vampire-covenant-summary h3 { margin:0; color:#4d171c; font:700 23px Georgia,serif; }
+
+.vampire-covenant-summary p { margin:5px 0 8px; color:#675657; font-size:12px; line-height:1.45; }
+
+.vampire-covenant-summary span { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:11px; font-weight:700; }
+
+.vampire-records { display:grid; gap:8px; }
+
+.vampire-records > div { display:grid; grid-template-columns:minmax(150px,.8fr) 96px minmax(220px,1.2fr) auto; align-items:end; gap:8px; }
+
+.vampire-records label { display:grid; gap:3px; font-size:10px; text-transform:uppercase; }
+
+.vampire-template-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+
+.vampire-card-selector > h3 { margin:0 0 8px; font:700 18px Georgia,serif; }
+
+.vampire-card-selector > div { display:grid; gap:6px; }
+
+.vampire-card-selector button { display:grid; gap:3px; width:100%; padding:10px 12px; border:1px solid #d9ccca; border-radius:8px; background:#fff; color:#3c2d2e; text-align:left; }
+
+.vampire-card-selector button:hover, .vampire-card-selector button.selected { border-color:#742d31; background:#f5e9e7; box-shadow:inset 0 0 0 1px #742d31; }
+
+.vampire-card-selector button small { color:#776768; font-size:11px; }
+
+.vampire-anchor-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:20px 0 14px; }
+
+.anchor-recovery { display:block; min-height:34px; margin-top:5px; color:#756666; font-size:11px; line-height:1.4; }
+
+.vampire-discipline-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 22px; padding:12px 16px; border:1px solid #dfd3d0; border-radius:9px; background:#fcf8f5; }
+
+.vampire-main-body .vampire-skill-grid { display:block; }
+
+.vampire-main-disciplines {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+}
+
+.vampire-main-banes { display:grid; gap:7px; }
+
+.vampire-main-banes .vampire-lore-card { padding:8px 10px; }
+
+.vampire-main-banes .vampire-lore-card p { font-size:11px; }
+
+.vampire-experience-panel { display:grid; gap:7px; }
+
+.vampire-experience-panel .beat-resource { justify-content:space-between; padding:6px 8px; border:1px solid #d9d3ca; background:#fff; }
+
+.vampire-experience-panel .experience-history { font-size:11px; }
+
+.vampire-experience-panel svg { width:14px; }
+
+/* --------------------------------------------------------------------------
+   Vampire: The Requiem — sheet visual layer
+   Mirrors the Changeling sheet's hierarchy and ornamental treatment while
+   retaining Vampire's burgundy palette and Vampire-specific layouts.
+
+   Vampire assets live in /public/vampire/style:
+   - attributes-divider.webp
+   - attributes-divider-thorns.webp
+   - divider-terminal.webp
+   - frame-blood-center-top.webp
+   - frame-blood-center-bottom.webp
+   - thorns-corner.webp
+   - vampire-title.webp
+   -------------------------------------------------------------------------- */
+
+.cod-sheet.vtr-sheet {
+  --vtr-ink: #4d171c;
+  --vtr-ink-strong: #351014;
+  --vtr-ink-soft: rgba(77, 23, 28, .50);
+  --vtr-rule: rgba(77, 23, 28, .34);
+  --vtr-paper: #eee5db;
+  --vtr-paper-light: rgba(255, 252, 248, .64);
+  --vtr-panel: rgba(255, 252, 248, .46);
+
+  --vtr-frame-rail-x: 150px;
+  --vtr-frame-rail-y: 25px;
+  --vtr-frame-side-x: 25px;
+  --vtr-frame-corner-depth: 133px;
+  --vtr-frame-center-gap: 25px;
+  --vtr-frame-center-width: 44px;
+  --vtr-frame-center-height: 64px;
+  --vtr-frame-center-half-height: 30px;
+  --vtr-frame-side-offset: 20px;
+  --vtr-frame-side-width: 11px;
+  --vtr-frame-side-height: 24px;
+  --vtr-frame-side-half-height: 9.5px;
+
+  --sheet-accent: var(--vtr-ink);
+  --sheet-ink: var(--vtr-ink);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 48px 52px 60px;
+
+  border: 2px solid rgba(77, 23, 28, .45);
+  border-radius: 0;
+
+  background-color: var(--vtr-paper);
+  background-image:
+    linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)),
+    repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) 1px, transparent 1px, transparent 5px);
+
+  box-shadow: 0 16px 48px rgba(45, 20, 22, .16);
+  color: #2d2021;
+  font-family: Georgia, "Times New Roman", serif;
+  font-synthesis: none;
+}
+
+/* Decorative frame mirrors the Changeling frame structure while using
+   Vampire-specific assets. */
+.vtr-decorative-frame {
+  position: absolute !important;
+  z-index: 3 !important;
+  inset: 0;
+  pointer-events: none;
+  color: var(--vtr-ink);
+}
+
+.vtr-frame-edge,
+.vtr-frame-center,
+.vtr-frame-side,
+.vtr-frame-corner {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  background-repeat: no-repeat;
+}
+
+.vtr-frame-edge-top,
+.vtr-frame-edge-bottom {
+  right: var(--vtr-frame-rail-x);
+  left: var(--vtr-frame-rail-x);
+  height: 4px;
+}
+
+.vtr-frame-edge-top { top: var(--vtr-frame-rail-y); }
+.vtr-frame-edge-bottom { bottom: var(--vtr-frame-rail-y); }
+
+.vtr-frame-edge-top::before,
+.vtr-frame-edge-top::after,
+.vtr-frame-edge-bottom::before,
+.vtr-frame-edge-bottom::after {
+  content: "";
+  position: absolute;
+  width: calc(50% - var(--vtr-frame-center-gap));
+  height: 4px;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0 10%,
+    rgba(77, 23, 28, .76) 10% 30%,
+    transparent 30% 57%,
+    rgba(77, 23, 28, .48) 57% 78%,
+    transparent 78% 100%
+  );
+}
+
+.vtr-frame-edge-top::before,
+.vtr-frame-edge-bottom::before { left: 0; }
+.vtr-frame-edge-top::after,
+.vtr-frame-edge-bottom::after { right: 0; }
+
+.vtr-frame-edge-left,
+.vtr-frame-edge-right {
+  top: var(--vtr-frame-corner-depth);
+  bottom: var(--vtr-frame-corner-depth);
+  width: 4px;
+  background-image: linear-gradient(
+    to right,
+    rgba(77, 23, 28, .46) 0 18%,
+    transparent 18% 48%,
+    rgba(77, 23, 28, .76) 48% 70%,
+    transparent 70% 100%
+  );
+}
+
+.vtr-frame-edge-left { left: calc(var(--vtr-frame-side-x) - 2px); }
+.vtr-frame-edge-right { right: calc(var(--vtr-frame-side-x) - 2px); transform: scaleX(-1); }
+
+.vtr-frame-center {
+  left: 50%;
+  width: var(--vtr-frame-center-width);
+  height: var(--vtr-frame-center-height);
+  background-position: center;
+  background-size: 50%;
+  transform: translateX(-50%);
+}
+
+.vtr-frame-center-top {
+  top: calc(
+    var(--vtr-frame-rail-y)
+    - var(--vtr-frame-center-half-height)
+    + 6px
+  );
+
+  background-image: url("/vampire/style/frame-blood-center-top.webp");
+}
+
+.vtr-frame-center-bottom {
+  bottom: calc(
+    var(--vtr-frame-rail-y)
+    - var(--vtr-frame-center-half-height)
+    + 6px
+  );
+
+  background-image: url("/vampire/style/frame-blood-center-bottom.webp");
+}
+
+.vtr-frame-side {
+  width: var(--vtr-frame-side-width);
+  height: var(--vtr-frame-side-height);
+  background-image: url("/vampire/style/divider-terminal.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.vtr-frame-side-top-left,
+.vtr-frame-side-bottom-left { left: calc(50% - var(--vtr-frame-side-offset)); }
+.vtr-frame-side-top-right,
+.vtr-frame-side-bottom-right { left: calc(50% + var(--vtr-frame-side-offset)); }
+
+.vtr-frame-side-top-left {
+  top: calc(var(--vtr-frame-rail-y) - var(--vtr-frame-side-half-height));
+  transform: translateX(-50%);
+}
+
+.vtr-frame-side-top-right {
+  top: calc(var(--vtr-frame-rail-y) - var(--vtr-frame-side-half-height));
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.vtr-frame-side-bottom-left {
+  bottom: calc(var(--vtr-frame-rail-y) - var(--vtr-frame-side-half-height));
+  transform: translateX(-50%) scaleX(-1) rotate(180deg);
+}
+
+.vtr-frame-side-bottom-right {
+  bottom: calc(var(--vtr-frame-rail-y) - var(--vtr-frame-side-half-height));
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.vtr-frame-corner {
+  width: 190px;
+  height: 178px;
+  background-image: url("/vampire/style/thorns-corner.webp");
+  background-position: left top;
+  background-size: contain;
+}
+
+.vtr-frame-corner-top-left,
+.vtr-frame-corner-top-right { top: 0; }
+.vtr-frame-corner-bottom-left,
+.vtr-frame-corner-bottom-right { bottom: 0; }
+.vtr-frame-corner-top-left,
+.vtr-frame-corner-bottom-left { left: 0; }
+.vtr-frame-corner-top-right,
+.vtr-frame-corner-bottom-right { right: 0; }
+.vtr-frame-corner-top-right { transform: scaleX(-1); }
+.vtr-frame-corner-bottom-left { transform: scaleY(-1); }
+.vtr-frame-corner-bottom-right { transform: scale(-1); }
+
+/* Keep the existing Vampire watermark, but move it behind the real content. */
+.cod-sheet.vtr-sheet::after {
+  background-image: url("/vampire/style/background-vampire.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+  opacity: .20;
+}
+
+.vtr-sheet > :not(.vtr-decorative-frame) {
+  position: relative;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   Title
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .cod-sheet-title {
+  min-height: 0;
+  margin: 0 10px;
+  padding: 0;
+}
+
+.vtr-sheet .cod-sheet-title > div {
+  align-items: center;
+}
+
+.vtr-sheet .cod-sheet-title::before,
+.vtr-sheet .cod-sheet-title::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  width: 50%;
+  height: 17px;
+  pointer-events: none;
+  background-image:
+    url("/vampire/style/divider-terminal.webp"),
+    linear-gradient(
+      transparent 43%,
+      var(--vtr-ink-soft) 43%,
+      var(--vtr-ink-soft) 48%,
+      transparent 48%,
+      transparent 57%,
+      var(--vtr-rule) 57%,
+      var(--vtr-rule) 62%,
+      transparent 62%
+    );
+  background-position:
+    left center,
+    8px center;
+  background-repeat:
+    no-repeat,
+    no-repeat;
+  background-size:
+    auto 17px,
+    calc(100% - 8px) 100%;
+}
+
+.vtr-sheet .cod-sheet-title::before { left: 0; }
+.vtr-sheet .cod-sheet-title::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.vtr-sheet .cod-sheet-title > div {
+  position: relative;
+  width: 100%;
+  gap: 0;
+  align-items: flex-start;
+}
+
+/* Vampire title artwork already contains “The Requiem”. */
+.vtr-sheet .cod-sheet-title span {
+  display: block;
+
+  width: 430px;
+  max-width: min(100%, 72vw);
+  height: 110px;
+
+  overflow: hidden;
+  color: transparent;
+
+  background-image: url("/vampire/style/vampire-title.webp");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  font-size: 0;
+  line-height: 0;
+  text-shadow: none;
+}
+
+.vtr-sheet .cod-sheet-title strong {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.vtr-sheet .cod-sheet-title p {
+  position: absolute;
+  top: 65%;
+  right: 0;
+  transform: translateY(-50%);
+  margin: 0;
+  color: var(--vtr-ink-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: .28em;
+}
+
+/* --------------------------------------------------------------------------
+   Tabs
+   -------------------------------------------------------------------------- */
+
+.vampire-sheet-tabs { margin-top: 9px; }
+
+.vampire-sheet-tabs > [data-slot="tabs-list"] {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(77, 23, 28, .62);
+  border-radius: 5px;
+  background: rgba(244, 236, 229, .52);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .56);
+}
+
+.vampire-sheet-tabs > [data-slot="tabs-list"] button {
+  position: relative;
+  isolation: isolate;
+  min-height: 39px;
+  flex: 1;
+  border: 0;
+  border-right: 1px solid var(--vtr-rule);
+  border-radius: 0;
+  color: var(--vtr-ink);
+  background: transparent;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .01em;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.vampire-sheet-tabs > [data-slot="tabs-list"] button:last-child { border-right: 0; }
+
+.vampire-sheet-tabs > [data-slot="tabs-list"] button[data-state="active"] {
+  color: #f8efeb;
+  background: transparent;
+  box-shadow: none;
+}
+
+.vampire-sheet-tabs > [data-slot="tabs-list"] button[data-state="active"]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+
+  background-color: var(--vtr-ink);
+  background-image: url("/vampire/style/selected-tab-texture.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  box-shadow: 0 0 0 1px rgba(77, 23, 28, .35);
+}
+
+.vampire-sheet-tabs > [data-slot="tabs-list"] button:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--vtr-ink);
+  outline-offset: 2px;
+}
+
+.vampire-sheet-page {
+  min-width: 0;
+  padding-top: 5px;
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   Identity
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .sheet-identity-grid {
+  gap: 7px 24px;
+  padding: 17px 8px 7px;
+}
+
+.vtr-sheet .official-field { gap: 7px; }
+
+.vtr-sheet .official-field span {
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-variant-caps: small-caps;
+  text-transform: none;
+  letter-spacing: .02em;
+}
+
+.vtr-sheet .official-field strong,
+.vtr-sheet .legacy-sheet-field button {
+  min-height: 22px;
+  border-bottom-color: rgba(77, 23, 28, .66);
+  color: #24191a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+/* --------------------------------------------------------------------------
+   Headings and Attributes divider
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .official-heading {
+  gap: 9px;
+  margin: 17px 0 8px;
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.vtr-sheet .official-heading::before,
+.vtr-sheet .official-heading::after {
+  content: "";
+  display: block;
+  flex: 1 1 0;
+  min-width: 24px;
+  height: 16px;
+  background-color: transparent;
+  background-image:
+    url("/vampire/style/divider-terminal.webp"),
+    linear-gradient(var(--vtr-rule), var(--vtr-rule)),
+    linear-gradient(var(--vtr-rule), var(--vtr-rule));
+  background-position:
+    left center,
+    right calc(50% - 1px),
+    right calc(50% + 1px);
+  background-repeat: no-repeat;
+  background-size:
+    auto 16px,
+    calc(100% - 10px) 1px,
+    calc(100% - 10px) 1px;
+  opacity: .9;
+}
+
+.vtr-sheet .official-heading::after { transform: scaleX(-1); }
+
+.vtr-sheet .official-heading span {
+  position: relative;
+  top: -1px;
+  white-space: nowrap;
+}
+
+.vtr-sheet .official-heading.ctl-single-divider::before,
+.vtr-sheet .official-heading.ctl-single-divider::after,
+.vtr-sheet .official-heading.main-sheet-merits-heading::before,
+.vtr-sheet .official-heading.main-sheet-merits-heading::after,
+.vtr-sheet .official-heading.main-sheet-aspirations-heading::before,
+.vtr-sheet .official-heading.main-sheet-aspirations-heading::after,
+.vtr-sheet .official-heading.main-sheet-conditions-heading::before,
+.vtr-sheet .official-heading.main-sheet-conditions-heading::after {
+  background-image:
+    url("/vampire/style/divider-terminal.webp"),
+    linear-gradient(var(--vtr-rule), var(--vtr-rule));
+  background-position:
+    left center,
+    8px center;
+  background-repeat:
+    no-repeat,
+    no-repeat;
+  background-size:
+    auto 16px,
+    calc(100% - 8px) 1px;
+}
+
+.vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid)) {
+  position: relative;
+  isolation: isolate;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::before,
+.vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::after {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  width: calc(50% - 72px);
+  height: 54px;
+  min-width: 0;
+  background-image:
+    url("/vampire/style/attributes-divider-thorns.webp"),
+    url("/vampire/style/attributes-divider.webp");
+  background-position: 100% center, left center;
+  background-repeat: no-repeat;
+  background-size: auto 26px, calc(100% - 55px) auto;
+  opacity: 1;
+}
+
+.vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::before {
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::after {
+  right: 0;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+.vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid)) span { z-index: 1; }
+
+/* --------------------------------------------------------------------------
+   Traits, dots and columns
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .official-trait-grid { gap: 0; }
+
+.vtr-sheet .official-trait-grid > .official-trait-block {
+  min-width: 0;
+  padding: 0 18px;
+}
+
+.vtr-sheet .official-trait-grid > .official-trait-block:first-child { padding-left: 0; }
+.vtr-sheet .official-trait-grid > .official-trait-block:last-child { padding-right: 0; }
+
+.vtr-sheet .official-trait-grid > .official-trait-block + .official-trait-block {
+  border-left: 1px solid var(--vtr-rule);
+  background-image: none;
+}
+
+.vtr-sheet .official-trait-block h4 {
+  margin: 0 0 -5px;
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+
+.nosferatu-easter-egg {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  pointer-events: all;
+}
+
+.nosferatu-easter-egg video {
+  width: min(800px, 90vw);
+  height: auto;
+  object-fit: contain;
+}
+
+.vtr-sheet .official-trait-grid .official-trait-block h4 { font-size: 20px; }
+
+.vtr-sheet .official-trait-line {
+  min-height: 26px;
+  border-bottom-color: var(--vtr-rule);
+  color: #2d2021;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  line-height: 1.05;
+  padding-bottom: 5px;
+  padding-top: 4px;
+}
+
+.vtr-sheet .official-trait-line small {
+  min-width: 0;
+  overflow: hidden;
+  padding-left: 4px;
+  color: #78696a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  font-style: italic;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vtr-sheet .official-dots { gap: 2px; }
+.vtr-sheet .official-dot-row { gap: 3px; }
+
+.vtr-sheet .official-dots i {
+  width: 10px;
+  height: 10px;
+  border-width: 1.25px;
+  border-color: var(--vtr-ink);
+}
+
+.vtr-sheet .official-dots i.on,
+.vtr-sheet .resource-track button.filled {
+  background: var(--vtr-ink);
+  box-shadow: inset 0 0 0 1.5px #f5ece5;
+}
+
+.vtr-sheet .official-sheet-body {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+
+.vtr-sheet .official-sheet-body > section {
+  min-width: 0;
+  padding: 0 15px;
+}
+
+.vtr-sheet .official-sheet-body > section:first-child { padding-left: 0; }
+.vtr-sheet .official-sheet-body > section:last-child { padding-right: 0; }
+
+.vtr-sheet .official-sheet-body > section + section {
+  border-left: 1px solid var(--vtr-rule);
+  background-image: none;
+}
+
+.vtr-sheet .sheet-skills-column .official-trait-block { margin-bottom: 13px; }
+
+/* --------------------------------------------------------------------------
+   Trackers, editable lines and notes
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .official-lines > div,
+.vtr-sheet .editable-line-row input {
+  border-bottom-color: var(--vtr-rule);
+  color: var(--vtr-ink);
+  background: transparent;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.vtr-sheet .editable-line-row input::placeholder,
+.vtr-sheet .notes-area textarea::placeholder {
+  color: rgba(77, 23, 28, .60);
+  opacity: 1;
+}
+
+.vtr-sheet .health-box,
+.vtr-sheet .resource-track button {
+  border-color: var(--vtr-ink);
+  background-color: rgba(255, 252, 248, .35);
+}
+
+.vtr-sheet .tracker-meta,
+.vtr-sheet .power-rating {
+  border-bottom-color: var(--vtr-rule);
+  font-size: 13px;
+}
+
+.vtr-sheet .tracker-meta strong,
+.vtr-sheet .power-rating strong {
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.vtr-sheet .tracker-help,
+.vtr-sheet .notes-area small { color: rgba(77, 23, 28, .72); }
+
+.vtr-sheet .notes-area textarea {
+  border-color: rgba(77, 23, 28, .38);
+  border-radius: 2px;
+  background-color: rgba(255, 252, 248, .48);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 23px,
+    rgba(77, 23, 28, .16) 24px
+  );
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Notched resource/experience panels — same visual language as Changeling
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .power-resource,
+.vtr-sheet .experience-panel,
+.vtr-sheet .vampire-experience-panel {
+  --panel-notch: 8px;
+  position: relative;
+  isolation: isolate;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.vtr-sheet .power-resource::before,
+.vtr-sheet .experience-panel::before,
+.vtr-sheet .vampire-experience-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: rgba(77, 23, 28, .40);
+  clip-path: polygon(
+    var(--panel-notch) 0,
+    calc(100% - var(--panel-notch)) 0,
+    100% var(--panel-notch),
+    100% calc(100% - var(--panel-notch)),
+    calc(100% - var(--panel-notch)) 100%,
+    var(--panel-notch) 100%,
+    0 calc(100% - var(--panel-notch)),
+    0 var(--panel-notch)
+  );
+  pointer-events: none;
+}
+
+.vtr-sheet .power-resource::after,
+.vtr-sheet .experience-panel::after,
+.vtr-sheet .vampire-experience-panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+  background: var(--vtr-paper);
+  clip-path: polygon(
+    7px 0,
+    calc(100% - 7px) 0,
+    100% 7px,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    7px 100%,
+    0 calc(100% - 7px),
+    0 7px
+  );
+  pointer-events: none;
+}
+
+.vtr-sheet .power-resource { padding: 9px; }
+.vtr-sheet .experience-panel,
+.vtr-sheet .vampire-experience-panel { padding: 10px; }
+
+.vtr-sheet .power-resource .power-rating {
+  margin-bottom: 9px;
+  border-bottom: 1px solid var(--vtr-rule);
+}
+
+.vtr-sheet .power-resource .power-rating > span,
+.vtr-sheet .power-resource .resource-track::before,
+.vtr-sheet .experience-title span {
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+
+.vtr-sheet .experience-title {
+  justify-content: center;
+  text-align: center;
+}
+
+.vtr-sheet .experience-title span { font-size: 17px; }
+.vtr-sheet .experience-title small {
+  color: rgba(77, 23, 28, .72);
+  font-size: 11px;
+}
+
+.vtr-sheet .experience-totals div,
+.vtr-sheet .experience-input,
+.vtr-sheet .beat-controls,
+.vtr-sheet .beat-resource,
+.vtr-sheet .vampire-experience-panel .beat-resource {
+  border-color: rgba(77, 23, 28, .26);
+  background: rgba(255, 252, 248, .40);
+}
+
+.vtr-sheet .experience-totals strong,
+.vtr-sheet .experience-input input,
+.vtr-sheet .beat-resource > strong {
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.vtr-sheet .experience-totals span,
+.vtr-sheet .experience-input span,
+.vtr-sheet .beat-controls legend,
+.vtr-sheet .beat-resource > span {
+  color: rgba(77, 23, 28, .70);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.vtr-sheet .experience-actions button,
+.vtr-sheet .condition-manager > button {
+  border-color: rgba(77, 23, 28, .38);
+  border-radius: 2px;
+  color: var(--vtr-ink);
+  background: rgba(234, 220, 218, .58);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.vtr-sheet .experience-actions button:hover,
+.vtr-sheet .condition-manager > button:hover {
+  background: rgba(225, 204, 202, .72);
+}
+
+/* --------------------------------------------------------------------------
+   Humanity track and compact Experience panel
+   -------------------------------------------------------------------------- */
+
+.vtr-sheet .vampire-humanity-heading {
+  margin-top: 14px;
+  margin-bottom: 5px;
+}
+
+.vtr-sheet .vampire-humanity-track {
+  display: grid;
+  gap: 0;
+  padding: 1px 0 2px;
+}
+
+.vtr-sheet .vampire-humanity-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px 14px;
+  align-items: center;
+  column-gap: 6px;
+  min-height: 22px;
+}
+
+.vtr-sheet .vampire-humanity-line,
+.vtr-sheet .vampire-humanity-touchstone {
+  width: 100%;
+  min-width: 0;
+  height: 21px;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid var(--vtr-rule);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.vtr-sheet .vampire-humanity-touchstone {
+  padding: 0 3px;
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 20px;
+}
+
+.vtr-sheet .vampire-humanity-touchstone::placeholder {
+  color: rgba(77, 23, 28, .48);
+  opacity: 1;
+}
+
+.vtr-sheet .vampire-humanity-touchstone:focus-visible {
+  outline: 0;
+  border-bottom-color: var(--vtr-ink);
+  box-shadow: 0 1px 0 rgba(77, 23, 28, .18);
+}
+
+.vtr-sheet .vampire-humanity-row > strong {
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+.vtr-sheet .vampire-humanity-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  min-height: 10px;
+  padding: 0;
+  border: 1.25px solid var(--vtr-ink);
+  border-radius: 50%;
+  background: rgba(255, 252, 248, .35);
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.vtr-sheet .vampire-humanity-dot.on {
+  background: var(--vtr-ink);
+  box-shadow: inset 0 0 0 1.5px #f5ece5;
+}
+
+.vtr-sheet .vampire-humanity-dot:focus-visible {
+  outline: 2px solid var(--vtr-ink);
+  outline-offset: 2px;
+}
+
+/* The Vampire panel is intentionally tighter than the shared Experience panel. */
+.vtr-sheet .vampire-experience-panel {
+  gap: 4px;
+  padding: 8px;
+}
+
+.vtr-sheet .vampire-experience-panel .beat-resource {
+  padding: 4px 7px;
+}
+
+.vtr-sheet .vampire-experience-panel .experience-actions {
+  margin-top: 0;
+}
+
+.vtr-sheet .vampire-experience-panel .experience-actions button {
+  min-height: 28px;
+}
+
+/* --------------------------------------------------------------------------
+   Vampire-specific cards and builders
+   -------------------------------------------------------------------------- */
+
+.vampire-discipline-grid,
+.vampire-power-grid > article,
+.vampire-lore-card,
+.vampire-protean-choices > section,
+.vampire-protean-builder > fieldset,
+.vampire-state-controls,
+.vampire-covenant-summary {
+  border-color: var(--vtr-rule);
+  border-radius: 0;
+  background: var(--vtr-panel);
+  box-shadow: none;
+}
+
+.vampire-power-grid header { border-bottom-color: var(--vtr-rule); }
+.vampire-power-level { border-top-color: var(--vtr-rule); }
+
+.vampire-power-grid p,
+.vampire-lore-card p,
+.vampire-power-level span,
+.vampire-state-controls p,
+.vampire-covenant-summary p,
+.anchor-recovery { color: #675657; }
+
+.vampire-covenant-summary h3,
+.vampire-card-selector > h3 {
+  color: var(--vtr-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.vampire-card-selector button {
+  border-color: rgba(77, 23, 28, .24);
+  border-radius: 2px;
+  background: rgba(255, 252, 248, .58);
+  color: #3c2d2e;
+}
+
+.vampire-card-selector button:hover,
+.vampire-card-selector button.selected {
+  border-color: var(--vtr-ink);
+  background: rgba(234, 220, 218, .65);
+  box-shadow: inset 0 0 0 1px var(--vtr-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .cod-sheet.vtr-sheet {
+    padding-right: 38px;
+    padding-left: 38px;
+  }
+}
+
+@media (max-width: 850px) {
+  .vtr-sheet .cod-sheet-title span {
+    width: min(410px, 72vw);
+  }
+
+  .vtr-sheet .cod-sheet-title p {
+    position: static;
+    transform: none;
+    margin-left: auto;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vampire-template-grid,
+  .vampire-anchor-grid,
+  .vampire-discipline-grid,
+  .vampire-skill-grid,
+  .vampire-details-grid,
+  .vampire-track-grid,
+  .vampire-power-grid,
+  .vampire-reference-grid,
+  .vampire-protean-choices,
+  .vampire-protean-builder,
+  .vampire-state-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vampire-state-controls .wide { grid-column: auto; }
+  .vampire-covenant-summary { grid-template-columns: 58px minmax(0, 1fr); gap: 11px; }
+  .vampire-covenant-summary img { width: 52px; height: 52px; }
+  .vampire-records > div { grid-template-columns: minmax(0, 1fr) 80px auto; }
+  .vampire-records > div > input:nth-of-type(2) { grid-column: 1 / -1; }
+
+  .cod-sheet.vtr-sheet {
+    padding: 28px 20px 34px;
+  }
+
+  .vtr-frame-corner {
+    width: 118px;
+    height: 111px;
+    opacity: .72;
+  }
+
+  .vtr-frame-center {
+    width: 34px;
+    height: 50px;
+    opacity: .8;
+  }
+
+  .vtr-frame-side { opacity: .8; }
+
+  .vtr-sheet .cod-sheet-title {
+    min-height: 58px;
+    margin-inline: -4px;
+    padding: 0 0 10px;
+  }
+
+  .vtr-sheet .cod-sheet-title > div {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .vtr-sheet .cod-sheet-title span {
+    width: min(340px, 78vw);
+    max-width: 100%;
+  }
+
+  .vtr-sheet .cod-sheet-title p {
+    margin-left: auto;
+    font-size: 10px;
+    letter-spacing: .16em;
+  }
+
+  .vampire-sheet-tabs > [data-slot="tabs-list"] {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .vampire-sheet-tabs > [data-slot="tabs-list"]::-webkit-scrollbar { display: none; }
+
+  .vampire-sheet-tabs > [data-slot="tabs-list"] button {
+    flex: 0 0 auto;
+    min-width: 104px;
+    min-height: 42px;
+    font-size: 18px;
+  }
+
+  .vtr-sheet .sheet-identity-grid {
+    gap: 6px 14px;
+    padding: 14px 3px 6px;
+  }
+
+  .vtr-sheet .official-field { gap: 5px; }
+  .vtr-sheet .official-field span { font-size: 15px; }
+
+  .vtr-sheet .official-field strong,
+  .vtr-sheet .legacy-sheet-field button {
+    min-height: 21px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .vtr-sheet .official-trait-grid > .official-trait-block,
+  .vtr-sheet .official-sheet-body > section,
+  .vtr-sheet .sheet-bottom-grid > section {
+    padding-inline: 0;
+    border-left: 0 !important;
+    background-image: none;
+  }
+
+  .vtr-sheet .official-sheet-body,
+  .vtr-sheet .sheet-bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .vtr-sheet .official-sheet-body > section + section,
+  .vtr-sheet .sheet-bottom-grid > section + section { margin-top: 8px; }
+
+  .vtr-sheet .official-heading {
+    gap: 7px;
+    margin: 15px 0 7px;
+    font-size: 21px;
+  }
+
+.vtr-sheet .official-heading::before,
+.vtr-sheet .official-heading::after {
+  background-position:
+    left center,
+    0 center,
+    0 center !important;
+
+  background-size:
+    auto 15px,
+    100% 1px,
+    100% 1px !important;
+}
+
+  .vtr-sheet .official-heading.ctl-single-divider::before,
+.vtr-sheet .official-heading.ctl-single-divider::after,
+.vtr-sheet .official-heading.main-sheet-merits-heading::before,
+.vtr-sheet .official-heading.main-sheet-merits-heading::after,
+.vtr-sheet .official-heading.main-sheet-aspirations-heading::before,
+.vtr-sheet .official-heading.main-sheet-aspirations-heading::after,
+.vtr-sheet .official-heading.main-sheet-conditions-heading::before,
+.vtr-sheet .official-heading.main-sheet-conditions-heading::after {
+  background-position:
+    left center,
+    8px center;
+
+  background-size:
+    auto 17px,
+    calc(100% - 8px) 1px;
+}
+
+  .vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid)) {
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+
+  .vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::before,
+  .vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::after {
+    width: calc(50% - 58px);
+    height: 42px;
+    background-image: url("/vampire/style/attributes-divider-thorns.webp");
+    background-position: right center;
+    background-size: auto 22px;
+  }
+
+  .vtr-sheet .official-trait-block h4 {
+    margin-bottom: -3px;
+    font-size: 18px;
+  }
+
+  .vtr-sheet .official-trait-grid .official-trait-block h4 { font-size: 19px; }
+  .vtr-sheet .official-trait-line { min-height: 25px; font-size: 15px; }
+  .vtr-sheet .official-trait-line small { font-size: 10px; }
+
+  .vtr-sheet .mobile-attribute-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .vtr-sheet .mobile-attribute-grid .official-trait-block {
+    min-width: 0;
+    padding-inline: 6px;
+  }
+
+  .vtr-sheet .mobile-attribute-grid .official-trait-block:first-child { padding-left: 0; }
+  .vtr-sheet .mobile-attribute-grid .official-trait-block:last-child { padding-right: 0; }
+
+  .vtr-sheet .mobile-attribute-grid .official-trait-line {
+    display: grid;
+    grid-template-columns: minmax(26px, 1fr) auto;
+    align-items: center;
+    column-gap: 3px;
+    min-width: 0;
+  }
+
+  .vtr-sheet .mobile-attribute-grid .official-trait-name {
+    min-width: 0;
+    overflow: visible;
+    white-space: nowrap;
+    text-overflow: clip;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .vtr-sheet .mobile-attribute-grid .official-dots {
+    flex-shrink: 0;
+    gap: 2px;
+  }
+
+  .vtr-sheet .mobile-attribute-grid .official-dots i {
+    width: 9px;
+    height: 9px;
+  }
+
+  .vtr-sheet .power-resource,
+  .vtr-sheet .experience-panel,
+  .vtr-sheet .vampire-experience-panel { --panel-notch: 7px; }
+
+  .vtr-sheet .vampire-humanity-heading {
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .vtr-sheet .vampire-humanity-row {
+    grid-template-columns: minmax(0, 1fr) 18px 14px;
+    min-height: 23px;
+  }
+
+  .vtr-sheet .vampire-humanity-touchstone {
+    font-size: 13px;
+  }
+
+  .vtr-sheet .vampire-experience-panel {
+    gap: 4px;
+    padding: 7px;
+  }
+
+  .vtr-sheet .notes-area textarea { font-size: 13px; }
+}
+
+@media print {
+  .cod-sheet.vtr-sheet { box-shadow: none; }
+
+  .vtr-sheet .vampire-sheet-tabs > [data-slot="tabs-list"] button[data-state="active"] {
+    color: var(--vtr-ink);
+  }
+}
+
+@media (prefers-contrast: more) {
+  .vtr-sheet .official-heading::before,
+  .vtr-sheet .official-heading::after,
+  .vtr-decorative-frame { opacity: 1; }
+}

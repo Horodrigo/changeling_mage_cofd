@@ -459,6 +459,10 @@ export function MageExperiencePanel({
     recalculateCoreDerived(next);
     updateSheet(synchronizeMeritGrants(next));
   }
+  const historyPanel = <details className="experience-history">
+    <summary><History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})</summary>
+    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{entry.regular} {tr("EXP","XP")} + {entry.arcane} {tr("EXP Arcana","Arcane XP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" onClick={() => revert(entry)}><RotateCcw /> {tr("Reverter","Refund")}</Button></p>) : <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>}</div>
+  </details>;
   return (
     <section className="experience-panel mage-experience">
       <div className="experience-title">
@@ -631,6 +635,7 @@ export function MageExperiencePanel({
           </div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
           <MageExperienceRules />
+          {historyPanel}
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar","Close")}</Button>
@@ -651,36 +656,7 @@ export function MageExperiencePanel({
         </Dialog>
         <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Perder FV","Lose WP")}</Button>} title={tr("Perder permanentemente um ponto de Força de Vontade?","Permanently lose one Willpower dot?")} description={tr("Isso reduzirá a Força de Vontade permanente em um ponto e registrará uma entrada reversível no histórico.","This reduces permanent Willpower by one dot and records a reversible history entry.")} action={tr("Perder FV","Lose WP")} onConfirm={markWillpowerLoss}/>
       </div>
-      <details className="experience-history">
-        <summary>
-          <History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})
-        </summary>
-        <div>
-          {history.length ? (
-            history.map((entry) => (
-              <p key={entry.id}>
-                <span>{entry.description}</span>
-                <strong>
-                  {entry.regular} {tr("EXP","XP")} + {entry.arcane} {tr("EXP Arcana","Arcane XP")}
-                </strong>
-                <small>
-                  {new Date(entry.createdAt).toLocaleDateString(locale)}
-                </small>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => revert(entry)}
-                >
-                  <RotateCcw /> {tr("Reverter","Refund")}
-                </Button>
-              </p>
-            ))
-          ) : (
-            <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>
-          )}
-        </div>
-      </details>
+
     </section>
   );
 }

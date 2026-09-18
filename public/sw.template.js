@@ -9,19 +9,23 @@ const SHELL = [
   "/app-icon-192.png",
   "/app-icon-512.png",
   "/cod-emblem-256.webp",
-  "/changeling-paper-texture.webp",
+  "/paper-texture.webp",
+
   "/changeling-skull.png",
   "/mage-skull.png",
+  "/vampire-skull.png",
+
   "/fonts/changeling/changeling-regular.woff2",
   "/fonts/changeling/changeling-italic.woff2",
   "/fonts/changeling/changeling-small-caps.woff2",
+
   "/changeling/style/botanical-corner.webp",
+  "/changeling/style/changeling-paper-texture.webp",
   "/changeling/style/frame-star-center.webp",
   "/changeling/style/frame-star-side.webp",
   "/changeling/style/changeling-title.webp",
   "/changeling/style/selected-tab-texture.webp",
-  "/changeling/style/attributes-divider-corner.webp",
-  "/changeling/style/attributes-divider-middle.webp",
+  "/changeling/style/attributes-divider.webp",
   "/changeling/style/attributes-divider-leaf.webp",
   "/changeling/style/divider-terminal.webp",
   "/changeling/style/vertical-rule.webp",
@@ -29,6 +33,19 @@ const SHELL = [
   "/changeling/style/skill-kith-middle-1.webp",
   "/changeling/style/skill-kith-middle-2.webp",
   "/changeling/style/skill-kith-right.webp",
+
+  "/vampire/style/attributes-divider.webp",
+  "/vampire/style/attributes-divider-thorns.webp",
+  "/vampire/style/background-vampire.webp",
+  "/vampire/style/divider-terminal.webp",
+  "/vampire/style/frame-blood-center-bottom.webp",
+  "/vampire/style/frame-blood-center-top.webp",
+  "/vampire/style/selected-tab-texture.webp",
+  "/vampire/style/thorns-corner.webp",
+  "/vampire/style/vampire-title.webp",
+
+  "/vampire/easter-eggs/nosferatu.webm",
+
   "/version.json",
 ];
 

@@ -2,6 +2,7 @@
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { ExperiencePanel } from "./experience-panel";
 import { CharacterPaperShell,EditableList,NotesArea,PowerResource,ResourceTrack,boundedNumber,updateLineData } from "@/app/workspace/character-paper-shell";
+import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { CompanionPage } from "./companion-page";
 import { CompanionPage as CoreCompanionPage } from "@/app/workspace/companion-page";
@@ -227,7 +228,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetHeading>Condições</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
             </>,
                 poderes: <>
-              <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
+              <PowerResource name={tr("Fado", "Wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={changelingFavoredRegalia(data)}/>
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
@@ -256,64 +257,36 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           {hasCompanions && <TabsTrigger value="companheiros">{tr("Companheiros", "Companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
-            <section className="sheet-identity-grid">
-              <SheetField label="Nome" value={character.character.name}/>
-              <SheetField label="Agulha" value={changelingAnchorDisplayName("needle", data.needle, locale)}/>
-              <SheetField label="Feição" value={seemingDisplayName(data.seeming, locale)}/>
-              <SheetField label="Jogador" value={character.character.player}/>
-              <SheetField label="Fio" value={changelingAnchorDisplayName("thread", data.thread, locale)}/>
-              <SheetField label={tr("Frátria", "Kith")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/>
-              <SheetField label="Crônica" value={character.character.chronicle}/>
-              <SheetField label="Conceito" value={character.character.concept}/>
-              <SheetField label={tr("Corte", "Court")} value={displayCourt(lineReference.courts, data.court, locale)}/>
-            </section>
-            <SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading>
-            <div className="official-trait-grid">
-              {Object.entries(ATTRIBUTES).map(([category, names]) => (<TraitBlock key={category} title={category} names={names} values={character.attributes}/>))}
-            </div>
-            <div className="official-sheet-body">
-              <div className="sheet-skills-column">
-                <SheetHeading>Perícias</SheetHeading>
-                {Object.entries(SKILLS).map(([category, names]) => (<TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone="kith"/>))}
-              </div>
-              <div className="sheet-center-column">
-                <SheetHeading>Méritos</SheetHeading>
-                <MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
-                <SheetHeading>Corte</SheetHeading>
-                <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts} main/>
-                <SheetHeading>Regalias Favorecidas</SheetHeading>
-                <LineList items={changelingFavoredRegalia(data)}/>
-                <SheetHeading>Fragilidades</SheetHeading>
-                <FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
-                <SheetHeading>Lucidez</SheetHeading>
-                <ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
-                <SheetHeading>Pedras de Contato</SheetHeading>
-                <EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato", "Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
-              </div>
-              <div className="sheet-right-column">
-                <SheetHeading>Vitalidade</SheetHeading>
-                <HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/>
-                <SheetHeading>Força de Vontade</SheetHeading>
-                <ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
-                <SheetHeading>Características da Linha</SheetHeading>
-                <PowerResource name="Fado" rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
-                <ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>
-              </div>
-            </div>
-            <div className="sheet-bottom-grid mage-bottom-grid">
-              <section>
-                <SheetHeading>Condições</SheetHeading>
-                <CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
-              </section>
-              <section>
-                <SheetHeading>Aspirações</SheetHeading>
-                <EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
-              </section>
-              <section>
-                <SheetHeading>Anotações</SheetHeading>
-                <NotesArea value={notes} onChange={(value) => setState("notes", value)}/>
-              </section>
-            </div>
+            <MainSheet className="changeling-main-body"
+              identity={<section className="sheet-identity-grid"><SheetField label="Nome" value={character.character.name}/><SheetField label="Agulha" value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label="Feição" value={seemingDisplayName(data.seeming, locale)}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Fio" value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={tr("Frátria", "Kith")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label="Crônica" value={character.character.chronicle}/><SheetField label="Conceito" value={character.character.concept}/><SheetField label={tr("Corte", "Court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
+              attributes={<><SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
+              skills={
+                <>
+                  <SheetHeading>Perícias</SheetHeading>
+                  {Object.entries(SKILLS).map(([category, names]) => (
+                    <TraitBlock
+                      key={category}
+                      title={category}
+                      subtitle={
+                        category === "Mental"
+                          ? tr("(-3 se não treinado)", "(-3 if Untrained)")
+                          : tr("(-1 se não treinado)", "(-1 if Untrained)")
+                      }
+                      names={names}
+                      values={effectiveSkills}
+                      specialties={specialties}
+                      highlightedNames={highlightedSkills}
+                      highlightTone="kith"
+                    />
+                  ))}
+                </>
+              }
+              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data)}/><SheetHeading className="ctl-single-divider">Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
+              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/><SheetHeading className="ctl-single-divider">Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato", "Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
+              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
+              conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
+              health={<><SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
+              powerStat={<MainPowerStat label="Fado" value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label="Glamour" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>Contratos</SheetHeading>

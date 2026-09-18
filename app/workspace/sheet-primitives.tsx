@@ -23,6 +23,7 @@ export function CompactValues({values}:{values:Record<string,number>}){const {lo
 
 export function TraitBlock({
   title,
+  subtitle,
   names,
   values,
   specialties = [],
@@ -31,6 +32,7 @@ export function TraitBlock({
   highlightTone,
 }: {
   title: string;
+  subtitle?: ReactNode;
   names: readonly string[];
   values: Record<string, number>;
   specialties?: Array<{ skill: string; name: string }>;
@@ -38,10 +40,18 @@ export function TraitBlock({
   highlightedNames?: ReadonlySet<string>;
   highlightTone?: "rote" | "kith" | "legacy" | "ruling";
 }) {
-  const {locale}=useLanguage();
+  const { locale } = useLanguage();
+
   return (
     <section className="official-trait-block">
-      <h4>{workspaceTerm(title,locale)}</h4>
+      <h4>{workspaceTerm(title, locale)}</h4>
+
+      {subtitle && (
+        <small className="official-trait-subtitle">
+          {subtitle}
+        </small>
+      )}
+
       {names.map((name) => (
         <TraitLine
           key={name}
