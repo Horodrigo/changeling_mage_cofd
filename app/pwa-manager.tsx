@@ -76,7 +76,7 @@ export function PwaManager() {
   if (dismissed || (!installPrompt && !waiting && !newerVersion && online)) return null;
   return <aside className="pwa-notice" role="status">
     <div>{waiting || newerVersion ? <RefreshCw /> : installPrompt ? <Smartphone /> : <Download />}</div>
-    <span><strong>{waiting || newerVersion ? t("ui.updateAvailable") : installPrompt ? t("ui.installTheApp") : t("ui.youAreOffline")}</strong><small>{waiting ? t("ui.versionIsReadyToInstall", { p1: remoteVersion }}) : newerVersion ? t("ui.preparingVersion", { p1: remoteVersion }}) : installPrompt ? t("ui.useCharactersOfTheDarknessFromYourHome") : t("ui.yourLocalCharacterSheetsRemainAvailable")}</small></span>
+    <span><strong>{waiting || newerVersion ? t("ui.updateAvailable") : installPrompt ? t("ui.installTheApp") : t("ui.youAreOffline")}</strong><small>{waiting ? t("ui.versionIsReadyToInstall", { p1: remoteVersion }) : newerVersion ? t("ui.preparingVersion", { p1: remoteVersion }) : installPrompt ? t("ui.useCharactersOfTheDarknessFromYourHome") : t("ui.yourLocalCharacterSheetsRemainAvailable")}</small></span>
     {waiting && <Button size="sm" onClick={() => waiting.postMessage({type:"SKIP_WAITING"})}>{t("ui.updateNow")}</Button>}
     {installPrompt && <Button size="sm" onClick={async()=>{await installPrompt.prompt();await installPrompt.userChoice;setInstallPrompt(null)}}>{t("ui.install")}</Button>}
     <button type="button" className="pwa-dismiss" onClick={()=>{window.sessionStorage.setItem(DISMISSED_KEY,"1");setDismissed(true)}} aria-label={t("ui.close")}><X /></button>

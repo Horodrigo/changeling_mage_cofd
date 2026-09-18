@@ -32,7 +32,6 @@ import { useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, isInlineMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
-import { systemTerm } from "@/lib/system-terms";
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 
@@ -419,7 +418,7 @@ function TrifleUseTrack({ used, onChange }: {
     onChange: (value: number) => void;
 }) {
     const { t } = useLanguage();
-    return <div className="trifle-use-block"><span>{t("ui.triflesUsed")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={t("ui.of3TriflesUsed", { p1: used }})}>{Array.from({ length: 3 }, (_, index) => <button key={index} type="button" className={index < used ? "used" : ""} onClick={() => onChange(index < used ? index : index + 1)} aria-label={t("ui.setUsedTriflesTo", { p1: index < used ? index : index + 1 }})}/>)}</div></div>;
+    return <div className="trifle-use-block"><span>{t("ui.triflesUsed")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={t("ui.of3TriflesUsed", { p1: used })}>{Array.from({ length: 3 }, (_, index) => <button key={index} type="button" className={index < used ? "used" : ""} onClick={() => onChange(index < used ? index : index + 1)} aria-label={t("ui.setUsedTriflesTo", { p1: index < used ? index : index + 1 })}/>)}</div></div>;
 }
 function ClarityTrack({ maximum, damage, onChange, }: {
     maximum: number;
@@ -435,8 +434,10 @@ function ClarityTrack({ maximum, damage, onChange, }: {
             level === "mild" ? "severe" : level === "severe" ? undefined : "mild";
         onChange(normalizeClarityDamage(slots, maximum));
     };
-    return (<div className="tracker-block clarity-block">
-      <div className="health-track clarity-track" role="group" aria-label={t("ui.currentClarityOf", { p1: current, p2: maximum }})}>
+    return (
+    
+    <div className="tracker-block clarity-block">
+      <div className="health-track clarity-track" role="group" aria-label={t("ui.currentClarityOf", { p1: current, p2: maximum })}>
         {Array.from({ length: maximum }, (_, index) => {
             const level = damage[index];
             return (<button type="button" key={index} className={`health-box clarity-box ${level ?? "empty"}`} onClick={() => cycle(index)} aria-label={t("ui.clarityBoxChange", { index: index + 1, state: level === "mild" ? t("ui.damageMild") : level === "severe" ? t("ui.damageSevere") : t("ui.damageEmpty") })}>
@@ -467,8 +468,8 @@ function GoblinDebtTrack({ value, onChange, }: {
     const { t } = useLanguage();
     return (<div className="goblin-debt-block">
       <h4>{t("ui.goblinDebt")}</h4>
-      <div className="goblin-debt-track" role="group" aria-label={t("ui.goblinDebtOf10", { p1: value }})}>
-        {Array.from({ length: 10 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={t("ui.setGoblinDebtTo", { p1: index < value ? index : index + 1 }})}/>))}
+      <div className="goblin-debt-track" role="group" aria-label={t("ui.goblinDebtOf10", { p1: value })}>
+        {Array.from({ length: 10 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={t("ui.setGoblinDebtTo", { p1: index < value ? index : index + 1 })}/>))}
       </div>
       <p>
         {value}/10 · {t("ui.uponReceivingTheTenthPointTheCharacterGains")}
@@ -482,7 +483,7 @@ function FrailtyList({ values, onChange }: {
     const { locale, t } = useLanguage();
     return (<div className="editable-lines frailty-lines">
       {values.map((value, index) => (<div className="editable-line-row" key={index}>
-          <Input value={index === 0 ? systemTerm(value, locale) : value} readOnly={index === 0} aria-label={index === 0 ? t("ui.mandatoryFrailtyColdIron") : t("ui.wyrdFrailty", { p1: index * 2 }})} placeholder={index === 0 ? undefined : t("ui.wyrdFrailty", { p1: index * 2 }})} onChange={(event) => {
+          <Input value={index === 0 ? systemTerm(value, locale) : value} readOnly={index === 0} aria-label={index === 0 ? t("ui.mandatoryFrailtyColdIron") : t("ui.wyrdFrailty", { p1: index * 2 })} placeholder={index === 0 ? undefined : t("ui.wyrdFrailty", { p1: index * 2 })} onChange={(event) => {
                 const next = [...values];
                 next[index] = event.target.value;
                 onChange(next);
@@ -688,7 +689,7 @@ function KithLore({ data, reference }: {
     const displayedChoice = choiceDefinition?.kind === "skill" ? systemTerm(choice, locale) : choiceDefinition?.kind === "specialty" && choiceParts.length > 1 ? `${systemTerm(choiceParts[0], locale)}: ${choiceParts.slice(1).join(": ")}` : choice;
     if (!name)
         return (<LorePanel title={t("ui.kithBlessing")} text={t("ui.noKithSelected")}/>);
-    return (<LorePanel title={t("ui.blessing", { p1: name }})} intro={data.kith_custom ? undefined : description} text={`${choice ? `${choiceLabel}: ${displayedChoice}. ` : ""}${skill ? `${skill}. ` : ""}${blessing || description}`} source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}/>);
+    return (<LorePanel title={t("ui.blessing", { p1: name })} intro={data.kith_custom ? undefined : description} text={`${choice ? `${choiceLabel}: ${displayedChoice}. ` : ""}${skill ? `${skill}. ` : ""}${blessing || description}`} source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}/>);
 }
 function CourtLore({ data, merits, courtCatalog, main = false, }: {
     data: Record<string, unknown>;

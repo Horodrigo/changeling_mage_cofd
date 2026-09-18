@@ -413,7 +413,7 @@ export function ExperiencePanel({
     };
     recalculateCtlDerived(next);
     updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
-    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description, p2: refund }}));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description, p2: refund }));
   }
   function buy() {
     if (purchaseType === "Atributo") {
@@ -591,7 +591,7 @@ export function ExperiencePanel({
   });
   const historyPanel = <details className="experience-history">
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
-    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {t("ui.refund")}</Button>} title={t("ui.refund20298a", { p1: entry.undo.name }})} description={entry.undo.name === "Entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
+    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {t("ui.refund")}</Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name === "Entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel">
@@ -834,7 +834,7 @@ export function ExperiencePanel({
                   disabled={!entry.undo}
                 >
                   <RotateCcw /> {t("ui.refund")}
-                </Button>} title={t("ui.refund20298a", { p1: entry.undo.name }})} description={entry.undo.name==="Entitlement"?t("ui.theRefundWillRemoveTheEntitlementItsRanks"):t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={()=>revertPurchase(entry)}/>:<Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={()=>revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}
+                </Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name==="Entitlement"?t("ui.theRefundWillRemoveTheEntitlementItsRanks"):t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={()=>revertPurchase(entry)}/>:<Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={()=>revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}
               </p>
             ))
           ) : (
