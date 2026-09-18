@@ -59,8 +59,6 @@ export function CharacterPrintDialog({
     const safeName = character.character.name.trim() || t("ui.character");
     const printSurface = document.createElement("div");
     printSurface.className = "character-print-surface";
-    printSurface.append(printable.cloneNode(true));
-    document.body.append(printSurface);
     document.title = `${safeName} - Changeling the Lost`;
     document.body.classList.add("character-printing");
     try {
