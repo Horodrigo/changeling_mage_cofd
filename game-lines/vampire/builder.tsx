@@ -160,7 +160,7 @@ function reconcileTraitAllocation(
 }
 
 function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
   const reference = catalogs.get<VampireReference>("vampire-reference");
@@ -222,31 +222,31 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: tr("Atributos", "Attributes"), skills: tr("Perícias", "Skills"),
-      attributePriorities: tr("Prioridades de Atributos", "Attribute priorities"),
-      skillPriorities: tr("Prioridades de Perícias", "Skill priorities"),
+      attributes: t("ui.attributes"), skills: t("ui.skills"),
+      attributePriorities: t("ui.attributePriorities"),
+      skillPriorities: t("ui.skillPriorities"),
       categoryLabel: (category) => systemTerm(category, locale),
     });
     const add = (key: string, label: string, step = 3) => result.push({ step, key, label });
-    if (!common.name.trim()) add("name", tr("Nome", "Name"), 1);
-    if (!selectedClan) add("clan", tr("Clã", "Clan"));
-    if (!selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", tr("Atributo favorecido do Clã", "Clan favored Attribute"));
+    if (!common.name.trim()) add("name", t("ui.name"), 1);
+    if (!selectedClan) add("clan", t("ui.clan"));
+    if (!selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
     if (!reference.covenants.some((item) => item.id === covenantId)) add("covenant", "Covenant");
     if (!reference.anchors.some((item) => item.id === maskId)) add("mask", "Mask");
-    if (!reference.anchors.some((item) => item.id === dirgeId) || dirgeId === maskId) add("dirge", tr("Dirge diferente de Mask", "Dirge distinct from Mask"));
+    if (!reference.anchors.some((item) => item.id === dirgeId) || dirgeId === maskId) add("dirge", t("ui.dirgeDistinctFromMask"));
     if (!touchstone.trim()) add("touchstone", "Touchstone");
-    if (disciplineDots !== (hasCreationCovenantPower ? 2 : 3) || inClanDots < 2) add("disciplines", hasCreationCovenantPower ? tr("2 pontos de Disciplinas do Clã mais 1 ponto convertido", "2 in-Clan Discipline dots plus 1 converted dot") : tr("3 pontos de Disciplinas, ao menos 2 no Clã", "3 Discipline dots, at least 2 in Clan"));
+    if (disciplineDots !== (hasCreationCovenantPower ? 2 : 3) || inClanDots < 2) add("disciplines", hasCreationCovenantPower ? t("ui.message2InClanDisciplineDotsPlus1Converted") : t("ui.message3DisciplineDotsAtLeast2InClan"));
     const protean = Number(disciplines.Protean ?? 0);
-    if (protean >= 2 && proteanAspects.filter((value) => value.trim()).length !== 3) add("protean", tr("Três adaptações de Predatory Aspect", "Three Predatory Aspect adaptations"));
-    if (protean >= 3 && !proteanForms.some((value) => value.trim())) add("protean", tr("Forma de Beast's Skin", "Beast's Skin form"));
-    if (protean >= 4 && proteanUnnatural.filter((value) => value.trim()).length !== 3) add("protean", tr("Três adaptações de Unnatural Aspect", "Three Unnatural Aspect adaptations"));
-    if (covenantId === "ordo-dracul" && !ORDO_MYSTERIES.includes(mysteryId as (typeof ORDO_MYSTERIES)[number])) add("mystery", tr("Mystery da Ordo Dracul", "Ordo Dracul Mystery"));
-    if (creationCovenantPowerId && (!hasCreationCovenantPower || covenantStatus < 1)) add("covenantPower", tr("Poder de Covenant requer Kindred Status 1 no Covenant escolhido", "Covenant power requires Kindred Status 1 in the chosen Covenant"));
-    if (meritSpent > meritBudget) add("merits", tr("Méritos acima do limite", "Merits exceed the limit"));
+    if (protean >= 2 && proteanAspects.filter((value) => value.trim()).length !== 3) add("protean", t("ui.threePredatoryAspectAdaptations"));
+    if (protean >= 3 && !proteanForms.some((value) => value.trim())) add("protean", t("ui.beastSSkinForm"));
+    if (protean >= 4 && proteanUnnatural.filter((value) => value.trim()).length !== 3) add("protean", t("ui.threeUnnaturalAspectAdaptations"));
+    if (covenantId === "ordo-dracul" && !ORDO_MYSTERIES.includes(mysteryId as (typeof ORDO_MYSTERIES)[number])) add("mystery", t("ui.ordoDraculMystery"));
+    if (creationCovenantPowerId && (!hasCreationCovenantPower || covenantStatus < 1)) add("covenantPower", t("ui.covenantPowerRequiresKindredStatus1InThe"));
+    if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${message}`);
-      if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", tr("Kindred Status exige um Clã, Covenant ou cidade", "Kindred Status requires a Clan, Covenant, or city"));
+      if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     return result;
   })();
@@ -305,7 +305,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
 };
   const finish = () => {
     if (issues.length) {
-      common.setError(`${tr("Ainda falta", "Still required")}: ${issues.map((issue) => issue.label).join(", ")}.`);
+      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
       common.setStep(issues[0].step);
       return;
     }
@@ -375,29 +375,29 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
       </div>
     )}
   
-  <CharacterBuilderShell line="VtR" templateLabel={tr("Modelo Vampírico", "Vampire Template")} state={common} issues={issues} onCancel={onCancel} onFinish={finish}
-    identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={tr("Nome", "Name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
+  <CharacterBuilderShell line="VtR" templateLabel={t("ui.vampireTemplate")} state={common} issues={issues} onCancel={onCancel} onFinish={finish}
+    identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<div className="builder-section vampire-builder-template">
-      <span className="kicker">{tr("PASSO 3 · VAMPIRO", "STEP 3 · VAMPIRE")}</span><h2>{tr("Modelo Vampírico", "Vampire Template")}</h2>
+      <span className="kicker">{t("ui.step3VAMPIRE")}</span><h2>{t("ui.vampireTemplate")}</h2>
       <div className="vampire-template-grid">
-        <SelectionCards title={tr("Clã", "Clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} disciplineCatalog={powers.disciplines} />
+        <SelectionCards title={t("ui.clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} disciplineCatalog={powers.disciplines} />
         <SelectionCards title="Covenant" items={reference.covenants} value={covenantId} onChange={(value) => { setCovenantId(value); setCreationCovenantPowerId(""); if (value !== "ordo-dracul") setMysteryId(""); }} locale={locale} invalid={missing("covenant")} disciplineCatalog={powers.disciplines} />
       </div>
-      {selectedClan && <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>}
+      {selectedClan && <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={t("ui.favoredAttribute1")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>}
       <div className="vampire-anchor-grid">
         <AnchorChoice label="Mask" value={maskId} setValue={setMaskId} anchors={reference.anchors} locale={locale} invalid={missing("mask")} />
         <AnchorChoice label="Dirge" value={dirgeId} setValue={setDirgeId} anchors={reference.anchors.filter((item) => item.id !== maskId)} locale={locale} invalid={missing("dirge")} />
       </div>
       <label className={missing("touchstone") ? "missing-field" : ""}>Touchstone<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
-      <h3>{tr("Disciplinas · 3 pontos", "Disciplines · 3 dots")}</h3>
-      <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>{powers.disciplines.map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={disciplineDots < (hasCreationCovenantPower ? 2 : 3)} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? tr("do Clã", "in-Clan") : undefined} />)}</div>
-      <p className="rule-callout">{tr("Distribua 3 pontos; ao menos 2 devem pertencer às Disciplinas do Clã.", "Allocate 3 dots; at least 2 must belong to the Clan Disciplines.")}</p>
-      {Number(disciplines.Protean ?? 0) >= 2 && <div className={`vampire-protean-builder${missing("protean") ? " missing-field block" : ""}`}><h3>{tr("Escolhas de Protean", "Protean Choices")}</h3><ChoiceLines label="Predatory Aspect" values={proteanAspects} count={3} placeholder={tr("Adaptação animal", "Animal adaptation")} onChange={setProteanAspects} />{Number(disciplines.Protean ?? 0) >= 3 && <ChoiceLines label="Beast's Skin" values={proteanForms} count={1} placeholder={tr("Forma animal", "Animal form")} onChange={setProteanForms} />}{Number(disciplines.Protean ?? 0) >= 4 && <ChoiceLines label="Unnatural Aspect" values={proteanUnnatural} count={3} placeholder={tr("Aspecto monstruoso", "Monstrous adaptation")} onChange={setProteanUnnatural} />}</div>}
-      {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label="Mystery" value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: tr("Ascendente", "Ascendant"), wyrm: tr("Serpente", "Wyrm"), voivode: tr("Voivoda", "Voivode") }} /></div>}
-      {covenantPowerOptions.length > 0 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={tr("Conversão opcional de 1 ponto de Disciplina", "Optional conversion of 1 Discipline dot")} value={creationCovenantPowerId || "__none"} setValue={(value) => setCreationCovenantPowerId(value === "__none" ? "" : value)} options={["__none", ...covenantPowerOptions.map((item) => item.id)]} optionLabels={{ __none: tr("Não converter", "Do not convert"), ...Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)])) }} /><small className="anchor-recovery">{covenantStatus >= 1 ? tr("Disponível por Kindred Status no Covenant.", "Available through Kindred Status in the Covenant.") : tr("Exige Kindred Status 1 configurado para este Covenant.", "Requires Kindred Status 1 configured for this Covenant.")}</small></div>}
+      <h3>{t("ui.disciplines3Dots")}</h3>
+      <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>{powers.disciplines.map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={disciplineDots < (hasCreationCovenantPower ? 2 : 3)} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}</div>
+      <p className="rule-callout">{t("ui.allocate3DotsAtLeast2MustBelong")}</p>
+      {Number(disciplines.Protean ?? 0) >= 2 && <div className={`vampire-protean-builder${missing("protean") ? " missing-field block" : ""}`}><h3>{t("ui.proteanChoices")}</h3><ChoiceLines label="Predatory Aspect" values={proteanAspects} count={3} placeholder={t("ui.animalAdaptation")} onChange={setProteanAspects} />{Number(disciplines.Protean ?? 0) >= 3 && <ChoiceLines label="Beast's Skin" values={proteanForms} count={1} placeholder={t("ui.animalForm")} onChange={setProteanForms} />}{Number(disciplines.Protean ?? 0) >= 4 && <ChoiceLines label="Unnatural Aspect" values={proteanUnnatural} count={3} placeholder={t("ui.monstrousAdaptation")} onChange={setProteanUnnatural} />}</div>}
+      {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label="Mystery" value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode") }} /></div>}
+      {covenantPowerOptions.length > 0 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={t("ui.optionalConversionOf1DisciplineDot")} value={creationCovenantPowerId || "__none"} setValue={(value) => setCreationCovenantPowerId(value === "__none" ? "" : value)} options={["__none", ...covenantPowerOptions.map((item) => item.id)]} optionLabels={{ __none: t("ui.doNotConvert"), ...Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)])) }} /><small className="anchor-recovery">{covenantStatus >= 1 ? t("ui.availableThroughKindredStatusInTheCovenant") : t("ui.requiresKindredStatus1ConfiguredForThisCovenant")}</small></div>}
       <Aspirations values={common.aspirations} setValues={common.setAspirations} />
-      <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={tr("Potência de Sangue", "Blood Potency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} /></div>
+      <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} /></div>
     </div>}
   />
   </>);

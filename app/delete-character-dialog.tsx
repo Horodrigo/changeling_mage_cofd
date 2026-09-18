@@ -23,23 +23,20 @@ export default function DeleteCharacterDialog({
   name: string;
   onDelete: () => void;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{tr(`Excluir “${name}”?`, `Delete “${name}”?`)}</AlertDialogTitle>
+          <AlertDialogTitle>{t("ui.delete", { p1: name })}</AlertDialogTitle>
           <AlertDialogDescription>
-            {tr(
-              "A ficha será removida do armazenamento deste navegador. Exporte o JSON antes se quiser conservar uma cópia.",
-              "This character will be removed from this browser's storage. Export the JSON first if you want to keep a copy.",
-            )}
+            {t("ui.thisCharacterWillBeRemovedFromThisBrowser")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel size="sm" className="catalog-dialog-done">{tr("Cancelar", "Cancel")}</AlertDialogCancel>
+          <AlertDialogCancel size="sm" className="catalog-dialog-done">{t("ui.cancel")}</AlertDialogCancel>
           <AlertDialogAction size="sm" className="catalog-dialog-done" variant="destructive" onClick={onDelete}>
-            {tr("Excluir definitivamente", "Delete permanently")}
+            {t("ui.deletePermanently")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -10,8 +10,8 @@ export function MeritCatalogVisibilityToggle({
   showAll: boolean;
   setShowAll: (value: boolean) => void;
 }) {
-  const { tr } = useLanguage();
-  const label = tr("Mostrar todos", "Show all");
+  const { t } = useLanguage();
+  const label = t("ui.showAll");
 
   return (
     <label className="merit-catalog-visibility-toggle">

@@ -94,7 +94,7 @@ function readSpells(
 }
 
 function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "MtA") throw new Error("Mage builder received a non-Mage character.");
   if (!catalogs) throw new Error("Mage builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {
@@ -187,9 +187,9 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: tr("Atributos", "Attributes"), skills: tr("Perícias", "Skills"),
-      attributePriorities: tr("Prioridades de Atributos", "Attribute priorities"),
-      skillPriorities: tr("Prioridades de Perícias", "Skill priorities"),
+      attributes: t("ui.attributes"), skills: t("ui.skills"),
+      attributePriorities: t("ui.attributePriorities"),
+      skillPriorities: t("ui.skillPriorities"),
       categoryLabel: (category) => systemTerm(category, locale),
     });
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
@@ -197,27 +197,27 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       const definition = meritCatalog.find((item) => item.name === merit.name);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${merit.name}: ${message}`);
     }
-    if (meritSpent > meritBudget) add("merits", tr("Méritos acima do limite", "Merits exceed the limit"));
+    if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [
       ["path", path, "Caminho"], ["order", order, "Ordem"], ["virtue", virtue, "Virtude"],
       ["vice", vice, "Vício"], ["shadowName", shadowName, "Nome das Sombras"],
       ["resistanceBonus", resistanceBonus, "Atributo de Resistência"],
     ]) if (!value) add(key, label);
-    if (order === "Nameless" && !customOrder?.name.trim()) add("order", tr("Escolha o nome da Nameless Order", "Choose a name for the Nameless Order"));
+    if (order === "Nameless" && !customOrder?.name.trim()) add("order", t("ui.chooseANameForTheNamelessOrder"));
     if (order === "Nameless" && namelessInitiationDots >= 2 && (namelessRoteSkills.length !== 3 || new Set(namelessRoteSkills).size !== 3))
-      add("merits", tr("Escolha três Perícias de Rota distintas no nível 2 de Mystery Cult Initiation", "Choose three distinct Rote Skills for Mystery Cult Initiation dot 2"));
+      add("merits", t("ui.chooseThreeDistinctRoteSkillsForMysteryCult"));
     arcanaCreationErrors(arcana, path ? pathData : undefined, locale).forEach((message) => add("arcana", message));
     if (hasCreationOrderBenefits && rotes.slice(0, 3).filter((item) => item?.roteSkill && meetsArcanaRequirements(item.requirements, arcana)).length !== 3)
-      add("rotes", tr("Três Rotas utilizáveis e suas Perícias", "Three usable Rotes and their Skills"));
+      add("rotes", t("ui.threeUsableRotesAndTheirSkills"));
     if (praxes.slice(0, gnosis).filter((item) => item && meetsArcanaRequirements(item.requirements, arcana)).length !== gnosis)
-      add("praxes", `${gnosis} ${tr("Práxis utilizável(is)", "usable Praxis")}`);
+      add("praxes", `${gnosis} ${t("ui.usablePraxis")}`);
     return result;
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
   const finish = () => {
     if (issues.length) {
-      common.setError(`${tr("Ainda falta", "Still required")}: ${issues.map((issue) => issue.label).join(", ")}.`);
+      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
       common.setStep(issues[0].step);
       return;
     }
@@ -272,9 +272,9 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
   };
 
   return <CharacterBuilderShell
-    line="MtA" templateLabel={tr("Modelo dos Despertos", "Awakened Template")} state={common} issues={issues}
+    line="MtA" templateLabel={t("ui.awakenedTemplate")} state={common} issues={issues}
     onCancel={onCancel} onFinish={finish}
-    identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={tr("Nome das Sombras", "Shadow Name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
+    identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={t("ui.shadowName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
   />;

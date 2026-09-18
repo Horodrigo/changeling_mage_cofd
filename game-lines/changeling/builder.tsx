@@ -76,7 +76,7 @@ function findKith(catalog: readonly KithDefinition[], value: string) {
 }
 
 function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "CtL") throw new Error("Changeling builder received a non-Changeling character.");
   if (!catalogs) throw new Error("Changeling builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {
@@ -147,37 +147,37 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: tr("Atributos", "Attributes"), skills: tr("Perícias", "Skills"),
-      attributePriorities: tr("Prioridades de Atributos", "Attribute priorities"),
-      skillPriorities: tr("Prioridades de Perícias", "Skill priorities"),
+      attributes: t("ui.attributes"), skills: t("ui.skills"),
+      attributePriorities: t("ui.attributePriorities"),
+      skillPriorities: t("ui.skillPriorities"),
       categoryLabel: (category) => systemTerm(category, locale),
     });
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
-    if (!common.name.trim()) add(1, "name", tr("Nome do personagem", "Character name"));
+    if (!common.name.trim()) add(1, "name", t("ui.characterName"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add(3, "merits", `${merit.name}: ${message}`);
     }
-    if (meritSpent > meritBudget) add(3, "merits", tr("Méritos acima do limite", "Merits exceed the limit"));
+    if (meritSpent > meritBudget) add(3, "merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [
-      ["seeming", seeming, tr("Feição", "Seeming")], ["kith", kith, tr("Fratria", "Kith")], ["needle", needle, tr("Agulha", "Needle")],
-      ["thread", thread, tr("Fio", "Thread")], ["favoredAttribute", favoredAttribute, tr("Atributo favorecido", "Favored Attribute")], ["secondRegalia", secondRegalia, tr("Segunda Regalia", "Second Regalia")],
+      ["seeming", seeming, t("ui.seeming")], ["kith", kith, t("ui.kith")], ["needle", needle, t("ui.needle")],
+      ["thread", thread, t("ui.thread")], ["favoredAttribute", favoredAttribute, t("ui.favoredAttribute")], ["secondRegalia", secondRegalia, t("ui.secondRegalia")],
     ]) if (!value) add(3, key, label);
     const selectedKith = findKith(reference.kiths, kith);
-    if (customKith && (!customKithSkill || !customKithDescription.trim())) add(3, "kith", tr("Fratria personalizada completa", "Complete custom Kith"));
-    if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", tr("Escolha da Bênção da Fratria", "Kith Blessing choice"));
+    if (customKith && (!customKithSkill || !customKithDescription.trim())) add(3, "kith", t("ui.completeCustomKith"));
+    if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", t("ui.kithBlessingChoice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
     if (
       contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectInitialContract(item, favoredRegalia, court, reference.courts)).length !== 4 ||
       contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectInitialContract(item, favoredRegalia, court, reference.courts)).length !== 2
-    ) add(3, "contracts", tr("Quatro Contratos Comuns e dois Reais permitidos pelas Regalias e Corte", "Four Common Contracts and two Royal Contracts allowed by the selected Regalia and Court"));
+    ) add(3, "contracts", t("ui.fourCommonContractsAndTwoRoyalContractsAllowed"));
     return result;
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
   const finish = () => {
     if (issues.length) {
-      common.setError(`${tr("Ainda falta", "Still required")}: ${issues.map((issue) => issue.label).join(", ")}.`);
+      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
       common.setStep(issues[0].step);
       return;
     }
@@ -232,9 +232,9 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
   };
 
   return <CharacterBuilderShell
-    line="CtL" templateLabel={tr("Modelo dos Perdidos", "Lost Template")} state={common} issues={issues}
+    line="CtL" templateLabel={t("ui.lostTemplate")} state={common} issues={issues}
     onCancel={onCancel} onFinish={finish}
-    identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={tr("Nome do personagem", "Character name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
+    identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<ChangelingBuilderView seeming={seeming} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={reference.kiths} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={reference.courts} />}
   />;

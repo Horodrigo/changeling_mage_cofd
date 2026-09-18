@@ -62,13 +62,13 @@ export function MainSheet({
   specificPowersTitle?: ReactNode;
   className?: string;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const derivedRows: Array<[string, unknown]> = [
-    [tr("Tamanho", "Size"), derived.Tamanho ?? "—"],
-    [tr("Deslocamento", "Speed"), derived.Deslocamento ?? "—"],
-    [tr("Defesa", "Defense"), derived.Defesa ?? "—"],
-    [tr("Armadura", "Armor"), derived.Armadura ?? 0],
-    [tr("Iniciativa", "Initiative"), derived.Iniciativa ?? "—"],
+    [t("ui.size"), derived.Tamanho ?? "—"],
+    [t("ui.speed"), derived.Deslocamento ?? "—"],
+    [t("ui.defense"), derived.Defesa ?? "—"],
+    [t("ui.armor"), derived.Armadura ?? 0],
+    [t("ui.initiative"), derived.Iniciativa ?? "—"],
   ];
   return <div className={`cod-main-sheet ${className}`}>
     <section className="cod-main-identity" data-slot="identity">{identity}</section>
@@ -76,24 +76,24 @@ export function MainSheet({
     <div className="cod-main-columns official-sheet-body">
       <section className="cod-main-skills sheet-skills-column" data-slot="skills">{skills}</section>
       <section className="cod-main-other sheet-center-column" data-slot="other-traits">
-        <div data-slot="specific-powers">{specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? tr("Poderes Específicos", "Specific Powers")}</SheetHeading>}{specificPowers}</div>
+        <div data-slot="specific-powers">{specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? t("ui.specificPowers")}</SheetHeading>}{specificPowers}</div>
         <div data-slot="merits">
   <SheetHeading className="main-sheet-merits-heading">
-    {tr("Méritos", "Merits")}
+    {t("ui.merits")}
   </SheetHeading>
   {merits}
 </div>
 
 <div data-slot="aspirations">
   <SheetHeading className="main-sheet-aspirations-heading">
-    {tr("Aspirações", "Aspirations")}
+    {t("ui.aspirations")}
   </SheetHeading>
   {aspirations}
 </div>
-        {obsessions !== undefined && <div data-slot="obsessions"><SheetHeading>{tr("Obsessões", "Obsessions")}</SheetHeading>{obsessions}</div>}
+        {obsessions !== undefined && <div data-slot="obsessions"><SheetHeading>{t("ui.obsessions")}</SheetHeading>{obsessions}</div>}
         <div data-slot="conditions">
   <SheetHeading className="main-sheet-conditions-heading">
-    {tr("Condições", "Conditions")}
+    {t("ui.conditions")}
   </SheetHeading>
   {conditions}
 </div>
@@ -105,7 +105,7 @@ export function MainSheet({
         <div data-slot="fuel">{fuel}</div>
         <div data-slot="stability">{stability}</div>
         <section className="cod-main-derived" data-slot="derived-stats">
-          <SheetHeading>{tr("Estatísticas Derivadas", "Derived Stats")}</SheetHeading>
+          <SheetHeading>{t("ui.derivedStats")}</SheetHeading>
           <div className="cod-main-derived-grid">{derivedRows.map(([label, value]) => <div key={String(label)}><span>{label}</span><strong>{String(value)}</strong></div>)}</div>
         </section>
         <section className="cod-main-experience" data-slot="experience">{experience}</section>

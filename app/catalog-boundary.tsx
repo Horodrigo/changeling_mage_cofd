@@ -20,7 +20,7 @@ export function CatalogBoundary({
   groups: readonly CatalogGroupId[];
   children: ReactNode;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const resourceKey = groups.join("|");
   const [result, setResult] = useState<{
     key: string;
@@ -45,14 +45,11 @@ export function CatalogBoundary({
   const state = result.key === resourceKey ? result.state : "loading";
 
   if (state === "loading")
-    return <div className="loading-card">{tr("Carregando catálogo…", "Loading catalog…")}</div>;
+    return <div className="loading-card">{t("ui.loadingCatalog")}</div>;
   if (state === "error")
     return (
       <div className="notice" role="alert">
-        {tr(
-          "O catálogo não está disponível neste dispositivo. Conecte-se e tente novamente.",
-          "The catalog is not available on this device. Connect and try again.",
-        )}
+        {t("ui.theCatalogIsNotAvailableOnThisDevice")}
       </div>
     );
   return <CatalogSnapshotContext.Provider value={result.snapshot}>{children}</CatalogSnapshotContext.Provider>;

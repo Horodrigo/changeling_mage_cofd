@@ -53,7 +53,7 @@ function coilPrerequisiteMet(prerequisites: string | undefined, ratings: Record<
 }
 
 export function VampireExperiencePanel({ character, updateSheet, catalogs }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalogs: CatalogSnapshot }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const state = character.current_state;
   const available = Math.max(0, Math.trunc(Number(state.experience_available ?? 0)));
   const spent = Math.max(0, Math.trunc(Number(state.experience_spent ?? 0)));
@@ -92,8 +92,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     if (purchase === "merit") return target ? [{ value: target, label: meritCatalog.find((item) => item.id === target)?.name ?? target }] : [];
     if (purchase === "discipline") return VAMPIRE_DISCIPLINES.map((name) => ({ value: name, label: name }));
     if (purchase === "devotion") return powers.devotions.filter((item) => !knownDevotions.has(item.id) && disciplinePrerequisitesMet(item.prerequisites, disciplines)).map((item) => ({ value: item.id, label: powerName(item, locale) }));
-    if (purchase === "cruac") { const next = Number(bloodSorcery.cruac_rating ?? 0) + 1; return powers.cruacRites.filter((item) => !knownRites.has(item.id) && Number(item.rating ?? 0) <= next).map((item) => ({ value: item.id, label: `${powerName(item, locale)} (${tr("rito gratuito", "free rite")})` })); }
-    if (purchase === "theban") { const next = Number(bloodSorcery.theban_rating ?? 0) + 1; return powers.thebanMiracles.filter((item) => !knownRites.has(item.id) && Number(item.rating ?? 0) <= next && Number(character.line_data.humanity ?? 7) >= Number(item.rating ?? 0)).map((item) => ({ value: item.id, label: `${powerName(item, locale)} (${tr("milagre gratuito", "free miracle")})` })); }
+    if (purchase === "cruac") { const next = Number(bloodSorcery.cruac_rating ?? 0) + 1; return powers.cruacRites.filter((item) => !knownRites.has(item.id) && Number(item.rating ?? 0) <= next).map((item) => ({ value: item.id, label: `${powerName(item, locale)} (${t("ui.freeRite")})` })); }
+    if (purchase === "theban") { const next = Number(bloodSorcery.theban_rating ?? 0) + 1; return powers.thebanMiracles.filter((item) => !knownRites.has(item.id) && Number(item.rating ?? 0) <= next && Number(character.line_data.humanity ?? 7) >= Number(item.rating ?? 0)).map((item) => ({ value: item.id, label: `${powerName(item, locale)} (${t("ui.freeMiracle")})` })); }
     if (purchase === "ritual") return covenantPowers.filter((item) => !knownRites.has(item.id)).map((item) => ({ value: item.id, label: powerName(item, locale) }));
     if (purchase === "coil") return powers.coils.map((item) => ({ value: item.id, label: powerName(item, locale) }));
     if (purchase === "scale") return powers.scales.filter((item) => !knownScales.has(item.id)).map((item) => ({ value: item.id, label: powerName(item, locale) }));
@@ -127,7 +127,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const unavailable = !chosen || cost < 1 || meritUnavailable || (purchase === "attribute" && Number(character.attributes[chosen] ?? 1) >= limit) || (purchase === "skill" && Number(character.skills[chosen] ?? 0) >= limit) || (purchase === "discipline" && (currentDiscipline >= limit || (teacherRequired && !teacherConfirmed))) || (purchase === "blood-potency" && Number(character.line_data.blood_potency ?? 1) >= 10) || (purchase === "humanity" && Number(character.line_data.humanity ?? 7) >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) < 1) || (purchase === "specialty" && !specialtyName.trim()) || (purchase === "cruac" && (covenant !== "circle-of-the-crone" || covenantStatus < 1 || Number(bloodSorcery.cruac_rating ?? 0) >= 5)) || (purchase === "theban" && (covenant !== "lancea-et-sanctum" || covenantStatus < 1 || Number(bloodSorcery.theban_rating ?? 0) >= 5)) || ((purchase === "coil" || purchase === "scale") && (covenant !== "ordo-dracul" || covenantStatus < 1)) || (purchase === "coil" && (Number(coilRatings[chosen] ?? 0) >= 5 || (!coilInMystery && Number(coilRatings[chosen] ?? 0) >= covenantStatus))) || (purchase === "ritual" && (covenantStatus < 1 || Number(selectedPower?.rating ?? 0) > Number(covenant === "circle-of-the-crone" ? bloodSorcery.cruac_rating ?? 0 : bloodSorcery.theban_rating ?? 0)));
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
-    if (unavailable || available < cost) return setFeedback(tr("Compra indisponível ou Experiência insuficiente.", "Purchase unavailable or insufficient Experience."));
+    if (unavailable || available < cost) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
     const before = structuredClone(character);
     before.current_state = { ...before.current_state, vampire_experience_history: [] };
     const next = structuredClone(character);
@@ -233,7 +233,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     }
 
     updateSheet(next);
-    setFeedback(tr("Compra registrada.", "Purchase recorded."));
+    setFeedback(t("ui.purchaseRecorded"));
     setSpecialtyName("");
     setTeacherConfirmed(false);
   };
@@ -249,34 +249,34 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     setAmount(String(nextAvailable));
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
-  const historyPanel = <details className="experience-history"><summary><History /> {tr("Gastos de Experiência", "Experience Expenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {tr("Reverter", "Refund")}</Button>}</p>) : <em>{tr("Nenhum gasto registrado.", "No expenses recorded.")}</em>}</div></details>;
+  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
-    <div className="experience-title"><div><span>{tr("Beats e Experiência", "Beats and Experience")}</span><small>{tr("Beats são marcados separadamente da Experiência", "Beats are tracked separately from Experience")}</small></div></div>
+    <div className="experience-title"><div><span>{t("ui.beatsAndExperience")}</span><small>{t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
     <div className="experience-totals">
-      <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmount(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={tr("Experiência disponível", "Available Experience")} /><span>{tr("EXP disponível", "XP available")}</span></label>
-      <div><strong>{total}</strong><span>{tr("EXP total", "Total XP")}</span></div>
-      <div><strong>{spent}</strong><span>{tr("EXP gasta", "XP spent")}</span></div>
+      <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmount(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={t("ui.availableExperience")} /><span>{t("ui.xpAvailable")}</span></label>
+      <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div>
+      <div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div>
     </div>
     <BeatTrack label="Beats" value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />
     <div className="experience-actions">
       <Dialog>
-        <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {tr("Gastar Experiência", "Spend Experience")}</Button></DialogTrigger>
+        <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger>
         <DialogContent className="experience-dialog">
-          <DialogHeader><DialogTitle>{tr("Gastar Experiência de Vampiro", "Spend Vampire Experience")}</DialogTitle><DialogDescription>{tr("Escolha uma característica e a ficha registrará o gasto e atualizará os valores automaticamente.", "Choose a trait and the sheet will record the expense and update the values automatically.")}</DialogDescription></DialogHeader>
+          <DialogHeader><DialogTitle>{t("ui.spendVampireExperience")}</DialogTitle><DialogDescription>{t("ui.chooseATraitAndTheSheetWillRecord")}</DialogDescription></DialogHeader>
           <div className="experience-purchase-form">
-            <label>{tr("Tipo", "Type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={PURCHASES.map((value) => ({ value, label: purchaseLabel(value, locale) }))} /></label>
-            {purchase === "merit" ? <label>{tr("Mérito", "Merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : options.length > 1 || options[0]?.value !== purchase ? <label>{tr("Característica", "Trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTeacherConfirmed(false); }} options={options} /></label> : null}
+            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={PURCHASES.map((value) => ({ value, label: purchaseLabel(value, locale) }))} /></label>
+            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : options.length > 1 || options[0]?.value !== purchase ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTeacherConfirmed(false); }} options={options} /></label> : null}
             {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
-            {purchase === "specialty" && <label>{tr("Especialização", "Specialty")}<Input value={specialtyName} placeholder={tr("Nome da Especialização", "Specialty name")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
-            {teacherRequired && <label className="vampire-teacher-confirmation"><Checkbox checked={teacherConfirmed} onCheckedChange={(checked) => setTeacherConfirmed(checked === true)} /><span>{tr("Confirmo professor e sangue de alguém que possui esta Disciplina.", "I confirm a teacher and blood from someone who possesses this Discipline.")}</span></label>}
+            {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
+            {teacherRequired && <label className="vampire-teacher-confirmation"><Checkbox checked={teacherConfirmed} onCheckedChange={(checked) => setTeacherConfirmed(checked === true)} /><span>{t("ui.iConfirmATeacherAndBloodFromSomeone")}</span></label>}
           </div>
-          <div className="purchase-preview"><strong>{options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {tr("EXP", "XP")}</span></div>
+          <div className="purchase-preview"><strong>{options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {t("ui.xp")}</span></div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
-          {historyPanel}<DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar", "Close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || available < cost} onClick={buy}>{tr("Comprar por", "Purchase for")} {cost} {tr("EXP", "XP")}</Button></DialogFooter>
+          {historyPanel}<DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || available < cost} onClick={buy}>{t("ui.purchaseFor")} {cost} {t("ui.xp")}</Button></DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
     {feedback && <p className="experience-feedback compact">{feedback}</p>}
-    <details className="experience-history"><summary><History /> {tr("Gastos de Experiência", "Experience Expenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {tr("Reverter", "Refund")}</Button>}</p>) : <em>{tr("Nenhum gasto registrado.", "No expenses recorded.")}</em>}</div></details>
+    <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>
   </section>;
 }

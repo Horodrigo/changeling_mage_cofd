@@ -1,7 +1,6 @@
 "use client";
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
-import { workspaceTerm } from "./workspace-i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { normalizeDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
 import { RuleSelect } from "./rule-select";
@@ -18,8 +17,8 @@ export function kithSkillMiddlePieceCount(nameWidth:number,frameHeight=38){
   const requiredWidth=nameWidth+20;
   return Math.max(0,Math.ceil((requiredWidth-fixedWidth)/middleWidth));
 }
-export function SheetHeading({children,className}:{children:ReactNode;className?:string}){const {locale}=useLanguage();return <h3 className={`official-heading${className?` ${className}`:""}`}><span>{typeof children==="string"?workspaceTerm(children,locale):children}</span></h3>;}
-export function CompactValues({values}:{values:Record<string,number>}){const {locale}=useLanguage();return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{workspaceTerm(pretty(name),locale)}</span><strong>{value}</strong></div>)}</div>;}
+export function SheetHeading({children,className}:{children:ReactNode;className?:string}){const {locale}=useLanguage();return <h3 className={`official-heading${className?` ${className}`:""}`}><span>{typeof children==="string"?systemTerm(children,locale):children}</span></h3>;}
+export function CompactValues({values}:{values:Record<string,number>}){const {locale}=useLanguage();return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{systemTerm(pretty(name),locale)}</span><strong>{value}</strong></div>)}</div>;}
 
 export function TraitBlock({
   title,
@@ -44,7 +43,7 @@ export function TraitBlock({
 
   return (
     <section className="official-trait-block">
-      <h4>{workspaceTerm(title, locale)}</h4>
+      <h4>{systemTerm(title, locale)}</h4>
 
       {subtitle && (
         <small className="official-trait-subtitle">
@@ -124,10 +123,10 @@ function KithSkillName({children}:{children:string}) {
   </span>;
 }
 export function DotValue({ value, max = 5, singleRow=false }: { value: number; max?: number; singleRow?:boolean }) {
-  const {tr}=useLanguage();
+  const { t }=useLanguage();
   const total = Math.max(max, Math.ceil(value / 5) * 5);
   return (
-    <span className="official-dots" aria-label={tr(`${value} pontos`,`${value} dots`)}>
+    <span className="official-dots" aria-label={t("ui.dots638f6d", { p1: value })}>
       {singleRow?<span className="official-dot-row">{Array.from({length:total},(_,index)=><i key={index} className={index<value?"on":""}/>)}</span>:Array.from({ length: Math.ceil(total / 5) }, (_, row) => (
         <span className="official-dot-row" key={row}>
           {Array.from({ length: 5 }, (_, column) => {
@@ -151,7 +150,7 @@ export function HealthTrack({
   damage: DamageLevel[];
   onChange: (value: DamageLevel[]) => void;
 }) {
-  const { tr }=useLanguage();
+  const { t }=useLanguage();
   const penalty = woundPenalty(damage, health);
   const cycle = (index: number) => {
     const slots: Array<DamageLevel | undefined> = Array.from(
@@ -174,7 +173,7 @@ export function HealthTrack({
       <div
         className="health-track"
         role="group"
-        aria-label={tr(`Vitalidade: ${damage.length} de ${health} caixas marcadas`,`Health: ${damage.length} of ${health} boxes marked`)}
+        aria-label={t("ui.healthOfBoxesMarked", { p1: damage.length, p2: health })}
       >
         {Array.from({ length: health }, (_, index) => {
           const level = damage[index];
@@ -184,7 +183,7 @@ export function HealthTrack({
               key={index}
               className={`health-box ${level ?? "empty"}`}
               onClick={() => cycle(index)}
-              aria-label={tr(`Caixa ${index + 1}: ${damageLabel(level)}. Clique para alterar.`,`Box ${index + 1}: ${level ?? "empty"}. Click to change.`)}
+              aria-label={t("ui.healthBoxChange", { index: index + 1, state: level ? damageLabel(level) : t("ui.damageEmpty") })}
             >
               <span aria-hidden="true" />
             </button>
@@ -193,17 +192,17 @@ export function HealthTrack({
       </div>
       <div className="tracker-meta">
         <span>
-          {damage.length}/{health} {tr("marcadas","marked")}
+          {damage.length}/{health} {t("ui.marked")}
         </span>
         <strong className={penalty < 0 ? "penalty" : ""}>
-          {tr("Penalidade","Penalty")} {penalty || "—"}
+          {t("ui.penalty")} {penalty || "—"}
         </strong>
       </div>
       <p className="tracker-help">
         <span className="legend-mark bashing" />
-        {tr("Contusão","Bashing")} <span className="legend-mark lethal" />
-        {tr("Letal","Lethal")} <span className="legend-mark aggravated" />
-        {tr("Agravado · clique para alternar","Aggravated · click to cycle")}
+        {t("ui.bashing")} <span className="legend-mark lethal" />
+        {t("ui.lethal")} <span className="legend-mark aggravated" />
+        {t("ui.aggravatedClickToCycle")}
       </p>
     </div>
   );

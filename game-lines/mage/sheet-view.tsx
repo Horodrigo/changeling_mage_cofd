@@ -48,7 +48,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
         ...catalogs.get<{ conditions: MageCondition[] }>("core-reference").conditions.filter((condition) => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
         ...catalogs.get<readonly MageCondition[]>("mage-reference"),
     ];
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const isMobile = useIsMobile();
     const [sheetTab, setSheetTab] = useState(isMobile ? "resumo" : "principal");
     const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) ||
@@ -147,14 +147,14 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     const legacyState = normalizeLegacyState(data.legacy_state);
     const legacyDefinition = findLegacy(legacyState?.definitionId);
     const hasLegacyAccess = (gnosis >= 2 || Boolean(legacyState?.joined));
-   const legacyDisplay = legacyState?.joined ? legacyDefinition?.name ?? "Legacy" : gnosis >= 3 ? tr("Join/Create", "Join/Create") : gnosis >= 2 ? tr("Join", "Join") : "";
+   const legacyDisplay = legacyState?.joined ? legacyDefinition?.name ?? "Legacy" : gnosis >= 3 ? t("ui.joinCreate") : gnosis >= 2 ? t("ui.join") : "";
     const pathDefinition = MTA_PATHS[String(data.path) as keyof typeof MTA_PATHS];
     const sameSystemTerm = (left: string, right: string) => systemTerm(left, "en-US") === systemTerm(right, "en-US");
     const arcanaPresentation = (name: string) => {
         const pathRuling = Boolean(pathDefinition?.ruling.some(item => sameSystemTerm(String(item), name)));
         const legacyRuling = Boolean(legacyState?.joined && legacyDefinition && sameSystemTerm(legacyDefinition.rulingArcanum, name));
         const inferior = Boolean(pathDefinition?.inferior && sameSystemTerm(String(pathDefinition.inferior), name));
-        return { note: legacyRuling ? tr("Regente da Legacy", "Legacy Ruling") : pathRuling ? tr("Regente", "Ruling") : inferior ? tr("Inferior", "Inferior") : undefined };
+        return { note: legacyRuling ? t("ui.legacyRuling") : pathRuling ? t("ui.ruling") : inferior ? t("ui.inferior") : undefined };
     };
     const obsessionSlots = gnosis <= 2 ? 1 : gnosis <= 5 ? 2 : gnosis <= 8 ? 3 : 4;
     const powerRating = gnosis;
@@ -186,7 +186,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
         const wisdom = Math.max(1, Number(next.line_data.wisdom ?? 7));
         const entry = {
             id: createRandomId(),
-            description: tr("Falha em Ato de Hubris: -1 Sabedoria", "Act of Hubris failure: -1 Wisdom"),
+            description: t("ui.actOfHubrisFailure1Wisdom"),
             regular: 0,
             arcane: 0,
             createdAt: new Date().toISOString(),
@@ -212,18 +212,18 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             ["Nome", character.character.name], ["Jogador", character.character.player],
             ["Crônica", character.character.chronicle], ["Vício", data.vice], ["Virtude", data.virtue],
             ["Conceito", character.character.concept], ["Nome das Sombras", data.shadow_name],
-            ["Caminho", data.path], ["Ordem", !data.order || data.order === "Orderless" ? tr("Sem Ordem", "Orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order],
+            ["Caminho", data.path], ["Ordem", !data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order],
         ];
         const paradoxConditions = conditionCatalog.filter((condition) => `${condition.name} ${condition.description} ${condition.penalty}`.toLocaleLowerCase("pt-BR").includes("paradoxo"));
-        return (<CharacterPaperShell line="MtA" mobile title={tr("MAGO", "MAGE")} subtitle={tr("O DESPERTAR", "THE AWAKENING")}>
+        return (<CharacterPaperShell line="MtA" mobile title={t("ui.mage")} subtitle={t("ui.theAWAKENING")}>
         <SwipeableSheetTabs value={sheetTab} onValueChange={setSheetTab} tabs={[
-                { value: "resumo", label: tr("Resumo", "Summary") }, { value: "stats", label: "Stats" },
-                { value: "detalhes", label: tr("Detalhes", "Details") },
-                { value: "poderes", label: tr("Poderes", "Powers") },
+                { value: "resumo", label: t("ui.summary") }, { value: "stats", label: "Stats" },
+                { value: "detalhes", label: t("ui.details") },
+                { value: "poderes", label: t("ui.powers") },
                 ...([]),
                 ...(hasLegacyAccess ? [{ value: "legacy", label: "Legacy", hidden: !legacyState?.joined }] : []),
-                { value: "combate", label: tr("Combate", "Combat") },
-                ...(hasCompanions ? [{ value: "companheiros", label: tr("Companheiros", "Companions") }] : []), { value: "anotacoes", label: tr("Anotações", "Notes") },
+                { value: "combate", label: t("ui.combat") },
+                ...(hasCompanions ? [{ value: "companheiros", label: t("ui.companions") }] : []), { value: "anotacoes", label: t("ui.notes") },
             ]}>
           {{
                 resumo: <>
@@ -231,7 +231,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
               <SheetHeading>Experiência</SheetHeading>
               {<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
               {<><SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
-              {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão", "Write an Obsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
+              {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
             </>,
                 stats: <>
               <SheetHeading>Atributos</SheetHeading>
@@ -242,14 +242,14 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 detalhes: <>
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/>
               <MageOrderSummary data={data}/>
-              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo", "Active spell")} onChange={(value) => setState("active_spells", value)}/>
+              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
             </>,
                 poderes: <>
-              <PowerResource name={tr("Gnose", "Gnosis")} rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>
+              <PowerResource name={t("ui.gnosis")} rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>
               <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} {...arcanaPresentation(name)}/>)}</div>
               <MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>
               <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
-              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={tr("Ferramenta Dedicada:", "Dedicated Tool:")} placeholder={tr("Ferramenta mágica", "Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
+              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={t("ui.dedicatedTool")} placeholder={t("ui.magicalTool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
               <SheetHeading>Inclinação do Nimbus</SheetHeading><NimbusEditor wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} onEffectsChange={setNimbusEffects}/>
               <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div><SpellColumn items={praxes} catalog={spellCatalog} minimumRows={gnosis} onRemove={removePraxis}/>
               <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana}/>
@@ -267,18 +267,18 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
         </SwipeableSheetTabs>
       </CharacterPaperShell>);
     }
-    return (<CharacterPaperShell line="MtA" title={tr("MAGO", "MAGE")} subtitle={tr("O DESPERTAR", "THE AWAKENING")}>
+    return (<CharacterPaperShell line="MtA" title={t("ui.mage")} subtitle={t("ui.theAWAKENING")}>
       {(<Tabs value={sheetTab} onValueChange={setSheetTab} className="ctl-sheet-tabs mta-sheet-tabs">
-          <TabsList className="ctl-sheet-tab-list" aria-label={tr("Páginas da ficha de Mago", "Mage character pages")}>
-            <TabsTrigger value="principal">{tr("Principal", "Main")}</TabsTrigger>
-            <TabsTrigger value="magia">{tr("Detalhes", "Details")}</TabsTrigger>
+          <TabsList className="ctl-sheet-tab-list" aria-label={t("ui.mageCharacterPages")}>
+            <TabsTrigger value="principal">{t("ui.main")}</TabsTrigger>
+            <TabsTrigger value="magia">{t("ui.details")}</TabsTrigger>
             {legacyState?.joined && <TabsTrigger value="legacy" data-legacy-tab-trigger>Legacy</TabsTrigger>}
-            <TabsTrigger value="combate">{tr("Combate", "Combat")}</TabsTrigger>
-            {hasCompanions && <TabsTrigger value="companheiros">{tr("Companheiros", "Companions")}</TabsTrigger>}
+            <TabsTrigger value="combate">{t("ui.combat")}</TabsTrigger>
+            {hasCompanions && <TabsTrigger value="companheiros">{t("ui.companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <MainSheet className="mage-main-body"
-              identity={<section className="sheet-identity-grid"><CommonSheetField label="Nome das Sombras" value={data.shadow_name}/><CommonSheetField label="Virtude" value={data.virtue}/><CommonSheetField label="Caminho" value={data.path}/><CommonSheetField label="Jogador" value={character.character.player}/><CommonSheetField label="Vício" value={data.vice}/><CommonSheetField label="Ordem" value={!data.order || data.order === "Orderless" ? tr("Sem Ordem", "Orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label="Crônica" value={character.character.chronicle}/><CommonSheetField label="Conceito" value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/></section>}
+              identity={<section className="sheet-identity-grid"><CommonSheetField label="Nome das Sombras" value={data.shadow_name}/><CommonSheetField label="Virtude" value={data.virtue}/><CommonSheetField label="Caminho" value={data.path}/><CommonSheetField label="Jogador" value={character.character.player}/><CommonSheetField label="Vício" value={data.vice}/><CommonSheetField label="Ordem" value={!data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label="Crônica" value={character.character.chronicle}/><CommonSheetField label="Conceito" value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/></section>}
               attributes={<><SheetHeading>Atributos</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
               skills={
                 <>
@@ -289,8 +289,8 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                         title={category}
                         subtitle={
                         category === "Mental"
-                            ? tr("(-3 se não treinado)", "(-3 if Untrained)")
-                            : tr("(-1 se não treinado)", "(-1 if Untrained)")
+                            ? t("ui.message3IfUntrained")
+                            : t("ui.message1IfUntrained")
                         }
                         names={names}
                         values={effectiveSkills}
@@ -303,17 +303,17 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 }
               specificPowers={<MageArcanaList arcana={arcana} presentation={arcanaPresentation}/>}
               merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
-              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
-              obsessions={<EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={tr("Escreva uma Obsessão", "Write an Obsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/>}
+              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
+              obsessions={<EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              specificPowersTitle="Arcanos" powerStat={<MainPowerStat label="Gnose" value={powerRating} summary={tr("Intervalo de ritual · magias combinadas · dados de Paradoxo por Reach excedente", "Ritual interval · combined spells · Paradox dice per over-Reach")}/>} fuel={<MainFuel label="Mana" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)}/>} stability={<MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>} derived={derived} experience={<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              specificPowersTitle="Arcanos" powerStat={<MainPowerStat label="Gnose" value={powerRating} summary={t("ui.ritualIntervalCombinedSpellsParadoxDicePerOver")}/>} fuel={<MainFuel label="Mana" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)}/>} stability={<MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>} derived={derived} experience={<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="magia" data-page-title="Detalhes" className="ctl-sheet-page powers-page mage-spell-page">
             <div className="mage-page-355-grid">
               <section className="mage-page-left">
                 <SheetHeading>Feitiços Ativos</SheetHeading>
-                <EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={tr("Feitiço ativo", "Active spell")} onChange={(value) => setState("active_spells", value)}/>
+                <EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
                 <SheetHeading>Attainments</SheetHeading>
                 <MageAttainmentList arcana={arcana}/>
                 <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div>
@@ -323,7 +323,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 <SheetHeading>Rotas</SheetHeading>
                 <SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
                 <SheetHeading>Ferramentas Mágicas</SheetHeading>
-                <EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={tr("Ferramenta Dedicada:", "Dedicated Tool:")} placeholder={tr("Ferramenta mágica", "Magical tool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
+                <EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={t("ui.dedicatedTool")} placeholder={t("ui.magicalTool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
                 <SheetHeading>Inclinação do Nimbus</SheetHeading>
                 <NimbusEditor wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} onEffectsChange={setNimbusEffects}/>
                 <SheetHeading>Anotações</SheetHeading>
@@ -363,7 +363,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacen
     catalog: readonly MeritDefinition[];
     hasAdjacentContent?: boolean;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const visible = merits.filter((item) => (!item.grantedBy || item.grantedBy === "Nameless Order") && item.name !== "Familiar");
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
@@ -382,7 +382,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacen
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                     </section>))) : (<p>
-                    {tr("Consulte a descrição deste Mérito para distribuir ou usar suas características internas.", "See this Merit's description to assign or use its internal traits.")}
+                    {t("ui.seeThisMeritSDescriptionToAssignOr")}
                   </p>)}
                 {configurationEditor}
               </div>
@@ -396,7 +396,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacen
                 </h4>
                 <small>
                   {style.source} · p. {style.page}
-                  {item.grantedBy !== "Nameless Order" && <> · {tr("Pré-requisitos", "Prerequisites")}: {style.prerequisites || tr("Nenhum", "None")}</>}
+                  {item.grantedBy !== "Nameless Order" && <> · {t("ui.prerequisites")}: {style.prerequisites || t("ui.none")}</>}
                 </small>
               </div>
               <DotValue value={item.dots}/>
@@ -421,7 +421,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacen
             </div>
           </details>);
         })}
-      {!visible.length && !hasAdjacentContent && <p className="rule-callout expanded-merit-empty">{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</p>}
+      {!visible.length && !hasAdjacentContent && <p className="rule-callout expanded-merit-empty">{t("ui.noExpandedMeritsPurchased")}</p>}
     </div>);
 }
 function NamelessMysteryCultLevels({ dots, configuration, locale }: {
@@ -466,18 +466,18 @@ function MageWisdomSection({ wisdom, gnosis, inuredSpells, available, locale, on
     onRemove: (id: string) => void;
     onHubris: (id: "megalomaniacal" | "rampant", persistent: boolean) => void;
 }) {
-    const { tr } = useLanguage();
+    const { t } = useLanguage();
     const [open, setOpen] = useState(false), [failed, setFailed] = useState(false), [condition, setCondition] = useState<"megalomaniacal" | "rampant">("megalomaniacal"), [persistent, setPersistent] = useState(false);
     const close = () => { setOpen(false); setFailed(false); setPersistent(false); };
     return <div className="wisdom-sheet-section">
     <div className="wisdom-heading-row"><SheetHeading>Sabedoria</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" onClick={() => setOpen(true)}>Hubris</Button></div>
     <div className="wisdom-track"><DotValue value={wisdom} max={10} singleRow/></div>
-    <div className="inured-heading-row"><strong>{tr("Feitiços Inured", "Inured Spells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length < gnosis && <ExperiencePowerPicker kind="Feitiço" items={available} selectedId="" onSelect={onAdd} compact triggerLabel={tr("Selecionar Feitiço Inured", "Select Inured Spell")} dialogTitle={tr("Selecionar Feitiço Inured", "Select Inured Spell")} dialogDescription={tr("Após perder Sabedoria pelo uso de uma magia, ela pode ser Inured: usos futuros não causam essa perda, mas sempre provocam um risco básico de Paradoxo de dois dados. MtA, p. 88.", "After losing Wisdom from using a spell, it may be Inured: future uses do not cause that loss, but always provoke a base two-die Paradox risk. MtA, p. 88.")}/>}</div>
-    <div className="inured-spell-list">{inuredSpells.map(item => <div key={String(item.id)}><span>{String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={() => onRemove(String(item.id))}><Trash2 /> {tr("Remover", "Remove")}</Button></div>)}</div>
+    <div className="inured-heading-row"><strong>{t("ui.inuredSpells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length < gnosis && <ExperiencePowerPicker kind="Feitiço" items={available} selectedId="" onSelect={onAdd} compact triggerLabel={t("ui.selectInuredSpell")} dialogTitle={t("ui.selectInuredSpell")} dialogDescription={t("ui.afterLosingWisdomFromUsingASpellIt")}/>}</div>
+    <div className="inured-spell-list">{inuredSpells.map(item => <div key={String(item.id)}><span>{String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={() => onRemove(String(item.id))}><Trash2 /> {t("ui.remove7d41cc")}</Button></div>)}</div>
     <Dialog open={open} onOpenChange={value => { setOpen(value); if (!value) {
         setFailed(false);
         setPersistent(false);
-    } }}><DialogContent><DialogHeader><DialogTitle>{tr("Ato de Hubris", "Act of Hubris")}</DialogTitle><DialogDescription>{failed ? tr("Escolha a Condição causada pela falha.", "Choose the Condition caused by the failure.") : tr("Qual foi o resultado do teste?", "What was the result of the roll?")}</DialogDescription></DialogHeader>{failed ? <div className="hubris-dialog-options"><label>{tr("Condição", "Condition")}<RuleSelect value={condition} onChange={value => setCondition(value as typeof condition)} options={[{ value: "megalomaniacal", label: "Megalomaniacal" }, { value: "rampant", label: "Rampant" }]}/></label><label className="hubris-persistent"><input type="checkbox" checked={persistent} onChange={event => setPersistent(event.target.checked)}/><span>{tr("Persistente", "Persistent")}</span></label></div> : <div className="dialog-choice-actions"><Button type="button" variant="outline" onClick={close}>{tr("Sucesso", "Success")}</Button><Button type="button" variant="destructive" onClick={() => setFailed(true)}>{tr("Falha", "Failure")}</Button></div>}<DialogFooter>{failed && <Button type="button" onClick={() => { onHubris(condition, persistent); close(); }}>{tr("Aplicar Condição", "Apply Condition")}</Button>}</DialogFooter></DialogContent></Dialog>
+    } }}><DialogContent><DialogHeader><DialogTitle>{t("ui.actOfHubris")}</DialogTitle><DialogDescription>{failed ? t("ui.chooseTheConditionCausedByTheFailure") : t("ui.whatWasTheResultOfTheRoll")}</DialogDescription></DialogHeader>{failed ? <div className="hubris-dialog-options"><label>{t("ui.condition")}<RuleSelect value={condition} onChange={value => setCondition(value as typeof condition)} options={[{ value: "megalomaniacal", label: "Megalomaniacal" }, { value: "rampant", label: "Rampant" }]}/></label><label className="hubris-persistent"><input type="checkbox" checked={persistent} onChange={event => setPersistent(event.target.checked)}/><span>{t("ui.persistent")}</span></label></div> : <div className="dialog-choice-actions"><Button type="button" variant="outline" onClick={close}>{t("ui.success")}</Button><Button type="button" variant="destructive" onClick={() => setFailed(true)}>{t("ui.failure")}</Button></div>}<DialogFooter>{failed && <Button type="button" onClick={() => { onHubris(condition, persistent); close(); }}>{t("ui.applyCondition")}</Button>}</DialogFooter></DialogContent></Dialog>
   </div>;
 }
 function NimbusEditor({ wisdom, gnosis, values, effects, onChange, onEffectsChange, }: {
@@ -494,12 +494,12 @@ function NimbusEditor({ wisdom, gnosis, values, effects, onChange, onEffectsChan
         modifier: number;
     }>) => void;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const descriptions = [...values.slice(0, 3)];
     while (descriptions.length < 3)
         descriptions.push("");
     const connection = mageNimbusConnection(wisdom);
-    const connectionLabel = connection === "Strong" ? tr("Forte", "Strong") : connection === "Medium" ? tr("Média", "Medium") : tr("Fraca", "Weak");
+    const connectionLabel = connection === "Strong" ? t("ui.strong") : connection === "Medium" ? t("ui.medium") : t("ui.weak");
     const budget = mageNimbusTiltBudget(gnosis);
     const allocated = effects.reduce((total, item) => total + Math.abs(item.modifier), 0);
     const traits = [...Object.values(ATTRIBUTES).flat(), ...Object.values(SKILLS).flat()];
@@ -511,14 +511,14 @@ function NimbusEditor({ wisdom, gnosis, values, effects, onChange, onEffectsChan
     const unused = traits.filter(trait => !effects.some(item => item.trait === trait));
     return <div className="nimbus-editor">
     <article>
-      <header><strong>{tr("Nimbus de Longo Prazo", "Long-Term Nimbus")}</strong><Badge variant="outline">{tr("Conexão simpática", "Sympathetic connection")}: {connectionLabel}</Badge></header>
-      <small>{tr("O alcance é calculado automaticamente a partir da Sabedoria.", "Range is calculated automatically from Wisdom.")} · MtA, p. 89</small>
-      <Input value={descriptions[0]} onChange={event => setDescription(0, event.target.value)} placeholder={tr("Coincidências e efeitos sutis ao redor do mago", "Subtle coincidences and effects surrounding the mage")}/>
+      <header><strong>{t("ui.longTermNimbus")}</strong><Badge variant="outline">{t("ui.sympatheticConnection")}: {connectionLabel}</Badge></header>
+      <small>{t("ui.rangeIsCalculatedAutomaticallyFromWisdom")} · MtA, p. 89</small>
+      <Input value={descriptions[0]} onChange={event => setDescription(0, event.target.value)} placeholder={t("ui.subtleCoincidencesAndEffectsSurroundingTheMage")}/>
     </article>
     <article>
-      <header><strong>{tr("Nimbus Imediato", "Immediate Nimbus")}</strong><Badge variant="outline">{allocated}/{budget} {tr("dados alocados", "dice allocated")}</Badge></header>
-      <small>{tr("Defina a aparência e distribua bônus ou penalidades entre Atributos e Perícias.", "Define its appearance and distribute bonuses or penalties among Attributes and Skills.")} · MtA, p. 90</small>
-      <Input value={descriptions[1]} onChange={event => setDescription(1, event.target.value)} placeholder={tr("Aparência ou sensação do Nimbus e seu Tilt", "Appearance or sensation of the Nimbus and its Tilt")}/>
+      <header><strong>{t("ui.immediateNimbus")}</strong><Badge variant="outline">{allocated}/{budget} {t("ui.diceAllocated")}</Badge></header>
+      <small>{t("ui.defineItsAppearanceAndDistributeBonusesOrPenalties")} · MtA, p. 90</small>
+      <Input value={descriptions[1]} onChange={event => setDescription(1, event.target.value)} placeholder={t("ui.appearanceOrSensationOfTheNimbusAndIts")}/>
       <div className="nimbus-effects">
         {effects.map((effect, index) => {
             const withoutCurrent = allocated - Math.abs(effect.modifier);
@@ -526,16 +526,16 @@ function NimbusEditor({ wisdom, gnosis, values, effects, onChange, onEffectsChan
             return <div key={`${effect.trait}-${index}`}>
             <Select value={effect.trait} onValueChange={value => updateEffect(index, { trait: value })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{traits.filter(trait => trait === effect.trait || !effects.some((item, itemIndex) => itemIndex !== index && item.trait === trait)).map(trait => <SelectItem key={trait} value={trait}>{systemTerm(trait, locale)}</SelectItem>)}</SelectContent></Select>
             <Select value={String(effect.modifier)} onValueChange={value => updateEffect(index, { modifier: Number(value) })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{allowed.map(value => <SelectItem key={value} value={String(value)}>{value > 0 ? `+${value}` : value}</SelectItem>)}</SelectContent></Select>
-            <Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={() => onEffectsChange(effects.filter((_, itemIndex) => itemIndex !== index))}><Trash2 /> {tr("Remover", "Remove")}</Button>
+            <Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={() => onEffectsChange(effects.filter((_, itemIndex) => itemIndex !== index))}><Trash2 /> {t("ui.remove7d41cc")}</Button>
           </div>;
         })}
-        {allocated < budget && unused.length > 0 && <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => onEffectsChange([...effects, { trait: unused[0], modifier: 1 }])}><Plus /> {tr("Adicionar efeito", "Add effect")}</Button>}
+        {allocated < budget && unused.length > 0 && <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => onEffectsChange([...effects, { trait: unused[0], modifier: 1 }])}><Plus /> {t("ui.addEffect")}</Button>}
       </div>
     </article>
     <article>
-      <header><strong>{tr("Nimbus de Assinatura", "Signature Nimbus")}</strong></header>
-      <small>{tr("Descreva o resíduo identificável deixado pela magia do personagem.", "Describe the recognizable residue left by the character's magic.")} · MtA, pp. 89–90</small>
-      <Input value={descriptions[2]} onChange={event => setDescription(2, event.target.value)} placeholder={tr("Descrição da assinatura mágica", "Magical signature description")}/>
+      <header><strong>{t("ui.signatureNimbus")}</strong></header>
+      <small>{t("ui.describeTheRecognizableResidueLeftByTheCharacter")} · MtA, pp. 89–90</small>
+      <Input value={descriptions[2]} onChange={event => setDescription(2, event.target.value)} placeholder={t("ui.magicalSignatureDescription")}/>
     </article>
   </div>;
 }
@@ -688,7 +688,7 @@ const GREATER_ATTAINMENTS: Record<string, [
 function MageAttainmentList({ arcana }: {
     arcana: Record<string, number>;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const owned = (minimum: number) => Object.entries(arcana)
         .filter(([, dots]) => Number(dots) >= minimum)
         .map(([name]) => locale === "en-US" ? systemTerm(name, locale) : ARCANA_PT[name] ?? name);
@@ -700,9 +700,9 @@ function MageAttainmentList({ arcana }: {
     const one = owned(1), two = owned(2), three = owned(3), five = owned(5);
     if (one.length)
         rows.push({
-            name: tr("Contramágica", "Counterspell"),
+            name: t("ui.counterspell"),
             arcana: one,
-            description: tr("Desfaz a Imago de um feitiço observado com Visão Mágica Ativa por meio de um Confronto de Vontades.", "Unravel the Imago of a spell observed with Active Mage Sight through a Clash of Wills."),
+            description: t("ui.unravelTheImagoOfASpellObservedWith"),
         });
     for (const [name, dots] of Object.entries(arcana)) {
         if (Number(dots) >= 2 && LESSER_ATTAINMENTS[name])
@@ -714,15 +714,15 @@ function MageAttainmentList({ arcana }: {
     }
     if (two.length)
         rows.push({
-            name: tr("Armadura do Mago", "Mage Armor"),
+            name: t("ui.mageArmor"),
             arcana: two,
-            description: tr("Ativa uma proteção correspondente a um dos Arcanos dominados; somente uma forma pode permanecer ativa por vez.", "Activate protection corresponding to a mastered Arcanum; only one form may remain active at a time."),
+            description: t("ui.activateProtectionCorrespondingToAMasteredArcanumOnly"),
         });
     if (three.length)
         rows.push({
-            name: tr("Invocação Direcionada", "Targeted Summoning"),
+            name: t("ui.targetedSummoning"),
             arcana: three,
-            description: tr("Ao invocar um ser Superno, permite especificar um segundo Arcano para refinar o alvo da invocação.", "When summoning a Supernal being, specify a second Arcanum to refine the target."),
+            description: t("ui.whenSummoningASupernalBeingSpecifyASecond"),
         });
     for (const [name, dots] of Object.entries(arcana)) {
         if (Number(dots) >= 4 && GREATER_ATTAINMENTS[name])
@@ -734,9 +734,9 @@ function MageAttainmentList({ arcana }: {
     }
     if (five.length)
         rows.push({
-            name: tr("Criar Rota", "Create Rote"),
+            name: t("ui.createRote"),
             arcana: five,
-            description: tr("Permite codificar como Rota um feitiço cujos Arcanos tenham sido dominados.", "Encode as a Rote a spell whose Arcana have been mastered."),
+            description: t("ui.encodeAsARoteASpellWhoseArcana"),
         });
     return (<div className="mage-attainment-list">
       {rows.map((row) => (<div key={`${row.name}-${row.arcana.join("-")}`} title={row.description}>
@@ -745,7 +745,7 @@ function MageAttainmentList({ arcana }: {
           </strong>
           <small>{row.description}</small>
         </div>))}
-      {!rows.length && <em>{tr("Nenhum Attainment adquirido.", "No Attainments acquired.")}</em>}
+      {!rows.length && <em>{t("ui.noAttainmentsAcquired")}</em>}
     </div>);
 }
 function SpellColumn({ items, catalog, showSkill = false, minimumRows = 0, onRemove, }: {
@@ -755,15 +755,15 @@ function SpellColumn({ items, catalog, showSkill = false, minimumRows = 0, onRem
     minimumRows?: number;
     onRemove?: (item: Record<string, unknown>) => void;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const arcanaSource = (item: Record<string, unknown>) => `${Object.entries((item.requirements ?? {}) as Record<string, number>).map(([name, dots]) => `${systemTerm(name, locale)} ${"•".repeat(dots)}`).join(" + ")} · ${String(item.source ?? "")} · p. ${String(item.page ?? "—")}`;
     return (<div className="mage-spell-lines">
       {items.map((item, index) => (<details className="contract-power-card" key={`${String(item.id ?? item.name)}-${index}`}>
-          <summary className="contract-power-summary"><strong>{String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName ?? "")}</strong>{onRemove && <Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={event => { event.preventDefault(); event.stopPropagation(); onRemove(item); }}><Trash2 /> {tr("Remover", "Remove")}</Button>}<small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{tr("Prática", "Practice")}:</strong> {String(item.practice ?? "")} | <strong>{tr("Fator Primário", "Primary Factor")}:</strong> {String(item.primaryFactor ?? "")}</span>{Boolean(item.withstand) && <span className="spell-card-rule-line"><strong>{tr("Resistência", "Withstand")}:</strong> {String(item.withstand)}</span>}{showSkill && Boolean(item.roteSkill) && <span className="spell-card-rule-line"><strong>{tr("Perícia de Rota", "Rote Skill")}:</strong> {systemTerm(String(item.roteSkill), locale)}</span>}</summary>
-          <div className="contract-power-details"><p><strong>{tr("Resumo", "Summary")}:</strong> {spellItemSummary(item, catalog)}</p>{spellItemReach(item, catalog) && <p><strong>{tr("Alcance", "Reach")}:</strong> {spellItemReach(item, catalog)}</p>}</div>
+          <summary className="contract-power-summary"><strong>{String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName ?? "")}</strong>{onRemove && <Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={event => { event.preventDefault(); event.stopPropagation(); onRemove(item); }}><Trash2 /> {t("ui.remove7d41cc")}</Button>}<small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {String(item.practice ?? "")} | <strong>{t("ui.primaryFactor")}:</strong> {String(item.primaryFactor ?? "")}</span>{Boolean(item.withstand) && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {String(item.withstand)}</span>}{showSkill && Boolean(item.roteSkill) && <span className="spell-card-rule-line"><strong>{t("ui.roteSkill")}:</strong> {systemTerm(String(item.roteSkill), locale)}</span>}</summary>
+          <div className="contract-power-details"><p><strong>{t("ui.summary")}:</strong> {spellItemSummary(item, catalog)}</p>{spellItemReach(item, catalog) && <p><strong>{t("ui.reach")}:</strong> {spellItemReach(item, catalog)}</p>}</div>
         </details>))}
-      {Array.from({ length: Math.max(0, minimumRows - items.length) }, (_, index) => <div className="mage-spell-empty" key={`empty-${index}`} aria-label={tr("Linha de Práxis disponível", "Available Praxis slot")}>&nbsp;</div>)}
-      {!items.length && !minimumRows && <em>{tr("Nenhum registro.", "No entries.")}</em>}
+      {Array.from({ length: Math.max(0, minimumRows - items.length) }, (_, index) => <div className="mage-spell-empty" key={`empty-${index}`} aria-label={t("ui.availablePraxisSlot")}>&nbsp;</div>)}
+      {!items.length && !minimumRows && <em>{t("ui.noEntries")}</em>}
     </div>);
 }
 function MeritSheetList({ character, merits, updateSheet, catalog, }: {
@@ -772,13 +772,13 @@ function MeritSheetList({ character, merits, updateSheet, catalog, }: {
     updateSheet: (sheet: CharacterSheet) => void;
     catalog: readonly MeritDefinition[];
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const availableCatalog = catalog, visible = merits.filter((item) => !item.grantedBy || ["Ordem", "Nameless Order"].includes(String(item.grantedBy)));
     return (<div className="sheet-merits single-column">
       {visible.length ? (visible.map((item, index) => {
             const definition = availableCatalog.find((entry) => entry.name === item.name);
             const tooltip = definition
-                ? `${definition.prerequisites ? `${tr("Pré-requisitos", "Prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
+                ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
                 : item.source;
             const inline = isInlineMeritConfiguration(item.name);
             const meritIndex = character.merits.indexOf(item);
@@ -788,7 +788,7 @@ function MeritSheetList({ character, merits, updateSheet, catalog, }: {
             return (<div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={inline ? undefined : tooltip}>
               <div className="sheet-merit-main">
                 <span>{inline ? `${displayName}:` : meritLabel(item, catalog, locale)}</span>
-                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${tr("descrição", "description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={tr("Escreva aqui", "Type here")} onChange={(event) => {
+                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${t("ui.description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={t("ui.typeHere")} onChange={(event) => {
                         const next = structuredClone(character);
                         const target = next.merits[meritIndex];
                         if (target)
@@ -798,7 +798,7 @@ function MeritSheetList({ character, merits, updateSheet, catalog, }: {
                 <DotValue value={item.dots} max={Math.max(5, item.dots)}/>
               </div>
             </div>);
-        })) : (<em>{tr("Nenhum Mérito selecionado", "No Merit selected")}</em>)}
+        })) : (<em>{t("ui.noMeritSelected")}</em>)}
     </div>);
 }
 function MageArcanaList({ arcana, presentation }: {
@@ -813,14 +813,14 @@ function MageArcanaList({ arcana, presentation }: {
 function MageOrderSummary({ data }: {
     data: Record<string, unknown>;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const raw = data.custom_order;
     const custom = raw && typeof raw === "object" ? raw as Record<string, unknown> : undefined;
     const orderKey = String(data.order ?? "Orderless");
     const name = orderKey === "Orderless"
-        ? tr("Sem Ordem", "Orderless")
+        ? t("ui.orderless")
         : String(custom?.name || (locale === "en-US" ? orderKey : MTA_ORDER_LABELS[orderKey] ?? orderKey));
-    const description = orderKey === "Nameless" ? tr("Uma Ordem sem nome reconhecido entre as grandes sociedades dos Despertos.", "An Order without a recognized name among the great societies of the Awakened.") : String(custom?.description || (MTA_ORDER_DESCRIPTIONS[orderKey]?.[locale === "pt-BR" ? 0 : 1] ?? ""));
+    const description = orderKey === "Nameless" ? t("ui.anOrderWithoutARecognizedNameAmongThe") : String(custom?.description || (MTA_ORDER_DESCRIPTIONS[orderKey]?.[locale === "pt-BR" ? 0 : 1] ?? ""));
     const skills = orderKey === "Nameless"
         ? stringList(data.rote_skills)
         : Array.isArray(custom?.roteSkills)
@@ -830,7 +830,7 @@ function MageOrderSummary({ data }: {
       <SheetHeading>Ordem</SheetHeading>
       <strong>{name}</strong>
       {description && <p>{description}</p>}
-      {skills.length > 0 && <small><strong>{tr("Perícias de Rota", "Rote Skills")}:</strong> {skills.map((skill) => systemTerm(skill, locale)).join(", ")}</small>}
+      {skills.length > 0 && <small><strong>{t("ui.roteSkills")}:</strong> {skills.map((skill) => systemTerm(skill, locale)).join(", ")}</small>}
     </section>);
 }
 function spellItemSummary(item: Record<string, unknown>, catalog: readonly SpellDefinition[]) {

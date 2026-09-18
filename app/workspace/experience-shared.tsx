@@ -10,7 +10,7 @@ import { useLanguage } from "@/lib/i18n";
 import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
-import { workspaceTerm } from "./workspace-i18n";
+import { systemTerm } from "@/lib/system-terms";
 import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
@@ -24,14 +24,14 @@ export function BeatTrack({
   value: number;
   onChange: (value: number) => void;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   return (
     <div className="beat-resource">
       <span>{label}</span>
       <div
         className="resource-track"
         role="group"
-        aria-label={tr(`${label}: ${value} de 5`, `${label}: ${value} of 5`)}
+        aria-label={t("ui.of5", { p1: label, p2: value })}
       >
         {Array.from({ length: 5 }, (_, index) => (
           <button
@@ -39,7 +39,7 @@ export function BeatTrack({
             key={index}
             className={index < value ? "filled" : ""}
             onClick={() => onChange(index < value ? index : index + 1)}
-            aria-label={tr(`Definir ${label} como ${index < value ? index : index + 1}`, `Set ${label} to ${index < value ? index : index + 1}`)}
+            aria-label={t("ui.setTo", { p1: label, p2: index < value ? index : index + 1 })}
           />
         ))}
       </div>
@@ -77,8 +77,8 @@ export function ExperiencePowerPicker({
   dialogTitle?: string;
   dialogDescription?: string;
 }) {
-  const {locale,tr}=useLanguage();
-  const kindLabel=kind==="Práxis"?tr("Práxis","Praxis"):workspaceTerm(kind,locale);
+  const { locale, t }=useLanguage();
+  const kindLabel=kind==="Práxis"?t("ui.praxis"):systemTerm(kind,locale);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const [secondary, setSecondary] = useState("Todos");
@@ -104,15 +104,15 @@ export function ExperiencePowerPicker({
     <Dialog>
       <DialogTrigger asChild>
         <Button type="button" variant="outline" size="sm" className={compact ? "builder-add-action catalog-selection-action" : "experience-merit-trigger catalog-selection-action"}>
-          <span>{selected?.name ?? triggerLabel ?? `${tr("Selecionar","Select")} ${kindLabel}`}</span>
+          <span>{selected?.name ?? triggerLabel ?? `${t("ui.select198f7a")} ${kindLabel}`}</span>
           <Search />
         </Button>
       </DialogTrigger>
       <DialogContent className={`merit-dialog experience-merit-dialog${line === "CtL" ? " ctl-dialog" : ""}`}>
         <DialogHeader>
-          <DialogTitle>{dialogTitle ?? `${tr("Comprar","Purchase")} ${kindLabel}`}</DialogTitle>
+          <DialogTitle>{dialogTitle ?? `${t("ui.purchase")} ${kindLabel}`}</DialogTitle>
           <DialogDescription>
-            {dialogDescription ?? tr("O catálogo mostra somente opções disponíveis para este personagem.","The catalog only shows options available to this character.")}
+            {dialogDescription ?? t("ui.theCatalogOnlyShowsOptionsAvailableToThis")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
@@ -121,7 +121,7 @@ export function ExperiencePowerPicker({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={`${tr("Buscar","Search")} ${kindLabel.toLocaleLowerCase(locale)}, ${tr("fonte ou descrição","source, or description")}`}
+              placeholder={`${t("ui.search")} ${kindLabel.toLocaleLowerCase(locale)}, ${t("ui.sourceOrDescription")}`}
             />
           </label>
           {categories.length > 2 && (
@@ -144,7 +144,7 @@ export function ExperiencePowerPicker({
             <SelectableCatalogCard
               key={item.id}
               selected={selectedId === item.id}
-              label={`${tr("Selecionar","Select")} ${item.name}`}
+              label={`${t("ui.select198f7a")} ${item.name}`}
               onToggle={() => onSelect(selectedId === item.id ? "" : item.id)}
             >
               <div>
@@ -154,11 +154,11 @@ export function ExperiencePowerPicker({
               </div>
             </SelectableCatalogCard>
           ))}
-          {!visible.length && <em>{tr("Nenhuma opção corresponde aos filtros.","No options match the filters.")}</em>}
+          {!visible.length && <em>{t("ui.noOptionsMatchTheFilters")}</em>}
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button>
+            <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
@@ -194,7 +194,7 @@ export function ExperienceMeritPicker({
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
 }) {
-  const {locale,tr}=useLanguage();
+  const { locale, t }=useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const [showAllMerits, setShowAllMerits] = useState(false);
@@ -217,16 +217,16 @@ export function ExperienceMeritPicker({
           <span>
             {selected
               ? `${meritName(selected)} ${targetDots}`
-              : tr("Selecionar Mérito e pontos","Select Merit and dots")}
+              : t("ui.selectMeritAndDots")}
           </span>
           <Search />
         </Button>
       </DialogTrigger>
       <DialogContent className={`merit-dialog experience-merit-dialog${line === "CtL" ? " ctl-dialog" : ""}`}>
         <DialogHeader>
-          <DialogTitle>{tr("Comprar Mérito","Purchase Merit")}</DialogTitle>
+          <DialogTitle>{t("ui.purchaseMerit")}</DialogTitle>
           <DialogDescription>
-            {tr("Escolha o Mérito e a quantidade de pontos. Nos Méritos repetíveis, escolha entre aumentar uma instância existente ou criar outra.","Choose the Merit and number of dots. For repeatable Merits, choose whether to improve an existing instance or create another.")}
+            {t("ui.chooseTheMeritAndNumberOfDotsFor")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
@@ -235,7 +235,7 @@ export function ExperienceMeritPicker({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={tr("Buscar por nome, descrição, requisito ou fonte","Search by name, description, prerequisite, or source")}
+              placeholder={t("ui.searchByNameDescriptionPrerequisiteOrSource")}
             />
           </label>
           <RuleSelect
@@ -296,21 +296,21 @@ export function ExperienceMeritPicker({
                     <strong>{meritName(item)}</strong>
                     <small>
                       {item.source} · p. {item.page || "—"}
-                      {repeatable ? tr(" · pode ser comprado várias vezes"," · may be purchased multiple times") : ""}
+                      {repeatable ? t("ui.mayBePurchasedMultipleTimes") : ""}
                     </small>
                     {item.prerequisites && (
                       <p className={prerequisitesMet ? "" : "merit-prerequisites-missing"}>
-                        <b>{tr("Pré-requisitos","Prerequisites")}:</b> {item.prerequisites}
+                        <b>{t("ui.prerequisites")}:</b> {item.prerequisites}
                       </p>
                     )}
                     <p>{item.description}</p>
                   </div>
                   <div className="experience-merit-choice">
-                    {repeatable && item.name !== "Mantle" && <label className="merit-instance-toggle"><input type="checkbox" checked={buyingNew} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:event.target.checked,instanceIndex:event.target.checked?-1:(instances[0]?.index??-1),dots:event.target.checked?(ratings[0]??1):(instances[0]?.owned.dots??1)}}))}/><span>{tr("Nova instância","New Instance")}</span></label>}
-                    {!buyingNew && instances.length > 1 && <label><span>{tr("Instância","Instance")}</span><select value={activeInstance?.index??instances[0].index} onChange={(event)=>{const instanceIndex=Number(event.target.value), owned=instances.find(entry=>entry.index===instanceIndex)?.owned;setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:false,instanceIndex,dots:owned?.dots??1}}));}}>{instances.map(({owned,index})=><option key={index} value={index}>{meritConfigurationTitle(owned.configuration)||`${meritName(item)} ${index+1}`}</option>)}</select></label>}
-                    <span className="merit-current-rating"><b>{tr("Atual","Current")}:</b> {buyingNew?0:(activeInstance?.owned.dots??0)}</span>
-                    <label><span>{tr("Pretendido","Intended")}</span><select value={intendedDots??""} disabled={!allowedRatings.length} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,dots:Number(event.target.value)}}))}>{allowedRatings.map(dot=><option key={dot} value={dot}>{dot}</option>)}</select></label>
-                    <DialogClose asChild><Button type="button" size="sm" className="catalog-selection-action" disabled={!intendedDots} variant={selectedId===item.id&&targetDots===intendedDots?"default":"outline"} onClick={()=>intendedDots&&onSelect(item.id,intendedDots,buyingNew?-1:(activeInstance?.index??-1))}>{tr("Selecionar","Select")}</Button></DialogClose>
+                    {repeatable && item.name !== "Mantle" && <label className="merit-instance-toggle"><input type="checkbox" checked={buyingNew} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:event.target.checked,instanceIndex:event.target.checked?-1:(instances[0]?.index??-1),dots:event.target.checked?(ratings[0]??1):(instances[0]?.owned.dots??1)}}))}/><span>{t("ui.newInstance431cdc")}</span></label>}
+                    {!buyingNew && instances.length > 1 && <label><span>{t("ui.instance")}</span><select value={activeInstance?.index??instances[0].index} onChange={(event)=>{const instanceIndex=Number(event.target.value), owned=instances.find(entry=>entry.index===instanceIndex)?.owned;setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:false,instanceIndex,dots:owned?.dots??1}}));}}>{instances.map(({owned,index})=><option key={index} value={index}>{meritConfigurationTitle(owned.configuration)||`${meritName(item)} ${index+1}`}</option>)}</select></label>}
+                    <span className="merit-current-rating"><b>{t("ui.current")}:</b> {buyingNew?0:(activeInstance?.owned.dots??0)}</span>
+                    <label><span>{t("ui.intended")}</span><select value={intendedDots??""} disabled={!allowedRatings.length} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,dots:Number(event.target.value)}}))}>{allowedRatings.map(dot=><option key={dot} value={dot}>{dot}</option>)}</select></label>
+                    <DialogClose asChild><Button type="button" size="sm" className="catalog-selection-action" disabled={!intendedDots} variant={selectedId===item.id&&targetDots===intendedDots?"default":"outline"} onClick={()=>intendedDots&&onSelect(item.id,intendedDots,buyingNew?-1:(activeInstance?.index??-1))}>{t("ui.select198f7a")}</Button></DialogClose>
                   </div>
                 </article>
               );
@@ -319,7 +319,7 @@ export function ExperienceMeritPicker({
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">
-              {tr("Cancelar","Cancel")}
+              {t("ui.cancel")}
             </Button>
           </DialogClose>
         </DialogFooter>

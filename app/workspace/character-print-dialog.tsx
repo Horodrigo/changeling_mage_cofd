@@ -28,7 +28,7 @@ export function CharacterPrintDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const catalogs = useCatalogSnapshot();
   const previewRef = useRef<HTMLDivElement>(null);
   const [PrintSheet, setPrintSheet] = useState<ComponentType<GameLinePrintSheetProps> | null>(null);
@@ -56,7 +56,7 @@ export function CharacterPrintDialog({
     if (!preview || !printable) return;
 
     const previousTitle = document.title;
-    const safeName = character.character.name.trim() || tr("Personagem", "Character");
+    const safeName = character.character.name.trim() || t("ui.character");
     const printSurface = document.createElement("div");
     printSurface.className = "character-print-surface";
     printSurface.append(printable.cloneNode(true));
@@ -78,28 +78,28 @@ export function CharacterPrintDialog({
     <DialogContent className="character-print-dialog" showCloseButton>
       <div className="character-print-controls">
         <DialogHeader>
-          <DialogTitle>{tr("Imprimir ficha CtL", "Print CtL character sheet")}</DialogTitle>
-          <DialogDescription>{tr("A prévia usa páginas A4 e não inclui os controles do aplicativo.", "The preview uses A4 pages and excludes application controls.")}</DialogDescription>
+          <DialogTitle>{t("ui.printCtLCharacterSheet")}</DialogTitle>
+          <DialogDescription>{t("ui.thePreviewUsesA4PagesAndExcludesApplication")}</DialogDescription>
         </DialogHeader>
         <div className="character-print-options">
           <label>
             <Checkbox checked={options.powerDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, powerDetails: checked === true }))}/>
-            <span>{tr("Imprimir detalhes completos dos Contratos", "Print full Contract details")}</span>
+            <span>{t("ui.printFullContractDetails")}</span>
           </label>
           <label>
             <Checkbox checked={options.expandedMeritDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, expandedMeritDetails: checked === true }))}/>
-            <span>{tr("Imprimir detalhes dos Méritos Expandidos", "Print Expanded Merit details")}</span>
+            <span>{t("ui.printExpandedMeritDetails")}</span>
           </label>
         </div>
       </div>
       <div ref={previewRef} className="character-print-preview" aria-busy={!ready}>
         {PrintSheet
           ? <PrintSheet character={character} options={options} catalogs={catalogs} onReadyChange={setReady}/>
-          : <div className="loading-card">{tr("Preparando impressão…", "Preparing print…")}</div>}
+          : <div className="loading-card">{t("ui.preparingPrint")}</div>}
       </div>
       <DialogFooter className="character-print-footer">
-        <DialogClose asChild><Button type="button" size="sm" variant="outline">{tr("Cancelar", "Cancel")}</Button></DialogClose>
-        <Button type="button" size="sm" disabled={!ready} onClick={() => void print()}><Printer />{tr("Imprimir / Salvar PDF", "Print / Save PDF")}</Button>
+        <DialogClose asChild><Button type="button" size="sm" variant="outline">{t("ui.cancel")}</Button></DialogClose>
+        <Button type="button" size="sm" disabled={!ready} onClick={() => void print()}><Printer />{t("ui.printSavePDF")}</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>;

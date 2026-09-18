@@ -43,45 +43,45 @@ export function renderChangelingStructuredMeritEditor(
 }
 
 function DreamBastionEditor({ merit, configuration, onChange, compact }: StructuredMeritEditorProps) {
-  const { tr } = useLanguage();
-  return <details className={`merit-configuration structured${compact ? " compact" : ""}`} open={!compact}><summary>{tr("Configurar Bastião dos Sonhos", "Configure Dream Bastion")}</summary><div><label>{tr("Descrição e aparência do Bastião", "Bastion description and appearance")}<textarea value={String(configuration.description ?? "")} onChange={(event) => onChange({ ...configuration, description: event.target.value })} /></label><p className="structured-rule">{tr("Este Mérito acrescenta", "This Merit adds")} +{merit.dots} {tr("à Fortificação do Bastião.", "to Bastion Fortification.")}</p></div></details>;
+  const { t } = useLanguage();
+  return <details className={`merit-configuration structured${compact ? " compact" : ""}`} open={!compact}><summary>{t("ui.configureDreamBastion")}</summary><div><label>{t("ui.bastionDescriptionAndAppearance")}<textarea value={String(configuration.description ?? "")} onChange={(event) => onChange({ ...configuration, description: event.target.value })} /></label><p className="structured-rule">{t("ui.thisMeritAdds")} +{merit.dots} {t("ui.toBastionFortification")}</p></div></details>;
 }
 
 function EntitlementMeritEditor({configuration,onChange,compact,entitlementCatalog}:{configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean;entitlementCatalog:readonly EntitlementDefinition[]}){
-  const {tr}=useLanguage();const selectedDefinition=entitlementCatalog.find((item)=>item.id===String(configuration.definitionId??""));
+  const { t }=useLanguage();const selectedDefinition=entitlementCatalog.find((item)=>item.id===String(configuration.definitionId??""));
   const availableEntitlements=entitlementCatalog;
   const definition=selectedDefinition&&availableEntitlements.some((item)=>item.id===selectedDefinition.id)?selectedDefinition:undefined;
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
-    <summary>{tr("Configurar Título Feérico","Configure Entitlement")}</summary><div>
-      <label>{tr("Título","Title")}<Select value={definition?.id} onValueChange={(definitionId)=>onChange({...configuration,definitionId,roleId:""})}><SelectTrigger><SelectValue placeholder={tr("Selecione um Título","Select an Entitlement")}/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>
-      {definition?.roles&&<label>{tr("Papel","Role")}<Select value={String(configuration.roleId??"")||undefined} onValueChange={(roleId)=>onChange({...configuration,roleId})}><SelectTrigger><SelectValue placeholder={tr("Selecione um papel","Select a role")}/></SelectTrigger><SelectContent>{definition.roles.map((role)=><SelectItem key={role.id} value={role.id}>{role.name} · {role.prerequisites}</SelectItem>)}</SelectContent></Select></label>}
-      {definition&&<p className="structured-rule"><strong>{tr("Pré-requisitos","Prerequisites")}:</strong> {definition.prerequisites}<br/><strong>{tr("Fonte","Source")}:</strong> {definition.source} · p. {definition.page}</p>}
+    <summary>{t("ui.configureEntitlement")}</summary><div>
+      <label>{t("ui.title")}<Select value={definition?.id} onValueChange={(definitionId)=>onChange({...configuration,definitionId,roleId:""})}><SelectTrigger><SelectValue placeholder={t("ui.selectAnEntitlement")}/></SelectTrigger><SelectContent>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>
+      {definition?.roles&&<label>{t("ui.role")}<Select value={String(configuration.roleId??"")||undefined} onValueChange={(roleId)=>onChange({...configuration,roleId})}><SelectTrigger><SelectValue placeholder={t("ui.selectARole")}/></SelectTrigger><SelectContent>{definition.roles.map((role)=><SelectItem key={role.id} value={role.id}>{role.name} · {role.prerequisites}</SelectItem>)}</SelectContent></Select></label>}
+      {definition&&<p className="structured-rule"><strong>{t("ui.prerequisites")}:</strong> {definition.prerequisites}<br/><strong>{t("ui.source")}:</strong> {definition.source} · p. {definition.page}</p>}
     </div>
   </details>;
 }
 
 const EMPTY_TOKEN:TokenConfigurationItem={id:"",kind:"token",name:"",rating:1,cost:"1 Glamour",effect:"",description:"",crux:"",catch:"",drawback:""};
 function TokenMeritEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
-  const {tr}=useLanguage();
+  const { t }=useLanguage();
   const [newKind,setNewKind]=useState<TokenKind>("token");
   const items=decodeConfiguredRows<TokenConfigurationItem>(configuration.items).map((item)=>({...EMPTY_TOKEN,...item,kind:["token","trifle","bauble"].includes(item.kind)?item.kind:"token",rating:item.kind==="trifle"?1:Math.max(1,Math.min(5,Number(item.rating)||1))}));
   const used=items.reduce((sum,item)=>sum+item.rating,0), remaining=merit.dots-used;
   const save=(next:TokenConfigurationItem[])=>onChange({...configuration,items:encodeConfiguredRows(next)});
   const update=(index:number,patch:Partial<TokenConfigurationItem>)=>save(items.map((item,itemIndex)=>itemIndex===index?{...item,...patch}:item));
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
-    <summary>{tr("Configurar Tokens","Configure Tokens")}</summary>
+    <summary>{t("ui.configureTokens")}</summary>
     <div className="token-merit-editor">
       <div className="token-allocation-header">
         <Select value={newKind} onValueChange={(value)=>setNewKind(value as TokenKind)}><SelectTrigger className="token-kind-trigger"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">Token</SelectItem><SelectItem value="trifle">Trifle</SelectItem><SelectItem value="bauble">Bauble</SelectItem></SelectContent></Select>
-        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<1} onClick={()=>save([...items,{...EMPTY_TOKEN,id:createRandomId(),kind:newKind}])}><Plus/>{tr("Adicionar","Add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
-        <p className={remaining===0?"structured-rule":"structured-rule warning"}>{tr("Pontos distribuídos","Allocated dots")}: {used}/{merit.dots}{remaining>0?` · ${remaining} ${tr("restantes","remaining")}`:remaining<0?` · ${Math.abs(remaining)} ${tr("acima do limite","over the limit")}`:""}</p>
+        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<1} onClick={()=>save([...items,{...EMPTY_TOKEN,id:createRandomId(),kind:newKind}])}><Plus/>{t("ui.add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
+        <p className={remaining===0?"structured-rule":"structured-rule warning"}>{t("ui.allocatedDots")}: {used}/{merit.dots}{remaining>0?` · ${remaining} ${t("ui.remaining")}`:remaining<0?` · ${Math.abs(remaining)} ${t("ui.overTheLimit")}`:""}</p>
       </div>
       {items.map((item,index)=>{const maximum=Math.max(1,Math.min(5,item.rating+remaining)),kindLabel=item.kind==="trifle"?"Trifle":item.kind==="bauble"?"Bauble":"Token";return <fieldset key={index}>
-        <legend>{kindLabel} {index+1} · {item.kind==="trifle"?tr("lote de 3","batch of 3"):"•".repeat(item.rating)}</legend>
-        <div className="structured-choice-row token-heading-row"><label>{tr("Tipo","Type")}<Select value={item.kind} onValueChange={(kind)=>update(index,{kind:kind as TokenKind,rating:kind==="trifle"?1:item.rating})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">Token</SelectItem><SelectItem value="trifle">Trifle</SelectItem><SelectItem value="bauble">Bauble</SelectItem></SelectContent></Select></label><label>{tr("Nome","Name")}<Input value={item.name} onChange={(event)=>update(index,{name:event.target.value})}/></label>{item.kind!=="trifle"&&<label>{tr("Pontos","Dots")}<Select value={String(item.rating)} onValueChange={(next)=>update(index,{rating:Number(next)})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{Array.from({length:maximum},(_,dot)=><SelectItem key={dot+1} value={String(dot+1)}>{dot+1}</SelectItem>)}</SelectContent></Select></label>}<Button className="token-remove-button" type="button" size="sm" variant="ghost" onClick={()=>{if(window.confirm(tr(`Remover este ${kindLabel}?`,`Remove this ${kindLabel}?`))) save(items.filter((_,itemIndex)=>itemIndex!==index));}}><Trash2/>{tr("Remover","Remove")}</Button></div>
-        {item.kind==="token"&&<><label>{tr("Custo","Cost")}<Input value={item.cost} onChange={(event)=>update(index,{cost:event.target.value})} placeholder="1 Glamour"/></label><label>{tr("Efeito","Effect")}<textarea value={item.effect} onChange={(event)=>update(index,{effect:event.target.value})}/></label><label>Catch<textarea value={item.catch} onChange={(event)=>update(index,{catch:event.target.value})}/></label><label>Drawback<textarea value={item.drawback} onChange={(event)=>update(index,{drawback:event.target.value})}/></label></>}
-        {item.kind==="trifle"&&<><label>{tr("Efeito","Effect")}<textarea value={item.effect} onChange={(event)=>update(index,{effect:event.target.value})}/></label><p className="structured-rule">{tr("Um ponto do Mérito concede três Bagatelas de função idêntica. Cada uma custa 1 Glamour, não possui Catch ou Drawback e é destruída após o uso.","One Merit dot grants three identically functioning Trifles. Each costs 1 Glamour, has no Catch or Drawback, and is destroyed after use.")}</p></>}
-        {item.kind==="bauble"&&<><label>{tr("Descrição","Description")}<textarea value={item.description} onChange={(event)=>update(index,{description:event.target.value})}/></label><label>Crux<textarea value={item.crux} onChange={(event)=>update(index,{crux:event.target.value})}/></label><label>Catch<textarea value={item.catch} onChange={(event)=>update(index,{catch:event.target.value})}/></label><p className="structured-rule">{tr("Sempre é um Token roubado. Ativar custa 1 Glamour, salvo quando a Catch é cumprida.","Always a stolen token. Activation costs 1 Glamour unless its Catch is fulfilled.")}</p></>}
+        <legend>{kindLabel} {index+1} · {item.kind==="trifle"?t("ui.batchOf3"):"•".repeat(item.rating)}</legend>
+        <div className="structured-choice-row token-heading-row"><label>{t("ui.type")}<Select value={item.kind} onValueChange={(kind)=>update(index,{kind:kind as TokenKind,rating:kind==="trifle"?1:item.rating})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">Token</SelectItem><SelectItem value="trifle">Trifle</SelectItem><SelectItem value="bauble">Bauble</SelectItem></SelectContent></Select></label><label>{t("ui.name")}<Input value={item.name} onChange={(event)=>update(index,{name:event.target.value})}/></label>{item.kind!=="trifle"&&<label>{t("ui.dots")}<Select value={String(item.rating)} onValueChange={(next)=>update(index,{rating:Number(next)})}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{Array.from({length:maximum},(_,dot)=><SelectItem key={dot+1} value={String(dot+1)}>{dot+1}</SelectItem>)}</SelectContent></Select></label>}<Button className="token-remove-button" type="button" size="sm" variant="ghost" onClick={()=>{if(window.confirm(t("ui.removeThis", { p1: kindLabel }))) save(items.filter((_,itemIndex)=>itemIndex!==index));}}><Trash2/>{t("ui.remove7d41cc")}</Button></div>
+        {item.kind==="token"&&<><label>{t("ui.cost")}<Input value={item.cost} onChange={(event)=>update(index,{cost:event.target.value})} placeholder="1 Glamour"/></label><label>{t("ui.effect")}<textarea value={item.effect} onChange={(event)=>update(index,{effect:event.target.value})}/></label><label>Catch<textarea value={item.catch} onChange={(event)=>update(index,{catch:event.target.value})}/></label><label>Drawback<textarea value={item.drawback} onChange={(event)=>update(index,{drawback:event.target.value})}/></label></>}
+        {item.kind==="trifle"&&<><label>{t("ui.effect")}<textarea value={item.effect} onChange={(event)=>update(index,{effect:event.target.value})}/></label><p className="structured-rule">{t("ui.oneMeritDotGrantsThreeIdenticallyFunctioningTrifles")}</p></>}
+        {item.kind==="bauble"&&<><label>{t("ui.descriptione7a7db")}<textarea value={item.description} onChange={(event)=>update(index,{description:event.target.value})}/></label><label>Crux<textarea value={item.crux} onChange={(event)=>update(index,{crux:event.target.value})}/></label><label>Catch<textarea value={item.catch} onChange={(event)=>update(index,{catch:event.target.value})}/></label><p className="structured-rule">{t("ui.alwaysAStolenTokenActivationCosts1Glamour")}</p></>}
       </fieldset>;})}
     </div>
   </details>;
@@ -93,18 +93,18 @@ const HEDGESPUN_BENEFITS:Array<{value:HedgespunBenefit;label:string;labelPt:stri
   {value:"durability",label:"Increased Durability",labelPt:"Durabilidade Aumentada",effect:"+1 Durability"},
 ];
 function HedgespunItemEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
-  const {locale,tr}=useLanguage();const item=decodeHedgespunConfiguration(configuration);
+  const { locale, t }=useLanguage();const item=decodeHedgespunConfiguration(configuration);
   const set=(patch:Partial<typeof item>)=>onChange({...configuration,name:patch.name??item.name,description:patch.description??item.description,extraordinary_detail:patch.extraordinaryDetail??item.extraordinaryDetail,benefits:patch.benefits??item.benefits});
   const choose=(index:number,next:HedgespunBenefit)=>{const benefits=Array.from({length:merit.dots},(_,itemIndex)=>item.benefits[itemIndex]??"");benefits[index]=next;set({benefits});};
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
-    <summary>{tr("Configurar Item Fiado na Sebe","Configure Hedgespun Item")}</summary><div>
-      <label>{tr("Nome do item","Item name")}<Input value={item.name} onChange={(event)=>set({name:event.target.value})}/></label>
-      <label>{tr("Máscara e semblante feérico","Mask and mien")}<textarea value={item.description} onChange={(event)=>set({description:event.target.value})}/></label>
-      <fieldset><legend>{tr("Benefícios","Benefits")} · {item.benefits.filter(Boolean).length}/{merit.dots}</legend>
-        {Array.from({length:merit.dots},(_,index)=>{const current=item.benefits[index]??"";return <label key={index}>{tr("Ponto","Dot")} {index+1}<Select value={current||undefined} onValueChange={(next)=>choose(index,next as HedgespunBenefit)}><SelectTrigger><SelectValue placeholder={tr("Selecione um benefício","Select a benefit")}/></SelectTrigger><SelectContent>{HEDGESPUN_BENEFITS.filter((benefit)=>benefit.value===current||item.benefits.filter((entry)=>entry===benefit.value).length<3).map((benefit)=><SelectItem key={benefit.value} value={benefit.value}>{locale==="en-US"?benefit.label:benefit.labelPt} · {benefit.effect}</SelectItem>)}</SelectContent></Select></label>;})}
+    <summary>{t("ui.configureHedgespunItem")}</summary><div>
+      <label>{t("ui.itemName")}<Input value={item.name} onChange={(event)=>set({name:event.target.value})}/></label>
+      <label>{t("ui.maskAndMiena79a27")}<textarea value={item.description} onChange={(event)=>set({description:event.target.value})}/></label>
+      <fieldset><legend>{t("ui.benefits")} · {item.benefits.filter(Boolean).length}/{merit.dots}</legend>
+        {Array.from({length:merit.dots},(_,index)=>{const current=item.benefits[index]??"";return <label key={index}>{t("ui.dot75ec98")} {index+1}<Select value={current||undefined} onValueChange={(next)=>choose(index,next as HedgespunBenefit)}><SelectTrigger><SelectValue placeholder={t("ui.selectABenefit")}/></SelectTrigger><SelectContent>{HEDGESPUN_BENEFITS.filter((benefit)=>benefit.value===current||item.benefits.filter((entry)=>entry===benefit.value).length<3).map((benefit)=><SelectItem key={benefit.value} value={benefit.value}>{locale==="en-US"?benefit.label:benefit.labelPt} · {benefit.effect}</SelectItem>)}</SelectContent></Select></label>;})}
       </fieldset>
-      {item.benefits.includes("extraordinary")&&<label>{tr("Bônus, armadura ou dano escolhido","Chosen bonus, armor, or damage")}<Input value={item.extraordinaryDetail} onChange={(event)=>set({extraordinaryDetail:event.target.value})} placeholder={tr("Ex.: +2 armadura geral","E.g.: +2 general armor")}/></label>}
-      <p className="structured-rule">{tr("Sempre ativo; não possui custo de Glamour nem Catch.","Always active; has no Glamour cost or Catch.")}</p>
+      {item.benefits.includes("extraordinary")&&<label>{t("ui.chosenBonusArmorOrDamage")}<Input value={item.extraordinaryDetail} onChange={(event)=>set({extraordinaryDetail:event.target.value})} placeholder={t("ui.eG2GeneralArmor")}/></label>}
+      <p className="structured-rule">{t("ui.alwaysActiveHasNoGlamourCostOrCatch")}</p>
     </div>
   </details>;
 }
@@ -134,7 +134,7 @@ function HollowEditor({
   onChange: (value: MeritConfiguration) => void;
   compact: boolean;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const selected = Array.isArray(configuration.features)
     ? configuration.features
     : [];
@@ -149,17 +149,17 @@ function HollowEditor({
       className={`merit-configuration structured${compact ? " compact" : ""}`}
       open={!compact}
     >
-      <summary>{tr("Configurar Recanto", "Configure Hollow")}</summary>
+      <summary>{t("ui.configureHollow")}</summary>
       <div>
         <label>
-          {tr("Nome", "Name")}
+          {t("ui.name")}
           <Input
             value={String(configuration.name ?? "")}
             onChange={(event) => set("name", event.target.value)}
           />
         </label>
         <label>
-          {tr("Localização e aparência", "Location and appearance")}
+          {t("ui.locationAndAppearance")}
           <textarea
             value={String(configuration.location ?? "")}
             onChange={(event) => set("location", event.target.value)}
@@ -167,7 +167,7 @@ function HollowEditor({
         </label>
         <fieldset>
           <legend>
-            {tr("Melhorias", "Enhancements")} ({used}/{merit.dots} {tr("pontos", "dots")})
+            {t("ui.enhancements")} ({used}/{merit.dots} {t("ui.dots33098e")})
           </legend>
           <div className="structured-option-grid">
             {HOLLOW_OPTIONS.filter((option) => {
@@ -202,7 +202,7 @@ function HollowEditor({
                   <span>
                     <strong>{name}</strong>
                     <small>
-                      {cost} {cost === 1 ? tr("ponto", "dot") : tr("pontos", "dots")}
+                      {cost} {cost === 1 ? t("ui.dot160503") : t("ui.dots33098e")}
                     </small>
                     <small>{description}</small>
                   </span>
@@ -212,7 +212,7 @@ function HollowEditor({
           </div>
         </fieldset>
         <p className="structured-rule">
-          {tr("A soma das melhorias não pode exceder os pontos de Recanto. Alarme de Hob exige Parentesco Hob.", "The total enhancement cost cannot exceed the Hollow dots. Hob Alarm requires Hob Kin.")}
+          {t("ui.theTotalEnhancementCostCannotExceedTheHollow")}
         </p>
       </div>
     </details>
@@ -230,40 +230,40 @@ const SHARED_BASTION_OPTIONS = [
 ] as const;
 
 function SharedBastionEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}) {
-  const {tr}=useLanguage();
+  const { t }=useLanguage();
   const selected=Array.isArray(configuration.features)?configuration.features:[];
   const used=selected.reduce((sum,item)=>sum+(Number(String(item).split("|")[1])||0),0);
   const set=(key:string,value:string|string[])=>onChange({...configuration,[key]:value});
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
-    <summary>{tr("Configurar Bastião Compartilhado","Configure Shared Bastion")}</summary>
+    <summary>{t("ui.configureSharedBastion")}</summary>
     <div>
-      <label>{tr("Nome","Name")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
-      <label>{tr("Localização e aparência","Location and appearance")}<textarea value={String(configuration.location??"")} onChange={(event)=>set("location",event.target.value)}/></label>
-      <fieldset><legend>{tr("Características","Features")} ({used}/{merit.dots} {tr("pontos","dots")})</legend><div className="structured-option-grid">
-        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=merit.dots-used).map(({name,cost,description})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{name}</strong><small>{cost} {cost===1?tr("ponto","dot"):tr("pontos","dots")}</small><small>{description}</small></span></label>;})}
+      <label>{t("ui.name")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
+      <label>{t("ui.locationAndAppearance")}<textarea value={String(configuration.location??"")} onChange={(event)=>set("location",event.target.value)}/></label>
+      <fieldset><legend>{t("ui.features")} ({used}/{merit.dots} {t("ui.dots33098e")})</legend><div className="structured-option-grid">
+        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=merit.dots-used).map(({name,cost,description})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{name}</strong><small>{cost} {cost===1?t("ui.dot160503"):t("ui.dots33098e")}</small><small>{description}</small></span></label>;})}
       </div></fieldset>
     </div>
   </details>;
 }
 
 function StableTrodEditor({configuration,onChange,compact}:{configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}) {
-  const {tr}=useLanguage();
+  const { t }=useLanguage();
   const set=(key:string,value:string|string[])=>onChange({...configuration,[key]:value});
   const oneDotOptions=HOLLOW_OPTIONS.filter((item)=>item.cost===1).map((item)=>item.name);
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
-    <summary>{tr("Configurar Trilha Estável","Configure Stable Trod")}</summary><div>
-      <label>{tr("Nome ou descrição da Trilha","Trod name or description")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
-      <Choice label={tr("Melhoria de Recanto compartilhada","Shared Hollow enhancement")} value={String(configuration.enhancement??"")} setValue={(value)=>set("enhancement",value)} options={oneDotOptions}/>
+    <summary>{t("ui.configureStableTrod")}</summary><div>
+      <label>{t("ui.trodNameOrDescription")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
+      <Choice label={t("ui.sharedHollowEnhancement")} value={String(configuration.enhancement??"")} setValue={(value)=>set("enhancement",value)} options={oneDotOptions}/>
     </div>
   </details>;
 }
 
 function WorkshopEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}) {
-  const {tr}=useLanguage();
+  const { t }=useLanguage();
   const specialties=Array.isArray(configuration.specialties)?configuration.specialties:[];
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
-    <summary>{tr("Configurar Oficina","Configure Workshop")}</summary><div><fieldset><legend>{tr("Especializações de Ofícios","Craft Specialties")}</legend>
-      <div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=><Input key={index} value={specialties[index]??""} placeholder={`${tr("Especialização","Specialty")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>specialties[item]??"");next[index]=event.target.value;onChange({...configuration,specialties:next});}}/>)}</div>
+    <summary>{t("ui.configureWorkshop")}</summary><div><fieldset><legend>{t("ui.craftSpecialties")}</legend>
+      <div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=><Input key={index} value={specialties[index]??""} placeholder={`${t("ui.specialty")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>specialties[item]??"");next[index]=event.target.value;onChange({...configuration,specialties:next});}}/>)}</div>
     </fieldset></div>
   </details>;
 }

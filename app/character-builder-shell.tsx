@@ -200,12 +200,12 @@ export function CharacterBuilderShell({
   onCancel: () => void;
   onFinish: () => void;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const missingAtStep = (step: number) => issues.filter((issue) => issue.step === step);
   const advance = () => {
     const current = missingAtStep(state.step);
     if (current.length) {
-      state.setError(`${tr("Ainda falta", "Still required")}: ${current.map((issue) => issue.label).join(", ")}.`);
+      state.setError(`${t("ui.stillRequired")}: ${current.map((issue) => issue.label).join(", ")}.`);
       return;
     }
     state.setError("");
@@ -213,28 +213,28 @@ export function CharacterBuilderShell({
   };
   return <section className={`builder line-theme-${line.toLowerCase()}`}>
     <div className="builder-head">
-      <Button variant="ghost" onClick={onCancel}><ArrowLeft /> {tr("Voltar", "Back")}</Button>
-      <div><Badge variant="outline">{line}</Badge><span>{tr("Criação guiada · regras compartilhadas v1", "Guided creation · shared rules v1")}</span></div>
+      <Button variant="ghost" onClick={onCancel}><ArrowLeft /> {t("ui.back")}</Button>
+      <div><Badge variant="outline">{line}</Badge><span>{t("ui.guidedCreationSharedRulesV1")}</span></div>
     </div>
     <div className="stepper">
-      {[tr("Identidade", "Identity"), tr("Características", "Traits"), templateLabel].map((label, index) =>
+      {[t("ui.identity"), t("ui.traits"), templateLabel].map((label, index) =>
         <div key={label} className={state.step === index + 1 ? "step active" : state.step > index + 1 ? "step done" : "step"}>
           <span>{state.step > index + 1 ? <Check /> : index + 1}</span><strong>{label}</strong>
         </div>,
       )}
     </div>
     {issues.length > 0 && <div className="builder-pending">
-      <strong>{issues.length} {issues.length === 1 ? tr("item pendente", "pending item") : tr("itens pendentes", "pending items")}</strong>
+      <strong>{issues.length} {issues.length === 1 ? t("ui.pendingItem") : t("ui.pendingItems")}</strong>
       <span>{issues.slice(0, 6).map((issue) => issue.label).join(" · ")}{issues.length > 6 ? ` · +${issues.length - 6}` : ""}</span>
     </div>}
     {state.error && <div className="builder-error">{state.error}</div>}
     <div className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : lineTemplate}</div>
     <div className="builder-actions">
-      {state.step > 1 && <Button variant="outline" onClick={() => state.setStep(state.step - 1)}><ArrowLeft /> {tr("Anterior", "Previous")}</Button>}
+      {state.step > 1 && <Button variant="outline" onClick={() => state.setStep(state.step - 1)}><ArrowLeft /> {t("ui.previous")}</Button>}
       <span />
       {state.step < 3
-        ? <Button onClick={advance}>{tr("Continuar", "Continue")} <ArrowRight /></Button>
-        : <Button onClick={onFinish}><Save /> {tr("Salvar ficha localmente", "Save character locally")}</Button>}
+        ? <Button onClick={advance}>{t("ui.continue")} <ArrowRight /></Button>
+        : <Button onClick={onFinish}><Save /> {t("ui.saveCharacterLocally")}</Button>}
     </div>
   </section>;
 }

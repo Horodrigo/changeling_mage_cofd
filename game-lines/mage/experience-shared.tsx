@@ -4,7 +4,7 @@ import { useLanguage } from "@/lib/i18n";
 
 /** Mage-only experience rules kept outside the common picker closure. */
 export function MageExperienceRules() {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const beatsPt = [
     "Cumprir ou avançar uma Aspiração",
     "Resolver uma Condição",
@@ -39,13 +39,13 @@ export function MageExperienceRules() {
   const costs = locale === "en-US" ? costsEn : costsPt;
   return (
     <div className="experience-rule-menus">
-      <details className="experience-rules"><summary>{tr("Formas de ganhar Beats", "Ways to earn Beats")}</summary><table>
+      <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table>
         <tbody>
           {beats.map((x) => <tr key={x}><td>{x}</td><td>1 Beat</td></tr>)}
-          {arcane.map((x) => <tr key={x}><td>{x}</td><td>{tr("1 Beat Arcano", "1 Arcane Beat")}</td></tr>)}
+          {arcane.map((x) => <tr key={x}><td>{x}</td><td>{t("ui.message1ArcaneBeat")}</td></tr>)}
         </tbody>
       </table></details>
-      <details className="experience-rules"><summary>{tr("Tabela de custos", "Cost table")}</summary><table>
+      <details className="experience-rules"><summary>{t("ui.costTable")}</summary><table>
         <tbody>{costs.map(([a, b]) => <tr key={a}><td>{a}</td><td>{b}</td></tr>)}</tbody>
       </table></details>
     </div>

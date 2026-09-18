@@ -93,7 +93,7 @@ export function ExperiencePanel({
   updateSheet: (sheet: CharacterSheet) => void;
   catalogs: CatalogSnapshot;
 }) {
-  const {locale,tr}=useLanguage();
+  const { locale, t }=useLanguage();
   const contractCatalog = catalogs.get<ContractDefinition[]>("changeling-contracts");
   const entitlementCatalog = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,[]));
@@ -254,7 +254,7 @@ export function ExperiencePanel({
       experience_history: history,
     };
     updateSheet(next);
-    setFeedback(tr("Experiência disponível atualizada.", "Available Experience updated."));
+    setFeedback(t("ui.availableExperienceUpdated"));
   }
   function append(entry: ExperienceEntry, nextState: Record<string, unknown>) {
     nextState.experience_history = [entry, ...history].slice(0, 100);
@@ -274,7 +274,7 @@ export function ExperiencePanel({
       {
         id: createRandomId(),
         kind: "spend",
-        description: tr("Perda permanente de um ponto de Força de Vontade", "Permanent loss of one Willpower dot"),
+        description: t("ui.permanentLossOfOneWillpowerDot"),
         experience: 0,
         createdAt: new Date().toISOString(),
         undo: { kind: "willpowerLoss", previousLost: lostWillpower },
@@ -284,7 +284,7 @@ export function ExperiencePanel({
     next.current_state = nextState;
     updateSheet(next);
     setFeedback(
-      tr("Perda permanente de Força de Vontade registrada no histórico.", "Permanent Willpower loss recorded in history."),
+      t("ui.permanentWillpowerLossRecordedInHistory"),
     );
   }
   function gainClarity() {
@@ -293,13 +293,13 @@ export function ExperiencePanel({
     append({
       id: createRandomId(),
       kind: "spend",
-      description: tr("Ganho permanente de uma caixa de Lucidez", "Permanent gain of one Clarity box"),
+      description: t("ui.permanentGainOfOneClarityBox"),
       experience: 0,
       createdAt: new Date().toISOString(),
       undo: { kind: "clarityGain" },
     }, next.current_state);
     updateSheet(next);
-    setFeedback(tr("Uma caixa permanente de Lucidez adicionada, sem custo de EXP.", "One permanent Clarity box added at no Experience cost."));
+    setFeedback(t("ui.onePermanentClarityBoxAddedAtNoExperience"));
   }
   function spend(
     cost: number,
@@ -308,7 +308,7 @@ export function ExperiencePanel({
     apply: (next: CharacterSheet) => void,
   ) {
     if (cost < 1 || available < cost) {
-      setFeedback(tr("Experiência disponível insuficiente para esta compra.", "Not enough available Experience for this purchase."));
+      setFeedback(t("ui.notEnoughAvailableExperienceForThisPurchase"));
       return;
     }
     const next = structuredClone(character);
@@ -335,14 +335,14 @@ export function ExperiencePanel({
     next.current_state = nextState;
     updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
     setFeedback(
-      tr(`${description} adquirido por ${cost} Experiência${cost === 1 ? "" : "s"}.`, `${description} purchased for ${cost} Experience.`),
+      t("ui.experiencePurchase", { description, cost, plural: cost === 1 ? "" : "s" }),
     );
   }
   function revertPurchase(entry: ExperienceEntry) {
     if (!history.some(item => item.id === entry.id)) return;
     if (!entry.undo)
       return setFeedback(
-        tr("Esta compra antiga não contém dados suficientes para ser revertida.", "This older purchase does not contain enough data to be refunded."),
+        t("ui.thisOlderPurchaseDoesNotContainEnoughData"),
       );
     const next = structuredClone(character);
     const undo = entry.undo;
@@ -413,14 +413,14 @@ export function ExperiencePanel({
     };
     recalculateCtlDerived(next);
     updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
-    setFeedback(tr(`${entry.description} foi revertido; ${refund} EXP devolvida.`, `${entry.description} was refunded; ${refund} Experience restored.`));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description, p2: refund }));
   }
   function buy() {
     if (purchaseType === "Atributo") {
       const current = Number(character.attributes[attribute] ?? 1);
       if (current >= traitMaximum)
         return setFeedback(
-          tr("Este Atributo já atingiu o máximo permitido pelo Fado.", "This Attribute has reached the maximum allowed by Wyrd."),
+          t("ui.thisAttributeHasReachedTheMaximumAllowedBy"),
         );
       const target = current + 1;
       spend(
@@ -443,7 +443,7 @@ export function ExperiencePanel({
       const current = Number(character.skills[skill] ?? 0);
       if (current >= traitMaximum)
         return setFeedback(
-          tr("Esta Perícia já atingiu o máximo permitido pelo Fado.", "This Skill has reached the maximum allowed by Wyrd."),
+          t("ui.thisSkillHasReachedTheMaximumAllowedBy"),
         );
       const target = current + 1;
       spend(
@@ -459,8 +459,8 @@ export function ExperiencePanel({
     }
     if (purchaseType === "Mérito") {
       if (!selectedMerit || !nextMeritRating)
-        return setFeedback(tr("Este Mérito não possui outro nível disponível.", "This Merit has no higher available rating."));
-      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(tr("Pré-requisitos não atendidos.","Prerequisites not met."));
+        return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
+      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? createRandomId();
@@ -499,11 +499,11 @@ export function ExperiencePanel({
     }
     if (purchaseType === "Especialização") {
       if (!specialtyName.trim())
-        return setFeedback(tr("Informe o nome da Especialização.", "Enter the Specialty name."));
+        return setFeedback(t("ui.enterTheSpecialtyName"));
       const name = specialtyName.trim();
       spend(
         1,
-        `${tr("Especialização", "Specialty")} ${systemTerm(specialtySkill,locale)}: ${name}`,
+        `${t("ui.specialty")} ${systemTerm(specialtySkill,locale)}: ${name}`,
         { kind: "specialty", skill: specialtySkill, name },
         (next) => next.specializations.push({ skill: specialtySkill, name }),
       );
@@ -512,11 +512,11 @@ export function ExperiencePanel({
     }
     if (purchaseType === "Contrato") {
       if (!selectedContract)
-        return setFeedback(tr("Não há Contrato disponível para esta compra.", "No Contract is available for this purchase."));
+        return setFeedback(t("ui.noContractIsAvailableForThisPurchase"));
       const cost = contractExperienceCost(selectedContract, character);
       spend(
         cost,
-        `${tr("Contrato", "Contract")} ${selectedContract.name}`,
+        `${t("ui.contract")} ${selectedContract.name}`,
         { kind: "contract", id: selectedContract.id },
         (next) => {
           const learned = objectList(next.line_data.learned_contracts);
@@ -531,13 +531,13 @@ export function ExperiencePanel({
     if (purchaseType === "Benefício de Contrato") {
       const value = benefitKey || benefitOptions[0]?.value;
       if (!value)
-        return setFeedback(tr("Não há Benefício ou Clause adicional disponível.", "No additional Benefit or Clause is available."));
+        return setFeedback(t("ui.noAdditionalBenefitOrClauseIsAvailable"));
       const [kind, chosenContract, choice] = value.split("::");
       const definition = findContractInCatalog(chosenContract);
       const isClause = kind === "clause";
       spend(
         1,
-        isClause ? `${tr("Clause de", "Clause for")} ${courtDisplayName(choice, locale)} · ${definition?.name ?? tr("Contrato", "Contract")}` : `${tr("Benefício de", "Benefit for")} ${seemingDisplayName(choice,locale)} · ${definition?.name ?? tr("Contrato", "Contract")}`,
+        isClause ? `${t("ui.clauseFor")} ${courtDisplayName(choice, locale)} · ${definition?.name ?? t("ui.contract")}` : `${t("ui.benefitFor")} ${seemingDisplayName(choice,locale)} · ${definition?.name ?? t("ui.contract")}`,
         isClause ? { kind: "clause", contractId: chosenContract, courtId: choice } : { kind: "benefit", contractId: chosenContract, seeming: choice },
         (next) => {
           next.line_data = {
@@ -551,19 +551,19 @@ export function ExperiencePanel({
       return;
     }
     if (purchaseType === "Fado") {
-      if (wyrd >= 10) return setFeedback(tr("Fado já atingiu 10.", "Wyrd has already reached 10."));
-      spend(5, `${tr("Fado", "Wyrd")} ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
+      if (wyrd >= 10) return setFeedback(t("ui.wyrdHasAlreadyReached10"));
+      spend(5, `${t("ui.wyrd")} ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
         next.line_data = { ...withChangelingPowerRating(next, wyrd + 1), frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
       });
       return;
     }
     if (!lostWillpower)
       return setFeedback(
-        tr("O personagem não possui pontos permanentes de Força de Vontade perdidos.", "The character has no permanently lost Willpower dots."),
+        t("ui.theCharacterHasNoPermanentlyLostWillpowerDots"),
       );
     spend(
       1,
-      tr("Recuperação de um ponto perdido de Força de Vontade", "Recovery of one lost Willpower dot"),
+      t("ui.recoveryOfOneLostWillpowerDot"),
       { kind: "willpower", previousLost: lostWillpower },
       (next) => {
         next.current_state = {
@@ -590,15 +590,15 @@ export function ExperiencePanel({
     lostWillpower,
   });
   const historyPanel = <details className="experience-history">
-    <summary><History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})</summary>
-    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {tr("Reverter","Refund")}</Button>} title={tr(`Reembolsar ${entry.undo.name}?`,`Refund ${entry.undo.name}?`)} description={entry.undo.name === "Entitlement" ? tr("O reembolso removerá o Título, suas graduações, Blessings, Heráldica e todos os benefícios concedidos.","The refund will remove the Entitlement, its ranks, Blessings, Heraldry, and all granted benefits.") : tr("O reembolso removerá o Mérito e seu Companion vinculado.","The refund will remove the Merit and its linked Companion.")} action={tr("Reembolsar","Refund")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {tr("Reverter","Refund")}</Button>}</p>) : <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>}</div>
+    <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
+    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {t("ui.refund")}</Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name === "Entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel">
       <div className="experience-title">
         <div>
-          <span>{tr("Beats e Experiência","Beats and Experience")}</span>
-          <small>{tr("Beats são marcados separadamente da Experiência","Beats are tracked separately from Experience")}</small>
+          <span>{t("ui.beatsAndExperience")}</span>
+          <small>{t("ui.beatsAreTrackedSeparatelyFromExperience")}</small>
         </div>
       </div>
       <div className="experience-totals">
@@ -614,17 +614,17 @@ export function ExperiencePanel({
             onKeyDown={(event) => {
               if (event.key === "Enter") event.currentTarget.blur();
             }}
-            aria-label={tr("Experiência disponível","Available Experience")}
+            aria-label={t("ui.availableExperience")}
           />
-          <span>{tr("EXP disponível","XP available")}</span>
+          <span>{t("ui.xpAvailable")}</span>
         </label>
         <div>
           <strong>{total}</strong>
-          <span>{tr("EXP total","Total XP")}</span>
+          <span>{t("ui.totalXP")}</span>
         </div>
         <div>
           <strong>{spentXp}</strong>
-          <span>{tr("EXP gasta","XP spent")}</span>
+          <span>{t("ui.xpSpent")}</span>
         </div>
       </div>
       <fieldset className="beat-controls">
@@ -650,7 +650,7 @@ export function ExperiencePanel({
           disabled={!beats}
           onClick={() => setBeats(0)}
         >
-          {tr("Limpar","Clear")}
+          {t("ui.clear")}
         </Button>
       </fieldset>
       <div className="experience-actions">
@@ -663,19 +663,19 @@ export function ExperiencePanel({
   className="catalog-selection-action ctl-purchase-trait-button"
 >
   <span className="ctl-purchase-trait-icon" aria-hidden="true" />
-  {tr("Comprar característica", "Purchase trait")}
+  {t("ui.purchaseTrait")}
 </Button>
           </DialogTrigger>
           <DialogContent className="experience-dialog ctl-dialog">
             <DialogHeader>
-              <DialogTitle>{tr("Gastar Experiência","Spend Experience")}</DialogTitle>
+              <DialogTitle>{t("ui.spendExperience")}</DialogTitle>
               <DialogDescription>
-                {tr("Custos de Changeling the Lost, p. 94. Cada compra registra automaticamente a despesa e atualiza a ficha.","Costs from Changeling: The Lost, p. 94. Each purchase records the expense and updates the character sheet.")}
+                {t("ui.costsFromChangelingTheLostP94Each")}
               </DialogDescription>
             </DialogHeader>
             <div className="experience-purchase-form">
               <label>
-                {tr("Tipo","Type")}
+                {t("ui.type")}
                 <RuleSelect
                   value={purchaseType}
                   onChange={(value) => {
@@ -690,7 +690,7 @@ export function ExperiencePanel({
               </label>
               {purchaseType === "Atributo" && (
                 <label>
-                  {tr("Atributo","Attribute")}
+                  {t("ui.attribute")}
                   <RuleSelect
                     value={attribute}
                     onChange={setAttribute}
@@ -700,7 +700,7 @@ export function ExperiencePanel({
               )}
               {purchaseType === "Perícia" && (
                 <label>
-                  {tr("Perícia","Skill")}
+                  {t("ui.skill")}
                   <RuleSelect
                     value={skill}
                     onChange={setSkill}
@@ -710,7 +710,7 @@ export function ExperiencePanel({
               )}
               {purchaseType === "Mérito" && (
                 <label>
-                  {tr("Mérito","Merit")}
+                  {t("ui.merit")}
                   <ExperienceMeritPicker
                     line="CtL"
                     archetypes={["changeling"]}
@@ -729,7 +729,7 @@ export function ExperiencePanel({
               {purchaseType === "Especialização" && (
                 <>
                   <label>
-                    {tr("Perícia","Skill")}
+                    {t("ui.skill")}
                     <RuleSelect
                       value={specialtySkill}
                       onChange={setSpecialtySkill}
@@ -737,7 +737,7 @@ export function ExperiencePanel({
                     />
                   </label>
                   <label>
-                    {tr("Especialização","Specialty")}
+                    {t("ui.specialty")}
                     <Input
                       value={specialtyName}
                       onChange={(event) => setSpecialtyName(event.target.value)}
@@ -748,7 +748,7 @@ export function ExperiencePanel({
               )}
               {purchaseType === "Contrato" && (
                 <label>
-                  {tr("Contrato","Contract")}
+                  {t("ui.contract")}
                   <ExperiencePowerPicker
                     kind="Contrato"
                     line="CtL"
@@ -756,10 +756,10 @@ export function ExperiencePanel({
                       id: item.id,
                       name: locale==="en-US"?item.originalName:item.name,
                       category: systemTerm(item.regalia,locale),
-                      secondaryCategory: item.type==="Comum"?tr("Comum","Common"):tr("Real","Royal"),
+                      secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
                       sortPriority: Number(item.type === "Real"),
                       description: contractOutcomeSections(item,locale).map(section=>section.text).join(" "),
-                      meta: `${item.type==="Comum"?tr("Comum","Common"):tr("Real","Royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
+                      meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
                     }))}
                     selectedId={selectedContract?.id ?? ""}
                     onSelect={setContractId}
@@ -768,13 +768,13 @@ export function ExperiencePanel({
               )}
               {purchaseType === "Benefício de Contrato" && (
                 <label>
-                  {tr("Benefício","Benefit")}
+                  {t("ui.benefit")}
                   <ExperiencePowerPicker
                     kind="Benefício de Contrato"
                     line="CtL"
                     items={benefitOptions.map((option)=>{
                       const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause";
-                      return {id:option.value,name:option.label,category:isClause?"Clause":tr("Benefício de Feição","Seeming Benefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??tr("Contrato","Contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
+                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
                     })}
                     selectedId={benefitKey || benefitOptions[0]?.value || ""}
                     onSelect={setBenefitKey}
@@ -785,7 +785,7 @@ export function ExperiencePanel({
             <div className="purchase-preview">
               <strong>{preview.label}</strong>
               <span>
-                {preview.cost} {tr(preview.cost===1?"Experiência":"Experiências","Experience")}
+                {preview.cost} {t(preview.cost === 1 ? "ui.experienceSingular" : "ui.experiencePlural")}
               </span>
             </div>
             {feedback && <p className="experience-feedback">{feedback}</p>}
@@ -793,7 +793,7 @@ export function ExperiencePanel({
             {historyPanel}
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar","Close")}</Button>
+                <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.close")}</Button>
               </DialogClose>
               <Button
                 type="button"
@@ -802,21 +802,21 @@ export function ExperiencePanel({
                 disabled={preview.cost < 1 || available < preview.cost}
                 onClick={buy}
               >
-                {tr("Comprar por","Purchase for")} {preview.cost} {tr("EXP","XP")}
+                {t("ui.purchaseFor")} {preview.cost} {t("ui.xp")}
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
         <div className="permanent-resource-actions">
-          <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Ganhar Lucidez","Gain Clarity")}</Button>} title={tr("Adicionar uma caixa permanente de Lucidez?","Add a permanent Clarity box?")} description={tr("Isso adicionará uma caixa permanente de Lucidez sem custo de Experiência e registrará uma entrada reversível no histórico.","This adds one permanent Clarity box at no Experience cost and records a reversible history entry.")} action={tr("Adicionar Lucidez","Add Clarity")} destructive={false} onConfirm={gainClarity}/>
+          <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.gainClarity")}</Button>} title={t("ui.addAPermanentClarityBox")} description={t("ui.thisAddsOnePermanentClarityBoxAtNo")} action={t("ui.addClarity")} destructive={false} onConfirm={gainClarity}/>
           <span aria-hidden="true">|</span>
-          <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Perder FV","Lose WP")}</Button>} title={tr("Perder permanentemente um ponto de Força de Vontade?","Permanently lose one Willpower dot?")} description={tr("Isso reduzirá a Força de Vontade permanente em um ponto e registrará uma entrada reversível no histórico.","This reduces permanent Willpower by one dot and records a reversible history entry.")} action={tr("Perder FV","Lose WP")} onConfirm={markWillpowerLoss}/>
+          <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.loseWP")}</Button>} title={t("ui.permanentlyLoseOneWillpowerDot")} description={t("ui.thisReducesPermanentWillpowerByOneDotAnd")} action={t("ui.loseWP")} onConfirm={markWillpowerLoss}/>
         </div>
       </div>
       {feedback && <p className="experience-feedback compact">{feedback}</p>}
       <details className="experience-history">
         <summary>
-          <History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})
+          <History /> {t("ui.experienceExpenses")} ({history.length})
         </summary>
         <div>
           {history.length ? (
@@ -833,12 +833,12 @@ export function ExperiencePanel({
                   variant="ghost"
                   disabled={!entry.undo}
                 >
-                  <RotateCcw /> {tr("Reverter","Refund")}
-                </Button>} title={tr(`Reembolsar ${entry.undo.name}?`,`Refund ${entry.undo.name}?`)} description={entry.undo.name==="Entitlement"?tr("O reembolso removerá o Título, suas graduações, Blessings, Heráldica e todos os benefícios concedidos.","The refund will remove the Entitlement, its ranks, Blessings, Heraldry, and all granted benefits."):tr("O reembolso removerá o Mérito e seu Companion vinculado.","The refund will remove the Merit and its linked Companion.")} action={tr("Reembolsar","Refund")} onConfirm={()=>revertPurchase(entry)}/>:<Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={()=>revertPurchase(entry)}><RotateCcw /> {tr("Reverter","Refund")}</Button>}
+                  <RotateCcw /> {t("ui.refund")}
+                </Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name==="Entitlement"?t("ui.theRefundWillRemoveTheEntitlementItsRanks"):t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={()=>revertPurchase(entry)}/>:<Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={()=>revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}
               </p>
             ))
           ) : (
-            <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>
+            <em>{t("ui.noExpensesRecorded")}</em>
           )}
         </div>
       </details>

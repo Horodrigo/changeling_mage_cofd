@@ -86,7 +86,7 @@ export function derivedWithPermanentMerits(character: CharacterSheet) {
 
 /** Changeling-only beat sources and advancement costs. */
 export function ExperienceRules() {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const beatRowsPt = ["Cumprir uma Aspiração", "Resolver uma Condição", "Aceitar uma falha dramática", "Render-se em combate", "Sofrer dano nas caixas finais de Vitalidade", "Encerrar uma sessão", "Sofrer dano de Lucidez", "Liberar Desvario involuntariamente"];
   const beatRowsEn = ["Fulfill an Aspiration", "Resolve a Condition", "Accept a dramatic failure", "Surrender in combat", "Take damage in the final Health boxes", "End a session", "Take Clarity damage", "Release Bedlam involuntarily"];
   const costRowsPt = [["Atributo", "4 por ponto"], ["Perícia", "2 por ponto"], ["Mérito", "1 por ponto"], ["Especialização", "1"], ["Contrato favorecido", "Comum 2 · Real 3"], ["Contrato não favorecido", "Comum 3 · Real 4"], ["Contrato Goblin", "2"], ["Benefício de outra Feição", "1"], ["Fado", "5 por ponto"], ["Ponto perdido de Força de Vontade", "1"]];
@@ -95,9 +95,9 @@ export function ExperienceRules() {
   const costRows = locale === "en-US" ? costRowsEn : costRowsPt;
   return (
     <div className="experience-rule-menus">
-      <details className="experience-rules"><summary>{tr("Formas de ganhar Beats", "Ways to earn Beats")}</summary><table><tbody>{beatRows.map((label) => <tr key={label}><td>{label}</td><td>1 Beat</td></tr>)}</tbody></table></details>
-      <details className="experience-rules"><summary>{tr("Tabela de custos", "Cost table")}</summary><table>
-        <thead><tr><th>{tr("Característica", "Trait")}</th><th>{tr("EXP", "XP")}</th></tr></thead>
+      <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table><tbody>{beatRows.map((label) => <tr key={label}><td>{label}</td><td>1 Beat</td></tr>)}</tbody></table></details>
+      <details className="experience-rules"><summary>{t("ui.costTable")}</summary><table>
+        <thead><tr><th>{t("ui.trait")}</th><th>{t("ui.xp")}</th></tr></thead>
         <tbody>{costRows.map(([label, cost]) => <tr key={label}><td>{label}</td><td>{cost}</td></tr>)}</tbody>
       </table></details>
     </div>

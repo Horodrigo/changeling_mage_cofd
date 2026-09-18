@@ -55,7 +55,7 @@ export function MeritPicker({
   renderConfiguration: (props: MeritConfigurationRenderProps) => ReactNode;
   isInlineConfiguration: (name: string) => boolean;
 }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
   const categoryName = (category: string) => locale === "pt-BR" ? meritCategoryLabel(category) : category;
   const [search, setSearch] = useState("");
@@ -76,13 +76,13 @@ export function MeritPicker({
     setMerits([...merits, { instanceId: createRandomId(), name: definition.name, dots: meritRatingsFor(definition)[0], sourceId: definition.sourceId, source: definition.source, configuration: {} }]);
   };
   return <>
-    <div className="merit-heading"><div><h3>{tr("Méritos", "Merits")}</h3><p>{tr("Core + livros da linha, reunidos por categoria. Você pode guardar pontos sem gastá-los.", "Core and game-line books, grouped by category. You may leave dots unspent.")}</p></div>
+    <div className="merit-heading"><div><h3>{t("ui.merits")}</h3><p>{t("ui.coreAndGameLineBooksGroupedByCategory")}</p></div>
       <div className="merit-heading-actions">
-        <Badge variant={spent > budget ? "destructive" : "outline"}>{spent}/{budget} {tr("pontos de Mérito usados na criação", "creation Merit dots spent")}</Badge>
+        <Badge variant={spent > budget ? "destructive" : "outline"}>{spent}/{budget} {t("ui.creationMeritDotsSpent")}</Badge>
         <Badge variant="outline">{powerLabel}: {power}</Badge>
-        <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => setCatalogOpen(true)}>{tr("Adicionar Mérito", "Add Merit")}</Button>
-        <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={power >= 3 || spent + 5 > budget} onClick={() => setPower(power + 1)}>{tr(`Adicionar ${powerLabel} (5 pontos de Mérito)`, `Add ${powerLabel} (5 Merit dots)`)}</Button>
-        {power > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setPower(power - 1)}>{tr(`Remover ${powerLabel}`, `Remove ${powerLabel}`)}</Button>}
+        <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => setCatalogOpen(true)}>{t("ui.addMerit")}</Button>
+        <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={power >= 3 || spent + 5 > budget} onClick={() => setPower(power + 1)}>{t("ui.add5MeritDots", { p1: powerLabel })}</Button>
+        {power > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setPower(power - 1)}>{t("ui.remove", { p1: powerLabel })}</Button>}
       </div>
     </div>
     <div className="merit-picker">{merits.map((selection, index) => {
@@ -91,17 +91,17 @@ export function MeritPicker({
       const needsConfirmation = ["Fae Mount", "Fae Pet", "Familiar", "Entitlement"].includes(selection.name);
       return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale) : undefined}>
         <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong>
-          <small>{definition ? `${categoryName(definition.category)} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {tr("primeiro ponto gratuito", "first dot free")}</> : null}</small></div>
-          <Choice label={tr("Pontos", "Dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
+          <small>{definition ? `${categoryName(definition.category)} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
+          <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
           {!selection.grantedBy && (needsConfirmation
-            ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${tr("Remover", "Remove")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={tr(`Remover ${definition ? meritName(definition) : selection.name}?`, `Remove ${definition ? meritName(definition) : selection.name}?`)} description={tr("O Mérito e benefícios vinculados serão removidos.", "The Merit and linked benefits will be removed.")} action={tr("Remover", "Remove")} onConfirm={remove} />
-            : <Button type="button" variant="ghost" size="icon" aria-label={`${tr("Remover", "Remove")} ${definition ? meritName(definition) : selection.name}`} onClick={remove}><Trash2 /></Button>)}
+            ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={t("ui.removefc5df2", { p1: definition ? meritName(definition) : selection.name })} description={t("ui.theMeritAndLinkedBenefitsWillBeRemoved")} action={t("ui.remove7d41cc")} onConfirm={remove} />
+            : <Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`} onClick={remove}><Trash2 /></Button>)}
         </div>
         {selection.name !== "Familiar" && renderConfiguration({ merit: selection, ownedMerits: context.merits ?? [], inline: isInlineConfiguration(selection.name), onChange: (configuration) => { const next = [...merits]; next[index] = { ...selection, configuration }; setMerits(next); } })}
       </div>;
     })}</div>
-    <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}><DialogContent className="merit-dialog"><DialogHeader><DialogTitle>{tr("Selecionar méritos", "Select Merits")}</DialogTitle><DialogDescription>{tr("Procure por nome ou navegue pelas categorias.", "Search by name or browse categories.")}</DialogDescription></DialogHeader>
-      <div className="catalog-filters"><label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={tr("Buscar mérito por nome, pré-requisito ou fonte…", "Search Merit by name, prerequisite, or source…")} /></label><Choice label={tr("Categoria", "Category")} value={category} setValue={setCategory} options={["all", ...categories]} optionLabels={{ all: tr("Todas as categorias", "All categories"), ...Object.fromEntries(categories.map((item) => [item, categoryName(item)])) }} /><MeritCatalogVisibilityToggle showAll={showAllMerits} setShowAll={setShowAllMerits} /></div>
+    <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}><DialogContent className="merit-dialog"><DialogHeader><DialogTitle>{t("ui.selectMerits")}</DialogTitle><DialogDescription>{t("ui.searchByNameOrBrowseCategories")}</DialogDescription></DialogHeader>
+      <div className="catalog-filters"><label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t("ui.searchMeritByNamePrerequisiteOrSource")} /></label><Choice label={t("ui.category")} value={category} setValue={setCategory} options={["all", ...categories]} optionLabels={{ all: t("ui.allCategories"), ...Object.fromEntries(categories.map((item) => [item, categoryName(item)])) }} /><MeritCatalogVisibilityToggle showAll={showAllMerits} setShowAll={setShowAllMerits} /></div>
       <div className="merit-catalog">{categories.map((catalogCategory) => {
         const items = visibleCatalog.filter((item) => item.category === catalogCategory);
         if (!items.length) return null;
@@ -109,9 +109,9 @@ export function MeritPicker({
           const selected = merits.some((merit) => merit.name === definition.name);
           const repeatable = isRepeatableDefinition(definition);
           const prerequisitesMet = meritPrerequisitesMet(definition, context);
-          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : formatRatings(meritRatingsFor(definition))}</small>{definition.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{tr("Pré-requisitos", "Prerequisites")}:</strong> {definition.prerequisites}</p>}<p>{definition.description}</p></div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {tr("Selecionado", "Selected")}</> : <><Plus /> {repeatable && selected ? tr("Nova instância", "New instance") : tr("Adicionar", "Add")}</>}</Button></article>;
+          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : formatRatings(meritRatingsFor(definition))}</small>{definition.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {definition.prerequisites}</p>}<p>{definition.description}</p></div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
         })}</div></section>;
-      })}{!visibleCatalog.length && <em>{tr("Nenhum Mérito corresponde aos filtros.", "No Merits match the filters.")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
+      })}{!visibleCatalog.length && <em>{t("ui.noMeritsMatchTheFilters")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
     </DialogContent></Dialog>
   </>;
 }
