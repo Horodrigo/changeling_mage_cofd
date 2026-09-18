@@ -19,7 +19,6 @@ import { hasPublishedMageOrder } from "@/lib/mage-orders";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
-import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { systemTerm } from "@/lib/system-terms";
@@ -268,7 +267,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(synchronizeMageBuilderMeritGrants(completed));
+    onSave(completed);
   };
 
   return <CharacterBuilderShell

@@ -1,4 +1,4 @@
-import { ATTRIBUTES, SKILLS } from "./creation-rules";
+import { ATTRIBUTES, SKILLS } from "./core/character/creation-rules";
 
 const collators = {
   "pt-BR": new Intl.Collator("pt-BR", { sensitivity: "base", numeric: true }),

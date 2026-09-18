@@ -5,7 +5,7 @@ export const vampireRegistration: GameLineRegistration = {
   id: "VtR",
   slug: "vampire",
   label: "Vampire: The Requiem",
-  iconSrc: "/vampire-skull.png",
+  iconSrc: "/vampire-skull.webp",
   cardClass: "vtr-card",
   summaryClass: "vtr-summary",
   catalogGroups: {

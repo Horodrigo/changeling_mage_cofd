@@ -11,9 +11,9 @@ const SHELL = [
   "/cod-emblem-256.webp",
   "/paper-texture.webp",
 
-  "/changeling-skull.png",
-  "/mage-skull.png",
-  "/vampire-skull.png",
+  "/changeling-skull.webp",
+  "/mage-skull.webp",
+  "/vampire-skull.webp",
 
   "/fonts/changeling/changeling-regular.woff2",
   "/fonts/changeling/changeling-italic.woff2",

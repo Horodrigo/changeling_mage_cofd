@@ -58,8 +58,10 @@ test("registry applies selected line normalize then synchronize hooks", async ()
 
   const normalizeIndex = registry.indexOf("rules.normalizeCharacter");
   const synchronizeIndex = registry.indexOf("rules.synchronizeCharacter");
+  const deriveIndex = registry.indexOf("rules.deriveCharacterState");
   assert.ok(normalizeIndex >= 0);
   assert.ok(synchronizeIndex > normalizeIndex);
+  assert.ok(deriveIndex > synchronizeIndex);
 });
 
 test("workspace contains no dead server-catalog presentation path", async () => {

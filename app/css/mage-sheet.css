@@ -162,7 +162,7 @@
 .line-choice button.mage-line-choice.selected { border-color:#397895; background:linear-gradient(145deg,#eaf5fa,#d9ebf4); box-shadow:inset 0 0 0 1px #397895,0 10px 28px #285f7b20; }
 
 .cod-sheet.mta-sheet::after {
-  background-image: url("/mage-skull.png");
+  background-image: url("/mage-skull.webp");
 }
 
 .mta-sheet { --sheet-accent:#397895; --sheet-ink:#253a47; background:linear-gradient(135deg,#eef8fb 0,#fff 13%,#fff 87%,#e9f5f8 100%); }
@@ -347,7 +347,7 @@
    - prism-circular.webp
    - prism-corner.webp
 
-   The existing /mage-skull.png watermark is intentionally preserved.
+   The existing /mage-skull.webp watermark is intentionally preserved.
    ========================================================================== */
 
 .cod-sheet.mta-sheet {
@@ -1457,7 +1457,7 @@
    -------------------------------------------------------------------------- */
 
 .cod-sheet.mta-sheet::after {
-  background-image:url("/mage-skull.png") !important;
+  background-image:url("/mage-skull.webp") !important;
 }
 
 /* --------------------------------------------------------------------------

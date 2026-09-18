@@ -8,7 +8,7 @@ const vite=await createServer({appType:"custom",configFile:false,root,resolve:{a
 after(async()=>vite.close());
 
 test("all six official Seemings and Grimm provide complete Portuguese and English mechanics",async()=>{
-  const {CTL_SEEMINGS}=await vite.ssrLoadModule("/lib/creation-rules.ts");
+  const {CTL_SEEMINGS}=await vite.ssrLoadModule("/game-lines/changeling/creation-rules.ts");
   assert.deepEqual(Object.keys(CTL_SEEMINGS),["Beast","Darkling","Elemental","Fairest","Ogre","Wizened","Grimm"]);
   assert.equal(CTL_SEEMINGS.Grimm.sourceId,"h-seemings");
   for(const [name,seeming] of Object.entries(CTL_SEEMINGS)){
@@ -23,7 +23,7 @@ test("all six official Seemings and Grimm provide complete Portuguese and Englis
 });
 
 test("Seeming labels follow the active language without changing stored values",async()=>{
-  const {seemingDisplayName}=await vite.ssrLoadModule("/lib/creation-rules.ts");
+  const {seemingDisplayName}=await vite.ssrLoadModule("/game-lines/changeling/creation-rules.ts");
   assert.equal(seemingDisplayName("Beast","pt-BR"),"Fera");
   assert.equal(seemingDisplayName("Beast","en-US"),"Beast");
   assert.equal(seemingDisplayName("Wizened","pt-BR"),"Mirrado");

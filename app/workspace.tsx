@@ -156,23 +156,28 @@ export function Workspace({
       const { normalizeStoredSheet } = await import("@/lib/character-persistence");
       setSelected(await normalizeGameLineCharacter(normalizeStoredSheet(sheet)));
     } catch {
-      setSelected(sheet);
+      setSelected(null);
+      setNotice(t("workspace.invalidCharacterJson"));
     }
   }
 
-  function saveCharacter(sheet: CharacterSheet) {
-    commitCharacters((current) => {
-      const exists = current.some((item) => storedCharacterId(item) === sheet.id);
-      return exists
-        ? current.map((item) => (storedCharacterId(item) === sheet.id ? sheet : item))
-        : [sheet, ...current];
-    });
-    setEditing(null);
-    setSelected(sheet);
-    setView("personagens");
-    setNotice(
-      t("workspace.characterSaved"),
-    );
+  async function saveCharacter(sheet: CharacterSheet) {
+    try {
+      const { normalizeStoredSheet } = await import("@/lib/character-persistence");
+      const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(sheet));
+      commitCharacters((current) => {
+        const exists = current.some((item) => storedCharacterId(item) === normalized.id);
+        return exists
+          ? current.map((item) => (storedCharacterId(item) === normalized.id ? normalized : item))
+          : [normalized, ...current];
+      });
+      setEditing(null);
+      setSelected(normalized);
+      setView("personagens");
+      setNotice(t("workspace.characterSaved"));
+    } catch {
+      setNotice(t("workspace.invalidCharacterJson"));
+    }
   }
 
   function updateCharacterState(
@@ -190,12 +195,18 @@ export function Workspace({
     setSelected(sheet);
   }
 
-  function updateCharacter(sheet: CharacterSheet) {
-    const updated = { ...sheet, updated_at: new Date().toISOString() };
-    commitCharacters((current) =>
-      current.map((item) => (storedCharacterId(item) === updated.id ? updated : item)),
-    );
-    setSelected(updated);
+  async function updateCharacter(sheet: CharacterSheet) {
+    try {
+      const updated = { ...sheet, updated_at: new Date().toISOString() };
+      const { normalizeStoredSheet } = await import("@/lib/character-persistence");
+      const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(updated));
+      commitCharacters((current) =>
+        current.map((item) => (storedCharacterId(item) === normalized.id ? normalized : item)),
+      );
+      setSelected(normalized);
+    } catch {
+      setNotice(t("workspace.invalidCharacterJson"));
+    }
   }
 
   function deleteCharacter(character: StoredCharacter) {
@@ -259,9 +270,9 @@ export function Workspace({
       >
         <Suspense fallback={<WorkspaceLoading />}>
           {editing === "new" ? (
-            <NewCharacterBuilder player={displayName} onCancel={() => setEditing(null)} onSave={saveCharacter} />
+            <NewCharacterBuilder player={displayName} onCancel={() => setEditing(null)} onSave={(sheet) => { void saveCharacter(sheet); }} />
           ) : (
-            <GameLineBuilder gameLine={editing.game_line} player={displayName} initial={editing} onCancel={() => setEditing(null)} onSave={saveCharacter} />
+            <GameLineBuilder gameLine={editing.game_line} player={displayName} initial={editing} onCancel={() => setEditing(null)} onSave={(sheet) => { void saveCharacter(sheet); }} />
           )}
         </Suspense>
       </CatalogBoundary>
@@ -377,7 +388,7 @@ export function Workspace({
             printOpen={printOpen}
             setPrintOpen={setPrintOpen}
             updateState={(state) => updateCharacterState(selected, state)}
-            updateSheet={updateCharacter}
+            updateSheet={(sheet) => { void updateCharacter(sheet); }}
           />
         ) : view === "inicio" ? (
           <Dashboard

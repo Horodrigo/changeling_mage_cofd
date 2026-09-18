@@ -278,7 +278,7 @@ de Skill de Kith.
 | Attributes | `public/changeling/style/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
 | Seções | `public/changeling/style/divider-terminal.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
 | Grid | `public/changeling/style/vertical-rule.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
-| Marca-d'água | `public/changeling-skull.png` | 534 × 500 | RGBA | Símbolo central muito translúcido, já existente antes da branch. |
+| Marca-d'água | `public/changeling-skull.webp` | 534 × 500 | RGBA | Símbolo central muito translúcido, já existente antes da branch. |
 | Skill de Kith | `public/changeling/style/skill-kith-left.webp` | 471 × 552 | RGBA | Início da moldura adaptável. |
 | Skill de Kith | `public/changeling/style/skill-kith-middle-1.webp` | 260 × 552 | RGBA | Primeiro segmento repetível. |
 | Skill de Kith | `public/changeling/style/skill-kith-middle-2.webp` | 260 × 552 | RGBA | Segundo segmento repetível, alternado com o primeiro. |

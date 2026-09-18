@@ -26,11 +26,16 @@ export function listGameLineRegistrations(): readonly GameLineRegistration[] {
 }
 
 /**
- * Runs an optional pure line-owned normalization hook after structural loading.
- * Rule modules are loaded only for the selected persisted game line.
+ * Canonical line-owned character pipeline after structural/core normalization:
+ * normalize -> synchronize -> derive.
  */
 export async function normalizeGameLineCharacter(character: CharacterSheet): Promise<CharacterSheet> {
   const rules = await getGameLineRegistration(character.game_line).loadRules();
-  const normalized = rules.normalizeCharacter?.(character) ?? character;
-  return rules.synchronizeCharacter?.(normalized) ?? normalized;
+
+  let next = structuredClone(character);
+  next = rules.normalizeCharacter?.(next) ?? next;
+  next = rules.synchronizeCharacter?.(next) ?? next;
+
+  const derived = rules.deriveCharacterState?.(next);
+  return derived ? { ...next, derived } : next;
 }

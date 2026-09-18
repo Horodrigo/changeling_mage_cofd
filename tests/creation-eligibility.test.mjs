@@ -24,7 +24,7 @@ const courtCatalog = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 courtCatalog.replaceCourtCatalog(
   JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")),
 );
-const creationRules = await vite.ssrLoadModule("/lib/creation-rules.ts");
+const creationRules = await vite.ssrLoadModule("/game-lines/changeling/creation-rules.ts");
 
 test("Needle and Thread reopen with canonical values and follow the active locale",()=>{
   assert.equal(creationRules.canonicalChangelingAnchorName("needle","Mestre de Xadrez"),"Chess Master");

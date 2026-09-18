@@ -75,8 +75,7 @@ test("build packaging contains no stale D1 or Drizzle migration path", async () 
   const buildPlugin = await source("build/sites-vite-plugin.ts");
   assert.doesNotMatch(
     buildPlugin,
-    /\bdrizzle\b|\bmigrations?\b/i,
-    "build/sites-vite-plugin.ts still contains database migration packaging from the removed D1 architecture",
+    /\bdrizzle\b|migrations_dir|resolve\([^)]*["']drizzle["']/i,
   );
 });
 

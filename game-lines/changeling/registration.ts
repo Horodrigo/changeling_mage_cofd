@@ -5,7 +5,7 @@ export const changelingRegistration: GameLineRegistration = {
   id: "CtL",
   slug: "changeling",
   label: "Changeling: The Lost",
-  iconSrc: "/changeling-skull.png",
+  iconSrc: "/changeling-skull.webp",
   cardClass: "ctl-card",
   summaryClass: "ctl-summary",
   catalogGroups: {

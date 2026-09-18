@@ -29,7 +29,6 @@ import { contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
-import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
@@ -228,7 +227,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
       },
       current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(synchronizeChangelingBuilderMeritGrants(completed, reference.entitlements));
+    onSave(completed);
   };
 
   return <CharacterBuilderShell
