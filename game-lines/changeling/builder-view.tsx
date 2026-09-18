@@ -143,7 +143,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             <div className="regalia-information" aria-live="polite">
               <strong>{props.secondRegalia ? systemTerm(props.secondRegalia, locale) : t("ui.secondRegalia")}</strong>
               <p>{props.secondRegalia
-                ? t("ui.thisFavoredRegaliaGrantsAccessToItsRoyal", { p1: secondRegaliaRoyalCount }})
+                ? t("ui.thisFavoredRegaliaGrantsAccessToItsRoyal", { p1: secondRegaliaRoyalCount })
                 : t("ui.chooseASecondFavoredRegaliaToUnlockAnother")}</p>
             </div>
             <div className="regalia-select">
@@ -306,9 +306,9 @@ function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"nee
     <span>{label}</span>
     <div className="kith-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):t("ui.noneSelected4f351e")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):t("ui.reviewTheWillpowerRecoveryTriggersBeforeChoosing")}</small></div>
     <Dialog>
-      <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {t("ui.select93d2b9", { p1: label }})}</Button></DialogTrigger>
+      <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {t("ui.select93d2b9", { p1: label })}</Button></DialogTrigger>
       <DialogContent className="merit-dialog anchor-dialog ctl-dialog">
-        <DialogHeader><DialogTitle>{t("ui.select93d2b9", { p1: label }})}</DialogTitle><DialogDescription>{t("ui.eachOptionRecoversEither1PointOrAll")}</DialogDescription></DialogHeader>
+        <DialogHeader><DialogTitle>{t("ui.select93d2b9", { p1: label })}</DialogTitle><DialogDescription>{t("ui.eachOptionRecoversEither1PointOrAll")}</DialogDescription></DialogHeader>
         <label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={t("ui.searchByNameOrTrigger")}/></label>
         <div className="catalog-filters anchor-filters"><label>{t("ui.source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{t("ui.allSources")}</SelectItem>{sources.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label></div>
         <div className="merit-catalog anchor-catalog">{filtered.map((item)=><SelectableCatalogCard key={item.name} selected={value===item.name} label={`${t("ui.select198f7a")} ${changelingAnchorDisplayName(kind,item.name,locale)}`} onToggle={()=>setValue(value===item.name?"":item.name)}><div><strong>{changelingAnchorDisplayName(kind,item.name,locale)}</strong>{item.source&&<small>{item.source} · p. {item.page}</small>}<p>{changelingAnchorRecovery(kind,item.name,locale).split("\n").map((line,index)=><span key={line}>{index===0?"":""}{line}</span>)}</p></div></SelectableCatalogCard>)}</div>

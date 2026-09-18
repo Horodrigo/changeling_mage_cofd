@@ -373,7 +373,7 @@ export function MageExperiencePanel({
       mage_experience_history: [entry, ...history].slice(0, 100),
     };
     updateSheet(synchronizeMeritGrants(next));
-    setFeedback(t("ui.purchased", { p1: label }}));
+    setFeedback(t("ui.purchased", { p1: label }));
     if(purchase==="Especialização")setMageSpecialtyName("");
   }
   function markWillpowerLoss() {

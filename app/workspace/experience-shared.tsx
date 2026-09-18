@@ -31,7 +31,7 @@ export function BeatTrack({
       <div
         className="resource-track"
         role="group"
-        aria-label={t("ui.of5", { p1: label, p2: value }})}
+        aria-label={t("ui.of5", { p1: label, p2: value })}
       >
         {Array.from({ length: 5 }, (_, index) => (
           <button
@@ -39,7 +39,7 @@ export function BeatTrack({
             key={index}
             className={index < value ? "filled" : ""}
             onClick={() => onChange(index < value ? index : index + 1)}
-            aria-label={t("ui.setTo", { p1: label, p2: index < value ? index : index + 1 }})}
+            aria-label={t("ui.setTo", { p1: label, p2: index < value ? index : index + 1 })}
           />
         ))}
       </div>

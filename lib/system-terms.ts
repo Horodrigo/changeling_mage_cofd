@@ -33,7 +33,7 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Frátria":"Kith", "Regalia":"Regalia", "Corte":"Court", "Manto":"Mantle",
   "Nenhuma opção disponível":"No options available",
   "Todas":"All", "Todos":"All",
-};
+
 
   "Nome":"Name",
   "Jogador":"Player",
@@ -108,6 +108,8 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Nenhum registro.":"No entries.",
   "Nenhum Mérito selecionado":"No Merit selected",
   "Nenhum Mérito Expandido adquirido.":"No Expanded Merit acquired.",
+
+  };
 
 const PORTUGUESE_TERMS: Record<string,string> = {
   Mental:"Mental", Physical:"Físico", Social:"Social",

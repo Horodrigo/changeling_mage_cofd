@@ -81,8 +81,8 @@ export function MeritPicker({
         <Badge variant={spent > budget ? "destructive" : "outline"}>{spent}/{budget} {t("ui.creationMeritDotsSpent")}</Badge>
         <Badge variant="outline">{powerLabel}: {power}</Badge>
         <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => setCatalogOpen(true)}>{t("ui.addMerit")}</Button>
-        <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={power >= 3 || spent + 5 > budget} onClick={() => setPower(power + 1)}>{t("ui.add5MeritDots", { p1: powerLabel }})}</Button>
-        {power > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setPower(power - 1)}>{t("ui.remove", { p1: powerLabel }})}</Button>}
+        <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={power >= 3 || spent + 5 > budget} onClick={() => setPower(power + 1)}>{t("ui.add5MeritDots", { p1: powerLabel })}</Button>
+        {power > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setPower(power - 1)}>{t("ui.remove", { p1: powerLabel })}</Button>}
       </div>
     </div>
     <div className="merit-picker">{merits.map((selection, index) => {
@@ -94,7 +94,7 @@ export function MeritPicker({
           <small>{definition ? `${categoryName(definition.category)} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
           <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
           {!selection.grantedBy && (needsConfirmation
-            ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={t("ui.removefc5df2", { p1: definition ? meritName(definition) : selection.name }})} description={t("ui.theMeritAndLinkedBenefitsWillBeRemoved")} action={t("ui.remove7d41cc")} onConfirm={remove} />
+            ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={t("ui.removefc5df2", { p1: definition ? meritName(definition) : selection.name })} description={t("ui.theMeritAndLinkedBenefitsWillBeRemoved")} action={t("ui.remove7d41cc")} onConfirm={remove} />
             : <Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`} onClick={remove}><Trash2 /></Button>)}
         </div>
         {selection.name !== "Familiar" && renderConfiguration({ merit: selection, ownedMerits: context.merits ?? [], inline: isInlineConfiguration(selection.name), onChange: (configuration) => { const next = [...merits]; next[index] = { ...selection, configuration }; setMerits(next); } })}

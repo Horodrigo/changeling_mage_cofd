@@ -43,7 +43,7 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
   const numina = stringList(configuration.numina);
   const numinaLimit = rank === 1 ? 3 : 5;
   return <article className="companion-card merit-companion companion-config">
-    <header><div><strong>{name}</strong><small>{t("ui.familiarRankEphemeralEntity", { p1: rank }})}</small></div></header>
+    <header><div><strong>{name}</strong><small>{t("ui.familiarRankEphemeralEntity", { p1: rank })}</small></div></header>
     <div className="companion-form-grid">
       <label>{t("ui.name")}<Input value={name} onChange={event => save({ name: event.target.value })}/></label>
       <label>{t("ui.form")}<RuleSelect value={form} onChange={value => save({ form: value })} options={[{ value: "animal", label: t("ui.animal") }, { value: "object", label: t("ui.object") }]}/></label>
@@ -62,6 +62,6 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
       const active = numina.includes(item);
       return <label key={item} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && numina.length >= numinaLimit} onChange={() => save({ numina: active ? numina.filter(value => value !== item) : [...numina, item] })}/><span><strong>{item}</strong></span></label>;
     })}</div>
-    <p className="combat-note">{t("ui.rankMaximumAttributeInfluenceAndUpToNumina", { p1: rank, p2: rank === 1 ? 5 : 7, p3: rank, p4: numinaLimit }})}</p>
+    <p className="combat-note">{t("ui.rankMaximumAttributeInfluenceAndUpToNumina", { p1: rank, p2: rank === 1 ? 5 : 7, p3: rank, p4: numinaLimit })}</p>
   </article>;
 }

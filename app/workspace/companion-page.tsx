@@ -51,7 +51,7 @@ export function AnimalCard({ animal, name, onRemove, removable = true, onNameCha
 }) {
   const { t } = useLanguage();
   return <article className="companion-card">
-    <header><div><strong>{name || animal.name}</strong><small>{name ? animal.name : t("ui.animalCompanion")}</small></div>{removable && <Button type="button" size="icon" variant="ghost" onClick={onRemove} aria-label={t("ui.remove", { p1: name || animal.name }})}><X /></Button>}</header>
+    <header><div><strong>{name || animal.name}</strong><small>{name ? animal.name : t("ui.animalCompanion")}</small></div>{removable && <Button type="button" size="icon" variant="ghost" onClick={onRemove} aria-label={t("ui.remove", { p1: name || animal.name })}><X /></Button>}</header>
     {onNameChange && <label className="companion-field">{t("ui.name")}<Input value={name ?? ""} onChange={event => onNameChange(event.target.value)} placeholder={animal.name}/></label>}
     <p><b>{t("ui.attributes")}:</b> {animal.attributes}</p>
     <p><b>{t("ui.skills")}:</b> {animal.skills}</p>

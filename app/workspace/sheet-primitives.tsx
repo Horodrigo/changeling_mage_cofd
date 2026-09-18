@@ -2,7 +2,6 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { systemTerm } from "@/lib/system-terms";
 import { normalizeDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
 import { RuleSelect } from "./rule-select";
 
@@ -127,7 +126,7 @@ export function DotValue({ value, max = 5, singleRow=false }: { value: number; m
   const { t }=useLanguage();
   const total = Math.max(max, Math.ceil(value / 5) * 5);
   return (
-    <span className="official-dots" aria-label={t("ui.dots638f6d", { p1: value }})}>
+    <span className="official-dots" aria-label={t("ui.dots638f6d", { p1: value })}>
       {singleRow?<span className="official-dot-row">{Array.from({length:total},(_,index)=><i key={index} className={index<value?"on":""}/>)}</span>:Array.from({ length: Math.ceil(total / 5) }, (_, row) => (
         <span className="official-dot-row" key={row}>
           {Array.from({ length: 5 }, (_, column) => {
@@ -174,7 +173,7 @@ export function HealthTrack({
       <div
         className="health-track"
         role="group"
-        aria-label={t("ui.healthOfBoxesMarked", { p1: damage.length, p2: health }})}
+        aria-label={t("ui.healthOfBoxesMarked", { p1: damage.length, p2: health })}
       >
         {Array.from({ length: health }, (_, index) => {
           const level = damage[index];

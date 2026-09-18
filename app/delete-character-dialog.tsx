@@ -28,7 +28,7 @@ export default function DeleteCharacterDialog({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("ui.delete", { p1: name }})}</AlertDialogTitle>
+          <AlertDialogTitle>{t("ui.delete", { p1: name })}</AlertDialogTitle>
           <AlertDialogDescription>
             {t("ui.thisCharacterWillBeRemovedFromThisBrowser")}
           </AlertDialogDescription>

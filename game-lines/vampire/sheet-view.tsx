@@ -223,7 +223,7 @@ function HumanityTrack({
               className="vampire-humanity-touchstone"
               value={String(row?.name ?? "")}
               placeholder="Touchstone"
-              aria-label={t("ui.humanityTouchstone", { p1: rating }})}
+              aria-label={t("ui.humanityTouchstone", { p1: rating })}
               onChange={(event) => setTouchstoneName(rating, meritPoint, event.target.value)}
             />
           : <span className="vampire-humanity-line" aria-hidden="true" />}
@@ -232,7 +232,7 @@ function HumanityTrack({
           type="button"
           className={`vampire-humanity-dot${value === rating ? " on" : ""}`}
           aria-pressed={value === rating}
-          aria-label={t("ui.setHumanity", { p1: rating }})}
+          aria-label={t("ui.setHumanity", { p1: rating })}
           onClick={() => setHumanity(rating)}
         />
       </div>;

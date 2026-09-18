@@ -82,7 +82,7 @@ function FaeCompanionCard({ merit, meritIndex, character, updateSheet }: {
   const mountAttributes = { Intelligence: 1, Wits: 3, Resolve: 3, Strength: 5, Dexterity: 3, Stamina: 5 + (burden ? 2 : 0), Presence: 3, Manipulation: 1, Composure: 2 };
   const special = [
     t("ui.canLiftFourTimesAsMuchAsA"),
-    burden ? t("ui.canCarryRiders", { p1: 1 + merit.dots }}) : t("ui.canCarryOneRider"),
+    burden ? t("ui.canCarryRiders", { p1: 1 + merit.dots }) : t("ui.canCarryOneRider"),
     abilities.includes("chatterbox") ? t("ui.speaksWithItsOwnerAndConveysSimpleMessages") : "",
     abilities.includes("actormask") ? t("ui.canLeaveTheHedgeAndMaintainAMask") : "",
     dreamspun ? t("ui.returnsToLifeAfterItsOwnerCompletesA") : "",
