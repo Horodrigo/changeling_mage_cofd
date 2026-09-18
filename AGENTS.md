@@ -19,7 +19,9 @@ The application currently supports the persisted game-line IDs `CtL`, `MtA`, and
 - `game-lines/vampire/`: Vampire rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `app/character-builder-shell.tsx` and `app/builder/`: common creation shell and genuinely shared controls.
 - `app/workspace/character-paper-shell.tsx` and neutral workspace controls: common in-app sheet composition.
-- `lib/character-persistence.ts` and `lib/stored-character.ts`: line-neutral persistence lifecycle and safe treatment of stored values.
+- `app/workspace/character-lifecycle.ts`: import/open/save/update lifecycle and canonical routing through Core normalization plus the selected game-line rules.
+- `app/workspace/character-repository.ts`: browser-local character loading, crash-safe staging, debounced persistence, and collection mutation.
+- `lib/character-persistence.ts` and `lib/stored-character.ts`: line-neutral structural normalization, current-schema validation exports, and safe treatment of stored values.
 - `public/data/`: static catalog data, separated by Core and game line.
 
 ## Ownership Rules
@@ -116,14 +118,14 @@ Required invariants:
 
 Do not reintroduce runtime mutation APIs such as `replaceSpellCatalog` or `replaceContractCatalog`.
 
-Four mutable adapters currently remain solely for legacy audit tests:
+Two legacy mutable catalog holders remain:
 
-- `replaceCourtCatalog` in `lib/changeling-courts.ts`;
-- `replaceKithCatalog` in `lib/changeling-kiths.ts`;
-- `replaceChangelingConditionCatalog` in `lib/changeling-conditions.ts`;
-- `replaceMageConditionCatalog` in `lib/mage-conditions.ts`.
+- `replaceCourtCatalog` / `CTL_COURT_DEFINITIONS` in `lib/changeling-courts.ts`;
+- `replaceKithCatalog` / `KITHS` in `lib/changeling-kiths.ts`.
 
-They are marked `@test-only`, must not be imported by `app/`, `game-lines/`, or `worker/`, and are protected by architecture tests. Prefer replacing them with immutable fixtures or explicit factories when that can test the same legitimate audit path; then remove the adapter and update its tests.
+The mutation entry points are test-only. Unlike the removed Condition adapters, however, some Court/Kith helper code still shares these legacy holders with runtime-facing modules. Treat this as transitional ownership debt, not as the target architecture. Prefer immutable fixtures in tests and explicit catalog/snapshot arguments in production helpers, then remove the global holders entirely.
+
+The former mutable Changeling/Mage Condition adapters have already been removed; do not recreate them.
 
 ## Merit Architecture and Invariants
 
@@ -165,7 +167,8 @@ parse
 -> Core structural normalization
 -> resolve the selected game-line rules module
 -> game-line normalization
--> game-line synchronization of grants and derived state
+-> game-line synchronization of grants
+-> game-line derived-state calculation
 -> runtime use
 ```
 
@@ -176,6 +179,18 @@ Core normalization remains line-neutral. Mage normalization belongs to Mage; Cha
 Local storage may contain data that is not a current `CharacterSheet`. Keep unsupported values opaque until the user explicitly removes them. Listing stored characters must not migrate or normalize those values. Tests should protect safe handling and deletion instead of obsolete migration behavior.
 
 Current-schema export and import must round-trip without losing data.
+
+### Workspace lifecycle and repository
+
+`Workspace` is a UI orchestrator, not the persistence implementation.
+
+- `CharacterLifecycle` owns import validation, catalog hydration for open/import, Core structural normalization, selected-line normalization/synchronization/derivation, and the explicit transient-state fast path.
+- `CharacterRepository` owns browser-local loading, crash-safe staging, debounced IndexedDB persistence, and upsert/replace/remove operations.
+- `Workspace` owns navigation, selection/editing state, notices, zoom, print controls, and delegation to those services.
+- Structural edits must go through the canonical lifecycle pipeline.
+- `current_state` interaction updates intentionally use the fast path and must not silently expand into structural rule mutation.
+
+Do not move `device-storage`, schema validation, catalog hydration, or game-line normalization logic back into `Workspace`.
 
 ## Official Content and Localization
 
@@ -310,8 +325,10 @@ For new functionality, ask:
 
 ## Documentation Policy
 
-`AGENTS.md` is the authoritative internal guide. Keep `README.md` for the public project overview and setup only.
+`AGENTS.md` is the authoritative internal guide. Keep `README.md` for the public project overview and setup.
 
-Temporary plans may exist as separate Markdown while work is active. When completed, delete them or rewrite their still-current constraints into this guide. Do not accumulate migration diaries, completed implementation plans, obsolete audit snapshots, or history that does not help current development.
+Implementation plans may remain after completion only when they are explicitly marked historical/reference documents and clearly defer to `AGENTS.md` and the current code for architecture. Do not treat future-tense implementation-plan text as a current runtime contract.
+
+Do not accumulate obsolete migration diaries or audit snapshots that are likely to mislead future work. Delete them, archive them outside the active documentation set, or add a clear historical-status header.
 
 Documentation that contradicts the code is a defect. Update this guide in the same work when architecture changes intentionally.

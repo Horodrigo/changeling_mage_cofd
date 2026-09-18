@@ -1,8 +1,14 @@
 # Characters of the Darkness
 
-Characters of the Darkness is a local-first character builder and sheet manager for Chronicles of Darkness. It currently supports Changeling: The Lost and Mage: The Awakening, with English (`en-US`) and Brazilian Portuguese (`pt-BR`) presentation.
+Characters of the Darkness is a local-first character builder and sheet manager for Chronicles of Darkness. The current application supports:
 
-The application runs on [Vinext](https://github.com/cloudflare/vinext), Vite, React, and Cloudflare. Large rules catalogs are served as static data and loaded only for the selected game line.
+- Changeling: The Lost (`CtL`)
+- Mage: The Awakening (`MtA`)
+- Vampire: The Requiem (`VtR`)
+
+The interface supports English (`en-US`) and Brazilian Portuguese (`pt-BR`).
+
+The runtime is built with React, Next/Vinext, Vite, and Cloudflare. Character persistence is browser-local through IndexedDB with localStorage crash-safe fallback/staging. Large rules catalogs remain static under `public/data/**` and are loaded lazily for the selected game line.
 
 ## Prerequisites
 
@@ -21,19 +27,78 @@ Useful checks:
 ```bash
 npm run lint
 npm run build
-node --test --test-concurrency=1 tests/*.test.mjs
 npx tsc --noEmit
+node --test --test-reporter=spec tests/*.test.mjs
 git diff --check
 ```
 
-The verified npm wrappers are designed for Bash environments and use project-scoped runtime directories through `scripts/sites-env.sh`. `.sites-runtime/` and Wrangler runtime state are disposable and ignored by Git.
+`npm test` runs the verified build and then the full Node test suite.
 
-See [AGENTS.md](AGENTS.md) for architecture, ownership boundaries, catalog rules, persistence policy, quality gates, and contribution guidance.
+The verified wrappers use project-scoped runtime directories through `scripts/sites-env.sh`. `.sites-runtime/` and Wrangler runtime state are disposable and ignored by Git.
+
+See [AGENTS.md](AGENTS.md) for the authoritative architecture, ownership boundaries, persistence lifecycle, catalog rules, quality gates, and contribution guidance.
+
+## Architecture overview
+
+The central rule is:
+
+> Core supplies mechanisms. Game lines supply mechanics.
+
+The major boundaries are:
+
+- `lib/core/character/` — neutral persisted character shape, validation, common Chronicles mechanics, and shared character helpers.
+- `lib/game-line-contracts/` — neutral contracts for registrations, rule hooks, UI surfaces, and catalog snapshots.
+- `game-lines/registry/` — explicit registration and lazy dispatch.
+- `game-lines/changeling/` — Changeling-owned rules, builder, sheet, experience flow, and catalogs.
+- `game-lines/mage/` — Mage-owned rules, builder, sheet, experience flow, and catalogs.
+- `game-lines/vampire/` — Vampire-owned rules, builder, sheet, experience flow, and catalogs.
+- `app/workspace/character-lifecycle.ts` — import/open/save/update lifecycle and canonical normalization routing.
+- `app/workspace/character-repository.ts` — browser-local character storage and collection mutation.
+- `lib/catalog/` — generic static catalog loading, cache, and immutable snapshots.
+- `public/data/` — static Core and game-line catalog data.
+
+Builder, sheet, rules, print surfaces, and catalog groups remain independently lazy where applicable. Inactive game lines should not impose their JavaScript or catalog-data cost on the current character.
+
+## Character persistence
+
+The only supported persisted schema is `schema_version = 2`.
+
+The canonical structural pipeline is:
+
+```text
+parse/import
+-> validate current outer schema
+-> Core structural normalization
+-> selected game-line normalize
+-> selected game-line synchronize
+-> selected game-line derive
+-> runtime use / local persistence
+```
+
+Transient play-state changes such as damage, resource tracks, and Conditions use the dedicated current-state fast path instead of re-running the full structural pipeline on every interaction.
+
+Unsupported stored values remain opaque in the character list until the user removes them explicitly.
 
 ## Runtime and deployment
 
-Cloudflare configuration lives in `wrangler.jsonc`; `.openai/hosting.json` declares the Sites project and D1 binding. The Worker entry is `worker/index.ts`, static assets are emitted to `dist/client`, and the server entry is emitted to `dist/server/index.js`.
+Cloudflare configuration lives in `wrangler.jsonc`.
 
-Workspace identity is read from the `oai-authenticated-user-email` header, with the optional percent-encoded full-name headers used when available. `app/chatgpt-auth.ts` contains the server-only helpers for dispatch-owned ChatGPT sign-in. D1 access is isolated under `db/`.
+- Worker entry: `worker/index.ts`
+- client assets: `dist/client`
+- server entry: `dist/server/index.js`
+- static RPG data: `public/data/**`
 
-Catalog data under `public/data/**` must remain compatible with static deployment. Browser code must not assume runtime filesystem access.
+The production application no longer uses D1 or Drizzle for character persistence.
+
+Workspace identity is read through the dispatch-owned authentication headers handled by `app/chatgpt-auth.ts`.
+
+Browser code must not assume runtime filesystem access. Worker code must remain independent from browser UI and concrete game-line surfaces.
+
+## Documentation
+
+- `AGENTS.md` is the authoritative current development/architecture guide.
+- `docs/sheet-stylization-guide.md` documents the visual-sheet approach.
+- `docs/*-implementation-plan.md` files are historical/reference implementation plans. Their future-tense sections record the plan used during implementation and are not the source of truth for current architecture.
+- asset-specific READMEs document reproducible source-to-public build steps.
+
+When documentation conflicts with the code, treat that as a documentation defect and update the documentation with the architectural change.

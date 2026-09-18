@@ -8,4 +8,4 @@ Run from the repository root:
 python scripts/build-changeling-fonts.py
 ```
 
-The script requires `fonttools` and `brotli`. It produces the Regular, Italic, and Small Caps WOFF2 files consumed by the Changeling-only stylesheet. Mage does not load or use this family.
+The script requires `fonttools` and `brotli`. It produces the Regular, Italic, and Small Caps WOFF2 files consumed by the Changeling-only stylesheet. Mage and Vampire do not load or use this family.

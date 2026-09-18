@@ -1,10 +1,6 @@
 # Guia de estilização visual das fichas por linha
 
-Este guia registra o processo usado na branch `changeling-style` para aproximar
-a ficha de Changeling: The Lost de uma folha oficial ilustrada. Ele deve ser
-usado como roteiro quando a mesma abordagem for aplicada a Mage ou a outra
-linha, sem copiar mecanicamente a identidade visual ou as mecânicas de
-Changeling.
+Este guia registra o processo usado em uma folha oficial ilustrada. Ele deve ser usado como roteiro quando a mesma abordagem for aplicada a novas linhas de jogos.
 
 O resultado adotado é híbrido:
 
@@ -26,27 +22,21 @@ serviu de base para a branch:
 | `53b48c4` — `style(changeling): recompõe divisores da ficha` | Substituiu divisores monolíticos por peças, reutilizou um único terminal espelhado, eliminou assets redundantes e corrigiu a organização de Court e Aspirations na Main. |
 | `be0bcea` — `feat(changeling): refina conteúdo e ornamento de perícia de kith` | Tornou Court colapsável na Main, definiu Summary como entrada mobile, simplificou Experience e substituiu o stamp fixo de Skill de Kith por uma moldura segmentada e medida em runtime. |
 
-O plano e a análise visual originais continuam em `Estilizacao.md`. A imagem de
-comparação usada no início do trabalho está em
-`docs/visual-references/changeling-main.png`.
-
 ## 2. Alterações realizadas
 
 ### 2.1 Isolamento por linha
 
 As regras específicas foram concentradas em `app/css/changeling-sheet.css` e todas
 partem de `.ctl-sheet`. O arquivo é importado por `app/layout.tsx` depois de
-`css/globals.css`, permitindo que a linha especialize as primitivas comuns sem
-alterar intencionalmente Mage.
+`css/globals.css`, permitindo que a linha especialize as primitivas comuns sem alterar intencionalmente outras linhas.
 
-A classe da linha já é aplicada por `CharacterPaperShell`:
+A classe da linha é aplicada por `CharacterPaperShell` a partir do ID persistido:
 
 - Changeling: `.cod-sheet.ctl-sheet`;
-- Mage: `.cod-sheet.mta-sheet`.
+- Mage: `.cod-sheet.mta-sheet`;
+- Vampire: `.cod-sheet.vtr-sheet`.
 
-Para outra linha, use o mesmo padrão de escopo. Não coloque a paleta, a fonte ou
-os ornamentos novos em seletores globais apenas porque a estrutura HTML é
-compartilhada.
+CtL ainda possui uma moldura botânica específica renderizada pelo shell; Mage e Vampire especializam a estrutura compartilhada principalmente por CSS/assets line-owned. Para outra linha, use o mesmo padrão de escopo. Não coloque a paleta, a fonte ou os ornamentos novos em seletores globais apenas porque a estrutura HTML é compartilhada.
 
 ### 2.2 Papel, paleta e dimensão da folha
 

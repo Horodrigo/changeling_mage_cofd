@@ -6,8 +6,8 @@ Changeling sheet. They combine user-provided artwork with an Attributes ornament
 generated from the approved visual reference. They are retained here so the
 optimized public assets can be rebuilt.
 
-The complete implementation history, asset inventory, and reuse guide for other
-game lines are documented in `docs/sheet-stylization-guide.md`.
+The maintained implementation history, asset inventory, and reuse guidance for
+other game lines are documented in `docs/sheet-stylization-guide.md`.
 
 Run:
 
