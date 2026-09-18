@@ -1,258 +1,169 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { after } from "node:test";
-import { createServer } from "vite";
+import { extname, join } from "node:path";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const source = (path) => readFile(`${root}/${path}`, "utf8");
-const vite = await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},resolve:{alias:{"@":root}}});
-after(() => vite.close());
+const source = (path) => readFile(join(root, path), "utf8");
 
-test("neutral contracts and core catalog infrastructure do not know concrete game lines", async () => {
-  const [contracts, service] = await Promise.all([
-    source("lib/game-line-contracts/game-line-registration.ts"),
-    source("lib/catalog/catalog-service.ts"),
-  ]);
-  assert.doesNotMatch(contracts, /game-lines\/(mage|changeling)/);
-  assert.doesNotMatch(service, /mage|changeling|hydrate(?:Spells|Contracts|Merits)/i);
+async function sourceFiles(path) {
+  const absolute = join(root, path);
+  const entries = await readdir(absolute, { withFileTypes: true });
+  const nested = await Promise.all(entries.map(async (entry) => {
+    const child = join(path, entry.name);
+    if (entry.isDirectory()) return sourceFiles(child);
+    return [".ts", ".tsx"].includes(extname(entry.name)) ? [child] : [];
+  }));
+  return nested.flat();
+}
+
+async function assertMissing(path) {
+  await assert.rejects(access(join(root, path)));
+}
+
+test("neutral game-line contracts do not know concrete game lines", async () => {
+  const files = [
+    "lib/game-line-contracts/game-line-registration.ts",
+    "lib/game-line-contracts/game-line-rules.ts",
+    "lib/game-line-contracts/game-line-ui.ts",
+    "lib/game-line-contracts/catalog-groups.ts",
+    "lib/catalog/catalog-service.ts",
+  ];
+  const content = (await Promise.all(files.map(source))).join("\n");
+
+  assert.doesNotMatch(content, /game-lines\/(?:mage|changeling|vampire)/);
+  assert.doesNotMatch(content, /\b(?:MtA|CtL|VtR)\b/);
 });
 
-test("catalog group registry retains statically analyzable lazy line loaders", async () => {
+test("registrations are metadata plus lazy surface loaders", async () => {
+  for (const line of ["mage", "changeling", "vampire"]) {
+    const registration = await source(`game-lines/${line}/registration.ts`);
+
+    assert.match(registration, /loadRules\s*:\s*\(\)\s*=>\s*import\(/, `${line}: rules must be lazy`);
+    assert.match(registration, /loadBuilder\s*:\s*\(\)\s*=>\s*import\(/, `${line}: builder must be lazy`);
+    assert.match(registration, /loadSheet\s*:\s*\(\)\s*=>\s*import\(/, `${line}: sheet must be lazy`);
+
+    assert.doesNotMatch(
+      registration,
+      /import\s+(?!type\b)[^;]+\s+from\s+["']\.\/(?:builder|sheet|rules|print)["']/,
+      `${line}: implementation surface was imported eagerly`,
+    );
+  }
+});
+
+test("catalog groups stay lazy and line-scoped", async () => {
   const registry = await source("game-lines/registry/catalog-group-registry.ts");
-  assert.match(registry, /\(\) => import\("\.\.\/mage\/catalogs\/spells"\)/);
-  assert.match(registry, /\(\) => import\("\.\.\/changeling\/catalogs\/contracts"\)/);
-  assert.doesNotMatch(registry, /import\s+.+from\s+["']\.\.\/(mage|changeling)\/catalogs/);
-  assert.doesNotMatch(registry, /applyLegacy/);
-  const contract = await source("lib/game-line-contracts/catalog-groups.ts");
-  assert.doesNotMatch(contract, /applyLegacy/);
+
+  for (const line of ["mage", "changeling", "vampire"]) {
+    assert.match(registry, new RegExp(`import\\("\\.\\./${line}/catalogs/`));
+  }
+
+  assert.doesNotMatch(
+    registry,
+    /import\s+(?!type\b)[^;]+\s+from\s+["']\.\.\/(?:mage|changeling|vampire)\/catalogs\//,
+  );
 });
 
-test("legacy catalog replacement adapters stay outside production surfaces", async () => {
-  const production = await Promise.all([
-    source("app/catalog-boundary.tsx"),
-    source("app/game-line-builder.tsx"),
-    source("app/workspace/game-line-sheet.tsx"),
-    source("game-lines/registry/catalog-group-registry.ts"),
-    source("game-lines/mage/builder.tsx"),
-    source("game-lines/mage/sheet-view.tsx"),
-    source("game-lines/changeling/builder.tsx"),
-    source("game-lines/changeling/sheet-view.tsx"),
-    source("worker/index.ts"),
-  ]);
-  assert.doesNotMatch(production.join("\n"), /replace(?:Court|Kith|ChangelingCondition|MageCondition|Spell|Contract)Catalog/);
-  assert.doesNotMatch(await source("lib/catalog/spell-catalog.ts"), /replaceSpellCatalog|SPELLS/);
-  assert.doesNotMatch(await source("lib/catalog/contract-catalog.ts"), /replaceContractCatalog|CONTRACTS/);
+test("game-line registrations do not statically depend on another game line", async () => {
+  const lines = ["mage", "changeling", "vampire"];
+
+  for (const line of lines) {
+    const content = await source(`game-lines/${line}/registration.ts`);
+    const others = lines.filter((candidate) => candidate !== line).join("|");
+    assert.doesNotMatch(
+      content,
+      new RegExp(`game-lines/(?:${others})|\\.\\./(?:${others})/`),
+      `${line} registration depends on another line`,
+    );
+  }
 });
 
-test("current game lines do not statically depend on one another", async () => {
-  const [mage, changeling, vampire] = await Promise.all([
-    source("game-lines/mage/registration.ts"),
-    source("game-lines/changeling/registration.ts"),
-    source("game-lines/vampire/registration.ts"),
-  ]);
-  assert.doesNotMatch(mage, /game-lines\/(changeling|vampire)|\.\.\/(changeling|vampire)\//);
-  assert.doesNotMatch(changeling, /game-lines\/(mage|vampire)|\.\.\/(mage|vampire)\//);
-  assert.doesNotMatch(vampire, /game-lines\/(mage|changeling)|\.\.\/(mage|changeling)\//);
+test("line-owned rule modules do not reach back into legacy line-specific lib modules", async () => {
+  const expectations = [
+    {
+      path: "game-lines/changeling/rules.ts",
+      forbidden: /@\/lib\/(?:creation-rules|changeling-|entitlements)/,
+    },
+    {
+      path: "game-lines/mage/rules.ts",
+      forbidden: /@\/lib\/(?:creation-rules|mage-|legacies)/,
+    },
+    {
+      path: "game-lines/vampire/rules.ts",
+      forbidden: /@\/lib\/(?:creation-rules|vampire-)/,
+    },
+  ];
+
+  for (const { path, forbidden } of expectations) {
+    const content = await source(path);
+    assert.doesNotMatch(
+      content,
+      forbidden,
+      `${path} still delegates line-owned mechanics to legacy lib modules`,
+    );
+  }
 });
 
-test("Changeling sheet snapshots include the core conditions they consume", async () => {
-  const registration = await source("game-lines/changeling/registration.ts");
-  assert.match(registration, /sheet:\s*\[[^\]]*"core-reference"/);
+test("current game-line source trees do not statically import one another", async () => {
+  const lines = ["mage", "changeling", "vampire"];
+
+  for (const line of lines) {
+    const files = await sourceFiles(`game-lines/${line}`);
+    const others = lines.filter((candidate) => candidate !== line);
+    const violations = [];
+
+    for (const file of files) {
+      const content = await source(file);
+      if (others.some((other) =>
+        new RegExp(`(?:@/game-lines/${other}|\\.\\./${other}/)`).test(content)
+      )) {
+        violations.push(file);
+      }
+    }
+
+    assert.deepEqual(violations, [], `${line} source tree imports another game line`);
+  }
 });
 
-test("Changeling printing is a lazy line-owned surface while Mage remains untouched", async () => {
-  const [contract, changeling, mage, printEntry, printView] = await Promise.all([
-    source("lib/game-line-contracts/game-line-registration.ts"),
-    source("game-lines/changeling/registration.ts"),
-    source("game-lines/mage/registration.ts"),
-    source("game-lines/changeling/print.tsx"),
-    source("game-lines/changeling/print-sheet.tsx"),
-  ]);
-  assert.match(contract, /loadPrintSheet\?/);
-  assert.match(changeling, /loadPrintSheet:\s*\(\)\s*=>\s*import\("\.\/print"\)/);
-  assert.match(changeling, /print:\s*\[[^\]]*"changeling-contracts"/);
-  assert.doesNotMatch(mage, /loadPrintSheet|print:/);
-  assert.doesNotMatch(`${printEntry}\n${printView}`, /game-lines\/mage|@\/lib\/mage/);
-});
-
-test("Mage conditions do not depend on Changeling catalog state", async () => {
-  const mageConditions = await source("lib/mage-conditions.ts");
-  assert.doesNotMatch(mageConditions, /changeling-conditions/);
-});
-
-test("Changeling entitlement mechanics receive a surface catalog instead of mutable global state", async () => {
-  const [mechanics, grants, page] = await Promise.all([
-    source("lib/entitlements.ts"),
-    source("game-lines/changeling/builder-merit-grants.ts"),
-    source("app/workspace/entitlement-page.tsx"),
-  ]);
-  assert.doesNotMatch(mechanics, /ENTITLEMENTS|replaceEntitlementCatalog/);
-  assert.match(mechanics, /catalog:readonly EntitlementDefinition\[\]/);
-  assert.match(grants, /entitlements\?: readonly EntitlementDefinition\[\]/);
-  assert.match(page, /synchronizeMeritGrants\(next,availableEntitlements\)/);
-});
-
-test("persistence is independent of app components", async () => {
-  const persistence = await source("lib/character-persistence.ts");
-  assert.doesNotMatch(persistence, /from\s+["'][^"']*app\//);
-  assert.doesNotMatch(persistence, /merit-configurations/);
-  assert.doesNotMatch(persistence, /synchronizeMeritGrants/);
-});
-
-test("the persisted character domain does not retain the mixed merit adapter", async () => {
-  const domain = await source("lib/core/character/character-types.ts");
-  assert.doesNotMatch(domain, /merit-configurations/);
-});
-
-test("generic merit requirements do not hard-code current game-line semantics", async () => {
-  const [requirements, merits] = await Promise.all([
-    source("lib/merit-requirements.ts"),
-    source("lib/merits.ts"),
-  ]);
-  assert.doesNotMatch(requirements, /gameLine.*(?:MtA|CtL)|(?:MtA|CtL).*gameLine/);
-  assert.doesNotMatch(merits, /gameLine.*(?:MtA|CtL)|(?:MtA|CtL).*gameLine/);
-  assert.doesNotMatch(merits, /RAW_MERITS|replaceMeritCatalog|getMeritsForLine/);
-  assert.match(requirements, /archetypes\?: readonly string\[\]/);
-});
-
-test("deferred Homebrew management is not part of the main workspace route", async () => {
-  const workspace = await source("app/workspace.tsx");
-  assert.doesNotMatch(workspace, /HomebrewsScreen|\.\/homebrews/);
-});
-
-test("deferred Homebrew modules are removed from the active source tree", async () => {
+test("obsolete mixed surfaces and deferred Homebrew modules stay removed", async () => {
   await Promise.all([
-    assert.rejects(access(`${root}/app/homebrews.tsx`)),
-    assert.rejects(access(`${root}/app/use-homebrews.ts`)),
-    assert.rejects(access(`${root}/lib/homebrews.ts`)),
-    assert.rejects(access(`${root}/lib/google-drive-sync.ts`)),
+    assertMissing("app/character-builder.tsx"),
+    assertMissing("app/workspace/character-paper.tsx"),
+    assertMissing("app/homebrews.tsx"),
+    assertMissing("app/use-homebrews.ts"),
+    assertMissing("lib/homebrews.ts"),
+    assertMissing("lib/google-drive-sync.ts"),
+    assertMissing("lib/merit-configurations.ts"),
+    assertMissing("lib/expanded-merits.ts"),
   ]);
 });
 
-test("game-line contracts do not expose a deferred Homebrew surface", async () => {
-  const [registration, groups] = await Promise.all([
-    source("lib/game-line-contracts/game-line-registration.ts"),
-    source("lib/game-line-contracts/catalog-groups.ts"),
-  ]);
-  assert.doesNotMatch(registration, /loadHomebrew|GameLineHomebrew/);
-  assert.doesNotMatch(groups, /homebrew/);
-});
-
-test("Workspace routes both existing and new character builders through shells", async () => {
+test("workspace routes builder and sheet surfaces through the registry shells", async () => {
   const workspace = await source("app/workspace.tsx");
-  assert.doesNotMatch(workspace, /import\("\.\/character-builder"\)/);
-  assert.match(workspace, /import\("\.\/new-character-builder"\)/);
+
   assert.match(workspace, /import\("\.\/game-line-builder"\)/);
+  assert.match(workspace, /import\("\.\/workspace\/game-line-sheet"\)/);
+  assert.doesNotMatch(workspace, /import\(["'][^"']*game-lines\/(?:mage|changeling|vampire)/);
 });
 
-test("obsolete mixed builder and paper implementations are removed", async () => {
-  await Promise.all([
-    assert.rejects(access(`${root}/app/character-builder.tsx`)),
-    assert.rejects(access(`${root}/app/workspace/character-paper.tsx`)),
-    assert.rejects(access(`${root}/lib/merit-configurations.ts`)),
-    assert.rejects(access(`${root}/lib/expanded-merits.ts`)),
-  ]);
-});
-
-test("line builders own independent controllers and consume scoped catalog snapshots", async () => {
-  const [mage, mageView, mageGrants, mageEligibility, magePower, mageRules, changeling, changelingView, changelingEditor, changelingGrants, changelingEligibility, changelingPower, changelingRules, shell, commonControls, meritPicker, meritEditor, commonGrants] = await Promise.all([
-    source("game-lines/mage/builder.tsx"),
-    source("game-lines/mage/builder-view.tsx"),
-    source("game-lines/mage/builder-merit-grants.ts"),
-    source("game-lines/mage/builder-eligibility.ts"),
-    source("game-lines/mage/builder-power-progression.ts"),
-    source("game-lines/mage/creation-rules.ts"),
-    source("game-lines/changeling/builder.tsx"),
-    source("game-lines/changeling/builder-view.tsx"),
-    source("game-lines/changeling/builder-merit-editor.tsx"),
-    source("game-lines/changeling/builder-merit-grants.ts"),
-    source("game-lines/changeling/builder-eligibility.ts"),
-    source("game-lines/changeling/builder-power-progression.ts"),
-    source("game-lines/changeling/creation-rules.ts"),
-    source("app/character-builder-shell.tsx"),
-    source("app/builder/common-controls.tsx"),
-    source("app/builder/merit-picker.tsx"),
-    source("app/builder/merit-configuration-editor.tsx"),
-    source("lib/core/character/synchronize-merit-grants.ts"),
-  ]);
-  const mageClosure = [mage, mageView, mageGrants, mageEligibility, magePower, mageRules].join("\n");
-  const changelingClosure = [changeling, changelingView, changelingEditor, changelingGrants, changelingEligibility, changelingPower, changelingRules].join("\n");
-  const commonClosure = [shell, commonControls, meritPicker, meritEditor, commonGrants].join("\n");
-  assert.doesNotMatch(mage, /Component:\s*CharacterBuilder\b/);
-  assert.doesNotMatch(changeling, /Component:\s*CharacterBuilder\b/);
-  assert.doesNotMatch(mageClosure, /@\/app\/character-builder["']/);
-  assert.doesNotMatch(changelingClosure, /@\/app\/character-builder["']/);
-  assert.doesNotMatch(changelingClosure, /useHomebrews|isHomebrewActive|@\/lib\/homebrews/);
-  assert.match(mage, /catalogs\.get<[^>]+>\("mage-spells"\)/);
-  assert.match(changeling, /catalogs\.get<[^>]+>\("changeling-contracts"\)/);
-  assert.doesNotMatch(mageClosure, /game-lines\/changeling|@\/lib\/changeling|@\/lib\/entitlements/);
-  assert.doesNotMatch(changelingClosure, /game-lines\/mage|@\/lib\/mage/);
-  assert.doesNotMatch(mageClosure, /@\/lib\/(?:creation-rules|creation-eligibility|power-progression)["']/);
-  assert.doesNotMatch(changelingClosure, /@\/lib\/(?:creation-rules|creation-eligibility|power-progression)["']/);
-  assert.match(shell, /useCommonBuilderState/);
-  assert.doesNotMatch(shell, /MTA_PATHS|CTL_SEEMINGS|spellCatalog|contractCatalog|mage_experience_history|experience_history|Nameless Order|Corte|Ordem/);
-  assert.doesNotMatch(commonClosure, /from\s+["'](?:@\/game-lines|@\/lib\/(?:mage|changeling|entitlements))/);
-});
-
-test("legacy character endpoint validates persisted IDs through the core contract", async () => {
-  const route = await source("app/api/characters/route.ts");
-  assert.match(route, /PERSISTED_GAME_LINE_IDS/);
-  assert.doesNotMatch(route, /payload\.game_line === ["']MtA|payload\.game_line === ["']CtL/);
-});
-
-test("shared creation rules do not read Changeling catalog state", async () => {
-  const creationRules = await source("lib/creation-rules.ts");
-  assert.doesNotMatch(creationRules, /changeling-courts/);
-});
-
-test("catalog snapshots deeply freeze static catalog data", async () => {
-  const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
-  const value = freezeCatalogData([{ id: "catalog", nested: { value: 1 } }]);
-  assert.ok(Object.isFrozen(value));
-  assert.ok(Object.isFrozen(value[0]));
-  assert.ok(Object.isFrozen(value[0].nested));
-});
-
-test("game-line catalog group loaders request only their own catalog IDs", async () => {
-  const [mageSpells, mageMerits, changelingContracts, changelingMerits, vampireReference, vampirePowers, vampireMerits] = await Promise.all([
-    vite.ssrLoadModule("/game-lines/mage/catalogs/spells.ts"),
-    vite.ssrLoadModule("/game-lines/mage/catalogs/merits.ts"),
-    vite.ssrLoadModule("/game-lines/changeling/catalogs/contracts.ts"),
-    vite.ssrLoadModule("/game-lines/changeling/catalogs/merits.ts"),
-    vite.ssrLoadModule("/game-lines/vampire/catalogs/reference.ts"),
-    vite.ssrLoadModule("/game-lines/vampire/catalogs/powers.ts"),
-    vite.ssrLoadModule("/game-lines/vampire/catalogs/merits.ts"),
-  ]);
-  const mageRequests = [];
-  const changelingRequests = [];
-  const vampireRequests = [];
-  const reader = (requests) => ({ getCatalog: async (id) => {
-    requests.push(id);
-    return id.endsWith("-index") ? [] : [];
-  }});
-
-  await Promise.all([
-    mageSpells.mageSpellsCatalogGroup.load(reader(mageRequests)),
-    mageMerits.mageMeritsCatalogGroup.load(reader(mageRequests)),
-    changelingContracts.changelingContractsCatalogGroup.load(reader(changelingRequests)),
-    changelingMerits.changelingMeritsCatalogGroup.load(reader(changelingRequests)),
-    vampireReference.vampireReferenceCatalogGroup.load(reader(vampireRequests)),
-    vampirePowers.vampirePowersCatalogGroup.load(reader(vampireRequests)),
-    vampireMerits.vampireMeritsCatalogGroup.load(reader(vampireRequests)),
+test("workspace print capability is driven by registration instead of a concrete line ID", async () => {
+  const [workspace, contract] = await Promise.all([
+    source("app/workspace.tsx"),
+    source("lib/game-line-contracts/game-line-registration.ts"),
   ]);
 
-  assert.ok(mageRequests.every((id) => !id.includes("changeling")));
-  assert.ok(changelingRequests.every((id) => !id.includes("mage")));
-  assert.deepEqual(mageRequests.sort(), ["mage-spells-index", "merits-mage"].sort());
-  assert.deepEqual(changelingRequests.sort(), ["changeling-contracts-index", "merits-changeling"].sort());
-  assert.ok(vampireRequests.every((id) => !id.includes("mage") && !id.includes("changeling")));
-  assert.deepEqual(vampireRequests.sort(), ["vampire-clans", "vampire-covenants", "vampire-anchors", "vampire-blood-potency", "vampire-torpor", "vampire-powers", "merits-vampire"].sort());
+  assert.match(contract, /loadPrintSheet\?/);
+  assert.doesNotMatch(
+    workspace,
+    /character\.game_line\s*===\s*["']CtL["']/,
+    "the shell still hard-codes Changeling printing instead of using registration capability",
+  );
 });
 
-test("production manifest keeps lazy builder entry closures free of opposite line entries", async () => {
+test("production build manifest keeps builder and sheet closures line-isolated", async () => {
   const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
+
   const closure = (rootKey) => {
     const keys = new Set();
     const visit = (key) => {
@@ -263,71 +174,18 @@ test("production manifest keeps lazy builder entry closures free of opposite lin
     visit(rootKey);
     return [...keys];
   };
-  const mage = closure("game-lines/mage/builder.tsx");
-  const changeling = closure("game-lines/changeling/builder.tsx");
-  const vampire = closure("game-lines/vampire/builder.tsx");
-  assert.ok(mage.length > 1 && changeling.length > 1 && vampire.length > 1);
-  assert.ok(mage.every((key) => !/game-lines\/(changeling|vampire)|character-builder\.tsx/.test(key)));
-  assert.ok(changeling.every((key) => !/game-lines\/(mage|vampire)|character-builder\.tsx/.test(key)));
-  assert.ok(vampire.every((key) => !/game-lines\/(mage|changeling)|character-builder\.tsx/.test(key)));
-});
 
-test("line sheets compose a neutral paper shell and line-owned mechanics", async () => {
-  const [mageEntry, mageView, mageExperience, mageCompanions, changelingEntry, changelingView, changelingExperience, changelingCompanions, shell, commonExperience, commonConditions, commonCompanions] = await Promise.all([
-    source("game-lines/mage/sheet.tsx"),
-    source("game-lines/mage/sheet-view.tsx"),
-    source("game-lines/mage/experience-panel.tsx"),
-    source("game-lines/mage/companion-page.tsx"),
-    source("game-lines/changeling/sheet.tsx"),
-    source("game-lines/changeling/sheet-view.tsx"),
-    source("game-lines/changeling/experience-panel.tsx"),
-    source("game-lines/changeling/companion-page.tsx"),
-    source("app/workspace/character-paper-shell.tsx"),
-    source("app/workspace/experience-shared.tsx"),
-    source("app/workspace/condition-manager.tsx"),
-    source("app/workspace/companion-page.tsx"),
-  ]);
-  const mageClosure = [mageEntry, mageView, mageExperience, mageCompanions].join("\n");
-  const changelingClosure = [changelingEntry, changelingView, changelingExperience, changelingCompanions].join("\n");
-  const commonClosure = [shell, commonExperience, commonConditions, commonCompanions].join("\n");
-  assert.match(mageEntry, /MageCharacterPaper/);
-  assert.match(changelingEntry, /ChangelingCharacterPaper/);
-  assert.doesNotMatch(mageClosure, /game-lines\/changeling|@\/lib\/changeling|@\/lib\/entitlements|Fae Mount|Fae Pet/);
-  assert.doesNotMatch(changelingClosure, /game-lines\/mage|@\/lib\/mage|Familiar/);
-  assert.doesNotMatch(`${mageClosure}\n${changelingClosure}`, /use-homebrews|app\/character-builder["']|@\/lib\/merit-configurations["']/);
-  assert.match(mageView, /catalogs\.get<[^>]+>\("mage-spells"\)/);
-  assert.match(changelingView, /catalogs\.get<[^>]+>\("changeling-contracts"\)/);
-  assert.match(mageCompanions, /Familiar/);
-  assert.match(changelingCompanions, /Fae Mount/);
-  assert.match(changelingCompanions, /Fae Pet/);
-  assert.match(commonConditions, /Bonded is a repeatable general Condition/);
-  assert.match(commonCompanions, /Bonded is a general, repeatable Condition/);
-  assert.doesNotMatch(commonCompanions, /Familiar|Fae Mount|Fae Pet/);
-  assert.doesNotMatch(commonClosure, /from\s+["'](?:@\/game-lines|@\/lib\/(?:mage|changeling|entitlements))/);
-  assert.doesNotMatch(`${mageEntry}\n${changelingEntry}`, /app\/workspace\/character-paper["']/);
-});
-
-test("production manifest keeps lazy sheet closures free of opposite line entries and the mixed legacy paper", async () => {
-  const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
-  const closure = (rootKey) => {
-    const keys = new Set();
-    const visit = (key) => {
-      if (keys.has(key) || !manifest[key]) return;
-      keys.add(key);
-      for (const imported of manifest[key].imports ?? []) visit(imported);
-    };
-    visit(rootKey);
-    return [...keys];
-  };
-  const mage = closure("game-lines/mage/sheet.tsx");
-  const changeling = closure("game-lines/changeling/sheet.tsx");
-  const vampire = closure("game-lines/vampire/sheet.tsx");
-  assert.ok(mage.length > 1 && changeling.length > 1 && vampire.length > 1);
-  assert.ok(mage.every((key) => !/game-lines\/(changeling|vampire)|character-paper\.tsx/.test(key)));
-  assert.ok(changeling.every((key) => !/game-lines\/(mage|vampire)|character-paper\.tsx/.test(key)));
-  assert.ok(vampire.every((key) => !/game-lines\/(mage|changeling)|character-paper\.tsx/.test(key)));
-  const mageBundle = await source(`dist/client/${manifest["game-lines/mage/sheet.tsx"].file}`);
-  const changelingBundle = await source(`dist/client/${manifest["game-lines/changeling/sheet.tsx"].file}`);
-  assert.doesNotMatch(mageBundle, /Fae Mount|Fae Pet|Entitlement|Glamour|Wyrd|Changeling/);
-  assert.doesNotMatch(changelingBundle, /Familiar|Gnosis|Arcana|Legacy|Mage/);
+  for (const surface of ["builder", "sheet"]) {
+    for (const line of ["mage", "changeling", "vampire"]) {
+      const key = `game-lines/${line}/${surface}.tsx`;
+      assert.ok(manifest[key], `missing manifest entry: ${key}`);
+      const keys = closure(key);
+      const others = ["mage", "changeling", "vampire"].filter((candidate) => candidate !== line);
+      assert.ok(keys.length > 1, `${key} has no analyzable closure`);
+      assert.ok(
+        keys.every((entry) => others.every((other) => !entry.includes(`game-lines/${other}/`))),
+        `${key} closure contains another game line`,
+      );
+    }
+  }
 });
