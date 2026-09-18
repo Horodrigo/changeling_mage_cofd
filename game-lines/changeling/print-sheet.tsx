@@ -16,7 +16,7 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeEntitlementState, type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage, type ClarityDamageLevel } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
@@ -124,7 +124,7 @@ function PrintCard({ title, meta, children, className = "" }: { title: ReactNode
 
 type ContractPrintData = { title: string; access: string; kind: string; facts: Array<[string, ReactNode]>; rows: Array<[string, ReactNode]> };
 
-function contractPrintData(baseDefinition: ContractDefinition, character: CharacterSheet, courts: readonly CourtDefinition[], locale: Locale, tr: (pt: string, en: string) => string): ContractPrintData {
+function contractPrintData(baseDefinition: ContractDefinition, character: CharacterSheet, courts: readonly CourtDefinition[], locale: Locale, t: Translator): ContractPrintData {
   const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale);
   const summary = contractSummary(baseDefinition, locale);
   const data = character.line_data;
@@ -139,38 +139,38 @@ function contractPrintData(baseDefinition: ContractDefinition, character: Charac
   const outcomes = contractOutcomeSections(definition, locale);
   const options = contractDisplayOptions(definition, locale);
   const rows: Array<[string, ReactNode]> = [];
-  if (summary) rows.push([tr("Resumo", "Summary"), summary]);
-  rows.push([tr("Ação / Duração", "Action / Duration"), `${definition.action ?? "-"} · ${definition.duration ?? "-"}`]);
+  if (summary) rows.push([t("ui.summary"), summary]);
+  rows.push([t("ui.actionDuration"), `${definition.action ?? "-"} · ${definition.duration ?? "-"}`]);
   outcomes.forEach((outcome) => rows.push([outcome.label, outcome.text]));
-  if (options.length) rows.push([tr("Opções", "Options"), <ul key="options">{options.map((option) => <li key={option}>{option}</li>)}</ul>]);
-  rows.push([tr("Brecha", "Loophole"), definition.loophole ?? "-"]);
-  benefits.forEach((benefit) => rows.push([`${tr("Benefício de", "Benefit for")} ${seemingDisplayName(benefit.key, locale)}`, benefit.text]));
-  if (courtBenefit) rows.push([tr("Benefício da Corte", "Court Benefit"), courtBenefit]);
+  if (options.length) rows.push([t("ui.options"), <ul key="options">{options.map((option) => <li key={option}>{option}</li>)}</ul>]);
+  rows.push([t("ui.loophole"), definition.loophole ?? "-"]);
+  benefits.forEach((benefit) => rows.push([`${t("ui.benefitFor")} ${seemingDisplayName(benefit.key, locale)}`, benefit.text]));
+  if (courtBenefit) rows.push([t("ui.courtBenefit"), courtBenefit]);
   clauses.forEach((clause) => rows.push([`Clause · ${courtName(courts, clause.courtId, locale)}`, clause.text]));
   definition.detailTables?.forEach((table) => rows.push([table.title, <table className="ctl-print-detail-table" key={table.title}><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row, rowIndex) => <tr key={`${table.title}-${rowIndex}`}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table>]));
-  if (definition.goblinDebt) rows.push([tr("Débito Goblin", "Goblin Debt"), definition.goblinDebt]);
+  if (definition.goblinDebt) rows.push([t("ui.goblinDebt"), definition.goblinDebt]);
   const name = locale === "en-US" ? definition.originalName ?? definition.name : definition.name;
-  const kind = definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal");
+  const kind = definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal");
   const courtNames = definition.courtIds?.map((courtId) => courtName(courts, courtId, locale)).filter(Boolean).join(", ");
   const access = definition.categoryKind === "Corte" ? definition.courtFamily || courtNames || systemTerm(definition.regalia, locale) : systemTerm(definition.regalia, locale);
   const roll = contractHasInvocationRoll(definition) === true && definition.dicePool?.trim() ? definition.dicePool : "None";
   const facts: Array<[string, ReactNode]> = [
-    [`${tr("Custo", "Cost")}:`, definition.cost?.trim() || "None"],
-    [`${tr("Jogada", "Roll")}:`, roll],
+    [`${t("ui.cost")}:`, definition.cost?.trim() || "None"],
+    [`${t("ui.roll")}:`, roll],
   ];
   return { title: name, access: access || "None", kind, facts, rows: rows.filter(([, value]) => Boolean(value)) };
 }
 
 function ContractCard({ data, rows, continued = false, detailed }: { data: ContractPrintData; rows: Array<[string, ReactNode]>; continued?: boolean; detailed: boolean }) {
-  const { tr } = useLanguage();
-  return <PrintCard title={<>{data.title} — {data.access} <span className="ctl-print-contract-tag">{data.kind}</span>{continued && <small className="ctl-print-contract-continuation">{tr("continuação", "continued")}</small>}</>} className={`ctl-print-contract ${detailed ? "detailed" : "compact"}`}>
+  const { t } = useLanguage();
+  return <PrintCard title={<>{data.title} — {data.access} <span className="ctl-print-contract-tag">{data.kind}</span>{continued && <small className="ctl-print-contract-continuation">{t("ui.continued")}</small>}</>} className={`ctl-print-contract ${detailed ? "detailed" : "compact"}`}>
     <dl className="ctl-print-contract-facts">{data.facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
     {detailed && <dl>{rows.map(([label, value], index) => <div key={`${label}-${index}`}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
   </PrintCard>;
 }
 
 function ExpandedMeritCard({ merit, catalog, courts, detailed }: { merit: CharacterSheet["merits"][number]; catalog: readonly MeritDefinition[]; courts: readonly CourtDefinition[]; detailed: boolean }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const definition = catalog.find((item) => item.name === merit.name);
   const configured = expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, courts);
   const configuredTitle = meritConfigurationTitle(merit.configuration, locale, courts);
@@ -180,14 +180,14 @@ function ExpandedMeritCard({ merit, catalog, courts, detailed }: { merit: Charac
   return <PrintCard title={`${title} ${"•".repeat(merit.dots)}`} meta={definition ? `${definition.source} · p. ${definition.page || "-"}` : merit.source} className={detailed ? "detailed" : "compact"}>
     {!!configured.length && <div className="ctl-print-configured">{configured.map((line, index) => <p key={index}>{line}</p>)}</div>}
     {detailed && definition && <div className="ctl-print-merit-details">
-      {definition.prerequisites && <p><b>{tr("Pré-requisitos", "Prerequisites")}:</b> {definition.prerequisites}</p>}
+      {definition.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {definition.prerequisites}</p>}
       {levels.length ? levels.map((level) => <p key={level.rating}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>) : <p>{locale === "en-US" ? definition.descriptionEn : definition.description}</p>}
     </div>}
   </PrintCard>;
 }
 
 function FlowPages({ blocks, characterName, startPage, onReadyChange, onPageCountChange }: { blocks: PrintBlock[]; characterName: string; startPage: number; onReadyChange?: (ready: boolean) => void; onPageCountChange: (count: number) => void }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const measureRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState<PrintFlowColumn[]>([]);
 
@@ -225,9 +225,9 @@ function FlowPages({ blocks, characterName, startPage, onReadyChange, onPageCoun
       {[...new Map(blocks.map((block) => [block.section, block.sectionLabel])).entries()].map(([section, label]) => <h2 key={section} data-print-heading={section} className="ctl-print-flow-heading">{label}</h2>)}
       {blocks.map((block) => <div className="ctl-print-flow-item" data-print-item={block.id} key={block.id}>{block.node}</div>)}
     </div>
-    {pages.map((pageColumns, pageIndex) => <PrintPage key={pageIndex} page={startPage + pageIndex} total={total} title={characterName || tr("Personagem", "Character")}>
+    {pages.map((pageColumns, pageIndex) => <PrintPage key={pageIndex} page={startPage + pageIndex} total={total} title={characterName || t("ui.character")}>
       <div className="ctl-print-flow-columns">{pageColumns.map((column, columnIndex) => <div className="ctl-print-flow-column" key={columnIndex}>{column.groups.map((group) => <section className="ctl-print-flow-group" key={`${group.section}-${group.itemIds[0]}`}>
-        <h2 className="ctl-print-flow-heading">{group.sectionLabel}{group.continued ? ` - ${tr("continuação", "continued")}` : ""}</h2>
+        <h2 className="ctl-print-flow-heading">{group.sectionLabel}{group.continued ? ` - ${t("ui.continued")}` : ""}</h2>
         {group.itemIds.map((id) => <div className="ctl-print-flow-item" key={id}>{blockById.get(id)?.node}</div>)}
       </section>)}</div>)}</div>
     </PrintPage>)}
@@ -236,7 +236,7 @@ function FlowPages({ blocks, characterName, startPage, onReadyChange, onPageCoun
 
 export function ChangelingPrintSheet({ character, options, catalogs, onReadyChange }: GameLinePrintSheetProps) {
   if (!catalogs) throw new Error("Changeling print sheet requires its catalog snapshot.");
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
   const coreMerits = catalogs.get<readonly MeritDefinition[]>("core-merits");
   const changelingMerits = catalogs.get<readonly MeritDefinition[]>("changeling-merits");
@@ -282,9 +282,9 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     return [...new Set(ids)].map((id) => conditions.find((condition) => condition.id === id)).filter((item): item is ChangelingCondition => Boolean(item));
   }, [character.current_state?.conditions, conditions, data.merit_granted_conditions]);
   const identity = [
-    [tr("Nome", "Name"), character.character.name], [tr("Agulha", "Needle"), changelingAnchorDisplayName("needle", data.needle, locale)], [tr("Feição", "Seeming"), seemingDisplayName(data.seeming, locale)],
-    [tr("Jogador", "Player"), character.character.player], [tr("Fio", "Thread"), changelingAnchorDisplayName("thread", data.thread, locale)], [tr("Frátria", "Kith"), kith.name],
-    [tr("Crônica", "Chronicle"), character.character.chronicle], [tr("Conceito", "Concept"), character.character.concept], [tr("Corte", "Court"), courtDisplay],
+    [t("ui.name"), character.character.name], [t("ui.needle"), changelingAnchorDisplayName("needle", data.needle, locale)], [t("ui.seeming"), seemingDisplayName(data.seeming, locale)],
+    [t("ui.player"), character.character.player], [t("ui.thread"), changelingAnchorDisplayName("thread", data.thread, locale)], [t("ui.kith6a78ff"), kith.name],
+    [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("ui.court"), courtDisplay],
   ];
   const otherTraits = {
     Defesa: Number(derived.Defesa ?? 0) + (armor?.defense ?? 0),
@@ -299,47 +299,47 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
     const seeming = CTL_SEEMINGS[String(data.seeming ?? "") as keyof typeof CTL_SEEMINGS];
     contracts.forEach((contract, contractIndex) => {
-      const card = contractPrintData(contract, character, reference.courts, locale, tr);
+      const card = contractPrintData(contract, character, reference.courts, locale, t);
       const chunks = options.powerDetails ? Array.from({ length: Math.max(1, Math.ceil(card.rows.length / 4)) }, (_, index) => card.rows.slice(index * 4, index * 4 + 4)) : [[]];
-      chunks.forEach((rows, chunkIndex) => add("contracts", tr("Contratos", "Contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed={options.powerDetails}/>));
+      chunks.forEach((rows, chunkIndex) => add("contracts", t("ui.contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed={options.powerDetails}/>));
     });
-    if (!contracts.length) add("contracts", tr("Contratos", "Contracts"), "contracts-blank", <PrintCard title={tr("Contratos", "Contracts")}><PrintTextList values={[]} minimum={5}/></PrintCard>);
-    if (seeming) add("line-lore", tr("Feição e Frátria", "Seeming and Kith"), "seeming", <PrintCard title={tr(`Bênção de ${seeming.translated}`, `${String(data.seeming)} Blessing`)} meta="Changeling: The Lost"><p>{locale === "en-US" ? seeming.blessingEn : seeming.blessing}</p><p><b>{tr("Maldição", "Curse")}:</b> {locale === "en-US" ? seeming.curseEn : seeming.curse}</p></PrintCard>);
-    else add("line-lore", tr("Feição e Frátria", "Seeming and Kith"), "seeming-blank", <PrintCard title={tr("Feição", "Seeming")}><PrintTextList values={[]} minimum={3}/></PrintCard>);
-    if (kith.name) add("line-lore", tr("Feição e Frátria", "Seeming and Kith"), "kith", <PrintCard title={tr(`Bênção de ${kith.name}`, `${kith.name} Blessing`)} meta={kith.source ? `${kith.source}${kith.page ? ` · p. ${kith.page}` : ""}` : undefined}>{kith.description && kith.description !== kith.blessing && <p>{kith.description}</p>}<p>{kith.blessing}</p></PrintCard>);
-    else add("line-lore", tr("Feição e Frátria", "Seeming and Kith"), "kith-blank", <PrintCard title={tr("Frátria", "Kith")}><PrintTextList values={[]} minimum={3}/></PrintCard>);
-    expanded.forEach((merit, index) => add("expanded-merits", tr("Méritos Expandidos", "Expanded Merits"), `merit-${merit.instanceId ?? merit.name}-${index}`, <ExpandedMeritCard merit={merit} catalog={meritCatalog} courts={reference.courts} detailed={options.expandedMeritDetails}/>));
-    if (!expanded.length) add("expanded-merits", tr("Méritos Expandidos", "Expanded Merits"), "expanded-merits-blank", <PrintCard title={tr("Méritos Expandidos", "Expanded Merits")}><PrintTextList values={[]} minimum={4}/></PrintCard>);
-    add("oaths", tr("Juramentos", "Oaths"), "oaths", <PrintCard title={tr("Juramentos", "Oaths")}><PrintTextList values={cleanList(data.oaths)} minimum={5}/></PrintCard>);
-    if (armor) add("equipment", tr("Equipamento", "Equipment"), "armor", <PrintCard title={armor.name} meta={`${tr("Armadura", "Armor")} ${armor.general}/${armor.ballistic} · ${tr("Defesa", "Defense")} ${signed(armor.defense)} · ${tr("Deslocamento", "Speed")} ${signed(armor.speed)}`}><p>{armor.coverage}</p></PrintCard>);
-    weapons.forEach((weapon, index) => add("equipment", tr("Equipamento", "Equipment"), `weapon-${weapon.id}-${index}`, <PrintCard title={weapon.name} meta={`${weapon.kind} · ${tr("Dano", "Damage")} ${weapon.damage} · ${tr("Iniciativa", "Initiative")} ${signed(weapon.initiative)} · ${tr("Força", "Strength")} ${weapon.strength} · ${tr("Tamanho", "Size")} ${weapon.size}`}>{weapon.ranges && <p>{tr("Alcance", "Range")}: {weapon.ranges} · {tr("Carga", "Capacity")}: {weapon.clip}</p>}{weapon.special && <p>{weapon.special}</p>}</PrintCard>));
-    equipment.forEach((item, index) => add("equipment", tr("Equipamento", "Equipment"), `equipment-${item.id}-${index}`, <PrintCard title={item.name} meta={`${item.category} · ${tr("Bônus", "Bonus")} ${item.bonus} · ${tr("Durabilidade", "Durability")} ${item.durability} · ${tr("Tamanho", "Size")} ${item.size}`}><p>{item.effect}</p></PrintCard>));
-    vehicles.forEach((vehicle, index) => add("equipment", tr("Equipamento", "Equipment"), `vehicle-${vehicle.id}-${index}`, <PrintCard title={vehicle.name} meta={`${tr("Modificador", "Modifier")} ${signed(vehicle.diceModifier)} · ${tr("Tamanho", "Size")} ${vehicle.size} · ${tr("Durabilidade", "Durability")} ${vehicle.durability} · ${tr("Estrutura", "Structure")} ${vehicle.structure} · ${tr("Deslocamento", "Speed")} ${vehicle.speed}`}/>));
-    if (!armor && !weapons.length && !equipment.length && !vehicles.length) add("equipment", tr("Equipamento", "Equipment"), "equipment-blank", <PrintCard title={tr("Equipamento", "Equipment")}><PrintTextList values={[]} minimum={6}/></PrintCard>);
-    selectedConditions.forEach((condition, index) => add("conditions", tr("Condições", "Conditions"), `condition-${condition.id}-${index}`, <PrintCard title={condition.name} meta={`${condition.sourceCode} · p. ${condition.page}`}>{condition.penalty && <p><b>{tr("Penalidade", "Penalty")}:</b> {condition.penalty}</p>}</PrintCard>));
+    if (!contracts.length) add("contracts", t("ui.contracts"), "contracts-blank", <PrintCard title={t("ui.contracts")}><PrintTextList values={[]} minimum={5}/></PrintCard>);
+    if (seeming) add("line-lore", t("ui.seemingAndKith"), "seeming", <PrintCard title={t("ui.blessingOf", { name: seemingDisplayName(String(data.seeming), locale) })} meta="Changeling: The Lost"><p>{locale === "en-US" ? seeming.blessingEn : seeming.blessing}</p><p><b>{t("ui.curse")}:</b> {locale === "en-US" ? seeming.curseEn : seeming.curse}</p></PrintCard>);
+    else add("line-lore", t("ui.seemingAndKith"), "seeming-blank", <PrintCard title={t("ui.seeming")}><PrintTextList values={[]} minimum={3}/></PrintCard>);
+    if (kith.name) add("line-lore", t("ui.seemingAndKith"), "kith", <PrintCard title={t("ui.blessing", { p1: kith.name }})} meta={kith.source ? `${kith.source}${kith.page ? ` · p. ${kith.page}` : ""}` : undefined}>{kith.description && kith.description !== kith.blessing && <p>{kith.description}</p>}<p>{kith.blessing}</p></PrintCard>);
+    else add("line-lore", t("ui.seemingAndKith"), "kith-blank", <PrintCard title={t("ui.kith6a78ff")}><PrintTextList values={[]} minimum={3}/></PrintCard>);
+    expanded.forEach((merit, index) => add("expanded-merits", t("ui.expandedMerits"), `merit-${merit.instanceId ?? merit.name}-${index}`, <ExpandedMeritCard merit={merit} catalog={meritCatalog} courts={reference.courts} detailed={options.expandedMeritDetails}/>));
+    if (!expanded.length) add("expanded-merits", t("ui.expandedMerits"), "expanded-merits-blank", <PrintCard title={t("ui.expandedMerits")}><PrintTextList values={[]} minimum={4}/></PrintCard>);
+    add("oaths", t("ui.oaths"), "oaths", <PrintCard title={t("ui.oaths")}><PrintTextList values={cleanList(data.oaths)} minimum={5}/></PrintCard>);
+    if (armor) add("equipment", t("ui.equipment"), "armor", <PrintCard title={armor.name} meta={`${t("ui.armor")} ${armor.general}/${armor.ballistic} · ${t("ui.defense")} ${signed(armor.defense)} · ${t("ui.speed")} ${signed(armor.speed)}`}><p>{armor.coverage}</p></PrintCard>);
+    weapons.forEach((weapon, index) => add("equipment", t("ui.equipment"), `weapon-${weapon.id}-${index}`, <PrintCard title={weapon.name} meta={`${weapon.kind} · ${t("ui.damage")} ${weapon.damage} · ${t("ui.initiative")} ${signed(weapon.initiative)} · ${t("ui.strength")} ${weapon.strength} · ${t("ui.size")} ${weapon.size}`}>{weapon.ranges && <p>{t("ui.range")}: {weapon.ranges} · {t("ui.capacity")}: {weapon.clip}</p>}{weapon.special && <p>{weapon.special}</p>}</PrintCard>));
+    equipment.forEach((item, index) => add("equipment", t("ui.equipment"), `equipment-${item.id}-${index}`, <PrintCard title={item.name} meta={`${item.category} · ${t("ui.bonus")} ${item.bonus} · ${t("ui.durability")} ${item.durability} · ${t("ui.size")} ${item.size}`}><p>{item.effect}</p></PrintCard>));
+    vehicles.forEach((vehicle, index) => add("equipment", t("ui.equipment"), `vehicle-${vehicle.id}-${index}`, <PrintCard title={vehicle.name} meta={`${t("ui.modifier")} ${signed(vehicle.diceModifier)} · ${t("ui.size")} ${vehicle.size} · ${t("ui.durability")} ${vehicle.durability} · ${t("ui.structure")} ${vehicle.structure} · ${t("ui.speed")} ${vehicle.speed}`}/>));
+    if (!armor && !weapons.length && !equipment.length && !vehicles.length) add("equipment", t("ui.equipment"), "equipment-blank", <PrintCard title={t("ui.equipment")}><PrintTextList values={[]} minimum={6}/></PrintCard>);
+    selectedConditions.forEach((condition, index) => add("conditions", t("ui.conditions"), `condition-${condition.id}-${index}`, <PrintCard title={condition.name} meta={`${condition.sourceCode} · p. ${condition.page}`}>{condition.penalty && <p><b>{t("ui.penalty")}:</b> {condition.penalty}</p>}</PrintCard>));
     const entitlementState = normalizeEntitlementState(data.entitlement, powerRating, reference.entitlements);
     const entitlement = reference.entitlements.find((item) => item.id === entitlementState.definitionId);
     if (entitlement && entitlementState.accepted) {
       const activeBlessings = entitlementState.allocations.filter((item) => item.target === "blessing").map((item) => entitlement.blessings.find((blessing) => blessing.id === item.blessingId)).filter((item): item is NonNullable<typeof item> => Boolean(item));
-      add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>Entitlement Touchstone:</b> {entitlementState.touchstone.name}</p><p><b>{tr("Privilégios", "Privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>Curse:</b> {entitlement.curse}</p></PrintCard>);
+      add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>Entitlement Touchstone:</b> {entitlementState.touchstone.name}</p><p><b>{t("ui.privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>Curse:</b> {entitlement.curse}</p></PrintCard>);
     }
     character.merits.filter((merit) => !merit.grantedBy && ["Fae Mount", "Fae Pet"].includes(merit.name)).forEach((merit, index) => {
       const configuration = normalizeMeritConfiguration(merit.configuration);
       const animal = merit.name === "Fae Pet" ? ANIMALS.find((item) => item.id === String(configuration.animalId ?? "")) : undefined;
       const presented = animal ? animalPresentation(animal, locale) : undefined;
-      const name = String(configuration.name ?? "").trim() || (merit.name === "Fae Mount" ? tr("Montaria Feérica", "Fae Mount") : tr("Mascote Feérico", "Fae Pet"));
-      add("companions", tr("Companheiros", "Companions"), `fae-companion-${index}`, <PrintCard title={name} meta={`${merit.name} · ${"•".repeat(merit.dots)}`}>{presented ? <><p><b>{tr("Atributos", "Attributes")}:</b> {presented.attributes}</p><p><b>{tr("Perícias", "Skills")}:</b> {presented.skills}</p><p><b>{tr("Outras Características", "Other Traits")}:</b> {tr("Força de Vontade", "Willpower")} {presented.willpower}, {tr("Iniciativa", "Initiative")} {presented.initiative}, {tr("Defesa", "Defense")} {presented.defense}, {tr("Deslocamento", "Speed")} {presented.speed}, {tr("Tamanho", "Size")} {presented.size}, {tr("Vitalidade", "Health")} {presented.health}</p></> : <><p><b>{tr("Habilidades", "Abilities")}:</b> {stringList(configuration.abilities).join(", ")}</p><p><b>{tr("Armadura", "Armor")}:</b> {String(configuration.armor_general ?? 0)}/{String(configuration.armor_ballistic ?? 0)}</p></>}</PrintCard>);
+      const name = String(configuration.name ?? "").trim() || (merit.name === "Fae Mount" ? t("ui.faeMount") : t("ui.faePet"));
+      add("companions", t("ui.companions"), `fae-companion-${index}`, <PrintCard title={name} meta={`${merit.name} · ${"•".repeat(merit.dots)}`}>{presented ? <><p><b>{t("ui.attributes")}:</b> {presented.attributes}</p><p><b>{t("ui.skills")}:</b> {presented.skills}</p><p><b>{t("ui.otherTraits")}:</b> {t("ui.willpower")} {presented.willpower}, {t("ui.initiative")} {presented.initiative}, {t("ui.defense")} {presented.defense}, {t("ui.speed")} {presented.speed}, {t("ui.size")} {presented.size}, {t("ui.health")} {presented.health}</p></> : <><p><b>{t("ui.abilities")}:</b> {stringList(configuration.abilities).join(", ")}</p><p><b>{t("ui.armor")}:</b> {String(configuration.armor_general ?? 0)}/{String(configuration.armor_ballistic ?? 0)}</p></>}</PrintCard>);
     });
     objectList(character.current_state?.conditions).filter((item) => String(item.id) === "bonded").forEach((bonded, index) => {
       const animal = ANIMALS.find((item) => item.id === String(bonded.animalId ?? ""));
       if (!animal) return;
       const presented = animalPresentation(animal, locale);
-      add("companions", tr("Companheiros", "Companions"), `bonded-${index}`, <PrintCard title={String(bonded.animalName ?? "").trim() || presented.name} meta={`Bonded · ${presented.name}`}><p><b>{tr("Atributos", "Attributes")}:</b> {presented.attributes}</p><p><b>{tr("Perícias", "Skills")}:</b> {presented.skills}</p><p><b>{tr("Outras Características", "Other Traits")}:</b> {tr("Força de Vontade", "Willpower")} {presented.willpower}, {tr("Iniciativa", "Initiative")} {presented.initiative}, {tr("Defesa", "Defense")} {presented.defense}, {tr("Deslocamento", "Speed")} {presented.speed}, {tr("Tamanho", "Size")} {presented.size}, {tr("Vitalidade", "Health")} {presented.health}</p></PrintCard>);
+      add("companions", t("ui.companions"), `bonded-${index}`, <PrintCard title={String(bonded.animalName ?? "").trim() || presented.name} meta={`Bonded · ${presented.name}`}><p><b>{t("ui.attributes")}:</b> {presented.attributes}</p><p><b>{t("ui.skills")}:</b> {presented.skills}</p><p><b>{t("ui.otherTraits")}:</b> {t("ui.willpower")} {presented.willpower}, {t("ui.initiative")} {presented.initiative}, {t("ui.defense")} {presented.defense}, {t("ui.speed")} {presented.speed}, {t("ui.size")} {presented.size}, {t("ui.health")} {presented.health}</p></PrintCard>);
     });
     const notes = String(character.current_state?.notes ?? "").trim();
-    add("notes", tr("Anotações", "Notes"), "notes", <PrintCard title={tr("Anotações", "Notes")}>{notes ? <p className="ctl-print-preserve-lines">{notes}</p> : <PrintTextList values={[]} minimum={8}/>}</PrintCard>);
+    add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}>{notes ? <p className="ctl-print-preserve-lines">{notes}</p> : <PrintTextList values={[]} minimum={8}/>}</PrintCard>);
     return blocks;
-  }, [armor, character, contracts, data, equipment, expanded, kith, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, tr, vehicles, weapons]);
+  }, [armor, character, contracts, data, equipment, expanded, kith, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, vehicles, weapons]);
 
   const [flowPageCount, setFlowPageCount] = useState(0);
   const total = 1 + flowPageCount;
@@ -350,37 +350,37 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   return <div className="ctl-print-document">
     <PrintPage page={1} total={total} title={character.character.name} main>
       <section className="ctl-print-identity">{identity.map(([label, value]) => <PrintField key={String(label)} label={String(label)} value={value}/>)}</section>
-      <SheetHeading className="ctl-print-attributes-heading">{tr("Atributos", "Attributes")}</SheetHeading>
+      <SheetHeading className="ctl-print-attributes-heading">{t("ui.attributes")}</SheetHeading>
       <div className="ctl-print-attributes">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div>
       <div className="ctl-print-main-grid">
-        <section><SheetHeading>{tr("Perícias", "Skills")}</SheetHeading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations} highlightedNames={kithSkillNames} highlightTone="kith"/>)}</section>
+        <section><SheetHeading>{t("ui.skills")}</SheetHeading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations} highlightedNames={kithSkillNames} highlightTone="kith"/>)}</section>
         <section>
-          <SheetHeading>{tr("Méritos", "Merits")}</SheetHeading>
+          <SheetHeading>{t("ui.merits")}</SheetHeading>
           <div className="ctl-print-merits">{principalMerits.map((merit, index) => { const definition = meritCatalog.find((item) => item.name === merit.name); const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name; const detail = meritConfigurationTitle(merit.configuration, locale, reference.courts); return <div key={`${merit.name}-${index}`}><span>{name}{detail ? `: ${detail}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)}/></div>; })}{Array.from({ length: Math.max(0, 6 - principalMerits.length) }, (_, index) => <div className="blank" key={`blank-merit-${index}`}><span>&nbsp;</span><DotValue value={0} max={5}/></div>)}</div>
-          <SheetHeading>{tr("Corte", "Court")}</SheetHeading><div className="ctl-print-court"><strong>{courtDisplay || "\u00a0"}</strong>{court && (locale === "en-US" ? court.emotion : court.emotionPt) && <span>{locale === "en-US" ? court.emotion : court.emotionPt}</span>}</div>
-          <SheetHeading>{tr("Regalias Favorecidas", "Favored Regalia")}</SheetHeading><PrintTextList values={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))} minimum={2}/>
-          <SheetHeading>{tr("Fragilidades", "Frailties")}</SheetHeading><PrintTextList values={frailties.map((value) => value ? systemTerm(value, locale) : "")} minimum={frailties.length}/>
-          <SheetHeading>{tr("Pedras de Contato", "Touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
+          <SheetHeading>{t("ui.court")}</SheetHeading><div className="ctl-print-court"><strong>{courtDisplay || "\u00a0"}</strong>{court && (locale === "en-US" ? court.emotion : court.emotionPt) && <span>{locale === "en-US" ? court.emotion : court.emotionPt}</span>}</div>
+          <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><PrintTextList values={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))} minimum={2}/>
+          <SheetHeading>{t("ui.frailties")}</SheetHeading><PrintTextList values={frailties.map((value) => value ? systemTerm(value, locale) : "")} minimum={frailties.length}/>
+          <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
         </section>
         <section>
-          <SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><PrintPhysicalTrack current={health} slots={health}/>
-          <SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><PrintPhysicalTrack current={currentWillpower}/>
-          <SheetHeading>{tr("Características da Linha", "Line Traits")}</SheetHeading><div className="ctl-print-power"><div><strong>{tr("Fado", "Wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label="Glamour"/></div>
-          <SheetHeading>{tr("Lucidez", "Clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
-          <SheetHeading>{tr("Débito Goblin", "Goblin Debt")}</SheetHeading><PrintResourceTrack label={tr("Débito Goblin", "Goblin Debt")} current={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))} maximum={10} numbered/>
+          <SheetHeading>{t("ui.health")}</SheetHeading><PrintPhysicalTrack current={health} slots={health}/>
+          <SheetHeading>{t("ui.willpower")}</SheetHeading><PrintPhysicalTrack current={currentWillpower}/>
+          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label="Glamour"/></div>
+          <SheetHeading>{t("ui.clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
+          <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><PrintResourceTrack label={t("ui.goblinDebt")} current={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))} maximum={10} numbered/>
         </section>
       </div>
       <div className="ctl-print-bottom-grid">
         <div className="ctl-print-bottom-stack">
-          <section><SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/></section>
-          <section><SheetHeading>{tr("Condições", "Conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={3}/></section>
+          <section><SheetHeading>{t("ui.aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/></section>
+          <section><SheetHeading>{t("ui.conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={3}/></section>
         </div>
-        <section><SheetHeading>{tr("Experiência", "Experience")}</SheetHeading><div className="ctl-print-experience">
+        <section><SheetHeading>{t("ui.experience")}</SheetHeading><div className="ctl-print-experience">
           <div className="ctl-print-experience-beats"><span>Beats</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>
-          <div><span>{tr("EXP disponível", "XP available")}</span></div>
-          <div><span>{tr("EXP total", "Total XP")}</span></div>
-          <div><span>{tr("EXP gasta", "XP spent")}</span></div>
-        </div><SheetHeading>{tr("Outras Características", "Other Traits")}</SheetHeading><CompactValues values={otherTraits}/></section>
+          <div><span>{t("ui.xpAvailable")}</span></div>
+          <div><span>{t("ui.totalXP")}</span></div>
+          <div><span>{t("ui.xpSpent")}</span></div>
+        </div><SheetHeading>{t("ui.otherTraits")}</SheetHeading><CompactValues values={otherTraits}/></section>
       </div>
     </PrintPage>
     <FlowPages blocks={flowBlocks} characterName={character.character.name} startPage={2} onReadyChange={onReadyChange} onPageCountChange={setFlowPageCount}/>

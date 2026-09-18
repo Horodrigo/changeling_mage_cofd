@@ -11,7 +11,7 @@ import { EntitlementPage } from "@/app/workspace/entitlement-page";
 import { derivedWithPermanentMerits } from "./experience-shared";
 import { DotValue,HealthTrack,SheetHeading,TraitBlock,stringList } from "@/app/workspace/sheet-primitives";
 import { SwipeableSheetTabs } from "@/app/workspace/sheet-tabs";
-import { workspaceTerm } from "@/app/workspace/workspace-i18n";
+import { systemTerm } from "@/lib/system-terms";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs,TabsContent,TabsList,TabsTrigger } from "@/components/ui/tabs";
@@ -89,7 +89,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         throw new Error("Changeling sheet requires its catalog snapshot.");
     const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
     const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")];
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const coreReference = catalogs.get<{ conditions: ChangelingCondition[]; presentation: Record<string, Partial<ChangelingCondition>> }>("core-reference");
     const lineReference = catalogs.get<ChangelingReference>("changeling-reference");
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
@@ -192,22 +192,22 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Fio", changelingAnchorDisplayName("thread", data.thread, locale)],
             ["Conceito", character.character.concept],
             ["Feição", seemingDisplayName(data.seeming, locale)],
-            [tr("Frátria", "Kith"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [tr("Corte", "Court"), displayCourt(lineReference.courts, data.court, locale)],
+            [t("ui.kith6a78ff"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [t("ui.court"), displayCourt(lineReference.courts, data.court, locale)],
         ];
-        return (<CharacterPaperShell line="CtL" mobile title={"CHANGELING"} subtitle={tr("OS PERDIDOS", "THE LOST")}>
+        return (<CharacterPaperShell line="CtL" mobile title={"CHANGELING"} subtitle={t("ui.theLOST")}>
         <SwipeableSheetTabs value={sheetTab} onValueChange={setSheetTab} tabs={[
-                { value: "resumo", label: tr("Resumo", "Summary") }, { value: "stats", label: "Stats" },
-                { value: "detalhes", label: tr("Detalhes", "Details") },
-                { value: "poderes", label: tr("Poderes", "Powers") },
+                { value: "resumo", label: t("ui.summary") }, { value: "stats", label: "Stats" },
+                { value: "detalhes", label: t("ui.details") },
+                { value: "poderes", label: t("ui.powers") },
                 ...(entitlementMerit ? [{ value: "entitlement", label: "Entitlement" }] : []),
                 ...([]),
-                { value: "combate", label: tr("Combate", "Combat") },
-                ...(hasCompanions ? [{ value: "companheiros", label: tr("Companheiros", "Companions") }] : []), { value: "anotacoes", label: tr("Anotações", "Notes") },
+                { value: "combate", label: t("ui.combat") },
+                ...(hasCompanions ? [{ value: "companheiros", label: t("ui.companions") }] : []), { value: "anotacoes", label: t("ui.notes") },
             ]}>
           {{
                 resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value}/>)}{false}</section>
-              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
+              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
               <SheetHeading>Experiência</SheetHeading>
               {<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
               {false}
@@ -223,16 +223,16 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
               <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
               <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
-              <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato", "Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
+              <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
               <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
               <SheetHeading>Condições</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
             </>,
                 poderes: <>
-              <PowerResource name={tr("Fado", "Wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
+              <PowerResource name={t("ui.wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
               <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={changelingFavoredRegalia(data)}/>
               <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
               <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
-              <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento", "Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
+              <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
               <SeemingLore seeming={String(data.seeming ?? "")}/><KithLore data={data} reference={lineReference}/>
             </>,
                 entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={lineReference.entitlements}/>,
@@ -247,18 +247,18 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         </SwipeableSheetTabs>
       </CharacterPaperShell>);
     }
-    return (<CharacterPaperShell line="CtL" title={"CHANGELING"} subtitle={tr("OS PERDIDOS", "THE LOST")}>
+    return (<CharacterPaperShell line="CtL" title={"CHANGELING"} subtitle={t("ui.theLOST")}>
       {(<Tabs defaultValue="principal" className="ctl-sheet-tabs">
-          <TabsList className="ctl-sheet-tab-list" aria-label={tr("Páginas da ficha", "Character pages")}>
-            <TabsTrigger value="principal">{tr("Principal", "Main")}</TabsTrigger>
-            <TabsTrigger value="poderes">{tr("Detalhes", "Details")}</TabsTrigger>
+          <TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
+            <TabsTrigger value="principal">{t("ui.main")}</TabsTrigger>
+            <TabsTrigger value="poderes">{t("ui.details")}</TabsTrigger>
             {entitlementMerit && <TabsTrigger value="entitlement">Entitlement</TabsTrigger>}
-            <TabsTrigger value="combate">{tr("Combate", "Combat")}</TabsTrigger>
-          {hasCompanions && <TabsTrigger value="companheiros">{tr("Companheiros", "Companions")}</TabsTrigger>}
+            <TabsTrigger value="combate">{t("ui.combat")}</TabsTrigger>
+          {hasCompanions && <TabsTrigger value="companheiros">{t("ui.companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <MainSheet className="changeling-main-body"
-              identity={<section className="sheet-identity-grid"><SheetField label="Nome" value={character.character.name}/><SheetField label="Agulha" value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label="Feição" value={seemingDisplayName(data.seeming, locale)}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Fio" value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={tr("Frátria", "Kith")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label="Crônica" value={character.character.chronicle}/><SheetField label="Conceito" value={character.character.concept}/><SheetField label={tr("Corte", "Court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
+              identity={<section className="sheet-identity-grid"><SheetField label="Nome" value={character.character.name}/><SheetField label="Agulha" value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label="Feição" value={seemingDisplayName(data.seeming, locale)}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Fio" value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={t("ui.kith6a78ff")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label="Crônica" value={character.character.chronicle}/><SheetField label="Conceito" value={character.character.concept}/><SheetField label={t("ui.court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
               attributes={<><SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
               skills={
                 <>
@@ -269,8 +269,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                       title={category}
                       subtitle={
                         category === "Mental"
-                          ? tr("(-3 se não treinado)", "(-3 if Untrained)")
-                          : tr("(-1 se não treinado)", "(-1 if Untrained)")
+                          ? t("ui.message3IfUntrained")
+                          : t("ui.message1IfUntrained")
                       }
                       names={names}
                       values={effectiveSkills}
@@ -282,8 +282,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 </>
               }
               specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data)}/><SheetHeading className="ctl-single-divider">Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
-              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/><SheetHeading className="ctl-single-divider">Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={tr("Escreva uma Pedra de Contato", "Write a Touchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
-              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
+              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/><SheetHeading className="ctl-single-divider">Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
+              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
               powerStat={<MainPowerStat label="Fado" value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label="Glamour" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
@@ -300,7 +300,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               </section>
               <section>
                 <SheetHeading>Juramentos</SheetHeading>
-                <EditableList values={oaths} minimum={5} placeholder={tr("Escreva um Juramento", "Write an Oath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
+                <EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
                 <SheetHeading>Méritos Expandidos</SheetHeading>
                 <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>
                 <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
@@ -325,7 +325,7 @@ function SheetField({ label, value }: {
     const anchorKind = label === "Agulha" ? "needle" : label === "Fio" ? "thread" : null;
     const tooltip = anchorKind ? changelingAnchorRecovery(anchorKind, systemTerm(String(value ?? ""), "en-US"), locale) : "";
     return (<div className="official-field" title={tooltip || undefined} data-tooltip={tooltip || undefined} tabIndex={tooltip ? 0 : undefined}>
-      <span>{workspaceTerm(label, locale)}</span>
+      <span>{systemTerm(label, locale)}</span>
       <strong>{String(value ?? "")}</strong>
     </div>);
 }
@@ -346,7 +346,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
     entitlementCatalog: readonly EntitlementDefinition[];
     hasAdjacentContent?: boolean;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const trifleUses = (character?.current_state.trifle_uses && typeof character.current_state.trifle_uses === "object" && !Array.isArray(character.current_state.trifle_uses) ? character.current_state.trifle_uses : {}) as Record<string, number>;
     const setTrifleUses = (key: string, value: number) => {
         if (!character || !updateSheet)
@@ -374,7 +374,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                       {tokenItems[index]?.kind === "trifle" && <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${tokenItems[index].id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${tokenItems[index].id || index}`, value)}/>}
                     </section>))) : (<p>
-                    {tr("Consulte a descrição deste Mérito para distribuir ou usar suas características internas.", "See this Merit's description to assign or use its internal traits.")}
+                    {t("ui.seeThisMeritSDescriptionToAssignOr")}
                   </p>)}
                 {configurationEditor}
               </div>
@@ -388,7 +388,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 </h4>
                 <small>
                   {style.source} · p. {style.page}
-                  <> · {tr("Pré-requisitos", "Prerequisites")}: {style.prerequisites || tr("Nenhum", "None")}</>
+                  <> · {t("ui.prerequisites")}: {style.prerequisites || t("ui.none")}</>
                 </small>
               </div>
               <DotValue value={item.dots}/>
@@ -411,22 +411,22 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             </div>
           </details>);
         })}
-      {!visible.length && !hasAdjacentContent && <p className="rule-callout expanded-merit-empty">{tr("Nenhum Mérito Expandido adquirido.", "No Expanded Merits purchased.")}</p>}
+      {!visible.length && !hasAdjacentContent && <p className="rule-callout expanded-merit-empty">{t("ui.noExpandedMeritsPurchased")}</p>}
     </div>);
 }
 function TrifleUseTrack({ used, onChange }: {
     used: number;
     onChange: (value: number) => void;
 }) {
-    const { tr } = useLanguage();
-    return <div className="trifle-use-block"><span>{tr("Trifles usadas", "Trifles used")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={tr(`${used} de 3 Trifles usadas`, `${used} of 3 Trifles used`)}>{Array.from({ length: 3 }, (_, index) => <button key={index} type="button" className={index < used ? "used" : ""} onClick={() => onChange(index < used ? index : index + 1)} aria-label={tr(`Definir Trifles usadas como ${index < used ? index : index + 1}`, `Set used Trifles to ${index < used ? index : index + 1}`)}/>)}</div></div>;
+    const { t } = useLanguage();
+    return <div className="trifle-use-block"><span>{t("ui.triflesUsed")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={t("ui.of3TriflesUsed", { p1: used }})}>{Array.from({ length: 3 }, (_, index) => <button key={index} type="button" className={index < used ? "used" : ""} onClick={() => onChange(index < used ? index : index + 1)} aria-label={t("ui.setUsedTriflesTo", { p1: index < used ? index : index + 1 }})}/>)}</div></div>;
 }
 function ClarityTrack({ maximum, damage, onChange, }: {
     maximum: number;
     damage: ClarityDamageLevel[];
     onChange: (value: ClarityDamageLevel[]) => void;
 }) {
-    const { tr } = useLanguage();
+    const { t } = useLanguage();
     const current = Math.max(0, maximum - damage.length);
     const cycle = (index: number) => {
         const slots: Array<ClarityDamageLevel | undefined> = Array.from({ length: maximum }, (_, slot) => damage[slot]);
@@ -436,10 +436,10 @@ function ClarityTrack({ maximum, damage, onChange, }: {
         onChange(normalizeClarityDamage(slots, maximum));
     };
     return (<div className="tracker-block clarity-block">
-      <div className="health-track clarity-track" role="group" aria-label={tr(`Lucidez atual ${current} de ${maximum}`, `Current Clarity ${current} of ${maximum}`)}>
+      <div className="health-track clarity-track" role="group" aria-label={t("ui.currentClarityOf", { p1: current, p2: maximum }})}>
         {Array.from({ length: maximum }, (_, index) => {
             const level = damage[index];
-            return (<button type="button" key={index} className={`health-box clarity-box ${level ?? "empty"}`} onClick={() => cycle(index)} aria-label={tr(`Caixa ${index + 1}: ${level === "mild" ? "dano leve" : level === "severe" ? "dano grave" : "vazia"}. Clique para alterar.`, `Box ${index + 1}: ${level === "mild" ? "mild damage" : level === "severe" ? "severe damage" : "empty"}. Press to change.`)}>
+            return (<button type="button" key={index} className={`health-box clarity-box ${level ?? "empty"}`} onClick={() => cycle(index)} aria-label={t("ui.clarityBoxChange", { index: index + 1, state: level === "mild" ? t("ui.damageMild") : level === "severe" ? t("ui.damageSevere") : t("ui.damageEmpty") })}>
               <span aria-hidden="true"/>
             </button>);
         })}
@@ -448,15 +448,15 @@ function ClarityTrack({ maximum, damage, onChange, }: {
         {Array.from({ length: maximum }, (_, index) => (<span key={index}>{index === 0 ? "" : index}</span>))}
       </div>
       <div className="tracker-meta">
-        <span>{tr("Lucidez atual", "Current Clarity")}</span>
+        <span>{t("ui.currentClarity")}</span>
         <strong>
           {current} / {maximum}
         </strong>
       </div>
       <p className="tracker-help">
         <span className="legend-mark mild"/>
-        {tr("Leve", "Mild")} <span className="legend-mark severe"/>
-        {tr("Grave · as três caixas à direita podem gerar Condições de Lucidez", "Severe · the three rightmost boxes may cause Clarity Conditions")}
+        {t("ui.mild")} <span className="legend-mark severe"/>
+        {t("ui.severeTheThreeRightmostBoxesMayCauseClarity")}
       </p>
     </div>);
 }
@@ -464,14 +464,14 @@ function GoblinDebtTrack({ value, onChange, }: {
     value: number;
     onChange: (value: number) => void;
 }) {
-    const { tr } = useLanguage();
+    const { t } = useLanguage();
     return (<div className="goblin-debt-block">
-      <h4>{tr("Débito Goblin", "Goblin Debt")}</h4>
-      <div className="goblin-debt-track" role="group" aria-label={tr(`Débito Goblin: ${value} de 10`, `Goblin Debt: ${value} of 10`)}>
-        {Array.from({ length: 10 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={tr(`Definir Débito Goblin como ${index < value ? index : index + 1}`, `Set Goblin Debt to ${index < value ? index : index + 1}`)}/>))}
+      <h4>{t("ui.goblinDebt")}</h4>
+      <div className="goblin-debt-track" role="group" aria-label={t("ui.goblinDebtOf10", { p1: value }})}>
+        {Array.from({ length: 10 }, (_, index) => (<button type="button" key={index} className={index < value ? "filled" : ""} onClick={() => onChange(index < value ? index : index + 1)} aria-label={t("ui.setGoblinDebtTo", { p1: index < value ? index : index + 1 }})}/>))}
       </div>
       <p>
-        {value}/10 · {tr("ao receber o décimo ponto, o personagem adquire a Condição Habitante da Sebe.", "upon receiving the tenth point, the character gains the Hedge Denizen Condition.")}
+        {value}/10 · {t("ui.uponReceivingTheTenthPointTheCharacterGains")}
       </p>
     </div>);
 }
@@ -479,10 +479,10 @@ function FrailtyList({ values, onChange }: {
     values: string[];
     onChange: (value: string[]) => void;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     return (<div className="editable-lines frailty-lines">
       {values.map((value, index) => (<div className="editable-line-row" key={index}>
-          <Input value={index === 0 ? systemTerm(value, locale) : value} readOnly={index === 0} aria-label={index === 0 ? tr("Fragilidade obrigatória: Ferro Frio", "Mandatory Frailty: Cold Iron") : tr(`Fragilidade de Fado ${index * 2}`, `Wyrd ${index * 2} Frailty`)} placeholder={index === 0 ? undefined : tr(`Fragilidade de Fado ${index * 2}`, `Wyrd ${index * 2} Frailty`)} onChange={(event) => {
+          <Input value={index === 0 ? systemTerm(value, locale) : value} readOnly={index === 0} aria-label={index === 0 ? t("ui.mandatoryFrailtyColdIron") : t("ui.wyrdFrailty", { p1: index * 2 }})} placeholder={index === 0 ? undefined : t("ui.wyrdFrailty", { p1: index * 2 }})} onChange={(event) => {
                 const next = [...values];
                 next[index] = event.target.value;
                 onChange(next);
@@ -506,13 +506,13 @@ function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog,
     courtCatalog: readonly CourtDefinition[];
     entitlementCatalog: readonly EntitlementDefinition[];
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const availableCatalog = catalog, visible = merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
     return (<div className="sheet-merits single-column">
       {visible.length ? (visible.map((item, index) => {
             const definition = availableCatalog.find((entry) => entry.name === item.name);
             const tooltip = definition
-                ? `${definition.prerequisites ? `${tr("Pré-requisitos", "Prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
+                ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
                 : item.source;
             const inline = isInlineMeritConfiguration(item.name);
             const meritIndex = character.merits.indexOf(item);
@@ -522,7 +522,7 @@ function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog,
             return (<div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={inline ? undefined : tooltip}>
               <div className="sheet-merit-main">
                 <span>{inline ? `${displayName}:` : meritLabel(item, catalog, courtCatalog, locale)}</span>
-                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${tr("descrição", "description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={tr("Escreva aqui", "Type here")} onChange={(event) => {
+                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${t("ui.description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={t("ui.typeHere")} onChange={(event) => {
                         const next = structuredClone(character);
                         const target = next.merits[meritIndex];
                         if (target)
@@ -532,7 +532,7 @@ function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog,
                 <DotValue value={item.dots} max={Math.max(5, item.dots)}/>
               </div>
             </div>);
-        })) : (<em>{tr("Nenhum Mérito selecionado", "No Merit selected")}</em>)}
+        })) : (<em>{t("ui.noMeritSelected")}</em>)}
     </div>);
 }
 function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, extraBenefits = [], extraClauses = [], }: {
@@ -544,7 +544,7 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
     extraBenefits?: Array<Record<string, unknown>>;
     extraClauses?: Array<Record<string, unknown>>;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     return (<div className="contract-power-list">
       {contracts
             .filter((item) => item.name)
@@ -579,22 +579,22 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
             const outcomeSections = contractOutcomeSections(definition, locale);
             const details = <dl>
                 {summary && <div>
-                  <dt>{tr("Resumo", "Summary")}</dt>
+                  <dt>{t("ui.summary")}</dt>
                   <dd>{summary}</dd>
                 </div>}
                 {contractHasInvocationRoll(definition) === true && <div>
-                  <dt>{tr("Parada de dados", "Dice Pool")}</dt>
-                  <dd>{definition.dicePool ?? tr("Não informada", "Not listed")}</dd>
+                  <dt>{t("ui.dicePool")}</dt>
+                  <dd>{definition.dicePool ?? t("ui.notListed")}</dd>
                 </div>}
                 <div>
-                  <dt>{tr("Custo", "Cost")}</dt>
-                  <dd>{definition.cost ?? tr("Conforme descrição", "As described")}</dd>
+                  <dt>{t("ui.cost")}</dt>
+                  <dd>{definition.cost ?? t("ui.asDescribed")}</dd>
                 </div>
                 <div>
-                  <dt>{tr("Ação / Duração", "Action / Duration")}</dt>
+                  <dt>{t("ui.actionDuration")}</dt>
                   <dd>
-                    {definition.action ?? tr("Instantânea", "Instant")} ·{" "}
-                    {definition.duration ?? tr("Cena", "Scene")}
+                    {definition.action ?? t("ui.instant")} ·{" "}
+                    {definition.duration ?? t("ui.scene")}
                   </dd>
                 </div>
                 {outcomeSections.slice(0, 1).map((section) => (<div key={section.label}>
@@ -602,7 +602,7 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
                     <dd>{section.text}</dd>
                   </div>))}
                 {displayOptions.length > 0 && (<div className="contract-options">
-                    <dt>{tr("Opções", "Options")}</dt>
+                    <dt>{t("ui.options")}</dt>
                     <dd><ul>{displayOptions.map((option) => <li key={option}>{option}</li>)}</ul></dd>
                   </div>)}
                 {definition.detailTables?.map((table) => (<div className="contract-detail-table" key={table.title}>
@@ -614,18 +614,18 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
                     <dd>{section.text}</dd>
                   </div>))}
                 <div>
-                  <dt>{tr("Brecha", "Loophole")}</dt>
+                  <dt>{t("ui.loophole")}</dt>
                   <dd>{definition.loophole}</dd>
                 </div>
                 {benefits.map((benefit) => (<div key={benefit.key}>
                     <dt>
-                      {tr("Benefício de", "Benefit for")}{" "}
+                      {t("ui.benefitFor")}{" "}
                       {seemingDisplayName(benefit.key, locale)}
                     </dt>
                     <dd>{benefit.text}</dd>
                   </div>))}
                 {courtBenefit && (<div>
-                    <dt>{tr("Benefício da Corte", "Court Benefit")} {court}</dt>
+                    <dt>{t("ui.courtBenefit")} {court}</dt>
                     <dd>{courtBenefit}</dd>
                   </div>)}
                 {clauses.map((clause) => (<div key={`clause-${clause.courtId}`}>
@@ -633,14 +633,14 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
                     <dd>{clause.text}</dd>
                   </div>))}
                 {definition.goblin && (<div className="goblin-debt-row">
-                    <dt>{tr("Débito Goblin", "Goblin Debt")}</dt>
+                    <dt>{t("ui.goblinDebt")}</dt>
                     <dd>{definition.goblinDebt}</dd>
                   </div>)}
               </dl>;
             return (<details className="contract-power-card" key={`${definition.id}-${index}`}>
               <summary className="contract-power-summary">
                 <strong>{locale === "en-US" ? definition.originalName ?? definition.name : definition.name}</strong>
-                <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}</Badge>
+                <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal")}</Badge>
                 <small>{systemTerm(definition.regalia, locale)} · {definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
               </summary>
               <div className="contract-power-details">{details}</div>
@@ -651,10 +651,10 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
 function SeemingLore({ seeming }: {
     seeming: string;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const definition = CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS];
     if (!definition)
-        return <LorePanel title={tr("Feição", "Seeming")} text={tr("Nenhuma Feição selecionada.", "No Seeming selected.")}/>;
+        return <LorePanel title={t("ui.seeming")} text={t("ui.noSeemingSelected")}/>;
     const page = ({
         Beast: 22,
         Darkling: 24,
@@ -664,15 +664,15 @@ function SeemingLore({ seeming }: {
         Wizened: 32,
     } as Record<string, number>)[seeming];
     return (<>
-      <LorePanel title={tr(`Bênção de ${definition.translated}`, `${seeming} Blessing`)} text={locale === "en-US" ? definition.blessingEn : definition.blessing} source={`Changeling the Lost · p. ${page}`}/>
-      <LorePanel title={tr(`Maldição de ${definition.translated}`, `${seeming} Curse`)} text={locale === "en-US" ? definition.curseEn : definition.curse} source={`Changeling the Lost · p. ${page}`}/>
+      <LorePanel title={t("ui.blessingOf", { name: seemingDisplayName(seeming, locale) })} text={locale === "en-US" ? definition.blessingEn : definition.blessing} source={`Changeling the Lost · p. ${page}`}/>
+      <LorePanel title={t("ui.curseOf", { name: seemingDisplayName(seeming, locale) })} text={locale === "en-US" ? definition.curseEn : definition.curse} source={`Changeling the Lost · p. ${page}`}/>
     </>);
 }
 function KithLore({ data, reference }: {
     data: Record<string, unknown>;
     reference: ChangelingReference;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const definition = data.kith_custom ? undefined : findKithInCatalog(reference.kiths, data.kith);
     const presentation = data.kith_custom ? undefined : presentKith(reference, data.kith, locale);
     const name = data.kith_custom ? String(data.kith ?? "") : presentation?.name ?? "";
@@ -687,8 +687,8 @@ function KithLore({ data, reference }: {
     const choiceParts = choice.split(": ");
     const displayedChoice = choiceDefinition?.kind === "skill" ? systemTerm(choice, locale) : choiceDefinition?.kind === "specialty" && choiceParts.length > 1 ? `${systemTerm(choiceParts[0], locale)}: ${choiceParts.slice(1).join(": ")}` : choice;
     if (!name)
-        return (<LorePanel title={tr("Bênção da Fratria", "Kith Blessing")} text={tr("Nenhuma Fratria selecionada.", "No Kith selected.")}/>);
-    return (<LorePanel title={tr(`Bênção de ${name}`, `${name} Blessing`)} intro={data.kith_custom ? undefined : description} text={`${choice ? `${choiceLabel}: ${displayedChoice}. ` : ""}${skill ? `${skill}. ` : ""}${blessing || description}`} source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}/>);
+        return (<LorePanel title={t("ui.kithBlessing")} text={t("ui.noKithSelected")}/>);
+    return (<LorePanel title={t("ui.blessing", { p1: name }})} intro={data.kith_custom ? undefined : description} text={`${choice ? `${choiceLabel}: ${displayedChoice}. ` : ""}${skill ? `${skill}. ` : ""}${blessing || description}`} source={source ? `${source}${page ? ` · p. ${page}` : ""}` : undefined}/>);
 }
 function CourtLore({ data, merits, courtCatalog, main = false, }: {
     data: Record<string, unknown>;
@@ -696,7 +696,7 @@ function CourtLore({ data, merits, courtCatalog, main = false, }: {
     courtCatalog: readonly CourtDefinition[];
     main?: boolean;
 }) {
-    const { locale, tr } = useLanguage();
+    const { locale, t } = useLanguage();
     const raw = data.custom_court;
     const custom = raw && typeof raw === "object" ? raw as Record<string, unknown> : undefined;
     const official = custom ? undefined : presentCourt(courtCatalog, data.court, locale);
@@ -714,19 +714,19 @@ function CourtLore({ data, merits, courtCatalog, main = false, }: {
         <DotValue value={dots}/>
       </summary>
       <div className="expanded-merit-body">
-        {emotion && <section><strong>{tr("Sentimento da Corte", "Court emotion")}</strong><p>{emotion}</p></section>}
+        {emotion && <section><strong>{t("ui.courtEmotion")}</strong><p>{emotion}</p></section>}
         {benefits.slice(0, 5).map((benefit, index) => (<section key={index} className={index >= dots ? "court-benefit-locked" : undefined}>
-          <strong>{tr("Manto", "Mantle")} {index + 1}</strong>
+          <strong>{t("ui.mantle")} {index + 1}</strong>
           <p>{benefit}</p>
         </section>))}
         {official && <small>{official.source} · p. {[official.page, ...(official.additionalPages ?? [])].join(", ")}</small>}
       </div>
     </details>);
     return (<article className="lore-panel">
-      <h4>{tr("Manto", "Mantle")}: {name}</h4>
-      <small>{tr("Sentimento da Corte", "Court emotion")}: {emotion}</small>
+      <h4>{t("ui.mantle")}: {name}</h4>
+      <small>{t("ui.courtEmotion")}: {emotion}</small>
       {benefits.slice(0, dots).map((benefit, index) => (<p key={index}>
-          <strong>{tr("Manto", "Mantle")} {index + 1}:</strong> {benefit}
+          <strong>{t("ui.mantle")} {index + 1}:</strong> {benefit}
         </p>))}
       {official && <small>{official.source} · p. {[official.page, ...(official.additionalPages ?? [])].join(", ")}</small>}
     </article>);

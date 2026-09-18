@@ -88,7 +88,7 @@ function contractCategoryKey(contract: ContractDefinition) {
 }
 
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
     ...REGALIA,
@@ -110,13 +110,13 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   ).length;
   return (
     <div className="builder-section">
-      <span className="kicker">{tr("PASSO 3 · CHANGELING", "STEP 3 · CHANGELING")}</span>
-      <h2>{tr("Modelo dos Perdidos", "Lost Template")}</h2>
-      <p>{tr("As escolhas e limites abaixo vêm de Changeling the Lost.", "The choices and limits below come from Changeling the Lost.")}</p>
+      <span className="kicker">{t("ui.step3CHANGELING")}</span>
+      <h2>{t("ui.lostTemplate")}</h2>
+      <p>{t("ui.theChoicesAndLimitsBelowComeFromChangeling")}</p>
       <div className="ctl-template-grid">
         <div className="ctl-template-primary">
           <Choice
-            label={tr("Feição", "Seeming")}
+            label={t("ui.seeming")}
             value={props.seeming}
             setValue={props.setSeeming}
             options={Object.keys(CTL_SEEMINGS)}
@@ -130,7 +130,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           />
           <div className="ctl-favored-inline">
             <Choice
-              label={tr("Atributo favorecido (+1)", "Favored Attribute (+1)")}
+              label={t("ui.favoredAttribute1")}
               value={props.favoredAttribute}
               setValue={props.setFavoredAttribute}
               options={favored}
@@ -139,15 +139,12 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             />
           </div>
           <div className="regalia-choice-stack">
-            <span className="regalia-field-label">{tr("Segunda Regalia favorecida", "Second favored Regalia")}</span>
+            <span className="regalia-field-label">{t("ui.secondFavoredRegalia")}</span>
             <div className="regalia-information" aria-live="polite">
-              <strong>{props.secondRegalia ? systemTerm(props.secondRegalia, locale) : tr("Segunda Regalia", "Second Regalia")}</strong>
+              <strong>{props.secondRegalia ? systemTerm(props.secondRegalia, locale) : t("ui.secondRegalia")}</strong>
               <p>{props.secondRegalia
-                ? tr(
-                    `Esta Regalia favorecida libera seus Contratos Reais (${secondRegaliaRoyalCount} disponíveis nas fontes ativas). Ela não altera a bênção da Feição.`,
-                    `This favored Regalia grants access to its Royal Contracts (${secondRegaliaRoyalCount} available from active sources). It does not change the Seeming blessing.`,
-                  )
-                : tr("Escolha uma segunda Regalia favorecida para liberar outra categoria de Contratos Reais.", "Choose a second favored Regalia to unlock another category of Royal Contracts.")}</p>
+                ? t("ui.thisFavoredRegaliaGrantsAccessToItsRoyal", { p1: secondRegaliaRoyalCount }})
+                : t("ui.chooseASecondFavoredRegaliaToUnlockAnother")}</p>
             </div>
             <div className="regalia-select">
               <Choice
@@ -191,7 +188,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           context={props.meritContext}
           spent={props.meritSpent}
           budget={props.meritBudget}
-          powerLabel={tr("Fado inicial", "Wyrd at creation")}
+          powerLabel={t("ui.wyrdAtCreation")}
           power={props.wyrd}
           setPower={props.setWyrd}
           isInlineConfiguration={(name) => isCommonInlineMeritConfiguration(name) || isChangelingInlineMeritConfiguration(name)}
@@ -204,7 +201,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
               catalog={props.meritCatalog}
               definitions={CHANGELING_BUILDER_MERIT_CONFIGURATIONS}
               renderStructured={(editorProps) => renderChangelingStructuredMeritEditor(editorProps, props.entitlementCatalog)}
-              renderCustomField={(kind, field) => kind === "court" ? <Choice label={tr("Corte beneficiada", "Benefited Court")} value={field.value} setValue={field.onChange} options={props.courtCatalog.filter((item) => courtId(props.courtCatalog, item.id ?? item.name) !== courtId(props.courtCatalog, props.court)).map((item) => item.id ?? item.name)} optionLabels={Object.fromEntries(props.courtCatalog.map((item) => [item.id ?? item.name, courtName(item, locale)]))} /> : null}
+              renderCustomField={(kind, field) => kind === "court" ? <Choice label={t("ui.benefitedCourt")} value={field.value} setValue={field.onChange} options={props.courtCatalog.filter((item) => courtId(props.courtCatalog, item.id ?? item.name) !== courtId(props.courtCatalog, props.court)).map((item) => item.id ?? item.name)} optionLabels={Object.fromEntries(props.courtCatalog.map((item) => [item.id ?? item.name, courtName(item, locale)]))} /> : null}
             />
           )}
         />
@@ -214,7 +211,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
 }
 
 function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"|"customCourt"|"setCustomCourt"|"courtCatalog">) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const [courtSearch, setCourtSearch] = useState("");
   const [courtSource, setCourtSource] = useState("all");
   const select = (name: string) => {
@@ -239,41 +236,41 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
   );
   return (
     <div className="kith-field">
-      <span>{tr("Corte", "Court")}</span>
+      <span>{t("ui.court")}</span>
       <div className="kith-current">
-        <strong>{props.court ? courtDisplayName(props.courtCatalog, props.court, locale) : tr("Nenhuma selecionada", "None selected")}</strong>
+        <strong>{props.court ? courtDisplayName(props.courtCatalog, props.court, locale) : t("ui.noneSelected")}</strong>
         <small>
           {!props.court
-            ? tr("Nenhuma Corte selecionada: o personagem será salvo como Sem Corte.", "No Court selected: the character will be saved as Courtless.")
+            ? t("ui.noCourtSelectedTheCharacterWillBeSaved")
             : officialCourt
-              ? `${locale === "en-US" ? officialCourt.emotion : (officialCourt.emotionPt ?? officialCourt.emotion)} · ${tr("A Corte concede Manto 1 automaticamente", "The Court grants Mantle 1 automatically")}`
-              : tr("Sem benefícios de Manto.", "No Mantle benefits.")}
+              ? `${locale === "en-US" ? officialCourt.emotion : (officialCourt.emotionPt ?? officialCourt.emotion)} · ${t("ui.theCourtGrantsMantle1Automatically")}`
+              : t("ui.noMantleBenefits")}
         </small>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Search /> {tr("Selecionar Corte", "Select Court")}
+            <Search /> {t("ui.selectCourt")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog ctl-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Selecionar Corte", "Select Court")}</DialogTitle>
+            <DialogTitle>{t("ui.selectCourt")}</DialogTitle>
             <DialogDescription>
-              {tr("Escolha entre as Cortes consolidadas das fontes ativas.", "Choose among the consolidated Courts from active sources.")}
+              {t("ui.chooseAmongTheConsolidatedCourtsFromActiveSources")}
             </DialogDescription>
           </DialogHeader>
           <div className="court-catalog-filters">
             <label className="merit-search">
               <Search aria-hidden="true" />
-              <Input value={courtSearch} onChange={(event) => setCourtSearch(event.target.value)} placeholder={tr("Buscar Corte…", "Search Court…")} />
+              <Input value={courtSearch} onChange={(event) => setCourtSearch(event.target.value)} placeholder={t("ui.searchCourt")} />
             </label>
-            <Choice label={tr("Fonte", "Source")} value={courtSource} setValue={setCourtSource} options={["all", ...courtSources]} optionLabels={{ all: tr("Todas", "All") }} />
+            <Choice label={t("ui.source")} value={courtSource} setValue={setCourtSource} options={["all", ...courtSources]} optionLabels={{ all: t("ui.all") }} />
           </div>
           <div className="court-catalog">
             <button type="button" className={!props.court ? "court-option selected" : "court-option"} onClick={() => select("")}>
-              <strong>{tr("Sem Corte", "Courtless")}</strong>
-              <small>{tr("O personagem não pertence a uma Corte.", "The character does not belong to a Court.")}</small>
+              <strong>{t("ui.courtless")}</strong>
+              <small>{t("ui.theCharacterDoesNotBelongToACourt")}</small>
             </button>
             {filteredCourts.map((court) => (
               <button type="button" aria-pressed={courtId(props.courtCatalog, props.court) === courtId(props.courtCatalog, court.value)} className={courtId(props.courtCatalog, props.court) === courtId(props.courtCatalog, court.value) ? "court-option selected" : "court-option"} key={court.value} onClick={() => select(courtId(props.courtCatalog, props.court) === courtId(props.courtCatalog, court.value) ? "" : court.value)}>
@@ -281,12 +278,12 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
                 <small>{court.detail}</small>
               </button>
             ))}
-            {!filteredCourts.length && <p className="empty-state">{tr("Nenhuma Corte encontrada.", "No Courts found.")}</p>}
+            {!filteredCourts.length && <p className="empty-state">{t("ui.noCourtsFound")}</p>}
           </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">
-                {tr("Concluir", "Done")}
+                {t("ui.done")}
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -297,32 +294,32 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
 }
 
 function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"needle"|"thread";value:string;setValue:(value:string)=>void;invalid?:boolean}) {
-  const {locale,tr}=useLanguage();
+  const { locale, t }=useLanguage();
   const [search,setSearch]=useState("");
   const [sourceFilter,setSourceFilter]=useState("all");
   const definitions=kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS;
   const sources=alphabetical([...new Set(definitions.map((item)=>item.source).filter((source):source is string=>Boolean(source)))],(source)=>source,locale);
-  const label=kind==="needle"?tr("Agulha","Needle"):tr("Fio","Thread");
+  const label=kind==="needle"?t("ui.needle"):t("ui.thread");
   const normalized=search.trim().toLocaleLowerCase(locale);
   const filtered=definitions.filter((item)=>(sourceFilter==="all"||item.source===sourceFilter)&&(!normalized||`${item.name} ${changelingAnchorRecovery(kind,item.name,locale)}`.toLocaleLowerCase(locale).includes(normalized)));
   return <div className={`kith-field anchor-field${invalid?" missing-field":""}`}>
     <span>{label}</span>
-    <div className="kith-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):tr("Nenhuma seleção","None selected")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):tr("Consulte os gatilhos de recuperação de Força de Vontade antes de escolher.","Review the Willpower recovery triggers before choosing.")}</small></div>
+    <div className="kith-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):t("ui.noneSelected4f351e")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):t("ui.reviewTheWillpowerRecoveryTriggersBeforeChoosing")}</small></div>
     <Dialog>
-      <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {tr(`Selecionar ${label}`,`Select ${label}`)}</Button></DialogTrigger>
+      <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {t("ui.select93d2b9", { p1: label }})}</Button></DialogTrigger>
       <DialogContent className="merit-dialog anchor-dialog ctl-dialog">
-        <DialogHeader><DialogTitle>{tr(`Selecionar ${label}`,`Select ${label}`)}</DialogTitle><DialogDescription>{tr("Cada opção recupera 1 ponto ou toda a Força de Vontade em circunstâncias diferentes.","Each option recovers either 1 point or all Willpower under different circumstances.")}</DialogDescription></DialogHeader>
-        <label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={tr("Buscar por nome ou gatilho…","Search by name or trigger…")}/></label>
-        <div className="catalog-filters anchor-filters"><label>{tr("Fonte","Source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Fontes","All Sources")}</SelectItem>{sources.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label></div>
-        <div className="merit-catalog anchor-catalog">{filtered.map((item)=><SelectableCatalogCard key={item.name} selected={value===item.name} label={`${tr("Selecionar","Select")} ${changelingAnchorDisplayName(kind,item.name,locale)}`} onToggle={()=>setValue(value===item.name?"":item.name)}><div><strong>{changelingAnchorDisplayName(kind,item.name,locale)}</strong>{item.source&&<small>{item.source} · p. {item.page}</small>}<p>{changelingAnchorRecovery(kind,item.name,locale).split("\n").map((line,index)=><span key={line}>{index===0?"":""}{line}</span>)}</p></div></SelectableCatalogCard>)}</div>
-        <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button></DialogClose></DialogFooter>
+        <DialogHeader><DialogTitle>{t("ui.select93d2b9", { p1: label }})}</DialogTitle><DialogDescription>{t("ui.eachOptionRecoversEither1PointOrAll")}</DialogDescription></DialogHeader>
+        <label className="merit-search"><Search aria-hidden="true"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder={t("ui.searchByNameOrTrigger")}/></label>
+        <div className="catalog-filters anchor-filters"><label>{t("ui.source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{t("ui.allSources")}</SelectItem>{sources.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label></div>
+        <div className="merit-catalog anchor-catalog">{filtered.map((item)=><SelectableCatalogCard key={item.name} selected={value===item.name} label={`${t("ui.select198f7a")} ${changelingAnchorDisplayName(kind,item.name,locale)}`} onToggle={()=>setValue(value===item.name?"":item.name)}><div><strong>{changelingAnchorDisplayName(kind,item.name,locale)}</strong>{item.source&&<small>{item.source} · p. {item.page}</small>}<p>{changelingAnchorRecovery(kind,item.name,locale).split("\n").map((line,index)=><span key={line}>{index===0?"":""}{line}</span>)}</p></div></SelectableCatalogCard>)}</div>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
     </Dialog>
   </div>;
 }
 
 function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"kithChoice"|"setKithChoice"|"specialties"|"customKith"|"setCustomKith"|"customKithSkill"|"setCustomKithSkill"|"customKithDescription"|"setCustomKithDescription"|"kithCatalog"|"kithPresentation">) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const [search, setSearch] = useState("");
   const [skillFilter,setSkillFilter]=useState("all");
   const [sourceFilter,setSourceFilter]=useState("all");
@@ -369,28 +366,28 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
   };
   return (
     <div className="kith-field">
-      <span>{tr("Fratria", "Kith")}</span>
+      <span>{t("ui.kith")}</span>
       <div className={`kith-current${creationChoice?" has-choice":""}`}>
         <div className="kith-choice-row">
-          <strong>{(selected ? kithName(selected) : props.kith) || tr("Nenhuma selecionada", "None selected")}</strong>
+          <strong>{(selected ? kithName(selected) : props.kith) || t("ui.noneSelected")}</strong>
           {creationChoice&&(creationChoice.kind==="text"?
             <Input className="kith-choice-inline" aria-label={locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn} value={props.kithChoice} onChange={event=>props.setKithChoice(event.target.value)} placeholder={locale==="pt-BR"?creationChoice.placeholderPt:creationChoice.placeholderEn}/>
-            : <Select value={props.kithChoice} onValueChange={props.setKithChoice} disabled={!creationChoiceOptions.length}><SelectTrigger className={`kith-choice-inline${props.kithChoice?"":" missing-choice"}`} size="sm" aria-label={locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn}><SelectValue placeholder={creationChoice.kind==="specialty"&&!creationChoiceOptions.length?tr("Escolha uma Especialização","Choose a Specialty"):(locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn)}/></SelectTrigger><SelectContent>{creationChoiceOptions.map(option=>{const [skill,...detail]=option.split(": ");return <SelectItem key={option} value={option}>{detail.length?`${systemTerm(skill,locale)}: ${detail.join(": ")}`:systemTerm(option,locale)}</SelectItem>;})}</SelectContent></Select>
+            : <Select value={props.kithChoice} onValueChange={props.setKithChoice} disabled={!creationChoiceOptions.length}><SelectTrigger className={`kith-choice-inline${props.kithChoice?"":" missing-choice"}`} size="sm" aria-label={locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn}><SelectValue placeholder={creationChoice.kind==="specialty"&&!creationChoiceOptions.length?t("ui.chooseASpecialty"):(locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn)}/></SelectTrigger><SelectContent>{creationChoiceOptions.map(option=>{const [skill,...detail]=option.split(": ");return <SelectItem key={option} value={option}>{detail.length?`${systemTerm(skill,locale)}: ${detail.join(": ")}`:systemTerm(option,locale)}</SelectItem>;})}</SelectContent></Select>
           )}
         </div>
-        <small>{selected?`${kithText(selected).skill} · ${selected.source} · p. ${selected.page}`:tr("Abra o catálogo para escolher","Open the catalog to choose")}</small>
+        <small>{selected?`${kithText(selected).skill} · ${selected.source} · p. ${selected.page}`:t("ui.openTheCatalogToChoose")}</small>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Search /> {tr("Selecionar Fratria", "Select Kith")}
+            <Search /> {t("ui.selectKith")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog kith-dialog ctl-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Selecionar Fratria", "Select Kith")}</DialogTitle>
+            <DialogTitle>{t("ui.selectKith")}</DialogTitle>
             <DialogDescription>
-              {tr("Consulte descrição, Perícia e Bênção antes de escolher.", "Review the description, Skill, and Blessing before choosing.")}
+              {t("ui.reviewTheDescriptionSkillAndBlessingBeforeChoosing")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -398,24 +395,24 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={tr("Buscar Fratria, Perícia ou fonte…", "Search Kith, Skill, or source…")}
+              placeholder={t("ui.searchKithSkillOrSource")}
             />
           </label>
           <div className="catalog-filters kith-filters">
-            <label>{tr("Perícia","Skill")}<Select value={skillFilter} onValueChange={setSkillFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
-              <SelectItem value="all">{tr("Todas as Perícias","All Skills")}</SelectItem>
+            <label>{t("ui.skill")}<Select value={skillFilter} onValueChange={setSkillFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
+              <SelectItem value="all">{t("ui.allSkills")}</SelectItem>
               {skillGroups.map((group)=><SelectGroup key={group.category}>
                 <SelectSeparator/><SelectLabel>{systemTerm(group.category,locale)}</SelectLabel>
                 {group.skills.map(skill=><SelectItem key={skill} value={skill}>{systemTerm(skill,locale)}</SelectItem>)}
               </SelectGroup>)}
-              {otherSkillOptions.length>0&&<SelectGroup><SelectSeparator/><SelectLabel>{tr("Outras opções","Other options")}</SelectLabel>{otherSkillOptions.map(option=><SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectGroup>}
+              {otherSkillOptions.length>0&&<SelectGroup><SelectSeparator/><SelectLabel>{t("ui.otherOptions")}</SelectLabel>{otherSkillOptions.map(option=><SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectGroup>}
             </SelectContent></Select></label>
-            <label>{tr("Fonte","Source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{tr("Todas as Fontes","All Sources")}</SelectItem>{sourceOptions.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label>
+            <label>{t("ui.source")}<Select value={sourceFilter} onValueChange={setSourceFilter}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">{t("ui.allSources")}</SelectItem>{sourceOptions.map((source)=><SelectItem key={source} value={source}>{source}</SelectItem>)}</SelectContent></Select></label>
           </div>
           <div className="merit-catalog">
             <section className="merit-category">
               <h3>
-                {tr("Fratrias", "Kiths")} <Badge variant="outline">{filtered.length}</Badge>
+                {t("ui.kiths")} <Badge variant="outline">{filtered.length}</Badge>
               </h3>
               <div>
                 {filtered.map((item) => {
@@ -427,7 +424,7 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
                       className="merit-option"
                       key={item.id}
                       selected={isSelected}
-                      label={`${tr("Selecionar","Select")} ${kithName(item)}`}
+                      label={`${t("ui.select198f7a")} ${kithName(item)}`}
                       onToggle={() => isSelected ? clear() : choose(item)}
                     >
                       <div>
@@ -438,7 +435,7 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
                         </small>
                         <p>{presentation.description}</p>
                         <p className="rule-detail">
-                          <strong>{tr("Bênção", "Blessing")}:</strong> {presentation.blessing}
+                          <strong>{t("ui.blessingb05ee6")}:</strong> {presentation.blessing}
                         </p>
                       </div>
                     </SelectableCatalogCard>
@@ -449,7 +446,7 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button>
+              <Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -481,7 +478,7 @@ function ContractSelector({
   courtCatalog: CourtDefinition[];
   catalog: ContractDefinition[];
 }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -490,11 +487,11 @@ function ContractSelector({
   const commonFull = contracts.slice(0, 4).every((item) => item.name);
   const royalFull = contracts.slice(4).every((item) => item.name);
   const categoryLabel = (category: string) => category === "court"
-    ? tr("Corte", "Court")
+    ? t("ui.court")
     : category === "independent"
-      ? tr("Independente", "Independent")
+      ? t("ui.independent")
       : category === "goblin"
-        ? tr("Goblin", "Goblin")
+        ? t("ui.goblin")
         : systemTerm(category, locale);
   const categoryOptions = alphabetical([...new Set(catalog.map(contractCategoryKey))], categoryLabel, locale);
   const availableContracts = alphabetical(catalog, contractName,locale)
@@ -562,26 +559,26 @@ function ContractSelector({
       <Dialog>
       <div className="merit-heading">
         <div>
-          <h3>{tr("Contratos iniciais", "Starting Contracts")}</h3>
+          <h3>{t("ui.startingContracts")}</h3>
           <p>
-            {tr("Selecione quatro Contratos Comuns — incluindo Contratos Goblin — e dois Reais. Expanda uma escolha para rever todos os detalhes.", "Select four Common Contracts — including Goblin Contracts — and two Royal Contracts. Expand a choice to review all details.")}
+            {t("ui.selectFourCommonContractsIncludingGoblinContractsAnd")}
           </p>
         </div>
         <div className="merit-heading-actions"><Badge variant="outline">
-          {contracts.filter((item) => item.name).length}/6 {tr("selecionados", "selected")}
-        </Badge><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="builder-add-action">{tr("Adicionar Contrato", "Add Contract")}</Button></DialogTrigger></div>
+          {contracts.filter((item) => item.name).length}/6 {t("ui.selected9c2338")}
+        </Badge><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="builder-add-action">{t("ui.addContract")}</Button></DialogTrigger></div>
       </div>
       <DialogContent className="merit-dialog ctl-dialog">
         <DialogHeader>
-          <DialogTitle>{tr("Adicionar Contrato", "Add Contract")}</DialogTitle>
+          <DialogTitle>{t("ui.addContract")}</DialogTitle>
           <DialogDescription>
-            {tr("Separados por Regalia, Corte ou Independente, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, Court, or Independent access, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
+            {t("ui.groupedByRegaliaCourtOrIndependentAccessWith")}
           </DialogDescription>
         </DialogHeader>
         <div className="catalog-filters">
-          <label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={tr("Buscar contrato, Regalia ou fonte…", "Search Contract, Regalia, or source…")} /></label>
-          <Choice value={typeFilter} setValue={setTypeFilter} options={["all","common","royal"]} optionLabels={{all:tr("Todos os tipos","All types"),common:tr("Comum","Common"),royal:tr("Real","Royal")}} />
-          <Choice value={categoryFilter} setValue={setCategoryFilter} options={["all",...categoryOptions]} optionLabels={{all:tr("Todas as categorias","All categories"),...Object.fromEntries(categoryOptions.map((category)=>[category,categoryLabel(category)]))}} />
+          <label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t("ui.searchContractRegaliaOrSource")} /></label>
+          <Choice value={typeFilter} setValue={setTypeFilter} options={["all","common","royal"]} optionLabels={{all:t("ui.allTypes"),common:t("ui.common"),royal:t("ui.royal")}} />
+          <Choice value={categoryFilter} setValue={setCategoryFilter} options={["all",...categoryOptions]} optionLabels={{all:t("ui.allCategories"),...Object.fromEntries(categoryOptions.map((category)=>[category,categoryLabel(category)]))}} />
         </div>
         <div className="merit-catalog">
           {groups.map(({ category, items }) => (
@@ -596,43 +593,43 @@ function ContractSelector({
                   const selected = contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName);
                   const full = contract.type === "Comum" ? commonFull : royalFull;
                   const benefit = presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
-                  return <SelectableCatalogCard className="merit-option" key={contract.id} selected={selected} disabled={!selected && full} label={contractName(contract)} onToggle={() => toggleContract(contract)}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{tr("Resumo", "Summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{tr("Parada de dados", "Dice Pool")}:</strong> {presented.dicePool ?? tr("Não informada", "Not listed")}</p>}{presented.cost && <p className="rule-detail"><strong>{tr("Custo", "Cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{tr("Opções", "Options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{tr("Benefício", "Benefit")}:</strong> {benefit}</p>}</div></SelectableCatalogCard>;
+                  return <SelectableCatalogCard className="merit-option" key={contract.id} selected={selected} disabled={!selected && full} label={contractName(contract)} onToggle={() => toggleContract(contract)}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Comum" ? t("ui.common") : t("ui.royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{t("ui.summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{t("ui.dicePool")}:</strong> {presented.dicePool ?? t("ui.notListed")}</p>}{presented.cost && <p className="rule-detail"><strong>{t("ui.cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{t("ui.options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{t("ui.benefit")}:</strong> {benefit}</p>}</div></SelectableCatalogCard>;
                 })}
               </div>
             </section>
           ))}
         </div>
-        <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button></DialogClose></DialogFooter>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
       </Dialog>
       <div className="contract-power-list creation-contract-list">
         {contracts.map((item,index)=>{
-          if(!item.name)return <article className="creation-contract-empty" key={index}><Badge variant={index<4?"secondary":"outline"}>{index<4?tr("Comum","Common"):tr("Real","Royal")}</Badge><div><strong>{tr("Vaga disponível","Available slot")}</strong><small>{tr("Escolha no catálogo","Choose from the catalog")}</small></div></article>;
+          if(!item.name)return <article className="creation-contract-empty" key={index}><Badge variant={index<4?"secondary":"outline"}>{index<4?t("ui.common"):t("ui.royal")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
           const presented=contractPresentation(item,locale),summary=contractSummary(item,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
           const benefit=presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
           return <details className="contract-power-card" key={`${item.id}-${index}`}>
-            <summary className="contract-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?tr("Comum","Common"):tr("Real","Royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
+            <summary className="contract-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?t("ui.common"):t("ui.royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
             <div className="contract-power-details"><dl>
-              {summary&&<div><dt>{tr("Resumo","Summary")}</dt><dd>{summary}</dd></div>}
-              {contractHasInvocationRoll(presented)===true&&<div><dt>{tr("Parada de dados","Dice Pool")}</dt><dd>{presented.dicePool??tr("Não informada","Not listed")}</dd></div>}
-              <div><dt>{tr("Custo","Cost")}</dt><dd>{presented.cost??tr("Conforme descrição","As described")}</dd></div>
-              <div><dt>{tr("Ação / Duração","Action / Duration")}</dt><dd>{presented.action??tr("Instantânea","Instant")} · {presented.duration??tr("Cena","Scene")}</dd></div>
+              {summary&&<div><dt>{t("ui.summary")}</dt><dd>{summary}</dd></div>}
+              {contractHasInvocationRoll(presented)===true&&<div><dt>{t("ui.dicePool")}</dt><dd>{presented.dicePool??t("ui.notListed")}</dd></div>}
+              <div><dt>{t("ui.cost")}</dt><dd>{presented.cost??t("ui.asDescribed")}</dd></div>
+              <div><dt>{t("ui.actionDuration")}</dt><dd>{presented.action??t("ui.instant")} · {presented.duration??t("ui.scene")}</dd></div>
               {outcomes.map(section=><div key={section.label}><dt>{section.label}</dt><dd>{section.text}</dd></div>)}
-              {displayOptions.length>0&&<div className="contract-options"><dt>{tr("Opções","Options")}</dt><dd><ul>{displayOptions.map(option=><li key={option}>{option}</li>)}</ul></dd></div>}
+              {displayOptions.length>0&&<div className="contract-options"><dt>{t("ui.options")}</dt><dd><ul>{displayOptions.map(option=><li key={option}>{option}</li>)}</ul></dd></div>}
               {presented.detailTables?.map(table=><div className="contract-detail-table" key={table.title}><dt>{table.title}</dt><dd><table><thead><tr>{table.columns.map(column=><th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map(row=><tr key={row.join("::")}>{row.map((cell,cellIndex)=><td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table></dd></div>)}
-              <div><dt>{tr("Brecha","Loophole")}</dt><dd>{presented.loophole}</dd></div>
-              {item.goblinDebt&&<div className="goblin-debt-row"><dt>{tr("Débito Goblin","Goblin Debt")}</dt><dd>{item.goblinDebt}</dd></div>}
-              {benefit&&<div><dt>{tr("Benefício de","Benefit for")} {seemingDisplayName(seeming,locale)}</dt><dd>{benefit}</dd></div>}
-              </dl><Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={()=>removeContract(index)}><Trash2/>{tr("Remover Contrato","Remove Contract")}</Button></div>
+              <div><dt>{t("ui.loophole")}</dt><dd>{presented.loophole}</dd></div>
+              {item.goblinDebt&&<div className="goblin-debt-row"><dt>{t("ui.goblinDebt")}</dt><dd>{item.goblinDebt}</dd></div>}
+              {benefit&&<div><dt>{t("ui.benefitFor")} {seemingDisplayName(seeming,locale)}</dt><dd>{benefit}</dd></div>}
+              </dl><Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={()=>removeContract(index)}><Trash2/>{t("ui.removeContract")}</Button></div>
           </details>;
         })}
       </div>
       <Dialog>
         <DialogContent className="merit-dialog ctl-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Selecionar contratos", "Select Contracts")}</DialogTitle>
+            <DialogTitle>{t("ui.selectContracts")}</DialogTitle>
             <DialogDescription>
-              {tr("Separados por Regalia, Corte ou Independente, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.", "Grouped by Regalia, Court, or Independent access, with effect, loophole, dice pool, and the current Seeming benefit. Goblin Contracts fill Common Contract slots and generate Goblin Debt when successfully invoked. Royal Contracts follow favored Regalia; Court Contracts follow the selected Court.")}
+              {t("ui.groupedByRegaliaCourtOrIndependentAccessWith")}
             </DialogDescription>
           </DialogHeader>
           <label className="merit-search">
@@ -640,7 +637,7 @@ function ContractSelector({
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder={tr("Buscar contrato, Regalia ou fonte…", "Search Contract, Regalia, or source…")}
+              placeholder={t("ui.searchContractRegaliaOrSource")}
             />
           </label>
           <div className="merit-catalog">
@@ -680,25 +677,25 @@ function ContractSelector({
                         <div>
                           <strong>{contractName(contract)}</strong>
                           <small>
-                            {contract.goblin ? "Goblin" : contract.type === "Comum" ? tr("Comum", "Common") : tr("Real", "Royal")}{" "}
+                            {contract.goblin ? "Goblin" : contract.type === "Comum" ? t("ui.common") : t("ui.royal")}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
                           {summary && <p className="rule-detail">
-                            <strong>{tr("Resumo", "Summary")}:</strong> {summary}
+                            <strong>{t("ui.summary")}:</strong> {summary}
                           </p>}
                           {contractHasInvocationRoll(presented) === true && <p className="rule-detail">
-                            <strong>{tr("Parada de dados", "Dice Pool")}:</strong>{" "}
-                            {presented.dicePool ?? tr("Não informada", "Not listed")}
+                            <strong>{t("ui.dicePool")}:</strong>{" "}
+                            {presented.dicePool ?? t("ui.notListed")}
                           </p>}
                           {presented.cost && (
                             <p className="rule-detail">
-                              <strong>{tr("Custo", "Cost")}:</strong> {presented.cost}
+                              <strong>{t("ui.cost")}:</strong> {presented.cost}
                             </p>
                           )}
                           <p className="rule-detail">
-                            <strong>{tr("Ação / Duração", "Action / Duration")}:</strong>{" "}
-                            {presented.action ?? tr("Instantânea", "Instant")} ·{" "}
-                            {presented.duration ?? tr("Cena", "Scene")}
+                            <strong>{t("ui.actionDuration")}:</strong>{" "}
+                            {presented.action ?? t("ui.instant")} ·{" "}
+                            {presented.duration ?? t("ui.scene")}
                           </p>
                           {outcomeSections.slice(0, 1).map((section) => (
                             <p className="rule-detail" key={section.label}>
@@ -707,7 +704,7 @@ function ContractSelector({
                           ))}
                           {displayOptions.length > 0 && (
                             <div className="contract-options">
-                              <strong>{tr("Opções", "Options")}</strong>
+                              <strong>{t("ui.options")}</strong>
                               <ul>
                                 {displayOptions.map((option) => (
                                   <li key={option}>{option}</li>
@@ -727,18 +724,18 @@ function ContractSelector({
                             </p>
                           ))}
                           <p className="rule-detail">
-                            <strong>{tr("Brecha", "Loophole")}:</strong> {presented.loophole}
+                            <strong>{t("ui.loophole")}:</strong> {presented.loophole}
                           </p>
                           {contract.goblinDebt && (
                             <p className="rule-detail goblin-debt-note">
-                              <strong>{tr("Débito Goblin", "Goblin Debt")}:</strong>{" "}
+                              <strong>{t("ui.goblinDebt")}:</strong>{" "}
                               {contract.goblinDebt}
                             </p>
                           )}
                           {benefit && (
                             <p className="rule-detail">
                               <strong>
-                                {tr("Benefício de", "Benefit for")}{" "}
+                                {t("ui.benefitFor")}{" "}
                                 {seemingDisplayName(seeming,locale)}:
                               </strong>{" "}
                               {benefit}
@@ -754,7 +751,7 @@ function ContractSelector({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button>
+              <Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

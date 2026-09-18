@@ -72,7 +72,7 @@ export function MageExperiencePanel({
   updateSheet: (sheet: CharacterSheet) => void;
   catalogs: CatalogSnapshot;
 }) {
-  const {locale,tr}=useLanguage();
+  const { locale, t }=useLanguage();
   const state = character.current_state ?? {};
   const regular = Math.max(
     0,
@@ -181,11 +181,11 @@ export function MageExperiencePanel({
   else if (purchase === "Perícia") cost = 2;
   else if (purchase === "Especialização") {
     cost = 1;
-    label = `${tr("Especialização", "Specialty")} ${systemTerm(mageSpecialtySkill,locale)}: ${mageSpecialtyName.trim()||tr("nova Especialização","new Specialty")}`;
+    label = `${t("ui.specialty")} ${systemTerm(mageSpecialtySkill,locale)}: ${mageSpecialtyName.trim()||t("ui.newSpecialty")}`;
   }
   else if (purchase === "Mérito") {
     cost = nextMerit ? nextMerit - (ownedMerit?.dots ?? 0) : 0;
-    label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? tr("Mérito","Merit");
+    label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? t("ui.merit");
   } else if (purchase === "Arcano") {
     const current = Number(arcana[chosenTarget] ?? 0);
     const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&activeLegacyDefinition?.rulingArcanum===systemTerm(chosenTarget,"en-US");
@@ -197,23 +197,23 @@ export function MageExperiencePanel({
   } else if (purchase === "Gnose") {
     cost = 5;
     mode = "either";
-    label = `${tr("Gnose","Gnosis")} ${Number(character.line_data.gnosis ?? 1) + 1}`;
+    label = `${t("ui.gnosis")} ${Number(character.line_data.gnosis ?? 1) + 1}`;
   } else if (purchase === "Rota") {
     cost = 1;
-    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? tr("Rota","Rote");
+    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.rote");
   } else if (purchase === "Práxis") {
     cost = 1;
     mode = "arcane";
-    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? tr("Práxis","Praxis");
+    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.praxis");
   } else if (purchase === "Sabedoria") {
     cost = 2;
     mode = "arcane";
-    label = `${tr("Sabedoria","Wisdom")} ${Number(character.line_data.wisdom ?? 7) + 1}`;
+    label = `${t("ui.wisdom")} ${Number(character.line_data.wisdom ?? 7) + 1}`;
   } else if (purchase === "Ponto perdido de Força de Vontade") {
     cost = lostWillpower ? 1 : 0;
     label = lostWillpower
-      ? tr("Recuperar ponto perdido de Força de Vontade","Recover a lost Willpower dot")
-      : tr("Nenhum ponto perdido","No lost dots");
+      ? t("ui.recoverALostWillpowerDot")
+      : t("ui.noLostDots");
   }
   const splitRegular =
       mode === "regular"
@@ -242,14 +242,14 @@ export function MageExperiencePanel({
   }
   function buy() {
     if(purchase==="Mérito"){
-      if(!selectedMerit||!nextMerit)return setFeedback(tr("Selecione um Mérito disponível.","Select an available Merit."));
-      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(tr("Este Mérito já foi concedido.","This Merit is already granted."));
+      if(!selectedMerit||!nextMerit)return setFeedback(t("ui.selectAnAvailableMerit"));
+      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
       const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]));
       if(problems.length)return setFeedback(problems.join(" "));
     }
-    if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(tr("Informe o nome da Especialização.","Enter the Specialty name."));
+    if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));
     if (cost < 1 || regular < splitRegular || arcane < splitArcane) {
-      setFeedback(tr("Experiência insuficiente ou compra indisponível.","Insufficient Experience or unavailable purchase."));
+      setFeedback(t("ui.insufficientExperienceOrUnavailablePurchase"));
       return;
     }
     const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
@@ -258,13 +258,13 @@ export function MageExperiencePanel({
         (purchase === "Arcano" && Number(arcana[chosenTarget] ?? 0) >= 10) ||
         (purchase === "Atributo" && Number(character.attributes[chosenTarget] ?? 1) >= traitMaximum) ||
         (purchase === "Perícia" && Number(character.skills[chosenTarget] ?? 0) >= traitMaximum))
-      return setFeedback(tr("Esta característica já atingiu seu limite de pontos.","This trait has reached its dot limit."));
+      return setFeedback(t("ui.thisTraitHasReachedItsDotLimit"));
     if (
       (purchase === "Rota" || purchase === "Práxis") &&
       (!selectedSpell ||
         !meetsArcanaRequirements(selectedSpell.requirements, arcana))
     ) {
-      setFeedback(tr("Não há feitiço disponível que atenda aos níveis atuais de Arcana.","No available spell meets the current Arcana ratings."));
+      setFeedback(t("ui.noAvailableSpellMeetsTheCurrentArcanaRatings"));
       return;
     }
     const next = structuredClone(character);
@@ -347,7 +347,7 @@ export function MageExperiencePanel({
     else if (purchase === "Sabedoria") undo = { kind: "wisdom" };
     else if (purchase === "Mérito") {
       const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
-      if (index < 0) return setFeedback(tr("Não foi possível identificar o Mérito adquirido.","The purchased Merit could not be identified."));
+      if (index < 0) return setFeedback(t("ui.thePurchasedMeritCouldNotBeIdentified"));
       const instanceId = next.merits[index].instanceId ?? createRandomId();
       next.merits[index].instanceId = instanceId;
       undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId };
@@ -373,12 +373,12 @@ export function MageExperiencePanel({
       mage_experience_history: [entry, ...history].slice(0, 100),
     };
     updateSheet(synchronizeMeritGrants(next));
-    setFeedback(tr(`${label} adquirido.`,`${label} purchased.`));
+    setFeedback(t("ui.purchased", { p1: label }}));
     if(purchase==="Especialização")setMageSpecialtyName("");
   }
   function markWillpowerLoss() {
     if (lostWillpower >= maximumLostWillpower) {
-      setFeedback(tr("Não é possível perder outro ponto permanente de Força de Vontade.","No additional permanent Willpower dot can be lost."));
+      setFeedback(t("ui.noAdditionalPermanentWillpowerDotCanBeLost"));
       return;
     }
     const next = structuredClone(character);
@@ -391,7 +391,7 @@ export function MageExperiencePanel({
     };
     const entry: MageXpEntry = {
       id: createRandomId(),
-      description: tr("Perda permanente de um ponto de Força de Vontade","Permanent loss of one Willpower dot"),
+      description: t("ui.permanentLossOfOneWillpowerDot"),
       undo: { kind: "willpowerLoss" },
       regular: 0,
       arcane: 0,
@@ -405,7 +405,7 @@ export function MageExperiencePanel({
       mage_experience_history: [entry, ...history].slice(0, 100),
     };
     updateSheet(next);
-    setFeedback(tr("Perda permanente de Força de Vontade registrada no histórico.","Permanent Willpower loss recorded in history."));
+    setFeedback(t("ui.permanentWillpowerLossRecordedInHistory"));
   }
   function revert(entry: MageXpEntry) {
     if (!history.some(item => item.id === entry.id)) return;
@@ -436,7 +436,7 @@ export function MageExperiencePanel({
           undo = { kind: "specialty", skill: entry.description, name: locale==="en-US"?"New Specialty":"Nova Especialização" };
       }
     }
-    if (!undo) return setFeedback(tr("Esta compra antiga não identifica com segurança o avanço a reembolsar.","This older purchase does not identify the advancement safely enough to refund it."));
+    if (!undo) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
     const next = structuredClone(character);
     refundMageAdvancement(next, undo);
     const legacyUndo = undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment" ? undo : undefined;
@@ -460,15 +460,15 @@ export function MageExperiencePanel({
     updateSheet(synchronizeMeritGrants(next));
   }
   const historyPanel = <details className="experience-history">
-    <summary><History /> {tr("Gastos de Experiência","Experience Expenses")} ({history.length})</summary>
-    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{entry.regular} {tr("EXP","XP")} + {entry.arcane} {tr("EXP Arcana","Arcane XP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" onClick={() => revert(entry)}><RotateCcw /> {tr("Reverter","Refund")}</Button></p>) : <em>{tr("Nenhum gasto registrado.","No expenses recorded.")}</em>}</div>
+    <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
+    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{entry.regular} {t("ui.xp")} + {entry.arcane} {t("ui.arcaneXP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel mage-experience">
       <div className="experience-title">
         <div>
-          <span>{tr("Experiência","Experience")}</span>
-          <small>{tr("Experiência comum e Arcana possuem reservas separadas","Regular and Arcane Experience use separate pools")}</small>
+          <span>{t("ui.experience")}</span>
+          <small>{t("ui.regularAndArcaneExperienceUseSeparatePools")}</small>
         </div>
       </div>
       <div className="mage-xp-balances">
@@ -480,7 +480,7 @@ export function MageExperiencePanel({
             onChange={(e) => setRegularInput(e.target.value)}
             onBlur={commitBalances}
           />
-          <span>{tr("EXP disponível","XP available")}</span>
+          <span>{t("ui.xpAvailable")}</span>
         </label>
         <label className="experience-input">
           <Input
@@ -490,7 +490,7 @@ export function MageExperiencePanel({
             onChange={(e) => setArcaneInput(e.target.value)}
             onBlur={commitBalances}
           />
-          <span>{tr("EXP Arcana disponível","Arcane XP available")}</span>
+          <span>{t("ui.arcaneXPAvailable")}</span>
         </label>
       </div>
       <BeatTrack
@@ -499,7 +499,7 @@ export function MageExperiencePanel({
         onChange={(value) => saveBalances({ mage_experience_beats: value })}
       />
       <BeatTrack
-        label={tr("Beats Arcanos","Arcane Beats")}
+        label={t("ui.arcaneBeats")}
         value={arcaneBeats}
         onChange={(value) => saveBalances({ arcane_experience_beats: value })}
       />
@@ -507,19 +507,19 @@ export function MageExperiencePanel({
         <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline" size="sm" className="catalog-selection-action">
-            <Sparkles /> {tr("Comprar característica","Purchase trait")}
+            <Sparkles /> {t("ui.purchaseTrait")}
           </Button>
         </DialogTrigger>
         <DialogContent className="experience-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Gastar Experiência de Mago","Spend Mage Experience")}</DialogTitle>
+            <DialogTitle>{t("ui.spendMageExperience")}</DialogTitle>
             <DialogDescription>
-              {tr("Custos de Mage the Awakening, pp. 83–85. Para Gnose e Arcanos dentro do limite, escolha como dividir o gasto.","Costs from Mage: The Awakening, pp. 83–85. For Gnosis and Arcana within the limit, choose how to split the cost.")}
+              {t("ui.costsFromMageTheAwakeningPp8385")}
             </DialogDescription>
           </DialogHeader>
           <div className="experience-purchase-form">
             <label>
-              {tr("Tipo","Type")}
+              {t("ui.type")}
               <RuleSelect
                 value={purchase}
                 onChange={(value) => {
@@ -535,7 +535,7 @@ export function MageExperiencePanel({
             </label>
             {purchase === "Mérito" && (
               <label>
-                {tr("Mérito","Merit")}
+                {t("ui.merit")}
                 <ExperienceMeritPicker
                   line="MtA"
                   archetypes={["awakened"]}
@@ -554,14 +554,14 @@ export function MageExperiencePanel({
             )}
             {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props}/>} onChange={setMageMeritConfiguration}/>}
             {purchase === "Especialização" && <>
-              <label>{tr("Perícia","Skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
-              <label>{tr("Especialização","Specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>
+              <label>{t("ui.skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
+              <label>{t("ui.specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>
             </>}
             {purchase !== "Mérito" && purchase !== "Especialização" &&
               ((purchase === "Rota" || purchase === "Práxis") ||
                 options.length > 1) && (
               <label>
-                {tr("Característica","Trait")}
+                {t("ui.trait")}
                 {purchase === "Rota" || purchase === "Práxis" ? (
                   <ExperiencePowerPicker
                     kind={purchase}
@@ -574,7 +574,7 @@ export function MageExperiencePanel({
                         id: spell.id,
                         name: locale==="en-US"?(spell.originalName||spell.name):spell.name,
                         category: systemTerm(mainArcanum,locale),
-                        secondaryCategory: `${tr("Nível","Level")} ${level}`,
+                        secondaryCategory: `${t("ui.level")} ${level}`,
                         description: spell.description ?? "",
                         meta: `${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page || "—"}`,
                       };
@@ -600,7 +600,7 @@ export function MageExperiencePanel({
             {mode === "either" && (
               <div className="mage-experience-split">
                 <label>
-                  {tr("Experiência","Experience")}
+                  {t("ui.experience")}
                   <Input
                     type="number"
                     min={0}
@@ -617,7 +617,7 @@ export function MageExperiencePanel({
                   />
                 </label>
                 <label>
-                  {tr("Experiência Arcana","Arcane Experience")}
+                  {t("ui.arcaneExperience")}
                   <Input
                     type="number"
                     value={cost - Math.min(cost, regularSplit)}
@@ -630,7 +630,7 @@ export function MageExperiencePanel({
           <div className="purchase-preview">
             <strong>{label}</strong>
             <span>
-              {splitRegular} {tr("EXP","XP")} + {splitArcane} {tr("EXP Arcana","Arcane XP")}
+              {splitRegular} {t("ui.xp")} + {splitArcane} {t("ui.arcaneXP")}
             </span>
           </div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
@@ -638,7 +638,7 @@ export function MageExperiencePanel({
           {historyPanel}
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{tr("Fechar","Close")}</Button>
+              <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.close")}</Button>
             </DialogClose>
             <Button
               type="button"
@@ -649,12 +649,12 @@ export function MageExperiencePanel({
               }
               onClick={buy}
             >
-              {tr("Comprar","Purchase")}
+              {t("ui.purchase")}
             </Button>
           </DialogFooter>
         </DialogContent>
         </Dialog>
-        <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{tr("Perder FV","Lose WP")}</Button>} title={tr("Perder permanentemente um ponto de Força de Vontade?","Permanently lose one Willpower dot?")} description={tr("Isso reduzirá a Força de Vontade permanente em um ponto e registrará uma entrada reversível no histórico.","This reduces permanent Willpower by one dot and records a reversible history entry.")} action={tr("Perder FV","Lose WP")} onConfirm={markWillpowerLoss}/>
+        <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.loseWP")}</Button>} title={t("ui.permanentlyLoseOneWillpowerDot")} description={t("ui.thisReducesPermanentWillpowerByOneDotAnd")} action={t("ui.loseWP")} onConfirm={markWillpowerLoss}/>
       </div>
 
     </section>

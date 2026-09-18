@@ -41,7 +41,7 @@ export type MageBuilderViewProps = {
 const MAGE_BUILDER_MERIT_CONFIGURATIONS = [...COMMON_MERIT_CONFIGURATIONS, ...MAGE_MERIT_CONFIGURATIONS];
 
 function OrderSelector(props: OrderSelectorProps) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const saved = props.orderCatalog ?? [];
   const draft: CustomOrderDefinition = props.customOrder ?? {
     name: "",
@@ -58,33 +58,33 @@ function OrderSelector(props: OrderSelectorProps) {
   };
   return (
     <div className={`kith-field ${props.invalid ? "missing-field" : ""}`}>
-      <span>{tr("Ordem", "Order")}</span>
+      <span>{t("ui.order")}</span>
       <div className="kith-current order-current">
         <strong>
-          {(props.order === "Orderless" ? tr("Sem Ordem", "Orderless") : props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : props.order === "Nameless" ? "Nameless" : MTA_ORDER_LABELS[props.order] ?? props.order) ||
-            tr("Nenhuma selecionada", "None selected")}
+          {(props.order === "Orderless" ? t("ui.orderless") : props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : props.order === "Nameless" ? "Nameless" : MTA_ORDER_LABELS[props.order] ?? props.order) ||
+            t("ui.noneSelected")}
         </strong>
-        <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || tr("Escolha uma Ordem para consultar sua descrição.", "Choose an Order to review its description.")}</p>
+        <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || t("ui.chooseAnOrderToReviewItsDescription")}</p>
         {hasPublishedMageOrder(props.order) ? <small>
-          <strong>{tr("Perícias de Rota", "Rote Skills")}:</strong>{" "}
+          <strong>{t("ui.roteSkills")}:</strong>{" "}
           {(MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => builderText(locale, skill)).join(", ")}
         </small> : null}
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            <Search /> {tr("Selecionar Ordem", "Select Order")}
+            <Search /> {t("ui.selectOrder")}
           </Button>
         </DialogTrigger>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Selecionar Ordem", "Select Order")}</DialogTitle>
+            <DialogTitle>{t("ui.selectOrder")}</DialogTitle>
             <DialogDescription>
-              {tr("Escolha uma das Ordens disponíveis. Nameless permite definir uma Ordem sem nome entre as seis principais.", "Choose an available Order. Nameless lets you define an Order outside the six main Orders.")}
+              {t("ui.chooseAnAvailableOrderNamelessLetsYouDefine")}
             </DialogDescription>
           </DialogHeader>
           <Choice
-            label={tr("Ordem", "Order")}
+            label={t("ui.order")}
             value={props.order || "__none"}
             setValue={(value: string) =>
               select(value === "__none" ? "Orderless" : value)
@@ -96,16 +96,16 @@ function OrderSelector(props: OrderSelectorProps) {
               ...saved.map((item) => item.name),
             ]}
             optionLabels={{
-              __none: tr("Selecione uma Ordem", "Select an Order"),
+              __none: t("ui.selectAnOrder"),
               ...MTA_ORDER_LABELS,
               Nameless: "Nameless",
-              Orderless: tr("Sem Ordem", "Orderless"),
+              Orderless: t("ui.orderless"),
             }}
           />
           {props.order === "Nameless" && (
             <div className="custom-kith-editor">
               <label>
-                {tr("Nome da Ordem", "Order name")}
+                {t("ui.orderName")}
                 <Input
                   value={draft.name}
                   maxLength={80}
@@ -114,13 +114,13 @@ function OrderSelector(props: OrderSelectorProps) {
                   }
                 />
               </label>
-              <p className="nameless-order-rule">{tr("Uma Nameless Order concede High Speech e Mystery Cult Initiation • no lugar de Awakened Status •. Configure os benefícios na seção de Méritos, conforme Mage: The Awakening, p. 106.", "A Nameless Order grants High Speech and Mystery Cult Initiation • instead of Awakened Status •. Configure its benefits in the Merits section, following Mage: The Awakening, p. 106.")}</p>
+              <p className="nameless-order-rule">{t("ui.aNamelessOrderGrantsHighSpeechAndMystery")}</p>
             </div>
           )}
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline" size="sm" className="catalog-dialog-done">
-                {tr("Concluir", "Done")}
+                {t("ui.done")}
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -131,33 +131,33 @@ function OrderSelector(props: OrderSelectorProps) {
 }
 
 export function MageBuilderView(props: MageBuilderViewProps) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const pathData = MTA_PATHS[props.path as keyof typeof MTA_PATHS];
   const neededPraxes = props.gnosis;
   const hasCreationOrderBenefits = hasPublishedMageOrder(props.order) || props.order === "Nameless";
   return (
     <div className="builder-section">
-      <span className="kicker">{tr("PASSO 3 · MAGO", "STEP 3 · MAGE")}</span>
-      <h2>{tr("Modelo dos Despertos", "Awakened Template")}</h2>
-      <p>{tr("As escolhas e limites abaixo vêm de Mage the Awakening.", "The choices and limits below come from Mage the Awakening.")}</p>
+      <span className="kicker">{t("ui.step3MAGE")}</span>
+      <h2>{t("ui.awakenedTemplate")}</h2>
+      <p>{t("ui.theChoicesAndLimitsBelowComeFromMage")}</p>
       <div className="mta-template-grid">
         <div className="mta-template-column">
           <Choice
-            label={tr("Caminho", "Path")}
+            label={t("ui.path")}
             value={props.path}
             setValue={props.setPath}
             options={Object.keys(MTA_PATHS)}
             invalid={props.missing("path")}
           />
           <p className="path-arcana-summary">
-            <span>{tr("Regentes", "Ruling")}:</span>{" "}
-            <strong>{pathData?.ruling.map((arcanum) => builderText(locale, arcanum)).join(tr(" e ", " and ")) ?? tr("selecione o Caminho", "select a Path")}</strong>
-            {" · "}<span>{tr("Inferior", "Inferior")}:</span>{" "}
+            <span>{t("ui.rulinge76e13")}:</span>{" "}
+            <strong>{pathData?.ruling.map((arcanum) => builderText(locale, arcanum)).join(t("ui.and")) ?? t("ui.selectAPath")}</strong>
+            {" · "}<span>{t("ui.inferior")}:</span>{" "}
             <strong>{pathData ? builderText(locale, pathData.inferior) : "—"}</strong>
           </p>
           <div className="ctl-favored-inline">
             <Choice
-              label={tr("Atributo de Resistência (+1)", "Resistance Attribute (+1)")}
+              label={t("ui.resistanceAttribute1")}
               value={props.resistanceBonus}
               setValue={props.setResistanceBonus}
               options={["Resolve", "Stamina", "Composure"]}
@@ -170,29 +170,29 @@ export function MageBuilderView(props: MageBuilderViewProps) {
         </div>
         <div className="mta-template-column mta-virtue-vice">
           <label className={props.missing("virtue") ? "missing-field" : ""}>
-            {tr("Virtude", "Virtue")}
+            {t("ui.virtue")}
             <Input value={props.virtue} onChange={(e) => props.setVirtue(e.target.value)} />
           </label>
           <label className={props.missing("vice") ? "missing-field" : ""}>
-            {tr("Vício", "Vice")}
+            {t("ui.vice")}
             <Input value={props.vice} onChange={(e) => props.setVice(e.target.value)} />
           </label>
         </div>
       </div>
       {props.powerAdvancement > 0 && <p className="rule-callout">
-        <ShieldCheck /> {tr("Gnose atual", "Current Gnosis")}: <strong>{Math.min(10, props.gnosis + props.powerAdvancement)}</strong> ({props.powerAdvancement} {tr("por experiência preservados", "preserved from Experiences")})
+        <ShieldCheck /> {t("ui.currentGnosis")}: <strong>{Math.min(10, props.gnosis + props.powerAdvancement)}</strong> ({props.powerAdvancement} {t("ui.preservedFromExperiences")})
       </p>}
       {props.order && (
         <p className="rule-callout">
           <ShieldCheck />{" "}
           {!hasPublishedMageOrder(props.order)
             ? props.order === "Orderless"
-              ? tr("Sem Ordem: não recebe Alta Fala, ponto gratuito de Ocultismo ou Rotas iniciais.", "Orderless: receives no High Speech, free Occult dot, or starting Rotes.")
-              : tr("A Nameless Order recebe Alta Fala e Mystery Cult Initiation • no lugar de Status de Ordem •.", "A Nameless Order receives High Speech and Mystery Cult Initiation • instead of Order Status •.")
-            : tr("Membro de Ordem: recebe Alta Fala, +1 em Ocultismo (máximo 5) e três Rotas iniciais.", "Order member: receives High Speech, free Occult dot, and three starting Rotes.")}
+              ? t("ui.orderlessReceivesNoHighSpeechFreeOccultDot")
+              : t("ui.aNamelessOrderReceivesHighSpeechAndMystery")
+            : t("ui.orderMemberReceivesHighSpeechFreeOccultDot")}
         </p>
       )}
-      <h3>{tr("Arcanos · 6 pontos", "Arcana · 6 dots")}</h3>
+      <h3>{t("ui.arcana6Dots")}</h3>
       <div
         className={`arcana-grid ${props.missing("arcana") ? "missing-field" : ""}`}
       >
@@ -208,9 +208,9 @@ export function MageBuilderView(props: MageBuilderViewProps) {
             max={3}
             tag={
               pathData?.ruling.includes(item as never)
-                ? tr("Regente", "Ruling")
+                ? t("ui.ruling")
                 : pathData?.inferior === item
-                  ? tr("Inferior", "Inferior")
+                  ? t("ui.inferior")
                   : undefined
             }
           />
@@ -220,7 +220,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
         <div className="rule-callout" role="alert">
           <ShieldCheck />
           <div>
-            <strong>{tr("Revise a distribuição de Arcana:", "Review the Arcana distribution:")}</strong>
+            <strong>{t("ui.reviewTheArcanaDistribution")}</strong>
             <ul>
               {arcanaCreationErrors(props.arcana, pathData, locale).map((message) => (
                 <li key={message}>{message}</li>
@@ -232,7 +232,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
       {hasCreationOrderBenefits && (
         <div className={props.missing("rotes") ? "missing-field block" : ""}>
           <SpellSelector
-            title={tr("Rotas iniciais", "Starting Rotes")}
+            title={t("ui.startingRotes")}
             count={3}
             values={props.rotes}
             setValues={props.setRotes}
@@ -244,7 +244,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
       )}
       <div className={props.missing("praxes") ? "missing-field block" : ""}>
         <SpellSelector
-          title={`${tr("Práxis", "Praxes")} · ${neededPraxes}`}
+          title={`${t("ui.praxes")} · ${neededPraxes}`}
           count={neededPraxes}
           values={props.praxes}
           setValues={props.setPraxes}
@@ -260,7 +260,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           context={props.meritContext}
           spent={props.meritSpent}
           budget={props.meritBudget}
-          powerLabel={tr("Gnose inicial", "Gnosis at creation")}
+          powerLabel={t("ui.gnosisAtCreation")}
           power={props.gnosis}
           setPower={props.setGnosis}
           isInlineConfiguration={(name) => isCommonInlineMeritConfiguration(name) || Boolean(MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === name && item.fields.length === 1 && item.fields[0].kind === "text"))}
@@ -290,7 +290,7 @@ function SpellSelector({
   arcana: Record<string, number>;
   catalog: SpellDefinition[];
 }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const spellName = (spell: SpellDefinition) => locale === "pt-BR" ? spell.name : (spell.originalName || spell.name);
   const [search, setSearch] = useState("");
   const [arcanaFilter, setArcanaFilter] = useState("__all");
@@ -333,7 +333,7 @@ function SpellSelector({
     choose(spell);
   };
   const arcanaLabels: Record<string, string> = {
-    Death: tr("Morte", "Death"), Fate: tr("Destino", "Fate"), Forces: tr("Forças", "Forces"), Life: tr("Vida", "Life"), Matter: tr("Matéria", "Matter"), Mind: tr("Mente", "Mind"), Prime: tr("Primórdio", "Prime"), Space: tr("Espaço", "Space"), Spirit: tr("Espírito", "Spirit"), Time: tr("Tempo", "Time"),
+    Death: t("ui.death"), Fate: t("ui.fate"), Forces: t("ui.forces"), Life: t("ui.life"), Matter: t("ui.matter"), Mind: t("ui.mind"), Prime: t("ui.prime"), Space: t("ui.space"), Spirit: t("ui.spirit"), Time: t("ui.time"),
   };
   const arcanaSource = (spell: SpellDefinition) =>
     `${Object.entries(spell.requirements).map(([name,dots])=>`${arcanaLabels[name]??name} ${"•".repeat(dots)}`).join(" + ")} · ${spell.source} · p. ${spell.page || "—"}`;
@@ -361,11 +361,11 @@ function SpellSelector({
         <div>
           <strong>{spellName(spell)}</strong>
           <small>{arcanaSource(spell)}</small>
-          <p className="rule-detail"><strong>{tr("Prática","Practice")}:</strong> {spell.practice} | <strong>{tr("Fator Primário","Primary Factor")}:</strong> {spell.primaryFactor}</p>
-          {spell.withstand && <p className="rule-detail"><strong>{tr("Resistência", "Withstand")}:</strong> {spell.withstand}</p>}
-          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{tr("Perícia de Rota", "Rote Skill")}:</strong> {spell.roteSkills.join(", ")}</p>}
+          <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {spell.practice} | <strong>{t("ui.primaryFactor")}:</strong> {spell.primaryFactor}</p>
+          {spell.withstand && <p className="rule-detail"><strong>{t("ui.withstand")}:</strong> {spell.withstand}</p>}
+          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.join(", ")}</p>}
           <p className="rule-detail">
-            <strong>{tr("Resumo", "Summary")}:</strong> {spellSummary(spell)}
+            <strong>{t("ui.summary")}:</strong> {spellSummary(spell)}
           </p>
           {spellReach(spell) && <p className="rule-detail"><strong>Reach:</strong> {spellReach(spell)}</p>}
         </div>
@@ -378,26 +378,26 @@ function SpellSelector({
         <div>
           <h3>{title}</h3>
           <p>
-            {tr("Escolha no catálogo de feitiços. Expanda uma escolha para consultar os detalhes.", "Choose from the spell catalog. Expand a choice to inspect its details.")}
+            {t("ui.chooseFromTheSpellCatalogExpandAChoice")}
           </p>
         </div>
         <div className="merit-heading-actions">
           <Badge variant="outline">{values.slice(0, count).filter(Boolean).length}/{count}</Badge>
           <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => setCatalogOpen(true)}>
-            <Plus /> {tr("Selecionar", "Select")} {rote ? tr("Rotas", "Rotes") : tr("Práxis", "Praxes")}
+            <Plus /> {t("ui.select198f7a")} {rote ? t("ui.rotes") : t("ui.praxes")}
           </Button>
         </div>
       </div>
       <div className="contract-power-list creation-contract-list creation-spell-list">
         {Array.from({ length: count }, (_, index) => {
           const item = values[index];
-          if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><div><strong>{tr("Vaga disponível", "Available slot")}</strong><small>{tr("Escolha no catálogo", "Choose from the catalog")}</small></div></article>;
+          if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
           return (
             <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? tr("Rota", "Rote") : tr("Práxis", "Praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {tr("Remover", "Remove")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{tr("Prática","Practice")}:</strong> {item.practice} | <strong>{tr("Fator Primário","Primary Factor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{tr("Resistência", "Withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={tr("Perícia de Rota", "Rote Skill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
+              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice} | <strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
               <div className="contract-power-details">
                 <dl>
-                  <div><dt>{tr("Resumo", "Summary")}</dt><dd>{spellSummary(item)}</dd></div>
+                  <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item)}</dd></div>
                   {spellReach(item) && <div><dt>Reach</dt><dd>{spellReach(item)}</dd></div>}
                 </dl>
               </div>
@@ -408,17 +408,17 @@ function SpellSelector({
       <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}>
         <DialogContent className="merit-dialog">
           <DialogHeader>
-            <DialogTitle>{tr("Catálogo de feitiços", "Spell catalog")}</DialogTitle>
+            <DialogTitle>{t("ui.spellCatalog")}</DialogTitle>
             <DialogDescription>
-              {tr("Feitiços organizados por Arcano e nível de maestria.", "Spells grouped by Arcanum and mastery level.")}
+              {t("ui.spellsGroupedByArcanumAndMasteryLevel")}
             </DialogDescription>
           </DialogHeader>
           <div className="catalog-filters spell-catalog-filters">
-            <label className="merit-search"><Search /><Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={tr("Buscar feitiço, Arcano ou fonte…", "Search spell, Arcanum, or source…")}/></label>
-            <Choice value={arcanaFilter} setValue={setArcanaFilter} options={["__all",...Object.keys(arcanaLabels)]} optionLabels={{__all:tr("Todos os Arcanos","All Arcana"),...arcanaLabels}} />
-            <Choice value={levelFilter} setValue={setLevelFilter} options={["__all","1","2","3","4","5"]} optionLabels={{__all:tr("Todos os níveis","All levels"),...Object.fromEntries([1,2,3,4,5].map(level=>[String(level),`${tr("Nível","Level")} ${level}`]))}} />
-            <Choice value={sourceFilter} setValue={setSourceFilter} options={["__all",...new Set(catalog.map(spell=>spell.sourceId))]} optionLabels={{__all:tr("Todas as fontes","All sources"),...Object.fromEntries(catalog.map(spell=>[spell.sourceId,spell.source]))}} />
-            <Choice value={practiceFilter} setValue={setPracticeFilter} options={["__all",...new Set(catalog.map(spell=>spell.practice))]} optionLabels={{__all:tr("Todas as Práticas","All Practices")}} />
+            <label className="merit-search"><Search /><Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t("ui.searchSpellArcanumOrSource")}/></label>
+            <Choice value={arcanaFilter} setValue={setArcanaFilter} options={["__all",...Object.keys(arcanaLabels)]} optionLabels={{__all:t("ui.allArcana"),...arcanaLabels}} />
+            <Choice value={levelFilter} setValue={setLevelFilter} options={["__all","1","2","3","4","5"]} optionLabels={{__all:t("ui.allLevels"),...Object.fromEntries([1,2,3,4,5].map(level=>[String(level),`${t("ui.level")} ${level}`]))}} />
+            <Choice value={sourceFilter} setValue={setSourceFilter} options={["__all",...new Set(catalog.map(spell=>spell.sourceId))]} optionLabels={{__all:t("ui.allSources729d47"),...Object.fromEntries(catalog.map(spell=>[spell.sourceId,spell.source]))}} />
+            <Choice value={practiceFilter} setValue={setPracticeFilter} options={["__all",...new Set(catalog.map(spell=>spell.practice))]} optionLabels={{__all:t("ui.allPractices")}} />
           </div>
           <div className="merit-catalog spell-groups">
             {Array.from(groups.entries())
@@ -436,7 +436,7 @@ function SpellSelector({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir", "Done")}</Button>
+              <Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

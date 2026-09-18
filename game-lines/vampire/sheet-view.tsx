@@ -104,7 +104,7 @@ function HumanityTrack({
   updateSheet: (sheet: CharacterSheet) => void;
   value: number;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const baseSlot = String(character.line_data.clan_id ?? "") === "ventrue" ? 7 : 6;
   const meritPoints = getTouchstoneMeritPoints(character, baseSlot);
   const touchstones = objectArray(character.line_data.touchstones);
@@ -223,7 +223,7 @@ function HumanityTrack({
               className="vampire-humanity-touchstone"
               value={String(row?.name ?? "")}
               placeholder="Touchstone"
-              aria-label={tr(`Touchstone da Humanidade ${rating}`, `Humanity ${rating} Touchstone`)}
+              aria-label={t("ui.humanityTouchstone", { p1: rating }})}
               onChange={(event) => setTouchstoneName(rating, meritPoint, event.target.value)}
             />
           : <span className="vampire-humanity-line" aria-hidden="true" />}
@@ -232,7 +232,7 @@ function HumanityTrack({
           type="button"
           className={`vampire-humanity-dot${value === rating ? " on" : ""}`}
           aria-pressed={value === rating}
-          aria-label={tr(`Definir Humanidade ${rating}`, `Set Humanity ${rating}`)}
+          aria-label={t("ui.setHumanity", { p1: rating }})}
           onClick={() => setHumanity(rating)}
         />
       </div>;
@@ -242,7 +242,7 @@ function HumanityTrack({
 
 export function VampireCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
   if (!catalogs) throw new Error("Vampire sheet requires its catalog snapshot.");
-  const { locale, t, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const isMobile = useIsMobile();
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
@@ -259,9 +259,9 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const limits = bloodPotencyRow(reference, bloodPotency);
   const feedingTierLabel = {
-    Animals: tr("Animais", "Animals"),
-    Humans: tr("Humanos", "Humans"),
-    Kindred: tr("Vampiros", "Kindred"),
+    Animals: t("ui.animals"),
+    Humans: t("ui.humans"),
+    Kindred: t("ui.kindred"),
   } satisfies Record<typeof limits.feedingTier, string>;
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
@@ -279,21 +279,21 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const tab = mobileTab.characterId === character.id ? mobileTab.value : "summary";
   const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
   const identity = <section className="sheet-identity-grid">
-    <SheetField label={tr("Nome", "Name")} value={character.character.name} />
+    <SheetField label={t("ui.name")} value={character.character.name} />
     <SheetField label={t("sheet.mask")} value={localized(mask, locale)} tooltip={mask?.singleWillpower} />
     <SheetField label={t("sheet.clan")} value={localized(clan, locale)} />
-    <SheetField label={tr("Jogador", "Player")} value={character.character.player} />
+    <SheetField label={t("ui.player")} value={character.character.player} />
     <SheetField label={t("sheet.dirge")} value={localized(dirge, locale)} tooltip={dirge?.allWillpower} />
     <SheetField label={t("sheet.bloodline")} value={String(data.bloodline ?? "")} />
-    <SheetField label={tr("Crônica", "Chronicle")} value={character.character.chronicle} />
-    <SheetField label={tr("Conceito", "Concept")} value={character.character.concept} />
+    <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />
+    <SheetField label={t("ui.concept")} value={character.character.concept} />
     <SheetField label={t("sheet.covenant")} value={localized(covenant, locale)} />
   </section>;
   const attributes = <>
-    <SheetHeading>{tr("Atributos", "Attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div>
+    <SheetHeading>{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div>
   </>;
   const skills = <>
-  <SheetHeading>{tr("Perícias", "Skills")}</SheetHeading>
+  <SheetHeading>{t("ui.skills")}</SheetHeading>
 
   <div className={isMobile ? "mobile-trait-stack" : "vampire-skill-grid"}>
     {Object.entries(SKILLS).map(([category, names]) =>
@@ -302,8 +302,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
         title={category}
         subtitle={
           category === "Mental"
-            ? tr("(-3 se não treinado)", "(-3 if Untrained)")
-            : tr("(-1 se não treinado)", "(-1 if Untrained)")
+            ? t("ui.message3IfUntrained")
+            : t("ui.message1IfUntrained")
         }
         names={names}
         values={character.skills}
@@ -318,54 +318,54 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
 </>;
   const stats = <>{attributes}{skills}</>;
   const humanitySection = <>
-    <SheetHeading className="ctl-single-divider vampire-humanity-heading">{tr("Humanidade", "Humanity")}</SheetHeading>
+    <SheetHeading className="ctl-single-divider vampire-humanity-heading">{t("ui.humanity")}</SheetHeading>
     <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} />
   </>;
   const summary = <>
     {identity}
-    <SheetHeading>{tr("Aspirações", "Aspirations")}</SheetHeading>
-    <EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+    <SheetHeading>{t("ui.aspirations")}</SheetHeading>
+    <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
     {humanitySection}
-    <SheetHeading>{tr("Condições", "Conditions")}</SheetHeading>
+    <SheetHeading>{t("ui.conditions")}</SheetHeading>
     <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />
-    <SheetHeading>{tr("Experiência", "Experience")}</SheetHeading>
+    <SheetHeading>{t("ui.experience")}</SheetHeading>
     <VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />
   </>;
   const powerPage = <>
     <PowerResource
-      name={tr("Potência de Sangue", "Blood Potency")}
+      name={t("ui.bloodPotency")}
       rating={bloodPotency}
       resourceName="Vitae"
       current={vitae}
       maximum={vitaeMaximum}
       perTurn={limits.vitaePerTurn}
       onChange={(value) => setState("vitae_current", value)}
-      summary={`${tr("Pode se alimentar de", "Can feed from")}: ${feedingTierLabel[limits.feedingTier]}`}
+      summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]}`}
     />
-    <SheetHeading>{tr("Disciplinas", "Disciplines")}</SheetHeading><div className="vampire-power-grid">{powers.disciplines.filter((item) => disciplines[item.name] > 0).map((item) => <article key={item.id}><header><strong>{localized(item, locale)}</strong><DotValue value={disciplines[item.name]} /></header><p>{item.summary}</p>{item.levels.filter((level) => level.rating <= disciplines[item.name]).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>)}</div>
+    <SheetHeading>{t("ui.disciplines")}</SheetHeading><div className="vampire-power-grid">{powers.disciplines.filter((item) => disciplines[item.name] > 0).map((item) => <article key={item.id}><header><strong>{localized(item, locale)}</strong><DotValue value={disciplines[item.name]} /></header><p>{item.summary}</p>{item.levels.filter((level) => level.rating <= disciplines[item.name]).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>)}</div>
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
     <PurchasedPowers character={character} powers={powers} locale={locale} scope="devotions" />
   </>;
   const covenantStatus = covenant ? vampireCovenantStatus(character, covenant.id, covenant.name, covenant.translatedName) : 0;
-  const covenantPage = <><SheetHeading>Covenant</SheetHeading><article className="vampire-covenant-summary"><Image src="/vampire-skull.png" width={82} height={82} alt="" aria-hidden="true" /><div><h3>{localized(covenant, locale) || tr("Sem Covenant", "Covenantless")}</h3><p>{covenant?.description ?? tr("Este Kindred não pertence a um Covenant.", "This Kindred belongs to no Covenant.")}</p><strong>{tr("Vantagem", "Advantage")}: {covenant?.advantage ?? tr("Nenhuma", "None")}</strong><span>Kindred Status: <DotValue value={covenantStatus} /></span></div></article>{covenant?.id === "ordo-dracul" && <article className="vampire-lore-card"><strong>Mystery</strong><p>{String((data.ordo_dracul as Record<string, unknown> | undefined)?.mystery_id ?? tr("Não selecionado", "Not selected"))}</p></article>}<PurchasedPowers character={character} powers={powers} locale={locale} scope="covenant" /></>;
-  const combat = <><div className="vampire-track-grid"><section><SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></section><section><SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><ResourceTrack label={tr("Força de Vontade", "Willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></section></div><CombatPage character={character} derived={derived} updateSheet={updateSheet} /><SheetHeading>{tr("Referências Kindred", "Kindred References")}</SheetHeading><div className="vampire-reference-grid"><article className="vampire-lore-card"><strong>Physical Intensity</strong><p>{tr("Gaste 1 Vitae para receber +2 nas rolagens de um Atributo Físico escolhido durante o turno.", "Spend 1 Vitae for +2 on rolls using one chosen Physical Attribute for the turn.")}</p></article><article className="vampire-lore-card"><strong>{tr("Cura", "Healing")}</strong><p>{tr("1 Vitae cura dois níveis de dano contusivo ou um letal. Dano agravado exige cinco Vitae e um dia.", "1 Vitae heals two bashing or one lethal damage. Aggravated damage requires five Vitae and one day.")}</p></article><article className="vampire-lore-card"><strong>Predatory Aura</strong><p>{tr("Escolha o aspecto Monstrous, Seductive ou Competitive e resolva a interação conforme a regra da mesa.", "Choose the Monstrous, Seductive, or Competitive aspect and resolve the interaction at the table.")}</p></article><article className="vampire-lore-card"><strong>Frenzy</strong><p>{tr("A ficha mantém recursos e estados; resistência, Riding the Wave e consequências permanecem decisões da mesa.", "The sheet tracks resources and states; resistance, Riding the Wave, and consequences remain table decisions.")}</p></article></div></>;
+  const covenantPage = <><SheetHeading>Covenant</SheetHeading><article className="vampire-covenant-summary"><Image src="/vampire-skull.png" width={82} height={82} alt="" aria-hidden="true" /><div><h3>{localized(covenant, locale) || t("ui.covenantless")}</h3><p>{covenant?.description ?? t("ui.thisKindredBelongsToNoCovenant")}</p><strong>{t("ui.advantage")}: {covenant?.advantage ?? t("ui.none247448")}</strong><span>Kindred Status: <DotValue value={covenantStatus} /></span></div></article>{covenant?.id === "ordo-dracul" && <article className="vampire-lore-card"><strong>Mystery</strong><p>{String((data.ordo_dracul as Record<string, unknown> | undefined)?.mystery_id ?? t("ui.notSelected"))}</p></article>}<PurchasedPowers character={character} powers={powers} locale={locale} scope="covenant" /></>;
+  const combat = <><div className="vampire-track-grid"><section><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></section><section><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></section></div><CombatPage character={character} derived={derived} updateSheet={updateSheet} /><SheetHeading>{t("ui.kindredReferences")}</SheetHeading><div className="vampire-reference-grid"><article className="vampire-lore-card"><strong>Physical Intensity</strong><p>{t("ui.spend1VitaeFor2OnRollsUsing")}</p></article><article className="vampire-lore-card"><strong>{t("ui.healing")}</strong><p>{t("ui.message1VitaeHealsTwoBashingOrOneLethal")}</p></article><article className="vampire-lore-card"><strong>Predatory Aura</strong><p>{t("ui.chooseTheMonstrousSeductiveOrCompetitiveAspectAnd")}</p></article><article className="vampire-lore-card"><strong>Frenzy</strong><p>{t("ui.theSheetTracksResourcesAndStatesResistanceRiding")}</p></article></div></>;
   const records = <>
     <VampireStateControls character={character} setState={setState} baseTorpor={torporReference?.duration ?? "—"} bloodPotency={bloodPotency} />
-    <SheetHeading>{tr("Maldições", "Banes")}</SheetHeading>
+    <SheetHeading>{t("ui.banes")}</SheetHeading>
     <div className="vampire-main-banes">
-      <article className="vampire-lore-card"><strong>{clan?.baneName ?? tr("Maldição do Clã", "Clan Bane")}</strong><p>{clan?.baneSummary ?? ""}</p></article>
-      {objectArray(data.banes).map((bane, index) => <article className="vampire-lore-card" key={index}><strong>{String(bane.name ?? tr("Maldição", "Bane"))}</strong><p>{String(bane.notes ?? "")}</p></article>)}
+      <article className="vampire-lore-card"><strong>{clan?.baneName ?? t("ui.clanBane")}</strong><p>{clan?.baneSummary ?? ""}</p></article>
+      {objectArray(data.banes).map((bane, index) => <article className="vampire-lore-card" key={index}><strong>{String(bane.name ?? t("ui.bane"))}</strong><p>{String(bane.notes ?? "")}</p></article>)}
     </div>
-    <SheetHeading>{tr("Referências de Humanidade", "Humanity References")}</SheetHeading>
+    <SheetHeading>{t("ui.humanityReferences")}</SheetHeading>
     <div className="vampire-reference-grid">
-      <article className="vampire-lore-card"><strong>{tr("Torpor", "Torpor")}</strong><p>{tr("Duração-base para a Humanidade atual", "Base duration for current Humanity")}: <b>{torporReference?.duration ?? "—"}</b>. {tr("Multiplique pela Potência de Sangue.", "Multiply by Blood Potency.")}</p></article>
-      <article className="vampire-lore-card"><strong>{tr("Sol e Humanidade", "Sunlight and Humanity")}</strong><p>{tr("A luz solar causa dano agravado. Consulte a intensidade da exposição e a Humanidade para determinar o intervalo do dano.", "Sunlight causes aggravated damage. Use exposure intensity and Humanity to determine the damage interval.")}</p></article>
+      <article className="vampire-lore-card"><strong>{t("ui.torpor")}</strong><p>{t("ui.baseDurationForCurrentHumanity")}: <b>{torporReference?.duration ?? "—"}</b>. {t("ui.multiplyByBloodPotency")}</p></article>
+      <article className="vampire-lore-card"><strong>{t("ui.sunlightAndHumanity")}</strong><p>{t("ui.sunlightCausesAggravatedDamageUseExposureIntensityAnd")}</p></article>
     </div>
     <SheetHeading>Blood Bonds</SheetHeading>
-    <StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={tr("Estágio", "Stage")} onChange={(value) => setState("blood_bonds", value)} />
-    <SheetHeading>{tr("Dependência de Vitae", "Vitae Addiction")}</SheetHeading>
+    <StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={t("ui.stage")} onChange={(value) => setState("blood_bonds", value)} />
+    <SheetHeading>{t("ui.vitaeAddiction")}</SheetHeading>
     <StructuredRecords values={objectArray(character.current_state.vitae_addictions)} onChange={(value) => setState("vitae_addictions", value)} />
-    <SheetHeading>{tr("Anotações", "Notes")}</SheetHeading>
+    <SheetHeading>{t("ui.notes")}</SheetHeading>
     <NotesArea value={notes} onChange={(value) => setState("notes", value)} />
   </>;
   const mainBody = <MainSheet className="vampire-main-body" identity={identity} attributes={attributes} skills={skills}
@@ -387,18 +387,18 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     }
     merits={<MeritList character={character} catalog={merits} locale={locale} />}
     aspirations={<>
-      <EditableList values={aspirations} minimum={3} maximum={3} placeholder={tr("Escreva uma Aspiração", "Write an Aspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
+      <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
       {humanitySection}
     </>}
     conditions={<ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />}
-    health={<><SheetHeading>{tr("Vitalidade", "Health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></>}
-    willpower={<><SheetHeading>{tr("Força de Vontade", "Willpower")}</SheetHeading><ResourceTrack label={tr("Força de Vontade", "Willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>}
-    specificPowersTitle={tr("Disciplinas", "Disciplines")}
+    health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></>}
+    willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>}
+    specificPowersTitle={t("ui.disciplines")}
     powerStat={
       <MainPowerStat
-        label={tr("Potência de Sangue", "Blood Potency")}
+        label={t("ui.bloodPotency")}
         value={bloodPotency}
-        summary={`${tr("Pode se alimentar de", "Can feed from")}: ${feedingTierLabel[limits.feedingTier]}`}
+        summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]}`}
       />
     }
     fuel={<MainFuel label="Vitae" current={vitae} maximum={vitaeMaximum} onChange={(value) => setState("vitae_current", value)} />}
@@ -408,20 +408,20 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   />;
 
   if (isMobile) return <CharacterPaperShell line="VtR" mobile title="VAMPIRE" subtitle="THE REQUIEM"><VampireDecorativeFrame /><SwipeableSheetTabs value={tab} onValueChange={(value) => setMobileTab({ characterId: character.id, value })} tabs={[
-    { value: "summary", label: tr("Resumo", "Summary") },
+    { value: "summary", label: t("ui.summary") },
     { value: "stats", label: "Stats" },
-    { value: "powers", label: tr("Poderes", "Powers") },
+    { value: "powers", label: t("ui.powers") },
     { value: "covenant", label: "Covenant" },
-    { value: "combat", label: tr("Combate", "Combat") },
-    { value: "records", label: tr("Registros", "Records") },
+    { value: "combat", label: t("ui.combat") },
+    { value: "records", label: t("ui.records") },
   ]}>{{ summary, stats, powers: powerPage, covenant: covenantPage, combat, records }}</SwipeableSheetTabs></CharacterPaperShell>;
 
-  return <CharacterPaperShell line="VtR" title="VAMPIRE" subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs defaultValue="main" className="vampire-sheet-tabs"><TabsList aria-label={tr("Páginas da ficha", "Character pages")}>
-    <TabsTrigger value="main">{tr("Principal", "Main")}</TabsTrigger>
-    <TabsTrigger value="powers">{tr("Poderes", "Powers")}</TabsTrigger>
+  return <CharacterPaperShell line="VtR" title="VAMPIRE" subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs defaultValue="main" className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
+    <TabsTrigger value="main">{t("ui.main")}</TabsTrigger>
+    <TabsTrigger value="powers">{t("ui.powers")}</TabsTrigger>
     <TabsTrigger value="covenant">Covenant</TabsTrigger>
-    <TabsTrigger value="combat">{tr("Combate", "Combat")}</TabsTrigger>
-    <TabsTrigger value="records">{tr("Registros", "Records")}</TabsTrigger>
+    <TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger>
+    <TabsTrigger value="records">{t("ui.records")}</TabsTrigger>
   </TabsList>
     <TabsContent value="main" className="vampire-sheet-page">{mainBody}</TabsContent>
     <TabsContent value="powers" className="vampire-sheet-page">{powerPage}</TabsContent>
@@ -454,26 +454,26 @@ function PurchasedPowers({ character, powers, locale, scope = "all" }: { charact
 }
 
 function ProteanChoicesEditor({ character, updateSheet, rating }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; rating: number }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const choices = character.line_data.discipline_choices && typeof character.line_data.discipline_choices === "object" && !Array.isArray(character.line_data.discipline_choices) ? character.line_data.discipline_choices as Record<string, unknown> : {};
   const set = (key: string, value: string[]) => { const next = structuredClone(character); next.line_data = { ...next.line_data, discipline_choices: { ...choices, [key]: value } }; updateSheet(next); };
-  return <><SheetHeading>{tr("Escolhas de Protean", "Protean Choices")}</SheetHeading><div className="vampire-protean-choices">
-    <section><strong>Predatory Aspect</strong><EditableList values={stringList(choices.protean_aspects)} minimum={3} maximum={3} placeholder={tr("Adaptação animal", "Animal adaptation")} onChange={(value) => set("protean_aspects", value)} /></section>
-    {rating >= 3 && <section><strong>Beast&apos;s Skin</strong><EditableList values={stringList(choices.protean_forms)} minimum={1} placeholder={tr("Forma animal", "Animal form")} onChange={(value) => set("protean_forms", value)} /></section>}
-    {rating >= 4 && <section><strong>Unnatural Aspect</strong><EditableList values={stringList(choices.protean_unnatural_aspect)} minimum={3} maximum={3} placeholder={tr("Aspecto monstruoso", "Monstrous adaptation")} onChange={(value) => set("protean_unnatural_aspect", value)} /></section>}
+  return <><SheetHeading>{t("ui.proteanChoices")}</SheetHeading><div className="vampire-protean-choices">
+    <section><strong>Predatory Aspect</strong><EditableList values={stringList(choices.protean_aspects)} minimum={3} maximum={3} placeholder={t("ui.animalAdaptation")} onChange={(value) => set("protean_aspects", value)} /></section>
+    {rating >= 3 && <section><strong>Beast&apos;s Skin</strong><EditableList values={stringList(choices.protean_forms)} minimum={1} placeholder={t("ui.animalForm")} onChange={(value) => set("protean_forms", value)} /></section>}
+    {rating >= 4 && <section><strong>Unnatural Aspect</strong><EditableList values={stringList(choices.protean_unnatural_aspect)} minimum={3} maximum={3} placeholder={t("ui.monstrousAdaptation")} onChange={(value) => set("protean_unnatural_aspect", value)} /></section>}
   </div></>;
 }
 
 function VampireStateControls({ character, setState, baseTorpor, bloodPotency }: { character: CharacterSheet; setState: (key: string, value: unknown) => void; baseTorpor: string; bloodPotency: number }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const torpor = character.current_state.torpor && typeof character.current_state.torpor === "object" && !Array.isArray(character.current_state.torpor) ? character.current_state.torpor as Record<string, unknown> : {};
   const setTorpor = (patch: Record<string, unknown>) => setState("torpor", { ...torpor, ...patch });
-  return <><SheetHeading>{tr("Estados Vampíricos", "Vampiric States")}</SheetHeading><div className="vampire-state-controls"><label><span>Blush of Life</span><Switch checked={Boolean(character.current_state.blush_of_life_active)} onCheckedChange={(checked) => setState("blush_of_life_active", checked)} /></label><label><span>{tr("Em torpor", "In torpor")}</span><Switch checked={Boolean(torpor.active)} onCheckedChange={(checked) => setTorpor({ active: checked })} /></label>{Boolean(torpor.active) && <><label>{tr("Início", "Started")}<Input type="date" value={String(torpor.started_at ?? "")} onChange={(event) => setTorpor({ started_at: event.target.value })} /></label><label>{tr("Fim estimado", "Expected end")}<Input type="date" value={String(torpor.expected_end ?? "")} onChange={(event) => setTorpor({ expected_end: event.target.value })} /></label><label className="wide">{tr("Notas de torpor", "Torpor notes")}<Input value={String(torpor.notes ?? "")} onChange={(event) => setTorpor({ notes: event.target.value })} /></label><p className="wide">{tr("Duração-base", "Base duration")}: <strong>{baseTorpor}</strong> × {tr("Potência de Sangue", "Blood Potency")} <strong>{bloodPotency}</strong>. {tr("A data permanece uma estimativa narrativa editável.", "The date remains an editable narrative estimate.")}</p></>}</div></>;
+  return <><SheetHeading>{t("ui.vampiricStates")}</SheetHeading><div className="vampire-state-controls"><label><span>Blush of Life</span><Switch checked={Boolean(character.current_state.blush_of_life_active)} onCheckedChange={(checked) => setState("blush_of_life_active", checked)} /></label><label><span>{t("ui.inTorpor")}</span><Switch checked={Boolean(torpor.active)} onCheckedChange={(checked) => setTorpor({ active: checked })} /></label>{Boolean(torpor.active) && <><label>{t("ui.started")}<Input type="date" value={String(torpor.started_at ?? "")} onChange={(event) => setTorpor({ started_at: event.target.value })} /></label><label>{t("ui.expectedEnd")}<Input type="date" value={String(torpor.expected_end ?? "")} onChange={(event) => setTorpor({ expected_end: event.target.value })} /></label><label className="wide">{t("ui.torporNotes")}<Input value={String(torpor.notes ?? "")} onChange={(event) => setTorpor({ notes: event.target.value })} /></label><p className="wide">{t("ui.baseDuration")}: <strong>{baseTorpor}</strong> × {t("ui.bloodPotency")} <strong>{bloodPotency}</strong>. {t("ui.theDateRemainsAnEditableNarrativeEstimate")}</p></>}</div></>;
 }
 
 function StructuredRecords({ values, onChange, levelLabel }: { values: Record<string, unknown>[]; onChange: (value: EditableRecord[]) => void; levelLabel?: string }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const rows = values.map((item, index): EditableRecord => ({ id: String(item.id ?? `record-${index}`), subject: String(item.subject ?? item.name ?? ""), stage: Number(item.stage ?? item.level ?? 1), notes: String(item.notes ?? "") }));
   const update = (index: number, patch: Partial<EditableRecord>) => onChange(rows.map((item, row) => row === index ? { ...item, ...patch } : item));
-  return <div className="vampire-records">{rows.map((item, index) => <div key={item.id}><Input value={item.subject} placeholder={tr("Nome ou alvo", "Name or subject")} onChange={(event) => update(index, { subject: event.target.value })} />{levelLabel && <label>{levelLabel}<Input type="number" min={1} max={3} value={item.stage} onChange={(event) => update(index, { stage: Number(event.target.value) })} /></label>}<Input value={item.notes} placeholder={tr("Notas", "Notes")} onChange={(event) => update(index, { notes: event.target.value })} /><Button type="button" size="icon" variant="ghost" onClick={() => onChange(rows.filter((_, row) => row !== index))}><Trash2 /></Button></div>)}<Button type="button" size="sm" variant="outline" onClick={() => onChange([...rows, { id: createRandomId(), subject: "", stage: 1, notes: "" }])}><Plus /> {tr("Adicionar registro", "Add record")}</Button></div>;
+  return <div className="vampire-records">{rows.map((item, index) => <div key={item.id}><Input value={item.subject} placeholder={t("ui.nameOrSubject")} onChange={(event) => update(index, { subject: event.target.value })} />{levelLabel && <label>{levelLabel}<Input type="number" min={1} max={3} value={item.stage} onChange={(event) => update(index, { stage: Number(event.target.value) })} /></label>}<Input value={item.notes} placeholder={t("ui.notes8c4aa0")} onChange={(event) => update(index, { notes: event.target.value })} /><Button type="button" size="icon" variant="ghost" onClick={() => onChange(rows.filter((_, row) => row !== index))}><Trash2 /></Button></div>)}<Button type="button" size="sm" variant="outline" onClick={() => onChange([...rows, { id: createRandomId(), subject: "", stage: 1, notes: "" }])}><Plus /> {t("ui.addRecord")}</Button></div>;
 }

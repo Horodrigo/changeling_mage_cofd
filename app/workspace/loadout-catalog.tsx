@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
-import { workspaceTerm } from "./workspace-i18n";
+import { systemTerm } from "@/lib/system-terms";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 export function LoadoutCatalog<T extends { id: string; name: string }>({
   title,
@@ -23,7 +23,7 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
   details: (item: T) => string;
   onChange: (value: string[]) => void;
 }) {
-  const {locale,tr}=useLanguage();
+  const { locale, t }=useLanguage();
   const [search, setSearch] = useState("");
   const filtered = alphabetical(items, item => item.name,locale).filter((item) =>
     `${item.name} ${describe(item)} ${details(item)}`
@@ -35,14 +35,14 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
       <DialogTrigger asChild>
         <Button type="button" size="sm" variant="outline">
           <Plus />
-          {workspaceTerm(title,locale)}
+          {systemTerm(title,locale)}
         </Button>
       </DialogTrigger>
       <DialogContent className="loadout-dialog">
         <DialogHeader>
-          <DialogTitle>{workspaceTerm(title,locale)}</DialogTitle>
+          <DialogTitle>{systemTerm(title,locale)}</DialogTitle>
           <DialogDescription>
-            {tr("Pesquise, compare as características e marque tudo que deseja adicionar à ficha.","Search, compare traits, and select everything you want to add to the character sheet.")}
+            {t("ui.searchCompareTraitsAndSelectEverythingYouWant")}
           </DialogDescription>
         </DialogHeader>
         <label className="catalog-search">
@@ -50,7 +50,7 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
           <Input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder={tr("Buscar por nome ou característica","Search by name or trait")}
+            placeholder={t("ui.searchByNameOrTrait")}
           />
         </label>
         <div className="loadout-catalog">
@@ -60,7 +60,7 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
               <SelectableCatalogCard
                 key={item.id}
                 selected={active}
-                label={`${active ? tr("Remover","Remove") : tr("Adicionar","Add")} ${item.name}`}
+                label={`${active ? t("ui.remove7d41cc") : t("ui.add")} ${item.name}`}
                 onToggle={() =>
                   onChange(
                     active
@@ -80,7 +80,7 @@ export function LoadoutCatalog<T extends { id: string; name: string }>({
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" size="sm" className="catalog-dialog-done">{tr("Concluir","Done")}</Button>
+            <Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

@@ -36,17 +36,17 @@ export function CommonIdentityStep({
   setChronicle: Setter<string>;
   missing: MissingCheck;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   return <div className="builder-section">
-    <span className="kicker">{tr("PASSO 1", "STEP 1")}</span>
-    <h2>{tr("Identidade", "Identity")}</h2>
+    <span className="kicker">{t("ui.step1")}</span>
+    <h2>{t("ui.identity")}</h2>
     <div className="identity-grid">
       <label className={missing("name") || missing("shadowName") ? "missing-field" : ""}>
         {nameLabel}<Input value={name} onChange={(event) => setName(event.target.value)} />
       </label>
-      <label>{tr("Conceito", "Concept")}<Input value={concept} onChange={(event) => setConcept(event.target.value)} /></label>
-      <label>{tr("Jogador", "Player")}<Input value={player} onChange={(event) => setPlayer(event.target.value)} /></label>
-      <label>{tr("Crônica", "Chronicle")}<Input value={chronicle} onChange={(event) => setChronicle(event.target.value)} /></label>
+      <label>{t("ui.concept")}<Input value={concept} onChange={(event) => setConcept(event.target.value)} /></label>
+      <label>{t("ui.player")}<Input value={player} onChange={(event) => setPlayer(event.target.value)} /></label>
+      <label>{t("ui.chronicle")}<Input value={chronicle} onChange={(event) => setChronicle(event.target.value)} /></label>
     </div>
   </div>;
 }
@@ -76,31 +76,31 @@ export function TraitsStep({
   setSpecialties: Setter<Specialty[]>;
   missing: MissingCheck;
 }) {
-  const { tr } = useLanguage();
+  const { t } = useLanguage();
   const attributeCategories = Object.keys(ATTRIBUTES);
   const skillCategories = Object.keys(SKILLS);
   return <div className="builder-section">
-    <span className="kicker">{tr("PASSO 2", "STEP 2")}</span>
-    <h2>{tr("Características", "Traits")}</h2>
+    <span className="kicker">{t("ui.step2")}</span>
+    <h2>{t("ui.traits")}</h2>
     <div className="priority-block">
-      <h3>{tr("Prioridades de Atributos", "Attribute priorities")}</h3>
+      <h3>{t("ui.attributePriorities")}</h3>
       <PriorityRow labels={attributeCategories} values={attributePriority} setValues={setAttributePriority} budgets={[5, 4, 3]} invalid={missing("attribute-priority")} />
       <DotGroups groups={ATTRIBUTES} values={attributes} setValues={setAttributes} base={1} maximum={5} priorities={attributePriority} budgets={[5, 4, 3]} missing={missing} prefix="attribute" />
     </div>
     <div className="priority-block">
-      <h3>{tr("Prioridades de Perícias", "Skill priorities")}</h3>
+      <h3>{t("ui.skillPriorities")}</h3>
       <PriorityRow labels={skillCategories} values={skillPriority} setValues={setSkillPriority} budgets={[11, 7, 4]} invalid={missing("skill-priority")} />
       <DotGroups groups={SKILLS} values={skills} setValues={setSkills} base={0} maximum={5} priorities={skillPriority} budgets={[11, 7, 4]} missing={missing} prefix="skill" />
     </div>
     <div className="specialties-block">
-      <h3>{tr("Especializações", "Specialties")}</h3>
+      <h3>{t("ui.specialties")}</h3>
       {specialties.map((specialty, index) => <div className="specialty-row" key={index}>
         <SkillSpecialtyChoice
-          label={`${tr("Perícia", "Skill")} ${index + 1}`}
+          label={`${t("ui.skill")} ${index + 1}`}
           value={specialty.skill}
           setValue={(skill) => updateArray(setSpecialties, specialties, index, { ...specialty, skill })}
         />
-        <label>{tr("Especialização", "Specialty")}<Input value={specialty.name} onChange={(event) => updateArray(setSpecialties, specialties, index, { ...specialty, name: event.target.value })} /></label>
+        <label>{t("ui.specialty")}<Input value={specialty.name} onChange={(event) => updateArray(setSpecialties, specialties, index, { ...specialty, name: event.target.value })} /></label>
       </div>)}
     </div>
   </div>;
@@ -119,7 +119,7 @@ function PriorityRow({
   budgets: number[];
   invalid: boolean;
 }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
 
   const setPriority = (index: number, next: string) => {
     const updated = [...values];
@@ -140,10 +140,10 @@ function PriorityRow({
         <Choice
           key={index}
           label={`${index === 0
-            ? tr("Primária", "Primary")
+            ? t("ui.primary")
             : index === 1
-              ? tr("Secundária", "Secondary")
-              : tr("Terciária", "Tertiary")
+              ? t("ui.secondary")
+              : t("ui.tertiary")
           } · ${budgets[index]}`}
           value={value}
           setValue={(next) => setPriority(index, next)}
@@ -197,14 +197,14 @@ export function DotRow({ name, value, setValue, min, max, tag, canIncrease = tru
 }
 
 export function Choice({ label = "", value, setValue, options, optionLabels = {}, invalid = false }: { label?: string; value: string; setValue: Setter<string>; options: readonly string[]; optionLabels?: Record<string, string>; invalid?: boolean }) {
-  const { tr } = useLanguage();
-  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger><SelectValue placeholder={tr("Selecione", "Select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
+  const { t } = useLanguage();
+  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger><SelectValue placeholder={t("ui.select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
 }
 
 function SkillSpecialtyChoice({ label, value, setValue }: { label: string; value: string; setValue: Setter<string> }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   return <label className="choice-label">{label}<Select value={value || undefined} onValueChange={setValue}>
-    <SelectTrigger><SelectValue placeholder={tr("Selecione uma Perícia", "Select a Skill")} /></SelectTrigger>
+    <SelectTrigger><SelectValue placeholder={t("ui.selectASkill")} /></SelectTrigger>
     <SelectContent>{Object.entries(SKILLS).map(([category, skills], index) => <SelectGroup key={category}>
       {index > 0 && <SelectSeparator />}
       <SelectLabel>{systemTerm(category, locale)}</SelectLabel>
@@ -214,8 +214,8 @@ function SkillSpecialtyChoice({ label, value, setValue }: { label: string; value
 }
 
 export function Aspirations({ values, setValues }: { values: string[]; setValues: Setter<string[]> }) {
-  const { tr } = useLanguage();
-  return <div className="aspirations-block"><h3>{tr("Aspirações", "Aspirations")}</h3><div>{values.map((value, index) => <Input key={index} value={value} onChange={(event) => updateArray(setValues, values, index, event.target.value)} placeholder={`${tr("Aspiração", "Aspiration")} ${index + 1}`} />)}</div></div>;
+  const { t } = useLanguage();
+  return <div className="aspirations-block"><h3>{t("ui.aspirations")}</h3><div>{values.map((value, index) => <Input key={index} value={value} onChange={(event) => updateArray(setValues, values, index, event.target.value)} placeholder={`${t("ui.aspiration")} ${index + 1}`} />)}</div></div>;
 }
 
 function updateArray<T>(setter: Setter<T[]>, values: T[], index: number, value: T) {

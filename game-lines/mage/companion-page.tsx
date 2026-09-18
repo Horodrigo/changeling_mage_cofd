@@ -25,7 +25,7 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
 }) {
-  const { locale, tr } = useLanguage();
+  const { locale, t } = useLanguage();
   const configuration = normalizeMeritConfiguration(merit.configuration);
   const name = String(configuration.name ?? "Familiar");
   const save = (patch: Record<string, string | string[]>) => {
@@ -43,18 +43,18 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
   const numina = stringList(configuration.numina);
   const numinaLimit = rank === 1 ? 3 : 5;
   return <article className="companion-card merit-companion companion-config">
-    <header><div><strong>{name}</strong><small>{tr(`Familiar · entidade efêmera de Rank ${rank}`, `Familiar · Rank ${rank} ephemeral entity`)}</small></div></header>
+    <header><div><strong>{name}</strong><small>{t("ui.familiarRankEphemeralEntity", { p1: rank }})}</small></div></header>
     <div className="companion-form-grid">
-      <label>{tr("Nome", "Name")}<Input value={name} onChange={event => save({ name: event.target.value })}/></label>
-      <label>{tr("Forma", "Form")}<RuleSelect value={form} onChange={value => save({ form: value })} options={[{ value: "animal", label: tr("Animal", "Animal") }, { value: "object", label: tr("Objeto", "Object") }]}/></label>
-      <label>{tr("Tipo de entidade", "Entity type")}<RuleSelect value={entity} onChange={value => save({ entity: value })} options={["Ghost", "Spirit", "Goetia"].map(value => ({ value, label: value }))}/></label>
-      {form === "animal" ? <label>{tr("Animal", "Animal")}<RuleSelect value={animalId} onChange={value => save({ animalId: value })} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label> : <label>{tr("Objeto", "Object")}<Input value={String(configuration.object ?? "")} onChange={event => save({ object: event.target.value })} placeholder={tr("Descrição do fetiche", "Fetish description")}/></label>}
-      <label>{tr("Poder", "Power")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.power ?? rank + 2)} onChange={event => save({ power: event.target.value })}/></label>
-      <label>{tr("Refinamento", "Finesse")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.finesse ?? rank + 2)} onChange={event => save({ finesse: event.target.value })}/></label>
-      <label>{tr("Resistência", "Resistance")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.resistance ?? rank + 2)} onChange={event => save({ resistance: event.target.value })}/></label>
-      <label>{tr("Influência", "Influence")}<Input value={String(configuration.influence ?? "")} onChange={event => save({ influence: event.target.value })} placeholder={tr(`Nome · ${rank} ponto(s)`, `Name · ${rank} dot${rank === 1 ? "" : "s"}`)}/></label>
-      <label>{tr("Interdição", "Ban")}<Input value={String(configuration.ban ?? "")} onChange={event => save({ ban: event.target.value })}/></label>
-      <label>{tr("Perdição", "Bane")}<Input value={String(configuration.bane ?? "")} onChange={event => save({ bane: event.target.value })}/></label>
+      <label>{t("ui.name")}<Input value={name} onChange={event => save({ name: event.target.value })}/></label>
+      <label>{t("ui.form")}<RuleSelect value={form} onChange={value => save({ form: value })} options={[{ value: "animal", label: t("ui.animal") }, { value: "object", label: t("ui.object") }]}/></label>
+      <label>{t("ui.entityType")}<RuleSelect value={entity} onChange={value => save({ entity: value })} options={["Ghost", "Spirit", "Goetia"].map(value => ({ value, label: value }))}/></label>
+      {form === "animal" ? <label>{t("ui.animal")}<RuleSelect value={animalId} onChange={value => save({ animalId: value })} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label> : <label>{t("ui.object")}<Input value={String(configuration.object ?? "")} onChange={event => save({ object: event.target.value })} placeholder={t("ui.fetishDescription")}/></label>}
+      <label>{t("ui.power")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.power ?? rank + 2)} onChange={event => save({ power: event.target.value })}/></label>
+      <label>{t("ui.finesse")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.finesse ?? rank + 2)} onChange={event => save({ finesse: event.target.value })}/></label>
+      <label>{t("ui.resistance")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.resistance ?? rank + 2)} onChange={event => save({ resistance: event.target.value })}/></label>
+      <label>{t("ui.influence")}<Input value={String(configuration.influence ?? "")} onChange={event => save({ influence: event.target.value })} placeholder={t("ui.rankDots", { rank, plural: rank === 1 ? "" : "s" })}/></label>
+      <label>{t("ui.ban")}<Input value={String(configuration.ban ?? "")} onChange={event => save({ ban: event.target.value })}/></label>
+      <label>{t("ui.baneda2072")}<Input value={String(configuration.bane ?? "")} onChange={event => save({ bane: event.target.value })}/></label>
     </div>
     {form === "animal" && presentedAnimal && <AnimalCard animal={presentedAnimal} name={name} onRemove={() => save({ form: "object", animalId: "" })}/>} 
     <strong>Numina ({numina.length}/{numinaLimit})</strong>
@@ -62,6 +62,6 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
       const active = numina.includes(item);
       return <label key={item} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && numina.length >= numinaLimit} onChange={() => save({ numina: active ? numina.filter(value => value !== item) : [...numina, item] })}/><span><strong>{item}</strong></span></label>;
     })}</div>
-    <p className="combat-note">{tr(`Rank ${rank}: máximo de Atributo ${rank === 1 ? 5 : 7}, Influência ${rank} e até ${numinaLimit} Numina. Complete Interdição e Perdição conforme a natureza da entidade.`, `Rank ${rank}: maximum Attribute ${rank === 1 ? 5 : 7}, Influence ${rank}, and up to ${numinaLimit} Numina. Complete Ban and Bane according to the entity's nature.`)}</p>
+    <p className="combat-note">{t("ui.rankMaximumAttributeInfluenceAndUpToNumina", { p1: rank, p2: rank === 1 ? 5 : 7, p3: rank, p4: numinaLimit }})}</p>
   </article>;
 }
