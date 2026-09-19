@@ -26,7 +26,7 @@ import type { VampireCondition, VampireMechanics, VampirePowers, VampireReferenc
 import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
-import { DETACHMENT_BREAKING_POINTS, vampireDetachmentBaseDice, vampireDetachmentPool } from "./detachment";
+import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice, vampireDetachmentPool } from "./detachment";
 import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule-effects";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
@@ -116,8 +116,15 @@ function HumanityTrack({
   const meritPoints = getTouchstoneMeritPoints(character, baseSlot);
   const touchstones = objectArray(character.line_data.touchstones);
   const attachedTouchstones = touchstones.filter((row) => String(row.name ?? "").trim()).length;
+  const activeBanes = objectArray(character.line_data.banes)
+    .filter((bane) => String(bane.name ?? "").trim() && String(bane.breaking_point_id ?? "").trim())
+    .slice(0, 3);
+  const protectedBreakingPoints = new Set(activeBanes.map((bane) => String(bane.breaking_point_id)));
+  const protectedBreakingPointKey = [...protectedBreakingPoints].sort().join("|");
+  const vastDynastyProtected = protectedBreakingPoints.has(VAST_DYNASTY_EMBRACE_BREAKING_POINT.id);
   const [open, setOpen] = useState(false);
-  const [breakingPoint, setBreakingPoint] = useState(Math.max(1, Math.min(10, value)));
+  const firstAvailable = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.level <= value && !protectedBreakingPoints.has(item.id));
+  const [breakingPointId, setBreakingPointId] = useState(firstAvailable?.id ?? "");
   const [protectMasquerade, setProtectMasquerade] = useState(false);
   const [protectRequiem, setProtectRequiem] = useState(false);
   const [vastDynastyEmbrace, setVastDynastyEmbrace] = useState(false);
@@ -125,8 +132,12 @@ function HumanityTrack({
   const [beastCondition, setBeastCondition] = useState<"bestial" | "competitive" | "wanton">("bestial");
 
   useEffect(() => {
-    setBreakingPoint((current) => Math.max(1, Math.min(current, Math.max(1, value))));
-  }, [value]);
+    const protectedIds = new Set(protectedBreakingPointKey.split("|").filter(Boolean));
+    const selected = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.id === breakingPointId);
+    if (selected && selected.level <= value && !protectedIds.has(selected.id)) return;
+    const replacement = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.level <= value && !protectedIds.has(item.id));
+    setBreakingPointId(replacement?.id ?? "");
+  }, [breakingPointId, protectedBreakingPointKey, value]);
 
   useEffect(() => {
     const activePoints = new Map(getTouchstoneMeritPoints(character, baseSlot).map((point) => [point.key, point]));
@@ -135,12 +146,7 @@ function HumanityTrack({
     const baseRow = unboundRows.find((row) => Number(row.humanity_slot) === baseSlot) ?? unboundRows[0];
     const nextRows: Record<string, unknown>[] = [];
 
-    if (baseRow) {
-      nextRows.push({
-        ...baseRow,
-        humanity_slot: baseSlot,
-      });
-    }
+    if (baseRow) nextRows.push({ ...baseRow, humanity_slot: baseSlot });
 
     for (const row of currentRows) {
       const key = String(row.merit_point_key ?? "");
@@ -156,24 +162,15 @@ function HumanityTrack({
     }
 
     if (JSON.stringify(nextRows) === JSON.stringify(currentRows)) return;
-
     const next = structuredClone(character);
-    next.line_data = {
-      ...next.line_data,
-      touchstones: nextRows,
-    };
+    next.line_data = { ...next.line_data, touchstones: nextRows };
     updateSheet(next);
   }, [baseSlot, character, updateSheet]);
 
   const setTouchstoneName = (slot: number, meritPoint: TouchstoneMeritPoint | undefined, name: string) => {
     const currentRows = objectArray(character.line_data.touchstones);
     const key = meritPoint?.key ?? "";
-    const rowIndex = currentRows.findIndex((row) =>
-      key
-        ? String(row.merit_point_key ?? "") === key
-        : !String(row.merit_point_key ?? ""),
-    );
-
+    const rowIndex = currentRows.findIndex((row) => key ? String(row.merit_point_key ?? "") === key : !String(row.merit_point_key ?? ""));
     const nextRows = [...currentRows];
     const existing = rowIndex >= 0 ? nextRows[rowIndex] : undefined;
 
@@ -181,40 +178,30 @@ function HumanityTrack({
       if (rowIndex >= 0) nextRows.splice(rowIndex, 1);
     } else {
       const row: Record<string, unknown> = {
-        ...(existing ?? {}),
-        id: String(existing?.id ?? createRandomId()),
-        name,
-        humanity_slot: slot,
-        notes: String(existing?.notes ?? ""),
+        ...(existing ?? {}), id: String(existing?.id ?? createRandomId()), name,
+        humanity_slot: slot, notes: String(existing?.notes ?? ""),
       };
-
       if (meritPoint) {
         row.merit_point_key = meritPoint.key;
         row.merit_instance_id = meritPoint.meritInstanceId;
         row.merit_dot = meritPoint.dot;
       } else {
-        delete row.merit_point_key;
-        delete row.merit_instance_id;
-        delete row.merit_dot;
+        delete row.merit_point_key; delete row.merit_instance_id; delete row.merit_dot;
       }
-
-      if (rowIndex >= 0) nextRows[rowIndex] = row;
-      else nextRows.push(row);
+      if (rowIndex >= 0) nextRows[rowIndex] = row; else nextRows.push(row);
     }
 
     const next = structuredClone(character);
-    next.line_data = {
-      ...next.line_data,
-      touchstones: nextRows,
-    };
+    next.line_data = { ...next.line_data, touchstones: nextRows };
     updateSheet(next);
   };
 
-  const effectiveBreakingPoint = vastDynastyEmbrace ? 3 : breakingPoint;
+  const selectedBreakingPoint = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.id === breakingPointId);
+  const effectiveBreakingPoint = vastDynastyEmbrace ? 3 : Number(selectedBreakingPoint?.level ?? 0);
   const touchstoneModifier = attachedTouchstones === 0 ? -2 : attachedTouchstones === 1 ? 2 : 3;
   const specialModifier = (protectMasquerade ? -1 : 0) + (protectRequiem ? 1 : 0) + (vastDynastyEmbrace ? 1 : 0);
-  const detachmentPool = vampireDetachmentPool(effectiveBreakingPoint, attachedTouchstones, specialModifier);
-  const applicable = effectiveBreakingPoint <= value && value > 0;
+  const detachmentPool = vampireDetachmentPool(effectiveBreakingPoint, attachedTouchstones, specialModifier, activeBanes.length);
+  const applicable = vastDynastyEmbrace ? value >= 3 && !vastDynastyProtected : Boolean(selectedBreakingPoint && selectedBreakingPoint.level <= value && !protectedBreakingPoints.has(selectedBreakingPoint.id));
 
   const applyDetachment = () => {
     if (!applicable) return;
@@ -222,29 +209,17 @@ function HumanityTrack({
     const losesHumanity = result === "dramatic-failure" || result === "failure";
     if (losesHumanity) next.line_data.humanity = Math.max(0, value - 1);
 
-    const conditionId = result === "dramatic-failure"
-      ? "jaded"
-      : result === "exceptional-success"
-        ? "inspired"
-        : beastCondition;
+    const conditionId = result === "dramatic-failure" ? "jaded" : result === "exceptional-success" ? "inspired" : beastCondition;
     const currentConditions = Array.isArray(next.current_state.conditions)
-      ? next.current_state.conditions as Array<Record<string, unknown>>
-      : [];
+      ? next.current_state.conditions as Array<Record<string, unknown>> : [];
     if (!currentConditions.some((item) => String(item.id ?? "") === conditionId)) {
-      currentConditions.push({
-        id: conditionId,
-        persistent: conditionId === "jaded",
-        instanceId: createRandomId(),
-      });
+      currentConditions.push({ id: conditionId, persistent: conditionId === "jaded", instanceId: createRandomId() });
     }
 
     const currentBeats = Math.max(0, Math.min(4, Math.trunc(Number(next.current_state.beats ?? 0))));
     const currentAvailable = Math.max(0, Math.trunc(Number(next.current_state.experience_available ?? 0)));
     const currentSpent = Math.max(0, Math.trunc(Number(next.current_state.experience_spent ?? 0)));
-    const currentTotal = Math.max(
-      currentAvailable + currentSpent,
-      Math.max(0, Math.trunc(Number(next.current_state.experience_total ?? 0))),
-    );
+    const currentTotal = Math.max(currentAvailable + currentSpent, Math.max(0, Math.trunc(Number(next.current_state.experience_total ?? 0))));
     const beatTotal = currentBeats + 1;
     next.current_state = {
       ...next.current_state,
@@ -256,16 +231,14 @@ function HumanityTrack({
     };
     updateSheet(next);
     setOpen(false);
-    setProtectMasquerade(false);
-    setProtectRequiem(false);
-    setVastDynastyEmbrace(false);
-    setResult("success");
-    setBeastCondition("bestial");
+    setProtectMasquerade(false); setProtectRequiem(false); setVastDynastyEmbrace(false);
+    setResult("success"); setBeastCondition("bestial");
   };
 
   return <div className="vampire-humanity-section">
-    <div className="vampire-humanity-actions">
-      <Button type="button" size="sm" variant="outline" onClick={() => setOpen(true)} disabled={value <= 0}>
+    <div className="vampire-humanity-heading-row">
+      <SheetHeading className="ctl-single-divider vampire-humanity-heading">{t("ui.humanity")}</SheetHeading>
+      <Button type="button" size="sm" variant="outline" className="builder-add-action vampire-detachment-trigger" onClick={() => setOpen(true)} disabled={value <= 0}>
         Detachment
       </Button>
     </div>
@@ -275,74 +248,49 @@ function HumanityTrack({
         const isBaseTouchstone = rating === baseSlot;
         const canWriteTouchstone = isBaseTouchstone || Boolean(meritPoint);
         const row = canWriteTouchstone
-          ? touchstones.find((item) => meritPoint
-            ? String(item.merit_point_key ?? "") === meritPoint.key
-            : !String(item.merit_point_key ?? ""))
+          ? touchstones.find((item) => meritPoint ? String(item.merit_point_key ?? "") === meritPoint.key : !String(item.merit_point_key ?? ""))
           : undefined;
-
         return <div className={`vampire-humanity-row${canWriteTouchstone ? " touchstone-slot" : ""}`} key={rating}>
           {canWriteTouchstone
-            ? <Input
-                className="vampire-humanity-touchstone"
-                value={String(row?.name ?? "")}
-                placeholder="Touchstone"
+            ? <Input className="vampire-humanity-touchstone" value={String(row?.name ?? "")} placeholder="Touchstone"
                 aria-label={t("ui.humanityTouchstone", { p1: rating })}
-                onChange={(event) => setTouchstoneName(rating, meritPoint, event.target.value)}
-              />
+                onChange={(event) => setTouchstoneName(rating, meritPoint, event.target.value)} />
             : <span className="vampire-humanity-line" aria-hidden="true" />}
           <strong>{rating}</strong>
-          <span className={`vampire-humanity-dot${value === rating ? " on" : ""}`} aria-label={`${t("ui.humanity")} ${rating}`} />
+          <span className={`vampire-humanity-dot${rating <= value ? " on" : ""}`} aria-label={`${t("ui.humanity")} ${rating}`} />
         </div>;
       })}
     </div>
 
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="vampire-detachment-dialog">
+      <DialogContent className="experience-dialog vtr-dialog vampire-detachment-dialog">
         <DialogHeader>
           <DialogTitle>Detachment</DialogTitle>
-          <DialogDescription>
-            {pt
-              ? "Escolha o nível do Breaking Point, confira a parada e aplique o resultado da rolagem. O Breaking Point sempre concede 1 Beat."
-              : "Choose the Breaking Point level, confirm the pool, and apply the roll result. A Breaking Point always grants 1 Beat."}
-          </DialogDescription>
+          <DialogDescription>{pt ? "Escolha o Breaking Point ocorrido, confira a parada e aplique o resultado. Cada Breaking Point concede 1 Beat." : "Choose the Breaking Point that occurred, confirm the pool, and apply the result. Every Breaking Point grants 1 Beat."}</DialogDescription>
         </DialogHeader>
-
         <div className="vampire-detachment-form">
-          {vastDynasty && <label className="vampire-detachment-check">
-            <input
-              type="checkbox"
-              checked={vastDynastyEmbrace}
-              onChange={(event) => {
-                setVastDynastyEmbrace(event.target.checked);
-                if (event.target.checked) setBreakingPoint(3);
-              }}
-            />
-            <span><strong>The Vast Dynasty — Embrace</strong><small>{pt ? "Breaking Point de Humanity 3; +1 dado no teste de Detachment." : "Humanity 3 Breaking Point; +1 die to the Detachment roll."}</small></span>
+          {vastDynasty && <label className={`vampire-detachment-check${vastDynastyProtected ? " bane-protected" : ""}`}>
+            <input type="checkbox" checked={vastDynastyEmbrace} disabled={vastDynastyProtected} onChange={(event) => setVastDynastyEmbrace(event.target.checked)} />
+            <span><strong>The Vast Dynasty — Embrace</strong><small>{vastDynastyProtected ? (pt ? "Protegido por Bane." : "Protected by Bane.") : (pt ? "Breaking Point de Humanity 3; +1 dado no teste de Detachment." : "Humanity 3 Breaking Point; +1 die to the Detachment roll.")}</small></span>
           </label>}
 
-          <label>{pt ? "Nível do Breaking Point" : "Breaking Point level"}
-            {vastDynastyEmbrace
-              ? <Input value="3" readOnly />
-              : <RuleSelect
-                  value={String(effectiveBreakingPoint)}
-                  onChange={(nextValue) => setBreakingPoint(Number(nextValue))}
-                  options={DETACHMENT_BREAKING_POINTS
-                    .filter((item) => item.level <= value)
-                    .map((item) => ({
-                      value: String(item.level),
-                      label: `${item.level} — ${item.dice === 0 ? (pt ? "dado de chance" : "chance die") : `${item.dice} ${pt ? "dados" : "dice"}`}`,
-                    }))}
-                />}
-          </label>
+          {!vastDynastyEmbrace && <div className="vampire-breaking-point-tiers">
+            {DETACHMENT_BREAKING_POINT_TIERS.filter((tier) => tier.level <= value).map((tier) => <section key={tier.level}>
+              <header><strong>Humanity {tier.level}</strong><span>{tier.dice === 0 ? (pt ? "Dado de chance" : "Chance die") : `${tier.dice} ${pt ? "dados" : "dice"}`}</span></header>
+              <div>{tier.breakingPoints.map((point) => {
+                const protectedByBane = protectedBreakingPoints.has(point.id);
+                return <label className={`vampire-breaking-point-row${protectedByBane ? " bane-protected" : ""}`} key={point.id}>
+                  <input type="radio" name="vampire-breaking-point" value={point.id} checked={breakingPointId === point.id} disabled={protectedByBane} onChange={() => setBreakingPointId(point.id)} />
+                  <span>{point.label}</span>
+                  {protectedByBane && <small>{pt ? "Protegido por Bane" : "Protected by Bane"}</small>}
+                </label>;
+              })}</div>
+            </section>)}
+          </div>}
 
           <div className="vampire-detachment-reference">
             <strong>{pt ? "Parada de Detachment" : "Detachment pool"}: {detachmentPool <= 0 ? (pt ? "Dado de chance" : "Chance die") : `${detachmentPool} ${pt ? "dados" : "dice"}`}</strong>
-            <small>
-              {vampireDetachmentBaseDice(effectiveBreakingPoint)} {pt ? "base" : "base"}
-              {" · "}{pt ? "Touchstones" : "Touchstones"} {touchstoneModifier >= 0 ? "+" : ""}{touchstoneModifier}
-              {specialModifier !== 0 ? ` · ${pt ? "outros modificadores" : "other modifiers"} ${specialModifier >= 0 ? "+" : ""}${specialModifier}` : ""}
-            </small>
-            <p>{DETACHMENT_BREAKING_POINTS.find((item) => item.level === effectiveBreakingPoint)?.examples.join(" · ")}</p>
+            <small>{vampireDetachmentBaseDice(effectiveBreakingPoint)} {pt ? "base" : "base"} · Touchstones {touchstoneModifier >= 0 ? "+" : ""}{touchstoneModifier}{activeBanes.length ? ` · Banes −${activeBanes.length}` : ""}{specialModifier ? ` · ${pt ? "outros" : "other"} ${specialModifier >= 0 ? "+" : ""}${specialModifier}` : ""}</small>
           </div>
 
           <div className="vampire-detachment-modifiers">
@@ -350,31 +298,15 @@ function HumanityTrack({
             <label><input type="checkbox" checked={protectRequiem} onChange={(event) => setProtectRequiem(event.target.checked)} /> {pt ? "Protegendo o Requiem (+1)" : "Protecting the Requiem (+1)"}</label>
           </div>
 
-          <label>{pt ? "Resultado da rolagem" : "Roll result"}
-            <RuleSelect
-              value={result}
-              onChange={(nextValue) => setResult(nextValue as typeof result)}
-              options={[
-                { value: "dramatic-failure", label: pt ? "Falha Dramática" : "Dramatic Failure" },
-                { value: "failure", label: pt ? "Falha" : "Failure" },
-                { value: "success", label: pt ? "Sucesso" : "Success" },
-                { value: "exceptional-success", label: pt ? "Sucesso Excepcional" : "Exceptional Success" },
-              ]}
-            />
-          </label>
-
-          {(result === "failure" || result === "success") && <label>{pt ? "Condition recebida" : "Condition gained"}
-            <RuleSelect
-              value={beastCondition}
-              onChange={(nextValue) => setBeastCondition(nextValue as typeof beastCondition)}
-              options={[
-                { value: "bestial", label: "Bestial" },
-                { value: "competitive", label: "Competitive" },
-                { value: "wanton", label: "Wanton" },
-              ]}
-            />
-          </label>}
-
+          <label>{pt ? "Resultado da rolagem" : "Roll result"}<RuleSelect value={result} onChange={(nextValue) => setResult(nextValue as typeof result)} options={[
+            { value: "dramatic-failure", label: pt ? "Falha Dramática" : "Dramatic Failure" },
+            { value: "failure", label: pt ? "Falha" : "Failure" },
+            { value: "success", label: pt ? "Sucesso" : "Success" },
+            { value: "exceptional-success", label: pt ? "Sucesso Excepcional" : "Exceptional Success" },
+          ]} /></label>
+          {(result === "failure" || result === "success") && <label>{pt ? "Condition recebida" : "Condition gained"}<RuleSelect value={beastCondition} onChange={(nextValue) => setBeastCondition(nextValue as typeof beastCondition)} options={[
+            { value: "bestial", label: "Bestial" }, { value: "competitive", label: "Competitive" }, { value: "wanton", label: "Wanton" },
+          ]} /></label>}
           <div className="vampire-detachment-outcome">
             {result === "dramatic-failure" && <p>{pt ? "−1 Humanity e Jaded." : "−1 Humanity and Jaded."}</p>}
             {result === "failure" && <p>{pt ? `−1 Humanity e ${beastCondition}.` : `−1 Humanity and ${beastCondition}.`}</p>}
@@ -382,7 +314,6 @@ function HumanityTrack({
             {result === "exceptional-success" && <p>{pt ? "Humanity mantida; recebe Inspired." : "Humanity is retained; gain Inspired."}</p>}
           </div>
         </div>
-
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => setOpen(false)}>{pt ? "Cancelar" : "Cancel"}</Button>
           <Button type="button" onClick={applyDetachment} disabled={!applicable}>{pt ? "Aplicar resultado" : "Apply result"}</Button>
@@ -390,6 +321,48 @@ function HumanityTrack({
       </DialogContent>
     </Dialog>
   </div>;
+}
+
+function BaneEditor({ character, updateSheet, clanBaneName, clanBaneSummary, vastDynasty }: {
+  character: CharacterSheet;
+  updateSheet: (sheet: CharacterSheet) => void;
+  clanBaneName: string;
+  clanBaneSummary: string;
+  vastDynasty: boolean;
+}) {
+  const { locale, t } = useLanguage();
+  const pt = locale === "pt-BR";
+  const rows = Array.from({ length: 3 }, (_, index) => objectArray(character.line_data.banes)[index] ?? {});
+  const update = (index: number, patch: Record<string, unknown>) => {
+    const nextRows = rows.map((row, rowIndex) => rowIndex === index ? { ...row, ...patch, id: String(row.id ?? createRandomId()) } : row);
+    const next = structuredClone(character);
+    next.line_data = { ...next.line_data, banes: nextRows.filter((row) => String(row.name ?? "").trim() || String(row.breaking_point_id ?? "").trim()) };
+    updateSheet(next);
+  };
+  const selectedIds = new Set(rows.map((row) => String(row.breaking_point_id ?? "")).filter(Boolean));
+  return <>
+    <SheetHeading>{t("ui.banes")}</SheetHeading>
+    <div className="vampire-bane-lines">
+      {rows.map((bane, index) => {
+        const name = String(bane.name ?? "");
+        const breakingPointId = String(bane.breaking_point_id ?? "");
+        const missingLink = Boolean(name.trim()) && !breakingPointId;
+        return <div className={`vampire-bane-row${missingLink ? " missing-field" : ""}`} key={String(bane.id ?? index)}>
+          <Input value={name} placeholder={`${t("ui.bane")} ${index + 1}`} onChange={(event) => update(index, { name: event.target.value })} />
+          <RuleSelect value={breakingPointId || "__none"} onChange={(value) => {
+            const point = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.id === value) ?? (value === VAST_DYNASTY_EMBRACE_BREAKING_POINT.id ? VAST_DYNASTY_EMBRACE_BREAKING_POINT : undefined);
+            update(index, { breaking_point_id: value === "__none" ? "" : value, breaking_point_level: point?.level ?? 0 });
+          }} options={[
+            { value: "__none", label: pt ? "Vincular Breaking Point…" : "Link Breaking Point…" },
+            ...DETACHMENT_BREAKING_POINT_OPTIONS.filter((point) => !selectedIds.has(point.id) || point.id === breakingPointId).map((point) => ({ value: point.id, label: point.label, group: `Humanity ${point.level}` })),
+            ...(vastDynasty && (!selectedIds.has(VAST_DYNASTY_EMBRACE_BREAKING_POINT.id) || breakingPointId === VAST_DYNASTY_EMBRACE_BREAKING_POINT.id) ? [{ value: VAST_DYNASTY_EMBRACE_BREAKING_POINT.id, label: VAST_DYNASTY_EMBRACE_BREAKING_POINT.label, group: "Humanity 3" }] : []),
+          ]} />
+        </div>;
+      })}
+    </div>
+    <SheetHeading>{t("ui.clanBane")}</SheetHeading>
+    <article className="vampire-lore-card vampire-clan-bane"><strong>{clanBaneName || t("ui.clanBane")}</strong><p>{clanBaneSummary}</p></article>
+  </>;
 }
 
 export function VampireCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
@@ -508,17 +481,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   </div>
 </>;
   const stats = <>{attributes}{skills}</>;
-  const humanitySection = <>
-    <SheetHeading className="ctl-single-divider vampire-humanity-heading">{t("ui.humanity")}</SheetHeading>
-    <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} />
-  </>;
-  const banesSection = <>
-    <SheetHeading>{t("ui.banes")}</SheetHeading>
-    <div className="vampire-main-banes">
-      <article className="vampire-lore-card"><strong>{clan?.baneName ?? t("ui.clanBane")}</strong><p>{clan?.baneSummary ?? ""}</p></article>
-      {objectArray(data.banes).map((bane, index) => <article className="vampire-lore-card" key={index}><strong>{String(bane.name ?? t("ui.bane"))}</strong><p>{String(bane.notes ?? "")}</p></article>)}
-    </div>
-  </>;
+  const humanitySection = <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} />;
+  const banesSection = <BaneEditor character={character} updateSheet={updateSheet} clanBaneName={clan?.baneName ?? t("ui.clanBane")} clanBaneSummary={clan?.baneSummary ?? ""} vastDynasty={hasRuleEffect("embrace-humanity")} />;
   const summary = <>
     {identity}
     <SheetHeading>{t("ui.aspirations")}</SheetHeading>
@@ -633,27 +597,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
         onChange={(value) => setState("conditions", value)}
       />
     }
-    health={
-      <>
-        <SheetHeading>{t("ui.health")}</SheetHeading>
-        <HealthTrack
-          health={health}
-          damage={damage}
-          onChange={(value) => setState("health_damage", value)}
-        />
-      </>
-    }
-    willpower={
-      <>
-        <SheetHeading>{t("ui.willpower")}</SheetHeading>
-        <ResourceTrack
-          label={t("ui.willpower")}
-          current={currentWillpower}
-          maximum={willpower}
-          onChange={(value) => setState("willpower_current", value)}
-        />
-      </>
-    }
+    health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></>}
+    willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>}
     specificPowersTitle={t("ui.disciplines")}
     powerStat={
       <MainPowerStat
@@ -662,23 +607,10 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
         summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]} · ${sunlightSummary}`}
       />
     }
-    fuel={
-      <MainFuel
-        label="Vitae"
-        current={vitae}
-        maximum={vitaeMaximum}
-        onChange={(value) => setState("vitae_current", value)}
-      />
-    }
+    fuel={<MainFuel label="Vitae" current={vitae} maximum={vitaeMaximum} onChange={(value) => setState("vitae_current", value)} />}
     stability={null}
     derived={derived}
-    experience={
-      <VampireExperiencePanel
-        character={character}
-        updateSheet={updateSheet}
-        catalogs={catalogs}
-      />
-    }
+    experience={<VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
   />;
 
   if (isMobile) return <CharacterPaperShell line="VtR" mobile title="VAMPIRE" subtitle="THE REQUIEM"><VampireDecorativeFrame /><SwipeableSheetTabs value={tab} onValueChange={(value) => setMobileTab({ characterId: character.id, value })} tabs={[

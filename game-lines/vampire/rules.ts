@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import type { GameLineValidationIssue } from "@/lib/game-line-contracts/game-line-rules";
 import { boundedRating, objectArray, recordRatings, stringArray, VAMPIRE_DISCIPLINES, vampireDerived } from "./creation-rules";
+import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 
 function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const data = character.line_data;
@@ -55,7 +56,15 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       touchstones,
       undead_companions: undeadCompanions,
       devotion_ids: stringArray(data.devotion_ids),
-      banes: objectArray(data.banes),
+      banes: objectArray(data.banes).slice(0, 3).map((bane, index) => ({
+        id: String(bane.id ?? `bane-${index + 1}`),
+        name: String(bane.name ?? ""),
+        breaking_point_id: String(bane.breaking_point_id ?? ""),
+        breaking_point_level: boundedRating(bane.breaking_point_level, 0, 10, 0),
+      })).filter((bane) => bane.name || bane.breaking_point_id),
+      kindred_status_scope: ["covenant", "clan", "city"].includes(String(data.kindred_status_scope ?? "")) ? String(data.kindred_status_scope) : "covenant",
+      kindred_status_city: String(data.kindred_status_city ?? ""),
+      kindred_status_group: String(data.kindred_status_group ?? ""),
       blood_sorcery: {
         ...bloodSorcery,
         cruac_rating: boundedRating(bloodSorcery.cruac_rating, 0, 5, 0),
@@ -88,6 +97,9 @@ export const vampireRules: GameLineRulesModule = {
       recordRatings(character.line_data.disciplines, VAMPIRE_DISCIPLINES, 10),
       boundedRating(character.line_data.blood_potency, 1, 10, 1),
     );
+  },
+  synchronizeCharacter(character) {
+    return synchronizeVampireBuilderMeritGrants(structuredClone(character));
   },
   validateCreation(character) {
     const issues: GameLineValidationIssue[] = [];

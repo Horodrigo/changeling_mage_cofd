@@ -3,6 +3,7 @@ import "./css/globals.css";
 import "./css/changeling-sheet.css";
 import "./css/mage-sheet.css";
 import "./css/vampire-sheet.css";
+import "./css/vampire-interactions.css";
 import { PwaManager } from "./pwa-manager";
 import { LanguageProvider } from "@/lib/i18n";
 
