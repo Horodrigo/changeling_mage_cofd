@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { type ReactNode, useEffect, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField, boundedNumber, updateLineData } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
@@ -9,7 +8,9 @@ import { ConditionManager, type ConditionDefinition, type SelectedCondition } fr
 import { HealthTrack, SheetHeading, TraitBlock, DotValue, stringList } from "@/app/workspace/sheet-primitives";
 import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
 import { SwipeableSheetTabs } from "@/app/workspace/sheet-tabs";
+import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -22,8 +23,10 @@ import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type { VampireCondition, VampireMechanics, VampirePowers, VampireReference, VampireRitualDisciplineDefinition } from "./catalog-types";
-import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
+import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
+import { VampireCompanionPage } from "./companion-page";
+import { DETACHMENT_BREAKING_POINTS, vampireDetachmentBaseDice, vampireDetachmentPool } from "./detachment";
 import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule-effects";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
@@ -100,22 +103,31 @@ function HumanityTrack({
   character,
   updateSheet,
   value,
+  vastDynasty = false,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   value: number;
+  vastDynasty?: boolean;
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
+  const pt = locale === "pt-BR";
   const baseSlot = String(character.line_data.clan_id ?? "") === "ventrue" ? 7 : 6;
   const meritPoints = getTouchstoneMeritPoints(character, baseSlot);
   const touchstones = objectArray(character.line_data.touchstones);
+  const attachedTouchstones = touchstones.filter((row) => String(row.name ?? "").trim()).length;
+  const [open, setOpen] = useState(false);
+  const [breakingPoint, setBreakingPoint] = useState(Math.max(1, Math.min(10, value)));
+  const [protectMasquerade, setProtectMasquerade] = useState(false);
+  const [protectRequiem, setProtectRequiem] = useState(false);
+  const [vastDynastyEmbrace, setVastDynastyEmbrace] = useState(false);
+  const [result, setResult] = useState<"dramatic-failure" | "failure" | "success" | "exceptional-success">("success");
+  const [beastCondition, setBeastCondition] = useState<"bestial" | "competitive" | "wanton">("bestial");
 
-  /*
-   * Keep each purchased Touchstone Merit dot tied to exactly one Humanity row.
-   * If a dot disappears, its linked Touchstone is removed from persisted data.
-   * Buying the dot again therefore unlocks a blank row rather than restoring
-   * the old text.
-   */
+  useEffect(() => {
+    setBreakingPoint((current) => Math.max(1, Math.min(current, Math.max(1, value))));
+  }, [value]);
+
   useEffect(() => {
     const activePoints = new Map(getTouchstoneMeritPoints(character, baseSlot).map((point) => [point.key, point]));
     const currentRows = objectArray(character.line_data.touchstones);
@@ -152,15 +164,6 @@ function HumanityTrack({
     };
     updateSheet(next);
   }, [baseSlot, character, updateSheet]);
-
-  const setHumanity = (rating: number) => {
-    const next = structuredClone(character);
-    next.line_data = {
-      ...next.line_data,
-      humanity: rating,
-    };
-    updateSheet(next);
-  };
 
   const setTouchstoneName = (slot: number, meritPoint: TouchstoneMeritPoint | undefined, name: string) => {
     const currentRows = objectArray(character.line_data.touchstones);
@@ -207,37 +210,185 @@ function HumanityTrack({
     updateSheet(next);
   };
 
-  return <div className="vampire-humanity-track">
-    {Array.from({ length: 10 }, (_, index) => 10 - index).map((rating) => {
-      const meritPoint = meritPoints.find((point) => point.slot === rating);
-      const isBaseTouchstone = rating === baseSlot;
-      const canWriteTouchstone = isBaseTouchstone || Boolean(meritPoint);
-      const row = canWriteTouchstone
-        ? touchstones.find((item) => meritPoint
-          ? String(item.merit_point_key ?? "") === meritPoint.key
-          : !String(item.merit_point_key ?? ""))
-        : undefined;
+  const effectiveBreakingPoint = vastDynastyEmbrace ? 3 : breakingPoint;
+  const touchstoneModifier = attachedTouchstones === 0 ? -2 : attachedTouchstones === 1 ? 2 : 3;
+  const specialModifier = (protectMasquerade ? -1 : 0) + (protectRequiem ? 1 : 0) + (vastDynastyEmbrace ? 1 : 0);
+  const detachmentPool = vampireDetachmentPool(effectiveBreakingPoint, attachedTouchstones, specialModifier);
+  const applicable = effectiveBreakingPoint <= value && value > 0;
 
-      return <div className={`vampire-humanity-row${canWriteTouchstone ? " touchstone-slot" : ""}`} key={rating}>
-        {canWriteTouchstone
-          ? <Input
-              className="vampire-humanity-touchstone"
-              value={String(row?.name ?? "")}
-              placeholder="Touchstone"
-              aria-label={t("ui.humanityTouchstone", { p1: rating })}
-              onChange={(event) => setTouchstoneName(rating, meritPoint, event.target.value)}
+  const applyDetachment = () => {
+    if (!applicable) return;
+    const next = structuredClone(character);
+    const losesHumanity = result === "dramatic-failure" || result === "failure";
+    if (losesHumanity) next.line_data.humanity = Math.max(0, value - 1);
+
+    const conditionId = result === "dramatic-failure"
+      ? "jaded"
+      : result === "exceptional-success"
+        ? "inspired"
+        : beastCondition;
+    const currentConditions = Array.isArray(next.current_state.conditions)
+      ? next.current_state.conditions as Array<Record<string, unknown>>
+      : [];
+    if (!currentConditions.some((item) => String(item.id ?? "") === conditionId)) {
+      currentConditions.push({
+        id: conditionId,
+        persistent: conditionId === "jaded",
+        instanceId: createRandomId(),
+      });
+    }
+
+    const currentBeats = Math.max(0, Math.min(4, Math.trunc(Number(next.current_state.beats ?? 0))));
+    const currentAvailable = Math.max(0, Math.trunc(Number(next.current_state.experience_available ?? 0)));
+    const currentSpent = Math.max(0, Math.trunc(Number(next.current_state.experience_spent ?? 0)));
+    const currentTotal = Math.max(
+      currentAvailable + currentSpent,
+      Math.max(0, Math.trunc(Number(next.current_state.experience_total ?? 0))),
+    );
+    const beatTotal = currentBeats + 1;
+    next.current_state = {
+      ...next.current_state,
+      conditions: currentConditions,
+      beats: beatTotal >= 5 ? beatTotal - 5 : beatTotal,
+      experience_available: beatTotal >= 5 ? currentAvailable + 1 : currentAvailable,
+      experience_spent: currentSpent,
+      experience_total: beatTotal >= 5 ? currentTotal + 1 : currentTotal,
+    };
+    updateSheet(next);
+    setOpen(false);
+    setProtectMasquerade(false);
+    setProtectRequiem(false);
+    setVastDynastyEmbrace(false);
+    setResult("success");
+    setBeastCondition("bestial");
+  };
+
+  return <div className="vampire-humanity-section">
+    <div className="vampire-humanity-actions">
+      <Button type="button" size="sm" variant="outline" onClick={() => setOpen(true)} disabled={value <= 0}>
+        Detachment
+      </Button>
+    </div>
+    <div className="vampire-humanity-track">
+      {Array.from({ length: 10 }, (_, index) => 10 - index).map((rating) => {
+        const meritPoint = meritPoints.find((point) => point.slot === rating);
+        const isBaseTouchstone = rating === baseSlot;
+        const canWriteTouchstone = isBaseTouchstone || Boolean(meritPoint);
+        const row = canWriteTouchstone
+          ? touchstones.find((item) => meritPoint
+            ? String(item.merit_point_key ?? "") === meritPoint.key
+            : !String(item.merit_point_key ?? ""))
+          : undefined;
+
+        return <div className={`vampire-humanity-row${canWriteTouchstone ? " touchstone-slot" : ""}`} key={rating}>
+          {canWriteTouchstone
+            ? <Input
+                className="vampire-humanity-touchstone"
+                value={String(row?.name ?? "")}
+                placeholder="Touchstone"
+                aria-label={t("ui.humanityTouchstone", { p1: rating })}
+                onChange={(event) => setTouchstoneName(rating, meritPoint, event.target.value)}
+              />
+            : <span className="vampire-humanity-line" aria-hidden="true" />}
+          <strong>{rating}</strong>
+          <span className={`vampire-humanity-dot${value === rating ? " on" : ""}`} aria-label={`${t("ui.humanity")} ${rating}`} />
+        </div>;
+      })}
+    </div>
+
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="vampire-detachment-dialog">
+        <DialogHeader>
+          <DialogTitle>Detachment</DialogTitle>
+          <DialogDescription>
+            {pt
+              ? "Escolha o nível do Breaking Point, confira a parada e aplique o resultado da rolagem. O Breaking Point sempre concede 1 Beat."
+              : "Choose the Breaking Point level, confirm the pool, and apply the roll result. A Breaking Point always grants 1 Beat."}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="vampire-detachment-form">
+          {vastDynasty && <label className="vampire-detachment-check">
+            <input
+              type="checkbox"
+              checked={vastDynastyEmbrace}
+              onChange={(event) => {
+                setVastDynastyEmbrace(event.target.checked);
+                if (event.target.checked) setBreakingPoint(3);
+              }}
             />
-          : <span className="vampire-humanity-line" aria-hidden="true" />}
-        <strong>{rating}</strong>
-        <button
-          type="button"
-          className={`vampire-humanity-dot${value === rating ? " on" : ""}`}
-          aria-pressed={value === rating}
-          aria-label={t("ui.setHumanity", { p1: rating })}
-          onClick={() => setHumanity(rating)}
-        />
-      </div>;
-    })}
+            <span><strong>The Vast Dynasty — Embrace</strong><small>{pt ? "Breaking Point de Humanity 3; +1 dado no teste de Detachment." : "Humanity 3 Breaking Point; +1 die to the Detachment roll."}</small></span>
+          </label>}
+
+          <label>{pt ? "Nível do Breaking Point" : "Breaking Point level"}
+            {vastDynastyEmbrace
+              ? <Input value="3" readOnly />
+              : <RuleSelect
+                  value={String(effectiveBreakingPoint)}
+                  onChange={(nextValue) => setBreakingPoint(Number(nextValue))}
+                  options={DETACHMENT_BREAKING_POINTS
+                    .filter((item) => item.level <= value)
+                    .map((item) => ({
+                      value: String(item.level),
+                      label: `${item.level} — ${item.dice === 0 ? (pt ? "dado de chance" : "chance die") : `${item.dice} ${pt ? "dados" : "dice"}`}`,
+                    }))}
+                />}
+          </label>
+
+          <div className="vampire-detachment-reference">
+            <strong>{pt ? "Parada de Detachment" : "Detachment pool"}: {detachmentPool <= 0 ? (pt ? "Dado de chance" : "Chance die") : `${detachmentPool} ${pt ? "dados" : "dice"}`}</strong>
+            <small>
+              {vampireDetachmentBaseDice(effectiveBreakingPoint)} {pt ? "base" : "base"}
+              {" · "}{pt ? "Touchstones" : "Touchstones"} {touchstoneModifier >= 0 ? "+" : ""}{touchstoneModifier}
+              {specialModifier !== 0 ? ` · ${pt ? "outros modificadores" : "other modifiers"} ${specialModifier >= 0 ? "+" : ""}${specialModifier}` : ""}
+            </small>
+            <p>{DETACHMENT_BREAKING_POINTS.find((item) => item.level === effectiveBreakingPoint)?.examples.join(" · ")}</p>
+          </div>
+
+          <div className="vampire-detachment-modifiers">
+            <label><input type="checkbox" checked={protectMasquerade} onChange={(event) => setProtectMasquerade(event.target.checked)} /> {pt ? "Protegendo a Masquerade (−1)" : "Protecting the Masquerade (−1)"}</label>
+            <label><input type="checkbox" checked={protectRequiem} onChange={(event) => setProtectRequiem(event.target.checked)} /> {pt ? "Protegendo o Requiem (+1)" : "Protecting the Requiem (+1)"}</label>
+          </div>
+
+          <label>{pt ? "Resultado da rolagem" : "Roll result"}
+            <RuleSelect
+              value={result}
+              onChange={(nextValue) => setResult(nextValue as typeof result)}
+              options={[
+                { value: "dramatic-failure", label: pt ? "Falha Dramática" : "Dramatic Failure" },
+                { value: "failure", label: pt ? "Falha" : "Failure" },
+                { value: "success", label: pt ? "Sucesso" : "Success" },
+                { value: "exceptional-success", label: pt ? "Sucesso Excepcional" : "Exceptional Success" },
+              ]}
+            />
+          </label>
+
+          {(result === "failure" || result === "success") && <label>{pt ? "Condition recebida" : "Condition gained"}
+            <RuleSelect
+              value={beastCondition}
+              onChange={(nextValue) => setBeastCondition(nextValue as typeof beastCondition)}
+              options={[
+                { value: "bestial", label: "Bestial" },
+                { value: "competitive", label: "Competitive" },
+                { value: "wanton", label: "Wanton" },
+              ]}
+            />
+          </label>}
+
+          <div className="vampire-detachment-outcome">
+            {result === "dramatic-failure" && <p>{pt ? "−1 Humanity e Jaded." : "−1 Humanity and Jaded."}</p>}
+            {result === "failure" && <p>{pt ? `−1 Humanity e ${beastCondition}.` : `−1 Humanity and ${beastCondition}.`}</p>}
+            {result === "success" && <p>{pt ? `Humanity mantida; recebe ${beastCondition}.` : `Humanity is retained; gain ${beastCondition}.`}</p>}
+            {result === "exceptional-success" && <p>{pt ? "Humanity mantida; recebe Inspired." : "Humanity is retained; gain Inspired."}</p>}
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button type="button" variant="outline" onClick={() => setOpen(false)}>{pt ? "Cancelar" : "Cancel"}</Button>
+          <Button type="button" onClick={applyDetachment} disabled={!applicable}>{pt ? "Aplicar resultado" : "Apply result"}</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </div>;
 }
 
@@ -300,6 +451,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const rideWaveWillpowerCost = conditionIds.has("raptured") || hasRuleEffect("ride-the-wave-cost") ? 0 : 1;
   const rideWaveTarget = conditionIds.has("raptured") ? 3 : 5;
   const frenzySenseBloodPotency = frenzyActive ? bloodPotency + ruleSourceRating("kindred-senses-blood-potency") : bloodPotency;
+  const predatoryAuraBloodPotency = frenzyActive ? bloodPotency + ruleSourceRating("predatory-aura-blood-potency") : bloodPotency;
   const ignoresDaysleepWithBlush = hasRuleEffect("daysleep");
   const ignoresLethargicWithBlush = hasRuleEffect("lethargic");
   const beastPowerAvailable = hasRuleEffect("frenzy-defense") && hasRuleEffect("frenzy-health") && hasRuleEffect("frenzy-speed");
@@ -358,28 +510,48 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const stats = <>{attributes}{skills}</>;
   const humanitySection = <>
     <SheetHeading className="ctl-single-divider vampire-humanity-heading">{t("ui.humanity")}</SheetHeading>
-    <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} />
+    <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} />
+  </>;
+  const banesSection = <>
+    <SheetHeading>{t("ui.banes")}</SheetHeading>
+    <div className="vampire-main-banes">
+      <article className="vampire-lore-card"><strong>{clan?.baneName ?? t("ui.clanBane")}</strong><p>{clan?.baneSummary ?? ""}</p></article>
+      {objectArray(data.banes).map((bane, index) => <article className="vampire-lore-card" key={index}><strong>{String(bane.name ?? t("ui.bane"))}</strong><p>{String(bane.notes ?? "")}</p></article>)}
+    </div>
   </>;
   const summary = <>
     {identity}
     <SheetHeading>{t("ui.aspirations")}</SheetHeading>
     <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
     {humanitySection}
+    {banesSection}
     <SheetHeading>{t("ui.conditions")}</SheetHeading>
     <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />
     <SheetHeading>{t("ui.experience")}</SheetHeading>
     <VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />
   </>;
-  const covenantStatus = covenant ? vampireCovenantStatus(character, covenant.id, covenant.name, covenant.translatedName) : 0;
   const detailsPage = <>
-    <SheetHeading>Covenant</SheetHeading>
-    <article className="vampire-covenant-summary"><Image src="/vampire-skull.webp" width={82} height={82} alt="" aria-hidden="true" unoptimized /><div><h3>{localized(covenant, locale) || t("ui.covenantless")}</h3><p>{covenant?.description ?? t("ui.thisKindredBelongsToNoCovenant")}</p><strong>{t("ui.advantage")}: {covenant?.advantage ?? t("ui.none247448")}</strong><span>Kindred Status: <DotValue value={covenantStatus} /></span></div></article>
-    {covenant?.id === "ordo-dracul" && <article className="vampire-lore-card"><strong>Mystery</strong><p>{String(ordo.mystery_id ?? t("ui.notSelected"))}</p></article>}
     <SheetHeading>{t("ui.disciplines")}</SheetHeading>
     <DisciplineCards powers={powers} disciplines={disciplines} locale={locale} />
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
     <RitualDisciplines powers={powers} cruacRating={cruacRating} thebanRating={thebanRating} locale={locale} />
     <PurchasedPowers character={character} powers={powers} locale={locale} />
+    <TricksOfTheDamned
+      character={character}
+      locale={locale}
+      bloodPotency={bloodPotency}
+      effectiveSenseBloodPotency={frenzySenseBloodPotency}
+      effectiveAuraBloodPotency={predatoryAuraBloodPotency}
+      feedingTier={feedingTierLabel[limits.feedingTier]}
+      vitaeMaximum={vitaeMaximum}
+      vitaePerTurn={limits.vitaePerTurn}
+      blushDuration={blushDuration}
+      canReduceSunlightInterval={hasRuleEffect("sunlight-interval-blood-potency")}
+      ignoresDaysleepWithBlush={ignoresDaysleepWithBlush}
+      ignoresLethargicWithBlush={ignoresLethargicWithBlush}
+      fireDowngraded={hasRuleEffect("fire-damage")}
+      resilience={Number(disciplines.Resilience ?? 0)}
+    />
   </>;
   const combat = <>
     <div className="vampire-track-grid">
@@ -387,18 +559,10 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       <section><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></section>
     </div>
     <CombatPage character={character} derived={combatDerived} updateSheet={updateSheet} />
-    <VampireStateControls
+    <FrenzyPanel
       setState={setState}
       locale={locale}
       bloodPotency={bloodPotency}
-      blushDuration={blushDuration}
-      canReduceSunlightInterval={hasRuleEffect("sunlight-interval-blood-potency")}
-      ignoresFireFrenzy={hasRuleEffect("frenzy-trigger", "fire")}
-      ignoresSunlightFrenzy={hasRuleEffect("frenzy-trigger", "sunlight")}
-      ignoresDaysleepWithBlush={ignoresDaysleepWithBlush}
-      ignoresLethargicWithBlush={ignoresLethargicWithBlush}
-      fireDowngraded={hasRuleEffect("fire-damage")}
-      resilience={Number(disciplines.Resilience ?? 0)}
       frenzyActive={frenzyActive}
       frenzyResistancePool={frenzyResistancePool}
       frenzyBasePool={frenzyBasePool}
@@ -407,35 +571,29 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       rideWaveBonus={rideWaveBonus}
       rideWaveWillpowerCost={rideWaveWillpowerCost}
       rideWaveTarget={rideWaveTarget}
-      frenzySenseBloodPotency={frenzySenseBloodPotency}
+      ignoresFireFrenzy={hasRuleEffect("frenzy-trigger", "fire")}
+      ignoresSunlightFrenzy={hasRuleEffect("frenzy-trigger", "sunlight")}
       beastPowerAvailable={beastPowerAvailable}
       beastPowerActive={beastPowerActive}
       combatDerived={combatDerived}
     />
-    <SheetHeading>{t("ui.kindredReferences")}</SheetHeading>
-    <div className="vampire-reference-grid">
-      <article className="vampire-lore-card"><strong>Physical Intensity</strong><p>{t("ui.spend1VitaeFor2OnRollsUsing")}</p></article>
-      <article className="vampire-lore-card"><strong>{t("ui.healing")}</strong><p>{t("ui.message1VitaeHealsTwoBashingOrOneLethal")}</p></article>
-      <article className="vampire-lore-card"><strong>Predatory Aura</strong><p>{t("ui.chooseTheMonstrousSeductiveOrCompetitiveAspectAnd")}</p></article>
-      <article className="vampire-lore-card"><strong>Frenzy</strong><p>{locale === "pt-BR" ? `Em frenesi, some Potência de Sangue ${bloodPotency} às rolagens/resistências de Força, Destreza e Vigor. Penalidades de ferimento são ignoradas.` : `While frenzied, add Blood Potency ${bloodPotency} to Strength, Dexterity, and Stamina rolls/resistances. Wound penalties are ignored.`}</p></article>
-    </div>
   </>;
+  const companionsPage = Number(disciplines.Animalism ?? 0) >= 2
+    ? <VampireCompanionPage character={character} updateSheet={updateSheet} bloodPotency={bloodPotency} />
+    : null;
   const notesPage = <>
-    <SheetHeading>{t("ui.banes")}</SheetHeading>
-    <div className="vampire-main-banes">
-      <article className="vampire-lore-card"><strong>{clan?.baneName ?? t("ui.clanBane")}</strong><p>{clan?.baneSummary ?? ""}</p></article>
-      {objectArray(data.banes).map((bane, index) => <article className="vampire-lore-card" key={index}><strong>{String(bane.name ?? t("ui.bane"))}</strong><p>{String(bane.notes ?? "")}</p></article>)}
-    </div>
-    <SheetHeading>{t("ui.humanityReferences")}</SheetHeading>
-    <div className="vampire-reference-grid">
-      <article className="vampire-lore-card"><strong>{t("ui.sunlightAndHumanity")}</strong><p>{sunlightSummary}</p></article>
-    </div>
     <SheetHeading>Blood Bonds</SheetHeading>
     <StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={t("ui.stage")} onChange={(value) => setState("blood_bonds", value)} />
     <SheetHeading>{t("ui.notes")}</SheetHeading>
     <NotesArea value={notes} onChange={(value) => setState("notes", value)} />
   </>;
-  const mainBody = <MainSheet className="vampire-main-body" identity={identity} attributes={attributes} skills={skills}
+  const mainBody = <MainSheet
+    className="vampire-main-body"
+    identity={identity}
+    attributes={attributes}
+    skills={skills}
+    conditionsAfterSkills
+    aspirationsAfterExperience
     specificPowers={
       <div className="vampire-main-disciplines">
         {VAMPIRE_DISCIPLINES
@@ -453,13 +611,49 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       </div>
     }
     merits={<MeritList character={character} catalog={merits} locale={locale} />}
-    aspirations={<>
-      <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
-      {humanitySection}
-    </>}
-    conditions={<ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />}
-    health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></>}
-    willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>}
+    lineSections={
+      <>
+        {humanitySection}
+        {banesSection}
+      </>
+    }
+    aspirations={
+      <EditableList
+        values={aspirations}
+        minimum={3}
+        maximum={3}
+        placeholder={t("ui.writeAnAspiration")}
+        onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}
+      />
+    }
+    conditions={
+      <ConditionManager
+        selected={conditions}
+        catalog={conditionCatalog}
+        onChange={(value) => setState("conditions", value)}
+      />
+    }
+    health={
+      <>
+        <SheetHeading>{t("ui.health")}</SheetHeading>
+        <HealthTrack
+          health={health}
+          damage={damage}
+          onChange={(value) => setState("health_damage", value)}
+        />
+      </>
+    }
+    willpower={
+      <>
+        <SheetHeading>{t("ui.willpower")}</SheetHeading>
+        <ResourceTrack
+          label={t("ui.willpower")}
+          current={currentWillpower}
+          maximum={willpower}
+          onChange={(value) => setState("willpower_current", value)}
+        />
+      </>
+    }
     specificPowersTitle={t("ui.disciplines")}
     powerStat={
       <MainPowerStat
@@ -468,10 +662,23 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
         summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]} · ${sunlightSummary}`}
       />
     }
-    fuel={<MainFuel label="Vitae" current={vitae} maximum={vitaeMaximum} onChange={(value) => setState("vitae_current", value)} />}
+    fuel={
+      <MainFuel
+        label="Vitae"
+        current={vitae}
+        maximum={vitaeMaximum}
+        onChange={(value) => setState("vitae_current", value)}
+      />
+    }
     stability={null}
     derived={derived}
-    experience={<VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
+    experience={
+      <VampireExperiencePanel
+        character={character}
+        updateSheet={updateSheet}
+        catalogs={catalogs}
+      />
+    }
   />;
 
   if (isMobile) return <CharacterPaperShell line="VtR" mobile title="VAMPIRE" subtitle="THE REQUIEM"><VampireDecorativeFrame /><SwipeableSheetTabs value={tab} onValueChange={(value) => setMobileTab({ characterId: character.id, value })} tabs={[
@@ -479,18 +686,21 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     { value: "stats", label: "Stats" },
     { value: "details", label: t("ui.details") },
     { value: "combat", label: t("ui.combat") },
+    ...(companionsPage ? [{ value: "companions", label: t("ui.companions") }] : []),
     { value: "notes", label: t("ui.notes") },
-  ]}>{{ summary, stats, details: detailsPage, combat, notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>;
+  ]}>{{ summary, stats, details: detailsPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>;
 
   return <CharacterPaperShell line="VtR" title="VAMPIRE" subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs defaultValue="main" className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
     <TabsTrigger value="main">{t("ui.main")}</TabsTrigger>
     <TabsTrigger value="details">{t("ui.details")}</TabsTrigger>
     <TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger>
+    {companionsPage && <TabsTrigger value="companions">{t("ui.companions")}</TabsTrigger>}
     <TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
   </TabsList>
     <TabsContent value="main" className="vampire-sheet-page">{mainBody}</TabsContent>
     <TabsContent value="details" className="vampire-sheet-page">{detailsPage}</TabsContent>
     <TabsContent value="combat" className="vampire-sheet-page">{combat}</TabsContent>
+    {companionsPage && <TabsContent value="companions" className="vampire-sheet-page">{companionsPage}</TabsContent>}
     <TabsContent value="notes" className="vampire-sheet-page">{notesPage}</TabsContent>
   </Tabs></CharacterPaperShell>;
 
@@ -505,10 +715,7 @@ function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePower
   return <div className="vampire-power-grid">
     {powers.disciplines.filter((item) => Number(disciplines[item.name] ?? 0) > 0).map((item) => {
       const rating = Number(disciplines[item.name] ?? 0);
-      return <details
-      className="contract-power-card vampire-discipline-card"
-      key={item.id}
-      >
+      return <details className="contract-power-card vampire-discipline-card" key={item.id}>
         <summary className="contract-power-summary">
           <strong>{localized(item, locale)}</strong>
           <DotValue value={rating} />
@@ -623,25 +830,107 @@ function ProteanChoicesEditor({ character, updateSheet, rating }: { character: C
   </div></>;
 }
 
-function VampireStateControls({
-  setState, locale, bloodPotency, blushDuration,
-  canReduceSunlightInterval, ignoresFireFrenzy, ignoresSunlightFrenzy,
+function TrickCard({ title, summary, children }: { title: string; summary: string; children: ReactNode }) {
+  return <details className="contract-power-card">
+    <summary className="contract-power-summary">
+      <strong>{title}</strong>
+      <small>{summary}</small>
+    </summary>
+    <div className="contract-power-details">{children}</div>
+  </details>;
+}
+
+function TricksOfTheDamned({
+  character, locale, bloodPotency, effectiveSenseBloodPotency, effectiveAuraBloodPotency,
+  feedingTier, vitaeMaximum, vitaePerTurn, blushDuration, canReduceSunlightInterval,
   ignoresDaysleepWithBlush, ignoresLethargicWithBlush, fireDowngraded, resilience,
-  frenzyActive, frenzyResistancePool, frenzyBasePool, frenzyAutomaticModifier,
-  rideWavePool, rideWaveBonus, rideWaveWillpowerCost, rideWaveTarget,
-  frenzySenseBloodPotency, beastPowerAvailable, beastPowerActive, combatDerived,
 }: {
-  setState: (key: string, value: unknown) => void;
+  character: CharacterSheet;
   locale: string;
   bloodPotency: number;
+  effectiveSenseBloodPotency: number;
+  effectiveAuraBloodPotency: number;
+  feedingTier: string;
+  vitaeMaximum: number;
+  vitaePerTurn: number;
   blushDuration: string;
   canReduceSunlightInterval: boolean;
-  ignoresFireFrenzy: boolean;
-  ignoresSunlightFrenzy: boolean;
   ignoresDaysleepWithBlush: boolean;
   ignoresLethargicWithBlush: boolean;
   fireDowngraded: boolean;
   resilience: number;
+}) {
+  const pt = locale === "pt-BR";
+  const auspex = Math.max(0, Number((character.line_data.disciplines as Record<string, unknown> | undefined)?.Auspex ?? 0));
+  const scentMultiplier = Math.max(1, auspex);
+  const heartbeatRange = effectiveSenseBloodPotency * 3;
+  const bloodScentRange = effectiveSenseBloodPotency * 10 * scentMultiplier;
+  const tasteBloodPool = Number(character.attributes.Wits ?? 1) + Number(character.attributes.Composure ?? 1);
+  const feedingGrounds = character.merits.filter((merit) => merit.name === "Feeding Grounds").reduce((sum, merit) => sum + Number(merit.dots ?? 0), 0);
+  const monstrousPool = Number(character.attributes.Strength ?? 1) + effectiveAuraBloodPotency;
+  const seductivePool = Number(character.attributes.Presence ?? 1) + effectiveAuraBloodPotency;
+  const competitivePool = Number(character.attributes.Intelligence ?? 1) + effectiveAuraBloodPotency;
+
+  return <>
+    <SheetHeading>Tricks of the Damned</SheetHeading>
+    <div className="vampire-power-grid">
+      <TrickCard title="Blush of Life" summary={pt ? `1 Vitae · duração ${blushDuration}` : `1 Vitae · duration ${blushDuration}`}>
+        <p>{pt ? "Por 1 Vitae, o vampiro simula vida: aquece o corpo, apresenta pulso, fluidos naturais, funções sexuais e pode manter comida e bebida durante a duração." : "For 1 Vitae, the vampire mimics life: body warmth, pulse, natural fluids, sexual function, and the ability to keep food and drink down for the duration."}</p>
+        {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p><strong>Surmounting the Daysleep:</strong> {pt ? `${ignoresDaysleepWithBlush ? "com Blush ativo, não é preciso rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "permanecer ativo de dia não causa Lethargic" : ""}.` : `${ignoresDaysleepWithBlush ? "with Blush active, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
+        {fireDowngraded && <p><strong>Peace with the Flame:</strong> {pt ? `com Blush ativo, fogo causa dano letal; Resilience ${resilience} pode converter um ponto de letal em contusão por ponto.` : `with Blush active, fire deals lethal damage; Resilience ${resilience} can downgrade one lethal point to bashing per dot.`}</p>}
+        {canReduceSunlightInterval && <p><strong>Sun&apos;s Forgotten Kiss:</strong> {pt ? "cada Vitae adicional gasto ao ativar Blush reduz em 1 a Blood Potency usada somente para o intervalo de dano solar, até o mínimo de 1." : "each additional Vitae spent when activating Blush reduces Blood Potency by 1 for sunlight-damage interval only, to a minimum of 1."}</p>}
+      </TrickCard>
+
+      <TrickCard title="Kindred Senses" summary={pt ? `Blood Potency efetiva ${effectiveSenseBloodPotency}` : `Effective Blood Potency ${effectiveSenseBloodPotency}`}>
+        <p>{pt ? `Escuridão total impõe apenas −2 em rolagens que exigem visão. Batimentos podem ser ouvidos a ${heartbeatRange} m; sangue pode ser percebido pelo cheiro a aproximadamente ${bloodScentRange} m${auspex > 0 ? ` com Auspex ${auspex}` : ""}.` : `Full darkness imposes only −2 on rolls requiring vision. Heartbeats can be heard at ${heartbeatRange} m; blood can be smelled at roughly ${bloodScentRange} m${auspex > 0 ? ` with Auspex ${auspex}` : ""}.`}</p>
+        <p>{pt ? `Quando os sentidos Kindred se aplicam, +${effectiveSenseBloodPotency} dados para detectar pessoas ou detalhes ocultos por traços de sangue. Após provar o sangue de um humano, o mesmo bônus se aplica para rastreá-lo pelo cheiro.` : `When Kindred senses apply, add +${effectiveSenseBloodPotency} dice to detect hidden people or details through traces of blood. After tasting a human's blood, the same bonus applies to tracking that person by scent.`}</p>
+      </TrickCard>
+
+      <TrickCard title="A Taste of Blood" summary={`${pt ? "Parada" : "Pool"}: Wits + Composure = ${tasteBloodPool}`}>
+        <p>{pt ? "Provar sangue revela informações sobre sua origem e condição. Um sucesso identifica detalhes básicos; sucesso excepcional revela detalhes mais específicos." : "Tasting blood reveals information about its origin and condition. A success identifies basic details; an exceptional success reveals finer details."}</p>
+        <p><strong>{pt ? "Modificadores" : "Modifiers"}:</strong> Auspex {pt ? "ativo" : "active"} +2; blood-tied +2; {pt ? "faminto" : "hungry"} +2; {pt ? "sangue com 1 hora" : "hour-old blood"} −1; {pt ? "1 dia" : "day-old"} −3; {pt ? "1 semana ou mais" : "week or older"} −5.</p>
+      </TrickCard>
+
+      <TrickCard title="Physical Intensity" summary={pt ? "1 Vitae · +2 dados por um turno" : "1 Vitae · +2 dice for one turn"}>
+        <p>{pt ? "Escolha Strength, Dexterity ou Stamina. Adicione +2 dados às rolagens que usam esse Atributo durante o turno. Isso aumenta resistências relevantes, mas não altera características derivadas." : "Choose Strength, Dexterity, or Stamina. Add +2 dice to rolls using that Attribute for the turn. Relevant resistances improve, but derived traits do not."}</p>
+      </TrickCard>
+
+      <TrickCard title="Healing" summary={pt ? "Vitae reconstrói o corpo morto" : "Vitae reconstructs the dead body"}>
+        <p>{pt ? "1 Vitae cura 2 de contusão ou 1 letal. Um ferimento agravado exige 5 Vitae e um dia completo de sono." : "1 Vitae heals 2 bashing or 1 lethal. One aggravated wound requires 5 Vitae and a full day's sleep."}</p>
+      </TrickCard>
+
+      <TrickCard title="The Cleansing" summary={pt ? "O daysleep restaura o corpo ao estado do Embrace" : "Daysleep restores the body toward its Embrace state"}>
+        <p>{pt ? "Alterações menores que não equivalem a níveis de Health desaparecem durante o sono. Ferimentos que exigem Vitae são curados automaticamente, consumindo Vitae; gastar 1 Willpower por ferimento permite preservá-lo. Marcas como cicatrizes, tatuagens ou piercings também podem ser mantidas dessa forma." : "Changes smaller than Health-level damage disappear during sleep. Wounds that require Vitae heal automatically and spend Vitae; 1 Willpower per wound can preserve it. Scars, tattoos, piercings, and similar changes can be preserved the same way."}</p>
+      </TrickCard>
+
+      <TrickCard title="Predatory Aura" summary={pt ? `Blood Potency efetiva ${effectiveAuraBloodPotency}` : `Effective Blood Potency ${effectiveAuraBloodPotency}`}>
+        <p>{pt ? "Lashing Out é uma ação instantânea. Contra Kindred custa 1 Willpower; contra mortais é gratuito. Disciplines não acrescentam dados a menos que digam explicitamente o contrário." : "Lashing Out is an instant action. Against Kindred it costs 1 Willpower; against mortals it is free. Disciplines do not add dice unless they explicitly say otherwise."}</p>
+        <p><strong>The Bestial Triad:</strong> Monstrous → Bestial; Seductive → Wanton; Competitive → Competitive.</p>
+        <p><strong>{pt ? "Lashing Out" : "Lashing Out"}:</strong> Monstrous = Strength + BP ({monstrousPool}); Seductive = Presence + BP ({seductivePool}); Competitive = Intelligence + BP ({competitivePool}).</p>
+        <p><strong>{pt ? "Modificadores" : "Modifiers"}:</strong> {pt ? "em seu território" : "on your territory"} +Feeding Grounds ({feedingGrounds}); {pt ? "faminto" : "hungry"} +1; {pt ? "starving" : "starving"} +2; {pt ? "alvo já afetado pela aura nesta cena" : "target already affected by the aura this scene"} −1 {pt ? "cumulativo" : "cumulative"}.</p>
+        <p>{pt ? "O alvo escolhe Fight ou Flight. Fight contesta com um Power Attribute + Blood Potency; Flight concede uma saída razoável e aplica a Condition associada ao aspecto do agressor." : "The target chooses Fight or Flight. Fight contests with a Power Attribute + Blood Potency; Flight grants a reasonable exit and applies the Condition associated with the aggressor's aspect."}</p>
+      </TrickCard>
+
+      <TrickCard title="Feeding" summary={`${pt ? "Pode alimentar-se de" : "Can feed from"}: ${feedingTier}`}>
+        <p><strong>Blood Potency {bloodPotency}:</strong> {pt ? `máximo ${vitaeMaximum} Vitae; até ${vitaePerTurn} Vitae por turno.` : `maximum ${vitaeMaximum} Vitae; up to ${vitaePerTurn} Vitae per turn.`}</p>
+        <p>{pt ? "Ao alimentar-se de uma fonte abaixo da restrição da Blood Potency, gaste 1 Willpower para cada Vitae obtido." : "Feeding from a source below the Blood Potency restriction costs 1 Willpower for each Vitae gained."}</p>
+        <p>{pt ? "Mordida violenta: presas funcionam como arma 0L com Brawl; após uma mordida em grapple, Feed rouba 1 Vitae por sucesso, limitado pela Blood Potency. Contra mortais, cada Vitae causa 1 letal adicional." : "Violent bite: fangs act as a 0L Brawl weapon; after biting in a grapple, Feed steals 1 Vitae per success, capped by Blood Potency. Against mortals, each Vitae causes 1 additional lethal damage."}</p>
+        <p>{pt ? "Mordida sutil: até 1 Vitae por turno; um mortal recebe Swooning e a ferida pode ser fechada sem deixar traço ao ser lambida." : "Subtle bite: up to 1 Vitae per turn; a mortal gains Swooning and the wound can be licked closed without leaving a trace."}</p>
+        <p>{pt ? "De humanos vivos, cada Vitae retirado causa 1 letal; retirar mais Vitae que a Stamina da vítima causa Drained. Sangue frio exige 2 × Blood Potency pints por Vitae." : "From living humans, each Vitae taken causes 1 lethal; taking more Vitae than the victim's Stamina inflicts Drained. Cold blood requires 2 × Blood Potency pints per Vitae."}</p>
+        <p>{pt ? `Starting Vitae: role 1d10 e some Feeding Grounds (${feedingGrounds}).` : `Starting Vitae: roll 1d10 and add Feeding Grounds (${feedingGrounds}).`}</p>
+      </TrickCard>
+    </div>
+  </>;
+}
+
+function FrenzyPanel({
+  setState, locale, bloodPotency, frenzyActive, frenzyResistancePool, frenzyBasePool,
+  frenzyAutomaticModifier, rideWavePool, rideWaveBonus, rideWaveWillpowerCost, rideWaveTarget,
+  ignoresFireFrenzy, ignoresSunlightFrenzy, beastPowerAvailable, beastPowerActive, combatDerived,
+}: {
+  setState: (key: string, value: unknown) => void;
+  locale: string;
+  bloodPotency: number;
   frenzyActive: boolean;
   frenzyResistancePool: number;
   frenzyBasePool: number;
@@ -650,28 +939,24 @@ function VampireStateControls({
   rideWaveBonus: number;
   rideWaveWillpowerCost: number;
   rideWaveTarget: number;
-  frenzySenseBloodPotency: number;
+  ignoresFireFrenzy: boolean;
+  ignoresSunlightFrenzy: boolean;
   beastPowerAvailable: boolean;
   beastPowerActive: boolean;
   combatDerived: Record<string, number>;
 }) {
-  const { t } = useLanguage();
   const pt = locale === "pt-BR";
   const resistanceLabel = frenzyResistancePool <= 0 ? (pt ? "Dado de chance" : "Chance die") : `${frenzyResistancePool} ${pt ? "dados" : "dice"}`;
   const rideLabel = rideWavePool <= 0 ? (pt ? "Dado de chance" : "Chance die") : `${rideWavePool} ${pt ? "dados" : "dice"}`;
   return <>
-    <SheetHeading>{t("ui.vampiricStates")}</SheetHeading>
+    <SheetHeading>Frenzy</SheetHeading>
     <div className="vampire-state-controls">
-      <p className="wide"><strong>Blush of Life:</strong> {pt ? "duração" : "duration"} {blushDuration}.</p>
-      {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p className="wide"><strong>Surmounting the Daysleep:</strong> {pt ? `${ignoresDaysleepWithBlush ? "enquanto usa Blush of Life, não precisa rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "não recebe Lethargic por permanecer ativo durante o dia" : ""}.` : `${ignoresDaysleepWithBlush ? "while using Blush of Life, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
-      {fireDowngraded && <p className="wide"><strong>Peace with the Flame:</strong> {pt ? `enquanto usa Blush of Life, fogo causa dano letal; Resilience ${resilience} pode reduzir pontos de letal para contusão.` : `while using Blush of Life, fire deals lethal damage; Resilience ${resilience} can downgrade lethal points to bashing.`}</p>}
-      {canReduceSunlightInterval && <p className="wide"><strong>Sun&apos;s Forgotten Kiss:</strong> {pt ? "cada Vitae extra gasto ao ativar Blush of Life reduz em 1 a Potência de Sangue usada apenas para o intervalo de dano solar, até o mínimo de 1." : "each additional Vitae spent when activating Blush of Life reduces Blood Potency by 1 for sunlight-damage interval only, to a minimum of 1."}</p>}
-      {(ignoresFireFrenzy || ignoresSunlightFrenzy) && <p className="wide"><strong>Conquer the Red Fear:</strong> {pt ? `não provoca Frenzy por ${[ignoresFireFrenzy && "fogo", ignoresSunlightFrenzy && "luz solar"].filter(Boolean).join(" ou ")}.` : `no Frenzy provocation from ${[ignoresFireFrenzy && "fire", ignoresSunlightFrenzy && "sunlight"].filter(Boolean).join(" or ")}.`}</p>}
       <label><span>Frenzy</span><Switch checked={frenzyActive} onCheckedChange={(checked) => setState("frenzy_active", checked)} /></label>
+      {beastPowerAvailable && <label><span>Beast&apos;s Power</span><Switch disabled={!frenzyActive} checked={beastPowerActive} onCheckedChange={(checked) => setState("frenzy_beast_power_active", checked)} /></label>}
+      {(ignoresFireFrenzy || ignoresSunlightFrenzy) && <p className="wide"><strong>Conquer the Red Fear:</strong> {pt ? `não provoca Frenzy por ${[ignoresFireFrenzy && "fogo", ignoresSunlightFrenzy && "luz solar"].filter(Boolean).join(" ou ")}.` : `no Frenzy provocation from ${[ignoresFireFrenzy && "fire", ignoresSunlightFrenzy && "sunlight"].filter(Boolean).join(" or ")}.`}</p>}
       <p className="wide"><strong>{pt ? "Resistir Frenzy" : "Resist Frenzy"}:</strong> {resistanceLabel} ({frenzyBasePool} {pt ? "base" : "base"} {frenzyAutomaticModifier >= 0 ? "+" : ""}{frenzyAutomaticModifier} {pt ? "automático" : "automatic"}). {pt ? "Outros modificadores situacionais são aplicados manualmente pelo jogador." : "Other situational modifiers are applied manually by the player."}</p>
       <p className="wide"><strong>Riding the Wave:</strong> {rideLabel}; {pt ? "custo" : "cost"} <strong>{rideWaveWillpowerCost} WP</strong>; {pt ? "alvo" : "target"} <strong>{rideWaveTarget} {pt ? "sucessos" : "successes"}</strong>{rideWaveBonus ? `; ${pt ? "bônus da Coil" : "Coil bonus"} +${rideWaveBonus}` : ""}.</p>
-      {frenzyActive && <p className="wide"><strong>{pt ? "Frenzy ativo" : "Active Frenzy"}:</strong> +{bloodPotency} {pt ? "em rolagens/resistências de Força, Destreza e Vigor; sem penalidades de ferimento. Potência efetiva para sentidos/aura" : "to Strength, Dexterity, and Stamina rolls/resistances; ignore wound penalties. Effective Potency for senses/aura"}: <strong>{frenzySenseBloodPotency}</strong>.</p>}
-      {beastPowerAvailable && frenzyActive && <label className="wide"><span>Beast&apos;s Power</span><Switch checked={beastPowerActive} onCheckedChange={(checked) => setState("frenzy_beast_power_active", checked)} /></label>}
+      {frenzyActive && <p className="wide"><strong>{pt ? "Frenzy ativo" : "Active Frenzy"}:</strong> +{bloodPotency} {pt ? "em rolagens/resistências de Strength, Dexterity e Stamina; penalidades de ferimento são ignoradas." : "to Strength, Dexterity, and Stamina rolls/resistances; wound penalties are ignored."}</p>}
       {beastPowerActive && <p className="wide"><strong>Beast&apos;s Power:</strong> Defense {combatDerived.Defesa}, Health {combatDerived.Vitalidade}, Speed {combatDerived.Deslocamento}.</p>}
       <p className="wide"><strong>Touchstone:</strong> {pt ? `requer ${bloodPotency * 3} sucessos em uma ação Social prolongada para encerrar Frenzy.` : `requires ${bloodPotency * 3} successes on an extended Social action to talk the vampire down.`}</p>
     </div>

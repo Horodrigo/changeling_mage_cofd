@@ -15,6 +15,12 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
     humanity_slot: boundedRating(item.humanity_slot, 2, 7, index === 0 ? 6 : Math.max(2, 6 - index)),
     notes: String(item.notes ?? ""),
   }));
+  const undeadCompanions = objectArray(data.undead_companions).map((item, index) => ({
+    id: String(item.id ?? `undead-familiar-${index + 1}`),
+    animal_id: String(item.animal_id ?? ""),
+    name: String(item.name ?? ""),
+    remaining_nights: Math.max(0, Math.trunc(Number(item.remaining_nights) || 0)),
+  })).filter((item) => item.animal_id);
   const disciplineChoices = data.discipline_choices && typeof data.discipline_choices === "object" && !Array.isArray(data.discipline_choices) ? data.discipline_choices as Record<string, unknown> : {};
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery) ? data.blood_sorcery as Record<string, unknown> : {};
   const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" && !Array.isArray(data.ordo_dracul) ? data.ordo_dracul as Record<string, unknown> : {};
@@ -47,6 +53,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       },
       aspirations: Array.isArray(data.aspirations) ? data.aspirations.map(String).slice(0, 3) : ["", "", ""],
       touchstones,
+      undead_companions: undeadCompanions,
       devotion_ids: stringArray(data.devotion_ids),
       banes: objectArray(data.banes),
       blood_sorcery: {

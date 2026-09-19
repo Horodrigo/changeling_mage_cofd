@@ -42,6 +42,9 @@ export function MainSheet({
   derived,
   experience,
   specificPowersTitle,
+  lineSections,
+  conditionsAfterSkills = false,
+  aspirationsAfterExperience = false,
   className = "",
 }: {
   identity: ReactNode;
@@ -60,6 +63,9 @@ export function MainSheet({
   derived: Record<string, unknown>;
   experience: ReactNode;
   specificPowersTitle?: ReactNode;
+  lineSections?: ReactNode;
+  conditionsAfterSkills?: boolean;
+  aspirationsAfterExperience?: boolean;
   className?: string;
 }) {
   const { t } = useLanguage();
@@ -70,45 +76,65 @@ export function MainSheet({
     [t("ui.armor"), derived.Armadura ?? 0],
     [t("ui.initiative"), derived.Iniciativa ?? "—"],
   ];
+
+  const conditionsSection = <div data-slot="conditions">
+    <SheetHeading className="main-sheet-conditions-heading">
+      {t("ui.conditions")}
+    </SheetHeading>
+    {conditions}
+  </div>;
+
+  const aspirationsSection = <div data-slot="aspirations">
+    <SheetHeading className="main-sheet-aspirations-heading">
+      {t("ui.aspirations")}
+    </SheetHeading>
+    {aspirations}
+  </div>;
+
   return <div className={`cod-main-sheet ${className}`}>
     <section className="cod-main-identity" data-slot="identity">{identity}</section>
     <section className="cod-main-attributes" data-slot="attributes">{attributes}</section>
-    <div className="cod-main-columns official-sheet-body">
-      <section className="cod-main-skills sheet-skills-column" data-slot="skills">{skills}</section>
-      <section className="cod-main-other sheet-center-column" data-slot="other-traits">
-        <div data-slot="specific-powers">{specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? t("ui.specificPowers")}</SheetHeading>}{specificPowers}</div>
-        <div data-slot="merits">
-  <SheetHeading className="main-sheet-merits-heading">
-    {t("ui.merits")}
-  </SheetHeading>
-  {merits}
-</div>
 
-<div data-slot="aspirations">
-  <SheetHeading className="main-sheet-aspirations-heading">
-    {t("ui.aspirations")}
-  </SheetHeading>
-  {aspirations}
-</div>
-        {obsessions !== undefined && <div data-slot="obsessions"><SheetHeading>{t("ui.obsessions")}</SheetHeading>{obsessions}</div>}
-        <div data-slot="conditions">
-  <SheetHeading className="main-sheet-conditions-heading">
-    {t("ui.conditions")}
-  </SheetHeading>
-  {conditions}
-</div>
+    <div className="cod-main-columns official-sheet-body">
+      <section className="cod-main-skills sheet-skills-column" data-slot="skills">
+        {skills}
+        {conditionsAfterSkills && conditionsSection}
       </section>
+
+      <section className="cod-main-other sheet-center-column" data-slot="other-traits">
+        <div data-slot="specific-powers">
+          {specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? t("ui.specificPowers")}</SheetHeading>}
+          {specificPowers}
+        </div>
+
+        <div data-slot="merits">
+          <SheetHeading className="main-sheet-merits-heading">
+            {t("ui.merits")}
+          </SheetHeading>
+          {merits}
+        </div>
+
+        {lineSections !== undefined && <div data-slot="line-sections">{lineSections}</div>}
+
+        {!aspirationsAfterExperience && aspirationsSection}
+        {obsessions !== undefined && <div data-slot="obsessions"><SheetHeading>{t("ui.obsessions")}</SheetHeading>{obsessions}</div>}
+        {!conditionsAfterSkills && conditionsSection}
+      </section>
+
       <section className="cod-main-core sheet-right-column" data-slot="core-line-traits">
         <div data-slot="health">{health}</div>
         <div data-slot="willpower">{willpower}</div>
         <div data-slot="power-stat">{powerStat}</div>
         <div data-slot="fuel">{fuel}</div>
         <div data-slot="stability">{stability}</div>
+
         <section className="cod-main-derived" data-slot="derived-stats">
           <SheetHeading>{t("ui.derivedStats")}</SheetHeading>
           <div className="cod-main-derived-grid">{derivedRows.map(([label, value]) => <div key={String(label)}><span>{label}</span><strong>{String(value)}</strong></div>)}</div>
         </section>
+
         <section className="cod-main-experience" data-slot="experience">{experience}</section>
+        {aspirationsAfterExperience && <section className="cod-main-aspirations">{aspirationsSection}</section>}
       </section>
     </div>
   </div>;
