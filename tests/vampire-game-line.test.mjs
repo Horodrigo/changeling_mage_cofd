@@ -18,20 +18,31 @@ test("Vampire derived traits include physical Disciplines and audited Blood Pote
   );
   assert.equal(derived.Vitalidade, 10);
   assert.equal(derived.Deslocamento, 13);
-  assert.equal(derived.Iniciativa, 7);
+  assert.equal(derived.Iniciativa, 6);
   assert.equal(derived.Defesa, 5);
   assert.equal(derived.VitaeMaxima, 20);
   assert.equal(derived.VitaePorTurno, 6);
   assert.equal(derived.LimiteDeCaracteristica, 6);
 });
 
-test("Vampire normalization owns its line_data and clamps ratings", async () => {
+test("Vampire normalization owns its line_data, clamps ratings, and drops retired state", async () => {
   const { vampireRules } = await vite.ssrLoadModule("/game-lines/vampire/rules.ts");
   const character = {
     id: "v1", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
     character: { name: "Mara", concept: "", player: "", chronicle: "" },
     attributes: { Stamina: 2, Strength: 2, Dexterity: 2, Resolve: 2, Composure: 2, Wits: 2 }, skills: { Athletics: 1 }, specializations: [], merits: [],
-    line_data: { blood_potency: 99, humanity: -4, disciplines: { Vigor: 12 }, discipline_choices: { protean_aspects: ["claws", 3] }, blood_sorcery: { cruac_rating: 9, cruac_rite_ids: ["rite", 2] }, ordo_dracul: { mystery_id: "wyrm", coil_ratings: { "coil-wyrm": 8 }, scale_ids: ["scale"] }, aspirations: [] }, derived: {}, current_state: { vitae_current: -3, blush_of_life_active: 1, torpor: { active: 1, notes: 4 } }, created_at: "", updated_at: "",
+    line_data: { blood_potency: 99, humanity: -4, disciplines: { Vigor: 12 }, discipline_choices: { protean_aspects: ["claws", 3] }, blood_sorcery: { cruac_rating: 9, cruac_rite_ids: ["rite", 2] }, ordo_dracul: { mystery_id: "wyrm", coil_ratings: { "coil-wyrm": 8 }, scale_ids: ["scale"] }, aspirations: [] }, derived: {},
+    current_state: {
+      vitae_current: -3,
+      blood_bonds: [{ subject: "Mara", stage: 2 }],
+      blush_of_life_active: true,
+      blush_of_life_extra_vitae: 2,
+      frenzy_situational_modifier: -3,
+      frenzy_held_willpower: 2,
+      torpor: { active: 1, notes: 4 },
+      vitae_addictions: [{ subject: "Legacy" }],
+    },
+    created_at: "", updated_at: "",
   };
   const normalized = vampireRules.normalizeCharacter(character);
   assert.equal(normalized.line_data.blood_potency, 10);
@@ -43,8 +54,13 @@ test("Vampire normalization owns its line_data and clamps ratings", async () => 
   assert.equal(normalized.line_data.blood_sorcery.cruac_rating, 5);
   assert.deepEqual(normalized.line_data.blood_sorcery.cruac_rite_ids, ["rite", "2"]);
   assert.equal(normalized.line_data.ordo_dracul.coil_ratings["coil-wyrm"], 5);
-  assert.equal(normalized.current_state.blush_of_life_active, true);
-  assert.equal(normalized.current_state.torpor.notes, "4");
+  assert.deepEqual(normalized.current_state.blood_bonds, [{ subject: "Mara", stage: 2 }]);
+  assert.equal("blush_of_life_active" in normalized.current_state, false);
+  assert.equal("blush_of_life_extra_vitae" in normalized.current_state, false);
+  assert.equal("frenzy_situational_modifier" in normalized.current_state, false);
+  assert.equal("frenzy_held_willpower" in normalized.current_state, false);
+  assert.equal("torpor" in normalized.current_state, false);
+  assert.equal("vitae_addictions" in normalized.current_state, false);
 });
 
 test("Vampire core-book catalogs expose all five Clans and line-owned content", async () => {

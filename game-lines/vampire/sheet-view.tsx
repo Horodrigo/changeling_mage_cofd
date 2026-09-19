@@ -284,24 +284,19 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const coilEffects = vampireOwnedCoilRuleEffects(powers, coilRatings);
   const hasRuleEffect = (rule: Parameters<typeof vampireRuleEffectsFor>[1], value?: string) => vampireRuleEffectsFor(coilEffects, rule).some((effect) => value === undefined || effect.value === value);
   const ruleSourceRating = (rule: Parameters<typeof vampireRuleEffectsFor>[1]) => Math.max(0, ...vampireRuleEffectsFor(coilEffects, rule).map((effect) => Number(coilRatings[effect.sourceId] ?? 0)));
-  const blushActive = Boolean(character.current_state.blush_of_life_active);
-  const blushExtraVitae = boundedNumber(character.current_state.blush_of_life_extra_vitae, Math.max(0, bloodPotency - 1), 0);
-  const sunlightIntervalBloodPotency = blushActive && hasRuleEffect("sunlight-interval-blood-potency") ? Math.max(1, bloodPotency - blushExtraVitae) : bloodPotency;
-  const sunlightSummary = vampireSunlightSummary(humanity, sunlightIntervalBloodPotency, locale);
+  const sunlightSummary = vampireSunlightSummary(humanity, bloodPotency, locale);
   const blushDurationRule = String(vampireRuleEffectsFor(coilEffects, "blush-duration")[0]?.value ?? "");
   const blushDuration = blushDurationRule === "24 hours" ? (locale === "pt-BR" ? "24 horas" : "24 hours") : (locale === "pt-BR" ? "Cena" : "Scene");
   const frenzyActive = Boolean(character.current_state.frenzy_active);
-  const frenzySituationalModifier = Math.max(-20, Math.min(20, Math.trunc(Number(character.current_state.frenzy_situational_modifier ?? 0)) || 0));
-  const frenzyHeldWillpower = Math.max(0, Math.min(currentWillpower, Math.trunc(Number(character.current_state.frenzy_held_willpower ?? 0)) || 0));
   const hungerModifier = vitae <= 2 ? -4 : vitae <= 4 ? -2 : 0;
   const woundModifier = damage.length >= Math.max(1, health - 2) ? -3 : damage.length > 0 ? -1 : 0;
   const satedModifier = conditionIds.has("sated") ? 1 : 0;
   const frenzyBasePool = Number(character.attributes.Resolve ?? 1) + Number(character.attributes.Composure ?? 1);
   const frenzyAutomaticModifier = hungerModifier + woundModifier + satedModifier;
-  const frenzyResistanceUncapped = frenzyBasePool + frenzyAutomaticModifier + frenzySituationalModifier + frenzyHeldWillpower;
+  const frenzyResistanceUncapped = frenzyBasePool + frenzyAutomaticModifier;
   const frenzyResistancePool = clan?.id === "gangrel" ? Math.min(humanity, frenzyResistanceUncapped) : frenzyResistanceUncapped;
   const rideWaveBonus = ruleSourceRating("ride-the-wave-pool");
-  const rideWavePool = frenzyBasePool + frenzyAutomaticModifier + frenzySituationalModifier + rideWaveBonus;
+  const rideWavePool = frenzyBasePool + frenzyAutomaticModifier + rideWaveBonus;
   const rideWaveWillpowerCost = conditionIds.has("raptured") || hasRuleEffect("ride-the-wave-cost") ? 0 : 1;
   const rideWaveTarget = conditionIds.has("raptured") ? 3 : 5;
   const frenzySenseBloodPotency = frenzyActive ? bloodPotency + ruleSourceRating("kindred-senses-blood-potency") : bloodPotency;
@@ -393,27 +388,21 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     </div>
     <CombatPage character={character} derived={combatDerived} updateSheet={updateSheet} />
     <VampireStateControls
-      character={character}
       setState={setState}
       locale={locale}
       bloodPotency={bloodPotency}
-      sunlightSummary={sunlightSummary}
-      sunlightIntervalBloodPotency={sunlightIntervalBloodPotency}
       blushDuration={blushDuration}
       canReduceSunlightInterval={hasRuleEffect("sunlight-interval-blood-potency")}
       ignoresFireFrenzy={hasRuleEffect("frenzy-trigger", "fire")}
       ignoresSunlightFrenzy={hasRuleEffect("frenzy-trigger", "sunlight")}
       ignoresDaysleepWithBlush={ignoresDaysleepWithBlush}
       ignoresLethargicWithBlush={ignoresLethargicWithBlush}
-      fireDowngraded={blushActive && hasRuleEffect("fire-damage")}
+      fireDowngraded={hasRuleEffect("fire-damage")}
       resilience={Number(disciplines.Resilience ?? 0)}
-      currentWillpower={currentWillpower}
       frenzyActive={frenzyActive}
       frenzyResistancePool={frenzyResistancePool}
       frenzyBasePool={frenzyBasePool}
       frenzyAutomaticModifier={frenzyAutomaticModifier}
-      frenzySituationalModifier={frenzySituationalModifier}
-      frenzyHeldWillpower={frenzyHeldWillpower}
       rideWavePool={rideWavePool}
       rideWaveBonus={rideWaveBonus}
       rideWaveWillpowerCost={rideWaveWillpowerCost}
@@ -439,9 +428,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     </div>
     <SheetHeading>{t("ui.humanityReferences")}</SheetHeading>
     <div className="vampire-reference-grid">
-      <article className="vampire-lore-card"><strong>{t("ui.sunlightAndHumanity")}</strong><p>{sunlightSummary}</p>{sunlightIntervalBloodPotency !== bloodPotency && <small>{locale === "pt-BR" ? `Potência de Sangue efetiva para o intervalo: ${sunlightIntervalBloodPotency}.` : `Effective Blood Potency for the interval: ${sunlightIntervalBloodPotency}.`}</small>}</article>
+      <article className="vampire-lore-card"><strong>{t("ui.sunlightAndHumanity")}</strong><p>{sunlightSummary}</p></article>
     </div>
-    <ActiveCoilRuleChanges effects={coilEffects} locale={locale} />
     <SheetHeading>Blood Bonds</SheetHeading>
     <StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={t("ui.stage")} onChange={(value) => setState("blood_bonds", value)} />
     <SheetHeading>{t("ui.notes")}</SheetHeading>
@@ -517,7 +505,10 @@ function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePower
   return <div className="vampire-power-grid">
     {powers.disciplines.filter((item) => Number(disciplines[item.name] ?? 0) > 0).map((item) => {
       const rating = Number(disciplines[item.name] ?? 0);
-      return <details className="contract-power-card vampire-discipline-card" key={item.id}>
+      return <details
+      className="contract-power-card vampire-discipline-card"
+      key={item.id}
+      >
         <summary className="contract-power-summary">
           <strong>{localized(item, locale)}</strong>
           <DotValue value={rating} />
@@ -536,29 +527,6 @@ function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePower
       </details>;
     })}
   </div>;
-}
-
-function ActiveCoilRuleChanges({ effects, locale }: { effects: ReturnType<typeof vampireOwnedCoilRuleEffects>; locale: string }) {
-  const handled = new Set(["daysleep", "lethargic", "blush-duration", "frenzy-trigger", "fire-damage", "sunlight-interval-blood-potency", "kindred-senses-blood-potency", "predatory-aura-blood-potency", "ride-the-wave-cost", "ride-the-wave-pool", "frenzy-defense", "frenzy-health", "frenzy-speed", "torpor-on-lethal"]);
-  const visible = effects.filter((effect) => !handled.has(effect.rule));
-  if (!visible.length) return null;
-  const labels: Record<string, [string, string]> = {
-    "vitae-addiction": ["Vitae e dependência", "Vitae and addiction"],
-    "blood-sympathy": ["Simpatia de Sangue", "Blood Sympathy"],
-    "blood-bond": ["Laço de Sangue", "Blood Bond"],
-    "discipline-resistance": ["Resistência a Disciplinas", "Discipline Resistance"],
-    "embrace-humanity": ["Abraço e Humanidade", "Embrace and Humanity"],
-  };
-  return <>
-    <SheetHeading>{locale === "pt-BR" ? "Alterações das Coils" : "Coil Rule Changes"}</SheetHeading>
-    <div className="vampire-reference-grid">
-      {visible.map((effect, index) => <article className="vampire-lore-card" key={`${effect.sourceId}-${effect.rule}-${index}`}>
-        <strong>{effect.sourceName} · {labels[effect.rule]?.[locale === "pt-BR" ? 0 : 1] ?? effect.rule}</strong>
-        <p>{String(effect.value ?? effect.notes ?? effect.operation)}</p>
-        {effect.condition && <small>{effect.condition}</small>}
-      </article>)}
-    </div>
-  </>;
 }
 
 function PowerMechanics({ mechanics, locale, compact = false }: { mechanics: VampireMechanics; locale: string; compact?: boolean }) {
@@ -656,18 +624,16 @@ function ProteanChoicesEditor({ character, updateSheet, rating }: { character: C
 }
 
 function VampireStateControls({
-  character, setState, locale, bloodPotency, sunlightSummary, sunlightIntervalBloodPotency, blushDuration,
-  canReduceSunlightInterval, ignoresFireFrenzy, ignoresSunlightFrenzy, ignoresDaysleepWithBlush, ignoresLethargicWithBlush, fireDowngraded, resilience, currentWillpower,
-  frenzyActive, frenzyResistancePool, frenzyBasePool, frenzyAutomaticModifier, frenzySituationalModifier,
-  frenzyHeldWillpower, rideWavePool, rideWaveBonus, rideWaveWillpowerCost, rideWaveTarget,
+  setState, locale, bloodPotency, blushDuration,
+  canReduceSunlightInterval, ignoresFireFrenzy, ignoresSunlightFrenzy,
+  ignoresDaysleepWithBlush, ignoresLethargicWithBlush, fireDowngraded, resilience,
+  frenzyActive, frenzyResistancePool, frenzyBasePool, frenzyAutomaticModifier,
+  rideWavePool, rideWaveBonus, rideWaveWillpowerCost, rideWaveTarget,
   frenzySenseBloodPotency, beastPowerAvailable, beastPowerActive, combatDerived,
 }: {
-  character: CharacterSheet;
   setState: (key: string, value: unknown) => void;
   locale: string;
   bloodPotency: number;
-  sunlightSummary: string;
-  sunlightIntervalBloodPotency: number;
   blushDuration: string;
   canReduceSunlightInterval: boolean;
   ignoresFireFrenzy: boolean;
@@ -676,13 +642,10 @@ function VampireStateControls({
   ignoresLethargicWithBlush: boolean;
   fireDowngraded: boolean;
   resilience: number;
-  currentWillpower: number;
   frenzyActive: boolean;
   frenzyResistancePool: number;
   frenzyBasePool: number;
   frenzyAutomaticModifier: number;
-  frenzySituationalModifier: number;
-  frenzyHeldWillpower: number;
   rideWavePool: number;
   rideWaveBonus: number;
   rideWaveWillpowerCost: number;
@@ -699,16 +662,13 @@ function VampireStateControls({
   return <>
     <SheetHeading>{t("ui.vampiricStates")}</SheetHeading>
     <div className="vampire-state-controls">
-      <label><span>Blush of Life</span><Switch checked={Boolean(character.current_state.blush_of_life_active)} onCheckedChange={(checked) => setState("blush_of_life_active", checked)} /></label>
-      <label><span>Frenzy</span><Switch checked={frenzyActive} onCheckedChange={(checked) => setState("frenzy_active", checked)} /></label>
-      <p className="wide"><strong>Blush of Life:</strong> {pt ? "duração" : "duration"} {blushDuration}. {fireDowngraded ? (pt ? `Fogo causa dano letal; Resilience ${resilience} pode reduzir pontos de letal para contusão.` : `Fire deals lethal damage; Resilience ${resilience} can downgrade lethal points to bashing.`) : ""}</p>
-      {Boolean(character.current_state.blush_of_life_active) && (ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p className="wide"><strong>Surmounting the Daysleep:</strong> {pt ? `${ignoresDaysleepWithBlush ? "não precisa rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "não recebe Lethargic por permanecer ativo durante o dia" : ""}.` : `${ignoresDaysleepWithBlush ? "no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
-      {canReduceSunlightInterval && Boolean(character.current_state.blush_of_life_active) && <label className="wide">{pt ? "Vitae extra em Blush (Sun's Forgotten Kiss)" : "Extra Vitae in Blush (Sun's Forgotten Kiss)"}<Input type="number" min={0} max={Math.max(0, bloodPotency - 1)} value={Number(character.current_state.blush_of_life_extra_vitae ?? 0)} onChange={(event) => setState("blush_of_life_extra_vitae", Math.max(0, Math.min(Math.max(0, bloodPotency - 1), Number(event.target.value) || 0)))} /></label>}
-      {canReduceSunlightInterval && <p className="wide">{sunlightSummary} · {pt ? "Potência efetiva para intervalo" : "Effective Potency for interval"}: <strong>{sunlightIntervalBloodPotency}</strong>.</p>}
+      <p className="wide"><strong>Blush of Life:</strong> {pt ? "duração" : "duration"} {blushDuration}.</p>
+      {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p className="wide"><strong>Surmounting the Daysleep:</strong> {pt ? `${ignoresDaysleepWithBlush ? "enquanto usa Blush of Life, não precisa rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "não recebe Lethargic por permanecer ativo durante o dia" : ""}.` : `${ignoresDaysleepWithBlush ? "while using Blush of Life, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
+      {fireDowngraded && <p className="wide"><strong>Peace with the Flame:</strong> {pt ? `enquanto usa Blush of Life, fogo causa dano letal; Resilience ${resilience} pode reduzir pontos de letal para contusão.` : `while using Blush of Life, fire deals lethal damage; Resilience ${resilience} can downgrade lethal points to bashing.`}</p>}
+      {canReduceSunlightInterval && <p className="wide"><strong>Sun&apos;s Forgotten Kiss:</strong> {pt ? "cada Vitae extra gasto ao ativar Blush of Life reduz em 1 a Potência de Sangue usada apenas para o intervalo de dano solar, até o mínimo de 1." : "each additional Vitae spent when activating Blush of Life reduces Blood Potency by 1 for sunlight-damage interval only, to a minimum of 1."}</p>}
       {(ignoresFireFrenzy || ignoresSunlightFrenzy) && <p className="wide"><strong>Conquer the Red Fear:</strong> {pt ? `não provoca Frenzy por ${[ignoresFireFrenzy && "fogo", ignoresSunlightFrenzy && "luz solar"].filter(Boolean).join(" ou ")}.` : `no Frenzy provocation from ${[ignoresFireFrenzy && "fire", ignoresSunlightFrenzy && "sunlight"].filter(Boolean).join(" or ")}.`}</p>}
-      <label>{pt ? "Modificador situacional de Frenzy" : "Frenzy situational modifier"}<Input type="number" min={-20} max={20} value={frenzySituationalModifier} onChange={(event) => setState("frenzy_situational_modifier", Math.max(-20, Math.min(20, Number(event.target.value) || 0)))} /></label>
-      <label>{pt ? "Willpower gasto para adiar" : "Willpower spent delaying"}<Input type="number" min={0} max={currentWillpower} value={frenzyHeldWillpower} onChange={(event) => setState("frenzy_held_willpower", Math.max(0, Number(event.target.value) || 0))} /></label>
-      <p className="wide"><strong>{pt ? "Resistir Frenzy" : "Resist Frenzy"}:</strong> {resistanceLabel} ({frenzyBasePool} {pt ? "base" : "base"} {frenzyAutomaticModifier >= 0 ? "+" : ""}{frenzyAutomaticModifier} {pt ? "automático" : "automatic"} {frenzySituationalModifier >= 0 ? "+" : ""}{frenzySituationalModifier} {pt ? "situacional" : "situational"} +{frenzyHeldWillpower} WP).</p>
+      <label><span>Frenzy</span><Switch checked={frenzyActive} onCheckedChange={(checked) => setState("frenzy_active", checked)} /></label>
+      <p className="wide"><strong>{pt ? "Resistir Frenzy" : "Resist Frenzy"}:</strong> {resistanceLabel} ({frenzyBasePool} {pt ? "base" : "base"} {frenzyAutomaticModifier >= 0 ? "+" : ""}{frenzyAutomaticModifier} {pt ? "automático" : "automatic"}). {pt ? "Outros modificadores situacionais são aplicados manualmente pelo jogador." : "Other situational modifiers are applied manually by the player."}</p>
       <p className="wide"><strong>Riding the Wave:</strong> {rideLabel}; {pt ? "custo" : "cost"} <strong>{rideWaveWillpowerCost} WP</strong>; {pt ? "alvo" : "target"} <strong>{rideWaveTarget} {pt ? "sucessos" : "successes"}</strong>{rideWaveBonus ? `; ${pt ? "bônus da Coil" : "Coil bonus"} +${rideWaveBonus}` : ""}.</p>
       {frenzyActive && <p className="wide"><strong>{pt ? "Frenzy ativo" : "Active Frenzy"}:</strong> +{bloodPotency} {pt ? "em rolagens/resistências de Força, Destreza e Vigor; sem penalidades de ferimento. Potência efetiva para sentidos/aura" : "to Strength, Dexterity, and Stamina rolls/resistances; ignore wound penalties. Effective Potency for senses/aura"}: <strong>{frenzySenseBloodPotency}</strong>.</p>}
       {beastPowerAvailable && frenzyActive && <label className="wide"><span>Beast&apos;s Power</span><Switch checked={beastPowerActive} onCheckedChange={(checked) => setState("frenzy_beast_power_active", checked)} /></label>}

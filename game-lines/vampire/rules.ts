@@ -19,7 +19,16 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery) ? data.blood_sorcery as Record<string, unknown> : {};
   const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" && !Array.isArray(data.ordo_dracul) ? data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" && !Array.isArray(ordo.coil_ratings) ? ordo.coil_ratings as Record<string, unknown> : {};
-  const torpor = state.torpor && typeof state.torpor === "object" && !Array.isArray(state.torpor) ? state.torpor as Record<string, unknown> : {};
+  const {
+    torpor: _torpor,
+    vitae_addictions: _vitaeAddictions,
+    blush_of_life_active: _blushOfLifeActive,
+    blush_of_life_extra_vitae: _blushOfLifeExtraVitae,
+    frenzy_situational_modifier: _frenzySituationalModifier,
+    frenzy_held_willpower: _frenzyHeldWillpower,
+    ...persistedState
+  } = state;
+
   return {
     ...character,
     line_data: {
@@ -55,18 +64,9 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       },
     },
     current_state: {
-      ...state,
+      ...persistedState,
       vitae_current: Math.max(0, Math.trunc(Number(state.vitae_current) || 0)),
-      blush_of_life_active: Boolean(state.blush_of_life_active),
-      torpor: {
-        ...torpor,
-        active: Boolean(torpor.active),
-        started_at: String(torpor.started_at ?? ""),
-        expected_end: String(torpor.expected_end ?? ""),
-        notes: String(torpor.notes ?? ""),
-      },
       blood_bonds: objectArray(state.blood_bonds),
-      vitae_addictions: objectArray(state.vitae_addictions),
     },
     derived: vampireDerived(character.attributes, character.skills, disciplines, bloodPotency),
   };

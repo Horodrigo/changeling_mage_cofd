@@ -94,10 +94,6 @@
 
 .vampire-card-selector > div { display:grid; gap:6px; }
 
-.vtr-sheet .vampire-discipline-card > .contract-power-details {
-  padding: 0;
-}
-
 .vtr-sheet .vampire-discipline-level {
   margin: 0;
   border-radius: 0;
