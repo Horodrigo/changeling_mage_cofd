@@ -33,7 +33,12 @@
 
 .vampire-details-grid, .vampire-track-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
 
-.vampire-power-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.vampire-power-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
 
 .vampire-power-grid > article, .vampire-lore-card { min-width:0; padding:13px; border:1px solid #9e777570; border-radius:3px; background:#fff9; }
 
@@ -88,6 +93,29 @@
 .vampire-card-selector > h3 { margin:0 0 8px; font:700 18px Georgia,serif; }
 
 .vampire-card-selector > div { display:grid; gap:6px; }
+
+.vtr-sheet .vampire-discipline-card > .contract-power-details {
+  padding: 0;
+}
+
+.vtr-sheet .vampire-discipline-level {
+  margin: 0;
+  border-radius: 0;
+  border-bottom: 0;
+}
+
+.vtr-sheet .vampire-discipline-level:last-child {
+  border-bottom: 1px solid var(--vtr-rule);
+  border-radius: 0 0 8px 8px;
+}
+
+.vtr-sheet .vampire-discipline-card > .contract-power-details {
+  padding: 14px;
+}
+
+.vtr-sheet .vampire-discipline-card > .contract-power-details.has-levels {
+  padding: 0;
+}
 
 .vampire-card-selector button { display:grid; gap:3px; width:100%; padding:10px 12px; border:1px solid #d9ccca; border-radius:8px; background:#fff; color:#3c2d2e; text-align:left; }
 
