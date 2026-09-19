@@ -65,6 +65,64 @@ export function bloodPotencyLimits(rating: number): BloodPotencyRow {
   return BLOOD_POTENCY_ROWS.find((row) => row.rating === rating) ?? BLOOD_POTENCY_ROWS[1];
 }
 
+export type VampireSunlightExposure = {
+  damage: number;
+  damageType: "lethal" | "aggravated";
+  frequency: "none" | "ten-minutes" | "one-minute" | "one-turn" | "two-per-turn" | "three-per-turn" | "five-per-turn";
+};
+
+export function vampireSunlightExposure(humanity: number, bloodPotency: number): VampireSunlightExposure {
+  const effectiveHumanity = boundedRating(humanity, 0, 10, 7);
+  const potency = boundedRating(bloodPotency, 0, 10, 1);
+  const damage =
+    effectiveHumanity >= 7 ? 1 :
+    effectiveHumanity === 6 ? 2 :
+    effectiveHumanity === 5 ? 3 :
+    effectiveHumanity === 4 ? 1 :
+    effectiveHumanity === 3 ? 2 :
+    effectiveHumanity === 2 ? 3 :
+    effectiveHumanity === 1 ? 4 : 5;
+  const damageType = effectiveHumanity >= 5 ? "lethal" : "aggravated";
+  const frequency =
+    potency === 0 ? "none" :
+    potency <= 2 ? "ten-minutes" :
+    potency === 3 ? "one-minute" :
+    potency <= 5 ? "one-turn" :
+    potency <= 7 ? "two-per-turn" :
+    potency <= 9 ? "three-per-turn" : "five-per-turn";
+  return { damage, damageType, frequency };
+}
+
+export function vampireSunlightSummary(humanity: number, bloodPotency: number, locale: Locale) {
+  const exposure = vampireSunlightExposure(humanity, bloodPotency);
+  const damageType = locale === "pt-BR"
+    ? exposure.damageType === "lethal" ? "letal" : "agravado"
+    : exposure.damageType;
+  const frequency = locale === "pt-BR"
+    ? {
+        none: "sem intervalo aplicável",
+        "ten-minutes": "a cada 10 minutos",
+        "one-minute": "a cada minuto",
+        "one-turn": "por turno",
+        "two-per-turn": "2× por turno",
+        "three-per-turn": "3× por turno",
+        "five-per-turn": "5× por turno",
+      }[exposure.frequency]
+    : {
+        none: "with no applicable interval",
+        "ten-minutes": "every 10 minutes",
+        "one-minute": "every minute",
+        "one-turn": "per turn",
+        "two-per-turn": "2× per turn",
+        "three-per-turn": "3× per turn",
+        "five-per-turn": "5× per turn",
+      }[exposure.frequency];
+
+  return locale === "pt-BR"
+    ? `Luz solar: ${exposure.damage} de dano ${damageType} ${frequency}`
+    : `Sunlight: ${exposure.damage} ${damageType} damage ${frequency}`;
+}
+
 export function vampireDerived(
   attributes: Record<string, number>,
   skills: Record<string, number>,
@@ -83,7 +141,7 @@ export function vampireDerived(
     Vitalidade: 5 + effectiveStamina,
     Deslocamento: 5 + effectiveStrength + Number(attributes.Dexterity ?? 1),
     ForçaDeVontade: Number(attributes.Resolve ?? 1) + Number(attributes.Composure ?? 1),
-    Iniciativa: Number(attributes.Dexterity ?? 1) + Number(attributes.Composure ?? 1) + celerity,
+    Iniciativa: Number(attributes.Dexterity ?? 1) + Number(attributes.Composure ?? 1),
     Defesa: Math.min(Number(attributes.Dexterity ?? 1), Number(attributes.Wits ?? 1)) + Number(skills.Athletics ?? 0) + celerity,
     VitaeMaxima: typeof potency?.vitaeMaximum === "number" ? potency.vitaeMaximum : effectiveStamina,
     VitaePorTurno: potency?.vitaePerTurn ?? 1,

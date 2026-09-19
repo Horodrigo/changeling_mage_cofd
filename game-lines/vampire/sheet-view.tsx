@@ -21,8 +21,8 @@ import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
-import type { VampireCondition, VampirePowers, VampireReference } from "./catalog-types";
-import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
+import type { VampireCondition, VampireMechanics, VampirePowers, VampireReference, VampireRitualDisciplineDefinition } from "./catalog-types";
+import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
@@ -251,6 +251,11 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const vampireConditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions") as readonly ConditionDefinition[];
   const conditionCatalog = [...coreConditions, ...vampireConditions];
   const data = character.line_data;
+  const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery)
+    ? data.blood_sorcery as Record<string, unknown>
+    : {};
+  const cruacRating = Number(bloodSorcery.cruac_rating ?? 0);
+  const thebanRating = Number(bloodSorcery.theban_rating ?? 0);
   const clan = reference.clans.find((item) => item.id === data.clan_id);
   const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
@@ -271,6 +276,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const currentWillpower = boundedNumber(character.current_state.willpower_current, willpower, willpower);
   const damage = normalizeDamage(character.current_state.health_damage, health);
   const humanity = Math.max(0, Math.min(10, Number(data.humanity ?? 7)));
+  const sunlightSummary = vampireSunlightSummary(humanity, bloodPotency, locale);
   const torporReference = reference.torpor.find((row) => humanity >= row.humanityMinimum && humanity <= row.humanityMaximum);
   const conditions = selectedConditions(character.current_state.conditions);
   const aspirations = stringList(data.aspirations);
@@ -340,14 +346,37 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       maximum={vitaeMaximum}
       perTurn={limits.vitaePerTurn}
       onChange={(value) => setState("vitae_current", value)}
-      summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]}`}
+      summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]} · ${sunlightSummary}`}
     />
-    <SheetHeading>{t("ui.disciplines")}</SheetHeading><div className="vampire-power-grid">{powers.disciplines.filter((item) => disciplines[item.name] > 0).map((item) => <article key={item.id}><header><strong>{localized(item, locale)}</strong><DotValue value={disciplines[item.name]} /></header><p>{item.summary}</p>{item.levels.filter((level) => level.rating <= disciplines[item.name]).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>)}</div>
+    <p className="tracker-help">{sunlightSummary}</p>
+    <SheetHeading>{t("ui.disciplines")}</SheetHeading>
+    <div className="vampire-power-grid">
+      {powers.disciplines.filter((item) => disciplines[item.name] > 0).map((item) => (
+        <article key={item.id}>
+          <header><strong>{localized(item, locale)}</strong><DotValue value={disciplines[item.name]} /></header>
+          <p>{item.summary}</p>
+          <PowerMechanics mechanics={item} locale={locale} />
+          {item.levels.filter((level) => level.rating <= disciplines[item.name]).map((level) => (
+            <div className="vampire-power-level" key={level.rating}>
+              <strong>{level.rating}. {localized(level, locale)}</strong>
+              <span>{level.summary}</span>
+              <PowerMechanics mechanics={level} locale={locale} compact />
+            </div>
+          ))}
+        </article>
+      ))}
+    </div>
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
     <PurchasedPowers character={character} powers={powers} locale={locale} scope="devotions" />
   </>;
   const covenantStatus = covenant ? vampireCovenantStatus(character, covenant.id, covenant.name, covenant.translatedName) : 0;
-  const covenantPage = <><SheetHeading>Covenant</SheetHeading><article className="vampire-covenant-summary"><Image src="/vampire-skull.webp" width={82} height={82} alt="" aria-hidden="true" /><div><h3>{localized(covenant, locale) || t("ui.covenantless")}</h3><p>{covenant?.description ?? t("ui.thisKindredBelongsToNoCovenant")}</p><strong>{t("ui.advantage")}: {covenant?.advantage ?? t("ui.none247448")}</strong><span>Kindred Status: <DotValue value={covenantStatus} /></span></div></article>{covenant?.id === "ordo-dracul" && <article className="vampire-lore-card"><strong>Mystery</strong><p>{String((data.ordo_dracul as Record<string, unknown> | undefined)?.mystery_id ?? t("ui.notSelected"))}</p></article>}<PurchasedPowers character={character} powers={powers} locale={locale} scope="covenant" /></>;
+  const covenantPage = <>
+    <SheetHeading>Covenant</SheetHeading>
+    <article className="vampire-covenant-summary"><Image src="/vampire-skull.webp" width={82} height={82} alt="" aria-hidden="true" /><div><h3>{localized(covenant, locale) || t("ui.covenantless")}</h3><p>{covenant?.description ?? t("ui.thisKindredBelongsToNoCovenant")}</p><strong>{t("ui.advantage")}: {covenant?.advantage ?? t("ui.none247448")}</strong><span>Kindred Status: <DotValue value={covenantStatus} /></span></div></article>
+    {covenant?.id === "ordo-dracul" && <article className="vampire-lore-card"><strong>Mystery</strong><p>{String((data.ordo_dracul as Record<string, unknown> | undefined)?.mystery_id ?? t("ui.notSelected"))}</p></article>}
+    <RitualDisciplines powers={powers} cruacRating={cruacRating} thebanRating={thebanRating} locale={locale} />
+    <PurchasedPowers character={character} powers={powers} locale={locale} scope="covenant" />
+  </>;
   const combat = <><div className="vampire-track-grid"><section><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)} /></section><section><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></section></div><CombatPage character={character} derived={derived} updateSheet={updateSheet} /><SheetHeading>{t("ui.kindredReferences")}</SheetHeading><div className="vampire-reference-grid"><article className="vampire-lore-card"><strong>Physical Intensity</strong><p>{t("ui.spend1VitaeFor2OnRollsUsing")}</p></article><article className="vampire-lore-card"><strong>{t("ui.healing")}</strong><p>{t("ui.message1VitaeHealsTwoBashingOrOneLethal")}</p></article><article className="vampire-lore-card"><strong>Predatory Aura</strong><p>{t("ui.chooseTheMonstrousSeductiveOrCompetitiveAspectAnd")}</p></article><article className="vampire-lore-card"><strong>Frenzy</strong><p>{t("ui.theSheetTracksResourcesAndStatesResistanceRiding")}</p></article></div></>;
   const records = <>
     <VampireStateControls character={character} setState={setState} baseTorpor={torporReference?.duration ?? "—"} bloodPotency={bloodPotency} />
@@ -359,7 +388,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetHeading>{t("ui.humanityReferences")}</SheetHeading>
     <div className="vampire-reference-grid">
       <article className="vampire-lore-card"><strong>{t("ui.torpor")}</strong><p>{t("ui.baseDurationForCurrentHumanity")}: <b>{torporReference?.duration ?? "—"}</b>. {t("ui.multiplyByBloodPotency")}</p></article>
-      <article className="vampire-lore-card"><strong>{t("ui.sunlightAndHumanity")}</strong><p>{t("ui.sunlightCausesAggravatedDamageUseExposureIntensityAnd")}</p></article>
+      <article className="vampire-lore-card"><strong>{t("ui.sunlightAndHumanity")}</strong><p>{sunlightSummary}</p></article>
     </div>
     <SheetHeading>Blood Bonds</SheetHeading>
     <StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={t("ui.stage")} onChange={(value) => setState("blood_bonds", value)} />
@@ -398,7 +427,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       <MainPowerStat
         label={t("ui.bloodPotency")}
         value={bloodPotency}
-        summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]}`}
+        summary={`${t("ui.canFeedFrom")}: ${feedingTierLabel[limits.feedingTier]} · ${sunlightSummary}`}
       />
     }
     fuel={<MainFuel label="Vitae" current={vitae} maximum={vitaeMaximum} onChange={(value) => setState("vitae_current", value)} />}
@@ -435,6 +464,59 @@ function VampireDisciplineLine({ name, value }: { name: string; value: number })
   return <div className="official-trait-line"><span className="official-trait-label"><span className="official-trait-name">{name}</span></span><DotValue value={value} /></div>;
 }
 
+
+function PowerMechanics({ mechanics, locale, compact = false }: { mechanics: VampireMechanics; locale: string; compact?: boolean }) {
+  const rows: Array<[string, string | number | undefined]> = [
+    [locale === "pt-BR" ? "Custo" : "Cost", mechanics.cost],
+    [locale === "pt-BR" ? "Requisito" : "Requirement", mechanics.requirement],
+    [locale === "pt-BR" ? "Condição" : "Condition", mechanics.condition],
+    [locale === "pt-BR" ? "Parada de Dados" : "Dice Pool", mechanics.dicePool],
+    [locale === "pt-BR" ? "Ação" : "Action", mechanics.action],
+    [locale === "pt-BR" ? "Duração" : "Duration", mechanics.duration],
+    [locale === "pt-BR" ? "Sucessos Alvo" : "Target Successes", mechanics.targetSuccesses],
+    [locale === "pt-BR" ? "Contestado por" : "Contested by", mechanics.contestedBy],
+    [locale === "pt-BR" ? "Resistido por" : "Resisted by", mechanics.resistedBy],
+    [locale === "pt-BR" ? "Sacramento" : "Sacrament", mechanics.sacrament],
+  ];
+  const visibleRows = rows.filter(([, value]) => value !== undefined && value !== "");
+  const results = mechanics.rollResults;
+  if (!visibleRows.length && !mechanics.effect && !mechanics.procedure && !mechanics.outcome && !results) return null;
+  return <div className={`vampire-power-mechanics${compact ? " compact" : ""}`}>
+    {visibleRows.map(([label, value]) => <p key={label}><strong>{label}:</strong> {String(value)}</p>)}
+    {mechanics.effect && <p><strong>{locale === "pt-BR" ? "Efeito" : "Effect"}:</strong> {mechanics.effect}</p>}
+    {mechanics.procedure && <p><strong>{locale === "pt-BR" ? "Procedimento" : "Procedure"}:</strong> {mechanics.procedure}</p>}
+    {mechanics.outcome && <p><strong>{locale === "pt-BR" ? "Resultado" : "Outcome"}:</strong> {mechanics.outcome}</p>}
+    {results && <div className="vampire-roll-results">
+      {results.dramaticFailure && <p><strong>{locale === "pt-BR" ? "Falha Dramática" : "Dramatic Failure"}:</strong> {results.dramaticFailure}</p>}
+      {results.failure && <p><strong>{locale === "pt-BR" ? "Falha" : "Failure"}:</strong> {results.failure}</p>}
+      {results.success && <p><strong>{locale === "pt-BR" ? "Sucesso" : "Success"}:</strong> {results.success}</p>}
+      {results.exceptionalSuccess && <p><strong>{locale === "pt-BR" ? "Sucesso Excepcional" : "Exceptional Success"}:</strong> {results.exceptionalSuccess}</p>}
+    </div>}
+    {mechanics.suggestedModifiers?.length ? <div className="vampire-suggested-modifiers">
+      <strong>{locale === "pt-BR" ? "Modificadores Sugeridos" : "Suggested Modifiers"}</strong>
+      {mechanics.suggestedModifiers.map((item, index) => <p key={`${item.modifier}-${index}`}><b>{item.modifier}</b> {item.situation}</p>)}
+    </div> : null}
+  </div>;
+}
+
+function RitualDisciplines({ powers, cruacRating, thebanRating, locale }: { powers: VampirePowers; cruacRating: number; thebanRating: number; locale: string }) {
+  const selected = powers.ritualDisciplines.filter((item) => item.id === "cruac" ? cruacRating > 0 : thebanRating > 0);
+  if (!selected.length) return null;
+  return <><SheetHeading>{locale === "pt-BR" ? "Disciplinas de Feitiçaria de Sangue" : "Blood Sorcery Disciplines"}</SheetHeading>
+    <div className="vampire-power-grid">
+      {selected.map((item: VampireRitualDisciplineDefinition) => {
+        const rating = item.id === "cruac" ? cruacRating : thebanRating;
+        return <article key={item.id}>
+          <header><strong>{localized(item, locale)}</strong><DotValue value={rating} /></header>
+          <p>{item.summary}</p>
+          <PowerMechanics mechanics={item} locale={locale} />
+          <small>{locale === "pt-BR" ? "Cada ponto normalmente concede um Rite/Miracle gratuito; o nível máximo do ritual é igual ao nível da Disciplina." : "Each dot normally grants one free rite/miracle; maximum ritual rating equals the Discipline rating."}</small>
+        </article>;
+      })}
+    </div>
+  </>;
+}
+
 function MeritList({ character, catalog, locale }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; locale: string }) {
   if (!character.merits.length) return <em>—</em>;
   return <div className="official-lines">{character.merits.map((merit, index) => { const definition = catalog.find((item) => item.name === merit.name); return <div key={`${merit.instanceId ?? merit.name}-${index}`}><span>{locale === "pt-BR" ? definition?.translatedName ?? merit.name : merit.name}</span><DotValue value={merit.dots} /></div>; })}</div>;
@@ -450,7 +532,20 @@ function PurchasedPowers({ character, powers, locale, scope = "all" }: { charact
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" && !Array.isArray(ordo.coil_ratings) ? ordo.coil_ratings as Record<string, unknown> : {};
   const selected = [...(scope !== "covenant" ? powers.devotions.filter((item) => ids.has(item.id)) : []), ...(scope !== "devotions" ? [...powers.cruacRites, ...powers.thebanMiracles].filter((item) => sorceryIds.has(item.id)) : []), ...(scope !== "devotions" ? powers.coils.filter((item) => Number(coilRatings[item.id] ?? 0) > 0) : []), ...(scope !== "devotions" ? powers.scales.filter((item) => scaleIds.has(item.id)) : [])];
   if (!selected.length) return null;
-  return <><SheetHeading>{t("sheet.otherPowers")}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => { const rating = item.kind === "coil" ? Number(coilRatings[item.id] ?? 0) : item.rating; return <article key={item.id}><header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header><small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small><p>{item.summary}</p>{item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}><strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span></div>)}</article>; })}</div></>;
+  return <><SheetHeading>{t("sheet.otherPowers")}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => {
+    const rating = item.kind === "coil" ? Number(coilRatings[item.id] ?? 0) : item.rating;
+    return <article key={item.id}>
+      <header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header>
+      <small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small>
+      <p>{item.summary}</p>
+      <PowerMechanics mechanics={item} locale={locale} />
+      {item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}>
+        <strong>{level.rating}. {localized(level, locale)}</strong>
+        <span>{level.summary}</span>
+        <PowerMechanics mechanics={level} locale={locale} compact />
+      </div>)}
+    </article>;
+  })}</div></>;
 }
 
 function ProteanChoicesEditor({ character, updateSheet, rating }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; rating: number }) {
