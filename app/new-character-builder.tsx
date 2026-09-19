@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { getGameLineRegistration, listGameLineRegistrations } from "@/game-lines/registry/game-line-registry";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { CatalogBoundary } from "./catalog-boundary";
 import { GameLineBuilder } from "./game-line-builder";
+import { useLanguage } from "@/lib/i18n";
 
 /** Common creation shell: choose a line, then load only that line's builder. */
 export function NewCharacterBuilder({ player, onCancel, onSave }: {
@@ -13,6 +15,7 @@ export function NewCharacterBuilder({ player, onCancel, onSave }: {
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
 }) {
+  const { t } = useLanguage();
   const [gameLine, setGameLine] = useState<CharacterSheet["game_line"] | null>(null);
   if (gameLine) {
     const registration = getGameLineRegistration(gameLine);
@@ -24,13 +27,13 @@ export function NewCharacterBuilder({ player, onCancel, onSave }: {
   }
   return (
     <section className="sheet-editor">
-      <div className="sheet-toolbar"><Button variant="ghost" onClick={onCancel}>← Voltar</Button></div>
+      <div className="sheet-toolbar"><Button variant="ghost" onClick={onCancel}>{t("ui.backArrow")}</Button></div>
       <div className="builder-section">
-        <span className="kicker">STEP 1</span><h2>Choose a game line</h2>
+        <span className="kicker">{t("ui.gameLineStep")}</span><h2>{t("ui.chooseGameLine")}</h2>
         <div className="line-choice">
           {listGameLineRegistrations().map((registration) => (
             <button className={`${registration.slug}-line-choice`} key={registration.id} onClick={() => setGameLine(registration.id)}>
-              <img src={registration.iconSrc} alt="" aria-hidden="true" />
+              <Image src={registration.iconSrc} alt="" aria-hidden="true" width={64} height={64} unoptimized />
               <strong>{registration.label}</strong>
             </button>
           ))}

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { History, RotateCcw, Leaf } from "lucide-react";
+import { History, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -591,7 +591,7 @@ export function ExperiencePanel({
   });
   const historyPanel = <details className="experience-history">
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
-    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {t("ui.refund")}</Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name === "Entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
+    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)}{t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {t("ui.refund")}</Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name === "Entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel">
@@ -628,11 +628,11 @@ export function ExperiencePanel({
         </div>
       </div>
       <fieldset className="beat-controls">
-        <legend>Beats</legend>
+        <legend>{t("ui.beats")}</legend>
         {Array.from({ length: 5 }, (_, index) => {
           const value = index + 1;
           return (
-            <label key={value} title={`${value} Beat${value === 1 ? "" : "s"}`}>
+            <label key={value} title={t("ui.beatsTitle", { count: value, plural: value === 1 ? "" : "s" })}>
               <input
                 type="radio"
                 name={`beats-${character.id}`}
@@ -823,7 +823,7 @@ export function ExperiencePanel({
             history.slice(0, 12).map((entry) => (
               <p key={entry.id}>
                 <span>{entry.description}</span>
-                <strong>{Math.abs(entry.experience)} EXP</strong>
+                <strong>{Math.abs(entry.experience)}{t("ui.xp")}</strong>
                 <small>
                   {new Date(entry.createdAt).toLocaleDateString(locale)}
                 </small>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { BeatTrack, ExperienceMeritPicker, isRepeatableDefinition } from "@/app/workspace/experience-shared";
@@ -63,7 +63,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
   const meritCatalog = useMemo(() => [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], [catalogs]);
-  const [amount, setAmount] = useState(String(available));
+  const [amountDraft, setAmountDraft] = useState<string | null>(null);
+  const amount = amountDraft ?? String(available);
   const [purchase, setPurchase] = useState<PurchaseType>("attribute");
   const [target, setTarget] = useState("");
   const [specialtyName, setSpecialtyName] = useState("");
@@ -72,7 +73,6 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const [meritConfiguration, setMeritConfiguration] = useState<MeritConfiguration>({});
   const [teacherConfirmed, setTeacherConfirmed] = useState(false);
   const [feedback, setFeedback] = useState("");
-  useEffect(() => setAmount(String(available)), [available]);
   const clan = reference.clans.find((item) => item.id === character.line_data.clan_id);
   const covenant = String(character.line_data.covenant_id ?? "covenantless");
   const covenantDefinition = reference.covenants.find((item) => item.id === covenant);
@@ -246,18 +246,18 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   };
   const commitAvailableExperience = () => {
     const nextAvailable = Math.max(0, Math.trunc(Number(amount) || 0));
-    setAmount(String(nextAvailable));
+    setAmountDraft(null);
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
-  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
+  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
     <div className="experience-title"><div><span>{t("ui.beatsAndExperience")}</span><small>{t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
     <div className="experience-totals">
-      <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmount(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={t("ui.availableExperience")} /><span>{t("ui.xpAvailable")}</span></label>
+      <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmountDraft(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={t("ui.availableExperience")} /><span>{t("ui.xpAvailable")}</span></label>
       <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div>
       <div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div>
     </div>
-    <BeatTrack label="Beats" value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />
+    <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />
     <div className="experience-actions">
       <Dialog>
         <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger>
@@ -277,6 +277,6 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       </Dialog>
     </div>
     {feedback && <p className="experience-feedback compact">{feedback}</p>}
-    <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} EXP</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>
+    <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>
   </section>;
 }

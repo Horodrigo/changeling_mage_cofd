@@ -27,12 +27,6 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" && !Array.isArray(data.ordo_dracul) ? data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" && !Array.isArray(ordo.coil_ratings) ? ordo.coil_ratings as Record<string, unknown> : {};
   const {
-    torpor: _torpor,
-    vitae_addictions: _vitaeAddictions,
-    blush_of_life_active: _blushOfLifeActive,
-    blush_of_life_extra_vitae: _blushOfLifeExtraVitae,
-    frenzy_situational_modifier: _frenzySituationalModifier,
-    frenzy_held_willpower: _frenzyHeldWillpower,
     ...persistedState
   } = state;
 

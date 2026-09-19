@@ -189,9 +189,10 @@ function DotGroups({ groups, values, setValues, base, maximum, priorities, budge
 }
 
 export function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: { name: string; value: number; setValue: Setter<number>; min: number; max: number; tag?: string; canIncrease?: boolean }) {
+  const { t } = useLanguage();
   return <div className="dot-row"><span>{name}{tag && <small>{tag}</small>}</span><div>
     <Button type="button" size="icon" variant="ghost" disabled={value <= min} onClick={() => setValue(value - 1)}><Minus /></Button>
-    <span className="dots" aria-label={`${value} dots`}>{Array.from({ length: max }, (_, index) => <i className={index < value ? "filled" : ""} key={index} />)}</span>
+    <span className="dots" aria-label={t("ui.dots638f6d", { p1: value })}>{Array.from({ length: max }, (_, index) => <i className={index < value ? "filled" : ""} key={index} />)}</span>
     <Button type="button" size="icon" variant="ghost" disabled={value >= max || !canIncrease} onClick={() => setValue(value + 1)}><Plus /></Button>
   </div></div>;
 }

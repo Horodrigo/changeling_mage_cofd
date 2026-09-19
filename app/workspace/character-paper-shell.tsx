@@ -150,7 +150,7 @@ export function ResourceTrack({
     <div className="tracker-meta">
       <span>{t("ui.current")}</span>
       <strong>
-        {current}/{maximum}{displayedPerTurn !== undefined && <> | {locale === "pt-BR" ? "Por turno" : "Per turn"}: {displayedPerTurn}</>}
+        {current}/{maximum}{displayedPerTurn !== undefined && <> | {t("ui.perTurn")}: {displayedPerTurn}</>}
       </strong>
     </div>
   </div>

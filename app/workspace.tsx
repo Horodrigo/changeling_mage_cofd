@@ -1,6 +1,7 @@
 "use client";
 
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import Image from "next/image";
 import {
   ArrowDownUp,
   ChevronRight,
@@ -77,12 +78,14 @@ export function Workspace({
   displayName: string;
   userKey: string;
 }) {
-  const {locale,setLocale,t}=useLanguage();
+  const { locale, setLocale, t } = useLanguage();
+
   const [view, setView] = useState<View>("inicio");
   const [selected, setSelected] = useState<CharacterSheet | null>(null);
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
   const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
+
   const {
     characters,
     ready,
@@ -91,18 +94,33 @@ export function Workspace({
     replaceCharacter,
     removeCharacter,
   } = useCharacterRepository(userKey);
-  const [sheetZoom,setSheetZoom]=useState(() => {
-    if (typeof window === "undefined" || window.matchMedia("(max-width: 767px)").matches) return 1;
-    try { return parseStoredSheetZoom(window.localStorage.getItem(SHEET_ZOOM_STORAGE_KEY)); } catch { return 1; }
-  });
-  const [maximumZoom,setMaximumZoom]=useState(1);
-  const [printOpen,setPrintOpen]=useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const storageReadFailedMessage = t("workspace.storageReadFailed");
-  useEffect(() => {
-    if (readFailed) setNotice(storageReadFailedMessage);
-  }, [readFailed, storageReadFailedMessage]);
+
+  const effectiveNotice = readFailed
+    ? storageReadFailedMessage
+    : notice;
+
+  const [sheetZoom, setSheetZoom] = useState(() => {
+    if (
+      typeof window === "undefined" ||
+      window.matchMedia("(max-width: 767px)").matches
+    ) {
+      return 1;
+    }
+
+    try {
+      return parseStoredSheetZoom(
+        window.localStorage.getItem(SHEET_ZOOM_STORAGE_KEY),
+      );
+    } catch {
+      return 1;
+    }
+  });
+
+  const [maximumZoom, setMaximumZoom] = useState(1);
+  const [printOpen, setPrintOpen] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(max-width: 767px)").matches) return;
@@ -230,7 +248,7 @@ export function Workspace({
       <section className="content">
         <header className="topbar">
           <button className="top-brand" onClick={() => navigate("inicio")}>
-            <img src="/cod-emblem-256.webp" alt="" aria-hidden="true" />
+            <Image src="/cod-emblem-256.webp" alt="" aria-hidden="true" width={52} height={52} unoptimized />
           <div>
             <strong>{t("workspace.charactersOfTheDarkness")}</strong>
             <span>{t("workspace.chroniclesOfDarkness")}</span>
@@ -316,7 +334,7 @@ export function Workspace({
           <p>{t("workspace.chroniclesOfDarkness")}</p>
           <h1>{title}</h1>
         </div>}
-        {notice && (
+        {effectiveNotice && (
           <div className="notice" role="status">
             <ShieldCheck />
             <span>{notice}</span>
@@ -411,7 +429,7 @@ function Dashboard({
           </div>
         </div>
         <div className="sigil" aria-hidden="true">
-          <img src="/cod-emblem-256.webp" alt="" />
+          <Image src="/cod-emblem-256.webp" alt="" width={152} height={152} unoptimized />
         </div>
       </section>
       {lineCounts.some(({ count }) => count > 0) && (
@@ -424,7 +442,7 @@ function Dashboard({
               title={t("workspace.lineCount", { count, line: registration.label })}
             >
               <strong>{count}</strong>
-              <img src={registration.iconSrc} alt="" aria-hidden="true" />
+              <Image src={registration.iconSrc} alt="" aria-hidden="true" width={40} height={40} unoptimized />
             </span>
           ))}
         </section>
@@ -571,10 +589,13 @@ function CharacterLineIcon({ line }: { line: CharacterSheet["game_line"] }) {
   const registration = getGameLineRegistration(line);
   return (
     <div className="character-line-icon">
-      <img
+      <Image
         src={registration.iconSrc}
         alt=""
         aria-hidden="true"
+        width={44}
+        height={44}
+        unoptimized
       />
     </div>
   );

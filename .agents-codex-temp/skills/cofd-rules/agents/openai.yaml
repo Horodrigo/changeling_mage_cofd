@@ -1,0 +1,6 @@
+interface:
+  display_name: "Chronicles of Darkness Rules"
+  short_description: "Keep CofD rules, editions, and game lines correctly separated."
+  default_prompt: "Use the Chronicles of Darkness rules discipline for this task."
+policy:
+  allow_implicit_invocation: true

@@ -189,11 +189,11 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     if (!common.name.trim()) add("name", t("ui.name"), 1);
     if (!selectedClan) add("clan", t("ui.clan"));
     if (!selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
-    if (!reference.covenants.some((item) => item.id === covenantId)) add("covenant", "Covenant");
-    if (!statusGroup) add("kindredStatus", locale === "pt-BR" ? "Kindred Status gratuito" : "Free Kindred Status");
-    if (!reference.anchors.some((item) => item.id === maskId)) add("mask", "Mask");
+    if (!reference.covenants.some((item) => item.id === covenantId)) add("covenant", t("sheet.covenant"));
+    if (!statusGroup) add("kindredStatus", t("ui.kindredStatus"));
+    if (!reference.anchors.some((item) => item.id === maskId)) add("mask", t("sheet.mask"));
     if (!reference.anchors.some((item) => item.id === dirgeId) || dirgeId === maskId) add("dirge", t("ui.dirgeDistinctFromMask"));
-    if (!touchstone.trim()) add("touchstone", "Touchstone");
+    if (!touchstone.trim()) add("touchstone", t("ui.touchstone"));
     if (disciplineDots !== (hasCreationCovenantPower ? 2 : 3) || inClanDots < 2) add("disciplines", hasCreationCovenantPower ? t("ui.message2InClanDisciplineDotsPlus1Converted") : t("ui.message3DisciplineDotsAtLeast2InClan"));
     const protean = Number(disciplines.Protean ?? 0);
     if (protean >= 2 && proteanAspects.filter((value) => value.trim()).length !== 3) add("protean", t("ui.threePredatoryAspectAdaptations"));
@@ -313,7 +313,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
             <Choice label={t("ui.clan")} value={clanId} setValue={chooseClan} options={reference.clans.map((item) => item.id)} optionLabels={Object.fromEntries(reference.clans.map((item) => [item.id, displayName(item, locale)]))} invalid={missing("clan")} />
             <div className="vampire-template-current">
               <strong>{selectedClan ? displayName(selectedClan, locale) : t("ui.noneSelected")}</strong>
-              <small>{selectedClan ? selectedClan.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, powers.disciplines, locale)).join(" · ") : (locale === "pt-BR" ? "Selecione um Clã." : "Select a Clan.")}</small>
+              <small>{selectedClan ? selectedClan.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, powers.disciplines, locale)).join(" · ") : t("ui.selectClan")}</small>
             </div>
             {selectedClan && <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={t("ui.favoredAttribute1")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>}
           </div>
@@ -321,22 +321,22 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
         </div>
 
         <div className={`vampire-kindred-status-grant${missing("kindredStatus") ? " missing-field" : ""}`}>
-          <div><strong>Kindred Status •</strong><small>{locale === "pt-BR" ? "Ponto gratuito do template. Escolha onde o Status se aplica." : "Free template dot. Choose where the Status applies."}</small></div>
-          <Choice label={locale === "pt-BR" ? "Tipo de Status" : "Status type"} value={statusScope} setValue={(value) => setStatusScope(value as KindredStatusScope)} options={statusScopeOptions} optionLabels={{ covenant: "Covenant", clan: locale === "pt-BR" ? "Clã" : "Clan", city: locale === "pt-BR" ? "Cidade" : "City" }} />
-          {statusScope === "city" && <label>{locale === "pt-BR" ? "Cidade" : "City"}<Input value={statusCity} onChange={(event) => setStatusCity(event.target.value)} placeholder={locale === "pt-BR" ? "Nome da cidade" : "City name"} /></label>}
-          {statusGroup && <span>{locale === "pt-BR" ? "Concede" : "Grants"}: <strong>Kindred Status ({statusGroup}) •</strong></span>}
+          <div><strong>{t("ui.kindredStatus")} •</strong><small>{t("ui.kindredStatusTemplateDot")}</small></div>
+          <Choice label={t("ui.statusType")} value={statusScope} setValue={(value) => setStatusScope(value as KindredStatusScope)} options={statusScopeOptions} optionLabels={{ covenant: t("sheet.covenant"), clan: t("ui.clan"), city: t("ui.city") }} />
+          {statusScope === "city" && <label>{t("ui.city")}<Input value={statusCity} onChange={(event) => setStatusCity(event.target.value)} placeholder={t("ui.cityName")} /></label>}
+          {statusGroup && <span>{t("ui.grants")}: <strong>{t("ui.kindredStatus")} ({statusGroup}) •</strong></span>}
         </div>
 
         <div className="vampire-anchor-grid">
-          <AnchorChoice label="Mask" value={maskId} setValue={setMaskId} anchors={reference.anchors} locale={locale} invalid={missing("mask")} />
-          <AnchorChoice label="Dirge" value={dirgeId} setValue={setDirgeId} anchors={reference.anchors.filter((item) => item.id !== maskId)} locale={locale} invalid={missing("dirge")} />
+          <AnchorChoice label={t("sheet.mask")} value={maskId} setValue={setMaskId} anchors={reference.anchors} locale={locale} invalid={missing("mask")} />
+          <AnchorChoice label={t("sheet.dirge")} value={dirgeId} setValue={setDirgeId} anchors={reference.anchors.filter((item) => item.id !== maskId)} locale={locale} invalid={missing("dirge")} />
         </div>
-        <label className={missing("touchstone") ? "missing-field" : ""}>Touchstone<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
+        <label className={missing("touchstone") ? "missing-field" : ""}>{t("ui.touchstone")}<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
         <h3>{t("ui.disciplines3Dots")}</h3>
         <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>{powers.disciplines.map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={disciplineDots < (hasCreationCovenantPower ? 2 : 3)} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}</div>
         <p className="rule-callout">{t("ui.allocate3DotsAtLeast2MustBelong")}</p>
-        {Number(disciplines.Protean ?? 0) >= 2 && <div className={`vampire-protean-builder${missing("protean") ? " missing-field block" : ""}`}><h3>{t("ui.proteanChoices")}</h3><ChoiceLines label="Predatory Aspect" values={proteanAspects} count={3} placeholder={t("ui.animalAdaptation")} onChange={setProteanAspects} />{Number(disciplines.Protean ?? 0) >= 3 && <ChoiceLines label="Beast's Skin" values={proteanForms} count={1} placeholder={t("ui.animalForm")} onChange={setProteanForms} />}{Number(disciplines.Protean ?? 0) >= 4 && <ChoiceLines label="Unnatural Aspect" values={proteanUnnatural} count={3} placeholder={t("ui.monstrousAdaptation")} onChange={setProteanUnnatural} />}</div>}
-        {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label="Mystery" value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode") }} /></div>}
+        {Number(disciplines.Protean ?? 0) >= 2 && <div className={`vampire-protean-builder${missing("protean") ? " missing-field block" : ""}`}><h3>{t("ui.proteanChoices")}</h3><ChoiceLines label={t("ui.predatoryAspect")} values={proteanAspects} count={3} placeholder={t("ui.animalAdaptation")} onChange={setProteanAspects} />{Number(disciplines.Protean ?? 0) >= 3 && <ChoiceLines label={t("ui.beastSSkin")} values={proteanForms} count={1} placeholder={t("ui.animalForm")} onChange={setProteanForms} />}{Number(disciplines.Protean ?? 0) >= 4 && <ChoiceLines label={t("ui.unnaturalAspect")} values={proteanUnnatural} count={3} placeholder={t("ui.monstrousAdaptation")} onChange={setProteanUnnatural} />}</div>}
+        {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label={t("ui.mystery")} value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode") }} /></div>}
         {covenantPowerOptions.length > 0 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={t("ui.optionalConversionOf1DisciplineDot")} value={creationCovenantPowerId || "__none"} setValue={(value) => setCreationCovenantPowerId(value === "__none" ? "" : value)} options={["__none", ...covenantPowerOptions.map((item) => item.id)]} optionLabels={{ __none: t("ui.doNotConvert"), ...Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)])) }} /><small className="anchor-recovery">{covenantStatus >= 1 ? t("ui.availableThroughKindredStatusInTheCovenant") : t("ui.requiresKindredStatus1ConfiguredForThisCovenant")}</small></div>}
         <Aspirations values={common.aspirations} setValues={common.setAspirations} />
         <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} /></div>
@@ -349,17 +349,17 @@ function CovenantSelector({ items, value, onChange, locale, invalid }: { items: 
   const { t } = useLanguage();
   const selected = items.find((item) => item.id === value);
   return <div className={`kith-field vampire-covenant-field${invalid ? " missing-field" : ""}`}>
-    <span>Covenant</span>
+    <span>{t("sheet.covenant")}</span>
     <div className="kith-current vampire-template-current">
       <strong>{selected ? displayName(selected, locale) : t("ui.noneSelected")}</strong>
-      <p>{selected?.description ?? (locale === "pt-BR" ? "Selecione uma Covenant." : "Select a Covenant.")}</p>
+      <p>{selected?.description ?? t("ui.selectCovenant")}</p>
       {selected?.advantage && <small><strong>{t("ui.advantage")}:</strong> {selected.advantage}</small>}
     </div>
     <Dialog>
-      <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {locale === "pt-BR" ? "Selecionar Covenant" : "Select Covenant"}</Button></DialogTrigger>
+      <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {t("ui.selectCovenant")}</Button></DialogTrigger>
       <DialogContent className="merit-dialog vtr-dialog">
-        <DialogHeader><DialogTitle>{locale === "pt-BR" ? "Selecionar Covenant" : "Select Covenant"}</DialogTitle><DialogDescription>{locale === "pt-BR" ? "Escolha a Covenant do personagem. O Status gratuito pode ser aplicado à Covenant, ao Clã ou a uma Cidade." : "Choose the character's Covenant. The free Status dot may apply to the Covenant, Clan, or a City."}</DialogDescription></DialogHeader>
-        <Choice label="Covenant" value={value} setValue={onChange} options={items.map((item) => item.id)} optionLabels={Object.fromEntries(items.map((item) => [item.id, displayName(item, locale)]))} />
+        <DialogHeader><DialogTitle>{t("ui.selectCovenant")}</DialogTitle><DialogDescription>{t("ui.selectCovenantDescription")}</DialogDescription></DialogHeader>
+        <Choice label={t("sheet.covenant")} value={value} setValue={onChange} options={items.map((item) => item.id)} optionLabels={Object.fromEntries(items.map((item) => [item.id, displayName(item, locale)]))} />
         {selected && <div className="vampire-selector-detail"><strong>{displayName(selected, locale)}</strong><p>{selected.description}</p>{selected.advantage && <small><strong>{t("ui.advantage")}:</strong> {selected.advantage}</small>}</div>}
         <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
       </DialogContent>

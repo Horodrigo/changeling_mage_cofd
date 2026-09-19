@@ -1,6 +1,6 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { BloodPotencyRow, VampireDisciplineDefinition, VampireReference } from "./catalog-types";
-import type { Locale } from "@/lib/i18n";
+import { translate, type Locale } from "@/lib/i18n";
 
 export const VAMPIRE_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
@@ -118,9 +118,7 @@ export function vampireSunlightSummary(humanity: number, bloodPotency: number, l
         "five-per-turn": "5× per turn",
       }[exposure.frequency];
 
-  return locale === "pt-BR"
-    ? `Luz solar: ${exposure.damage} de dano ${damageType} ${frequency}`
-    : `Sunlight: ${exposure.damage} ${damageType} damage ${frequency}`;
+  return translate(locale, "ui.sunlightSummary", { damage: exposure.damage, damageType, frequency });
 }
 
 export function vampireDerived(

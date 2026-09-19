@@ -32,7 +32,7 @@ for (const key of ["wyrd", "gnosis"]) for (const creation of [1,2,3]) {
     assert.equal(progression.creation + progression.advancement, creation + 3);
     for (const order of permutations) {
       const copy = structuredClone(current);
-      for (const _ of order) copy.line_data = power.refundPowerRating(copy, key);
+      for (let remaining = order.length; remaining > 0; remaining--) copy.line_data = power.refundPowerRating(copy, key);
       assert.equal(copy.line_data[key], creation);
     }
   });
@@ -60,7 +60,7 @@ test("reembolsa pontos em qualquer ordem sem restaurar snapshots de outras compr
     current.attributes.Strength = 4; current.skills.Athletics = 3;
     current.line_data.arcana.Fate = 3; current.line_data.wisdom = 10;
     current.line_data.gnosis = 5;
-    for (const _ of order) refunds.refundMageAdvancement(current, undo);
+    for (let remaining = order.length; remaining > 0; remaining--) refunds.refundMageAdvancement(current, undo);
     assert.equal(current.line_data.gnosis, 5);
     if (undo.kind === "trait") assert.equal(current[undo.group][undo.name], undo.group === "attributes" ? 1 : 0);
     if (undo.kind === "arcana") assert.equal(current.line_data.arcana.Fate, 0);
@@ -165,7 +165,7 @@ test("Lucidez permanente é gratuita, persistente e remove a última caixa em qu
     for (let i=0;i<3;i++) current.current_state = resources.changePermanentClarity(current.current_state, 1);
     current.current_state = JSON.parse(JSON.stringify(current.current_state));
     current.current_state.clarity_damage = ["severe","severe","mild","mild","mild","mild","mild"];
-    for (const _ of order) {
+    for (let remaining = order.length; remaining > 0; remaining--) {
       current.current_state = resources.changePermanentClarity(current.current_state, -1);
       current.current_state.clarity_damage = resources.normalizeClarityDamage(current.current_state.clarity_damage, 4 + resources.permanentClarityBonus(current.current_state));
     }
@@ -181,7 +181,7 @@ test("salvamento aguarda commit, mantém ordem e recupera gravação interrompid
   globalThis.indexedDB = { open() {
     const request = {};
     queueMicrotask(() => {
-      request.result = { close() {}, transaction(_store,mode) {
+      request.result = { close() {}, transaction() {
         const tx = { objectStore() { return {
           put(value,key) { const req={result:key}; transactions.push(()=>{disk.set(key,structuredClone(value)); tx.oncomplete();}); return req; },
           get(key) { const req={result:disk.get(key)}; queueMicrotask(()=>tx.oncomplete()); return req; }

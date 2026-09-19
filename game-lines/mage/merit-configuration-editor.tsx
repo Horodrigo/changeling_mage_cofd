@@ -20,7 +20,7 @@ export function MageStructuredMeritEditor(props: StructuredMeritEditorProps) {
   return <details className={`merit-configuration structured${props.compact ? " compact" : ""}`} open={!props.compact}>
     <summary>{t("ui.configureNamelessOrderBenefits")}</summary>
     <div>
-      <fieldset><legend>{t("ui.dot")} 1</legend><p className="structured-rule">High Speech</p></fieldset>
+      <fieldset><legend>{t("ui.dot")} 1</legend><p className="structured-rule">{t("ui.highSpeech")}</p></fieldset>
       {props.merit.dots >= 2 && <fieldset><legend>{t("ui.dot")} 2</legend><div className="merit-config-list">
         {Array.from({ length: 3 }, (_, index) => {
           const unavailable = new Set(selected.filter((_, itemIndex) => itemIndex !== index));

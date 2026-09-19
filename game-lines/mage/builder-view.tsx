@@ -398,7 +398,7 @@ function SpellSelector({
               <div className="contract-power-details">
                 <dl>
                   <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item)}</dd></div>
-                  {spellReach(item) && <div><dt>Reach</dt><dd>{spellReach(item)}</dd></div>}
+                  {spellReach(item) && <div><dt>{t("ui.reach")}</dt><dd>{spellReach(item)}</dd></div>}
                 </dl>
               </div>
             </details>

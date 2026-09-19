@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage } from "@/lib/i18n";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import {
   meritPrerequisitesMet,
@@ -121,7 +121,7 @@ function isRepeatableDefinition(definition: MeritDefinition) {
 }
 
 function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {
-  return definition.prerequisites ? `${locale === "pt-BR" ? "Pré-requisitos" : "Prerequisites"}: ${definition.prerequisites}\n${definition.description}` : definition.description;
+  return definition.prerequisites ? `${translate(locale, "ui.prerequisites")}: ${definition.prerequisites}\n${definition.description}` : definition.description;
 }
 
 function meritCategoryLabel(category: string) {

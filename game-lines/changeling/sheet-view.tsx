@@ -28,7 +28,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { CTL_SEEMINGS, changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
 import { entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
-import { useLanguage,type Locale } from "@/lib/i18n";
+import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, isInlineMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
@@ -80,7 +80,7 @@ function presentCourt(catalog: readonly CourtDefinition[], value: unknown, local
 
 function displayCourt(catalog: readonly CourtDefinition[], value: unknown, locale: Locale) {
     const raw = String(value ?? "");
-    if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return locale === "en-US" ? "Courtless" : "Sem Corte";
+    if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return translate(locale, "ui.courtless");
     return presentCourt(catalog, value, locale)?.name ?? raw;
 }
 export function ChangelingCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
@@ -193,7 +193,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             ["Feição", seemingDisplayName(data.seeming, locale)],
             [t("ui.kith6a78ff"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [t("ui.court"), displayCourt(lineReference.courts, data.court, locale)],
         ];
-        return (<CharacterPaperShell line="CtL" mobile title={"CHANGELING"} subtitle={t("ui.theLOST")}>
+        return (<CharacterPaperShell line="CtL" mobile title={t("ui.changelingTitle")} subtitle={t("ui.theLOST")}>
         <SwipeableSheetTabs value={sheetTab} onValueChange={setSheetTab} tabs={[
                 { value: "resumo", label: t("ui.summary") }, { value: "stats", label: "Stats" },
                 { value: "detalhes", label: t("ui.details") },
@@ -206,62 +206,62 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           {{
                 resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value}/>)}{false}</section>
-              <SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
-              <SheetHeading>Experiência</SheetHeading>
+              <SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
+              <SheetHeading>{t("ui.experience")}</SheetHeading>
               {<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
               {false}
               {false}
             </>,
                 stats: <>
-              <SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading>
+              <SheetHeading className="ctl-attributes-heading">{t("ui.attributes")}</SheetHeading>
               <div className="mobile-attribute-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames/>)}</div>
-              <SheetHeading>Perícias</SheetHeading>
+              <SheetHeading>{t("ui.skills")}</SheetHeading>
               <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>)}</div>
             </>,
                 detalhes: <>
-              <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
-              <SheetHeading>Méritos Expandidos</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
-              <SheetHeading>Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
-              <SheetHeading>Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
-              <SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
-              <SheetHeading>Condições</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
+              <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
+              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
+              <SheetHeading>{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
+              <SheetHeading>{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
+              <SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
+              <SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
             </>,
                 poderes: <>
               <PowerResource name={t("ui.wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
-              <SheetHeading>Regalias Favorecidas</SheetHeading><LineList items={changelingFavoredRegalia(data)}/>
-              <SheetHeading>Contratos</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
-              <SheetHeading>Débito Goblin</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
-              <SheetHeading>Juramentos</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
+              <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data)}/>
+              <SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
+              <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
+              <SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
               <SeemingLore seeming={String(data.seeming ?? "")}/><KithLore data={data} reference={lineReference}/>
             </>,
                 entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={lineReference.entitlements}/>,
                 combate: <>
-              <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/>
-              <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
+              <SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/>
+              <SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
               <CombatPage character={character} derived={derived} updateSheet={updateSheet}/>
             </>,
                 companheiros: <div className="companions-page"><CompanionPage character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>,
-                anotacoes: <><SheetHeading>Anotações</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+                anotacoes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
             }}
         </SwipeableSheetTabs>
       </CharacterPaperShell>);
     }
-    return (<CharacterPaperShell line="CtL" title={"CHANGELING"} subtitle={t("ui.theLOST")}>
+    return (<CharacterPaperShell line="CtL" title={t("ui.changelingTitle")} subtitle={t("ui.theLOST")}>
       {(<Tabs defaultValue="principal" className="ctl-sheet-tabs">
           <TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
             <TabsTrigger value="principal">{t("ui.main")}</TabsTrigger>
             <TabsTrigger value="poderes">{t("ui.details")}</TabsTrigger>
-            {entitlementMerit && <TabsTrigger value="entitlement">Entitlement</TabsTrigger>}
+            {entitlementMerit && <TabsTrigger value="entitlement">{t("ui.entitlement")}</TabsTrigger>}
             <TabsTrigger value="combate">{t("ui.combat")}</TabsTrigger>
           {hasCompanions && <TabsTrigger value="companheiros">{t("ui.companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <MainSheet className="changeling-main-body"
-              identity={<section className="sheet-identity-grid"><SheetField label="Nome" value={character.character.name}/><SheetField label="Agulha" value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label="Feição" value={seemingDisplayName(data.seeming, locale)}/><SheetField label="Jogador" value={character.character.player}/><SheetField label="Fio" value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={t("ui.kith6a78ff")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label="Crônica" value={character.character.chronicle}/><SheetField label="Conceito" value={character.character.concept}/><SheetField label={t("ui.court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
-              attributes={<><SheetHeading className="ctl-attributes-heading">Atributos</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
+              identity={<section className="sheet-identity-grid"><SheetField label={t("ui.name")} value={character.character.name}/><SheetField label={t("ui.needle")} value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label={t("ui.seeming")} value={seemingDisplayName(data.seeming, locale)}/><SheetField label={t("ui.player")} value={character.character.player}/><SheetField label={t("ui.thread")} value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={t("ui.kith6a78ff")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label={t("ui.chronicle")} value={character.character.chronicle}/><SheetField label={t("ui.concept")} value={character.character.concept}/><SheetField label={t("ui.court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
+              attributes={<><SheetHeading className="ctl-attributes-heading">{t("ui.attributes")}</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
               skills={
                 <>
-                  <SheetHeading>Perícias</SheetHeading>
+                  <SheetHeading>{t("ui.skills")}</SheetHeading>
                   {Object.entries(SKILLS).map(([category, names]) => (
                     <TraitBlock
                       key={category}
@@ -280,27 +280,27 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                   ))}
                 </>
               }
-              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data)}/><SheetHeading className="ctl-single-divider">Fragilidades</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
-              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/><SheetHeading className="ctl-single-divider">Pedras de Contato</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
+              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data)}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
+              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
-              health={<><SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              powerStat={<MainPowerStat label="Fado" value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label="Glamour" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>Lucidez</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
+              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label="Glamour" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
-            <SheetHeading>Contratos</SheetHeading>
+            <SheetHeading>{t("ui.contracts")}</SheetHeading>
             <ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
             <div className="powers-sheet-grid">
               <section>
-                <SheetHeading>Outras Características</SheetHeading>
+                <SheetHeading>{t("ui.otherTraits")}</SheetHeading>
                 <SeemingLore seeming={String(data.seeming ?? "")}/>
                 <KithLore data={data} reference={lineReference}/>
                 <GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
               </section>
               <section>
-                <SheetHeading>Juramentos</SheetHeading>
+                <SheetHeading>{t("ui.oaths")}</SheetHeading>
                 <EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
-                <SheetHeading>Méritos Expandidos</SheetHeading>
+                <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
                 <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>
                 <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
               </section>

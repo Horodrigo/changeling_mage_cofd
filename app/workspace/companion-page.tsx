@@ -19,7 +19,7 @@ export function CompanionPage({ character, updateSheet }: {
   const animals = ANIMALS.map(item => animalPresentation(item, locale));
   const bonded = objectList(character.current_state?.conditions).filter(item => String(item.id) === "bonded" && String(item.animalId ?? ""));
   return <section className="core-companions">
-    <SheetHeading>Bonded</SheetHeading>
+    <SheetHeading>{t("ui.bonded")}</SheetHeading>
     <div className="companion-grid">{bonded.map((saved, index) => {
       const animal = animals.find(item => item.id === String(saved.animalId));
       if (!animal) return null;

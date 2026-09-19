@@ -228,41 +228,41 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
           {{
                 resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <CommonSheetField key={String(label)} label={String(label)} value={value}/>)}{<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/>}</section>
-              <SheetHeading>Experiência</SheetHeading>
+              <SheetHeading>{t("ui.experience")}</SheetHeading>
               {<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
-              {<><SheetHeading>Méritos Expandidos</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
-              {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>Condições</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/></section><section><SheetHeading>Aspirações</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>Obsessões</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
+              {<><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
+              {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/></section><section><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>{t("ui.obsessions")}</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
             </>,
                 stats: <>
-              <SheetHeading>Atributos</SheetHeading>
+              <SheetHeading>{t("ui.attributes")}</SheetHeading>
               <div className="mobile-attribute-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames/>)}</div>
-              <SheetHeading>Perícias</SheetHeading>
+              <SheetHeading>{t("ui.skills")}</SheetHeading>
               <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>)}</div>
             </>,
                 detalhes: <>
-              <SheetHeading>Méritos</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/>
+              <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/>
               <MageOrderSummary data={data}/>
-              <SheetHeading>Feitiços Ativos</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
+              <SheetHeading>{t("ui.activeSpells")}</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
             </>,
                 poderes: <>
               <PowerResource name={t("ui.gnosis")} rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>
-              <SheetHeading>Arcanos</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} {...arcanaPresentation(name)}/>)}</div>
+              <SheetHeading>{t("ui.arcana")}</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} {...arcanaPresentation(name)}/>)}</div>
               <MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>
-              <SheetHeading>Rotas</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
-              <SheetHeading>Ferramentas Mágicas</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={t("ui.dedicatedTool")} placeholder={t("ui.magicalTool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
-              <SheetHeading>Inclinação do Nimbus</SheetHeading><NimbusEditor wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} onEffectsChange={setNimbusEffects}/>
-              <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div><SpellColumn items={praxes} catalog={spellCatalog} minimumRows={gnosis} onRemove={removePraxis}/>
-              <SheetHeading>Attainments</SheetHeading><MageAttainmentList arcana={arcana}/>
-              <SheetHeading>Condições do Paradoxo</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)}/>
+              <SheetHeading>{t("ui.rotes")}</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
+              <SheetHeading>{t("ui.magicalTools")}</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={t("ui.dedicatedTool")} placeholder={t("ui.magicalTool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
+              <SheetHeading>{t("ui.nimbusTilt")}</SheetHeading><NimbusEditor wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} onEffectsChange={setNimbusEffects}/>
+              <div className="sheet-heading-action"><SheetHeading>{t("ui.praxes")}</SheetHeading>{praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div><SpellColumn items={praxes} catalog={spellCatalog} minimumRows={gnosis} onRemove={removePraxis}/>
+              <SheetHeading>{t("ui.attainments")}</SheetHeading><MageAttainmentList arcana={arcana}/>
+              <SheetHeading>{t("ui.paradoxConditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={paradoxConditions} onChange={(value) => setState("conditions", value)}/>
             </>,
                 legacy: <LegacyPage character={character} updateSheet={updateSheet} onDiscard={() => setSheetTab("resumo")}/>,
                 combate: <>
-              <SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/>
-              <SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
+              <SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/>
+              <SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
               <CombatPage character={character} derived={derived} updateSheet={updateSheet}/>
             </>,
                 companheiros: <div className="companions-page"><MageCompanionPage character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>,
-                anotacoes: <><SheetHeading>Anotações</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+                anotacoes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
             }}
         </SwipeableSheetTabs>
       </CharacterPaperShell>);
@@ -272,17 +272,17 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
           <TabsList className="ctl-sheet-tab-list" aria-label={t("ui.mageCharacterPages")}>
             <TabsTrigger value="principal">{t("ui.main")}</TabsTrigger>
             <TabsTrigger value="magia">{t("ui.details")}</TabsTrigger>
-            {legacyState?.joined && <TabsTrigger value="legacy" data-legacy-tab-trigger>Legacy</TabsTrigger>}
+            {legacyState?.joined && <TabsTrigger value="legacy" data-legacy-tab-trigger>{t("ui.legacy")}</TabsTrigger>}
             <TabsTrigger value="combate">{t("ui.combat")}</TabsTrigger>
             {hasCompanions && <TabsTrigger value="companheiros">{t("ui.companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <MainSheet className="mage-main-body"
-              identity={<section className="sheet-identity-grid"><CommonSheetField label="Nome das Sombras" value={data.shadow_name}/><CommonSheetField label="Virtude" value={data.virtue}/><CommonSheetField label="Caminho" value={data.path}/><CommonSheetField label="Jogador" value={character.character.player}/><CommonSheetField label="Vício" value={data.vice}/><CommonSheetField label="Ordem" value={!data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label="Crônica" value={character.character.chronicle}/><CommonSheetField label="Conceito" value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/></section>}
-              attributes={<><SheetHeading>Atributos</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
+              identity={<section className="sheet-identity-grid"><CommonSheetField label={t("ui.shadowName")} value={data.shadow_name}/><CommonSheetField label={t("ui.virtue")} value={data.virtue}/><CommonSheetField label={t("ui.path")} value={data.path}/><CommonSheetField label={t("ui.player")} value={character.character.player}/><CommonSheetField label={t("ui.vice")} value={data.vice}/><CommonSheetField label={t("ui.order")} value={!data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label={t("ui.chronicle")} value={character.character.chronicle}/><CommonSheetField label={t("ui.concept")} value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/></section>}
+              attributes={<><SheetHeading>{t("ui.attributes")}</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
               skills={
                 <>
-                    <SheetHeading>Perícias</SheetHeading>
+                    <SheetHeading>{t("ui.skills")}</SheetHeading>
                     {Object.entries(SKILLS).map(([category, names]) => (
                     <TraitBlock
                         key={category}
@@ -306,27 +306,27 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               obsessions={<EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
-              health={<><SheetHeading>Vitalidade</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>Força de Vontade</SheetHeading><ResourceTrack label="Força de Vontade" current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              specificPowersTitle="Arcanos" powerStat={<MainPowerStat label="Gnose" value={powerRating} summary={t("ui.ritualIntervalCombinedSpellsParadoxDicePerOver")}/>} fuel={<MainFuel label="Mana" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)}/>} stability={<MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>} derived={derived} experience={<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
+              specificPowersTitle="Arcanos" powerStat={<MainPowerStat label={t("ui.gnosis")} value={powerRating} summary={t("ui.ritualIntervalCombinedSpellsParadoxDicePerOver")}/>} fuel={<MainFuel label={t("ui.mana")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)}/>} stability={<MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>} derived={derived} experience={<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="magia" data-page-title="Detalhes" className="ctl-sheet-page powers-page mage-spell-page">
             <div className="mage-page-355-grid">
               <section className="mage-page-left">
-                <SheetHeading>Feitiços Ativos</SheetHeading>
+                <SheetHeading>{t("ui.activeSpells")}</SheetHeading>
                 <EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
-                <SheetHeading>Attainments</SheetHeading>
+                <SheetHeading>{t("ui.attainments")}</SheetHeading>
                 <MageAttainmentList arcana={arcana}/>
-                <div className="sheet-heading-action"><SheetHeading>Práxis</SheetHeading>{praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div>
+                <div className="sheet-heading-action"><SheetHeading>{t("ui.praxes")}</SheetHeading>{praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}</div>
                 <SpellColumn items={praxes} catalog={spellCatalog} minimumRows={gnosis} onRemove={removePraxis}/>
               </section>
               <section className="mage-page-main">
-                <SheetHeading>Rotas</SheetHeading>
+                <SheetHeading>{t("ui.rotes")}</SheetHeading>
                 <SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
-                <SheetHeading>Ferramentas Mágicas</SheetHeading>
+                <SheetHeading>{t("ui.magicalTools")}</SheetHeading>
                 <EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={t("ui.dedicatedTool")} placeholder={t("ui.magicalTool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
-                <SheetHeading>Inclinação do Nimbus</SheetHeading>
+                <SheetHeading>{t("ui.nimbusTilt")}</SheetHeading>
                 <NimbusEditor wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} onEffectsChange={setNimbusEffects}/>
-                <SheetHeading>Anotações</SheetHeading>
+                <SheetHeading>{t("ui.notes")}</SheetHeading>
                 <NotesArea value={notes} onChange={(value) => setState("notes", value)}/>
               </section>
             </div>
@@ -346,7 +346,8 @@ function LegacySheetField({ value, enabled, onOpen }: {
     enabled: boolean;
     onOpen: () => void;
 }) {
-    return <div className={`official-field legacy-sheet-field${enabled ? " enabled" : ""}`}><span>Legacy</span>{enabled ? <button type="button" onClick={onOpen}>{value}</button> : <strong>{value}</strong>}</div>;
+    const { t } = useLanguage();
+    return <div className={`official-field legacy-sheet-field${enabled ? " enabled" : ""}`}><span>{t("ui.legacy")}</span>{enabled ? <button type="button" onClick={onOpen}>{value}</button> : <strong>{value}</strong>}</div>;
 }
 function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], locale: Locale = "en-US") {
     const definition = catalog.find((entry) => entry.name === item.name);
@@ -470,7 +471,7 @@ function MageWisdomSection({ wisdom, gnosis, inuredSpells, available, locale, on
     const [open, setOpen] = useState(false), [failed, setFailed] = useState(false), [condition, setCondition] = useState<"megalomaniacal" | "rampant">("megalomaniacal"), [persistent, setPersistent] = useState(false);
     const close = () => { setOpen(false); setFailed(false); setPersistent(false); };
     return <div className="wisdom-sheet-section">
-    <div className="wisdom-heading-row"><SheetHeading>Sabedoria</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" onClick={() => setOpen(true)}>Hubris</Button></div>
+    <div className="wisdom-heading-row"><SheetHeading>{t("ui.wisdom")}</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" onClick={() => setOpen(true)}>{t("ui.hubris")}</Button></div>
     <div className="wisdom-track"><DotValue value={wisdom} max={10} singleRow/></div>
     <div className="inured-heading-row"><strong>{t("ui.inuredSpells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length < gnosis && <ExperiencePowerPicker kind="Feitiço" items={available} selectedId="" onSelect={onAdd} compact triggerLabel={t("ui.selectInuredSpell")} dialogTitle={t("ui.selectInuredSpell")} dialogDescription={t("ui.afterLosingWisdomFromUsingASpellIt")}/>}</div>
     <div className="inured-spell-list">{inuredSpells.map(item => <div key={String(item.id)}><span>{String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={() => onRemove(String(item.id))}><Trash2 /> {t("ui.remove7d41cc")}</Button></div>)}</div>
@@ -827,7 +828,7 @@ function MageOrderSummary({ data }: {
             ? custom.roteSkills.map(String).filter(Boolean)
             : [...(MTA_ORDERS[orderKey as keyof typeof MTA_ORDERS] ?? [])];
     return (<section className="mage-order-summary">
-      <SheetHeading>Ordem</SheetHeading>
+      <SheetHeading>{t("ui.order")}</SheetHeading>
       <strong>{name}</strong>
       {description && <p>{description}</p>}
       {skills.length > 0 && <small><strong>{t("ui.roteSkills")}:</strong> {skills.map((skill) => systemTerm(skill, locale)).join(", ")}</small>}

@@ -494,7 +494,7 @@ export function MageExperiencePanel({
         </label>
       </div>
       <BeatTrack
-        label="Beats"
+        label={t("ui.beats")}
         value={beats}
         onChange={(value) => saveBalances({ mage_experience_beats: value })}
       />

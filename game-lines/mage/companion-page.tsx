@@ -13,9 +13,10 @@ import { alphabetical } from "@/lib/option-order";
 const FAMILIAR_NUMINA = ["Awe", "Blast", "Dement", "Drain", "Emotional Aura", "Entropic Decay", "Firestarter", "Hallucination", "Implant Mission", "Left-Handed Spanner", "Mortal Mask", "Pathfinder", "Regenerate", "Seek", "Speed", "Sign", "Stalwart", "Telekinesis"];
 
 export function CompanionPage({ character, updateSheet }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void }) {
+  const { t } = useLanguage();
   const familiars = character.merits.map((merit, index) => ({ merit, index })).filter(({ merit }) => !merit.grantedBy && merit.name === "Familiar");
   return <section className="mage-companions">
-    {!!familiars.length && <><SheetHeading>Familiars</SheetHeading>{familiars.map(({ merit, index }) => <FamiliarCompanionCard key={`Familiar-${index}`} merit={merit} meritIndex={index} character={character} updateSheet={updateSheet}/>)}</>}
+    {!!familiars.length && <><SheetHeading>{t("ui.familiars")}</SheetHeading>{familiars.map(({ merit, index }) => <FamiliarCompanionCard key={`Familiar-${index}`} merit={merit} meritIndex={index} character={character} updateSheet={updateSheet}/>)}</>}
   </section>;
 }
 

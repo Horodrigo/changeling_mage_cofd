@@ -1,3 +1,5 @@
+import { translate } from "@/lib/i18n";
+
 export const CTL_SEEMINGS = {
   Beast: {
     translated: "Fera", favored: "Resistance", regalia: "Steed",
@@ -190,7 +192,7 @@ export function changelingAnchorRecovery(kind:"needle"|"thread",name:unknown,loc
   if(!item)return "";
   const single=locale==="pt-BR"?item.singleWillpowerPt:item.singleWillpower;
   const all=locale==="pt-BR"?item.allWillpowerPt:item.allWillpower;
-  return locale==="pt-BR"?`Recuperar 1 FV: ${single}\nRecuperar toda a FV: ${all}`:`Recover 1 Willpower: ${single}\nRecover all Willpower: ${all}`;
+  return translate(locale, "ui.recoverWillpowerSummary", { single, all });
 }
 export function changelingAnchorDisplayName(
   kind: "needle" | "thread",
