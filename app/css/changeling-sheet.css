@@ -280,11 +280,11 @@
 }
 
 .ctl-sheet::after {
-  background-image: url("/changeling/style/watermark.webp");
+  background-image: url("/changeling/style/background-changeling.webp");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 55% auto;
-  opacity: .20;
+  background-size: 50% auto;
+  opacity: .15;
 }
 
 .ctl-botanical-frame {

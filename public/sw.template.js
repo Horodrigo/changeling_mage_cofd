@@ -34,7 +34,7 @@ const SHELL = [
   "/changeling/style/skill-highlight-middle-2.webp",
   "/changeling/style/skill-highlight-right.webp",
   "/changeling/style/experience-purchase-icon.webp",
-  "/changeling/style/watermark.webp",
+  "/changeling/style/background-changeling.webp",
 
   "/vampire/style/attributes-divider.webp",
   "/vampire/style/attributes-divider-thorns.webp",

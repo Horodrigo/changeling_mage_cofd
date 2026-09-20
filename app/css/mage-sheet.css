@@ -166,7 +166,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50% auto;
-  opacity: .20;
+  opacity: .10;
 }
 
 .mta-sheet { --sheet-accent:#397895; --sheet-ink:#253a47; background:linear-gradient(135deg,#eef8fb 0,#fff 13%,#fff 87%,#e9f5f8 100%); }

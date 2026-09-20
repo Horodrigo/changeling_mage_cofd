@@ -267,7 +267,7 @@ específicas da moldura dinâmica de Skill de Kith.
 | Attributes | `public/changeling/style/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
 | Seções | `public/changeling/style/section-divider.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
 | Grid | `public/changeling/style/column-divider.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
-| Marca-d'água | `public/changeling/style/watermark.webp` | 1145 × 1374 | RGBA | Ilustração central translúcida da ficha. |
+| Marca-d'água | `public/changeling/style/background-changeling.webp` | 1145 × 1374 | RGBA | Ilustração central translúcida da ficha. |
 | Ícone | `public/changeling/style/icon.webp` | 534 × 500 | RGBA | Símbolo da linha usado no registro e na impressão. |
 | Experiência | `public/changeling/style/experience-purchase-icon.webp` | 657 × 685 | RGBA | Ornamento do seletor de compra de trait. |
 | Skill de Kith | `public/changeling/style/skill-highlight-left.webp` | 760 × 552 | RGBA | Início da moldura adaptável. |
