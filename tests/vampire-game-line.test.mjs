@@ -84,6 +84,27 @@ test("Vampire core-book catalogs expose all five Clans and line-owned content", 
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
 });
 
+test("Secrets of the Covenants exposes every printed Merit, Law, Oath, and Wyrm's Nest Merit", async () => {
+  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const core = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const supplement = merits.filter((item) => item.sourceId === "vtr-sotc");
+  const count = (category) => supplement.filter((item) => item.category === category).length;
+
+  assert.equal(supplement.length, 60);
+  assert.equal(count("Carthian Movement"), 11);
+  assert.equal(count("Carthian Law"), 6);
+  assert.equal(count("Circle of the Crone"), 8);
+  assert.equal(count("Invictus"), 10);
+  assert.equal(count("Invictus Oaths"), 10);
+  assert.equal(count("Lancea et Sanctum"), 7);
+  assert.equal(count("Ordo Dracul"), 4);
+  assert.equal(count("Wyrm's Nest"), 4);
+  assert.deepEqual(
+    core.filter((item) => item.additionalSources?.some((entry) => entry.sourceId === "vtr-sotc")).map((item) => item.name).sort(),
+    ["Automatic Writing", "Laying on Hands", "Numbing Touch"],
+  );
+});
+
 test("Vampire Discipline presentation never applies Attribute translations", async () => {
   const { vampireDisciplineDisplayName } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
