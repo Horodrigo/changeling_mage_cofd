@@ -76,10 +76,10 @@ test("Vampire core-book catalogs expose all five Clans and line-owned content", 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 10);
   assert.equal(powers.devotions.length, 29);
-  assert.equal(powers.cruacRites.length, 10);
-  assert.equal(powers.thebanMiracles.length, 9);
-  assert.equal(powers.coils.length, 3);
-  assert.equal(powers.scales.length, 10);
+  assert.equal(powers.cruacRites.length, 24);
+  assert.equal(powers.thebanMiracles.length, 23);
+  assert.equal(powers.coils.length, 5);
+  assert.equal(powers.scales.length, 14);
   assert.ok(powers.coils.every((item) => item.levels.length === 5));
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
 });
@@ -103,6 +103,19 @@ test("Secrets of the Covenants exposes every printed Merit, Law, Oath, and Wyrm'
     core.filter((item) => item.additionalSources?.some((entry) => entry.sourceId === "vtr-sotc")).map((item) => item.name).sort(),
     ["Automatic Writing", "Laying on Hands", "Numbing Touch"],
   );
+});
+
+test("Secrets of the Covenants exposes every Crúac rite, Theban miracle, Coil level, and Scale", async () => {
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const fromSupplement = (items) => items.filter((item) => item.source === "Secrets of the Covenants");
+  const coils = fromSupplement(powers.coils);
+
+  assert.equal(fromSupplement(powers.cruacRites).length, 14);
+  assert.equal(fromSupplement(powers.thebanMiracles).length, 14);
+  assert.equal(coils.length, 2);
+  assert.equal(coils.flatMap((item) => item.levels).length, 10);
+  assert.equal(fromSupplement(powers.scales).length, 4);
+  assert.deepEqual(coils.map((item) => item.name), ["Coil of Zirnitra", "Coil of Ziva"]);
 });
 
 test("Vampire Discipline presentation never applies Attribute translations", async () => {
