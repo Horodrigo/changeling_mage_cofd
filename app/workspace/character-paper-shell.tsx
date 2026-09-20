@@ -167,9 +167,9 @@ export function PowerResource({
   return (
     <div className="power-resource">
       <div className="power-rating power-rating-summary" tabIndex={summary ? 0 : undefined} title={summary} aria-label={summary} data-tooltip={summary}>
-        <span>{systemTerm(name, locale)}</span><DotValue value={rating} max={10} />
+        <span>{systemTerm(name, locale)}</span><DotValue value={rating} max={10} singleRow />
       </div>
-      <ResourceTrack label={resourceName} current={current} maximum={maximum} perTurn={perTurn} onChange={onChange} storedCurrent={storedCurrent} storedMaximum={storedMaximum} onStoredChange={onStoredChange} />
+      <ResourceTrack label={resourceName} current={current} maximum={maximum} displayMinimum={20} perTurn={perTurn} onChange={onChange} storedCurrent={storedCurrent} storedMaximum={storedMaximum} onStoredChange={onStoredChange} />
       {storedCurrent !== undefined && <p className="tracker-help">{t("ui.storedGlamour")} <strong>{storedCurrent}</strong></p>}
     </div>
   );

@@ -364,7 +364,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section>
           <SheetHeading>{t("ui.health")}</SheetHeading><PrintPhysicalTrack current={health} slots={health}/>
           <SheetHeading>{t("ui.willpower")}</SheetHeading><PrintPhysicalTrack current={currentWillpower}/>
-          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
+          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={1} max={10} singleRow/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
           <SheetHeading>{t("ui.clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
           <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
           <SheetHeading>{t("ui.derivedStats")}</SheetHeading><CompactValues values={otherTraits}/>

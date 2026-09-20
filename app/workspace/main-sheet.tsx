@@ -4,7 +4,7 @@ import { ResourceTrack } from "./character-paper-shell";
 import { DotValue, SheetHeading } from "./sheet-primitives";
 
 export function MainPowerStat({ label, value, summary }: { label: string; value: number; summary?: string }) {
-  return <><SheetHeading>{label}</SheetHeading><div className="cod-main-power-stat"><DotValue value={value} max={10} singleRow /></div>{summary && <p className="cod-main-power-summary">{summary}</p>}</>;
+  return <><div className="cod-main-power-stat"><strong>{label}</strong><DotValue value={value} max={10} singleRow /></div>{summary && <p className="cod-main-power-summary">{summary}</p>}</>;
 }
 
 export function MainFuel({ label, current, maximum, onChange, storedCurrent, storedMaximum, onStoredChange }: {
