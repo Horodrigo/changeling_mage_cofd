@@ -44,8 +44,8 @@ export function CommonIdentityStep({
       <label className={missing("name") || missing("shadowName") ? "missing-field" : ""}>
         {nameLabel}<Input value={name} onChange={(event) => setName(event.target.value)} />
       </label>
-      <label>{t("ui.concept")}<Input value={concept} onChange={(event) => setConcept(event.target.value)} /></label>
       <label>{t("ui.player")}<Input value={player} onChange={(event) => setPlayer(event.target.value)} /></label>
+      <label>{t("ui.concept")}<Input value={concept} onChange={(event) => setConcept(event.target.value)} /></label>
       <label>{t("ui.chronicle")}<Input value={chronicle} onChange={(event) => setChronicle(event.target.value)} /></label>
     </div>
   </div>;
