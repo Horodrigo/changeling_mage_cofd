@@ -32,6 +32,6 @@ export function PrintSingleMarkDots({ value, maximum = 10 }: { value: number; ma
   return <span className="cod-print-dots">{Array.from({ length: maximum }, (_, index) => <i className={index + 1 === value ? "filled" : ""} key={index}/>)}</span>;
 }
 
-export function PrintExperience({ beatTracks, values }: { beatTracks: ReadonlyArray<{ label: ReactNode; value: number }>; values: ReadonlyArray<{ label: ReactNode; value: number }> }) {
-  return <div className="cod-print-experience">{beatTracks.map((track, index) => <div className="beats" key={index}><span>{track.label}</span><PrintDots value={track.value} maximum={5}/></div>)}{values.map((item, index) => <div key={index}><span>{item.label}</span><strong>{item.value}</strong></div>)}</div>;
+export function PrintExperience({ beatLabels, lineLabels }: { beatLabels: readonly ReactNode[]; lineLabels: readonly ReactNode[] }) {
+  return <div className="cod-print-experience">{beatLabels.map((label, index) => <div className="beats" key={index}><span>{label}</span><PrintDots value={0} maximum={5}/></div>)}{lineLabels.map((label, index) => <div key={index}><span>{label}</span><strong/></div>)}</div>;
 }

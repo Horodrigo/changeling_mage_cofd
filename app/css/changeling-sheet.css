@@ -1857,7 +1857,7 @@ background-size:
   box-shadow:0 4px 22px #1d27214d;
   color:var(--sheet-ink);
   font-family:"Changeling Sheet",Georgia,"Times New Roman",serif;
-  font-size:8.2pt;
+  font-size:8.8pt;
   print-color-adjust:exact;
   -webkit-print-color-adjust:exact;
 }
@@ -1880,7 +1880,7 @@ background-size:
 .ctl-print-field { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:end; gap:2mm; min-width:0; }
 .ctl-print-field span { font-size:6.5pt; font-weight:700; text-transform:uppercase; }
 .ctl-print-field strong { min-height:5mm; overflow:hidden; border-bottom:.2mm solid var(--sheet-ink); font:italic 9pt/5mm Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
-.ctl-print-page .official-heading { margin:3.1mm 0 1.6mm; font-size:11pt; }
+.ctl-print-page .official-heading { margin:3.1mm 0 1.6mm; font-size:12pt; }
 .ctl-print-page .official-heading::before,.ctl-print-page .official-heading::after { height:4.2mm; background-color:transparent; background-image:url('/changeling/style/section-divider.webp'),linear-gradient(var(--ctl-rule),var(--ctl-rule)); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.2mm,calc(100% - 4.5mm) .25mm; opacity:.9; }
 .ctl-print-page .official-heading::after { transform:scaleX(-1); }
 .ctl-print-page .official-heading.ctl-print-attributes-heading { position:relative; isolation:isolate; justify-content:center; min-height:10mm; margin-top:1.2mm; }
@@ -1918,8 +1918,8 @@ background-size:
 .ctl-print-main-grid { display:grid; grid-template-columns:1.08fr .96fr .96fr; gap:5mm; align-items:start; }
 .ctl-print-main-grid > section + section { background-image:url('/changeling/style/column-divider.webp'); background-position:left top; background-repeat:repeat-y; background-size:1.2mm auto; padding-left:2.5mm; }
 .ctl-print-main-grid .official-trait-block { margin-bottom:2mm; }
-.ctl-print-page .official-trait-block h4 { margin-bottom:.6mm; font-size:7pt; }
-.ctl-print-page .official-trait-line { min-height:4.7mm; font-size:8.2pt; }
+.ctl-print-page .official-trait-block h4 { margin-bottom:.6mm; font-size:7.7pt; }
+.ctl-print-page .official-trait-line { min-height:5mm; font-size:8.8pt; }
 .ctl-print-page .official-trait-line small { font-size:5.8pt; }
 .ctl-print-page .official-dots { gap:.55mm; }
 .ctl-print-page .official-dot-row { gap:.55mm; }
@@ -1936,7 +1936,7 @@ background-size:
 .ctl-print-page .kith-skill-right { width:calc(7.5mm * 471 / 552); background-image:url('/changeling/style/skill-highlight-right.webp'); }
 .ctl-print-merits { display:grid; }
 .ctl-print-merits > div { display:flex; min-height:4.6mm; align-items:center; justify-content:space-between; gap:2mm; border-bottom:.2mm solid #aaa8a170; }
-.ctl-print-merits > div > span { min-width:0; overflow:hidden; font-size:7.6pt; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-merits > div > span { min-width:0; overflow:hidden; font-size:8.2pt; text-overflow:ellipsis; white-space:nowrap; }
 .ctl-print-merits > div.blank { min-height:4.6mm; }
 .ctl-print-court { display:grid; gap:.5mm; border-bottom:.2mm solid #aaa8a170; padding:1mm 0; }
 .ctl-print-court strong { color:var(--sheet-accent); font-size:8.5pt; }

@@ -4,6 +4,7 @@ import { useLayoutEffect } from "react";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintLines, PrintRatedLines, PrintSingleMarkDots } from "@/app/workspace/print-sheet-primitives";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import type { SpellDefinition } from "@/lib/catalog/catalog-types";
+import { EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -32,8 +33,8 @@ function Heading({ children }: { children: React.ReactNode }) {
   return <h2 className="mta-print-heading">{children}</h2>;
 }
 
-function Track({ label, maximum, current = maximum, dots = false }: { label: string; maximum: number; current?: number; dots?: boolean }) {
-  return <section className="mta-print-track"><strong>{label}</strong>{dots ? <PrintDots value={maximum} maximum={10}/> : <><PrintDots value={maximum} maximum={Math.max(10, maximum)}/><PrintBoxes value={current} maximum={Math.max(10, maximum)}/></>}</section>;
+function Track({ label, maximum, value = maximum }: { label: string; maximum: number; value?: number }) {
+  return <section className="mta-print-track"><strong>{label}</strong><PrintDots value={value} maximum={Math.max(10, maximum)}/><PrintBoxes maximum={Math.max(10, maximum)}/></section>;
 }
 
 export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLinePrintSheetProps) {
@@ -49,18 +50,11 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   ];
   const arcana = data.arcana && typeof data.arcana === "object" ? data.arcana as Record<string, number> : {};
   const gnosis = Math.max(1, Number(data.gnosis ?? 1));
-  const wisdom = Math.max(1, Number(data.wisdom ?? 7));
   const resource = powerResourceLimits(gnosis);
   const derived = derivedWithPermanentMerits(character);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
-  const mana = Math.max(0, Math.min(resource.maximum, Number(character.current_state.mana_current ?? resource.maximum)));
-  const regularAvailable = Math.max(0, Math.trunc(Number(character.current_state.mage_experience_available ?? 0)));
-  const regularSpent = Math.max(0, Math.trunc(Number(character.current_state.mage_experience_spent ?? 0)));
-  const arcaneAvailable = Math.max(0, Math.trunc(Number(character.current_state.arcane_experience_available ?? 0)));
-  const arcaneSpent = Math.max(0, Math.trunc(Number(character.current_state.arcane_experience_spent ?? 0)));
-  const regularTotal = Math.max(regularAvailable + regularSpent, Math.trunc(Number(character.current_state.mage_experience_total ?? 0)));
-  const arcaneTotal = Math.max(arcaneAvailable + arcaneSpent, Math.trunc(Number(character.current_state.arcane_experience_total ?? 0)));
+  const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
   const conditions = objectList(character.current_state.conditions).map((item) => conditionCatalog.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
   const rotes = [...objectList(data.rotes), ...objectList(data.learned_rotes)];
   const praxes = [...objectList(data.praxes), ...objectList(data.learned_praxes)];
@@ -99,22 +93,23 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
     `${t("ui.baneda2072")}: ${String(familiarConfig.bane ?? "")}`,
     `${t("ui.numina")}: ${stringList(familiarConfig.numina).join(", ")}`,
   ] : [];
-  const specialties = character.specializations.map((item) => typeof item === "string" ? item : `${systemTerm(item.skill, locale)} (${item.name})`);
+  const weapons = stringList(data.combat_weapons).map((id) => WEAPONS.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));
+  const equipment = stringList(data.combat_equipment).map((id) => EQUIPMENT.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));
   return <div className="game-print-document mta-print-document">
     <MagePrintPage page={1}>
       <section className="mta-print-identity">{identity.map(([label, value]) => <PrintField key={String(label)} label={String(label)} value={value}/>)}</section>
       <Heading>{t("ui.attributes")}</Heading>
       <div className="mta-print-attributes">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div>
       <div className="mta-print-main-grid">
-        <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}</section>
-        <section><Heading>{t("ui.arcana")}</Heading><PrintRatedLines values={arcanaRows} minimum={10}/><Heading>{t("ui.merits")}</Heading><PrintRatedLines values={meritRows} minimum={9}/><dl className="mta-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl></section>
-        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower}/><Heading>{t("ui.lineTraits")}</Heading><div className="mta-print-power"><section><strong>{t("ui.gnosis")}</strong><PrintDots value={gnosis} maximum={10}/></section><section><strong>{t("ui.mana")}</strong><PrintBoxes value={mana} maximum={resource.maximum}/></section></div><Heading>{t("ui.wisdom")}</Heading><PrintSingleMarkDots value={wisdom}/><Heading>{t("ui.conditions")}</Heading><PrintLines values={conditions} minimum={4}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.obsessions")}</Heading><PrintLines values={stringList(data.obsessions)} minimum={2}/><Heading>{t("ui.experience")}</Heading><PrintExperience beatTracks={[{ label: t("ui.beats"), value: Math.max(0, Math.min(5, Number(character.current_state.mage_experience_beats ?? 0))) }, { label: t("ui.arcaneBeats"), value: Math.max(0, Math.min(5, Number(character.current_state.arcane_experience_beats ?? 0))) }]} values={[{ label: t("ui.xpAvailable"), value: regularAvailable }, { label: t("ui.totalXP"), value: regularTotal }, { label: t("ui.xpSpent"), value: regularSpent }, { label: t("ui.arcaneXPAvailable"), value: arcaneAvailable }, { label: t("ui.arcaneXPTotal"), value: arcaneTotal }, { label: t("ui.arcaneXPSpent"), value: arcaneSpent }]}/></section>
+        <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}<Heading>{t("ui.conditions")}</Heading><PrintLines values={conditions} minimum={4}/></section>
+        <section><Heading>{t("ui.arcana")}</Heading><PrintRatedLines values={arcanaRows} minimum={10}/><Heading>{t("ui.merits")}</Heading><PrintRatedLines values={meritRows} minimum={9}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.obsessions")}</Heading><PrintLines values={stringList(data.obsessions)} minimum={2}/></section>
+        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower} value={currentWillpower}/><Heading>{t("ui.lineTraits")}</Heading><div className="mta-print-power"><section><strong>{t("ui.gnosis")}</strong><PrintDots value={gnosis} maximum={10}/></section><section><strong>{t("ui.mana")}</strong><PrintBoxes maximum={resource.maximum}/></section></div><Heading>{t("ui.wisdom")}</Heading><PrintSingleMarkDots value={1}/><Heading>{t("ui.derivedStats")}</Heading><dl className="mta-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats"), t("ui.arcaneBeats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent"), t("ui.arcaneXPAvailable"), t("ui.arcaneXPTotal"), t("ui.arcaneXPSpent")]}/></section>
       </div>
     </MagePrintPage>
     <MagePrintPage page={2}>
       <div className="mta-print-second-grid">
         <section><Heading>{t("ui.activeSpells")}</Heading><PrintLines values={activeSpells} minimum={12}/><Heading>{t("ui.attainments")}</Heading><PrintLines values={attainments} minimum={8}/><Heading>{t("ui.dedicatedTool")}</Heading><PrintLines values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3}/><Heading>{t("ui.praxes")}</Heading><PrintLines values={praxes.map((item) => spellName(item, locale))} minimum={8}/></section>
-        <section><Heading>{t("ui.rotes")}</Heading><div className="mta-print-rotes">{rotes.slice(0, 10).map((item, index) => { const saved = (spellCatalog.find((spell) => spell.id === item.id) ?? item) as unknown as Record<string, unknown>; return <div key={String(item.id ?? index)}><span>{spellName(saved, locale)}</span><span>{Object.entries((saved.requirements ?? {}) as Record<string, number>).map(([name, dots]) => `${systemTerm(name, locale)} ${dots}`).join(" + ")}</span><span>{systemTerm(String(saved.roteSkill ?? ""), locale)}</span></div>; })}</div><Heading>{t("ui.nimbusTilt")}</Heading><PrintLines values={stringList(data.nimbus_tilt)} minimum={3}/><Heading>{t("ui.enchantedItems")}</Heading><PrintLines values={enchantedItems} minimum={5}/><Heading>{t("ui.combat")}</Heading><PrintLines values={specialties.filter((value) => /weapon|firearm|brawl|athletic/i.test(value))} minimum={4}/><Heading>{t("ui.familiars")}</Heading><PrintLines values={familiarRows} minimum={7}/></section>
+        <section><Heading>{t("ui.rotes")}</Heading><div className="mta-print-rotes">{rotes.slice(0, 10).map((item, index) => { const saved = (spellCatalog.find((spell) => spell.id === item.id) ?? item) as unknown as Record<string, unknown>; return <div key={String(item.id ?? index)}><span>{spellName(saved, locale)}</span><span>{Object.entries((saved.requirements ?? {}) as Record<string, number>).map(([name, dots]) => `${systemTerm(name, locale)} ${dots}`).join(" + ")}</span><span>{systemTerm(String(saved.roteSkill ?? ""), locale)}</span></div>; })}</div><Heading>{t("ui.nimbusTilt")}</Heading><PrintLines values={stringList(data.nimbus_tilt)} minimum={3}/><Heading>{t("ui.enchantedItems")}</Heading><PrintLines values={enchantedItems} minimum={5}/><Heading>{t("ui.combat")}</Heading><div className="mta-print-combat"><header><i/><span>{t("combat.weapons")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="mta-print-equipment"><header><i/><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div><Heading>{t("ui.familiars")}</Heading><PrintLines values={familiarRows} minimum={7}/></section>
       </div>
     </MagePrintPage>
   </div>;

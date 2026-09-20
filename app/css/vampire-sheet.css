@@ -1477,7 +1477,7 @@
   justify-content: center;
   gap: 18px;
   color: #3f171b;
-  font-family: Georgia, "Times New Roman", serif;
+  font: 9pt/1.2 Georgia, "Times New Roman", serif;
 }
 
 .vtr-print-page {
@@ -1549,7 +1549,7 @@
   gap: 2mm;
   margin: 2mm 0 1mm;
   color: #611920;
-  font-size: 13pt;
+  font-size: 14pt;
   font-variant: small-caps;
   text-align: center;
 }
@@ -1570,32 +1570,37 @@
 }
 
 .vtr-print-document h3 { margin: 1mm 0 0; font-size: 9pt; text-align: center; }
-.vtr-print-document .official-trait-block h4 { margin: 1mm 0 0; font-size: 10pt; text-align: center; }
-.vtr-print-document .official-trait-line { min-height: 4.3mm; font-size: 8pt; }
+.vtr-print-document .official-trait-block h4 { margin: 1mm 0 0; font-size: 10.5pt; text-align: center; }
+.vtr-print-document .official-trait-line { min-height: 4.8mm; font-size: 8.7pt; }
 .vtr-print-document .official-dots i,
-.vtr-print-document .cod-print-dots i { width: 2.5mm; height: 2.5mm; border-color:var(--vtr-ink); background:#fff; }
+.vtr-print-document .cod-print-dots i { width: 3.2mm; height: 3.2mm; border-color:var(--vtr-ink); background:#fff; }
 .vtr-print-document .official-dots i.on { background:var(--vtr-ink); box-shadow:inset 0 0 0 .35mm #f5ece5; }
-.vtr-print-document .cod-print-boxes i { width: 3.3mm; height: 3.3mm; }
+.vtr-print-document .cod-print-dots i.filled { background:var(--vtr-ink); box-shadow:inset 0 0 0 .4mm #f5ece5; }
+.vtr-print-document .cod-print-boxes i { width: 3.2mm; height: 3.2mm; }
 .vtr-print-document .cod-print-lines > div,
 .vtr-print-document .cod-print-rated-lines > div { min-height: 4.4mm; font-size: 8pt; }
 
-.vtr-print-power { display:grid; gap:1.5mm; margin-bottom:1mm; }
-.vtr-print-power > section { display:grid; gap:.7mm; }
-.vtr-print-power strong { color:#611920; font-size:7pt; text-transform:uppercase; }
+.vtr-print-power { display:grid; gap:1.5mm; margin-bottom:1mm; border:.2mm solid #9b7771; padding:2mm; }
+.vtr-print-power > section { display:grid; gap:.8mm; }
+.vtr-print-power > section:first-child { display:flex; align-items:center; justify-content:space-between; border-bottom:.2mm solid #9b7771; padding-bottom:1.5mm; }
+.vtr-print-power strong { color:#611920; font-size:7.5pt; text-transform:uppercase; }
 .vtr-print-power .cod-print-dots,.vtr-print-power .cod-print-boxes { flex-wrap:wrap; }
+.vtr-print-power .cod-print-boxes { display:grid; grid-template-columns:repeat(10,3.2mm); }
 .vtr-print-page .cod-print-integrity > div { border-color:#9b7771; }
 .vtr-print-page .cod-print-integrity i.filled { box-shadow:inset 0 0 0 .45mm #f5ece5; }
 
-.vtr-print-derived { display: grid; grid-template-columns: 1fr 1fr; margin: 2mm 0 0; font-size: 8pt; }
-.vtr-print-derived div { display: flex; justify-content: space-between; border-bottom: 1px solid #9b7771; }
+.vtr-print-derived { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 4mm; margin:0; font-size:8pt; }
+.vtr-print-derived div { display:grid; grid-template-columns:minmax(0,1fr) auto; min-height:4.8mm; align-items:end; gap:2mm; border-bottom:1px solid #9b7771; }
 .vtr-print-derived dt,
 .vtr-print-derived dd { margin: 0; }
 
 .vtr-print-second-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
-.vtr-print-combat > div,
-.vtr-print-equipment > div { display: grid; min-height: 5mm; align-items: end; border-bottom: 1px solid #9b7771; font-size: 7pt; }
-.vtr-print-combat > div { grid-template-columns: 2fr repeat(5, 1fr); }
-.vtr-print-equipment > div { grid-template-columns: 2fr repeat(3, 1fr); }
+.vtr-print-combat > header,.vtr-print-combat > div,.vtr-print-equipment > header,.vtr-print-equipment > div { display:grid; min-height:5mm; align-items:end; gap:.6mm; font-size:7pt; }
+.vtr-print-combat > header,.vtr-print-combat > div { grid-template-columns:3mm 2fr repeat(5,1fr); }
+.vtr-print-equipment > header,.vtr-print-equipment > div { grid-template-columns:3mm 2fr repeat(3,1fr); }
+.vtr-print-combat > header,.vtr-print-equipment > header { color:#611920; font-size:6pt; font-weight:700; text-transform:uppercase; }
+.vtr-print-combat span,.vtr-print-equipment span { min-width:0; overflow:hidden; border-bottom:1px solid #9b7771; padding:.5mm; text-overflow:ellipsis; white-space:nowrap; }
+.vtr-print-combat i,.vtr-print-equipment i { width:2.5mm; height:2.5mm; border:.25mm solid #4d171c; margin-bottom:.6mm; }
 
 @media print {
   body.character-printing .vtr-print-page {

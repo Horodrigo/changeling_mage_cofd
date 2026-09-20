@@ -367,7 +367,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
           <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
           <SheetHeading>{t("ui.clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
           <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
-          <SheetHeading>{t("ui.otherTraits")}</SheetHeading><CompactValues values={otherTraits}/>
+          <SheetHeading>{t("ui.derivedStats")}</SheetHeading><CompactValues values={otherTraits}/>
           <SheetHeading>{t("ui.experience")}</SheetHeading><div className="ctl-print-experience">
             <div className="ctl-print-experience-beats"><span>{t("ui.beats")}</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>
             <div><span>{t("ui.xpAvailable")}</span></div><div><span>{t("ui.totalXP")}</span></div><div><span>{t("ui.xpSpent")}</span></div>

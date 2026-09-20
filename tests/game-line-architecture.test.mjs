@@ -221,11 +221,15 @@ test("line print surfaces retain their web skins and line-specific tracks", asyn
     source("app/css/vampire-sheet.css"),
   ]);
 
-  assert.match(magePrint, /PrintSingleMarkDots value=\{wisdom\}/);
-  assert.match(magePrint, /arcane_experience_beats/);
+  assert.match(magePrint, /PrintSingleMarkDots value=\{1\}/);
+  assert.match(magePrint, /ui\.arcaneBeats/);
   assert.match(magePrint, /arcaneXPAvailable/);
+  assert.match(vampirePrint, /PrintIntegrityTrack value=\{1\}/);
   assert.match(vampirePrint, /item\.humanity_slot/);
+  assert.match(vampirePrint, /ui\.devotions/);
+  assert.match(vampirePrint, /ui\.bloodBonds/);
   assert.doesNotMatch(vampirePrint, /touchstonesAndBanes/);
+  assert.doesNotMatch(vampirePrint, /acquiredPowers/);
   assert.match(mageCss, /mage\/style\/background-mage\.webp/);
   assert.match(mageCss, /mta-print-frame/);
   assert.match(vampireCss, /vtr-print-frame/);

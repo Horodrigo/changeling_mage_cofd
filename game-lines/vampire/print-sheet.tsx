@@ -47,7 +47,14 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
   const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
-  const disciplineRows = Object.entries(disciplines).filter(([, rating]) => Number(rating) > 0).map(([name, rating]) => ({ name: vampireDisciplineDisplayName(name, powers.disciplines, locale), rating: Number(rating) }));
+  const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" ? data.blood_sorcery as Record<string, unknown> : {};
+  const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" ? data.ordo_dracul as Record<string, unknown> : {};
+  const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
+  const disciplineRows = [
+    ...Object.entries(disciplines).filter(([, rating]) => Number(rating) > 0).map(([name, rating]) => ({ name: vampireDisciplineDisplayName(name, powers.disciplines, locale), rating: Number(rating) })),
+    ...(powers.ritualDisciplines ?? []).flatMap((item) => { const rating = Number(item.id === "cruac" ? bloodSorcery.cruac_rating : bloodSorcery.theban_rating); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
+    ...powers.coils.flatMap((item) => { const rating = Number(coilRatings[item.id] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
+  ];
   const meritRows = character.merits.filter((merit) => !merit.grantedBy || merit.grantedBy === "Clã").map((merit) => {
     const definition = meritCatalog.find((item) => item.name === merit.name);
     const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
@@ -57,31 +64,19 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const mainDisciplines = disciplineRows.slice(0, 8);
   const mainMerits = meritRows.slice(0, 8);
   const overflowTraits = [...disciplineRows.slice(8), ...meritRows.slice(8)];
-  const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" ? data.blood_sorcery as Record<string, unknown> : {};
   const rites = powers.cruacRites.filter((item) => new Set(stringList(bloodSorcery.cruac_rite_ids)).has(item.id));
   const miracles = powers.thebanMiracles.filter((item) => new Set(stringList(bloodSorcery.theban_miracle_ids)).has(item.id));
-  const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" ? data.ordo_dracul as Record<string, unknown> : {};
-  const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
-  const coils = powers.coils.filter((item) => Number(coilRatings[item.id] ?? 0) > 0).map((item) => `${localized(item, locale)} (${"•".repeat(Number(coilRatings[item.id] ?? 0))})`);
   const devotionIds = new Set(stringList(data.devotion_ids));
-  const scaleIds = new Set(stringList(ordo.scale_ids));
-  const acquiredPowers = [
-    ...powers.devotions.filter((item) => devotionIds.has(item.id)).map((item) => localized(item, locale)),
-    ...coils,
-    ...powers.scales.filter((item) => scaleIds.has(item.id)).map((item) => localized(item, locale)),
-  ];
+  const devotions = powers.devotions.filter((item) => devotionIds.has(item.id)).map((item) => localized(item, locale));
+  const bloodBonds = objectArray(character.current_state.blood_bonds).map((item) => [String(item.subject ?? "").trim(), Number(item.stage) > 0 ? `${t("ui.stage")} ${Number(item.stage)}` : "", String(item.notes ?? "").trim()].filter(Boolean).join(" · "));
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
-  const humanity = Math.max(0, Math.min(10, Number(data.humanity ?? 7)));
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
   const limits = bloodPotencyRow(reference, bloodPotency);
   const vitaeMaximum = typeof limits.vitaeMaximum === "number" ? limits.vitaeMaximum : Number(character.attributes.Stamina ?? 1) + Number(disciplines.Resilience ?? 0);
-  const vitae = Math.max(0, Math.min(vitaeMaximum, Number(character.current_state.vitae_current ?? vitaeMaximum)));
   const selectedConditions = objectArray(character.current_state.conditions).map((item) => conditions.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
-  const experienceAvailable = Math.max(0, Math.trunc(Number(character.current_state.experience_available ?? 0)));
-  const experienceSpent = Math.max(0, Math.trunc(Number(character.current_state.experience_spent ?? 0)));
-  const experienceTotal = Math.max(experienceAvailable + experienceSpent, Math.trunc(Number(character.current_state.experience_total ?? 0)));
   const touchstonesByRating = new Map(objectArray(data.touchstones).flatMap((item) => {
     const rating = Number(item.humanity_slot);
     const name = String(item.name ?? "").trim();
@@ -103,13 +98,13 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
       <div className="vtr-print-main-grid">
         <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}</section>
         <section><Heading>{t("ui.otherTraits")}</Heading><h3>{t("ui.disciplines")}</h3><PrintRatedLines values={mainDisciplines} minimum={8}/><h3>{t("ui.merits")}</h3><PrintRatedLines values={mainMerits} minimum={8}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.banes")}</Heading><PrintLines values={banes} minimum={3}/></section>
-        <section><Heading>{t("ui.health")}</Heading><PrintDots value={health} maximum={Math.max(10, health)}/><PrintBoxes maximum={Math.max(10, health)}/><Heading>{t("ui.willpower")}</Heading><PrintDots value={willpower} maximum={Math.max(10, willpower)}/><PrintBoxes value={Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)))} maximum={Math.max(10, willpower)}/><Heading>{t("ui.lineTraits")}</Heading><div className="vtr-print-power"><section><strong>{t("ui.bloodPotency")}</strong><PrintDots value={bloodPotency} maximum={10}/></section><section><strong>{t("ui.vitae")}</strong><PrintBoxes value={vitae} maximum={Math.max(10, vitaeMaximum)}/></section></div><Heading>{t("ui.humanity")}</Heading><PrintIntegrityTrack value={humanity} notes={touchstonesByRating}/><dl className="vtr-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.armor")}</dt><dd>0</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatTracks={[{ label: t("ui.beats"), value: Math.max(0, Math.min(5, Number(character.current_state.beats ?? 0))) }]} values={[{ label: t("ui.xpAvailable"), value: experienceAvailable }, { label: t("ui.totalXP"), value: experienceTotal }, { label: t("ui.xpSpent"), value: experienceSpent }]}/></section>
+        <section><Heading>{t("ui.health")}</Heading><PrintDots value={health} maximum={Math.max(10, health)}/><PrintBoxes maximum={Math.max(10, health)}/><Heading>{t("ui.willpower")}</Heading><PrintDots value={currentWillpower} maximum={Math.max(10, willpower)}/><PrintBoxes maximum={Math.max(10, willpower)}/><Heading>{t("ui.lineTraits")}</Heading><div className="vtr-print-power"><section><strong>{t("ui.bloodPotency")}</strong><PrintDots value={bloodPotency} maximum={10}/></section><section><strong>{t("ui.vitae")}</strong><PrintBoxes maximum={Math.max(10, vitaeMaximum)}/></section></div><Heading>{t("ui.humanity")}</Heading><PrintIntegrityTrack value={1} notes={touchstonesByRating}/><Heading>{t("ui.derivedStats")}</Heading><dl className="vtr-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.armor")}</dt><dd>0</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent")]}/></section>
       </div>
     </VampirePrintPage>
     <VampirePrintPage page={2}>
       <div className="vtr-print-second-grid">
         <section><Heading>{t("ui.otherTraits")}</Heading><PrintRatedLines values={overflowTraits} minimum={13}/><Heading>{t("ui.ritesAndMiracles")}</Heading><PrintLines values={[...rites.map((item) => `${localized(item, locale)} ${item.rating ?? ""}`), ...miracles.map((item) => `${localized(item, locale)} ${item.rating ?? ""}`)]} minimum={9}/><Heading>{t("ui.conditions")}</Heading><PrintLines values={selectedConditions} minimum={7}/></section>
-        <section><Heading>{t("ui.acquiredPowers")}</Heading><PrintLines values={acquiredPowers} minimum={16}/><Heading>{t("ui.combat")}</Heading><div className="vtr-print-combat">{weapons.slice(0, 5).map((weapon) => <div key={weapon.id}><span>{weapon.name}</span><span>{weapon.damage}</span><span>{weapon.ranges}</span><span>{weapon.initiative}</span><span>{weapon.strength}</span><span>{weapon.size}</span></div>)}</div><Heading>{t("ui.equipment")}</Heading><div className="vtr-print-equipment">{equipment.slice(0, 5).map((item) => <div key={item.id}><span>{item.name}</span><span>{item.durability}</span><span>{item.structure}</span><span>{item.size}</span></div>)}</div></section>
+        <section><Heading>{t("ui.devotions")}</Heading><PrintLines values={devotions.slice(0, 10)} minimum={10}/><Heading>{t("ui.bloodBonds")}</Heading><PrintLines values={bloodBonds.slice(0, 5)} minimum={5}/><Heading>{t("ui.combat")}</Heading><div className="vtr-print-combat"><header><i/><span>{t("combat.weapons")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.strength")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.strength}</span><span>{weapon?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="vtr-print-equipment"><header><i/><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div></section>
       </div>
     </VampirePrintPage>
   </div>;

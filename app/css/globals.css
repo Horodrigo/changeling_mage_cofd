@@ -439,7 +439,8 @@ button { cursor: pointer; }
 .cod-print-integrity > div > i { width:2.5mm; height:2.5mm; box-sizing:border-box; border:.25mm solid currentColor; border-radius:50%; }
 .cod-print-integrity > div > i.filled { background:currentColor; box-shadow:inset 0 0 0 .45mm #fff; }
 .cod-print-experience { display:grid; }
-.cod-print-experience > div { display:flex; min-height:5.5mm; align-items:center; justify-content:space-between; gap:2mm; border-bottom:.2mm solid currentColor; font-size:7pt; text-transform:uppercase; }
+.cod-print-experience > div { display:flex; min-height:5.8mm; align-items:center; justify-content:space-between; gap:2mm; border-bottom:.2mm solid currentColor; font-size:7.5pt; text-transform:uppercase; }
+.cod-print-experience > div > strong { min-width:18mm; min-height:4mm; }
 .cod-print-experience .beats .cod-print-dots i { width:2.8mm; height:2.8mm; }
 .cod-print-lines,.cod-print-rated-lines { display:grid; }
 .cod-print-lines > div,.cod-print-rated-lines > div { min-height:4.5mm; overflow:hidden; border-bottom:.2mm solid currentColor; font:7pt/4.3mm Georgia,serif; }
