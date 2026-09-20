@@ -426,6 +426,18 @@ button { cursor: pointer; }
 .sheet-toolbar > div { display: flex; gap: 8px; align-items: center; color: #7c747c; font-size:13px; }
 .sheet-toolbar-actions { justify-content:flex-end; flex-wrap:wrap; }
 
+.cod-print-field { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:end; gap:2mm; min-width:0; }
+.cod-print-field > span { font-size:6.5pt; font-weight:700; text-transform:uppercase; }
+.cod-print-field > strong { min-width:0; min-height:4.5mm; overflow:hidden; border-bottom:.2mm solid currentColor; font:italic 8.5pt/4.5mm Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
+.cod-print-dots,.cod-print-boxes { display:flex; flex:none; gap:.7mm; }
+.cod-print-dots i,.cod-print-boxes i { display:block; width:2.6mm; height:2.6mm; box-sizing:border-box; border:.3mm solid currentColor; background:#fff; }
+.cod-print-dots i { border-radius:50%; }
+.cod-print-dots i.filled,.cod-print-boxes i.filled { background:currentColor; box-shadow:inset 0 0 0 .35mm #fff; }
+.cod-print-lines,.cod-print-rated-lines { display:grid; }
+.cod-print-lines > div,.cod-print-rated-lines > div { min-height:4.5mm; overflow:hidden; border-bottom:.2mm solid currentColor; font:7pt/4.3mm Georgia,serif; }
+.cod-print-rated-lines > div { display:flex; align-items:center; justify-content:space-between; gap:2mm; }
+.cod-print-rated-lines > div > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
 .sheet-zoom-control { display:flex; align-items:center; gap:2px; height:32px; padding:2px 4px; border:1px solid var(--line-border); border-radius:8px; background:color-mix(in srgb,var(--line-soft) 72%,#fff); color:var(--line-strong); }
 .sheet-zoom-control [data-slot="button"] { color:inherit; }
 .sheet-zoom-value { min-width:46px; padding:3px 5px; border:0; border-radius:5px; background:transparent; color:inherit; font-size:11px; font-weight:800; cursor:pointer; }

@@ -996,6 +996,47 @@
   opacity:.05;
 }
 
+/* Official two-page print composition (MtAw pp. 354-355). */
+.mta-print-document { display:grid; justify-content:center; gap:18px; color:#183e56; font-family:Georgia,"Times New Roman",serif; }
+.mta-print-page { position:relative; width:210mm; min-width:210mm; height:297mm; box-sizing:border-box; overflow:hidden; padding:9mm 14mm 8mm; background:#f8fbfb url("/mage/style/mage-paper-texture.webp") center/cover no-repeat; box-shadow:0 4px 22px #122d3b3d; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+.mta-print-page::before,.mta-print-page::after { content:""; position:absolute; top:0; bottom:0; width:13mm; pointer-events:none; background:url("/mage/style/prism-corner.webp") top left/28mm auto no-repeat; opacity:.45; }
+.mta-print-page::before { left:0; }
+.mta-print-page::after { right:0; transform:scaleX(-1); }
+.mta-print-page > header { position:relative; z-index:1; display:grid; place-content:center; min-height:25mm; background:url("/mage/style/mage-title.webp") center/76mm auto no-repeat; text-align:center; text-transform:uppercase; }
+.mta-print-page > header span,.mta-print-page > header strong { visibility:hidden; }
+.mta-print-page > footer { position:absolute; right:14mm; bottom:3mm; font:6pt Inter,Arial,sans-serif; }
+.mta-print-page > :not(header):not(footer) { position:relative; z-index:1; }
+.mta-print-identity { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1mm 7mm; margin-bottom:2mm; }
+.mta-print-heading { display:flex; align-items:center; gap:2mm; min-height:7mm; margin:1mm 0; color:#24617e; font:400 14pt/1 Georgia,serif; text-align:center; text-transform:uppercase; }
+.mta-print-heading::before,.mta-print-heading::after { content:""; height:.3mm; flex:1; background:#24617e; }
+.mta-print-attributes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5mm; }
+.mta-print-main-grid { display:grid; grid-template-columns:.92fr 1.05fr .95fr; gap:4mm; align-items:start; }
+.mta-print-main-grid > section + section,.mta-print-second-grid > section + section { border-left:.3mm solid #24617e; padding-left:3mm; }
+.mta-print-page .official-trait-block { margin-bottom:1.5mm; }
+.mta-print-page .official-trait-block h4 { min-height:5mm; margin:0; font-size:8pt; text-align:center; }
+.mta-print-page .official-trait-line { min-height:4.4mm; font-size:7.4pt; }
+.mta-print-page .official-dots { gap:.5mm; }
+.mta-print-page .official-dots i { width:2.2mm; height:2.2mm; }
+.mta-print-page .cod-print-lines > div,.mta-print-page .cod-print-rated-lines > div { border-color:#5b7786; }
+.mta-print-page .cod-print-rated-lines > div { min-height:4.35mm; }
+.mta-print-track { display:grid; gap:.7mm; margin-bottom:1.2mm; }
+.mta-print-track > strong { display:none; }
+.mta-print-track .cod-print-dots i,.mta-print-track .cod-print-boxes i { width:3.1mm; height:3.1mm; }
+.mta-print-derived { display:grid; grid-template-columns:repeat(2,1fr); gap:0 3mm; margin:2mm 0 0; font:7pt/1.4 Inter,Arial,sans-serif; }
+.mta-print-derived div { display:flex; justify-content:space-between; border-bottom:.2mm solid #66818e; }
+.mta-print-derived dt { font-weight:700; }
+.mta-print-derived dd { margin:0; }
+.mta-print-second-grid { display:grid; grid-template-columns:.72fr 1.45fr; gap:5mm; align-items:start; }
+.mta-print-second-grid .cod-print-lines > div { min-height:5.2mm; }
+.mta-print-rotes { display:grid; }
+.mta-print-rotes > div { display:grid; grid-template-columns:1.7fr .8fr .75fr; min-height:5mm; align-items:end; gap:1mm; font:6.7pt/1.1 Inter,Arial,sans-serif; }
+.mta-print-rotes span { min-width:0; overflow:hidden; border-bottom:.2mm solid #5b7786; padding:.5mm; text-overflow:ellipsis; white-space:nowrap; }
+
+@media print {
+  body.character-printing .mta-print-page { width:210mm!important; min-width:210mm!important; height:297mm!important; margin:0!important; box-shadow:none!important; break-after:page; page-break-after:always; }
+  body.character-printing .mta-print-page:last-child { break-after:auto; page-break-after:auto; }
+}
+
 /* Lower three-column area keeps the same vertical rhythm. */
 .mta-sheet .sheet-bottom-grid.mage-bottom-grid {
   gap:0;

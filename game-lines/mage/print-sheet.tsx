@@ -1,0 +1,114 @@
+"use client";
+
+import { useLayoutEffect } from "react";
+import { PrintBoxes, PrintDots, PrintField, PrintLines, PrintRatedLines } from "@/app/workspace/print-sheet-primitives";
+import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
+import type { SpellDefinition } from "@/lib/catalog/catalog-types";
+import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
+import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
+import { useLanguage } from "@/lib/i18n";
+import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
+import type { MeritDefinition } from "@/lib/merits";
+import { powerResourceLimits } from "@/lib/resource-rules";
+import { systemTerm } from "@/lib/system-terms";
+import { MTA_ORDER_LABELS } from "./creation-rules";
+import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
+
+const objectList = (value: unknown) => Array.isArray(value) ? value as Array<Record<string, unknown>> : [];
+const spellName = (item: Record<string, unknown>, locale: string) => String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName ?? "");
+
+function MagePrintPage({ page, children }: { page: number; children: React.ReactNode }) {
+  const { t } = useLanguage();
+  return <section className={`mta-print-page mta-print-page-${page}`}>
+    <header><span>{t("ui.mage")}</span><strong>{t("ui.theAWAKENING")}</strong></header>
+    {children}
+    <footer>{page} / 2</footer>
+  </section>;
+}
+
+function Heading({ children }: { children: React.ReactNode }) {
+  return <h2 className="mta-print-heading">{children}</h2>;
+}
+
+function Track({ label, maximum, current = maximum, dots = false }: { label: string; maximum: number; current?: number; dots?: boolean }) {
+  return <section className="mta-print-track"><strong>{label}</strong>{dots ? <PrintDots value={maximum} maximum={10}/> : <><PrintDots value={maximum} maximum={Math.max(10, maximum)}/><PrintBoxes value={current} maximum={Math.max(10, maximum)}/></>}</section>;
+}
+
+export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLinePrintSheetProps) {
+  if (!catalogs) throw new Error("Mage print sheet requires its catalog snapshot.");
+  const { locale, t } = useLanguage();
+  useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
+  const data = character.line_data;
+  const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
+  const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")];
+  const conditionCatalog = [
+    ...catalogs.get<{ conditions: Array<{ id: string; name: string }> }>("core-reference").conditions,
+    ...catalogs.get<Array<{ id: string; name: string }>>("mage-reference"),
+  ];
+  const arcana = data.arcana && typeof data.arcana === "object" ? data.arcana as Record<string, number> : {};
+  const gnosis = Math.max(1, Number(data.gnosis ?? 1));
+  const wisdom = Math.max(1, Number(data.wisdom ?? 7));
+  const resource = powerResourceLimits(gnosis);
+  const derived = derivedWithPermanentMerits(character);
+  const health = Math.max(1, Number(derived.Vitalidade ?? 5));
+  const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const mana = Math.max(0, Math.min(resource.maximum, Number(character.current_state.mana_current ?? resource.maximum)));
+  const conditions = objectList(character.current_state.conditions).map((item) => conditionCatalog.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
+  const rotes = [...objectList(data.rotes), ...objectList(data.learned_rotes)];
+  const praxes = [...objectList(data.praxes), ...objectList(data.learned_praxes)];
+  const activeSpells = stringList(character.current_state.active_spells);
+  const legacyState = normalizeLegacyState(data.legacy_state);
+  const legacy = legacyState.joined ? findLegacy(legacyState.definitionId) : undefined;
+  const order = !data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? String(data.order) : MTA_ORDER_LABELS[String(data.order)] ?? String(data.order);
+  const identity = [
+    [t("ui.shadowName"), data.shadow_name], [t("ui.concept"), character.character.concept], [t("ui.path"), data.path],
+    [t("ui.player"), character.character.player], [t("ui.virtue"), data.virtue], [t("ui.order"), order],
+    [t("ui.chronicle"), character.character.chronicle], [t("ui.vice"), data.vice], ["Legacy", legacy?.name ?? ""],
+  ];
+  const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Ordem", "Nameless Order"].includes(String(merit.grantedBy))).slice(0, 9).map((merit) => {
+    const definition = meritCatalog.find((item) => item.name === merit.name);
+    return { name: locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name, rating: merit.dots };
+  });
+  const arcanaRows = Object.entries(arcana).map(([name, rating]) => ({ name: systemTerm(name, locale), rating: Number(rating) }));
+  const attainments = [
+    ...(Object.values(arcana).some((value) => Number(value) >= 1) ? [t("ui.counterspell")] : []),
+    ...(Object.values(arcana).some((value) => Number(value) >= 2) ? [t("ui.mageArmor")] : []),
+    ...(Object.values(arcana).some((value) => Number(value) >= 3) ? [t("ui.targetedSummoning")] : []),
+    ...(Object.values(arcana).some((value) => Number(value) >= 5) ? [t("ui.createRote")] : []),
+    ...(legacy?.attainments.filter((item) => legacyState.attainmentRanks.includes(item.rank)).map((item) => item.name) ?? []),
+  ];
+  const enchantedItems = character.merits.filter((merit) => ["Artifact", "Enhanced Item", "Imbued Item", "Daimonomikon", "Grimoire"].includes(merit.name)).map((merit) => {
+    const configuration = normalizeMeritConfiguration(merit.configuration);
+    return `${String(configuration.name ?? merit.name)} (${"•".repeat(merit.dots)})`;
+  });
+  const familiar = character.merits.find((merit) => merit.name === "Familiar" && !merit.grantedBy);
+  const familiarConfig = normalizeMeritConfiguration(familiar?.configuration);
+  const familiarRows = familiar ? [
+    `${t("ui.name")}: ${String(familiarConfig.name ?? "Familiar")}`,
+    `${t("ui.power")}: ${String(familiarConfig.power ?? "")}; ${t("ui.finesse")}: ${String(familiarConfig.finesse ?? "")}; ${t("ui.resistance")}: ${String(familiarConfig.resistance ?? "")}`,
+    `${t("ui.influence")}: ${String(familiarConfig.influence ?? "")}`,
+    `${t("ui.ban")}: ${String(familiarConfig.ban ?? "")}`,
+    `${t("ui.baneda2072")}: ${String(familiarConfig.bane ?? "")}`,
+    `${t("ui.numina")}: ${stringList(familiarConfig.numina).join(", ")}`,
+  ] : [];
+  const specialties = character.specializations.map((item) => typeof item === "string" ? item : `${systemTerm(item.skill, locale)} (${item.name})`);
+  return <div className="game-print-document mta-print-document">
+    <MagePrintPage page={1}>
+      <section className="mta-print-identity">{identity.map(([label, value]) => <PrintField key={String(label)} label={String(label)} value={value}/>)}</section>
+      <Heading>{t("ui.attributes")}</Heading>
+      <div className="mta-print-attributes">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div>
+      <div className="mta-print-main-grid">
+        <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}</section>
+        <section><Heading>{t("ui.arcana")}</Heading><PrintRatedLines values={arcanaRows} minimum={10}/><Heading>{t("ui.merits")}</Heading><PrintRatedLines values={meritRows} minimum={9}/><dl className="mta-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl></section>
+        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower}/><Heading>{t("ui.gnosis")}</Heading><Track label={t("ui.gnosis")} maximum={gnosis} dots/><Heading>{t("ui.mana")}</Heading><Track label={t("ui.mana")} maximum={resource.maximum} current={mana}/><Heading>{t("ui.wisdom")}</Heading><Track label={t("ui.wisdom")} maximum={wisdom} dots/><Heading>{t("ui.conditions")}</Heading><PrintLines values={conditions} minimum={4}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.obsessions")}</Heading><PrintLines values={stringList(data.obsessions)} minimum={2}/></section>
+      </div>
+    </MagePrintPage>
+    <MagePrintPage page={2}>
+      <div className="mta-print-second-grid">
+        <section><Heading>{t("ui.activeSpells")}</Heading><PrintLines values={activeSpells} minimum={12}/><Heading>{t("ui.attainments")}</Heading><PrintLines values={attainments} minimum={8}/><Heading>{t("ui.dedicatedTool")}</Heading><PrintLines values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3}/><Heading>{t("ui.praxes")}</Heading><PrintLines values={praxes.map((item) => spellName(item, locale))} minimum={8}/></section>
+        <section><Heading>{t("ui.rotes")}</Heading><div className="mta-print-rotes">{rotes.slice(0, 10).map((item, index) => { const saved = (spellCatalog.find((spell) => spell.id === item.id) ?? item) as unknown as Record<string, unknown>; return <div key={String(item.id ?? index)}><span>{spellName(saved, locale)}</span><span>{Object.entries((saved.requirements ?? {}) as Record<string, number>).map(([name, dots]) => `${systemTerm(name, locale)} ${dots}`).join(" + ")}</span><span>{systemTerm(String(saved.roteSkill ?? ""), locale)}</span></div>; })}</div><Heading>{t("ui.nimbusTilt")}</Heading><PrintLines values={stringList(data.nimbus_tilt)} minimum={3}/><Heading>{t("ui.enchantedItems")}</Heading><PrintLines values={enchantedItems} minimum={5}/><Heading>{t("ui.combat")}</Heading><PrintLines values={specialties.filter((value) => /weapon|firearm|brawl|athletic/i.test(value))} minimum={4}/><Heading>{t("ui.familiars")}</Heading><PrintLines values={familiarRows} minimum={7}/></section>
+      </div>
+    </MagePrintPage>
+  </div>;
+}
