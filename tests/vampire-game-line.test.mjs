@@ -104,6 +104,21 @@ test("Vampire sheet presents owned Coils and keeps Rites and Miracles under thei
   assert.deepEqual(ownedVampireRituals(powers, "theban", [rite.id, miracle.id]), [miracle]);
 });
 
+test("Vampire creation and editing persist the selected Covenant Discipline without losing XP advances", async () => {
+  const { reconcileCreationCovenantPower } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const [rite] = powers.cruacRites;
+  const [miracle] = powers.thebanMiracles;
+  const [coil] = powers.coils;
+  const created = reconcileCreationCovenantPower(powers, "", rite.id, {}, {});
+  assert.deepEqual(created.bloodSorcery, { cruac_rating: 1, cruac_rite_ids: [rite.id] });
+  const edited = reconcileCreationCovenantPower(powers, rite.id, miracle.id, { cruac_rating: 3, cruac_rite_ids: [rite.id, "paid-rite"], theban_rating: 0 }, { [coil.id]: 2 });
+  assert.deepEqual(edited.bloodSorcery, { cruac_rating: 2, cruac_rite_ids: ["paid-rite"], theban_rating: 1, theban_miracle_ids: [miracle.id] });
+  assert.deepEqual(edited.coilRatings, { [coil.id]: 2 });
+  const changedCoil = reconcileCreationCovenantPower(powers, coil.id, powers.coils[1].id, {}, { [coil.id]: 3 });
+  assert.deepEqual(changedCoil.coilRatings, { [coil.id]: 2, [powers.coils[1].id]: 1 });
+});
+
 test("Vampire Status and English trait prerequisites resolve against neutral stored fields", async () => {
   const { textRequirementMet } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
   const { vampireCovenantStatus } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");

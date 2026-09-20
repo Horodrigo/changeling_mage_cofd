@@ -54,6 +54,34 @@ function displayName(item: { name: string; translatedName: string }, locale: str
   return locale === "pt-BR" ? item.translatedName : item.name;
 }
 
+export function reconcileCreationCovenantPower(
+  powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles" | "coils">,
+  previousId: string,
+  selectedId: string,
+  bloodSorceryValue: unknown,
+  coilRatingsValue: unknown,
+) {
+  const bloodSorcery = bloodSorceryValue && typeof bloodSorceryValue === "object" && !Array.isArray(bloodSorceryValue) ? { ...bloodSorceryValue as Record<string, unknown> } : {};
+  const coilRatings = coilRatingsValue && typeof coilRatingsValue === "object" && !Array.isArray(coilRatingsValue) ? { ...coilRatingsValue as Record<string, unknown> } : {};
+  const adjust = (id: string, amount: -1 | 1) => {
+    if (!id) return;
+    const riteKey = powers.cruacRites.some((item) => item.id === id) ? "cruac_rite_ids" : powers.thebanMiracles.some((item) => item.id === id) ? "theban_miracle_ids" : "";
+    if (riteKey) {
+      const ratingKey = riteKey === "cruac_rite_ids" ? "cruac_rating" : "theban_rating";
+      bloodSorcery[ratingKey] = Math.max(0, Math.min(5, Number(bloodSorcery[ratingKey] ?? 0) + amount));
+      const ids = stringArray(bloodSorcery[riteKey]).filter((item) => item !== id);
+      bloodSorcery[riteKey] = amount > 0 ? [...ids, id] : ids;
+    } else if (powers.coils.some((item) => item.id === id)) {
+      const rating = Math.max(0, Math.min(5, Number(coilRatings[id] ?? 0) + amount));
+      if (rating) coilRatings[id] = rating;
+      else delete coilRatings[id];
+    }
+  };
+  adjust(previousId, -1);
+  adjust(selectedId, 1);
+  return { bloodSorcery, coilRatings };
+}
+
 type TouchstoneMeritPoint = { key: string; meritInstanceId: string; dot: number; slot: number };
 
 function touchstoneMeritPoints(merits: CharacterSheet["merits"], baseSlot: number): TouchstoneMeritPoint[] {
@@ -274,13 +302,9 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const touchstoneSlot = clanId === "ventrue" ? 7 : 6;
-    const existingBloodSorcery = initial?.line_data.blood_sorcery && typeof initial.line_data.blood_sorcery === "object" && !Array.isArray(initial.line_data.blood_sorcery) ? initial.line_data.blood_sorcery as Record<string, unknown> : {};
-    const existingCoils = initialOrdo.coil_ratings && typeof initialOrdo.coil_ratings === "object" && !Array.isArray(initialOrdo.coil_ratings) ? initialOrdo.coil_ratings as Record<string, unknown> : {};
-    const startingRite = powers.cruacRites.some((item) => item.id === creationCovenantPowerId);
-    const startingMiracle = powers.thebanMiracles.some((item) => item.id === creationCovenantPowerId);
-    const startingCoil = powers.coils.some((item) => item.id === creationCovenantPowerId);
-    const bloodSorcery = initial ? existingBloodSorcery : startingRite ? { cruac_rating: 1, cruac_rite_ids: [creationCovenantPowerId], theban_rating: 0, theban_miracle_ids: [] } : startingMiracle ? { cruac_rating: 0, cruac_rite_ids: [], theban_rating: 1, theban_miracle_ids: [creationCovenantPowerId] } : {};
-    const ordoDracul = { ...initialOrdo, mystery_id: covenantId === "ordo-dracul" ? mysteryId : initialOrdo.mystery_id ?? "", coil_ratings: initial ? existingCoils : startingCoil ? { [creationCovenantPowerId]: 1 } : {} };
+    const covenantPower = reconcileCreationCovenantPower(powers, String(initial?.line_data.creation_covenant_power_id ?? ""), hasCreationCovenantPower ? creationCovenantPowerId : "", initial?.line_data.blood_sorcery, initialOrdo.coil_ratings);
+    const bloodSorcery = covenantPower.bloodSorcery;
+    const ordoDracul = { ...initialOrdo, mystery_id: covenantId === "ordo-dracul" ? mysteryId : initialOrdo.mystery_id ?? "", coil_ratings: covenantPower.coilRatings };
     const finalMerits = mergeCreationMerits(initial?.merits, common.merits.map((merit) => {
         const definition = meritCatalog.find((item) => item.name === merit.name);
         return { ...merit, sourceId: definition?.sourceId, source: definition?.source, configuration: normalizeMeritConfiguration(merit.configuration) };
