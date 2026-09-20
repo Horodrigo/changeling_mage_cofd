@@ -30,7 +30,8 @@ import { useLanguage,type Locale } from "@/lib/i18n";
 import { findLegacy,normalizeLegacyState } from "@/lib/legacies";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import { mageNimbusConnection,mageNimbusTiltBudget,normalizeNimbusTiltEffects } from "./nimbus";
-import { expandedConfigurationLines, findMeritConfiguration, isInlineMeritConfiguration, meritConfigurationTitle, MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "./sheet-merit-configurations";
+import { availableHubrisTiers, hubrisPool } from "./hubris";
+import { expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeDamage,powerResourceLimits } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
@@ -51,9 +52,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     const { locale, t } = useLanguage();
     const isMobile = useIsMobile();
     const [sheetTab, setSheetTab] = useState(isMobile ? "resumo" : "principal");
-    const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) ||
-        name === "Contacts" ||
-        name === "Multilingual";
+    const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) || Boolean(findMeritConfiguration(name));
     const data = character.line_data;
     const hasCompanions = character.merits.some((item) => !item.grantedBy && item.name === "Familiar") || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
     const derived = derivedWithPermanentMerits(character);
@@ -178,15 +177,22 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     ].filter((item, index, all) => item.id === "bonded" || all.findIndex((other) => other.id === item.id) === index);
     const notes = String(character.current_state?.notes ?? "");
     const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
-    const addHubrisCondition = (id: "megalomaniacal" | "rampant", persistent: boolean) => {
+    const applyHubris = (result: "dramatic-failure" | "failure" | "success" | "exceptional-success", id: "megalomaniacal" | "rampant", act: string) => {
         const next = structuredClone(character);
         const history = Array.isArray(next.current_state.mage_experience_history)
             ? next.current_state.mage_experience_history
             : [];
         const wisdom = Math.max(1, Number(next.line_data.wisdom ?? 7));
-        const entry = {
+        const losesWisdom = result === "dramatic-failure" || result === "failure";
+        const earnedBeats = result === "exceptional-success" ? 2 : 1;
+        const currentArcaneBeats = Math.max(0, Math.trunc(Number(next.current_state.arcane_experience_beats ?? 0)));
+        const currentArcaneAvailable = Math.max(0, Math.trunc(Number(next.current_state.arcane_experience_available ?? 0)));
+        const currentArcaneSpent = Math.max(0, Math.trunc(Number(next.current_state.arcane_experience_spent ?? 0)));
+        const arcaneBeatTotal = currentArcaneBeats + earnedBeats;
+        const gainedArcaneExperience = Math.floor(arcaneBeatTotal / 5);
+        const entry = losesWisdom ? {
             id: createRandomId(),
-            description: t("ui.actOfHubrisFailure1Wisdom"),
+            description: `${t("ui.actOfHubris")}: ${act}`,
             regular: 0,
             arcane: 0,
             createdAt: new Date().toISOString(),
@@ -198,12 +204,19 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 specializations: structuredClone(next.specializations),
                 line_data: structuredClone(next.line_data),
             },
-        };
-        next.line_data = { ...next.line_data, wisdom: Math.max(1, wisdom - 1) };
+        } : null;
+        if (losesWisdom) next.line_data = { ...next.line_data, wisdom: Math.max(1, wisdom - 1) };
+        const currentConditions = selectedConditionList(next.current_state.conditions, conditionCatalog);
+        const conditions = losesWisdom
+            ? [...currentConditions.filter(item => item.id !== id), { id, persistent: result === "dramatic-failure" }]
+            : currentConditions;
         next.current_state = {
             ...next.current_state,
-            conditions: [...selectedConditionList(next.current_state.conditions, conditionCatalog).filter(item => item.id !== id), { id, persistent }],
-            mage_experience_history: [entry, ...history].slice(0, 100),
+            conditions,
+            arcane_experience_beats: arcaneBeatTotal % 5,
+            arcane_experience_available: currentArcaneAvailable + gainedArcaneExperience,
+            arcane_experience_total: currentArcaneAvailable + gainedArcaneExperience + currentArcaneSpent,
+            mage_experience_history: entry ? [entry, ...history].slice(0, 100) : history,
         };
         updateSheet(next);
     };
@@ -247,7 +260,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 poderes: <>
               <PowerResource name={t("ui.gnosis")} rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>
               <SheetHeading>{t("ui.arcana")}</SheetHeading><div className="arcana-sheet-list">{Object.entries(arcana).map(([name, value]) => <TraitLine key={name} name={name} value={Number(value)} {...arcanaPresentation(name)}/>)}</div>
-              <MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>
+              <MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={applyHubris}/>
               <SheetHeading>{t("ui.rotes")}</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/>
               <SheetHeading>{t("ui.magicalTools")}</SheetHeading><EditableList values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]} minimum={3} maximum={3} firstPrefix={t("ui.dedicatedTool")} placeholder={t("ui.magicalTool")} onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}/>
               <SheetHeading>{t("ui.nimbusTilt")}</SheetHeading><NimbusEditor wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} values={stringList(data.nimbus_tilt)} effects={nimbusEffects} onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)} onEffectsChange={setNimbusEffects}/>
@@ -302,12 +315,12 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 </>
                 }
               specificPowers={<MageArcanaList arcana={arcana} presentation={arcanaPresentation}/>}
-              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
+              merits={<MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/>}
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               obsessions={<EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              specificPowersTitle="Arcanos" powerStat={<MainPowerStat label={t("ui.gnosis")} value={powerRating} summary={t("ui.ritualIntervalCombinedSpellsParadoxDicePerOver")}/>} fuel={<MainFuel label={t("ui.mana")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)}/>} stability={<MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={addHubrisCondition}/>} derived={derived} experience={<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              specificPowersTitle="Arcanos" powerStat={<MainPowerStat label={t("ui.gnosis")} value={powerRating} summary={t("ui.ritualIntervalCombinedSpellsParadoxDicePerOver")}/>} fuel={<MainFuel label={t("ui.mana")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)}/>} stability={<MageWisdomSection wisdom={Number(data.wisdom ?? 7)} gnosis={gnosis} inuredSpells={inuredSpells} available={availableInuredSpells} locale={locale} onAdd={addInuredSpell} onRemove={removeInuredSpell} onHubris={applyHubris}/>} derived={derived} experience={<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="magia" data-page-title="Detalhes" className="ctl-sheet-page powers-page mage-spell-page">
             <div className="mage-page-355-grid">
@@ -368,7 +381,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacen
     const visible = merits.filter((item) => (!item.grantedBy || item.grantedBy === "Nameless Order") && item.name !== "Familiar");
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
-            const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale), cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = meritLabel(item, catalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && item.name !== "Familiar"
+            const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale), cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = meritLabel(item, catalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && item.name !== "Familiar"
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => <MageStructuredMeritEditor {...props}/>} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next)); }}/>
                 : null;
@@ -465,20 +478,22 @@ function MageWisdomSection({ wisdom, gnosis, inuredSpells, available, locale, on
     locale: Locale;
     onAdd: (id: string) => void;
     onRemove: (id: string) => void;
-    onHubris: (id: "megalomaniacal" | "rampant", persistent: boolean) => void;
+    onHubris: (result: "dramatic-failure" | "failure" | "success" | "exceptional-success", id: "megalomaniacal" | "rampant", act: string) => void;
 }) {
     const { t } = useLanguage();
-    const [open, setOpen] = useState(false), [failed, setFailed] = useState(false), [condition, setCondition] = useState<"megalomaniacal" | "rampant">("megalomaniacal"), [persistent, setPersistent] = useState(false);
-    const close = () => { setOpen(false); setFailed(false); setPersistent(false); };
+    const tiers = availableHubrisTiers(wisdom);
+    const [open, setOpen] = useState(false), [selectedActId, setSelectedActId] = useState(""), [result, setResult] = useState<"dramatic-failure" | "failure" | "success" | "exceptional-success">("success"), [condition, setCondition] = useState<"megalomaniacal" | "rampant">("megalomaniacal"), [obsession, setObsession] = useState(false), [virtue, setVirtue] = useState(false), [vice, setVice] = useState(false);
+    const selectedTier = tiers.find(tier => tier.acts.some(act => act.id === selectedActId)) ?? tiers[0];
+    const selectedAct = selectedTier?.acts.find(act => act.id === selectedActId) ?? selectedTier?.acts[0];
+    const pool = selectedTier ? hubrisPool(selectedTier, { obsession, virtue, vice }) : 0;
+    const close = () => { setOpen(false); setResult("success"); setObsession(false); setVirtue(false); setVice(false); };
+    const outcome = result === "dramatic-failure" ? t("ui.hubrisDramaticFailure") : result === "failure" ? t("ui.hubrisFailure") : result === "exceptional-success" ? t("ui.hubrisExceptionalSuccess") : t("ui.hubrisSuccess");
     return <div className="wisdom-sheet-section">
-    <div className="wisdom-heading-row"><SheetHeading>{t("ui.wisdom")}</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" onClick={() => setOpen(true)}>{t("ui.hubris")}</Button></div>
+    <div className="wisdom-heading-row"><SheetHeading>{t("ui.wisdom")}</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" disabled={wisdom < 1} onClick={() => setOpen(true)}>{t("ui.hubris")}</Button></div>
     <div className="wisdom-track"><DotValue value={wisdom} max={10} singleRow/></div>
     <div className="inured-heading-row"><strong>{t("ui.inuredSpells")} ({inuredSpells.length}/{gnosis})</strong>{inuredSpells.length < gnosis && <ExperiencePowerPicker kind="Feitiço" items={available} selectedId="" onSelect={onAdd} compact triggerLabel={t("ui.selectInuredSpell")} dialogTitle={t("ui.selectInuredSpell")} dialogDescription={t("ui.afterLosingWisdomFromUsingASpellIt")}/>}</div>
     <div className="inured-spell-list">{inuredSpells.map(item => <div key={String(item.id)}><span>{String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName)}</span><Button type="button" variant="ghost" size="sm" className="compact-remove-action" onClick={() => onRemove(String(item.id))}><Trash2 /> {t("ui.remove7d41cc")}</Button></div>)}</div>
-    <Dialog open={open} onOpenChange={value => { setOpen(value); if (!value) {
-        setFailed(false);
-        setPersistent(false);
-    } }}><DialogContent><DialogHeader><DialogTitle>{t("ui.actOfHubris")}</DialogTitle><DialogDescription>{failed ? t("ui.chooseTheConditionCausedByTheFailure") : t("ui.whatWasTheResultOfTheRoll")}</DialogDescription></DialogHeader>{failed ? <div className="hubris-dialog-options"><label>{t("ui.condition")}<RuleSelect value={condition} onChange={value => setCondition(value as typeof condition)} options={[{ value: "megalomaniacal", label: "Megalomaniacal" }, { value: "rampant", label: "Rampant" }]}/></label><label className="hubris-persistent"><input type="checkbox" checked={persistent} onChange={event => setPersistent(event.target.checked)}/><span>{t("ui.persistent")}</span></label></div> : <div className="dialog-choice-actions"><Button type="button" variant="outline" onClick={close}>{t("ui.success")}</Button><Button type="button" variant="destructive" onClick={() => setFailed(true)}>{t("ui.failure")}</Button></div>}<DialogFooter>{failed && <Button type="button" onClick={() => { onHubris(condition, persistent); close(); }}>{t("ui.applyCondition")}</Button>}</DialogFooter></DialogContent></Dialog>
+    <Dialog open={open} onOpenChange={value => value ? setOpen(true) : close()}><DialogContent className="experience-dialog mage-hubris-dialog"><DialogHeader><DialogTitle>{t("ui.actOfHubris")}</DialogTitle><DialogDescription>{t("ui.hubrisDescription")}</DialogDescription></DialogHeader><div className="mage-hubris-form"><div className="mage-hubris-tiers">{tiers.map(tier => <section key={tier.id}><header><strong>{t(tier.labelKey)}</strong></header><div>{tier.acts.map(act => <label className="mage-hubris-act" key={act.id}><input type="radio" name="mage-hubris-act" checked={selectedAct?.id === act.id} onChange={() => setSelectedActId(act.id)}/><span>{t(act.labelKey)}</span></label>)}</div></section>)}</div><div className="mage-hubris-reference"><strong>{t("ui.hubrisPool")}: {pool <= 0 ? t("ui.chanceDie") : t("ui.diceCount", { p1: pool })}</strong><small>{t("ui.hubrisNoWillpower")}</small></div><div className="mage-hubris-modifiers"><label><input type="checkbox" checked={obsession} onChange={event => setObsession(event.target.checked)}/><span>{t("ui.hubrisPursuedObsession")}</span></label><label><input type="checkbox" checked={virtue} onChange={event => setVirtue(event.target.checked)}/><span>{t("ui.hubrisDefendedVirtue")}</span></label><label><input type="checkbox" checked={vice} onChange={event => setVice(event.target.checked)}/><span>{t("ui.hubrisFollowedVice")}</span></label></div><label>{t("ui.rollResult")}<RuleSelect value={result} onChange={value => setResult(value as typeof result)} options={[{ value: "dramatic-failure", label: t("ui.dramaticFailure") }, { value: "failure", label: t("ui.failure") }, { value: "success", label: t("ui.success") }, { value: "exceptional-success", label: t("ui.exceptionalSuccess") }]}/></label>{(result === "dramatic-failure" || result === "failure") && <div className="hubris-dialog-options"><label>{t("ui.condition")}<RuleSelect value={condition} onChange={value => setCondition(value as typeof condition)} options={[{ value: "megalomaniacal", label: "Megalomaniacal" }, { value: "rampant", label: "Rampant" }]}/></label>{result === "dramatic-failure" && <strong>{t("ui.persistent")}</strong>}</div>}<div className="mage-hubris-outcome"><p>{outcome}</p></div></div><DialogFooter><Button type="button" size="sm" variant="outline" className="catalog-dialog-done" onClick={close}>{t("common.cancel")}</Button><Button type="button" size="sm" className="catalog-selection-action" disabled={!selectedAct} onClick={() => { if (selectedAct) onHubris(result, condition, t(selectedAct.labelKey)); close(); }}>{t("ui.applyResult")}</Button></DialogFooter></DialogContent></Dialog>
   </div>;
 }
 function NimbusEditor({ wisdom, gnosis, values, effects, onChange, onEffectsChange, }: {
@@ -767,7 +782,7 @@ function SpellColumn({ items, catalog, showSkill = false, minimumRows = 0, onRem
       {!items.length && !minimumRows && <em>{t("ui.noEntries")}</em>}
     </div>);
 }
-function MeritSheetList({ character, merits, updateSheet, catalog, }: {
+function MeritSheetList({ merits, catalog, }: {
     character: CharacterSheet;
     merits: CharacterSheet["merits"];
     updateSheet: (sheet: CharacterSheet) => void;
@@ -781,21 +796,9 @@ function MeritSheetList({ character, merits, updateSheet, catalog, }: {
             const tooltip = definition
                 ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
                 : item.source;
-            const inline = isInlineMeritConfiguration(item.name);
-            const meritIndex = character.merits.indexOf(item);
-            const inlineField = inline ? findMeritConfiguration(item.name)?.fields[0] : undefined;
-            const configuration = normalizeMeritConfiguration(item.configuration);
-            const displayName = definition ? definition[locale === "en-US" ? "name" : "translatedName"] : item.name;
-            return (<div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={inline ? undefined : tooltip}>
+            return (<div className="sheet-merit-row" key={`${item.name}-${index}`} title={tooltip}>
               <div className="sheet-merit-main">
-                <span>{inline ? `${displayName}:` : meritLabel(item, catalog, locale)}</span>
-                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${t("ui.description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={t("ui.typeHere")} onChange={(event) => {
-                        const next = structuredClone(character);
-                        const target = next.merits[meritIndex];
-                        if (target)
-                            target.configuration = { ...configuration, [inlineField.key]: event.target.value };
-                        updateSheet(synchronizeMeritGrants(next));
-                    }}/>}
+                <span>{meritLabel(item, catalog, locale)}</span>
                 <DotValue value={item.dots} max={Math.max(5, item.dots)}/>
               </div>
             </div>);
