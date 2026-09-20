@@ -19,7 +19,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
@@ -423,9 +423,9 @@ function ChoiceLines({ label, values, count, placeholder, onChange }: { label: s
   return <fieldset><legend>{label}</legend>{rows.map((value, index) => <Input key={index} value={value} placeholder={`${placeholder} ${index + 1}`} onChange={(event) => { const next = [...rows]; next[index] = event.target.value; onChange(next); }} />)}</fieldset>;
 }
 
-function AnchorChoice({ label, value, setValue, anchors, locale, invalid }: { label: string; value: string; setValue: (value: string) => void; anchors: VampireAnchorDefinition[]; locale: string; invalid: boolean }) {
+function AnchorChoice({ label, value, setValue, anchors, locale, invalid }: { label: string; value: string; setValue: (value: string) => void; anchors: VampireAnchorDefinition[]; locale: Locale; invalid: boolean }) {
   const selected = anchors.find((item) => item.id === value);
-  return <div><Choice label={label} value={value} setValue={setValue} options={anchors.map((item) => item.id)} optionLabels={Object.fromEntries(anchors.map((item) => [item.id, displayName(item, locale)]))} invalid={invalid} />{selected && <small className="anchor-recovery">{selected.singleWillpower}</small>}</div>;
+  return <div><Choice label={label} value={value} setValue={setValue} options={anchors.map((item) => item.id)} optionLabels={Object.fromEntries(anchors.map((item) => [item.id, displayName(item, locale)]))} invalid={invalid} />{selected && <small className="anchor-recovery">{translate(locale, "ui.recoverWillpowerSummary", { single: selected.singleWillpower, all: selected.allWillpower })}</small>}</div>;
 }
 
 export const vampireBuilder: GameLineBuilderModule = { Component: VampireCharacterBuilder };
