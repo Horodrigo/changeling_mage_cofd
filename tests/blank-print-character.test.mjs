@@ -16,6 +16,7 @@ test("blank print sheets contain only baseline Chronicles traits", () => {
     assert.deepEqual(new Set(Object.values(character.skills)), new Set([0]));
     assert.deepEqual(character.line_data, {});
     assert.deepEqual(character.current_state, {});
+    assert.deepEqual(character.derived, {});
     assert.deepEqual(character.merits, []);
   }
 });

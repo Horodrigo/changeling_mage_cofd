@@ -2,8 +2,9 @@
 
 import { useLayoutEffect } from "react";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintIntegrityTrack, PrintLines, PrintRatedLines } from "@/app/workspace/print-sheet-primitives";
+import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
-import { EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
+import { EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -71,6 +72,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const bloodBonds = objectArray(character.current_state.blood_bonds).map((item) => [String(item.subject ?? "").trim(), Number(item.stage) > 0 ? `${t("ui.stage")} ${Number(item.stage)}` : "", String(item.notes ?? "").trim()].filter(Boolean).join(" · "));
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
+  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
@@ -96,7 +98,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
       <div className="vtr-print-main-grid">
         <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}</section>
         <section><Heading>{t("ui.otherTraits")}</Heading><h3>{t("ui.disciplines")}</h3><PrintRatedLines values={mainDisciplines} minimum={8}/><h3>{t("ui.merits")}</h3><PrintRatedLines values={mainMerits} minimum={8}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.banes")}</Heading><PrintLines values={banes} minimum={3}/></section>
-        <section><Heading>{t("ui.health")}</Heading><PrintDots value={health} maximum={Math.max(10, health)}/><PrintBoxes maximum={Math.max(10, health)}/><Heading>{t("ui.willpower")}</Heading><PrintDots value={currentWillpower} maximum={Math.max(10, willpower)}/><PrintBoxes maximum={Math.max(10, willpower)}/><Heading>{t("ui.lineTraits")}</Heading><div className="vtr-print-power"><section><strong>{t("ui.bloodPotency")}</strong><PrintDots value={1} maximum={10}/></section><section><strong>{t("ui.vitae")}</strong><PrintBoxes maximum={20}/></section></div><Heading>{t("ui.humanity")}</Heading><PrintIntegrityTrack value={1} notes={touchstonesByRating}/><Heading>{t("ui.derivedStats")}</Heading><dl className="vtr-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.armor")}</dt><dd>0</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent")]}/></section>
+        <section><Heading>{t("ui.health")}</Heading><PrintDots value={health} maximum={Math.max(10, health)}/><PrintBoxes maximum={Math.max(10, health)}/><Heading>{t("ui.willpower")}</Heading><PrintDots value={currentWillpower} maximum={Math.max(10, willpower)}/><PrintBoxes maximum={Math.max(10, willpower)}/><Heading>{t("ui.lineTraits")}</Heading><div className="vtr-print-power"><section><strong>{t("ui.bloodPotency")}</strong><PrintDots value={1} maximum={10}/></section><section><strong>{t("ui.vitae")}</strong><PrintBoxes maximum={20}/></section></div><Heading>{t("ui.humanity")}</Heading><PrintIntegrityTrack value={1} notes={touchstonesByRating}/><Heading>{t("ui.derivedStats")}</Heading><dl className="vtr-print-derived"><div><dt>{t("ui.size")}</dt><dd>{printDerived?.Tamanho}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{printDerived?.Deslocamento}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{printDerived?.Defesa}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{printDerived?.Iniciativa}</dd></div><div><dt>{t("ui.armor")}</dt><dd>{printDerived?.Armadura}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent")]}/></section>
       </div>
     </VampirePrintPage>
     <VampirePrintPage page={2}>

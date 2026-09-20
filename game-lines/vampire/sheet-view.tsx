@@ -946,6 +946,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     fuel={<MainFuel label={t("ui.vitae")} current={vitae} maximum={vitaeMaximum} onChange={(value) => setState("vitae_current", value)} />}
     stability={null}
     derived={derived}
+    armorId={data.combat_armor}
     experience={<VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
   />;
 

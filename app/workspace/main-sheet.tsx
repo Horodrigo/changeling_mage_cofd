@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { ResourceTrack } from "./character-paper-shell";
 import { DotValue, SheetHeading } from "./sheet-primitives";
+import { derivedTraitsWithArmor } from "@/lib/combat-equipment";
 
 export function MainPowerStat({ label, value, summary }: { label: string; value: number; summary?: string }) {
   return <><div className="cod-main-power-stat"><strong>{label}</strong><DotValue value={value} max={10} singleRow /></div>{summary && <p className="cod-main-power-summary">{summary}</p>}</>;
@@ -40,6 +41,7 @@ export function MainSheet({
   fuel,
   stability,
   derived,
+  armorId,
   experience,
   specificPowersTitle,
   lineSections,
@@ -61,6 +63,7 @@ export function MainSheet({
   fuel: ReactNode;
   stability: ReactNode;
   derived: Record<string, unknown>;
+  armorId?: unknown;
   experience: ReactNode;
   specificPowersTitle?: ReactNode;
   lineSections?: ReactNode;
@@ -69,12 +72,13 @@ export function MainSheet({
   className?: string;
 }) {
   const { t } = useLanguage();
+  const traits = derivedTraitsWithArmor(derived, armorId);
   const derivedRows: Array<[string, unknown]> = [
-    [t("ui.size"), derived.Tamanho ?? "—"],
-    [t("ui.speed"), derived.Deslocamento ?? "—"],
-    [t("ui.defense"), derived.Defesa ?? "—"],
-    [t("ui.armor"), derived.Armadura ?? 0],
-    [t("ui.initiative"), derived.Iniciativa ?? "—"],
+    [t("ui.size"), traits.Tamanho],
+    [t("ui.speed"), traits.Deslocamento],
+    [t("ui.defense"), traits.Defesa],
+    [t("ui.initiative"), traits.Iniciativa],
+    [t("ui.armor"), traits.Armadura],
   ];
 
   const conditionsSection = <div data-slot="conditions">

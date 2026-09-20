@@ -2,9 +2,10 @@
 
 import { useLayoutEffect } from "react";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintLines, PrintRatedLines, PrintSingleMarkDots } from "@/app/workspace/print-sheet-primitives";
+import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import type { SpellDefinition } from "@/lib/catalog/catalog-types";
-import { EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
+import { EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -49,6 +50,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   ];
   const arcana = data.arcana && typeof data.arcana === "object" ? data.arcana as Record<string, number> : {};
   const derived = derivedWithPermanentMerits(character);
+  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
@@ -100,7 +102,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
       <div className="mta-print-main-grid">
         <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}<Heading>{t("ui.conditions")}</Heading><PrintLines values={conditions} minimum={4}/></section>
         <section><Heading>{t("ui.arcana")}</Heading><PrintRatedLines values={arcanaRows} minimum={10}/><Heading>{t("ui.merits")}</Heading><PrintRatedLines values={meritRows} minimum={9}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.obsessions")}</Heading><PrintLines values={stringList(data.obsessions)} minimum={2}/></section>
-        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower} value={currentWillpower}/><Heading>{t("ui.lineTraits")}</Heading><div className="mta-print-power"><section><strong>{t("ui.gnosis")}</strong><PrintDots value={1} maximum={10}/></section><section><strong>{t("ui.mana")}</strong><PrintBoxes maximum={20}/></section></div><Heading>{t("ui.wisdom")}</Heading><PrintSingleMarkDots value={1}/><Heading>{t("ui.derivedStats")}</Heading><dl className="mta-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats"), t("ui.arcaneBeats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent"), t("ui.arcaneXPAvailable"), t("ui.arcaneXPTotal"), t("ui.arcaneXPSpent")]}/></section>
+        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower} value={currentWillpower}/><Heading>{t("ui.lineTraits")}</Heading><div className="mta-print-power"><section><strong>{t("ui.gnosis")}</strong><PrintDots value={1} maximum={10}/></section><section><strong>{t("ui.mana")}</strong><PrintBoxes maximum={20}/></section></div><Heading>{t("ui.wisdom")}</Heading><PrintSingleMarkDots value={1}/><Heading>{t("ui.derivedStats")}</Heading><dl className="mta-print-derived"><div><dt>{t("ui.size")}</dt><dd>{printDerived?.Tamanho}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{printDerived?.Deslocamento}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{printDerived?.Defesa}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{printDerived?.Iniciativa}</dd></div><div><dt>{t("ui.armor")}</dt><dd>{printDerived?.Armadura}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats"), t("ui.arcaneBeats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent"), t("ui.arcaneXPAvailable"), t("ui.arcaneXPTotal"), t("ui.arcaneXPSpent")]}/></section>
       </div>
     </MagePrintPage>
     <MagePrintPage page={2}>

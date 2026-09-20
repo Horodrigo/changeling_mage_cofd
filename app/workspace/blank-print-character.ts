@@ -17,9 +17,13 @@ export function blankPrintCharacter(gameLine: PersistedGameLineId): CharacterShe
     specializations: [],
     merits: [],
     line_data: {},
-    derived: { Tamanho: 5, Vitalidade: 6, Deslocamento: 7, ForçaDeVontade: 2, Iniciativa: 2, Defesa: 1 },
+    derived: {},
     current_state: {},
     created_at: "",
     updated_at: "",
   };
+}
+
+export function isBlankPrintCharacter(character: CharacterSheet) {
+  return character.id === `blank-${character.game_line}`;
 }

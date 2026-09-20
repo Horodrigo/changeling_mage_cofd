@@ -3,6 +3,7 @@
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
 import { PrintIntegrityTrack } from "@/app/workspace/print-sheet-primitives";
+import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
 import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList } from "@/app/workspace/sheet-primitives";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
@@ -10,7 +11,7 @@ import type { CourtDefinition } from "@/lib/changeling-courts";
 import { kithCreationChoice } from "./kith-choices";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
-import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
+import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
@@ -285,14 +286,9 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     [t("ui.player"), character.character.player], [t("ui.thread"), changelingAnchorDisplayName("thread", data.thread, locale)], [t("ui.kith6a78ff"), kith.name],
     [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("ui.court"), courtDisplay],
   ];
-  const otherTraits = {
-    Defesa: Number(derived.Defesa ?? 0) + (armor?.defense ?? 0),
-    Iniciativa: Number(derived.Iniciativa ?? 0),
-    Deslocamento: Number(derived.Deslocamento ?? 0) + (armor?.speed ?? 0),
-    Tamanho: Number(derived.Tamanho ?? 5),
-    "Armadura geral": armor?.general ?? 0,
-    "Armadura balística": armor?.ballistic ?? 0,
-  };
+  const otherTraits = isBlankPrintCharacter(character)
+    ? { Tamanho: "", Deslocamento: "", Defesa: "", Iniciativa: "", Armadura: "" }
+    : derivedTraitsWithArmor(derived, data.combat_armor);
   const flowBlocks = useMemo(() => {
     const blocks: PrintBlock[] = [];
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
