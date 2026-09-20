@@ -58,7 +58,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   const activeSpells = stringList(character.current_state.active_spells);
   const legacyState = normalizeLegacyState(data.legacy_state);
   const legacy = legacyState.joined ? findLegacy(legacyState.definitionId) : undefined;
-  const order = !data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? String(data.order) : MTA_ORDER_LABELS[String(data.order)] ?? String(data.order);
+  const order = !data.order ? "" : data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? String(data.order) : MTA_ORDER_LABELS[String(data.order)] ?? String(data.order);
   const identity = [
     [t("ui.shadowName"), data.shadow_name], [t("ui.concept"), character.character.concept], [t("ui.path"), data.path],
     [t("ui.player"), character.character.player], [t("ui.virtue"), data.virtue], [t("ui.order"), order],
