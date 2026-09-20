@@ -1973,6 +1973,22 @@ background-size:
 .ctl-print-experience > div { display:flex; min-height:6.5mm; align-items:end; justify-content:space-between; gap:3mm; border-bottom:.2mm solid #aaa8a170; padding-bottom:.7mm; }
 .ctl-print-experience span { font-size:7pt; text-transform:uppercase; }
 .ctl-print-experience-beats { align-items:center!important; }
+.ctl-print-contract-table { display:grid; margin-bottom:2mm; font:6pt/1.15 Inter,Arial,sans-serif; }
+.ctl-print-contract-table > header,.ctl-print-contract-table > div { display:grid; grid-template-columns:1.25fr .45fr .85fr .9fr 1fr 1.15fr; min-height:6mm; align-items:end; }
+.ctl-print-contract-table > header { min-height:5mm; color:var(--sheet-accent); font-weight:800; text-transform:uppercase; }
+.ctl-print-contract-table span { min-width:0; max-height:6mm; overflow:hidden; border-bottom:.2mm solid #8e9b91; padding:.6mm 1mm; }
+.ctl-print-contract-table span + span { border-left:.2mm solid #c5cec7; }
+.ctl-print-second-grid { display:grid; grid-template-columns:.72fr 1.55fr; gap:5mm; align-items:start; }
+.ctl-print-second-grid > section + section { background-image:url('/changeling/style/column-divider.webp'); background-position:left top; background-repeat:repeat-y; background-size:1.2mm auto; padding-left:3mm; }
+.ctl-print-second-grid h3 { margin:2mm 0 .7mm; color:var(--sheet-accent); font:400 9pt "Changeling Sheet Small Caps","Changeling Sheet",Georgia,serif; text-align:center; text-transform:uppercase; }
+.ctl-print-lore-text { height:23mm; margin:0; overflow:hidden; border-bottom:.2mm solid #aeb9b0; font:6.6pt/1.3 Inter,Arial,sans-serif; }
+.ctl-print-expanded-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2mm 5mm; }
+.ctl-print-expanded-grid article { min-width:0; }
+.ctl-print-expanded-grid article > strong { display:block; overflow:hidden; color:var(--sheet-accent); font-size:8pt; text-align:center; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-combat-table { display:grid; font:6.4pt/1.2 Inter,Arial,sans-serif; }
+.ctl-print-combat-table > header,.ctl-print-combat-table > div { display:grid; grid-template-columns:1.6fr .7fr .55fr .65fr .65fr .45fr; min-height:5.5mm; align-items:end; }
+.ctl-print-combat-table > header { color:var(--sheet-accent); font-weight:800; }
+.ctl-print-combat-table span { min-width:0; overflow:hidden; border-bottom:.2mm solid #8e9b91; padding:.5mm .8mm; text-overflow:ellipsis; white-space:nowrap; }
 .ctl-print-flow-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6mm; height:244mm; padding-top:3mm; align-items:start; }
 .ctl-print-flow-column { min-width:0; height:244mm; overflow:hidden; }
 .ctl-print-flow-group + .ctl-print-flow-group { margin-top:0; }
