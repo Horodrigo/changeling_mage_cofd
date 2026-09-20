@@ -801,6 +801,7 @@ button { cursor: pointer; }
 .merit-row.configurable { display:block; }
 .merit-row-main { display:grid; grid-template-columns:minmax(0,1fr) 130px auto; gap:10px; align-items:center; }
 .merit-row-main > div:first-child { min-width:0; display:grid; }
+.merit-row-main strong { overflow-wrap:anywhere; }
 .merit-configuration { grid-column:1/-1; margin-top:8px; border-top:1px solid #e7dfe7; padding-top:7px; }
 .merit-configuration summary { cursor:pointer; color:#6b556e; font-size:13px; font-weight:700; }
 .contacts-config-field legend { font-size:11px; }
@@ -1202,7 +1203,7 @@ button { cursor: pointer; }
 .sheet-merits.single-column { grid-template-columns:1fr; }
 .sheet-merits > div { min-height:24px; border-bottom:1px solid #aaa8a16b; font-size:13px; }
 .sheet-merit-main { min-width:0; min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
-.sheet-merit-main > span:first-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sheet-merit-main > span:first-child { min-width:0; overflow-wrap:anywhere; white-space:normal; }
 .sheet-merit-row.has-inline-config { padding:4px 0; }
 .sheet-merit-row.has-inline-config .sheet-merit-main > span { flex:none; }
 .sheet-merit-row .inline-merit-input { min-width:80px; height:24px; flex:1; padding:1px 3px; border:0; border-bottom:1px solid #aaa8a16b; border-radius:0; background:transparent; box-shadow:none; font:italic 13px Georgia,serif; }

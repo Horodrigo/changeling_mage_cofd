@@ -70,7 +70,6 @@
 
 .vampire-state-controls p { margin:0; color:#675657; font-size:11px; }
 
-.vampire-teacher-confirmation { display:flex; align-items:center; gap:7px; max-width:390px; font-size:11px; line-height:1.35; }
 
 .vampire-covenant-summary { display:grid; grid-template-columns:92px minmax(0,1fr); gap:18px; align-items:center; padding:16px; border:1px solid #9e777570; background:linear-gradient(110deg,#fff9,#eadbd680); }
 
@@ -112,6 +111,37 @@
 .vtr-sheet .vampire-discipline-card > .contract-power-details.has-levels {
   padding: 0;
 }
+
+.vtr-sheet .contract-power-details.has-levels > .vampire-power-mechanics {
+  padding: 14px;
+  border-bottom: 1px solid var(--vtr-rule);
+}
+
+.vtr-sheet .contract-power-details.has-levels > small {
+  display: block;
+  padding: 0 14px 12px;
+}
+
+.vtr-sheet .vampire-power-mechanics {
+  display: grid;
+  gap: 6px;
+  color: #675657;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.vtr-sheet .vampire-power-mechanics p { margin: 0; }
+
+.vtr-sheet .vampire-roll-results,
+.vtr-sheet .vampire-suggested-modifiers {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--vtr-rule);
+}
+
+.vtr-sheet .vampire-suggested-modifiers > strong { font-size: 12px; }
 
 .vampire-card-selector button { display:grid; gap:3px; width:100%; padding:10px 12px; border:1px solid #d9ccca; border-radius:8px; background:#fff; color:#3c2d2e; text-align:left; }
 
@@ -363,7 +393,7 @@
   background-image: url("/vampire/style/background-vampire.webp");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 50% 50%;
+  background-size: 50% auto;
   opacity: .20;
 }
 
