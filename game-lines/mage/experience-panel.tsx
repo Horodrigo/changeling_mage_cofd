@@ -26,7 +26,7 @@ import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
 const PURCHASE_TYPE_EN:Record<string,string>={Atributo:"Attribute",Perícia:"Skill",Mérito:"Merit",Especialização:"Specialty",Arcano:"Arcanum",Gnose:"Gnosis",Rota:"Rote",Práxis:"Praxis",Sabedoria:"Wisdom","Ponto perdido de Força de Vontade":"Lost Willpower dot"};
@@ -51,18 +51,13 @@ type MageXpEntry = {
   before: MageXpSnapshot;
   previousLostWillpower?: number;
 };
-const MAGE_PURCHASES = [
-  "Atributo",
-  "Perícia",
-  "Mérito",
-  "Especialização",
-  "Arcano",
-  "Gnose",
-  "Rota",
-  "Práxis",
-  "Sabedoria",
-  "Ponto perdido de Força de Vontade",
-];
+const MAGE_PURCHASE_GROUPS = [
+  { group: "core", purchases: ["Atributo", "Perícia", "Especialização", "Mérito"] },
+  { group: "supernatural", purchases: ["Gnose", "Arcano"] },
+  { group: "integrity", purchases: ["Sabedoria", "Ponto perdido de Força de Vontade"] },
+  { group: "acquired", purchases: ["Rota", "Práxis"] },
+] as const;
+const MAGE_PURCHASES = MAGE_PURCHASE_GROUPS.flatMap(({ purchases }) => [...purchases]);
 export function MageExperiencePanel({
   character,
   updateSheet,
@@ -545,10 +540,7 @@ export function MageExperiencePanel({
                   setTargetRating(0);
                   setRegularSplit(0);
                 }}
-                options={MAGE_PURCHASES.map((value) => ({
-                  value,
-                  label: purchaseTypeLabel(value,locale),
-                }))}
+                options={groupedPurchaseOptions(MAGE_PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
               />
             </label>
             {purchase === "Mérito" && (

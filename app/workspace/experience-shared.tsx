@@ -15,6 +15,23 @@ import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
+export type ExperiencePurchaseGroup<T extends string> = {
+  group: "core" | "supernatural" | "integrity" | "acquired";
+  purchases: readonly T[];
+};
+
+const EXPERIENCE_GROUP_LABELS = {
+  core: ["Core", "Core"],
+  supernatural: ["Sobrenatural", "Supernatural"],
+  integrity: ["Integridade e Recuperação", "Integrity & Recovery"],
+  acquired: ["Poderes Adquiridos", "Acquired Powers"],
+} as const;
+
+export function groupedPurchaseOptions<T extends string>(groups: readonly ExperiencePurchaseGroup<T>[], label: (value: T) => string, locale: string) {
+  const language = locale === "pt-BR" ? 0 : 1;
+  return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: EXPERIENCE_GROUP_LABELS[group][language] })));
+}
+
 export function BeatTrack({
   label,
   value,

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, isRepeatableDefinition } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,7 +26,12 @@ import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "cruac" | "theban" | "ritual" | "coil" | "scale";
 type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before?: CharacterSheet; undo?: VampireAdvancementUndo };
 
-const PURCHASES: PurchaseType[] = ["attribute", "skill", "specialty", "merit", "discipline", "blood-potency", "humanity", "willpower", "devotion", "cruac", "theban", "ritual", "coil", "scale"];
+const PURCHASE_GROUPS = [
+  { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
+  { group: "supernatural", purchases: ["blood-potency", "discipline", "cruac", "theban", "coil"] },
+  { group: "integrity", purchases: ["humanity", "willpower"] },
+  { group: "acquired", purchases: ["devotion", "ritual", "scale"] },
+] as const satisfies readonly ExperiencePurchaseGroup<PurchaseType>[];
 
 function purchaseLabel(type: PurchaseType, locale: string) {
   const labels: Record<PurchaseType, [string, string]> = {
@@ -324,7 +329,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
         <DialogContent className="experience-dialog">
           <DialogHeader><DialogTitle>{t("ui.spendVampireExperience")}</DialogTitle><DialogDescription>{t("ui.chooseATraitAndTheSheetWillRecord")}</DialogDescription></DialogHeader>
           <div className="experience-purchase-form">
-            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setFreePowerIds([]); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={PURCHASES.map((value) => ({ value, label: purchaseLabel(value, locale) }))} /></label>
+            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setFreePowerIds([]); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>
             {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : purchase !== "cruac" && purchase !== "theban" && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); setTeacherConfirmed(false); }} options={options} /></label> : null}
             {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
             {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}

@@ -18,6 +18,22 @@ const hubris = await vite.ssrLoadModule("/game-lines/mage/hubris.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
 
+test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", () => {
+  const groups = [
+    { group: "core", purchases: ["Attribute", "Merit"] },
+    { group: "supernatural", purchases: ["Gnosis"] },
+    { group: "integrity", purchases: ["Wisdom"] },
+    { group: "acquired", purchases: ["Rote"] },
+  ];
+  assert.deepEqual(experienceShared.groupedPurchaseOptions(groups, (value) => value, "pt-BR"), [
+    { value: "Attribute", label: "Attribute", group: "Core" },
+    { value: "Merit", label: "Merit", group: "Core" },
+    { value: "Gnosis", label: "Gnosis", group: "Sobrenatural" },
+    { value: "Wisdom", label: "Wisdom", group: "Integridade e Recuperação" },
+    { value: "Rote", label: "Rote", group: "Poderes Adquiridos" },
+  ]);
+});
+
 function sheet(key = "wyrd", creation = 1) {
   return { game_line: key === "wyrd" ? "CtL" : "MtA", attributes: { Strength: 1 }, skills: { Athletics: 0 },
     merits: [{ name: "Resources", dots: 10, creationDots: 10, experienceDots: 0 }], specializations: [], derived: { LucidezMaxima: 4 },

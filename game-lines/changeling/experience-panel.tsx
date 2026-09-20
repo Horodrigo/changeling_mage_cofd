@@ -28,7 +28,7 @@ import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, isRepeatableDefinition } from "@/app/workspace/experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
 import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
 type ExperienceUndo =
   | {
@@ -61,16 +61,13 @@ type ExperienceEntry = {
   createdAt: string;
   undo?: ExperienceUndo;
 };
-const PURCHASE_TYPES = [
-  "Atributo",
-  "Perícia",
-  "Mérito",
-  "Especialização",
-  "Contrato",
-  "Benefício de Contrato",
-  "Fado",
-  "Ponto perdido de Força de Vontade",
-];
+const PURCHASE_GROUPS = [
+  { group: "core", purchases: ["Atributo", "Perícia", "Especialização", "Mérito"] },
+  { group: "supernatural", purchases: ["Fado", "Contrato"] },
+  { group: "integrity", purchases: ["Ponto perdido de Força de Vontade"] },
+  { group: "acquired", purchases: ["Benefício de Contrato"] },
+] as const;
+const PURCHASE_TYPES = PURCHASE_GROUPS.flatMap(({ purchases }) => [...purchases]);
 const PURCHASE_TYPE_EN:Record<string,string>={
   Atributo:"Attribute", Perícia:"Skill", Mérito:"Merit", Especialização:"Specialty", Contrato:"Contract",
   "Benefício de Contrato":"Contract Benefit", Fado:"Wyrd", "Ponto perdido de Força de Vontade":"Lost Willpower dot",
@@ -699,10 +696,7 @@ export function ExperiencePanel({
                     setTargetRating(0);
                     setFeedback("");
                   }}
-                  options={PURCHASE_TYPES.map((value) => ({
-                    value,
-                    label: purchaseTypeLabel(value,locale),
-                  }))}
+                  options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
                 />
               </label>
               {purchaseType === "Atributo" && (
