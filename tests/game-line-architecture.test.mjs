@@ -225,6 +225,8 @@ test("line print surfaces retain their web skins and line-specific tracks", asyn
   ]);
 
   assert.match(changelingPrint, /DotValue value=\{1\} max=\{10\} singleRow/);
+  assert.match(changelingPrint, /PrintIntegrityTrack value=\{Math\.max\(0, Math\.min\(10,/);
+  assert.match(changelingPrint, /ctl-print-equipment-table/);
   assert.match(magePrint, /PrintDots value=\{1\} maximum=\{10\}/);
   assert.match(magePrint, /PrintBoxes maximum=\{20\}/);
   assert.match(magePrint, /PrintSingleMarkDots value=\{1\}/);
@@ -236,6 +238,9 @@ test("line print surfaces retain their web skins and line-specific tracks", asyn
   assert.match(vampirePrint, /item\.humanity_slot/);
   assert.match(vampirePrint, /ui\.devotions/);
   assert.match(vampirePrint, /ui\.bloodBonds/);
+  assert.match(vampirePrint, /ui\.rites/);
+  assert.match(vampirePrint, /ui\.miracles/);
+  assert.match(vampirePrint, /Array\.from\(\{ length: 10 \}.*const item = equipment/);
   assert.doesNotMatch(vampirePrint, /touchstonesAndBanes/);
   assert.doesNotMatch(vampirePrint, /acquiredPowers/);
   assert.match(mageCss, /mage\/style\/background-mage\.webp/);

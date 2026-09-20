@@ -1579,6 +1579,11 @@
 .vtr-print-document .cod-print-boxes i { width: 3.2mm; height: 3.2mm; }
 .vtr-print-document .cod-print-lines > div,
 .vtr-print-document .cod-print-rated-lines > div { min-height: 4.4mm; font-size: 8pt; }
+.vtr-print-main-grid > section:nth-child(-n+2) .vtr-print-heading { margin:3mm 0 1.5mm; }
+.vtr-print-main-grid > section:nth-child(-n+2) h3 { margin-top:2mm; font-size:9.5pt; }
+.vtr-print-main-grid > section:nth-child(-n+2) .official-trait-line,
+.vtr-print-main-grid > section:nth-child(-n+2) .cod-print-lines > div,
+.vtr-print-main-grid > section:nth-child(-n+2) .cod-print-rated-lines > div { min-height:5.1mm; font-size:9.1pt; }
 
 .vtr-print-power { display:grid; gap:1.5mm; margin-bottom:1mm; border:.2mm solid #9b7771; padding:2mm; }
 .vtr-print-power > section { display:grid; gap:.8mm; }
@@ -1596,10 +1601,12 @@
 .vtr-print-derived dt,
 .vtr-print-derived dd { margin: 0; }
 
-.vtr-print-second-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.vtr-print-second-grid { display:grid; grid-template-columns:.65fr 1.35fr; gap:8mm; }
 .vtr-print-combat > header,.vtr-print-combat > div,.vtr-print-equipment > header,.vtr-print-equipment > div { display:grid; min-height:5mm; align-items:end; gap:.6mm; font-size:7pt; }
-.vtr-print-combat > header,.vtr-print-combat > div { grid-template-columns:3mm 2fr repeat(5,1fr); }
-.vtr-print-equipment > header,.vtr-print-equipment > div { grid-template-columns:3mm 2fr repeat(3,1fr); }
+.vtr-print-combat > header { grid-template-columns:2fr repeat(5,1fr); }
+.vtr-print-combat > div { grid-template-columns:3mm 2fr repeat(5,1fr); }
+.vtr-print-equipment > header { grid-template-columns:2fr repeat(3,1fr); }
+.vtr-print-equipment > div { grid-template-columns:3mm 2fr repeat(3,1fr); }
 .vtr-print-combat > header,.vtr-print-equipment > header { color:#611920; font-size:6pt; font-weight:700; text-transform:uppercase; }
 .vtr-print-combat span,.vtr-print-equipment span { min-width:0; overflow:hidden; border-bottom:1px solid #9b7771; padding:.5mm; text-overflow:ellipsis; white-space:nowrap; }
 .vtr-print-combat i,.vtr-print-equipment i { width:2.5mm; height:2.5mm; border:.25mm solid #4d171c; margin-bottom:.6mm; }

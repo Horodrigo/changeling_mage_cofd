@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
+import { PrintIntegrityTrack } from "@/app/workspace/print-sheet-primitives";
 import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList } from "@/app/workspace/sheet-primitives";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
@@ -92,11 +93,6 @@ function PrintPage({ page, total, title, children, main = false }: { page: numbe
 
 function PrintField({ label, value }: { label: string; value: unknown }) {
   return <div className="ctl-print-field"><span>{label}</span><strong>{String(value ?? "")}</strong></div>;
-}
-
-function PrintResourceTrack({ label, current, maximum, numbered = false }: { label: string; current: number; maximum: number; numbered?: boolean }) {
-  const { t } = useLanguage();
-  return <div className="ctl-print-track"><strong>{label}</strong><div className="ctl-print-circles">{Array.from({ length: maximum }, (_, index) => <i className={index < current ? "filled" : ""} key={index}/>)}</div>{numbered && <div className="ctl-print-resource-numbers" aria-label={t("ui.scaleLabel", { label })}>{Array.from({ length: maximum }, (_, index) => <span key={index}>{index + 1}</span>)}</div>}</div>;
 }
 
 function PrintPhysicalTrack({ current, slots = 10, damage, clarityScale = false }: { current: number; slots?: number; damage?: ClarityDamageLevel[]; clarityScale?: boolean }) {
@@ -388,14 +384,16 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
           <h3>{t("ui.blessingOf", { name: seemingDisplayName(String(data.seeming ?? ""), locale) })}</h3><p className="ctl-print-lore-text">{seemingBlessing}</p>
           <h3>{t("ui.curse")}</h3><p className="ctl-print-lore-text">{seemingCurse}</p>
           <h3>{t("ui.kithBlessing")}</h3><p className="ctl-print-lore-text">{kith.blessing}</p>
-          <h3>{t("ui.goblinDebt")}</h3><PrintResourceTrack label={t("ui.notes")} current={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))} maximum={10}/>
+          <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><PrintIntegrityTrack value={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))}/>
         </section>
         <section>
           <SheetHeading>{t("ui.oaths")}</SheetHeading><PrintTextList values={cleanList(data.oaths)} minimum={6}/>
           <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
           <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, reference.courts)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
           <SheetHeading>{t("ui.combat")}</SheetHeading>
-          <div className="ctl-print-combat-table"><header><span>{t("combat.weapons")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{weapons.slice(0, 4).map((weapon) => <div key={weapon.id}><span>{weapon.name}</span><span/><span>{weapon.damage}</span><span>{weapon.ranges}</span><span>{weapon.initiative}</span><span>{weapon.size}</span></div>)}</div>
+          <div className="ctl-print-combat-table"><header><span>{t("combat.weapons")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span/><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div>
+          <SheetHeading>{t("ui.equipment")}</SheetHeading>
+          <div className="ctl-print-equipment-table"><header><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div>
         </section>
       </div>
     </PrintPage>

@@ -1956,8 +1956,8 @@ background-size:
 .ctl-print-boxes i.bashing span,.ctl-print-boxes i.mild span { background:linear-gradient(55deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%); }
 .ctl-print-boxes i.lethal span,.ctl-print-boxes i.severe span { background:linear-gradient(45deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%),linear-gradient(-45deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%); }
 .ctl-print-boxes i.aggravated span { background:linear-gradient(90deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%),linear-gradient(30deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%),linear-gradient(-30deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%); }
-.ctl-print-clarity-numbers,.ctl-print-resource-numbers { display:flex; gap:1.1mm; margin-top:-.6mm; }
-.ctl-print-clarity-numbers span,.ctl-print-resource-numbers span { width:4mm; flex:none; text-align:center; font:5.2pt/1.1 Inter,Arial,sans-serif; }
+.ctl-print-clarity-numbers { display:flex; gap:1.1mm; margin-top:-.6mm; }
+.ctl-print-clarity-numbers span { width:4mm; flex:none; text-align:center; font:5.2pt/1.1 Inter,Arial,sans-serif; }
 .ctl-print-clarity-numbers span:first-child { font-size:4.5pt; text-transform:uppercase; }
 .ctl-print-power { border:.2mm solid #9baa9f; padding:2mm; }
 .ctl-print-power > div:first-child { display:flex; align-items:center; justify-content:space-between; gap:2mm; border-bottom:.2mm solid #9baa9f; padding-bottom:1.5mm; margin-bottom:1.5mm; color:var(--sheet-accent); text-transform:uppercase; }
@@ -1981,13 +1981,20 @@ background-size:
 .ctl-print-second-grid > section + section { background-image:url('/changeling/style/column-divider.webp'); background-position:left top; background-repeat:repeat-y; background-size:1.2mm auto; padding-left:3mm; }
 .ctl-print-second-grid h3 { margin:2mm 0 .7mm; color:var(--sheet-accent); font:400 9pt "Changeling Sheet Small Caps","Changeling Sheet",Georgia,serif; text-align:center; text-transform:uppercase; }
 .ctl-print-lore-text { height:23mm; margin:0; overflow:hidden; border-bottom:.2mm solid #aeb9b0; font:6.6pt/1.3 Inter,Arial,sans-serif; }
+.ctl-print-page .cod-print-integrity > div { border-color:#8e9b91; }
+.ctl-print-page .cod-print-integrity i.filled { box-shadow:inset 0 0 0 .45mm #f5f0df; }
 .ctl-print-expanded-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2mm 5mm; }
 .ctl-print-expanded-grid article { min-width:0; }
 .ctl-print-expanded-grid article > strong { display:block; overflow:hidden; color:var(--sheet-accent); font-size:8pt; text-align:center; text-overflow:ellipsis; white-space:nowrap; }
-.ctl-print-combat-table { display:grid; font:6.4pt/1.2 Inter,Arial,sans-serif; }
-.ctl-print-combat-table > header,.ctl-print-combat-table > div { display:grid; grid-template-columns:1.6fr .7fr .55fr .65fr .65fr .45fr; min-height:5.5mm; align-items:end; }
-.ctl-print-combat-table > header { color:var(--sheet-accent); font-weight:800; }
-.ctl-print-combat-table span { min-width:0; overflow:hidden; border-bottom:.2mm solid #8e9b91; padding:.5mm .8mm; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-combat-table,.ctl-print-equipment-table { display:grid; font:6.4pt/1.2 Inter,Arial,sans-serif; }
+.ctl-print-combat-table > header,.ctl-print-combat-table > div,.ctl-print-equipment-table > header,.ctl-print-equipment-table > div { display:grid; min-height:5.5mm; align-items:end; gap:.6mm; }
+.ctl-print-combat-table > header { grid-template-columns:1.6fr .7fr .55fr .65fr .65fr .45fr; }
+.ctl-print-combat-table > div { grid-template-columns:3mm 1.6fr .7fr .55fr .65fr .65fr .45fr; }
+.ctl-print-equipment-table > header { grid-template-columns:2fr repeat(3,1fr); }
+.ctl-print-equipment-table > div { grid-template-columns:3mm 2fr repeat(3,1fr); }
+.ctl-print-combat-table > header,.ctl-print-equipment-table > header { color:var(--sheet-accent); font-weight:800; }
+.ctl-print-combat-table span,.ctl-print-equipment-table span { min-width:0; overflow:hidden; border-bottom:.2mm solid #8e9b91; padding:.5mm .8mm; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-combat-table i,.ctl-print-equipment-table i { width:2.5mm; height:2.5mm; border:.25mm solid var(--sheet-ink); margin-bottom:.6mm; }
 .ctl-print-flow-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6mm; height:244mm; padding-top:3mm; align-items:start; }
 .ctl-print-flow-column { min-width:0; height:244mm; overflow:hidden; }
 .ctl-print-flow-group + .ctl-print-flow-group { margin-top:0; }
