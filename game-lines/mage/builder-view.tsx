@@ -10,7 +10,7 @@ import { Choice, DotRow } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
-import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS } from "./creation-rules";
+import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS, mageOrderLabel } from "./creation-rules";
 import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
@@ -61,7 +61,7 @@ function OrderSelector(props: OrderSelectorProps) {
       <span>{t("ui.order")}</span>
       <div className="kith-current order-current">
         <strong>
-          {(props.order === "Orderless" ? t("ui.orderless") : props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : props.order === "Nameless" ? "Nameless" : MTA_ORDER_LABELS[props.order] ?? props.order) ||
+          {(props.order === "Orderless" ? t("ui.orderless") : props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : props.order === "Nameless" ? "Nameless" : mageOrderLabel(props.order, locale)) ||
             t("ui.noneSelected")}
         </strong>
         <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || t("ui.chooseAnOrderToReviewItsDescription")}</p>
@@ -97,7 +97,7 @@ function OrderSelector(props: OrderSelectorProps) {
             ]}
             optionLabels={{
               __none: t("ui.selectAnOrder"),
-              ...MTA_ORDER_LABELS,
+              ...Object.fromEntries(Object.keys(MTA_ORDER_LABELS).map((order) => [order, mageOrderLabel(order, locale)])),
               Nameless: "Nameless",
               Orderless: t("ui.orderless"),
             }}

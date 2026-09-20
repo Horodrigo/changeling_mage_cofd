@@ -21,6 +21,9 @@ export const MTA_ORDER_LABELS: Record<string, string> = {
   "Silver Ladder": "Escada de Prata", "Seers of the Throne": "Videntes do Trono", Nameless: "Sem Ordem",
 };
 
+export const mageOrderLabel = (order: string, locale: "pt-BR" | "en-US") =>
+  locale === "pt-BR" ? MTA_ORDER_LABELS[order] ?? order : order;
+
 export const MTA_ORDER_DESCRIPTIONS: Record<string, [string, string]> = {
   "Adamantine Arrow": ["Guerreiros místicos que aperfeiçoam a si mesmos através do conflito e defendem os Despertos.", "Mystic warriors who perfect themselves through conflict and defend the Awakened."],
   "Free Council": ["Magos modernos que buscam sabedoria na cultura humana, na democracia e na inovação.", "Modern mages who seek wisdom in human culture, democracy, and innovation."],

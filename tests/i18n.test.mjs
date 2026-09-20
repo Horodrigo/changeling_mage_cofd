@@ -51,6 +51,13 @@ test("English is the server/default locale and catalog fallback is explicit", as
   assert.match(catalogs, /fallback: CatalogFallback = "empty"/);
 });
 
+test("Mage Order labels follow the active locale", async () => {
+  const { mageOrderLabel } = await vite.ssrLoadModule("/game-lines/mage/creation-rules.ts");
+
+  assert.equal(mageOrderLabel("Adamantine Arrow", "en-US"), "Adamantine Arrow");
+  assert.equal(mageOrderLabel("Adamantine Arrow", "pt-BR"), "Seta Adamantina");
+});
+
 test("legacy tr() UI translation helper is not reintroduced in active app surfaces", async () => {
   const candidates = [
     "../app/workspace.tsx",
