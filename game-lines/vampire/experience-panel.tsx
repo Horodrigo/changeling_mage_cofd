@@ -6,7 +6,6 @@ import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-edit
 import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
@@ -80,7 +79,6 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const [meritDots, setMeritDots] = useState(0);
   const [meritInstance, setMeritInstance] = useState(-1);
   const [meritConfiguration, setMeritConfiguration] = useState<MeritConfiguration>({});
-  const [teacherConfirmed, setTeacherConfirmed] = useState(false);
   const [feedback, setFeedback] = useState("");
   const clan = reference.clans.find((item) => item.id === character.line_data.clan_id);
   const covenant = String(character.line_data.covenant_id ?? "covenantless");
@@ -94,7 +92,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const knownDevotions = new Set(Array.isArray(character.line_data.devotion_ids) ? character.line_data.devotion_ids.map(String) : []);
   const knownRites = new Set([...(Array.isArray(bloodSorcery.cruac_rite_ids) ? bloodSorcery.cruac_rite_ids : []), ...(Array.isArray(bloodSorcery.theban_miracle_ids) ? bloodSorcery.theban_miracle_ids : [])].map(String));
   const knownScales = new Set(Array.isArray(ordo.scale_ids) ? ordo.scale_ids.map(String) : []);
-  const covenantPowers = covenant === "circle-of-the-crone" ? powers.cruacRites : covenant === "lancea-et-sanctum" ? powers.thebanMiracles : [];
+  const covenantPowers = [...(Number(bloodSorcery.cruac_rating ?? 0) > 0 ? powers.cruacRites : []), ...(Number(bloodSorcery.theban_rating ?? 0) > 0 ? powers.thebanMiracles : [])];
   const options = (() => {
     if (purchase === "attribute") return Object.values(ATTRIBUTES).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
     if (purchase === "skill" || purchase === "specialty") return Object.values(SKILLS).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
@@ -116,7 +114,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const mysteryId = String(ordo.mystery_id ?? "");
   const limit = Math.max(5, Number(character.derived.LimiteDeCaracteristica ?? 5));
   const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
-  const coilInMystery = Boolean(mysteryId) && chosenOption === `coil-${mysteryId}`;
+  const coilInMystery = covenant === "ordo-dracul" && Boolean(mysteryId) && chosenOption === `coil-${mysteryId}`;
   const currentDiscipline = Number(disciplines[chosenOption] ?? 0);
   const ratedCurrent = purchase === "attribute" ? Number(character.attributes[chosenOption] ?? 1)
     : purchase === "skill" ? Number(character.skills[chosenOption] ?? 0)
@@ -133,7 +131,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       : purchase === "humanity" ? humanityMaximum
         : purchase === "willpower" ? permanentWillpowerMaximum
           : purchase === "cruac" || purchase === "theban" ? 5
-            : purchase === "coil" ? (coilInMystery ? 5 : covenantStatus)
+            : purchase === "coil" ? 5
               : 0;
   const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
   const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
@@ -148,9 +146,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     }
   }
   const chosen = purchase === "cruac" || purchase === "theban" ? freePowerSelections[0] ?? "" : chosenOption;
-  const selectedPower = [...powers.devotions, ...covenantPowers, ...powers.coils, ...powers.scales].find((item) => item.id === chosen);
+  const selectedPower = [...powers.devotions, ...powers.cruacRites, ...powers.thebanMiracles, ...powers.coils, ...powers.scales].find((item) => item.id === chosen);
   const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (clan?.disciplines.includes(chosen) ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" ? Number(selectedPower?.experienceCost ?? 0) : purchase === "cruac" || purchase === "theban" ? 4 * ratingAmount : purchase === "ritual" ? 2 : purchase === "coil" ? (coilInMystery ? 3 : 4) * ratingAmount : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;
-  const teacherRequired = purchase === "discipline" && !clan?.disciplines.includes(chosen) && ["Auspex", "Dominate", "Majesty", "Nightmare", "Protean"].includes(chosen);
   const duplicateNonRepeatableMerit = purchase === "merit" && Boolean(
     selectedMerit &&
     meritInstance < 0 &&
@@ -164,7 +161,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     (selectedMerit.name === "Kindred Status" && !String(meritConfiguration.group ?? "").trim()) ||
     !meritPrerequisitesMet(selectedMerit, { ...meritContext, selectedDots: nextMeritRating, configuration: meritConfiguration })
   );
-  const unavailable = !chosen || cost < 1 || meritUnavailable || ((purchase === "cruac" || purchase === "theban") && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && (ratedCurrent >= limit || (teacherRequired && !teacherConfirmed))) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) < 1) || (purchase === "specialty" && !specialtyName.trim()) || (purchase === "cruac" && (covenant !== "circle-of-the-crone" || covenantStatus < 1 || ratedCurrent >= 5)) || (purchase === "theban" && (covenant !== "lancea-et-sanctum" || covenantStatus < 1 || ratedCurrent >= 5)) || ((purchase === "coil" || purchase === "scale") && (covenant !== "ordo-dracul" || covenantStatus < 1)) || (purchase === "coil" && ratedCurrent >= ratedMaximum) || (purchase === "ritual" && (covenantStatus < 1 || Number(selectedPower?.rating ?? 0) > Number(covenant === "circle-of-the-crone" ? bloodSorcery.cruac_rating ?? 0 : bloodSorcery.theban_rating ?? 0)));
+  const ritualDisciplineRating = selectedPower?.kind === "cruac-rite" ? Number(bloodSorcery.cruac_rating ?? 0) : Number(bloodSorcery.theban_rating ?? 0);
+  const unavailable = !chosen || cost < 1 || meritUnavailable || ((purchase === "cruac" || purchase === "theban") && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= limit) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) < 1) || (purchase === "specialty" && !specialtyName.trim()) || ((purchase === "cruac" || purchase === "theban" || purchase === "coil") && ratedCurrent >= 5) || (purchase === "scale" && (covenant !== "ordo-dracul" || covenantStatus < 1)) || (purchase === "ritual" && Number(selectedPower?.rating ?? 0) > ritualDisciplineRating);
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
     if (unavailable || available < cost) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
@@ -204,7 +202,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     else if (purchase === "devotion") next.line_data.devotion_ids = [...knownDevotions, chosen];
     else if (purchase === "cruac") { next.line_data.blood_sorcery = { ...bloodSorcery, cruac_rating: intendedRating, cruac_rite_ids: [...(Array.isArray(bloodSorcery.cruac_rite_ids) ? bloodSorcery.cruac_rite_ids : []), ...freePowerSelections] }; next.line_data.humanity = Math.min(Number(next.line_data.humanity ?? 7), 10 - intendedRating); }
     else if (purchase === "theban") next.line_data.blood_sorcery = { ...bloodSorcery, theban_rating: intendedRating, theban_miracle_ids: [...(Array.isArray(bloodSorcery.theban_miracle_ids) ? bloodSorcery.theban_miracle_ids : []), ...freePowerSelections] };
-    else if (purchase === "ritual") next.line_data.blood_sorcery = covenant === "circle-of-the-crone" ? { ...bloodSorcery, cruac_rite_ids: [...(Array.isArray(bloodSorcery.cruac_rite_ids) ? bloodSorcery.cruac_rite_ids : []), chosen] } : { ...bloodSorcery, theban_miracle_ids: [...(Array.isArray(bloodSorcery.theban_miracle_ids) ? bloodSorcery.theban_miracle_ids : []), chosen] };
+    else if (purchase === "ritual") next.line_data.blood_sorcery = selectedPower?.kind === "cruac-rite" ? { ...bloodSorcery, cruac_rite_ids: [...(Array.isArray(bloodSorcery.cruac_rite_ids) ? bloodSorcery.cruac_rite_ids : []), chosen] } : { ...bloodSorcery, theban_miracle_ids: [...(Array.isArray(bloodSorcery.theban_miracle_ids) ? bloodSorcery.theban_miracle_ids : []), chosen] };
     else if (purchase === "coil") next.line_data.ordo_dracul = { ...ordo, coil_ratings: { ...coilRatings, [chosen]: intendedRating } };
     else if (purchase === "scale") next.line_data.ordo_dracul = { ...ordo, scale_ids: [...knownScales, chosen] };
     const nextDisciplines = recordRatings(next.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
@@ -221,7 +219,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       : purchase === "devotion" ? { kind: "devotion", id: chosen }
       : purchase === "cruac" ? { kind: "cruac", ids: freePowerSelections, amount: ratingAmount, humanityLost: Math.max(0, Number(character.line_data.humanity ?? 7) - Number(next.line_data.humanity ?? 7)) }
       : purchase === "theban" ? { kind: "theban", ids: freePowerSelections, amount: ratingAmount }
-      : purchase === "ritual" ? { kind: "ritual", key: covenant === "circle-of-the-crone" ? "cruac_rite_ids" : "theban_miracle_ids", id: chosen }
+      : purchase === "ritual" ? { kind: "ritual", key: selectedPower?.kind === "cruac-rite" ? "cruac_rite_ids" : "theban_miracle_ids", id: chosen }
       : purchase === "coil" ? { kind: "coil", id: chosen, amount: ratingAmount }
       : { kind: "scale", id: chosen };
     const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), undo };
@@ -279,13 +277,12 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       const nextOrdo = next.line_data.ordo_dracul && typeof next.line_data.ordo_dracul === "object" ? next.line_data.ordo_dracul as Record<string, unknown> : {};
       const nextCoilRatings = nextOrdo.coil_ratings && typeof nextOrdo.coil_ratings === "object" ? nextOrdo.coil_ratings as Record<string, number> : {};
       const nextRating = Number(nextCoilRatings[chosen] ?? 0);
-      if (nextRating >= 5 || (!coilInMystery && nextRating >= covenantStatus)) setTarget("");
+      if (nextRating >= 5) setTarget("");
     }
 
     updateSheet(next);
     setFeedback(t("ui.purchaseRecorded"));
     setSpecialtyName("");
-    setTeacherConfirmed(false);
   };
   const revert = (entry: HistoryEntry) => {
     if (!history.some((item) => item.id === entry.id)) return;
@@ -329,8 +326,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
         <DialogContent className="experience-dialog">
           <DialogHeader><DialogTitle>{t("ui.spendVampireExperience")}</DialogTitle><DialogDescription>{t("ui.chooseATraitAndTheSheetWillRecord")}</DialogDescription></DialogHeader>
           <div className="experience-purchase-form">
-            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setFreePowerIds([]); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); setTeacherConfirmed(false); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>
-            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : purchase !== "cruac" && purchase !== "theban" && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); setTeacherConfirmed(false); }} options={options} /></label> : null}
+            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setFreePowerIds([]); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>
+            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : purchase !== "cruac" && purchase !== "theban" && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label> : null}
             {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
             {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
             {ratedMaximum > ratedCurrent && <ExperienceRatingPicker current={ratedCurrent} maximum={ratedMaximum} value={intendedRating} onChange={(value) => { setTargetRating(value); setFreePowerIds([]); }} />}
@@ -340,7 +337,6 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
               const freeOptions = freePowerCatalog.filter((item) => !knownRites.has(item.id) && !selectedElsewhere.has(item.id) && Number(item.rating ?? 0) <= maximumRating && (purchase !== "theban" || Number(character.line_data.humanity ?? 7) >= Number(item.rating ?? 0))).map((item) => ({ value: item.id, label: powerName(item, locale) }));
               return <label key={`${purchase}-${index}`}>{purchase === "cruac" ? t("ui.freeRite") : t("ui.freeMiracle")} {index + 1}<RuleSelect value={selectedId} onChange={(id) => setFreePowerIds(() => { const next = [...freePowerSelections]; next[index] = id; return next; })} options={freeOptions} /></label>;
             })}
-            {teacherRequired && <label className="vampire-teacher-confirmation"><Checkbox checked={teacherConfirmed} onCheckedChange={(checked) => setTeacherConfirmed(checked === true)} /><span>{t("ui.iConfirmATeacherAndBloodFromSomeone")}</span></label>}
           </div>
           <div className="purchase-preview"><strong>{ratedMaximum ? `${purchase === "cruac" || purchase === "theban" ? purchaseLabel(purchase, locale) : options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)} ${intendedRating}` : options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {t("ui.xp")}</span></div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
