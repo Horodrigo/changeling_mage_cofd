@@ -18,7 +18,7 @@ export function kithSkillMiddlePieceCount(nameWidth:number,frameHeight=38){
   return Math.max(0,Math.ceil((requiredWidth-fixedWidth)/middleWidth));
 }
 export function SheetHeading({children,className}:{children:ReactNode;className?:string}){const {locale}=useLanguage();return <h3 className={`official-heading${className?` ${className}`:""}`}><span>{typeof children==="string"?systemTerm(children,locale):children}</span></h3>;}
-export function CompactValues({values}:{values:Record<string,number>}){const {locale}=useLanguage();return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{systemTerm(pretty(name),locale)}</span><strong>{value}</strong></div>)}</div>;}
+export function CompactValues({values}:{values:Record<string,number|string>}){const {locale}=useLanguage();return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{systemTerm(pretty(name),locale)}</span><strong>{value}</strong></div>)}</div>;}
 
 export function TraitBlock({
   title,

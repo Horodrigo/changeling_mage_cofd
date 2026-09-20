@@ -11,8 +11,10 @@ export const vampireRegistration: GameLineRegistration = {
   catalogGroups: {
     builder: ["core-merits", "vampire-merits", "vampire-powers", "vampire-reference"],
     sheet: ["core-merits", "vampire-merits", "vampire-powers", "core-reference", "vampire-reference", "vampire-conditions"],
+    print: ["core-merits", "vampire-merits", "vampire-powers", "core-reference", "vampire-reference", "vampire-conditions"],
   },
   loadRules: () => import("./rules").then(({ vampireRules }) => vampireRules),
   loadBuilder: () => import("./builder").then(({ vampireBuilder }) => vampireBuilder),
   loadSheet: () => import("./sheet").then(({ vampireSheet }) => vampireSheet),
+  loadPrintSheet: () => import("./print").then(({ vampirePrintSheet }) => vampirePrintSheet),
 };

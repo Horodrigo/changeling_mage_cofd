@@ -29,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
+import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
 import {
   isCurrentStoredCharacter,
@@ -49,6 +50,7 @@ import {
   updateCharacterState as applyCharacterState,
 } from "./workspace/character-lifecycle";
 import { useCharacterRepository } from "./workspace/character-repository";
+import { blankPrintCharacter } from "./workspace/blank-print-character";
 
 const NewCharacterBuilder = lazy(() =>
   import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
@@ -120,6 +122,7 @@ export function Workspace({
 
   const [maximumZoom, setMaximumZoom] = useState(1);
   const [printOpen, setPrintOpen] = useState(false);
+  const [blankPrintLine, setBlankPrintLine] = useState<PersistedGameLineId | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -133,6 +136,7 @@ export function Workspace({
     setEditing(null);
     setMaximumZoom(1);
     setPrintOpen(false);
+    setBlankPrintLine(null);
   }
 
   async function openCharacter(sheet: CharacterSheet) {
@@ -359,6 +363,7 @@ export function Workspace({
             characters={characters}
             openCharacters={() => navigate("personagens")}
             createCharacter={() => setEditing("new")}
+            printBlankSheet={setBlankPrintLine}
             openCharacter={(sheet) => { void openCharacter(sheet); }}
             deleteCharacter={setDeleteTarget}
           />
@@ -385,6 +390,9 @@ export function Workspace({
           />
         </Suspense>
       )}
+      {blankPrintLine && <CatalogBoundary groups={getGameLineRegistration(blankPrintLine).catalogGroups.print ?? getGameLineRegistration(blankPrintLine).catalogGroups.sheet}>
+        <Suspense fallback={<WorkspaceLoading />}><CharacterPrintDialog character={blankPrintCharacter(blankPrintLine)} open onOpenChange={(open) => { if (!open) setBlankPrintLine(null); }}/></Suspense>
+      </CatalogBoundary>}
     </main>
   );
 }
@@ -393,12 +401,14 @@ function Dashboard({
   characters,
   openCharacters,
   createCharacter,
+  printBlankSheet,
   openCharacter,
   deleteCharacter,
 }: {
   characters: StoredCharacter[];
   openCharacters: () => void;
   createCharacter: () => void;
+  printBlankSheet: (line: PersistedGameLineId) => void;
   openCharacter: (item: CharacterSheet) => void;
   deleteCharacter: (item: StoredCharacter) => void;
 }) {
@@ -426,6 +436,14 @@ function Dashboard({
             <Button onClick={createCharacter}>
               <Plus /> {t("workspace.newCharacter")}
             </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild><Button variant="outline"><Printer /> {t("workspace.printBlankSheet")}</Button></DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {listGameLineRegistrations().filter((registration) => registration.loadPrintSheet).map((registration) => <DropdownMenuItem key={registration.id} onSelect={() => printBlankSheet(registration.id)}>
+                  <Printer /> {registration.label}
+                </DropdownMenuItem>)}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
         <div className="sigil" aria-hidden="true">

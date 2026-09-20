@@ -2,6 +2,8 @@
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
+import { PrintIntegrityTrack } from "@/app/workspace/print-sheet-primitives";
+import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
 import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList } from "@/app/workspace/sheet-primitives";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
@@ -9,7 +11,7 @@ import type { CourtDefinition } from "@/lib/changeling-courts";
 import { kithCreationChoice } from "./kith-choices";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
-import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
+import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
@@ -92,11 +94,6 @@ function PrintPage({ page, total, title, children, main = false }: { page: numbe
 
 function PrintField({ label, value }: { label: string; value: unknown }) {
   return <div className="ctl-print-field"><span>{label}</span><strong>{String(value ?? "")}</strong></div>;
-}
-
-function PrintResourceTrack({ label, current, maximum, numbered = false }: { label: string; current: number; maximum: number; numbered?: boolean }) {
-  const { t } = useLanguage();
-  return <div className="ctl-print-track"><strong>{label}</strong><div className="ctl-print-circles">{Array.from({ length: maximum }, (_, index) => <i className={index < current ? "filled" : ""} key={index}/>)}</div>{numbered && <div className="ctl-print-resource-numbers" aria-label={t("ui.scaleLabel", { label })}>{Array.from({ length: maximum }, (_, index) => <span key={index}>{index + 1}</span>)}</div>}</div>;
 }
 
 function PrintPhysicalTrack({ current, slots = 10, damage, clarityScale = false }: { current: number; slots?: number; damage?: ClarityDamageLevel[]; clarityScale?: boolean }) {
@@ -263,7 +260,6 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   }), [contractCatalog, data.contracts, data.learned_contracts]);
   const expanded = useMemo(() => character.merits.filter((merit) => !merit.grantedBy && (meritCatalog.some((item) => item.name === merit.name && item.levels?.length) || ["Contacts", "Multilingual"].includes(merit.name))), [character.merits, meritCatalog]);
   const principalMerits = character.merits.filter((merit) => !merit.grantedBy || merit.grantedBy === "Corte");
-  const court = findCourt(reference.courts, data.court);
   const courtDisplay = courtName(reference.courts, data.court, locale);
   const kith = useMemo(() => kithPresentation(reference, data.kith, locale, Boolean(data.kith_custom)), [data.kith, data.kith_custom, locale, reference]);
   const kithSkillNames = useMemo(() => {
@@ -284,41 +280,28 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     ].filter(Boolean);
     return [...new Set(ids)].map((id) => conditions.find((condition) => condition.id === id)).filter((item): item is ConditionDefinition => Boolean(item));
   }, [character.current_state?.conditions, conditions, data.merit_granted_conditions]);
+  const seeming = CTL_SEEMINGS[String(data.seeming ?? "") as keyof typeof CTL_SEEMINGS];
   const identity = [
     [t("ui.name"), character.character.name], [t("ui.needle"), changelingAnchorDisplayName("needle", data.needle, locale)], [t("ui.seeming"), seemingDisplayName(data.seeming, locale)],
     [t("ui.player"), character.character.player], [t("ui.thread"), changelingAnchorDisplayName("thread", data.thread, locale)], [t("ui.kith6a78ff"), kith.name],
     [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("ui.court"), courtDisplay],
   ];
-  const otherTraits = {
-    Defesa: Number(derived.Defesa ?? 0) + (armor?.defense ?? 0),
-    Iniciativa: Number(derived.Iniciativa ?? 0),
-    Deslocamento: Number(derived.Deslocamento ?? 0) + (armor?.speed ?? 0),
-    Tamanho: Number(derived.Tamanho ?? 5),
-    "Armadura geral": armor?.general ?? 0,
-    "Armadura balística": armor?.ballistic ?? 0,
-  };
+  const otherTraits = isBlankPrintCharacter(character)
+    ? { Tamanho: "", Deslocamento: "", Defesa: "", Iniciativa: "", Armadura: "" }
+    : derivedTraitsWithArmor(derived, data.combat_armor);
   const flowBlocks = useMemo(() => {
     const blocks: PrintBlock[] = [];
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
-    const seeming = CTL_SEEMINGS[String(data.seeming ?? "") as keyof typeof CTL_SEEMINGS];
-    contracts.forEach((contract, contractIndex) => {
+    if (options.powerDetails) contracts.forEach((contract, contractIndex) => {
       const card = contractPrintData(contract, character, reference.courts, locale, t);
-      const chunks = options.powerDetails ? Array.from({ length: Math.max(1, Math.ceil(card.rows.length / 4)) }, (_, index) => card.rows.slice(index * 4, index * 4 + 4)) : [[]];
-      chunks.forEach((rows, chunkIndex) => add("contracts", t("ui.contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed={options.powerDetails}/>));
+      const chunks = Array.from({ length: Math.max(1, Math.ceil(card.rows.length / 4)) }, (_, index) => card.rows.slice(index * 4, index * 4 + 4));
+      chunks.forEach((rows, chunkIndex) => add("contracts", t("ui.contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed/>));
     });
-    if (!contracts.length) add("contracts", t("ui.contracts"), "contracts-blank", <PrintCard title={t("ui.contracts")}><PrintTextList values={[]} minimum={5}/></PrintCard>);
-    if (seeming) add("line-lore", t("ui.seemingAndKith"), "seeming", <PrintCard title={t("ui.blessingOf", { name: seemingDisplayName(String(data.seeming), locale) })} meta="Changeling: The Lost"><p>{locale === "en-US" ? seeming.blessingEn : seeming.blessing}</p><p><b>{t("ui.curse")}:</b> {locale === "en-US" ? seeming.curseEn : seeming.curse}</p></PrintCard>);
-    else add("line-lore", t("ui.seemingAndKith"), "seeming-blank", <PrintCard title={t("ui.seeming")}><PrintTextList values={[]} minimum={3}/></PrintCard>);
-    if (kith.name) add("line-lore", t("ui.seemingAndKith"), "kith", <PrintCard title={t("ui.blessing", { p1: kith.name })} meta={kith.source ? `${kith.source}${kith.page ? ` · p. ${kith.page}` : ""}` : undefined}>{kith.description && kith.description !== kith.blessing && <p>{kith.description}</p>}<p>{kith.blessing}</p></PrintCard>);
-    else add("line-lore", t("ui.seemingAndKith"), "kith-blank", <PrintCard title={t("ui.kith6a78ff")}><PrintTextList values={[]} minimum={3}/></PrintCard>);
-    expanded.forEach((merit, index) => add("expanded-merits", t("ui.expandedMerits"), `merit-${merit.instanceId ?? merit.name}-${index}`, <ExpandedMeritCard merit={merit} catalog={meritCatalog} courts={reference.courts} detailed={options.expandedMeritDetails}/>));
-    if (!expanded.length) add("expanded-merits", t("ui.expandedMerits"), "expanded-merits-blank", <PrintCard title={t("ui.expandedMerits")}><PrintTextList values={[]} minimum={4}/></PrintCard>);
-    add("oaths", t("ui.oaths"), "oaths", <PrintCard title={t("ui.oaths")}><PrintTextList values={cleanList(data.oaths)} minimum={5}/></PrintCard>);
+    if (options.expandedMeritDetails) expanded.forEach((merit, index) => add("expanded-merits", t("ui.expandedMerits"), `merit-${merit.instanceId ?? merit.name}-${index}`, <ExpandedMeritCard merit={merit} catalog={meritCatalog} courts={reference.courts} detailed/>));
     if (armor) add("equipment", t("ui.equipment"), "armor", <PrintCard title={armor.name} meta={`${t("ui.armor")} ${armor.general}/${armor.ballistic} · ${t("ui.defense")} ${signed(armor.defense)} · ${t("ui.speed")} ${signed(armor.speed)}`}><p>{armor.coverage}</p></PrintCard>);
     weapons.forEach((weapon, index) => add("equipment", t("ui.equipment"), `weapon-${weapon.id}-${index}`, <PrintCard title={weapon.name} meta={`${weapon.kind} · ${t("ui.damage")} ${weapon.damage} · ${t("ui.initiative")} ${signed(weapon.initiative)} · ${t("ui.strength")} ${weapon.strength} · ${t("ui.size")} ${weapon.size}`}>{weapon.ranges && <p>{t("ui.range")}: {weapon.ranges} · {t("ui.capacity")}: {weapon.clip}</p>}{weapon.special && <p>{weapon.special}</p>}</PrintCard>));
     equipment.forEach((item, index) => add("equipment", t("ui.equipment"), `equipment-${item.id}-${index}`, <PrintCard title={item.name} meta={`${item.category} · ${t("ui.bonus")} ${item.bonus} · ${t("ui.durability")} ${item.durability} · ${t("ui.size")} ${item.size}`}><p>{item.effect}</p></PrintCard>));
     vehicles.forEach((vehicle, index) => add("equipment", t("ui.equipment"), `vehicle-${vehicle.id}-${index}`, <PrintCard title={vehicle.name} meta={`${t("ui.modifier")} ${signed(vehicle.diceModifier)} · ${t("ui.size")} ${vehicle.size} · ${t("ui.durability")} ${vehicle.durability} · ${t("ui.structure")} ${vehicle.structure} · ${t("ui.speed")} ${vehicle.speed}`}/>));
-    if (!armor && !weapons.length && !equipment.length && !vehicles.length) add("equipment", t("ui.equipment"), "equipment-blank", <PrintCard title={t("ui.equipment")}><PrintTextList values={[]} minimum={6}/></PrintCard>);
     selectedConditions.forEach((condition, index) => add("conditions", t("ui.conditions"), `condition-${condition.id}-${index}`, <PrintCard title={condition.name} meta={`${condition.sourceCode} · p. ${condition.page}`}>{condition.penalty && <p><b>{t("ui.penalty")}:</b> {condition.penalty}</p>}</PrintCard>));
     const entitlementState = normalizeEntitlementState(data.entitlement, powerRating, reference.entitlements);
     const entitlement = reference.entitlements.find((item) => item.id === entitlementState.definitionId);
@@ -340,17 +323,22 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
       add("companions", t("ui.companions"), `bonded-${index}`, <PrintCard title={String(bonded.animalName ?? "").trim() || presented.name} meta={`Bonded · ${presented.name}`}><p><b>{t("ui.attributes")}:</b> {presented.attributes}</p><p><b>{t("ui.skills")}:</b> {presented.skills}</p><p><b>{t("ui.otherTraits")}:</b> {t("ui.willpower")} {presented.willpower}, {t("ui.initiative")} {presented.initiative}, {t("ui.defense")} {presented.defense}, {t("ui.speed")} {presented.speed}, {t("ui.size")} {presented.size}, {t("ui.health")} {presented.health}</p></PrintCard>);
     });
     const notes = String(character.current_state?.notes ?? "").trim();
-    add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}>{notes ? <p className="ctl-print-preserve-lines">{notes}</p> : <PrintTextList values={[]} minimum={8}/>}</PrintCard>);
+    if (notes) add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}><p className="ctl-print-preserve-lines">{notes}</p></PrintCard>);
     return blocks;
-  }, [armor, character, contracts, data, equipment, expanded, kith, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, vehicles, weapons]);
+  }, [armor, character, contracts, data, equipment, expanded, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, vehicles, weapons]);
 
   const [flowPageCount, setFlowPageCount] = useState(0);
-  const total = 1 + flowPageCount;
+  const total = 2 + flowPageCount;
   const frailties = normalizeChangelingFrailties(data.frailties, powerRating);
   const touchstoneSlots = 1 + character.merits.filter((merit) => merit.name === "Touchstone" && !merit.grantedBy).reduce((sum, merit) => sum + merit.dots, 0);
   const touchstones = cleanList(data.touchstones).length ? cleanList(data.touchstones) : cleanList([data.touchstone]);
   const experienceBeats = Math.max(0, Math.min(5, Math.trunc(Number(character.current_state?.experience_beats ?? 0) || 0)));
-  return <div className="ctl-print-document">
+  const meritRows = principalMerits.slice(0, 8);
+  const pageTwoMerits = [...principalMerits.slice(8), ...expanded.filter((merit) => !principalMerits.includes(merit))];
+  const contractRows = contracts.slice(0, 10).map((contract) => contractPrintData(contract, character, reference.courts, locale, t));
+  const seemingBlessing = seeming ? (locale === "en-US" ? seeming.blessingEn : seeming.blessing) : "";
+  const seemingCurse = seeming ? (locale === "en-US" ? seeming.curseEn : seeming.curse) : "";
+  return <div className="game-print-document ctl-print-document">
     <PrintPage page={1} total={total} title={character.character.name} main>
       <section className="ctl-print-identity">{identity.map(([label, value]) => <PrintField key={String(label)} label={String(label)} value={value}/>)}</section>
       <SheetHeading className="ctl-print-attributes-heading">{t("ui.attributes")}</SheetHeading>
@@ -359,33 +347,52 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section><SheetHeading>{t("ui.skills")}</SheetHeading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations} highlightedNames={kithSkillNames} highlightTone="kith"/>)}</section>
         <section>
           <SheetHeading>{t("ui.merits")}</SheetHeading>
-          <div className="ctl-print-merits">{principalMerits.map((merit, index) => { const definition = meritCatalog.find((item) => item.name === merit.name); const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name; const detail = meritConfigurationTitle(merit.configuration, locale, reference.courts); return <div key={`${merit.name}-${index}`}><span>{name}{detail ? `: ${detail}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)}/></div>; })}{Array.from({ length: Math.max(0, 6 - principalMerits.length) }, (_, index) => <div className="blank" key={`blank-merit-${index}`}><span>&nbsp;</span><DotValue value={0} max={5}/></div>)}</div>
-          <SheetHeading>{t("ui.court")}</SheetHeading><div className="ctl-print-court"><strong>{courtDisplay || "\u00a0"}</strong>{court && (locale === "en-US" ? court.emotion : court.emotionPt) && <span>{locale === "en-US" ? court.emotion : court.emotionPt}</span>}</div>
+          <div className="ctl-print-merits">{meritRows.map((merit, index) => { const definition = meritCatalog.find((item) => item.name === merit.name); const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name; const detail = meritConfigurationTitle(merit.configuration, locale, reference.courts); return <div key={`${merit.name}-${index}`}><span>{name}{detail ? `: ${detail}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)}/></div>; })}{Array.from({ length: Math.max(0, 8 - meritRows.length) }, (_, index) => <div className="blank" key={`blank-merit-${index}`}><span>&nbsp;</span><DotValue value={0} max={5}/></div>)}</div>
           <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><PrintTextList values={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))} minimum={2}/>
           <SheetHeading>{t("ui.frailties")}</SheetHeading><PrintTextList values={frailties.map((value) => value ? systemTerm(value, locale) : "")} minimum={frailties.length}/>
-          <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
+          <SheetHeading>{t("ui.aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/>
+          <SheetHeading>{t("ui.conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={4}/>
         </section>
         <section>
           <SheetHeading>{t("ui.health")}</SheetHeading><PrintPhysicalTrack current={health} slots={health}/>
           <SheetHeading>{t("ui.willpower")}</SheetHeading><PrintPhysicalTrack current={currentWillpower}/>
-          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
+          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={1} max={10} singleRow/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
           <SheetHeading>{t("ui.clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
-          <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><PrintResourceTrack label={t("ui.goblinDebt")} current={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))} maximum={10} numbered/>
+          <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
+          <SheetHeading>{t("ui.derivedStats")}</SheetHeading><CompactValues values={otherTraits}/>
+          <SheetHeading>{t("ui.experience")}</SheetHeading><div className="ctl-print-experience">
+            <div className="ctl-print-experience-beats"><span>{t("ui.beats")}</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>
+            <div><span>{t("ui.xpAvailable")}</span></div><div><span>{t("ui.totalXP")}</span></div><div><span>{t("ui.xpSpent")}</span></div>
+          </div>
         </section>
       </div>
-      <div className="ctl-print-bottom-grid">
-        <div className="ctl-print-bottom-stack">
-          <section><SheetHeading>{t("ui.aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/></section>
-          <section><SheetHeading>{t("ui.conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={3}/></section>
-        </div>
-        <section><SheetHeading>{t("ui.experience")}</SheetHeading><div className="ctl-print-experience">
-          <div className="ctl-print-experience-beats"><span>{t("ui.beats")}</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>
-          <div><span>{t("ui.xpAvailable")}</span></div>
-          <div><span>{t("ui.totalXP")}</span></div>
-          <div><span>{t("ui.xpSpent")}</span></div>
-        </div><SheetHeading>{t("ui.otherTraits")}</SheetHeading><CompactValues values={otherTraits}/></section>
+    </PrintPage>
+    <PrintPage page={2} total={total} title={character.character.name} main>
+      <SheetHeading>{t("ui.contracts")}</SheetHeading>
+      <div className="ctl-print-contract-table">
+        <header><span>{t("ui.name")}</span><span>{t("ui.cost")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.actionDuration")}</span><span>{t("ui.loophole")}</span><span>{t("ui.seemingBenefit")}</span></header>
+        {contractRows.map((contract, index) => <div key={`${contract.title}-${index}`}><span>{contract.title}</span><span>{contract.facts[0]?.[1]}</span><span>{contract.facts[1]?.[1]}</span><span>{contract.rows.find(([label]) => label === t("ui.actionDuration"))?.[1]}</span><span>{contract.rows.find(([label]) => label === t("ui.loophole"))?.[1]}</span><span>{contract.rows.find(([label]) => label.startsWith(t("ui.benefitFor")))?.[1]}</span></div>)}
+        {Array.from({ length: Math.max(0, 10 - contractRows.length) }, (_, index) => <div key={`blank-contract-${index}`}><span/><span/><span/><span/><span/><span/></div>)}
+      </div>
+      <div className="ctl-print-second-grid">
+        <section>
+          <SheetHeading>{t("ui.otherTraits")}</SheetHeading>
+          <h3>{t("ui.blessingOf", { name: seemingDisplayName(String(data.seeming ?? ""), locale) })}</h3><p className="ctl-print-lore-text">{seemingBlessing}</p>
+          <h3>{t("ui.curse")}</h3><p className="ctl-print-lore-text">{seemingCurse}</p>
+          <h3>{t("ui.kithBlessing")}</h3><p className="ctl-print-lore-text">{kith.blessing}</p>
+          <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><PrintIntegrityTrack value={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))}/>
+        </section>
+        <section>
+          <SheetHeading>{t("ui.oaths")}</SheetHeading><PrintTextList values={cleanList(data.oaths)} minimum={6}/>
+          <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
+          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, reference.courts)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
+          <SheetHeading>{t("ui.combat")}</SheetHeading>
+          <div className="ctl-print-combat-table"><header><span>{t("combat.weapons")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span/><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div>
+          <SheetHeading>{t("ui.equipment")}</SheetHeading>
+          <div className="ctl-print-equipment-table"><header><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div>
+        </section>
       </div>
     </PrintPage>
-    <FlowPages blocks={flowBlocks} characterName={character.character.name} startPage={2} onReadyChange={onReadyChange} onPageCountChange={setFlowPageCount}/>
+    <FlowPages blocks={flowBlocks} characterName={character.character.name} startPage={3} onReadyChange={onReadyChange} onPageCountChange={setFlowPageCount}/>
   </div>;
 }

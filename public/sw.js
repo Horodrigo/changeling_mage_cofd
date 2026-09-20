@@ -1,4 +1,4 @@
-const VERSION = "2026.09.20-fba128b";
+const VERSION = "2026.09.20-2010047";
 const CACHE = `characters-of-the-darkness-${VERSION}`;
 
 const SHELL = [
@@ -11,7 +11,7 @@ const SHELL = [
   "/cod-emblem-256.webp",
   "/paper-texture.webp",
 
-  "/changeling-skull.webp",
+  "/changeling/style/icon.webp",
   "/mage-skull.webp",
   "/vampire-skull.webp",
 
@@ -19,20 +19,22 @@ const SHELL = [
   "/fonts/changeling/changeling-italic.woff2",
   "/fonts/changeling/changeling-small-caps.woff2",
 
-  "/changeling/style/botanical-corner.webp",
-  "/changeling/style/changeling-paper-texture.webp",
-  "/changeling/style/frame-star-center.webp",
-  "/changeling/style/frame-star-side.webp",
-  "/changeling/style/changeling-title.webp",
-  "/changeling/style/selected-tab-texture.webp",
+  "/changeling/style/frame-corner.webp",
+  "/changeling/style/paper-texture.webp",
+  "/changeling/style/frame-center.webp",
+  "/changeling/style/frame-side.webp",
+  "/changeling/style/title.webp",
+  "/changeling/style/tab-texture.webp",
   "/changeling/style/attributes-divider.webp",
   "/changeling/style/attributes-divider-leaf.webp",
-  "/changeling/style/divider-terminal.webp",
-  "/changeling/style/vertical-rule.webp",
-  "/changeling/style/skill-kith-left.webp",
-  "/changeling/style/skill-kith-middle-1.webp",
-  "/changeling/style/skill-kith-middle-2.webp",
-  "/changeling/style/skill-kith-right.webp",
+  "/changeling/style/section-divider.webp",
+  "/changeling/style/column-divider.webp",
+  "/changeling/style/skill-highlight-left.webp",
+  "/changeling/style/skill-highlight-middle-1.webp",
+  "/changeling/style/skill-highlight-middle-2.webp",
+  "/changeling/style/skill-highlight-right.webp",
+  "/changeling/style/experience-purchase-icon.webp",
+  "/changeling/style/background-changeling.webp",
 
   "/vampire/style/attributes-divider.webp",
   "/vampire/style/attributes-divider-thorns.webp",

@@ -7,7 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
-import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation } from "@/lib/combat-equipment";
+import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { VEHICLES, vehiclePresentation } from "@/lib/companions";
 import { TILTS, findTilt } from "@/lib/tilts";
 import { RuleSelect } from "./rule-select";
@@ -50,19 +50,11 @@ export function CombatPage({
   };
   const equipmentDetails = (item: (typeof presentedEquipment)[number]) => t("combat.equipmentDetails", { category: item.category, bonus: item.bonus, durability: item.durability, size: item.size, structure: item.structure, availability: item.availability });
   const vehicleDetails = (item: (typeof presentedVehicles)[number]) => t("combat.vehicleDetails", { modifier: signed(item.diceModifier), size: item.size, durability: item.durability, structure: item.structure, speed: item.speed });
-  const combatValues = {
-    Defesa: Number(derived.Defesa ?? 0) + (armor?.defense ?? 0),
-    Iniciativa: Number(derived.Iniciativa ?? 0),
-    Deslocamento: Number(derived.Deslocamento ?? 0) + (armor?.speed ?? 0),
-    Tamanho: Number(derived.Tamanho ?? 5),
-    Vitalidade: Number(derived.Vitalidade ?? 5),
-    "Armadura geral": armor?.general ?? 0,
-    "Armadura balística": armor?.ballistic ?? 0,
-  };
+  const combatValues = derivedTraitsWithArmor(derived, armorId);
   return (
     <div className="combat-page">
       <section>
-        <SheetHeading>{t("combat.otherTraits")}</SheetHeading>
+        <SheetHeading>{t("ui.derivedStats")}</SheetHeading>
         <CompactValues values={combatValues} />
         <p className="combat-note">{t("combat.defenseSpeedNote")}</p>
         <SheetHeading>{t("combat.combatSummary")}</SheetHeading>

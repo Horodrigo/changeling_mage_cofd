@@ -11,8 +11,10 @@ export const mageRegistration: GameLineRegistration = {
   catalogGroups: {
     builder: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
     sheet: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
+    print: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
   },
   loadRules: () => import("./rules").then(({ mageRules }) => mageRules),
   loadBuilder: () => import("./builder").then(({ mageBuilder }) => mageBuilder),
   loadSheet: () => import("./sheet").then(({ mageSheet }) => mageSheet),
+  loadPrintSheet: () => import("./print").then(({ magePrintSheet }) => magePrintSheet),
 };

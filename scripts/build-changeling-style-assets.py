@@ -15,7 +15,6 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "assets" / "changeling-style" / "source"
 OUTPUT = ROOT / "public" / "changeling" / "style"
-PUBLIC = ROOT / "public"
 INK = (23, 56, 35)
 
 
@@ -106,13 +105,6 @@ def save_texture_webp(image: Image.Image, name: str) -> None:
     print(f"{target.relative_to(ROOT)}: {image.width}x{image.height}")
 
 
-def save_public_texture_webp(image: Image.Image, name: str) -> None:
-    target = PUBLIC / name
-    target.parent.mkdir(parents=True, exist_ok=True)
-    image.convert("RGB").save(target, "WEBP", quality=92, method=6)
-    print(f"{target.relative_to(ROOT)}: {image.width}x{image.height}")
-
-
 def build_attribute_divider_assets() -> None:
     """Crop the manually separated pieces used by the Attributes divider."""
 
@@ -126,13 +118,13 @@ def build_attribute_divider_assets() -> None:
 def build_kith_skill_assets() -> None:
     """Preserve the four matching pieces used by the measured Kith Skill frame."""
 
-    for name in (
-        "skill-kith-left.webp",
-        "skill-kith-middle-1.webp",
-        "skill-kith-middle-2.webp",
-        "skill-kith-right.webp",
+    for source_name, output_name in (
+        ("skill-kith-left.webp", "skill-highlight-left.webp"),
+        ("skill-kith-middle-1.webp", "skill-highlight-middle-1.webp"),
+        ("skill-kith-middle-2.webp", "skill-highlight-middle-2.webp"),
+        ("skill-kith-right.webp", "skill-highlight-right.webp"),
     ):
-        save_webp(Image.open(SOURCE / name).convert("RGBA"), name)
+        save_webp(Image.open(SOURCE / source_name).convert("RGBA"), output_name)
 
 
 def main() -> None:
@@ -144,7 +136,7 @@ def main() -> None:
         return
 
     corner = crop_alpha(Image.open(SOURCE / "botanical-corner.png"), padding=8)
-    save_webp(fit(corner, (1024, 1024)), "botanical-corner.webp")
+    save_webp(fit(corner, (1024, 1024)), "frame-corner.webp")
 
     star_source = Image.open(SOURCE / "frame-star.png").convert("RGBA")
     star_center_x = star_source.width // 2
@@ -156,35 +148,35 @@ def main() -> None:
         star_source.crop((star_center_x - 116, 195, star_center_x + 116, 525)),
         padding=4,
     )
-    save_webp(fit(star, (240, 340)), "frame-star-center.webp")
+    save_webp(fit(star, (240, 340)), "frame-center.webp")
 
     side_left = crop_alpha(
         star_source.crop((star_center_x - 236, 300, star_center_x - 116, 420)),
         padding=4,
     )
-    save_webp(fit(side_left, (130, 130)), "frame-star-side.webp")
+    save_webp(fit(side_left, (130, 130)), "frame-side.webp")
 
     title = crop_alpha(clean_title(Image.open(SOURCE / "changeling-title.png")), padding=8)
-    save_webp(fit(title, (1600, 560)), "changeling-title.webp")
+    save_webp(fit(title, (1600, 560)), "title.webp")
 
     paper = fit(Image.open(SOURCE / "changeling-paper-texture-v2.png"), (1024, 1024))
-    save_public_texture_webp(paper, "paper-texture.webp")
+    save_texture_webp(paper, "paper-texture.webp")
 
     tab_texture = fit(Image.open(SOURCE / "selected-tab-texture.png"), (1280, 320))
-    save_texture_webp(tab_texture, "selected-tab-texture.webp")
+    save_texture_webp(tab_texture, "tab-texture.webp")
 
     build_attribute_divider_assets()
     build_kith_skill_assets()
 
     terminal = crop_alpha(Image.open(SOURCE / "divider-terminal.webp"), padding=2)
-    save_webp(fit(terminal, (180, 180)), "divider-terminal.webp")
+    save_webp(fit(terminal, (180, 180)), "section-divider.webp")
 
     # This source is a scan of a real inked rule.  Its center section excludes
     # the page-edge flourishes, leaving a repeatable, slightly irregular stroke.
     vertical_source = Image.open(SOURCE / "vertical-rule.png")
     vertical_band = vertical_source.crop((14, 120, 27, 1000))
     vertical_rule = crop_alpha(extract_scanned_green_rule(vertical_band), padding=2)
-    save_webp(vertical_rule, "vertical-rule.webp")
+    save_webp(vertical_rule, "column-divider.webp")
 
 if __name__ == "__main__":
     main()

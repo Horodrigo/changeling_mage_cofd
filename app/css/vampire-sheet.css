@@ -394,7 +394,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50% auto;
-  opacity: .20;
+  opacity: .10;
 }
 
 .vtr-sheet > :not(.vtr-decorative-frame) {
@@ -1465,4 +1465,157 @@
   .vtr-sheet .official-heading::before,
   .vtr-sheet .official-heading::after,
   .vtr-decorative-frame { opacity: 1; }
+}
+
+/* Official two-page print composition, using the project's Vampire skin. */
+.vtr-print-document {
+  --vtr-ink: #4d171c;
+  --vtr-ink-soft: rgba(77, 23, 28, .5);
+  --vtr-rule: rgba(77, 23, 28, .34);
+  --sheet-ink: var(--vtr-ink);
+  display: grid;
+  justify-content: center;
+  gap: 18px;
+  color: #3f171b;
+  font: 9pt/1.2 Georgia, "Times New Roman", serif;
+}
+
+.vtr-print-page {
+  position: relative;
+  box-sizing: border-box;
+  width: 210mm;
+  min-width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  padding: 9mm 15mm 8mm;
+  border: .4mm solid rgba(77, 23, 28, .45);
+  background-color: #eee5db;
+  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) .25mm, transparent .25mm, transparent 1.3mm);
+  box-shadow: 0 4px 22px #39131740;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.vtr-print-page::after { position:absolute; inset:0; z-index:0; background:url("/vampire/style/background-vampire.webp") center/50% auto no-repeat; content:""; opacity:.2; pointer-events:none; }
+.vtr-print-page > * { position: relative; z-index: 1; }
+
+.vtr-print-frame {
+  --vtr-frame-rail-x: 36mm;
+  --vtr-frame-rail-y: 6mm;
+  --vtr-frame-side-x: 6mm;
+  --vtr-frame-corner-depth: 36mm;
+  --vtr-frame-center-gap: 7mm;
+  --vtr-frame-center-width: 12mm;
+  --vtr-frame-center-height: 17mm;
+  --vtr-frame-center-half-height: 8mm;
+  --vtr-frame-side-offset: 5mm;
+  --vtr-frame-side-width: 3mm;
+  --vtr-frame-side-height: 6mm;
+  --vtr-frame-side-half-height: 2.5mm;
+}
+
+.vtr-print-frame .vtr-frame-corner { width: 40mm; height: 37.5mm; }
+
+.vtr-print-page > header {
+  display: flex;
+  min-height: 25mm;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2mm;
+  padding: 0 1mm 3mm;
+  text-transform: uppercase;
+}
+
+.vtr-print-page > header::before,
+.vtr-print-page > header::after { position:absolute; bottom:0; width:50%; height:4.5mm; background-image:url("/vampire/style/divider-terminal.webp"),linear-gradient(transparent 43%,var(--vtr-ink-soft) 43%,var(--vtr-ink-soft) 48%,transparent 48%,transparent 57%,var(--vtr-rule) 57%,var(--vtr-rule) 62%,transparent 62%); background-position:left center,2mm center; background-repeat:no-repeat,no-repeat; background-size:auto 4.5mm,calc(100% - 2mm) 100%; content:""; }
+.vtr-print-page > header::before { left:0; }
+.vtr-print-page > header::after { right:0; transform:scaleX(-1); }
+.vtr-print-page > header > div { width:94mm; height:22mm; background:url("/vampire/style/vampire-title.webp") left center/contain no-repeat; }
+.vtr-print-page > header span,
+.vtr-print-page > header strong { visibility: hidden; }
+.vtr-print-page > header p { margin:0; color:var(--vtr-ink-soft); font-size:6pt; letter-spacing:.22em; }
+.vtr-print-page > footer { position: absolute; right: 12mm; bottom: 5mm; font-size: 7pt; }
+
+.vtr-print-identity {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5mm 5mm;
+  margin-bottom: 2mm;
+}
+
+.vtr-print-heading {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin: 2mm 0 1mm;
+  color: #611920;
+  font-size: 14pt;
+  font-variant: small-caps;
+  text-align: center;
+}
+
+.vtr-print-heading::before,
+.vtr-print-heading::after { height: 1px; flex: 1; background: #8d5556; content: ""; }
+
+.vtr-print-attributes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5mm;
+}
+
+.vtr-print-main-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr .8fr;
+  gap: 5mm;
+}
+
+.vtr-print-document h3 { margin: 1mm 0 0; font-size: 9pt; text-align: center; }
+.vtr-print-document .official-trait-block h4 { margin: 1mm 0 0; font-size: 10.5pt; text-align: center; }
+.vtr-print-document .official-trait-line { min-height: 4.8mm; font-size: 8.7pt; }
+.vtr-print-document .official-dots i,
+.vtr-print-document .cod-print-dots i { width: 3.2mm; height: 3.2mm; border-color:var(--vtr-ink); background:#fff; }
+.vtr-print-document .official-dots i.on { background:var(--vtr-ink); box-shadow:inset 0 0 0 .35mm #f5ece5; }
+.vtr-print-document .cod-print-dots i.filled { background:var(--vtr-ink); box-shadow:inset 0 0 0 .4mm #f5ece5; }
+.vtr-print-document .cod-print-boxes i { width: 3.2mm; height: 3.2mm; }
+.vtr-print-document .cod-print-lines > div,
+.vtr-print-document .cod-print-rated-lines > div { min-height: 4.4mm; font-size: 8pt; }
+.vtr-print-main-grid > section:nth-child(-n+2) .vtr-print-heading { margin:3mm 0 1.5mm; }
+.vtr-print-main-grid > section:nth-child(-n+2) h3 { margin-top:2mm; font-size:9.5pt; }
+.vtr-print-main-grid > section:nth-child(-n+2) .official-trait-line,
+.vtr-print-main-grid > section:nth-child(-n+2) .cod-print-lines > div,
+.vtr-print-main-grid > section:nth-child(-n+2) .cod-print-rated-lines > div { min-height:5.1mm; font-size:9.1pt; }
+
+.vtr-print-power { display:grid; gap:1.5mm; margin-bottom:1mm; border:.2mm solid #9b7771; padding:2mm; }
+.vtr-print-power > section { display:grid; gap:.8mm; }
+.vtr-print-power > section:first-child { display:flex; align-items:center; justify-content:space-between; border-bottom:.2mm solid #9b7771; padding-bottom:1.5mm; }
+.vtr-print-power strong { color:#611920; font-size:7.5pt; text-transform:uppercase; }
+.vtr-print-power .cod-print-dots,.vtr-print-power .cod-print-boxes { flex-wrap:wrap; }
+.vtr-print-power .cod-print-dots { flex-wrap:nowrap; gap:.55mm; }
+.vtr-print-power .cod-print-dots i { width:2.1mm; height:2.1mm; }
+.vtr-print-power .cod-print-boxes { display:grid; grid-template-columns:repeat(10,3.2mm); }
+.vtr-print-page .cod-print-integrity > div { border-color:#9b7771; }
+.vtr-print-page .cod-print-integrity i.filled { box-shadow:inset 0 0 0 .45mm #f5ece5; }
+
+.vtr-print-derived { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 4mm; margin:0; font-size:8pt; }
+.vtr-print-derived div { display:grid; grid-template-columns:minmax(0,1fr) auto; min-height:4.8mm; align-items:end; gap:2mm; border-bottom:1px solid #9b7771; }
+.vtr-print-derived dt,
+.vtr-print-derived dd { margin: 0; }
+
+.vtr-print-second-grid { display:grid; grid-template-columns:.65fr 1.35fr; gap:8mm; }
+.vtr-print-combat > header,.vtr-print-combat > div,.vtr-print-equipment > header,.vtr-print-equipment > div { display:grid; min-height:5mm; align-items:end; gap:.6mm; font-size:7pt; }
+.vtr-print-combat > header { grid-template-columns:2fr repeat(5,1fr); }
+.vtr-print-combat > div { grid-template-columns:3mm 2fr repeat(5,1fr); }
+.vtr-print-equipment > header { grid-template-columns:2fr repeat(3,1fr); }
+.vtr-print-equipment > div { grid-template-columns:3mm 2fr repeat(3,1fr); }
+.vtr-print-combat > header,.vtr-print-equipment > header { color:#611920; font-size:6pt; font-weight:700; text-transform:uppercase; }
+.vtr-print-combat span,.vtr-print-equipment span { min-width:0; overflow:hidden; border-bottom:1px solid #9b7771; padding:.5mm; text-overflow:ellipsis; white-space:nowrap; }
+.vtr-print-combat i,.vtr-print-equipment i { width:2.5mm; height:2.5mm; border:.25mm solid #4d171c; margin-bottom:.6mm; }
+
+@media print {
+  body.character-printing .vtr-print-page {
+    break-after: page;
+    box-shadow: none;
+  }
+
+  body.character-printing .vtr-print-page:last-child { break-after: auto; }
 }

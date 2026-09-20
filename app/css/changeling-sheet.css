@@ -113,7 +113,7 @@
       rgba(255, 254, 249, 0) 93%,
       rgba(239, 245, 233, .94) 100%
     ),
-    url('/changeling-paper-texture.webp');
+    url('/changeling/style/paper-texture.webp');
   background-repeat: no-repeat, repeat;
   background-size: auto, 1024px 1024px;
 }
@@ -264,7 +264,7 @@
   border-radius: 0;
 
   background-color: var(--ctl-paper);
-  background-image: url("/changeling/style/changeling-paper-texture.webp");
+  background-image: url("/changeling/style/paper-texture.webp");
   background-repeat: repeat;
   background-size: 1024px 1024px;
 
@@ -283,8 +283,8 @@
   background-image: url("/changeling/style/background-changeling.webp");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 55% auto;
-  opacity: .20;
+  background-size: 50% auto;
+  opacity: .15;
 }
 
 .ctl-botanical-frame {
@@ -359,7 +359,7 @@
   left: 50%;
   width: var(--ctl-frame-star-width);
   height: var(--ctl-frame-star-height);
-  background-image: url("/changeling/style/frame-star-center.webp");
+  background-image: url("/changeling/style/frame-center.webp");
   background-position: center;
   background-size: 50%;
   background-repeat: no-repeat; 
@@ -388,12 +388,12 @@
 }
 
 .ctl-frame-star-side-top-left {
-  background-image: url("/changeling/style/frame-star-side.webp");
+  background-image: url("/changeling/style/frame-side.webp");
   transform: translateX(-50%);
 }
 
 .ctl-frame-star-side-top-right {
-  background-image: url("/changeling/style/frame-star-side.webp");
+  background-image: url("/changeling/style/frame-side.webp");
   transform: translateX(-50%) scaleX(-1);
 }
 
@@ -404,20 +404,20 @@
 
 .ctl-frame-star-side-bottom-left {
   bottom: calc(var(--ctl-frame-rail-y) - var(--ctl-frame-star-side-half-height));
-  background-image: url("/changeling/style/frame-star-side.webp");
+  background-image: url("/changeling/style/frame-side.webp");
   transform: translateX(-50%) scaleX(-1) rotate(180deg);
 }
 
 .ctl-frame-star-side-bottom-right {
   bottom: calc(var(--ctl-frame-rail-y) - var(--ctl-frame-star-side-half-height));
-  background-image: url("/changeling/style/frame-star-side.webp");
+  background-image: url("/changeling/style/frame-side.webp");
   transform: translateX(-50%) rotate(180deg);
 }
 
 .ctl-frame-corner {
   width: 190px;
   height: 178px;
-  background-image: url("/changeling/style/botanical-corner.webp");
+  background-image: url("/changeling/style/frame-corner.webp");
   background-position: left top;
   background-size: contain;
 }
@@ -464,7 +464,7 @@
 .ctl-sheet .cod-sheet-title::before {
   left: 0;
   background-image:
-    url("/changeling/style/divider-terminal.webp"),
+    url("/changeling/style/section-divider.webp"),
     linear-gradient(transparent 43%, var(--ctl-ink-soft) 43%, var(--ctl-ink-soft) 48%, transparent 48%, transparent 57%, var(--ctl-rule) 57%, var(--ctl-rule) 62%, transparent 62%);
   background-position: left center, right center;
 }
@@ -473,7 +473,7 @@
   right: 0;
   transform: scaleX(-1);
   background-image:
-    url("/changeling/style/divider-terminal.webp"),
+    url("/changeling/style/section-divider.webp"),
     linear-gradient(transparent 43%, var(--ctl-ink-soft) 43%, var(--ctl-ink-soft) 48%, transparent 48%, transparent 57%, var(--ctl-rule) 57%, var(--ctl-rule) 62%, transparent 62%);
   background-position: left center, right center;
 }
@@ -492,7 +492,7 @@
   aspect-ratio: 998 / 190;
   overflow: hidden;
   color: transparent;
-  background-image: url("/changeling/style/changeling-title.webp");
+  background-image: url("/changeling/style/title.webp");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -606,7 +606,7 @@
   inset: 4px;
   border-radius: 2px;
   background-color: var(--ctl-ink);
-  background-image: url("/changeling/style/selected-tab-texture.webp");
+  background-image: url("/changeling/style/tab-texture.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -680,7 +680,7 @@
   background-color: transparent;
 
   background-image:
-    url("/changeling/style/divider-terminal.webp"),
+    url("/changeling/style/section-divider.webp"),
     linear-gradient(var(--ctl-rule), var(--ctl-rule)),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
 
@@ -715,7 +715,7 @@
 .ctl-sheet .official-heading.main-sheet-conditions-heading::before,
 .ctl-sheet .official-heading.main-sheet-conditions-heading::after {
   background-image:
-    url("/changeling/style/divider-terminal.webp"),
+    url("/changeling/style/section-divider.webp"),
     linear-gradient(
       var(--ctl-rule),
       var(--ctl-rule)
@@ -796,7 +796,7 @@ background-size:
 .ctl-sheet .official-trait-grid > .official-trait-block:last-child { padding-right: 0px; }
 .ctl-sheet .official-trait-grid > .official-trait-block + .official-trait-block {
   border-left: 0;
-  background-image: url("/changeling/style/vertical-rule.webp");
+  background-image: url("/changeling/style/column-divider.webp");
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -877,7 +877,7 @@ background-size:
 
 .ctl-sheet .kith-skill-left {
   width: calc(38px * 760 / 552);
-  background-image: url("/changeling/style/skill-kith-left.webp");
+  background-image: url("/changeling/style/skill-highlight-left.webp");
 }
 
 .ctl-sheet .kith-skill-middle-1,
@@ -885,12 +885,12 @@ background-size:
   width: calc(38px * 260 / 552);
 }
 
-.ctl-sheet .kith-skill-middle-1 { background-image: url("/changeling/style/skill-kith-middle-1.webp"); }
-.ctl-sheet .kith-skill-middle-2 { background-image: url("/changeling/style/skill-kith-middle-2.webp"); }
+.ctl-sheet .kith-skill-middle-1 { background-image: url("/changeling/style/skill-highlight-middle-1.webp"); }
+.ctl-sheet .kith-skill-middle-2 { background-image: url("/changeling/style/skill-highlight-middle-2.webp"); }
 
 .ctl-sheet .kith-skill-right {
   width: calc(38px * 471 / 552);
-  background-image: url("/changeling/style/skill-kith-right.webp");
+  background-image: url("/changeling/style/skill-highlight-right.webp");
 }
 
 .ctl-sheet .court-summary-card .court-benefit-locked {
@@ -1354,7 +1354,7 @@ background-size:
   flex: 0 0 21px;
 
   background:
-    url("/changeling/style/purchase-trait-icon.webp")
+    url("/changeling/style/experience-purchase-icon.webp")
     center / contain no-repeat;
 }
 
@@ -1420,7 +1420,7 @@ background-size:
 .ctl-sheet .sheet-bottom-grid > section:last-child { padding-right: 0px; }
 .ctl-sheet .sheet-bottom-grid > section + section {
   border-left: 0;
-  background-image: url("/changeling/style/vertical-rule.webp");
+  background-image: url("/changeling/style/column-divider.webp");
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -1796,7 +1796,7 @@ background-size:
 @media print {
   .ctl-sheet {
     box-shadow: none;
-    background-image: url("/changeling/style/changeling-paper-texture.webp");
+    background-image: url("/changeling/style/paper-texture.webp");
   }
 
   .ctl-sheet .cod-sheet-title span,
@@ -1832,6 +1832,8 @@ background-size:
 .character-print-options { display:flex; flex-wrap:wrap; gap:10px 22px; }
 .character-print-options label { display:flex; align-items:center; gap:8px; color:#4a4f4b; font-size:12px; font-weight:700; }
 .character-print-preview { min-height:260px; overflow:auto; border:1px solid #cbd2cc; background:#d8dfdb; padding:18px; }
+.character-print-preview-content { position:relative; margin-inline:auto; }
+.character-print-preview-content > .game-print-document { position:absolute; top:0; left:0; transform:scale(var(--print-preview-scale,1)); transform-origin:top left; }
 .character-print-footer { flex:none; }
 .character-print-surface { position:fixed; top:0; left:-100000px; display:block; width:210mm; min-width:210mm; visibility:hidden; pointer-events:none; }
 .ctl-print-document { display:grid; justify-content:center; gap:18px; color:#263a2c; font-family:Georgia,"Times New Roman",serif; }
@@ -1849,26 +1851,25 @@ background-size:
   overflow:hidden;
   padding:9mm 11mm 8mm;
   background-color:#fffef9;
-  background-image:linear-gradient(90deg,rgba(202,219,190,.42) 0,rgba(255,254,249,0) 7%,rgba(255,254,249,0) 93%,rgba(202,219,190,.42) 100%),url('/changeling-paper-texture.webp');
+  background-image:linear-gradient(90deg,rgba(202,219,190,.42) 0,rgba(255,254,249,0) 7%,rgba(255,254,249,0) 93%,rgba(202,219,190,.42) 100%),url('/changeling/style/paper-texture.webp');
   background-repeat:no-repeat,repeat;
   background-size:auto,1024px 1024px;
   box-shadow:0 4px 22px #1d27214d;
   color:var(--sheet-ink);
   font-family:"Changeling Sheet",Georgia,"Times New Roman",serif;
-  font-size:8.2pt;
+  font-size:8.8pt;
   print-color-adjust:exact;
   -webkit-print-color-adjust:exact;
 }
-.ctl-print-page::after { content:""; position:absolute; inset:0; pointer-events:none; background:url('/changeling-skull.webp') center 43%/105mm auto no-repeat; opacity:.035; }
 .ctl-print-page > * { position:relative; z-index:1; }
 .ctl-print-frame { --ctl-frame-rail-x:36mm; --ctl-frame-rail-y:6mm; --ctl-frame-side-x:6mm; --ctl-frame-corner-depth:36mm; --ctl-frame-center-gap:11mm; --ctl-frame-star-width:12mm; --ctl-frame-star-height:16mm; --ctl-frame-star-half-height:8mm; --ctl-frame-star-side-offset:9mm; --ctl-frame-star-side-width:5.5mm; --ctl-frame-star-side-height:6mm; --ctl-frame-star-side-half-height:2.7mm; }
 .ctl-print-frame .ctl-frame-corner { width:40mm; height:37.5mm; }
 .ctl-print-brand { position:relative; display:flex; min-height:18mm; align-items:flex-end; justify-content:space-between; gap:8mm; padding:0 1mm 4mm; text-transform:uppercase; }
-.ctl-print-brand::before,.ctl-print-brand::after { content:""; position:absolute; bottom:0; width:50%; height:4.5mm; background-image:url('/changeling/style/divider-terminal.webp'),linear-gradient(transparent 43%,var(--ctl-ink-soft) 43%,var(--ctl-ink-soft) 48%,transparent 48%,transparent 57%,var(--ctl-rule) 57%,var(--ctl-rule) 62%,transparent 62%); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.5mm,calc(100% - 5.5mm) 100%; }
+.ctl-print-brand::before,.ctl-print-brand::after { content:""; position:absolute; bottom:0; width:50%; height:4.5mm; background-image:url('/changeling/style/section-divider.webp'),linear-gradient(transparent 43%,var(--ctl-ink-soft) 43%,var(--ctl-ink-soft) 48%,transparent 48%,transparent 57%,var(--ctl-rule) 57%,var(--ctl-rule) 62%,transparent 62%); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.5mm,calc(100% - 5.5mm) 100%; }
 .ctl-print-brand::before { left:0; }
 .ctl-print-brand::after { right:0; transform:scaleX(-1); }
 .ctl-print-brand > div { position:relative; width:112mm; min-height:14mm; }
-.ctl-print-title-mark { display:block; width:84mm; max-width:100%; aspect-ratio:998/190; overflow:hidden; color:transparent; background:url('/changeling/style/changeling-title.webp') left center/contain no-repeat; font-size:0; line-height:0; }
+.ctl-print-title-mark { display:block; width:84mm; max-width:100%; aspect-ratio:998/190; overflow:hidden; color:transparent; background:url('/changeling/style/title.webp') left center/contain no-repeat; font-size:0; line-height:0; }
 .ctl-print-brand strong { position:absolute; top:9.2mm; left:77mm; white-space:nowrap; font-family:"Changeling Sheet Small Caps","Changeling Sheet",Georgia,serif; font-size:11pt; font-weight:400; letter-spacing:.22em; }
 .ctl-print-brand p { margin:0 0 2.4mm; font-family:"Changeling Sheet Small Caps","Changeling Sheet",Georgia,serif; font-size:6.5pt; letter-spacing:.22em; }
 .ctl-print-page-heading { display:flex; min-height:8mm; align-items:center; justify-content:space-between; border-bottom:.25mm solid #6d8274; color:var(--sheet-accent); font-size:9pt; letter-spacing:.12em; text-transform:uppercase; }
@@ -1879,8 +1880,8 @@ background-size:
 .ctl-print-field { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:end; gap:2mm; min-width:0; }
 .ctl-print-field span { font-size:6.5pt; font-weight:700; text-transform:uppercase; }
 .ctl-print-field strong { min-height:5mm; overflow:hidden; border-bottom:.2mm solid var(--sheet-ink); font:italic 9pt/5mm Georgia,serif; text-overflow:ellipsis; white-space:nowrap; }
-.ctl-print-page .official-heading { margin:3.1mm 0 1.6mm; font-size:11pt; }
-.ctl-print-page .official-heading::before,.ctl-print-page .official-heading::after { height:4.2mm; background-color:transparent; background-image:url('/changeling/style/divider-terminal.webp'),linear-gradient(var(--ctl-rule),var(--ctl-rule)); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.2mm,calc(100% - 4.5mm) .25mm; opacity:.9; }
+.ctl-print-page .official-heading { margin:3.1mm 0 1.6mm; font-size:12pt; }
+.ctl-print-page .official-heading::before,.ctl-print-page .official-heading::after { height:4.2mm; background-color:transparent; background-image:url('/changeling/style/section-divider.webp'),linear-gradient(var(--ctl-rule),var(--ctl-rule)); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.2mm,calc(100% - 4.5mm) .25mm; opacity:.9; }
 .ctl-print-page .official-heading::after { transform:scaleX(-1); }
 .ctl-print-page .official-heading.ctl-print-attributes-heading { position:relative; isolation:isolate; justify-content:center; min-height:10mm; margin-top:1.2mm; }
 .ctl-print-page .official-heading.ctl-print-attributes-heading::before,
@@ -1915,10 +1916,10 @@ background-size:
 .ctl-print-page .official-heading.ctl-print-attributes-heading span { z-index:1; }
 .ctl-print-attributes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5mm; }
 .ctl-print-main-grid { display:grid; grid-template-columns:1.08fr .96fr .96fr; gap:5mm; align-items:start; }
-.ctl-print-main-grid > section + section { background-image:url('/changeling/style/vertical-rule.webp'); background-position:left top; background-repeat:repeat-y; background-size:1.2mm auto; padding-left:2.5mm; }
+.ctl-print-main-grid > section + section { background-image:url('/changeling/style/column-divider.webp'); background-position:left top; background-repeat:repeat-y; background-size:1.2mm auto; padding-left:2.5mm; }
 .ctl-print-main-grid .official-trait-block { margin-bottom:2mm; }
-.ctl-print-page .official-trait-block h4 { margin-bottom:.6mm; font-size:7pt; }
-.ctl-print-page .official-trait-line { min-height:4.7mm; font-size:8.2pt; }
+.ctl-print-page .official-trait-block h4 { margin-bottom:.6mm; font-size:7.7pt; }
+.ctl-print-page .official-trait-line { min-height:5mm; font-size:8.8pt; }
 .ctl-print-page .official-trait-line small { font-size:5.8pt; }
 .ctl-print-page .official-dots { gap:.55mm; }
 .ctl-print-page .official-dot-row { gap:.55mm; }
@@ -1928,14 +1929,14 @@ background-size:
 .ctl-print-page .kith-skill-name-text { position:relative; z-index:1; }
 .ctl-print-page .kith-skill-frame { position:absolute; z-index:0; top:calc(50% - .25mm); left:calc(50% - 1.5mm); display:flex; height:7.5mm; transform:translate(-50%,-50%); pointer-events:none; }
 .ctl-print-page .kith-skill-piece { display:block; height:100%; flex:none; background-position:center; background-repeat:no-repeat; background-size:100% 100%; }
-.ctl-print-page .kith-skill-left { width:calc(7.5mm * 760 / 552); background-image:url('/changeling/style/skill-kith-left.webp'); }
+.ctl-print-page .kith-skill-left { width:calc(7.5mm * 760 / 552); background-image:url('/changeling/style/skill-highlight-left.webp'); }
 .ctl-print-page .kith-skill-middle-1,.ctl-print-page .kith-skill-middle-2 { width:calc(7.5mm * 260 / 552); }
-.ctl-print-page .kith-skill-middle-1 { background-image:url('/changeling/style/skill-kith-middle-1.webp'); }
-.ctl-print-page .kith-skill-middle-2 { background-image:url('/changeling/style/skill-kith-middle-2.webp'); }
-.ctl-print-page .kith-skill-right { width:calc(7.5mm * 471 / 552); background-image:url('/changeling/style/skill-kith-right.webp'); }
+.ctl-print-page .kith-skill-middle-1 { background-image:url('/changeling/style/skill-highlight-middle-1.webp'); }
+.ctl-print-page .kith-skill-middle-2 { background-image:url('/changeling/style/skill-highlight-middle-2.webp'); }
+.ctl-print-page .kith-skill-right { width:calc(7.5mm * 471 / 552); background-image:url('/changeling/style/skill-highlight-right.webp'); }
 .ctl-print-merits { display:grid; }
 .ctl-print-merits > div { display:flex; min-height:4.6mm; align-items:center; justify-content:space-between; gap:2mm; border-bottom:.2mm solid #aaa8a170; }
-.ctl-print-merits > div > span { min-width:0; overflow:hidden; font-size:7.6pt; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-merits > div > span { min-width:0; overflow:hidden; font-size:8.2pt; text-overflow:ellipsis; white-space:nowrap; }
 .ctl-print-merits > div.blank { min-height:4.6mm; }
 .ctl-print-court { display:grid; gap:.5mm; border-bottom:.2mm solid #aaa8a170; padding:1mm 0; }
 .ctl-print-court strong { color:var(--sheet-accent); font-size:8.5pt; }
@@ -1955,8 +1956,8 @@ background-size:
 .ctl-print-boxes i.bashing span,.ctl-print-boxes i.mild span { background:linear-gradient(55deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%); }
 .ctl-print-boxes i.lethal span,.ctl-print-boxes i.severe span { background:linear-gradient(45deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%),linear-gradient(-45deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%); }
 .ctl-print-boxes i.aggravated span { background:linear-gradient(90deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%),linear-gradient(30deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%),linear-gradient(-30deg,transparent 43%,var(--sheet-ink) 44% 56%,transparent 57%); }
-.ctl-print-clarity-numbers,.ctl-print-resource-numbers { display:flex; gap:1.1mm; margin-top:-.6mm; }
-.ctl-print-clarity-numbers span,.ctl-print-resource-numbers span { width:4mm; flex:none; text-align:center; font:5.2pt/1.1 Inter,Arial,sans-serif; }
+.ctl-print-clarity-numbers { display:flex; gap:1.1mm; margin-top:-.6mm; }
+.ctl-print-clarity-numbers span { width:4mm; flex:none; text-align:center; font:5.2pt/1.1 Inter,Arial,sans-serif; }
 .ctl-print-clarity-numbers span:first-child { font-size:4.5pt; text-transform:uppercase; }
 .ctl-print-power { border:.2mm solid #9baa9f; padding:2mm; }
 .ctl-print-power > div:first-child { display:flex; align-items:center; justify-content:space-between; gap:2mm; border-bottom:.2mm solid #9baa9f; padding-bottom:1.5mm; margin-bottom:1.5mm; color:var(--sheet-accent); text-transform:uppercase; }
@@ -1971,11 +1972,34 @@ background-size:
 .ctl-print-experience > div { display:flex; min-height:6.5mm; align-items:end; justify-content:space-between; gap:3mm; border-bottom:.2mm solid #aaa8a170; padding-bottom:.7mm; }
 .ctl-print-experience span { font-size:7pt; text-transform:uppercase; }
 .ctl-print-experience-beats { align-items:center!important; }
+.ctl-print-contract-table { display:grid; margin-bottom:2mm; font:6pt/1.15 Inter,Arial,sans-serif; }
+.ctl-print-contract-table > header,.ctl-print-contract-table > div { display:grid; grid-template-columns:1.25fr .45fr .85fr .9fr 1fr 1.15fr; min-height:6mm; align-items:end; }
+.ctl-print-contract-table > header { min-height:5mm; color:var(--sheet-accent); font-weight:800; text-transform:uppercase; }
+.ctl-print-contract-table span { min-width:0; max-height:6mm; overflow:hidden; border-bottom:.2mm solid #8e9b91; padding:.6mm 1mm; }
+.ctl-print-contract-table span + span { border-left:.2mm solid #c5cec7; }
+.ctl-print-second-grid { display:grid; grid-template-columns:.72fr 1.55fr; gap:5mm; align-items:start; }
+.ctl-print-second-grid > section + section { background-image:url('/changeling/style/column-divider.webp'); background-position:left top; background-repeat:repeat-y; background-size:1.2mm auto; padding-left:3mm; }
+.ctl-print-second-grid h3 { margin:2mm 0 .7mm; color:var(--sheet-accent); font:400 9pt "Changeling Sheet Small Caps","Changeling Sheet",Georgia,serif; text-align:center; text-transform:uppercase; }
+.ctl-print-lore-text { height:23mm; margin:0; overflow:hidden; border-bottom:.2mm solid #aeb9b0; font:6.6pt/1.3 Inter,Arial,sans-serif; }
+.ctl-print-page .cod-print-integrity > div { border-color:#8e9b91; }
+.ctl-print-page .cod-print-integrity i.filled { box-shadow:inset 0 0 0 .45mm #f5f0df; }
+.ctl-print-expanded-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2mm 5mm; }
+.ctl-print-expanded-grid article { min-width:0; }
+.ctl-print-expanded-grid article > strong { display:block; overflow:hidden; color:var(--sheet-accent); font-size:8pt; text-align:center; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-combat-table,.ctl-print-equipment-table { display:grid; font:6.4pt/1.2 Inter,Arial,sans-serif; }
+.ctl-print-combat-table > header,.ctl-print-combat-table > div,.ctl-print-equipment-table > header,.ctl-print-equipment-table > div { display:grid; min-height:5.5mm; align-items:end; gap:.6mm; }
+.ctl-print-combat-table > header { grid-template-columns:1.6fr .7fr .55fr .65fr .65fr .45fr; }
+.ctl-print-combat-table > div { grid-template-columns:3mm 1.6fr .7fr .55fr .65fr .65fr .45fr; }
+.ctl-print-equipment-table > header { grid-template-columns:2fr repeat(3,1fr); }
+.ctl-print-equipment-table > div { grid-template-columns:3mm 2fr repeat(3,1fr); }
+.ctl-print-combat-table > header,.ctl-print-equipment-table > header { color:var(--sheet-accent); font-weight:800; }
+.ctl-print-combat-table span,.ctl-print-equipment-table span { min-width:0; overflow:hidden; border-bottom:.2mm solid #8e9b91; padding:.5mm .8mm; text-overflow:ellipsis; white-space:nowrap; }
+.ctl-print-combat-table i,.ctl-print-equipment-table i { width:2.5mm; height:2.5mm; border:.25mm solid var(--sheet-ink); margin-bottom:.6mm; }
 .ctl-print-flow-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6mm; height:244mm; padding-top:3mm; align-items:start; }
 .ctl-print-flow-column { min-width:0; height:244mm; overflow:hidden; }
 .ctl-print-flow-group + .ctl-print-flow-group { margin-top:0; }
 .ctl-print-flow-heading { display:flex; align-items:center; gap:2mm; margin:0 0 2mm; padding:0 0 1.2mm; color:var(--sheet-accent); font:400 10pt "Changeling Sheet Small Caps","Changeling Sheet",Georgia,serif; text-align:center; text-transform:uppercase; }
-.ctl-print-flow-heading::before,.ctl-print-flow-heading::after { content:""; flex:1 1 0; height:4.2mm; background-image:url('/changeling/style/divider-terminal.webp'),linear-gradient(var(--ctl-rule),var(--ctl-rule)); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.2mm,calc(100% - 4.5mm) .25mm; }
+.ctl-print-flow-heading::before,.ctl-print-flow-heading::after { content:""; flex:1 1 0; height:4.2mm; background-image:url('/changeling/style/section-divider.webp'),linear-gradient(var(--ctl-rule),var(--ctl-rule)); background-position:left center,right center; background-repeat:no-repeat,no-repeat; background-size:auto 4.2mm,calc(100% - 4.5mm) .25mm; }
 .ctl-print-flow-heading::after { transform:scaleX(-1); }
 .ctl-print-flow-item { box-sizing:border-box; padding-bottom:2.4mm; break-inside:avoid; }
 .ctl-print-card { overflow:hidden; border:0; background:transparent; }
@@ -2022,7 +2046,7 @@ background-size:
   body.character-printing [data-slot="dialog-close"] { display:none!important; }
   body.character-printing .character-print-surface,
   body.character-printing .character-print-surface * { animation:none!important; transition:none!important; }
-  body.character-printing .character-print-surface .ctl-print-document { display:block!important; width:210mm!important; min-width:210mm!important; transform:none!important; }
+  body.character-printing .character-print-surface .game-print-document { position:static!important; display:block!important; width:210mm!important; min-width:210mm!important; transform:none!important; }
   body.character-printing .character-print-surface .ctl-print-page { width:210mm!important; min-width:210mm!important; height:297mm!important; margin:0!important; transform:none!important; box-shadow:none!important; break-after:page; page-break-after:always; }
   body.character-printing .character-print-surface .ctl-print-page:last-child { break-after:auto; page-break-after:auto; }
   body.character-printing .character-print-surface .ctl-print-measure { display:none!important; }

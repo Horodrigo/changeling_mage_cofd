@@ -193,8 +193,8 @@ test("workspace print capability is driven entirely by registration", async () =
 
   assert.match(contract, /loadPrintSheet\?/);
   assert.match(changeling, /loadPrintSheet\s*:/);
-  assert.doesNotMatch(mage, /loadPrintSheet\s*:/);
-  assert.doesNotMatch(vampire, /loadPrintSheet\s*:/);
+  assert.match(mage, /loadPrintSheet\s*:/);
+  assert.match(vampire, /loadPrintSheet\s*:/);
 
   assert.match(
     workspace,
@@ -213,7 +213,46 @@ test("workspace print capability is driven entirely by registration", async () =
   );
 });
 
-test("production build manifest keeps builder and sheet closures line-isolated", async () => {
+test("line print surfaces retain their web skins and line-specific tracks", async () => {
+  const [changelingPrint, magePrint, vampirePrint, mageCss, vampireCss, paperShell, mainSheet] = await Promise.all([
+    source("game-lines/changeling/print-sheet.tsx"),
+    source("game-lines/mage/print-sheet.tsx"),
+    source("game-lines/vampire/print-sheet.tsx"),
+    source("app/css/mage-sheet.css"),
+    source("app/css/vampire-sheet.css"),
+    source("app/workspace/character-paper-shell.tsx"),
+    source("app/workspace/main-sheet.tsx"),
+  ]);
+
+  assert.match(changelingPrint, /DotValue value=\{1\} max=\{10\} singleRow/);
+  assert.match(changelingPrint, /PrintIntegrityTrack value=\{Math\.max\(0, Math\.min\(10,/);
+  assert.match(changelingPrint, /ctl-print-equipment-table/);
+  assert.match(magePrint, /PrintDots value=\{1\} maximum=\{10\}/);
+  assert.match(magePrint, /PrintBoxes maximum=\{20\}/);
+  assert.match(magePrint, /PrintSingleMarkDots value=\{1\}/);
+  assert.match(magePrint, /ui\.arcaneBeats/);
+  assert.match(magePrint, /arcaneXPAvailable/);
+  assert.match(vampirePrint, /PrintDots value=\{1\} maximum=\{10\}/);
+  assert.match(vampirePrint, /PrintBoxes maximum=\{20\}/);
+  assert.match(vampirePrint, /PrintIntegrityTrack value=\{1\}/);
+  assert.match(vampirePrint, /item\.humanity_slot/);
+  assert.match(vampirePrint, /ui\.devotions/);
+  assert.match(vampirePrint, /ui\.bloodBonds/);
+  assert.match(vampirePrint, /ui\.rites/);
+  assert.match(vampirePrint, /ui\.miracles/);
+  assert.match(vampirePrint, /Array\.from\(\{ length: 10 \}.*const item = equipment/);
+  assert.doesNotMatch(vampirePrint, /touchstonesAndBanes/);
+  assert.doesNotMatch(vampirePrint, /acquiredPowers/);
+  assert.match(mageCss, /mage\/style\/background-mage\.webp/);
+  assert.match(mageCss, /mta-print-frame/);
+  assert.match(vampireCss, /vtr-print-frame/);
+  assert.match(vampireCss, /official-dots i\.on/);
+  assert.match(paperShell, /DotValue value=\{rating\} max=\{10\} singleRow/);
+  assert.match(paperShell, /displayMinimum=\{20\}/);
+  assert.match(mainSheet, /DotValue value=\{value\} max=\{10\} singleRow/);
+});
+
+test("production build manifest keeps builder, sheet, and print closures line-isolated", async () => {
   const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
 
   const closure = (rootKey) => {
@@ -227,7 +266,7 @@ test("production build manifest keeps builder and sheet closures line-isolated",
     return [...keys];
   };
 
-  for (const surface of ["builder", "sheet"]) {
+  for (const surface of ["builder", "sheet", "print"]) {
     for (const line of ["mage", "changeling", "vampire"]) {
       const key = `game-lines/${line}/${surface}.tsx`;
       assert.ok(manifest[key], `missing manifest entry: ${key}`);

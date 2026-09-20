@@ -38,6 +38,16 @@ test("o catálogo de combate possui apresentação inglesa completa", () => {
   assert.equal(combat.combatItemPresentation(combat.EQUIPMENT.find((item) => item.id === "software-de-invasao"), "en-US").name, "Cracking Software");
 });
 
+test("Derived Traits applies equipped armor once and formats General/Ballistic", () => {
+  assert.deepEqual(combat.derivedTraitsWithArmor({ Tamanho: 5, Deslocamento: 12, Defesa: 4, Iniciativa: 6 }, "equipamento-antitumulto"), {
+    Tamanho: 5,
+    Deslocamento: 11,
+    Defesa: 2,
+    Iniciativa: 6,
+    Armadura: "3/5",
+  });
+});
+
 test("os 9 veículos e 21 animais possuem apresentação inglesa completa", () => {
   assert.equal(companions.VEHICLES.length, 9);
   assert.equal(companions.ANIMALS.length, 21);
