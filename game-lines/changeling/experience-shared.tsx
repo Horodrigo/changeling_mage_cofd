@@ -28,10 +28,11 @@ export function purchasePreview(input: {
   benefitKey?: string;
   wyrd: number;
   lostWillpower: number;
+  targetRating: number;
 }) {
   const { purchaseType, character, locale } = input;
-  if (purchaseType === "Atributo") return { label: `${systemTerm(input.attribute,locale)} ${Number(character.attributes[input.attribute] ?? 1) + 1}`, cost: 4 };
-  if (purchaseType === "Perícia") return { label: `${systemTerm(input.skill,locale)} ${Number(character.skills[input.skill] ?? 0) + 1}`, cost: 2 };
+  if (purchaseType === "Atributo") return { label: `${systemTerm(input.attribute,locale)} ${input.targetRating}`, cost: 4 * (input.targetRating - Number(character.attributes[input.attribute] ?? 1)) };
+  if (purchaseType === "Perícia") return { label: `${systemTerm(input.skill,locale)} ${input.targetRating}`, cost: 2 * (input.targetRating - Number(character.skills[input.skill] ?? 0)) };
   if (purchaseType === "Mérito") return {
     label: input.nextMeritRating
       ? `${locale === "en-US" ? input.selectedMerit?.name : input.selectedMerit?.translatedName} ${input.nextMeritRating}`
@@ -51,12 +52,12 @@ export function purchasePreview(input: {
     cost: input.benefitKey ? 1 : 0,
   };
   if (purchaseType === "Fado") return {
-    label: input.wyrd < 10 ? `${translate(locale, "ui.wyrd")} ${input.wyrd + 1}` : translate(locale, "ui.maximumWyrd"),
-    cost: input.wyrd < 10 ? 5 : 0,
+    label: input.wyrd < 10 ? `${translate(locale, "ui.wyrd")} ${input.targetRating}` : translate(locale, "ui.maximumWyrd"),
+    cost: input.wyrd < 10 ? 5 * (input.targetRating - input.wyrd) : 0,
   };
   return {
-    label: input.lostWillpower ? translate(locale, "ui.recoverALostWillpowerDot") : translate(locale, "ui.noLostDots"),
-    cost: input.lostWillpower ? 1 : 0,
+    label: input.lostWillpower ? `${translate(locale, "ui.willpower")} ${input.targetRating}` : translate(locale, "ui.noLostDots"),
+    cost: input.lostWillpower ? input.targetRating - (Number(character.derived.ForçaDeVontade ?? 1) - input.lostWillpower) : 0,
   };
 }
 

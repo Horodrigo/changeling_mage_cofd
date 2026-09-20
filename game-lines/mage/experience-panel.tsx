@@ -26,7 +26,7 @@ import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, canAdvanceGrantedMerit, isRepeatableDefinition, recalculateCoreDerived } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
 const PURCHASE_TYPE_EN:Record<string,string>={Atributo:"Attribute",Perícia:"Skill",Mérito:"Merit",Especialização:"Specialty",Arcano:"Arcanum",Gnose:"Gnosis",Rota:"Rote",Práxis:"Praxis",Sabedoria:"Wisdom","Ponto perdido de Força de Vontade":"Lost Willpower dot"};
@@ -108,6 +108,7 @@ export function MageExperiencePanel({
     [arcaneInput, setArcaneInput] = useState<string | null>(null);
   const [purchase, setPurchase] = useState<string>(MAGE_PURCHASES[0]),
     [target, setTarget] = useState<string>(Object.values(ATTRIBUTES).flat()[0]);
+  const [targetRating, setTargetRating] = useState(0);
   const [mageSpecialtySkill,setMageSpecialtySkill]=useState<string>(Object.values(SKILLS).flat()[0]);
   const [mageSpecialtyName,setMageSpecialtyName]=useState("");
   const [meritDots, setMeritDots] = useState(0);
@@ -174,11 +175,27 @@ export function MageExperiencePanel({
     nextMerit = meritRatings.includes(meritDots) ? meritDots : meritRatings[0];
   const selectedSpell =
     availableSpells.find((item) => item.id === target) ?? availableSpells[0];
+  const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
+  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
+  const ratedCurrent = purchase === "Atributo" ? Number(character.attributes[chosenTarget] ?? 1)
+    : purchase === "Perícia" ? Number(character.skills[chosenTarget] ?? 0)
+      : purchase === "Arcano" ? Number(arcana[chosenTarget] ?? 0)
+        : purchase === "Gnose" ? Number(character.line_data.gnosis ?? 1)
+          : purchase === "Sabedoria" ? Number(character.line_data.wisdom ?? 7)
+            : purchase === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum - lostWillpower
+              : 0;
+  const ratedMaximum = purchase === "Atributo" || purchase === "Perícia" ? traitMaximum
+    : ["Arcano", "Gnose", "Sabedoria"].includes(purchase) ? 10
+      : purchase === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum
+        : 0;
+  const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
+  const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
   let cost = 1,
     label: string = systemTerm(chosenTarget,locale),
-    mode: "regular" | "arcane" | "either" = "regular";
-  if (purchase === "Atributo") cost = 4;
-  else if (purchase === "Perícia") cost = 2;
+    mode: "regular" | "arcane" | "either" = "regular",
+    minimumRegular = 0;
+  if (purchase === "Atributo") { cost = 4 * ratingAmount; label = `${systemTerm(chosenTarget, locale)} ${intendedRating}`; }
+  else if (purchase === "Perícia") { cost = 2 * ratingAmount; label = `${systemTerm(chosenTarget, locale)} ${intendedRating}`; }
   else if (purchase === "Especialização") {
     cost = 1;
     label = `${t("ui.specialty")} ${systemTerm(mageSpecialtySkill,locale)}: ${mageSpecialtyName.trim()||t("ui.newSpecialty")}`;
@@ -191,13 +208,14 @@ export function MageExperiencePanel({
     const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&activeLegacyDefinition?.rulingArcanum===systemTerm(chosenTarget,"en-US");
     const inferior = path?.inferior === chosenTarget;
     const limit = ruling ? 5 : inferior ? 2 : 4;
-    cost = current < limit ? 4 : 5;
-    mode = current < limit ? "either" : "regular";
-    label = `${systemTerm(chosenTarget,locale)} ${current + 1}`;
+    cost = ratingPurchaseCost(current, intendedRating, (rating) => rating <= limit ? 4 : 5);
+    minimumRegular = ratingPurchaseCost(Math.max(current, limit), intendedRating, 5);
+    mode = minimumRegular < cost ? "either" : "regular";
+    label = `${systemTerm(chosenTarget,locale)} ${intendedRating}`;
   } else if (purchase === "Gnose") {
-    cost = 5;
+    cost = 5 * ratingAmount;
     mode = "either";
-    label = `${t("ui.gnosis")} ${Number(character.line_data.gnosis ?? 1) + 1}`;
+    label = `${t("ui.gnosis")} ${intendedRating}`;
   } else if (purchase === "Rota") {
     cost = 1;
     label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.rote");
@@ -206,13 +224,13 @@ export function MageExperiencePanel({
     mode = "arcane";
     label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.praxis");
   } else if (purchase === "Sabedoria") {
-    cost = 2;
+    cost = 2 * ratingAmount;
     mode = "arcane";
-    label = `${t("ui.wisdom")} ${Number(character.line_data.wisdom ?? 7) + 1}`;
+    label = `${t("ui.wisdom")} ${intendedRating}`;
   } else if (purchase === "Ponto perdido de Força de Vontade") {
-    cost = lostWillpower ? 1 : 0;
+    cost = lostWillpower ? ratingAmount : 0;
     label = lostWillpower
-      ? t("ui.recoverALostWillpowerDot")
+      ? `${t("ui.willpower")} ${intendedRating}`
       : t("ui.noLostDots");
   }
   const splitRegular =
@@ -220,7 +238,7 @@ export function MageExperiencePanel({
         ? cost
         : mode === "arcane"
           ? 0
-          : Math.min(cost, regularSplit),
+          : Math.max(minimumRegular, Math.min(cost, regularSplit)),
     splitArcane =
       mode === "arcane" ? cost : mode === "regular" ? 0 : cost - splitRegular;
   const saveBalances = (patch: Record<string, unknown>) => {
@@ -252,7 +270,6 @@ export function MageExperiencePanel({
       setFeedback(t("ui.insufficientExperienceOrUnavailablePurchase"));
       return;
     }
-    const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
     if ((purchase === "Gnose" && Number(character.line_data.gnosis ?? 1) >= 10) ||
         (purchase === "Sabedoria" && Number(character.line_data.wisdom ?? 7) >= 10) ||
         (purchase === "Arcano" && Number(arcana[chosenTarget] ?? 0) >= 10) ||
@@ -276,9 +293,9 @@ export function MageExperiencePanel({
       line_data: structuredClone(next.line_data),
     };
     if (purchase === "Atributo")
-      next.attributes[chosenTarget] = Number(next.attributes[chosenTarget] ?? 1) + 1;
+      next.attributes[chosenTarget] = intendedRating;
     else if (purchase === "Perícia")
-      next.skills[chosenTarget] = Number(next.skills[chosenTarget] ?? 0) + 1;
+      next.skills[chosenTarget] = intendedRating;
     else if (purchase === "Mérito" && selectedMerit && nextMerit) {
       const found =
         mageMeritInstance >= 0
@@ -305,10 +322,10 @@ export function MageExperiencePanel({
     else if (purchase === "Arcano")
       next.line_data = {
         ...next.line_data,
-        arcana: { ...arcana, [chosenTarget]: Number(arcana[chosenTarget] ?? 0) + 1 },
+        arcana: { ...arcana, [chosenTarget]: intendedRating },
       };
     else if (purchase === "Gnose")
-      next.line_data = withMagePowerRating(next, Number(next.line_data.gnosis ?? 1) + 1);
+      next.line_data = withMagePowerRating(next, intendedRating);
     else if (purchase === "Rota" && selectedSpell)
       next.line_data = {
         ...next.line_data,
@@ -328,23 +345,23 @@ export function MageExperiencePanel({
     else if (purchase === "Sabedoria")
       next.line_data = {
         ...next.line_data,
-        wisdom: Number(next.line_data.wisdom ?? 7) + 1,
+        wisdom: intendedRating,
       };
     else if (purchase === "Ponto perdido de Força de Vontade")
       next.current_state = {
         ...next.current_state,
         willpower_lost_dots: Math.max(
           0,
-          Number(next.current_state.willpower_lost_dots ?? 0) - 1,
+          Number(next.current_state.willpower_lost_dots ?? 0) - ratingAmount,
         ),
       };
     recalculateCoreDerived(next);
     let undo: MageAdvancementUndo;
     if (purchase === "Atributo" || purchase === "Perícia")
-      undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget };
-    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget, creditedArcane:activeLegacy.joined&&activeLegacyDefinition&&path?.ruling.some(item=>systemTerm(String(item),"en-US")===activeLegacyDefinition.rulingArcanum)&&systemTerm(chosenTarget,"en-US")===activeLegacyDefinition.rulingArcanum?1:0 };
-    else if (purchase === "Gnose") undo = { kind: "gnosis" };
-    else if (purchase === "Sabedoria") undo = { kind: "wisdom" };
+      undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget, amount: ratingAmount };
+    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget, amount: ratingAmount, creditedArcane:activeLegacy.joined&&activeLegacyDefinition&&path?.ruling.some(item=>systemTerm(String(item),"en-US")===activeLegacyDefinition.rulingArcanum)&&systemTerm(chosenTarget,"en-US")===activeLegacyDefinition.rulingArcanum?ratingAmount:0 };
+    else if (purchase === "Gnose") undo = { kind: "gnosis", amount: ratingAmount };
+    else if (purchase === "Sabedoria") undo = { kind: "wisdom", amount: ratingAmount };
     else if (purchase === "Mérito") {
       const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
       if (index < 0) return setFeedback(t("ui.thePurchasedMeritCouldNotBeIdentified"));
@@ -354,7 +371,7 @@ export function MageExperiencePanel({
     } else if (purchase === "Especialização") undo = { kind: "specialty", skill: mageSpecialtySkill, name: mageSpecialtyName.trim() };
     else if (purchase === "Rota" || purchase === "Práxis")
       undo = { kind: "spell", key: purchase === "Rota" ? "learned_rotes" : "learned_praxes", id: selectedSpell.id };
-    else undo = { kind: "willpower" };
+    else undo = { kind: "willpower", amount: ratingAmount };
     const entry: MageXpEntry = {
       undo,
       id: createRandomId(),
@@ -525,6 +542,7 @@ export function MageExperiencePanel({
                 onChange={(value) => {
                   setPurchase(value);
                   setTarget("");
+                  setTargetRating(0);
                   setRegularSplit(0);
                 }}
                 options={MAGE_PURCHASES.map((value) => ({
@@ -585,7 +603,7 @@ export function MageExperiencePanel({
                 ) : (
                   <RuleSelect
                     value={chosenTarget}
-                    onChange={setTarget}
+                    onChange={(value) => { setTarget(value); setTargetRating(0); }}
                     options={
                       purchase === "Atributo"
                         ? ATTRIBUTE_OPTIONS
@@ -597,19 +615,20 @@ export function MageExperiencePanel({
                 )}
               </label>
             )}
+            {ratedMaximum > ratedCurrent && <ExperienceRatingPicker current={ratedCurrent} maximum={ratedMaximum} value={intendedRating} onChange={setTargetRating} />}
             {mode === "either" && (
               <div className="mage-experience-split">
                 <label>
                   {t("ui.experience")}
                   <Input
                     type="number"
-                    min={0}
+                    min={minimumRegular}
                     max={cost}
-                    value={regularSplit}
+                    value={splitRegular}
                     onChange={(e) =>
                       setRegularSplit(
                         Math.max(
-                          0,
+                          minimumRegular,
                           Math.min(cost, Number(e.target.value) || 0),
                         ),
                       )
@@ -620,7 +639,7 @@ export function MageExperiencePanel({
                   {t("ui.arcaneExperience")}
                   <Input
                     type="number"
-                    value={cost - Math.min(cost, regularSplit)}
+                    value={splitArcane}
                     readOnly
                   />
                 </label>

@@ -28,7 +28,7 @@ import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, isRepeatableDefinition } from "@/app/workspace/experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, isRepeatableDefinition } from "@/app/workspace/experience-shared";
 import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
 type ExperienceUndo =
   | {
@@ -36,6 +36,7 @@ type ExperienceUndo =
       group: "attributes" | "skills";
       name: string;
       previous: number;
+      amount?: number;
     }
   | {
       kind: "merit";
@@ -48,9 +49,9 @@ type ExperienceUndo =
   | { kind: "contract"; id: string }
   | { kind: "benefit"; contractId: string; seeming: string }
   | { kind: "clause"; contractId: string; courtId: string }
-  | { kind: "wyrd"; previous: number }
+  | { kind: "wyrd"; previous: number; amount?: number }
   | { kind: "clarityGain" }
-  | { kind: "willpower"; previousLost: number }
+  | { kind: "willpower"; previousLost: number; amount?: number }
   | { kind: "willpowerLoss"; previousLost: number };
 type ExperienceEntry = {
   id: string;
@@ -124,6 +125,7 @@ export function ExperiencePanel({
   ).filter((entry) => entry.kind === "spend");
   const [experienceInput, setExperienceInput] = useState(String(available));
   const [purchaseType, setPurchaseType] = useState(PURCHASE_TYPES[0]);
+  const [targetRating, setTargetRating] = useState(0);
   const [attribute, setAttribute] = useState<string>(
     Object.values(ATTRIBUTES).flat()[0],
   );
@@ -207,6 +209,18 @@ export function ExperiencePanel({
     Math.max(0, Number(character.derived.ForçaDeVontade ?? 1) - 1),
     0,
   );
+  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
+  const ratedCurrent = purchaseType === "Atributo" ? Number(character.attributes[attribute] ?? 1)
+    : purchaseType === "Perícia" ? Number(character.skills[skill] ?? 0)
+      : purchaseType === "Fado" ? wyrd
+        : purchaseType === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum - lostWillpower
+          : 0;
+  const ratedMaximum = purchaseType === "Atributo" || purchaseType === "Perícia" ? traitMaximum
+    : purchaseType === "Fado" ? 10
+      : purchaseType === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum
+        : 0;
+  const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
+  const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setExperienceInput(String(available)), [available]);
@@ -346,7 +360,7 @@ export function ExperiencePanel({
       );
     const next = structuredClone(character);
     const undo = entry.undo;
-    if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], 1, undo.group === "attributes" ? 1 : 0);
+    if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], undo.amount ?? 1, undo.group === "attributes" ? 1 : 0);
     else if (undo.kind === "merit") {
       refundMeritDots(next, undo.name, Math.abs(entry.experience), undo.instanceId, undo.instanceIndex);
       if (undo.name === "Touchstone") {
@@ -393,13 +407,13 @@ export function ExperiencePanel({
       next.current_state.clarity_damage = normalizeClarityDamage(next.current_state.clarity_damage, maximum);
     }
     else if (undo.kind === "wyrd") {
-      next.line_data = refundChangelingPowerRating(next);
+      for (let dot = 0; dot < (undo.amount ?? 1); dot += 1) next.line_data = refundChangelingPowerRating(next);
       next.line_data.frailties = normalizeChangelingFrailties(next.line_data.frailties, Number(next.line_data.wyrd));
     }
     else
       next.current_state = {
         ...next.current_state,
-        willpower_lost_dots: Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? 1 : -1)),
+        willpower_lost_dots: Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? undo.amount ?? 1 : -1)),
       };
     const refund = Math.abs(entry.experience);
     const nextAvailable = available + refund;
@@ -422,15 +436,16 @@ export function ExperiencePanel({
         return setFeedback(
           t("ui.thisAttributeHasReachedTheMaximumAllowedBy"),
         );
-      const target = current + 1;
+      const target = intendedRating;
       spend(
-        4,
+        4 * ratingAmount,
         `${attribute} ${target}`,
         {
           kind: "trait",
           group: "attributes",
           name: attribute,
           previous: current,
+          amount: ratingAmount,
         },
         (next) => {
           next.attributes[attribute] = target;
@@ -445,11 +460,11 @@ export function ExperiencePanel({
         return setFeedback(
           t("ui.thisSkillHasReachedTheMaximumAllowedBy"),
         );
-      const target = current + 1;
+      const target = intendedRating;
       spend(
-        2,
+        2 * ratingAmount,
         `${skill} ${target}`,
-        { kind: "trait", group: "skills", name: skill, previous: current },
+        { kind: "trait", group: "skills", name: skill, previous: current, amount: ratingAmount },
         (next) => {
           next.skills[skill] = target;
           recalculateCtlDerived(next);
@@ -552,8 +567,8 @@ export function ExperiencePanel({
     }
     if (purchaseType === "Fado") {
       if (wyrd >= 10) return setFeedback(t("ui.wyrdHasAlreadyReached10"));
-      spend(5, `${t("ui.wyrd")} ${wyrd + 1}`, { kind: "wyrd", previous: wyrd }, (next) => {
-        next.line_data = { ...withChangelingPowerRating(next, wyrd + 1), frailties: normalizeChangelingFrailties(next.line_data.frailties, wyrd + 1) };
+      spend(5 * ratingAmount, `${t("ui.wyrd")} ${intendedRating}`, { kind: "wyrd", previous: wyrd, amount: ratingAmount }, (next) => {
+        next.line_data = { ...withChangelingPowerRating(next, intendedRating), frailties: normalizeChangelingFrailties(next.line_data.frailties, intendedRating) };
       });
       return;
     }
@@ -562,13 +577,13 @@ export function ExperiencePanel({
         t("ui.theCharacterHasNoPermanentlyLostWillpowerDots"),
       );
     spend(
-      1,
-      t("ui.recoveryOfOneLostWillpowerDot"),
-      { kind: "willpower", previousLost: lostWillpower },
+      ratingAmount,
+      `${t("ui.willpower")} ${intendedRating}`,
+      { kind: "willpower", previousLost: lostWillpower, amount: ratingAmount },
       (next) => {
         next.current_state = {
           ...next.current_state,
-          willpower_lost_dots: lostWillpower - 1,
+          willpower_lost_dots: lostWillpower - ratingAmount,
         };
       },
     );
@@ -588,6 +603,7 @@ export function ExperiencePanel({
     benefitKey: benefitKey || benefitOptions[0]?.value,
     wyrd,
     lostWillpower,
+    targetRating: intendedRating,
   });
   const historyPanel = <details className="experience-history">
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
@@ -680,6 +696,7 @@ export function ExperiencePanel({
                   value={purchaseType}
                   onChange={(value) => {
                     setPurchaseType(value);
+                    setTargetRating(0);
                     setFeedback("");
                   }}
                   options={PURCHASE_TYPES.map((value) => ({
@@ -693,7 +710,7 @@ export function ExperiencePanel({
                   {t("ui.attribute")}
                   <RuleSelect
                     value={attribute}
-                    onChange={setAttribute}
+                    onChange={(value) => { setAttribute(value); setTargetRating(0); }}
                     options={ATTRIBUTE_OPTIONS}
                   />
                 </label>
@@ -703,7 +720,7 @@ export function ExperiencePanel({
                   {t("ui.skill")}
                   <RuleSelect
                     value={skill}
-                    onChange={setSkill}
+                    onChange={(value) => { setSkill(value); setTargetRating(0); }}
                     options={SKILL_OPTIONS}
                   />
                 </label>
@@ -781,6 +798,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
+              {ratedMaximum > ratedCurrent && <ExperienceRatingPicker current={ratedCurrent} maximum={ratedMaximum} value={intendedRating} onChange={setTargetRating} />}
             </div>
             <div className="purchase-preview">
               <strong>{preview.label}</strong>

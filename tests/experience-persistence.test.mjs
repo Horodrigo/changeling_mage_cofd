@@ -13,6 +13,8 @@ const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/chan
 const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+const experienceShared = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
+const hubris = await vite.ssrLoadModule("/game-lines/mage/hubris.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
 
@@ -99,6 +101,33 @@ test("Vampiro reembolsa compras fora de ordem sem apagar avanços posteriores", 
   const humanity = {attributes:{},skills:{},specializations:[],merits:[],line_data:{humanity:9,blood_sorcery:{cruac_rating:1,cruac_rite_ids:["rite"]}},current_state:{}};
   vampireRefunds.refundVampireAdvancement(humanity,{kind:"cruac",id:"rite",humanityLost:1});
   assert.equal(humanity.line_data.humanity,10);
+});
+
+test("compras X→Y somam custos por ponto e reembolsam o delta completo", () => {
+  assert.equal(experienceShared.ratingPurchaseCost(2, 5, 4), 12);
+  assert.equal(experienceShared.ratingPurchaseCost(3, 6, (rating) => rating <= 4 ? 4 : 5), 14);
+
+  const mage = sheet("gnosis");
+  mage.attributes.Strength = 5;
+  mage.line_data.arcana.Fate = 4;
+  refunds.refundMageAdvancement(mage, {kind:"trait",group:"attributes",name:"Strength",amount:3});
+  refunds.refundMageAdvancement(mage, {kind:"arcana",name:"Fate",amount:3});
+  assert.deepEqual([mage.attributes.Strength,mage.line_data.arcana.Fate],[2,1]);
+
+  const vampire = {attributes:{Strength:5},skills:{},specializations:[],merits:[],line_data:{humanity:6,blood_sorcery:{cruac_rating:4,cruac_rite_ids:["one","two","three"]}},current_state:{}};
+  vampireRefunds.refundVampireAdvancement(vampire,{kind:"trait",group:"attributes",name:"Strength",amount:3});
+  vampireRefunds.refundVampireAdvancement(vampire,{kind:"cruac",ids:["two","three"],amount:2,humanityLost:1});
+  assert.deepEqual([vampire.attributes.Strength,vampire.line_data.blood_sorcery.cruac_rating,vampire.line_data.blood_sorcery.cruac_rite_ids,vampire.line_data.humanity],[2,2,["one"],7]);
+
+  vampireRefunds.refundVampireAdvancement(vampire,{kind:"humanityLoss",amount:1});
+  assert.equal(vampire.line_data.humanity,8);
+});
+
+test("Acts of Hubris usa o tier do ato e aplica os três modificadores cumulativos", () => {
+  assert.deepEqual(hubris.availableHubrisTiers(7).map((tier) => tier.id), ["understanding","falling"]);
+  const falling = hubris.HUBRIS_TIERS.find((tier) => tier.id === "falling");
+  assert.equal(hubris.hubrisPool(falling,{obsession:true,virtue:true,vice:true}),0);
+  assert.equal(hubris.hubrisPool(falling,{obsession:false,virtue:true,vice:false}),2);
 });
 
 test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas", () => {

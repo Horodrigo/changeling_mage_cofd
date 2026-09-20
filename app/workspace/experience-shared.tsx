@@ -46,6 +46,22 @@ export function BeatTrack({
     </div>
   );
 }
+
+export function ratingPurchaseCost(current: number, target: number, costForDot: number | ((rating: number) => number)) {
+  let total = 0;
+  for (let rating = current + 1; rating <= target; rating += 1)
+    total += typeof costForDot === "number" ? costForDot : costForDot(rating);
+  return total;
+}
+
+export function ExperienceRatingPicker({ current, maximum, value, onChange }: { current: number; maximum: number; value: number; onChange: (value: number) => void }) {
+  const { t } = useLanguage();
+  const options = Array.from({ length: Math.max(0, maximum - current) }, (_, index) => current + index + 1);
+  return <div className="experience-rating-picker">
+    <span><b>{t("ui.current")}:</b> {current}</span>
+    <label><span>{t("ui.intended")}</span><RuleSelect value={String(value)} onChange={(next) => onChange(Number(next))} options={options.map((rating) => ({ value: String(rating), label: String(rating) }))} /></label>
+  </div>;
+}
 type ExperienceCatalogItem = {
   id: string;
   name: string;

@@ -17,9 +17,9 @@ export function refundMeritDots(sheet: CharacterSheet, name: string, amount: num
 }
 
 export type MageAdvancementUndo =
-  | { kind: "trait"; group: "attributes" | "skills"; name: string }
-  | { kind: "arcana"; name: string; creditedArcane?: number }
-  | { kind: "gnosis" | "wisdom" | "wisdomLoss" | "willpower" | "willpowerLoss" }
+  | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
+  | { kind: "arcana"; name: string; amount?: number; creditedArcane?: number }
+  | { kind: "gnosis" | "wisdom" | "wisdomLoss" | "willpower" | "willpowerLoss"; amount?: number }
   | { kind: "merit"; name: string; dots: number; instanceId?: string; index?: number }
   | { kind: "spell"; key: "learned_rotes" | "learned_praxes"; id: string }
   | { kind: "legacyInitiation"; previousState: unknown; removedPraxis?: {key:"praxes"|"learned_praxes";index:number;item:Record<string,unknown>}; creditedRegular:number; creditedArcane:number; creditedArcaneBeats:number }
@@ -28,13 +28,13 @@ export type MageAdvancementUndo =
 
 /** Undo only this purchase's delta, never replace the sheet with an old snapshot. */
 export function refundMageAdvancement(sheet: CharacterSheet, undo: MageAdvancementUndo) {
-  if (undo.kind === "trait") sheet[undo.group][undo.name] = subtractDots(sheet[undo.group][undo.name], 1, undo.group === "attributes" ? 1 : 0);
-  else if (undo.kind === "gnosis") sheet.line_data = refundPowerRating(sheet, "gnosis");
-  else if (undo.kind === "wisdom") sheet.line_data.wisdom = subtractDots(sheet.line_data.wisdom, 1, 1);
+  if (undo.kind === "trait") sheet[undo.group][undo.name] = subtractDots(sheet[undo.group][undo.name], undo.amount ?? 1, undo.group === "attributes" ? 1 : 0);
+  else if (undo.kind === "gnosis") for (let dot = 0; dot < (undo.amount ?? 1); dot += 1) sheet.line_data = refundPowerRating(sheet, "gnosis");
+  else if (undo.kind === "wisdom") sheet.line_data.wisdom = subtractDots(sheet.line_data.wisdom, undo.amount ?? 1, 1);
   else if (undo.kind === "wisdomLoss") sheet.line_data.wisdom = Math.min(10, (Number(sheet.line_data.wisdom) || 1) + 1);
   else if (undo.kind === "arcana") {
     const arcana = { ...(sheet.line_data.arcana as Record<string, number>) };
-    arcana[undo.name] = subtractDots(arcana[undo.name]);
+    arcana[undo.name] = subtractDots(arcana[undo.name], undo.amount ?? 1);
     sheet.line_data.arcana = arcana;
   } else if (undo.kind === "merit") refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index);
   else if (undo.kind === "spell") {
@@ -54,5 +54,5 @@ export function refundMageAdvancement(sheet: CharacterSheet, undo: MageAdvanceme
   } else if (undo.kind === "specialty") {
     const index = sheet.specializations.findLastIndex(item => item.skill === undo.skill && item.name === undo.name);
     if (index >= 0) sheet.specializations.splice(index, 1);
-  } else sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? 1 : -1));
+  } else sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? undo.amount ?? 1 : -1));
 }
