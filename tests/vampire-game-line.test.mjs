@@ -119,6 +119,17 @@ test("Vampire creation and editing persist the selected Covenant Discipline with
   assert.deepEqual(changedCoil.coilRatings, { [coil.id]: 2, [powers.coils[1].id]: 1 });
 });
 
+test("Vampire Experience separates Rites from Miracles and orders free rituals by the gained dot", async () => {
+  const { freeBloodSorcerySelections, purchaseLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
+  const catalog = [
+    { id: "level-2", name: "Level Two", rating: 2 },
+    { id: "level-1", name: "Level One", rating: 1 },
+  ];
+  assert.equal(purchaseLabel("rite", "en-US"), "Crúac Rite");
+  assert.equal(purchaseLabel("miracle", "en-US"), "Theban Miracle");
+  assert.deepEqual(freeBloodSorcerySelections(catalog, new Set(), [], 0, 2), ["level-1", "level-2"]);
+});
+
 test("Vampire Status and English trait prerequisites resolve against neutral stored fields", async () => {
   const { textRequirementMet } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
   const { vampireCovenantStatus } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
