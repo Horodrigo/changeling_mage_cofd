@@ -93,6 +93,10 @@ When code represents CofD mechanics:
 5. Tests that encode a rule should state the applicable line and edition in their name or fixture metadata when ambiguity is possible.
 6. When changing rule data, inspect nearby entries for accidental first-edition or cross-line contamination.
 
+## Repository workflow
+
+For implementation work in this repository, create small local commits after each verified, coherent task type. Keep unrelated task types and user-owned changes out of the commit; inspect a dirty worktree before staging, and prefer explicit file or hunk staging over broad staging commands.
+
 ## Verification behavior
 
 Before asserting a specific mechanic, prerequisite, cost, rating, dice pool, exception, or character-creation rule:
