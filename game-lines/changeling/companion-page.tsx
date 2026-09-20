@@ -58,7 +58,7 @@ function FaeCompanionCard({ merit, meritIndex, character, updateSheet }: {
     const animalId = String(configuration.animalId ?? ANIMALS[0]?.id ?? "");
     const animal = ANIMALS.find(item => item.id === animalId);
     return <article className="companion-card merit-companion companion-config">
-      <header><div><strong>{name}</strong><small>Fae Pet · {merit.dots} {t("ui.dots33098e")}</small></div></header>
+      <header><div><strong>{name}</strong><small>{t("ui.faePet")} · {merit.dots} {t("ui.dots33098e")}</small></div></header>
       <div className="companion-form-grid">
         <label>{t("ui.name")}<Input value={name} onChange={event => save({ name: event.target.value })}/></label>
         <label>{t("ui.animal")}<RuleSelect value={animalId} onChange={value => save({ animalId: value })} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label>

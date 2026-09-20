@@ -41,7 +41,7 @@ export function MageExperienceRules() {
     <div className="experience-rule-menus">
       <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table>
         <tbody>
-          {beats.map((x) => <tr key={x}><td>{x}</td><td>1 Beat</td></tr>)}
+          {beats.map((x) => <tr key={x}><td>{x}</td><td>{t("ui.oneBeat")}</td></tr>)}
           {arcane.map((x) => <tr key={x}><td>{x}</td><td>{t("ui.message1ArcaneBeat")}</td></tr>)}
         </tbody>
       </table></details>

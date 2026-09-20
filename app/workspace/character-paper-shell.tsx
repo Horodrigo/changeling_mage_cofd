@@ -72,15 +72,34 @@ export function NotesArea({ value, onChange }: { value: string; onChange: (value
   );
 }
 
+function inferredPowerResourcePerTurn(label: string, maximum: number) {
+  if (!["Mana", "Glamour", "Vitae"].includes(label)) return undefined;
+  const byMaximum: Record<number, number> = {
+    10: 1,
+    11: 2,
+    12: 3,
+    13: 4,
+    15: 5,
+    20: 6,
+    25: 7,
+    30: 8,
+    50: 10,
+    75: 15,
+  };
+  return byMaximum[maximum];
+}
+
 export function ResourceTrack({
-  label, current, maximum, onChange, storedCurrent, storedMaximum, onStoredChange, displayMinimum,
+  label, current, maximum, onChange, storedCurrent, storedMaximum, onStoredChange, displayMinimum, perTurn,
 }: {
   label: string; current: number; maximum: number; onChange: (value: number) => void;
   storedCurrent?: number; storedMaximum?: number; onStoredChange?: (value: number) => void;
   displayMinimum?: number;
+  perTurn?: number;
 }) {
   const { locale, t } = useLanguage();
   const displayLabel = systemTerm(label, locale);
+  const displayedPerTurn = perTurn ?? inferredPowerResourcePerTurn(label, maximum);
   return (
     <div className="tracker-block">
     <div
@@ -131,7 +150,7 @@ export function ResourceTrack({
     <div className="tracker-meta">
       <span>{t("ui.current")}</span>
       <strong>
-        {current} / {maximum}
+        {current}/{maximum}{displayedPerTurn !== undefined && <> | {t("ui.perTurn")}: {displayedPerTurn}</>}
       </strong>
     </div>
   </div>
@@ -150,8 +169,8 @@ export function PowerResource({
       <div className="power-rating power-rating-summary" tabIndex={summary ? 0 : undefined} title={summary} aria-label={summary} data-tooltip={summary}>
         <span>{systemTerm(name, locale)}</span><DotValue value={rating} max={10} />
       </div>
-      <ResourceTrack label={resourceName} current={current} maximum={maximum} onChange={onChange} storedCurrent={storedCurrent} storedMaximum={storedMaximum} onStoredChange={onStoredChange} />
-      <p className="tracker-help">{t("ui.resourceMaximum", { name: systemTerm(resourceName, locale) })} <strong>{maximum}</strong>{storedCurrent !== undefined && <> · {t("ui.storedGlamour")} <strong>{storedCurrent}</strong></>} · {t("ui.spentPerTurn")} <strong>{perTurn}</strong></p>
+      <ResourceTrack label={resourceName} current={current} maximum={maximum} perTurn={perTurn} onChange={onChange} storedCurrent={storedCurrent} storedMaximum={storedMaximum} onStoredChange={onStoredChange} />
+      {storedCurrent !== undefined && <p className="tracker-help">{t("ui.storedGlamour")} <strong>{storedCurrent}</strong></p>}
     </div>
   );
 }

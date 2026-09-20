@@ -1,127 +1,1969 @@
 {
   "disciplines": [
-    {"id":"animalism","name":"Animalism","translatedName":"Animalismo","summary":"Extends the Beast's dominion over animals, familiars, territory, and the feral impulses of living beings.","source":"Vampire: The Requiem Second Edition","page":126,"levels":[
-      {"rating":1,"name":"Feral Whispers","translatedName":"Sussurros Ferozes","summary":"Communicate with animals and issue simple commands."},
-      {"rating":2,"name":"Raise Familiar","translatedName":"Erguer Familiar","summary":"Raise a recently dead animal as a loyal undead familiar."},
-      {"rating":3,"name":"Summon the Hunt","translatedName":"Convocar a Caçada","summary":"Call nearby animals of a chosen kind to the vampire."},
-      {"rating":4,"name":"Feral Infection","translatedName":"Infecção Feral","summary":"Drive people or animals into violent, bestial behavior."},
-      {"rating":5,"name":"Lord of the Land","translatedName":"Senhor da Terra","summary":"Claim territory and perceive or influence events through its animals."}
-    ]},
-    {"id":"auspex","name":"Auspex","translatedName":"Auspícios","summary":"Heightens perception until the vampire can read auras, objects, minds, and distant places.","source":"Vampire: The Requiem Second Edition","page":129,"levels":[
-      {"rating":1,"name":"Beast's Hackles","translatedName":"Arrepio da Besta","summary":"Ask the Beast a question about immediate danger or weakness."},
-      {"rating":2,"name":"Uncanny Perception","translatedName":"Percepção Sobrenatural","summary":"Read revealing details in a subject's aura and behavior."},
-      {"rating":3,"name":"The Spirit's Touch","translatedName":"Toque do Espírito","summary":"Read strong impressions and memories attached to an object."},
-      {"rating":4,"name":"Lay Open the Mind","translatedName":"Abrir a Mente","summary":"Enter a subject's thoughts and search their memories."},
-      {"rating":5,"name":"Twilight Projection","translatedName":"Projeção Crepuscular","summary":"Project the senses and spirit away from the body."}
-    ]},
-    {"id":"celerity","name":"Celerity","translatedName":"Celeridade","physical":true,"summary":"Permanently adds its dots to Defense and Initiative; Vitae can fuel bursts of impossible speed and reflexes.","source":"Vampire: The Requiem Second Edition","page":131,"levels":[]},
-    {"id":"dominate","name":"Dominate","translatedName":"Dominação","summary":"Imposes commands, false memories, and finally possession through the vampire's will.","source":"Vampire: The Requiem Second Edition","page":132,"levels":[
-      {"rating":1,"name":"Mesmerize","translatedName":"Hipnotizar","summary":"Place a victim in a receptive trance."},
-      {"rating":2,"name":"Iron Edict","translatedName":"Édito de Ferro","summary":"Plant a direct command in a mesmerized victim."},
-      {"rating":3,"name":"Entombed Command","translatedName":"Comando Sepultado","summary":"Hide a command behind a later trigger."},
-      {"rating":4,"name":"The Lying Mind","translatedName":"A Mente Mentirosa","summary":"Rewrite or suppress a victim's memories."},
-      {"rating":5,"name":"Possession","translatedName":"Possessão","summary":"Take complete control of another person's body."}
-    ]},
-    {"id":"majesty","name":"Majesty","translatedName":"Majestade","summary":"Turns supernatural presence into fascination, trust, loyalty, and worship.","source":"Vampire: The Requiem Second Edition","page":134,"levels":[
-      {"rating":1,"name":"Awe","translatedName":"Fascínio","summary":"Draw attention and make social influence easier."},
-      {"rating":2,"name":"Confidant","translatedName":"Confidente","summary":"Create an intimate bond that invites trust and disclosure."},
-      {"rating":3,"name":"Green Eyes","translatedName":"Olhos Verdes","summary":"Inspire jealousy and competition for the vampire's favor."},
-      {"rating":4,"name":"Loyalty","translatedName":"Lealdade","summary":"Create intense devotion and the Enthralled Condition."},
-      {"rating":5,"name":"Idol","translatedName":"Ídolo","summary":"Overwhelm a crowd with adoration and obedience."}
-    ]},
-    {"id":"nightmare","name":"Nightmare","translatedName":"Pesadelo","summary":"Weaponizes the terror inspired by the Beast.","source":"Vampire: The Requiem Second Edition","page":135,"levels":[
-      {"rating":1,"name":"Dread Presence","translatedName":"Presença Aterradora","summary":"Radiate palpable fear and unease."},
-      {"rating":2,"name":"Face of the Beast","translatedName":"Face da Besta","summary":"Focus terror on a victim through the predator's gaze."},
-      {"rating":3,"name":"The Grand Delusion","translatedName":"A Grande Ilusão","summary":"Make a victim believe a convincing personal nightmare."},
-      {"rating":4,"name":"Waking Nightmare","translatedName":"Pesadelo Desperto","summary":"Make a nightmare appear real to the victim's senses."},
-      {"rating":5,"name":"Mortal Terror","translatedName":"Terror Mortal","summary":"Inflict overwhelming terror capable of breaking body and mind."}
-    ]},
-    {"id":"obfuscate","name":"Obfuscate","translatedName":"Ofuscação","summary":"Erases the vampire, companions, objects, and places from attention and memory.","source":"Vampire: The Requiem Second Edition","page":137,"levels":[
-      {"rating":1,"name":"Face in the Crowd","translatedName":"Rosto na Multidão","summary":"Fade into a crowd and become unremarkable."},
-      {"rating":2,"name":"Touch of Shadow","translatedName":"Toque da Sombra","summary":"Hide an object from notice."},
-      {"rating":3,"name":"Cloak of Night","translatedName":"Manto da Noite","summary":"Vanish from direct observation."},
-      {"rating":4,"name":"The Familiar Stranger","translatedName":"O Estranho Familiar","summary":"Appear to be the person an observer expects to see."},
-      {"rating":5,"name":"Oubliette","translatedName":"Oubliette","summary":"Hide a place and those within it from the outside world."}
-    ]},
-    {"id":"protean","name":"Protean","translatedName":"Metamorfose","summary":"Reshapes the vampire through earth, animal adaptations, full forms, and monstrous transformation.","source":"Vampire: The Requiem Second Edition","page":139,"levels":[
-      {"rating":1,"name":"Unmarked Grave","translatedName":"Túmulo Sem Marca","summary":"Merge with natural earth to rest safely."},
-      {"rating":2,"name":"Predatory Aspect","translatedName":"Aspecto Predatório","summary":"Manifest three chosen animal adaptations."},
-      {"rating":3,"name":"Beast's Skin","translatedName":"Pele da Besta","summary":"Take stored animal forms."},
-      {"rating":4,"name":"Unnatural Aspect","translatedName":"Aspecto Antinatural","summary":"Manifest a powerful monstrous adaptation."},
-      {"rating":5,"name":"Primeval Miasma","translatedName":"Miasma Primevo","summary":"Dissolve into a predatory cloud that can hunt and feed."}
-    ]},
-    {"id":"resilience","name":"Resilience","translatedName":"Resiliência","physical":true,"summary":"Permanently adds its dots to Stamina and Health; Vitae can mitigate severe injury.","source":"Vampire: The Requiem Second Edition","page":141,"levels":[]},
-    {"id":"vigor","name":"Vigor","translatedName":"Ímpeto","physical":true,"summary":"Permanently adds its dots to Strength and Speed; Vitae can fuel overwhelming feats and attacks.","source":"Vampire: The Requiem Second Edition","page":142,"levels":[]}
+    {
+      "id": "animalism",
+      "name": "Animalism",
+      "translatedName": "Animalismo",
+      "summary": "Extends the Beast's dominion over animals, familiars, territory, and the feral impulses of living beings.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 126,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Feral Whispers",
+          "translatedName": "Sussurros Ferozes",
+          "summary": "Communicate with animals and issue simple commands.",
+          "cost": "None",
+          "dicePool": "Manipulation + Animal Ken + Animalism",
+          "action": "Instant",
+          "duration": "Scene; a command may persist up to one night",
+          "effect": "Communicate with animals the vampire can address and give simple commands appropriate to the animal.",
+          "rollResults": {
+            "dramaticFailure": "The animal misunderstands and gives false information or follows a twisted version of the command.",
+            "failure": "The animals flee from the vampire's Beast.",
+            "success": "The vampire communicates with the animal and may give a simple command with simple contingencies.",
+            "exceptionalSuccess": "The animal follows the spirit of the command with unusual initiative."
+          }
+        },
+        {
+          "rating": 2,
+          "name": "Raise Familiar",
+          "translatedName": "Erguer Familiar",
+          "summary": "Raise a drained animal as a loyal undead familiar.",
+          "cost": "1 Vitae",
+          "requirement": "Feed 1 Vitae to the animal corpse; included in the cost",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Blood Potency × animal Stamina nights",
+          "effect": "The corpse rises with Intelligence 1, takes bashing from attacks like a vampire, does not bleed out or decompose, and can receive silent Feral Whispers at any distance. Each additional Vitae renews its duration as if freshly raised."
+        },
+        {
+          "rating": 3,
+          "name": "Summon the Hunt",
+          "translatedName": "Convocar a Caçada",
+          "summary": "Call predators and scavengers to blood marked prey.",
+          "cost": "2 Vitae",
+          "requirement": "Spill 1 Vitae on the target; included in the cost",
+          "dicePool": "Presence + Animal Ken + Animalism",
+          "action": "Instant",
+          "duration": "One night or until the blood-marked target is destroyed",
+          "effect": "Summon all predators/scavengers, or one chosen kind, within a radius determined by successes. Animals that taste the Vitae can receive one shared Feral Whispers command lasting one night per success.",
+          "rollResults": {
+            "dramaticFailure": "Called animals lash out at the vampire in fear.",
+            "failure": "Nearby animals avoid the vampire.",
+            "success": "Matching animals answer the call and may receive one shared command.",
+            "exceptionalSuccess": "Animals pursue the command without stopping to eat or sleep."
+          }
+        },
+        {
+          "rating": 4,
+          "name": "Feral Infection",
+          "translatedName": "Infecção Feral",
+          "summary": "Spread the Beast's rage through an area.",
+          "cost": "2 Vitae",
+          "requirement": "Spill 1 Vitae on the ground; included in the cost",
+          "dicePool": "Presence + Intimidation + Animalism",
+          "action": "Instant",
+          "duration": "Scene",
+          "effect": "Animals smelling the blood enter feral rage. Humans and supernatural beings resist with Resolve + Composure minus the vampire's successes; recent contact with the vampire's blood gives a further penalty. Failed resistance drives victims into frenzy or atavistic violence under broad direction.",
+          "rollResults": {
+            "dramaticFailure": "The vampire is provoked to frenzy and suffers a penalty to resist it.",
+            "failure": "Affected animals behave strangely but do not enter rage.",
+            "success": "Affected creatures enter feral rage; the vampire may direct them toward a simple target or goal.",
+            "exceptionalSuccess": "The vampire gains the Sated Condition."
+          }
+        },
+        {
+          "rating": 5,
+          "name": "Lord of the Land",
+          "translatedName": "Senhor da Terra",
+          "summary": "Claim a blood-marked territory and dominate events within it.",
+          "cost": "3–9 Vitae and 1 Willpower",
+          "requirement": "Walk the boundary while marking it with Vitae; the Vitae cost scales with territory size",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "At least one week per Blood Potency; persists while the vampire remains in the territory",
+          "effect": "Animals avoid the territory unless invited or controlled. Intruders resist entering/staying and suffer broad penalties unless exceptionally successful. The vampire senses intruders and their rough locations, gains special command over animals and frenzying creatures, and may use raised familiars as remote sensory/command relays."
+        }
+      ]
+    },
+    {
+      "id": "auspex",
+      "name": "Auspex",
+      "translatedName": "Auspícios",
+      "summary": "Heightens perception until the vampire can read danger, secrets, objects, minds, and distant places.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 129,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Beast's Hackles",
+          "translatedName": "Arrepio da Besta",
+          "summary": "Ask the Beast about immediate danger or weakness.",
+          "cost": "First use per scene is free; later uses that scene cost 1 Vitae",
+          "dicePool": "Wits + Empathy + Auspex",
+          "action": "Instant",
+          "effect": "Ask one immediate question about danger or weakness; the Beast answers through sensory imagery.",
+          "rollResults": {
+            "dramaticFailure": "The Storyteller gives false or warped information.",
+            "failure": "The Beast reveals no immediate weakness.",
+            "success": "Ask one appropriate question.",
+            "exceptionalSuccess": "Ask two appropriate questions."
+          }
+        },
+        {
+          "rating": 2,
+          "name": "Uncanny Perception",
+          "translatedName": "Percepção Sobrenatural",
+          "summary": "Read secrets and weaknesses in one subject.",
+          "cost": "First use per scene against a target is free; later uses against the same target that scene cost 1 Vitae",
+          "dicePool": "Intelligence + Empathy + Auspex",
+          "action": "Instant",
+          "effect": "Ask questions about the subject's mood, fears, supernatural nature, hidden control, vulnerabilities, and similar secrets.",
+          "rollResults": {
+            "dramaticFailure": "The Storyteller gives false or misleading information.",
+            "failure": "No useful secret is revealed.",
+            "success": "Ask one question per success.",
+            "exceptionalSuccess": "The answers also provide additional insight."
+          }
+        },
+        {
+          "rating": 3,
+          "name": "The Spirit's Touch",
+          "translatedName": "Toque do Espírito",
+          "summary": "Read impressions attached to an object or place.",
+          "cost": "None",
+          "dicePool": "Wits + Occult + Auspex",
+          "action": "Instant",
+          "requirement": "A particular object can be examined only once per scene",
+          "effect": "Ask questions about an object's or place's history, ownership, strongest emotions, and associated events.",
+          "rollResults": {
+            "dramaticFailure": "The Storyteller gives false or misleading information.",
+            "failure": "The subject yields no useful impression.",
+            "success": "Ask one question per success.",
+            "exceptionalSuccess": "Gain a bonus when using or interacting with the subject for the rest of the scene."
+          }
+        },
+        {
+          "rating": 4,
+          "name": "Lay Open the Mind",
+          "translatedName": "Abrir a Mente",
+          "summary": "Read and project thoughts and memories.",
+          "cost": "1 Vitae",
+          "dicePool": "Intelligence + Socialize + Auspex vs. Resolve + Blood Potency",
+          "action": "Instant",
+          "duration": "Scene",
+          "effect": "Hear the subject's surface thoughts and project thoughts, images, or memories. Deep memories can be dragged up; each additional deep memory after the initial allowance costs Vitae.",
+          "rollResults": {
+            "dramaticFailure": "The vampire cannot separate thoughts and gains the Confused Condition.",
+            "failure": "The subject's thoughts remain inaccessible.",
+            "success": "Establish the mental link for the scene.",
+            "exceptionalSuccess": "Retrieve deep memories up to Auspex dots before paying additional Vitae."
+          }
+        },
+        {
+          "rating": 5,
+          "name": "Twilight Projection",
+          "translatedName": "Projeção Crepuscular",
+          "summary": "Project the senses and consciousness outside the body.",
+          "cost": "2 Vitae",
+          "dicePool": "Intelligence + Occult + Auspex",
+          "action": "Instant",
+          "effect": "The vampire's consciousness travels astrally within the lunar sphere while the body remains corpse-like and vulnerable. Astral Speed is multiplied by Auspex + Blood Potency. The form passes through physical barriers but cannot physically interact or use Disciplines. Each sunrise away costs one temporary Blood Potency; reaching 0 causes Final Death.",
+          "rollResults": {
+            "dramaticFailure": "The consciousness is displaced far from the intended location.",
+            "failure": "Projection fails.",
+            "success": "The vampire projects and may travel until returning to the body.",
+            "exceptionalSuccess": "The vampire may later spend Vitae reflexively to snap back to the body or the edge of a blocking mystical boundary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "celerity",
+      "name": "Celerity",
+      "translatedName": "Celeridade",
+      "physical": true,
+      "summary": "Persistent supernatural speed and reflexive bursts fueled by Vitae.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 131,
+      "levels": [],
+      "cost": "None or 1 Vitae per active effect",
+      "dicePool": "None",
+      "action": "None for persistent effects; Reflexive for active effects",
+      "duration": "Permanent for persistent effects; one turn for active effects",
+      "effect": "Persistent: add Celerity to Defense and Dodge; even firearms that deny Defense suffer a penalty equal to Celerity when the vampire can react. Active: each Vitae buys one distinct effect for the turn — jump to the head of Initiative, interrupt another character with a brief action, or multiply Speed by Celerity + 1. No active option may be used more than once per turn."
+    },
+    {
+      "id": "dominate",
+      "name": "Dominate",
+      "translatedName": "Dominação",
+      "summary": "Imposes commands, false memories, and possession through supernatural authority.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 132,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Mesmerize",
+          "translatedName": "Hipnotizar",
+          "summary": "Place a victim in a receptive trance.",
+          "cost": "None",
+          "requirement": "Eye contact",
+          "dicePool": "Intelligence + Expression + Dominate vs. Resolve + Blood Potency",
+          "action": "Instant",
+          "effect": "Inflict Mesmerized; while Mesmerized, short direct commands can be issued as instant actions.",
+          "rollResults": {
+            "dramaticFailure": "The victim sees through the attempt and gains Steadfast.",
+            "failure": "The victim resists.",
+            "success": "The victim gains Mesmerized.",
+            "exceptionalSuccess": "A command may be issued in the same action."
+          }
+        },
+        {
+          "rating": 2,
+          "name": "Iron Edict",
+          "translatedName": "Édito de Ferro",
+          "summary": "Issue a longer command to a Mesmerized victim.",
+          "cost": "1 Vitae; free if the victim is in Vinculum with the vampire",
+          "requirement": "Victim has Mesmerized",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Until the task is completed or sunrise",
+          "effect": "Give up to three sentences of direct instructions; the victim gains Dominated and follows the command."
+        },
+        {
+          "rating": 3,
+          "name": "Entombed Command",
+          "translatedName": "Comando Sepultado",
+          "summary": "Plant subconscious triggers for Dominate effects.",
+          "cost": "None; linked Dominate effects may cost Vitae",
+          "requirement": "Victim has Mesmerized",
+          "dicePool": "Intelligence + Subterfuge + Dominate – victim Resolve",
+          "action": "Instant",
+          "duration": "One week per success; one month per success if the victim is in Vinculum",
+          "effect": "Implant one trigger per success. Each trigger activates a specified Mesmerize, Iron Edict, or Lying Mind effect when encountered.",
+          "rollResults": {
+            "dramaticFailure": "Mesmerized ends and the attempted trigger grants Steadfast when encountered during the next week.",
+            "failure": "No trigger is implanted.",
+            "success": "Implant triggers equal to successes.",
+            "exceptionalSuccess": "Reduce the Vitae cost of implanted Iron Edict and Lying Mind by one."
+          }
+        },
+        {
+          "rating": 4,
+          "name": "The Lying Mind",
+          "translatedName": "A Mente Mentirosa",
+          "summary": "Permanently rewrite or suppress memories.",
+          "cost": "2 Vitae",
+          "requirement": "Victim has Mesmerized and consumes or is anointed with 1 Vitae included in the cost",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Permanent",
+          "effect": "Create, erase, or alter memories and inflict Amnesia or False Memories as appropriate. Entombed Command can make the change conditional on a trigger."
+        },
+        {
+          "rating": 5,
+          "name": "Possession",
+          "translatedName": "Possessão",
+          "summary": "Take control of another person's body.",
+          "cost": "1 Vitae and 1 Willpower",
+          "requirement": "Victim has Mesmerized",
+          "dicePool": "Intelligence + Intimidation + Dominate – victim Resolve",
+          "action": "Reflexive",
+          "duration": "One night per success",
+          "effect": "Use the victim's body, Physical Attributes, Skills, and Physical/Combat Merits. The vampire's own body lies in a torpor-like state. Disciplines and Blood Sorcery are unavailable while possessing another body.",
+          "rollResults": {
+            "dramaticFailure": "Mesmerized ends and the victim regains Willpower.",
+            "failure": "Possession fails.",
+            "success": "Possess the victim for one night per success.",
+            "exceptionalSuccess": "Regain Willpower when leaving the body."
+          }
+        }
+      ]
+    },
+    {
+      "id": "majesty",
+      "name": "Majesty",
+      "translatedName": "Majestade",
+      "summary": "Turns supernatural presence into fascination, trust, jealousy, loyalty, and worship.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 134,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Awe",
+          "translatedName": "Fascínio",
+          "summary": "Become the unquestioned center of attention.",
+          "cost": "None",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Scene",
+          "effect": "Ignore Social penalties from appearance or behavior, add Majesty to Presence rolls in normal interaction, and penalize others' attempts to notice anything else."
+        },
+        {
+          "rating": 2,
+          "name": "Confidant",
+          "translatedName": "Confidente",
+          "summary": "Create intimate trust in someone already affected by Awe.",
+          "cost": "None",
+          "requirement": "Use Awe on the victim",
+          "dicePool": "Presence + Empathy + Majesty vs. Resolve + Blood Potency",
+          "action": "Contested; resistance is reflexive",
+          "effect": "Inflict Charmed.",
+          "rollResults": {
+            "dramaticFailure": "The vampire gains Swooning for the victim.",
+            "failure": "The victim is not Charmed.",
+            "success": "The victim gains Charmed.",
+            "exceptionalSuccess": "Charmed lasts nights rather than hours."
+          }
+        },
+        {
+          "rating": 3,
+          "name": "Green Eyes",
+          "translatedName": "Olhos Verdes",
+          "summary": "Manipulate the emotions and obsessive loyalty of Charmed or Enthralled victims.",
+          "cost": "1 Vitae per emotional shift",
+          "requirement": "Victim has Charmed or Enthralled",
+          "dicePool": "None",
+          "action": "Reflexive",
+          "duration": "Scene",
+          "effect": "Shift affected victims into intense emotional states and leverage Charmed/Enthralled loyalty for requests. Charmed victims stop before lethal harm or breaking points; Enthralled victims tolerate far more."
+        },
+        {
+          "rating": 4,
+          "name": "Loyalty",
+          "translatedName": "Lealdade",
+          "summary": "Turn affection into fanatical devotion.",
+          "cost": "2 Vitae",
+          "requirement": "Victim has Charmed",
+          "dicePool": "Manipulation + Empathy + Majesty vs. Resolve + Blood Potency",
+          "action": "Contested; resistance is reflexive",
+          "effect": "Inflict Enthralled.",
+          "rollResults": {
+            "dramaticFailure": "The victim resolves Charmed.",
+            "failure": "The victim remains Charmed but not Enthralled.",
+            "success": "The victim gains Enthralled.",
+            "exceptionalSuccess": "Enthralled lasts one week per Blood Potency."
+          }
+        },
+        {
+          "rating": 5,
+          "name": "Idol",
+          "translatedName": "Ídolo",
+          "summary": "Elevate Awe into near-worship across a scene.",
+          "cost": "2 Vitae and 1 Willpower",
+          "dicePool": "None",
+          "action": "Reflexive",
+          "duration": "Scene",
+          "effect": "Enhance Awe. Affected people must overcome Resolve + Blood Potency minus Majesty to harm or embarrass the vampire; Charmed victims may become Enthralled for the scene."
+        }
+      ]
+    },
+    {
+      "id": "nightmare",
+      "name": "Nightmare",
+      "translatedName": "Pesadelo",
+      "summary": "Weaponizes the supernatural terror inspired by the Beast.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 135,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Dread Presence",
+          "translatedName": "Presença Aterradora",
+          "summary": "Radiate an unsettling aura and conjure brief frightening illusions.",
+          "cost": "None",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Scene",
+          "effect": "Add Nightmare to mundane Intimidation, prevent affected victims from spending Willpower offensively, and create small short-lived illusions affecting up to two senses."
+        },
+        {
+          "rating": 2,
+          "name": "Face of the Beast",
+          "translatedName": "Face da Besta",
+          "summary": "Magnify a victim's fear until they flee.",
+          "cost": "1 Vitae",
+          "dicePool": "Presence + Empathy + Nightmare vs. Composure + Blood Potency",
+          "action": "Contested; resistance is reflexive",
+          "effect": "Inflict Frightened.",
+          "rollResults": {
+            "dramaticFailure": "The victim faces the fear and regains Willpower.",
+            "failure": "Fear troubles the victim but does not drive them away.",
+            "success": "The victim gains Frightened.",
+            "exceptionalSuccess": "The vampire learns precisely what the victim fears."
+          }
+        },
+        {
+          "rating": 3,
+          "name": "The Grand Delusion",
+          "translatedName": "A Grande Ilusão",
+          "summary": "Implant a frightening false belief.",
+          "cost": "2 Vitae",
+          "dicePool": "Manipulation + Empathy + Nightmare vs. Composure + Blood Potency",
+          "action": "Contested; resistance is reflexive",
+          "duration": "One night",
+          "effect": "Inflict Delusional with a belief defined by the vampire, within limits.",
+          "rollResults": {
+            "dramaticFailure": "The vampire gains Delusional based on the intended false belief.",
+            "failure": "The delusion fails.",
+            "success": "The victim gains Delusional for the normal duration; Dread Presence extends it by Blood Potency.",
+            "exceptionalSuccess": "The delusion lasts three nights, or longer with Dread Presence."
+          }
+        },
+        {
+          "rating": 4,
+          "name": "Waking Nightmare",
+          "translatedName": "Pesadelo Desperto",
+          "summary": "Create a multi-sensory nightmare hallucination.",
+          "cost": "1 Vitae",
+          "dicePool": "Presence + Empathy + Nightmare vs. highest Composure + Blood Potency in group",
+          "action": "Contested; resistance is reflexive",
+          "duration": "Scene",
+          "effect": "Create one terrifying alteration or addition perceived across all senses. With Dread Presence it can affect everyone present.",
+          "rollResults": {
+            "dramaticFailure": "The vampire hallucinates and must resist frenzy.",
+            "failure": "Victims are unaffected.",
+            "success": "The hallucination lasts a scene.",
+            "exceptionalSuccess": "The hallucination lasts a full night."
+          }
+        },
+        {
+          "rating": 5,
+          "name": "Mortal Terror",
+          "translatedName": "Terror Mortal",
+          "summary": "Turn an existing fear into lethal supernatural terror.",
+          "cost": "1 Vitae and 1 Willpower",
+          "condition": "Victim has Frightened or Delusional",
+          "dicePool": "Presence + Intimidation + Nightmare – victim Composure",
+          "action": "Instant",
+          "effect": "Deal lethal damage per success and inflict Broken if the victim survives. Dread Presence can also strip Composure temporarily.",
+          "rollResults": {
+            "dramaticFailure": "The victim gains a strong bonus to resist Nightmare for the next week.",
+            "failure": "The victim suffers fear but no mechanical harm.",
+            "success": "Deal one lethal damage per success and inflict Broken if the victim survives.",
+            "exceptionalSuccess": "If the victim dies, the vampire regains Willpower."
+          }
+        }
+      ]
+    },
+    {
+      "id": "obfuscate",
+      "name": "Obfuscate",
+      "translatedName": "Ofuscação",
+      "summary": "Erases the vampire, companions, objects, and places from attention and memory.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 137,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Face in the Crowd",
+          "translatedName": "Rosto na Multidão",
+          "summary": "Become unremarkable and easy to overlook.",
+          "cost": "None",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Scene",
+          "effect": "Observers ignore and poorly remember the vampire unless the vampire draws attention. Actions that would draw notice prompt Wits + Composure penalized by Obfuscate."
+        },
+        {
+          "rating": 2,
+          "name": "Touch of Shadow",
+          "translatedName": "Toque da Sombra",
+          "summary": "Hide an object or animal from notice.",
+          "cost": "1 Vitae",
+          "requirement": "Touch the subject; unwilling targets require a touch attack; normal Size limit is the vampire's Size",
+          "dicePool": "Wits + Larceny + Obfuscate",
+          "action": "Reflexive",
+          "duration": "Scene",
+          "effect": "Apply Face in the Crowd-like occlusion to an object or animal.",
+          "rollResults": {
+            "dramaticFailure": "The subject becomes conspicuous.",
+            "failure": "The subject remains noticeable.",
+            "success": "The subject fades from active notice.",
+            "exceptionalSuccess": "The subject also fails to stand out in photographs or video recorded while the power was active."
+          },
+          "suggestedModifiers": [
+            {
+              "modifier": "–1",
+              "situation": "Increase maximum affected Size by 1"
+            },
+            {
+              "modifier": "–2",
+              "situation": "Increase maximum affected Size by 2"
+            },
+            {
+              "modifier": "–3",
+              "situation": "Increase maximum affected Size by 3"
+            }
+          ]
+        },
+        {
+          "rating": 3,
+          "name": "Cloak of Night",
+          "translatedName": "Manto da Noite",
+          "summary": "Vanish completely and extend Obfuscate to people.",
+          "cost": "1 Vitae",
+          "dicePool": "None",
+          "action": "None",
+          "effect": "Touch of Shadow may affect people. Spending Vitae with Face in the Crowd makes the vampire disappear completely; indirect tracking remains possible."
+        },
+        {
+          "rating": 4,
+          "name": "The Familiar Stranger",
+          "translatedName": "O Estranho Familiar",
+          "summary": "Appear as a subjective or specific expected identity.",
+          "cost": "2 Vitae",
+          "dicePool": "None",
+          "action": "None",
+          "effect": "When using Face in the Crowd or Touch of Shadow on a person, project a chosen identity or subjective archetype. Objects can likewise be visually redefined within similar Size."
+        },
+        {
+          "rating": 5,
+          "name": "Oubliette",
+          "translatedName": "Oubliette",
+          "summary": "Turn a blood-marked haven into a large-scale Obfuscate domain.",
+          "cost": "3–9 Vitae and 1 Willpower",
+          "requirement": "Mark the area's boundaries, gateways, exits, and landmarks with Vitae and sleep a full day there",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "One week per Blood Potency",
+          "effect": "Use Touch of Shadow, Cloak of Night, and Familiar Stranger at any distance within the haven and affect multiple subjects with a single activation; associated extra Vitae costs are reduced as described by the power."
+        }
+      ]
+    },
+    {
+      "id": "protean",
+      "name": "Protean",
+      "translatedName": "Metamorfose",
+      "summary": "Reshapes the vampire through earth, animal adaptations, full forms, and monstrous transformation.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 139,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Unmarked Grave",
+          "translatedName": "Túmulo Sem Marca",
+          "summary": "Merge with earth or solid material to rest safely.",
+          "cost": "0 in soil/earth; otherwise Vitae equal to material Durability",
+          "requirement": "Hiding place at least the vampire's Size",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Indefinite",
+          "effect": "Merge with the ground, remain mostly insulated from the outside world, retain limited Kindred senses, absorb blood spilled above, and take bashing as the shelter loses Structure."
+        },
+        {
+          "rating": 2,
+          "name": "Predatory Aspect",
+          "translatedName": "Aspecto Predatório",
+          "summary": "Manifest three chosen predatory adaptations.",
+          "cost": "1 Vitae",
+          "dicePool": "None",
+          "action": "Reflexive",
+          "duration": "Scene",
+          "effect": "Manifest any or all of three stored adaptations. Stored adaptations can be changed by spending a day in Unmarked Grave and Vitae per replacement."
+        },
+        {
+          "rating": 3,
+          "name": "Beast's Skin",
+          "translatedName": "Pele da Besta",
+          "summary": "Assume stored forms of consumed predatory animals.",
+          "cost": "2 Vitae",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Indefinite",
+          "effect": "Use a stored animal's Physical Attributes, Skills, Size, Speed, Health, senses, locomotion, and natural attacks. Store up to Protean dots in forms."
+        },
+        {
+          "rating": 4,
+          "name": "Unnatural Aspect",
+          "translatedName": "Aspecto Antinatural",
+          "summary": "Add one monstrous adaptation when using Predatory Aspect.",
+          "cost": "1 additional Vitae",
+          "dicePool": "None",
+          "action": "None",
+          "duration": "Scene",
+          "effect": "Add one stored monstrous adaptation such as Barbed Hands, Hooked Hands, Horrid Talons, Rubbery Flesh, or Wings. Change the stored choice after a full day/night in Unmarked Grave and two Vitae."
+        },
+        {
+          "rating": 5,
+          "name": "Primeval Miasma",
+          "translatedName": "Miasma Primevo",
+          "summary": "Dissolve into a predatory cloud of smoke.",
+          "cost": "3 Vitae",
+          "dicePool": "None",
+          "action": "Instant",
+          "effect": "Become a mobile smoke cloud immune to physical harm except fire, sunlight, and damaging banes; move through non-airtight barriers, retain Kindred senses, feed from open wounds, and sleep in this form like Unmarked Grave."
+        }
+      ]
+    },
+    {
+      "id": "resilience",
+      "name": "Resilience",
+      "translatedName": "Resiliência",
+      "physical": true,
+      "summary": "Persistent supernatural toughness with active damage mitigation.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 141,
+      "levels": [],
+      "cost": "None or 1 Vitae per active effect",
+      "dicePool": "None",
+      "action": "None for persistent effects; Reflexive for active effects",
+      "duration": "Permanent for persistent effects; one turn for active effects",
+      "effect": "Persistent: add Resilience to Stamina and downgrade one aggravated damage per Resilience dot to lethal from most sources, including fire and acquired banes but not sunlight. Active: each Vitae buys one distinct effect for the turn — reduce non-bane damage by Resilience + 1, or reduce fire/acquired-bane damage by Resilience. Sunlight is never reduced by Resilience."
+    },
+    {
+      "id": "vigor",
+      "name": "Vigor",
+      "translatedName": "Ímpeto",
+      "physical": true,
+      "summary": "Persistent supernatural strength with active bursts of destructive force.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 142,
+      "levels": [],
+      "cost": "None or 1 Vitae per active effect",
+      "dicePool": "None",
+      "action": "None for persistent effects; Reflexive for active effects",
+      "duration": "Permanent for persistent effects; one turn for active effects",
+      "effect": "Persistent: add Vigor to Strength and multiply jump distance by Vigor + 1. Active: each Vitae buys one distinct effect for the turn — add Vigor as weapon bonus to Athletics/Brawl/Weaponry attacks, or lift and hurl otherwise unwieldy objects using the Discipline's improvised-weapon rules."
+    }
+  ],
+  "ritualDisciplines": [
+    {
+      "id": "cruac",
+      "name": "Crúac",
+      "translatedName": "Crúac",
+      "ritualKind": "cruac-rite",
+      "experienceCostPerDot": 4,
+      "freeRitualPerDot": true,
+      "maximumRitualRating": "discipline-rating",
+      "statusRequirement": "Circle of the Crone Status • to learn new Crúac or rites",
+      "humanityCapFormula": "10 − Crúac dots",
+      "summary": "Ritual Discipline of the Circle of the Crone. Each purchased dot normally grants one free rite, and known rites cannot exceed the Crúac rating.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 150,
+      "cost": "Rites cost Vitae equal to rite rating before the casting roll",
+      "dicePool": "Manipulation + Occult + Crúac",
+      "action": "Extended; base interval 30 minutes per roll, 15 minutes when Crúac exceeds the rite rating",
+      "effect": "The unmodified casting pool determines the maximum number of rolls. Rituals fail if interrupted. Standard blood-sorcery roll results and ritual-specific contested/resisted defenses apply.",
+      "rollResults": {
+        "dramaticFailure": "The ritual fails completely and the sacrifice is lost. Crúac grants Tempted; Theban Sorcery grants Humbled. The next ritual attempted suffers a –2 dice penalty.",
+        "failure": "No successes are accumulated. The ritualist may abandon the ritual or continue; continuing inflicts the Stumbled Condition.",
+        "success": "Accumulate successes. When the ritual's target number of successes is reached, its effect takes place immediately.",
+        "exceptionalSuccess": "In addition to accumulating successes, choose one: reduce the target successes by the Ritual Discipline dots; reduce the interval to 15 minutes (or 5 minutes if the Discipline exceeds the ritual rating); or gain Ecstatic (Crúac) / Raptured (Theban Sorcery) if the ritual succeeds."
+      },
+      "suggestedModifiers": [
+        {
+          "modifier": "+1 to +3",
+          "situation": "Power targets or applies to a vampire with existing blood sympathy; Crúac doubles this modifier."
+        },
+        {
+          "modifier": "–1 to –3",
+          "situation": "The ritualist is rushed or distracted; multiple distractions are cumulative."
+        },
+        {
+          "modifier": "0 to +3",
+          "situation": "The ritualist prepares an elaborate ritual beyond the minimum sacrifice."
+        },
+        {
+          "modifier": "0 to +3",
+          "situation": "Theban only: successful meditation; bonus equals meditation successes."
+        },
+        {
+          "modifier": "0 to +3",
+          "situation": "Crúac only: extra Vitae sacrificed beyond the requirement; bonus equals excess Vitae."
+        }
+      ]
+    },
+    {
+      "id": "theban",
+      "name": "Theban Sorcery",
+      "translatedName": "Feitiçaria Tebana",
+      "ritualKind": "theban-miracle",
+      "experienceCostPerDot": 4,
+      "freeRitualPerDot": true,
+      "maximumRitualRating": "discipline-rating",
+      "statusRequirement": "Lancea et Sanctum Status • to learn new Theban Sorcery or miracles",
+      "minimumHumanityToCast": "ritual-rating",
+      "summary": "Ritual Discipline of the Lancea et Sanctum. Each purchased dot normally grants one free miracle, and known miracles cannot exceed the Theban rating.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 150,
+      "cost": "1 Willpower plus the miracle's sacrament before the casting roll",
+      "dicePool": "Intelligence + Academics + Theban Sorcery",
+      "action": "Extended; base interval 30 minutes per roll, 15 minutes when Theban Sorcery exceeds the miracle rating",
+      "effect": "The unmodified casting pool determines the maximum number of rolls. Rituals fail if interrupted. The caster's Humanity must be at least the miracle's rating.",
+      "rollResults": {
+        "dramaticFailure": "The ritual fails completely and the sacrifice is lost. Crúac grants Tempted; Theban Sorcery grants Humbled. The next ritual attempted suffers a –2 dice penalty.",
+        "failure": "No successes are accumulated. The ritualist may abandon the ritual or continue; continuing inflicts the Stumbled Condition.",
+        "success": "Accumulate successes. When the ritual's target number of successes is reached, its effect takes place immediately.",
+        "exceptionalSuccess": "In addition to accumulating successes, choose one: reduce the target successes by the Ritual Discipline dots; reduce the interval to 15 minutes (or 5 minutes if the Discipline exceeds the ritual rating); or gain Ecstatic (Crúac) / Raptured (Theban Sorcery) if the ritual succeeds."
+      },
+      "suggestedModifiers": [
+        {
+          "modifier": "+1 to +3",
+          "situation": "Power targets or applies to a vampire with existing blood sympathy; Crúac doubles this modifier."
+        },
+        {
+          "modifier": "–1 to –3",
+          "situation": "The ritualist is rushed or distracted; multiple distractions are cumulative."
+        },
+        {
+          "modifier": "0 to +3",
+          "situation": "The ritualist prepares an elaborate ritual beyond the minimum sacrifice."
+        },
+        {
+          "modifier": "0 to +3",
+          "situation": "Theban only: successful meditation; bonus equals meditation successes."
+        },
+        {
+          "modifier": "0 to +3",
+          "situation": "Crúac only: extra Vitae sacrificed beyond the requirement; bonus equals excess Vitae."
+        }
+      ]
+    }
   ],
   "devotions": [
-    {"id":"devotion-body-of-will","kind":"devotion","name":"Body of Will","translatedName":"Corpo de Vontade","prerequisites":"Resilience •••, Vigor •","cost":"1 Vitae","experienceCost":2,"summary":"Suppresses wound penalties and turns fresh injury into fuel for Vigor.","source":"Vampire: The Requiem Second Edition","page":142},
-    {"id":"devotion-chain-of-command","kind":"devotion","name":"Chain of Command","translatedName":"Cadeia de Comando","prerequisites":"Dominate •••, Vigor •","cost":"2 Vitae","experienceCost":2,"summary":"Places a Dominate effect in a victim for later use against a designated subject.","source":"Vampire: The Requiem Second Edition","page":142},
-    {"id":"devotion-cloak-the-gathering","kind":"devotion","name":"Cloak the Gathering","translatedName":"Manto da Reunião","prerequisites":"Obfuscate •••••","cost":"2 Vitae","experienceCost":2,"summary":"Extends Obfuscate to a group near the vampire.","source":"Vampire: The Requiem Second Edition","page":142},
-    {"id":"devotion-conditioning","kind":"devotion","name":"Conditioning","translatedName":"Condicionamento","prerequisites":"Dominate ••••","experienceCost":2,"summary":"Repeatedly erodes a mesmerized victim's will toward complete enslavement.","source":"Vampire: The Requiem Second Edition","page":143},
-    {"id":"devotion-cross-contamination","kind":"devotion","name":"Cross-Contamination","translatedName":"Contaminação Cruzada","prerequisites":"Majesty •, Nightmare •","experienceCost":1,"summary":"Blends awe and terror into a disorienting emotional aura.","source":"Vampire: The Requiem Second Edition","page":143},
-    {"id":"devotion-cult-of-personality","kind":"devotion","name":"Cult of Personality","translatedName":"Culto à Personalidade","prerequisites":"Majesty ••••, Vigor •••","cost":"10 Vitae","experienceCost":4,"summary":"Broadcasts Loyalty across a crowd and enthralls the susceptible.","source":"Vampire: The Requiem Second Edition","page":143},
-    {"id":"devotion-enchantment","kind":"devotion","name":"Enchantment","translatedName":"Encantamento","prerequisites":"Majesty ••••, Obfuscate ••","cost":"1 Vitae","experienceCost":2,"summary":"Redirects an enthralled victim's devotion to another person, place, or object.","source":"Vampire: The Requiem Second Edition","page":143},
-    {"id":"devotion-enfeebling-aura","kind":"devotion","name":"Enfeebling Aura","translatedName":"Aura Debilitante","prerequisites":"Majesty •, Resilience •","cost":"1 Vitae","experienceCost":3,"summary":"Sacrifices Majesty to suppress a victim's physical Disciplines for the scene.","source":"Vampire: The Requiem Second Edition","page":143},
-    {"id":"devotion-foul-grave","kind":"devotion","name":"Foul Grave","translatedName":"Sepultura Profana","prerequisites":"Protean •, Nightmare •","cost":"1 Vitae","experienceCost":1,"summary":"Projects predatory aura while resting within an Unmarked Grave.","source":"Vampire: The Requiem Second Edition","page":144},
-    {"id":"devotion-force-of-nature","kind":"devotion","name":"Force of Nature","translatedName":"Força da Natureza","prerequisites":"Protean ••••, Resilience ••••, Vigor ••","cost":"8 Vitae","experienceCost":5,"summary":"Assumes multiple Protean adaptations and redistributes Physical Attributes for a scene.","source":"Vampire: The Requiem Second Edition","page":144},
-    {"id":"devotion-gargoyles-vigilance","kind":"devotion","name":"Gargoyle's Vigilance","translatedName":"Vigilância da Gárgula","prerequisites":"Auspex •, Resilience ••, Safe Place •","cost":"1 Vitae","experienceCost":1,"summary":"Grants total vigilance over a haven while the vampire remains still.","source":"Vampire: The Requiem Second Edition","page":144},
-    {"id":"devotion-hint-of-fear","kind":"devotion","name":"Hint of Fear","translatedName":"Indício de Medo","prerequisites":"Celerity ••, Nightmare ••","cost":"2 Vitae","experienceCost":2,"summary":"Uses Face of the Beast with a rapid, unnoticeable glance.","source":"Vampire: The Requiem Second Edition","page":144},
-    {"id":"devotion-juggernauts-gait","kind":"devotion","name":"Juggernaut's Gait","translatedName":"Passo do Colosso","prerequisites":"Resilience •••••, Vigor •••","cost":"5 Vitae per turn","experienceCost":4,"summary":"Briefly renders the vampire immune to all harm.","source":"Vampire: The Requiem Second Edition","page":145},
-    {"id":"devotion-quicken-sight","kind":"devotion","name":"Quicken Sight","translatedName":"Visão Acelerada","prerequisites":"Auspex •, Celerity •","cost":"1 Vitae","experienceCost":1,"summary":"Perceives fast events in slow motion and applies Defense against ranged attacks for a turn.","source":"Vampire: The Requiem Second Edition","page":145},
-    {"id":"devotion-reasons-salon","kind":"devotion","name":"Reason's Salon","translatedName":"Salão da Razão","prerequisites":"Animalism ••••, Resilience ••","cost":"5 Vitae","experienceCost":3,"summary":"Calms predatory auras and supports frenzy resistance within a prepared place.","source":"Vampire: The Requiem Second Edition","page":146},
-    {"id":"devotion-riot","kind":"devotion","name":"Riot","translatedName":"Motim","prerequisites":"Animalism ••••, Majesty •••••","cost":"10 Vitae","experienceCost":5,"summary":"Drives a wide area into destructive, selfish bedlam.","source":"Vampire: The Requiem Second Edition","page":146},
-    {"id":"devotion-shared-sight","kind":"devotion","name":"Shared Sight","translatedName":"Visão Compartilhada","prerequisites":"Auspex ••••, Dominate •","cost":"2 Vitae","experienceCost":2,"summary":"Temporarily lends dots of Auspex to another person.","source":"Vampire: The Requiem Second Edition","page":146},
-    {"id":"devotion-shatter-the-shroud","kind":"devotion","name":"Shatter the Shroud","translatedName":"Rasgar o Véu","prerequisites":"Auspex ••, Vigor •","cost":"2 Vitae","experienceCost":2,"summary":"Ends a supernatural concealment after winning the Clash of Wills.","source":"Vampire: The Requiem Second Edition","page":146},
-    {"id":"devotion-stalwart-servant","kind":"devotion","name":"Stalwart Servant","translatedName":"Servo Resistente","prerequisites":"Dominate •••, Resilience •","cost":"1 Vitae","experienceCost":2,"summary":"Lends Resilience to a servant who drinks the vampire's Vitae.","source":"Vampire: The Requiem Second Edition","page":146},
-    {"id":"devotion-subsume-lesser-beast","kind":"devotion","name":"Subsume the Lesser Beast","translatedName":"Subsumir a Besta Menor","prerequisites":"Animalism ••••, Dominate ••","cost":"1 Vitae","experienceCost":3,"summary":"Projects the vampire's mind into a predatory animal.","source":"Vampire: The Requiem Second Edition","page":147},
-    {"id":"devotion-summoning-dominate","kind":"devotion","name":"Summoning (Dominate)","translatedName":"Convocação (Dominação)","prerequisites":"Dominate ••••","cost":"1 Vitae","experienceCost":2,"summary":"Compels a previously mesmerized victim to travel to the vampire.","source":"Vampire: The Requiem Second Edition","page":147},
-    {"id":"devotion-summoning-majesty","kind":"devotion","name":"Summoning (Majesty)","translatedName":"Convocação (Majestade)","prerequisites":"Majesty ••••","cost":"1 Vitae","experienceCost":2,"summary":"Compels a previous subject of Awe to travel to the vampire.","source":"Vampire: The Requiem Second Edition","page":147},
-    {"id":"devotion-suns-brutal-dreamscape","kind":"devotion","name":"Sun's Brutal Dreamscape","translatedName":"Paisagem Onírica Brutal do Sol","prerequisites":"Nightmare •••••, Resilience ••","cost":"1 Vitae","experienceCost":4,"summary":"Makes a sleeping Kindred victim share the vampire's sunlight wounds.","source":"Vampire: The Requiem Second Edition","page":148},
-    {"id":"devotion-touch-of-deprivation","kind":"devotion","name":"Touch of Deprivation","translatedName":"Toque da Privação","prerequisites":"Obfuscate ••••, Dominate ••","cost":"1 Vitae","experienceCost":3,"summary":"Temporarily denies a touched victim one sense or known Auspex ability.","source":"Vampire: The Requiem Second Edition","page":148},
-    {"id":"devotion-undying-familiar","kind":"devotion","name":"Undying Familiar","translatedName":"Familiar Imortal","prerequisites":"Animalism ••, Resilience ••","cost":"2 Vitae","experienceCost":1,"summary":"Causes a living ghouled animal to rise through Raise Familiar when killed.","source":"Vampire: The Requiem Second Edition","page":148},
-    {"id":"devotion-wet-dream","kind":"devotion","name":"Wet Dream","translatedName":"Sonho Erótico","prerequisites":"Majesty ••, Nightmare ••","cost":"1 Vitae","experienceCost":2,"summary":"Afflicts a sleeping victim with intertwined fear and desire.","source":"Vampire: The Requiem Second Edition","page":148},
-    {"id":"devotion-the-wish","kind":"devotion","name":"The Wish","translatedName":"O Desejo","prerequisites":"Celerity ••, Majesty ••••, Vigor ••","cost":"5 Vitae","experienceCost":2,"summary":"Temporarily exalts a mortal before binding them in lasting enthrallment.","source":"Vampire: The Requiem Second Edition","page":148},
-    {"id":"devotion-vermin-flood","kind":"devotion","name":"Vermin Flood","translatedName":"Dilúvio de Vermes","prerequisites":"Animalism •••, Celerity ••, Vigor ••","cost":"10 Vitae","experienceCost":4,"summary":"Calls a destructive swarm of small animals over a prepared area.","source":"Vampire: The Requiem Second Edition","page":149},
-    {"id":"devotion-wraiths-presence","kind":"devotion","name":"Wraith's Presence","translatedName":"Presença do Espectro","prerequisites":"Obfuscate •••, Nightmare •","cost":"1 Vitae","experienceCost":2,"summary":"Projects a false image elsewhere when using Cloak of Night.","source":"Vampire: The Requiem Second Edition","page":149}
+    {
+      "id": "devotion-body-of-will",
+      "kind": "devotion",
+      "name": "Body of Will",
+      "translatedName": "Corpo de Vontade",
+      "prerequisites": "Resilience •••, Vigor •",
+      "experienceCost": 2,
+      "summary": "Ignore wound penalties briefly and turn new injuries into free Vigor activations.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 142,
+      "cost": "1 Vitae",
+      "dicePool": "Stamina + Survival + Resilience",
+      "action": "Reflexive",
+      "duration": "One turn per success",
+      "effect": "For the duration, ignore wound penalties; on turns when damage is taken, one Vigor effect may be activated without Vitae."
+    },
+    {
+      "id": "devotion-chain-of-command",
+      "kind": "devotion",
+      "name": "Chain of Command",
+      "translatedName": "Cadeia de Comando",
+      "prerequisites": "Dominate •••, Vigor •",
+      "experienceCost": 2,
+      "summary": "Plant one Dominate effect in a victim for later use against a designated subject.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 142,
+      "cost": "2 Vitae",
+      "dicePool": "Intelligence + Persuasion + Dominate vs. Resolve + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "effect": "On success, the victim carries one specified Dominate effect and later uses it with the vampire's dice pool."
+    },
+    {
+      "id": "devotion-cloak-the-gathering",
+      "kind": "devotion",
+      "name": "Cloak the Gathering",
+      "translatedName": "Manto da Reunião",
+      "prerequisites": "Obfuscate •••••",
+      "experienceCost": 2,
+      "summary": "Extend Obfuscate to a group within the vampire's aura.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 142,
+      "cost": "2 Vitae",
+      "dicePool": "None",
+      "action": "None",
+      "effect": "Expand Touch of Shadow to up to Blood Potency people nearby; extra Vitae can apply Cloak of Night to the whole group."
+    },
+    {
+      "id": "devotion-conditioning",
+      "kind": "devotion",
+      "name": "Conditioning",
+      "translatedName": "Condicionamento",
+      "prerequisites": "Dominate ••••",
+      "experienceCost": 2,
+      "summary": "Erode a Mesmerized victim's will over repeated sessions.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 143,
+      "cost": "None",
+      "requirement": "Victim has Mesmerized; same victim only once every two nights",
+      "dicePool": "Wits + Subterfuge + Dominate vs. Resolve + Blood Potency",
+      "action": "Instant",
+      "effect": "Repeated successes build Subservient marks across Willpower until the victim becomes Enslaved.",
+      "rollResults": {
+        "dramaticFailure": "Mesmerized ends and the victim retains the normal resistance bonus.",
+        "failure": "No progress.",
+        "success": "Apply Subservient.",
+        "exceptionalSuccess": "Apply an extra Subservient mark."
+      }
+    },
+    {
+      "id": "devotion-cross-contamination",
+      "kind": "devotion",
+      "name": "Cross-Contamination",
+      "translatedName": "Contaminação Cruzada",
+      "prerequisites": "Majesty •, Nightmare •",
+      "experienceCost": 1,
+      "summary": "Blend awe and terror into a disorienting emotional aura.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 143,
+      "cost": "None",
+      "dicePool": "Presence + Empathy + lower of Majesty or Nightmare",
+      "action": "Instant",
+      "effect": "Reduce effective Composure by one, make looking away require a contested roll, and remove 10-again from resistance to Persuasion/Intimidation Social Maneuvering. Cannot coexist with Awe or Dread Presence."
+    },
+    {
+      "id": "devotion-cult-of-personality",
+      "kind": "devotion",
+      "name": "Cult of Personality",
+      "translatedName": "Culto à Personalidade",
+      "prerequisites": "Majesty ••••, Vigor •••",
+      "experienceCost": 4,
+      "summary": "Broadcast Loyalty across a crowd.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 143,
+      "cost": "10 Vitae",
+      "dicePool": "Presence + Socialize + Majesty",
+      "action": "Instant",
+      "effect": "Anyone present whose Composure + Blood Potency is lower than the vampire's successes gains Enthralled."
+    },
+    {
+      "id": "devotion-enchantment",
+      "kind": "devotion",
+      "name": "Enchantment",
+      "translatedName": "Encantamento",
+      "prerequisites": "Majesty ••••, Obfuscate ••",
+      "experienceCost": 2,
+      "summary": "Redirect Loyalty to another person, place, or object.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 143,
+      "cost": "1 Vitae",
+      "dicePool": "Manipulation + Empathy + Majesty vs. Composure + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "effect": "Works as Loyalty, but the source of Enthralled may be a communicated alternate person, place, or object."
+    },
+    {
+      "id": "devotion-enfeebling-aura",
+      "kind": "devotion",
+      "name": "Enfeebling Aura",
+      "translatedName": "Aura Debilitante",
+      "prerequisites": "Majesty •, Resilience •",
+      "experienceCost": 3,
+      "summary": "Trade Majesty dots to suppress a victim's physical Disciplines for the scene.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 144,
+      "cost": "1 Vitae",
+      "dicePool": "Presence + Intimidation + Majesty vs. Composure + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "duration": "Scene",
+      "effect": "On success, sacrifice Majesty dots one-for-one to remove up to successes total dots from the target's Celerity, Resilience, and Vigor."
+    },
+    {
+      "id": "devotion-foul-grave",
+      "kind": "devotion",
+      "name": "Foul Grave",
+      "translatedName": "Sepultura Profana",
+      "prerequisites": "Protean •, Nightmare •",
+      "experienceCost": 1,
+      "summary": "Project predatory aura while resting in an Unmarked Grave.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 144,
+      "cost": "1 Vitae",
+      "dicePool": "None",
+      "action": "Reflexive",
+      "effect": "Gain limited awareness of nearby mortals and Kindred while interred and activate predatory aura normally from the grave."
+    },
+    {
+      "id": "devotion-force-of-nature",
+      "kind": "devotion",
+      "name": "Force of Nature",
+      "translatedName": "Força da Natureza",
+      "prerequisites": "Protean ••••, Resilience ••••, Vigor ••",
+      "experienceCost": 5,
+      "summary": "Assume multiple Protean advantages and redistribute Physical Attributes.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 144,
+      "cost": "8 Vitae",
+      "dicePool": "None",
+      "action": "Instant",
+      "duration": "Scene",
+      "effect": "Gain as many Predatory Aspect, Beast's Skin, and Unnatural Aspect advantages as desired without their Vitae costs; adaptations can change reflexively. An instant action may shift up to Protean dots among Physical Attributes."
+    },
+    {
+      "id": "devotion-gargoyles-vigilance",
+      "kind": "devotion",
+      "name": "Gargoyle's Vigilance",
+      "translatedName": "Vigilância da Gárgula",
+      "prerequisites": "Auspex •, Resilience ••, Safe Place •",
+      "experienceCost": 1,
+      "summary": "Gain complete vigilance over a haven while remaining still.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 144,
+      "cost": "1 Vitae",
+      "requirement": "Remain stationary for at least ten minutes in a Safe Place",
+      "dicePool": "None",
+      "action": "Reflexive",
+      "effect": "Project Auspex from any point in the haven, gain a major bonus to detect intruders, gain an Initiative bonus when moving against one, and activate Resilience without Vitae. Willpower allows use while sleeping."
+    },
+    {
+      "id": "devotion-hint-of-fear",
+      "kind": "devotion",
+      "name": "Hint of Fear",
+      "translatedName": "Indício de Medo",
+      "prerequisites": "Celerity ••, Nightmare ••",
+      "experienceCost": 2,
+      "summary": "Use Face of the Beast as a rapid reflexive glance.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 144,
+      "cost": "1 Vitae plus Face of the Beast's cost",
+      "dicePool": "None; roll Face of the Beast normally",
+      "action": "Reflexive",
+      "effect": "Face of the Beast becomes reflexive and may be subtle if the vampire does not designate herself as the fear's source."
+    },
+    {
+      "id": "devotion-juggernauts-gait",
+      "kind": "devotion",
+      "name": "Juggernaut's Gait",
+      "translatedName": "Passo do Colosso",
+      "prerequisites": "Resilience •••••, Vigor •••",
+      "experienceCost": 4,
+      "summary": "Become briefly immune to all damage.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 145,
+      "cost": "5 Vitae per turn",
+      "dicePool": "None",
+      "action": "Reflexive",
+      "duration": "One turn per 5 Vitae",
+      "effect": "Take no damage from any source, including fire and sunlight, while maintained. The Vitae may be prepared across previous turns subject to normal expenditure limits."
+    },
+    {
+      "id": "devotion-quicken-sight",
+      "kind": "devotion",
+      "name": "Quicken Sight",
+      "translatedName": "Visão Acelerada",
+      "prerequisites": "Auspex •, Celerity •",
+      "experienceCost": 1,
+      "summary": "Perceive fast events in slow motion and react accordingly.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 145,
+      "cost": "1 Vitae",
+      "dicePool": "None",
+      "action": "Reflexive",
+      "duration": "One turn",
+      "effect": "Read and inspect very fast events, apply Defense to ranged attacks, and gain the benefit of aiming immediately."
+    },
+    {
+      "id": "devotion-reasons-salon",
+      "kind": "devotion",
+      "name": "Reason's Salon",
+      "translatedName": "Salão da Razão",
+      "prerequisites": "Animalism ••••, Resilience ••",
+      "experienceCost": 3,
+      "summary": "Suppress predatory aggression within a prepared gathering place.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 146,
+      "cost": "5 Vitae",
+      "dicePool": "None",
+      "action": "Instant",
+      "duration": "Evening",
+      "effect": "Within the prepared location, vampires suffer the user's Resilience as a penalty to predatory aura rolls and gain the same value as a bonus to resist frenzy."
+    },
+    {
+      "id": "devotion-riot",
+      "kind": "devotion",
+      "name": "Riot",
+      "translatedName": "Motim",
+      "prerequisites": "Animalism ••••, Majesty •••••",
+      "experienceCost": 5,
+      "summary": "Drive a wide area into selfish, destructive bedlam.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 146,
+      "cost": "10 Vitae",
+      "dicePool": "Presence + Animal Ken + Majesty",
+      "action": "Instant",
+      "effect": "Characters in a large area whose Composure + Blood Potency is below the vampire's successes gain Bestial, Competitive, and Wanton. Use is a Humanity 1 breaking point."
+    },
+    {
+      "id": "devotion-shared-sight",
+      "kind": "devotion",
+      "name": "Shared Sight",
+      "translatedName": "Visão Compartilhada",
+      "prerequisites": "Auspex ••••, Dominate •",
+      "experienceCost": 2,
+      "summary": "Temporarily lend Auspex dots to another person.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 146,
+      "cost": "2 Vitae",
+      "dicePool": "Intelligence + Empathy + Auspex",
+      "action": "Instant",
+      "duration": "Scene",
+      "effect": "Transfer up to successes Auspex dots. The borrower uses their own Attributes/Skills; the lender loses that many dice from Auspex rolls for the duration."
+    },
+    {
+      "id": "devotion-shatter-the-shroud",
+      "kind": "devotion",
+      "name": "Shatter the Shroud",
+      "translatedName": "Rasgar o Véu",
+      "prerequisites": "Auspex ••, Vigor •",
+      "experienceCost": 2,
+      "summary": "Destroy a concealment effect after winning a Clash of Wills.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 146,
+      "cost": "2 Vitae",
+      "dicePool": "None",
+      "action": "Reflexive",
+      "effect": "When the vampire wins a Clash of Wills to pierce hiding, the opposing concealment ends immediately."
+    },
+    {
+      "id": "devotion-stalwart-servant",
+      "kind": "devotion",
+      "name": "Stalwart Servant",
+      "translatedName": "Servo Resistente",
+      "prerequisites": "Dominate •••, Resilience •",
+      "experienceCost": 2,
+      "summary": "Lend Resilience through Vitae to a servant.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 146,
+      "cost": "1 Vitae",
+      "dicePool": "None",
+      "action": "Instant",
+      "duration": "One night",
+      "effect": "After feeding, the subject gains the vampire's Resilience dots if lower than the vampire's rating, including passive benefits and one Vitae to activate it. Subjects maintained at once are limited by Blood Potency."
+    },
+    {
+      "id": "devotion-subsume-lesser-beast",
+      "kind": "devotion",
+      "name": "Subsume the Lesser Beast",
+      "translatedName": "Subsumir a Besta Menor",
+      "prerequisites": "Animalism ••••, Dominate ••",
+      "experienceCost": 3,
+      "summary": "Project the vampire's mind into a predatory or scavenging animal.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 147,
+      "cost": "1 Vitae",
+      "requirement": "Feed 1 Vitae to the animal; included in the cost",
+      "dicePool": "Manipulation + Animal Ken + Animalism – animal Resolve",
+      "action": "Reflexive",
+      "effect": "Take over the animal's body while the vampire's body lies torpor-like. Use the animal's Physical traits and abilities; normal Disciplines/Blood Sorcery are unavailable.",
+      "rollResults": {
+        "dramaticFailure": "The animal rejects control and the vampire suffers animalistic tics and Social penalties for the night.",
+        "failure": "Control fails.",
+        "success": "Control lasts one night per success.",
+        "exceptionalSuccess": "Auspex remains available while inhabiting the animal."
+      }
+    },
+    {
+      "id": "devotion-summoning-dominate",
+      "kind": "devotion",
+      "name": "Summoning (Dominate)",
+      "translatedName": "Convocação (Dominação)",
+      "prerequisites": "Dominate ••••",
+      "experienceCost": 2,
+      "summary": "Compel a previously Mesmerized subject to travel to the vampire.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 147,
+      "cost": "1 Vitae",
+      "requirement": "Mesmerized the victim within the last year",
+      "dicePool": "Manipulation + Persuasion + Dominate vs. Composure + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "duration": "One night",
+      "effect": "The subject knows where the vampire is and feels compelled to travel there by the most direct practical means.",
+      "rollResults": {
+        "dramaticFailure": "The victim actively avoids the vampire.",
+        "failure": "The summons fails.",
+        "success": "The compulsion lasts through the vampire's current night.",
+        "exceptionalSuccess": "The compulsion continues through the following day and night."
+      }
+    },
+    {
+      "id": "devotion-summoning-majesty",
+      "kind": "devotion",
+      "name": "Summoning (Majesty)",
+      "translatedName": "Convocação (Majestade)",
+      "prerequisites": "Majesty ••••",
+      "experienceCost": 2,
+      "summary": "Compel a previous subject of Awe to travel to the vampire.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 147,
+      "cost": "1 Vitae",
+      "requirement": "Used Awe on the victim within the last year",
+      "dicePool": "Manipulation + Persuasion + Majesty vs. Composure + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "duration": "One night",
+      "effect": "The subject knows where the vampire is and feels compelled to travel there by the most direct practical means.",
+      "rollResults": {
+        "dramaticFailure": "The victim actively avoids the vampire.",
+        "failure": "The summons fails.",
+        "success": "The compulsion lasts through the vampire's current night.",
+        "exceptionalSuccess": "The compulsion continues through the following day and night."
+      }
+    },
+    {
+      "id": "devotion-suns-brutal-dreamscape",
+      "kind": "devotion",
+      "name": "Sun's Brutal Dreamscape",
+      "translatedName": "Paisagem Onírica Brutal do Sol",
+      "prerequisites": "Nightmare •••••, Resilience ••",
+      "experienceCost": 4,
+      "summary": "Make a sleeping Kindred victim share the vampire's sunlight wounds.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 148,
+      "cost": "1 Vitae",
+      "dicePool": "Manipulation + Empathy + Nightmare vs. Composure + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "duration": "Successes nights",
+      "effect": "While active, a touched sleeping Kindred takes every sunlight wound the vampire takes; awakening from this damage also inflicts Frightened."
+    },
+    {
+      "id": "devotion-touch-of-deprivation",
+      "kind": "devotion",
+      "name": "Touch of Deprivation",
+      "translatedName": "Toque da Privação",
+      "prerequisites": "Obfuscate ••••, Dominate ••",
+      "experienceCost": 3,
+      "summary": "Temporarily deny a touched victim one sense or one known Auspex ability.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 148,
+      "cost": "1 Vitae",
+      "requirement": "Touch the victim",
+      "dicePool": "Intelligence + Medicine + Auspex vs. Resolve + Blood Potency",
+      "action": "Instant",
+      "duration": "Scene",
+      "effect": "On success, suppress one chosen sense or a known Auspex ability for the scene."
+    },
+    {
+      "id": "devotion-undying-familiar",
+      "kind": "devotion",
+      "name": "Undying Familiar",
+      "translatedName": "Familiar Imortal",
+      "prerequisites": "Animalism ••, Resilience ••",
+      "experienceCost": 1,
+      "summary": "Make a living ghouled animal rise under Raise Familiar when killed.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 148,
+      "cost": "2 Vitae",
+      "dicePool": "None",
+      "action": "Instant",
+      "effect": "Activate together with Raise Familiar while feeding a living animal. While it remains ghouled, death immediately raises it; its undead duration is measured in weeks rather than nights."
+    },
+    {
+      "id": "devotion-wet-dream",
+      "kind": "devotion",
+      "name": "Wet Dream",
+      "translatedName": "Sonho Erótico",
+      "prerequisites": "Majesty ••, Nightmare ••",
+      "experienceCost": 2,
+      "summary": "Seed a sleeping victim with intertwined fear and desire.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 148,
+      "cost": "1 Vitae",
+      "dicePool": "Manipulation + Empathy + Majesty vs. Composure + Blood Potency",
+      "action": "Contested; resistance is reflexive",
+      "effect": "On success, the victim's next sleep inflicts both Spooked and Swooning, with subjects chosen by the vampire; resolving both grants only one Beat."
+    },
+    {
+      "id": "devotion-the-wish",
+      "kind": "devotion",
+      "name": "The Wish",
+      "translatedName": "O Desejo",
+      "prerequisites": "Celerity ••, Majesty ••••, Vigor ••",
+      "experienceCost": 2,
+      "summary": "Temporarily exalt a consenting mortal before binding them in lasting enthrallment.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 148,
+      "cost": "5 Vitae",
+      "requirement": "Mortal target freely agrees and feeds from the vampire; usable once per character",
+      "dicePool": "Manipulation + Persuasion + Majesty",
+      "action": "Instant",
+      "duration": "Three nights",
+      "effect": "Grant Celerity 2, Vigor 2, Majesty 3 usable with Willpower instead of Vitae, and remove normal need for sleep/food/water. At the end, the mortal gains Persistent Enthralled."
+    },
+    {
+      "id": "devotion-vermin-flood",
+      "kind": "devotion",
+      "name": "Vermin Flood",
+      "translatedName": "Dilúvio de Vermes",
+      "prerequisites": "Animalism •••, Celerity ••, Vigor ••",
+      "experienceCost": 4,
+      "summary": "Call a destructive plague of small animals over a prepared area.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 149,
+      "cost": "10 Vitae",
+      "requirement": "Spread Vitae over an area no larger than a small house or alley",
+      "dicePool": "Presence + Animal Ken + Animalism",
+      "action": "Instant",
+      "duration": "Scene",
+      "effect": "Every Size 2-or-less animal swarms the area with persistent Celerity/Vigor benefits. Everything except the vampire takes lethal damage equal to Animalism each turn, ignoring mundane armor; movement in the swarm is halved."
+    },
+    {
+      "id": "devotion-wraiths-presence",
+      "kind": "devotion",
+      "name": "Wraith's Presence",
+      "translatedName": "Presença do Espectro",
+      "prerequisites": "Obfuscate •••, Nightmare •",
+      "experienceCost": 2,
+      "summary": "Project a false image elsewhere while using Cloak of Night.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 149,
+      "cost": "1 Vitae",
+      "dicePool": "Wits + Subterfuge + Obfuscate",
+      "action": "Instant",
+      "effect": "Project a mostly still, silent image of the chosen subject at a visible location. Touch dispels it; otherwise supernatural piercing uses Clash of Wills."
+    }
   ],
   "cruacRites": [
-    {"id":"cruac-pangs-proserpina","kind":"cruac-rite","name":"Pangs of Proserpina","translatedName":"Dores de Prosérpina","rating":1,"summary":"Provokes supernatural hunger in a distant victim.","source":"Vampire: The Requiem Second Edition","page":152},
-    {"id":"cruac-rigor-mortis","kind":"cruac-rite","name":"Rigor Mortis","translatedName":"Rigor Mortis","rating":1,"summary":"Penalizes a vampire victim's next physical action.","source":"Vampire: The Requiem Second Edition","page":152},
-    {"id":"cruac-cheval","kind":"cruac-rite","name":"Cheval","translatedName":"Cheval","rating":2,"summary":"Lets the ritualist see and hear through a touched subject.","source":"Vampire: The Requiem Second Edition","page":152},
-    {"id":"cruac-hydras-vitae","kind":"cruac-rite","name":"The Hydra's Vitae","translatedName":"Vitae da Hidra","rating":2,"summary":"Makes the ritualist's blood poisonous to drink.","source":"Vampire: The Requiem Second Edition","page":152},
-    {"id":"cruac-deflection-wooden-doom","kind":"cruac-rite","name":"Deflection of Wooden Doom","translatedName":"Desvio da Perdição de Madeira","rating":3,"summary":"Prevents attempts to stake the ritualist until sunrise.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"cruac-touch-morrigan","kind":"cruac-rite","name":"Touch of the Morrigan","translatedName":"Toque da Morrigan","rating":3,"summary":"Turns the ritualist's touch into a lethal curse.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"cruac-blood-price","kind":"cruac-rite","name":"Blood Price","translatedName":"Preço de Sangue","rating":4,"summary":"Redirects blood consumed by a subject to the ritualist.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"cruac-willful-vitae","kind":"cruac-rite","name":"Willful Vitae","translatedName":"Vitae Obstinada","rating":4,"summary":"Protects the ritualist from blood bonds and Vitae addiction.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"cruac-blood-blight","kind":"cruac-rite","name":"Blood Blight","translatedName":"Praga do Sangue","rating":4,"summary":"Curses a victim's Vitae.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"cruac-feeding-crone","kind":"cruac-rite","name":"Feeding the Crone","translatedName":"Alimentando a Anciã","rating":4,"summary":"Offers blood to empower the Crone's rite.","source":"Vampire: The Requiem Second Edition","page":153}
+    {
+      "id": "cruac-pangs-proserpina",
+      "kind": "cruac-rite",
+      "name": "Pangs of Proserpina",
+      "translatedName": "Dores de Prosérpina",
+      "rating": 1,
+      "experienceCost": 2,
+      "summary": "Provoke supernatural hunger in a distant victim.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 152,
+      "cost": "1 Vitae",
+      "targetSuccesses": 6,
+      "contestedBy": "Composure + Blood Potency",
+      "effect": "A victim within one mile counts as starving for the next frenzy-resistance roll, regardless of recent feeding."
+    },
+    {
+      "id": "cruac-rigor-mortis",
+      "kind": "cruac-rite",
+      "name": "Rigor Mortis",
+      "translatedName": "Rigor Mortis",
+      "rating": 1,
+      "experienceCost": 2,
+      "summary": "Suppress the reanimating force of a vampire's Vitae.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 152,
+      "cost": "1 Vitae",
+      "targetSuccesses": 5,
+      "resistedBy": "Composure",
+      "effect": "A vampire victim within one mile suffers –3 dice on the next physical action."
+    },
+    {
+      "id": "cruac-cheval",
+      "kind": "cruac-rite",
+      "name": "Cheval",
+      "translatedName": "Cheval",
+      "rating": 2,
+      "experienceCost": 2,
+      "summary": "See and hear through a touched subject.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 152,
+      "cost": "2 Vitae",
+      "targetSuccesses": 5,
+      "resistedBy": "Composure",
+      "requirement": "Subject present and physically touched",
+      "duration": "Rest of the night",
+      "effect": "The ritualist sees and hears what the subject does regardless of distance."
+    },
+    {
+      "id": "cruac-hydras-vitae",
+      "kind": "cruac-rite",
+      "name": "The Hydra's Vitae",
+      "translatedName": "Vitae da Hidra",
+      "rating": 2,
+      "experienceCost": 2,
+      "summary": "Curse the ritualist's own blood into poison.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 152,
+      "cost": "2 Vitae",
+      "targetSuccesses": 5,
+      "duration": "Until next sunrise",
+      "effect": "Vampires/Strix drinking the ritualist's blood take lethal per Vitae and gain no nourishment; mortals/ghouls take heavier lethal damage."
+    },
+    {
+      "id": "cruac-deflection-wooden-doom",
+      "kind": "cruac-rite",
+      "name": "Deflection of Wooden Doom",
+      "translatedName": "Desvio da Perdição de Madeira",
+      "rating": 3,
+      "experienceCost": 2,
+      "summary": "Ward the ritualist against staking.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "3 Vitae",
+      "targetSuccesses": 6,
+      "duration": "Until next sunrise",
+      "effect": "All attempts to stake the ritualist fail."
+    },
+    {
+      "id": "cruac-touch-morrigan",
+      "kind": "cruac-rite",
+      "name": "Touch of the Morrigan",
+      "translatedName": "Toque da Morrigan",
+      "rating": 3,
+      "experienceCost": 2,
+      "summary": "Charge the ritualist's touch with lethal force.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "3 Vitae",
+      "targetSuccesses": 6,
+      "duration": "Until first use or next sunrise",
+      "effect": "The first successful touch attack inflicts lethal damage equal to ritual Potency and ends the rite."
+    },
+    {
+      "id": "cruac-blood-price",
+      "kind": "cruac-rite",
+      "name": "Blood Price",
+      "translatedName": "Preço de Sangue",
+      "rating": 4,
+      "experienceCost": 2,
+      "summary": "Redirect blood consumed by a subject to the ritualist.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "4 Vitae",
+      "targetSuccesses": 8,
+      "contestedBy": "Composure + Blood Potency",
+      "requirement": "Vampire or ghoul subject present",
+      "duration": "Until next sunrise",
+      "effect": "Whenever the subject drinks blood, up to ritual Potency Vitae go to the ritualist first; excess remains with the subject."
+    },
+    {
+      "id": "cruac-willful-vitae",
+      "kind": "cruac-rite",
+      "name": "Willful Vitae",
+      "translatedName": "Vitae Obstinada",
+      "rating": 4,
+      "experienceCost": 2,
+      "summary": "Prevent new Vinculum and blood addiction for the night.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "4 Vitae",
+      "targetSuccesses": 7,
+      "duration": "Rest of the night",
+      "effect": "The ritualist is immune to new Vinculum and blood addiction; existing bonds/addiction remain."
+    },
+    {
+      "id": "cruac-blood-blight",
+      "kind": "cruac-rite",
+      "name": "Blood Blight",
+      "translatedName": "Praga do Sangue",
+      "rating": 4,
+      "experienceCost": 2,
+      "summary": "Mystically destroy blood or Vitae in a victim.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "4 Vitae",
+      "targetSuccesses": 8,
+      "contestedBy": "Stamina + Blood Potency",
+      "effect": "Mortals take ritual Potency lethal damage; Kindred, Strix, and ghouls lose ritual Potency Vitae, usually provoking hunger frenzy checks in Kindred."
+    },
+    {
+      "id": "cruac-feeding-crone",
+      "kind": "cruac-rite",
+      "name": "Feeding the Crone",
+      "translatedName": "Alimentando a Anciã",
+      "rating": 4,
+      "experienceCost": 2,
+      "summary": "Transform feeding into a savage supernatural bite.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "4 Vitae",
+      "targetSuccesses": 10,
+      "duration": "Until next sunrise or cancelled with 1 Vitae",
+      "effect": "The ritualist gains no Vitae from feeding but the bite deals +2 aggravated damage."
+    }
   ],
   "thebanMiracles": [
-    {"id":"theban-blood-scourge","kind":"theban-miracle","name":"Blood Scourge","translatedName":"Flagelo de Sangue","rating":1,"summary":"Creates a temporary whip of Vitae.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"theban-vitae-reliquary","kind":"theban-miracle","name":"Vitae Reliquary","translatedName":"Relicário de Vitae","rating":1,"summary":"Stores Vitae within a sacramental object.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"theban-blandishment-sin","kind":"theban-miracle","name":"Blandishment of Sin","translatedName":"Lisonja do Pecado","rating":1,"summary":"Reveals or confronts a subject's sin.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"theban-curse-babel","kind":"theban-miracle","name":"Curse of Babel","translatedName":"Maldição de Babel","rating":2,"summary":"Confounds a victim's ability to communicate.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"theban-liars-plague","kind":"theban-miracle","name":"Liar's Plague","translatedName":"Praga do Mentiroso","rating":2,"summary":"Punishes falsehood with a supernatural affliction.","source":"Vampire: The Requiem Second Edition","page":153},
-    {"id":"theban-malediction-despair","kind":"theban-miracle","name":"Malediction of Despair","translatedName":"Maldição do Desespero","rating":3,"summary":"Afflicts a subject with crushing despair.","source":"Vampire: The Requiem Second Edition","page":154},
-    {"id":"theban-gift-lazarus","kind":"theban-miracle","name":"Gift of Lazarus","translatedName":"Dádiva de Lázaro","rating":4,"summary":"Calls on the Curse to restore the fallen.","source":"Vampire: The Requiem Second Edition","page":154},
-    {"id":"theban-stigmata","kind":"theban-miracle","name":"Stigmata","translatedName":"Estigmas","rating":4,"summary":"Marks a subject with miraculous wounds.","source":"Vampire: The Requiem Second Edition","page":154},
-    {"id":"theban-transubstantiation","kind":"theban-miracle","name":"Transubstantiation","translatedName":"Transubstanciação","rating":5,"summary":"Performs a supreme transformation of sacramental blood.","source":"Vampire: The Requiem Second Edition","page":154}
+    {
+      "id": "theban-blood-scourge",
+      "kind": "theban-miracle",
+      "name": "Blood Scourge",
+      "translatedName": "Flagelo de Sangue",
+      "rating": 1,
+      "experienceCost": 2,
+      "summary": "Create a temporary whip of Vitae.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 6,
+      "sacrament": "At least 1 Vitae of the ritualist's own blood",
+      "duration": "Until sunrise; created whip lasts until scene end",
+      "effect": "Create a 2L Vitae whip at any point before sunrise."
+    },
+    {
+      "id": "theban-vitae-reliquary",
+      "kind": "theban-miracle",
+      "name": "Vitae Reliquary",
+      "translatedName": "Relicário de Vitae",
+      "rating": 1,
+      "experienceCost": 2,
+      "summary": "Store Vitae in a sacramental object.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 5,
+      "sacrament": "Any object up to Size •••",
+      "duration": "One lunar month",
+      "effect": "Transfer up to ritual Potency Vitae into the object. Vampires, Strix, or ghouls can later retrieve it; normal bond/addiction risks apply."
+    },
+    {
+      "id": "theban-blandishment-sin",
+      "kind": "theban-miracle",
+      "name": "Blandishment of Sin",
+      "translatedName": "Lisonja do Pecado",
+      "rating": 1,
+      "experienceCost": 2,
+      "summary": "Upgrade the next bashing damage a distant victim suffers.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 5,
+      "contestedBy": "Resolve + Blood Potency",
+      "sacrament": "Paper bearing the victim's name",
+      "duration": "Until triggered or sunrise",
+      "effect": "The next bashing damage from one attack becomes lethal. A separate four-dot version with 8 target successes upgrades lethal to aggravated."
+    },
+    {
+      "id": "theban-curse-babel",
+      "kind": "theban-miracle",
+      "name": "Curse of Babel",
+      "translatedName": "Maldição de Babel",
+      "rating": 2,
+      "experienceCost": 2,
+      "summary": "Prevent a victim from speaking or writing.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 6,
+      "resistedBy": "Resolve",
+      "sacrament": "An animal or human tongue",
+      "duration": "Until next sunrise",
+      "effect": "A victim within one mile cannot speak or write."
+    },
+    {
+      "id": "theban-liars-plague",
+      "kind": "theban-miracle",
+      "name": "Liar's Plague",
+      "translatedName": "Praga do Mentiroso",
+      "rating": 2,
+      "experienceCost": 2,
+      "summary": "Punish a present victim for telling falsehoods.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 153,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 5,
+      "contestedBy": "Resolve + Blood Potency",
+      "sacrament": "An insect carapace",
+      "duration": "Next scene",
+      "effect": "If the victim lies during the next scene, beetles swarm from the victim's mouth."
+    },
+    {
+      "id": "theban-malediction-despair",
+      "kind": "theban-miracle",
+      "name": "Malediction of Despair",
+      "translatedName": "Maldição do Desespero",
+      "rating": 3,
+      "experienceCost": 2,
+      "summary": "Curse one specified future action.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 154,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 13,
+      "contestedBy": "Resolve + Blood Potency",
+      "sacrament": "A lock of the victim's hair",
+      "duration": "Until triggered or one lunar month",
+      "effect": "The next time the victim performs the specified action, suffer –5 dice once."
+    },
+    {
+      "id": "theban-gift-lazarus",
+      "kind": "theban-miracle",
+      "name": "Gift of Lazarus",
+      "translatedName": "Dádiva de Lázaro",
+      "rating": 4,
+      "experienceCost": 2,
+      "summary": "Animate a human corpse as a servant.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 154,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 8,
+      "sacrament": "A communion wafer under the corpse's tongue",
+      "duration": "Up to one lunar month",
+      "effect": "Raise a corpse retaining its former Skills but no Willpower; age of corpse degrades Attributes. It is destroyed by enough aggravated damage or when the miracle expires."
+    },
+    {
+      "id": "theban-stigmata",
+      "kind": "theban-miracle",
+      "name": "Stigmata",
+      "translatedName": "Estigmas",
+      "rating": 4,
+      "experienceCost": 2,
+      "summary": "Inflict miraculous bleeding wounds.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 154,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 5,
+      "resistedBy": "Stamina",
+      "sacrament": "A crucifix",
+      "duration": "Ritual Potency turns",
+      "effect": "Mortals take one lethal per turn; vampires and ghouls lose one Vitae per turn, then take lethal if a vampire reaches zero Vitae."
+    },
+    {
+      "id": "theban-transubstantiation",
+      "kind": "theban-miracle",
+      "name": "Transubstantiation",
+      "translatedName": "Transubstanciação",
+      "rating": 5,
+      "experienceCost": 2,
+      "summary": "Transform one present substance, creature, or person into another form.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 154,
+      "cost": "1 Willpower + sacrament",
+      "targetSuccesses": 8,
+      "contestedBy": "Stamina + Blood Potency",
+      "sacrament": "A drop of liquid gold",
+      "duration": "Until next sunrise",
+      "effect": "Transform a subject no larger than the ritualist without creating intelligence or directly healing/harming it; existing injuries remain and the change reverses at sunrise."
+    }
   ],
   "coils": [
-    {"id":"coil-ascendant","kind":"coil","name":"Coil of the Ascendant","translatedName":"Espiral do Ascendente","rating":5,"summary":"Transcends daysleep, fire, and sunlight through five cumulative tiers.","levels":[{"rating":1,"name":"Surmounting the Daysleep","translatedName":"Superar o Sono Diurno","summary":"While using Blush of Life, resist neither daysleep nor the Lethargic Condition for daytime activity."},{"rating":2,"name":"The Warm Face","translatedName":"O Rosto Quente","summary":"Blush of Life lasts 24 hours instead of one scene."},{"rating":3,"name":"Conquer the Red Fear","translatedName":"Conquistar o Medo Vermelho","summary":"Fire and sunlight no longer provoke frenzy."},{"rating":4,"name":"Peace with the Flame","translatedName":"Paz com a Chama","summary":"While using Blush of Life, fire causes lethal damage; Resilience can reduce it further to bashing."},{"rating":5,"name":"Sun's Forgotten Kiss","translatedName":"O Beijo Esquecido do Sol","summary":"Additional Vitae spent on Blush of Life lowers effective Blood Potency for sunlight intervals."}],"source":"Vampire: The Requiem Second Edition","page":155},
-    {"id":"coil-wyrm","kind":"coil","name":"Coil of the Wyrm","translatedName":"Espiral da Serpente","rating":5,"summary":"Refines and commands the Beast through five cumulative tiers.","levels":[{"rating":1,"name":"Stir the Beast","translatedName":"Despertar a Besta","summary":"Spend Willpower to enter a voluntary frenzy directed toward a brief objective."},{"rating":2,"name":"Beast's Hunger","translatedName":"Fome da Besta","summary":"During frenzy, Coil rating increases effective Blood Potency for Kindred senses and predatory aura."},{"rating":3,"name":"Leash the Beast","translatedName":"Conter a Besta","summary":"Riding the Wave no longer costs Willpower and gains the Coil rating as a bonus."},{"rating":4,"name":"Beast's Power","translatedName":"Poder da Besta","summary":"Forgo frenzy resistance to add Blood Potency to Defense, Health, and Speed during frenzy."},{"rating":5,"name":"Eternal Frenzy","translatedName":"Frenesi Eterno","summary":"Frenzy can stave off torpor from lethal wounds and continue across scenes."}],"source":"Vampire: The Requiem Second Edition","page":157},
-    {"id":"coil-voivode","kind":"coil","name":"Coil of the Voivode","translatedName":"Espiral do Voivoda","rating":5,"summary":"Transforms blood bonds, loyalty, and the Embrace through five cumulative tiers.","levels":[{"rating":1,"name":"Taste of Fealty","translatedName":"Gosto da Fidelidade","summary":"The Dragon's Vitae counts double for addiction and becomes uniquely satisfying to those addicted."},{"rating":2,"name":"Into the Fold","translatedName":"Para Dentro do Rebanho","summary":"Blood-bound subjects share closer blood sympathy with the Dragon."},{"rating":3,"name":"Call to Serve","translatedName":"Chamado para Servir","summary":"Extra Vitae can accelerate a new blood bond directly to stage two or three."},{"rating":4,"name":"Voivode Undisputed","translatedName":"Voivoda Indiscutível","summary":"Blood sympathy cannot empower Disciplines against the Dragon and instead aids resistance."},{"rating":5,"name":"The Vast Dynasty","translatedName":"A Vasta Dinastia","summary":"The Embrace no longer causes automatic Humanity loss and becomes a Humanity 3 breaking point."}],"source":"Vampire: The Requiem Second Edition","page":158}
+    {
+      "id": "coil-ascendant",
+      "kind": "coil",
+      "name": "Coil of the Ascendant",
+      "translatedName": "Espiral do Ascendente",
+      "rating": 5,
+      "summary": "Transcends daysleep, fire, and sunlight through five cumulative tiers.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 155,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Surmounting the Daysleep",
+          "translatedName": "Superar o Sono Diurno",
+          "summary": "Remain active by day more easily while Blush of Life is active.",
+          "effect": "While benefiting from Blush of Life, no roll is required to resist daysleep and remaining active by day does not inflict Lethargic.",
+          "ruleEffects": [
+            {
+              "rule": "daysleep",
+              "operation": "ignore",
+              "value": true,
+              "condition": "Blush of Life active"
+            },
+            {
+              "rule": "lethargic",
+              "operation": "ignore",
+              "value": true,
+              "condition": "Blush of Life active during daytime"
+            }
+          ]
+        },
+        {
+          "rating": 2,
+          "name": "The Warm Face",
+          "translatedName": "O Rosto Quente",
+          "summary": "Extend Blush of Life to a full day.",
+          "effect": "Blush of Life lasts 24 hours rather than one scene.",
+          "ruleEffects": [
+            {
+              "rule": "blush-duration",
+              "operation": "set",
+              "value": "24 hours"
+            }
+          ]
+        },
+        {
+          "rating": 3,
+          "name": "Conquer the Red Fear",
+          "translatedName": "Conquistar o Medo Vermelho",
+          "summary": "Fire and sunlight no longer provoke frenzy.",
+          "effect": "Exposure to fire or sunlight does not trigger frenzy, though damage still applies normally.",
+          "ruleEffects": [
+            {
+              "rule": "frenzy-trigger",
+              "operation": "ignore",
+              "value": "fire"
+            },
+            {
+              "rule": "frenzy-trigger",
+              "operation": "ignore",
+              "value": "sunlight"
+            }
+          ]
+        },
+        {
+          "rating": 4,
+          "name": "Peace with the Flame",
+          "translatedName": "Paz com a Chama",
+          "summary": "Downgrade fire damage while Blush of Life is active.",
+          "effect": "While Blush of Life is active, fire deals lethal rather than aggravated. Each Resilience dot can further downgrade one point of that fire damage from lethal to bashing.",
+          "ruleEffects": [
+            {
+              "rule": "fire-damage",
+              "operation": "replace",
+              "value": "aggravated → lethal",
+              "condition": "Blush of Life active"
+            },
+            {
+              "rule": "fire-damage",
+              "operation": "replace",
+              "value": "one lethal → bashing per Resilience dot",
+              "condition": "Blush of Life active"
+            }
+          ]
+        },
+        {
+          "rating": 5,
+          "name": "Sun's Forgotten Kiss",
+          "translatedName": "O Beijo Esquecido do Sol",
+          "summary": "Spend extra Vitae with Blush of Life to slow sunlight damage intervals.",
+          "cost": "Additional Vitae when activating Blush of Life",
+          "effect": "Each extra Vitae makes Blood Potency count one lower for sunlight damage interval only, minimum effective Blood Potency 1.",
+          "ruleEffects": [
+            {
+              "rule": "sunlight-interval-blood-potency",
+              "operation": "reduce",
+              "value": "1 per extra Vitae spent with Blush of Life",
+              "minimum": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coil-wyrm",
+      "kind": "coil",
+      "name": "Coil of the Wyrm",
+      "translatedName": "Espiral da Serpente",
+      "rating": 5,
+      "summary": "Refines and directs the Beast through five cumulative tiers.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 157,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Stir the Beast",
+          "translatedName": "Despertar a Besta",
+          "summary": "Enter a voluntary frenzy with a declared objective.",
+          "cost": "1 Willpower",
+          "action": "Reflexive",
+          "effect": "Enter frenzy voluntarily and name a short goal. Escaping before the goal is met suffers a penalty; the frenzy ends when the goal is no longer pressing or possible."
+        },
+        {
+          "rating": 2,
+          "name": "Beast's Hunger",
+          "translatedName": "Fome da Besta",
+          "summary": "Increase effective Blood Potency for senses and predatory aura while frenzying.",
+          "effect": "During any frenzy, add the current Coil of the Wyrm rating to Blood Potency for Kindred senses and predatory aura.",
+          "ruleEffects": [
+            {
+              "rule": "kindred-senses-blood-potency",
+              "operation": "add",
+              "value": "Coil of the Wyrm rating",
+              "condition": "In frenzy"
+            },
+            {
+              "rule": "predatory-aura-blood-potency",
+              "operation": "add",
+              "value": "Coil of the Wyrm rating",
+              "condition": "In frenzy"
+            }
+          ]
+        },
+        {
+          "rating": 3,
+          "name": "Leash the Beast",
+          "translatedName": "Conter a Besta",
+          "summary": "Ride the Wave without Willpower and with a Coil bonus.",
+          "effect": "Riding the Wave no longer costs Willpower and gains the Coil of the Wyrm rating as bonus dice.",
+          "ruleEffects": [
+            {
+              "rule": "ride-the-wave-cost",
+              "operation": "set",
+              "value": "0 Willpower"
+            },
+            {
+              "rule": "ride-the-wave-pool",
+              "operation": "add",
+              "value": "Coil of the Wyrm rating"
+            }
+          ]
+        },
+        {
+          "rating": 4,
+          "name": "Beast's Power",
+          "translatedName": "Poder da Besta",
+          "summary": "Surrender fully to frenzy for major physical bonuses.",
+          "effect": "When entering frenzy, the Dragon may forgo resistance until the Beast is sated; during that frenzy add Blood Potency to Defense, Health, and Speed.",
+          "ruleEffects": [
+            {
+              "rule": "frenzy-defense",
+              "operation": "add",
+              "value": "Blood Potency",
+              "condition": "Chose to forgo frenzy resistance"
+            },
+            {
+              "rule": "frenzy-health",
+              "operation": "add",
+              "value": "Blood Potency",
+              "condition": "Chose to forgo frenzy resistance"
+            },
+            {
+              "rule": "frenzy-speed",
+              "operation": "add",
+              "value": "Blood Potency",
+              "condition": "Chose to forgo frenzy resistance"
+            }
+          ]
+        },
+        {
+          "rating": 5,
+          "name": "Eternal Frenzy",
+          "translatedName": "Frenesi Eterno",
+          "summary": "Remain frenzying despite lethal wounds that would normally force torpor.",
+          "effect": "While in frenzy, filling Health with lethal damage does not cause torpor. If frenzy ends while Health is still full of lethal, torpor begins immediately; frenzy may persist across scenes.",
+          "ruleEffects": [
+            {
+              "rule": "torpor-on-lethal",
+              "operation": "ignore",
+              "value": true,
+              "condition": "In frenzy"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coil-voivode",
+      "kind": "coil",
+      "name": "Coil of the Voivode",
+      "translatedName": "Espiral do Voivoda",
+      "rating": 5,
+      "summary": "Transforms Vitae addiction, blood sympathy, blood bonds, and the Embrace.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 158,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Taste of Fealty",
+          "translatedName": "Gosto da Fidelidade",
+          "summary": "Make the Dragon's Vitae exceptionally addictive and uniquely satisfying.",
+          "effect": "Each point of the Dragon's Vitae counts as two for Vitae addiction; addicts can resolve blood-addiction Deprived only with Vitae from someone possessing this Coil.",
+          "ruleEffects": [
+            {
+              "rule": "vitae-addiction",
+              "operation": "multiply",
+              "value": 2,
+              "condition": "Drinking the Dragon's Vitae"
+            }
+          ]
+        },
+        {
+          "rating": 2,
+          "name": "Into the Fold",
+          "translatedName": "Para Dentro do Rebanho",
+          "summary": "Create blood sympathy with blood-bound subjects.",
+          "effect": "The Dragon and blood-bound subjects gain blood sympathy with closeness based on bond stage.",
+          "ruleEffects": [
+            {
+              "rule": "blood-sympathy",
+              "operation": "set",
+              "value": "stage 1 = four-times removed; stage 2 = three-times removed; stage 3 = twice removed",
+              "condition": "Subject blood-bound to Dragon"
+            }
+          ]
+        },
+        {
+          "rating": 3,
+          "name": "Call to Serve",
+          "translatedName": "Chamado para Servir",
+          "summary": "Accelerate a new blood bond with extra Vitae.",
+          "effect": "Three Vitae in one brief feeding can establish stage two; five Vitae can establish stage three. This expenditure ignores the normal Vitae-per-turn limit.",
+          "ruleEffects": [
+            {
+              "rule": "blood-bond",
+              "operation": "set",
+              "value": "3 Vitae → stage 2; 5 Vitae → stage 3"
+            }
+          ]
+        },
+        {
+          "rating": 4,
+          "name": "Voivode Undisputed",
+          "translatedName": "Voivoda Indiscutível",
+          "summary": "Turn blood sympathy into resistance instead of vulnerability.",
+          "effect": "Blood sympathy gives no Discipline bonus against the Dragon; the Dragon adds her blood-sympathy bonus to resist blood bonds and contest predatory aura from those she has bound.",
+          "ruleEffects": [
+            {
+              "rule": "discipline-resistance",
+              "operation": "replace",
+              "value": "blood-sympathy attack bonus removed against Dragon",
+              "condition": "Attacker connected by blood sympathy"
+            }
+          ]
+        },
+        {
+          "rating": 5,
+          "name": "The Vast Dynasty",
+          "translatedName": "A Vasta Dinastia",
+          "summary": "Replace automatic Humanity loss from Embrace with a lower breaking point.",
+          "effect": "Embracing no longer automatically costs Humanity. It becomes a Humanity 3 breaking point, with +1 die to avoid detachment.",
+          "ruleEffects": [
+            {
+              "rule": "embrace-humanity",
+              "operation": "replace",
+              "value": "Humanity 3 breaking point; +1 die to detachment"
+            }
+          ]
+        }
+      ]
+    }
   ],
   "scales": [
-    {"id":"scale-day-wake-conditioning","kind":"scale","name":"Day-Wake Conditioning","translatedName":"Condicionamento de Vigília Diurna","prerequisites":"coil-ascendant 1","summary":"Reverses a vampire subject's sleep cycle under continuing conditions.","source":"Vampire: The Requiem Second Edition","page":156},
-    {"id":"scale-epidermal-shielding-bath","kind":"scale","name":"Epidermal Shielding Bath","translatedName":"Banho de Proteção Epidérmica","prerequisites":"coil-ascendant 5","summary":"Temporarily raises effective Humanity against sunlight damage.","source":"Vampire: The Requiem Second Edition","page":156},
-    {"id":"scale-flesh-graft-treatment","kind":"scale","name":"Flesh Graft Treatment","translatedName":"Tratamento de Enxerto de Carne","prerequisites":"coil-ascendant 4","summary":"Allows grievous wounds to be healed as lesser damage.","source":"Vampire: The Requiem Second Edition","page":156},
-    {"id":"scale-augmented-vitae-draught","kind":"scale","name":"Augmented Vitae Draught","translatedName":"Poção de Vitae Aumentada","prerequisites":"coil-wyrm 4","summary":"Bottles a physical Vitae augmentation for a mortal subject.","source":"Vampire: The Requiem Second Edition","page":157},
-    {"id":"scale-kindred-sense-endowment","kind":"scale","name":"Kindred Sense Endowment","translatedName":"Concessão dos Sentidos Kindred","prerequisites":"coil-wyrm 2","summary":"Temporarily grants a mortal vampire-like blood senses.","source":"Vampire: The Requiem Second Edition","page":157},
-    {"id":"scale-surgical-heart-removal","kind":"scale","name":"Surgical Heart Removal","translatedName":"Remoção Cirúrgica do Coração","prerequisites":"coil-wyrm 5","summary":"Removes a Kindred subject's heart through a dangerous procedure.","source":"Vampire: The Requiem Second Edition","page":158},
-    {"id":"scale-blood-cleansing-ritual","kind":"scale","name":"Blood Cleansing Ritual","translatedName":"Ritual de Purificação do Sangue","prerequisites":"coil-voivode 1","summary":"Attempts to remove an existing blood bond.","source":"Vampire: The Requiem Second Edition","page":158},
-    {"id":"scale-fealtys-reward","kind":"scale","name":"Fealty's Reward","translatedName":"Recompensa da Lealdade","prerequisites":"coil-voivode 3","summary":"Creates an unusually enduring ghoul from a fully bound mortal.","source":"Vampire: The Requiem Second Edition","page":159},
-    {"id":"scale-mass-embrace","kind":"scale","name":"Mass Embrace","translatedName":"Abraço em Massa","prerequisites":"coil-voivode 5","summary":"Embraces a prepared group through a dangerous collective procedure.","source":"Vampire: The Requiem Second Edition","page":159},
-    {"id":"scale-sanguinary-invigoration","kind":"scale","name":"Sanguinary Invigoration","translatedName":"Revigoramento Sanguíneo","prerequisites":"coil-voivode 2","summary":"Makes a living vessel temporarily suitable for vampires of much higher Blood Potency.","source":"Vampire: The Requiem Second Edition","page":159}
+    {
+      "id": "scale-day-wake-conditioning",
+      "kind": "scale",
+      "name": "Day-Wake Conditioning",
+      "translatedName": "Condicionamento de Vigília Diurna",
+      "prerequisites": "coil-ascendant 1",
+      "experienceCost": 2,
+      "summary": "Reverse a vampire subject's sleep cycle while the conditioning is maintained.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 156,
+      "procedure": "Force a vampire to resist daysleep until resistance falls to a chance die, then allow sleep only at dusk in a brightly lit chamber.",
+      "outcome": "The subject wakes at dawn and sleeps at night indefinitely while continuing to sleep in bright light each night; more than two consecutive nights without doing so ends the effect.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-epidermal-shielding-bath",
+      "kind": "scale",
+      "name": "Epidermal Shielding Bath",
+      "translatedName": "Banho de Proteção Epidérmica",
+      "prerequisites": "coil-ascendant 5",
+      "experienceCost": 2,
+      "summary": "Temporarily improve a Kindred subject's effective Humanity against sunlight.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 156,
+      "procedure": "Submerge a Kindred in an alchemical bath for one hour while Vitae is bled into the mixture.",
+      "outcome": "For 24 hours, each Vitae invested increases effective Humanity by one for sunlight damage only.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-flesh-graft-treatment",
+      "kind": "scale",
+      "name": "Flesh Graft Treatment",
+      "translatedName": "Tratamento de Enxerto de Carne",
+      "prerequisites": "coil-ascendant 4",
+      "experienceCost": 2,
+      "summary": "Temporarily make grievous wounds easier to heal.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 156,
+      "procedure": "Prepare mortal skin grafts in fresh human blood, bind them over damaged areas, and inject very fresh human blood.",
+      "outcome": "Kindred can heal aggravated damage with Vitae as though it were lethal. Mortals can heal lethal with Vitae supplied in the treatment; this may create a blood bond/ghoul.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-augmented-vitae-draught",
+      "kind": "scale",
+      "name": "Augmented Vitae Draught",
+      "translatedName": "Poção de Vitae Aumentada",
+      "prerequisites": "coil-wyrm 4",
+      "experienceCost": 2,
+      "summary": "Bottle a Physical Intensity augmentation for a mortal.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 157,
+      "procedure": "Use sterilized needles and tubing, then trigger Physical Intensity so the spent Vitae drains into a sealed vessel.",
+      "outcome": "The stored Vitae remains potent for Blood Potency hours. A mortal drinking it gains the physical augmentation for a scene, then takes bashing damage equal to twice the Vitae invested and develops blood addiction.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-kindred-sense-endowment",
+      "kind": "scale",
+      "name": "Kindred Sense Endowment",
+      "translatedName": "Concessão dos Sentidos Kindred",
+      "prerequisites": "coil-wyrm 2",
+      "experienceCost": 2,
+      "summary": "Grant a mortal temporary vampire-like blood senses.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 157,
+      "procedure": "Prepare and distill a blood-and-bone mixture, apply it to the subject's eyes and nose, and have the subject ingest the remainder.",
+      "outcome": "For about 24 hours the mortal senses blood as though Blood Potency 2 and develops a dangerous hunger for human blood.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-surgical-heart-removal",
+      "kind": "scale",
+      "name": "Surgical Heart Removal",
+      "translatedName": "Remoção Cirúrgica do Coração",
+      "prerequisites": "coil-wyrm 5",
+      "experienceCost": 2,
+      "summary": "Remove a Kindred subject's heart through a reversible but dangerous operation.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 158,
+      "procedure": "Perform a six-hour surgery: extended Intelligence + Medicine, 10 successes, one-hour interval. Reversal uses the same roll.",
+      "outcome": "On success the subject cannot be staked and cannot gain Vitae from feeding, but can still spend stored Vitae or gain it from blood sorcery. Destroying the body eventually regenerates it from the heart; destroying the heart kills the subject.",
+      "manualOnly": true,
+      "reversible": true,
+      "dicePool": "Intelligence + Medicine",
+      "action": "Extended; 10 successes; 1 hour per roll",
+      "rollResults": {
+        "dramaticFailure": "The heart is destroyed; the subject frenzies and reaches Final Death at scene end.",
+        "failure": "The subject falls into torpor as if staked until the heart is restored.",
+        "success": "Heart removal succeeds with the listed consequences.",
+        "exceptionalSuccess": "Normal extended-action exceptional-success benefit only."
+      }
+    },
+    {
+      "id": "scale-blood-cleansing-ritual",
+      "kind": "scale",
+      "name": "Blood Cleansing Ritual",
+      "translatedName": "Ritual de Purificação do Sangue",
+      "prerequisites": "coil-voivode 1",
+      "experienceCost": 2,
+      "summary": "Attempt to remove an existing blood bond.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 158,
+      "procedure": "Prepare an animal-blood and viscera wash mixed with several Vitae and repeatedly force it through the restrained subject's nose and mouth.",
+      "outcome": "For each Vitae invested, roll Dragon Blood Potency minus the bond creator's Blood Potency; any success permanently removes the bond. The Dragon's Vitae in the wash does not create a new bond.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-fealtys-reward",
+      "kind": "scale",
+      "name": "Fealty's Reward",
+      "translatedName": "Recompensa da Lealdade",
+      "prerequisites": "coil-voivode 3",
+      "experienceCost": 2,
+      "summary": "Create an unusually enduring ghoul from a stage-three bound mortal.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 159,
+      "procedure": "Drain a stage-three blood-bound mortal to the last Health box, collect the Dragon's gained Vitae, have the subject drink it, then rest 48 hours.",
+      "outcome": "The subject becomes a ghoul for one year rather than one month, renewable only by the Dragon. If the state expires, the ghoul dies and later rises as a draugr.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-mass-embrace",
+      "kind": "scale",
+      "name": "Mass Embrace",
+      "translatedName": "Abraço em Massa",
+      "prerequisites": "coil-voivode 5",
+      "experienceCost": 2,
+      "summary": "Embrace a prepared group through one collective procedure.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 159,
+      "procedure": "Gather mortals in a basin-like space, bleed out the Dragon's Vitae, drain the subjects into the pool, drink from the pooled blood, and inject it into the corpses.",
+      "outcome": "Subjects rise at Blood Potency 1 with one Vitae. Each makes a chance die: success = control, failure = immediate frenzy, dramatic failure = draugr. The Dragon loses Humanity as with an ordinary Embrace.",
+      "manualOnly": true,
+      "reversible": true
+    },
+    {
+      "id": "scale-sanguinary-invigoration",
+      "kind": "scale",
+      "name": "Sanguinary Invigoration",
+      "translatedName": "Revigoramento Sanguíneo",
+      "prerequisites": "coil-voivode 2",
+      "experienceCost": 2,
+      "summary": "Prepare a living vessel so much higher-Blood-Potency vampires can feed from it.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 159,
+      "procedure": "Mix one extracted Vitae with arcane ingredients and inject the fresh preparation into a living human or animal within ten minutes.",
+      "outcome": "For one week, the Dragon treats Blood Potency as four lower when checking whether she can feed from the subject and four higher for smelling the subject's blood. The subject is not blood-bound or addicted by the injection itself.",
+      "manualOnly": true,
+      "reversible": true
+    }
   ]
 }

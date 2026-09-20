@@ -11,11 +11,15 @@ const eslintConfig = defineConfig([
     // Default ignores of eslint-config-next:
     ".next/**",
     ".sites-package-*/**",
+    ".sites-runtime/**",
     "dist/**",
     "out/**",
     "build/**",
     "tmp/**",
     "next-env.d.ts",
+    "**/dist/**",
+    "**/.next/**",
+    "**/build/**",
   ]),
   {
     files: ["app/**/*.{ts,tsx}", "game-lines/**/*.{ts,tsx}"],

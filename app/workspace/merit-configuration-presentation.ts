@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/i18n";
+import { translate, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { normalizeMeritConfiguration, type MeritConfigDefinition } from "@/lib/core/character/merit-configuration";
 
@@ -31,32 +31,32 @@ export function commonExpandedConfigurationLines(
     const profession = String(configuration.profession ?? "").trim();
     const contacts = Array.isArray(configuration.contacts) ? configuration.contacts.filter(Boolean) : [];
     const assets = Array.isArray(configuration.asset_skills) ? configuration.asset_skills.filter(Boolean) : [];
-    if (profession) lines.push(`${locale === "en-US" ? "Profession" : "Profissão"}: ${profession}`);
-    if (dots >= 1 && contacts.length) lines.push(`${locale === "en-US" ? "Contacts" : "Contatos"}: ${contacts.join(", ")}`);
-    if (dots >= 2 && assets.length) lines.push(`${locale === "en-US" ? "Asset Skills" : "Perícias de Ativo"}: ${assets.join(", ")}`);
+    if (profession) lines.push(`${translate(locale, "ui.profession")}: ${profession}`);
+    if (dots >= 1 && contacts.length) lines.push(`${translate(locale, "ui.contacts")}: ${contacts.join(", ")}`);
+    if (dots >= 2 && assets.length) lines.push(`${translate(locale, "ui.assetSkills")}: ${assets.join(", ")}`);
     for (const index of [1, 2]) {
       const skill = String(configuration[`specialty_${index}_skill`] ?? "").trim();
       const specialty = String(configuration[`specialty_${index}_name`] ?? "").trim();
-      if (dots >= 3 && skill && specialty) lines.push(`${locale === "en-US" ? "Specialty" : "Especialização"}: ${skill} (${specialty})`);
+      if (dots >= 3 && skill && specialty) lines.push(`${translate(locale, "ui.specialty")}: ${skill} (${specialty})`);
     }
     const boosted = String(configuration.boosted_skill ?? "").trim();
-    if (dots >= 4 && boosted) lines.push(`${locale === "en-US" ? "Skill Increase" : "Aumento de Perícia"}: ${boosted} +1`);
+    if (dots >= 4 && boosted) lines.push(`${translate(locale, "ui.skillIncrease")}: ${boosted} +1`);
     return lines;
   }
   if (name === "Contacts") {
     const groups = configuration.groups;
     const choices = Array.isArray(groups) ? groups.filter(Boolean) : String(groups ?? "").trim() ? [String(groups)] : [];
-    return choices.map((choice, index) => `${locale === "en-US" ? "Contact" : "Contato"} ${index + 1}: ${choice}`);
+    return choices.map((choice, index) => `${translate(locale, "ui.contact")} ${index + 1}: ${choice}`);
   }
   if (name === "Multilingual") {
     const configured = configuration.languages;
     const languages = Array.isArray(configured) ? configured.filter(Boolean) : String(configured ?? "").trim() ? [String(configured)] : [];
-    return languages.length ? [`${locale === "en-US" ? "Languages" : "Idiomas"}: ${languages.join(", ")}`] : [];
+    return languages.length ? [`${translate(locale, "ui.languages")}: ${languages.join(", ")}`] : [];
   }
   if (name === "Mystery Cult Initiation" || name === "Mystery Cult Influence") {
     const lines: string[] = [];
     const cult = String(configuration.cult ?? "").trim();
-    if (cult) lines.push(`${locale === "en-US" ? "Cult" : "Culto"}: ${cult}`);
+    if (cult) lines.push(`${translate(locale, "ui.cult")}: ${cult}`);
     for (let level = 1; level <= Math.min(5, dots); level += 1) {
       const prefix = `level_${level}`;
       const type = String(configuration[`${prefix}_type`] ?? "");
@@ -64,7 +64,7 @@ export function commonExpandedConfigurationLines(
       if (type === "specialty") {
         const skill = String(configuration[`${prefix}_specialty_skill`] ?? "").trim();
         const specialty = String(configuration[`${prefix}_specialty_name`] ?? "").trim();
-        if (skill || specialty) benefits.push(`${locale === "en-US" ? "Specialty" : "Especialização"}: ${skill}${skill && specialty ? " (" : ""}${specialty}${skill && specialty ? ")" : ""}`);
+        if (skill || specialty) benefits.push(`${translate(locale, "ui.specialty")}: ${skill}${skill && specialty ? " (" : ""}${specialty}${skill && specialty ? ")" : ""}`);
       }
       if (type === "skill" || type === "merit_skill") {
         const skill = String(configuration[`${prefix}_skill`] ?? "").trim();
@@ -72,7 +72,7 @@ export function commonExpandedConfigurationLines(
       }
       if (type === "rote_skills") {
         const skills = Array.isArray(configuration[`${prefix}_rote_skills`]) ? configuration[`${prefix}_rote_skills`] as string[] : [];
-        if (skills.some(Boolean)) benefits.push(`${locale === "en-US" ? "Rote Skills" : "Perícias de Rota"}: ${skills.filter(Boolean).map((skill) => systemTerm(skill, locale)).join(", ")}`);
+        if (skills.some(Boolean)) benefits.push(`${translate(locale, "ui.roteSkills")}: ${skills.filter(Boolean).map((skill) => systemTerm(skill, locale)).join(", ")}`);
       }
       if (type === "merit" || type === "merits" || type === "merit_skill") {
         const merits = Array.isArray(configuration[`${prefix}_merits`]) ? configuration[`${prefix}_merits`] as string[] : [];
@@ -85,7 +85,7 @@ export function commonExpandedConfigurationLines(
         const custom = String(configuration[`${prefix}_custom`] ?? "").trim();
         if (custom) benefits.push(custom);
       }
-      if (benefits.length) lines.push(`${locale === "en-US" ? "Dot" : "Nível"} ${level}: ${benefits.join("; ")}`);
+      if (benefits.length) lines.push(`${translate(locale, "ui.dot")} ${level}: ${benefits.join("; ")}`);
     }
     return lines;
   }

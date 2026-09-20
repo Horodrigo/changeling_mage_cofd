@@ -3,7 +3,7 @@ import { commonExpandedConfigurationLines, decodeConfiguredRows } from "@/app/wo
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { meritConfigurationTitle as coreMeritConfigurationTitle, normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { HEDGE_DUELIST_VARIANTS } from "./hedge-duelist-variants";
-import type { Locale } from "@/lib/i18n";
+import { translate, type Locale } from "@/lib/i18n";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 
@@ -24,7 +24,7 @@ export const isInlineMeritConfiguration = (name: string) =>
 
 function courtDisplayName(catalog: readonly CourtDefinition[], value: unknown, locale: Locale) {
   const raw = String(value ?? "");
-  if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return locale === "en-US" ? "Courtless" : "Sem Corte";
+  if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return translate(locale, "ui.courtless");
   const normalized = raw.toLocaleLowerCase();
   const definition = catalog.find((item) =>
     [item.id, item.name, item.translatedName, item.name.replace(/ Court$/, "")].some((candidate) => candidate.toLocaleLowerCase() === normalized),
@@ -61,36 +61,34 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     const lines: string[] = [];
     for (const [index, item] of items.entries()) {
       const kind = item.kind ?? "token";
-      const kindLabel = kind === "trifle" ? (locale === "en-US" ? "Trifle batch" : "Lote de Bagatelas") : kind === "bauble" ? "Bauble" : "Token";
+      const kindLabel = kind === "trifle" ? translate(locale, "ui.trifleBatch") : kind === "bauble" ? translate(locale, "ui.bauble") : translate(locale, "ui.token");
       const title = item.name.trim() || `${kindLabel} ${index + 1}`;
       const rating = Math.max(1, item.rating);
-      if (kind === "trifle") lines.push(`${title} (3): ${locale === "en-US" ? "Effect" : "Efeito"}: ${item.effect || "—"}`);
-      else if (kind === "bauble") lines.push(`${title} (${"•".repeat(rating)}): ${locale === "en-US" ? "Description" : "Descrição"}: ${item.description || "—"}; Crux: ${item.crux || "—"}; Catch: ${item.catch || "—"}`);
-      else lines.push(`${title} (${"•".repeat(rating)}): ${locale === "en-US" ? "Cost" : "Custo"}: ${item.cost || "—"}; ${locale === "en-US" ? "Effect" : "Efeito"}: ${item.effect || "—"}; Catch: ${item.catch || "—"}; Drawback: ${item.drawback || "—"}`);
+      if (kind === "trifle") lines.push(`${title} (3): ${translate(locale, "ui.effect")}: ${item.effect || "—"}`);
+      else if (kind === "bauble") lines.push(`${title} (${"•".repeat(rating)}): ${translate(locale, "ui.description")}: ${item.description || "—"}; ${translate(locale, "ui.crux")}: ${item.crux || "—"}; ${translate(locale, "ui.catch")}: ${item.catch || "—"}`);
+      else lines.push(`${title} (${"•".repeat(rating)}): ${translate(locale, "ui.cost")}: ${item.cost || "—"}; ${translate(locale, "ui.effect")}: ${item.effect || "—"}; ${translate(locale, "ui.catch")}: ${item.catch || "—"}; ${translate(locale, "ui.drawback")}: ${item.drawback || "—"}`);
     }
     const allocated = items.reduce((sum, item) => sum + item.rating, 0);
-    if (allocated !== dots) lines.push(`${locale === "en-US" ? "Unallocated dots" : "Pontos não distribuídos"}: ${Math.max(0, dots - allocated)}`);
+    if (allocated !== dots) lines.push(`${translate(locale, "ui.unallocatedDots")}: ${Math.max(0, dots - allocated)}`);
     return lines;
   }
   if (name === "Hedgespun Item") {
     const item = decodeHedgespunConfiguration(configuration);
     const lines: string[] = [];
     const selectedBenefits = item.benefits.slice(0, Math.max(0, dots));
-    if (item.name.trim()) lines.push(`${locale === "en-US" ? "Item" : "Item"}: ${item.name}`);
-    if (item.description.trim()) lines.push(`${locale === "en-US" ? "Mask and mien" : "Máscara e semblante feérico"}: ${item.description}`);
+    if (item.name.trim()) lines.push(`${translate(locale, "ui.item")}: ${item.name}`);
+    if (item.description.trim()) lines.push(`${translate(locale, "ui.maskAndMien")}: ${item.description}`);
     const benefits = [
-      ["extraordinary", locale === "en-US" ? "Extraordinary Equipment" : "Equipamento Extraordinário", item.extraordinaryDetail],
-      ["alacrity", locale === "en-US" ? "Improved Alacrity" : "Alacridade Aprimorada", "+2 Initiative and Speed"],
-      ["durability", locale === "en-US" ? "Increased Durability" : "Durabilidade Aumentada", "+1 Durability"],
+      ["extraordinary", translate(locale, "ui.extraordinaryEquipment"), item.extraordinaryDetail],
+      ["alacrity", translate(locale, "ui.improvedAlacrity"), "+2 Initiative and Speed"],
+      ["durability", translate(locale, "ui.increasedDurability"), "+1 Durability"],
     ] as const;
     for (const [key, label, detail] of benefits) {
       const count = selectedBenefits.filter((benefit) => benefit === key).length;
       if (count) lines.push(`${label} ×${count}: ${detail}`);
     }
-    const drawback = locale === "en-US"
-      ? "While the item is used, attempts to go unnoticed in plain sight or deflect attention automatically fail and grant a Beat. A non-fae user suffers −1 on tasks requiring concentration or Social interaction."
-      : "Enquanto o item estiver em uso, tentativas de passar despercebido à vista de todos ou desviar atenção falham automaticamente e concedem uma Batida. Um usuário não feérico sofre −1 em tarefas que exigem concentração ou interação Social.";
-    lines.push(`${locale === "en-US" ? "Drawback" : "Desvantagem"}: ${drawback}`);
+    const drawback = translate(locale, "ui.extraordinaryEquipmentDrawback");
+    lines.push(`${translate(locale, "ui.drawback")}: ${drawback}`);
     return lines;
   }
   if (name === "Hollow" || name === "Shared Bastion") {
@@ -98,25 +96,25 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     const configuredName = String(configuration.name ?? "").trim();
     const location = String(configuration.location ?? "").trim();
     const features = Array.isArray(configuration.features) ? configuration.features : [];
-    if (configuredName) lines.push(`${locale === "en-US" ? "Name" : "Nome"}: ${configuredName}`);
-    if (location) lines.push(`${locale === "en-US" ? "Location and appearance" : "Localização e aparência"}: ${location}`);
-    if (features.length) lines.push(`${locale === "en-US" ? "Features" : "Características"}: ${features.map((item) => String(item).split("|")[0]).join(", ")}`);
+    if (configuredName) lines.push(`${translate(locale, "ui.name")}: ${configuredName}`);
+    if (location) lines.push(`${translate(locale, "ui.locationAndAppearance")}: ${location}`);
+    if (features.length) lines.push(`${translate(locale, "ui.features")}: ${features.map((item) => String(item).split("|")[0]).join(", ")}`);
     return lines;
   }
   if (name === "Stable Trod") {
     const lines: string[] = [];
     const configuredName = String(configuration.name ?? "").trim();
     const enhancement = String(configuration.enhancement ?? "").trim();
-    if (configuredName) lines.push(`${locale === "en-US" ? "Trod" : "Trilha"}: ${configuredName}`);
-    if (enhancement) lines.push(`${locale === "en-US" ? "Shared Hollow enhancement" : "Melhoria compartilhada de Recanto"}: ${enhancement}`);
+    if (configuredName) lines.push(`${translate(locale, "ui.trod")}: ${configuredName}`);
+    if (enhancement) lines.push(`${translate(locale, "ui.sharedHollowEnhancement")}: ${enhancement}`);
     return lines;
   }
   if (name === "Workshop") {
     const specialties = Array.isArray(configuration.specialties) ? configuration.specialties.filter(Boolean) : [];
-    return specialties.length ? [`${locale === "en-US" ? "Craft Specialties" : "Especializações de Ofícios"}: ${specialties.join(", ")}`] : [];
+    return specialties.length ? [`${translate(locale, "ui.craftSpecialties")}: ${specialties.join(", ")}`] : [];
   }
   if (name === "Court Goodwill") {
-    const court = courtDisplayName(courtCatalog, configuration.court, locale) || (locale === "en-US" ? "Not selected" : "Não selecionada");
+    const court = courtDisplayName(courtCatalog, configuration.court, locale) || translate(locale, "ui.notSelected");
     const mantle = Math.max(0, dots - 2);
     return locale === "en-US" ? [
       `Court: ${court}.`,

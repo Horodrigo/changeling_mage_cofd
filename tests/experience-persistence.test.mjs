@@ -12,8 +12,27 @@ const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
 const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
+const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+const experienceShared = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
+const hubris = await vite.ssrLoadModule("/game-lines/mage/hubris.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
+
+test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", () => {
+  const groups = [
+    { group: "core", purchases: ["Attribute", "Merit"] },
+    { group: "supernatural", purchases: ["Gnosis"] },
+    { group: "integrity", purchases: ["Wisdom"] },
+    { group: "acquired", purchases: ["Rote"] },
+  ];
+  assert.deepEqual(experienceShared.groupedPurchaseOptions(groups, (value) => value, "pt-BR"), [
+    { value: "Attribute", label: "Attribute", group: "Core" },
+    { value: "Merit", label: "Merit", group: "Core" },
+    { value: "Gnosis", label: "Gnosis", group: "Sobrenatural" },
+    { value: "Wisdom", label: "Wisdom", group: "Integridade e Recuperação" },
+    { value: "Rote", label: "Rote", group: "Poderes Adquiridos" },
+  ]);
+});
 
 function sheet(key = "wyrd", creation = 1) {
   return { game_line: key === "wyrd" ? "CtL" : "MtA", attributes: { Strength: 1 }, skills: { Athletics: 0 },
@@ -32,7 +51,7 @@ for (const key of ["wyrd", "gnosis"]) for (const creation of [1,2,3]) {
     assert.equal(progression.creation + progression.advancement, creation + 3);
     for (const order of permutations) {
       const copy = structuredClone(current);
-      for (const _ of order) copy.line_data = power.refundPowerRating(copy, key);
+      for (let remaining = order.length; remaining > 0; remaining--) copy.line_data = power.refundPowerRating(copy, key);
       assert.equal(copy.line_data[key], creation);
     }
   });
@@ -60,12 +79,71 @@ test("reembolsa pontos em qualquer ordem sem restaurar snapshots de outras compr
     current.attributes.Strength = 4; current.skills.Athletics = 3;
     current.line_data.arcana.Fate = 3; current.line_data.wisdom = 10;
     current.line_data.gnosis = 5;
-    for (const _ of order) refunds.refundMageAdvancement(current, undo);
+    for (let remaining = order.length; remaining > 0; remaining--) refunds.refundMageAdvancement(current, undo);
     assert.equal(current.line_data.gnosis, 5);
     if (undo.kind === "trait") assert.equal(current[undo.group][undo.name], undo.group === "attributes" ? 1 : 0);
     if (undo.kind === "arcana") assert.equal(current.line_data.arcana.Fate, 0);
     if (undo.kind === "wisdom") assert.equal(current.line_data.wisdom, 7);
   }
+});
+
+test("Vampiro reembolsa compras fora de ordem sem apagar avanços posteriores", () => {
+  const undos = [
+    {kind:"trait",group:"attributes",name:"Strength"},
+    {kind:"trait",group:"skills",name:"Athletics"},
+    {kind:"specialty",skill:"Athletics",name:"Corrida"},
+    {kind:"merit",name:"Resources",dots:2,index:0},
+    {kind:"discipline",name:"Vigor"},
+    {kind:"bloodPotency"}, {kind:"humanity"}, {kind:"willpower"},
+    {kind:"devotion",id:"devotion-1"},
+    {kind:"cruac",id:"rite-1",humanityLost:0},
+    {kind:"theban",id:"miracle-1"},
+    {kind:"ritual",key:"cruac_rite_ids",id:"rite-2"},
+    {kind:"coil",id:"coil-1"}, {kind:"scale",id:"scale-1"},
+  ];
+  for (const order of [undos, [...undos].reverse()]) {
+    const current = {
+      attributes:{Strength:2}, skills:{Athletics:1}, specializations:[{skill:"Athletics",name:"Corrida"}],
+      merits:[{name:"Resources",dots:3,creationDots:1,experienceDots:2}],
+      line_data:{disciplines:{Vigor:1},blood_potency:2,humanity:8,devotion_ids:["devotion-1"],blood_sorcery:{cruac_rating:1,cruac_rite_ids:["rite-1","rite-2"],theban_rating:1,theban_miracle_ids:["miracle-1"]},ordo_dracul:{coil_ratings:{"coil-1":1},scale_ids:["scale-1"]}},
+      current_state:{willpower_lost_dots:0},
+    };
+    for (const undo of order) vampireRefunds.refundVampireAdvancement(current, undo);
+    assert.deepEqual([current.attributes.Strength,current.skills.Athletics,current.specializations.length,current.merits[0].dots],[1,0,0,1]);
+    assert.deepEqual([current.line_data.disciplines.Vigor,current.line_data.blood_potency,current.line_data.humanity,current.current_state.willpower_lost_dots],[0,1,7,1]);
+    assert.deepEqual([current.line_data.devotion_ids,current.line_data.blood_sorcery.cruac_rite_ids,current.line_data.blood_sorcery.theban_miracle_ids,current.line_data.ordo_dracul.scale_ids],[[],[],[],[]]);
+    assert.deepEqual([current.line_data.blood_sorcery.cruac_rating,current.line_data.blood_sorcery.theban_rating,current.line_data.ordo_dracul.coil_ratings["coil-1"]],[0,0,0]);
+  }
+  const humanity = {attributes:{},skills:{},specializations:[],merits:[],line_data:{humanity:9,blood_sorcery:{cruac_rating:1,cruac_rite_ids:["rite"]}},current_state:{}};
+  vampireRefunds.refundVampireAdvancement(humanity,{kind:"cruac",id:"rite",humanityLost:1});
+  assert.equal(humanity.line_data.humanity,10);
+});
+
+test("compras X→Y somam custos por ponto e reembolsam o delta completo", () => {
+  assert.equal(experienceShared.ratingPurchaseCost(2, 5, 4), 12);
+  assert.equal(experienceShared.ratingPurchaseCost(3, 6, (rating) => rating <= 4 ? 4 : 5), 14);
+
+  const mage = sheet("gnosis");
+  mage.attributes.Strength = 5;
+  mage.line_data.arcana.Fate = 4;
+  refunds.refundMageAdvancement(mage, {kind:"trait",group:"attributes",name:"Strength",amount:3});
+  refunds.refundMageAdvancement(mage, {kind:"arcana",name:"Fate",amount:3});
+  assert.deepEqual([mage.attributes.Strength,mage.line_data.arcana.Fate],[2,1]);
+
+  const vampire = {attributes:{Strength:5},skills:{},specializations:[],merits:[],line_data:{humanity:6,blood_sorcery:{cruac_rating:4,cruac_rite_ids:["one","two","three"]}},current_state:{}};
+  vampireRefunds.refundVampireAdvancement(vampire,{kind:"trait",group:"attributes",name:"Strength",amount:3});
+  vampireRefunds.refundVampireAdvancement(vampire,{kind:"cruac",ids:["two","three"],amount:2,humanityLost:1});
+  assert.deepEqual([vampire.attributes.Strength,vampire.line_data.blood_sorcery.cruac_rating,vampire.line_data.blood_sorcery.cruac_rite_ids,vampire.line_data.humanity],[2,2,["one"],7]);
+
+  vampireRefunds.refundVampireAdvancement(vampire,{kind:"humanityLoss",amount:1});
+  assert.equal(vampire.line_data.humanity,8);
+});
+
+test("Acts of Hubris usa o tier do ato e aplica os três modificadores cumulativos", () => {
+  assert.deepEqual(hubris.availableHubrisTiers(7).map((tier) => tier.id), ["understanding","falling"]);
+  const falling = hubris.HUBRIS_TIERS.find((tier) => tier.id === "falling");
+  assert.equal(hubris.hubrisPool(falling,{obsession:true,virtue:true,vice:true}),0);
+  assert.equal(hubris.hubrisPool(falling,{obsession:false,virtue:true,vice:false}),2);
 });
 
 test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas", () => {
@@ -159,13 +237,21 @@ test("edição preserva Méritos de Experiência e substitui apenas a base de cr
   ]);
 });
 
+test("edição preserva XP de Méritos automáticos quando o grant inicial é recriado", () => {
+  const existing = [{name:"Kindred Status",instanceId:"old",dots:3,creationDots:1,experienceDots:2,configuration:{group:"Circle of the Crone"},grantedBy:"Vampire Template"}];
+  const edited = [{name:"Kindred Status",instanceId:"new",dots:1,configuration:{group:"Daeva"},grantedBy:"Vampire Template"}];
+  assert.deepEqual(merits.mergeCreationMerits(existing,edited),[
+    {name:"Kindred Status",instanceId:"new",dots:3,creationDots:1,experienceDots:2,configuration:{group:"Daeva"},grantedBy:"Vampire Template"},
+  ]);
+});
+
 test("Lucidez permanente é gratuita, persistente e remove a última caixa em qualquer ordem", () => {
   for (const order of permutations) {
     const current = sheet();
     for (let i=0;i<3;i++) current.current_state = resources.changePermanentClarity(current.current_state, 1);
     current.current_state = JSON.parse(JSON.stringify(current.current_state));
     current.current_state.clarity_damage = ["severe","severe","mild","mild","mild","mild","mild"];
-    for (const _ of order) {
+    for (let remaining = order.length; remaining > 0; remaining--) {
       current.current_state = resources.changePermanentClarity(current.current_state, -1);
       current.current_state.clarity_damage = resources.normalizeClarityDamage(current.current_state.clarity_damage, 4 + resources.permanentClarityBonus(current.current_state));
     }
@@ -181,7 +267,7 @@ test("salvamento aguarda commit, mantém ordem e recupera gravação interrompid
   globalThis.indexedDB = { open() {
     const request = {};
     queueMicrotask(() => {
-      request.result = { close() {}, transaction(_store,mode) {
+      request.result = { close() {}, transaction() {
         const tx = { objectStore() { return {
           put(value,key) { const req={result:key}; transactions.push(()=>{disk.set(key,structuredClone(value)); tx.oncomplete();}); return req; },
           get(key) { const req={result:disk.get(key)}; queueMicrotask(()=>tx.oncomplete()); return req; }

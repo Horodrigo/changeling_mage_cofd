@@ -24,7 +24,7 @@ export function mergeCreationMerits(existing: MeritSelection[] = [], selected: M
     .map((merit) => ({ ...merit, creationDots: 0, experienceDots: experienceMeritDots(merit), dots: experienceMeritDots(merit) }));
 
   for (const merit of selected) {
-    const previous = existing.find((item) => item.instanceId && item.instanceId === merit.instanceId);
+    const previous = existing.find((item) => item.instanceId && item.instanceId === merit.instanceId) ?? (merit.grantedBy ? existing.find((item) => item.name === merit.name && item.grantedBy === merit.grantedBy) : undefined);
     const creation = dots(merit.dots);
     const experience = previous ? experienceMeritDots(previous) : 0;
     result.push({ ...(previous ?? {}), ...merit, creationDots: creation, experienceDots: experience, dots: creation + experience });

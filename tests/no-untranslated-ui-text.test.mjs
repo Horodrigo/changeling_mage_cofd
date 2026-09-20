@@ -40,3 +40,9 @@ test("detector aceita t() e atributos técnicos", () => {
   `;
   assert.deepEqual(messages(code), []);
 });
+
+test("detector ignora pontuação estrutural sem texto traduzível", () => {
+  assert.deepEqual(messages("<p>{value}: {maximum} · {page}</p>"), []);
+  assert.deepEqual(messages("<p>· MtA, pp. 89–90</p>"), []);
+  assert.deepEqual(messages("const value = item[locale === 'en-US' ? 'name' : 'translatedName'];"), []);
+});

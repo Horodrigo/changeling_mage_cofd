@@ -5,10 +5,12 @@ import { getGameLineRegistration } from "@/game-lines/registry/game-line-registr
 import type { GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import { useCatalogSnapshot } from "./catalog-boundary";
+import { useLanguage } from "@/lib/i18n";
 
 /** Loads only the selected line's builder surface through the lightweight registry. */
 export function GameLineBuilder(props: GameLineBuilderProps & { gameLine: PersistedGameLineId }) {
   const catalogs = useCatalogSnapshot();
+  const { t } = useLanguage();
   const [Builder, setBuilder] = useState<ComponentType<GameLineBuilderProps> | null>(null);
 
   useEffect(() => {
@@ -19,5 +21,5 @@ export function GameLineBuilder(props: GameLineBuilderProps & { gameLine: Persis
     return () => { cancelled = true; };
   }, [props.gameLine]);
 
-  return Builder ? <Builder {...props} fixedGameLine={props.gameLine} catalogs={catalogs} /> : <div className="loading-card">Carregando…</div>;
+  return Builder ? <Builder {...props} fixedGameLine={props.gameLine} catalogs={catalogs} /> : <div className="loading-card">{t("workspace.loading")}</div>;
 }

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage } from "@/lib/i18n";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import {
   meritPrerequisitesMet,
@@ -22,6 +22,7 @@ import { Choice } from "./common-controls";
 import { ConfirmAction } from "../workspace/confirm-action";
 import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
 import { createRandomId } from "@/lib/random-id";
+import { experienceMeritDots } from "@/lib/merit-progression";
 
 export type MeritConfigurationRenderProps = {
   merit: MeritSelection;
@@ -64,6 +65,7 @@ export function MeritPicker({
   const [catalogOpen, setCatalogOpen] = useState(false);
   const categories = [...new Set(catalog.map((merit) => merit.category))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
+  const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
   const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
     (showAllMerits || meritPrerequisitesMet(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => owned.name === item.name) || merits.some((owned) => owned.name === item.name)) &&
@@ -100,6 +102,15 @@ export function MeritPicker({
         {selection.name !== "Familiar" && renderConfiguration({ merit: selection, ownedMerits: context.merits ?? [], inline: isInlineConfiguration(selection.name), onChange: (configuration) => { const next = [...merits]; next[index] = { ...selection, configuration }; setMerits(next); } })}
       </div>;
     })}</div>
+    {experienceMerits.length > 0 && <>
+      <div className="merit-heading"><div><h3>{t("ui.experience")}</h3><p>{t("ui.experienceMeritsPreservedDuringEditing")}</p></div></div>
+      <div className="merit-picker">{experienceMerits.map((selection, index) => {
+        const definition = catalog.find((item) => item.name === selection.name);
+        return <div className="merit-row configurable" key={`experience-${selection.instanceId ?? index}-${selection.name}`}>
+          <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong><small>{definition ? `${definition.source} · p. ${definition.page || "—"}` : t("ui.experience")}</small></div><Badge variant="outline">{selection.dots} {t("ui.dots")}</Badge><Badge variant="outline">{experienceMeritDots(selection)} {t("ui.xp")}</Badge></div>
+        </div>;
+      })}</div>
+    </>}
     <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}><DialogContent className="merit-dialog"><DialogHeader><DialogTitle>{t("ui.selectMerits")}</DialogTitle><DialogDescription>{t("ui.searchByNameOrBrowseCategories")}</DialogDescription></DialogHeader>
       <div className="catalog-filters"><label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t("ui.searchMeritByNamePrerequisiteOrSource")} /></label><Choice label={t("ui.category")} value={category} setValue={setCategory} options={["all", ...categories]} optionLabels={{ all: t("ui.allCategories"), ...Object.fromEntries(categories.map((item) => [item, categoryName(item)])) }} /><MeritCatalogVisibilityToggle showAll={showAllMerits} setShowAll={setShowAllMerits} /></div>
       <div className="merit-catalog">{categories.map((catalogCategory) => {
@@ -121,7 +132,7 @@ function isRepeatableDefinition(definition: MeritDefinition) {
 }
 
 function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {
-  return definition.prerequisites ? `${locale === "pt-BR" ? "Pré-requisitos" : "Prerequisites"}: ${definition.prerequisites}\n${definition.description}` : definition.description;
+  return definition.prerequisites ? `${translate(locale, "ui.prerequisites")}: ${definition.prerequisites}\n${definition.description}` : definition.description;
 }
 
 function meritCategoryLabel(category: string) {

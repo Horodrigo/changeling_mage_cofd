@@ -4,7 +4,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { MeritDefinition } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { changelingContractExperienceCost } from "@/lib/changeling-regalia";
 import { permanentClarityBonus } from "@/lib/resource-rules";
 import { derivedWithPermanentMerits as derivedWithCommonMerits } from "@/app/workspace/experience-shared";
@@ -28,35 +28,36 @@ export function purchasePreview(input: {
   benefitKey?: string;
   wyrd: number;
   lostWillpower: number;
+  targetRating: number;
 }) {
   const { purchaseType, character, locale } = input;
-  if (purchaseType === "Atributo") return { label: `${systemTerm(input.attribute,locale)} ${Number(character.attributes[input.attribute] ?? 1) + 1}`, cost: 4 };
-  if (purchaseType === "Perícia") return { label: `${systemTerm(input.skill,locale)} ${Number(character.skills[input.skill] ?? 0) + 1}`, cost: 2 };
+  if (purchaseType === "Atributo") return { label: `${systemTerm(input.attribute,locale)} ${input.targetRating}`, cost: 4 * (input.targetRating - Number(character.attributes[input.attribute] ?? 1)) };
+  if (purchaseType === "Perícia") return { label: `${systemTerm(input.skill,locale)} ${input.targetRating}`, cost: 2 * (input.targetRating - Number(character.skills[input.skill] ?? 0)) };
   if (purchaseType === "Mérito") return {
     label: input.nextMeritRating
       ? `${locale === "en-US" ? input.selectedMerit?.name : input.selectedMerit?.translatedName} ${input.nextMeritRating}`
-      : locale === "en-US" ? "No additional rating" : "Sem nível adicional",
+      : translate(locale, "ui.noAdditionalRating"),
     cost: input.nextMeritRating ? input.nextMeritRating - (input.ownedMerit?.dots ?? 0) : 0,
   };
   if (purchaseType === "Especialização") return {
-    label: `${systemTerm(input.specialtySkill,locale)}: ${input.specialtyName || (locale === "en-US" ? "new Specialty" : "nova Especialização")}`,
+    label: `${systemTerm(input.specialtySkill,locale)}: ${input.specialtyName || translate(locale, "ui.newSpecialty")}`,
     cost: 1,
   };
   if (purchaseType === "Contrato") return {
-    label: (locale === "en-US" ? input.selectedContract?.originalName : input.selectedContract?.name) ?? (locale === "en-US" ? "No Contract available" : "Nenhum Contrato disponível"),
+    label: (locale === "en-US" ? input.selectedContract?.originalName : input.selectedContract?.name) ?? translate(locale, "ui.noContractAvailable"),
     cost: input.selectedContract ? contractExperienceCost(input.selectedContract, character) : 0,
   };
   if (purchaseType === "Benefício de Contrato") return {
-    label: input.benefitKey ? locale === "en-US" ? "Benefit from another Seeming" : "Benefício de outra Feição" : locale === "en-US" ? "No Benefit available" : "Nenhum Benefício disponível",
+    label: input.benefitKey ? translate(locale, "ui.benefitFromAnotherSeeming") : translate(locale, "ui.noBenefitAvailable"),
     cost: input.benefitKey ? 1 : 0,
   };
   if (purchaseType === "Fado") return {
-    label: input.wyrd < 10 ? `${locale === "en-US" ? "Wyrd" : "Fado"} ${input.wyrd + 1}` : locale === "en-US" ? "Maximum Wyrd" : "Fado máximo",
-    cost: input.wyrd < 10 ? 5 : 0,
+    label: input.wyrd < 10 ? `${translate(locale, "ui.wyrd")} ${input.targetRating}` : translate(locale, "ui.maximumWyrd"),
+    cost: input.wyrd < 10 ? 5 * (input.targetRating - input.wyrd) : 0,
   };
   return {
-    label: input.lostWillpower ? locale === "en-US" ? "Recover a lost Willpower dot" : "Recuperar ponto perdido de Força de Vontade" : locale === "en-US" ? "No lost dots" : "Nenhum ponto perdido",
-    cost: input.lostWillpower ? 1 : 0,
+    label: input.lostWillpower ? `${translate(locale, "ui.willpower")} ${input.targetRating}` : translate(locale, "ui.noLostDots"),
+    cost: input.lostWillpower ? input.targetRating - (Number(character.derived.ForçaDeVontade ?? 1) - input.lostWillpower) : 0,
   };
 }
 
@@ -95,7 +96,7 @@ export function ExperienceRules() {
   const costRows = locale === "en-US" ? costRowsEn : costRowsPt;
   return (
     <div className="experience-rule-menus">
-      <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table><tbody>{beatRows.map((label) => <tr key={label}><td>{label}</td><td>1 Beat</td></tr>)}</tbody></table></details>
+      <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table><tbody>{beatRows.map((label) => <tr key={label}><td>{label}</td><td>{t("ui.oneBeat")}</td></tr>)}</tbody></table></details>
       <details className="experience-rules"><summary>{t("ui.costTable")}</summary><table>
         <thead><tr><th>{t("ui.trait")}</th><th>{t("ui.xp")}</th></tr></thead>
         <tbody>{costRows.map(([label, cost]) => <tr key={label}><td>{label}</td><td>{cost}</td></tr>)}</tbody>

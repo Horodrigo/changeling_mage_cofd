@@ -15,6 +15,23 @@ import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
+export type ExperiencePurchaseGroup<T extends string> = {
+  group: "core" | "supernatural" | "integrity" | "acquired";
+  purchases: readonly T[];
+};
+
+const EXPERIENCE_GROUP_LABELS = {
+  core: ["Core", "Core"],
+  supernatural: ["Sobrenatural", "Supernatural"],
+  integrity: ["Integridade e Recuperação", "Integrity & Recovery"],
+  acquired: ["Poderes Adquiridos", "Acquired Powers"],
+} as const;
+
+export function groupedPurchaseOptions<T extends string>(groups: readonly ExperiencePurchaseGroup<T>[], label: (value: T) => string, locale: string) {
+  const language = locale === "pt-BR" ? 0 : 1;
+  return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: EXPERIENCE_GROUP_LABELS[group][language] })));
+}
+
 export function BeatTrack({
   label,
   value,
@@ -45,6 +62,22 @@ export function BeatTrack({
       </div>
     </div>
   );
+}
+
+export function ratingPurchaseCost(current: number, target: number, costForDot: number | ((rating: number) => number)) {
+  let total = 0;
+  for (let rating = current + 1; rating <= target; rating += 1)
+    total += typeof costForDot === "number" ? costForDot : costForDot(rating);
+  return total;
+}
+
+export function ExperienceRatingPicker({ current, maximum, value, onChange }: { current: number; maximum: number; value: number; onChange: (value: number) => void }) {
+  const { t } = useLanguage();
+  const options = Array.from({ length: Math.max(0, maximum - current) }, (_, index) => current + index + 1);
+  return <div className="experience-rating-picker">
+    <span><b>{t("ui.current")}:</b> {current}</span>
+    <label><span>{t("ui.intended")}</span><RuleSelect value={String(value)} onChange={(next) => onChange(Number(next))} options={options.map((rating) => ({ value: String(rating), label: String(rating) }))} /></label>
+  </div>;
 }
 type ExperienceCatalogItem = {
   id: string;

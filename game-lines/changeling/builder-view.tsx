@@ -29,7 +29,7 @@ import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSecti
 import type { MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 
@@ -75,7 +75,7 @@ function courtId(catalog: readonly BuilderCourtDefinition[], value: unknown) {
 function courtDisplayName(catalog: readonly BuilderCourtDefinition[], value: unknown, locale: string) {
   const raw = String(value ?? "");
   if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase()))
-    return locale === "en-US" ? "Courtless" : "Sem Corte";
+    return translate(locale as "pt-BR" | "en-US", "ui.courtless");
   const definition = findCourt(catalog, value);
   return definition ? courtName(definition, locale) : raw;
 }
@@ -122,9 +122,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             options={Object.keys(CTL_SEEMINGS)}
             optionLabels={Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([name,item])=>[
               name,
-              locale === "pt-BR"
-                ? `${seemingDisplayName(name, locale)} - favorece a ${systemTerm(item.regalia, locale)}`
-                : `${name} - favors the ${item.regalia}`,
+              t("ui.favorsRegalia", { name: seemingDisplayName(name, locale), regalia: systemTerm(item.regalia, locale) }),
             ]))}
             invalid={props.missing("seeming")}
           />

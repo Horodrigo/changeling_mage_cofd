@@ -16,7 +16,7 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeEntitlementState, type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
-import { useLanguage, type Locale, type Translator } from "@/lib/i18n";
+import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage, type ClarityDamageLevel } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
@@ -46,7 +46,7 @@ function findCourt(catalog: readonly CourtDefinition[], value: unknown) {
 
 function courtName(catalog: readonly CourtDefinition[], value: unknown, locale: Locale) {
   const raw = String(value ?? "");
-  if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return locale === "en-US" ? "Courtless" : "Sem Corte";
+  if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return translate(locale, "ui.courtless");
   const court = findCourt(catalog, value);
   return court ? (locale === "en-US" ? court.name : court.translatedName) : raw;
 }
@@ -69,6 +69,7 @@ function kithPresentation(reference: ChangelingReference, value: unknown, locale
 }
 
 function PrintPage({ page, total, title, children, main = false }: { page: number; total: number; title: string; children: ReactNode; main?: boolean }) {
+  const { t } = useLanguage();
   return <section className={`ctl-print-page${main ? " ctl-print-main-page" : ""}`}>
     <div className="ctl-botanical-frame ctl-print-frame" aria-hidden="true">
       <span className="ctl-frame-edge ctl-frame-edge-top"/><span className="ctl-frame-edge ctl-frame-edge-bottom"/>
@@ -80,8 +81,8 @@ function PrintPage({ page, total, title, children, main = false }: { page: numbe
       <span className="ctl-frame-corner ctl-frame-corner-bottom-left"/><span className="ctl-frame-corner ctl-frame-corner-bottom-right"/>
     </div>
     <header className="ctl-print-brand">
-      <div><span className="ctl-print-title-mark">CHANGELING</span><strong>THE LOST</strong></div>
-      <p>CHRONICLES OF DARKNESS</p>
+      <div><span className="ctl-print-title-mark">{t("ui.changelingTitle")}</span><strong>{t("ui.theLOST")}</strong></div>
+      <p>{t("ui.chroniclesOFDARKNESS")}</p>
     </header>
     {!main && <div className="ctl-print-page-heading"><strong>{title}</strong><span>{page} / {total}</span></div>}
     <div className="ctl-print-page-content">{children}</div>
@@ -94,16 +95,18 @@ function PrintField({ label, value }: { label: string; value: unknown }) {
 }
 
 function PrintResourceTrack({ label, current, maximum, numbered = false }: { label: string; current: number; maximum: number; numbered?: boolean }) {
-  return <div className="ctl-print-track"><strong>{label}</strong><div className="ctl-print-circles">{Array.from({ length: maximum }, (_, index) => <i className={index < current ? "filled" : ""} key={index}/>)}</div>{numbered && <div className="ctl-print-resource-numbers" aria-label={`${label} scale`}>{Array.from({ length: maximum }, (_, index) => <span key={index}>{index + 1}</span>)}</div>}</div>;
+  const { t } = useLanguage();
+  return <div className="ctl-print-track"><strong>{label}</strong><div className="ctl-print-circles">{Array.from({ length: maximum }, (_, index) => <i className={index < current ? "filled" : ""} key={index}/>)}</div>{numbered && <div className="ctl-print-resource-numbers" aria-label={t("ui.scaleLabel", { label })}>{Array.from({ length: maximum }, (_, index) => <span key={index}>{index + 1}</span>)}</div>}</div>;
 }
 
 function PrintPhysicalTrack({ current, slots = 10, damage, clarityScale = false }: { current: number; slots?: number; damage?: ClarityDamageLevel[]; clarityScale?: boolean }) {
+  const { t } = useLanguage();
   const maximum = Math.max(10, slots);
   const marked = Math.max(0, Math.min(maximum, current));
   return <div className={`ctl-print-physical-track${clarityScale ? " ctl-print-clarity-track" : ""}`}>
     <div className="ctl-print-circles">{Array.from({ length: maximum }, (_, index) => <i className={index < marked ? "filled" : ""} key={`circle-${index}`}/>)}</div>
     <div className="ctl-print-boxes">{Array.from({ length: maximum }, (_, index) => <i className={String(damage?.[index] ?? "empty")} key={`box-${index}`}><span/></i>)}</div>
-    {clarityScale && <div className="ctl-print-clarity-numbers" aria-label="Clarity scale">{Array.from({ length: maximum }, (_, index) => <span key={index}>{index || "\u00a0"}</span>)}</div>}
+    {clarityScale && <div className="ctl-print-clarity-numbers" aria-label={t("ui.clarityScale")}>{Array.from({ length: maximum }, (_, index) => <span key={index}>{index || "\u00a0"}</span>)}</div>}
   </div>;
 }
 
@@ -321,7 +324,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     const entitlement = reference.entitlements.find((item) => item.id === entitlementState.definitionId);
     if (entitlement && entitlementState.accepted) {
       const activeBlessings = entitlementState.allocations.filter((item) => item.target === "blessing").map((item) => entitlement.blessings.find((blessing) => blessing.id === item.blessingId)).filter((item): item is NonNullable<typeof item> => Boolean(item));
-      add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>Entitlement Touchstone:</b> {entitlementState.touchstone.name}</p><p><b>{t("ui.privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>Curse:</b> {entitlement.curse}</p></PrintCard>);
+      add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>{t("ui.entitlementTouchstone")}:</b> {entitlementState.touchstone.name}</p><p><b>{t("ui.privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>{t("ui.curse")}:</b> {entitlement.curse}</p></PrintCard>);
     }
     character.merits.filter((merit) => !merit.grantedBy && ["Fae Mount", "Fae Pet"].includes(merit.name)).forEach((merit, index) => {
       const configuration = normalizeMeritConfiguration(merit.configuration);
@@ -365,7 +368,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section>
           <SheetHeading>{t("ui.health")}</SheetHeading><PrintPhysicalTrack current={health} slots={health}/>
           <SheetHeading>{t("ui.willpower")}</SheetHeading><PrintPhysicalTrack current={currentWillpower}/>
-          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label="Glamour"/></div>
+          <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={powerRating} max={10}/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
           <SheetHeading>{t("ui.clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
           <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><PrintResourceTrack label={t("ui.goblinDebt")} current={Math.max(0, Math.min(10, Number(character.current_state?.goblin_debt ?? 0)))} maximum={10} numbered/>
         </section>
@@ -376,7 +379,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
           <section><SheetHeading>{t("ui.conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={3}/></section>
         </div>
         <section><SheetHeading>{t("ui.experience")}</SheetHeading><div className="ctl-print-experience">
-          <div className="ctl-print-experience-beats"><span>Beats</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>
+          <div className="ctl-print-experience-beats"><span>{t("ui.beats")}</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>
           <div><span>{t("ui.xpAvailable")}</span></div>
           <div><span>{t("ui.totalXP")}</span></div>
           <div><span>{t("ui.xpSpent")}</span></div>

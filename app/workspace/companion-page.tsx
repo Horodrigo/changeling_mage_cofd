@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ANIMALS, animalPresentation, type Animal } from "@/lib/companions";
@@ -19,7 +20,7 @@ export function CompanionPage({ character, updateSheet }: {
   const animals = ANIMALS.map(item => animalPresentation(item, locale));
   const bonded = objectList(character.current_state?.conditions).filter(item => String(item.id) === "bonded" && String(item.animalId ?? ""));
   return <section className="core-companions">
-    <SheetHeading>Bonded</SheetHeading>
+    <SheetHeading>{t("ui.bonded")}</SheetHeading>
     <div className="companion-grid">{bonded.map((saved, index) => {
       const animal = animals.find(item => item.id === String(saved.animalId));
       if (!animal) return null;
@@ -42,12 +43,13 @@ export function CompanionPage({ character, updateSheet }: {
   </section>;
 }
 
-export function AnimalCard({ animal, name, onRemove, removable = true, onNameChange }: {
+export function AnimalCard({ animal, name, onRemove, removable = true, onNameChange, children }: {
   animal: Animal;
   name?: string;
   onRemove: () => void;
   removable?: boolean;
   onNameChange?: (value: string) => void;
+  children?: ReactNode;
 }) {
   const { t } = useLanguage();
   return <article className="companion-card">
@@ -59,5 +61,6 @@ export function AnimalCard({ animal, name, onRemove, removable = true, onNameCha
     <p><b>{t("ui.speed")}:</b> {animal.speed}</p>
     <p><b>{t("ui.attacks")}:</b> {animal.attacks.length ? animal.attacks.map(item => `${item.name} ${item.damage} (${item.pool} ${t("ui.dice")})${item.note ? ` — ${item.note}` : ""}`).join("; ") : t("ui.none")}</p>
     {animal.special && <p><b>{t("ui.special")}:</b> {animal.special}</p>}
+    {children}
   </article>;
 }

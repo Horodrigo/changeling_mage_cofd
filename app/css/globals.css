@@ -528,6 +528,9 @@ button { cursor: pointer; }
 .builder-section > h2 { margin: 6px 0 7px; font:700 31px Georgia,serif; }
 .builder-section > p { margin: 0 0 24px; color: #766e77; line-height: 1.6; }
 .builder-section > h3 { margin: 26px 0 12px; font:700 20px Georgia,serif; }
+.identity-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 18px; }
+.identity-grid > label { display:grid; gap:6px; min-width:0; }
+@media (max-width:767px) { .identity-grid { grid-template-columns:minmax(0,1fr); } }
 .builder-actions { max-width: 1000px; margin: 16px auto 0; display: grid; grid-template-columns: auto 1fr auto; }
 .line-choice { display: flex; flex-wrap: wrap; align-items: stretch; gap: 13px; margin: 24px 0; }
 .line-choice button { width: fit-content; min-height: 130px; display: flex; flex: 0 0 auto; flex-direction: column; align-items: flex-start; gap: 9px; padding: 20px; border: 1px solid #ddd5cc; border-radius: 11px; background: #faf7f2; text-align: left; }
@@ -571,6 +574,7 @@ button { cursor: pointer; }
 .rule-callout { display: flex; align-items: center; gap: 7px; margin: 18px 0!important; padding: 12px 14px; border-radius: 8px; background: #edf4ef; color: #4a6453!important; font-size:13px; }
 .rule-callout svg { width: 17px; flex: none; }
 .expanded-merit-empty { background: transparent !important; }
+.merit-empty { background: transparent !important; font-size:13px; padding: 0 0px;}
 .contract-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
 .contract-grid > div { display: grid; grid-template-columns: auto 1fr 38px; align-items: center; gap: 8px; padding: 9px; border: 1px solid #e0d9d0; border-radius: 9px; }
 .contract-grid strong, .contract-grid small { display: block; }.contract-grid small { margin-top: 3px; color: #827884; font-size:12px; }
@@ -797,6 +801,7 @@ button { cursor: pointer; }
 .merit-row.configurable { display:block; }
 .merit-row-main { display:grid; grid-template-columns:minmax(0,1fr) 130px auto; gap:10px; align-items:center; }
 .merit-row-main > div:first-child { min-width:0; display:grid; }
+.merit-row-main strong { overflow-wrap:anywhere; }
 .merit-configuration { grid-column:1/-1; margin-top:8px; border-top:1px solid #e7dfe7; padding-top:7px; }
 .merit-configuration summary { cursor:pointer; color:#6b556e; font-size:13px; font-weight:700; }
 .contacts-config-field legend { font-size:11px; }
@@ -956,8 +961,9 @@ button { cursor: pointer; }
    regions, but the page geometry remains stable across every game line. */
 .cod-main-sheet { display:grid; gap:12px; }
 .cod-main-identity, .cod-main-attributes { min-width:0; }
-.cod-main-columns { display:grid; grid-template-columns:1.08fr .94fr .98fr; gap:25px; align-items:start; }
+.cod-main-columns { display:grid; grid-template-columns:1.08fr .94fr .98fr; gap:25px; align-items:start; min-width:0; }
 .cod-main-columns > section { min-width:0; }
+.cod-main-columns :is(input, textarea, button, [data-slot="select-trigger"]) { max-width:100%; }
 .cod-main-other, .cod-main-core { display:grid; gap:3px; align-content:start; }
 .cod-main-skills .official-heading, .cod-main-other .official-heading, .cod-main-core .official-heading {
     margin: 4px 0 3px;
@@ -984,6 +990,8 @@ button { cursor: pointer; }
 .cod-main-experience { min-width:0; }
 .cod-main-experience .experience-panel { margin-top:0; padding:8px; }
 .cod-main-experience .experience-title small { display:none; }
+.cod-main-experience .experience-totals > * { min-width:0; }
+.cod-main-experience .experience-totals span { overflow-wrap:anywhere; font-size:10px; }
 .experience-panel .beat-resource .resource-track button { width:10px; height:10px; border-width:1px; }
 .experience-panel .beat-resource .resource-track { gap:3px; }
 .experience-panel > .experience-history { display:none; }
@@ -1070,6 +1078,8 @@ button { cursor: pointer; }
 .experience-history>div { display:grid; gap:4px; margin-top:7px; }.experience-history p { display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:2px 6px; margin:0; padding:5px 0; border-bottom:1px solid #ddd8d0; font-size:10px; }.experience-history p span { line-height:1.35; }.experience-history p strong { color:var(--sheet-accent); }.experience-history p small { grid-column:1/3; color:#7a7d79; font-size:11px; }.experience-history p button { grid-column:3; grid-row:1/3; height:25px; padding:0 7px; font-size:10px; }.experience-history p button svg { width:11px; }.experience-history em { color:#777; font-size:10px; }
 .experience-dialog { width:min(620px,calc(100vw - 32px)); max-width:620px!important; max-height:88vh; overflow-y:auto; }
 .experience-purchase-form { display:grid; grid-template-columns:1fr 1fr; gap:12px; }.experience-purchase-form label { display:grid; gap:6px; color:#504851; font-size:13px; font-weight:700; }.experience-purchase-form label:first-child { grid-column:1/-1; }
+.experience-rating-picker { display:grid; grid-template-columns:1fr 1fr; grid-column:1/-1; align-items:end; gap:12px; }
+.experience-rating-picker>span { min-height:36px; display:flex; align-items:center; gap:4px; padding:0 10px; border:1px solid color-mix(in srgb,var(--sheet-accent) 28%,#d8d2c8); background:rgba(255,255,255,.35); font-size:13px; }
 
 
 
@@ -1192,7 +1202,8 @@ button { cursor: pointer; }
 .sheet-merits { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
 .sheet-merits.single-column { grid-template-columns:1fr; }
 .sheet-merits > div { min-height:24px; border-bottom:1px solid #aaa8a16b; font-size:13px; }
-.sheet-merit-main { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sheet-merit-main { min-width:0; min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sheet-merit-main > span:first-child { min-width:0; overflow-wrap:anywhere; white-space:normal; }
 .sheet-merit-row.has-inline-config { padding:4px 0; }
 .sheet-merit-row.has-inline-config .sheet-merit-main > span { flex:none; }
 .sheet-merit-row .inline-merit-input { min-width:80px; height:24px; flex:1; padding:1px 3px; border:0; border-bottom:1px solid #aaa8a16b; border-radius:0; background:transparent; box-shadow:none; font:italic 13px Georgia,serif; }
@@ -1316,5 +1327,3 @@ button { cursor: pointer; }
   
   .official-field, .official-trait-block, .official-trait-line, .sheet-skills-column, .sheet-center-column, .sheet-right-column { min-width:0; }
 }
-
-

@@ -283,7 +283,7 @@
   background-image: url("/changeling/style/background-changeling.webp");
   background-position: center;
   background-repeat: no-repeat;
-   background-size: 55% 55%;
+  background-size: 55% auto;
   opacity: .20;
 }
 

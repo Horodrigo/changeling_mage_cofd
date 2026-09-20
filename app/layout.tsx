@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import Image from "next/image";
 import "./css/globals.css";
 import "./css/changeling-sheet.css";
 import "./css/mage-sheet.css";
 import "./css/vampire-sheet.css";
+import "./css/vampire-interactions.css";
 import { PwaManager } from "./pwa-manager";
 import { LanguageProvider } from "@/lib/i18n";
 
@@ -25,8 +27,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: `if ("serviceWorker" in navigator) { navigator.serviceWorker.getRegistrations().then((registrations) => Promise.all(registrations.map((registration) => registration.unregister()))); } if ("caches" in window) { caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("characters-of-the-darkness-") || key.startsWith("arquivo-das-trevas-")).map((key) => caches.delete(key)))); }` }}
         />}
         <div className="app-launch-splash" aria-hidden="true">
-          <img src="/app-icon-192.png" alt="" />
-          <strong>Characters of the Darkness</strong>
+          <Image src="/app-icon-192.png" alt="" width={192} height={192} priority unoptimized />
+          <strong>{metadata.title as string}</strong>
         </div>
         <LanguageProvider>{children}<PwaManager /></LanguageProvider>
       </body>
