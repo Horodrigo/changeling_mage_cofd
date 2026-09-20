@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect } from "react";
-import { PrintBoxes, PrintDots, PrintField, PrintLines, PrintRatedLines } from "@/app/workspace/print-sheet-primitives";
+import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintLines, PrintRatedLines, PrintSingleMarkDots } from "@/app/workspace/print-sheet-primitives";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import type { SpellDefinition } from "@/lib/catalog/catalog-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
@@ -21,7 +21,8 @@ const spellName = (item: Record<string, unknown>, locale: string) => String(loca
 function MagePrintPage({ page, children }: { page: number; children: React.ReactNode }) {
   const { t } = useLanguage();
   return <section className={`mta-print-page mta-print-page-${page}`}>
-    <header><span>{t("ui.mage")}</span><strong>{t("ui.theAWAKENING")}</strong></header>
+    <div className="mta-print-frame" aria-hidden="true"><i/><i/><i/><i/><span/><span/></div>
+    <header><div><span>{t("ui.mage")}</span><strong>{t("ui.theAWAKENING")}</strong></div><p>{t("ui.chroniclesOFDARKNESS")}</p></header>
     {children}
     <footer>{page} / 2</footer>
   </section>;
@@ -54,6 +55,12 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
   const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
   const mana = Math.max(0, Math.min(resource.maximum, Number(character.current_state.mana_current ?? resource.maximum)));
+  const regularAvailable = Math.max(0, Math.trunc(Number(character.current_state.mage_experience_available ?? 0)));
+  const regularSpent = Math.max(0, Math.trunc(Number(character.current_state.mage_experience_spent ?? 0)));
+  const arcaneAvailable = Math.max(0, Math.trunc(Number(character.current_state.arcane_experience_available ?? 0)));
+  const arcaneSpent = Math.max(0, Math.trunc(Number(character.current_state.arcane_experience_spent ?? 0)));
+  const regularTotal = Math.max(regularAvailable + regularSpent, Math.trunc(Number(character.current_state.mage_experience_total ?? 0)));
+  const arcaneTotal = Math.max(arcaneAvailable + arcaneSpent, Math.trunc(Number(character.current_state.arcane_experience_total ?? 0)));
   const conditions = objectList(character.current_state.conditions).map((item) => conditionCatalog.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
   const rotes = [...objectList(data.rotes), ...objectList(data.learned_rotes)];
   const praxes = [...objectList(data.praxes), ...objectList(data.learned_praxes)];
@@ -101,7 +108,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
       <div className="mta-print-main-grid">
         <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}</section>
         <section><Heading>{t("ui.arcana")}</Heading><PrintRatedLines values={arcanaRows} minimum={10}/><Heading>{t("ui.merits")}</Heading><PrintRatedLines values={meritRows} minimum={9}/><dl className="mta-print-derived"><div><dt>{t("ui.size")}</dt><dd>{derived.Tamanho ?? 5}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{derived.Deslocamento ?? 0}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{derived.Defesa ?? 0}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{derived.Iniciativa ?? 0}</dd></div></dl></section>
-        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower}/><Heading>{t("ui.gnosis")}</Heading><Track label={t("ui.gnosis")} maximum={gnosis} dots/><Heading>{t("ui.mana")}</Heading><Track label={t("ui.mana")} maximum={resource.maximum} current={mana}/><Heading>{t("ui.wisdom")}</Heading><Track label={t("ui.wisdom")} maximum={wisdom} dots/><Heading>{t("ui.conditions")}</Heading><PrintLines values={conditions} minimum={4}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.obsessions")}</Heading><PrintLines values={stringList(data.obsessions)} minimum={2}/></section>
+        <section><Heading>{t("ui.health")}</Heading><Track label={t("ui.health")} maximum={health}/><Heading>{t("ui.willpower")}</Heading><Track label={t("ui.willpower")} maximum={willpower}/><Heading>{t("ui.lineTraits")}</Heading><div className="mta-print-power"><section><strong>{t("ui.gnosis")}</strong><PrintDots value={gnosis} maximum={10}/></section><section><strong>{t("ui.mana")}</strong><PrintBoxes value={mana} maximum={resource.maximum}/></section></div><Heading>{t("ui.wisdom")}</Heading><PrintSingleMarkDots value={wisdom}/><Heading>{t("ui.conditions")}</Heading><PrintLines values={conditions} minimum={4}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.obsessions")}</Heading><PrintLines values={stringList(data.obsessions)} minimum={2}/><Heading>{t("ui.experience")}</Heading><PrintExperience beatTracks={[{ label: t("ui.beats"), value: Math.max(0, Math.min(5, Number(character.current_state.mage_experience_beats ?? 0))) }, { label: t("ui.arcaneBeats"), value: Math.max(0, Math.min(5, Number(character.current_state.arcane_experience_beats ?? 0))) }]} values={[{ label: t("ui.xpAvailable"), value: regularAvailable }, { label: t("ui.totalXP"), value: regularTotal }, { label: t("ui.xpSpent"), value: regularSpent }, { label: t("ui.arcaneXPAvailable"), value: arcaneAvailable }, { label: t("ui.arcaneXPTotal"), value: arcaneTotal }, { label: t("ui.arcaneXPSpent"), value: arcaneSpent }]}/></section>
       </div>
     </MagePrintPage>
     <MagePrintPage page={2}>

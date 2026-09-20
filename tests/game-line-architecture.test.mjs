@@ -213,6 +213,25 @@ test("workspace print capability is driven entirely by registration", async () =
   );
 });
 
+test("line print surfaces retain their web skins and line-specific tracks", async () => {
+  const [magePrint, vampirePrint, mageCss, vampireCss] = await Promise.all([
+    source("game-lines/mage/print-sheet.tsx"),
+    source("game-lines/vampire/print-sheet.tsx"),
+    source("app/css/mage-sheet.css"),
+    source("app/css/vampire-sheet.css"),
+  ]);
+
+  assert.match(magePrint, /PrintSingleMarkDots value=\{wisdom\}/);
+  assert.match(magePrint, /arcane_experience_beats/);
+  assert.match(magePrint, /arcaneXPAvailable/);
+  assert.match(vampirePrint, /item\.humanity_slot/);
+  assert.doesNotMatch(vampirePrint, /touchstonesAndBanes/);
+  assert.match(mageCss, /mage\/style\/background-mage\.webp/);
+  assert.match(mageCss, /mta-print-frame/);
+  assert.match(vampireCss, /vtr-print-frame/);
+  assert.match(vampireCss, /official-dots i\.on/);
+});
+
 test("production build manifest keeps builder, sheet, and print closures line-isolated", async () => {
   const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
 

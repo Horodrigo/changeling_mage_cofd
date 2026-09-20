@@ -1861,7 +1861,6 @@ background-size:
   print-color-adjust:exact;
   -webkit-print-color-adjust:exact;
 }
-.ctl-print-page::after { content:""; position:absolute; inset:0; pointer-events:none; background:url('/changeling/style/icon.webp') center 43%/105mm auto no-repeat; opacity:.035; }
 .ctl-print-page > * { position:relative; z-index:1; }
 .ctl-print-frame { --ctl-frame-rail-x:36mm; --ctl-frame-rail-y:6mm; --ctl-frame-side-x:6mm; --ctl-frame-corner-depth:36mm; --ctl-frame-center-gap:11mm; --ctl-frame-star-width:12mm; --ctl-frame-star-height:16mm; --ctl-frame-star-half-height:8mm; --ctl-frame-star-side-offset:9mm; --ctl-frame-star-side-width:5.5mm; --ctl-frame-star-side-height:6mm; --ctl-frame-star-side-half-height:2.7mm; }
 .ctl-print-frame .ctl-frame-corner { width:40mm; height:37.5mm; }

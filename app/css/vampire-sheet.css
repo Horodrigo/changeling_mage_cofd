@@ -1469,6 +1469,10 @@
 
 /* Official two-page print composition, using the project's Vampire skin. */
 .vtr-print-document {
+  --vtr-ink: #4d171c;
+  --vtr-ink-soft: rgba(77, 23, 28, .5);
+  --vtr-rule: rgba(77, 23, 28, .34);
+  --sheet-ink: var(--vtr-ink);
   display: grid;
   justify-content: center;
   gap: 18px;
@@ -1484,39 +1488,52 @@
   height: 297mm;
   overflow: hidden;
   padding: 9mm 15mm 8mm;
-  background: #f3e8df url("/paper-texture.webp") center / 1024px auto;
+  border: .4mm solid rgba(77, 23, 28, .45);
+  background-color: #eee5db;
+  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) .25mm, transparent .25mm, transparent 1.3mm);
   box-shadow: 0 4px 22px #39131740;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
 }
 
-.vtr-print-page::before,
-.vtr-print-page::after {
-  position: absolute;
-  z-index: 0;
-  width: 58mm;
-  height: 58mm;
-  background: url("/vampire/style/thorns-corner.webp") left top / contain no-repeat;
-  content: "";
-  pointer-events: none;
+.vtr-print-page::after { position:absolute; inset:0; z-index:0; background:url("/vampire/style/background-vampire.webp") center/50% auto no-repeat; content:""; opacity:.2; pointer-events:none; }
+.vtr-print-page > * { position: relative; z-index: 1; }
+
+.vtr-print-frame {
+  --vtr-frame-rail-x: 36mm;
+  --vtr-frame-rail-y: 6mm;
+  --vtr-frame-side-x: 6mm;
+  --vtr-frame-corner-depth: 36mm;
+  --vtr-frame-center-gap: 7mm;
+  --vtr-frame-center-width: 12mm;
+  --vtr-frame-center-height: 17mm;
+  --vtr-frame-center-half-height: 8mm;
+  --vtr-frame-side-offset: 5mm;
+  --vtr-frame-side-width: 3mm;
+  --vtr-frame-side-height: 6mm;
+  --vtr-frame-side-half-height: 2.5mm;
 }
 
-.vtr-print-page::before { top: 2mm; left: 2mm; }
-.vtr-print-page::after { right: 2mm; bottom: 2mm; transform: rotate(180deg); }
-.vtr-print-page > * { position: relative; z-index: 1; }
+.vtr-print-frame .vtr-frame-corner { width: 40mm; height: 37.5mm; }
 
 .vtr-print-page > header {
   display: flex;
-  min-height: 22mm;
-  align-items: end;
-  justify-content: center;
+  min-height: 25mm;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 2mm;
-  background: url("/vampire/style/vampire-title.webp") center / auto 20mm no-repeat;
+  padding: 0 1mm 3mm;
   text-transform: uppercase;
 }
 
-.vtr-print-page > header span { visibility: hidden; }
-.vtr-print-page > header strong { font-size: 7pt; letter-spacing: .2em; }
+.vtr-print-page > header::before,
+.vtr-print-page > header::after { position:absolute; bottom:0; width:50%; height:4.5mm; background-image:url("/vampire/style/divider-terminal.webp"),linear-gradient(transparent 43%,var(--vtr-ink-soft) 43%,var(--vtr-ink-soft) 48%,transparent 48%,transparent 57%,var(--vtr-rule) 57%,var(--vtr-rule) 62%,transparent 62%); background-position:left center,2mm center; background-repeat:no-repeat,no-repeat; background-size:auto 4.5mm,calc(100% - 2mm) 100%; content:""; }
+.vtr-print-page > header::before { left:0; }
+.vtr-print-page > header::after { right:0; transform:scaleX(-1); }
+.vtr-print-page > header > div { width:94mm; height:22mm; background:url("/vampire/style/vampire-title.webp") left center/contain no-repeat; }
+.vtr-print-page > header span,
+.vtr-print-page > header strong { visibility: hidden; }
+.vtr-print-page > header p { margin:0; color:var(--vtr-ink-soft); font-size:6pt; letter-spacing:.22em; }
 .vtr-print-page > footer { position: absolute; right: 12mm; bottom: 5mm; font-size: 7pt; }
 
 .vtr-print-identity {
@@ -1556,22 +1573,18 @@
 .vtr-print-document .official-trait-block h4 { margin: 1mm 0 0; font-size: 10pt; text-align: center; }
 .vtr-print-document .official-trait-line { min-height: 4.3mm; font-size: 8pt; }
 .vtr-print-document .official-dots i,
-.vtr-print-document .cod-print-dots i { width: 2.5mm; height: 2.5mm; }
+.vtr-print-document .cod-print-dots i { width: 2.5mm; height: 2.5mm; border-color:var(--vtr-ink); background:#fff; }
+.vtr-print-document .official-dots i.on { background:var(--vtr-ink); box-shadow:inset 0 0 0 .35mm #f5ece5; }
 .vtr-print-document .cod-print-boxes i { width: 3.3mm; height: 3.3mm; }
 .vtr-print-document .cod-print-lines > div,
 .vtr-print-document .cod-print-rated-lines > div { min-height: 4.4mm; font-size: 8pt; }
 
-.vtr-print-humanity > div {
-  display: grid;
-  grid-template-columns: 5mm minmax(0, 1fr) 3mm;
-  min-height: 4.6mm;
-  align-items: center;
-  border-bottom: 1px solid #9b7771;
-  font-size: 8pt;
-}
-
-.vtr-print-humanity i { width: 2.5mm; height: 2.5mm; border: 1px solid currentColor; border-radius: 50%; }
-.vtr-print-humanity i.filled { background: currentColor; box-shadow: inset 0 0 0 .5mm #f3e8df; }
+.vtr-print-power { display:grid; gap:1.5mm; margin-bottom:1mm; }
+.vtr-print-power > section { display:grid; gap:.7mm; }
+.vtr-print-power strong { color:#611920; font-size:7pt; text-transform:uppercase; }
+.vtr-print-power .cod-print-dots,.vtr-print-power .cod-print-boxes { flex-wrap:wrap; }
+.vtr-print-page .cod-print-integrity > div { border-color:#9b7771; }
+.vtr-print-page .cod-print-integrity i.filled { box-shadow:inset 0 0 0 .45mm #f5ece5; }
 
 .vtr-print-derived { display: grid; grid-template-columns: 1fr 1fr; margin: 2mm 0 0; font-size: 8pt; }
 .vtr-print-derived div { display: flex; justify-content: space-between; border-bottom: 1px solid #9b7771; }
@@ -1579,7 +1592,6 @@
 .vtr-print-derived dd { margin: 0; }
 
 .vtr-print-second-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
-.vtr-print-anchor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
 .vtr-print-combat > div,
 .vtr-print-equipment > div { display: grid; min-height: 5mm; align-items: end; border-bottom: 1px solid #9b7771; font-size: 7pt; }
 .vtr-print-combat > div { grid-template-columns: 2fr repeat(5, 1fr); }
