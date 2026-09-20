@@ -121,7 +121,7 @@ export function ExperiencePanel({
       : []
   ).filter((entry) => entry.kind === "spend");
   const [experienceInput, setExperienceInput] = useState(String(available));
-  const [purchaseType, setPurchaseType] = useState(PURCHASE_TYPES[0]);
+  const [purchaseType, setPurchaseType] = useState<string>(PURCHASE_TYPES[0]);
   const [targetRating, setTargetRating] = useState(0);
   const [attribute, setAttribute] = useState<string>(
     Object.values(ATTRIBUTES).flat()[0],
