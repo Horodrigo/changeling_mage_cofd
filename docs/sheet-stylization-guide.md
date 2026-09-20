@@ -45,7 +45,7 @@ Changeling passou a usar:
 - tinta principal `#173823`;
 - tinta suave e regras derivadas da mesma cor com transparência;
 - papel-base `#eee6d2`;
-- textura repetível de 1024 × 1024 px;
+- textura repetível de 1254 × 1254 px;
 - degradê verde lateral sobre a textura;
 - sombra externa suave e sombra interna esverdeada.
 
@@ -107,17 +107,17 @@ responsivas da estrela central.
 
 O cabeçalho foi recomposto com três elementos independentes:
 
-- `changeling-title.webp` para o lettering principal;
+- `title.webp` para o lettering principal;
 - `THE LOST`/`OS PERDIDOS` como texto HTML posicionado ao lado do título;
 - `CHRONICLES OF DARKNESS`/`CRÔNICAS DAS TREVAS` como texto HTML independente.
 
-O divisor inferior do cabeçalho usa `divider-terminal.webp` em cada extremidade
+O divisor inferior do cabeçalho usa `section-divider.webp` em cada extremidade
 e duas linhas CSS. O mesmo terminal é espelhado no lado direito; não são
 necessários arquivos `left` e `right`.
 
 As abas formam uma caixa contínua com cantos arredondados, divisores verticais
 de altura total e `overflow: hidden`. A aba ativa recebe um inset de 4 px e a
-textura orgânica `selected-tab-texture.webp`, mantendo uma pequena margem entre
+textura orgânica `tab-texture.webp`, mantendo uma pequena margem entre
 o preenchimento e a borda externa.
 
 ### 2.6 Divisores internos
@@ -129,7 +129,7 @@ Traits, Court, Favored Regalia, Frailties, Clarity, Touchstones, Conditions,
 Aspirations e Notes, usa:
 
 - uma linha CSS flexível em cada lado do texto;
-- `divider-terminal.webp` no extremo interno;
+- `section-divider.webp` no extremo interno;
 - o mesmo pseudo-elemento espelhado no lado direito;
 - uma única linha para títulos secundários, em vez de imagens largas rígidas.
 
@@ -143,16 +143,16 @@ Cada metade é uma sobreposição de três WebPs e uma linha CSS. O texto perman
 centralizado e acima da decoração. Os três assets possuem função própria e não
 devem ser fundidos novamente em uma imagem de largura fixa.
 
-Os antigos `attributes-divider.webp`, `divider-arm.webp` e `panel-node.webp`
-foram removidos porque duplicavam funções ou não se adaptavam à largura real.
+Os antigos `divider-arm.webp` e `panel-node.webp` foram removidos porque
+duplicavam funções ou não se adaptavam à largura real.
 Painéis de recursos e Experience passaram a reutilizar
-`frame-star-side.webp` nos quatro cantos.
+`frame-side.webp` nos quatro cantos.
 
 ### 2.7 Linhas verticais e grid
 
 Os separadores entre Attributes, Skills, conteúdo central, recursos e blocos
 inferiores deixaram de usar bordas CSS perfeitamente uniformes. Eles usam
-`vertical-rule.webp`, um trecho estreito de tinta escaneada repetido em Y.
+`column-divider.webp`, um trecho estreito de tinta escaneada repetido em Y.
 
 A ficha mantém três colunas em desktop e remove padding nas extremidades
 externas para aproveitar melhor a área útil. Em mobile, as grids são empilhadas
@@ -252,34 +252,35 @@ mas manter sua composição e interpretação dos dados dentro da própria linha
 
 ### 3.1 Assets usados em runtime por Changeling
 
-A implementação completa usa **16 imagens raster** quando a marca-d'água já
-existente também é contada: 12 fundamentais e 4 específicas da moldura dinâmica
-de Skill de Kith.
+A implementação completa usa **17 imagens raster**: 13 fundamentais e 4
+específicas da moldura dinâmica de Skill de Kith.
 
 | Grupo | Asset público | Dimensão | Canal | Propósito |
 | --- | --- | ---: | --- | --- |
-| Papel | `public/paper-texture.webp` | 1024 × 1024 | RGB | Textura repetível do fundo da folha. |
-| Moldura | `public/changeling/style/botanical-corner.webp` | 1229 × 1280 | RGBA | Um canto botânico reutilizado nas quatro quinas por transformação CSS. |
-| Moldura | `public/changeling/style/frame-star-center.webp` | 232 × 314 | RGBA | Estrela central superior; rotacionada para a inferior. |
-| Moldura | `public/changeling/style/frame-star-side.webp` | 120 × 103 | RGBA | Um ornamento lateral reutilizado ao redor das duas estrelas e nos cantos de painéis. |
-| Cabeçalho | `public/changeling/style/changeling-title.webp` | 998 × 190 | RGBA | Lettering ilustrado da marca Changeling. |
-| Abas | `public/changeling/style/selected-tab-texture.webp` | 1280 × 320 | RGB | Tinta orgânica da aba ativa; aplicada com `background-size: cover`. |
-| Attributes | `public/changeling/style/attributes-divider.webp` | 1182 × 499 | RGBA | Medalhão/trecho intermediário do divisor. |
+| Papel | `public/changeling/style/paper-texture.webp` | 1254 × 1254 | RGB | Textura repetível do fundo da folha. |
+| Moldura | `public/changeling/style/frame-corner.webp` | 1254 × 1254 | RGBA | Um canto botânico reutilizado nas quatro quinas por transformação CSS. |
+| Moldura | `public/changeling/style/frame-center.webp` | 232 × 314 | RGBA | Estrela central superior; rotacionada para a inferior. |
+| Moldura | `public/changeling/style/frame-side.webp` | 120 × 103 | RGBA | Um ornamento lateral reutilizado ao redor das duas estrelas e nos cantos de painéis. |
+| Cabeçalho | `public/changeling/style/title.webp` | 998 × 190 | RGBA | Lettering ilustrado da marca Changeling. |
+| Abas | `public/changeling/style/tab-texture.webp` | 1280 × 320 | RGB | Tinta orgânica da aba ativa; aplicada com `background-size: cover`. |
+| Attributes | `public/changeling/style/attributes-divider.webp` | 2172 × 724 | RGBA | Medalhão/trecho intermediário do divisor. |
 | Attributes | `public/changeling/style/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
-| Seções | `public/changeling/style/divider-terminal.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
-| Grid | `public/changeling/style/vertical-rule.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
-| Marca-d'água | `public/changeling-skull.webp` | 534 × 500 | RGBA | Símbolo central muito translúcido, já existente antes da branch. |
-| Skill de Kith | `public/changeling/style/skill-kith-left.webp` | 471 × 552 | RGBA | Início da moldura adaptável. |
-| Skill de Kith | `public/changeling/style/skill-kith-middle-1.webp` | 260 × 552 | RGBA | Primeiro segmento repetível. |
-| Skill de Kith | `public/changeling/style/skill-kith-middle-2.webp` | 260 × 552 | RGBA | Segundo segmento repetível, alternado com o primeiro. |
-| Skill de Kith | `public/changeling/style/skill-kith-right.webp` | 760 × 552 | RGBA | Fechamento da moldura adaptável. |
+| Seções | `public/changeling/style/section-divider.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
+| Grid | `public/changeling/style/column-divider.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
+| Marca-d'água | `public/changeling/style/watermark.webp` | 1145 × 1374 | RGBA | Ilustração central translúcida da ficha. |
+| Ícone | `public/changeling/style/icon.webp` | 534 × 500 | RGBA | Símbolo da linha usado no registro e na impressão. |
+| Experiência | `public/changeling/style/experience-purchase-icon.webp` | 657 × 685 | RGBA | Ornamento do seletor de compra de trait. |
+| Skill de Kith | `public/changeling/style/skill-highlight-left.webp` | 760 × 552 | RGBA | Início da moldura adaptável. |
+| Skill de Kith | `public/changeling/style/skill-highlight-middle-1.webp` | 260 × 552 | RGBA | Primeiro segmento repetível. |
+| Skill de Kith | `public/changeling/style/skill-highlight-middle-2.webp` | 260 × 552 | RGBA | Segundo segmento repetível, alternado com o primeiro. |
+| Skill de Kith | `public/changeling/style/skill-highlight-right.webp` | 471 × 552 | RGBA | Fechamento da moldura adaptável. |
 
 Há ainda **3 fontes WOFF2**, que não entram na contagem de imagens, em
 `public/fonts/changeling/`.
 
 ### 3.2 Quantidade recomendada para uma nova linha
 
-Para reproduzir a mesma profundidade visual em Mage, prepare primeiro **12
+Para reproduzir a mesma profundidade visual em Mage, prepare primeiro **13
 imagens fundamentais de runtime**:
 
 1. uma textura de papel repetível;
@@ -294,17 +295,18 @@ imagens fundamentais de runtime**:
 10. um terminal genérico de seção;
 11. uma regra vertical de tinta repetível;
 12. uma marca-d'água da linha.
+13. um ornamento para a ação de compra de experiência.
 
 Se a linha possuir um destaque que precise envolver texto de largura variável,
 adicione **4 imagens segmentadas** — esquerda, centro A, centro B e direita —
-chegando a **16 imagens**, como em Changeling. Não crie esse conjunto para Mage
+chegando a **17 imagens**, como em Changeling. Não crie esse conjunto para Mage
 apenas para imitar Kith: só o adote se houver um significado visual próprio,
 como Rote, Ruling ou outro estado que realmente peça essa ornamentação.
 
 O pacote-fonte atual de Changeling contém 14 arquivos em
-`assets/changeling-style/source/`. A diferença de contagem ocorre porque
-`frame-star.png` é um master do qual o pipeline extrai dois assets de runtime,
-enquanto a marca-d'água já existia e não faz parte desse pacote-fonte.
+`assets/changeling-style/source/`. A diferença de contagem ocorre porque alguns
+masters geram peças de runtime e porque a marca-d'água, o ícone da linha e o
+ornamento de experiência não fazem parte desse pacote-fonte.
 
 ## 4. Especificação dos arquivos visuais
 
@@ -547,12 +549,11 @@ Não restaure estes arquivos sem uma nova necessidade comprovada:
 
 | Asset removido | Motivo |
 | --- | --- |
-| `attributes-divider.webp` | Divisor monolítico não acomodava texto e largura variáveis. |
 | `divider-arm.webp` | O mesmo resultado é obtido com terminal reutilizável e linha CSS. |
 | `panel-node.webp` | Duplicava o papel do ornamento lateral da estrela. |
 | `kith-skill-stamp.webp` | Distorcia e não acompanhava a largura real do nome localizado. |
 | `attributes-divider.png` e `section-divider.png` nos masters | Substituídos pelas peças finais reutilizáveis. |
-| variantes `divider-terminal-left/right` | Um único terminal pode ser espelhado. |
+| variantes `section-divider-left/right` | Um único terminal pode ser espelhado. |
 
 ## 9. Validação obrigatória
 
