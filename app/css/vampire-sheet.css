@@ -1466,3 +1466,130 @@
   .vtr-sheet .official-heading::after,
   .vtr-decorative-frame { opacity: 1; }
 }
+
+/* Official two-page print composition, using the project's Vampire skin. */
+.vtr-print-document {
+  display: grid;
+  justify-content: center;
+  gap: 18px;
+  color: #3f171b;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.vtr-print-page {
+  position: relative;
+  box-sizing: border-box;
+  width: 210mm;
+  min-width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  padding: 9mm 15mm 8mm;
+  background: #f3e8df url("/paper-texture.webp") center / 1024px auto;
+  box-shadow: 0 4px 22px #39131740;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.vtr-print-page::before,
+.vtr-print-page::after {
+  position: absolute;
+  z-index: 0;
+  width: 58mm;
+  height: 58mm;
+  background: url("/vampire/style/thorns-corner.webp") left top / contain no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.vtr-print-page::before { top: 2mm; left: 2mm; }
+.vtr-print-page::after { right: 2mm; bottom: 2mm; transform: rotate(180deg); }
+.vtr-print-page > * { position: relative; z-index: 1; }
+
+.vtr-print-page > header {
+  display: flex;
+  min-height: 22mm;
+  align-items: end;
+  justify-content: center;
+  margin-bottom: 2mm;
+  background: url("/vampire/style/vampire-title.webp") center / auto 20mm no-repeat;
+  text-transform: uppercase;
+}
+
+.vtr-print-page > header span { visibility: hidden; }
+.vtr-print-page > header strong { font-size: 7pt; letter-spacing: .2em; }
+.vtr-print-page > footer { position: absolute; right: 12mm; bottom: 5mm; font-size: 7pt; }
+
+.vtr-print-identity {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5mm 5mm;
+  margin-bottom: 2mm;
+}
+
+.vtr-print-heading {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin: 2mm 0 1mm;
+  color: #611920;
+  font-size: 13pt;
+  font-variant: small-caps;
+  text-align: center;
+}
+
+.vtr-print-heading::before,
+.vtr-print-heading::after { height: 1px; flex: 1; background: #8d5556; content: ""; }
+
+.vtr-print-attributes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5mm;
+}
+
+.vtr-print-main-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr .8fr;
+  gap: 5mm;
+}
+
+.vtr-print-document h3 { margin: 1mm 0 0; font-size: 9pt; text-align: center; }
+.vtr-print-document .official-trait-block h4 { margin: 1mm 0 0; font-size: 10pt; text-align: center; }
+.vtr-print-document .official-trait-line { min-height: 4.3mm; font-size: 8pt; }
+.vtr-print-document .official-dots i,
+.vtr-print-document .cod-print-dots i { width: 2.5mm; height: 2.5mm; }
+.vtr-print-document .cod-print-boxes i { width: 3.3mm; height: 3.3mm; }
+.vtr-print-document .cod-print-lines > div,
+.vtr-print-document .cod-print-rated-lines > div { min-height: 4.4mm; font-size: 8pt; }
+
+.vtr-print-humanity > div {
+  display: grid;
+  grid-template-columns: 5mm minmax(0, 1fr) 3mm;
+  min-height: 4.6mm;
+  align-items: center;
+  border-bottom: 1px solid #9b7771;
+  font-size: 8pt;
+}
+
+.vtr-print-humanity i { width: 2.5mm; height: 2.5mm; border: 1px solid currentColor; border-radius: 50%; }
+.vtr-print-humanity i.filled { background: currentColor; box-shadow: inset 0 0 0 .5mm #f3e8df; }
+
+.vtr-print-derived { display: grid; grid-template-columns: 1fr 1fr; margin: 2mm 0 0; font-size: 8pt; }
+.vtr-print-derived div { display: flex; justify-content: space-between; border-bottom: 1px solid #9b7771; }
+.vtr-print-derived dt,
+.vtr-print-derived dd { margin: 0; }
+
+.vtr-print-second-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.vtr-print-anchor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.vtr-print-combat > div,
+.vtr-print-equipment > div { display: grid; min-height: 5mm; align-items: end; border-bottom: 1px solid #9b7771; font-size: 7pt; }
+.vtr-print-combat > div { grid-template-columns: 2fr repeat(5, 1fr); }
+.vtr-print-equipment > div { grid-template-columns: 2fr repeat(3, 1fr); }
+
+@media print {
+  body.character-printing .vtr-print-page {
+    break-after: page;
+    box-shadow: none;
+  }
+
+  body.character-printing .vtr-print-page:last-child { break-after: auto; }
+}

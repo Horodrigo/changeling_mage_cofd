@@ -101,7 +101,7 @@ export function CharacterPrintDialog({
           <DialogTitle>{t("ui.printCharacterSheet")}</DialogTitle>
           <DialogDescription>{t("ui.thePreviewUsesA4PagesAndExcludesApplication")}</DialogDescription>
         </DialogHeader>
-        <div className="character-print-options">
+        {character.game_line === "CtL" && <div className="character-print-options">
           <label>
             <Checkbox checked={options.powerDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, powerDetails: checked === true }))}/>
             <span>{t("ui.printFullPowerDetails")}</span>
@@ -110,7 +110,7 @@ export function CharacterPrintDialog({
             <Checkbox checked={options.expandedMeritDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, expandedMeritDetails: checked === true }))}/>
             <span>{t("ui.printExpandedMeritDetails")}</span>
           </label>
-        </div>
+        </div>}
       </div>
       <div ref={previewRef} className="character-print-preview" aria-busy={!ready}>
         <div

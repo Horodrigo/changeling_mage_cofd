@@ -145,10 +145,11 @@ test("Vampire Status and English trait prerequisites resolve against neutral sto
   assert.equal(vampireCovenantStatus({ merits: context.merits }, "circle-of-the-crone", "Circle of the Crone"), 2);
 });
 
-test("Vampire remains a lazy registered line without a print surface", async () => {
+test("Vampire exposes its print surface lazily", async () => {
   const registration = await readFile(`${root}/game-lines/vampire/registration.ts`, "utf8");
   assert.match(registration, /id:\s*"VtR"/);
   assert.match(registration, /loadBuilder:\s*\(\)\s*=>\s*import\("\.\/builder"\)/);
   assert.match(registration, /loadSheet:\s*\(\)\s*=>\s*import\("\.\/sheet"\)/);
-  assert.doesNotMatch(registration, /loadPrintSheet|print:/);
+  assert.match(registration, /loadPrintSheet:\s*\(\)\s*=>\s*import\("\.\/print"\)/);
+  assert.match(registration, /print:\s*\[/);
 });

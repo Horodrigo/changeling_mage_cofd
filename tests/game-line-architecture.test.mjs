@@ -193,8 +193,8 @@ test("workspace print capability is driven entirely by registration", async () =
 
   assert.match(contract, /loadPrintSheet\?/);
   assert.match(changeling, /loadPrintSheet\s*:/);
-  assert.doesNotMatch(mage, /loadPrintSheet\s*:/);
-  assert.doesNotMatch(vampire, /loadPrintSheet\s*:/);
+  assert.match(mage, /loadPrintSheet\s*:/);
+  assert.match(vampire, /loadPrintSheet\s*:/);
 
   assert.match(
     workspace,
@@ -213,7 +213,7 @@ test("workspace print capability is driven entirely by registration", async () =
   );
 });
 
-test("production build manifest keeps builder and sheet closures line-isolated", async () => {
+test("production build manifest keeps builder, sheet, and print closures line-isolated", async () => {
   const manifest = JSON.parse(await source("dist/client/.vite/manifest.json"));
 
   const closure = (rootKey) => {
@@ -227,7 +227,7 @@ test("production build manifest keeps builder and sheet closures line-isolated",
     return [...keys];
   };
 
-  for (const surface of ["builder", "sheet"]) {
+  for (const surface of ["builder", "sheet", "print"]) {
     for (const line of ["mage", "changeling", "vampire"]) {
       const key = `game-lines/${line}/${surface}.tsx`;
       assert.ok(manifest[key], `missing manifest entry: ${key}`);
