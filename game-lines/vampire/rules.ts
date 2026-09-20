@@ -16,25 +16,39 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
     humanity_slot: boundedRating(item.humanity_slot, 2, 7, index === 0 ? 6 : Math.max(2, 6 - index)),
     notes: String(item.notes ?? ""),
   }));
+  const clanId = String(data.clan_id ?? "");
+  const normalizedBanes = objectArray(data.banes).map((bane, index) => ({
+    id: String(bane.id ?? `bane-${index + 1}`),
+    name: String(bane.name ?? ""),
+    breaking_point_id: String(bane.breaking_point_id ?? ""),
+    breaking_point_level: boundedRating(bane.breaking_point_level, 0, 10, 0),
+    required_by: String(bane.required_by ?? ""),
+  }));
+  const mekhetBane = normalizedBanes.find((bane) => bane.required_by === "mekhet");
+  const banes = clanId === "mekhet"
+    ? [{ ...(mekhetBane ?? {}), id: "mekhet-clan-bane", name: mekhetBane?.name ?? "", breaking_point_id: "", breaking_point_level: 0, required_by: "mekhet" }, ...normalizedBanes.filter((bane) => bane.required_by !== "mekhet")].slice(0, 3)
+    : normalizedBanes.filter((bane) => bane.required_by !== "mekhet").filter((bane) => bane.name || bane.breaking_point_id).slice(0, 3);
   const undeadCompanions = objectArray(data.undead_companions).map((item, index) => ({
     id: String(item.id ?? `undead-familiar-${index + 1}`),
     animal_id: String(item.animal_id ?? ""),
     name: String(item.name ?? ""),
-    remaining_nights: Math.max(0, Math.trunc(Number(item.remaining_nights) || 0)),
+    health_damage: Array.isArray(item.health_damage) ? item.health_damage.filter((damage) => damage === "bashing" || damage === "lethal" || damage === "aggravated") : [],
+    undying: Boolean(item.undying),
   })).filter((item) => item.animal_id);
   const disciplineChoices = data.discipline_choices && typeof data.discipline_choices === "object" && !Array.isArray(data.discipline_choices) ? data.discipline_choices as Record<string, unknown> : {};
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery) ? data.blood_sorcery as Record<string, unknown> : {};
   const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" && !Array.isArray(data.ordo_dracul) ? data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" && !Array.isArray(ordo.coil_ratings) ? ordo.coil_ratings as Record<string, unknown> : {};
-  const {
-    ...persistedState
-  } = state;
+  const persistedState = { ...state };
+  for (const retiredKey of ["blush_of_life_active", "blush_of_life_extra_vitae", "frenzy_situational_modifier", "frenzy_held_willpower", "torpor", "vitae_addictions"])
+    delete persistedState[retiredKey];
 
   return {
     ...character,
     line_data: {
       ...data,
-      clan_id: String(data.clan_id ?? ""),
+      clan_id: clanId,
+      clan_bane_active: data.clan_bane_active !== false,
       favored_attribute: String(data.favored_attribute ?? ""),
       covenant_id: String(data.covenant_id ?? "covenantless"),
       humanity,
@@ -50,12 +64,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       touchstones,
       undead_companions: undeadCompanions,
       devotion_ids: stringArray(data.devotion_ids),
-      banes: objectArray(data.banes).slice(0, 3).map((bane, index) => ({
-        id: String(bane.id ?? `bane-${index + 1}`),
-        name: String(bane.name ?? ""),
-        breaking_point_id: String(bane.breaking_point_id ?? ""),
-        breaking_point_level: boundedRating(bane.breaking_point_level, 0, 10, 0),
-      })).filter((bane) => bane.name || bane.breaking_point_id),
+      banes,
       kindred_status_scope: ["covenant", "clan", "city"].includes(String(data.kindred_status_scope ?? "")) ? String(data.kindred_status_scope) : "covenant",
       kindred_status_city: String(data.kindred_status_city ?? ""),
       kindred_status_group: String(data.kindred_status_group ?? ""),
@@ -100,9 +109,9 @@ export const vampireRules: GameLineRulesModule = {
     if (!String(character.line_data.clan_id ?? "")) issues.push({ field: "clan_id", message: "Choose a Clan." });
     if (!String(character.line_data.mask_id ?? "")) issues.push({ field: "mask_id", message: "Choose a Mask." });
     if (!String(character.line_data.dirge_id ?? "")) issues.push({ field: "dirge_id", message: "Choose a Dirge." });
-    if (!objectArray(character.line_data.touchstones).some((item) => String(item.name ?? "").trim())) issues.push({ field: "touchstones", message: "Name the first Touchstone." });
     const disciplines = recordRatings(character.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
-    if (Object.values(disciplines).reduce((sum, value) => sum + value, 0) < 3) issues.push({ field: "disciplines", message: "Allocate three Discipline dots." });
+    const covenantDot = String(character.line_data.creation_covenant_power_id ?? "") ? 1 : 0;
+    if (Object.values(disciplines).reduce((sum, value) => sum + value, 0) + covenantDot < 3) issues.push({ field: "disciplines", message: "Allocate three Discipline dots." });
     return issues;
   },
 };

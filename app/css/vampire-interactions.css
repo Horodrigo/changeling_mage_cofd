@@ -68,7 +68,13 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
   margin: 0;
 }
 
+.vtr-sheet .vampire-humanity-heading-row > .official-heading::after {
+  display: none;
+}
+
 .vtr-sheet .vampire-detachment-trigger {
+  position: relative;
+  z-index: 1;
   width: auto;
   flex: 0 0 auto;
   min-height: 30px;
@@ -204,6 +210,8 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
   align-items: center;
 }
 
+.vtr-sheet .vampire-bane-required { display:grid; width:26px; height:26px; place-items:center; color:var(--vtr-ink); font-weight:700; }
+
 .vtr-sheet .vampire-bane-row > input {
   width: 100%;
   min-width: 0;
@@ -231,6 +239,9 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
 .vtr-sheet .vampire-clan-bane {
   padding: 8px 10px;
 }
+.vtr-sheet .vampire-clan-bane > header { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.vtr-sheet .vampire-clan-bane > header label { display:flex; align-items:center; gap:6px; font-size:11px; }
+.vtr-sheet .vampire-clan-bane.inactive { opacity:.62; }
 
 .vampire-template-standard {
   align-items: stretch;

@@ -3,19 +3,21 @@
 import { useState } from "react";
 import { AnimalCard } from "@/app/workspace/companion-page";
 import { RuleSelect } from "@/app/workspace/rule-select";
-import { SheetHeading } from "@/app/workspace/sheet-primitives";
+import { HealthTrack, SheetHeading } from "@/app/workspace/sheet-primitives";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { ANIMALS, animalPresentation, type Animal } from "@/lib/companions";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { createRandomId } from "@/lib/random-id";
+import { normalizeDamage, type DamageLevel } from "@/lib/resource-rules";
 
 type UndeadCompanion = {
   id: string;
   animal_id: string;
   name: string;
-  remaining_nights: number;
+  health_damage: DamageLevel[];
+  undying: boolean;
 };
 
 function objectList(value: unknown) {
@@ -48,48 +50,39 @@ export function VampireCompanionPage({
 }) {
   const { locale, t } = useLanguage();
   const pt = locale === "pt-BR";
+  const hasUndyingFamiliar = Array.isArray(character.line_data.devotion_ids) && character.line_data.devotion_ids.includes("devotion-undying-familiar");
   const companions = objectList(character.line_data.undead_companions).map((item): UndeadCompanion => ({
     id: String(item.id ?? createRandomId()),
     animal_id: String(item.animal_id ?? ANIMALS[0]?.id ?? ""),
     name: String(item.name ?? ""),
-    remaining_nights: Math.max(0, Math.trunc(Number(item.remaining_nights ?? 0))),
+    health_damage: normalizeDamage(item.health_damage, ANIMALS.find((animal) => animal.id === item.animal_id)?.health ?? 1),
+    undying: hasUndyingFamiliar && Boolean(item.undying),
   }));
   const [animalId, setAnimalId] = useState(ANIMALS[0]?.id ?? "");
-  const [name, setName] = useState("");
-  const vitae = Math.max(0, Math.trunc(Number(character.current_state.vitae_current ?? 0)));
 
-  const persist = (nextCompanions: UndeadCompanion[], vitaeCurrent = vitae) => {
+  const persist = (nextCompanions: UndeadCompanion[]) => {
     const next = structuredClone(character);
     next.line_data = { ...next.line_data, undead_companions: nextCompanions };
-    next.current_state = { ...next.current_state, vitae_current: vitaeCurrent };
     updateSheet(next);
   };
 
   const selectedAnimal = ANIMALS.find((item) => item.id === animalId);
   const raise = () => {
-    if (!selectedAnimal || vitae < 1) return;
-    const duration = bloodPotency * animalStamina(selectedAnimal);
+    if (!selectedAnimal) return;
     persist([
       ...companions,
       {
         id: createRandomId(),
         animal_id: selectedAnimal.id,
-        name: name.trim() || animalPresentation(selectedAnimal, locale).name,
-        remaining_nights: duration,
+        name: animalPresentation(selectedAnimal, locale).name,
+        health_damage: [],
+        undying: false,
       },
-    ], vitae - 1);
-    setName("");
+    ]);
   };
 
   return <section className="vampire-undead-companions">
     <SheetHeading>{t("ui.undeadFamiliars")}</SheetHeading>
-    <div className="vampire-familiar-rules">
-      <p><strong>{t("ui.raiseTheFamiliar")}:</strong> {pt ? "1 Vitae; ação instantânea; sem rolagem." : "1 Vitae; instant action; no roll."}</p>
-      <p>{pt ? "O familiar permanece ativo por Blood Potency × Stamina do animal noites. Alimentá-lo com mais 1 Vitae reinicia essa duração." : "The familiar remains active for Blood Potency × the animal's Stamina nights. Feeding it another Vitae resets that duration."}</p>
-      <p>{pt ? "Ele possui Intelligence 1, recebe dano de ataques como um vampiro (contusão em vez do dano mortal normal), não cai inconsciente, não sangra até morrer e não se decompõe." : "It has Intelligence 1, takes attack damage like a vampire (bashing instead of ordinary mortal injury), does not fall unconscious, does not bleed out, and does not decompose."}</p>
-      <p>{pt ? "Feral Whispers pode ser usado no familiar silenciosamente, a qualquer distância. Ainda é feita a rolagem para interpretar a ordem, mas o familiar não resiste." : "Feral Whispers can be used on the familiar silently at any distance. The interpretation roll still occurs, but the familiar does not resist."}</p>
-    </div>
-
     <div className="vampire-familiar-create">
       <label>{t("ui.animal")}
         <RuleSelect
@@ -101,56 +94,32 @@ export function VampireCompanionPage({
           })}
         />
       </label>
-      <label>{t("ui.name")}
-        <Input value={name} onChange={(event) => setName(event.target.value)} placeholder={selectedAnimal ? animalPresentation(selectedAnimal, locale).name : ""} />
-      </label>
-      <Button type="button" onClick={raise} disabled={!selectedAnimal || vitae < 1}>
-        {pt ? "Erguer familiar (1 Vitae)" : "Raise familiar (1 Vitae)"}
+      <Button type="button" onClick={raise} disabled={!selectedAnimal}>
+        {t("ui.raiseTheFamiliar")}
       </Button>
-      <small>{pt ? `Vitae atual: ${vitae}` : `Current Vitae: ${vitae}`}</small>
     </div>
 
     <div className="companion-grid">
       {companions.map((saved, index) => {
         const animal = ANIMALS.find((item) => item.id === saved.animal_id);
         if (!animal) return null;
-        const maximum = bloodPotency * animalStamina(animal);
+        const lifespan = bloodPotency * animalStamina(animal);
         const presented = raisedAnimalPresentation(animal, locale);
-        return <article className="vampire-undead-familiar" key={saved.id}>
-          <AnimalCard
+        return <AnimalCard
+            key={saved.id}
             animal={presented}
             name={saved.name}
             onRemove={() => persist(companions.filter((_, itemIndex) => itemIndex !== index))}
             onNameChange={(nextName) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, name: nextName } : item))}
-          />
-          <div className="vampire-familiar-state">
-            <label>{pt ? "Noites restantes" : "Nights remaining"}
-              <Input
-                type="number"
-                min={0}
-                max={maximum}
-                value={saved.remaining_nights}
-                onChange={(event) => {
-                  const remaining = Math.max(0, Math.min(maximum, Math.trunc(Number(event.target.value) || 0)));
-                  persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, remaining_nights: remaining } : item));
-                }}
-              />
-            </label>
-            <span>{pt ? `Duração máxima atual: ${maximum} noites` : `Current maximum duration: ${maximum} nights`}</span>
-            <Button
-              type="button"
-              size="sm"
-              variant="outline"
-              disabled={vitae < 1}
-              onClick={() => persist(
-                companions.map((item, itemIndex) => itemIndex === index ? { ...item, remaining_nights: maximum } : item),
-                vitae - 1,
-              )}
-            >
-              {pt ? "Renovar (1 Vitae)" : "Renew (1 Vitae)"}
-            </Button>
-          </div>
-        </article>;
+          >
+            <div className="vampire-familiar-state">
+              <p><strong>{pt ? "Duração" : "Lifespan"}:</strong> {lifespan} {saved.undying ? (pt ? "semanas por Vitae" : "weeks per Vitae") : (pt ? "noites por Vitae" : "nights per Vitae")}</p>
+              {hasUndyingFamiliar && <label><span>{pt ? "Familiar Imortal" : "Undying Familiar"}</span><Switch size="sm" checked={saved.undying} onCheckedChange={(checked) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, undying: checked } : item))} /></label>}
+              {saved.undying && <small>{pt ? "Erguido quando o animal ghoul vivo morre." : "Raised when the living ghouled animal dies."}</small>}
+              <strong>{t("ui.health")}</strong>
+              <HealthTrack health={animal.health} damage={saved.health_damage} onChange={(health_damage) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, health_damage } : item))} />
+            </div>
+          </AnimalCard>;
       })}
     </div>
   </section>;

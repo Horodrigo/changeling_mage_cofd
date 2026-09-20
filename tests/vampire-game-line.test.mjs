@@ -31,7 +31,7 @@ test("Vampire normalization owns its line_data, clamps ratings, and drops retire
     id: "v1", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
     character: { name: "Mara", concept: "", player: "", chronicle: "" },
     attributes: { Stamina: 2, Strength: 2, Dexterity: 2, Resolve: 2, Composure: 2, Wits: 2 }, skills: { Athletics: 1 }, specializations: [], merits: [],
-    line_data: { blood_potency: 99, humanity: -4, disciplines: { Vigor: 12 }, discipline_choices: { protean_aspects: ["claws", 3] }, blood_sorcery: { cruac_rating: 9, cruac_rite_ids: ["rite", 2] }, ordo_dracul: { mystery_id: "wyrm", coil_ratings: { "coil-wyrm": 8 }, scale_ids: ["scale"] }, aspirations: [] }, derived: {},
+    line_data: { clan_id: "mekhet", blood_potency: 99, humanity: -4, disciplines: { Vigor: 12 }, discipline_choices: { protean_aspects: ["claws", 3] }, blood_sorcery: { cruac_rating: 9, cruac_rite_ids: ["rite", 2] }, ordo_dracul: { mystery_id: "wyrm", coil_ratings: { "coil-wyrm": 8 }, scale_ids: ["scale"] }, aspirations: [], undead_companions: [{ animal_id: "cat", health_damage: ["lethal", "invalid"], undying: 1 }] }, derived: {},
     current_state: {
       vitae_current: -3,
       blood_bonds: [{ subject: "Mara", stage: 2 }],
@@ -55,12 +55,17 @@ test("Vampire normalization owns its line_data, clamps ratings, and drops retire
   assert.deepEqual(normalized.line_data.blood_sorcery.cruac_rite_ids, ["rite", "2"]);
   assert.equal(normalized.line_data.ordo_dracul.coil_ratings["coil-wyrm"], 5);
   assert.deepEqual(normalized.current_state.blood_bonds, [{ subject: "Mara", stage: 2 }]);
+  assert.deepEqual(normalized.line_data.banes, [{ id: "mekhet-clan-bane", name: "", breaking_point_id: "", breaking_point_level: 0, required_by: "mekhet" }]);
+  assert.deepEqual(normalized.line_data.undead_companions[0].health_damage, ["lethal"]);
+  assert.equal(normalized.line_data.clan_bane_active, true);
   assert.equal("blush_of_life_active" in normalized.current_state, false);
   assert.equal("blush_of_life_extra_vitae" in normalized.current_state, false);
   assert.equal("frenzy_situational_modifier" in normalized.current_state, false);
   assert.equal("frenzy_held_willpower" in normalized.current_state, false);
   assert.equal("torpor" in normalized.current_state, false);
   assert.equal("vitae_addictions" in normalized.current_state, false);
+  const creationIssues = vampireRules.validateCreation({ ...normalized, line_data: { ...normalized.line_data, mask_id: "mask", dirge_id: "dirge", disciplines: { Vigor: 2 }, creation_covenant_power_id: "coil-wyrm" } });
+  assert.equal(creationIssues.some((issue) => issue.field === "touchstones" || issue.field === "disciplines"), false);
 });
 
 test("Vampire core-book catalogs expose all five Clans and line-owned content", async () => {

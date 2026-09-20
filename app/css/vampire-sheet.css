@@ -1111,6 +1111,35 @@
 .vampire-covenant-summary p,
 .anchor-recovery { color: #675657; }
 
+.vampire-tricks-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid var(--vtr-rule); }
+.vampire-trick { min-width:0; border-bottom:1px solid var(--vtr-rule); }
+.vampire-trick:nth-child(-n+4) { border-right:1px solid var(--vtr-rule); }
+.vampire-trick:nth-child(1) { order:1; }
+.vampire-trick:nth-child(2) { order:3; }
+.vampire-trick:nth-child(3) { order:5; }
+.vampire-trick:nth-child(4) { order:7; }
+.vampire-trick:nth-child(5) { order:2; }
+.vampire-trick:nth-child(6) { order:4; }
+.vampire-trick:nth-child(7) { order:6; }
+.vampire-trick:nth-child(8) { order:8; }
+.vampire-trick-summary { display:grid; grid-template-columns:auto minmax(0,1fr); gap:3px 7px; padding:7px 9px; cursor:pointer; list-style:none; }
+.vampire-trick-summary::-webkit-details-marker { display:none; }
+.vampire-trick-summary::before { content:"+"; color:var(--vtr-ink); font-weight:700; }
+.vampire-trick[open] .vampire-trick-summary::before { content:"−"; }
+.vampire-trick-summary strong { min-width:0; color:var(--vtr-ink); font:400 15px Georgia,"Times New Roman",serif; }
+.vampire-trick-summary small { grid-column:2; min-width:0; color:#675657; font-size:10px; }
+.vampire-trick-details { padding:0 9px 8px 28px; color:#675657; font-size:11px; line-height:1.45; }
+.vampire-trick-details p { margin:5px 0; }
+.vampire-familiar-create { display:flex; align-items:end; gap:9px; margin-bottom:12px; }
+.vampire-familiar-create > label { display:grid; flex:1; gap:5px; min-width:0; }
+.vampire-familiar-state { display:grid; gap:8px; margin-top:9px; padding-top:9px; border-top:1px solid var(--vtr-rule); }
+.vampire-familiar-state > p { margin:0; }
+.vampire-familiar-state > label { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.vampire-familiar-state .tracker-block { margin-top:0; }
+.vampire-records > div > small { grid-column:1 / -1; color:#675657; font-size:10px; }
+.vampire-coil-automations { display:grid; gap:5px; margin-top:9px; padding:8px 10px; border:1px solid var(--vtr-rule); background:var(--vtr-panel); }
+.vampire-coil-automations p { margin:0; color:#675657; font-size:11px; line-height:1.45; }
+
 .vampire-covenant-summary h3,
 .vampire-card-selector > h3 {
   color: var(--vtr-ink);
@@ -1170,6 +1199,10 @@
   .vampire-state-controls {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .vampire-tricks-list { grid-template-columns:minmax(0,1fr); }
+  .vampire-trick:nth-child(-n+4) { border-right:0; }
+  .vampire-familiar-create { align-items:stretch; flex-direction:column; }
 
   .vampire-state-controls .wide { grid-column: auto; }
   .vampire-covenant-summary { grid-template-columns: 58px minmax(0, 1fr); gap: 11px; }

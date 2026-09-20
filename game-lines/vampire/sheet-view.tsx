@@ -2,11 +2,13 @@
 
 import { type ReactNode, useEffect, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
+import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField, boundedNumber, updateLineData } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { ConditionManager, type ConditionDefinition, type SelectedCondition } from "@/app/workspace/condition-manager";
 import { HealthTrack, SheetHeading, TraitBlock, DotValue, stringList } from "@/app/workspace/sheet-primitives";
 import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
+import { commonExpandedConfigurationLines, configuredDefinitionLines } from "@/app/workspace/merit-configuration-presentation";
 import { SwipeableSheetTabs } from "@/app/workspace/sheet-tabs";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
@@ -18,9 +20,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, type Locale } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
@@ -30,7 +32,7 @@ import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
 import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice, vampireDetachmentPool } from "./detachment";
 import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule-effects";
-import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
+import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -107,14 +109,16 @@ function HumanityTrack({
   updateSheet,
   value,
   vastDynasty = false,
+  clanBaneActive = true,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   value: number;
   vastDynasty?: boolean;
+  clanBaneActive?: boolean;
 }) {
   const { t } = useLanguage();
-  const baseSlot = String(character.line_data.clan_id ?? "") === "ventrue" ? 7 : 6;
+  const baseSlot = String(character.line_data.clan_id ?? "") === "ventrue" && clanBaneActive ? 7 : 6;
   const meritPoints = getTouchstoneMeritPoints(character, baseSlot);
   const touchstones = objectArray(character.line_data.touchstones);
   const attachedTouchstones = touchstones.filter((row) => String(row.name ?? "").trim()).length;
@@ -225,6 +229,7 @@ const effectiveBreakingPointId = selectedBreakingPoint?.id ?? "";
     const currentSpent = Math.max(0, Math.trunc(Number(next.current_state.experience_spent ?? 0)));
     const currentTotal = Math.max(currentAvailable + currentSpent, Math.max(0, Math.trunc(Number(next.current_state.experience_total ?? 0))));
     const beatTotal = currentBeats + 1;
+    const history = Array.isArray(next.current_state.vampire_experience_history) ? next.current_state.vampire_experience_history : [];
     next.current_state = {
       ...next.current_state,
       conditions: currentConditions,
@@ -232,6 +237,13 @@ const effectiveBreakingPointId = selectedBreakingPoint?.id ?? "";
       experience_available: beatTotal >= 5 ? currentAvailable + 1 : currentAvailable,
       experience_spent: currentSpent,
       experience_total: beatTotal >= 5 ? currentTotal + 1 : currentTotal,
+      vampire_experience_history: losesHumanity ? [...history, {
+        id: createRandomId(),
+        label: `${t("ui.detachment")}: ${t(result === "dramatic-failure" ? "ui.dramaticFailure" : "ui.failure")}`,
+        cost: 0,
+        createdAt: new Date().toISOString(),
+        undo: { kind: "humanityLoss", amount: 1 },
+      }] : history,
     };
     updateSheet(next);
     setOpen(false);
@@ -540,12 +552,14 @@ function BaneEditor({
   clanBaneName,
   clanBaneSummary,
   vastDynasty,
+  clanBaneActive,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   clanBaneName: string;
   clanBaneSummary: string;
   vastDynasty: boolean;
+  clanBaneActive: boolean;
 }) {
   const { t } = useLanguage();
 
@@ -571,6 +585,7 @@ function BaneEditor({
       ...next.line_data,
       banes: nextRows.filter(
         (row) =>
+          String(row.required_by ?? "") === "mekhet" ||
           String(row.name ?? "").trim() ||
           String(row.breaking_point_id ?? "").trim(),
       ),
@@ -593,24 +608,26 @@ function BaneEditor({
         {rows.map((bane, index) => {
           const name = String(bane.name ?? "");
           const breakingPointId = String(bane.breaking_point_id ?? "");
-          const missingLink = Boolean(name.trim()) && !breakingPointId;
+          const requiredByMekhet = String(bane.required_by ?? "") === "mekhet";
+          const missingLink = !requiredByMekhet && Boolean(name.trim()) && !breakingPointId;
+          const missingRequired = requiredByMekhet && !name.trim();
 
           return (
             <div
               className={`vampire-bane-row${
-                missingLink ? " missing-field" : ""
+                missingLink || missingRequired ? " missing-field" : ""
               }`}
               key={String(bane.id ?? index)}
             >
               <Input
                 value={name}
-                placeholder={`${t("ui.bane")} ${index + 1}`}
+                placeholder={requiredByMekhet ? t("ui.mekhetBaneRequired") : `${t("ui.bane")} ${index + 1}`}
                 onChange={(event) =>
                   update(index, { name: event.target.value })
                 }
               />
 
-              <Popover>
+              {!requiredByMekhet && <Popover>
                 <PopoverTrigger asChild>
                   <Button type="button" size="icon-xs" variant="ghost" className="vampire-bane-reference" aria-label={t("ui.linkBreakingPoint")} title={DETACHMENT_BREAKING_POINT_OPTIONS.find((point) => point.id === breakingPointId)?.label ?? t("ui.linkBreakingPoint")}>
                     <Link2 />
@@ -624,7 +641,8 @@ function BaneEditor({
                       <span>{point.label}</span><small>{t("ui.humanity")} {point.level}</small>
                     </Button>)}
                 </PopoverContent>
-              </Popover>
+              </Popover>}
+              {requiredByMekhet && <span className="vampire-bane-required" title={t("ui.mekhetBaneRequired")}>!</span>}
             </div>
           );
         })}
@@ -632,8 +650,8 @@ function BaneEditor({
 
       <SheetHeading>{t("ui.clanBane")}</SheetHeading>
 
-      <article className="vampire-lore-card vampire-clan-bane">
-        <strong>{clanBaneName || t("ui.clanBane")}</strong>
+      <article className={`vampire-lore-card vampire-clan-bane${clanBaneActive ? " active" : " inactive"}`}>
+        <header><strong>{clanBaneName || t("ui.clanBane")}</strong><label><span>{clanBaneActive ? t("ui.active") : t("ui.inactive")}</span><Switch size="sm" checked={clanBaneActive} onCheckedChange={(checked) => { const next = structuredClone(character); next.line_data = { ...next.line_data, clan_bane_active: checked }; updateSheet(next); }} /></label></header>
         <p>{clanBaneSummary}</p>
       </article>
     </>
@@ -676,6 +694,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const currentWillpower = boundedNumber(character.current_state.willpower_current, willpower, willpower);
   const damage = normalizeDamage(character.current_state.health_damage, health);
   const humanity = Math.max(0, Math.min(10, Number(data.humanity ?? 7)));
+  const clanBaneActive = data.clan_bane_active !== false;
   const conditions = selectedConditions(character.current_state.conditions);
   const conditionIds = new Set(conditions.map((item) => item.id));
   const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" && !Array.isArray(data.ordo_dracul) ? data.ordo_dracul as Record<string, unknown> : {};
@@ -683,7 +702,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const coilEffects = vampireOwnedCoilRuleEffects(powers, coilRatings);
   const hasRuleEffect = (rule: Parameters<typeof vampireRuleEffectsFor>[1], value?: string) => vampireRuleEffectsFor(coilEffects, rule).some((effect) => value === undefined || effect.value === value);
   const ruleSourceRating = (rule: Parameters<typeof vampireRuleEffectsFor>[1]) => Math.max(0, ...vampireRuleEffectsFor(coilEffects, rule).map((effect) => Number(coilRatings[effect.sourceId] ?? 0)));
-  const sunlightSummary = vampireSunlightSummary(humanity, bloodPotency, locale);
+  const baneHumanity = clan?.id === "mekhet" && clanBaneActive ? Math.max(0, humanity - 1) : humanity;
+  const sunlightSummary = vampireSunlightSummary(baneHumanity, bloodPotency, locale);
   const blushDurationRule = String(vampireRuleEffectsFor(coilEffects, "blush-duration")[0]?.value ?? "");
   const blushDuration = blushDurationRule === "24 hours" ? (t("ui.twentyFourHours")) : (t("ui.scene"));
   const frenzyActive = Boolean(character.current_state.frenzy_active);
@@ -693,7 +713,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const frenzyBasePool = Number(character.attributes.Resolve ?? 1) + Number(character.attributes.Composure ?? 1);
   const frenzyAutomaticModifier = hungerModifier + woundModifier + satedModifier;
   const frenzyResistanceUncapped = frenzyBasePool + frenzyAutomaticModifier;
-  const frenzyResistancePool = clan?.id === "gangrel" ? Math.min(humanity, frenzyResistanceUncapped) : frenzyResistanceUncapped;
+  const frenzyResistancePool = clan?.id === "gangrel" && clanBaneActive ? Math.min(humanity, frenzyResistanceUncapped) : frenzyResistanceUncapped;
   const rideWaveBonus = ruleSourceRating("ride-the-wave-pool");
   const rideWavePool = frenzyBasePool + frenzyAutomaticModifier + rideWaveBonus;
   const rideWaveWillpowerCost = conditionIds.has("raptured") || hasRuleEffect("ride-the-wave-cost") ? 0 : 1;
@@ -703,6 +723,11 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const ignoresDaysleepWithBlush = hasRuleEffect("daysleep");
   const ignoresLethargicWithBlush = hasRuleEffect("lethargic");
   const beastPowerAvailable = hasRuleEffect("frenzy-defense") && hasRuleEffect("frenzy-health") && hasRuleEffect("frenzy-speed");
+  const eternalFrenzy = hasRuleEffect("torpor-on-lethal");
+  const vitaeAddictionMultiplier = Number(vampireRuleEffectsFor(coilEffects, "vitae-addiction")[0]?.value ?? 0);
+  const bloodSympathyFromBonds = hasRuleEffect("blood-sympathy");
+  const acceleratedBloodBond = hasRuleEffect("blood-bond");
+  const voivodeResistance = hasRuleEffect("discipline-resistance");
   const beastPowerActive = frenzyActive && beastPowerAvailable && Boolean(character.current_state.frenzy_beast_power_active);
   const combatDerived = beastPowerActive ? {
     ...derived,
@@ -715,7 +740,9 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const aspirations = stringList(data.aspirations);
   const notes = String(character.current_state.notes ?? "");
   const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "summary" });
+  const [desktopTab, setDesktopTab] = useState("main");
   const tab = mobileTab.characterId === character.id ? mobileTab.value : "summary";
+  const openCompanions = () => isMobile ? setMobileTab({ characterId: character.id, value: "companions" }) : setDesktopTab("companions");
   const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
   const identity = <section className="sheet-identity-grid">
     <SheetField label={t("ui.name")} value={character.character.name} />
@@ -756,8 +783,9 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   </div>
 </>;
   const stats = <>{attributes}{skills}</>;
-  const humanitySection = <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} />;
-  const banesSection = <BaneEditor character={character} updateSheet={updateSheet} clanBaneName={clan?.baneName ?? t("ui.clanBane")} clanBaneSummary={clan?.baneSummary ?? ""} vastDynasty={hasRuleEffect("embrace-humanity")} />;
+  const humanitySection = <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} />;
+  const banesSection = <BaneEditor character={character} updateSheet={updateSheet} clanBaneName={clan?.baneName ?? t("ui.clanBane")} clanBaneSummary={clan?.baneSummary ?? ""} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} />;
+  const expandedMerits = character.merits.filter((item) => (!item.grantedBy || item.grantedBy === "Vampire Template") && (Boolean(VAMPIRE_MERIT_CONFIGURATIONS.find((definition) => definition.name === item.name)) || Boolean(merits.find((definition) => definition.name === item.name)?.levels?.length)));
   const summary = <>
     {identity}
     <SheetHeading>{t("ui.aspirations")}</SheetHeading>
@@ -770,8 +798,10 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />
   </>;
   const detailsPage = <>
+    <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
+    <VampireExpandedMeritList character={character} updateSheet={updateSheet} merits={expandedMerits} catalog={merits} locale={locale} />
     <SheetHeading>{t("ui.disciplines")}</SheetHeading>
-    <DisciplineCards powers={powers} disciplines={disciplines} locale={locale} />
+    <DisciplineCards powers={powers} disciplines={disciplines} locale={locale} onRaiseFamiliar={openCompanions} />
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
     <RitualDisciplines powers={powers} cruacRating={cruacRating} thebanRating={thebanRating} locale={locale} />
     <PurchasedPowers character={character} powers={powers} locale={locale} />
@@ -815,6 +845,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       beastPowerAvailable={beastPowerAvailable}
       beastPowerActive={beastPowerActive}
       combatDerived={combatDerived}
+      eternalFrenzy={eternalFrenzy}
+      lethalTrackFilled={combatDamage.length >= combatHealth && !combatDamage.includes("aggravated")}
     />
   </>;
   const companionsPage = Number(disciplines.Animalism ?? 0) >= 2
@@ -822,7 +854,21 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     : null;
   const notesPage = <>
     <SheetHeading>{t("ui.bloodBonds")}</SheetHeading>
-    <StructuredRecords values={objectArray(character.current_state.blood_bonds)} levelLabel={t("ui.stage")} onChange={(value) => setState("blood_bonds", value)} />
+    <StructuredRecords
+      values={objectArray(character.current_state.blood_bonds)}
+      levelLabel={t("ui.stage")}
+      onChange={(value) => setState("blood_bonds", value)}
+      rowDetail={bloodSympathyFromBonds ? (record) => {
+        const stage = Math.max(1, Math.min(3, Number(record.stage ?? 1)));
+        const sympathy = t(stage === 1 ? "ui.bloodSympathyStage1" : stage === 2 ? "ui.bloodSympathyStage2" : "ui.bloodSympathyStage3");
+        return `${t("ui.bloodSympathy")}: ${sympathy}${voivodeResistance ? ` · ${t("ui.voivodeResistanceSuffix")}` : ""}`;
+      } : undefined}
+    />
+    {(vitaeAddictionMultiplier || acceleratedBloodBond || voivodeResistance) && <div className="vampire-coil-automations">
+      {vitaeAddictionMultiplier > 0 && <p><strong>{t("ui.tasteOfFealty")}:</strong> {t("ui.tasteOfFealtyAutomation", { count: vitaeAddictionMultiplier })}</p>}
+      {acceleratedBloodBond && <p><strong>{t("ui.callToServe")}:</strong> {t("ui.callToServeAutomation")}</p>}
+      {voivodeResistance && <p><strong>{t("ui.voivodeUndisputed")}:</strong> {t("ui.voivodeUndisputedAutomation")}</p>}
+    </div>}
     <SheetHeading>{t("ui.notes")}</SheetHeading>
     <NotesArea value={notes} onChange={(value) => setState("notes", value)} />
   </>;
@@ -849,7 +895,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
           ))}
       </div>
     }
-    merits={<MeritList character={character} updateSheet={updateSheet} catalog={merits} locale={locale} />}
+    merits={<MeritList character={character} catalog={merits} locale={locale} />}
     lineSections={
       <>
         {humanitySection}
@@ -897,7 +943,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     { value: "notes", label: t("ui.notes") },
   ]}>{{ summary, stats, details: detailsPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>;
 
-  return <CharacterPaperShell line="VtR" title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs defaultValue="main" className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
+  return <CharacterPaperShell line="VtR" title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs value={desktopTab} onValueChange={setDesktopTab} className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
     <TabsTrigger value="main">{t("ui.main")}</TabsTrigger>
     <TabsTrigger value="details">{t("ui.details")}</TabsTrigger>
     <TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger>
@@ -918,7 +964,8 @@ function VampireDisciplineLine({ name, value }: { name: string; value: number })
 }
 
 
-function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePowers; disciplines: Record<string, number>; locale: string }) {
+function DisciplineCards({ powers, disciplines, locale, onRaiseFamiliar }: { powers: VampirePowers; disciplines: Record<string, number>; locale: string; onRaiseFamiliar: () => void }) {
+  const { t } = useLanguage();
   return <div className="vampire-power-grid">
     {powers.disciplines.filter((item) => Number(disciplines[item.name] ?? 0) > 0).map((item) => {
       const rating = Number(disciplines[item.name] ?? 0);
@@ -935,7 +982,7 @@ function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePower
               <strong>{"•".repeat(level.rating)} {localized(level, locale)}</strong>
               <small>{level.summary}</small>
             </summary>
-            <div className="contract-power-details"><PowerMechanics mechanics={level} compact /></div>
+            <div className="contract-power-details"><PowerMechanics mechanics={level} compact />{item.id === "animalism" && level.rating === 2 && <Button type="button" size="sm" variant="outline" onClick={onRaiseFamiliar}>{t("ui.use")}</Button>}</div>
           </details>)}
         </div>
       </details>;
@@ -997,28 +1044,48 @@ function RitualDisciplines({ powers, cruacRating, thebanRating, locale }: { powe
   </>;
 }
 
-function MeritList({ character, updateSheet, catalog, locale }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalog: readonly MeritDefinition[]; locale: string }) {
+function VampireExpandedMeritList({ character, updateSheet, merits, catalog, locale }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; merits: CharacterSheet["merits"]; catalog: readonly MeritDefinition[]; locale: Locale }) {
+  const { t } = useLanguage();
+  if (!merits.length) return <p className="rule-callout expanded-merit-empty">{t("ui.noExpandedMeritsPurchased")}</p>;
+  return <div className="expanded-merit-list">{merits.map((merit, index) => {
+    const definition = catalog.find((item) => item.name === merit.name);
+    const configDefinition = VAMPIRE_MERIT_CONFIGURATIONS.find((item) => item.name === merit.name);
+    const displayName = localized(definition, locale) || merit.name;
+    const detail = meritConfigurationTitle(merit.configuration);
+    const configured = configuredDefinitionLines(configDefinition, merit.dots, merit.configuration).length
+      ? configuredDefinitionLines(configDefinition, merit.dots, merit.configuration)
+      : commonExpandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale) ?? [];
+    const meritIndex = character.merits.indexOf(merit);
+    const editor = configDefinition && merit.grantedBy !== "Vampire Template"
+      ? <MeritConfigurationEditor compact merit={merit} ownedMerits={character.merits} catalog={[...catalog]} definitions={VAMPIRE_MERIT_CONFIGURATIONS} onChange={(configuration) => {
+          const next = structuredClone(character);
+          next.merits[meritIndex].configuration = configuration;
+          updateSheet(next);
+        }} />
+      : null;
+    return <details className="expanded-merit-card" key={`${merit.instanceId ?? merit.name}-${index}`}>
+      <summary><div><h4>{displayName}{detail ? `: ${detail}` : ""}</h4>{definition && <small>{definition.source} · p. {definition.page}</small>}</div><DotValue value={merit.dots} max={Math.max(5, merit.dots)} /></summary>
+      <div className="expanded-merit-body">
+        {configured.map((line, lineIndex) => <section key={`${merit.name}-${lineIndex}`}><strong>{line.split(":")[0]}</strong><p>{line.slice(line.indexOf(":") + 1).trim()}</p></section>)}
+        {!configured.length && definition?.description && <p>{definition.description}</p>}
+        {editor}
+      </div>
+    </details>;
+  })}</div>;
+}
+
+function MeritList({ character, catalog, locale }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; locale: string }) {
   const { t } = useLanguage();
   const visible = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Vampire Template");
-  if (!visible.length) return <em>{t("ui.noMeritSelected")}</em>;
+  if (!visible.length) return <em className="rule-callout merit-empty" >{t("ui.noMeritSelected")}</em>;
   return <div className="sheet-merits single-column">{visible.map((merit, index) => {
     const definition = catalog.find((item) => item.name === merit.name);
-    const displayName = locale === "pt-BR" ? definition?.translatedName ?? merit.name : definition?.name ?? merit.name;
-    const inline = isVampireInlineMeritConfiguration(merit.name);
-    const inlineField = inline ? VAMPIRE_MERIT_CONFIGURATIONS.find((item) => item.name === merit.name)?.fields[0] : undefined;
-    const configuration = normalizeMeritConfiguration(merit.configuration);
-    const meritIndex = character.merits.indexOf(merit);
-    const configuredName = inlineField ? String(configuration[inlineField.key] ?? "") : "";
+    const displayName = localized(definition, locale) || merit.name;
+    const configuredName = meritConfigurationTitle(merit.configuration);
     const tooltip = definition ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}` : merit.source;
-    return <div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${merit.instanceId ?? merit.name}-${index}`} title={inline ? undefined : tooltip}>
+    return <div className="sheet-merit-row" key={`${merit.instanceId ?? merit.name}-${index}`} title={tooltip}>
       <div className="sheet-merit-main">
-        <span>{inline ? `${displayName}:` : displayName}</span>
-        {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${t("ui.description")}`} value={configuredName} placeholder={t("ui.typeHere")} onChange={(event) => {
-          const next = structuredClone(character);
-          next.merits[meritIndex].configuration = { ...configuration, [inlineField.key]: event.target.value };
-          if (merit.grantedBy === "Vampire Template") next.line_data.kindred_status_group = event.target.value;
-          updateSheet(next);
-        }} />}
+        <span>{displayName}{configuredName ? `: ${configuredName}` : ""}</span>
         <DotValue value={merit.dots} max={Math.max(5, merit.dots)} />
       </div>
     </div>;
@@ -1063,12 +1130,12 @@ function ProteanChoicesEditor({ character, updateSheet, rating }: { character: C
 }
 
 function TrickCard({ title, summary, children }: { title: string; summary: string; children: ReactNode }) {
-  return <details className="contract-power-card">
-    <summary className="contract-power-summary">
+  return <details className="vampire-trick">
+    <summary className="vampire-trick-summary">
       <strong>{title}</strong>
       <small>{summary}</small>
     </summary>
-    <div className="contract-power-details">{children}</div>
+    <div className="vampire-trick-details">{children}</div>
   </details>;
 }
 
@@ -1106,7 +1173,7 @@ function TricksOfTheDamned({
 
   return <>
     <SheetHeading>{t("ui.tricksOfTheDamned")}</SheetHeading>
-    <div className="vampire-power-grid">
+    <div className="vampire-tricks-list">
       <TrickCard title={t("ui.blushOfLife")} summary={pt ? `1 Vitae · duração ${blushDuration}` : `1 Vitae · duration ${blushDuration}`}>
         <p>{pt ? "Por 1 Vitae, o vampiro simula vida: aquece o corpo, apresenta pulso, fluidos naturais, funções sexuais e pode manter comida e bebida durante a duração." : "For 1 Vitae, the vampire mimics life: body warmth, pulse, natural fluids, sexual function, and the ability to keep food and drink down for the duration."}</p>
         {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p><strong>{t("ui.surmountingTheDaysleep")}:</strong> {pt ? `${ignoresDaysleepWithBlush ? "com Blush ativo, não é preciso rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "permanecer ativo de dia não causa Lethargic" : ""}.` : `${ignoresDaysleepWithBlush ? "with Blush active, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
@@ -1159,7 +1226,7 @@ function TricksOfTheDamned({
 function FrenzyPanel({
   setState, locale, bloodPotency, frenzyActive, frenzyResistancePool, frenzyBasePool,
   frenzyAutomaticModifier, rideWavePool, rideWaveBonus, rideWaveWillpowerCost, rideWaveTarget,
-  ignoresFireFrenzy, ignoresSunlightFrenzy, beastPowerAvailable, beastPowerActive, combatDerived,
+  ignoresFireFrenzy, ignoresSunlightFrenzy, beastPowerAvailable, beastPowerActive, combatDerived, eternalFrenzy, lethalTrackFilled,
 }: {
   setState: (key: string, value: unknown) => void;
   locale: string;
@@ -1177,6 +1244,8 @@ function FrenzyPanel({
   beastPowerAvailable: boolean;
   beastPowerActive: boolean;
   combatDerived: Record<string, number>;
+  eternalFrenzy: boolean;
+  lethalTrackFilled: boolean;
 }) {
   const { t } = useLanguage();
   const pt = locale === "pt-BR";
@@ -1192,14 +1261,15 @@ function FrenzyPanel({
       <p className="wide"><strong>{t("ui.ridingTheWave")}:</strong> {rideLabel}; {pt ? "custo" : "cost"} <strong>{rideWaveWillpowerCost}{t("ui.willpowerAbbreviation")}</strong>; {pt ? "alvo" : "target"} <strong>{rideWaveTarget} {pt ? "sucessos" : "successes"}</strong>{rideWaveBonus ? `; ${pt ? "bônus da Coil" : "Coil bonus"} +${rideWaveBonus}` : ""}.</p>
       {frenzyActive && <p className="wide"><strong>{t("ui.activeFrenzy")}:</strong> +{bloodPotency} {pt ? "em rolagens/resistências de Strength, Dexterity e Stamina; penalidades de ferimento são ignoradas." : "to Strength, Dexterity, and Stamina rolls/resistances; wound penalties are ignored."}</p>}
       {beastPowerActive && <p className="wide"><strong>{t("ui.beastsPower")}:</strong>{t("ui.defense")}{combatDerived.Defesa}, {t("ui.health")} {combatDerived.Vitalidade}, {t("ui.speed")} {combatDerived.Deslocamento}.</p>}
+      {eternalFrenzy && <p className="wide"><strong>{t("ui.eternalFrenzy")}:</strong> {t(frenzyActive ? lethalTrackFilled ? "ui.eternalFrenzyFilled" : "ui.eternalFrenzyReady" : "ui.eternalFrenzyInactive")}</p>}
       <p className="wide"><strong>{t("ui.touchstone")}:</strong> {pt ? `requer ${bloodPotency * 3} sucessos em uma ação Social prolongada para encerrar Frenzy.` : `requires ${bloodPotency * 3} successes on an extended Social action to talk the vampire down.`}</p>
     </div>
   </>;
 }
 
-function StructuredRecords({ values, onChange, levelLabel }: { values: Record<string, unknown>[]; onChange: (value: EditableRecord[]) => void; levelLabel?: string }) {
+function StructuredRecords({ values, onChange, levelLabel, rowDetail }: { values: Record<string, unknown>[]; onChange: (value: EditableRecord[]) => void; levelLabel?: string; rowDetail?: (record: EditableRecord) => string }) {
   const { t } = useLanguage();
   const rows = values.map((item, index): EditableRecord => ({ id: String(item.id ?? `record-${index}`), subject: String(item.subject ?? item.name ?? ""), stage: Number(item.stage ?? item.level ?? 1), notes: String(item.notes ?? "") }));
   const update = (index: number, patch: Partial<EditableRecord>) => onChange(rows.map((item, row) => row === index ? { ...item, ...patch } : item));
-  return <div className="vampire-records">{rows.map((item, index) => <div key={item.id}><Input value={item.subject} placeholder={t("ui.nameOrSubject")} onChange={(event) => update(index, { subject: event.target.value })} />{levelLabel && <label>{levelLabel}<Input type="number" min={1} max={3} value={item.stage} onChange={(event) => update(index, { stage: Number(event.target.value) })} /></label>}<Input value={item.notes} placeholder={t("ui.notes8c4aa0")} onChange={(event) => update(index, { notes: event.target.value })} /><Button type="button" size="icon" variant="ghost" onClick={() => onChange(rows.filter((_, row) => row !== index))}><Trash2 /></Button></div>)}<Button type="button" size="sm" variant="outline" onClick={() => onChange([...rows, { id: createRandomId(), subject: "", stage: 1, notes: "" }])}><Plus /> {t("ui.addRecord")}</Button></div>;
+  return <div className="vampire-records">{rows.map((item, index) => <div key={item.id}><Input value={item.subject} placeholder={t("ui.nameOrSubject")} onChange={(event) => update(index, { subject: event.target.value })} />{levelLabel && <label>{levelLabel}<Input type="number" min={1} max={3} value={item.stage} onChange={(event) => update(index, { stage: Number(event.target.value) })} /></label>}<Input value={item.notes} placeholder={t("ui.notes8c4aa0")} onChange={(event) => update(index, { notes: event.target.value })} /><Button type="button" size="icon" variant="ghost" onClick={() => onChange(rows.filter((_, row) => row !== index))}><Trash2 /></Button>{rowDetail && <small>{rowDetail(item)}</small>}</div>)}<Button type="button" size="sm" variant="outline" onClick={() => onChange([...rows, { id: createRandomId(), subject: "", stage: 1, notes: "" }])}><Plus /> {t("ui.addRecord")}</Button></div>;
 }
