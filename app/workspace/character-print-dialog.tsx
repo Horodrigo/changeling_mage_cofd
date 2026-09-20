@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ComponentType, type CSSProperties } from "react";
 import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -31,8 +31,10 @@ export function CharacterPrintDialog({
   const { t } = useLanguage();
   const catalogs = useCatalogSnapshot();
   const previewRef = useRef<HTMLDivElement>(null);
+  const previewContentRef = useRef<HTMLDivElement>(null);
   const [PrintSheet, setPrintSheet] = useState<ComponentType<GameLinePrintSheetProps> | null>(null);
   const [ready, setReady] = useState(false);
+  const [previewSize, setPreviewSize] = useState({ width: 0, height: 0, scale: 1 });
   const [options, setOptions] = useState<GameLinePrintOptions>({
     expandedMeritDetails: false,
     powerDetails: false,
@@ -49,17 +51,37 @@ export function CharacterPrintDialog({
     return () => { cancelled = true; };
   }, [character.game_line, open]);
 
+  useLayoutEffect(() => {
+    if (!open) return;
+    const preview = previewRef.current;
+    const printable = previewContentRef.current?.querySelector<HTMLElement>(".game-print-document");
+    if (!preview || !printable) return;
+    const resize = () => {
+      const width = printable.scrollWidth;
+      const height = printable.scrollHeight;
+      const scale = Math.min(1, Math.max(0.1, (preview.clientWidth - 16) / width));
+      setPreviewSize({ width: width * scale, height: height * scale, scale });
+    };
+    const observer = new ResizeObserver(resize);
+    observer.observe(preview);
+    observer.observe(printable);
+    resize();
+    return () => observer.disconnect();
+  }, [open, PrintSheet, ready, options]);
+
   async function print() {
     if (!ready) return;
     const preview = previewRef.current;
-    const printable = preview?.querySelector<HTMLElement>(".ctl-print-document");
+    const printable = preview?.querySelector<HTMLElement>(".game-print-document");
     if (!preview || !printable) return;
 
     const previousTitle = document.title;
     const safeName = character.character.name.trim() || t("ui.character");
     const printSurface = document.createElement("div");
     printSurface.className = "character-print-surface";
-    document.title = `${safeName} - Changeling the Lost`;
+    printSurface.appendChild(printable.cloneNode(true));
+    document.body.appendChild(printSurface);
+    document.title = `${safeName} - ${getGameLineRegistration(character.game_line).label}`;
     document.body.classList.add("character-printing");
     try {
       await document.fonts?.ready;
@@ -76,13 +98,13 @@ export function CharacterPrintDialog({
     <DialogContent className="character-print-dialog" showCloseButton>
       <div className="character-print-controls">
         <DialogHeader>
-          <DialogTitle>{t("ui.printCtLCharacterSheet")}</DialogTitle>
+          <DialogTitle>{t("ui.printCharacterSheet")}</DialogTitle>
           <DialogDescription>{t("ui.thePreviewUsesA4PagesAndExcludesApplication")}</DialogDescription>
         </DialogHeader>
         <div className="character-print-options">
           <label>
             <Checkbox checked={options.powerDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, powerDetails: checked === true }))}/>
-            <span>{t("ui.printFullContractDetails")}</span>
+            <span>{t("ui.printFullPowerDetails")}</span>
           </label>
           <label>
             <Checkbox checked={options.expandedMeritDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, expandedMeritDetails: checked === true }))}/>
@@ -91,9 +113,19 @@ export function CharacterPrintDialog({
         </div>
       </div>
       <div ref={previewRef} className="character-print-preview" aria-busy={!ready}>
-        {PrintSheet
-          ? <PrintSheet character={character} options={options} catalogs={catalogs} onReadyChange={setReady}/>
-          : <div className="loading-card">{t("ui.preparingPrint")}</div>}
+        <div
+          ref={previewContentRef}
+          className="character-print-preview-content"
+          style={{
+            "--print-preview-scale": previewSize.scale,
+            width: previewSize.width || undefined,
+            height: previewSize.height || undefined,
+          } as CSSProperties}
+        >
+          {PrintSheet
+            ? <PrintSheet character={character} options={options} catalogs={catalogs} onReadyChange={setReady}/>
+            : <div className="loading-card">{t("ui.preparingPrint")}</div>}
+        </div>
       </div>
       <DialogFooter className="character-print-footer">
         <DialogClose asChild><Button type="button" size="sm" variant="outline">{t("ui.cancel")}</Button></DialogClose>

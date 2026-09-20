@@ -1832,6 +1832,8 @@ background-size:
 .character-print-options { display:flex; flex-wrap:wrap; gap:10px 22px; }
 .character-print-options label { display:flex; align-items:center; gap:8px; color:#4a4f4b; font-size:12px; font-weight:700; }
 .character-print-preview { min-height:260px; overflow:auto; border:1px solid #cbd2cc; background:#d8dfdb; padding:18px; }
+.character-print-preview-content { position:relative; margin-inline:auto; }
+.character-print-preview-content > .game-print-document { position:absolute; top:0; left:0; transform:scale(var(--print-preview-scale,1)); transform-origin:top left; }
 .character-print-footer { flex:none; }
 .character-print-surface { position:fixed; top:0; left:-100000px; display:block; width:210mm; min-width:210mm; visibility:hidden; pointer-events:none; }
 .ctl-print-document { display:grid; justify-content:center; gap:18px; color:#263a2c; font-family:Georgia,"Times New Roman",serif; }
@@ -2022,7 +2024,7 @@ background-size:
   body.character-printing [data-slot="dialog-close"] { display:none!important; }
   body.character-printing .character-print-surface,
   body.character-printing .character-print-surface * { animation:none!important; transition:none!important; }
-  body.character-printing .character-print-surface .ctl-print-document { display:block!important; width:210mm!important; min-width:210mm!important; transform:none!important; }
+  body.character-printing .character-print-surface .game-print-document { position:static!important; display:block!important; width:210mm!important; min-width:210mm!important; transform:none!important; }
   body.character-printing .character-print-surface .ctl-print-page { width:210mm!important; min-width:210mm!important; height:297mm!important; margin:0!important; transform:none!important; box-shadow:none!important; break-after:page; page-break-after:always; }
   body.character-printing .character-print-surface .ctl-print-page:last-child { break-after:auto; page-break-after:auto; }
   body.character-printing .character-print-surface .ctl-print-measure { display:none!important; }

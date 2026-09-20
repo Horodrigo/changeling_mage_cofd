@@ -350,7 +350,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const touchstoneSlots = 1 + character.merits.filter((merit) => merit.name === "Touchstone" && !merit.grantedBy).reduce((sum, merit) => sum + merit.dots, 0);
   const touchstones = cleanList(data.touchstones).length ? cleanList(data.touchstones) : cleanList([data.touchstone]);
   const experienceBeats = Math.max(0, Math.min(5, Math.trunc(Number(character.current_state?.experience_beats ?? 0) || 0)));
-  return <div className="ctl-print-document">
+  return <div className="game-print-document ctl-print-document">
     <PrintPage page={1} total={total} title={character.character.name} main>
       <section className="ctl-print-identity">{identity.map(([label, value]) => <PrintField key={String(label)} label={String(label)} value={value}/>)}</section>
       <SheetHeading className="ctl-print-attributes-heading">{t("ui.attributes")}</SheetHeading>
