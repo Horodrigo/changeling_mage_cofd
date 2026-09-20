@@ -93,6 +93,17 @@ test("Vampire Discipline presentation never applies Attribute translations", asy
   assert.equal(vampireDisciplineDisplayName("Auspex", powers.disciplines, "pt-BR"), "Auspícios");
 });
 
+test("Vampire sheet presents owned Coils and keeps Rites and Miracles under their Discipline", async () => {
+  const { ownedVampireCoils, ownedVampireRituals } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const [coil] = powers.coils;
+  const [rite] = powers.cruacRites;
+  const [miracle] = powers.thebanMiracles;
+  assert.deepEqual(ownedVampireCoils(powers, { [coil.id]: 2 }), [coil]);
+  assert.deepEqual(ownedVampireRituals(powers, "cruac", [rite.id, miracle.id]), [rite]);
+  assert.deepEqual(ownedVampireRituals(powers, "theban", [rite.id, miracle.id]), [miracle]);
+});
+
 test("Vampire Status and English trait prerequisites resolve against neutral stored fields", async () => {
   const { textRequirementMet } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
   const { vampireCovenantStatus } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");

@@ -40,6 +40,15 @@ function localized<T extends { name: string; translatedName: string }>(item: T |
   return item ? (locale === "pt-BR" ? item.translatedName : item.name) : "";
 }
 
+export function ownedVampireCoils(powers: Pick<VampirePowers, "coils">, ratings: Record<string, number>) {
+  return powers.coils.filter((item) => Number(ratings[item.id] ?? 0) > 0);
+}
+
+export function ownedVampireRituals(powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles">, discipline: "cruac" | "theban", ids: unknown) {
+  const selected = new Set(stringList(ids));
+  return (discipline === "cruac" ? powers.cruacRites : powers.thebanMiracles).filter((item) => selected.has(item.id));
+}
+
 function selectedConditions(value: unknown): SelectedCondition[] {
   return objectArray(value).map((item) => ({
     id: String(item.id ?? ""), persistent: Boolean(item.persistent),
@@ -801,9 +810,9 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
     <VampireExpandedMeritList character={character} updateSheet={updateSheet} merits={expandedMerits} catalog={merits} locale={locale} />
     <SheetHeading>{t("ui.disciplines")}</SheetHeading>
-    <DisciplineCards powers={powers} disciplines={disciplines} locale={locale} onRaiseFamiliar={openCompanions} />
+    <DisciplineCards powers={powers} disciplines={disciplines} coilRatings={coilRatings} locale={locale} onRaiseFamiliar={openCompanions} />
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
-    <RitualDisciplines powers={powers} cruacRating={cruacRating} thebanRating={thebanRating} locale={locale} />
+    <RitualDisciplines powers={powers} cruacRating={cruacRating} thebanRating={thebanRating} cruacRiteIds={bloodSorcery.cruac_rite_ids} thebanMiracleIds={bloodSorcery.theban_miracle_ids} locale={locale} />
     <PurchasedPowers character={character} powers={powers} locale={locale} />
     <TricksOfTheDamned
       character={character}
@@ -893,6 +902,12 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
               value={Number(disciplines[name] ?? 0)}
             />
           ))}
+        {(powers.ritualDisciplines ?? []).filter((item) => item.id === "cruac" ? cruacRating > 0 : thebanRating > 0).map((item) => (
+          <VampireDisciplineLine key={item.id} name={localized(item, locale)} value={item.id === "cruac" ? cruacRating : thebanRating} />
+        ))}
+        {ownedVampireCoils(powers, coilRatings).map((item) => (
+          <VampireDisciplineLine key={item.id} name={localized(item, locale)} value={Number(coilRatings[item.id] ?? 0)} />
+        ))}
       </div>
     }
     merits={<MeritList character={character} catalog={merits} locale={locale} />}
@@ -964,20 +979,23 @@ function VampireDisciplineLine({ name, value }: { name: string; value: number })
 }
 
 
-function DisciplineCards({ powers, disciplines, locale, onRaiseFamiliar }: { powers: VampirePowers; disciplines: Record<string, number>; locale: string; onRaiseFamiliar: () => void }) {
+function DisciplineCards({ powers, disciplines, coilRatings, locale, onRaiseFamiliar }: { powers: VampirePowers; disciplines: Record<string, number>; coilRatings: Record<string, number>; locale: string; onRaiseFamiliar: () => void }) {
   const { t } = useLanguage();
+  const selected = [
+    ...powers.disciplines.filter((item) => Number(disciplines[item.name] ?? 0) > 0).map((item) => ({ item, rating: Number(disciplines[item.name] ?? 0) })),
+    ...ownedVampireCoils(powers, coilRatings).map((item) => ({ item, rating: Number(coilRatings[item.id] ?? 0) })),
+  ];
   return <div className="vampire-power-grid">
-    {powers.disciplines.filter((item) => Number(disciplines[item.name] ?? 0) > 0).map((item) => {
-      const rating = Number(disciplines[item.name] ?? 0);
+    {selected.map(({ item, rating }) => {
       return <details className="contract-power-card vampire-discipline-card" key={item.id}>
         <summary className="contract-power-summary">
           <strong>{localized(item, locale)}</strong>
           <DotValue value={rating} />
           <small>{item.summary}</small>
         </summary>
-        <div className={`contract-power-details${item.levels.length ? " has-levels" : ""}`}>
+        <div className={`contract-power-details${item.levels?.length ? " has-levels" : ""}`}>
           <PowerMechanics mechanics={item} />
-          {item.levels.filter((level) => level.rating <= rating).map((level) => <details className="contract-power-card vampire-discipline-level" key={level.rating}>
+          {(item.levels ?? []).filter((level) => level.rating <= rating).map((level) => <details className="contract-power-card vampire-discipline-level" key={level.rating}>
             <summary className="contract-power-summary">
               <strong>{"•".repeat(level.rating)} {localized(level, locale)}</strong>
               <small>{level.summary}</small>
@@ -1025,7 +1043,7 @@ function PowerMechanics({ mechanics, compact = false }: { mechanics: VampireMech
   </div>;
 }
 
-function RitualDisciplines({ powers, cruacRating, thebanRating, locale }: { powers: VampirePowers; cruacRating: number; thebanRating: number; locale: string }) {
+function RitualDisciplines({ powers, cruacRating, thebanRating, cruacRiteIds, thebanMiracleIds, locale }: { powers: VampirePowers; cruacRating: number; thebanRating: number; cruacRiteIds: unknown; thebanMiracleIds: unknown; locale: string }) {
   const { t } = useLanguage();
   const selected = (powers.ritualDisciplines ?? []).filter((item) => item.id === "cruac" ? cruacRating > 0 : thebanRating > 0);
   if (!selected.length) return null;
@@ -1033,12 +1051,18 @@ function RitualDisciplines({ powers, cruacRating, thebanRating, locale }: { powe
     <div className="vampire-power-grid">
       {selected.map((item: VampireRitualDisciplineDefinition) => {
         const rating = item.id === "cruac" ? cruacRating : thebanRating;
-        return <article key={item.id}>
-          <header><strong>{localized(item, locale)}</strong><DotValue value={rating} /></header>
-          <p>{item.summary}</p>
-          <PowerMechanics mechanics={item} />
-          <small>{t("ui.bloodSorceryFreeRitual")}</small>
-        </article>;
+        const rituals = ownedVampireRituals(powers, item.id, item.id === "cruac" ? cruacRiteIds : thebanMiracleIds);
+        return <details className="contract-power-card vampire-discipline-card" key={item.id}>
+          <summary className="contract-power-summary"><strong>{localized(item, locale)}</strong><DotValue value={rating} /><small>{item.summary}</small></summary>
+          <div className="contract-power-details has-levels">
+            <PowerMechanics mechanics={item} />
+            <small>{t("ui.bloodSorceryFreeRitual")}</small>
+            {rituals.map((ritual) => <details className="contract-power-card vampire-discipline-level" key={ritual.id}>
+              <summary className="contract-power-summary"><strong>{"•".repeat(Number(ritual.rating ?? 0))} {localized(ritual, locale)}</strong><small>{ritual.summary}</small></summary>
+              <div className="contract-power-details"><PowerMechanics mechanics={ritual} compact /></div>
+            </details>)}
+          </div>
+        </details>;
       })}
     </div>
   </>;
@@ -1092,18 +1116,15 @@ function MeritList({ character, catalog, locale }: { character: CharacterSheet; 
   })}</div>;
 }
 
-function PurchasedPowers({ character, powers, locale, scope = "all" }: { character: CharacterSheet; powers: VampirePowers; locale: string; scope?: "all" | "devotions" | "covenant" }) {
+function PurchasedPowers({ character, powers, locale }: { character: CharacterSheet; powers: VampirePowers; locale: string }) {
   const { t } = useLanguage();
   const ids = new Set(stringList(character.line_data.devotion_ids));
-  const sorcery = character.line_data.blood_sorcery && typeof character.line_data.blood_sorcery === "object" && !Array.isArray(character.line_data.blood_sorcery) ? character.line_data.blood_sorcery as Record<string, unknown> : {};
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" && !Array.isArray(character.line_data.ordo_dracul) ? character.line_data.ordo_dracul as Record<string, unknown> : {};
-  const sorceryIds = new Set([...stringList(sorcery.cruac_rite_ids), ...stringList(sorcery.theban_miracle_ids)]);
   const scaleIds = new Set(stringList(ordo.scale_ids));
-  const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" && !Array.isArray(ordo.coil_ratings) ? ordo.coil_ratings as Record<string, unknown> : {};
-  const selected = [...(scope !== "covenant" ? powers.devotions.filter((item) => ids.has(item.id)) : []), ...(scope !== "devotions" ? [...powers.cruacRites, ...powers.thebanMiracles].filter((item) => sorceryIds.has(item.id)) : []), ...(scope !== "devotions" ? powers.coils.filter((item) => Number(coilRatings[item.id] ?? 0) > 0) : []), ...(scope !== "devotions" ? powers.scales.filter((item) => scaleIds.has(item.id)) : [])];
+  const selected = [...powers.devotions.filter((item) => ids.has(item.id)), ...powers.scales.filter((item) => scaleIds.has(item.id))];
   if (!selected.length) return null;
   return <><SheetHeading>{t("sheet.otherPowers")}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => {
-    const rating = item.kind === "coil" ? Number(coilRatings[item.id] ?? 0) : item.rating;
+    const rating = item.rating;
     return <article key={item.id}>
       <header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header>
       <small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small>
