@@ -29,7 +29,7 @@ import { CTL_SEEMINGS, changelingAnchorDisplayName, changelingAnchorRecovery, no
 import { entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
-import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, isInlineMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
+import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useState } from "react";
@@ -97,9 +97,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
     const sheetTab = mobileTab.characterId === character.id ? mobileTab.value : "resumo";
     const setSheetTab = (value: string) => setMobileTab({ characterId: character.id, value });
-    const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) ||
-        name === "Contacts" ||
-        name === "Multilingual";
+    const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) || Boolean(findMeritConfiguration(name));
     const data = character.line_data;
     const entitlementMerit = character.merits.find((item) => item.name === "Entitlement" && !item.grantedBy);
     const hasCompanions = character.merits.some((item) => !item.grantedBy && ["Fae Mount", "Fae Pet"].includes(item.name)) || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
@@ -357,7 +355,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
       {visible.map((item, itemIndex) => {
             const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
                 ? "Tokens"
-                : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !isInlineMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
+                : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>
                 : null;
@@ -499,7 +497,7 @@ function LineList({ items }: {
       {!items.filter(Boolean).length && <div>&nbsp;</div>}
     </div>);
 }
-function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog, entitlementCatalog, }: {
+function MeritSheetList({ merits, catalog, courtCatalog, }: {
     character: CharacterSheet;
     merits: CharacterSheet["merits"];
     updateSheet: (sheet: CharacterSheet) => void;
@@ -515,25 +513,13 @@ function MeritSheetList({ character, merits, updateSheet, catalog, courtCatalog,
             const tooltip = definition
                 ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
                 : item.source;
-            const inline = isInlineMeritConfiguration(item.name);
-            const meritIndex = character.merits.indexOf(item);
-            const inlineField = inline ? findMeritConfiguration(item.name)?.fields[0] : undefined;
-            const configuration = normalizeMeritConfiguration(item.configuration);
-            const displayName = definition ? definition[locale === "en-US" ? "name" : "translatedName"] : item.name;
-            return (<div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${item.name}-${index}`} title={inline ? undefined : tooltip}>
+            return (<div className="sheet-merit-row" key={`${item.name}-${index}`} title={tooltip}>
               <div className="sheet-merit-main">
-                <span>{inline ? `${displayName}:` : meritLabel(item, catalog, courtCatalog, locale)}</span>
-                {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${t("ui.description")}`} value={String(configuration[inlineField.key] ?? "")} placeholder={t("ui.typeHere")} onChange={(event) => {
-                        const next = structuredClone(character);
-                        const target = next.merits[meritIndex];
-                        if (target)
-                            target.configuration = { ...configuration, [inlineField.key]: event.target.value };
-                        updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
-                    }}/>}
+                <span>{meritLabel(item, catalog, courtCatalog, locale)}</span>
                 <DotValue value={item.dots} max={Math.max(5, item.dots)}/>
               </div>
             </div>);
-        })) : (<em>{t("ui.noMeritSelected")}</em>)}
+        })) : (<em className="rule-callout merit-empty">{t("ui.noMeritSelected")}</em>)}
     </div>);
 }
 function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, extraBenefits = [], extraClauses = [], }: {
