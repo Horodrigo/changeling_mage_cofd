@@ -97,6 +97,8 @@ When code represents CofD mechanics:
 
 For implementation work in this repository, create small local commits after each verified, coherent task type. Keep unrelated task types and user-owned changes out of the commit; inspect a dirty worktree before staging, and prefer explicit file or hunk staging over broad staging commands.
 
+The user performs the final browser smoke tests. Do not run smoke tests unless the user explicitly asks for them; use automated checks appropriate to the change and report their results instead.
+
 ## Verification behavior
 
 Before asserting a specific mechanic, prerequisite, cost, rating, dice pool, exception, or character-creation rule:
