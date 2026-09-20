@@ -285,7 +285,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label="Glamour" current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>{t("ui.contracts")}</SheetHeading>
@@ -630,7 +630,7 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
                     <dd>{courtBenefit}</dd>
                   </div>)}
                 {clauses.map((clause) => (<div key={`clause-${clause.courtId}`}>
-                    <dt>Clause · {displayCourt(courtCatalog, clause.courtId, locale)}</dt>
+                    <dt>{t("ui.clauseFor")} · {displayCourt(courtCatalog, clause.courtId, locale)}</dt>
                     <dd>{clause.text}</dd>
                   </div>))}
                 {definition.goblin && (<div className="goblin-debt-row">

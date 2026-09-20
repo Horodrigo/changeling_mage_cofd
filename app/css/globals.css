@@ -956,8 +956,9 @@ button { cursor: pointer; }
    regions, but the page geometry remains stable across every game line. */
 .cod-main-sheet { display:grid; gap:12px; }
 .cod-main-identity, .cod-main-attributes { min-width:0; }
-.cod-main-columns { display:grid; grid-template-columns:1.08fr .94fr .98fr; gap:25px; align-items:start; }
+.cod-main-columns { display:grid; grid-template-columns:1.08fr .94fr .98fr; gap:25px; align-items:start; min-width:0; }
 .cod-main-columns > section { min-width:0; }
+.cod-main-columns :is(input, textarea, button, [data-slot="select-trigger"]) { max-width:100%; }
 .cod-main-other, .cod-main-core { display:grid; gap:3px; align-content:start; }
 .cod-main-skills .official-heading, .cod-main-other .official-heading, .cod-main-core .official-heading {
     margin: 4px 0 3px;
@@ -984,6 +985,8 @@ button { cursor: pointer; }
 .cod-main-experience { min-width:0; }
 .cod-main-experience .experience-panel { margin-top:0; padding:8px; }
 .cod-main-experience .experience-title small { display:none; }
+.cod-main-experience .experience-totals > * { min-width:0; }
+.cod-main-experience .experience-totals span { overflow-wrap:anywhere; font-size:10px; }
 .experience-panel .beat-resource .resource-track button { width:10px; height:10px; border-width:1px; }
 .experience-panel .beat-resource .resource-track { gap:3px; }
 .experience-panel > .experience-history { display:none; }
@@ -1192,7 +1195,8 @@ button { cursor: pointer; }
 .sheet-merits { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
 .sheet-merits.single-column { grid-template-columns:1fr; }
 .sheet-merits > div { min-height:24px; border-bottom:1px solid #aaa8a16b; font-size:13px; }
-.sheet-merit-main { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sheet-merit-main { min-width:0; min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sheet-merit-main > span:first-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .sheet-merit-row.has-inline-config { padding:4px 0; }
 .sheet-merit-row.has-inline-config .sheet-merit-main > span { flex:none; }
 .sheet-merit-row .inline-merit-input { min-width:80px; height:24px; flex:1; padding:1px 3px; border:0; border-bottom:1px solid #aaa8a16b; border-radius:0; background:transparent; box-shadow:none; font:italic 13px Georgia,serif; }
@@ -1316,5 +1320,4 @@ button { cursor: pointer; }
   
   .official-field, .official-trait-block, .official-trait-line, .sheet-skills-column, .sheet-center-column, .sheet-right-column { min-width:0; }
 }
-
 

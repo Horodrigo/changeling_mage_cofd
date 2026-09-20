@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, useEffect, useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Link2, Plus, Trash2 } from "lucide-react";
 import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField, boundedNumber, updateLineData } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { ConditionManager, type ConditionDefinition, type SelectedCondition } from "@/app/workspace/condition-manager";
@@ -12,11 +12,13 @@ import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
+import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
@@ -28,6 +30,7 @@ import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
 import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice, vampireDetachmentPool } from "./detachment";
 import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule-effects";
+import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -508,7 +511,9 @@ return (
     <DialogFooter>
       <Button
         type="button"
+        size="sm"
         variant="outline"
+        className="catalog-dialog-done"
         onClick={() => setOpen(false)}
       >
         {t("common.cancel")}
@@ -516,6 +521,8 @@ return (
 
       <Button
         type="button"
+        size="sm"
+        className="catalog-selection-action"
         onClick={applyDetachment}
         disabled={!applicable}
       >
@@ -603,57 +610,21 @@ function BaneEditor({
                 }
               />
 
-              <RuleSelect
-                value={breakingPointId || "__none"}
-                onChange={(value) => {
-                  const point =
-                    DETACHMENT_BREAKING_POINT_OPTIONS.find(
-                      (item) => item.id === value,
-                    ) ??
-                    (value === VAST_DYNASTY_EMBRACE_BREAKING_POINT.id
-                      ? VAST_DYNASTY_EMBRACE_BREAKING_POINT
-                      : undefined);
-
-                  update(index, {
-                    breaking_point_id:
-                      value === "__none" ? "" : value,
-                    breaking_point_level: point?.level ?? 0,
-                  });
-                }}
-                options={[
-                  {
-                    value: "__none",
-                    label: t("ui.linkBreakingPoint"),
-                  },
-                  ...DETACHMENT_BREAKING_POINT_OPTIONS
-                    .filter(
-                      (point) =>
-                        !selectedIds.has(point.id) ||
-                        point.id === breakingPointId,
-                    )
-                    .map((point) => ({
-                      value: point.id,
-                      label: point.label,
-                      group: `${t("ui.humanity")} ${point.level}`,
-                    })),
-                  ...(vastDynasty &&
-                  (!selectedIds.has(
-                    VAST_DYNASTY_EMBRACE_BREAKING_POINT.id,
-                  ) ||
-                    breakingPointId ===
-                      VAST_DYNASTY_EMBRACE_BREAKING_POINT.id)
-                    ? [
-                        {
-                          value:
-                            VAST_DYNASTY_EMBRACE_BREAKING_POINT.id,
-                          label:
-                            VAST_DYNASTY_EMBRACE_BREAKING_POINT.label,
-                          group: `${t("ui.humanity")} 3`,
-                        },
-                      ]
-                    : []),
-                ]}
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button type="button" size="icon-xs" variant="ghost" className="vampire-bane-reference" aria-label={t("ui.linkBreakingPoint")} title={DETACHMENT_BREAKING_POINT_OPTIONS.find((point) => point.id === breakingPointId)?.label ?? t("ui.linkBreakingPoint")}>
+                    <Link2 />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="vampire-bane-reference-menu">
+                  <Button type="button" size="xs" variant="ghost" onClick={() => update(index, { breaking_point_id: "", breaking_point_level: 0 })}>{t("ui.linkBreakingPoint")}</Button>
+                  {[...DETACHMENT_BREAKING_POINT_OPTIONS, ...(vastDynasty ? [VAST_DYNASTY_EMBRACE_BREAKING_POINT] : [])]
+                    .filter((point) => !selectedIds.has(point.id) || point.id === breakingPointId)
+                    .map((point) => <Button type="button" size="xs" variant={point.id === breakingPointId ? "secondary" : "ghost"} key={point.id} onClick={() => update(index, { breaking_point_id: point.id, breaking_point_level: point.level })}>
+                      <span>{point.label}</span><small>{t("ui.humanity")} {point.level}</small>
+                    </Button>)}
+                </PopoverContent>
+              </Popover>
             </div>
           );
         })}
@@ -878,7 +849,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
           ))}
       </div>
     }
-    merits={<MeritList character={character} catalog={merits} locale={locale} />}
+    merits={<MeritList character={character} updateSheet={updateSheet} catalog={merits} locale={locale} />}
     lineSections={
       <>
         {humanitySection}
@@ -958,13 +929,13 @@ function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePower
           <small>{item.summary}</small>
         </summary>
         <div className={`contract-power-details${item.levels.length ? " has-levels" : ""}`}>
-          <PowerMechanics mechanics={item} locale={locale} />
+          <PowerMechanics mechanics={item} />
           {item.levels.filter((level) => level.rating <= rating).map((level) => <details className="contract-power-card vampire-discipline-level" key={level.rating}>
             <summary className="contract-power-summary">
               <strong>{"•".repeat(level.rating)} {localized(level, locale)}</strong>
               <small>{level.summary}</small>
             </summary>
-            <div className="contract-power-details"><PowerMechanics mechanics={level} locale={locale} compact /></div>
+            <div className="contract-power-details"><PowerMechanics mechanics={level} compact /></div>
           </details>)}
         </div>
       </details>;
@@ -972,13 +943,13 @@ function DisciplineCards({ powers, disciplines, locale }: { powers: VampirePower
   </div>;
 }
 
-function PowerMechanics({ mechanics, locale, compact = false }: { mechanics: VampireMechanics; locale: string; compact?: boolean }) {
+function PowerMechanics({ mechanics, compact = false }: { mechanics: VampireMechanics; compact?: boolean }) {
   const { t } = useLanguage();
   const rows: Array<[string, string | number | undefined]> = [
     [t("ui.cost"), mechanics.cost],
     [t("ui.requirement"), mechanics.requirement],
     [t("ui.condition"), mechanics.condition],
-    [locale === "pt-BR" ? "Parada de Dados" : "Dice Pool", mechanics.dicePool],
+    [t("ui.dicePool"), mechanics.dicePool],
     [t("ui.action"), mechanics.action],
     [t("ui.duration"), mechanics.duration],
     [t("ui.targetSuccesses"), mechanics.targetSuccesses],
@@ -1018,7 +989,7 @@ function RitualDisciplines({ powers, cruacRating, thebanRating, locale }: { powe
         return <article key={item.id}>
           <header><strong>{localized(item, locale)}</strong><DotValue value={rating} /></header>
           <p>{item.summary}</p>
-          <PowerMechanics mechanics={item} locale={locale} />
+          <PowerMechanics mechanics={item} />
           <small>{t("ui.bloodSorceryFreeRitual")}</small>
         </article>;
       })}
@@ -1026,9 +997,32 @@ function RitualDisciplines({ powers, cruacRating, thebanRating, locale }: { powe
   </>;
 }
 
-function MeritList({ character, catalog, locale }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; locale: string }) {
-  if (!character.merits.length) return <em>—</em>;
-  return <div className="official-lines">{character.merits.map((merit, index) => { const definition = catalog.find((item) => item.name === merit.name); return <div key={`${merit.instanceId ?? merit.name}-${index}`}><span>{locale === "pt-BR" ? definition?.translatedName ?? merit.name : merit.name}</span><DotValue value={merit.dots} /></div>; })}</div>;
+function MeritList({ character, updateSheet, catalog, locale }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalog: readonly MeritDefinition[]; locale: string }) {
+  const { t } = useLanguage();
+  const visible = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Vampire Template");
+  if (!visible.length) return <em>{t("ui.noMeritSelected")}</em>;
+  return <div className="sheet-merits single-column">{visible.map((merit, index) => {
+    const definition = catalog.find((item) => item.name === merit.name);
+    const displayName = locale === "pt-BR" ? definition?.translatedName ?? merit.name : definition?.name ?? merit.name;
+    const inline = isVampireInlineMeritConfiguration(merit.name);
+    const inlineField = inline ? VAMPIRE_MERIT_CONFIGURATIONS.find((item) => item.name === merit.name)?.fields[0] : undefined;
+    const configuration = normalizeMeritConfiguration(merit.configuration);
+    const meritIndex = character.merits.indexOf(merit);
+    const configuredName = inlineField ? String(configuration[inlineField.key] ?? "") : "";
+    const tooltip = definition ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}` : merit.source;
+    return <div className={`sheet-merit-row${inline ? " has-inline-config" : ""}`} key={`${merit.instanceId ?? merit.name}-${index}`} title={inline ? undefined : tooltip}>
+      <div className="sheet-merit-main">
+        <span>{inline ? `${displayName}:` : displayName}</span>
+        {inlineField && <Input className="inline-merit-input" aria-label={`${displayName}: ${t("ui.description")}`} value={configuredName} placeholder={t("ui.typeHere")} onChange={(event) => {
+          const next = structuredClone(character);
+          next.merits[meritIndex].configuration = { ...configuration, [inlineField.key]: event.target.value };
+          if (merit.grantedBy === "Vampire Template") next.line_data.kindred_status_group = event.target.value;
+          updateSheet(next);
+        }} />}
+        <DotValue value={merit.dots} max={Math.max(5, merit.dots)} />
+      </div>
+    </div>;
+  })}</div>;
 }
 
 function PurchasedPowers({ character, powers, locale, scope = "all" }: { character: CharacterSheet; powers: VampirePowers; locale: string; scope?: "all" | "devotions" | "covenant" }) {
@@ -1047,11 +1041,11 @@ function PurchasedPowers({ character, powers, locale, scope = "all" }: { charact
       <header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header>
       <small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small>
       <p>{item.summary}</p>
-      <PowerMechanics mechanics={item} locale={locale} />
+      <PowerMechanics mechanics={item} />
       {item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}>
         <strong>{level.rating}. {localized(level, locale)}</strong>
         <span>{level.summary}</span>
-        <PowerMechanics mechanics={level} locale={locale} compact />
+        <PowerMechanics mechanics={level} compact />
       </div>)}
     </article>;
   })}</div></>;
@@ -1115,9 +1109,9 @@ function TricksOfTheDamned({
     <div className="vampire-power-grid">
       <TrickCard title={t("ui.blushOfLife")} summary={pt ? `1 Vitae · duração ${blushDuration}` : `1 Vitae · duration ${blushDuration}`}>
         <p>{pt ? "Por 1 Vitae, o vampiro simula vida: aquece o corpo, apresenta pulso, fluidos naturais, funções sexuais e pode manter comida e bebida durante a duração." : "For 1 Vitae, the vampire mimics life: body warmth, pulse, natural fluids, sexual function, and the ability to keep food and drink down for the duration."}</p>
-        {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p><strong>Surmounting the Daysleep:</strong> {pt ? `${ignoresDaysleepWithBlush ? "com Blush ativo, não é preciso rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "permanecer ativo de dia não causa Lethargic" : ""}.` : `${ignoresDaysleepWithBlush ? "with Blush active, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
-        {fireDowngraded && <p><strong>Peace with the Flame:</strong> {pt ? `com Blush ativo, fogo causa dano letal; Resilience ${resilience} pode converter um ponto de letal em contusão por ponto.` : `with Blush active, fire deals lethal damage; Resilience ${resilience} can downgrade one lethal point to bashing per dot.`}</p>}
-        {canReduceSunlightInterval && <p><strong>Sun&apos;s Forgotten Kiss:</strong> {pt ? "cada Vitae adicional gasto ao ativar Blush reduz em 1 a Blood Potency usada somente para o intervalo de dano solar, até o mínimo de 1." : "each additional Vitae spent when activating Blush reduces Blood Potency by 1 for sunlight-damage interval only, to a minimum of 1."}</p>}
+        {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && <p><strong>{t("ui.surmountingTheDaysleep")}:</strong> {pt ? `${ignoresDaysleepWithBlush ? "com Blush ativo, não é preciso rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "permanecer ativo de dia não causa Lethargic" : ""}.` : `${ignoresDaysleepWithBlush ? "with Blush active, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}</p>}
+        {fireDowngraded && <p><strong>{t("ui.peaceWithTheFlame")}:</strong> {pt ? `com Blush ativo, fogo causa dano letal; Resilience ${resilience} pode converter um ponto de letal em contusão por ponto.` : `with Blush active, fire deals lethal damage; Resilience ${resilience} can downgrade one lethal point to bashing per dot.`}</p>}
+        {canReduceSunlightInterval && <p><strong>{t("ui.sunsForgottenKiss")}:</strong> {pt ? "cada Vitae adicional gasto ao ativar Blush reduz em 1 a Blood Potency usada somente para o intervalo de dano solar, até o mínimo de 1." : "each additional Vitae spent when activating Blush reduces Blood Potency by 1 for sunlight-damage interval only, to a minimum of 1."}</p>}
       </TrickCard>
 
       <TrickCard title={t("ui.kindredSenses")} summary={pt ? `Blood Potency efetiva ${effectiveSenseBloodPotency}` : `Effective Blood Potency ${effectiveSenseBloodPotency}`}>
@@ -1144,7 +1138,7 @@ function TricksOfTheDamned({
 
       <TrickCard title={t("ui.predatoryAura")} summary={pt ? `Blood Potency efetiva ${effectiveAuraBloodPotency}` : `Effective Blood Potency ${effectiveAuraBloodPotency}`}>
         <p>{pt ? "Lashing Out é uma ação instantânea. Contra Kindred custa 1 Willpower; contra mortais é gratuito. Disciplines não acrescentam dados a menos que digam explicitamente o contrário." : "Lashing Out is an instant action. Against Kindred it costs 1 Willpower; against mortals it is free. Disciplines do not add dice unless they explicitly say otherwise."}</p>
-        <p><strong>The Bestial Triad:</strong>{t("ui.bestialTriadConditions")}</p>
+        <p><strong>{t("ui.bestialTriad")}:</strong>{t("ui.bestialTriadConditions")}</p>
         <p><strong>{pt ? "Lashing Out" : "Lashing Out"}:</strong>{t("ui.monstrousPoolPrefix")}{monstrousPool}{t("ui.seductivePoolPrefix")}{seductivePool}{t("ui.competitivePoolPrefix")}{competitivePool}).</p>
         <p><strong>{pt ? "Modificadores" : "Modifiers"}:</strong> {pt ? "em seu território" : "on your territory"}{t("ui.feedingGroundsPrefix")}{feedingGrounds}); {pt ? "faminto" : "hungry"} +1; {pt ? "starving" : "starving"} +2; {pt ? "alvo já afetado pela aura nesta cena" : "target already affected by the aura this scene"} −1 {pt ? "cumulativo" : "cumulative"}.</p>
         <p>{pt ? "O alvo escolhe Fight ou Flight. Fight contesta com um Power Attribute + Blood Potency; Flight concede uma saída razoável e aplica a Condition associada ao aspecto do agressor." : "The target chooses Fight or Flight. Fight contests with a Power Attribute + Blood Potency; Flight grants a reasonable exit and applies the Condition associated with the aggressor's aspect."}</p>
@@ -1193,12 +1187,12 @@ function FrenzyPanel({
     <div className="vampire-state-controls">
       <label><span>{t("ui.frenzy")}</span><Switch checked={frenzyActive} onCheckedChange={(checked) => setState("frenzy_active", checked)} /></label>
       {beastPowerAvailable && <label><span>{t("ui.beastsPower")}</span><Switch disabled={!frenzyActive} checked={beastPowerActive} onCheckedChange={(checked) => setState("frenzy_beast_power_active", checked)} /></label>}
-      {(ignoresFireFrenzy || ignoresSunlightFrenzy) && <p className="wide"><strong>Conquer the Red Fear:</strong> {pt ? `não provoca Frenzy por ${[ignoresFireFrenzy && "fogo", ignoresSunlightFrenzy && "luz solar"].filter(Boolean).join(" ou ")}.` : `no Frenzy provocation from ${[ignoresFireFrenzy && "fire", ignoresSunlightFrenzy && "sunlight"].filter(Boolean).join(" or ")}.`}</p>}
-      <p className="wide"><strong>{pt ? "Resistir Frenzy" : "Resist Frenzy"}:</strong> {resistanceLabel} ({frenzyBasePool} {pt ? "base" : "base"} {frenzyAutomaticModifier >= 0 ? "+" : ""}{frenzyAutomaticModifier} {pt ? "automático" : "automatic"}). {pt ? "Outros modificadores situacionais são aplicados manualmente pelo jogador." : "Other situational modifiers are applied manually by the player."}</p>
-      <p className="wide"><strong>Riding the Wave:</strong> {rideLabel}; {pt ? "custo" : "cost"} <strong>{rideWaveWillpowerCost}{t("ui.willpowerAbbreviation")}</strong>; {pt ? "alvo" : "target"} <strong>{rideWaveTarget} {pt ? "sucessos" : "successes"}</strong>{rideWaveBonus ? `; ${pt ? "bônus da Coil" : "Coil bonus"} +${rideWaveBonus}` : ""}.</p>
-      {frenzyActive && <p className="wide"><strong>{pt ? "Frenzy ativo" : "Active Frenzy"}:</strong> +{bloodPotency} {pt ? "em rolagens/resistências de Strength, Dexterity e Stamina; penalidades de ferimento são ignoradas." : "to Strength, Dexterity, and Stamina rolls/resistances; wound penalties are ignored."}</p>}
-      {beastPowerActive && <p className="wide"><strong>Beast&apos;s Power:</strong>{t("ui.defense")}{combatDerived.Defesa}, Health {combatDerived.Vitalidade}, Speed {combatDerived.Deslocamento}.</p>}
-      <p className="wide"><strong>Touchstone:</strong> {pt ? `requer ${bloodPotency * 3} sucessos em uma ação Social prolongada para encerrar Frenzy.` : `requires ${bloodPotency * 3} successes on an extended Social action to talk the vampire down.`}</p>
+      {(ignoresFireFrenzy || ignoresSunlightFrenzy) && <p className="wide"><strong>{t("ui.conquerTheRedFear")}:</strong> {pt ? `não provoca Frenzy por ${[ignoresFireFrenzy && "fogo", ignoresSunlightFrenzy && "luz solar"].filter(Boolean).join(" ou ")}.` : `no Frenzy provocation from ${[ignoresFireFrenzy && "fire", ignoresSunlightFrenzy && "sunlight"].filter(Boolean).join(" or ")}.`}</p>}
+      <p className="wide"><strong>{t("ui.resistFrenzy")}:</strong> {resistanceLabel} ({frenzyBasePool} {pt ? "base" : "base"} {frenzyAutomaticModifier >= 0 ? "+" : ""}{frenzyAutomaticModifier} {pt ? "automático" : "automatic"}). {pt ? "Outros modificadores situacionais são aplicados manualmente pelo jogador." : "Other situational modifiers are applied manually by the player."}</p>
+      <p className="wide"><strong>{t("ui.ridingTheWave")}:</strong> {rideLabel}; {pt ? "custo" : "cost"} <strong>{rideWaveWillpowerCost}{t("ui.willpowerAbbreviation")}</strong>; {pt ? "alvo" : "target"} <strong>{rideWaveTarget} {pt ? "sucessos" : "successes"}</strong>{rideWaveBonus ? `; ${pt ? "bônus da Coil" : "Coil bonus"} +${rideWaveBonus}` : ""}.</p>
+      {frenzyActive && <p className="wide"><strong>{t("ui.activeFrenzy")}:</strong> +{bloodPotency} {pt ? "em rolagens/resistências de Strength, Dexterity e Stamina; penalidades de ferimento são ignoradas." : "to Strength, Dexterity, and Stamina rolls/resistances; wound penalties are ignored."}</p>}
+      {beastPowerActive && <p className="wide"><strong>{t("ui.beastsPower")}:</strong>{t("ui.defense")}{combatDerived.Defesa}, {t("ui.health")} {combatDerived.Vitalidade}, {t("ui.speed")} {combatDerived.Deslocamento}.</p>}
+      <p className="wide"><strong>{t("ui.touchstone")}:</strong> {pt ? `requer ${bloodPotency * 3} sucessos em uma ação Social prolongada para encerrar Frenzy.` : `requires ${bloodPotency * 3} successes on an extended Social action to talk the vampire down.`}</p>
     </div>
   </>;
 }

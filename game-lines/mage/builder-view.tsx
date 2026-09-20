@@ -367,7 +367,7 @@ function SpellSelector({
           <p className="rule-detail">
             <strong>{t("ui.summary")}:</strong> {spellSummary(spell)}
           </p>
-          {spellReach(spell) && <p className="rule-detail"><strong>Reach:</strong> {spellReach(spell)}</p>}
+          {spellReach(spell) && <p className="rule-detail"><strong>{t("ui.reach")}:</strong> {spellReach(spell)}</p>}
         </div>
       </SelectableCatalogCard>
     );

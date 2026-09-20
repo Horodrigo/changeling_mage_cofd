@@ -114,7 +114,7 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     return specialties.length ? [`${translate(locale, "ui.craftSpecialties")}: ${specialties.join(", ")}`] : [];
   }
   if (name === "Court Goodwill") {
-    const court = courtDisplayName(courtCatalog, configuration.court, locale) || (locale === "en-US" ? "Not selected" : "Não selecionada");
+    const court = courtDisplayName(courtCatalog, configuration.court, locale) || translate(locale, "ui.notSelected");
     const mantle = Math.max(0, dots - 2);
     return locale === "en-US" ? [
       `Court: ${court}.`,

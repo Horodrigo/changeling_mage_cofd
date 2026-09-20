@@ -58,7 +58,7 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
       <label>{t("ui.baneda2072")}<Input value={String(configuration.bane ?? "")} onChange={event => save({ bane: event.target.value })}/></label>
     </div>
     {form === "animal" && presentedAnimal && <AnimalCard animal={presentedAnimal} name={name} onRemove={() => save({ form: "object", animalId: "" })}/>} 
-    <strong>Numina ({numina.length}/{numinaLimit})</strong>
+    <strong>{t("ui.numina")} ({numina.length}/{numinaLimit})</strong>
     <div className="companion-options numina-options">{alphabetical(FAMILIAR_NUMINA, item => item).filter(item => numina.length < numinaLimit || numina.includes(item)).map(item => {
       const active = numina.includes(item);
       return <label key={item} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && numina.length >= numinaLimit} onChange={() => save({ numina: active ? numina.filter(value => value !== item) : [...numina, item] })}/><span><strong>{item}</strong></span></label>;

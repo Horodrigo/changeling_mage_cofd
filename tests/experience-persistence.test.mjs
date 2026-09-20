@@ -12,6 +12,7 @@ const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
 const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
+const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
 
@@ -66,6 +67,38 @@ test("reembolsa pontos em qualquer ordem sem restaurar snapshots de outras compr
     if (undo.kind === "arcana") assert.equal(current.line_data.arcana.Fate, 0);
     if (undo.kind === "wisdom") assert.equal(current.line_data.wisdom, 7);
   }
+});
+
+test("Vampiro reembolsa compras fora de ordem sem apagar avanços posteriores", () => {
+  const undos = [
+    {kind:"trait",group:"attributes",name:"Strength"},
+    {kind:"trait",group:"skills",name:"Athletics"},
+    {kind:"specialty",skill:"Athletics",name:"Corrida"},
+    {kind:"merit",name:"Resources",dots:2,index:0},
+    {kind:"discipline",name:"Vigor"},
+    {kind:"bloodPotency"}, {kind:"humanity"}, {kind:"willpower"},
+    {kind:"devotion",id:"devotion-1"},
+    {kind:"cruac",id:"rite-1",humanityLost:0},
+    {kind:"theban",id:"miracle-1"},
+    {kind:"ritual",key:"cruac_rite_ids",id:"rite-2"},
+    {kind:"coil",id:"coil-1"}, {kind:"scale",id:"scale-1"},
+  ];
+  for (const order of [undos, [...undos].reverse()]) {
+    const current = {
+      attributes:{Strength:2}, skills:{Athletics:1}, specializations:[{skill:"Athletics",name:"Corrida"}],
+      merits:[{name:"Resources",dots:3,creationDots:1,experienceDots:2}],
+      line_data:{disciplines:{Vigor:1},blood_potency:2,humanity:8,devotion_ids:["devotion-1"],blood_sorcery:{cruac_rating:1,cruac_rite_ids:["rite-1","rite-2"],theban_rating:1,theban_miracle_ids:["miracle-1"]},ordo_dracul:{coil_ratings:{"coil-1":1},scale_ids:["scale-1"]}},
+      current_state:{willpower_lost_dots:0},
+    };
+    for (const undo of order) vampireRefunds.refundVampireAdvancement(current, undo);
+    assert.deepEqual([current.attributes.Strength,current.skills.Athletics,current.specializations.length,current.merits[0].dots],[1,0,0,1]);
+    assert.deepEqual([current.line_data.disciplines.Vigor,current.line_data.blood_potency,current.line_data.humanity,current.current_state.willpower_lost_dots],[0,1,7,1]);
+    assert.deepEqual([current.line_data.devotion_ids,current.line_data.blood_sorcery.cruac_rite_ids,current.line_data.blood_sorcery.theban_miracle_ids,current.line_data.ordo_dracul.scale_ids],[[],[],[],[]]);
+    assert.deepEqual([current.line_data.blood_sorcery.cruac_rating,current.line_data.blood_sorcery.theban_rating,current.line_data.ordo_dracul.coil_ratings["coil-1"]],[0,0,0]);
+  }
+  const humanity = {attributes:{},skills:{},specializations:[],merits:[],line_data:{humanity:9,blood_sorcery:{cruac_rating:1,cruac_rite_ids:["rite"]}},current_state:{}};
+  vampireRefunds.refundVampireAdvancement(humanity,{kind:"cruac",id:"rite",humanityLost:1});
+  assert.equal(humanity.line_data.humanity,10);
 });
 
 test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas", () => {

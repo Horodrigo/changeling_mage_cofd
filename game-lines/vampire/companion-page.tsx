@@ -82,9 +82,9 @@ export function VampireCompanionPage({
   };
 
   return <section className="vampire-undead-companions">
-    <SheetHeading>{pt ? "Familiares Mortos-vivos" : "Undead Familiars"}</SheetHeading>
+    <SheetHeading>{t("ui.undeadFamiliars")}</SheetHeading>
     <div className="vampire-familiar-rules">
-      <p><strong>Raise the Familiar ••:</strong> {pt ? "1 Vitae; ação instantânea; sem rolagem." : "1 Vitae; instant action; no roll."}</p>
+      <p><strong>{t("ui.raiseTheFamiliar")}:</strong> {pt ? "1 Vitae; ação instantânea; sem rolagem." : "1 Vitae; instant action; no roll."}</p>
       <p>{pt ? "O familiar permanece ativo por Blood Potency × Stamina do animal noites. Alimentá-lo com mais 1 Vitae reinicia essa duração." : "The familiar remains active for Blood Potency × the animal's Stamina nights. Feeding it another Vitae resets that duration."}</p>
       <p>{pt ? "Ele possui Intelligence 1, recebe dano de ataques como um vampiro (contusão em vez do dano mortal normal), não cai inconsciente, não sangra até morrer e não se decompõe." : "It has Intelligence 1, takes attack damage like a vampire (bashing instead of ordinary mortal injury), does not fall unconscious, does not bleed out, and does not decompose."}</p>
       <p>{pt ? "Feral Whispers pode ser usado no familiar silenciosamente, a qualquer distância. Ainda é feita a rolagem para interpretar a ordem, mas o familiar não resiste." : "Feral Whispers can be used on the familiar silently at any distance. The interpretation roll still occurs, but the familiar does not resist."}</p>

@@ -19,10 +19,12 @@ import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampirePowers, VampireReference, VampirePurchasablePower } from "./catalog-types";
 import { recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived } from "./creation-rules";
+import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
+import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "cruac" | "theban" | "ritual" | "coil" | "scale";
-type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before: CharacterSheet; undo?: Record<string, unknown> };
+type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before?: CharacterSheet; undo?: VampireAdvancementUndo };
 
 const PURCHASES: PurchaseType[] = ["attribute", "skill", "specialty", "merit", "discipline", "blood-potency", "humanity", "willpower", "devotion", "cruac", "theban", "ritual", "coil", "scale"];
 
@@ -128,8 +130,6 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
     if (unavailable || available < cost) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
-    const before = structuredClone(character);
-    before.current_state = { ...before.current_state, vampire_experience_history: [] };
     const next = structuredClone(character);
     let purchasedMeritIndex = -1;
     let label = options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale);
@@ -170,11 +170,22 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     else if (purchase === "scale") next.line_data.ordo_dracul = { ...ordo, scale_ids: [...knownScales, chosen] };
     const nextDisciplines = recordRatings(next.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
     next.derived = vampireDerived(next.attributes, next.skills, nextDisciplines, Number(next.line_data.blood_potency ?? 1), reference);
-    const undo = purchase === "attribute" ? { kind: "trait", group: "attributes", name: chosen }
+    const purchasedMerit = purchasedMeritIndex >= 0 ? next.merits[purchasedMeritIndex] : undefined;
+    const undo: VampireAdvancementUndo = purchase === "attribute" ? { kind: "trait", group: "attributes", name: chosen }
       : purchase === "skill" ? { kind: "trait", group: "skills", name: chosen }
       : purchase === "specialty" ? { kind: "specialty", skill: chosen, name: specialtyName.trim() }
-      : undefined;
-    const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), before, undo };
+      : purchase === "merit" ? { kind: "merit", name: selectedMerit!.name, dots: cost, instanceId: purchasedMerit?.instanceId, index: purchasedMeritIndex }
+      : purchase === "discipline" ? { kind: "discipline", name: chosen }
+      : purchase === "blood-potency" ? { kind: "bloodPotency" }
+      : purchase === "humanity" ? { kind: "humanity" }
+      : purchase === "willpower" ? { kind: "willpower" }
+      : purchase === "devotion" ? { kind: "devotion", id: chosen }
+      : purchase === "cruac" ? { kind: "cruac", id: chosen, humanityLost: Math.max(0, Number(character.line_data.humanity ?? 7) - Number(next.line_data.humanity ?? 7)) }
+      : purchase === "theban" ? { kind: "theban", id: chosen }
+      : purchase === "ritual" ? { kind: "ritual", key: covenant === "circle-of-the-crone" ? "cruac_rite_ids" : "theban_miracle_ids", id: chosen }
+      : purchase === "coil" ? { kind: "coil", id: chosen }
+      : { kind: "scale", id: chosen };
+    const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), undo };
     next.current_state = { ...next.current_state, experience_available: available - cost, experience_spent: spent + cost, experience_total: total, vampire_experience_history: [...history, entry] };
 
     // Preserve the current purchase when it can still be advanced. If the
@@ -237,19 +248,34 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     setSpecialtyName("");
     setTeacherConfirmed(false);
   };
-  const undo = () => {
-    const last = history.at(-1);
-    if (!last?.before) return;
-    const restored = structuredClone(last.before);
-    restored.current_state = { ...restored.current_state, experience_available: available + last.cost, experience_spent: Math.max(0, spent - last.cost), experience_total: total, vampire_experience_history: history.slice(0, -1) };
-    updateSheet(restored);
+  const revert = (entry: HistoryEntry) => {
+    if (!history.some((item) => item.id === entry.id)) return;
+    if (!entry.undo) {
+      if (!entry.before || history.at(-1)?.id !== entry.id) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+      const restored = structuredClone(entry.before);
+      restored.current_state = { ...restored.current_state, experience_available: available + entry.cost, experience_spent: Math.max(0, spent - entry.cost), experience_total: total, vampire_experience_history: history.filter((item) => item.id !== entry.id) };
+      updateSheet(restored);
+      return;
+    }
+    const next = structuredClone(character);
+    refundVampireAdvancement(next, entry.undo);
+    next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, VAMPIRE_DISCIPLINES, 10), Number(next.line_data.blood_potency ?? 1), reference);
+    next.current_state = {
+      ...next.current_state,
+      experience_available: available + entry.cost,
+      experience_spent: Math.max(0, spent - entry.cost),
+      experience_total: total,
+      vampire_experience_history: history.filter((item) => item.id !== entry.id),
+    };
+    updateSheet(synchronizeVampireBuilderMeritGrants(next));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.label, p2: entry.cost }));
   };
   const commitAvailableExperience = () => {
     const nextAvailable = Math.max(0, Math.trunc(Number(amount) || 0));
     setAmountDraft(null);
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
-  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
+  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo && (!entry.before || history.at(-1)?.id !== entry.id)} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
     <div className="experience-title"><div><span>{t("ui.beatsAndExperience")}</span><small>{t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
     <div className="experience-totals">
@@ -277,6 +303,6 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       </Dialog>
     </div>
     {feedback && <p className="experience-feedback compact">{feedback}</p>}
-    <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry, index) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{index === 0 && <Button type="button" size="sm" variant="ghost" onClick={undo}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>
+    {historyPanel}
   </section>;
 }

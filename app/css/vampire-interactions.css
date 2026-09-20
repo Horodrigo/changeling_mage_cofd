@@ -37,11 +37,17 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
 }
 
 .vampire-detachment-dialog {
-  width: min(760px, calc(100vw - 2rem)) !important;
-  max-width: 760px !important;
+  width: min(680px, calc(100vw - 2rem)) !important;
+  max-width: 680px !important;
   max-height: min(88vh, 900px);
   overflow: hidden;
 }
+
+.vampire-detachment-dialog [data-slot="dialog-title"] { font-size:18px; }
+.vampire-detachment-dialog [data-slot="dialog-description"] { font-size:12px; line-height:1.4; }
+.vampire-detachment-dialog [data-slot="dialog-footer"] [data-slot="button"] { min-height:32px; padding:5px 11px; font-size:12px; }
+.vampire-detachment-form > label { font-size:13px; }
+.vampire-detachment-form [data-slot="select-trigger"] { width:fit-content; min-width:120px; height:32px; font-size:12px; }
 
 .vampire-detachment-form {
   display: grid;
@@ -58,16 +64,22 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
 
 .vtr-sheet .vampire-humanity-heading-row > .official-heading {
   flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
 }
 
 .vtr-sheet .vampire-detachment-trigger {
+  width: auto;
   flex: 0 0 auto;
-  min-height: 28px;
+  min-height: 30px;
+  height: 30px;
+  padding: 0 10px;
   border-color: rgba(77, 23, 28, .42);
   border-radius: 2px;
   color: var(--vtr-ink);
   background: rgba(255, 252, 248, .45);
+  font-size: 12px;
+  line-height: 1;
   font-family: Georgia, "Times New Roman", serif;
 }
 
@@ -187,20 +199,29 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
 
 .vtr-sheet .vampire-bane-row {
   display: grid;
-  grid-template-columns: minmax(130px, .85fr) minmax(180px, 1.15fr);
-  gap: 7px;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  gap: 3px;
   align-items: center;
 }
 
-.vtr-sheet .vampire-bane-row > input,
-.vtr-sheet .vampire-bane-row [data-slot="select-trigger"] {
+.vtr-sheet .vampire-bane-row > input {
   width: 100%;
-  min-height: 30px;
+  min-width: 0;
+  height: 27px;
+  padding: 1px 3px;
+  border: 0;
+  border-bottom: 1px solid var(--vtr-rule);
   border-radius: 0;
-  border-color: var(--vtr-rule);
-  background: rgba(255, 252, 248, .36);
-  font-family: Georgia, "Times New Roman", serif;
+  background: transparent;
+  box-shadow: none;
+  font: italic 13px Georgia, "Times New Roman", serif;
 }
+
+.vtr-sheet .vampire-bane-reference { width:26px; height:26px; min-height:26px; padding:0; color:var(--vtr-ink); }
+.vampire-bane-reference-menu { display:grid; gap:2px; width:min(340px, calc(100vw - 2rem)); max-height:320px; overflow:auto; padding:6px; border-color:rgba(77, 23, 28, .38); background:#eee5db; }
+.vampire-bane-reference-menu [data-slot="button"] { width:100%; height:auto; min-height:26px; justify-content:space-between; padding:4px 6px; color:#4d171c; font-size:11px; line-height:1.25; white-space:normal; text-align:left; }
+.vampire-bane-reference-menu [data-slot="button"] span { min-width:0; }
+.vampire-bane-reference-menu [data-slot="button"] small { flex:none; opacity:.7; }
 
 .vtr-sheet .vampire-bane-row.missing-field {
   padding: 2px;
@@ -274,7 +295,6 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
   .vampire-detachment-dialog { max-height: 92vh; }
   .vampire-breaking-point-tiers { max-height: 42vh; }
   .vampire-detachment-modifiers,
-  .vtr-sheet .vampire-bane-row,
   .vampire-kindred-status-grant { grid-template-columns: minmax(0, 1fr); }
   .vampire-kindred-status-grant > span { grid-column: auto; }
 }

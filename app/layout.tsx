@@ -6,7 +6,7 @@ import "./css/mage-sheet.css";
 import "./css/vampire-sheet.css";
 import "./css/vampire-interactions.css";
 import { PwaManager } from "./pwa-manager";
-import { LanguageProvider, translate } from "@/lib/i18n";
+import { LanguageProvider } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Characters of the Darkness",
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />}
         <div className="app-launch-splash" aria-hidden="true">
           <Image src="/app-icon-192.png" alt="" width={192} height={192} priority unoptimized />
-          <strong>{translate("en-US", "workspace.charactersOfTheDarkness")}</strong>
+          <strong>{metadata.title as string}</strong>
         </div>
         <LanguageProvider>{children}<PwaManager /></LanguageProvider>
       </body>

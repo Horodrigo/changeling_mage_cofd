@@ -433,7 +433,7 @@ export function MageExperiencePanel({
           undo = { kind: "merit", name: merit.name, dots: entry.regular + entry.arcane };
         else if (spell) undo = { kind: "spell", id: spell.id, key: entry.arcane > 0 ? "learned_praxes" : "learned_rotes" };
         else if (Object.values(SKILLS).flat().some(name => name === entry.description))
-          undo = { kind: "specialty", skill: entry.description, name: locale==="en-US"?"New Specialty":"Nova Especialização" };
+          undo = { kind: "specialty", skill: entry.description, name: t("ui.newSpecialty") };
       }
     }
     if (!undo) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
