@@ -138,7 +138,7 @@ function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {
 }
 
 function meritCategoryLabel(category: string) {
-  return ({ Mental: "Mentais", Physical: "Físicos", Social: "Sociais", Supernatural: "Sobrenaturais", "Fighting Style": "Estilos de Combate", Changeling: "Changeling", Awakened: "Despertos", Entitlement: "Títulos Feéricos", Court: "Cortes", Seeming: "Feições", Historical: "Históricos", Order: "Ordens", "Mystery Cult": "Cultos de Mistério" } as Record<string, string>)[category] ?? category;
+  return ({ Mental: "Mentais", Physical: "Físicos", Social: "Sociais", Supernatural: "Sobrenaturais", "Supernatural Styles": "Estilos Sobrenaturais", "Fighting Style": "Estilos de Combate", Changeling: "Changeling", Awakened: "Despertos", Entitlement: "Títulos Feéricos", Court: "Cortes", Seeming: "Feições", Historical: "Históricos", Order: "Ordens", "Mystery Cult": "Cultos de Mistério" } as Record<string, string>)[category] ?? category;
 }
 
 function formatRatings(ratings: number[]) {

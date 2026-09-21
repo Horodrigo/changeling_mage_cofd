@@ -1,7 +1,7 @@
 import { meritPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 
 export function isMortalSupernaturalMerit(merit: MeritDefinition) {
-  return merit.category === "Supernatural" && merit.mortalOnly === true;
+  return merit.mortalOnly === true;
 }
 
 export function zirnitraMortalMeritLimit(rating: number) {
@@ -19,5 +19,6 @@ export function vampireMeritEligible(merit: MeritDefinition, context: MeritPrere
   if (!isMortalSupernaturalMerit(merit)) return true;
   const count = zirnitraMortalMeritCount(context);
   const limit = zirnitraMortalMeritLimit(zirnitraRating);
+  if (merit.id === "hurt-locker:supernatural-resistance" && count === 0) return false;
   return (context.merits ?? []).some((owned) => owned.dots > 0 && owned.name === merit.name) ? count <= limit : count < limit;
 }

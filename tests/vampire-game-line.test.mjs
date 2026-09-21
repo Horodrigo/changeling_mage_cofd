@@ -124,19 +124,31 @@ test("Coil of Zirnitra unlocks one mortal Supernatural Merit per dot and removes
   const automaticWriting = catalog.find((item) => item.id === "core-2ed:automatic-writing");
   const layingOnHands = catalog.find((item) => item.id === "core-2ed:laying-on-hands");
   const numbingTouch = catalog.find((item) => item.id === "core-2ed:numbing-touch");
+  const supernaturalResistance = catalog.find((item) => item.id === "hurt-locker:supernatural-resistance");
   const context = { gameLine: "VtR", archetypes: ["vampire"], meritCatalog: catalog, merits: [] };
+  const mortalSupernatural = catalog.filter((item) => item.mortalOnly);
 
+  assert.equal(mortalSupernatural.length, 48);
+  assert.equal(mortalSupernatural.filter((item) => item.sourceId === "core-2ed").length, 17);
+  assert.equal(mortalSupernatural.filter((item) => item.sourceId === "hurt-locker").length, 30);
+  assert.equal(mortalSupernatural.filter((item) => item.sourceId === "dark-eras").length, 1);
+  assert.equal(mortalSupernatural.filter((item) => item.category === "Supernatural Styles").length, 3);
+  assert.deepEqual(["Accursed Harbinger", "Astral Adept", "Phantom Limb", "Stigmata"].filter((name) => catalog.some((item) => item.name === name)), []);
+  assert.equal(catalog.find((item) => item.id === "core-2ed:esoteric-armory").mortalOnly, undefined);
+  assert.deepEqual(catalog.find((item) => item.id === "hurt-locker:psychic-onslaught").ratings, [5]);
   assert.equal(automaticWriting.mortalOnly, true);
   assert.equal(layingOnHands.mortalOnly, true);
   assert.equal(numbingTouch.mortalOnly, true);
   assert.equal(vampireMeritEligible(automaticWriting, context, 0), false);
   assert.equal(vampireMeritEligible(automaticWriting, context, 1), true);
+  assert.equal(vampireMeritEligible(supernaturalResistance, context, 5), false);
 
   const oneOwned = { ...context, merits: [{ name: automaticWriting.name, dots: 2 }] };
   assert.equal(zirnitraMortalMeritCount(oneOwned), 1);
   assert.equal(vampireMeritEligible(automaticWriting, oneOwned, 1), true);
   assert.equal(vampireMeritEligible(layingOnHands, oneOwned, 1), false);
   assert.equal(vampireMeritEligible(layingOnHands, oneOwned, 2), true);
+  assert.equal(vampireMeritEligible(supernaturalResistance, oneOwned, 2), true);
 
   const threeOwned = { ...context, merits: [automaticWriting, layingOnHands, numbingTouch].map((item) => ({ name: item.name, dots: item.ratings[0] })) };
   assert.equal(vampireMeritEligible(layingOnHands, threeOwned, 2), false);
