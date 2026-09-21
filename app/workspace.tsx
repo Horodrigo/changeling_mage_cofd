@@ -52,6 +52,7 @@ import {
 } from "./workspace/character-lifecycle";
 import { useCharacterRepository } from "./workspace/character-repository";
 import { blankPrintCharacter } from "./workspace/blank-print-character";
+import { isCreationDraft } from "./character-builder-shell";
 
 const NewCharacterBuilder = lazy(() =>
   import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
@@ -166,6 +167,24 @@ export function Workspace({
     }
   }
 
+  function saveCharacterDraft(sheet: CharacterSheet) {
+    upsertCharacter(sheet);
+    setEditing(null);
+    setSelected(null);
+    setView("personagens");
+    setNotice(t("workspace.characterDraftSaved"));
+  }
+
+  function openOrResumeCharacter(sheet: CharacterSheet) {
+    if (isCreationDraft(sheet)) {
+      setSelected(null);
+      setEditing(sheet);
+      setView("personagens");
+      return;
+    }
+    void openCharacter(sheet);
+  }
+
   function updateCharacterState(
     character: CharacterSheet,
     currentState: Record<string, unknown>,
@@ -240,9 +259,9 @@ export function Workspace({
       >
         <Suspense fallback={<WorkspaceLoading />}>
           {editing === "new" ? (
-            <NewCharacterBuilder player={displayName} onCancel={() => setEditing(null)} onSave={(sheet) => { void saveCharacter(sheet); }} />
+            <NewCharacterBuilder player={displayName} onCancel={() => setEditing(null)} onSave={(sheet) => { void saveCharacter(sheet); }} onSaveDraft={saveCharacterDraft} />
           ) : (
-            <GameLineBuilder gameLine={editing.game_line} player={displayName} initial={editing} onCancel={() => setEditing(null)} onSave={(sheet) => { void saveCharacter(sheet); }} />
+            <GameLineBuilder gameLine={editing.game_line} player={displayName} initial={editing} onCancel={() => setEditing(null)} onSave={(sheet) => { void saveCharacter(sheet); }} onSaveDraft={saveCharacterDraft} />
           )}
         </Suspense>
       </CatalogBoundary>
@@ -367,7 +386,7 @@ export function Workspace({
             openCharacters={() => navigate("personagens")}
             createCharacter={() => setEditing("new")}
             printBlankSheet={setBlankPrintLine}
-            openCharacter={(sheet) => { void openCharacter(sheet); }}
+            openCharacter={openOrResumeCharacter}
             deleteCharacter={setDeleteTarget}
           />
         ) : view === "personagens" ? (
@@ -375,7 +394,7 @@ export function Workspace({
             characters={characters}
             ready={ready}
             createCharacter={() => setEditing("new")}
-            open={(sheet) => { void openCharacter(sheet); }}
+            open={openOrResumeCharacter}
             deleteCharacter={setDeleteTarget}
           />
         ) : (
@@ -570,9 +589,10 @@ function StoredCharacterCard({
 }) {
   const {t}=useLanguage();
   const summary = summarizeStoredCharacter(character);
+  const draft = isCurrentStoredCharacter(character) && isCreationDraft(character);
   const registration = summary.gameLine ? getGameLineRegistration(summary.gameLine) : null;
   const title = summary.isCurrent
-    ? registration?.label ?? ""
+    ? draft ? t("workspace.creationDraft") : registration?.label ?? ""
     : t("workspace.unsupportedCharacter");
   const concept = summary.concept || t("workspace.noConcept");
   return (
@@ -590,6 +610,7 @@ function StoredCharacterCard({
           <Badge variant={summary.isCurrent ? "outline" : "destructive"}>{title}</Badge>
           <h3>{summary.name}</h3>
           <p>{concept}</p>
+          {draft && <small>{t("workspace.continueCreationDraft")}</small>}
           {!summary.isCurrent && <small>{t("workspace.unsupportedCharacterDescription")}</small>}
         </div>
         {summary.isCurrent && <ChevronRight />}

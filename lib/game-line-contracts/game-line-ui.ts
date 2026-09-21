@@ -9,6 +9,7 @@ export type GameLineBuilderProps = {
   initial?: CharacterSheet | null;
   onCancel: () => void;
   onSave: (sheet: CharacterSheet) => void;
+  onSaveDraft: (sheet: CharacterSheet) => void;
   catalogs?: CatalogSnapshot;
   fixedGameLine?: PersistedGameLineId;
 };

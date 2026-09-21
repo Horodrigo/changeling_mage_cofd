@@ -3,8 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   CharacterBuilderShell,
+  builderCurrentState,
   commonCreationIssues,
   experienceTraitDots,
+  isCreationDraft,
   useCommonBuilderState,
   type BuilderValidationIssue,
 } from "@/app/character-builder-shell";
@@ -92,7 +94,7 @@ function readSpells(
   return result;
 }
 
-function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
+function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "MtA") throw new Error("Mage builder received a non-Mage character.");
   if (!catalogs) throw new Error("Mage builder requires its catalog snapshot.");
@@ -214,13 +216,14 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
-  const finish = () => {
-    if (issues.length) {
+  const finish = (draft: boolean) => {
+    if (!draft && issues.length) {
       common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
       common.setStep(issues[0].step);
-      return;
+      return false;
     }
-    const finalAttributes = { ...common.attributes, [resistanceBonus]: Math.min(5, (common.attributes[resistanceBonus] ?? 1) + 1) };
+    const finalAttributes = { ...common.attributes };
+    if (resistanceBonus) finalAttributes[resistanceBonus] = Math.min(5, (common.attributes[resistanceBonus] ?? 1) + 1);
     const finalSkills = { ...common.skills };
     const finalArcana = { ...arcana };
     if (hasOrderOccultBonus) finalSkills.Occult = Math.min(5, (finalSkills.Occult ?? 0) + 1);
@@ -254,7 +257,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
         creation_gnosis: gnosis, gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
         wisdom: Number(initial?.line_data.wisdom ?? 7), arcana: finalArcana,
         rotes: hasCreationOrderBenefits ? rotes.filter(Boolean) : [], praxes: praxes.slice(0, gnosis).filter(Boolean),
-        ruling_arcana: pathData.ruling, inferior_arcanum: pathData.inferior,
+        ruling_arcana: pathData?.ruling ?? [], inferior_arcanum: pathData?.inferior ?? "",
         rote_skills: order === "Nameless" ? namelessRoteSkills : (MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? []),
       },
       derived: {
@@ -265,14 +268,15 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: G
         Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
         Sabedoria: 7,
       },
-      current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
+      current_state: builderCurrentState(initial, draft, common.step), created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(completed);
+    (draft ? onSaveDraft : onSave)(completed);
+    return true;
   };
 
   return <CharacterBuilderShell
     line="MtA" templateLabel={t("ui.awakenedTemplate")} state={common} issues={issues}
-    onCancel={onCancel} onFinish={finish}
+    draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
     identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={t("ui.shadowName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}

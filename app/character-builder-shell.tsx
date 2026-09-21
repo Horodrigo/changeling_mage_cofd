@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import { creationMerits } from "@/lib/merit-progression";
@@ -11,6 +12,44 @@ import { useLanguage } from "@/lib/i18n";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
 export type BuilderValidationIssue = { step: number; key: string; label: string };
+
+export const isCreationDraft = (sheet: CharacterSheet | null | undefined) => sheet?.current_state.creation_draft === true;
+
+export function builderCurrentState(initial: CharacterSheet | null | undefined, draft: boolean, step: number) {
+  const state = { ...(initial?.current_state ?? {}) };
+  if (draft) { state.creation_draft = true; state.creation_draft_step = step; }
+  else { delete state.creation_draft; delete state.creation_draft_step; }
+  return state;
+}
+
+export function useBuilderExitGuard(active: boolean, onRequest: () => void) {
+  const leaving = useRef(false);
+  useEffect(() => {
+    if (!active) return;
+    const marker = { ...window.history.state, characterBuilder: true };
+    if (!window.history.state?.characterBuilder) window.history.pushState(marker, "");
+    const popstate = () => {
+      if (leaving.current) return;
+      window.history.pushState(marker, "");
+      onRequest();
+    };
+    const beforeunload = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
+    window.addEventListener("popstate", popstate);
+    window.addEventListener("beforeunload", beforeunload);
+    return () => { window.removeEventListener("popstate", popstate); window.removeEventListener("beforeunload", beforeunload); };
+  }, [active, onRequest]);
+  return useCallback((action: () => boolean | void) => {
+    leaving.current = true;
+    try {
+      if (action() === false) { leaving.current = false; return false; }
+      if (window.history.state?.characterBuilder) window.history.back();
+      return true;
+    } catch (error) {
+      leaving.current = false;
+      throw error;
+    }
+  }, []);
+}
 
 export function experienceTraitDots(
   initial: CharacterSheet | null | undefined,
@@ -107,7 +146,7 @@ export function useCommonBuilderState(
 ) {
   const startingAttributes = editableTraits(initial, "attributes", options.experienceHistoryKey, options.adjustAttributes);
   const startingSkills = editableTraits(initial, "skills", options.experienceHistoryKey, options.adjustSkills);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(() => isCreationDraft(initial) ? Math.max(1, Math.min(4, Number(initial?.current_state.creation_draft_step ?? 1))) : 1);
   const [error, setError] = useState("");
   const [name, setName] = useState(initial?.character.name ?? "");
   const [concept, setConcept] = useState(initial?.character.concept ?? "");
@@ -187,6 +226,7 @@ export function CharacterBuilderShell({
   identity,
   traits,
   lineTemplate,
+  draft,
   onCancel,
   onFinish,
 }: {
@@ -197,10 +237,15 @@ export function CharacterBuilderShell({
   identity: ReactNode;
   traits: ReactNode;
   lineTemplate: ReactNode;
+  draft: boolean;
   onCancel: () => void;
-  onFinish: () => void;
+  onFinish: (draft: boolean) => boolean;
 }) {
   const { t } = useLanguage();
+  const [exitOpen, setExitOpen] = useState(false);
+  const requestExit = useCallback(() => setExitOpen(true), []);
+  const leave = useBuilderExitGuard(true, requestExit);
+  const saveAndExit = (asDraft: boolean) => { setExitOpen(false); leave(() => onFinish(asDraft)); };
   const missingAtStep = (step: number) => issues.filter((issue) => issue.step === step);
   const advance = () => {
     const current = missingAtStep(state.step);
@@ -213,8 +258,9 @@ export function CharacterBuilderShell({
   };
   return <section className={`builder line-theme-${line.toLowerCase()}`}>
     <div className="builder-head">
-      <Button variant="ghost" onClick={onCancel}><ArrowLeft /> {t("ui.back")}</Button>
+      <Button variant="ghost" onClick={requestExit}><ArrowLeft /> {t("ui.back")}</Button>
       <div><Badge variant="outline">{line}</Badge><span>{t("ui.guidedCreationSharedRulesV1")}</span></div>
+      <Button type="button" variant="outline" onClick={() => saveAndExit(draft)}><Save /> {draft ? t("ui.saveDraftAndExit") : t("ui.saveChangesAndExit")}</Button>
     </div>
     <div className="stepper">
       {[t("ui.identity"), t("ui.traits"), templateLabel].map((label, index) =>
@@ -234,7 +280,13 @@ export function CharacterBuilderShell({
       <span />
       {state.step < 3
         ? <Button onClick={advance}>{t("ui.continue")} <ArrowRight /></Button>
-        : <Button onClick={onFinish}><Save /> {t("ui.saveCharacterLocally")}</Button>}
+        : <Button onClick={() => saveAndExit(false)}><Save /> {t("ui.saveCharacterLocally")}</Button>}
     </div>
+    <BuilderExitDialog open={exitOpen} onOpenChange={setExitOpen} draft={draft} onDiscard={() => leave(() => { onCancel(); return true; })} onSave={() => saveAndExit(draft)} />
   </section>;
+}
+
+export function BuilderExitDialog({ open, onOpenChange, draft, onDiscard, onSave }: { open: boolean; onOpenChange: (open: boolean) => void; draft: boolean; onDiscard: () => void; onSave?: () => void }) {
+  const { t } = useLanguage();
+  return <AlertDialog open={open} onOpenChange={onOpenChange}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{t("ui.leaveCreation")}</AlertDialogTitle><AlertDialogDescription>{onSave ? t("ui.leaveCreationDescription") : t("ui.leaveCreationWithoutLineDescription")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>{t("ui.continueEditing")}</AlertDialogCancel><Button type="button" variant="destructive" onClick={onDiscard}>{t("ui.discardAndExit")}</Button>{onSave && <Button type="button" onClick={onSave}>{draft ? t("ui.saveDraftAndExit") : t("ui.saveChangesAndExit")}</Button>}</AlertDialogFooter></AlertDialogContent></AlertDialog>;
 }

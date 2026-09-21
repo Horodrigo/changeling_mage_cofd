@@ -4,8 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import {
   CharacterBuilderShell,
+  builderCurrentState,
   commonCreationIssues,
   experienceTraitDots,
+  isCreationDraft,
   useCommonBuilderState,
   type BuilderValidationIssue,
 } from "@/app/character-builder-shell";
@@ -144,7 +146,7 @@ function reconcileTraitAllocation(values: Record<string, number>, groups: Record
   return next;
 }
 
-function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
+function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
@@ -291,16 +293,17 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     if (value === "covenantless" && statusScope === "covenant") setStatusScope("clan");
   };
 
-  const finish = () => {
-    if (issues.length) {
+  const finish = (draft: boolean) => {
+    if (!draft && issues.length) {
       common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
-      common.setStep(issues[0].step); return;
+      common.setStep(issues[0].step); return false;
     }
     const advancement = disciplineAdvancement(initial);
     const finalDisciplines = Object.fromEntries(VAMPIRE_DISCIPLINES.map((name) => [name, (VAMPIRE_CREATION_DISCIPLINES as readonly string[]).includes(name) ? disciplines[name] + advancement[name] : advancement[name]]));
     const bpAdvancement = Math.max(0, Number(initial?.line_data.blood_potency ?? 1) - Number(initial?.line_data.creation_blood_potency ?? initial?.line_data.blood_potency ?? 1));
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
-    const finalAttributes = { ...common.attributes, [favoredAttribute]: Math.min(5, Number(common.attributes[favoredAttribute] ?? 1) + 1) };
+    const finalAttributes = { ...common.attributes };
+    if (favoredAttribute) finalAttributes[favoredAttribute] = Math.min(5, Number(common.attributes[favoredAttribute] ?? 1) + 1);
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     const finalSkills = { ...common.skills };
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
@@ -333,9 +336,10 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
         touchstones: finalTouchstones, devotion_ids: initial?.line_data.devotion_ids ?? [], blood_sorcery: bloodSorcery, ordo_dracul: ordoDracul, banes: initial?.line_data.banes ?? [],
       },
       derived: vampireDerived(finalAttributes, finalSkills, finalDisciplines, finalBloodPotency, reference),
-      current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
+      current_state: builderCurrentState(initial, draft, common.step), created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(synchronizeVampireBuilderMeritGrants(completed));
+    (draft ? onSaveDraft : onSave)(synchronizeVampireBuilderMeritGrants(completed));
+    return true;
   };
 
   const statusScopeOptions: KindredStatusScope[] = [
@@ -346,7 +350,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
 
   return <>
     {nosferatuEasterEgg && <div className="nosferatu-easter-egg"><video src="/vampire/easter-eggs/nosferatu.webm" autoPlay playsInline controls={false} disablePictureInPicture /></div>}
-    <CharacterBuilderShell line="VtR" templateLabel={t("ui.vampireTemplate")} state={common} issues={issues} onCancel={onCancel} onFinish={finish}
+    <CharacterBuilderShell line="VtR" templateLabel={t("ui.vampireTemplate")} state={common} issues={issues} draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
       identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
       traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
       lineTemplate={<div className="builder-section vampire-builder-template">

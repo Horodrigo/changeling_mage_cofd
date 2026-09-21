@@ -7,6 +7,7 @@ const lifecycleUrl = new URL("../app/workspace/character-lifecycle.ts", import.m
 const repositoryUrl = new URL("../app/workspace/character-repository.ts", import.meta.url);
 const persistenceUrl = new URL("../lib/character-persistence.ts", import.meta.url);
 const registryUrl = new URL("../game-lines/registry/game-line-registry.ts", import.meta.url);
+const builderShellUrl = new URL("../app/character-builder-shell.tsx", import.meta.url);
 
 function functionBody(source, name, nextName) {
   const start = source.indexOf(`function ${name}`);
@@ -120,4 +121,22 @@ test("workspace contains no dead server-catalog presentation path", async () => 
     /workspace\.(?:sharedLibrary|activeRules|activeRulesDescription|structuredRuleSummary|sharedRuleActive|sourceDetail)/,
     "D1-era catalog presentation copy remains reachable from Workspace",
   );
+});
+
+test("character creation drafts survive exit and resume through the Builder", async () => {
+  const [workspace, shell, changeling, mage, vampire] = await Promise.all([
+    readFile(workspaceUrl, "utf8"), readFile(builderShellUrl, "utf8"),
+    readFile(new URL("../game-lines/changeling/builder.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../game-lines/mage/builder.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../game-lines/vampire/builder.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(shell, /addEventListener\("popstate"/);
+  assert.match(shell, /addEventListener\("beforeunload"/);
+  assert.match(shell, /creation_draft_step/);
+  assert.match(workspace, /function saveCharacterDraft/);
+  assert.match(workspace, /isCreationDraft\(sheet\)[\s\S]*?setEditing\(sheet\)/);
+  for (const source of [changeling, mage, vampire]) {
+    assert.match(source, /builderCurrentState\(initial, draft, common\.step\)/);
+    assert.match(source, /draft \? onSaveDraft : onSave/);
+  }
 });

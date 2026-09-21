@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import {
   CharacterBuilderShell,
+  builderCurrentState,
   commonCreationIssues,
   experienceTraitDots,
+  isCreationDraft,
   useCommonBuilderState,
   type BuilderValidationIssue,
 } from "@/app/character-builder-shell";
@@ -76,7 +78,7 @@ function findKith(catalog: readonly KithDefinition[], value: string) {
   return catalog.find((item) => item.id === value || item.name === value);
 }
 
-function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalogs }: GameLineBuilderProps) {
+function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "CtL") throw new Error("Changeling builder received a non-Changeling character.");
   if (!catalogs) throw new Error("Changeling builder requires its catalog snapshot.");
@@ -183,13 +185,14 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
-  const finish = () => {
-    if (issues.length) {
+  const finish = (draft: boolean) => {
+    if (!draft && issues.length) {
       common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
       common.setStep(issues[0].step);
-      return;
+      return false;
     }
-    const finalAttributes = { ...common.attributes, [favoredAttribute]: Math.min(5, (common.attributes[favoredAttribute] ?? 1) + 1) };
+    const finalAttributes = { ...common.attributes };
+    if (favoredAttribute) finalAttributes[favoredAttribute] = Math.min(5, (common.attributes[favoredAttribute] ?? 1) + 1);
     const finalSkills = { ...common.skills };
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
@@ -219,7 +222,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
         kith_blessing: customKith ? customKithDescription : (selectedKith?.blessing ?? ""),
         kith_source: customKith ? "Criação do jogador" : (selectedKith?.source ?? ""),
         kith_page: customKith ? 0 : (selectedKith?.page ?? 0),
-        primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS].regalia,
+        primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia ?? "",
         second_regalia: secondRegalia, favored_attribute: favoredAttribute,
         aspirations: common.aspirations, contracts,
         learned_contracts: initial?.line_data.learned_contracts ?? [],
@@ -234,14 +237,15 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
         Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
         LucidezMaxima: finalAttributes.Wits + finalAttributes.Composure,
       },
-      current_state: initial?.current_state ?? {}, created_at: initial?.created_at ?? now, updated_at: now,
+      current_state: builderCurrentState(initial, draft, common.step), created_at: initial?.created_at ?? now, updated_at: now,
     };
-    onSave(completed);
+    (draft ? onSaveDraft : onSave)(completed);
+    return true;
   };
 
   return <CharacterBuilderShell
     line="CtL" templateLabel={t("ui.lostTemplate")} state={common} issues={issues}
-    onCancel={onCancel} onFinish={finish}
+    draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<ChangelingBuilderView seeming={seeming} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}
