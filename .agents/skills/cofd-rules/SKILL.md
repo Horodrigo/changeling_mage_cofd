@@ -109,6 +109,8 @@ Before asserting a specific mechanic, prerequisite, cost, rating, dice pool, exc
 - if only an index/summary is available, label the result accordingly;
 - do not infer exact mechanics from memory.
 
+When reconstructing rules from PDFs, treat extracted text as an aid rather than authoritative reading order. CofD books commonly use two columns, sidebars, stat blocks, headers, footers, and content continued across page or column boundaries. Visually inspect every relevant page, map physical PDF pages to printed page numbers, and verify neighboring columns before treating headings or paragraphs as complete.
+
 Read `references/verification-checklist.md` for high-risk tasks.
 
 ## Token discipline

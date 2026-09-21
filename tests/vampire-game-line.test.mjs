@@ -118,6 +118,33 @@ test("Secrets of the Covenants exposes every Crúac rite, Theban miracle, Coil l
   assert.deepEqual(coils.map((item) => item.name), ["Coil of Zirnitra", "Coil of Ziva"]);
 });
 
+test("Secrets of the Covenants exposes its two printed Conditions", async () => {
+  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  assert.deepEqual(
+    conditions.filter((item) => item.source === "Secrets of the Covenants").map((item) => item.name).sort(),
+    ["Oathbreaker", "Primeval Truths"],
+  );
+});
+
+test("Secrets of the Covenants catalog totals the 107 audited primary mechanics", async () => {
+  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const core = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const source = (items) => items.filter((item) => item.source === "Secrets of the Covenants");
+  const records = [
+    ...source(merits),
+    ...core.filter((item) => item.additionalSources?.some((entry) => entry.sourceId === "vtr-sotc")),
+    ...source(powers.cruacRites),
+    ...source(powers.thebanMiracles),
+    ...source(powers.coils).flatMap((item) => item.levels),
+    ...source(powers.scales),
+    ...source(conditions),
+  ];
+
+  assert.equal(records.length, 107);
+});
+
 test("Vampire Discipline presentation never applies Attribute translations", async () => {
   const { vampireDisciplineDisplayName } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
