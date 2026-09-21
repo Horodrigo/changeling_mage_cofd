@@ -161,7 +161,7 @@
 .ctl-dialog .merit-option small,
 .ctl-dialog .experience-merit-catalog small {
   color: rgba(38, 58, 44, .72);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.45;
   white-space: normal;
 }
@@ -169,7 +169,7 @@
 .ctl-dialog .merit-option p,
 .ctl-dialog .experience-merit-catalog p {
   color: #35483a;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1.5;
 }
 
