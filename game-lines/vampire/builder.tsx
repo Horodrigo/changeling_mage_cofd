@@ -25,7 +25,7 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
+import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
@@ -33,7 +33,7 @@ import { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimi
 type KindredStatusScope = "covenant" | "clan" | "city";
 
 function initialCreationDisciplines(initial?: CharacterSheet | null) {
-  return recordRatings(initial?.line_data.creation_disciplines ?? initial?.line_data.disciplines, VAMPIRE_DISCIPLINES, 5);
+  return recordRatings(initial?.line_data.creation_disciplines ?? initial?.line_data.disciplines, VAMPIRE_CREATION_DISCIPLINES, 5);
 }
 
 function disciplineAdvancement(initial?: CharacterSheet | null) {
@@ -297,7 +297,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
       common.setStep(issues[0].step); return;
     }
     const advancement = disciplineAdvancement(initial);
-    const finalDisciplines = Object.fromEntries(VAMPIRE_DISCIPLINES.map((name) => [name, disciplines[name] + advancement[name]]));
+    const finalDisciplines = Object.fromEntries(VAMPIRE_DISCIPLINES.map((name) => [name, (VAMPIRE_CREATION_DISCIPLINES as readonly string[]).includes(name) ? disciplines[name] + advancement[name] : advancement[name]]));
     const bpAdvancement = Math.max(0, Number(initial?.line_data.blood_potency ?? 1) - Number(initial?.line_data.creation_blood_potency ?? initial?.line_data.blood_potency ?? 1));
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
     const finalAttributes = { ...common.attributes, [favoredAttribute]: Math.min(5, Number(common.attributes[favoredAttribute] ?? 1) + 1) };
@@ -377,7 +377,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
         <label>{t("ui.touchstone")}<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
         <h3>{t("ui.disciplines3Dots")}</h3>
         <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>
-          {powers.disciplines.map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
+          {powers.disciplines.filter((discipline) => !discipline.bloodlineId).map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
           {covenantPowerOptions.length > 0 && <DotRow
             name={covenantId === "circle-of-the-crone" ? "Crúac" : covenantId === "lancea-et-sanctum" ? "Theban Sorcery" : displayName(covenantPowerOptions[0], locale)}
             value={hasCreationCovenantPower ? 1 : 0}

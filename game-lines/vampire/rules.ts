@@ -1,7 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import type { GameLineValidationIssue } from "@/lib/game-line-contracts/game-line-rules";
-import { boundedRating, objectArray, recordRatings, stringArray, VAMPIRE_DISCIPLINES, vampireDerived } from "./creation-rules";
+import { boundedRating, objectArray, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireDerived, vampireDisciplineAvailable } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 
 function normalizeVampire(character: CharacterSheet): CharacterSheet {
@@ -9,7 +9,9 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const state = character.current_state;
   const humanity = boundedRating(data.humanity, 0, 10, 7);
   const bloodPotency = boundedRating(data.blood_potency, 1, 10, 1);
+  const bloodlineId = String(data.bloodline_id ?? "");
   const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
+  for (const name of VAMPIRE_DISCIPLINES) if (!vampireDisciplineAvailable(name, bloodlineId)) disciplines[name] = 0;
   const touchstones = objectArray(data.touchstones).map((item, index) => ({
     id: String(item.id ?? `touchstone-${index + 1}`),
     name: String(item.name ?? ""),
@@ -48,6 +50,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
     line_data: {
       ...data,
       clan_id: clanId,
+      bloodline_id: bloodlineId,
       clan_bane_active: data.clan_bane_active !== false,
       favored_attribute: String(data.favored_attribute ?? ""),
       covenant_id: String(data.covenant_id ?? "covenantless"),
@@ -109,7 +112,7 @@ export const vampireRules: GameLineRulesModule = {
     if (!String(character.line_data.clan_id ?? "")) issues.push({ field: "clan_id", message: "Choose a Clan." });
     if (!String(character.line_data.mask_id ?? "")) issues.push({ field: "mask_id", message: "Choose a Mask." });
     if (!String(character.line_data.dirge_id ?? "")) issues.push({ field: "dirge_id", message: "Choose a Dirge." });
-    const disciplines = recordRatings(character.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
+    const disciplines = recordRatings(character.line_data.disciplines, VAMPIRE_CREATION_DISCIPLINES, 10);
     const covenantDot = String(character.line_data.creation_covenant_power_id ?? "") ? 1 : 0;
     if (Object.values(disciplines).reduce((sum, value) => sum + value, 0) + covenantDot < 3) issues.push({ field: "disciplines", message: "Allocate three Discipline dots." });
     return issues;

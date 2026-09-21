@@ -607,6 +607,16 @@
   line-height: 21px;
 }
 
+.bloodline-page { padding: 8px; }
+.bloodline-page .bloodline-joining-note { border-left: 4px solid var(--vtr-ink); }
+.bloodline-page .bloodline-joining-note ul { margin: 8px 0; padding-left: 20px; color: #55494a; font-size: 13px; line-height: 1.5; }
+.bloodline-page .bloodline-joining-note small,
+.bloodline-page > section > small { display: block; margin-top: 8px; color: #756769; font-size: 11px; }
+.bloodline-overview p + p { margin-top: 6px; }
+.bloodline-discipline-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.bloodline-discipline-list span { border: 1px solid var(--vtr-rule); background: #fff; padding: 5px 8px; color: var(--vtr-ink); font-size: 12px; }
+.bloodline-bane-card { border-left: 4px solid var(--vtr-ink) !important; }
+
 /* --------------------------------------------------------------------------
    Headings and Attributes divider
    -------------------------------------------------------------------------- */

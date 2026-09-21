@@ -626,6 +626,97 @@
       "action": "None for persistent effects; Reflexive for active effects",
       "duration": "Permanent for persistent effects; one turn for active effects",
       "effect": "Persistent: add Vigor to Strength and multiply jump distance by Vigor + 1. Active: each Vitae buys one distinct effect for the turn — add Vigor as weapon bonus to Athletics/Brawl/Weaponry attacks, or lift and hurl otherwise unwieldy objects using the Discipline's improvised-weapon rules."
+    },
+    {
+      "id": "dead-signal",
+      "name": "Dead Signal",
+      "translatedName": "Dead Signal",
+      "bloodlineId": "jharana",
+      "summary": "Reads transmissions of the God-Machine and temporarily reconfigures living receivers.",
+      "source": "Night Horrors: Spilled Blood",
+      "page": 23,
+      "levels": [
+        {
+          "rating": 1,
+          "name": "Analyze Signal",
+          "translatedName": "Analyze Signal",
+          "summary": "Identify Radio Sickness or a Stigmata and, with exceptional insight, learn how it arose.",
+          "cost": "None",
+          "dicePool": "Wits + Composure + Dead Signal",
+          "action": "Instant",
+          "duration": "Instant",
+          "rollResults": {
+            "dramaticFailure": "A burst of static inflicts 2 bashing damage on the vampire.",
+            "failure": "The signal is unreadable and may be mistaken for something else.",
+            "success": "Learn whether the target has Radio Sickness or a Stigmata.",
+            "exceptionalSuccess": "Also learn the sickness's progress and triggering omen, or receive a broad vision of how the Stigmata arose."
+          }
+        },
+        {
+          "rating": 2,
+          "name": "Minor Repairs",
+          "translatedName": "Minor Repairs",
+          "summary": "Repair non-persistent Conditions or bashing damage with Vitae.",
+          "cost": "1 Vitae per Condition or bashing damage healed",
+          "dicePool": "Wits + Medicine + Dead Signal",
+          "action": "Standard",
+          "duration": "Instant",
+          "rollResults": {
+            "dramaticFailure": "The target gains Shaken.",
+            "failure": "The target is not healed.",
+            "success": "Each Vitae heals one non-persistent Condition or one bashing damage.",
+            "exceptionalSuccess": "One Vitae heals one Condition, including a persistent one, and two bashing damage."
+          }
+        },
+        {
+          "rating": 3,
+          "name": "Receive Transmission",
+          "translatedName": "Receive Transmission",
+          "summary": "Take another character's Radio Sickness for one night to give them time to interpret the omen.",
+          "cost": "1 Willpower",
+          "dicePool": "Intelligence + Occult + Dead Signal",
+          "action": "Standard",
+          "duration": "One night",
+          "rollResults": {
+            "dramaticFailure": "The vampire takes the sickness until the omen is solved, someone else receives it, or she meets Final Death.",
+            "failure": "The transfer fails.",
+            "success": "The vampire suffers the target's current Radio Sickness for one night while the target is temporarily cured.",
+            "exceptionalSuccess": "When the sickness returns to the target, it returns at its first stage."
+          }
+        },
+        {
+          "rating": 4,
+          "name": "Configure Receiver",
+          "translatedName": "Configure Receiver",
+          "summary": "Temporarily raise a target's Skills and, on an exceptional success, one Attribute.",
+          "cost": "1 Willpower + 2 Vitae per trait raised",
+          "dicePool": "Intelligence + Medicine + Dead Signal",
+          "action": "Standard",
+          "duration": "One night",
+          "rollResults": {
+            "dramaticFailure": "No traits change and the vampire gains Radio Sickness.",
+            "failure": "The target's traits remain unchanged.",
+            "success": "Every 2 Vitae raises one Skill by one dot, to a maximum of 5.",
+            "exceptionalSuccess": "The vampire may raise one Attribute under the same cost as well as Skills."
+          }
+        },
+        {
+          "rating": 5,
+          "name": "Broadcast",
+          "translatedName": "Broadcast",
+          "summary": "Broadcast a summons to nearby servants of the God-Machine.",
+          "cost": "1 Vitae",
+          "dicePool": "Manipulation + Persuasion + Dead Signal",
+          "action": "Extended",
+          "duration": "1 hour per Vitae",
+          "rollResults": {
+            "dramaticFailure": "Nearby demons are angered and seek the source of the broadcast.",
+            "failure": "No broadcast is sent.",
+            "success": "Nearby Jharana, Holy Engineers, Stigmatics, and other servants hear the call and arrive at least initially friendly.",
+            "exceptionalSuccess": "An angel arrives with a message and answers questions as well as it can."
+          }
+        }
+      ]
     }
   ],
   "ritualDisciplines": [

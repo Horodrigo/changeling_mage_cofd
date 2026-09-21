@@ -17,7 +17,7 @@ import { meritContextForSheet, meritRatingsFor, type MeritDefinition } from "@/l
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampirePowers, VampireReference, VampirePurchasablePower } from "./catalog-types";
-import { recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived } from "./creation-rules";
+import { recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
 import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
@@ -99,6 +99,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const [feedback, setFeedback] = useState("");
   const clan = reference.clans.find((item) => item.id === character.line_data.clan_id);
   const covenant = String(character.line_data.covenant_id ?? "covenantless");
+  const bloodlineId = String(character.line_data.bloodline_id ?? "");
   const covenantDefinition = reference.covenants.find((item) => item.id === covenant);
   const covenantStatus = covenantDefinition ? vampireCovenantStatus(character, covenant, covenantDefinition.name, covenantDefinition.translatedName) : 0;
   const disciplines = recordRatings(character.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
@@ -117,7 +118,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
     if (purchase === "attribute") return Object.values(ATTRIBUTES).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
     if (purchase === "skill" || purchase === "specialty") return Object.values(SKILLS).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
     if (purchase === "merit") return target ? [{ value: target, label: meritCatalog.find((item) => item.id === target)?.name ?? target }] : [];
-    if (purchase === "discipline") return VAMPIRE_DISCIPLINES.map((name) => ({ value: name, label: name }));
+    if (purchase === "discipline") return VAMPIRE_DISCIPLINES.filter((name) => vampireDisciplineAvailable(name, bloodlineId)).map((name) => ({ value: name, label: vampireDisciplineDisplayName(name, powers.disciplines, locale) }));
     if (purchase === "devotion") return powers.devotions.filter((item) => !knownDevotions.has(item.id) && disciplinePrerequisitesMet(item.prerequisites, disciplines)).map((item) => ({ value: item.id, label: powerName(item, locale) }));
     if (purchase === "cruac") return bloodSorceryOptions(powers.cruacRites, cruacRating + 1).map((item) => ({ ...item, label: `${item.label} (${t("ui.freeRite")})` }));
     if (purchase === "theban") return bloodSorceryOptions(powers.thebanMiracles, thebanRating + 1, Number(character.line_data.humanity ?? 7)).map((item) => ({ ...item, label: `${item.label} (${t("ui.freeMiracle")})` }));
@@ -160,7 +161,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const freePowerSelections = purchase === "cruac" || purchase === "theban" ? freeBloodSorcerySelections(freePowerCatalog, knownRites, freePowerIds, ratedCurrent, intendedRating, purchase === "theban" ? Number(character.line_data.humanity ?? 7) : 10) : [];
   const chosen = purchase === "cruac" || purchase === "theban" ? freePowerSelections[0] ?? "" : chosenOption;
   const selectedPower = [...powers.devotions, ...powers.cruacRites, ...powers.thebanMiracles, ...powers.coils, ...powers.scales].find((item) => item.id === chosen);
-  const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (clan?.disciplines.includes(chosen) ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" ? Number(selectedPower?.experienceCost ?? 0) : purchase === "cruac" || purchase === "theban" ? 4 * ratingAmount : purchase === "rite" || purchase === "miracle" ? 2 : purchase === "coil" ? (coilInMystery ? 3 : 4) * ratingAmount : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;
+  const bloodlineDiscipline = powers.disciplines.find((item) => item.name === chosen)?.bloodlineId === bloodlineId;
+  const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (clan?.disciplines.includes(chosen) || bloodlineDiscipline ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" ? Number(selectedPower?.experienceCost ?? 0) : purchase === "cruac" || purchase === "theban" ? 4 * ratingAmount : purchase === "rite" || purchase === "miracle" ? 2 : purchase === "coil" ? (coilInMystery ? 3 : 4) * ratingAmount : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;
   const duplicateNonRepeatableMerit = purchase === "merit" && Boolean(
     selectedMerit &&
     meritInstance < 0 &&

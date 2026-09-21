@@ -2,10 +2,16 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { BloodPotencyRow, VampireDisciplineDefinition, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
 
-export const VAMPIRE_DISCIPLINES = [
+export const VAMPIRE_CREATION_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
   "Nightmare", "Obfuscate", "Protean", "Resilience", "Vigor",
 ] as const;
+
+export const VAMPIRE_DISCIPLINES = [...VAMPIRE_CREATION_DISCIPLINES, "Dead Signal"] as const;
+
+export function vampireDisciplineAvailable(name: string, bloodlineId: string) {
+  return name !== "Dead Signal" || bloodlineId === "jharana";
+}
 
 export const ORDO_MYSTERIES = ["ascendant", "wyrm", "voivode"] as const;
 

@@ -44,6 +44,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
     ...catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
   ];
   const clan = reference.clans.find((item) => item.id === data.clan_id);
+  const bloodline = reference.bloodlines.find((item) => item.id === data.bloodline_id);
   const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
@@ -85,7 +86,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const banes = objectArray(data.banes).map((item) => String(item.name ?? "")).filter(Boolean);
   const identity = [
     [t("ui.name"), character.character.name], [t("sheet.mask"), localized(mask, locale)], [t("sheet.clan"), localized(clan, locale)],
-    [t("ui.player"), character.character.player], [t("sheet.dirge"), localized(dirge, locale)], [t("sheet.bloodline"), data.bloodline],
+    [t("ui.player"), character.character.player], [t("sheet.dirge"), localized(dirge, locale)], [t("sheet.bloodline"), localized(bloodline, locale)],
     [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("sheet.covenant"), localized(covenant, locale)],
   ];
   const weapons = stringList(data.combat_weapons).map((id) => WEAPONS.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));

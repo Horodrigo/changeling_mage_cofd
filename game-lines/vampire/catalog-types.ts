@@ -40,12 +40,31 @@ export type BloodPotencyRow = {
 
 export type TorporRow = { humanityMinimum: number; humanityMaximum: number; duration: string };
 
+export type VampireBloodlineDefinition = {
+  id: string;
+  name: string;
+  translatedName: string;
+  parentClan: string;
+  requirements?: string;
+  nicknames: string[];
+  favoredAttributes: [string, string];
+  disciplines: [string, string, string, string];
+  exclusiveDiscipline?: string;
+  summary: string;
+  baneName: string;
+  baneSummary: string;
+  sourceId: string;
+  source: string;
+  page: number;
+};
+
 export type VampireReference = {
   clans: VampireClanDefinition[];
   covenants: VampireCovenantDefinition[];
   anchors: VampireAnchorDefinition[];
   bloodPotency: BloodPotencyRow[];
   torpor: TorporRow[];
+  bloodlines: VampireBloodlineDefinition[];
 };
 
 export type VampireRollResults = {
@@ -121,6 +140,7 @@ export type VampireDisciplineDefinition = VampireMechanics & {
   name: string;
   translatedName: string;
   physical?: boolean;
+  bloodlineId?: string;
   summary: string;
   levels: VampirePowerLevel[];
   source: string;

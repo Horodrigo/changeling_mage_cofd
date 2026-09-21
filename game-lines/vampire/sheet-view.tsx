@@ -30,9 +30,10 @@ import type { VampireCondition, VampireMechanics, VampirePowers, VampireReferenc
 import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
-import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice, vampireDetachmentPool } from "./detachment";
+import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice } from "./detachment";
 import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule-effects";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
+import { BloodlinePage } from "./bloodline-page";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -119,25 +120,31 @@ function HumanityTrack({
   value,
   vastDynasty = false,
   clanBaneActive = true,
+  bloodlineId = "",
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   value: number;
   vastDynasty?: boolean;
   clanBaneActive?: boolean;
+  bloodlineId?: string;
 }) {
   const { t } = useLanguage();
   const baseSlot = String(character.line_data.clan_id ?? "") === "ventrue" && clanBaneActive ? 7 : 6;
-  const meritPoints = getTouchstoneMeritPoints(character, baseSlot);
+  const allMeritPoints = getTouchstoneMeritPoints(character, baseSlot);
+  const meritPoints = bloodlineId === "vilseduire" ? [] : allMeritPoints;
   const touchstones = objectArray(character.line_data.touchstones);
-  const attachedTouchstones = touchstones.filter((row) => String(row.name ?? "").trim()).length;
+  const attachedTouchstones = bloodlineId === "vilseduire"
+    ? Math.min(1, touchstones.filter((row) => !String(row.merit_point_key ?? "") && String(row.name ?? "").trim()).length)
+    : touchstones.filter((row) => String(row.name ?? "").trim()).length;
   const activeBanes = objectArray(character.line_data.banes)
     .filter((bane) => String(bane.name ?? "").trim() && String(bane.breaking_point_id ?? "").trim())
     .slice(0, 3);
   const protectedBreakingPoints = new Set(activeBanes.map((bane) => String(bane.breaking_point_id)));
   const vastDynastyProtected = protectedBreakingPoints.has(VAST_DYNASTY_EMBRACE_BREAKING_POINT.id);
   const [open, setOpen] = useState(false);
-  const firstAvailable = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.level <= value && !protectedBreakingPoints.has(item.id));
+  const detachmentHumanity = bloodlineId === "vilseduire" ? Math.floor(value / 2) : value;
+  const firstAvailable = DETACHMENT_BREAKING_POINT_OPTIONS.find((item) => item.level <= detachmentHumanity && !protectedBreakingPoints.has(item.id));
   const [breakingPointId, setBreakingPointId] = useState(firstAvailable?.id ?? "");
   const [protectMasquerade, setProtectMasquerade] = useState(false);
   const [protectRequiem, setProtectRequiem] = useState(false);
@@ -208,17 +215,17 @@ function HumanityTrack({
 
 const selectedBreakingPoint =
   requestedBreakingPoint &&
-  requestedBreakingPoint.level <= value &&
+  requestedBreakingPoint.level <= detachmentHumanity &&
   !protectedBreakingPoints.has(requestedBreakingPoint.id)
     ? requestedBreakingPoint
     : firstAvailable;
 
 const effectiveBreakingPointId = selectedBreakingPoint?.id ?? "";
   const effectiveBreakingPoint = vastDynastyEmbrace ? 3 : Number(selectedBreakingPoint?.level ?? 0);
-  const touchstoneModifier = attachedTouchstones === 0 ? -2 : attachedTouchstones === 1 ? 2 : 3;
+  const touchstoneModifier = bloodlineId === "liderc" && attachedTouchstones > 0 ? 1 : attachedTouchstones === 0 ? -2 : attachedTouchstones === 1 ? 2 : 3;
   const specialModifier = (protectMasquerade ? -1 : 0) + (protectRequiem ? 1 : 0) + (vastDynastyEmbrace ? 1 : 0);
-  const detachmentPool = vampireDetachmentPool(effectiveBreakingPoint, attachedTouchstones, specialModifier, activeBanes.length);
-  const applicable = vastDynastyEmbrace ? value >= 3 && !vastDynastyProtected : Boolean(selectedBreakingPoint && selectedBreakingPoint.level <= value && !protectedBreakingPoints.has(selectedBreakingPoint.id));
+  const detachmentPool = vampireDetachmentBaseDice(effectiveBreakingPoint) + touchstoneModifier + specialModifier - activeBanes.length;
+  const applicable = vastDynastyEmbrace ? detachmentHumanity >= 3 && !vastDynastyProtected : Boolean(selectedBreakingPoint && selectedBreakingPoint.level <= detachmentHumanity && !protectedBreakingPoints.has(selectedBreakingPoint.id));
 
   const applyDetachment = () => {
     if (!applicable) return;
@@ -231,6 +238,9 @@ const effectiveBreakingPointId = selectedBreakingPoint?.id ?? "";
       ? next.current_state.conditions as Array<Record<string, unknown>> : [];
     if (!currentConditions.some((item) => String(item.id ?? "") === conditionId)) {
       currentConditions.push({ id: conditionId, persistent: conditionId === "jaded", instanceId: createRandomId() });
+    }
+    if (bloodlineId === "icelus" && result === "failure" && !currentConditions.some((item) => String(item.id ?? "") === "mesmerized")) {
+      currentConditions.push({ id: "mesmerized", persistent: false, instanceId: createRandomId() });
     }
 
     const currentBeats = Math.max(0, Math.min(4, Math.trunc(Number(next.current_state.beats ?? 0))));
@@ -562,6 +572,7 @@ function BaneEditor({
   clanBaneSummary,
   vastDynasty,
   clanBaneActive,
+  bloodlineBane,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
@@ -569,6 +580,7 @@ function BaneEditor({
   clanBaneSummary: string;
   vastDynasty: boolean;
   clanBaneActive: boolean;
+  bloodlineBane?: { name: string; summary: string };
 }) {
   const { t } = useLanguage();
 
@@ -663,6 +675,7 @@ function BaneEditor({
         <header><strong>{clanBaneName || t("ui.clanBane")}</strong><label><span>{clanBaneActive ? t("ui.active") : t("ui.inactive")}</span><Switch size="sm" checked={clanBaneActive} onCheckedChange={(checked) => { const next = structuredClone(character); next.line_data = { ...next.line_data, clan_bane_active: checked }; updateSheet(next); }} /></label></header>
         <p>{clanBaneSummary}</p>
       </article>
+      {bloodlineBane && <><SheetHeading>{t("ui.bloodlineBane")}</SheetHeading><article className="vampire-lore-card vampire-clan-bane active"><header><strong>{bloodlineBane.name}</strong><span>{t("ui.active")}</span></header><p>{bloodlineBane.summary}</p></article></>}
     </>
   );
 }
@@ -684,6 +697,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const cruacRating = Number(bloodSorcery.cruac_rating ?? 0);
   const thebanRating = Number(bloodSorcery.theban_rating ?? 0);
   const clan = reference.clans.find((item) => item.id === data.clan_id);
+  const bloodline = reference.bloodlines.find((item) => item.id === data.bloodline_id);
   const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
@@ -762,7 +776,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetField label={t("sheet.covenant")} value={localized(covenant, locale)} />
     <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />
     <SheetField label={t("ui.concept")} value={character.character.concept} />
-    <SheetField label={t("sheet.bloodline")} value={String(data.bloodline ?? "")} />
+    <BloodlineSheetField value={bloodline?.name ?? t("ui.join")} onOpen={() => isMobile ? setMobileTab({ characterId: character.id, value: "bloodlines" }) : setDesktopTab("bloodlines")} />
   </section>;
   const attributes = <>
     <SheetHeading>{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div>
@@ -792,8 +806,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   </div>
 </>;
   const stats = <>{attributes}{skills}</>;
-  const humanitySection = <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} />;
-  const banesSection = <BaneEditor character={character} updateSheet={updateSheet} clanBaneName={clan?.baneName ?? t("ui.clanBane")} clanBaneSummary={clan?.baneSummary ?? ""} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} />;
+  const humanitySection = <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} bloodlineId={bloodline?.id} />;
+  const banesSection = <BaneEditor character={character} updateSheet={updateSheet} clanBaneName={clan?.baneName ?? t("ui.clanBane")} clanBaneSummary={clan?.baneSummary ?? ""} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} bloodlineBane={bloodline ? { name: bloodline.baneName, summary: bloodline.baneSummary } : undefined} />;
   const expandedMerits = character.merits.filter((item) => (!item.grantedBy || item.grantedBy === "Vampire Template") && (Boolean(VAMPIRE_MERIT_CONFIGURATIONS.find((definition) => definition.name === item.name)) || Boolean(merits.find((definition) => definition.name === item.name)?.levels?.length)));
   const summary = <>
     {identity}
@@ -881,6 +895,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetHeading>{t("ui.notes")}</SheetHeading>
     <NotesArea value={notes} onChange={(value) => setState("notes", value)} />
   </>;
+  const bloodlinesPage = <BloodlinePage character={character} updateSheet={updateSheet} reference={reference} powers={powers} />;
   const mainBody = <MainSheet
     className="vampire-main-body"
     identity={identity}
@@ -954,25 +969,33 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     { value: "summary", label: t("ui.summary") },
     { value: "stats", label: "Stats" },
     { value: "details", label: t("ui.details") },
+    { value: "bloodlines", label: t("ui.bloodlines") },
     { value: "combat", label: t("ui.combat") },
     ...(companionsPage ? [{ value: "companions", label: t("ui.companions") }] : []),
     { value: "notes", label: t("ui.notes") },
-  ]}>{{ summary, stats, details: detailsPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>;
+  ]}>{{ summary, stats, details: detailsPage, bloodlines: bloodlinesPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>;
 
   return <CharacterPaperShell line="VtR" title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs value={desktopTab} onValueChange={setDesktopTab} className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
     <TabsTrigger value="main">{t("ui.main")}</TabsTrigger>
     <TabsTrigger value="details">{t("ui.details")}</TabsTrigger>
+    <TabsTrigger value="bloodlines">{t("ui.bloodlines")}</TabsTrigger>
     <TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger>
     {companionsPage && <TabsTrigger value="companions">{t("ui.companions")}</TabsTrigger>}
     <TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
   </TabsList>
     <TabsContent value="main" className="vampire-sheet-page">{mainBody}</TabsContent>
     <TabsContent value="details" className="vampire-sheet-page">{detailsPage}</TabsContent>
+    <TabsContent value="bloodlines" className="vampire-sheet-page">{bloodlinesPage}</TabsContent>
     <TabsContent value="combat" className="vampire-sheet-page">{combat}</TabsContent>
     {companionsPage && <TabsContent value="companions" className="vampire-sheet-page">{companionsPage}</TabsContent>}
     <TabsContent value="notes" className="vampire-sheet-page">{notesPage}</TabsContent>
   </Tabs></CharacterPaperShell>;
 
+}
+
+function BloodlineSheetField({ value, onOpen }: { value: string; onOpen: () => void }) {
+  const { t } = useLanguage();
+  return <div className="official-field legacy-sheet-field enabled"><span>{t("sheet.bloodline")}</span><button type="button" onClick={onOpen}>{value}</button></div>;
 }
 
 function VampireDisciplineLine({ name, value }: { name: string; value: number }) {

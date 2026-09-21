@@ -74,7 +74,7 @@ test("Vampire core-book catalogs expose all five Clans and line-owned content", 
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   assert.deepEqual(clans.map((item) => item.id), ["daeva", "gangrel", "mekhet", "nosferatu", "ventrue"]);
   assert.ok(merits.length >= 45);
-  assert.equal(powers.disciplines.length, 10);
+  assert.equal(powers.disciplines.length, 11);
   assert.equal(powers.devotions.length, 29);
   assert.equal(powers.cruacRites.length, 24);
   assert.equal(powers.thebanMiracles.length, 23);
@@ -82,6 +82,37 @@ test("Vampire core-book catalogs expose all five Clans and line-owned content", 
   assert.equal(powers.scales.length, 14);
   assert.ok(powers.coils.every((item) => item.levels.length === 5));
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
+});
+
+test("Spilled Blood exposes the ten audited Bloodlines and gates Dead Signal to Jharana", async () => {
+  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const { vampireRules } = await vite.ssrLoadModule("/game-lines/vampire/rules.ts");
+  assert.deepEqual(bloodlines.map((item) => item.id), ["ankou", "icelus", "jharana", "liderc", "nosoi", "parliamentarians", "penumbrae", "scions-of-the-first-city", "vardyvle", "vilseduire"]);
+  assert.equal(powers.disciplines.find((item) => item.name === "Dead Signal")?.levels.length, 5);
+  const base = {
+    id: "bloodline", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
+    character: { name: "Signal", concept: "", player: "", chronicle: "" }, attributes: {}, skills: {}, specializations: [], merits: [],
+    line_data: { blood_potency: 1, humanity: 7, disciplines: { "Dead Signal": 3 } }, current_state: {}, derived: {}, created_at: "", updated_at: "",
+  };
+  assert.equal(vampireRules.normalizeCharacter(base).line_data.disciplines["Dead Signal"], 0);
+  assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "jharana" } }).line_data.disciplines["Dead Signal"], 3);
+});
+
+test("removing a Bloodline clears and refunds its exclusive Discipline", async () => {
+  const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const character = {
+    id: "refund", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
+    character: { name: "Signal", concept: "", player: "", chronicle: "" }, attributes: {}, skills: {}, specializations: [], merits: [], derived: {}, created_at: "", updated_at: "",
+    line_data: { bloodline_id: "jharana", disciplines: { "Dead Signal": 2 } },
+    current_state: { experience_available: 1, experience_spent: 6, vampire_experience_history: [{ id: "paid", cost: 6, undo: { kind: "discipline", name: "Dead Signal", amount: 2 } }, { id: "other", cost: 1, undo: { kind: "skill", name: "Occult", amount: 1 } }] },
+  };
+  const removed = removeVampireBloodline(character);
+  assert.equal(removed.line_data.bloodline_id, "");
+  assert.equal(removed.line_data.disciplines["Dead Signal"], 0);
+  assert.equal(removed.current_state.experience_available, 7);
+  assert.equal(removed.current_state.experience_spent, 0);
+  assert.deepEqual(removed.current_state.vampire_experience_history.map((item) => item.id), ["other"]);
 });
 
 test("Secrets of the Covenants exposes every printed Merit, Law, Oath, and Wyrm's Nest Merit", async () => {
