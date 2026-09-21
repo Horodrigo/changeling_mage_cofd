@@ -198,6 +198,6 @@ export type VampireCondition = {
   resolution?: string;
   beat?: string;
   source: string;
-  sourceCode: "VtR";
+  sourceCode: "VtR" | "HD" | "TY";
   page: number;
 };

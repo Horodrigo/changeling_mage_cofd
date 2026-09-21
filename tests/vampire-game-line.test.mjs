@@ -195,6 +195,50 @@ test("Secrets of the Covenants exposes its two printed Conditions", async () => 
   );
 });
 
+test("Vampire exposes every line-owned core-book Condition and reuses Core Swooned", async () => {
+  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const core = JSON.parse(await readFile(`${root}/public/data/core/conditions.json`, "utf8"));
+  const mage = JSON.parse(await readFile(`${root}/public/data/mage/conditions.json`, "utf8"));
+  const coreBook = conditions.filter((item) => item.source === "Vampire: The Requiem Second Edition");
+  const added = [
+    "Addicted", "Charmed", "Confused", "Delusional", "Distracted", "Dominated", "Drained", "Ecstatic", "Enervated", "Enslaved",
+    "False Memories", "Frightened", "Humbled", "Intoxicated", "Mesmerized", "Raptured", "Sated", "Scarred", "Stumbled",
+    "Subservient", "Tainted", "Tasked", "Thrall",
+  ];
+
+  assert.equal(coreBook.length, 32);
+  assert.deepEqual(added.filter((name) => !coreBook.some((item) => item.name === name)), []);
+  assert.ok(core.some((item) => item.id === "swooned" && item.name === "Swooned"));
+  assert.equal(conditions.some((item) => item.name === "Swooning"), false);
+  assert.equal(new Set([...core, ...conditions].map((item) => item.id)).size, core.length + conditions.length);
+  for (const name of ["Addicted", "Charmed", "Humbled", "Thrall"]) {
+    const vampireVersion = conditions.find((item) => item.name === name);
+    const mageVersion = mage.find((item) => item.name === name);
+    assert.ok(vampireVersion && mageVersion, name);
+    assert.notEqual(vampireVersion.description, mageVersion.description, `${name} must remain line-specific`);
+  }
+});
+
+test("known Vampire power and Bloodline Condition references resolve", async () => {
+  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const available = new Set(conditions.map((item) => item.id));
+  for (const id of ["charmed", "dominated", "ecstatic", "enslaved", "false-memories", "humbled", "mesmerized", "raptured", "sated", "subservient", "tainted"]) {
+    assert.ok(available.has(id), id);
+  }
+});
+
+test("Half-Damned and Thousand Years of Night Conditions remain source-scoped", async () => {
+  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const halfDamned = conditions.filter((item) => item.sourceCode === "HD");
+  const elders = conditions.filter((item) => item.sourceCode === "TY");
+
+  assert.deepEqual(halfDamned.map((item) => item.name), ["Blood Siblings"]);
+  assert.equal(elders.length, 16);
+  assert.equal(elders.filter((item) => item.persistent).length, 12);
+  assert.equal(elders.find((item) => item.name === "Leveraged")?.id, "elder-leveraged");
+  assert.ok(elders.every((item) => item.category === "Elder" && item.source === "Thousand Years of Night"));
+});
+
 test("Secrets of the Covenants catalog totals the 107 audited primary mechanics", async () => {
   const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
   const core = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
