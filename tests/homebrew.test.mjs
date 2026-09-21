@@ -27,3 +27,16 @@ test("player-created Changeling Entitlements are normalized at storage boundary"
   assert.equal(item.blessings.length, 1);
   assert.equal(normalizeEntitlementHomebrew({ id: "bad", name: "Bad", meritName: "Bad", blessings: [] }), null);
 });
+
+test("player-created Vampire Bloodlines are normalized at storage boundary", async () => {
+  const { normalizeBloodlineHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-homebrews.ts");
+  const item = normalizeBloodlineHomebrew({
+    id: "homebrew:bloodline:test", name: "Test Line", parentClan: "Mekhet", nicknames: ["Owls"],
+    favoredAttributes: ["Intelligence", "Wits"], disciplines: ["Auspex", "Celerity", "Obfuscate", "Test Gift"], exclusiveDiscipline: "Test Gift",
+    summary: "A hidden lineage.", baneName: "Moonblind", baneSummary: "The moon reveals their shadow.",
+  });
+  assert.equal(item.sourceId, "homebrew:vampire-bloodlines");
+  assert.equal(item.homebrew, true);
+  assert.equal(item.exclusiveDiscipline, "Test Gift");
+  assert.equal(normalizeBloodlineHomebrew({ id: "homebrew:bloodline:bad", name: "Bad" }), null);
+});

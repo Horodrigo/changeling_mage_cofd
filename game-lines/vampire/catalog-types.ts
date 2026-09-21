@@ -56,6 +56,7 @@ export type VampireBloodlineDefinition = {
   sourceId: string;
   source: string;
   page: number;
+  homebrew?: boolean;
 };
 
 export type VampireReference = {

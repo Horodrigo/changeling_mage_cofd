@@ -617,6 +617,33 @@
 .bloodline-discipline-list span { border: 1px solid var(--vtr-rule); background: #fff; padding: 5px 8px; color: var(--vtr-ink); font-size: 12px; }
 .bloodline-bane-card { border-left: 4px solid var(--vtr-ink) !important; }
 
+.vtr-dialog {
+  --sheet-accent: #4d171c;
+  --vtr-ink: #4d171c;
+  --vtr-rule: rgba(77, 23, 28, .34);
+  border: 1px solid rgba(77, 23, 28, .55);
+  background-color: #eee5db;
+  background-image: repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) 1px, transparent 1px, transparent 5px);
+  color: #2d2021;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.vtr-dialog [data-slot="dialog-title"],
+.vtr-dialog .homebrew-section > legend,
+.vtr-dialog .bloodline-details h3 { color: var(--vtr-ink); font-family: Georgia, "Times New Roman", serif; }
+.vtr-dialog [data-slot="dialog-description"], .vtr-dialog .homebrew-section > div > p { color: #675657; }
+.vtr-dialog .homebrew-section, .vtr-dialog .bloodline-details > section, .vtr-dialog .bloodline-overview > section { border-color: var(--vtr-rule); background: rgba(255, 252, 248, .58); }
+.vtr-dialog input, .vtr-dialog textarea, .vtr-dialog [data-slot="select-trigger"] { border-color: rgba(77, 23, 28, .28); background: rgba(255, 252, 248, .72); }
+.bloodline-homebrew-editor .homebrew-form { grid-template-columns: 1fr; }
+.vampire-bloodline-join-dialog .entitlement-select { display: grid; gap: 6px; font-weight: 700; }
+.vampire-bloodline-join-dialog .entitlement-select [data-slot="select-trigger"] { width: 100%; }
+.vampire-bloodline-join-dialog .bloodline-joining-note { padding: 12px 14px; border-left: 4px solid var(--vtr-ink); background: rgba(255, 252, 248, .58); }
+.vampire-bloodline-join-dialog .bloodline-joining-note h3, .vampire-bloodline-join-dialog .bloodline-joining-note p { margin: 0 0 7px; }
+.vampire-bloodline-join-dialog .bloodline-joining-note ul { margin: 8px 0; padding-left: 20px; color: #55494a; font-size: 13px; line-height: 1.5; }
+.vampire-bloodline-join-dialog .bloodline-joining-note small { color: #756769; font-size: 11px; }
+.bloodline-details { display: grid; gap: 12px; }
+.bloodline-details > section { padding: 12px; border: 1px solid var(--vtr-rule); }
+
 /* --------------------------------------------------------------------------
    Headings and Attributes divider
    -------------------------------------------------------------------------- */

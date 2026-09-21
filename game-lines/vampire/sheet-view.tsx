@@ -33,7 +33,8 @@ import { VampireCompanionPage } from "./companion-page";
 import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice } from "./detachment";
 import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule-effects";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
-import { BloodlinePage } from "./bloodline-page";
+import { BloodlineJoinDialog, BloodlinePage } from "./bloodline-page";
+import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -685,6 +686,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const { locale, t } = useLanguage();
   const isMobile = useIsMobile();
   const reference = catalogs.get<VampireReference>("vampire-reference");
+  const customBloodlines = useBloodlineHomebrews();
+  const bloodlines = [...reference.bloodlines, ...customBloodlines.filter((item) => !reference.bloodlines.some((official) => official.id === item.id))];
   const powers = catalogs.get<VampirePowers>("vampire-powers");
   const merits = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")];
   const coreConditions = catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions;
@@ -697,7 +700,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const cruacRating = Number(bloodSorcery.cruac_rating ?? 0);
   const thebanRating = Number(bloodSorcery.theban_rating ?? 0);
   const clan = reference.clans.find((item) => item.id === data.clan_id);
-  const bloodline = reference.bloodlines.find((item) => item.id === data.bloodline_id);
+  const bloodline = bloodlines.find((item) => item.id === data.bloodline_id);
   const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
@@ -764,7 +767,12 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const notes = String(character.current_state.notes ?? "");
   const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "summary" });
   const [desktopTab, setDesktopTab] = useState("main");
+  const [bloodlineJoinOpen, setBloodlineJoinOpen] = useState(false);
   const tab = mobileTab.characterId === character.id ? mobileTab.value : "summary";
+  const hasBloodline = Boolean(data.bloodline_id);
+  const showBloodlineTab = () => isMobile ? setMobileTab({ characterId: character.id, value: "bloodlines" }) : setDesktopTab("bloodlines");
+  const openBloodline = () => hasBloodline ? showBloodlineTab() : setBloodlineJoinOpen(true);
+  const closeBloodline = () => isMobile ? setMobileTab({ characterId: character.id, value: "summary" }) : setDesktopTab("main");
   const openCompanions = () => isMobile ? setMobileTab({ characterId: character.id, value: "companions" }) : setDesktopTab("companions");
   const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
   const identity = <section className="sheet-identity-grid">
@@ -776,7 +784,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetField label={t("sheet.covenant")} value={localized(covenant, locale)} />
     <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />
     <SheetField label={t("ui.concept")} value={character.character.concept} />
-    <BloodlineSheetField value={bloodline?.name ?? t("ui.join")} onOpen={() => isMobile ? setMobileTab({ characterId: character.id, value: "bloodlines" }) : setDesktopTab("bloodlines")} />
+    <BloodlineSheetField value={bloodline?.name ?? (hasBloodline ? String(data.bloodline_id) : t("ui.join"))} onOpen={openBloodline} />
   </section>;
   const attributes = <>
     <SheetHeading>{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div>
@@ -895,7 +903,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetHeading>{t("ui.notes")}</SheetHeading>
     <NotesArea value={notes} onChange={(value) => setState("notes", value)} />
   </>;
-  const bloodlinesPage = <BloodlinePage character={character} updateSheet={updateSheet} reference={reference} powers={powers} />;
+  const bloodlinesPage = <BloodlinePage character={character} updateSheet={updateSheet} bloodlines={bloodlines} powers={powers} onRemoved={closeBloodline} />;
+  const bloodlineJoinDialog = <BloodlineJoinDialog open={bloodlineJoinOpen} onOpenChange={setBloodlineJoinOpen} onJoined={showBloodlineTab} character={character} updateSheet={updateSheet} reference={reference} powers={powers} />;
   const mainBody = <MainSheet
     className="vampire-main-body"
     identity={identity}
@@ -965,31 +974,31 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     experience={<VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
   />;
 
-  if (isMobile) return <CharacterPaperShell line="VtR" mobile title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><SwipeableSheetTabs value={tab} onValueChange={(value) => setMobileTab({ characterId: character.id, value })} tabs={[
+  if (isMobile) return <><CharacterPaperShell line="VtR" mobile title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><SwipeableSheetTabs value={tab} onValueChange={(value) => setMobileTab({ characterId: character.id, value })} tabs={[
     { value: "summary", label: t("ui.summary") },
     { value: "stats", label: "Stats" },
     { value: "details", label: t("ui.details") },
-    { value: "bloodlines", label: t("ui.bloodlines") },
+    { value: "bloodlines", label: t("ui.bloodlines"), hidden: !hasBloodline },
     { value: "combat", label: t("ui.combat") },
     ...(companionsPage ? [{ value: "companions", label: t("ui.companions") }] : []),
     { value: "notes", label: t("ui.notes") },
-  ]}>{{ summary, stats, details: detailsPage, bloodlines: bloodlinesPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>;
+  ]}>{{ summary, stats, details: detailsPage, bloodlines: bloodlinesPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>{bloodlineJoinDialog}</>;
 
-  return <CharacterPaperShell line="VtR" title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs value={desktopTab} onValueChange={setDesktopTab} className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
+  return <><CharacterPaperShell line="VtR" title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs value={desktopTab} onValueChange={setDesktopTab} className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
     <TabsTrigger value="main">{t("ui.main")}</TabsTrigger>
     <TabsTrigger value="details">{t("ui.details")}</TabsTrigger>
-    <TabsTrigger value="bloodlines">{t("ui.bloodlines")}</TabsTrigger>
+    {hasBloodline && <TabsTrigger value="bloodlines">{t("ui.bloodlines")}</TabsTrigger>}
     <TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger>
     {companionsPage && <TabsTrigger value="companions">{t("ui.companions")}</TabsTrigger>}
     <TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
   </TabsList>
     <TabsContent value="main" className="vampire-sheet-page">{mainBody}</TabsContent>
     <TabsContent value="details" className="vampire-sheet-page">{detailsPage}</TabsContent>
-    <TabsContent value="bloodlines" className="vampire-sheet-page">{bloodlinesPage}</TabsContent>
+    {hasBloodline && <TabsContent value="bloodlines" className="vampire-sheet-page">{bloodlinesPage}</TabsContent>}
     <TabsContent value="combat" className="vampire-sheet-page">{combat}</TabsContent>
     {companionsPage && <TabsContent value="companions" className="vampire-sheet-page">{companionsPage}</TabsContent>}
     <TabsContent value="notes" className="vampire-sheet-page">{notesPage}</TabsContent>
-  </Tabs></CharacterPaperShell>;
+  </Tabs></CharacterPaperShell>{bloodlineJoinDialog}</>;
 
 }
 
