@@ -41,7 +41,7 @@ export function EntitlementHomebrewEditor({ open, onOpenChange, initial, onSave 
   const updateBlessing = (index: number, patch: Partial<EntitlementBlessing>) => set("blessings", value.blessings.map((item, itemIndex) => itemIndex === index ? { ...item, ...patch } : item));
   const updateRole = (index: number, patch: Partial<EntitlementRole>) => set("roles", (value.roles ?? []).map((item, itemIndex) => itemIndex === index ? { ...item, ...patch } : item));
   return <Dialog open={open} onOpenChange={onOpenChange}>
-    <DialogContent className="homebrew-dialog entitlement-homebrew-editor">
+    <DialogContent className="homebrew-dialog entitlement-homebrew-editor ctl-dialog">
       <DialogHeader><DialogTitle>{initial ? h("Editar Entitlement", "Edit Entitlement") : h("Criar novo Entitlement", "Create New Entitlement")}</DialogTitle><DialogDescription>{h("Estruture o Título, sua Heraldry e os benefícios que podem ser adquiridos com seus níveis.", "Define the Title, its Heraldry, and the benefits acquired through its ranks.")}</DialogDescription></DialogHeader>
       <div className="homebrew-form">
         <Section title={h("Identidade e função", "Identity and role")}>

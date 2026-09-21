@@ -143,6 +143,95 @@
   font-family: "Changeling Sheet", Georgia, serif;
 }
 
+.ctl-dialog [data-slot="dialog-description"] {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.ctl-dialog .merit-search input,
+.ctl-dialog [data-slot="select-trigger"] {
+  font-size: 16px;
+}
+
+.ctl-dialog .merit-option strong,
+.ctl-dialog .experience-merit-catalog strong {
+  font-size: 18px;
+}
+
+.ctl-dialog .merit-option small,
+.ctl-dialog .experience-merit-catalog small {
+  color: rgba(38, 58, 44, .72);
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+.ctl-dialog .merit-option p,
+.ctl-dialog .experience-merit-catalog p {
+  color: #35483a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ctl-dialog .experience-merit-choice label,
+.ctl-dialog .merit-current-rating,
+.ctl-dialog .experience-purchase-form label,
+.ctl-dialog .experience-rules summary,
+.ctl-dialog .experience-history summary {
+  font-size: 14px;
+}
+
+.ctl-dialog .experience-merit-choice select,
+.ctl-dialog .catalog-selection-action,
+.ctl-dialog .catalog-dialog-done {
+  font-size: 14px;
+}
+
+.ctl-dialog .catalog-selection-action,
+.ctl-dialog .catalog-dialog-done {
+  min-height: 36px;
+  height: 36px;
+}
+
+.ctl-dialog .purchase-preview strong {
+  font-size: 17px;
+}
+
+.ctl-dialog .purchase-preview span,
+.ctl-dialog .experience-rules table,
+.ctl-dialog .experience-history p,
+.ctl-dialog .experience-history p small,
+.ctl-dialog .experience-history em {
+  font-size: 13px;
+}
+
+.entitlement-homebrew-editor.ctl-dialog .homebrew-section,
+.entitlement-homebrew-editor.ctl-dialog .homebrew-repeat {
+  border-color: rgba(23, 56, 35, .28);
+  border-radius: 0;
+  background: rgba(255, 255, 255, .44);
+}
+
+.entitlement-homebrew-editor.ctl-dialog .homebrew-section > legend,
+.entitlement-homebrew-editor.ctl-dialog .homebrew-form label {
+  color: var(--ctl-ink, #263a2c);
+}
+
+.entitlement-homebrew-editor.ctl-dialog .homebrew-form label {
+  font-size: 14px;
+}
+
+.entitlement-homebrew-editor.ctl-dialog input,
+.entitlement-homebrew-editor.ctl-dialog textarea {
+  border-color: rgba(23, 56, 35, .38);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, .72);
+  color: var(--ctl-ink, #263a2c);
+  font-family: "Changeling Sheet", Georgia, serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
 .ctl-sheet-tabs {
   position: relative;
   z-index: 1;
