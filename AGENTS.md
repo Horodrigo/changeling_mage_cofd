@@ -21,6 +21,7 @@ The application currently supports the persisted game-line IDs `CtL`, `MtA`, and
 - `app/workspace/character-paper-shell.tsx` and neutral workspace controls: common in-app sheet composition.
 - `app/workspace/character-lifecycle.ts`: import/open/save/update lifecycle and canonical routing through Core normalization plus the selected game-line rules.
 - `app/workspace/character-repository.ts`: browser-local character loading, crash-safe staging, debounced persistence, and collection mutation.
+- `app/homebrews.tsx` plus line-owned Homebrew surfaces: shared source/item activation shell and game-line-specific editors.
 - `lib/character-persistence.ts` and `lib/stored-character.ts`: line-neutral structural normalization, current-schema validation exports, and safe treatment of stored values.
 - `public/data/`: static catalog data, separated by Core and game line.
 
@@ -277,7 +278,9 @@ Do not change Cloudflare bindings or configuration merely to silence local ambie
 
 ## Deferred Features
 
-Homebrew management and specialized server-side PDF generation remain deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage and Vampire printing remain deferred until their own line-owned surfaces are implemented.
+Specialized server-side PDF generation remains deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage and Vampire printing remain deferred until their own line-owned surfaces are implemented.
+
+Homebrew activation is browser-local and shared by source/item ID. The common Homebrew shell owns only navigation, activation preferences, and lazy line dispatch. Each game line owns its Homebrew inventory, editors, validation, and integration with its catalogs. Changeling currently owns player-created Entitlements; their definitions are stored separately from character sheets and merged into Changeling surfaces without mutating static catalog snapshots.
 
 Do not let removed implementations shape Core, current game-line APIs, Builder shells, or Sheet shells. When these features return, design them against the modular architecture that exists then. Do not restore old mutable global Homebrew catalogs or old mixed print/paper paths because historical code used them.
 

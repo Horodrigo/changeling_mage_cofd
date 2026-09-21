@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Download,
   FileJson,
+  FlaskConical,
   LayoutDashboard,
   Pencil,
   Plus,
@@ -65,12 +66,14 @@ const DeleteCharacterDialog = lazy(() => import("./delete-character-dialog"));
 const CharacterPrintDialog = lazy(() =>
   import("./workspace/character-print-dialog").then((module) => ({ default: module.CharacterPrintDialog })),
 );
+const Homebrews = lazy(() => import("./homebrews"));
 
-type View = "inicio" | "personagens";
+type View = "inicio" | "personagens" | "homebrew";
 
 const nav = [
   ["inicio", "workspace.home", LayoutDashboard],
   ["personagens", "workspace.characters", UsersRound],
+  ["homebrew", "workspace.homebrew", FlaskConical],
 ] as const;
 
 export function Workspace({
@@ -367,7 +370,7 @@ export function Workspace({
             openCharacter={(sheet) => { void openCharacter(sheet); }}
             deleteCharacter={setDeleteTarget}
           />
-        ) : (
+        ) : view === "personagens" ? (
           <Characters
             characters={characters}
             ready={ready}
@@ -375,6 +378,8 @@ export function Workspace({
             open={(sheet) => { void openCharacter(sheet); }}
             deleteCharacter={setDeleteTarget}
           />
+        ) : (
+          <Suspense fallback={<WorkspaceLoading/>}><Homebrews/></Suspense>
         )}
       </section>
       {deleteTarget !== null && (

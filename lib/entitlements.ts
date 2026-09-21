@@ -2,7 +2,7 @@ export type EntitlementRole={id:string;name:string;prerequisites:string;privileg
 export type EntitlementBlessing={id:string;name:string;description:string;conditional?:boolean;choiceLabel?:string};
 export type EntitlementDefinition={
   id:string;name:string;meritName:string;source:string;sourceCode:string;page:number;
-  sourceId?:"h-courts"|"h-seemings";
+  sourceId?:string;homebrew?:true;
   prerequisites:string;purpose:string;privileges:string;duties:string;maskAndMien:string;
   heraldry:string;token:{name:string;description:string;effect:string;catch:string;drawback:string};
   blessings:EntitlementBlessing[];roles?:EntitlementRole[];touchstone:string;curse:string;beat:string;legends:string[];

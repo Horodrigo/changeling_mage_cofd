@@ -25,6 +25,9 @@ import { RuleSelect } from "@/app/workspace/rule-select";
 import { stringList } from "@/app/workspace/sheet-primitives";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { createRandomId } from "@/lib/random-id";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { homebrewContentActive } from "@/lib/homebrew";
+import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -92,9 +95,11 @@ export function ExperiencePanel({
   catalogs: CatalogSnapshot;
 }) {
   const { locale, t }=useLanguage();
+  const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews();
   const contractCatalog = catalogs.get<ContractDefinition[]>("changeling-contracts");
-  const entitlementCatalog = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
-  const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,[]));
+  const staticEntitlements = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
+  const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
+  const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
   const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
   const state = character.current_state ?? {};
   const beats = boundedNumber(state.experience_beats, 5, 0);
@@ -137,10 +142,11 @@ export function ExperiencePanel({
   const [contractId, setContractId] = useState("");
   const [benefitKey, setBenefitKey] = useState("");
   const [feedback, setFeedback] = useState("");
-  const meritCatalog = [
+  const fullMeritCatalog = [
     ...catalogs.get<MeritDefinition[]>("core-merits"),
     ...catalogs.get<MeritDefinition[]>("changeling-merits"),
   ];
+  const meritCatalog = fullMeritCatalog.filter((item)=>homebrewContentActive(homebrewPreferences,item.id,item.sourceId));
   const merits = meritCatalog;
   const ownedContracts = [
     ...objectList(character.line_data.contracts),
@@ -150,7 +156,7 @@ export function ExperiencePanel({
     ownedContracts.map((item) => String(item.id ?? "")),
   );
   const contractOptions = contractsCatalog.filter(
-    (item) => !ownedContractIds.has(item.id),
+    (item) => !ownedContractIds.has(item.id) && homebrewContentActive(homebrewPreferences,item.id,item.sourceId),
   );
   const extraBenefits = objectList(character.line_data.extra_contract_benefits);
   const extraKeys = new Set(

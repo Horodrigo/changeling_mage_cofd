@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CharacterBuilderShell,
   commonCreationIssues,
@@ -32,6 +32,8 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { homebrewContentActive } from "@/lib/homebrew";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -88,11 +90,16 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     },
   });
   const reference = catalogs.get<ChangelingReference>("changeling-reference");
-  const contractCatalog = useMemo(() => catalogs.get<readonly ContractDefinition[]>("changeling-contracts").map((item) => contractWithSupplementalBenefits(item, [])), [catalogs]);
-  const meritCatalog = useMemo(() => [
+  const homebrewPreferences = useHomebrewPreferences();
+  const initialContractIds = new Set((Array.isArray(initial?.line_data.contracts) ? initial.line_data.contracts : []).map((item) => String((item as Record<string, unknown>).id ?? "")));
+  const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts")
+    .filter((item) => initialContractIds.has(item.id) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
+    .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"]));
+  const meritCatalog = [
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("changeling-merits"),
-  ].sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs]);
+  ].filter((item) => common.merits.some((merit) => merit.name === item.name) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
+    .sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
 
   const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? ""));
   const [kith, setKith] = useState(String(initial?.line_data.kith ?? ""));
@@ -110,6 +117,8 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
   const [secondRegalia, setSecondRegalia] = useState(translateRegalia(String(initial?.line_data.second_regalia ?? "")));
   const [favoredAttribute, setFavoredAttribute] = useState(String(initial?.line_data.favored_attribute ?? ""));
   const [contracts, setContracts] = useState<ContractSelection[]>(() => readContracts(initial, contractCatalog));
+  const courtCatalog = reference.courts.filter((item) => [item.id, item.name, item.translatedName].includes(court) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId));
+  const kithCatalog = reference.kiths.filter((item) => [item.id, item.name, item.translatedName].includes(kith) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId));
   const setMerits = common.setMerits;
 
   useEffect(() => {
@@ -162,7 +171,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
       ["seeming", seeming, t("ui.seeming")], ["kith", kith, t("ui.kith")], ["needle", needle, t("ui.needle")],
       ["thread", thread, t("ui.thread")], ["favoredAttribute", favoredAttribute, t("ui.favoredAttribute")], ["secondRegalia", secondRegalia, t("ui.secondRegalia")],
     ]) if (!value) add(3, key, label);
-    const selectedKith = findKith(reference.kiths, kith);
+    const selectedKith = findKith(kithCatalog, kith);
     if (customKith && (!customKithSkill || !customKithDescription.trim())) add(3, "kith", t("ui.completeCustomKith"));
     if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", t("ui.kithBlessingChoice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
@@ -184,7 +193,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     const finalSkills = { ...common.skills };
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
-    const selectedKith = findKith(reference.kiths, kith);
+    const selectedKith = findKith(kithCatalog, kith);
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
       id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
@@ -235,7 +244,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, catalog
     onCancel={onCancel} onFinish={finish}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
-    lineTemplate={<ChangelingBuilderView seeming={seeming} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={reference.kiths} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={reference.courts} />}
+    lineTemplate={<ChangelingBuilderView seeming={seeming} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}
   />;
 }
 

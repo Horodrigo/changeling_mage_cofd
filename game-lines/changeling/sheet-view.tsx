@@ -34,6 +34,7 @@ import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
+import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 
 type ChangelingReference = {
     conditions: ConditionDefinition[];
@@ -91,6 +92,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const { locale, t } = useLanguage();
     const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
     const lineReference = catalogs.get<ChangelingReference>("changeling-reference");
+    const customEntitlements = useEntitlementHomebrews();
+    const entitlementCatalog = [...lineReference.entitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
     const conditionCatalog = [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
     const isMobile = useIsMobile();
@@ -156,8 +159,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const currentWillpower = boundedNumber(character.current_state?.willpower_current, willpower, willpower);
     const resourceKey = "glamour_current";
     const currentResource = boundedNumber(character.current_state?.[resourceKey], resource.maximum, resource.maximum);
-    const entitlementState = entitlementMerit ? normalizeEntitlementState(data.entitlement, powerRating, lineReference.entitlements) : null;
-    const entitlementDefinition = lineReference.entitlements.find((item) => item.id === entitlementState?.definitionId);
+    const entitlementState = entitlementMerit ? normalizeEntitlementState(data.entitlement, powerRating, entitlementCatalog) : null;
+    const entitlementDefinition = entitlementCatalog.find((item) => item.id === entitlementState?.definitionId);
     const hasStoredGlamour = Boolean(entitlementState?.accepted && entitlementState.allocations.some((item) => item.target === "blessing" && item.blessingId === "glamour-gain") && entitlementState.touchstone.status === "active" && entitlementState.touchstone.name.trim() && entitlementDefinition && entitlementPrerequisitesMet(entitlementDefinition, entitlementState, character));
     const storedGlamour = hasStoredGlamour ? boundedNumber(entitlementState?.token.storedGlamour, powerRating, 0) : 0;
     const setStoredGlamour = (value: number) => {
@@ -166,10 +169,10 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         const next = structuredClone(character), merit = next.merits.find((item) => item.name === "Entitlement" && !item.grantedBy);
         if (!merit)
             return;
-        const state = normalizeEntitlementState(next.line_data.entitlement, powerRating, lineReference.entitlements);
+        const state = normalizeEntitlementState(next.line_data.entitlement, powerRating, entitlementCatalog);
         state.token = { ...state.token, storedGlamour: boundedNumber(value, powerRating, 0) };
         next.line_data.entitlement = state;
-        updateSheet(synchronizeEntitlement(next, lineReference.entitlements));
+        updateSheet(synchronizeEntitlement(next, entitlementCatalog));
     };
     const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 10, 0);
     const expandedMerits = character.merits.filter((item) => isExpanded(item.name) && !item.grantedBy);
@@ -217,8 +220,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <div className="mobile-trait-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>)}</div>
             </>,
                 detalhes: <>
-              <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/>
-              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
+              <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/>
+              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} hasAdjacentContent/>
               <SheetHeading>{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
               <SheetHeading>{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
               <SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
@@ -232,7 +235,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
               <SeemingLore seeming={String(data.seeming ?? "")}/><KithLore data={data} reference={lineReference}/>
             </>,
-                entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={lineReference.entitlements}/>,
+                entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={entitlementCatalog}/>,
                 combate: <>
               <SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/>
               <SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
@@ -279,7 +282,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 </>
               }
               specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data)}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
-              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
+              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
@@ -300,11 +303,11 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 <EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
                 <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
                 <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>
-                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={lineReference.entitlements} hasAdjacentContent/>
+                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} hasAdjacentContent/>
               </section>
             </div>
           </TabsContent>
-          {entitlementMerit && <TabsContent value="entitlement" data-page-title="Entitlement" className="ctl-sheet-page powers-page"><EntitlementPage character={character} updateSheet={updateSheet} catalog={lineReference.entitlements}/></TabsContent>}
+          {entitlementMerit && <TabsContent value="entitlement" data-page-title="Entitlement" className="ctl-sheet-page powers-page"><EntitlementPage character={character} updateSheet={updateSheet} catalog={entitlementCatalog}/></TabsContent>}
           <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <CombatPage character={character} derived={derived} updateSheet={updateSheet}/>
           </TabsContent>

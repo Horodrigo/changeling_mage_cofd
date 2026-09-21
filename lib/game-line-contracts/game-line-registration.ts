@@ -3,6 +3,7 @@ import type { CatalogGroupsBySurface } from "./catalog-groups";
 import type { GameLineRulesModule } from "./game-line-rules";
 import type {
   GameLineBuilderModule,
+  GameLineHomebrewModule,
   GameLinePrintModule,
   GameLineSheetModule,
 } from "./game-line-ui";
@@ -24,4 +25,5 @@ export interface GameLineRegistration {
   loadBuilder: () => Promise<GameLineBuilderModule>;
   loadSheet: () => Promise<GameLineSheetModule>;
   loadPrintSheet?: () => Promise<GameLinePrintModule>;
+  loadHomebrew?: () => Promise<GameLineHomebrewModule>;
 }

@@ -161,17 +161,29 @@ test("current game-line source trees do not statically import one another", asyn
   }
 });
 
-test("obsolete mixed surfaces and deferred Homebrew modules stay removed", async () => {
+test("obsolete mixed surfaces and legacy Homebrew modules stay removed", async () => {
   await Promise.all([
     assertMissing("app/character-builder.tsx"),
     assertMissing("app/workspace/character-paper.tsx"),
-    assertMissing("app/homebrews.tsx"),
     assertMissing("app/use-homebrews.ts"),
     assertMissing("lib/homebrews.ts"),
     assertMissing("lib/google-drive-sync.ts"),
     assertMissing("lib/merit-configurations.ts"),
     assertMissing("lib/expanded-merits.ts"),
   ]);
+  await access(join(root, "app/homebrews.tsx"));
+  await access(join(root, "lib/homebrew.ts"));
+});
+
+test("Homebrew shell dispatches line-owned editors lazily", async () => {
+  const [shell, contract, changeling] = await Promise.all([
+    source("app/homebrews.tsx"),
+    source("lib/game-line-contracts/game-line-registration.ts"),
+    source("game-lines/changeling/registration.ts"),
+  ]);
+  assert.doesNotMatch(shell, /game-lines\/(?:mage|changeling|vampire)/);
+  assert.match(contract, /loadHomebrew\?/);
+  assert.match(changeling, /loadHomebrew\s*:\s*\(\)\s*=>\s*import\(/);
 });
 
 test("workspace routes builder and sheet surfaces through the registry shells", async () => {
@@ -279,4 +291,11 @@ test("production build manifest keeps builder, sheet, and print closures line-is
       );
     }
   }
+
+  const homebrewKey = "game-lines/changeling/homebrew.tsx";
+  assert.ok(manifest[homebrewKey], `missing manifest entry: ${homebrewKey}`);
+  assert.ok(
+    closure(homebrewKey).every((entry) => !entry.includes("game-lines/mage/") && !entry.includes("game-lines/vampire/")),
+    `${homebrewKey} closure contains another game line`,
+  );
 });

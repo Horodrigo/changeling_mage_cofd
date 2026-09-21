@@ -32,6 +32,8 @@ import { alphabetical } from "@/lib/option-order";
 import { translate, useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { homebrewContentActive } from "@/lib/homebrew";
 
 export type ContractSelection = ContractDefinition;
 export type CustomCourtDefinition = { name: string; emotion: string; mantleBenefits: string[] };
@@ -89,6 +91,7 @@ function contractCategoryKey(contract: ContractDefinition) {
 
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, t } = useLanguage();
+  const homebrewPreferences = useHomebrewPreferences();
   const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
   const availableRegalia = [
     ...REGALIA,
@@ -119,7 +122,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             label={t("ui.seeming")}
             value={props.seeming}
             setValue={props.setSeeming}
-            options={Object.keys(CTL_SEEMINGS)}
+            options={Object.entries(CTL_SEEMINGS).filter(([name,item])=>name===props.seeming||homebrewContentActive(homebrewPreferences,`seeming:${name}`,"sourceId" in item?item.sourceId:undefined)).map(([name])=>name)}
             optionLabels={Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([name,item])=>[
               name,
               t("ui.favorsRegalia", { name: seemingDisplayName(name, locale), regalia: systemTerm(item.regalia, locale) }),
@@ -293,9 +296,10 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
 
 function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"needle"|"thread";value:string;setValue:(value:string)=>void;invalid?:boolean}) {
   const { locale, t }=useLanguage();
+  const homebrewPreferences=useHomebrewPreferences();
   const [search,setSearch]=useState("");
   const [sourceFilter,setSourceFilter]=useState("all");
-  const definitions=kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS;
+  const definitions=(kind==="needle"?CTL_NEEDLE_DEFINITIONS:CTL_THREAD_DEFINITIONS).filter((item)=>item.name===value||homebrewContentActive(homebrewPreferences,`${kind}:${item.name}`,item.sourceId));
   const sources=alphabetical([...new Set(definitions.map((item)=>item.source).filter((source):source is string=>Boolean(source)))],(source)=>source,locale);
   const label=kind==="needle"?t("ui.needle"):t("ui.thread");
   const normalized=search.trim().toLocaleLowerCase(locale);
