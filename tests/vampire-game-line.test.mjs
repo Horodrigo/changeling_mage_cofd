@@ -118,6 +118,32 @@ test("Secrets of the Covenants exposes every Crúac rite, Theban miracle, Coil l
   assert.deepEqual(coils.map((item) => item.name), ["Coil of Zirnitra", "Coil of Ziva"]);
 });
 
+test("Coil of Zirnitra unlocks one mortal Supernatural Merit per dot and removes the limit at five", async () => {
+  const { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
+  const catalog = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const automaticWriting = catalog.find((item) => item.id === "core-2ed:automatic-writing");
+  const layingOnHands = catalog.find((item) => item.id === "core-2ed:laying-on-hands");
+  const numbingTouch = catalog.find((item) => item.id === "core-2ed:numbing-touch");
+  const context = { gameLine: "VtR", archetypes: ["vampire"], meritCatalog: catalog, merits: [] };
+
+  assert.equal(automaticWriting.mortalOnly, true);
+  assert.equal(layingOnHands.mortalOnly, true);
+  assert.equal(numbingTouch.mortalOnly, true);
+  assert.equal(vampireMeritEligible(automaticWriting, context, 0), false);
+  assert.equal(vampireMeritEligible(automaticWriting, context, 1), true);
+
+  const oneOwned = { ...context, merits: [{ name: automaticWriting.name, dots: 2 }] };
+  assert.equal(zirnitraMortalMeritCount(oneOwned), 1);
+  assert.equal(vampireMeritEligible(automaticWriting, oneOwned, 1), true);
+  assert.equal(vampireMeritEligible(layingOnHands, oneOwned, 1), false);
+  assert.equal(vampireMeritEligible(layingOnHands, oneOwned, 2), true);
+
+  const threeOwned = { ...context, merits: [automaticWriting, layingOnHands, numbingTouch].map((item) => ({ name: item.name, dots: item.ratings[0] })) };
+  assert.equal(vampireMeritEligible(layingOnHands, threeOwned, 2), false);
+  assert.equal(vampireMeritEligible(layingOnHands, threeOwned, 5), true);
+  assert.equal(zirnitraMortalMeritLimit(5), Number.POSITIVE_INFINITY);
+});
+
 test("Secrets of the Covenants exposes its two printed Conditions", async () => {
   const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
   assert.deepEqual(

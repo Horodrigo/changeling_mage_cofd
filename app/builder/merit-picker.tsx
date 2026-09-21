@@ -43,6 +43,7 @@ export function MeritPicker({
   setPower,
   renderConfiguration,
   isInlineConfiguration,
+  isEligible = meritPrerequisitesMet,
 }: {
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
@@ -55,6 +56,7 @@ export function MeritPicker({
   setPower: (value: number) => void;
   renderConfiguration: (props: MeritConfigurationRenderProps) => ReactNode;
   isInlineConfiguration: (name: string) => boolean;
+  isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
 }) {
   const { locale, t } = useLanguage();
   const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
@@ -67,13 +69,13 @@ export function MeritPicker({
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
   const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
-    (showAllMerits || meritPrerequisitesMet(item, context)) &&
+    (showAllMerits || isEligible(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => owned.name === item.name) || merits.some((owned) => owned.name === item.name)) &&
     (category === "all" || item.category === category) &&
     (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))
   );
   const addMerit = (definition: MeritDefinition) => {
-    if (!meritPrerequisitesMet(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => item.name === definition.name))) return;
+    if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => item.name === definition.name))) return;
     if (!isRepeatableDefinition(definition) && merits.some((merit) => merit.name === definition.name)) return;
     setMerits([...merits, { instanceId: createRandomId(), name: definition.name, dots: meritRatingsFor(definition)[0], sourceId: definition.sourceId, source: definition.source, configuration: {} }]);
   };
@@ -119,7 +121,7 @@ export function MeritPicker({
         return <section className="merit-category" key={catalogCategory}><h3>{categoryName(catalogCategory)} <Badge variant="outline">{items.length}</Badge></h3><div>{items.map((definition) => {
           const selected = merits.some((merit) => merit.name === definition.name);
           const repeatable = isRepeatableDefinition(definition);
-          const prerequisitesMet = meritPrerequisitesMet(definition, context);
+          const prerequisitesMet = isEligible(definition, context);
           return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : formatRatings(meritRatingsFor(definition))}</small>{definition.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {definition.prerequisites}</p>}<p>{definition.description}</p></div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
         })}</div></section>;
       })}{!visibleCatalog.length && <em>{t("ui.noMeritsMatchTheFilters")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>

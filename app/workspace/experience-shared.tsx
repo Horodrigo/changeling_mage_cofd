@@ -7,7 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { useLanguage } from "@/lib/i18n";
-import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { systemTerm } from "@/lib/system-terms";
@@ -218,6 +218,7 @@ export function ExperienceMeritPicker({
   selectedId,
   targetDots,
   onSelect,
+  isEligible = meritPrerequisitesMet,
 }: {
   line: PersistedGameLineId;
   archetypes: readonly string[];
@@ -226,6 +227,7 @@ export function ExperienceMeritPicker({
   selectedId: string;
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
+  isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
 }) {
   const { locale, t }=useLanguage();
   const [search, setSearch] = useState("");
@@ -282,7 +284,7 @@ export function ExperienceMeritPicker({
           {catalog
             .filter(
               (item) =>
-                (showAllMerits || meritPrerequisitesMet(item, context)) &&
+                (showAllMerits || isEligible(item, context)) &&
                 (category === "Todas" || item.category === category) &&
                 `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source}`
                   .toLocaleLowerCase("pt-BR")
@@ -308,10 +310,10 @@ export function ExperienceMeritPicker({
                 buyingNew = repeatable && draft.newInstance,
                 allowedRatings = ratings.filter((dot)=>
                   (buyingNew || !activeInstance || dot > activeInstance.owned.dots) &&
-                  meritPrerequisitesMet(item,{...context,selectedDots:dot,configuration:buyingNew?undefined:activeInstance?.owned.configuration}),
+                  isEligible(item,{...context,selectedDots:dot,configuration:buyingNew?undefined:activeInstance?.owned.configuration}),
                 ),
                 intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
-                prerequisitesMet = meritPrerequisitesMet(item,context);
+                prerequisitesMet = isEligible(item,context);
               if (item.name === "Mantle" && !instances.length) return null;
               if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvanceGrantedMerit(line,owned)))return null;
               if (

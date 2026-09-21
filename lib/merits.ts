@@ -26,6 +26,7 @@ export type MeritDefinition = {
   kith?: string;
   repeatable?: boolean;
   unbounded?: boolean;
+  mortalOnly?: boolean;
 };
 
 export const REPEATABLE_MERITS = new Set([

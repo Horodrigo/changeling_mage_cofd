@@ -28,6 +28,7 @@ import type { VampireAnchorDefinition, VampireCovenantDefinition, VampirePowers,
 import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
+import { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
 
 type KindredStatusScope = "covenant" | "clan" | "city";
 
@@ -198,6 +199,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
   const covenantStatus = Math.max(purchasedCovenantStatus, statusScope === "covenant" && statusGroup ? 1 : 0);
   const covenantPowerOptions = covenantId === "circle-of-the-crone" ? powers.cruacRites.filter((item) => item.rating === 1) : covenantId === "lancea-et-sanctum" ? powers.thebanMiracles.filter((item) => item.rating === 1) : covenantId === "ordo-dracul" && mysteryId ? powers.coils.filter((item) => item.id === `coil-${mysteryId}`) : [];
   const hasCreationCovenantPower = covenantPowerOptions.some((item) => item.id === creationCovenantPowerId);
+  const covenantPower = reconcileCreationCovenantPower(powers, String(initial?.line_data.creation_covenant_power_id ?? ""), hasCreationCovenantPower ? creationCovenantPowerId : "", initial?.line_data.blood_sorcery, initialOrdo.coil_ratings);
+  const zirnitraRating = Number(covenantPower.coilRatings["coil-zirnitra"] ?? 0);
   const disciplineDots = Object.values(disciplines).reduce((sum, value) => sum + value, 0);
   const totalDisciplineDots = disciplineDots + Number(hasCreationCovenantPower);
   const inClanDots = selectedClan?.disciplines.reduce((sum, name) => sum + Number(disciplines[name] ?? 0), 0) ?? 0;
@@ -232,6 +235,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     if (covenantId === "ordo-dracul" && !ORDO_MYSTERIES.includes(mysteryId as (typeof ORDO_MYSTERIES)[number])) add("mystery", t("ui.ordoDraculMystery"));
     if (creationCovenantPowerId && (!hasCreationCovenantPower || covenantStatus < 1)) add("covenantPower", t("ui.covenantPowerRequiresKindredStatus1InThe"));
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
+    if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", "Coil of Zirnitra");
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${message}`);
@@ -302,7 +306,6 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
     for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const touchstoneSlot = clanId === "ventrue" ? 7 : 6;
-    const covenantPower = reconcileCreationCovenantPower(powers, String(initial?.line_data.creation_covenant_power_id ?? ""), hasCreationCovenantPower ? creationCovenantPowerId : "", initial?.line_data.blood_sorcery, initialOrdo.coil_ratings);
     const bloodSorcery = covenantPower.bloodSorcery;
     const ordoDracul = { ...initialOrdo, mystery_id: covenantId === "ordo-dracul" ? mysteryId : initialOrdo.mystery_id ?? "", coil_ratings: covenantPower.coilRatings };
     const finalMerits = mergeCreationMerits(initial?.merits, common.merits.map((merit) => {
@@ -390,7 +393,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, catalogs }
         {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label={t("ui.mystery")} value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode") }} /></div>}
         {hasCreationCovenantPower && covenantPowerOptions.length > 1 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={covenantId === "circle-of-the-crone" ? t("ui.freeRite") : t("ui.freeMiracle")} value={creationCovenantPowerId} setValue={setCreationCovenantPowerId} options={covenantPowerOptions.map((item) => item.id)} optionLabels={Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)]))} /></div>}
         <Aspirations values={common.aspirations} setValues={common.setAspirations} />
-        <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} /></div>
+        <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} /></div>
       </div>}
     />
   </>;
