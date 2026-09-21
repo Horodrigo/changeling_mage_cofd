@@ -14,6 +14,8 @@ const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
 const experienceShared = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
+const builderShared = await vite.ssrLoadModule("/app/character-builder-shell.tsx");
+const mageBuilder = await vite.ssrLoadModule("/game-lines/mage/builder.tsx");
 const hubris = await vite.ssrLoadModule("/game-lines/mage/hubris.ts");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
@@ -32,6 +34,23 @@ test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", 
     { value: "Wisdom", label: "Wisdom", group: "Integridade e Recuperação" },
     { value: "Rote", label: "Rote", group: "Poderes Adquiridos" },
   ]);
+});
+
+test("avanços da criação viram Experiência gasta sem exigir saldo prévio", () => {
+  assert.deepEqual(experienceShared.experiencePurchaseBalances(0, 0, 0, 12, true), { available: 0, spent: 12, total: 12 });
+  assert.deepEqual(experienceShared.experiencePurchaseBalances(3, 7, 10, 2, false), { available: 1, spent: 9, total: 10 });
+  assert.deepEqual(experienceShared.experiencePurchaseBalances(0, 12, 12, 3, true), { available: 0, spent: 15, total: 15 });
+});
+
+test("o Builder preserva compras de vários pontos feitas em uma única transação", () => {
+  const advanced = { current_state: {
+    mage_experience_history: [
+      { undo: { kind: "trait", group: "attributes", name: "Strength", amount: 3 } },
+      { undo: { kind: "arcana", name: "Fate", amount: 2 } },
+    ],
+  } };
+  assert.deepEqual(builderShared.experienceTraitDots(advanced, "attributes", "mage_experience_history"), { Strength: 3 });
+  assert.deepEqual(mageBuilder.experienceArcanaDots(advanced), { Fate: 2 });
 });
 
 function sheet(key = "wyrd", creation = 1) {

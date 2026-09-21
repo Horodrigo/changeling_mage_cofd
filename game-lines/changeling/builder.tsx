@@ -36,6 +36,7 @@ import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
+import { ExperiencePanel } from "./experience-panel";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -185,37 +186,33 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
-  const finish = (draft: boolean) => {
-    if (!draft && issues.length) {
-      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
-      common.setStep(issues[0].step);
-      return false;
-    }
+  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => {
+    const sourceProgression = changelingBuilderPowerProgression(source);
     const finalAttributes = { ...common.attributes };
     if (favoredAttribute) finalAttributes[favoredAttribute] = Math.min(5, (common.attributes[favoredAttribute] ?? 1) + 1);
     const finalSkills = { ...common.skills };
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     const selectedKith = findKith(kithCatalog, kith);
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
-      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
+      id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
       ruleset: { id: "ctl-2ed-embedded", version: 1 },
       character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,
       specializations: [
         ...common.specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({ skill: item.skill, name: item.name.trim() })),
-        ...(initial?.specializations ?? []).filter((item) => Boolean(item.grantedBy)),
+        ...(source?.specializations ?? []).filter((item) => Boolean(item.grantedBy)),
       ],
-      merits: mergeCreationMerits(initial?.merits, common.merits.map((item) => {
+      merits: mergeCreationMerits(source?.merits, common.merits.map((item) => {
         const definition = meritCatalog.find((entry) => entry.name === item.name);
         return { ...item, configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId, source: definition?.source };
       })),
       line_data: {
-        ...(initial?.line_data ?? {}), seeming, kith, kith_choice: customKith ? "" : kithChoice,
+        ...(source?.line_data ?? {}), seeming, kith, kith_choice: customKith ? "" : kithChoice,
         court: court || "Sem Corte", needle, thread, touchstone,
-        creation_wyrd: wyrd, wyrd: Math.min(10, wyrd + wyrdProgression.advancement),
-        frailties: normalizeChangelingFrailties(initial?.line_data.frailties, wyrd + wyrdProgression.advancement),
+        creation_wyrd: wyrd, wyrd: Math.min(10, wyrd + sourceProgression.advancement),
+        frailties: normalizeChangelingFrailties(source?.line_data.frailties, wyrd + sourceProgression.advancement),
         custom_court: customCourt, kith_custom: customKith,
         kith_skill: customKith ? customKithSkill : (selectedKith?.skill ?? ""),
         kith_description: customKith ? customKithDescription : (selectedKith?.description ?? ""),
@@ -225,9 +222,9 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
         primary_regalia: CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS]?.regalia ?? "",
         second_regalia: secondRegalia, favored_attribute: favoredAttribute,
         aspirations: common.aspirations, contracts,
-        learned_contracts: initial?.line_data.learned_contracts ?? [],
-        extra_contract_benefits: initial?.line_data.extra_contract_benefits ?? [],
-        extra_contract_clauses: initial?.line_data.extra_contract_clauses ?? [],
+        learned_contracts: source?.line_data.learned_contracts ?? [],
+        extra_contract_benefits: source?.line_data.extra_contract_benefits ?? [],
+        extra_contract_clauses: source?.line_data.extra_contract_clauses ?? [],
       },
       derived: {
         Tamanho: 5, Vitalidade: 5 + finalAttributes.Stamina,
@@ -237,8 +234,17 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
         Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
         LucidezMaxima: finalAttributes.Wits + finalAttributes.Composure,
       },
-      current_state: builderCurrentState(initial, draft, common.step), created_at: initial?.created_at ?? now, updated_at: now,
+      current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
     };
+    return completed;
+  };
+  const finish = (draft: boolean, advancement?: CharacterSheet) => {
+    if (!draft && issues.length) {
+      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
+      common.setStep(issues[0].step);
+      return false;
+    }
+    const completed = buildCharacter(advancement ?? initial, draft);
     (draft ? onSaveDraft : onSave)(completed);
     return true;
   };
@@ -246,6 +252,8 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
   return <CharacterBuilderShell
     line="CtL" templateLabel={t("ui.lostTemplate")} state={common} issues={issues}
     draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
+    prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
+    renderAdvancement={(sheet, updateSheet) => <ExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<ChangelingBuilderView seeming={seeming} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}

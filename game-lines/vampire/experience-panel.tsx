@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect, type RuleSelectOption } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -75,7 +75,7 @@ function coilPrerequisiteMet(prerequisites: string | undefined, ratings: Record<
   return !match || Number(ratings[match[1]] ?? 0) >= Number(match[2]);
 }
 
-export function VampireExperiencePanel({ character, updateSheet, catalogs }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalogs: CatalogSnapshot }) {
+export function VampireExperiencePanel({ character, updateSheet, catalogs, builderMode = false }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalogs: CatalogSnapshot; builderMode?: boolean }) {
   const { locale, t } = useLanguage();
   const state = character.current_state;
   const available = Math.max(0, Math.trunc(Number(state.experience_available ?? 0)));
@@ -179,7 +179,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   const unavailable = !chosen || cost < 1 || meritUnavailable || ((purchase === "cruac" || purchase === "theban") && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= limit) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) < 1) || (purchase === "specialty" && !specialtyName.trim()) || ((purchase === "cruac" || purchase === "theban" || purchase === "coil") && ratedCurrent >= 5) || (purchase === "scale" && (covenant !== "ordo-dracul" || covenantStatus < 1));
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
-    if (unavailable || available < cost) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
+    if (unavailable || (!builderMode && available < cost)) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
     const next = structuredClone(character);
     let purchasedMeritIndex = -1;
     let label = options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale);
@@ -238,7 +238,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
       : purchase === "coil" ? { kind: "coil", id: chosen, amount: ratingAmount }
       : { kind: "scale", id: chosen };
     const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), undo };
-    next.current_state = { ...next.current_state, experience_available: available - cost, experience_spent: spent + cost, experience_total: total, vampire_experience_history: [...history, entry] };
+    const balance = experiencePurchaseBalances(available, spent, total, cost, builderMode);
+    next.current_state = { ...next.current_state, experience_available: balance.available, experience_spent: balance.spent, experience_total: balance.total, vampire_experience_history: [...history, entry] };
 
     // Preserve the current purchase when it can still be advanced. If the
     // purchased option is exhausted, move the UI away from the now-invalid
@@ -328,20 +329,23 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
   };
   const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo && (!entry.before || history.at(-1)?.id !== entry.id)} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
-    <div className="experience-title"><div><span>{t("ui.beatsAndExperience")}</span><small>{t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
+    <div className="experience-title"><div><span>{builderMode ? t("ui.creationAdvancement") : t("ui.beatsAndExperience")}</span><small>{builderMode ? t("ui.creationAdvancementDescription") : t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
     <div className="experience-totals">
-      <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmountDraft(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={t("ui.availableExperience")} /><span>{t("ui.xpAvailable")}</span></label>
+      {!builderMode && <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amount} onChange={(event) => setAmountDraft(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={t("ui.availableExperience")} /><span>{t("ui.xpAvailable")}</span></label>}
       <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div>
       <div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div>
     </div>
-    <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />
+    {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />}
     <div className="experience-actions">
       <Dialog>
         <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger>
         <DialogContent className="experience-dialog">
           <DialogHeader><DialogTitle>{t("ui.spendVampireExperience")}</DialogTitle><DialogDescription>{t("ui.chooseATraitAndTheSheetWillRecord")}</DialogDescription></DialogHeader>
           <div className="experience-purchase-form">
-            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setFreePowerIds([]); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>
+            <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setFreePowerIds([]); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); }} options={groupedPurchaseOptions(builderMode ? [
+              { group: "core", purchases: ["attribute", "skill", "merit"] },
+              { group: "supernatural", purchases: ["blood-potency", "discipline"] },
+            ] : PURCHASE_GROUPS, (value) => purchaseLabel(value as PurchaseType, locale), locale)} /></label>
             {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), covenant]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} /></label> : purchase !== "cruac" && purchase !== "theban" && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label> : null}
             {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
             {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
@@ -355,7 +359,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs }: { c
           </div>
           <div className="purchase-preview"><strong>{ratedMaximum ? `${purchase === "cruac" || purchase === "theban" ? purchaseLabel(purchase, locale) : options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)} ${intendedRating}` : options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {t("ui.xp")}</span></div>
           {feedback && <p className="experience-feedback">{feedback}</p>}
-          {historyPanel}<DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || available < cost} onClick={buy}>{t("ui.purchaseFor")} {cost} {t("ui.xp")}</Button></DialogFooter>
+          {historyPanel}<DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || (!builderMode && available < cost)} onClick={buy}>{t("ui.purchaseFor")} {cost} {t("ui.xp")}</Button></DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

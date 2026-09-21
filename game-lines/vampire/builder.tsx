@@ -25,6 +25,7 @@ import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
+import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
@@ -293,52 +294,55 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (value === "covenantless" && statusScope === "covenant") setStatusScope("clan");
   };
 
-  const finish = (draft: boolean) => {
-    if (!draft && issues.length) {
-      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
-      common.setStep(issues[0].step); return false;
-    }
-    const advancement = disciplineAdvancement(initial);
+  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => {
+    const advancement = disciplineAdvancement(source);
     const finalDisciplines = Object.fromEntries(VAMPIRE_DISCIPLINES.map((name) => [name, (VAMPIRE_CREATION_DISCIPLINES as readonly string[]).includes(name) ? disciplines[name] + advancement[name] : advancement[name]]));
-    const bpAdvancement = Math.max(0, Number(initial?.line_data.blood_potency ?? 1) - Number(initial?.line_data.creation_blood_potency ?? initial?.line_data.blood_potency ?? 1));
+    const bpAdvancement = Math.max(0, Number(source?.line_data.blood_potency ?? 1) - Number(source?.line_data.creation_blood_potency ?? source?.line_data.blood_potency ?? 1));
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
     const finalAttributes = { ...common.attributes };
     if (favoredAttribute) finalAttributes[favoredAttribute] = Math.min(5, Number(common.attributes[favoredAttribute] ?? 1) + 1);
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     const finalSkills = { ...common.skills };
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const touchstoneSlot = clanId === "ventrue" ? 7 : 6;
     const bloodSorcery = covenantPower.bloodSorcery;
     const ordoDracul = { ...initialOrdo, mystery_id: covenantId === "ordo-dracul" ? mysteryId : initialOrdo.mystery_id ?? "", coil_ratings: covenantPower.coilRatings };
-    const finalMerits = mergeCreationMerits(initial?.merits, common.merits.map((merit) => {
+    const finalMerits = mergeCreationMerits(source?.merits, common.merits.map((merit) => {
         const definition = meritCatalog.find((item) => item.name === merit.name);
         return { ...merit, sourceId: definition?.sourceId, source: definition?.source, configuration: normalizeMeritConfiguration(merit.configuration) };
       }));
-    const finalTouchstones = reconcileTouchstones(initial, finalMerits, touchstoneSlot, touchstone);
+    const finalTouchstones = reconcileTouchstones(source, finalMerits, touchstoneSlot, touchstone);
     const completed: CharacterSheet = {
-      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR",
+      id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR",
       ruleset: { id: "vtr-2ed-embedded", version: 1 },
       character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,
       specializations: [
         ...common.specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({ skill: item.skill, name: item.name.trim() })),
-        ...experienceSpecialties(initial), ...(initial?.specializations ?? []).filter((item) => typeof item !== "string" && Boolean(item.grantedBy)),
+        ...experienceSpecialties(source), ...(source?.specializations ?? []).filter((item) => typeof item !== "string" && Boolean(item.grantedBy)),
       ],
       merits: finalMerits,
       line_data: {
-        ...(initial?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, covenant_id: covenantId,
+        ...(source?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, covenant_id: covenantId,
         kindred_status_scope: statusScope, kindred_status_city: statusCity.trim(), kindred_status_group: statusGroup,
         mask_id: maskId, dirge_id: dirgeId, aspirations: common.aspirations.map((item) => item.trim()).filter(Boolean),
         creation_blood_potency: bloodPotency, blood_potency: finalBloodPotency, creation_covenant_power_id: hasCreationCovenantPower ? creationCovenantPowerId : "",
-        creation_disciplines: disciplines, disciplines: finalDisciplines, humanity: Number(initial?.line_data.humanity ?? 7),
+        creation_disciplines: disciplines, disciplines: finalDisciplines, humanity: Number(source?.line_data.humanity ?? 7),
         discipline_choices: { ...initialChoices, protean_aspects: proteanAspects.map((value) => value.trim()).filter(Boolean), protean_forms: proteanForms.map((value) => value.trim()).filter(Boolean), protean_unnatural_aspect: proteanUnnatural.map((value) => value.trim()).filter(Boolean) },
-        touchstones: finalTouchstones, devotion_ids: initial?.line_data.devotion_ids ?? [], blood_sorcery: bloodSorcery, ordo_dracul: ordoDracul, banes: initial?.line_data.banes ?? [],
+        touchstones: finalTouchstones, devotion_ids: source?.line_data.devotion_ids ?? [], blood_sorcery: bloodSorcery, ordo_dracul: ordoDracul, banes: source?.line_data.banes ?? [],
       },
       derived: vampireDerived(finalAttributes, finalSkills, finalDisciplines, finalBloodPotency, reference),
-      current_state: builderCurrentState(initial, draft, common.step), created_at: initial?.created_at ?? now, updated_at: now,
+      current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
     };
-    (draft ? onSaveDraft : onSave)(synchronizeVampireBuilderMeritGrants(completed));
+    return synchronizeVampireBuilderMeritGrants(completed);
+  };
+  const finish = (draft: boolean, advancement?: CharacterSheet) => {
+    if (!draft && issues.length) {
+      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
+      common.setStep(issues[0].step); return false;
+    }
+    (draft ? onSaveDraft : onSave)(buildCharacter(advancement ?? initial, draft));
     return true;
   };
 
@@ -351,6 +355,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   return <>
     {nosferatuEasterEgg && <div className="nosferatu-easter-egg"><video src="/vampire/easter-eggs/nosferatu.webm" autoPlay playsInline controls={false} disablePictureInPicture /></div>}
     <CharacterBuilderShell line="VtR" templateLabel={t("ui.vampireTemplate")} state={common} issues={issues} draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
+      prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
+      renderAdvancement={(sheet, updateSheet) => <VampireExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
       identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
       traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
       lineTemplate={<div className="builder-section vampire-builder-template">

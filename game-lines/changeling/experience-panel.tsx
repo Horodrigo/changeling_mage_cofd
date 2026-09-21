@@ -31,7 +31,7 @@ import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
 import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
 type ExperienceUndo =
   | {
@@ -89,10 +89,12 @@ export function ExperiencePanel({
   character,
   updateSheet,
   catalogs,
+  builderMode = false,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   catalogs: CatalogSnapshot;
+  builderMode?: boolean;
 }) {
   const { locale, t }=useLanguage();
   const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews();
@@ -324,19 +326,18 @@ export function ExperiencePanel({
     undo: ExperienceUndo,
     apply: (next: CharacterSheet) => void,
   ) {
-    if (cost < 1 || available < cost) {
+    if (cost < 1 || (!builderMode && available < cost)) {
       setFeedback(t("ui.notEnoughAvailableExperienceForThisPurchase"));
       return;
     }
     const next = structuredClone(character);
     apply(next);
-    const nextAvailable = available - cost;
-    const nextSpent = spentXp + cost;
+    const balance = experiencePurchaseBalances(available, spentXp, total, cost, builderMode);
     const nextState = {
       ...next.current_state,
-      experience_available: nextAvailable,
-      experience_spent: nextSpent,
-      experience_total: nextAvailable + nextSpent,
+      experience_available: balance.available,
+      experience_spent: balance.spent,
+      experience_total: balance.total,
     };
     append(
       {
@@ -616,12 +617,12 @@ export function ExperiencePanel({
     <section className="experience-panel">
       <div className="experience-title">
         <div>
-          <span>{t("ui.beatsAndExperience")}</span>
-          <small>{t("ui.beatsAreTrackedSeparatelyFromExperience")}</small>
+          <span>{builderMode ? t("ui.creationAdvancement") : t("ui.beatsAndExperience")}</span>
+          <small>{builderMode ? t("ui.creationAdvancementDescription") : t("ui.beatsAreTrackedSeparatelyFromExperience")}</small>
         </div>
       </div>
       <div className="experience-totals">
-        <label className="experience-input">
+        {!builderMode && <label className="experience-input">
           <Input
             type="number"
             min={0}
@@ -636,7 +637,7 @@ export function ExperiencePanel({
             aria-label={t("ui.availableExperience")}
           />
           <span>{t("ui.xpAvailable")}</span>
-        </label>
+        </label>}
         <div>
           <strong>{total}</strong>
           <span>{t("ui.totalXP")}</span>
@@ -646,7 +647,7 @@ export function ExperiencePanel({
           <span>{t("ui.xpSpent")}</span>
         </div>
       </div>
-      <fieldset className="beat-controls">
+      {!builderMode && <fieldset className="beat-controls">
         <legend>{t("ui.beats")}</legend>
         {Array.from({ length: 5 }, (_, index) => {
           const value = index + 1;
@@ -671,7 +672,7 @@ export function ExperiencePanel({
         >
           {t("ui.clear")}
         </Button>
-      </fieldset>
+      </fieldset>}
       <div className="experience-actions">
         <Dialog>
           <DialogTrigger asChild>
@@ -702,7 +703,10 @@ export function ExperiencePanel({
                     setTargetRating(0);
                     setFeedback("");
                   }}
-                  options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
+                  options={groupedPurchaseOptions(builderMode ? [
+                    { group: "core", purchases: ["Atributo", "Perícia", "Mérito"] },
+                    { group: "supernatural", purchases: ["Fado", "Contrato"] },
+                  ] : PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
                 />
               </label>
               {purchaseType === "Atributo" && (
@@ -817,7 +821,7 @@ export function ExperiencePanel({
                 type="button"
                 size="sm"
                 className="catalog-selection-action"
-                disabled={preview.cost < 1 || available < preview.cost}
+                disabled={preview.cost < 1 || (!builderMode && available < preview.cost)}
                 onClick={buy}
               >
                 {t("ui.purchaseFor")} {preview.cost} {t("ui.xp")}
@@ -825,11 +829,11 @@ export function ExperiencePanel({
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <div className="permanent-resource-actions">
+        {!builderMode && <div className="permanent-resource-actions">
           <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.gainClarity")}</Button>} title={t("ui.addAPermanentClarityBox")} description={t("ui.thisAddsOnePermanentClarityBoxAtNo")} action={t("ui.addClarity")} destructive={false} onConfirm={gainClarity}/>
           <span aria-hidden="true">|</span>
           <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.loseWP")}</Button>} title={t("ui.permanentlyLoseOneWillpowerDot")} description={t("ui.thisReducesPermanentWillpowerByOneDotAnd")} action={t("ui.loseWP")} onConfirm={markWillpowerLoss}/>
-        </div>
+        </div>}
       </div>
       {feedback && <p className="experience-feedback compact">{feedback}</p>}
       <details className="experience-history">

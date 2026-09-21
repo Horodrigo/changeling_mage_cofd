@@ -26,7 +26,7 @@ import { createRandomId } from "@/lib/random-id";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
 const PURCHASE_TYPE_EN:Record<string,string>={Atributo:"Attribute",Perícia:"Skill",Mérito:"Merit",Especialização:"Specialty",Arcano:"Arcanum",Gnose:"Gnosis",Rota:"Rote",Práxis:"Praxis",Sabedoria:"Wisdom","Ponto perdido de Força de Vontade":"Lost Willpower dot"};
@@ -62,10 +62,12 @@ export function MageExperiencePanel({
   character,
   updateSheet,
   catalogs,
+  builderMode = false,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   catalogs: CatalogSnapshot;
+  builderMode?: boolean;
 }) {
   const { locale, t }=useLanguage();
   const state = character.current_state ?? {};
@@ -228,14 +230,16 @@ export function MageExperiencePanel({
       ? `${t("ui.willpower")} ${intendedRating}`
       : t("ui.noLostDots");
   }
-  const splitRegular =
-      mode === "regular"
+  const splitRegular = builderMode
+      ? mode === "arcane" ? 0 : cost
+      : mode === "regular"
         ? cost
         : mode === "arcane"
           ? 0
           : Math.max(minimumRegular, Math.min(cost, regularSplit)),
-    splitArcane =
-      mode === "arcane" ? cost : mode === "regular" ? 0 : cost - splitRegular;
+    splitArcane = builderMode
+      ? mode === "arcane" ? cost : 0
+      : mode === "arcane" ? cost : mode === "regular" ? 0 : cost - splitRegular;
   const saveBalances = (patch: Record<string, unknown>) => {
     const next = structuredClone(character);
     next.current_state = { ...next.current_state, ...patch };
@@ -261,7 +265,7 @@ export function MageExperiencePanel({
       if(problems.length)return setFeedback(problems.join(" "));
     }
     if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));
-    if (cost < 1 || regular < splitRegular || arcane < splitArcane) {
+    if (cost < 1 || (!builderMode && (regular < splitRegular || arcane < splitArcane))) {
       setFeedback(t("ui.insufficientExperienceOrUnavailablePurchase"));
       return;
     }
@@ -376,12 +380,16 @@ export function MageExperiencePanel({
       createdAt: new Date().toISOString(),
       before,
     };
+    const regularBalance = experiencePurchaseBalances(regular, spentRegular, Number(next.current_state.mage_experience_total ?? 0), splitRegular, builderMode);
+    const arcaneBalance = experiencePurchaseBalances(arcane, spentArcane, Number(next.current_state.arcane_experience_total ?? 0), splitArcane, builderMode);
     next.current_state = {
       ...next.current_state,
-      mage_experience_available: regular - splitRegular,
-      arcane_experience_available: arcane - splitArcane + (undo.kind==="arcana"?undo.creditedArcane??0:0),
-      mage_experience_spent: spentRegular + splitRegular,
-      arcane_experience_spent: spentArcane + splitArcane,
+      mage_experience_available: regularBalance.available,
+      arcane_experience_available: arcaneBalance.available + (builderMode ? 0 : undo.kind==="arcana" ? undo.creditedArcane ?? 0 : 0),
+      mage_experience_spent: regularBalance.spent,
+      arcane_experience_spent: arcaneBalance.spent,
+      mage_experience_total: regularBalance.total,
+      arcane_experience_total: arcaneBalance.total,
       mage_experience_history: [entry, ...history].slice(0, 100),
     };
     updateSheet(synchronizeMeritGrants(next));
@@ -479,11 +487,11 @@ export function MageExperiencePanel({
     <section className="experience-panel mage-experience">
       <div className="experience-title">
         <div>
-          <span>{t("ui.experience")}</span>
-          <small>{t("ui.regularAndArcaneExperienceUseSeparatePools")}</small>
+          <span>{builderMode ? t("ui.creationAdvancement") : t("ui.experience")}</span>
+          <small>{builderMode ? t("ui.creationAdvancementDescription") : t("ui.regularAndArcaneExperienceUseSeparatePools")}</small>
         </div>
       </div>
-      <div className="mage-xp-balances">
+      {!builderMode && <div className="mage-xp-balances">
         <label className="experience-input">
           <Input
             type="number"
@@ -504,8 +512,14 @@ export function MageExperiencePanel({
           />
           <span>{t("ui.arcaneXPAvailable")}</span>
         </label>
-      </div>
-      <BeatTrack
+      </div>}
+      {builderMode && <div className="experience-totals mage-creation-xp-totals">
+        <div><strong>{regular + spentRegular}</strong><span>{t("ui.totalXP")}</span></div>
+        <div><strong>{spentRegular}</strong><span>{t("ui.xpSpent")}</span></div>
+        <div><strong>{arcane + spentArcane}</strong><span>{t("ui.arcaneXPTotal")}</span></div>
+        <div><strong>{spentArcane}</strong><span>{t("ui.arcaneXPSpent")}</span></div>
+      </div>}
+      {!builderMode && <><BeatTrack
         label={t("ui.beats")}
         value={beats}
         onChange={(value) => saveBalances({ mage_experience_beats: value })}
@@ -514,7 +528,7 @@ export function MageExperiencePanel({
         label={t("ui.arcaneBeats")}
         value={arcaneBeats}
         onChange={(value) => saveBalances({ arcane_experience_beats: value })}
-      />
+      /></>}
       <div className="experience-actions mage-experience-actions">
         <Dialog>
         <DialogTrigger asChild>
@@ -540,7 +554,11 @@ export function MageExperiencePanel({
                   setTargetRating(0);
                   setRegularSplit(0);
                 }}
-                options={groupedPurchaseOptions(MAGE_PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
+                options={groupedPurchaseOptions(builderMode ? [
+                  { group: "core", purchases: ["Atributo", "Perícia", "Mérito"] },
+                  { group: "supernatural", purchases: ["Gnose", "Arcano"] },
+                  { group: "acquired", purchases: ["Rota", "Práxis"] },
+                ] : MAGE_PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
               />
             </label>
             {purchase === "Mérito" && (
@@ -656,7 +674,7 @@ export function MageExperiencePanel({
               size="sm"
               className="catalog-selection-action"
               disabled={
-                cost < 1 || regular < splitRegular || arcane < splitArcane
+                cost < 1 || (!builderMode && (regular < splitRegular || arcane < splitArcane))
               }
               onClick={buy}
             >
@@ -665,9 +683,9 @@ export function MageExperiencePanel({
           </DialogFooter>
         </DialogContent>
         </Dialog>
-        <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.loseWP")}</Button>} title={t("ui.permanentlyLoseOneWillpowerDot")} description={t("ui.thisReducesPermanentWillpowerByOneDotAnd")} action={t("ui.loseWP")} onConfirm={markWillpowerLoss}/>
+        {!builderMode && <ConfirmAction trigger={<Button type="button" variant="ghost" size="sm" className="catalog-selection-action">{t("ui.loseWP")}</Button>} title={t("ui.permanentlyLoseOneWillpowerDot")} description={t("ui.thisReducesPermanentWillpowerByOneDotAnd")} action={t("ui.loseWP")} onConfirm={markWillpowerLoss}/>}
       </div>
-
+      {builderMode && historyPanel}
     </section>
   );
 }

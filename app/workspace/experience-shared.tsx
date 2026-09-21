@@ -32,6 +32,12 @@ export function groupedPurchaseOptions<T extends string>(groups: readonly Experi
   return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: EXPERIENCE_GROUP_LABELS[group][language] })));
 }
 
+export function experiencePurchaseBalances(available: number, spent: number, total: number, cost: number, builderMode = false) {
+  const nextAvailable = builderMode ? available : available - cost;
+  const nextSpent = spent + cost;
+  return { available: nextAvailable, spent: nextSpent, total: builderMode ? Math.max(total, available + spent) + cost : Math.max(total, nextAvailable + nextSpent) };
+}
+
 export function BeatTrack({
   label,
   value,

@@ -136,7 +136,11 @@ test("character creation drafts survive exit and resume through the Builder", as
   assert.match(workspace, /function saveCharacterDraft/);
   assert.match(workspace, /isCreationDraft\(sheet\)[\s\S]*?setEditing\(sheet\)/);
   for (const source of [changeling, mage, vampire]) {
-    assert.match(source, /builderCurrentState\(initial, draft, common\.step\)/);
+    assert.match(source, /builderCurrentState\(source, draft, common\.step, common\.allowAdvancement\)/);
     assert.match(source, /draft \? onSaveDraft : onSave/);
+    assert.match(source, /prepareAdvancement=/);
+    assert.match(source, /builderMode/);
   }
+  assert.match(shell, /creation_advancement_enabled/);
+  assert.match(shell, /state\.step === 3 && state\.allowAdvancement/);
 });

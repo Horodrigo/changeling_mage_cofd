@@ -25,6 +25,7 @@ import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
+import { MageExperiencePanel } from "./experience-panel";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
   if (!value || typeof value !== "object") return null;
@@ -53,12 +54,12 @@ function editableArcana(initial: CharacterSheet | null | undefined) {
   return values;
 }
 
-function experienceArcanaDots(initial: CharacterSheet | null | undefined) {
+export function experienceArcanaDots(initial: CharacterSheet | null | undefined) {
   const history = initial?.current_state?.mage_experience_history;
   if (!Array.isArray(history)) return {} as Record<string, number>;
   return history.reduce<Record<string, number>>((totals, entry) => {
     const undo = entry && typeof entry === "object" ? (entry as { undo?: Record<string, unknown> }).undo : undefined;
-    if (undo?.kind === "arcana" && typeof undo.name === "string") totals[undo.name] = (totals[undo.name] ?? 0) + 1;
+    if (undo?.kind === "arcana" && typeof undo.name === "string") totals[undo.name] = (totals[undo.name] ?? 0) + Math.max(1, Number(undo.amount) || 1);
     return totals;
   }, {});
 }
@@ -216,46 +217,42 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
-  const finish = (draft: boolean) => {
-    if (!draft && issues.length) {
-      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
-      common.setStep(issues[0].step);
-      return false;
-    }
+  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => {
+    const sourceProgression = mageBuilderPowerProgression(source);
     const finalAttributes = { ...common.attributes };
     if (resistanceBonus) finalAttributes[resistanceBonus] = Math.min(5, (common.attributes[resistanceBonus] ?? 1) + 1);
     const finalSkills = { ...common.skills };
     const finalArcana = { ...arcana };
     if (hasOrderOccultBonus) finalSkills.Occult = Math.min(5, (finalSkills.Occult ?? 0) + 1);
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "attributes", "mage_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
-    for (const [name, dots] of Object.entries(experienceTraitDots(initial, "skills", "mage_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
-    for (const [name, dots] of Object.entries(experienceArcanaDots(initial))) finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "mage_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "mage_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    for (const [name, dots] of Object.entries(experienceArcanaDots(source))) finalArcana[name] = Number(finalArcana[name] ?? 0) + dots;
     const now = new Date().toISOString();
     const completed: CharacterSheet = {
-      id: initial?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
+      id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
       ruleset: { id: "mta-2ed-embedded", version: 1 },
       character: { name: shadowName.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
       attributes: finalAttributes, skills: finalSkills,
       specializations: [
         ...common.specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({ skill: item.skill, name: item.name.trim() })),
-        ...experienceSpecialties(initial),
-        ...(initial?.specializations ?? []).filter((item) => Boolean(item.grantedBy)),
+        ...experienceSpecialties(source),
+        ...(source?.specializations ?? []).filter((item) => Boolean(item.grantedBy)),
       ],
       merits: [
-        ...mergeCreationMerits(initial?.merits, common.merits.map((item) => {
+        ...mergeCreationMerits(source?.merits, common.merits.map((item) => {
           const definition = meritCatalog.find((entry) => entry.name === item.name);
           return { ...item, configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId, source: definition?.source };
         })),
-        ...(hasPublishedMageOrder(order) && !common.merits.some((item) => item.name === "High Speech") && !initial?.merits.some((item) => item.name === "High Speech" && item.experienceDots)
+        ...(hasPublishedMageOrder(order) && !common.merits.some((item) => item.name === "High Speech") && !source?.merits.some((item) => item.name === "High Speech" && item.experienceDots)
           ? [{ name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]
           : []),
       ],
       line_data: {
-        ...(initial?.line_data ?? {}), path, order, custom_order: customOrder, virtue, vice, shadow_name: shadowName,
+        ...(source?.line_data ?? {}), path, order, custom_order: customOrder, virtue, vice, shadow_name: shadowName,
         resistance_bonus: resistanceBonus,
         order_occult_bonus: hasOrderOccultBonus ? Math.max(0, Math.min(5, (common.skills.Occult ?? 0) + 1) - (common.skills.Occult ?? 0)) : 0,
-        creation_gnosis: gnosis, gnosis: Math.min(10, gnosis + gnosisProgression.advancement),
-        wisdom: Number(initial?.line_data.wisdom ?? 7), arcana: finalArcana,
+        creation_gnosis: gnosis, gnosis: Math.min(10, gnosis + sourceProgression.advancement),
+        wisdom: Number(source?.line_data.wisdom ?? 7), arcana: finalArcana,
         rotes: hasCreationOrderBenefits ? rotes.filter(Boolean) : [], praxes: praxes.slice(0, gnosis).filter(Boolean),
         ruling_arcana: pathData?.ruling ?? [], inferior_arcanum: pathData?.inferior ?? "",
         rote_skills: order === "Nameless" ? namelessRoteSkills : (MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? []),
@@ -268,8 +265,17 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
         Defesa: Math.min(finalAttributes.Dexterity, finalAttributes.Wits) + finalSkills.Athletics,
         Sabedoria: 7,
       },
-      current_state: builderCurrentState(initial, draft, common.step), created_at: initial?.created_at ?? now, updated_at: now,
+      current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
     };
+    return completed;
+  };
+  const finish = (draft: boolean, advancement?: CharacterSheet) => {
+    if (!draft && issues.length) {
+      common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
+      common.setStep(issues[0].step);
+      return false;
+    }
+    const completed = buildCharacter(advancement ?? initial, draft);
     (draft ? onSaveDraft : onSave)(completed);
     return true;
   };
@@ -277,6 +283,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   return <CharacterBuilderShell
     line="MtA" templateLabel={t("ui.awakenedTemplate")} state={common} issues={issues}
     draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
+    prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
+    renderAdvancement={(sheet, updateSheet) => <MageExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={t("ui.shadowName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
