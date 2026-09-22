@@ -4,6 +4,7 @@ const dots = (value: unknown) => Math.max(0, Math.trunc(Number(value) || 0));
 
 export const creationMeritDots = (merit: MeritSelection) => {
   if (merit.creationDots !== undefined) return dots(merit.creationDots);
+  if (merit.experienceDots === undefined) return dots(merit.dots);
   if (merit.grantedBy) return Math.max(1, dots(merit.dots) - dots(merit.experienceDots));
   return 0;
 };

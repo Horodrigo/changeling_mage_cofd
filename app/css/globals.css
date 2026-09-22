@@ -74,7 +74,7 @@
 @media (max-width:720px) {
   .merit-configuration.structured > div, .structured-choice-row { grid-template-columns:1fr; }
   .structured-choice-row > button { justify-self:end; }
-  .token-heading-row { grid-template-columns:110px minmax(0,1fr) 72px auto; }
+  .token-heading-row { grid-template-columns:1fr; }
 }
 .expanded-merit-list, .expanded-merit-body, .loadout-list, .combat-rules { display:grid; gap:8px; }
 .expanded-merit-card { border:1px solid color-mix(in srgb,var(--sheet-accent) 32%,#d8d2c8); background:#fffefa; padding:11px; }

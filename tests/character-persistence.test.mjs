@@ -7,6 +7,7 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},resolve:{alias:{"@":root}}});
 after(()=>vite.close());
 const {normalizeStoredSheet,validateCurrentCharacter}=await vite.ssrLoadModule("/lib/character-persistence.ts");
+const {creationMerits}=await vite.ssrLoadModule("/lib/merit-progression.ts");
 const {normalizeGameLineCharacter}=await vite.ssrLoadModule("/game-lines/registry/game-line-registry.ts");
 const {isCurrentStoredCharacter,summarizeStoredCharacter}=await vite.ssrLoadModule("/lib/stored-character.ts");
 
@@ -32,6 +33,15 @@ test("legacy local records stay opaque but retain enough metadata for deletion",
 test("structural persistence normalization assigns stable merit instance IDs",()=>{
   const current=sheet();delete current.merits[0].instanceId;
   assert.match(normalizeStoredSheet(current).merits[0].instanceId,/^legacy-merit-0-allies$/);
+});
+test("creation merits survive save normalization and remain editable",()=>{
+  for(const game_line of ["CtL","MtA","VtR"]){
+    const current=sheet(game_line);current.merits[0]={...current.merits[0],creationDots:2,experienceDots:0};
+    const normalized=normalizeStoredSheet(current);
+    assert.deepEqual([normalized.merits[0].creationDots,normalized.merits[0].experienceDots],[2,0]);
+    assert.equal(creationMerits(normalized.merits).length,1);
+  }
+  assert.equal(creationMerits(sheet().merits).length,1,"current-schema merits saved before allocation metadata must remain recoverable");
 });
 test("Changeling-owned normalization preserves structural persistence boundaries",async()=>{
   const current={...sheet("CtL"),line_data:{wyrd:2,frailties:[]}};
