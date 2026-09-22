@@ -3,7 +3,7 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField, boundedNumber, updateLineData } from "@/app/workspace/character-paper-shell";
+import { CharacterPaperShell, EditableList, NotesArea, PowerResource, ResourceTrack, SheetField, boundedNumber, updateLineData } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { ConditionManager, type ConditionDefinition, type SelectedCondition } from "@/app/workspace/condition-manager";
 import { HealthTrack, SheetHeading, TraitBlock, DotValue, stringList } from "@/app/workspace/sheet-primitives";
@@ -821,16 +821,11 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     {identity}
     <SheetHeading>{t("ui.aspirations")}</SheetHeading>
     <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)} />
-    {humanitySection}
-    {banesSection}
-    <SheetHeading>{t("ui.conditions")}</SheetHeading>
-    <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />
     <SheetHeading>{t("ui.experience")}</SheetHeading>
     <VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />
   </>;
-  const detailsPage = <>
-    <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
-    <VampireExpandedMeritList character={character} updateSheet={updateSheet} merits={expandedMerits} catalog={merits} locale={locale} />
+  const powersPage = <>
+    {isMobile && <PowerResource name={t("ui.bloodPotency")} rating={bloodPotency} resourceName="Vitae" current={vitae} maximum={vitaeMaximum} perTurn={limits.vitaePerTurn} onChange={(value) => setState("vitae_current", value)} />}
     <SheetHeading>{t("ui.disciplines")}</SheetHeading>
     <DisciplineCards powers={powers} disciplines={disciplines} coilRatings={coilRatings} locale={locale} onRaiseFamiliar={openCompanions} />
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
@@ -852,6 +847,12 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
       fireDowngraded={hasRuleEffect("fire-damage")}
       resilience={Number(disciplines.Resilience ?? 0)}
     />
+  </>;
+  const detailsPage = <>
+    <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
+    <VampireExpandedMeritList character={character} updateSheet={updateSheet} merits={expandedMerits} catalog={merits} locale={locale} />
+    {isMobile && <>{humanitySection}{banesSection}<SheetHeading>{t("ui.conditions")}</SheetHeading><ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} /></>}
+    {!isMobile && powersPage}
   </>;
   const combat = <>
     <div className="vampire-track-grid">
@@ -978,11 +979,12 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     { value: "summary", label: t("ui.summary") },
     { value: "stats", label: "Stats" },
     { value: "details", label: t("ui.details") },
+    { value: "powers", label: t("ui.powers") },
     { value: "bloodlines", label: t("ui.bloodlines"), hidden: !hasBloodline },
     { value: "combat", label: t("ui.combat") },
     ...(companionsPage ? [{ value: "companions", label: t("ui.companions") }] : []),
     { value: "notes", label: t("ui.notes") },
-  ]}>{{ summary, stats, details: detailsPage, bloodlines: bloodlinesPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>{bloodlineJoinDialog}</>;
+  ]}>{{ summary, stats, details: detailsPage, powers: powersPage, bloodlines: bloodlinesPage, combat, ...(companionsPage ? { companions: companionsPage } : {}), notes: notesPage }}</SwipeableSheetTabs></CharacterPaperShell>{bloodlineJoinDialog}</>;
 
   return <><CharacterPaperShell line="VtR" title={t("ui.vampireTitle")} subtitle="THE REQUIEM"><VampireDecorativeFrame /><Tabs value={desktopTab} onValueChange={setDesktopTab} className="vampire-sheet-tabs"><TabsList aria-label={t("ui.characterPages")}>
     <TabsTrigger value="main">{t("ui.main")}</TabsTrigger>

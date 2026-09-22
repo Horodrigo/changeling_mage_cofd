@@ -51,7 +51,10 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     ];
     const { locale, t } = useLanguage();
     const isMobile = useIsMobile();
-    const [sheetTab, setSheetTab] = useState(isMobile ? "resumo" : "principal");
+    const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
+    const [desktopTab, setDesktopTab] = useState("principal");
+    const sheetTab = isMobile ? (mobileTab.characterId === character.id ? mobileTab.value : "resumo") : desktopTab;
+    const setSheetTab = (value: string) => isMobile ? setMobileTab({ characterId: character.id, value }) : setDesktopTab(value);
     const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) || Boolean(findMeritConfiguration(name));
     const data = character.line_data;
     const hasCompanions = character.merits.some((item) => !item.grantedBy && item.name === "Familiar") || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
@@ -241,10 +244,9 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
           {{
                 resumo: <>
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <CommonSheetField key={String(label)} label={String(label)} value={value}/>)}{<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/>}</section>
+              {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>{t("ui.obsessions")}</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
               <SheetHeading>{t("ui.experience")}</SheetHeading>
               {<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
-              {<><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/></>}
-              {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/></section><section><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>{t("ui.obsessions")}</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
             </>,
                 stats: <>
               <SheetHeading>{t("ui.attributes")}</SheetHeading>
@@ -254,8 +256,10 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             </>,
                 detalhes: <>
               <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/>
+              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/>
               <MageOrderSummary data={data}/>
               <SheetHeading>{t("ui.activeSpells")}</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
+              <SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
             </>,
                 poderes: <>
               <PowerResource name={t("ui.gnosis")} rating={powerRating} resourceName="Mana" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)}/>

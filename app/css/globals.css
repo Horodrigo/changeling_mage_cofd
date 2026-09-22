@@ -1358,4 +1358,5 @@ button { cursor: pointer; }
   }
   
   .official-field, .official-trait-block, .official-trait-line, .sheet-skills-column, .sheet-center-column, .sheet-right-column { min-width:0; }
+  .mobile-character-sheet .power-resource .resource-track::before { grid-column:1/-1; }
 }
