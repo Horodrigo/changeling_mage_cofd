@@ -4,7 +4,6 @@ const dots = (value: unknown) => Math.max(0, Math.trunc(Number(value) || 0));
 
 export const creationMeritDots = (merit: MeritSelection) => {
   if (merit.creationDots !== undefined) return dots(merit.creationDots);
-  if (merit.experienceDots === undefined) return dots(merit.dots);
   if (merit.grantedBy) return Math.max(1, dots(merit.dots) - dots(merit.experienceDots));
   return 0;
 };
@@ -12,8 +11,8 @@ export const experienceMeritDots = (merit: MeritSelection) => dots(merit.experie
 
 export function creationMerits(merits: MeritSelection[] = []) {
   return merits
-    .filter((merit) => !merit.grantedBy && creationMeritDots(merit) > 0)
-    .map((merit) => ({ ...merit, dots: creationMeritDots(merit) }));
+    .map((merit) => ({ ...merit, dots: merit.creationDots === undefined && merit.experienceDots === undefined ? dots(merit.dots) : creationMeritDots(merit) }))
+    .filter((merit) => !merit.grantedBy && merit.dots > 0);
 }
 
 /** Replaces only creation allocations and preserves every Experience allocation. */
