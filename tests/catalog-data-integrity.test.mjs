@@ -47,6 +47,29 @@ test("Changeling static identity catalogs use unique IDs and retain source metad
   }
 });
 
+test("Changeling Token catalog contains editable Token, Trifle, and Bauble text", async () => {
+  const items = await json(new URL("../public/data/changeling/tokens.json", import.meta.url));
+  const counts = Object.groupBy(items, (item) => item.kind);
+
+  assert.deepEqual(
+    Object.fromEntries(Object.entries(counts).map(([kind, values]) => [kind, values.length])),
+    { token: 16, trifle: 6, bauble: 5 },
+  );
+  assert.deepEqual(
+    Object.fromEntries(Object.entries(Object.groupBy(items, (item) => item.sourceId)).map(([source, values]) => [source, values.length])),
+    { "ctl-2ed": 14, de2: 2, "ctl-oak-ash-thorn": 11 },
+  );
+  assert.equal(new Set(items.map((item) => item.id)).size, items.length);
+  assert.equal(items.some((item) => item.name === "Hedgespun Item"), false);
+  for (const item of items) {
+    assert.ok(item.name && item.sourceId && item.source && item.page > 0, item.id);
+    assert.ok(Number.isInteger(item.rating) && item.rating > 0, `${item.id}: rating`);
+    if (item.kind === "token") assert.ok(item.effect && item.catch && item.drawback, item.id);
+    if (item.kind === "trifle") assert.ok(item.effect, item.id);
+    if (item.kind === "bauble") assert.ok(item.description && item.crux && item.catch, item.id);
+  }
+});
+
 test("Changeling contract shards have globally unique IDs and required structural fields", async () => {
   const directory = new URL("../public/data/changeling/contracts/", import.meta.url);
   const contracts = (await jsonFiles(directory)).flat();

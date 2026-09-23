@@ -35,6 +35,7 @@ import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type Clarity
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
+import type { TokenDefinition } from "./catalogs/tokens";
 
 type ChangelingReference = {
     conditions: ConditionDefinition[];
@@ -92,6 +93,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const { locale, t } = useLanguage();
     const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
     const lineReference = catalogs.get<ChangelingReference>("changeling-reference");
+    const tokenCatalog = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
     const customEntitlements = useEntitlementHomebrews();
     const entitlementCatalog = [...lineReference.entitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
@@ -221,7 +223,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             </>,
                 detalhes: <>
               <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/>
-              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} hasAdjacentContent/>
+              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/>
               <SheetHeading>{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
               <SheetHeading>{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
               <SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
@@ -303,7 +305,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 <EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
                 <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
                 <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>
-                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} hasAdjacentContent/>
+                <ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/>
               </section>
             </div>
           </TabsContent>
@@ -337,13 +339,14 @@ function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly Me
             (item.name === "Hollow" ? "Recanto" : item.name), detail = meritConfigurationTitle(item.configuration, locale, courtCatalog);
     return detail ? `${base}: ${detail}` : base;
 }
-function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatalog, entitlementCatalog, hasAdjacentContent = false }: {
+function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatalog, entitlementCatalog, tokenCatalog, hasAdjacentContent = false }: {
     merits: CharacterSheet["merits"];
     character?: CharacterSheet;
     updateSheet?: (sheet: CharacterSheet) => void;
     catalog: readonly MeritDefinition[];
     courtCatalog: readonly CourtDefinition[];
     entitlementCatalog: readonly EntitlementDefinition[];
+    tokenCatalog: readonly TokenDefinition[];
     hasAdjacentContent?: boolean;
 }) {
     const { locale, t } = useLanguage();
@@ -359,7 +362,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
                 ? "Tokens"
                 : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
-                ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
+                ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>
                 : null;
             if (!style)

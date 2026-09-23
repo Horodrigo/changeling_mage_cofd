@@ -34,6 +34,7 @@ import { systemTerm } from "@/lib/system-terms";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
+import type { TokenDefinition } from "./catalogs/tokens";
 
 export type ContractSelection = ContractDefinition;
 export type CustomCourtDefinition = { name: string; emotion: string; mantleBenefits: string[] };
@@ -54,6 +55,7 @@ export type ChangelingBuilderViewProps = {
   kithCatalog: Array<KithDefinition & { homebrew?: true }>;
   kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }>;
   entitlementCatalog: EntitlementDefinition[];
+  tokenCatalog: readonly TokenDefinition[];
   customCourt: CustomCourtDefinition | null; setCustomCourt: Setter<CustomCourtDefinition | null>; setCourt: Setter<string>; courtCatalog: CourtDefinition[];
 };
 const CHANGELING_BUILDER_MERIT_CONFIGURATIONS = [...COMMON_MERIT_CONFIGURATIONS, ...CHANGELING_MERIT_CONFIGURATIONS];
@@ -201,7 +203,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
               onChange={onChange}
               catalog={props.meritCatalog}
               definitions={CHANGELING_BUILDER_MERIT_CONFIGURATIONS}
-              renderStructured={(editorProps) => renderChangelingStructuredMeritEditor(editorProps, props.entitlementCatalog)}
+              renderStructured={(editorProps) => renderChangelingStructuredMeritEditor(editorProps, props.entitlementCatalog, props.tokenCatalog)}
               renderCustomField={(kind, field) => kind === "court" ? <Choice label={t("ui.benefitedCourt")} value={field.value} setValue={field.onChange} options={props.courtCatalog.filter((item) => courtId(props.courtCatalog, item.id ?? item.name) !== courtId(props.courtCatalog, props.court)).map((item) => item.id ?? item.name)} optionLabels={Object.fromEntries(props.courtCatalog.map((item) => [item.id ?? item.name, courtName(item, locale)]))} /> : null}
             />
           )}

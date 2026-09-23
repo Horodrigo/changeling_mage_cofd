@@ -62,9 +62,10 @@
 .merit-configuration.structured fieldset > p, .merit-grant-picker > p { margin:0 0 9px; color:#746d75; font-size:13px; line-height:1.45; }
 .structured-choice-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(110px,.55fr) auto; gap:8px; align-items:end; margin-top:8px; }
 .structured-rule { align-self:center; margin:0; padding:12px; border-left:3px solid #7b587d; background:#f6eff6; font-size:14px; line-height:1.45; }
-.token-allocation-header { grid-column:1/-1; display:flex; align-items:center; gap:8px; }
+.token-allocation-header { grid-column:1/-1; display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
 .token-allocation-header .structured-rule { flex:1; }
 .token-kind-trigger { width:110px; }
+.token-catalog-trigger { min-width:240px; flex:1; }
 .token-add-button { flex:none; min-height:0; height:auto; padding:5px 8px; font-size:14px; line-height:1.45; }
 .token-add-button svg { width:14px; height:14px; }
 .token-remove-button { justify-self:end; min-height:0; height:auto; padding:4px 6px; font-size:11px; line-height:1.25; }

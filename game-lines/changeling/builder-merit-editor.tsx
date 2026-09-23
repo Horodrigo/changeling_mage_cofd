@@ -15,8 +15,8 @@ import { homebrewContentActive } from "@/lib/homebrew";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import { useLanguage } from "@/lib/i18n";
 import { createRandomId } from "@/lib/random-id";
+import type { TokenDefinition, TokenKind } from "./catalogs/tokens";
 
-type TokenKind = "token" | "trifle" | "bauble";
 type TokenConfigurationItem = { id: string; kind: TokenKind; name: string; rating: number; cost: string; effect: string; description: string; crux: string; catch: string; drawback: string };
 type HedgespunBenefit = "extraordinary" | "alacrity" | "durability";
 function encodeConfiguredRows<T>(items: T[]) { return items.map((item) => JSON.stringify(item)); }
@@ -32,9 +32,10 @@ function decodeHedgespunConfiguration(configuration: MeritConfiguration) {
 export function renderChangelingStructuredMeritEditor(
   props: StructuredMeritEditorProps,
   entitlementCatalog: readonly EntitlementDefinition[],
+  tokenCatalog: readonly TokenDefinition[],
 ): ReactNode {
   const { merit } = props;
-  if (merit.name === "Token") return <TokenMeritEditor {...props} />;
+  if (merit.name === "Token") return <TokenMeritEditor {...props} catalog={tokenCatalog} />;
   if (merit.name === "Hedgespun Item") return <HedgespunItemEditor {...props} />;
   if (merit.name === "Entitlement") return <EntitlementMeritEditor configuration={props.configuration} onChange={props.onChange} compact={props.compact} entitlementCatalog={entitlementCatalog} />;
   if (merit.name === "Hollow") return <HollowEditor {...props} />;
@@ -66,19 +67,23 @@ function EntitlementMeritEditor({configuration,onChange,compact,entitlementCatal
 }
 
 const EMPTY_TOKEN:TokenConfigurationItem={id:"",kind:"token",name:"",rating:1,cost:"1 Glamour",effect:"",description:"",crux:"",catch:"",drawback:""};
-function TokenMeritEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
+function TokenMeritEditor({merit,configuration,onChange,compact,catalog}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean;catalog:readonly TokenDefinition[]}){
   const { t }=useLanguage();
   const [newKind,setNewKind]=useState<TokenKind>("token");
+  const [catalogId,setCatalogId]=useState("custom");
   const items=decodeConfiguredRows<TokenConfigurationItem>(configuration.items).map((item)=>({...EMPTY_TOKEN,...item,kind:["token","trifle","bauble"].includes(item.kind)?item.kind:"token",rating:item.kind==="trifle"?1:Math.max(1,Math.min(5,Number(item.rating)||1))}));
   const used=items.reduce((sum,item)=>sum+item.rating,0), remaining=merit.dots-used;
+  const available=catalog.filter((item)=>item.kind===newKind), selected=available.find((item)=>item.id===catalogId);
   const save=(next:TokenConfigurationItem[])=>onChange({...configuration,items:encodeConfiguredRows(next)});
   const update=(index:number,patch:Partial<TokenConfigurationItem>)=>save(items.map((item,itemIndex)=>itemIndex===index?{...item,...patch}:item));
+  const add=()=>{const item:TokenConfigurationItem=selected?{...EMPTY_TOKEN,id:createRandomId(),kind:selected.kind,name:selected.name,rating:selected.rating,effect:selected.effect??"",description:selected.description??"",crux:selected.crux??"",catch:selected.catch??"",drawback:selected.drawback??""}:{...EMPTY_TOKEN,id:createRandomId(),kind:newKind};save([...items,item]);};
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
     <summary>{t("ui.configureTokens")}</summary>
     <div className="token-merit-editor">
       <div className="token-allocation-header">
-        <Select value={newKind} onValueChange={(value)=>setNewKind(value as TokenKind)}><SelectTrigger className="token-kind-trigger"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">{t("ui.token")}</SelectItem><SelectItem value="trifle">{t("ui.trifle")}</SelectItem><SelectItem value="bauble">{t("ui.bauble")}</SelectItem></SelectContent></Select>
-        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<1} onClick={()=>save([...items,{...EMPTY_TOKEN,id:createRandomId(),kind:newKind}])}><Plus/>{t("ui.add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
+        <Select value={newKind} onValueChange={(value)=>{setNewKind(value as TokenKind);setCatalogId("custom");}}><SelectTrigger className="token-kind-trigger"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="token">{t("ui.token")}</SelectItem><SelectItem value="trifle">{t("ui.trifle")}</SelectItem><SelectItem value="bauble">{t("ui.bauble")}</SelectItem></SelectContent></Select>
+        <Select value={catalogId} onValueChange={setCatalogId}><SelectTrigger className="token-catalog-trigger" aria-label={t("ui.selectExistingItem")}><SelectValue/></SelectTrigger><SelectContent><SelectItem value="custom">{t("ui.newCustomItem")}</SelectItem>{available.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.kind==="trifle"?t("ui.batchOf3"):"•".repeat(item.rating)} · {item.source} p. {item.page}</SelectItem>)}</SelectContent></Select>
+        <Button className="token-add-button" type="button" size="sm" variant="outline" disabled={remaining<(selected?.rating??1)} onClick={add}><Plus/>{t("ui.add")} {newKind==="trifle"?"Trifle":newKind==="bauble"?"Bauble":"Token"}</Button>
         <p className={remaining===0?"structured-rule":"structured-rule warning"}>{t("ui.allocatedDots")}: {used}/{merit.dots}{remaining>0?` · ${remaining} ${t("ui.remaining")}`:remaining<0?` · ${Math.abs(remaining)} ${t("ui.overTheLimit")}`:""}</p>
       </div>
       {items.map((item,index)=>{const maximum=Math.max(1,Math.min(5,item.rating+remaining)),kindLabel=item.kind==="trifle"?"Trifle":item.kind==="bauble"?"Bauble":"Token";return <fieldset key={index}>

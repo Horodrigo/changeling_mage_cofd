@@ -9,8 +9,8 @@ export const changelingRegistration: GameLineRegistration = {
   cardClass: "ctl-card",
   summaryClass: "ctl-summary",
   catalogGroups: {
-    builder: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-reference"],
-    sheet: ["core-merits", "changeling-merits", "changeling-contracts", "core-reference", "changeling-reference"],
+    builder: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-tokens", "changeling-reference"],
+    sheet: ["core-merits", "changeling-merits", "changeling-contracts", "changeling-tokens", "core-reference", "changeling-reference"],
     print: ["core-merits", "changeling-merits", "changeling-contracts", "core-reference", "changeling-reference"],
     homebrew: ["changeling-merits", "changeling-contracts", "changeling-reference"],
   },

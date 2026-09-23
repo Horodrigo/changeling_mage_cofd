@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 3,
+  "catalogVersion": 4,
   "catalogs": {
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
@@ -20,6 +20,7 @@
     "changeling-contracts-ctl-dark-eras": { "version": 1, "url": "/data/changeling/contracts/ctl-dark-eras.json" },
     "changeling-contracts-ctl-kith-and-kin": { "version": 1, "url": "/data/changeling/contracts/ctl-kith-and-kin.json" },
     "changeling-contracts-ctl-core": { "version": 1, "url": "/data/changeling/contracts/ctl-core.json" },
+    "changeling-tokens": { "version": 1, "url": "/data/changeling/tokens.json" },
     "merits-index": { "version": 4, "url": "/data/core/merits/index.json" },
     "merits-core": { "version": 4, "url": "/data/core/merits/core.json" },
     "merits-changeling": { "version": 1, "url": "/data/core/merits/changeling.json" },

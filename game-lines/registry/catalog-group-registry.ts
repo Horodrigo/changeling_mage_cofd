@@ -10,6 +10,7 @@ const groupLoaders: Readonly<Record<CatalogGroupId, CatalogGroupLoader>> = {
   "mage-reference": () => import("../mage/catalogs/reference").then(({ mageReferenceCatalogGroup }) => mageReferenceCatalogGroup),
   "changeling-merits": () => import("../changeling/catalogs/merits").then(({ changelingMeritsCatalogGroup }) => changelingMeritsCatalogGroup),
   "changeling-contracts": () => import("../changeling/catalogs/contracts").then(({ changelingContractsCatalogGroup }) => changelingContractsCatalogGroup),
+  "changeling-tokens": () => import("../changeling/catalogs/tokens").then(({ changelingTokensCatalogGroup }) => changelingTokensCatalogGroup),
   "changeling-reference": () => import("../changeling/catalogs/reference").then(({ changelingReferenceCatalogGroup }) => changelingReferenceCatalogGroup),
   "vampire-merits": () => import("../vampire/catalogs/merits").then(({ vampireMeritsCatalogGroup }) => vampireMeritsCatalogGroup),
   "vampire-powers": () => import("../vampire/catalogs/powers").then(({ vampirePowersCatalogGroup }) => vampirePowersCatalogGroup),
