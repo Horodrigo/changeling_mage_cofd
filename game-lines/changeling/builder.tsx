@@ -38,6 +38,8 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
 import { ExperiencePanel } from "./experience-panel";
 import type { TokenDefinition } from "./catalogs/tokens";
+import { mergeContractHomebrews } from "./contract-homebrews";
+import { useContractHomebrews } from "./use-contract-homebrews";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -96,8 +98,9 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
   const reference = catalogs.get<ChangelingReference>("changeling-reference");
   const tokenCatalog = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
   const homebrewPreferences = useHomebrewPreferences();
+  const customContracts = useContractHomebrews();
   const initialContractIds = new Set((Array.isArray(initial?.line_data.contracts) ? initial.line_data.contracts : []).map((item) => String((item as Record<string, unknown>).id ?? "")));
-  const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts")
+  const contractCatalog = mergeContractHomebrews(catalogs.get<readonly ContractDefinition[]>("changeling-contracts"), customContracts)
     .filter((item) => initialContractIds.has(item.id) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
     .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"]));
   const meritCatalog = [

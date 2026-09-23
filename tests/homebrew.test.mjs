@@ -8,12 +8,33 @@ const vite = await createServer({ appType: "custom", configFile: false, root, re
 after(() => vite.close());
 
 test("Homebrew activation honors both source and individual switches", async () => {
-  const { homebrewContentActive, setHomebrewEnabled } = await vite.ssrLoadModule("/lib/homebrew.ts");
+  const { homebrewCategoryKeys, homebrewContentActive, setHomebrewEnabled } = await vite.ssrLoadModule("/lib/homebrew.ts");
   const sourceOff = setHomebrewEnabled({ disabledIds: [] }, "h-courts", false);
   assert.equal(homebrewContentActive(sourceOff, "some-item", "h-courts"), false);
   const itemOff = setHomebrewEnabled({ disabledIds: [] }, "some-item", false);
   assert.equal(homebrewContentActive(itemOff, "some-item", "h-courts"), false);
   assert.equal(homebrewContentActive(itemOff, "official-item", "ctl-2ed"), true);
+  assert.deepEqual(homebrewCategoryKeys("Court", "h-courts"), ["Court", "Homebrew"]);
+  assert.deepEqual(homebrewCategoryKeys("Court", "ctl-2ed"), ["Court"]);
+});
+
+test("player-created Changeling Contracts are normalized at storage boundary", async () => {
+  const { mergeContractHomebrews, normalizeContractHomebrew } = await vite.ssrLoadModule("/game-lines/changeling/contract-homebrews.ts");
+  const item = normalizeContractHomebrew({
+    id: "homebrew:contract:test", name: "Borrowed Moon", type: "Real", categoryKind: "Corte", regalia: "Moon Court", courtIds: ["moon"],
+    description: "Borrow the moonlight.", hasRoll: true, dicePool: "Presence + Occult + Mantle", cost: "●●", action: "Instant", duration: "One scene", loophole: "Sing to the moon.",
+    success: "The moon answers.", exceptionalSuccess: "It answers completely.", failure: "Nothing happens.", dramaticFailure: "The moon takes offense.",
+    seemingBenefits: { Darkling: "Hide in the borrowed light.", Beast: "" },
+  });
+  assert.equal(item.sourceId, "homebrew:changeling-contracts");
+  assert.equal(item.homebrew, true);
+  assert.deepEqual(item.courtIds, ["moon"]);
+  assert.deepEqual(item.seemingBenefits, { Darkling: "Hide in the borrowed light." });
+  assert.equal(mergeContractHomebrews([{ ...item, id: "official" }], [item]).length, 2);
+
+  const goblin = normalizeContractHomebrew({ ...item, id: "homebrew:contract:goblin", type: "Real", categoryKind: "Independente", regalia: "Goblin", goblin: true, courtIds: [] });
+  assert.equal(goblin.type, "Comum");
+  assert.equal(normalizeContractHomebrew({ id: "homebrew:contract:bad", name: "Bad" }), null);
 });
 
 test("player-created Changeling Entitlements are normalized at storage boundary", async () => {

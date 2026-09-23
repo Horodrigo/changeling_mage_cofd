@@ -89,6 +89,7 @@ type ExperienceCatalogItem = {
   id: string;
   name: string;
   category: string;
+  categories?: string[];
   secondaryCategory?: string;
   sortPriority?: number;
   description: string;
@@ -123,7 +124,7 @@ export function ExperiencePowerPicker({
   const [secondary, setSecondary] = useState("Todos");
   const normalized = search.trim().toLocaleLowerCase("pt-BR");
   const selected = items.find((item) => item.id === selectedId);
-  const categories = ["Todas", ...new Set(items.map((item) => item.category))];
+  const categories = ["Todas", ...new Set(items.flatMap((item) => item.categories ?? [item.category]))];
   const secondaryCategories = [
     "Todos",
     ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),
@@ -132,10 +133,10 @@ export function ExperiencePowerPicker({
     .sort((left, right) => (left.sortPriority ?? 0) - (right.sortPriority ?? 0))
     .filter(
     (item) =>
-      (category === "Todas" || item.category === category) &&
+      (category === "Todas" || (item.categories ?? [item.category]).includes(category)) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
       (!normalized ||
-        `${item.name} ${item.category} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
+        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
     );
