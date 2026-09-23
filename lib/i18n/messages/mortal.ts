@@ -2,7 +2,6 @@ export const mortalMessages = {
   "pt-BR": {
     "ui": {
       "age": "Idade",
-      "answerFiveBreakingPointQuestions": "Responda às cinco perguntas de Breaking Point",
       "breakingPoints": "Breaking Points",
       "breakingPointWorstThingDone": "Qual foi a pior coisa que o personagem já fez?",
       "breakingPointWorstThingImaginedDoing": "Qual é a pior coisa que o personagem se imagina fazendo?",
@@ -13,11 +12,11 @@ export const mortalMessages = {
       "groupName": "Nome do grupo",
       "integrity": "Integridade",
       "mortal": "Mortal",
+      "mortalExperienceDescription": "Escolha uma característica; a ficha registrará o gasto e atualizará os valores automaticamente.",
+      "mortalPurchaseRecorded": "Compra registrada.",
+      "mortalPurchaseUnavailable": "Compra indisponível ou Experiência insuficiente.",
       "mortalTemplate": "Personagem Mortal",
-      "sevenMeritDots": "Distribua exatamente sete pontos de Méritos",
       "step3MORTAL": "PASSO 3 · MORTAL",
-      "threeAspirations": "Preencha as três Aspirações",
-      "threeCompleteSpecialties": "Três Especializações completas",
       "virtueAndViceMustDiffer": "Virtude e Vício devem ser diferentes",
       "writeBreakingPoint": "Descreva um Breaking Point"
     }
@@ -25,7 +24,6 @@ export const mortalMessages = {
   "en-US": {
     "ui": {
       "age": "Age",
-      "answerFiveBreakingPointQuestions": "Answer the five Breaking Point questions",
       "breakingPoints": "Breaking Points",
       "breakingPointWorstThingDone": "What is the worst thing the character has done?",
       "breakingPointWorstThingImaginedDoing": "What is the worst thing the character can imagine doing?",
@@ -36,11 +34,11 @@ export const mortalMessages = {
       "groupName": "Group name",
       "integrity": "Integrity",
       "mortal": "Mortal",
+      "mortalExperienceDescription": "Choose a trait; the sheet will record the expense and update values automatically.",
+      "mortalPurchaseRecorded": "Purchase recorded.",
+      "mortalPurchaseUnavailable": "Purchase unavailable or insufficient Experience.",
       "mortalTemplate": "Mortal Character",
-      "sevenMeritDots": "Allocate exactly seven Merit dots",
       "step3MORTAL": "STEP 3 · MORTAL",
-      "threeAspirations": "Complete all three Aspirations",
-      "threeCompleteSpecialties": "Three complete Specialties",
       "virtueAndViceMustDiffer": "Virtue and Vice must be different",
       "writeBreakingPoint": "Describe a Breaking Point"
     }

@@ -7,6 +7,7 @@ import {
   CharacterBuilderShell,
   builderCurrentState,
   commonCreationIssues,
+  experienceTraitDots,
   isCreationDraft,
   readLineArray,
   useCommonBuilderState,
@@ -25,6 +26,18 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import { mortalDerived } from "./creation-rules";
+import { MortalExperiencePanel } from "./experience-panel";
+
+function experienceSpecialties(initial: CharacterSheet | null | undefined) {
+  const history = initial?.current_state.mortal_experience_history;
+  if (!Array.isArray(history)) return [];
+  return history.flatMap((entry) => {
+    const undo = entry && typeof entry === "object" ? (entry as { undo?: Record<string, unknown> }).undo : undefined;
+    return undo?.kind === "specialty" && typeof undo.skill === "string" && typeof undo.name === "string"
+      ? [{ skill: undo.skill, name: undo.name }]
+      : [];
+  });
+}
 
 const BREAKING_POINT_KEYS = [
   "ui.breakingPointWorstThingDone",
@@ -45,7 +58,10 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
   if (initial && initial.game_line !== "CofD") throw new Error("Mortal builder received a non-mortal character.");
   if (!catalogs) throw new Error("Mortal builder requires its catalog snapshot.");
 
-  const common = useCommonBuilderState(initial, player, { experienceHistoryKey: "mortal_experience_history" });
+  const common = useCommonBuilderState(initial, player, {
+    experienceHistoryKey: "mortal_experience_history",
+    purchasedSpecialties: experienceSpecialties(initial),
+  });
   const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits")];
   const [age, setAge] = useState(String(initial?.line_data.age ?? ""));
   const [faction, setFaction] = useState(String(initial?.line_data.faction ?? ""));
@@ -77,17 +93,11 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     });
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
-    if (common.specialties.some((specialty) => !specialty.skill || !specialty.name.trim()))
-      add(2, "specialties", t("ui.threeCompleteSpecialties"));
     if (!virtue.trim()) add(3, "virtue", t("ui.virtue"));
     if (!vice.trim()) add(3, "vice", t("ui.vice"));
     if (virtue.trim() && virtue.trim().toLocaleLowerCase() === vice.trim().toLocaleLowerCase())
       add(3, "anchors", t("ui.virtueAndViceMustDiffer"));
-    if (common.aspirations.length < 3 || common.aspirations.slice(0, 3).some((value) => !value.trim()))
-      add(3, "aspirations", t("ui.threeAspirations"));
-    if (breakingPoints.slice(0, 5).some((value) => !value.trim()))
-      add(3, "breakingPoints", t("ui.answerFiveBreakingPointQuestions"));
-    if (meritSpent !== 7) add(3, "merits", t("ui.sevenMeritDots"));
+    if (meritSpent > 7) add(3, "merits", t("ui.meritsExceedTheLimit"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext))
@@ -97,10 +107,16 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
 
-  const buildCharacter = (draft: boolean) => {
+  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => {
     const now = new Date().toISOString();
+    const finalAttributes = { ...common.attributes };
+    const finalSkills = { ...common.skills };
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "mortal_experience_history")))
+      finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "mortal_experience_history")))
+      finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
     const completed: CharacterSheet = {
-      id: initial?.id ?? createRandomId(),
+      id: source?.id ?? createRandomId(),
       schema_version: 2,
       system: "chronicles-of-darkness",
       game_line: "CofD",
@@ -111,12 +127,16 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         player: common.playerName.trim(),
         chronicle: common.chronicle.trim(),
       },
-      attributes: { ...common.attributes },
-      skills: { ...common.skills },
-      specializations: common.specialties
-        .filter((specialty) => specialty.skill && specialty.name.trim())
-        .map((specialty) => ({ skill: specialty.skill, name: specialty.name.trim() })),
-      merits: mergeCreationMerits(initial?.merits, common.merits.map((merit) => {
+      attributes: finalAttributes,
+      skills: finalSkills,
+      specializations: [
+        ...common.specialties
+          .filter((specialty) => specialty.skill && specialty.name.trim())
+          .map((specialty) => ({ skill: specialty.skill, name: specialty.name.trim() })),
+        ...experienceSpecialties(source),
+        ...(source?.specializations ?? []).filter((specialty) => Boolean(specialty.grantedBy)),
+      ],
+      merits: mergeCreationMerits(source?.merits, common.merits.map((merit) => {
         const definition = meritCatalog.find((item) => item.name === merit.name);
         return {
           ...merit,
@@ -126,7 +146,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         };
       })),
       line_data: {
-        ...(initial?.line_data ?? {}),
+        ...(source?.line_data ?? {}),
         age: age.trim(),
         faction: faction.trim(),
         group_name: groupName.trim(),
@@ -134,24 +154,24 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         vice: vice.trim(),
         aspirations: common.aspirations.map((value) => value.trim()).slice(0, 3),
         breaking_points: breakingPoints.map((value) => value.trim()),
-        integrity: Number(initial?.line_data.integrity ?? 7),
+        integrity: Number(source?.line_data.integrity ?? 7),
       },
-      derived: { ...(initial?.derived ?? {}) },
-      current_state: builderCurrentState(initial, draft, common.step, false),
-      created_at: initial?.created_at ?? now,
+      derived: { ...(source?.derived ?? {}) },
+      current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement),
+      created_at: source?.created_at ?? now,
       updated_at: now,
     };
     completed.derived = mortalDerived(completed);
     return completed;
   };
 
-  const finish = (draft: boolean) => {
+  const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) {
       common.setError(`${t("ui.stillRequired")}: ${issues.map((issue) => issue.label).join(", ")}.`);
       common.setStep(issues[0].step);
       return false;
     }
-    (draft ? onSaveDraft : onSave)(buildCharacter(draft));
+    (draft ? onSaveDraft : onSave)(buildCharacter(advancement ?? initial, draft));
     return true;
   };
 
@@ -163,6 +183,8 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     draft={!initial || isCreationDraft(initial)}
     onCancel={onCancel}
     onFinish={finish}
+    prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
+    renderAdvancement={(sheet, updateSheet) => <MortalExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<>
       <CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />
       <div className="builder-section mortal-identity-extra"><div className="identity-grid">

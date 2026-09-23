@@ -18,6 +18,7 @@ import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeDamage } from "@/lib/resource-rules";
 import { boundedIntegrity } from "./creation-rules";
+import { MortalExperiencePanel } from "./experience-panel";
 
 type CoreReference = {
   conditions: ConditionDefinition[];
@@ -77,15 +78,15 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
     <SheetField label={t("ui.concept")} value={character.character.concept} />
     <SheetField label={t("ui.groupName")} value={data.group_name} />
   </section>;
-  const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} />)}</div></>;
-  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={names} values={character.skills} specialties={character.specializations} />)}</>;
+  const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div></>;
+  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className={isMobile ? "mobile-trait-stack" : "mortal-skill-stack"}>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={names} values={character.skills} specialties={character.specializations} />)}</div></>;
   const merits = <MeritList character={character} catalog={meritCatalog} />;
   const aspirationList = <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => setLineValue("aspirations", value)} />;
   const breakingPointList = <EditableList values={breakingPoints} minimum={5} placeholder={t("ui.writeBreakingPoint")} onChange={(value) => setLineValue("breaking_points", value)} />;
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />;
   const healthTrack = <><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={normalizeDamage(state.health_damage, health)} onChange={(value) => setState("health_damage", value)} /></>;
   const willpowerTrack = <><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>;
-  const integrityTrack = <><SheetHeading>{t("ui.integrity")}</SheetHeading><ResourceTrack label={t("ui.integrity")} current={integrity} maximum={10} onChange={(value) => setLineValue("integrity", value)} /></>;
+  const integrityTrack = <div className="integrity-sheet-section"><div className="integrity-heading-row"><SheetHeading>{t("ui.integrity")}</SheetHeading></div><div className="integrity-track"><DotValue value={integrity} max={10} singleRow /></div></div>;
 
   if (isMobile) return <CharacterPaperShell line="CofD" mobile title={t("ui.mortal")} subtitle={t("ui.chroniclesOFDARKNESS")}>
     <SwipeableSheetTabs value={activeTab} onValueChange={setActiveTab} tabs={[
@@ -95,7 +96,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
       { value: "combat", label: t("ui.combat") },
       { value: "notes", label: t("ui.notes") },
     ]}>{{
-      summary: <>{identity}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}{integrityTrack}</>,
+      summary: <>{identity}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}{integrityTrack}<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></>,
       stats: <>{attributes}{skills}<SheetHeading>{t("ui.merits")}</SheetHeading>{merits}</>,
       details: <><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
       combat: <>{healthTrack}{willpowerTrack}<CombatPage character={character} derived={derived} updateSheet={updateSheet} /></>,
@@ -128,7 +129,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
           stability={integrityTrack}
           derived={derived}
           armorId={data.combat_armor}
-          experience={null}
+          experience={<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
           lineSections={<><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}</>}
         />
       </TabsContent>
