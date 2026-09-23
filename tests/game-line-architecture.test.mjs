@@ -59,6 +59,7 @@ test("catalog groups stay lazy and line-scoped", async () => {
     assert.match(registry, new RegExp(`import\\("\\.\\./${line}/catalogs/`));
   }
   const mortal = await source("game-lines/mortal/registration.ts");
+  assert.match(mortal, /iconSrc:\s*"\/mortal-skull\.webp"/);
   assert.match(mortal, /builder:\s*\["core-merits"\]/);
   assert.match(mortal, /sheet:\s*\["core-merits",\s*"core-reference"\]/);
   assert.doesNotMatch(registry, /mortal\/catalogs/);
