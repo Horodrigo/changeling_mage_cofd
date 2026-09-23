@@ -1278,13 +1278,23 @@
   .vampire-records > div > input:nth-of-type(2) { grid-column: 1 / -1; }
 
   .cod-sheet.vtr-sheet {
+    --vtr-frame-rail-y: 12px;
     --vtr-frame-side-x: 8px;
+    --vtr-frame-corner-depth: 96px;
+    --vtr-frame-center-gap: 20px;
+    --vtr-frame-center-width: 32px;
+    --vtr-frame-center-height: 44px;
+    --vtr-frame-center-half-height: 22px;
+    --vtr-frame-side-offset: 20px;
+    --vtr-frame-side-width: 12px;
+    --vtr-frame-side-height: 18px;
+    --vtr-frame-side-half-height: 7px;
     padding: 28px 20px 40px;
   }
 
   .vtr-frame-corner {
-    width: 118px;
-    height: 111px;
+    width: 102px;
+    height: 96px;
     opacity: .72;
   }
 
@@ -1327,11 +1337,12 @@
 
   .vampire-sheet-tabs > [data-slot="tabs-list"]::-webkit-scrollbar { display: none; }
 
-  .vampire-sheet-tabs > [data-slot="tabs-list"] button {
+  .vtr-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
     flex: 0 0 auto;
-    min-width: 104px;
+    min-width: max-content;
     min-height: 42px;
-    font-size: 18px;
+    padding-inline: 7px;
+    font-size: 15px;
   }
 
   .vtr-sheet .sheet-identity-grid {

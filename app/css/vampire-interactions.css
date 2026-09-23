@@ -32,6 +32,18 @@ body:has(.line-theme-vtr) .experience-dialog [data-slot="button"] {
   font-family: Georgia, "Times New Roman", serif;
 }
 
+.vtr-dialog .catalog-selection-action,
+body:has(.line-theme-vtr) .experience-dialog .catalog-selection-action {
+  color: #fff8f3;
+  background: #742d31;
+}
+
+.vtr-dialog .catalog-dialog-done,
+body:has(.line-theme-vtr) .experience-dialog .catalog-dialog-done {
+  color: #4d171c;
+  background: rgba(234, 220, 218, .72);
+}
+
 body:has(.line-theme-vtr) [data-slot="select-content"] {
   border-color: rgba(77, 23, 28, .38);
 }

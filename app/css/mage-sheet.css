@@ -151,6 +151,52 @@
   --line-topbar-muted:#aec5d1;
 }
 
+body:has(.line-theme-mta) .experience-dialog,
+.mage-hubris-dialog {
+  border-color: rgba(30,77,108,.52) !important;
+  border-radius: 0 !important;
+  background: rgba(241,245,245,.99) !important;
+  color: var(--mta-ink, #183f5b);
+  font-family: Georgia, "Times New Roman", serif;
+  box-shadow: 0 20px 55px rgba(15,48,72,.24) !important;
+}
+
+body:has(.line-theme-mta) .experience-dialog [data-slot="dialog-title"],
+body:has(.line-theme-mta) .experience-dialog strong,
+.mage-hubris-dialog [data-slot="dialog-title"],
+.mage-hubris-dialog strong { color: #183f5b; }
+
+body:has(.line-theme-mta) .experience-dialog input,
+body:has(.line-theme-mta) .experience-dialog button,
+body:has(.line-theme-mta) .experience-dialog [data-slot="select-trigger"],
+.mage-hubris-dialog input,
+.mage-hubris-dialog button,
+.mage-hubris-dialog [data-slot="select-trigger"] {
+  border-color: rgba(30,77,108,.38);
+  border-radius: 2px;
+}
+
+body:has(.line-theme-mta) .experience-dialog [data-slot="button"],
+.mage-hubris-dialog [data-slot="button"] {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body:has(.line-theme-mta) .experience-dialog .catalog-selection-action,
+.mage-hubris-dialog .catalog-selection-action {
+  color: #f3f8fa;
+  background: #285d7b;
+}
+
+body:has(.line-theme-mta) .experience-dialog .catalog-dialog-done,
+.mage-hubris-dialog .catalog-dialog-done {
+  color: #183f5b;
+  background: rgba(230,240,246,.72);
+}
+
+body:has(.line-theme-mta) [data-slot="select-content"] {
+  border-color: rgba(30,77,108,.38);
+}
+
 .app-shell.line-theme-mta { background:color-mix(in srgb,var(--line-accent) 5%,var(--background)); }
 
 .line-summary .mta-summary { border-left:4px solid #3f86aa; }
@@ -415,10 +461,9 @@
   isolation:isolate;
   overflow:hidden;
   padding:50px 54px 62px;
-  border:0;
+  border:2px solid rgba(36,82,113,.34);
   border-radius:0;
-  outline:1px solid rgba(36,82,113,.34);
-  outline-offset:-16px;
+  outline:0;
 
   background-color:var(--mta-paper);
   background-image:
@@ -484,7 +529,7 @@
    -------------------------------------------------------------------------- */
 
 .mta-sheet .cod-sheet-title,
-.mta-sheet .mta-sheet-tabs {
+.mta-sheet > .ctl-sheet-tabs {
   position:relative;
 }
 
@@ -497,7 +542,7 @@
 }
 
 /* Bottom frame center, using the same central motif. */
-.mta-sheet .mta-sheet-tabs {
+.mta-sheet > .ctl-sheet-tabs {
   background-image:url("/mage/style/frame-prism-center.webp");
   background-repeat:no-repeat;
   background-size:76px 152px;
@@ -507,8 +552,8 @@
 /* Four actual corner ornaments. */
 .mta-sheet .cod-sheet-title::before,
 .mta-sheet .cod-sheet-title::after,
-.mta-sheet .mta-sheet-tabs::before,
-.mta-sheet .mta-sheet-tabs::after {
+.mta-sheet > .ctl-sheet-tabs::before,
+.mta-sheet > .ctl-sheet-tabs::after {
   content:"";
   position:absolute;
   z-index:5;
@@ -529,13 +574,13 @@
   transform:scaleX(-1);
 }
 
-.mta-sheet .mta-sheet-tabs::before {
+.mta-sheet > .ctl-sheet-tabs::before {
   bottom:-60px;
   left:-53px;
   transform:scaleY(-1);
 }
 
-.mta-sheet .mta-sheet-tabs::after {
+.mta-sheet > .ctl-sheet-tabs::after {
   bottom:-60px;
   right:-53px;
   transform:scale(-1,-1);
@@ -1142,20 +1187,18 @@
 @media (max-width:900px) {
   .cod-sheet.mta-sheet {
     padding:44px 42px 56px;
-    outline-offset:-13px;
   }
 
   .mta-sheet .cod-sheet-title::before,
-  .mta-sheet .mta-sheet-tabs::before { left:-42px; }
+  .mta-sheet > .ctl-sheet-tabs::before { left:-42px; }
 
   .mta-sheet .cod-sheet-title::after,
-  .mta-sheet .mta-sheet-tabs::after { right:-42px; }
+  .mta-sheet > .ctl-sheet-tabs::after { right:-42px; }
 }
 
 @media (max-width:760px) {
   .cod-sheet.mta-sheet {
     padding:32px 24px 42px;
-    outline-offset:-9px;
     background-size:
       calc(100% - 62px) 1px,
       calc(100% - 78px) 1px,
@@ -1183,22 +1226,22 @@
   }
 
   .mta-sheet .cod-sheet-title,
-  .mta-sheet .mta-sheet-tabs {
+  .mta-sheet > .ctl-sheet-tabs {
     background-image:none;
   }
 
   .mta-sheet .cod-sheet-title::before,
   .mta-sheet .cod-sheet-title::after,
-  .mta-sheet .mta-sheet-tabs::before,
-  .mta-sheet .mta-sheet-tabs::after {
+  .mta-sheet > .ctl-sheet-tabs::before,
+  .mta-sheet > .ctl-sheet-tabs::after {
     width:62px;
     height:62px;
   }
 
-  .mta-sheet .cod-sheet-title::before { top:-31px; left:-25px; }
-  .mta-sheet .cod-sheet-title::after { top:-31px; right:-25px; }
-  .mta-sheet .mta-sheet-tabs::before { bottom:-39px; left:-25px; }
-  .mta-sheet .mta-sheet-tabs::after { bottom:-39px; right:-25px; }
+  .mta-sheet .cod-sheet-title::before { top:-20px; left:-16px; }
+  .mta-sheet .cod-sheet-title::after { top:-20px; right:-16px; }
+  .mta-sheet > .ctl-sheet-tabs::before { bottom:-32px; left:-12px; }
+  .mta-sheet > .ctl-sheet-tabs::after { bottom:-32px; right:-12px; }
 
   .mta-sheet .cod-sheet-title span {
     width:390px;
@@ -1515,7 +1558,7 @@
 
 /* Remove the old cropped-background implementation. */
 .mta-sheet .cod-sheet-title,
-.mta-sheet .mta-sheet-tabs {
+.mta-sheet > .ctl-sheet-tabs {
   background-image:none !important;
 }
 
@@ -1537,13 +1580,13 @@
  * The active page spans the sheet body, so placing the bottom ornament on it
  * anchors the ornament to the actual lower frame instead of the tab strip.
  */
-.mta-sheet .mta-sheet-tabs > [data-slot="tabs-content"][data-state="active"],
-.mta-sheet .mta-sheet-tabs > .ctl-sheet-page[data-state="active"] {
+.mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"],
+.mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"] {
   position:relative;
 }
 
-.mta-sheet .mta-sheet-tabs > [data-slot="tabs-content"][data-state="active"]::after,
-.mta-sheet .mta-sheet-tabs > .ctl-sheet-page[data-state="active"]::after {
+.mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"]::after,
+.mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"]::after {
   content:"";
   position:absolute;
   z-index:7;
@@ -1607,12 +1650,14 @@
 
 @media (max-width:760px) {
   .cod-sheet.mta-sheet {
+    padding-top:28px;
     padding-inline:20px;
+    padding-bottom:40px;
     background-position:
-      center 25px,
-      center 29px,
-      center calc(100% - 25px),
-      center calc(100% - 29px),
+      center 8px,
+      center 12px,
+      center calc(100% - 8px),
+      center calc(100% - 12px),
       8px center,
       12px center,
       calc(100% - 8px) center,
@@ -1621,6 +1666,16 @@
       center,
       center,
       center !important;
+  }
+
+  .mta-sheet .cod-sheet-title { min-height:82px; padding-bottom:6px; }
+  .mta-sheet .cod-sheet-title span { width:340px; max-width:100%; height:76px; }
+
+  .mta-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
+    min-width:max-content;
+    padding-inline:10px;
+    font-size:16px;
+    letter-spacing:.03em;
   }
 
   .mta-sheet .editable-line-row:has(.editable-line-prefix) input { width:auto; }
@@ -1641,9 +1696,9 @@
     height:68px;
   }
 
-  .mta-sheet .mta-sheet-tabs > [data-slot="tabs-content"][data-state="active"]::after,
-  .mta-sheet .mta-sheet-tabs > .ctl-sheet-page[data-state="active"]::after {
-    bottom:-47px;
+  .mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"]::after,
+  .mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"]::after {
+    bottom:-34px;
     width:34px;
     height:68px;
   }

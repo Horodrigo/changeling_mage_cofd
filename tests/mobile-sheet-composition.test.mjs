@@ -28,5 +28,9 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(vampire, /resourceName="Vitae"/);
   assert.match(globals, /mobile-character-sheet \.power-resource \.resource-track::before \{ grid-column:1\/-1; \}/);
   assert.match(mageCss, /8px center,[\s\S]*12px center/);
+  assert.match(mageCss, /\.mta-sheet > \.ctl-sheet-tabs::before/);
+  assert.match(mageCss, /border:2px solid rgba\(36,82,113,\.34\)/);
+  assert.match(vampireCss, /--vtr-frame-rail-y: 12px/);
   assert.match(vampireCss, /--vtr-frame-side-x: 8px/);
+  assert.match(vampireCss, /--vtr-frame-corner-depth: 96px/);
 });
