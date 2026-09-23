@@ -27,6 +27,9 @@ export type MeritDefinition = {
   repeatable?: boolean;
   unbounded?: boolean;
   mortalOnly?: boolean;
+  homebrew?: true;
+  descriptivePrerequisites?: true;
+  narrativePrerequisites?: string;
 };
 
 export const REPEATABLE_MERITS = new Set([
@@ -68,7 +71,7 @@ export function meritPrerequisitesMet(
   if(merit.kith&&!requirementMet({kith:merit.kith},context)) return false;
   if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
   const owned=context.merits??[];
-  const forbidden=(definition:Partial<MeritDefinition>)=>definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
+  const forbidden=(definition:Partial<MeritDefinition>)=>definition.descriptivePrerequisites?[]:definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
   if(forbidden(merit).some(name=>owned.some(item=>item.dots>0&&canonicalTrait(item.name)===canonicalTrait(name))))return false;
   const catalog=context.meritCatalog??[];
   if(owned.some(item=>item.dots>0&&catalog.some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
@@ -95,7 +98,7 @@ export function meritPrerequisitesMet(
     // courtAccess above is authoritative, so only evaluate the printed remainder.
     printedPrerequisites=printedPrerequisites?.includes(";")?printedPrerequisites.split(";").slice(1).join(";").trim():undefined;
   }
-  if(!usedSeemingAlternative&&!catalogPrerequisitesMet(printedPrerequisites,context)) return false;
+  if(!merit.descriptivePrerequisites&&!usedSeemingAlternative&&!catalogPrerequisitesMet(printedPrerequisites,context)) return false;
   return true;
 }
 

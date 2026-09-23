@@ -12,6 +12,7 @@ import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { systemTerm } from "@/lib/system-terms";
 import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
+import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
@@ -246,7 +247,7 @@ export function ExperienceMeritPicker({
   const catalog = alphabetical([...meritCatalog], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),
-    categories = ["Todas", ...new Set(catalog.map((item) => item.category))];
+    categories = ["Todas", ...new Set(catalog.flatMap((item) => homebrewCategoryKeys(item.category, item.sourceId)))];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -292,8 +293,8 @@ export function ExperienceMeritPicker({
             .filter(
               (item) =>
                 (showAllMerits || isEligible(item, context)) &&
-                (category === "Todas" || item.category === category) &&
-                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source}`
+                (category === "Todas" || homebrewCategoryKeys(item.category, item.sourceId).includes(category)) &&
+                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source} ${homebrewCategoryKeys(item.category, item.sourceId).join(" ")}`
                   .toLocaleLowerCase("pt-BR")
                   .includes(normalized),
             )

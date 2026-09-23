@@ -35,6 +35,8 @@ import { vampireOwnedCoilRuleEffects, vampireRuleEffectsFor } from "./power-rule
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { BloodlineJoinDialog, BloodlinePage } from "./bloodline-page";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -689,7 +691,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const customBloodlines = useBloodlineHomebrews();
   const bloodlines = [...reference.bloodlines, ...customBloodlines.filter((item) => !reference.bloodlines.some((official) => official.id === item.id))];
   const powers = catalogs.get<VampirePowers>("vampire-powers");
-  const merits = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")];
+  const customMerits = useMeritHomebrews("VtR", true);
+  const merits = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], customMerits);
   const coreConditions = catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions;
   const vampireConditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions") as readonly ConditionDefinition[];
   const conditionCatalog = [...coreConditions, ...vampireConditions];

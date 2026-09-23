@@ -23,6 +23,7 @@ import { CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, changelin
 import { ContractHomebrewEditor } from "./contract-homebrew-editor";
 import { CONTRACT_HOMEBREW_SOURCE_ID, mergeContractHomebrews, saveContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
+import { MeritHomebrewPanel } from "@/app/merit-homebrew-panel";
 
 type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; summary: string; tier?: string; tierOrder?: number; customEntitlement?: EntitlementDefinition; customContract?: ContractDefinition };
 
@@ -61,7 +62,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     const active = homebrewContentActive(preferences, item.id, item.sourceId);
     return <article className="homebrew-card" key={`${item.kind}:${item.id}`}><div><h3>{item.name}</h3><p>{item.summary}</p></div><div className="homebrew-card-actions"><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label>{item.customEntitlement && <><Button type="button" size="sm" variant="outline" onClick={() => setEditingEntitlement(item.customEntitlement ?? null)}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Entitlement?", "Delete Entitlement?")} description={h("Ele deixará de aparecer nas escolhas. Fichas que dependem dele podem perder a apresentação das regras.", "It will disappear from choices. Sheets that depend on it may lose their rules presentation.")} action={h("Excluir", "Delete")} onConfirm={() => removeCustomEntitlement(item.id)}/></>}{item.customContract && <><Button type="button" size="sm" variant="outline" onClick={() => setContractEditor({ open: true, initial: item.customContract ?? null })}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Contrato?", "Delete Contract?")} description={h("Ele deixará de aparecer nas novas escolhas. Fichas existentes conservam os textos já salvos.", "It will disappear from new choices. Existing sheets retain their saved text.")} action={h("Excluir", "Delete")} onConfirm={() => removeCustomContract(item.id)}/></>}</div></article>;
   };
-  return <section className="homebrew-panel">
+  return <><MeritHomebrewPanel line="CtL" catalog={[...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")]}/><section className="homebrew-panel">
     <div className="panel-heading"><div><h3>{h("Homebrews de Changeling", "Changeling Homebrews")}</h3><p>{h("A ativação controla novas escolhas; fichas existentes conservam os dados que já possuem.", "Activation controls new choices; existing sheets retain data they already own.")}</p></div><Button type="button" size="sm" onClick={() => setContractEditor({ open: true, initial: null })}><Plus/> {h("Criar Contrato", "Create Contract")}</Button></div>
     <div className="homebrew-source-list">{sources.map(([sourceId, source]) => {
       const sourceItems = items.filter((item) => item.sourceId === sourceId), sourceActive = !preferences.disabledIds.includes(sourceId), kinds = [...new Set(sourceItems.map((item) => item.kind))].sort((left, right) => left.localeCompare(right, locale));
@@ -77,7 +78,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     })}</div>
     {editingEntitlement && <EntitlementHomebrewEditor open onOpenChange={(open) => { if (!open) setEditingEntitlement(null); }} initial={editingEntitlement} onSave={saveCustomEntitlement}/>}
     {contractEditor.open && <ContractHomebrewEditor open onOpenChange={(open) => setContractEditor((current) => ({ ...current, open }))} initial={contractEditor.initial} courts={reference.courts} onSave={saveCustomContract}/>}
-  </section>;
+  </section></>;
 }
 
 export const changelingHomebrew: GameLineHomebrewModule = { Component: ChangelingHomebrew };

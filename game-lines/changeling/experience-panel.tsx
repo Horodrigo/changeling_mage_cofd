@@ -30,6 +30,8 @@ import { homebrewCategoryKeys, homebrewContentActive } from "@/lib/homebrew";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import { mergeContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -99,7 +101,7 @@ export function ExperiencePanel({
   builderMode?: boolean;
 }) {
   const { locale, t }=useLanguage();
-  const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews();
+  const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews(),customMerits=useMeritHomebrews("CtL",true);
   const contractCatalog = mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts);
   const staticEntitlements = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
@@ -146,11 +148,10 @@ export function ExperiencePanel({
   const [contractId, setContractId] = useState("");
   const [benefitKey, setBenefitKey] = useState("");
   const [feedback, setFeedback] = useState("");
-  const fullMeritCatalog = [
+  const meritCatalog = activeMeritCatalog([
     ...catalogs.get<MeritDefinition[]>("core-merits"),
     ...catalogs.get<MeritDefinition[]>("changeling-merits"),
-  ];
-  const meritCatalog = fullMeritCatalog.filter((item)=>homebrewContentActive(homebrewPreferences,item.id,item.sourceId));
+  ],customMerits,homebrewPreferences,character.merits.map((item)=>item.name));
   const merits = meritCatalog;
   const ownedContracts = [
     ...objectList(character.line_data.contracts),

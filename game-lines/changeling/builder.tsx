@@ -40,6 +40,8 @@ import { ExperiencePanel } from "./experience-panel";
 import type { TokenDefinition } from "./catalogs/tokens";
 import { mergeContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 type ChangelingReference = {
   courts: CourtDefinition[];
@@ -99,14 +101,15 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
   const tokenCatalog = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
   const homebrewPreferences = useHomebrewPreferences();
   const customContracts = useContractHomebrews();
+  const customMerits = useMeritHomebrews("CtL", true);
   const initialContractIds = new Set((Array.isArray(initial?.line_data.contracts) ? initial.line_data.contracts : []).map((item) => String((item as Record<string, unknown>).id ?? "")));
   const contractCatalog = mergeContractHomebrews(catalogs.get<readonly ContractDefinition[]>("changeling-contracts"), customContracts)
     .filter((item) => initialContractIds.has(item.id) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
     .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"]));
-  const meritCatalog = [
+  const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("changeling-merits"),
-  ].filter((item) => common.merits.some((merit) => merit.name === item.name) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
+  ], customMerits, homebrewPreferences, common.merits.map((item) => item.name))
     .sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
 
   const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? ""));

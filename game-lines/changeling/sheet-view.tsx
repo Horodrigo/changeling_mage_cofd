@@ -36,6 +36,8 @@ import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import type { TokenDefinition } from "./catalogs/tokens";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 
 type ChangelingReference = {
     conditions: ConditionDefinition[];
@@ -89,7 +91,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     if (!catalogs)
         throw new Error("Changeling sheet requires its catalog snapshot.");
     const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
-    const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")];
+    const customMerits = useMeritHomebrews("CtL", true);
+    const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")], customMerits);
     const { locale, t } = useLanguage();
     const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
     const lineReference = catalogs.get<ChangelingReference>("changeling-reference");

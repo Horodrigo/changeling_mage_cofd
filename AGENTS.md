@@ -280,7 +280,7 @@ Do not change Cloudflare bindings or configuration merely to silence local ambie
 
 Specialized server-side PDF generation remains deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage and Vampire printing remain deferred until their own line-owned surfaces are implemented.
 
-Homebrew activation is browser-local and shared by source/item ID. The common Homebrew shell owns only navigation, activation preferences, and lazy line dispatch. Each game line owns its Homebrew inventory, editors, validation, and integration with its catalogs. Changeling currently owns player-created Entitlements; their definitions are stored separately from character sheets and merged into Changeling surfaces without mutating static catalog snapshots.
+Homebrew activation is browser-local and shared by source/item ID. The common Homebrew shell owns only navigation, activation preferences, and lazy line dispatch. Each game line owns its Homebrew inventory, validation, and integration with its catalogs; generic Merit storage and editing remain a shared Core mechanism. Core and each line support player-created Merits, while Changeling also owns player-created Contracts and Entitlements. Their definitions are stored separately from character sheets and merged into the relevant surfaces without mutating static catalog snapshots.
 
 Do not let removed implementations shape Core, current game-line APIs, Builder shells, or Sheet shells. When these features return, design them against the modular architecture that exists then. Do not restore old mutable global Homebrew catalogs or old mixed print/paper paths because historical code used them.
 

@@ -15,6 +15,8 @@ import type { MeritDefinition } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
 import { MTA_ORDER_LABELS } from "./creation-rules";
 import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 
 const objectList = (value: unknown) => Array.isArray(value) ? value as Array<Record<string, unknown>> : [];
 const spellName = (item: Record<string, unknown>, locale: string) => String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName ?? "");
@@ -43,7 +45,8 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
   const data = character.line_data;
   const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
-  const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")];
+  const customMerits = useMeritHomebrews("MtA", true);
+  const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")], customMerits);
   const conditionCatalog = [
     ...catalogs.get<{ conditions: Array<{ id: string; name: string }> }>("core-reference").conditions,
     ...catalogs.get<Array<{ id: string; name: string }>>("mage-reference"),

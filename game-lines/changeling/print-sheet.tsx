@@ -25,6 +25,8 @@ import { systemTerm } from "@/lib/system-terms";
 import { changelingAnchorDisplayName, normalizeChangelingFrailties, seemingDisplayName, CTL_SEEMINGS } from "./creation-rules";
 import { derivedWithPermanentMerits } from "./experience-shared";
 import { expandedConfigurationLines, meritConfigurationTitle } from "./sheet-merit-configurations";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 
 type ChangelingReference = {
   conditions: ConditionDefinition[];
@@ -240,7 +242,8 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
   const coreMerits = catalogs.get<readonly MeritDefinition[]>("core-merits");
   const changelingMerits = catalogs.get<readonly MeritDefinition[]>("changeling-merits");
-  const meritCatalog = useMemo(() => [...coreMerits, ...changelingMerits], [changelingMerits, coreMerits]);
+  const customMerits = useMeritHomebrews("CtL", true);
+  const meritCatalog = useMemo(() => mergeMeritHomebrews([...coreMerits, ...changelingMerits], customMerits), [changelingMerits, coreMerits, customMerits]);
   const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const reference = catalogs.get<ChangelingReference>("changeling-reference");
   const conditions = useMemo(() => [...coreReference.conditions, ...reference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id], ...reference.presentation[condition.id] } : condition), [coreReference, locale, reference]);

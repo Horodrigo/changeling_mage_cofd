@@ -1,6 +1,6 @@
 # Plano: criação de Méritos Homebrew
 
-Status: planejado, ainda não implementado. `AGENTS.md` e o código atual continuam sendo a autoridade arquitetural.
+Status: implementado como referência histórica. `AGENTS.md` e o código atual continuam sendo a autoridade arquitetural.
 
 ## Objetivo
 
