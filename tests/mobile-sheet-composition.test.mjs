@@ -5,7 +5,8 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("mobile sheets keep summaries, details, powers, and resource tracks separated", async () => {
-  const [mage, vampire, globals, mageCss, vampireCss] = await Promise.all([
+  const [mortal, mage, vampire, globals, mageCss, vampireCss] = await Promise.all([
+    read("../game-lines/mortal/sheet-view.tsx"),
     read("../game-lines/mage/sheet-view.tsx"),
     read("../game-lines/vampire/sheet-view.tsx"),
     read("../app/css/globals.css"),
@@ -26,6 +27,9 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.doesNotMatch(vampireSummary, /humanitySection|banesSection|ui\.conditions/);
   assert.match(vampire, /value: "powers", label: t\("ui\.powers"\)/);
   assert.match(vampire, /resourceName="Vitae"/);
+  assert.match(mortal, /value: "summary", label: t\("ui\.summary"\)/);
+  assert.match(mortal, /value: "details", label: t\("ui\.details"\)/);
+  assert.match(mortal, /minimum=\{5\}/);
   assert.match(globals, /mobile-character-sheet \.power-resource \.resource-track::before \{ grid-column:1\/-1; \}/);
   assert.match(mageCss, /8px center,[\s\S]*12px center/);
   assert.match(vampireCss, /--vtr-frame-side-x: 8px/);

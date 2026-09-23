@@ -51,9 +51,9 @@ export function MeritPicker({
   context: MeritPrerequisiteContext;
   spent: number;
   budget: number;
-  powerLabel: string;
-  power: number;
-  setPower: (value: number) => void;
+  powerLabel?: string;
+  power?: number;
+  setPower?: (value: number) => void;
   renderConfiguration: (props: MeritConfigurationRenderProps) => ReactNode;
   isInlineConfiguration: (name: string) => boolean;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
@@ -83,10 +83,10 @@ export function MeritPicker({
     <div className="merit-heading"><div><h3>{t("ui.merits")}</h3><p>{t("ui.coreAndGameLineBooksGroupedByCategory")}</p></div>
       <div className="merit-heading-actions">
         <Badge variant={spent > budget ? "destructive" : "outline"}>{spent}/{budget} {t("ui.creationMeritDotsSpent")}</Badge>
-        <Badge variant="outline">{powerLabel}: {power}</Badge>
+        {powerLabel && power !== undefined && setPower && <Badge variant="outline">{powerLabel}: {power}</Badge>}
         <Button type="button" variant="outline" size="sm" className="builder-add-action" onClick={() => setCatalogOpen(true)}>{t("ui.addMerit")}</Button>
-        <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={power >= 3 || spent + 5 > budget} onClick={() => setPower(power + 1)}>{t("ui.add5MeritDots", { p1: powerLabel })}</Button>
-        {power > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setPower(power - 1)}>{t("ui.remove", { p1: powerLabel })}</Button>}
+        {powerLabel && power !== undefined && setPower && <Button type="button" variant="outline" size="sm" className="builder-add-action" disabled={power >= 3 || spent + 5 > budget} onClick={() => setPower(power + 1)}>{t("ui.add5MeritDots", { p1: powerLabel })}</Button>}
+        {powerLabel && power !== undefined && setPower && power > 1 && <Button type="button" variant="ghost" size="sm" className="builder-add-action" onClick={() => setPower(power - 1)}>{t("ui.remove", { p1: powerLabel })}</Button>}
       </div>
     </div>
     <div className="merit-picker">{merits.map((selection, index) => {

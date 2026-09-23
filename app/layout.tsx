@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import "./css/globals.css";
+import "./css/mortal-sheet.css";
 import "./css/changeling-sheet.css";
 import "./css/mage-sheet.css";
 import "./css/vampire-sheet.css";
