@@ -12,6 +12,7 @@ import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { systemTerm } from "@/lib/system-terms";
 import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
+import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
@@ -89,6 +90,7 @@ type ExperienceCatalogItem = {
   id: string;
   name: string;
   category: string;
+  categories?: string[];
   secondaryCategory?: string;
   sortPriority?: number;
   description: string;
@@ -123,7 +125,7 @@ export function ExperiencePowerPicker({
   const [secondary, setSecondary] = useState("Todos");
   const normalized = search.trim().toLocaleLowerCase("pt-BR");
   const selected = items.find((item) => item.id === selectedId);
-  const categories = ["Todas", ...new Set(items.map((item) => item.category))];
+  const categories = ["Todas", ...new Set(items.flatMap((item) => item.categories ?? [item.category]))];
   const secondaryCategories = [
     "Todos",
     ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),
@@ -132,10 +134,10 @@ export function ExperiencePowerPicker({
     .sort((left, right) => (left.sortPriority ?? 0) - (right.sortPriority ?? 0))
     .filter(
     (item) =>
-      (category === "Todas" || item.category === category) &&
+      (category === "Todas" || (item.categories ?? [item.category]).includes(category)) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
       (!normalized ||
-        `${item.name} ${item.category} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
+        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
     );
@@ -245,7 +247,7 @@ export function ExperienceMeritPicker({
   const catalog = alphabetical([...meritCatalog], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),
-    categories = ["Todas", ...new Set(catalog.map((item) => item.category))];
+    categories = ["Todas", ...new Set(catalog.flatMap((item) => homebrewCategoryKeys(item.category, item.sourceId)))];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -291,8 +293,8 @@ export function ExperienceMeritPicker({
             .filter(
               (item) =>
                 (showAllMerits || isEligible(item, context)) &&
-                (category === "Todas" || item.category === category) &&
-                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source}`
+                (category === "Todas" || homebrewCategoryKeys(item.category, item.sourceId).includes(category)) &&
+                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source} ${homebrewCategoryKeys(item.category, item.sourceId).join(" ")}`
                   .toLocaleLowerCase("pt-BR")
                   .includes(normalized),
             )

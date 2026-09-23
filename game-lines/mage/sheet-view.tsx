@@ -40,11 +40,14 @@ import { Plus,Trash2 } from "lucide-react";
 import { useState } from "react";
 import { MageStructuredMeritEditor } from "./merit-configuration-editor";
 import { CompanionPage as MageCompanionPage } from "./companion-page";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 export function MageCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
     if (!catalogs)
         throw new Error("Mage sheet requires its catalog snapshot.");
     const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
-    const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")];
+    const customMerits = useMeritHomebrews("MtA", true);
+    const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")], customMerits);
     const conditionCatalog = [
         ...catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions.filter((condition) => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
         ...catalogs.get<readonly ConditionDefinition[]>("mage-reference"),

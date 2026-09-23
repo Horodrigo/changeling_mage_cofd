@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import {
   CharacterBuilderShell,
@@ -32,6 +32,9 @@ import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINE
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 type KindredStatusScope = "covenant" | "clan" | "city";
 
@@ -153,10 +156,11 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
-  const meritCatalog = useMemo(() => [
+  const customMerits = useMeritHomebrews("VtR", true), homebrewPreferences = useHomebrewPreferences();
+  const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),
-  ].sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs]);
+  ], customMerits, homebrewPreferences, initial?.merits.map((item) => item.name)).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "vampire_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),

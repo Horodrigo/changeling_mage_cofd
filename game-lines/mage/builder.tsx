@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CharacterBuilderShell,
   builderCurrentState,
@@ -26,6 +26,9 @@ import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { MageExperiencePanel } from "./experience-panel";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
   if (!value || typeof value !== "object") return null;
@@ -115,10 +118,11 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     },
   });
   const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
-  const meritCatalog = useMemo(() => [
+  const customMerits = useMeritHomebrews("MtA", true), homebrewPreferences = useHomebrewPreferences();
+  const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("mage-merits"),
-  ].sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs]);
+  ], customMerits, homebrewPreferences, common.merits.map((item) => item.name)).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
 
   const [path, setPath] = useState(String(initial?.line_data.path ?? ""));
   const [order, setOrder] = useState(String(initial?.line_data.order || "Orderless"));

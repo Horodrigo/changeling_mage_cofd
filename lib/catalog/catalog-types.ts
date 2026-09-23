@@ -82,6 +82,7 @@ export interface ContractDefinition {
   sourceId: string;
   source: string;
   page: number;
+  homebrew?: true;
 }
 
 export type ContractIndexEntry = Pick<

@@ -27,6 +27,9 @@ export function saveHomebrewPreferences(value: HomebrewPreferences) {
 
 export const isHomebrewSource = (sourceId: unknown) => /^(?:h-|homebrew:)/.test(String(sourceId ?? ""));
 
+export const homebrewCategoryKeys = (category: string, sourceId?: string) =>
+  isHomebrewSource(sourceId) ? [category, "Homebrew"] : [category];
+
 export function homebrewContentActive(preferences: HomebrewPreferences, id: string, sourceId?: string) {
   return !isHomebrewSource(sourceId) || (!preferences.disabledIds.includes(id) && !preferences.disabledIds.includes(String(sourceId)));
 }

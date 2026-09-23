@@ -33,7 +33,7 @@ import { translate, useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
-import { homebrewContentActive } from "@/lib/homebrew";
+import { homebrewCategoryKeys, homebrewContentActive } from "@/lib/homebrew";
 import type { TokenDefinition } from "./catalogs/tokens";
 
 export type ContractSelection = ContractDefinition;
@@ -90,6 +90,8 @@ function contractCategoryKey(contract: ContractDefinition) {
   if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
   return contract.regalia;
 }
+
+const contractCategoryKeys = (contract: ContractDefinition) => homebrewCategoryKeys(contractCategoryKey(contract), contract.sourceId);
 
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, t } = useLanguage();
@@ -496,8 +498,10 @@ function ContractSelector({
       ? t("ui.independent")
       : category === "goblin"
         ? t("ui.goblin")
+        : category === "Homebrew"
+          ? "Homebrew"
         : systemTerm(category, locale);
-  const categoryOptions = alphabetical([...new Set(catalog.map(contractCategoryKey))], categoryLabel, locale);
+  const categoryOptions = alphabetical([...new Set(catalog.flatMap(contractCategoryKeys))], categoryLabel, locale);
   const availableContracts = alphabetical(catalog, contractName,locale)
     .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
     .filter((contract) =>
@@ -508,7 +512,7 @@ function ContractSelector({
         courtCatalog,
       ) &&
       (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&
-      (categoryFilter === "all" || contractCategoryKey(contract) === categoryFilter) &&
+      (categoryFilter === "all" || contractCategoryKeys(contract).includes(categoryFilter)) &&
       (!((contract.type === "Comum" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName)),
     );
   const groups = alphabetical([...new Set(availableContracts.map(contractCategoryKey))], categoryLabel, locale)

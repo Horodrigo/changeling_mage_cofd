@@ -12,9 +12,11 @@ export const mageRegistration: GameLineRegistration = {
     builder: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
     sheet: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
     print: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
+    homebrew: ["core-merits", "mage-merits"],
   },
   loadRules: () => import("./rules").then(({ mageRules }) => mageRules),
   loadBuilder: () => import("./builder").then(({ mageBuilder }) => mageBuilder),
   loadSheet: () => import("./sheet").then(({ mageSheet }) => mageSheet),
   loadPrintSheet: () => import("./print").then(({ magePrintSheet }) => magePrintSheet),
+  loadHomebrew: () => import("./homebrew").then(({ mageHomebrew }) => mageHomebrew),
 };

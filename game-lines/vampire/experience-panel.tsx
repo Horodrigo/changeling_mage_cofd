@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
@@ -22,6 +22,9 @@ import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experie
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible } from "./merit-eligibility";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "cruac" | "theban" | "rite" | "miracle" | "coil" | "scale";
 type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before?: CharacterSheet; undo?: VampireAdvancementUndo };
@@ -85,7 +88,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const history = Array.isArray(state.vampire_experience_history) ? state.vampire_experience_history as HistoryEntry[] : [];
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
-  const meritCatalog = useMemo(() => [...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], [catalogs]);
+  const customMerits=useMeritHomebrews("VtR",true),homebrewPreferences=useHomebrewPreferences();
+  const meritCatalog = activeMeritCatalog([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")],customMerits,homebrewPreferences,character.merits.map((item)=>item.name));
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
   const amount = amountDraft ?? String(available);
   const [purchase, setPurchase] = useState<PurchaseType>("attribute");

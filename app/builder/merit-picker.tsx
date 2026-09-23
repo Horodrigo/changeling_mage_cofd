@@ -23,6 +23,7 @@ import { ConfirmAction } from "../workspace/confirm-action";
 import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
 import { createRandomId } from "@/lib/random-id";
 import { experienceMeritDots } from "@/lib/merit-progression";
+import { homebrewCategoryKeys } from "@/lib/homebrew";
 
 export type MeritConfigurationRenderProps = {
   merit: MeritSelection;
@@ -65,14 +66,14 @@ export function MeritPicker({
   const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
-  const categories = [...new Set(catalog.map((merit) => merit.category))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
+  const categories = [...new Set(catalog.flatMap((merit) => homebrewCategoryKeys(merit.category, merit.sourceId)))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
   const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
     (showAllMerits || isEligible(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => owned.name === item.name) || merits.some((owned) => owned.name === item.name)) &&
-    (category === "all" || item.category === category) &&
-    (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))
+    (category === "all" || homebrewCategoryKeys(item.category, item.sourceId).includes(category)) &&
+    (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""} ${homebrewCategoryKeys(item.category, item.sourceId).join(" ")}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))
   );
   const addMerit = (definition: MeritDefinition) => {
     if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => item.name === definition.name))) return;

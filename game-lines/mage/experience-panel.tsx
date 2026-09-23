@@ -23,6 +23,9 @@ import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { createRandomId } from "@/lib/random-id";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -113,10 +116,11 @@ export function MageExperiencePanel({
   const [mageMeritConfiguration,setMageMeritConfiguration] = useState<Record<string,string|string[]>>({});
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
-  const meritCatalog = [
+  const customMerits=useMeritHomebrews("MtA",true),homebrewPreferences=useHomebrewPreferences();
+  const meritCatalog = activeMeritCatalog([
       ...catalogs.get<MeritDefinition[]>("core-merits"),
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
-    ],
+    ],customMerits,homebrewPreferences,character.merits.map((item)=>item.name)),
     merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog, ["awakened"]))),
     spells = catalogs.get<SpellDefinition[]>("mage-spells");
   const arcana = (
