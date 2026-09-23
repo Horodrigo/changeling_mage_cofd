@@ -43,6 +43,11 @@ test("avanços da criação viram Experiência gasta sem exigir saldo prévio", 
   assert.deepEqual(experienceShared.experiencePurchaseBalances(0, 12, 12, 3, true), { available: 0, spent: 15, total: 15 });
 });
 
+test("o quinto Beat converte automaticamente em uma Experiência", () => {
+  assert.deepEqual(experienceShared.convertFifthBeat(4, 2, 7), { beats: 4, available: 2, total: 7 });
+  assert.deepEqual(experienceShared.convertFifthBeat(5, 2, 7), { beats: 0, available: 3, total: 8 });
+});
+
 test("o Builder preserva compras de vários pontos feitas em uma única transação", () => {
   const advanced = { current_state: {
     mage_experience_history: [

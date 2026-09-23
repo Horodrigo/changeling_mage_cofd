@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, experiencePurchaseBalances, groupedPurchaseOptions, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -149,7 +149,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       {!builderMode && <label className="experience-input"><Input type="number" min={0} step={1} inputMode="numeric" value={amountDraft ?? String(available)} onChange={(event) => setAmountDraft(event.target.value)} onBlur={commitAvailableExperience} onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }} aria-label={t("ui.availableExperience")} /><span>{t("ui.xpAvailable")}</span></label>}
       <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div><div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div>
     </div>
-    {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />}
+    {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => { const change = convertFifthBeat(value, available, total); saveState({ beats: change.beats, experience_available: change.available, experience_spent: spent, experience_total: change.total }); }} />}
     <div className="experience-actions"><Dialog><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger><DialogContent className="experience-dialog">
       <DialogHeader><DialogTitle>{t("ui.spendExperience")}</DialogTitle><DialogDescription>{t("ui.mortalExperienceDescription")}</DialogDescription></DialogHeader>
       <div className="experience-purchase-form">

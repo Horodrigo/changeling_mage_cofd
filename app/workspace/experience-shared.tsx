@@ -38,6 +38,11 @@ export function experiencePurchaseBalances(available: number, spent: number, tot
   return { available: nextAvailable, spent: nextSpent, total: builderMode ? Math.max(total, available + spent) + cost : Math.max(total, nextAvailable + nextSpent) };
 }
 
+export function convertFifthBeat(value: number, available: number, total: number) {
+  const gained = value === 5 ? 1 : 0;
+  return { beats: gained ? 0 : value, available: available + gained, total: total + gained };
+}
+
 export function BeatTrack({
   label,
   value,
