@@ -68,11 +68,14 @@ test("Vampire normalization owns its line_data, clamps ratings, and drops retire
   assert.equal(creationIssues.some((issue) => issue.field === "touchstones" || issue.field === "disciplines"), false);
 });
 
-test("Vampire core-book catalogs expose all five Clans and line-owned content", async () => {
+test("Vampire core-book catalogs expose the five main Clans, Jiang Shi, and line-owned content", async () => {
   const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
   const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  assert.deepEqual(clans.map((item) => item.id), ["daeva", "gangrel", "mekhet", "nosferatu", "ventrue"]);
+  assert.deepEqual(clans.map((item) => item.id), ["daeva", "gangrel", "mekhet", "nosferatu", "ventrue", "jiang-shi"]);
+  assert.deepEqual(clans.map((item) => item.group), ["core", "core", "core", "core", "core", "uncommon"]);
+  assert.ok(merits.some((item) => item.id === "vtr-etiquette" && item.levels.length === 5));
+  assert.ok(merits.some((item) => item.id === "vtr-hototogisu-status" && item.levels.length === 5));
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 11);
   assert.equal(powers.devotions.length, 29);
@@ -242,15 +245,15 @@ test("known Vampire power and Bloodline Condition references resolve", async () 
   }
 });
 
-test("Half-Damned and Thousand Years of Night Conditions remain source-scoped", async () => {
+test("excluded Ghoul, Dhampyr, and Revenant Conditions are absent", async () => {
   const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
   const halfDamned = conditions.filter((item) => item.sourceCode === "HD");
   const elders = conditions.filter((item) => item.sourceCode === "TY");
 
-  assert.deepEqual(halfDamned.map((item) => item.name), ["Blood Siblings"]);
-  assert.equal(elders.length, 16);
-  assert.equal(elders.filter((item) => item.persistent).length, 12);
-  assert.equal(elders.find((item) => item.name === "Leveraged")?.id, "elder-leveraged");
+  assert.deepEqual(halfDamned, []);
+  assert.equal(elders.length, 12);
+  assert.equal(elders.filter((item) => item.persistent).length, 8);
+  assert.deepEqual(["Blood Siblings", "Children of the Blood", "Curated", "Leveraged", "Weak Vitae"].filter((name) => conditions.some((item) => item.name === name)), []);
   assert.ok(elders.every((item) => item.category === "Elder" && item.source === "Thousand Years of Night"));
 });
 

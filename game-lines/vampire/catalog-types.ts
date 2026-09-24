@@ -6,6 +6,7 @@ export type VampireClanDefinition = {
   disciplines: [string, string, string];
   baneName: string;
   baneSummary: string;
+  group: "core" | "historical" | "uncommon";
   source: string;
   page: number;
 };
@@ -16,6 +17,7 @@ export type VampireCovenantDefinition = {
   translatedName: string;
   advantage: string;
   description: string;
+  group: "core" | "historical" | "uncommon";
   source: string;
   page: number;
 };

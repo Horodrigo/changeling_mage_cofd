@@ -17,6 +17,7 @@ import { MeritPicker } from "@/app/builder/merit-picker";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
@@ -27,7 +28,7 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { createRandomId } from "@/lib/random-id";
 import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
-import type { VampireAnchorDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
+import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
@@ -367,7 +368,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         <span className="kicker">{t("ui.step3VAMPIRE")}</span><h2>{t("ui.vampireTemplate")}</h2>
         <div className="vampire-template-grid vampire-template-standard">
           <div className="vampire-template-primary">
-            <Choice label={t("ui.clan")} value={clanId} setValue={chooseClan} options={reference.clans.map((item) => item.id)} optionLabels={Object.fromEntries(reference.clans.map((item) => [item.id, displayName(item, locale)]))} invalid={missing("clan")} />
+            <GroupedReferenceChoice label={t("ui.clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} />
             <div className="vampire-template-current">
               <strong>{selectedClan ? displayName(selectedClan, locale) : t("ui.noneSelected")}</strong>
               <small>{selectedClan ? selectedClan.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, powers.disciplines, locale)).join(" · ") : t("ui.selectClan")}</small>
@@ -427,12 +428,22 @@ function CovenantSelector({ items, value, onChange, locale, invalid }: { items: 
       <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {t("ui.selectCovenant")}</Button></DialogTrigger>
       <DialogContent className="merit-dialog vtr-dialog">
         <DialogHeader><DialogTitle>{t("ui.selectCovenant")}</DialogTitle><DialogDescription>{t("ui.selectCovenantDescription")}</DialogDescription></DialogHeader>
-        <Choice label={t("sheet.covenant")} value={value} setValue={onChange} options={items.map((item) => item.id)} optionLabels={Object.fromEntries(items.map((item) => [item.id, displayName(item, locale)]))} />
+        <GroupedReferenceChoice label={t("sheet.covenant")} items={items} value={value} onChange={onChange} locale={locale} />
         {selected && <div className="vampire-selector-detail"><strong>{displayName(selected, locale)}</strong><p>{selected.description}</p>{selected.advantage && <small><strong>{t("ui.advantage")}:</strong> {selected.advantage}</small>}</div>}
         <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
     </Dialog>
   </div>;
+}
+
+function GroupedReferenceChoice({ label, items, value, onChange, locale, invalid = false }: { label: string; items: readonly (VampireClanDefinition | VampireCovenantDefinition)[]; value: string; onChange: (value: string) => void; locale: Locale; invalid?: boolean }) {
+  const { t } = useLanguage();
+  const groups = ["core", "historical", "uncommon"] as const;
+  const labels = { core: t("ui.coreOptions"), historical: t("ui.historicalOptions"), uncommon: t("ui.uncommonOptions") };
+  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={onChange}><SelectTrigger><SelectValue placeholder={t("ui.select")} /></SelectTrigger><SelectContent>{groups.map((group, index) => {
+    const options = items.filter((item) => item.group === group);
+    return options.length ? <SelectGroup key={group}>{index > 0 && <SelectSeparator />}<SelectLabel>{labels[group]}</SelectLabel>{options.map((item) => <SelectItem key={item.id} value={item.id}>{displayName(item, locale)}</SelectItem>)}</SelectGroup> : null;
+  })}</SelectContent></Select></label>;
 }
 
 function ChoiceLines({ label, values, count, placeholder, onChange }: { label: string; values: string[]; count: number; placeholder: string; onChange: (value: string[]) => void }) {

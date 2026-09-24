@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 4,
+  "catalogVersion": 5,
   "catalogs": {
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
@@ -34,14 +34,14 @@
     "changeling-kiths": { "version": 1, "url": "/data/changeling/kiths.json" },
     "changeling-kiths-pt": { "version": 1, "url": "/data/changeling/kiths-pt.json" },
     "mage-conditions": { "version": 1, "url": "/data/mage/conditions.json" },
-    "vampire-clans": { "version": 2, "url": "/data/vampire/clans.json" },
-    "vampire-covenants": { "version": 1, "url": "/data/vampire/covenants.json" },
+    "vampire-clans": { "version": 3, "url": "/data/vampire/clans.json" },
+    "vampire-covenants": { "version": 2, "url": "/data/vampire/covenants.json" },
     "vampire-anchors": { "version": 1, "url": "/data/vampire/anchors.json" },
     "vampire-blood-potency": { "version": 1, "url": "/data/vampire/blood-potency.json" },
     "vampire-torpor": { "version": 1, "url": "/data/vampire/torpor.json" },
     "vampire-bloodlines": { "version": 1, "url": "/data/vampire/bloodlines.json" },
-    "merits-vampire": { "version": 3, "url": "/data/vampire/merits.json" },
+    "merits-vampire": { "version": 4, "url": "/data/vampire/merits.json" },
     "vampire-powers": { "version": 5, "url": "/data/vampire/powers.json" },
-    "vampire-conditions": { "version": 3, "url": "/data/vampire/conditions.json" }
+    "vampire-conditions": { "version": 4, "url": "/data/vampire/conditions.json" }
   }
 }
