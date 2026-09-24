@@ -1,5 +1,5 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import type { BloodPotencyRow, VampireDisciplineDefinition, VampireReference } from "./catalog-types";
+import type { BloodPotencyRow, VampireCovenantDefinition, VampireDisciplineDefinition, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
@@ -9,13 +9,13 @@ export const VAMPIRE_CREATION_DISCIPLINES = [
 
 export const VAMPIRE_DISCIPLINES = [...VAMPIRE_CREATION_DISCIPLINES, "Dead Signal", "Cachexy", "Crochan"] as const;
 
-export function vampireDisciplineAvailable(name: string, bloodlineId: string, clanId = "", covenantId = "") {
+export function vampireDisciplineAvailable(name: string, bloodlineId: string, clanId = "", covenantId: string | readonly string[] = "") {
   if (name === "Dead Signal") return bloodlineId === "jharana";
   if (name === "Cachexy") return bloodlineId === "morbus";
   if (name === "Crochan") return bloodlineId === "bron";
   if (name === "Praestantia") return clanId === "akhud";
   if (name === "Vitiate") return clanId === "bekaak";
-  if (name === "Triadic Evolution") return covenantId === "belials-brood";
+  if (name === "Triadic Evolution") return Array.isArray(covenantId) ? covenantId.includes("belials-brood") : covenantId === "belials-brood";
   return true;
 }
 
@@ -61,6 +61,32 @@ export function recordRatings(value: unknown, keys: readonly string[], maximum =
 
 export function stringArray(value: unknown) {
   return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
+}
+
+export function vampireCovenantIds(data: Record<string, unknown>) {
+  const saved = stringArray(data.covenant_ids);
+  const primary = String(data.covenant_id ?? "covenantless");
+  const ids = [...new Set(saved.length ? saved : [primary])];
+  return ids.includes("covenantless") && ids.length > 1 ? ids.filter((id) => id !== "covenantless") : ids;
+}
+
+export function hollowKaRank(humanity: number) {
+  const value = boundedRating(humanity, 1, 10, 7);
+  return value >= 9 ? 1 : value >= 7 ? 2 : value >= 5 ? 3 : value >= 3 ? 4 : 5;
+}
+
+export function hollowKaLimits(rank: number) {
+  return [
+    { traitMaximum: 5, attributeMinimum: 5, attributeMaximum: 8, essenceMaximum: 10, numinaMinimum: 1, numinaMaximum: 3 },
+    { traitMaximum: 7, attributeMinimum: 9, attributeMaximum: 14, essenceMaximum: 15, numinaMinimum: 3, numinaMaximum: 5 },
+    { traitMaximum: 9, attributeMinimum: 15, attributeMaximum: 25, essenceMaximum: 20, numinaMinimum: 5, numinaMaximum: 7 },
+    { traitMaximum: 12, attributeMinimum: 26, attributeMaximum: 35, essenceMaximum: 25, numinaMinimum: 7, numinaMaximum: 9 },
+    { traitMaximum: 15, attributeMinimum: 36, attributeMaximum: 45, essenceMaximum: 50, numinaMinimum: 9, numinaMaximum: 11 },
+  ][Math.max(1, Math.min(5, Math.trunc(rank))) - 1];
+}
+
+export function simplifiedHollowKaPool(humanity: number) {
+  return Math.max(0, 10 - boundedRating(humanity, 0, 10, 7));
 }
 
 export function objectArray(value: unknown) {
@@ -160,8 +186,22 @@ export function vampireDerived(
 }
 
 export function vampireCovenantStatus(sheet: Pick<CharacterSheet, "merits">, ...covenantNames: string[]) {
-  const expected = new Set(covenantNames.map((name) => name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("en-US").replace(/[^a-z0-9]/g, "")));
+  const expected = new Set(covenantNames.map(normalizeAffiliation));
   return Math.max(0, ...sheet.merits
-    .filter((merit) => merit.name === "Kindred Status" && expected.has(String(merit.configuration?.group ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("en-US").replace(/[^a-z0-9]/g, "")))
+    .filter((merit) => merit.name === "Kindred Status" && expected.has(normalizeAffiliation(String(merit.configuration?.group ?? ""))))
     .map((merit) => Number(merit.dots) || 0));
+}
+
+function normalizeAffiliation(value: string) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("en-US").replace(/[^a-z0-9]/g, "");
+}
+
+export function vampireCovenantAffiliationDots(sheet: Pick<CharacterSheet, "merits">, covenants: readonly VampireCovenantDefinition[]) {
+  const covenantNames = new Set(covenants.flatMap((item) => [item.id, item.name, item.translatedName]).map(normalizeAffiliation));
+  const shadowNames = new Set(covenants.filter((item) => item.group === "shadow-cult").flatMap((item) => [item.id, item.name, item.translatedName]).map(normalizeAffiliation));
+  return sheet.merits.reduce((sum, merit) => {
+    if (merit.name === "Kindred Status" && covenantNames.has(normalizeAffiliation(String(merit.configuration?.group ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
+    if (merit.name === "Mystery Cult Initiation" && shadowNames.has(normalizeAffiliation(String(merit.configuration?.cult ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
+    return sum;
+  }, 0);
 }

@@ -298,6 +298,15 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
 
 .vampire-selector-detail p { margin: 0; font-size: 12px; line-height: 1.45; }
 
+.vampire-covenant-options { display: grid; gap: 12px; max-height: 46vh; overflow: auto; }
+.vampire-covenant-options section { display: grid; gap: 6px; }
+.vampire-covenant-options h3 { margin: 0; font-size: 13px; }
+.vampire-covenant-options article { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; align-items: center; padding: 7px; border: 1px solid rgba(77, 23, 28, .18); }
+.vampire-covenant-options article.selected { background: rgba(116, 45, 49, .08); }
+.vampire-covenant-options article > div { display: grid; gap: 2px; }
+.vampire-covenant-options article small { color: #675657; }
+.hollow-ka-builder { display: grid; gap: 13px; }
+
 .vampire-kindred-status-grant {
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(170px, .7fr) minmax(170px, .7fr);

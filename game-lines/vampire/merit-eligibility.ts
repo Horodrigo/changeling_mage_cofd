@@ -16,6 +16,16 @@ export function zirnitraMortalMeritCount(context: MeritPrerequisiteContext) {
 
 export function vampireMeritEligible(merit: MeritDefinition, context: MeritPrerequisiteContext, zirnitraRating: number) {
   if (!meritPrerequisitesMet(merit, context)) return false;
+  const requiredIdentity: Record<string, string> = {
+    "Star-Crossed": "star-crossed",
+    Xiao: "xiao",
+    Typhos: "typhos",
+    Inconnu: "inconnu",
+    Moirai: "moirai",
+    "Architects of the Monolith": "architects-of-the-monolith",
+  };
+  const identity = requiredIdentity[merit.category];
+  if (identity && !(context.archetypes ?? []).includes(identity)) return false;
   if (!isMortalSupernaturalMerit(merit)) return true;
   const count = zirnitraMortalMeritCount(context);
   const limit = zirnitraMortalMeritLimit(zirnitraRating);

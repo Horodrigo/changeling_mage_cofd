@@ -27,7 +27,7 @@ import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type { VampireCondition, VampireMechanics, VampirePowers, VampireReference, VampireRitualDisciplineDefinition } from "./catalog-types";
-import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
+import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
 import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice } from "./detachment";
@@ -48,9 +48,9 @@ export function ownedVampireCoils(powers: Pick<VampirePowers, "coils">, ratings:
   return powers.coils.filter((item) => Number(ratings[item.id] ?? 0) > 0);
 }
 
-export function ownedVampireRituals(powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles" | "kimiyaFormulae" | "therionSacrileges">, discipline: VampireRitualDisciplineDefinition["id"], ids: unknown) {
+export function ownedVampireRituals(powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles" | "kimiyaFormulae" | "therionSacrileges" | "gildedInvocations">, discipline: VampireRitualDisciplineDefinition["id"], ids: unknown) {
   const selected = new Set(stringList(ids));
-  const catalog = discipline === "cruac" ? powers.cruacRites : discipline === "theban" ? powers.thebanMiracles : discipline === "kimiya" ? powers.kimiyaFormulae : powers.therionSacrileges;
+  const catalog = discipline === "cruac" ? powers.cruacRites : discipline === "theban" ? powers.thebanMiracles : discipline === "kimiya" ? powers.kimiyaFormulae : discipline === "therion" ? powers.therionSacrileges : powers.gildedInvocations;
   return catalog.filter((item) => selected.has(item.id));
 }
 
@@ -59,6 +59,7 @@ const ritualFields = {
   theban: ["theban_rating", "theban_miracle_ids"],
   kimiya: ["kimiya_rating", "kimiya_formula_ids"],
   therion: ["therion_rating", "therion_sacrilege_ids"],
+  "gilded-cage": ["gilded_cage_rating", "gilded_invocation_ids"],
 } as const;
 
 function selectedConditions(value: unknown): SelectedCondition[] {
@@ -710,7 +711,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     : {};
   const clan = reference.clans.find((item) => item.id === data.clan_id);
   const bloodline = bloodlines.find((item) => item.id === data.bloodline_id);
-  const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
+  const covenants = reference.covenants.filter((item) => vampireCovenantIds(data).includes(item.id));
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
   const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
@@ -790,7 +791,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetField label={t("sheet.clan")} value={localized(clan, locale)} />
     <SheetField label={t("ui.player")} value={character.character.player} />
     <SheetField label={t("sheet.dirge")} value={localized(dirge, locale)} tooltip={dirge?.allWillpower} />
-    <SheetField label={t("sheet.covenant")} value={localized(covenant, locale)} />
+    <SheetField label={t("sheet.covenant")} value={covenants.map((item) => localized(item, locale)).join(" · ")} />
     <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />
     <SheetField label={t("ui.concept")} value={character.character.concept} />
     <BloodlineSheetField value={bloodline?.name ?? (hasBloodline ? String(data.bloodline_id) : t("ui.join"))} onOpen={openBloodline} />
@@ -825,7 +826,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const stats = <>{attributes}{skills}</>;
   const humanitySection = <HumanityTrack character={character} updateSheet={updateSheet} value={humanity} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} bloodlineId={bloodline?.id} />;
   const banesSection = <BaneEditor character={character} updateSheet={updateSheet} clanBaneName={clan?.baneName ?? t("ui.clanBane")} clanBaneSummary={clan?.baneSummary ?? ""} vastDynasty={hasRuleEffect("embrace-humanity")} clanBaneActive={clanBaneActive} bloodlineBane={bloodline ? { name: bloodline.baneName, summary: bloodline.baneSummary } : undefined} />;
-  const expandedMerits = character.merits.filter((item) => (!item.grantedBy || item.grantedBy === "Vampire Template") && (Boolean(VAMPIRE_MERIT_CONFIGURATIONS.find((definition) => definition.name === item.name)) || Boolean(merits.find((definition) => definition.name === item.name)?.levels?.length)));
+  const expandedMerits = character.merits.filter((item) => (!item.grantedBy || ["Vampire Template", "Vampire Shadow Cult"].includes(item.grantedBy)) && (Boolean(VAMPIRE_MERIT_CONFIGURATIONS.find((definition) => definition.name === item.name)) || Boolean(merits.find((definition) => definition.name === item.name)?.levels?.length) || item.name === "Mystery Cult Initiation"));
   const summary = <>
     {identity}
     <SheetHeading>{t("ui.aspirations")}</SheetHeading>
@@ -858,6 +859,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     />
   </>;
   const detailsPage = <>
+    {clan?.id === "hollow-mekhet" && <HollowKaCard data={data.hollow_ka} />}
     <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
     <VampireExpandedMeritList character={character} updateSheet={updateSheet} merits={expandedMerits} catalog={merits} locale={locale} />
     {isMobile && <>{humanitySection}{banesSection}<SheetHeading>{t("ui.conditions")}</SheetHeading><ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} /></>}
@@ -1125,7 +1127,7 @@ function VampireExpandedMeritList({ character, updateSheet, merits, catalog, loc
       ? configuredDefinitionLines(configDefinition, merit.dots, merit.configuration)
       : commonExpandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale) ?? [];
     const meritIndex = character.merits.indexOf(merit);
-    const editor = configDefinition && merit.grantedBy !== "Vampire Template"
+    const editor = configDefinition && !["Vampire Template", "Vampire Shadow Cult"].includes(String(merit.grantedBy ?? ""))
       ? <MeritConfigurationEditor compact merit={merit} ownedMerits={character.merits} catalog={[...catalog]} definitions={VAMPIRE_MERIT_CONFIGURATIONS} onChange={(configuration) => {
           const next = structuredClone(character);
           next.merits[meritIndex].configuration = configuration;
@@ -1145,7 +1147,7 @@ function VampireExpandedMeritList({ character, updateSheet, merits, catalog, loc
 
 function MeritList({ character, catalog, locale }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; locale: string }) {
   const { t } = useLanguage();
-  const visible = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Vampire Template");
+  const visible = character.merits.filter((item) => !item.grantedBy || ["Vampire Template", "Vampire Shadow Cult"].includes(item.grantedBy));
   if (!visible.length) return <em className="rule-callout merit-empty" >{t("ui.noMeritSelected")}</em>;
   return <div className="sheet-merits single-column">{visible.map((merit, index) => {
     const definition = catalog.find((item) => item.name === merit.name);
@@ -1161,12 +1163,21 @@ function MeritList({ character, catalog, locale }: { character: CharacterSheet; 
   })}</div>;
 }
 
+function HollowKaCard({ data }: { data: unknown }) {
+  const { t } = useLanguage();
+  if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+  const ka = data as Record<string, unknown>;
+  const list = (key: string) => stringList(ka[key]).join(" · ");
+  return <><SheetHeading>{t("ui.ka")}</SheetHeading><article className="vampire-lore-card"><header><strong>{String(ka.name ?? "Ka")}</strong><span>{String(ka.concept ?? "")}</span></header>{ka.simplified ? <p><strong>{t("ui.simplifiedHollow")}:</strong> {t("ui.simplifiedHollowSheet")}</p> : <><p>{t("ui.kaTraits", { rank: Number(ka.rank ?? 1), power: Number(ka.power ?? 1), finesse: Number(ka.finesse ?? 1), resistance: Number(ka.resistance ?? 1) })}</p><p><strong>{t("ui.bane")}:</strong> {String(ka.bane ?? "")}</p><p><strong>{t("ui.anchors")}:</strong> {list("anchors")}</p><p><strong>{t("ui.influences")}:</strong> {list("influences")}</p><p><strong>{t("ui.manifestations")}:</strong> {list("manifestations")}</p><p><strong>{t("ui.numina")}:</strong> {list("numina")}</p></>}</article></>;
+}
+
 function PurchasedPowers({ character, powers, locale }: { character: CharacterSheet; powers: VampirePowers; locale: string }) {
   const { t } = useLanguage();
   const ids = new Set(stringList(character.line_data.devotion_ids));
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" && !Array.isArray(character.line_data.ordo_dracul) ? character.line_data.ordo_dracul as Record<string, unknown> : {};
   const scaleIds = new Set(stringList(ordo.scale_ids));
-  const selected = [...powers.devotions.filter((item) => ids.has(item.id)), ...powers.scales.filter((item) => scaleIds.has(item.id))];
+  const detournementIds = new Set(stringList(character.line_data.detournement_ids));
+  const selected = [...powers.devotions.filter((item) => ids.has(item.id)), ...powers.scales.filter((item) => scaleIds.has(item.id)), ...powers.detournements.filter((item) => detournementIds.has(item.id))];
   if (!selected.length) return null;
   return <><SheetHeading>{t("sheet.otherPowers")}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => {
     const rating = item.rating;

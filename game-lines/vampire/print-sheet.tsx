@@ -11,7 +11,7 @@ import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-lin
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import type { VampireCondition, VampirePowers, VampireReference } from "./catalog-types";
-import { objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
+import { objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 
@@ -48,7 +48,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   ];
   const clan = reference.clans.find((item) => item.id === data.clan_id);
   const bloodline = reference.bloodlines.find((item) => item.id === data.bloodline_id);
-  const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
+  const covenants = reference.covenants.filter((item) => vampireCovenantIds(data).includes(item.id));
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
   const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
@@ -57,10 +57,10 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
   const disciplineRows = [
     ...Object.entries(disciplines).filter(([, rating]) => Number(rating) > 0).map(([name, rating]) => ({ name: vampireDisciplineDisplayName(name, powers.disciplines, locale), rating: Number(rating) })),
-    ...(powers.ritualDisciplines ?? []).flatMap((item) => { const rating = Number(bloodSorcery[`${item.id}_rating`] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
+    ...(powers.ritualDisciplines ?? []).flatMap((item) => { const key = item.id === "gilded-cage" ? "gilded_cage_rating" : `${item.id}_rating`; const rating = Number(bloodSorcery[key] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
     ...powers.coils.flatMap((item) => { const rating = Number(coilRatings[item.id] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
   ];
-  const meritRows = character.merits.filter((merit) => !merit.grantedBy || merit.grantedBy === "Clã").map((merit) => {
+  const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Clã", "Vampire Template", "Vampire Shadow Cult"].includes(merit.grantedBy)).map((merit) => {
     const definition = meritCatalog.find((item) => item.name === merit.name);
     const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
     const detail = meritConfigurationTitle(merit.configuration);
@@ -69,10 +69,11 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const mainDisciplines = disciplineRows.slice(0, 8);
   const mainMerits = meritRows.slice(0, 8);
   const overflowTraits = [...disciplineRows.slice(8), ...meritRows.slice(8)];
-  const rites = powers.cruacRites.filter((item) => new Set(stringList(bloodSorcery.cruac_rite_ids)).has(item.id));
+  const rites = [...powers.cruacRites.filter((item) => new Set(stringList(bloodSorcery.cruac_rite_ids)).has(item.id)), ...powers.gildedInvocations.filter((item) => new Set(stringList(bloodSorcery.gilded_invocation_ids)).has(item.id))];
   const miracles = powers.thebanMiracles.filter((item) => new Set(stringList(bloodSorcery.theban_miracle_ids)).has(item.id));
   const devotionIds = new Set(stringList(data.devotion_ids));
-  const devotions = powers.devotions.filter((item) => devotionIds.has(item.id)).map((item) => localized(item, locale));
+  const detournementIds = new Set(stringList(data.detournement_ids));
+  const devotions = [...powers.devotions.filter((item) => devotionIds.has(item.id)), ...powers.detournements.filter((item) => detournementIds.has(item.id))].map((item) => localized(item, locale));
   const bloodBonds = objectArray(character.current_state.blood_bonds).map((item) => [String(item.subject ?? "").trim(), Number(item.stage) > 0 ? `${t("ui.stage")} ${Number(item.stage)}` : "", String(item.notes ?? "").trim()].filter(Boolean).join(" · "));
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
@@ -90,7 +91,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const identity = [
     [t("ui.name"), character.character.name], [t("sheet.mask"), localized(mask, locale)], [t("sheet.clan"), localized(clan, locale)],
     [t("ui.player"), character.character.player], [t("sheet.dirge"), localized(dirge, locale)], [t("sheet.bloodline"), localized(bloodline, locale)],
-    [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("sheet.covenant"), localized(covenant, locale)],
+    [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("sheet.covenant"), covenants.map((item) => localized(item, locale)).join(" · ")],
   ];
   const weapons = stringList(data.combat_weapons).map((id) => WEAPONS.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));
   const equipment = stringList(data.combat_equipment).map((id) => EQUIPMENT.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));

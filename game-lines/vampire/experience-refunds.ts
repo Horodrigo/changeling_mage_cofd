@@ -10,8 +10,9 @@ export type VampireAdvancementUndo =
   | { kind: "devotion"; id: string }
   | { kind: "cruac"; ids?: string[]; id?: string; humanityLost: number; amount?: number }
   | { kind: "theban"; ids?: string[]; id?: string; amount?: number }
-  | { kind: "bloodSorcery"; ratingKey: "kimiya_rating" | "therion_rating"; idsKey: "kimiya_formula_ids" | "therion_sacrilege_ids"; ids?: string[]; amount?: number }
-  | { kind: "ritual"; key: "cruac_rite_ids" | "theban_miracle_ids" | "kimiya_formula_ids" | "therion_sacrilege_ids"; id: string }
+  | { kind: "bloodSorcery"; ratingKey: "kimiya_rating" | "therion_rating" | "gilded_cage_rating"; idsKey: "kimiya_formula_ids" | "therion_sacrilege_ids" | "gilded_invocation_ids"; ids?: string[]; amount?: number }
+  | { kind: "ritual"; key: "cruac_rite_ids" | "theban_miracle_ids" | "kimiya_formula_ids" | "therion_sacrilege_ids" | "gilded_invocation_ids"; id: string }
+  | { kind: "detournement"; id: string }
   | { kind: "coil"; id: string; amount?: number }
   | { kind: "scale"; id: string };
 
@@ -39,6 +40,7 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
   }
   else if (undo.kind === "willpower") sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.amount ?? 1));
   else if (undo.kind === "devotion") sheet.line_data.devotion_ids = without(sheet.line_data.devotion_ids, undo.id);
+  else if (undo.kind === "detournement") sheet.line_data.detournement_ids = without(sheet.line_data.detournement_ids, undo.id);
   else if (undo.kind === "cruac" || undo.kind === "theban" || undo.kind === "bloodSorcery" || undo.kind === "ritual") {
     const sorcery = sheet.line_data.blood_sorcery && typeof sheet.line_data.blood_sorcery === "object" && !Array.isArray(sheet.line_data.blood_sorcery)
       ? { ...sheet.line_data.blood_sorcery as Record<string, unknown> }

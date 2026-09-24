@@ -180,5 +180,29 @@
     "summary": "Self-reinventing social predators who excel at projecting the Beast through its three aspects.",
     "baneName": "The Opposing Curse", "baneSummary": "Against anyone not subject to a Predatory Aura Condition, lose 10-again on all non-reflexive actions; Predatory Aura rolls are unaffected.",
     "sourceId": "vtr-onyx-path-kerberos", "source": "Onyx Path Blog: The Jaws of the Beast", "page": 0
+  },
+  {
+    "id": "star-crossed", "name": "Star-Crossed", "translatedName": "Star-Crossed", "parentClan": "Daeva", "nicknames": ["Custodians", "Sophists"],
+    "favoredAttributes": ["Dexterity", "Manipulation"], "disciplines": ["Celerity", "Dominate", "Majesty", "Resilience"],
+    "summary": "Custodians who preserve mortal Purities in repeating moments and refine their timeless blood into Electrum.",
+    "baneName": "The Curse of Self-Reflection", "baneSummary": "After a mortal sees any visual representation of the vampire, the Star-Crossed's Social actions with that mortal are capped by Humanity for the rest of the night. Touchstones are exempt, but Purities are not.",
+    "sourceId": "vtr-sin-again", "source": "Sin Again: Daeva", "page": 52,
+    "homebrew": true
+  },
+  {
+    "id": "xiao", "name": "Xiao", "translatedName": "Xiao", "parentClan": "Daeva", "nicknames": ["Ascended", "Apostates", "Parasites", "California Xiao"],
+    "favoredAttributes": ["Dexterity", "Manipulation"], "disciplines": ["Celerity", "Majesty", "Nightmare", "Vigor"],
+    "summary": "Emotionally blunted predators divided between the exploitative Sect and Apostates who weaponize their detachment.",
+    "baneName": "The Detached Curse", "baneSummary": "Mundane Empathy and Socialize rolls involving humans treat Humanity as two dots lower, and failures become dramatic failures. This does not apply to Touchstones.",
+    "sourceId": "vtr-sin-again", "source": "Sin Again: Daeva", "page": 57,
+    "homebrew": true
+  },
+  {
+    "id": "typhos", "name": "Typhos", "translatedName": "Typhos", "parentClan": "Ventrue", "nicknames": ["Sawbones", "The Institute", "Surgeons"],
+    "favoredAttributes": ["Composure", "Presence"], "disciplines": ["Animalism", "Auspex", "Dominate", "Resilience"],
+    "summary": "Biomedical predators who alter mortal hosts through Arthmoic Surgery and the international Typhos Institute.",
+    "baneName": "The Clinician's Curse", "baneSummary": "Treat Humanity as one dot lower on rolls to relate to humans. The penalty is permanently removed for a human on whom the Typhos performs a substantial medical procedure.",
+    "sourceId": "vtr-false-gods", "source": "False Gods: Ventrue", "page": 55,
+    "homebrew": true
   }
 ]

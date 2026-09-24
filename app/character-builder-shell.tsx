@@ -154,7 +154,7 @@ export function useCommonBuilderState(
 ) {
   const startingAttributes = editableTraits(initial, "attributes", options.experienceHistoryKey, options.adjustAttributes);
   const startingSkills = editableTraits(initial, "skills", options.experienceHistoryKey, options.adjustSkills);
-  const [step, setStep] = useState(() => isCreationDraft(initial) ? Math.max(1, Math.min(4, Number(initial?.current_state.creation_draft_step ?? 1))) : 1);
+  const [step, setStep] = useState(() => isCreationDraft(initial) ? Math.max(1, Number(initial?.current_state.creation_draft_step ?? 1)) : 1);
   const [allowAdvancement, setAllowAdvancement] = useState(initial?.current_state.creation_advancement_enabled === true);
   const [error, setError] = useState("");
   const [name, setName] = useState(initial?.character.name ?? "");
@@ -235,6 +235,7 @@ export function CharacterBuilderShell({
   identity,
   traits,
   lineTemplate,
+  lineSteps = [],
   prepareAdvancement,
   renderAdvancement,
   draft,
@@ -248,6 +249,7 @@ export function CharacterBuilderShell({
   identity: ReactNode;
   traits: ReactNode;
   lineTemplate: ReactNode;
+  lineSteps?: readonly { label: string; content: ReactNode }[];
   prepareAdvancement?: (previous?: CharacterSheet) => CharacterSheet;
   renderAdvancement?: (sheet: CharacterSheet, updateSheet: (sheet: CharacterSheet) => void) => ReactNode;
   draft: boolean;
@@ -256,8 +258,9 @@ export function CharacterBuilderShell({
 }) {
   const { t } = useLanguage();
   const hasAdvancement = Boolean(prepareAdvancement && renderAdvancement);
+  const advancementStep = 4 + lineSteps.length;
   const [exitOpen, setExitOpen] = useState(false);
-  const [advancement, setAdvancement] = useState<CharacterSheet | undefined>(() => state.step === 4 && prepareAdvancement ? prepareAdvancement() : undefined);
+  const [advancement, setAdvancement] = useState<CharacterSheet | undefined>(() => state.step === advancementStep && prepareAdvancement ? prepareAdvancement() : undefined);
   const requestExit = useCallback(() => setExitOpen(true), []);
   const leave = useBuilderExitGuard(true, requestExit);
   const saveAndExit = (asDraft: boolean) => { setExitOpen(false); leave(() => onFinish(asDraft, advancement)); };
@@ -269,10 +272,13 @@ export function CharacterBuilderShell({
       return;
     }
     state.setError("");
-    if (state.step === 3 && state.allowAdvancement && prepareAdvancement) setAdvancement(prepareAdvancement(advancement));
+    if (state.step === advancementStep - 1 && state.allowAdvancement && prepareAdvancement) setAdvancement(prepareAdvancement(advancement));
     state.setStep(state.step + 1);
   };
-  const steps = [t("ui.identity"), t("ui.traits"), templateLabel, ...(hasAdvancement && state.allowAdvancement ? [t("ui.advancement")] : [])];
+  const steps = [t("ui.identity"), t("ui.traits"), templateLabel, ...lineSteps.map((step) => step.label), ...(hasAdvancement && state.allowAdvancement ? [t("ui.advancement")] : [])];
+  useEffect(() => {
+    if (state.step > steps.length) state.setStep(steps.length);
+  }, [state, steps.length]);
   return <section className={`builder line-theme-${line.toLowerCase()}`}>
     <div className="builder-head">
       <Button variant="ghost" onClick={requestExit}><ArrowLeft /> {t("ui.back")}</Button>
@@ -281,7 +287,7 @@ export function CharacterBuilderShell({
     </div>
     {hasAdvancement && <label className="builder-advancement-toggle">
       <span><strong>{t("ui.allowCreationAdvancement")}</strong><small>{t("ui.allowCreationAdvancementDescription")}</small></span>
-      <Switch checked={state.allowAdvancement} onCheckedChange={(checked) => { state.setAllowAdvancement(checked); if (!checked) { setAdvancement(undefined); if (state.step === 4) state.setStep(3); } }} />
+      <Switch checked={state.allowAdvancement} onCheckedChange={(checked) => { state.setAllowAdvancement(checked); if (!checked) { setAdvancement(undefined); if (state.step === advancementStep) state.setStep(advancementStep - 1); } }} />
     </label>}
     <div className="stepper">
       {steps.map((label, index) =>
@@ -295,7 +301,7 @@ export function CharacterBuilderShell({
       <span>{issues.slice(0, 6).map((issue) => issue.label).join(" · ")}{issues.length > 6 ? ` · +${issues.length - 6}` : ""}</span>
     </div>}
     {state.error && <div className="builder-error">{state.error}</div>}
-    <div className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : state.step === 3 ? lineTemplate : advancement && renderAdvancement ? renderAdvancement(advancement, setAdvancement) : null}</div>
+    <div className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : state.step === 3 ? lineTemplate : state.step < advancementStep ? lineSteps[state.step - 4]?.content : advancement && renderAdvancement ? renderAdvancement(advancement, setAdvancement) : null}</div>
     <div className="builder-actions">
       {state.step > 1 && <Button variant="outline" onClick={() => state.setStep(state.step - 1)}><ArrowLeft /> {t("ui.previous")}</Button>}
       <span />
