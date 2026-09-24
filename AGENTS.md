@@ -222,6 +222,11 @@ Work in small verifiable batches. Reconcile IDs, counts, source, page, required 
 - Share controls only when behavior is truly common. A shared visual pattern does not imply a shared mechanical abstraction.
 - Keep line-specific forms and interactions in the owning module.
 - Avoid giant switch components, universal section engines, and large optional-prop matrices.
+- Desktop page content uses the shared `1200px` maximum width and is centered. Full-width sections inside a page grid must explicitly span every grid column; do not rely on a generic `wide` class with unrelated selectors.
+- Use the shared `Button`, `Input`, `Textarea`, and select primitives for application controls. Standard controls are `36px` high; `32px` compact controls are reserved for card-level and inline actions. Controls sharing a row use the same height and align to the field baseline.
+- Section headers use the shared `panel-heading` pattern: copy starts at the top-left and one primary action occupies the top-right action slot. On narrow screens the action moves below the copy and fills the available width.
+- Navigation and menu rows center labels and icons vertically, keep icons in a fixed non-shrinking `16px` slot, and use a minimum `44px` interaction target. Sibling tab triggers divide the available width evenly on desktop and become a horizontal scroll strip on narrow screens.
+- Homebrew source inventories use one outer source disclosure, category tabs, and border-separated item disclosure rows. Keep each item's name and activation state visible; reveal descriptions and item actions on expansion instead of nesting category panels and item cards.
 - Add-item actions use the compact visual scale established by the shared Builder controls.
 - Remove-item actions use the compact card-level treatment used elsewhere.
 - Catalog selection uses compact checkboxes when an item is a simple toggle. Keep a compact action button when selection has additional semantics, including repeatable Merit instances.

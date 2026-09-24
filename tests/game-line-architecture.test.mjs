@@ -186,6 +186,14 @@ test("Homebrew shell dispatches line-owned editors lazily", async () => {
   assert.match(changeling, /loadHomebrew\s*:\s*\(\)\s*=>\s*import\(/);
 });
 
+test("Changeling Homebrew uses category tabs and compact disclosure rows", async () => {
+  const homebrew = await source("game-lines/changeling/homebrew.tsx");
+
+  assert.match(homebrew, /homebrew-kind-tabs-list/);
+  assert.match(homebrew, /homebrew-list-item/);
+  assert.doesNotMatch(homebrew, /className="homebrew-card"/);
+});
+
 test("workspace routes builder and sheet surfaces through the registry shells", async () => {
   const workspace = await source("app/workspace.tsx");
 

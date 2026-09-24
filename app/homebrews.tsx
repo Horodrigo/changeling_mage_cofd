@@ -13,7 +13,7 @@ import { GameLineHomebrew } from "./game-line-homebrew";
 type Splat = "Core" | PersistedGameLineId;
 const CoreHomebrew = lazy(() => import("./core-homebrew"));
 const SPLATS: Array<{ id: Splat; label: string }> = [
-  { id: "Core", label: "Core" }, { id: "VtR", label: "Vamp" }, { id: "CtL", label: "Changeling" }, { id: "MtA", label: "Mage" },
+  { id: "Core", label: "Core" }, { id: "VtR", label: "Vampire" }, { id: "CtL", label: "Changeling" }, { id: "MtA", label: "Mage" },
 ];
 
 export default function Homebrews() {
