@@ -464,6 +464,13 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.match(registration, /homebrew:\s*\[[^\]]*"vampire-powers"[^\]]*"vampire-conditions"/);
   const homebrew = await readFile(`${root}/game-lines/vampire/homebrew.tsx`, "utf8");
   assert.match(homebrew, /gildedInvocations[\s\S]*"gilded-cage"/);
+  assert.match(homebrew, /"Lessons of Erebus": \{ kind: disciplines, parentId: "truths-of-erebus" \}/);
+  assert.match(homebrew, /"Blood Tether Lashes": \{ kind: disciplines, parentId: "blood-tether" \}/);
+  assert.match(homebrew, /"Ortam Recipes": \{ kind: disciplines, parentId: "ortam" \}/);
+  assert.match(homebrew, /"Lithopedia Rites": \{ kind: bloodSorcery, parentId: "lithopedia" \}/);
+  assert.match(homebrew, /item\.id === "lithopedia" \? bloodSorcery : disciplines/);
+  for (const collection of ["cruacRites", "thebanMiracles", "detournements"])
+    assert.match(homebrew, new RegExp(`powers\\.${collection}\\.forEach\\(\\(item\\) => add\\(item, bloodSorcery`));
   assert.match(homebrew, /homebrew-subitem-list/);
 });
 

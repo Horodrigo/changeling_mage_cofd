@@ -28,6 +28,13 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   const preferences = useHomebrewPreferences(), customBloodlines = useBloodlineHomebrews();
   const reference = catalogs.get<VampireReference>("vampire-reference"), powers = catalogs.get<VampirePowers>("vampire-powers"), conditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions");
   const merits = catalogs.get<readonly MeritDefinition[]>("vampire-merits");
+  const bloodSorcery = h("Feitiçaria de Sangue", "Blood Sorcery"), disciplines = h("Disciplinas", "Disciplines");
+  const nestedDevotions: Record<string, { kind: string; parentId: string }> = {
+    "Lessons of Erebus": { kind: disciplines, parentId: "truths-of-erebus" },
+    "Blood Tether Lashes": { kind: disciplines, parentId: "blood-tether" },
+    "Ortam Recipes": { kind: disciplines, parentId: "ortam" },
+    "Lithopedia Rites": { kind: bloodSorcery, parentId: "lithopedia" },
+  };
   const [editing, setEditing] = useState<VampireBloodlineDefinition | null>(null);
   const listed: ListedHomebrew[] = [];
   const detail = (label: string, value: unknown): Detail[] => String(value ?? "").trim() ? [{ label, text: String(value).trim() }] : [];
@@ -46,13 +53,13 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   reference.bloodlines.forEach((item) => add(item, "Bloodlines", [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Clã de origem", "Parent Clan"), item.parentClan), ...detail(h("Pré-requisitos", "Prerequisites"), item.requirements), ...detail(h("Atributos favorecidos", "Favored Attributes"), item.favoredAttributes.join(" / ")), ...detail(h("Disciplinas", "Disciplines"), item.disciplines.join(", ")), ...detail(item.giftName ?? "", item.giftSummary), ...detail(item.baneName, item.baneSummary)]));
   reference.covenants.forEach((item) => add(item, "Covenants", [...detail(h("Descrição", "Description"), item.description), ...detail(h("Vantagem", "Advantage"), item.advantage)]));
   merits.forEach((item) => add(item, h("Méritos", "Merits"), [...detail(h("Níveis", "Ratings"), item.ratings.join(", ")), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...detail(h("Efeito", "Effect"), locale === "pt-BR" ? item.description : item.descriptionEn ?? item.description), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]));
-  powers.disciplines.forEach((item) => add(item, h("Disciplinas", "Disciplines"), [...detail(h("Resumo", "Summary"), item.summary), ...detail("Bloodline", item.bloodlineId), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.summary))]));
-  powers.ritualDisciplines.forEach((item) => add(item, h("Feitiçaria de Sangue", "Blood Sorcery"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.statusRequirement), ...mechanics(item)]));
-  powers.devotions.forEach((item) => add(item, item.category ?? h("Devoções", "Devotions"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)]));
-  powers.cruacRites.forEach((item) => add(item, h("Ritos", "Rites"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
-  powers.thebanMiracles.forEach((item) => add(item, h("Milagres", "Miracles"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
-  powers.gildedInvocations.forEach((item) => add(item, h("Feitiçaria de Sangue", "Blood Sorcery"), [...detail(h("Disciplina", "Discipline"), "Gilded Cage"), ...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)], "gilded-cage"));
-  powers.detournements.forEach((item) => add(item, "Detournements", [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)]));
+  powers.disciplines.forEach((item) => add(item, item.id === "lithopedia" ? bloodSorcery : disciplines, [...detail(h("Resumo", "Summary"), item.summary), ...detail("Bloodline", item.bloodlineId), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.summary))]));
+  powers.ritualDisciplines.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.statusRequirement), ...mechanics(item)]));
+  powers.devotions.forEach((item) => { const placement = item.category ? nestedDevotions[item.category] : undefined; add(item, placement?.kind ?? item.category ?? h("Devoções", "Devotions"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId); });
+  powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
+  powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
+  powers.gildedInvocations.forEach((item) => add(item, bloodSorcery, [...detail(h("Disciplina", "Discipline"), "Gilded Cage"), ...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)], "gilded-cage"));
+  powers.detournements.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)]));
   conditions.forEach((item) => add(item, h("Condições", "Conditions"), [...detail(h("Descrição", "Description"), item.description), ...detail(h("Penalidade", "Penalty"), item.penalty), ...detail(h("Persistente", "Persistent"), item.persistent ? h("Sim", "Yes") : ""), ...detail(h("Resolução", "Resolution"), item.resolution), ...detail("Beat", item.beat)]));
   listed.push({ id: SIMPLIFIED_HOLLOW_ID, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", kind: h("Regras", "Rules"), name: "Simplified Hollow", details: detail(h("Efeito", "Effect"), h("Substitui a ficha completa do Ka pela parada simplificada baseada em Humanidade.", "Replaces the full Ka sheet with the simplified Humanity-based dice pool.")) });
   listed.sort((left, right) => left.name.localeCompare(right.name, locale));
