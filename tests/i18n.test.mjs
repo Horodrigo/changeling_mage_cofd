@@ -41,6 +41,16 @@ test("all locales expose exactly the same message keys", async () => {
   assert.deepEqual(keys(messages["pt-BR"]), keys(messages["en-US"]));
 });
 
+test("translations are split between common and game-line dictionaries", () => {
+  const infrastructure = readFileSync(new URL("../lib/i18n.tsx", import.meta.url), "utf8");
+  for (const line of ["mortal", "changeling", "mage", "vampire"]) {
+    assert.match(infrastructure, new RegExp(`i18n/messages/${line}`));
+    const dictionary = readFileSync(new URL(`../lib/i18n/messages/${line}.ts`, import.meta.url), "utf8");
+    assert.match(dictionary, new RegExp(`export const ${line}Messages`));
+  }
+  assert.ok(infrastructure.split("\n").length < 150);
+});
+
 test("English is the server/default locale and catalog fallback is explicit", async () => {
   const infrastructure = readFileSync(new URL("../lib/i18n.tsx", import.meta.url), "utf8");
   const catalogs = readFileSync(new URL("../lib/localized-catalog.ts", import.meta.url), "utf8");
@@ -69,6 +79,8 @@ test("legacy tr() UI translation helper is not reintroduced in active app surfac
     "../game-lines/changeling/sheet-view.tsx",
     "../game-lines/vampire/builder.tsx",
     "../game-lines/vampire/sheet-view.tsx",
+    "../game-lines/mortal/builder.tsx",
+    "../game-lines/mortal/sheet-view.tsx",
   ];
 
   const violations = [];

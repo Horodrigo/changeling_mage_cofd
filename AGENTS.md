@@ -8,12 +8,14 @@ The primary rule is:
 
 > Core supplies mechanisms. Game lines supply mechanics.
 
-The application currently supports the persisted game-line IDs `CtL`, `MtA`, and `VtR`. The main boundaries are:
+The application currently supports the persisted game-line IDs `CofD`, `CtL`, `MtA`, and `VtR`. The main boundaries are:
 
 - `lib/core/character/`: neutral persisted character shape, current-schema validation, shared Chronicles traits, and structural normalization helpers.
 - `lib/game-line-contracts/`: neutral contracts for registrations, rule hooks, UI surfaces, and catalog snapshots.
 - `game-lines/registry/`: explicit lightweight registrations and lazy catalog-group dispatch.
+- `game-lines/mortal/`: mortal/Core character rules, builder, and sheet composition.
 - `lib/catalog/`: generic manifest, cache, loading, deep-freezing, and immutable snapshot infrastructure.
+- `lib/i18n.tsx` and `lib/i18n/messages/`: shared localization runtime plus common and per-game-line dictionaries.
 - `game-lines/changeling/`: Changeling rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `game-lines/mage/`: Mage rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `game-lines/vampire/`: Vampire rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
@@ -35,6 +37,7 @@ Core may own behavior that is genuinely common to Chronicles of Darkness charact
 
 Core must not accumulate line-specific mechanics. These remain line-owned:
 
+- Mortal/Core characters: Virtue, Vice, Integrity, personal Breaking Points, and the mortal creation workflow.
 - Mage: Path, Order, Gnosis, Arcana, Rotes, Praxes, Legacies, Nimbus, and Mage-specific Merit behavior.
 - Changeling: Seeming, Kith, Court, Wyrd, Clarity, Contracts, Regalia, Entitlements, and Changeling-specific Merit behavior.
 - Vampire: Clan, Covenant, Blood Potency, Humanity, Touchstones, Disciplines, Devotions, Blood Sorcery, Coils, Scales, and Vampire-specific Merit behavior.
@@ -111,7 +114,7 @@ Static RPG content should remain data under `public/data/**` where practical. Ca
 
 Required invariants:
 
-- Each runtime requests only Core and its selected game line's JSON; CtL, MtA, and VtR catalogs remain isolated from one another.
+- Each runtime requests only Core and its selected game line's JSON; CofD, CtL, MtA, and VtR catalogs remain isolated from one another.
 - Catalog snapshots are explicit, surface-scoped, deeply frozen, and consumed directly.
 - Switching lines never depends on replacing mutable global catalog state.
 - Large static datasets do not move back into application JavaScript merely for convenience.
@@ -196,6 +199,8 @@ Do not move `device-storage`, schema validation, catalog hydration, or game-line
 ## Official Content and Localization
 
 Official catalog content is English-first. Every item has a stable identity independent of displayed text; `en-US` is canonical and `pt-BR` is a localized presentation of that same item.
+
+Keep the localization runtime in `lib/i18n.tsx`, shared UI messages in `lib/i18n/messages/common.ts`, and line-exclusive UI messages in the matching per-line dictionary. Consumers continue to use the shared `useLanguage()` and `t()` API.
 
 - Changing locale must not alter rules, IDs, choices, costs, persisted data, or experience history.
 - Persist IDs or canonical values, never localized labels as primary identity.

@@ -13,6 +13,7 @@ const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/chan
 const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+const mortalExperience = await vite.ssrLoadModule("/game-lines/mortal/experience-rules.ts");
 const experienceShared = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
 const builderShared = await vite.ssrLoadModule("/app/character-builder-shell.tsx");
 const mageBuilder = await vite.ssrLoadModule("/game-lines/mage/builder.tsx");
@@ -40,6 +41,11 @@ test("avanços da criação viram Experiência gasta sem exigir saldo prévio", 
   assert.deepEqual(experienceShared.experiencePurchaseBalances(0, 0, 0, 12, true), { available: 0, spent: 12, total: 12 });
   assert.deepEqual(experienceShared.experiencePurchaseBalances(3, 7, 10, 2, false), { available: 1, spent: 9, total: 10 });
   assert.deepEqual(experienceShared.experiencePurchaseBalances(0, 12, 12, 3, true), { available: 0, spent: 15, total: 15 });
+});
+
+test("o quinto Beat converte automaticamente em uma Experiência", () => {
+  assert.deepEqual(experienceShared.convertFifthBeat(4, 2, 7), { beats: 4, available: 2, total: 7 });
+  assert.deepEqual(experienceShared.convertFifthBeat(5, 2, 7), { beats: 0, available: 3, total: 8 });
 });
 
 test("o Builder preserva compras de vários pontos feitas em uma única transação", () => {
@@ -136,6 +142,23 @@ test("Vampiro reembolsa compras fora de ordem sem apagar avanços posteriores", 
   const humanity = {attributes:{},skills:{},specializations:[],merits:[],line_data:{humanity:9,blood_sorcery:{cruac_rating:1,cruac_rite_ids:["rite"]}},current_state:{}};
   vampireRefunds.refundVampireAdvancement(humanity,{kind:"cruac",id:"rite",humanityLost:1});
   assert.equal(humanity.line_data.humanity,10);
+});
+
+test("Mortal reembolsa somente o delta de cada compra", () => {
+  const current = {
+    attributes: { Strength: 4 }, skills: { Athletics: 3 },
+    specializations: [{ skill: "Athletics", name: "Corrida" }],
+    merits: [{ name: "Resources", instanceId: "resources", dots: 4, creationDots: 2, experienceDots: 2 }],
+    line_data: { integrity: 9 }, current_state: {},
+  };
+  for (const undo of [
+    { kind: "integrity", amount: 2 },
+    { kind: "merit", name: "Resources", dots: 2, instanceId: "resources" },
+    { kind: "specialty", skill: "Athletics", name: "Corrida" },
+    { kind: "trait", group: "skills", name: "Athletics", amount: 3 },
+    { kind: "trait", group: "attributes", name: "Strength", amount: 3 },
+  ]) mortalExperience.refundMortalAdvancement(current, undo);
+  assert.deepEqual([current.attributes.Strength, current.skills.Athletics, current.specializations.length, current.merits[0].dots, current.line_data.integrity], [1, 0, 0, 2, 7]);
 });
 
 test("compras X→Y somam custos por ponto e reembolsam o delta completo", () => {

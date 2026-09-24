@@ -35,7 +35,7 @@ import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
 import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
 type ExperienceUndo =
   | {
@@ -234,9 +234,12 @@ export function ExperiencePanel({
   useEffect(() => setExperienceInput(String(available)), [available]);
   function setBeats(value: number) {
     const next = structuredClone(character);
+    const change = convertFifthBeat(value, available, total);
     next.current_state = {
       ...next.current_state,
-      experience_beats: value,
+      experience_beats: change.beats,
+      experience_available: change.available,
+      experience_total: change.total,
       experience_history: history,
     };
     updateSheet(next);
@@ -254,16 +257,19 @@ export function ExperiencePanel({
       const labels = [...fieldset.querySelectorAll("label")];
       const index = labels.indexOf(label);
       const next = structuredClone(character);
+      const change = convertFifthBeat(index < beats ? index : index + 1, available, total);
       next.current_state = {
         ...next.current_state,
-        experience_beats: index < beats ? index : index + 1,
+        experience_beats: change.beats,
+        experience_available: change.available,
+        experience_total: change.total,
         experience_history: history,
       };
       updateSheet(next);
     };
     fieldset.addEventListener("click", click);
     return () => fieldset.removeEventListener("click", click);
-  }, [beats, character, history, updateSheet]);
+  }, [available, beats, character, history, total, updateSheet]);
   function commitAvailableExperience() {
     const value = Math.max(0, Math.trunc(Number(experienceInput) || 0));
     setExperienceInput(String(value));

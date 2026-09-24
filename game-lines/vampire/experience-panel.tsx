@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect, type RuleSelectOption } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -339,7 +339,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div>
       <div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div>
     </div>
-    {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => saveState(value === 5 ? { beats: 0, experience_available: available + 1, experience_spent: spent, experience_total: total + 1 } : { beats: value })} />}
+    {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => { const change = convertFifthBeat(value, available, total); saveState({ beats: change.beats, experience_available: change.available, experience_spent: spent, experience_total: change.total }); }} />}
     <div className="experience-actions">
       <Dialog>
         <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger>

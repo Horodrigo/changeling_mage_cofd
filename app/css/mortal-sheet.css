@@ -1,0 +1,56 @@
+.line-theme-cofd {
+  --primary:#315e7a;
+  --secondary:#dce9f0;
+  --secondary-foreground:#203f52;
+  --accent:#d6e6ee;
+  --accent-foreground:#173d54;
+  --ring:#477d9d;
+  --line-accent:#315e7a;
+  --line-strong:#17384c;
+  --line-soft:#e7f0f5;
+  --line-border:#abc3d1;
+  --line-topbar-start:#142b3a;
+  --line-topbar-middle:#1d4056;
+  --line-topbar-end:#2b5b75;
+  --line-topbar-muted:#bfd1db;
+}
+
+.app-shell.line-theme-cofd { background:color-mix(in srgb,var(--line-accent) 5%,var(--background)); }
+.line-summary .cofd-summary, .character-card.cofd-card { border-left:4px solid #315e7a; }
+.line-choice button.mortal-line-choice { border-color:#aec5d2; background:linear-gradient(145deg,#f5fafc,#e7f0f5); }
+.line-choice button.mortal-line-choice:hover { border-color:#477d9d; }
+.cod-sheet.cofd-sheet { --sheet-accent:#315e7a; --sheet-ink:#253b47; background:linear-gradient(135deg,#edf5f8 0,#fffef9 14%,#fffef9 86%,#e8f1f5 100%); }
+.cofd-sheet .cod-sheet-title span { letter-spacing:-.035em; }
+.cofd-sheet .resource-track { grid-template-columns:repeat(10,minmax(0,1fr)); }
+.cofd-sheet .mortal-skill-stack { display:grid; gap:12px; }
+.cofd-sheet .integrity-sheet-section { display:grid; gap:7px; margin-top:12px; }
+.cofd-sheet .integrity-heading-row { display:flex; align-items:center; justify-content:space-between; }
+.cofd-sheet .integrity-heading-row .official-heading { flex:1; margin:0; }
+.cofd-sheet .integrity-track { display:flex; justify-content:center; padding:8px; border:1px solid var(--line-border); background:#fff; }
+.cofd-sheet .integrity-track .official-dots { flex-wrap:nowrap; }
+.cofd-sheet .mortal-experience-panel { display:grid; gap:7px; }
+.cofd-sheet .mortal-experience-panel .beat-resource { justify-content:space-between; padding:6px 8px; border:1px solid var(--line-border); background:#fff; }
+.cofd-sheet .mortal-experience-panel .experience-history { font-size:11px; }
+.cofd-sheet .mortal-experience-panel svg { width:14px; }
+.cofd-sheet .breaking-point-list { display:grid; gap:5px; }
+.breaking-point-builder { display:grid; gap:10px; }
+.breaking-point-builder label { display:grid; gap:6px; color:#504851; font-size:13px; font-weight:700; }
+.breaking-point-builder textarea { min-height:72px; }
+
+@media (max-width:767px) {
+  .cod-sheet.cofd-sheet { min-width:0; padding:10px; }
+  .cofd-sheet .sheet-identity-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cofd-sheet .mobile-attribute-grid { gap:4px; }
+  .cofd-sheet .mobile-attribute-grid .official-trait-block { padding:7px 3px; }
+  .cofd-sheet .mobile-attribute-grid .official-trait-name { font-size:10px; }
+  .cofd-sheet .mobile-attribute-grid .official-dots i { width:7px; height:7px; }
+  .cofd-sheet .mobile-trait-stack { gap:12px; }
+  .cofd-sheet .integrity-track { padding:7px 4px; }
+  .cofd-sheet .integrity-track .official-dots { gap:4px; }
+  .cofd-sheet .integrity-track .official-dots i { width:11px; height:11px; }
+  .cofd-sheet .mortal-experience-panel { margin-top:10px; padding:9px; }
+  .cofd-sheet .mortal-experience-panel .experience-totals { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cofd-sheet .mortal-experience-panel .experience-input { grid-column:1 / -1; }
+  .cofd-sheet .mortal-experience-panel .experience-actions button { width:100%; }
+  .cofd-sheet .breaking-point-list textarea { min-height:88px; }
+}

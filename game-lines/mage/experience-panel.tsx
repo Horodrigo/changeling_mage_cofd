@@ -29,7 +29,7 @@ import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
 const PURCHASE_TYPE_EN:Record<string,string>={Atributo:"Attribute",Perícia:"Skill",Mérito:"Merit",Especialização:"Specialty",Arcano:"Arcanum",Gnose:"Gnosis",Rota:"Rote",Práxis:"Praxis",Sabedoria:"Wisdom","Ponto perdido de Força de Vontade":"Lost Willpower dot"};
@@ -526,12 +526,12 @@ export function MageExperiencePanel({
       {!builderMode && <><BeatTrack
         label={t("ui.beats")}
         value={beats}
-        onChange={(value) => saveBalances({ mage_experience_beats: value })}
+        onChange={(value) => { const change = convertFifthBeat(value, regular, Math.max(regular + spentRegular, Number(state.mage_experience_total ?? 0))); saveBalances({ mage_experience_beats: change.beats, mage_experience_available: change.available, mage_experience_total: change.total }); }}
       />
       <BeatTrack
         label={t("ui.arcaneBeats")}
         value={arcaneBeats}
-        onChange={(value) => saveBalances({ arcane_experience_beats: value })}
+        onChange={(value) => { const change = convertFifthBeat(value, arcane, Math.max(arcane + spentArcane, Number(state.arcane_experience_total ?? 0))); saveBalances({ arcane_experience_beats: change.beats, arcane_experience_available: change.available, arcane_experience_total: change.total }); }}
       /></>}
       <div className="experience-actions mage-experience-actions">
         <Dialog>

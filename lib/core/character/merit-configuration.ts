@@ -1,3 +1,5 @@
+import type { PersistedGameLineId } from "./game-line-ids";
+
 export type MeritConfigValue = string | string[];
 export type MeritConfiguration = Record<string, MeritConfigValue>;
 export type MeritConfigField = {
@@ -15,7 +17,7 @@ export type MeritConfigDefinition = {
   name: string;
   fields: MeritConfigField[];
   grants?: boolean;
-  line?: "CtL" | "MtA" | "VtR";
+  line?: PersistedGameLineId;
 };
 
 export const normalizeMeritConfiguration = (value: unknown): MeritConfiguration =>

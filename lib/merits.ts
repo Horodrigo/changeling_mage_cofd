@@ -1,6 +1,7 @@
 import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
+import type { PersistedGameLineId } from "./core/character/game-line-ids";
 
-export type GameLine = "CtL" | "MtA" | "VtR";
+export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
 export type MeritDefinition = {
   id: string;

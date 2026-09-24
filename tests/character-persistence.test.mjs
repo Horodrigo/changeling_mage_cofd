@@ -35,7 +35,7 @@ test("structural persistence normalization assigns stable merit instance IDs",()
   assert.match(normalizeStoredSheet(current).merits[0].instanceId,/^legacy-merit-0-allies$/);
 });
 test("creation merits survive save normalization and remain editable",()=>{
-  for(const game_line of ["CtL","MtA","VtR"]){
+  for(const game_line of ["CofD","CtL","MtA","VtR"]){
     const current=sheet(game_line);current.merits[0]={...current.merits[0],creationDots:2,experienceDots:0};
     const normalized=normalizeStoredSheet(current);
     assert.deepEqual([normalized.merits[0].creationDots,normalized.merits[0].experienceDots],[2,0]);
@@ -47,6 +47,17 @@ test("Changeling-owned normalization preserves structural persistence boundaries
   const current={...sheet("CtL"),line_data:{wyrd:2,frailties:[]}};
   const normalized=await normalizeGameLineCharacter(normalizeStoredSheet(current));
   assert.ok(Array.isArray(normalized.line_data.frailties));
+});
+test("Mortal normalization owns Integrity, Breaking Points, and derived traits",async()=>{
+  const current={...sheet("CofD"),attributes:{Strength:2,Dexterity:3,Stamina:4,Wits:2,Resolve:3,Composure:2},skills:{Athletics:2},line_data:{integrity:0,breaking_points:["one"]}};
+  const normalized=await normalizeGameLineCharacter(normalizeStoredSheet(current));
+  assert.equal(normalized.line_data.integrity,0);
+  assert.equal(normalized.line_data.breaking_points.length,5);
+  assert.equal(normalized.line_data.aspirations.length,3);
+  assert.deepEqual(
+    [normalized.derived.Vitalidade,normalized.derived.Deslocamento,normalized.derived.ForçaDeVontade,normalized.derived.Iniciativa,normalized.derived.Defesa,normalized.derived.Integridade],
+    [9,10,5,5,4,0],
+  );
 });
 test("current sheets apply only the selected line's merit synchronization",async()=>{
   const mage=await normalizeGameLineCharacter(normalizeStoredSheet({...sheet("MtA"),line_data:{order:"Orderless"}}));

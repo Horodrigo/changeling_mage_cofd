@@ -2,6 +2,7 @@
 
 Characters of the Darkness is a local-first character builder and sheet manager for Chronicles of Darkness. The current application supports:
 
+- Chronicles of Darkness mortals (`CofD`)
 - Changeling: The Lost (`CtL`)
 - Mage: The Awakening (`MtA`)
 - Vampire: The Requiem (`VtR`)
@@ -49,6 +50,7 @@ The major boundaries are:
 - `lib/core/character/` — neutral persisted character shape, validation, common Chronicles mechanics, and shared character helpers.
 - `lib/game-line-contracts/` — neutral contracts for registrations, rule hooks, UI surfaces, and catalog snapshots.
 - `game-lines/registry/` — explicit registration and lazy dispatch.
+- `game-lines/mortal/` — mortal/Core rules, builder, and sheet.
 - `game-lines/changeling/` — Changeling-owned rules, builder, sheet, experience flow, and catalogs.
 - `game-lines/mage/` — Mage-owned rules, builder, sheet, experience flow, and catalogs.
 - `game-lines/vampire/` — Vampire-owned rules, builder, sheet, experience flow, and catalogs.

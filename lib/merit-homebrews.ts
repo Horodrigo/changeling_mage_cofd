@@ -9,12 +9,13 @@ export type MeritHomebrewLine = "Core" | GameLine;
 export const MERIT_HOMEBREW_KEY = "arquivo-das-trevas:merits:v1";
 export const MERIT_HOMEBREW_SOURCES: Record<MeritHomebrewLine, { id: string; name: string }> = {
   Core: { id: "homebrew:core-merits", name: "Player-created Core Merits" },
+  CofD: { id: "homebrew:mortal-merits", name: "Player-created Mortal Merits" },
   CtL: { id: "homebrew:changeling-merits", name: "Player-created Changeling Merits" },
   MtA: { id: "homebrew:mage-merits", name: "Player-created Mage Merits" },
   VtR: { id: "homebrew:vampire-merits", name: "Player-created Vampire Merits" },
 };
 
-const lines = new Set<MeritHomebrewLine>(["Core", "CtL", "MtA", "VtR"]);
+const lines = new Set<MeritHomebrewLine>(["Core", "CofD", "CtL", "MtA", "VtR"]);
 const record = (value: unknown): Record<string, unknown> => value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
 const text = (value: unknown) => String(value ?? "").trim();
 
