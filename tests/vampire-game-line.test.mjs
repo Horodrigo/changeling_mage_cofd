@@ -471,6 +471,10 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.match(homebrew, /item\.id === "lithopedia" \? bloodSorcery : disciplines/);
   for (const collection of ["cruacRites", "thebanMiracles", "detournements"])
     assert.match(homebrew, new RegExp(`powers\\.${collection}\\.forEach\\(\\(item\\) => add\\(item, bloodSorcery`));
+  assert.match(homebrew, /const categoryOrder = \[h\("Méritos", "Merits"\), "Clans", "Covenants", "Bloodlines", disciplines, bloodSorcery, h\("Devoções", "Devotions"\), h\("Condições", "Conditions"\), "Errata"\]/);
+  assert.match(homebrew, /reference\.clans\.forEach/);
+  assert.match(homebrew, /kind: "Errata", name: "Simplified Hollow"/);
+  assert.match(homebrew, /kinds = \[\.\.\.new Set\([^;]+\.sort\(\(left, right\) => categoryOrder\.indexOf\(left\) - categoryOrder\.indexOf\(right\)\)/);
   assert.match(homebrew, /homebrew-subitem-list/);
 });
 
