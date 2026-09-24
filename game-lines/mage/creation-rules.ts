@@ -1,3 +1,5 @@
+import type { MessageKey, Translator } from "@/lib/i18n";
+
 export const MTA_PATHS = {
   Acanthus: { ruling: ["Time", "Fate"], inferior: "Forces" },
   Mastigos: { ruling: ["Space", "Mind"], inferior: "Matter" },
@@ -23,6 +25,29 @@ export const MTA_ORDER_LABELS: Record<string, string> = {
 
 export const mageOrderLabel = (order: string, locale: "pt-BR" | "en-US") =>
   locale === "pt-BR" ? MTA_ORDER_LABELS[order] ?? order : order;
+
+const GNOSIS_CASTING = [
+  [0, 1, 1], [0, 1, 1],
+  [1, 2, 2], [1, 2, 2],
+  [2, 2, 3], [2, 3, 3],
+  [3, 3, 4], [3, 3, 4],
+  [4, 4, 5], [4, 4, 5],
+] as const;
+
+const GNOSIS_RITUAL_KEYS = [
+  "ui.gnosisRitual3Hours",
+  "ui.gnosisRitual1Hour",
+  "ui.gnosisRitual30Minutes",
+  "ui.gnosisRitual10Minutes",
+  "ui.gnosisRitual1Minute20Turns",
+] as const satisfies readonly MessageKey[];
+
+export function mageGnosisSummary(gnosis: number, t: Translator) {
+  const [ritualIndex, combined, paradox] = GNOSIS_CASTING[Math.max(1, Math.min(10, Math.trunc(gnosis))) - 1];
+  return t(paradox === 1 ? "ui.gnosisCastingSummaryOneDie" : "ui.gnosisCastingSummaryDice", {
+    ritual: t(GNOSIS_RITUAL_KEYS[ritualIndex]), combined, paradox,
+  });
+}
 
 export const MTA_ORDER_DESCRIPTIONS: Record<string, [string, string]> = {
   "Adamantine Arrow": ["Guerreiros místicos que aperfeiçoam a si mesmos através do conflito e defendem os Despertos.", "Mystic warriors who perfect themselves through conflict and defend the Awakened."],

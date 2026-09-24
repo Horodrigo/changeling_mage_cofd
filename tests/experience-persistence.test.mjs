@@ -18,6 +18,8 @@ const experienceShared = await vite.ssrLoadModule("/app/workspace/experience-sha
 const builderShared = await vite.ssrLoadModule("/app/character-builder-shell.tsx");
 const mageBuilder = await vite.ssrLoadModule("/game-lines/mage/builder.tsx");
 const hubris = await vite.ssrLoadModule("/game-lines/mage/hubris.ts");
+const mageCreation = await vite.ssrLoadModule("/game-lines/mage/creation-rules.ts");
+const i18n = await vite.ssrLoadModule("/lib/i18n.tsx");
 const resources = await vite.ssrLoadModule("/lib/resource-rules.ts");
 const storage = await vite.ssrLoadModule("/lib/device-storage.ts");
 
@@ -183,9 +185,16 @@ test("compras X→Y somam custos por ponto e reembolsam o delta completo", () =>
 
 test("Acts of Hubris usa o tier do ato e aplica os três modificadores cumulativos", () => {
   assert.deepEqual(hubris.availableHubrisTiers(7).map((tier) => tier.id), ["understanding","falling"]);
+  assert.deepEqual([10, 7, 3, 0].map(hubris.wisdomState), ["Enlightened", "Understanding", "Falling", "Mad"]);
   const falling = hubris.HUBRIS_TIERS.find((tier) => tier.id === "falling");
   assert.equal(hubris.hubrisPool(falling,{obsession:true,virtue:true,vice:true}),0);
   assert.equal(hubris.hubrisPool(falling,{obsession:false,virtue:true,vice:false}),2);
+});
+
+test("resumo de Gnosis informa os valores oficiais de conjuração", () => {
+  const t = (locale) => (key, params) => i18n.translate(locale, key, params);
+  assert.equal(mageCreation.mageGnosisSummary(1, t("en-US")), "Ritual interval: 3 hours · Combined spells: 1 · Paradox per over-Reach: 1 die");
+  assert.equal(mageCreation.mageGnosisSummary(9, t("pt-BR")), "Intervalo ritual: 1 minuto (20 turnos) · Magias combinadas: 4 · Paradoxo por Reach excedente: 5 dados");
 });
 
 test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas", () => {

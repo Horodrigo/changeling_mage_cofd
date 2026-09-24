@@ -358,9 +358,11 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .wisdom-heading-row .official-heading { flex:1; margin:0; }
 
-.wisdom-track { display:flex; align-items:center; justify-content:flex-start; min-height:28px; border-bottom:1px solid #b9b2a5; padding:2px 4px 7px; }
+.wisdom-track { display:grid; justify-items:center; min-height:28px; border-bottom:1px solid #b9b2a5; padding:2px 4px 7px; }
 
 .wisdom-track .official-dots { flex-direction:row; }
+
+.wisdom-current { color:#4f5962; font:700 11px/1.2 var(--font-ui); letter-spacing:.04em; text-transform:uppercase; }
 
 .inured-heading-row { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:2px; }
 

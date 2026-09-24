@@ -1180,7 +1180,7 @@ button { cursor: pointer; }
 
 
 
-.editable-line-row:has(.editable-line-prefix) { grid-template-columns:auto minmax(0,1fr) auto; }
+.editable-line-row:has(.editable-line-prefix) { grid-template-columns:auto minmax(0,1fr) 28px; }
 .editable-line-prefix { align-self:center; color:var(--sheet-accent); font:700 11px Inter,Arial,sans-serif; white-space:nowrap; }
 
 

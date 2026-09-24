@@ -51,6 +51,11 @@ export function availableHubrisTiers(wisdom: number) {
   return HUBRIS_TIERS.filter((tier) => wisdom >= tier.minimumWisdom);
 }
 
+export function wisdomState(wisdom: number) {
+  const tier = HUBRIS_TIERS.find((candidate) => wisdom >= candidate.minimumWisdom)?.id;
+  return tier ? tier[0].toUpperCase() + tier.slice(1) : "Mad";
+}
+
 export function hubrisPool(tier: HubrisTier, modifiers: { obsession: boolean; virtue: boolean; vice: boolean }) {
   return tier.dice - Number(modifiers.obsession) + Number(modifiers.virtue) - Number(modifiers.vice);
 }
