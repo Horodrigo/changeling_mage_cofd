@@ -145,6 +145,8 @@ export type VampireDisciplineDefinition = VampireMechanics & {
   translatedName: string;
   physical?: boolean;
   bloodlineId?: string;
+  clanIds?: string[];
+  covenantIds?: string[];
   summary: string;
   levels: VampirePowerLevel[];
   source: string;
@@ -152,10 +154,10 @@ export type VampireDisciplineDefinition = VampireMechanics & {
 };
 
 export type VampireRitualDisciplineDefinition = VampireMechanics & {
-  id: "cruac" | "theban";
+  id: "cruac" | "theban" | "kimiya" | "therion";
   name: string;
   translatedName: string;
-  ritualKind: "cruac-rite" | "theban-miracle";
+  ritualKind: "cruac-rite" | "theban-miracle" | "kimiya-formula" | "therion-sacrilege";
   experienceCostPerDot: number;
   freeRitualPerDot: boolean;
   maximumRitualRating: "discipline-rating";
@@ -169,12 +171,14 @@ export type VampireRitualDisciplineDefinition = VampireMechanics & {
 
 export type VampirePurchasablePower = VampireMechanics & {
   id: string;
-  kind: "devotion" | "cruac-rite" | "theban-miracle" | "coil" | "scale";
+  kind: "devotion" | "cruac-rite" | "theban-miracle" | "kimiya-formula" | "therion-sacrilege" | "coil" | "scale";
   name: string;
   translatedName: string;
   rating?: number;
   prerequisites?: string;
   experienceCost?: number;
+  bloodlineId?: string;
+  covenantIds?: string[];
   summary: string;
   source: string;
   page: number;
@@ -187,6 +191,8 @@ export type VampirePowers = {
   devotions: VampirePurchasablePower[];
   cruacRites: VampirePurchasablePower[];
   thebanMiracles: VampirePurchasablePower[];
+  kimiyaFormulae: VampirePurchasablePower[];
+  therionSacrileges: VampirePurchasablePower[];
   coils: VampirePurchasablePower[];
   scales: VampirePurchasablePower[];
 };

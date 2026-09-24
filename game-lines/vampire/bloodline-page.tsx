@@ -16,13 +16,16 @@ import type { VampireBloodlineDefinition, VampirePowers, VampireReference } from
 import { vampireDisciplineDisplayName } from "./creation-rules";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 
-export function removeVampireBloodline(character: CharacterSheet) {
+export function removeVampireBloodline(character: CharacterSheet, definition?: VampireBloodlineDefinition, powers?: VampirePowers) {
   const next = structuredClone(character);
   const history = Array.isArray(next.current_state.vampire_experience_history) ? next.current_state.vampire_experience_history as Array<Record<string, unknown>> : [];
-  const refunded = history.filter((entry) => { const undo = entry.undo as Record<string, unknown> | undefined; return undo?.kind === "discipline" && undo.name === "Dead Signal"; });
+  const exclusive = definition?.exclusiveDiscipline ?? "Dead Signal";
+  const refunded = history.filter((entry) => { const undo = entry.undo as Record<string, unknown> | undefined; return undo?.kind === "discipline" && undo.name === exclusive; });
   const refund = refunded.reduce((sum, entry) => sum + Math.max(0, Number(entry.cost ?? 0)), 0);
-  const disciplines = next.line_data.disciplines && typeof next.line_data.disciplines === "object" ? { ...next.line_data.disciplines as Record<string, unknown>, "Dead Signal": 0 } : { "Dead Signal": 0 };
-  next.line_data = { ...next.line_data, bloodline_id: "", disciplines };
+  const disciplines = next.line_data.disciplines && typeof next.line_data.disciplines === "object" ? { ...next.line_data.disciplines as Record<string, unknown>, [exclusive]: 0 } : { [exclusive]: 0 };
+  const automatic = new Set((powers?.devotions ?? []).filter((item) => item.bloodlineId === definition?.id && Number(item.experienceCost ?? 0) === 0).map((item) => item.id));
+  const devotionIds = Array.isArray(next.line_data.devotion_ids) ? next.line_data.devotion_ids.map(String).filter((id) => !automatic.has(id)) : [];
+  next.line_data = { ...next.line_data, bloodline_id: "", disciplines, devotion_ids: devotionIds };
   next.current_state = { ...next.current_state, experience_available: Math.max(0, Number(next.current_state.experience_available ?? 0)) + refund, experience_spent: Math.max(0, Number(next.current_state.experience_spent ?? 0) - refund), vampire_experience_history: history.filter((entry) => !refunded.includes(entry)) };
   return next;
 }
@@ -48,7 +51,10 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   };
   const join = () => {
     if (!preview) return;
-    const next = structuredClone(character); next.line_data = { ...next.line_data, bloodline_id: preview.id };
+    const next = structuredClone(character);
+    const devotionIds = new Set(Array.isArray(next.line_data.devotion_ids) ? next.line_data.devotion_ids.map(String) : []);
+    for (const item of powers.devotions) if (item.bloodlineId === preview.id && Number(item.experienceCost ?? 0) === 0) devotionIds.add(item.id);
+    next.line_data = { ...next.line_data, bloodline_id: preview.id, devotion_ids: [...devotionIds] };
     updateSheet(next); onOpenChange(false); onJoined();
   };
   return <>
@@ -68,10 +74,10 @@ export function BloodlinePage({ character, updateSheet, bloodlines, powers, onRe
 }) {
   const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
   const currentId = String(character.line_data.bloodline_id ?? ""), current = bloodlines.find((item) => item.id === currentId);
-  const remove = () => { updateSheet(removeVampireBloodline(character)); onRemoved(); };
+  const remove = () => { updateSheet(removeVampireBloodline(character, current, powers)); onRemoved(); };
   if (!current) return <div className="entitlement-page bloodline-page"><header className="entitlement-title"><div><h2>{currentId || h("Nenhuma Bloodline", "No Bloodline")}</h2><p>{h("A definição desta Bloodline não está mais disponível.", "This Bloodline definition is no longer available.")}</p></div>{currentId && <ConfirmAction trigger={<Button type="button" size="sm" variant="destructive">{h("Sair da Bloodline", "Leave Bloodline")}</Button>} title={h("Sair da Bloodline?", "Leave Bloodline?")} description={h("A Bloodline será removida da ficha.", "The Bloodline will be removed from the sheet.")} action={h("Sair", "Leave")} onConfirm={remove} />}</header></div>;
   return <div className="entitlement-page bloodline-page">
-    <header className="entitlement-title"><div><h2>{current.name}</h2><p>{current.source}{current.page ? ` · p. ${current.page}` : ""}</p></div><ConfirmAction trigger={<Button type="button" size="sm" variant="destructive">{h("Sair da Bloodline", "Leave Bloodline")}</Button>} title={h(`Sair de ${current.name}?`, `Leave ${current.name}?`)} description={h("A Bloodline e seus dots de Dead Signal serão removidos. Experiência gasta em Dead Signal será devolvida.", "The Bloodline and its Dead Signal dots will be removed. Experience spent on Dead Signal will be refunded.")} action={h("Sair da Bloodline", "Leave Bloodline")} onConfirm={remove} /></header>
+    <header className="entitlement-title"><div><h2>{current.name}</h2><p>{current.source}{current.page ? ` · p. ${current.page}` : ""}</p></div><ConfirmAction trigger={<Button type="button" size="sm" variant="destructive">{h("Sair da Bloodline", "Leave Bloodline")}</Button>} title={h(`Sair de ${current.name}?`, `Leave ${current.name}?`)} description={h("A Bloodline, sua Disciplina exclusiva e seus poderes automáticos serão removidos; a Experiência gasta na Disciplina será devolvida.", "The Bloodline, its exclusive Discipline, and automatic powers will be removed; Experience spent on the Discipline will be refunded.")} action={h("Sair da Bloodline", "Leave Bloodline")} onConfirm={remove} /></header>
     <BloodlineDetails definition={current} powers={powers} />
   </div>;
 }
