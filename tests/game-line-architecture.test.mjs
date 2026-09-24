@@ -208,6 +208,8 @@ test("Changeling Homebrew uses category tabs and compact disclosure rows", async
   assert.match(homebrew, /presented\.resolution/);
   assert.match(homebrew, /item\.token\.effect/);
   assert.match(homebrew, /item\.singleWillpower/);
+  assert.match(homebrew, /const categoryOrder = \[h\("Méritos", "Merits"\), "Seemings", h\("Cortes", "Courts"\), h\("Frátrias", "Kiths"\), "Entitlements", h\("Contratos", "Contracts"\), "Needles", "Threads", h\("Condições", "Conditions"\), "Errata"\]/);
+  assert.match(homebrew, /categoryRank\(left\) - categoryRank\(right\)/);
   assert.match(sheet, /item\.name !== "Entitlement" && isExpanded/);
   assert.match(css, /\.panel\.homebrew-source \{ padding:0; \}/);
   assert.match(css, /\.homebrew-list-item-body p>strong:first-child \{ color:/);
