@@ -142,5 +142,5 @@ test("character creation drafts survive exit and resume through the Builder", as
     assert.match(source, /builderMode/);
   }
   assert.match(shell, /creation_advancement_enabled/);
-  assert.match(shell, /state\.step === 3 && state\.allowAdvancement/);
+  assert.match(shell, /state\.step === advancementStep - 1 && state\.allowAdvancement/);
 });
