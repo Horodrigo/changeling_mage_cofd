@@ -257,6 +257,9 @@ test("line print surfaces retain their web skins and line-specific tracks", asyn
   assert.doesNotMatch(vampirePrint, /acquiredPowers/);
   assert.match(mageCss, /mage\/style\/background-mage\.webp/);
   assert.match(mageCss, /mta-print-frame/);
+  assert.match(mageCss, /--mta-print-frame-center-clearance:8mm/);
+  assert.match(mageCss, /mta-print-heading:has\(\+ \.mta-print-attributes\)/);
+  assert.match(mageCss, /\.mta-print-page \.cod-print-experience/);
   assert.match(vampireCss, /vtr-print-frame/);
   assert.match(vampireCss, /official-dots i\.on/);
   assert.match(paperShell, /DotValue value=\{rating\} max=\{10\} singleRow/);
