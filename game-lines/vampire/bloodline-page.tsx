@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { homebrewContentActive, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { localized, useLanguage } from "@/lib/i18n";
+import { alphabetical } from "@/lib/option-order";
 import { systemTerm } from "@/lib/system-terms";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
 import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
@@ -36,7 +37,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
   const preferences = useHomebrewPreferences(), custom = useBloodlineHomebrews();
   const bloodlines = [...reference.bloodlines, ...custom.filter((item) => !reference.bloodlines.some((official) => official.id === item.id))];
-  const available = bloodlines.filter((item) => homebrewContentActive(preferences, item.id, item.sourceId));
+  const available = alphabetical(bloodlines.filter((item) => homebrewContentActive(preferences, item.id, item.sourceId)), (item) => item.name, locale);
   const [previewId, setPreviewId] = useState("");
   const [editorOpen, setEditorOpen] = useState(false);
   const preview = available.find((item) => item.id === previewId) ?? available[0];
