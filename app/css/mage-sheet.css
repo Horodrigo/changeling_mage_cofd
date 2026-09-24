@@ -1015,7 +1015,6 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
    -------------------------------------------------------------------------- */
 
 .mta-sheet .power-resource,
-.mta-sheet .nimbus-editor article,
 .mta-sheet .order-current {
   position:relative;
   isolation:isolate;

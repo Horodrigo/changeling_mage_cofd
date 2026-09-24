@@ -56,6 +56,7 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.doesNotMatch(mageCss, /visual corrections v3/);
   assert.match(mageCss, /\.legacy-sheet-field button \{[^}]*padding:0 0 0 2px/);
   assert.match(mageCss, /\.mage-legacy-join-dialog \.entitlement-select \[data-slot="select-trigger"\]/);
+  assert.doesNotMatch(mageCss, /\.mta-sheet \.nimbus-editor article,[^}]*box-closed\.webp/);
   assert.match(mageCss, /\.mta-sheet > \.ctl-sheet-tabs::before/);
   assert.match(mageCss, /border:2px solid rgba\(36,82,113,\.34\)/);
   assert.match(vampireCss, /--vtr-frame-rail-y: 12px/);
