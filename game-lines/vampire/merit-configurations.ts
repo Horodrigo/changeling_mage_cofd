@@ -44,6 +44,18 @@ export const VAMPIRE_MERIT_CONFIGURATIONS: readonly MeritConfigDefinition[] = [
       },
     ],
   },
+
+  {
+    name: "Retainer(Ghoul)",
+    line: "VtR",
+    fields: [
+      { key: "name", label: "Ghoul name", kind: "text" },
+      { key: "purview", label: "Area of expertise", kind: "text" },
+      { key: "discipline_1", label: "First dot from the regnant's Disciplines", kind: "text", minDots: 1 },
+      { key: "discipline_2", label: "Second dot from the regnant's Disciplines", kind: "text", minDots: 3 },
+      { key: "discipline_3", label: "Third dot from the regnant's Disciplines", kind: "text", minDots: 5 },
+    ],
+  },
 ];
 
 const VAMPIRE_INLINE_CONFIGURATIONS = new Set([

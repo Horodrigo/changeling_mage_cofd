@@ -84,6 +84,21 @@ test("Vampire core-book catalogs expose all five Clans and line-owned content", 
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
 });
 
+test("Vampire core p. 101 exposes Retainer(Ghoul) without changing Core Retainer", async () => {
+  const vampireMerits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const coreMerits = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const { VAMPIRE_MERIT_CONFIGURATIONS } = await vite.ssrLoadModule("/game-lines/vampire/merit-configurations.ts");
+  const merit = vampireMerits.find((item) => item.id === "vtr-retainer-ghoul");
+  const configuration = VAMPIRE_MERIT_CONFIGURATIONS.find((item) => item.name === "Retainer(Ghoul)");
+
+  assert.deepEqual(merit.ratings, [1, 2, 3, 4, 5]);
+  assert.equal(merit.category, "Kindred");
+  assert.equal(merit.page, 101);
+  assert.equal(merit.repeatable, true);
+  assert.deepEqual(configuration.fields.filter((field) => field.key.startsWith("discipline_")).map((field) => field.minDots), [1, 3, 5]);
+  assert.equal(coreMerits.filter((item) => item.name === "Retainer").length, 1);
+});
+
 test("Spilled Blood exposes the ten audited Bloodlines and gates Dead Signal to Jharana", async () => {
   const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
