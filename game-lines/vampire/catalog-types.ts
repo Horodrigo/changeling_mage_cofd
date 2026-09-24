@@ -54,6 +54,8 @@ export type VampireBloodlineDefinition = {
   disciplines: [string, string, string, string];
   exclusiveDiscipline?: string;
   summary: string;
+  giftName?: string;
+  giftSummary?: string;
   baneName: string;
   baneSummary: string;
   sourceId: string;
@@ -179,6 +181,7 @@ export type VampirePurchasablePower = VampireMechanics & {
   experienceCost?: number;
   bloodlineId?: string;
   covenantIds?: string[];
+  category?: string;
   summary: string;
   source: string;
   page: number;
@@ -210,6 +213,8 @@ export type VampireCondition = {
   resolution?: string;
   beat?: string;
   source: string;
-  sourceCode: "VtR" | "HD" | "TY";
+  sourceCode: string;
+  sourceId?: string;
+  homebrew?: boolean;
   page: number;
 };

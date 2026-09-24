@@ -254,7 +254,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const simplifiedHollowAvailable = Boolean(initialKa.simplified) || vampireHomebrewContentActive(homebrewPreferences, { id: SIMPLIFIED_HOLLOW_ID, source: "Strange Shades: Mekhet" });
 
   const meritContext: MeritPrerequisiteContext = {
-    gameLine: "VtR", archetypes: ["vampire", clanId, ...covenantIds], attributes: common.attributes,
+    gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: common.attributes,
     skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits), meritCatalog,
     powers: Object.entries(disciplines).filter(([, value]) => value > 0).map(([name]) => name),
   };

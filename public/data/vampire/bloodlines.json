@@ -4,9 +4,21 @@
     "name": "Ankou",
     "translatedName": "Ankou",
     "parentClan": "Mekhet",
-    "nicknames": ["Guardians", "Reapers", "Death Dealers"],
-    "favoredAttributes": ["Intelligence", "Composure"],
-    "disciplines": ["Auspex", "Celerity", "Obfuscate", "Vigor"],
+    "nicknames": [
+      "Guardians",
+      "Reapers",
+      "Death Dealers"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Composure"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Obfuscate",
+      "Vigor"
+    ],
     "summary": "Watchers of concealed horrors who distance themselves from ordinary human life while guarding against threats few Kindred perceive.",
     "baneName": "The Distanced Curse",
     "baneSummary": "Whenever an Ankou would regain Willpower by maintaining the Mask, roll Humanity. On a failure, no Willpower is regained.",
@@ -19,9 +31,20 @@
     "name": "Icelus",
     "translatedName": "Icelus",
     "parentClan": "Mekhet or Ventrue",
-    "nicknames": ["Auditors", "The Foundation"],
-    "favoredAttributes": ["Parent Clan", "Parent Clan"],
-    "disciplines": ["Auspex", "Dominate", "Obfuscate", "Resilience"],
+    "nicknames": [
+      "Auditors",
+      "The Foundation"
+    ],
+    "favoredAttributes": [
+      "Parent Clan",
+      "Parent Clan"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Dominate",
+      "Obfuscate",
+      "Resilience"
+    ],
     "summary": "Methodical auditors of Kindred society whose hypnotic detachment makes failures of conscience dangerously exploitable.",
     "baneName": "The Hypnotic Curse",
     "baneSummary": "In addition to the parent Clan bane, a failed detachment roll that inflicts Bestial, Competitive, or Wanton also inflicts Mesmerized. Resolving it does not grant the usual +3 resistance to Dominate.",
@@ -34,9 +57,20 @@
     "name": "Jharana",
     "translatedName": "Jharana",
     "parentClan": "Daeva",
-    "nicknames": ["Menders", "Machinists"],
-    "favoredAttributes": ["Manipulation", "Intelligence"],
-    "disciplines": ["Auspex", "Dead Signal", "Celerity", "Vigor"],
+    "nicknames": [
+      "Menders",
+      "Machinists"
+    ],
+    "favoredAttributes": [
+      "Manipulation",
+      "Intelligence"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Dead Signal",
+      "Celerity",
+      "Vigor"
+    ],
     "exclusiveDiscipline": "Dead Signal",
     "summary": "Vampires attuned to transmissions and omens of the God-Machine who can inspect and reconfigure living signals.",
     "baneName": "The Omen Curse",
@@ -50,9 +84,19 @@
     "name": "Lidérc",
     "translatedName": "Lidérc",
     "parentClan": "Daeva",
-    "nicknames": ["The Beloved"],
-    "favoredAttributes": ["Manipulation", "Presence"],
-    "disciplines": ["Celerity", "Majesty", "Obfuscate", "Vigor"],
+    "nicknames": [
+      "The Beloved"
+    ],
+    "favoredAttributes": [
+      "Manipulation",
+      "Presence"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Majesty",
+      "Obfuscate",
+      "Vigor"
+    ],
     "summary": "Emotional predators who cultivate intense circles of lovers and dependents, feeding on devotion as much as blood.",
     "baneName": "The Devoted Curse",
     "baneSummary": "While Dependent, all attached Touchstones provide only +1 die total to detachment. Defending the subject restores at most 1 Willpower, and a subject who was a Touchstone is lost immediately when the relationship breaks.",
@@ -65,9 +109,19 @@
     "name": "Nosoi",
     "translatedName": "Nosoi",
     "parentClan": "Gangrel",
-    "nicknames": ["Plague Doctors"],
-    "favoredAttributes": ["Stamina", "Manipulation"],
-    "disciplines": ["Dominate", "Obfuscate", "Protean", "Resilience"],
+    "nicknames": [
+      "Plague Doctors"
+    ],
+    "favoredAttributes": [
+      "Stamina",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Dominate",
+      "Obfuscate",
+      "Protean",
+      "Resilience"
+    ],
     "summary": "Plague-bearing Gangrel whose Blood adapts to a chosen illness and punishes feeding that avoids it.",
     "baneName": "The Calamitous Curse",
     "baneSummary": "Choose a blood-carried ailment. Each night, Vitae gained from blood not infected with that ailment cannot raise the Nosoi's Vitae above her Humanity.",
@@ -81,9 +135,19 @@
     "translatedName": "The Parliamentarians",
     "parentClan": "Any",
     "requirements": "Carthian Movement",
-    "nicknames": ["Hidebound"],
-    "favoredAttributes": ["Manipulation", "Resolve"],
-    "disciplines": ["Animalism", "Auspex", "Celerity", "Majesty"],
+    "nicknames": [
+      "Hidebound"
+    ],
+    "favoredAttributes": [
+      "Manipulation",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Celerity",
+      "Majesty"
+    ],
     "summary": "Carthian architects of rigid personal systems who seek security and leverage through a meticulously ordered Requiem.",
     "baneName": "The Ordered Curse",
     "baneSummary": "When the Parliamentarian's personal order is disrupted, Humanity dots cap all Social dice pools.",
@@ -97,9 +161,21 @@
     "translatedName": "Penumbrae",
     "parentClan": "Any",
     "requirements": "Circle of the Crone",
-    "nicknames": ["Seers", "Seekers", "Sleepers"],
-    "favoredAttributes": ["Intelligence", "Stamina"],
-    "disciplines": ["Auspex", "Celerity", "Crúac", "Vigor"],
+    "nicknames": [
+      "Seers",
+      "Seekers",
+      "Sleepers"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Crúac",
+      "Vigor"
+    ],
     "summary": "Crone seers who read truth through torpor and dreams, trading reliable memory for occult revelation.",
     "baneName": "The Somnolent Curse",
     "baneSummary": "Determine torpor duration using Humanity minus Crúac dots. Waking early costs additional Vitae equal to Crúac, and waking from torpor or Clotho's Skein inflicts False Memories until the next daysleep.",
@@ -113,9 +189,20 @@
     "translatedName": "Scions of the First City",
     "parentClan": "Any",
     "requirements": "Invictus",
-    "nicknames": ["Harbingers", "Scions"],
-    "favoredAttributes": ["Wits", "Stamina"],
-    "disciplines": ["Animalism", "Auspex", "Obfuscate", "Resilience"],
+    "nicknames": [
+      "Harbingers",
+      "Scions"
+    ],
+    "favoredAttributes": [
+      "Wits",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Obfuscate",
+      "Resilience"
+    ],
     "summary": "Invictus urbanists who claim descent from the first great city and draw strength from dense metropolitan life.",
     "baneName": "The Mother's Curse",
     "baneSummary": "Outside a metropolis, or in a settlement with fewer than 10,000 people, Humanity dots cap every dice pool.",
@@ -128,9 +215,23 @@
     "name": "Vardyvle",
     "translatedName": "Vardyvle",
     "parentClan": "Ventrue",
-    "nicknames": ["Doppelgängers", "Look-Stealers", "Stalkers", "Skin-Takers", "Tiresias"],
-    "favoredAttributes": ["Manipulation", "Presence"],
-    "disciplines": ["Dominate", "Obfuscate", "Protean", "Resilience"],
+    "nicknames": [
+      "Doppelgängers",
+      "Look-Stealers",
+      "Stalkers",
+      "Skin-Takers",
+      "Tiresias"
+    ],
+    "favoredAttributes": [
+      "Manipulation",
+      "Presence"
+    ],
+    "disciplines": [
+      "Dominate",
+      "Obfuscate",
+      "Protean",
+      "Resilience"
+    ],
     "summary": "Covetous identity thieves who stalk lives they envy and reshape themselves around stolen memories.",
     "baneName": "The Covetous Curse",
     "baneSummary": "When feeding from a human she envies, roll Humanity. Failure grants one of the victim's memories and False Memory for a week; dramatic failure also inflicts addiction to the victim's blood.",
@@ -143,9 +244,21 @@
     "name": "Vilseduire",
     "translatedName": "Vilseduire",
     "parentClan": "Daeva or Nosferatu",
-    "nicknames": ["Tempters", "Enablers", "Devils"],
-    "favoredAttributes": ["Manipulation", "Composure"],
-    "disciplines": ["Majesty", "Nightmare", "Obfuscate", "Resilience"],
+    "nicknames": [
+      "Tempters",
+      "Enablers",
+      "Devils"
+    ],
+    "favoredAttributes": [
+      "Manipulation",
+      "Composure"
+    ],
+    "disciplines": [
+      "Majesty",
+      "Nightmare",
+      "Obfuscate",
+      "Resilience"
+    ],
     "summary": "Tempters who strip away restraint and encourage excess while their own connection to Humanity erodes.",
     "baneName": "The Ablative Curse",
     "baneSummary": "A Vilseduire can have no more than one attached Touchstone and treats all breaking points as though at half normal Humanity, rounded down.",
@@ -154,55 +267,1328 @@
     "page": 50
   },
   {
-    "id": "morbus", "name": "Morbus", "translatedName": "Morbus", "parentClan": "Mekhet", "nicknames": ["The Afflicted"],
-    "favoredAttributes": ["Intelligence", "Wits"], "disciplines": ["Auspex", "Celerity", "Cachexy", "Obfuscate"], "exclusiveDiscipline": "Cachexy",
+    "id": "morbus",
+    "name": "Morbus",
+    "translatedName": "Morbus",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "The Afflicted"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Cachexy",
+      "Obfuscate"
+    ],
+    "exclusiveDiscipline": "Cachexy",
     "summary": "Outcast plague angels who cultivate disease and wield it as a weapon from the shadows.",
-    "baneName": "The Unclean Curse", "baneSummary": "In addition to the Mekhet bane, the Morbus can feed on living mortals only when they are diseased; Kindred Vitae remains nourishing.",
-    "sourceId": "cofd-dark-eras-companion", "source": "Dark Eras Companion", "page": 94
+    "baneName": "The Unclean Curse",
+    "baneSummary": "In addition to the Mekhet bane, the Morbus can feed on living mortals only when they are diseased; Kindred Vitae remains nourishing.",
+    "sourceId": "cofd-dark-eras-companion",
+    "source": "Dark Eras Companion",
+    "page": 94
   },
   {
-    "id": "bron", "name": "Bron", "translatedName": "Bron", "parentClan": "Ventrue", "nicknames": ["Hedge Knights"],
-    "favoredAttributes": ["Stamina", "Presence"], "disciplines": ["Animalism", "Crochan", "Dominate", "Resilience"], "exclusiveDiscipline": "Crochan",
+    "id": "bron",
+    "name": "Bron",
+    "translatedName": "Bron",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Hedge Knights"
+    ],
+    "favoredAttributes": [
+      "Stamina",
+      "Presence"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Crochan",
+      "Dominate",
+      "Resilience"
+    ],
+    "exclusiveDiscipline": "Crochan",
     "summary": "Knights errant and bravos who bind themselves to blood, quest, and oath.",
-    "baneName": "The Errant Curse", "baneSummary": "In addition to the Ventrue bane, a change in permanent Blood Potency detaches every Touchstone; each night an unattached Touchstone may be replaced after a failed Humanity roll.",
-    "sourceId": "cofd-dark-eras-2", "source": "Dark Eras 2", "page": 117
+    "baneName": "The Errant Curse",
+    "baneSummary": "In addition to the Ventrue bane, a change in permanent Blood Potency detaches every Touchstone; each night an unattached Touchstone may be replaced after a failed Humanity roll.",
+    "sourceId": "cofd-dark-eras-2",
+    "source": "Dark Eras 2",
+    "page": 117
   },
   {
-    "id": "khaibit", "name": "Khaibit", "translatedName": "Khaibit", "parentClan": "Mekhet", "nicknames": ["Asps"],
-    "favoredAttributes": ["Intelligence", "Wits"], "disciplines": ["Auspex", "Celerity", "Obfuscate", "Vigor"],
+    "id": "khaibit",
+    "name": "Khaibit",
+    "translatedName": "Khaibit",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Asps"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Obfuscate",
+      "Vigor"
+    ],
     "summary": "Ancient soldiers who fight the darkness by embracing and mastering it.",
-    "baneName": "The Blinded Curse", "baneSummary": "Bright light that would inhibit ordinary vision inflicts the Blinded Tilt and suppresses Udjat for the scene.",
-    "sourceId": "vtr-onyx-path-khaibit", "source": "Onyx Path Blog: The Shadow and the Asp", "page": 0
+    "baneName": "The Blinded Curse",
+    "baneSummary": "Bright light that would inhibit ordinary vision inflicts the Blinded Tilt and suppresses Udjat for the scene.",
+    "sourceId": "vtr-onyx-path-khaibit",
+    "source": "Onyx Path Blog: The Shadow and the Asp",
+    "page": 0
   },
   {
-    "id": "kerberos", "name": "Kerberos", "translatedName": "Kerberos", "parentClan": "Gangrel", "nicknames": ["Children of Typhon", "Watchdogs"],
-    "favoredAttributes": ["Composure", "Stamina"], "disciplines": ["Animalism", "Majesty", "Protean", "Resilience"],
+    "id": "kerberos",
+    "name": "Kerberos",
+    "translatedName": "Kerberos",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Children of Typhon",
+      "Watchdogs"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Majesty",
+      "Protean",
+      "Resilience"
+    ],
     "summary": "Self-reinventing social predators who excel at projecting the Beast through its three aspects.",
-    "baneName": "The Opposing Curse", "baneSummary": "Against anyone not subject to a Predatory Aura Condition, lose 10-again on all non-reflexive actions; Predatory Aura rolls are unaffected.",
-    "sourceId": "vtr-onyx-path-kerberos", "source": "Onyx Path Blog: The Jaws of the Beast", "page": 0
+    "baneName": "The Opposing Curse",
+    "baneSummary": "Against anyone not subject to a Predatory Aura Condition, lose 10-again on all non-reflexive actions; Predatory Aura rolls are unaffected.",
+    "sourceId": "vtr-onyx-path-kerberos",
+    "source": "Onyx Path Blog: The Jaws of the Beast",
+    "page": 0
   },
   {
-    "id": "star-crossed", "name": "Star-Crossed", "translatedName": "Star-Crossed", "parentClan": "Daeva", "nicknames": ["Custodians", "Sophists"],
-    "favoredAttributes": ["Dexterity", "Manipulation"], "disciplines": ["Celerity", "Dominate", "Majesty", "Resilience"],
+    "id": "children-of-judas",
+    "name": "Children of Judas",
+    "translatedName": "Children of Judas",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "The Hanged",
+      "Suicide Kings"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Nightmare",
+      "Vigor"
+    ],
+    "summary": "Grief-addicted Daeva who taste a victim's worst remorse and weaponize buried guilt.",
+    "baneName": "The Grievous Curse",
+    "baneSummary": "After more than Humanity nights without feeding from someone experiencing grief, remorse, or regret, roll Resolve + Composure on rising with a cumulative penalty for each overdue night. Failure inflicts Deprived until the vampire feeds from an appropriately sorrowful vessel.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 20,
+    "homebrew": true,
+    "giftName": "A Taste of Grief",
+    "giftSummary": "The first time the vampire feeds from a vessel, she receives an involuntary vision of a tragic event from that person's past."
+  },
+  {
+    "id": "duchagne",
+    "name": "Duchagne",
+    "translatedName": "Duchagne",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Decadents",
+      "Bacchantes"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Majesty",
+      "Resilience",
+      "Vigor"
+    ],
+    "summary": "Jaded sensualists who need extreme sensation to make feeding feel alive.",
+    "baneName": "The Sybaritic Curse",
+    "baneSummary": "Unless feeding involves intense physical sensation such as pain, pleasure, or extreme temperature, spend Willpower or apply the Daeva clan bane even on the first feeding from that vessel.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 26,
+    "homebrew": true,
+    "giftName": "The Spice of Life",
+    "giftSummary": "Once per night, feeding from a victim experiencing extreme sensation can refresh one spent Willpower; causing additional harm imposes -1 on the resulting detachment roll."
+  },
+  {
+    "id": "erzsebet",
+    "name": "Erzsébet",
+    "translatedName": "Erzsébet",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Cavaliers",
+      "The Withered",
+      "Moretti",
+      "Rózsa",
+      "Syska"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Majesty",
+      "Vigor"
+    ],
+    "summary": "Near-living Daeva whose bodies age as Humanity wanes.",
+    "baneName": "The Moldering Curse",
+    "baneSummary": "At Humanity 6 or lower the vampire ages at one quarter the human rate. Once per chapter after a breaking point, failure on a Humanity roll ages her one year during daysleep; equal time in torpor reverses this only as far as her Embrace age.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 31,
+    "homebrew": true,
+    "giftName": "Almost Human",
+    "giftSummary": "Hair and nails grow at will, physical changes persist through daysleep without Willpower, and a permanent blush of life can be intensified with Vitae for mortal healing, masked aura, and exceptional Empathy."
+  },
+  {
+    "id": "gulikan",
+    "name": "Gulikan",
+    "translatedName": "Gulikan",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Perfumers",
+      "Bloodhounds",
+      "Peddlers"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Majesty",
+      "Ortam",
+      "Vigor"
+    ],
+    "summary": "Hyperosmic perfumers who distill stolen scents into occult recipes.",
+    "baneName": "The Hyperosmic Curse",
+    "baneSummary": "After more than passing intimate contact with a living person, roll Humanity. Failure causes an Obsession focused on that person's scent until the vampire immerses herself in it; a new instance replaces the old one.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 36,
+    "homebrew": true,
+    "exclusiveDiscipline": "Ortam"
+  },
+  {
+    "id": "moda-mortale",
+    "name": "Moda Mortale",
+    "translatedName": "Moda Mortale",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Fashionistas",
+      "Widows"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Majesty",
+      "Obfuscate",
+      "Protean",
+      "Vigor"
+    ],
+    "summary": "Perfectionist assassins who turn fashion and murder into precise messages.",
+    "baneName": "The Impeccable Curse",
+    "baneSummary": "When a setback or flaw disrupts the vampire's current plan, roll Humanity. Failure inflicts Broken until it resolves or the task is complete; the bane cannot trigger again while Broken remains.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 42,
+    "homebrew": true,
+    "giftName": "Finishing School",
+    "giftSummary": "Bloodline Status grants Friends Abroad alongside Cacophony Savvy, a qualifying Fighting Style dot, and Taste or a one-Experience refund if Taste is already owned."
+  },
+  {
+    "id": "nelapsi",
+    "name": "Nelapsi",
+    "translatedName": "Nelapsi",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Gluttons",
+      "Locusts"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Majesty",
+      "Nightmare",
+      "Resilience",
+      "Vigor"
+    ],
+    "summary": "Legend-haunted predators whose insatiable feeding sustains their terrifying reputations.",
+    "baneName": "The Edacious Curse",
+    "baneSummary": "After feeding, roll Humanity. Failure makes the vampire count as starving for frenzy until she drinks Blood Potency Vitae; Willpower suppresses this for one scene, and excess blood is vomited.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 47,
+    "homebrew": true,
+    "giftName": "The Lessons",
+    "giftSummary": "Nelapsi mentorship is expressed through Quickened Hunger and Shadow Heart, Fame (Advanced), and the Cursed Fiefdom Devotion rather than an automatic power."
+  },
+  {
+    "id": "star-crossed",
+    "name": "Star-Crossed",
+    "translatedName": "Star-Crossed",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Custodians",
+      "Sophists"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Dominate",
+      "Majesty",
+      "Resilience"
+    ],
     "summary": "Custodians who preserve mortal Purities in repeating moments and refine their timeless blood into Electrum.",
-    "baneName": "The Curse of Self-Reflection", "baneSummary": "After a mortal sees any visual representation of the vampire, the Star-Crossed's Social actions with that mortal are capped by Humanity for the rest of the night. Touchstones are exempt, but Purities are not.",
-    "sourceId": "h-vtr-sin-again", "source": "Sin Again: Daeva", "page": 52,
-    "homebrew": true
+    "baneName": "The Curse of Self-Reflection",
+    "baneSummary": "After a mortal sees any visual representation of the vampire, the Star-Crossed's Social actions with that mortal are capped by Humanity for the rest of the night. Touchstones are exempt, but Purities are not.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 52,
+    "homebrew": true,
+    "giftName": "Purification",
+    "giftSummary": "Anoint a mortal with Vitae and Willpower to lock the subject into a renewable 24-hour biological loop that reverses aging, disease, injury, and death while imposing persistent confusion."
   },
   {
-    "id": "xiao", "name": "Xiao", "translatedName": "Xiao", "parentClan": "Daeva", "nicknames": ["Ascended", "Apostates", "Parasites", "California Xiao"],
-    "favoredAttributes": ["Dexterity", "Manipulation"], "disciplines": ["Celerity", "Majesty", "Nightmare", "Vigor"],
+    "id": "xiao",
+    "name": "Xiao",
+    "translatedName": "Xiao",
+    "parentClan": "Daeva",
+    "nicknames": [
+      "Ascended",
+      "Apostates",
+      "Parasites",
+      "California Xiao"
+    ],
+    "favoredAttributes": [
+      "Dexterity",
+      "Manipulation"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Majesty",
+      "Nightmare",
+      "Vigor"
+    ],
     "summary": "Emotionally blunted predators divided between the exploitative Sect and Apostates who weaponize their detachment.",
-    "baneName": "The Detached Curse", "baneSummary": "Mundane Empathy and Socialize rolls involving humans treat Humanity as two dots lower, and failures become dramatic failures. This does not apply to Touchstones.",
-    "sourceId": "h-vtr-sin-again", "source": "Sin Again: Daeva", "page": 57,
+    "baneName": "The Detached Curse",
+    "baneSummary": "Mundane Empathy and Socialize rolls involving humans treat Humanity as two dots lower, and failures become dramatic failures. This does not apply to Touchstones.",
+    "sourceId": "h-vtr-sin-again",
+    "source": "Sin Again: Daeva",
+    "page": 57,
     "homebrew": true
   },
   {
-    "id": "typhos", "name": "Typhos", "translatedName": "Typhos", "parentClan": "Ventrue", "nicknames": ["Sawbones", "The Institute", "Surgeons"],
-    "favoredAttributes": ["Composure", "Presence"], "disciplines": ["Animalism", "Auspex", "Dominate", "Resilience"],
-    "summary": "Biomedical predators who alter mortal hosts through Arthmoic Surgery and the international Typhos Institute.",
-    "baneName": "The Clinician's Curse", "baneSummary": "Treat Humanity as one dot lower on rolls to relate to humans. The penalty is permanently removed for a human on whom the Typhos performs a substantial medical procedure.",
-    "sourceId": "h-vtr-false-gods", "source": "False Gods: Ventrue", "page": 55,
+    "id": "baetyl",
+    "name": "Baetyl",
+    "translatedName": "Baetyl",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Termites",
+      "Gargoyles"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Protean",
+      "Resilience"
+    ],
+    "summary": "Stone-eating Gangrel who incorporate swallowed material into their mutable flesh.",
+    "baneName": "The Chimeric Curse",
+    "baneSummary": "In addition to the Feral Curse, the vampire also suffers the Nosferatu clan bane as inorganic material progressively deforms her body.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 20,
+    "homebrew": true,
+    "giftName": "The Bezoar Core",
+    "giftSummary": "The vampire can swallow inanimate matter and once per scene spend Vitae to add the consumed material's Size, maximum +5, to Auspex rolls for the scene."
+  },
+  {
+    "id": "cerrid",
+    "name": "Cerrid",
+    "translatedName": "Cerrid",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Beguilers",
+      "Troubadours"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Majesty",
+      "Obfuscate",
+      "Protean"
+    ],
+    "summary": "Nomadic performers whose songs soothe and direct the Beast.",
+    "baneName": "The Cadenza Curse",
+    "baneSummary": "At least once every 11 minus Blood Potency nights, regain Willpower from the Mask through performance. Otherwise a visible mutation lowers effective Humanity by two for the Feral Curse until all Willpower is regained through performance or torpor intervenes.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 25,
+    "homebrew": true,
+    "giftName": "The Golden Throat",
+    "giftSummary": "Gain one Expression dot on joining, or another Social Skill if Expression is already maximum; spending Willpower on mundane Expression grants +5 instead of +3."
+  },
+  {
+    "id": "childer-of-the-morrigan",
+    "name": "Childer of the Morrigan",
+    "translatedName": "Childer of the Morrigan",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Stormcrows",
+      "Crows",
+      "Morrigans"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Protean",
+      "Resilience",
+      "Vigor"
+    ],
+    "summary": "Warrior Acolytes who invoke Crúac in sudden, violent bursts.",
+    "baneName": "The Warmonger's Curse",
+    "baneSummary": "Backing down, de-escalating, or resolving an important problem without direct conflict causes a cumulative -1 to frenzy resistance for the rest of the night.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 30,
+    "homebrew": true,
+    "giftName": "Banshee Crúac",
+    "giftSummary": "Spend Willpower to cast a rite of three dots or less instantly with reduced successes and Potency; failure becomes dramatic and temporarily curses everyone nearby. Beast's Skin always includes a crow or raven form."
+  },
+  {
+    "id": "daimonion",
+    "name": "Daimonion",
+    "translatedName": "Daimonion",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Counselors",
+      "Beast Whisperers"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Protean",
+      "Vigor"
+    ],
+    "summary": "Counselors who read and manipulate the instincts of other Beasts.",
+    "baneName": "The Curse of Attunement",
+    "baneSummary": "While Tempted, witnessing another vampire enter involuntary frenzy requires spending Willpower or resisting a sympathetic frenzy whose impulse is to assist that vampire; resisting once grants immunity for the scene.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 35,
+    "homebrew": true,
+    "giftName": "An Ear for the Beast",
+    "giftSummary": "Auspex gains an extra question about a vampire's Beast and intimate-contact benefits against frenzy, Bestial Triad Conditions, and draugr."
+  },
+  {
+    "id": "dead-wolves",
+    "name": "Dead Wolves",
+    "translatedName": "Dead Wolves",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Lobos de Sangre",
+      "Lobos",
+      "Namus-Ur"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Protean",
+      "Resilience"
+    ],
+    "summary": "Moon-bound Gangrel who borrow the forms and mysteries of werewolves.",
+    "baneName": "The Moonstruck Curse",
+    "baneSummary": "Seeing the full moon for the first time each night provokes frenzy; Sublunario can shift the triggering phase. The first silver-weapon injury each scene provokes fear frenzy at -3.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 40,
     "homebrew": true
+  },
+  {
+    "id": "mystikoi",
+    "name": "Mystikoi",
+    "translatedName": "Mystikoi",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Illuminated",
+      "Mystikos",
+      "Heretics"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Protean",
+      "Resilience",
+      "Spiritus Sancti"
+    ],
+    "summary": "Mystic predators who seek divinity by consuming supernatural essence.",
+    "baneName": "The Consubstantiation Curse",
+    "baneSummary": "Each night only Humanity Vitae from humans provides nourishment unless Willpower is spent per excess feeding. Kindred blood is exempt below Blood Potency 6, as is werewolf blood.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 46,
+    "homebrew": true,
+    "exclusiveDiscipline": "Spiritus Sancti",
+    "giftName": "Spiritus Sancti",
+    "giftSummary": "An exclusive five-dot Discipline that refines consumed supernatural essence into a path of bodily and spiritual transcendence."
+  },
+  {
+    "id": "oberlochs",
+    "name": "Oberlochs",
+    "translatedName": "Oberlochs",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Kin",
+      "Rats"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Dominate",
+      "Protean",
+      "Resilience"
+    ],
+    "summary": "A sprawling rural family whose corpses continue to age and breed the line true.",
+    "baneName": "The Putrefying Curse",
+    "baneSummary": "The vampire ages and takes Humanity-based Social penalties when relating to other vampires as though they were mortals; Humanity 9-10 grants no bonus. Her childer enter the bloodline automatically.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 52,
+    "homebrew": true
+  },
+  {
+    "id": "verlice",
+    "name": "Verlice",
+    "translatedName": "Verlice",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Needles",
+      "Coyotes",
+      "Trespassers"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Obfuscate",
+      "Protean",
+      "Resilience"
+    ],
+    "summary": "Restless nomads mystically bonded to a chosen vehicle.",
+    "baneName": "The Stagnant Curse",
+    "baneSummary": "Each night after the first spent sleeping within the same Blood Potency-mile radius lowers effective Humanity by one for attached Touchstones. Resting a full day somewhere new relieves it, and the old area cannot be reused for a week.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 57,
+    "homebrew": true,
+    "giftName": "The Ride",
+    "giftSummary": "Anoint a vehicle with Vitae and spend Willpower to make it the vampire's bonded Ride, enabling the bloodline's vehicle Devotions."
+  },
+  {
+    "id": "wickers",
+    "name": "Wickers",
+    "translatedName": "Wickers",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Hawks",
+      "The Flock"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Nightmare",
+      "Protean"
+    ],
+    "summary": "Avian augurs who draw terrible omens from pain and disaster.",
+    "baneName": "The Curse of the Parliament",
+    "baneSummary": "After a failed breaking point, roll Humanity. Failure attracts a Strix before the story ends; successes impose cumulative -1 on later rolls until the bane triggers. This entry records the printed bane but does not implement Strix mechanics.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 63,
+    "homebrew": true
+  },
+  {
+    "id": "yarilo",
+    "name": "Yarilo",
+    "translatedName": "Yarilo",
+    "parentClan": "Gangrel",
+    "nicknames": [
+      "Vines",
+      "Arboreals"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Stamina"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Celerity",
+      "Dominate",
+      "Protean"
+    ],
+    "summary": "Plantlike Gangrel rooted to sacred Heartwood trees and clouds of controlling spores.",
+    "baneName": "The Tinderbox Curse",
+    "baneSummary": "After taking fire damage, treat Humanity as one lower for attaching Touchstones for the rest of the night.",
+    "sourceId": "h-vtr-wild-hunt",
+    "source": "Wild Hunt: Gangrel",
+    "page": 68,
+    "homebrew": true
+  },
+  {
+    "id": "connected",
+    "name": "Connected",
+    "translatedName": "Connected",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Oracles",
+      "IT"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Interface",
+      "Obfuscate"
+    ],
+    "summary": "Networked Mekhet who treat digital systems as extensions of their senses.",
+    "baneName": "The Anonymous Curse",
+    "baneSummary": "Among more than 10 minus Blood Potency mortals in a genuinely social or crowded setting, roll Humanity. Failure inflicts Distracted until the vampire escapes the crowd or the scene ends; digital gatherings and Touchstones are exempt.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 18,
+    "homebrew": true,
+    "exclusiveDiscipline": "Interface",
+    "giftName": "Interface",
+    "giftSummary": "An exclusive five-dot Discipline for sensing, entering, protecting, and controlling digital systems."
+  },
+  {
+    "id": "csalad",
+    "name": "Család",
+    "translatedName": "Család",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Stone Sires",
+      "The Family",
+      "Családtag"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Lithopedia",
+      "Obfuscate"
+    ],
+    "summary": "Territorial Mekhet who read and command the living history of cities and land.",
+    "baneName": "The Civic Curse",
+    "baneSummary": "On nights after resting outside her territory, suffering any breaking point also inflicts Lethargic. Territory may be represented by Feeding Grounds, Haven, Safe Place, or a narrative domain.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 25,
+    "homebrew": true,
+    "exclusiveDiscipline": "Lithopedia",
+    "giftName": "Lithopedia",
+    "giftSummary": "A ritual Discipline whose rites bind the vampire to territory and reveal or direct the memories and forces of the land."
+  },
+  {
+    "id": "kuufukuji",
+    "name": "Kuufukuji",
+    "translatedName": "Kuufukuji",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "The Hungry",
+      "Celibates"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Obfuscate",
+      "Resilience"
+    ],
+    "summary": "Ascetic Mekhet who pursue insight through hunger and controlled deprivation.",
+    "baneName": "The Ascetic Curse",
+    "baneSummary": "Drinking more Vitae than Humanity in one night inflicts Bestial until the vampire abstains for a full night; frenzy failures during that time become hunger frenzy. References to revenant creation are intentionally not implemented.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 31,
+    "homebrew": true
+  },
+  {
+    "id": "leandros",
+    "name": "Leandros",
+    "translatedName": "Leandros",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Heartbreakers",
+      "Creeps"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Majesty",
+      "Obfuscate",
+      "Vigor"
+    ],
+    "summary": "Predators who form consuming romantic fixations through feeding.",
+    "baneName": "The Infatuated Curse",
+    "baneSummary": "After feeding from a mortal, roll Resolve + Composure. Failure makes that mortal the only satisfying vessel, capping nourishment from all other sources at half Humanity until the mortal dies or the vampire next succeeds at a breaking point. Invitation is mandatory if the clan bane has not manifested.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 36,
+    "homebrew": true
+  },
+  {
+    "id": "mnemosyne",
+    "name": "Mnemosyne",
+    "translatedName": "Mnemosyne",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Keepers",
+      "Mnemovores",
+      "Mind-Thieves"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Dominate",
+      "Obfuscate"
+    ],
+    "summary": "Memory thieves who preserve history by drinking it from blood.",
+    "baneName": "The Gestalt Curse",
+    "baneSummary": "When feeding again from a previous vessel, roll Humanity. Failure inflicts False Memories drawn from that victim; later failures alter the same single instance.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 42,
+    "homebrew": true
+  },
+  {
+    "id": "norvegi",
+    "name": "Norvegi",
+    "translatedName": "Norvegi",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Knives",
+      "Outlaws",
+      "Norvegus",
+      "Norvega"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Protean",
+      "Vigor"
+    ],
+    "summary": "Inbred outlaws whose Beasts visibly warp their flesh.",
+    "baneName": "The Curse of Glamr",
+    "baneSummary": "Unless Willpower is spent or a Humanity roll succeeds, Social actions for the scene suffer half Blood Potency, rounded up. The penalty does not apply to other Norvegi or their named kin. Fangless is mandatory if the clan bane has not manifested.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 48,
+    "homebrew": true
+  },
+  {
+    "id": "qedeshah",
+    "name": "Qedeshah",
+    "translatedName": "Qedeshah",
+    "parentClan": "Mekhet",
+    "nicknames": [
+      "Mothers",
+      "Mothers of Heaven",
+      "Parents"
+    ],
+    "favoredAttributes": [
+      "Intelligence",
+      "Wits"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Celerity",
+      "Majesty",
+      "Obfuscate"
+    ],
+    "summary": "Protective Mekhet who anoint mortals as extensions of their Touchstones.",
+    "baneName": "The Fretful Curse",
+    "baneSummary": "After more than Humanity nights without defending a Touchstone or anointed mortal, gain Guilty. It resolves only by defending an attachment strongly enough to recover all Willpower; with no attachments, it becomes Persistent until one is gained.",
+    "sourceId": "h-vtr-strange-shades",
+    "source": "Strange Shades: Mekhet",
+    "page": 54,
+    "homebrew": true,
+    "giftName": "Anointment",
+    "giftSummary": "The bloodline can consecrate selected mortals as anointed attachments used by its protective Merits and Devotions."
+  },
+  {
+    "id": "acteius",
+    "name": "Acteius",
+    "translatedName": "Acteius",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Artisans",
+      "Telchines"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Nightmare",
+      "Obfuscate",
+      "Vigor"
+    ],
+    "summary": "Methodical blood-artisans who craft tools and weapons from Vitae.",
+    "baneName": "The Hide-bound Curse",
+    "baneSummary": "When an unexpected setback or unlikely turn occurs, roll Humanity. Failure inflicts Tempted as the Beast reacts to disruption.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 20,
+    "homebrew": true
+  },
+  {
+    "id": "candymen",
+    "name": "Candymen",
+    "translatedName": "Candymen",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Peddlers",
+      "Pushers"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Dominate",
+      "Nightmare",
+      "Obfuscate",
+      "Vigor"
+    ],
+    "summary": "Alchemical drug dealers whose blood-laced concoctions reshape appetite.",
+    "baneName": "The Sweet Sin Curse",
+    "baneSummary": "Choose a defining vessel type. On rising, roll Humanity; failure makes all other vessels non-nourishing for the night, including stored blood, unless they consumed the vampire's concoctions.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 26,
+    "homebrew": true,
+    "giftName": "The Sweet Stuff",
+    "giftSummary": "The vampire can infuse drugs and treats with Vitae, making consumers valid vessels and enabling the bloodline's addictive Devotions."
+  },
+  {
+    "id": "cockscomb-society",
+    "name": "The Cockscomb Society",
+    "translatedName": "The Cockscomb Society",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Cockerels",
+      "The Society",
+      "Ladies",
+      "Gents",
+      "Biddies",
+      "Gumps"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Majesty",
+      "Nightmare",
+      "Obfuscate",
+      "Vigor"
+    ],
+    "summary": "Decadent aristocrats whose cultivated civility barely restrains monstrous urges.",
+    "baneName": "The Curse of Ennui",
+    "baneSummary": "Apply the Nosferatu Social penalty with mortals to rolls resisting Bestial, Competitive, Wanton, and similar urges; use the higher modifier if effects overlap, and failures become dramatic failures.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 32,
+    "homebrew": true,
+    "giftName": "Old Money",
+    "giftSummary": "The Society's inherited wealth and connections provide lineage-specific social leverage and support its role-playing Devotions."
+  },
+  {
+    "id": "gethsemani",
+    "name": "Gethsemani",
+    "translatedName": "Gethsemani",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Ecstatics",
+      "Revivalists",
+      "Charlatans"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Majesty",
+      "Nightmare",
+      "Obfuscate",
+      "Resilience"
+    ],
+    "summary": "Stigmatic prophets who turn holy terror into blood miracles.",
+    "baneName": "The Stigmatist Curse",
+    "baneSummary": "On rising, spend extra Vitae equal to half Blood Potency, rounded up, or manifest stigmatic wounds that lower effective Humanity by one for the Nosferatu clan bane until daysleep.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 37,
+    "homebrew": true,
+    "giftName": "Stigmatica",
+    "giftSummary": "The bloodline's supernatural stigmata enable its signature Theban Miracles and devotional feeding practices."
+  },
+  {
+    "id": "keepers-of-the-dark",
+    "name": "Keepers of the Dark",
+    "translatedName": "Keepers of the Dark",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Wardens",
+      "Mole-Rats"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Nightmare",
+      "Obfuscate",
+      "Resilience"
+    ],
+    "summary": "Subterranean wardens who shape labyrinthine havens and hoard secrets in darkness.",
+    "baneName": "The Radiant Curse",
+    "baneSummary": "Bright light such as a flashlight, bonfire, or full moon inflicts Distracted for the scene unless a Humanity roll succeeds.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 43,
+    "homebrew": true
+  },
+  {
+    "id": "lygos",
+    "name": "Lygos",
+    "translatedName": "Lygos",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Shades",
+      "Creeps"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Auspex",
+      "Nightmare",
+      "Obfuscate",
+      "Vigor"
+    ],
+    "summary": "Mystics of absolute darkness who learn the progressive Truths of Erebus.",
+    "baneName": "The Luminous Curse",
+    "baneSummary": "Outside dim light, Humanity counts as one lower for the Nosferatu bane and frenzy resistance suffers -1.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 49,
+    "homebrew": true,
+    "giftName": "Truths of Erebus",
+    "giftSummary": "The bloodline treats the five Truths as a primary Mystery and may learn Lessons of Erebus as its associated procedures."
+  },
+  {
+    "id": "von-schreck-family",
+    "name": "Von Schreck Family",
+    "translatedName": "Von Schreck Family",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Scream Queens",
+      "Fangorians",
+      "The Family"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Majesty",
+      "Nightmare",
+      "Obfuscate",
+      "Vigor"
+    ],
+    "summary": "Horror-industry predators who need a live audience for their feeding performances.",
+    "baneName": "The Exhibitionist Curse",
+    "baneSummary": "Unless mortals observe the feeding live, directly or remotely, spend Willpower or cap each vessel's Vitae capacity at half Humanity, rounded down. Frenzy and Kindred blood are exempt.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 55,
+    "homebrew": true,
+    "giftName": "Know Your Audience",
+    "giftSummary": "The bloodline exploits live spectators and horror fandom to amplify fear, feeding, and its cinematic Devotions."
+  },
+  {
+    "id": "yagnatia",
+    "name": "Yagnatia",
+    "translatedName": "Yagnatia",
+    "parentClan": "Nosferatu",
+    "nicknames": [
+      "Boyars",
+      "Vozhds",
+      "Pretenders"
+    ],
+    "favoredAttributes": [
+      "Composure",
+      "Strength"
+    ],
+    "disciplines": [
+      "Dominate",
+      "Nightmare",
+      "Resilience",
+      "Vigor"
+    ],
+    "summary": "Feudal blood-sorcerers who bargain with the gods and spirits of their land.",
+    "baneName": "The Curse of Bielobog",
+    "baneSummary": "Humanity caps dice pools and traits used to resist the Numina of ephemeral beings. References to Strix powers are recorded by the source but not implemented.",
+    "sourceId": "h-vtr-better-feared",
+    "source": "Better Feared: Nosferatu",
+    "page": 60,
+    "homebrew": true
+  },
+  {
+    "id": "adrestoi",
+    "name": "Adrestoi",
+    "translatedName": "Adrestoi",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "The Unchained",
+      "Children of Midas"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Dominate",
+      "Obfuscate",
+      "Protean",
+      "Resilience"
+    ],
+    "summary": "Pack-bound Lords who submit their Beasts to a chosen master through Blood Tether.",
+    "baneName": "The Submissive Curse",
+    "baneSummary": "The vampire has Blood of the Unwilling, but requires feeding permission from a superior with equal or higher relevant Kindred Status; a pack master has final authority. Once granted, permission normally cannot be rescinded.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 20,
+    "homebrew": true,
+    "exclusiveDiscipline": "Blood Tether",
+    "giftName": "Blood Tether",
+    "giftSummary": "A five-dot Discipline that binds a pack to its master and distributes senses, emotion, strength, and feeding across the tether."
+  },
+  {
+    "id": "gottlings",
+    "name": "Gottlings",
+    "translatedName": "Gottlings",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Directors",
+      "Dramaturges",
+      "Drama Queens"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Dominate",
+      "Obfuscate"
+    ],
+    "summary": "Supernatural directors who turn people into performers in their obsessive productions.",
+    "baneName": "The Curse of the Muse",
+    "baneSummary": "Without an attached Touchstone, gain Obsession toward the current project until it is completed, Humanity rises, or a new Touchstone is acquired.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 27,
+    "homebrew": true
+  },
+  {
+    "id": "keravnos",
+    "name": "Keravnos",
+    "translatedName": "Keravnos",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Shockers",
+      "Jovians",
+      "The Technopoly"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Dominate",
+      "Resilience",
+      "Surge"
+    ],
+    "summary": "Electrical Ventrue who feed from current and command power grids.",
+    "baneName": "The Voltaic Curse",
+    "baneSummary": "A breaking point for harming mortals with electricity moves Touchstones one Humanity level higher. If the vampire fed only from electricity that night, detachment rolls suffer -2.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 32,
+    "homebrew": true,
+    "exclusiveDiscipline": "Surge",
+    "giftName": "Surge",
+    "giftSummary": "An exclusive five-dot Discipline that consumes, stores, senses, and redirects electricity."
+  },
+  {
+    "id": "malocusians",
+    "name": "Malocusians",
+    "translatedName": "Malocusians",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Spiders",
+      "Hermits",
+      "Ticks"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Dominate",
+      "Obfuscate",
+      "Resilience"
+    ],
+    "summary": "Reclusive domain masters whose homes become extensions of their bodies and will.",
+    "baneName": "The Sedentary Curse",
+    "baneSummary": "Leaving home without spending Willpower allows Humanity minus Blood Potency hours away, minimum one, before frenzy resistance takes cumulative -1 per hour to -5 until a full day is spent at home.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 38,
+    "homebrew": true,
+    "giftName": "Domus",
+    "giftSummary": "The vampire mystically extends senses and authority through her domicile, empowering its defenses and the bloodline's household Devotions."
+  },
+  {
+    "id": "melissidae",
+    "name": "Melissidae",
+    "translatedName": "Melissidae",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Queens",
+      "Queen Bees",
+      "Collectors",
+      "Melissid"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Dominate",
+      "Majesty",
+      "Resilience"
+    ],
+    "summary": "Hive-building Ventrue who absorb insects and people into a collective organism.",
+    "baneName": "The Swarming Curse",
+    "baneSummary": "Every Touchstone must belong to the hive, and at least one attached Touchstone is required for any to count as attached. Inanimate places and objects cannot serve as Touchstones.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 44,
+    "homebrew": true,
+    "giftName": "Insectoid Kinship",
+    "giftSummary": "The vampire can communicate with and command insects, laying the foundation for Hivemind and the bloodline's colony Devotions."
+  },
+  {
+    "id": "rotgrafen",
+    "name": "Rotgrafen",
+    "translatedName": "Rotgrafen",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Sea Kings",
+      "Fire Lords",
+      "Red Counts",
+      "Anarchs"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Dominate",
+      "Protean",
+      "Resilience"
+    ],
+    "summary": "Pirate Lords whose Beasts reject obedience without an equitable price.",
+    "baneName": "The Recalcitrant Curse",
+    "baneSummary": "Submitting to authority without fair compensation caps frenzy-resistance rolls by Humanity for the night, including retroactively if the bargain is broken. Trivial demands, self-preservation, and other Rotgrafen are exempt.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 50,
+    "homebrew": true
+  },
+  {
+    "id": "typhos",
+    "name": "Typhos",
+    "translatedName": "Typhos",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Sawbones",
+      "The Institute",
+      "Surgeons"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Dominate",
+      "Resilience"
+    ],
+    "summary": "Biomedical predators who alter mortal hosts through Arthmoic Surgery and the international Typhos Institute.",
+    "baneName": "The Clinician's Curse",
+    "baneSummary": "Treat Humanity as one dot lower on rolls to relate to humans. The penalty is permanently removed for a human on whom the Typhos performs a substantial medical procedure.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 55,
+    "homebrew": true
+  },
+  {
+    "id": "warumono",
+    "name": "Warumono",
+    "translatedName": "Warumono",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Wild Ones",
+      "Gangsters"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Celerity",
+      "Dominate",
+      "Resilience",
+      "Vigor"
+    ],
+    "summary": "Tattooed gangsters who channel control through disciplined paths and spectacular violence.",
+    "baneName": "The Turbulent Curse",
+    "baneSummary": "After violent action or drawing blood, including feeding, the Lost Visage fails for the scene and mundane subtlety, Stealth, and escape-notice rolls are capped by Humanity.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 61,
+    "homebrew": true
+  },
+  {
+    "id": "malkovians",
+    "name": "Malkovians",
+    "translatedName": "Malkovians",
+    "parentClan": "Ventrue",
+    "nicknames": [
+      "Oracles",
+      "The Moonstruck",
+      "Cassandras",
+      "Knights of the Moon"
+    ],
+    "favoredAttributes": [
+      "Presence",
+      "Resolve"
+    ],
+    "disciplines": [
+      "Animalism",
+      "Auspex",
+      "Nightmare",
+      "Resilience"
+    ],
+    "summary": "Afflicted seers who perceive impossible truths through Malkavia and Dementation.",
+    "baneName": "The Curse of Babble",
+    "baneSummary": "Each chapter the Storyteller gains 10 minus Humanity dice to oppose successful Social attempts to communicate truths. If successes are reduced to failure, it becomes dramatic and that truth cannot be communicated again until the next night; Touchstones are exempt.",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "page": 96,
+    "homebrew": true,
+    "giftName": "Apophenia",
+    "giftSummary": "The vampire reads meaningful patterns in apparent coincidence, gaining prophetic insight while risking the Pareidolia Condition."
   }
 ]

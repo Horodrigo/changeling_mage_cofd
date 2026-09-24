@@ -36,7 +36,9 @@ import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { BloodlineJoinDialog, BloodlinePage } from "./bloodline-page";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import { vampireHomebrewContentActive } from "./homebrew-catalog";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -695,6 +697,7 @@ function BaneEditor({
 export function VampireCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
   if (!catalogs) throw new Error("Vampire sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
+  const preferences = useHomebrewPreferences();
   const isMobile = useIsMobile();
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const customBloodlines = useBloodlineHomebrews();
@@ -703,7 +706,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const customMerits = useMeritHomebrews("VtR", true);
   const merits = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], customMerits);
   const coreConditions = catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions;
-  const vampireConditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions") as readonly ConditionDefinition[];
+  const vampireConditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions").filter((item) => vampireHomebrewContentActive(preferences, item)) as readonly ConditionDefinition[];
   const conditionCatalog = [...coreConditions, ...vampireConditions];
   const data = character.line_data;
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery)

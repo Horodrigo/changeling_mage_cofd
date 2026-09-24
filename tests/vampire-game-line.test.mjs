@@ -80,11 +80,11 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.some((item) => item.id === "vtr-etiquette" && item.levels.length === 5));
   assert.ok(merits.some((item) => item.id === "vtr-hototogisu-status" && item.levels.length === 5));
   assert.ok(merits.length >= 45);
-  assert.equal(powers.disciplines.length, 16);
+  assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 152);
-  assert.equal(powers.cruacRites.length, 42);
-  assert.equal(powers.thebanMiracles.length, 27);
+  assert.equal(powers.devotions.length, 316);
+  assert.equal(powers.cruacRites.length, 48);
+  assert.equal(powers.thebanMiracles.length, 33);
   assert.equal(powers.kimiyaFormulae.length, 5);
   assert.equal(powers.therionSacrileges.length, 7);
   assert.equal(powers.gildedInvocations.length, 10);
@@ -114,7 +114,11 @@ test("supplement catalogs expose the audited Bloodlines and gate Dead Signal to 
   const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   const { vampireRules } = await vite.ssrLoadModule("/game-lines/vampire/rules.ts");
-  assert.deepEqual(bloodlines.map((item) => item.id), ["ankou", "icelus", "jharana", "liderc", "nosoi", "parliamentarians", "penumbrae", "scions-of-the-first-city", "vardyvle", "vilseduire", "morbus", "bron", "khaibit", "kerberos", "star-crossed", "xiao", "typhos"]);
+  assert.equal(bloodlines.length, 56);
+  assert.deepEqual(
+    ["ankou", "icelus", "jharana", "liderc", "nosoi", "parliamentarians", "penumbrae", "scions-of-the-first-city", "vardyvle", "vilseduire", "morbus", "bron", "khaibit", "kerberos", "star-crossed", "xiao", "typhos", "gulikan", "mystikoi", "connected", "lygos", "adrestoi"].filter((id) => !bloodlines.some((item) => item.id === id)),
+    [],
+  );
   assert.equal(powers.disciplines.find((item) => item.name === "Dead Signal")?.levels.length, 5);
   const base = {
     id: "bloodline", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
@@ -125,6 +129,8 @@ test("supplement catalogs expose the audited Bloodlines and gate Dead Signal to 
   assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "jharana" } }).line_data.disciplines["Dead Signal"], 3);
   assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "morbus", disciplines: { Cachexy: 3 } } }).line_data.disciplines.Cachexy, 3);
   assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "bron", disciplines: { Crochan: 2 } } }).line_data.disciplines.Crochan, 2);
+  assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "gulikan", disciplines: { Ortam: 2 } } }).line_data.disciplines.Ortam, 2);
+  assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "ventrue", disciplines: { Ortam: 2 } } }).line_data.disciplines.Ortam, 0);
 });
 
 test("supplement catalogs exclude Lingua Bellum, chronicle, coterie, Ghoul, Dhampyr, Strix, and Revenant options", async () => {
@@ -161,13 +167,15 @@ test("Khaibit and Kerberos automatic Devotions are removed with their Bloodline"
 
 test("removing a Bloodline clears and refunds its exclusive Discipline", async () => {
   const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const character = {
     id: "refund", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
     character: { name: "Signal", concept: "", player: "", chronicle: "" }, attributes: {}, skills: {}, specializations: [], merits: [], derived: {}, created_at: "", updated_at: "",
     line_data: { bloodline_id: "jharana", disciplines: { "Dead Signal": 2 } },
     current_state: { experience_available: 1, experience_spent: 6, vampire_experience_history: [{ id: "paid", cost: 6, undo: { kind: "discipline", name: "Dead Signal", amount: 2 } }, { id: "other", cost: 1, undo: { kind: "skill", name: "Occult", amount: 1 } }] },
   };
-  const removed = removeVampireBloodline(character);
+  const removed = removeVampireBloodline(character, bloodlines.find((item) => item.id === "jharana"), powers);
   assert.equal(removed.line_data.bloodline_id, "");
   assert.equal(removed.line_data.disciplines["Dead Signal"], 0);
   assert.equal(removed.current_state.experience_available, 7);
@@ -413,27 +421,45 @@ test("Hollow Mekhet keeps the official Clan and offers only the Simplified Hollo
 test("every published Vampire homebrew item is inventoried and can be disabled by source or item", async () => {
   const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
   const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
   const { SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
   const items = [
-    ...bloodlines, ...covenants, ...merits, ...powers.ritualDisciplines, ...powers.devotions,
-    ...powers.cruacRites, ...powers.gildedInvocations, ...powers.detournements,
+    ...bloodlines, ...covenants, ...conditions, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions,
+    ...powers.cruacRites, ...powers.thebanMiracles, ...powers.gildedInvocations, ...powers.detournements,
   ].filter((item) => vampireHomebrewSourceId(item)?.startsWith("h-vtr-"));
   const counts = Object.fromEntries(Object.entries(Object.groupBy(items, vampireHomebrewSourceId)).map(([sourceId, entries]) => [sourceId, entries.length]));
   assert.deepEqual(counts, {
-    "h-vtr-sin-again": 11,
-    "h-vtr-wild-hunt": 46,
-    "h-vtr-false-gods": 17,
-    "h-vtr-strange-shades": 18,
-    "h-vtr-better-feared": 32,
+    "h-vtr-sin-again": 91,
+    "h-vtr-wild-hunt": 92,
+    "h-vtr-false-gods": 106,
+    "h-vtr-strange-shades": 89,
+    "h-vtr-better-feared": 92,
   });
-  assert.equal(items.some((item) => item.name === "Risen Beast" || item.name === "Disciple of Dis" || item.name === "Igor"), false);
+  const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
+  assert.deepEqual(bloodlineNames, {
+    "h-vtr-sin-again": ["Children of Judas", "Duchagne", "Erzsébet", "Gulikan", "Moda Mortale", "Nelapsi", "Star-Crossed", "Xiao"],
+    "h-vtr-wild-hunt": ["Baetyl", "Cerrid", "Childer of the Morrigan", "Daimonion", "Dead Wolves", "Mystikoi", "Oberlochs", "Verlice", "Wickers", "Yarilo"],
+    "h-vtr-strange-shades": ["Connected", "Család", "Kuufukuji", "Leandros", "Mnemosyne", "Norvegi", "Qedeshah"],
+    "h-vtr-better-feared": ["Acteius", "Candymen", "Gethsemani", "Keepers of the Dark", "Lygos", "The Cockscomb Society", "Von Schreck Family", "Yagnatia"],
+    "h-vtr-false-gods": ["Adrestoi", "Gottlings", "Keravnos", "Malkovians", "Malocusians", "Melissidae", "Rotgrafen", "Typhos", "Warumono"],
+  });
+  assert.equal(items.some((item) => ["Risen Beast", "Disciple of Dis", "Igor", "Pack Omega", "Predator-Marked", "Treasured Servant", "Beast King", "Show Breed", "Crashes"].includes(item.name)), false);
+  assert.deepEqual(
+    merits.filter((item) => item.category === "Necropolis").map((item) => item.name).sort(),
+    ["Bleak Annals", "Corrupting Influence", "Dark Hub", "Home Turf", "Honeycomb", "Lost & Found", "Necropolis Arsenal"],
+  );
+  assert.equal(powers.devotions.find((item) => item.name === "Crowdsourcing"), undefined);
+  assert.equal(powers.gildedInvocations.some((item) => item.name === "Crowdsourcing"), true);
   assert.equal(homebrewContentActive({ disabledIds: ["h-vtr-false-gods"] }, "gilded-crowdsourcing", "h-vtr-false-gods"), false);
   assert.equal(homebrewContentActive({ disabledIds: [SIMPLIFIED_HOLLOW_ID] }, SIMPLIFIED_HOLLOW_ID, "h-vtr-strange-shades"), false);
   const registration = await readFile(`${root}/game-lines/vampire/registration.ts`, "utf8");
-  assert.match(registration, /homebrew:\s*\[[^\]]*"vampire-powers"/);
+  assert.match(registration, /homebrew:\s*\[[^\]]*"vampire-powers"[^\]]*"vampire-conditions"/);
+  const homebrew = await readFile(`${root}/game-lines/vampire/homebrew.tsx`, "utf8");
+  assert.match(homebrew, /gildedInvocations[\s\S]*"gilded-cage"/);
+  assert.match(homebrew, /homebrew-subitem-list/);
 });
 
 test("Vampire supports multiple Covenants and grants Shadow Cult Initiation instead of Kindred Status", async () => {

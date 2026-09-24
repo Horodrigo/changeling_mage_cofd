@@ -15,25 +15,25 @@ import { localized, useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
 import { BLOODLINE_HOMEBREW_SOURCE, BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
-import type { VampireBloodlineDefinition, VampireMechanics, VampirePowers, VampireReference } from "./catalog-types";
+import type { VampireBloodlineDefinition, VampireCondition, VampireMechanics, VampirePowers, VampireReference } from "./catalog-types";
 import { SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } from "./homebrew-catalog";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 
 type Detail = { label: string; text: string };
-type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: Detail[] };
+type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: Detail[]; parentId?: string };
 
 function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   if (!catalogs) throw new Error("Vampire Homebrew requires its catalog snapshot.");
   const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
   const preferences = useHomebrewPreferences(), customBloodlines = useBloodlineHomebrews();
-  const reference = catalogs.get<VampireReference>("vampire-reference"), powers = catalogs.get<VampirePowers>("vampire-powers");
+  const reference = catalogs.get<VampireReference>("vampire-reference"), powers = catalogs.get<VampirePowers>("vampire-powers"), conditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions");
   const merits = catalogs.get<readonly MeritDefinition[]>("vampire-merits");
   const [editing, setEditing] = useState<VampireBloodlineDefinition | null>(null);
   const listed: ListedHomebrew[] = [];
   const detail = (label: string, value: unknown): Detail[] => String(value ?? "").trim() ? [{ label, text: String(value).trim() }] : [];
-  const add = (item: { id: string; source: string; sourceId?: string; name: string; translatedName?: string; page?: number }, kind: string, details: Detail[]) => {
+  const add = (item: { id: string; source: string; sourceId?: string; name: string; translatedName?: string; page?: number }, kind: string, details: Detail[], parentId?: string) => {
     const sourceId = vampireHomebrewSourceId(item);
-    if (sourceId && isHomebrewSource(sourceId)) listed.push({ id: item.id, sourceId, source: item.source, kind, name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...details, ...detail(h("Página", "Page"), item.page)] });
+    if (sourceId && isHomebrewSource(sourceId)) listed.push({ id: item.id, sourceId, source: item.source, kind, name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...details, ...detail(h("Página", "Page"), item.page)], parentId });
   };
   const mechanics = (item: VampireMechanics): Detail[] => [
     ...detail(h("Custo", "Cost"), item.cost), ...detail(h("Requisito", "Requirement"), item.requirement), ...detail(h("Parada de dados", "Dice Pool"), item.dicePool),
@@ -43,14 +43,17 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     ...detail(h("Procedimento", "Procedure"), item.procedure), ...detail(h("Resultado", "Outcome"), item.outcome),
     ...Object.entries(item.rollResults ?? {}).flatMap(([label, text]) => detail(label, text)),
   ];
-  reference.bloodlines.forEach((item) => add(item, "Bloodlines", [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Clã de origem", "Parent Clan"), item.parentClan), ...detail(h("Pré-requisitos", "Prerequisites"), item.requirements), ...detail(h("Atributos favorecidos", "Favored Attributes"), item.favoredAttributes.join(" / ")), ...detail(h("Disciplinas", "Disciplines"), item.disciplines.join(", ")), ...detail(item.baneName, item.baneSummary)]));
+  reference.bloodlines.forEach((item) => add(item, "Bloodlines", [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Clã de origem", "Parent Clan"), item.parentClan), ...detail(h("Pré-requisitos", "Prerequisites"), item.requirements), ...detail(h("Atributos favorecidos", "Favored Attributes"), item.favoredAttributes.join(" / ")), ...detail(h("Disciplinas", "Disciplines"), item.disciplines.join(", ")), ...detail(item.giftName ?? "", item.giftSummary), ...detail(item.baneName, item.baneSummary)]));
   reference.covenants.forEach((item) => add(item, "Covenants", [...detail(h("Descrição", "Description"), item.description), ...detail(h("Vantagem", "Advantage"), item.advantage)]));
   merits.forEach((item) => add(item, h("Méritos", "Merits"), [...detail(h("Níveis", "Ratings"), item.ratings.join(", ")), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...detail(h("Efeito", "Effect"), locale === "pt-BR" ? item.description : item.descriptionEn ?? item.description), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]));
+  powers.disciplines.forEach((item) => add(item, h("Disciplinas", "Disciplines"), [...detail(h("Resumo", "Summary"), item.summary), ...detail("Bloodline", item.bloodlineId), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.summary))]));
   powers.ritualDisciplines.forEach((item) => add(item, h("Feitiçaria de Sangue", "Blood Sorcery"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.statusRequirement), ...mechanics(item)]));
-  powers.devotions.forEach((item) => add(item, h("Devoções", "Devotions"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)]));
+  powers.devotions.forEach((item) => add(item, item.category ?? h("Devoções", "Devotions"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)]));
   powers.cruacRites.forEach((item) => add(item, h("Ritos", "Rites"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
-  powers.gildedInvocations.forEach((item) => add(item, h("Invocações", "Invocations"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
+  powers.thebanMiracles.forEach((item) => add(item, h("Milagres", "Miracles"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
+  powers.gildedInvocations.forEach((item) => add(item, h("Feitiçaria de Sangue", "Blood Sorcery"), [...detail(h("Disciplina", "Discipline"), "Gilded Cage"), ...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)], "gilded-cage"));
   powers.detournements.forEach((item) => add(item, "Detournements", [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)]));
+  conditions.forEach((item) => add(item, h("Condições", "Conditions"), [...detail(h("Descrição", "Description"), item.description), ...detail(h("Penalidade", "Penalty"), item.penalty), ...detail(h("Persistente", "Persistent"), item.persistent ? h("Sim", "Yes") : ""), ...detail(h("Resolução", "Resolution"), item.resolution), ...detail("Beat", item.beat)]));
   listed.push({ id: SIMPLIFIED_HOLLOW_ID, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", kind: h("Regras", "Rules"), name: "Simplified Hollow", details: detail(h("Efeito", "Effect"), h("Substitui a ficha completa do Ka pela parada simplificada baseada em Humanidade.", "Replaces the full Ka sheet with the simplified Humanity-based dice pool.")) });
   listed.sort((left, right) => left.name.localeCompare(right.name, locale));
   const sources = [...new Map(listed.map((item) => [item.sourceId, item.source])).entries()].sort((left, right) => left[1].localeCompare(right[1], locale));
@@ -61,7 +64,8 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   };
   const renderItem = (item: ListedHomebrew, sourceActive: boolean) => {
     const active = homebrewContentActive(preferences, item.id, item.sourceId);
-    return <article className="homebrew-list-item" key={item.id}><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body">{item.details.map((entry, index) => <p key={`${entry.label}:${index}`}><strong>{entry.label}:</strong> {entry.text}</p>)}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>;
+    const children = listed.filter((entry) => entry.parentId === item.id);
+    return <div key={item.id}><article className="homebrew-list-item"><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body">{item.details.map((entry, index) => <p key={`${entry.label}:${index}`}><strong>{entry.label}:</strong> {entry.text}</p>)}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>{children.length > 0 && <div className="homebrew-item-list homebrew-subitem-list">{children.map((child) => renderItem(child, sourceActive && active))}</div>}</div>;
   };
   return <>
     <MeritHomebrewPanel line="VtR" catalog={[...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...merits]}/>
@@ -69,7 +73,7 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
       <div className="panel-heading"><div><h3>{h("Conteúdo publicado de Vampire", "Published Vampire Homebrew")}</h3><p>{h("A ativação controla novas escolhas; fichas existentes conservam o conteúdo que já possuem.", "Activation controls new choices; existing sheets retain content they already own.")}</p></div></div>
       <div className="homebrew-source-list">{sources.map(([sourceId, source]) => {
         const sourceItems = listed.filter((item) => item.sourceId === sourceId), sourceActive = !preferences.disabledIds.includes(sourceId), kinds = [...new Set(sourceItems.map((item) => item.kind))];
-        return <details className="panel homebrew-source" key={sourceId}><summary className="homebrew-source-summary"><div><Badge variant="outline">{h("Homebrew", "Homebrew")}</Badge><strong>{source}</strong><span>{sourceItems.length} {h("itens implementados", "implemented items")}</span></div></summary><div className="homebrew-source-body"><Tabs defaultValue={kinds[0]} className="homebrew-kind-tabs"><div className="homebrew-source-toolbar"><TabsList variant="line" className="homebrew-kind-tabs-list" aria-label={h("Categorias da fonte", "Source categories")}>{kinds.map((kind) => <TabsTrigger key={kind} value={kind}>{kind}</TabsTrigger>)}</TabsList><label className="homebrew-toggle"><span>{sourceActive ? h("Fonte ativa", "Source active") : h("Fonte desativada", "Source disabled")}</span><Switch checked={sourceActive} onCheckedChange={(checked) => toggle(sourceId, checked)} aria-label={`${source}: ${sourceActive ? h("ativa", "active") : h("desativada", "disabled")}`}/></label></div>{kinds.map((kind) => <TabsContent className="homebrew-kind-panel" value={kind} key={kind}><div className="homebrew-item-list">{sourceItems.filter((item) => item.kind === kind).map((item) => renderItem(item, sourceActive))}</div></TabsContent>)}</Tabs></div></details>;
+        return <details className="panel homebrew-source" key={sourceId}><summary className="homebrew-source-summary"><div><Badge variant="outline">{h("Homebrew", "Homebrew")}</Badge><strong>{source}</strong><span>{sourceItems.length} {h("itens implementados", "implemented items")}</span></div></summary><div className="homebrew-source-body"><Tabs defaultValue={kinds[0]} className="homebrew-kind-tabs"><div className="homebrew-source-toolbar"><TabsList variant="line" className="homebrew-kind-tabs-list" aria-label={h("Categorias da fonte", "Source categories")}>{kinds.map((kind) => <TabsTrigger key={kind} value={kind}>{kind}</TabsTrigger>)}</TabsList><label className="homebrew-toggle"><span>{sourceActive ? h("Fonte ativa", "Source active") : h("Fonte desativada", "Source disabled")}</span><Switch checked={sourceActive} onCheckedChange={(checked) => toggle(sourceId, checked)} aria-label={`${source}: ${sourceActive ? h("ativa", "active") : h("desativada", "disabled")}`}/></label></div>{kinds.map((kind) => <TabsContent className="homebrew-kind-panel" value={kind} key={kind}><div className="homebrew-item-list">{sourceItems.filter((item) => item.kind === kind && !item.parentId).map((item) => renderItem(item, sourceActive))}</div></TabsContent>)}</Tabs></div></details>;
       })}</div>
     </section>
     <section className="homebrew-panel">

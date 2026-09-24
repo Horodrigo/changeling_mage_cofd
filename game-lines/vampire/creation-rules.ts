@@ -7,12 +7,22 @@ export const VAMPIRE_CREATION_DISCIPLINES = [
   "Nightmare", "Obfuscate", "Protean", "Resilience", "Vigor", "Praestantia", "Vitiate", "Triadic Evolution",
 ] as const;
 
-export const VAMPIRE_DISCIPLINES = [...VAMPIRE_CREATION_DISCIPLINES, "Dead Signal", "Cachexy", "Crochan"] as const;
+export const VAMPIRE_DISCIPLINES = [
+  ...VAMPIRE_CREATION_DISCIPLINES, "Dead Signal", "Cachexy", "Crochan", "Ortam", "Spiritus Sancti",
+  "Interface", "Lithopedia", "Truths of Erebus", "Blood Tether", "Surge",
+] as const;
 
 export function vampireDisciplineAvailable(name: string, bloodlineId: string, clanId = "", covenantId: string | readonly string[] = "") {
   if (name === "Dead Signal") return bloodlineId === "jharana";
   if (name === "Cachexy") return bloodlineId === "morbus";
   if (name === "Crochan") return bloodlineId === "bron";
+  if (name === "Ortam") return bloodlineId === "gulikan";
+  if (name === "Spiritus Sancti") return bloodlineId === "mystikoi";
+  if (name === "Interface") return bloodlineId === "connected";
+  if (name === "Lithopedia") return bloodlineId === "csalad";
+  if (name === "Truths of Erebus") return bloodlineId === "lygos";
+  if (name === "Blood Tether") return bloodlineId === "adrestoi";
+  if (name === "Surge") return bloodlineId === "keravnos";
   if (name === "Praestantia") return clanId === "akhud";
   if (name === "Vitiate") return clanId === "bekaak";
   if (name === "Triadic Evolution") return Array.isArray(covenantId) ? covenantId.includes("belials-brood") : covenantId === "belials-brood";
