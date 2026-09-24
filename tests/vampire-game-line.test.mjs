@@ -419,6 +419,7 @@ test("Hollow Mekhet keeps the official Clan and offers only the Simplified Hollo
 });
 
 test("every published Vampire homebrew item is inventoried and can be disabled by source or item", async () => {
+  const manifest = JSON.parse(await readFile(`${root}/public/data/manifest.json`, "utf8"));
   const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
   const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
@@ -438,6 +439,10 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-strange-shades": 89,
     "h-vtr-better-feared": 92,
   });
+  assert.deepEqual(
+    Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
+    { "vampire-bloodlines": 5, "merits-vampire": 9, "vampire-powers": 9, "vampire-conditions": 5 },
+  );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {
     "h-vtr-sin-again": ["Children of Judas", "Duchagne", "Erzsébet", "Gulikan", "Moda Mortale", "Nelapsi", "Star-Crossed", "Xiao"],

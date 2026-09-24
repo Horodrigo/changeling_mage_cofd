@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 6,
+  "catalogVersion": 7,
   "catalogs": {
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
@@ -39,9 +39,9 @@
     "vampire-anchors": { "version": 1, "url": "/data/vampire/anchors.json" },
     "vampire-blood-potency": { "version": 1, "url": "/data/vampire/blood-potency.json" },
     "vampire-torpor": { "version": 1, "url": "/data/vampire/torpor.json" },
-    "vampire-bloodlines": { "version": 4, "url": "/data/vampire/bloodlines.json" },
-    "merits-vampire": { "version": 8, "url": "/data/vampire/merits.json" },
-    "vampire-powers": { "version": 8, "url": "/data/vampire/powers.json" },
-    "vampire-conditions": { "version": 4, "url": "/data/vampire/conditions.json" }
+    "vampire-bloodlines": { "version": 5, "url": "/data/vampire/bloodlines.json" },
+    "merits-vampire": { "version": 9, "url": "/data/vampire/merits.json" },
+    "vampire-powers": { "version": 9, "url": "/data/vampire/powers.json" },
+    "vampire-conditions": { "version": 5, "url": "/data/vampire/conditions.json" }
   }
 }
