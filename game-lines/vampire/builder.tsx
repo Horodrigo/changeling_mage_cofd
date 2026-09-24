@@ -157,6 +157,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
+  const initialClan = reference.clans.find((item) => item.id === String(initial?.line_data.clan_id ?? ""));
   const customMerits = useMeritHomebrews("VtR", true), homebrewPreferences = useHomebrewPreferences();
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
@@ -167,8 +168,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     purchasedSpecialties: experienceSpecialties(initial),
     grantedMeritSources: ["Vampire Template"],
     adjustAttributes: (values) => {
-      const favored = String(initial?.line_data.favored_attribute ?? "");
-      if (favored && values[favored] > 1) values[favored] -= 1;
+      const favored = initialClan?.favoredAttributeMode === "both" ? initialClan.favoredAttributes : [String(initial?.line_data.favored_attribute ?? "")];
+      for (const name of favored) if (name && values[name] > 1) values[name] -= 1;
       return values;
     },
   });
@@ -230,7 +231,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const add = (key: string, label: string, step = 3) => result.push({ step, key, label });
     if (!common.name.trim()) add("name", t("ui.name"), 1);
     if (!selectedClan) add("clan", t("ui.clan"));
-    if (!selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
+    if (selectedClan?.favoredAttributeMode !== "both" && !selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
     if (!reference.covenants.some((item) => item.id === covenantId)) add("covenant", t("sheet.covenant"));
     if (!statusGroup) add("kindredStatus", t("ui.kindredStatus"));
     if (!reference.anchors.some((item) => item.id === maskId)) add("mask", t("sheet.mask"));
@@ -290,7 +291,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const chooseClan = (value: string) => {
     setClanId(value);
     const clan = reference.clans.find((item) => item.id === value);
-    if (!clan?.favoredAttributes.includes(favoredAttribute)) setFavoredAttribute("");
+    if (clan?.favoredAttributeMode === "both" || !clan?.favoredAttributes.includes(favoredAttribute)) setFavoredAttribute("");
     if (value === "nosferatu") setNosferatuEasterEgg(true);
   };
   const chooseCovenant = (value: string) => {
@@ -305,7 +306,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const bpAdvancement = Math.max(0, Number(source?.line_data.blood_potency ?? 1) - Number(source?.line_data.creation_blood_potency ?? source?.line_data.blood_potency ?? 1));
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
     const finalAttributes = { ...common.attributes };
-    if (favoredAttribute) finalAttributes[favoredAttribute] = Math.min(5, Number(common.attributes[favoredAttribute] ?? 1) + 1);
+    const favoredAttributes = selectedClan?.favoredAttributeMode === "both" ? selectedClan.favoredAttributes : favoredAttribute ? [favoredAttribute] : [];
+    for (const name of favoredAttributes) finalAttributes[name] = Math.min(5, Number(common.attributes[name] ?? 1) + 1);
     for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     const finalSkills = { ...common.skills };
     for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
@@ -329,7 +331,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
       ],
       merits: finalMerits,
       line_data: {
-        ...(source?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, covenant_id: covenantId,
+        ...(source?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, favored_attributes: favoredAttributes, covenant_id: covenantId,
         kindred_status_scope: statusScope, kindred_status_city: statusCity.trim(), kindred_status_group: statusGroup,
         mask_id: maskId, dirge_id: dirgeId, aspirations: common.aspirations.map((item) => item.trim()).filter(Boolean),
         creation_blood_potency: bloodPotency, blood_potency: finalBloodPotency, creation_covenant_power_id: hasCreationCovenantPower ? creationCovenantPowerId : "",
@@ -373,7 +375,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
               <strong>{selectedClan ? displayName(selectedClan, locale) : t("ui.noneSelected")}</strong>
               <small>{selectedClan ? selectedClan.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, powers.disciplines, locale)).join(" · ") : t("ui.selectClan")}</small>
             </div>
-            {selectedClan && <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={t("ui.favoredAttribute1")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>}
+            {selectedClan && (selectedClan.favoredAttributeMode === "both" ? <div className="vampire-template-current"><strong>{t("ui.favoredAttribute1")}</strong><small>{selectedClan.favoredAttributes.map((item) => systemTerm(item, locale)).join(" · ")}</small></div> : <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={t("ui.favoredAttribute1")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>)}
           </div>
           <CovenantSelector items={reference.covenants} value={covenantId} onChange={chooseCovenant} locale={locale} invalid={missing("covenant")} />
         </div>

@@ -68,12 +68,13 @@ test("Vampire normalization owns its line_data, clamps ratings, and drops retire
   assert.equal(creationIssues.some((issue) => issue.field === "touchstones" || issue.field === "disciplines"), false);
 });
 
-test("Vampire core-book catalogs expose the five main Clans, Jiang Shi, and line-owned content", async () => {
+test("Vampire catalogs group core, historical, and uncommon Clans", async () => {
   const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
   const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  assert.deepEqual(clans.map((item) => item.id), ["daeva", "gangrel", "mekhet", "nosferatu", "ventrue", "jiang-shi"]);
-  assert.deepEqual(clans.map((item) => item.group), ["core", "core", "core", "core", "core", "uncommon"]);
+  assert.deepEqual(Object.fromEntries(["core", "historical", "uncommon"].map((group) => [group, clans.filter((item) => item.group === group).length])), { core: 5, historical: 5, uncommon: 6 });
+  assert.ok(clans.some((item) => item.id === "jiang-shi" && item.group === "uncommon"));
+  assert.ok(clans.some((item) => item.id === "twice-cursed" && item.favoredAttributeMode === "both"));
   assert.ok(merits.some((item) => item.id === "vtr-etiquette" && item.levels.length === 5));
   assert.ok(merits.some((item) => item.id === "vtr-hototogisu-status" && item.levels.length === 5));
   assert.ok(merits.length >= 45);
@@ -102,11 +103,11 @@ test("Vampire core p. 101 exposes Retainer(Ghoul) without changing Core Retainer
   assert.equal(coreMerits.filter((item) => item.name === "Retainer").length, 1);
 });
 
-test("Spilled Blood exposes the ten audited Bloodlines and gates Dead Signal to Jharana", async () => {
+test("supplement catalogs expose the audited Bloodlines and gate Dead Signal to Jharana", async () => {
   const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   const { vampireRules } = await vite.ssrLoadModule("/game-lines/vampire/rules.ts");
-  assert.deepEqual(bloodlines.map((item) => item.id), ["ankou", "icelus", "jharana", "liderc", "nosoi", "parliamentarians", "penumbrae", "scions-of-the-first-city", "vardyvle", "vilseduire"]);
+  assert.deepEqual(bloodlines.map((item) => item.id), ["ankou", "icelus", "jharana", "liderc", "nosoi", "parliamentarians", "penumbrae", "scions-of-the-first-city", "vardyvle", "vilseduire", "morbus", "bron", "khaibit", "kerberos"]);
   assert.equal(powers.disciplines.find((item) => item.name === "Dead Signal")?.levels.length, 5);
   const base = {
     id: "bloodline", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
@@ -115,6 +116,14 @@ test("Spilled Blood exposes the ten audited Bloodlines and gates Dead Signal to 
   };
   assert.equal(vampireRules.normalizeCharacter(base).line_data.disciplines["Dead Signal"], 0);
   assert.equal(vampireRules.normalizeCharacter({ ...base, line_data: { ...base.line_data, bloodline_id: "jharana" } }).line_data.disciplines["Dead Signal"], 3);
+});
+
+test("supplement catalogs exclude Lingua Bellum, chronicle, coterie, Ghoul, Dhampyr, Strix, and Revenant options", async () => {
+  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const forbidden = ["Lingua Bellum", "Group Touchstone", "Common Enmity", "Goal", "History"];
+  assert.deepEqual(forbidden.filter((name) => merits.some((item) => item.name === name)), []);
+  assert.ok(merits.some((item) => item.name === "The Three Heads of Kerberos"));
+  assert.ok(merits.some((item) => item.name === "Contract with the Uncanny"));
 });
 
 test("removing a Bloodline clears and refunds its exclusive Discipline", async () => {

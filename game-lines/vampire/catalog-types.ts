@@ -3,6 +3,7 @@ export type VampireClanDefinition = {
   name: string;
   translatedName: string;
   favoredAttributes: [string, string];
+  favoredAttributeMode?: "both";
   disciplines: [string, string, string];
   baneName: string;
   baneSummary: string;
