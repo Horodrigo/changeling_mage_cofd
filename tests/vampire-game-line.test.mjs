@@ -82,8 +82,8 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 16);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 113);
-  assert.equal(powers.cruacRites.length, 37);
+  assert.equal(powers.devotions.length, 152);
+  assert.equal(powers.cruacRites.length, 42);
   assert.equal(powers.thebanMiracles.length, 27);
   assert.equal(powers.kimiyaFormulae.length, 5);
   assert.equal(powers.therionSacrileges.length, 7);
@@ -408,6 +408,32 @@ test("Hollow Mekhet keeps the official Clan and offers only the Simplified Hollo
   assert.equal(hollowKaRank(7), 2);
   assert.deepEqual(hollowKaLimits(2), { traitMaximum: 7, attributeMinimum: 9, attributeMaximum: 14, essenceMaximum: 15, numinaMinimum: 3, numinaMaximum: 5 });
   assert.equal(simplifiedHollowKaPool(7), 3);
+});
+
+test("every published Vampire homebrew item is inventoried and can be disabled by source or item", async () => {
+  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
+  const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
+  const { SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
+  const items = [
+    ...bloodlines, ...covenants, ...merits, ...powers.ritualDisciplines, ...powers.devotions,
+    ...powers.cruacRites, ...powers.gildedInvocations, ...powers.detournements,
+  ].filter((item) => vampireHomebrewSourceId(item)?.startsWith("h-vtr-"));
+  const counts = Object.fromEntries(Object.entries(Object.groupBy(items, vampireHomebrewSourceId)).map(([sourceId, entries]) => [sourceId, entries.length]));
+  assert.deepEqual(counts, {
+    "h-vtr-sin-again": 11,
+    "h-vtr-wild-hunt": 46,
+    "h-vtr-false-gods": 17,
+    "h-vtr-strange-shades": 18,
+    "h-vtr-better-feared": 32,
+  });
+  assert.equal(items.some((item) => item.name === "Risen Beast" || item.name === "Disciple of Dis" || item.name === "Igor"), false);
+  assert.equal(homebrewContentActive({ disabledIds: ["h-vtr-false-gods"] }, "gilded-crowdsourcing", "h-vtr-false-gods"), false);
+  assert.equal(homebrewContentActive({ disabledIds: [SIMPLIFIED_HOLLOW_ID] }, SIMPLIFIED_HOLLOW_ID, "h-vtr-strange-shades"), false);
+  const registration = await readFile(`${root}/game-lines/vampire/registration.ts`, "utf8");
+  assert.match(registration, /homebrew:\s*\[[^\]]*"vampire-powers"/);
 });
 
 test("Vampire supports multiple Covenants and grants Shadow Cult Initiation instead of Kindred Status", async () => {

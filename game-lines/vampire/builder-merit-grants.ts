@@ -31,7 +31,7 @@ export function synchronizeVampireBuilderMeritGrants(sheet: CharacterSheet) {
     const existing = automatic.find((item) => item.name === "Mystery Cult Initiation");
     const experienceDots = Math.max(0, Number(existing?.experienceDots ?? 0));
     const creationDots = Math.max(1, Number(existing?.creationDots ?? existing?.dots ?? 1) - experienceDots);
-    sheet.merits.push({ ...existing, instanceId: existing?.instanceId ?? `shadow-cult-${primaryCovenant}`, name: "Mystery Cult Initiation", dots: creationDots + experienceDots, creationDots, experienceDots, sourceId: "vtr-strange-shades", source: "Strange Shades: Mekhet", configuration: { ...normalizeMeritConfiguration(existing?.configuration), cult: cult.name, ...cult.configuration }, grantedBy: SHADOW_CULT_SOURCE });
+    sheet.merits.push({ ...existing, instanceId: existing?.instanceId ?? `shadow-cult-${primaryCovenant}`, name: "Mystery Cult Initiation", dots: creationDots + experienceDots, creationDots, experienceDots, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", configuration: { ...normalizeMeritConfiguration(existing?.configuration), cult: cult.name, ...cult.configuration }, grantedBy: SHADOW_CULT_SOURCE });
   } else if (group) {
     const existing = automatic.find((item) => item.name === "Kindred Status");
     const experienceDots = Math.max(0, Number(existing?.experienceDots ?? 0));

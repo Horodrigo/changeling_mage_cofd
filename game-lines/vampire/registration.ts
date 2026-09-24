@@ -12,7 +12,7 @@ export const vampireRegistration: GameLineRegistration = {
     builder: ["core-merits", "vampire-merits", "vampire-powers", "vampire-reference"],
     sheet: ["core-merits", "vampire-merits", "vampire-powers", "core-reference", "vampire-reference", "vampire-conditions"],
     print: ["core-merits", "vampire-merits", "vampire-powers", "core-reference", "vampire-reference", "vampire-conditions"],
-    homebrew: ["core-merits", "vampire-merits", "vampire-reference"],
+    homebrew: ["core-merits", "vampire-merits", "vampire-powers", "vampire-reference"],
   },
   loadRules: () => import("./rules").then(({ vampireRules }) => vampireRules),
   loadBuilder: () => import("./builder").then(({ vampireBuilder }) => vampireBuilder),

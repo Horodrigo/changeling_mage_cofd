@@ -16,6 +16,7 @@ import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodlin
 import type { VampireBloodlineDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { vampireDisciplineDisplayName } from "./creation-rules";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
+import { vampireHomebrewContentActive } from "./homebrew-catalog";
 
 export function removeVampireBloodline(character: CharacterSheet, definition?: VampireBloodlineDefinition, powers?: VampirePowers) {
   const next = structuredClone(character);
@@ -54,7 +55,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
     if (!preview) return;
     const next = structuredClone(character);
     const devotionIds = new Set(Array.isArray(next.line_data.devotion_ids) ? next.line_data.devotion_ids.map(String) : []);
-    for (const item of powers.devotions) if (item.bloodlineId === preview.id && Number(item.experienceCost ?? 0) === 0) devotionIds.add(item.id);
+    for (const item of powers.devotions) if (vampireHomebrewContentActive(preferences, item) && item.bloodlineId === preview.id && Number(item.experienceCost ?? 0) === 0) devotionIds.add(item.id);
     next.line_data = { ...next.line_data, bloodline_id: preview.id, devotion_ids: [...devotionIds] };
     updateSheet(next); onOpenChange(false); onJoined();
   };
