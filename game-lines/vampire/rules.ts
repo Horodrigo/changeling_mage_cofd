@@ -10,15 +10,16 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const humanity = boundedRating(data.humanity, 0, 10, 7);
   const bloodPotency = boundedRating(data.blood_potency, 1, 10, 1);
   const bloodlineId = String(data.bloodline_id ?? "");
+  const clanId = String(data.clan_id ?? "");
+  const covenantId = String(data.covenant_id ?? "covenantless");
   const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
-  for (const name of VAMPIRE_DISCIPLINES) if (!vampireDisciplineAvailable(name, bloodlineId)) disciplines[name] = 0;
+  for (const name of VAMPIRE_DISCIPLINES) if (!vampireDisciplineAvailable(name, bloodlineId, clanId, covenantId)) disciplines[name] = 0;
   const touchstones = objectArray(data.touchstones).map((item, index) => ({
     id: String(item.id ?? `touchstone-${index + 1}`),
     name: String(item.name ?? ""),
     humanity_slot: boundedRating(item.humanity_slot, 2, 7, index === 0 ? 6 : Math.max(2, 6 - index)),
     notes: String(item.notes ?? ""),
   }));
-  const clanId = String(data.clan_id ?? "");
   const normalizedBanes = objectArray(data.banes).map((bane, index) => ({
     id: String(bane.id ?? `bane-${index + 1}`),
     name: String(bane.name ?? ""),
@@ -53,7 +54,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       bloodline_id: bloodlineId,
       clan_bane_active: data.clan_bane_active !== false,
       favored_attribute: String(data.favored_attribute ?? ""),
-      covenant_id: String(data.covenant_id ?? "covenantless"),
+      covenant_id: covenantId,
       humanity,
       blood_potency: bloodPotency,
       disciplines,
@@ -77,6 +78,10 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
         cruac_rite_ids: stringArray(bloodSorcery.cruac_rite_ids),
         theban_rating: boundedRating(bloodSorcery.theban_rating, 0, 5, 0),
         theban_miracle_ids: stringArray(bloodSorcery.theban_miracle_ids),
+        kimiya_rating: boundedRating(bloodSorcery.kimiya_rating, 0, 5, 0),
+        kimiya_formula_ids: stringArray(bloodSorcery.kimiya_formula_ids),
+        therion_rating: boundedRating(bloodSorcery.therion_rating, 0, 5, 0),
+        therion_sacrilege_ids: stringArray(bloodSorcery.therion_sacrilege_ids),
       },
       ordo_dracul: {
         ...ordo,

@@ -217,9 +217,30 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet { --sheet-accent:#397895; --sheet-ink:#253a47; background:linear-gradient(135deg,#eef8fb 0,#fff 13%,#fff 87%,#e9f5f8 100%); }
 
-.legacy-sheet-field button { min-width:0; min-height:21px; overflow:hidden; border:0; border-bottom:1px solid var(--sheet-ink); background:transparent; padding:0; color:var(--sheet-accent); cursor:pointer; font:italic 700 15px/20px Georgia,serif; text-align:left; text-overflow:ellipsis; white-space:nowrap; }
+.legacy-sheet-field button { min-width:0; min-height:21px; overflow:hidden; border:0; border-bottom:1px solid var(--sheet-ink); background:transparent; padding:0 0 0 2px; color:var(--sheet-accent); cursor:pointer; font:italic 700 15px/20px Georgia,serif; text-align:left; text-overflow:ellipsis; white-space:nowrap; }
 
 .legacy-sheet-field button:hover, .legacy-sheet-field button:focus-visible { border-bottom-width:2px; outline:0; }
+
+.mage-legacy-join-dialog {
+  --sheet-accent:#397895;
+  --mta-ink:#183f5b;
+  border:1px solid rgba(30,77,108,.52)!important;
+  border-radius:0!important;
+  background:rgba(241,245,245,.99)!important;
+  color:var(--mta-ink);
+  font-family:Georgia,"Times New Roman",serif;
+  box-shadow:0 20px 55px rgba(15,48,72,.24)!important;
+}
+
+.mage-legacy-join-dialog [data-slot="dialog-title"],
+.mage-legacy-join-dialog .legacy-page h2,
+.mage-legacy-join-dialog .legacy-page h3 { color:var(--mta-ink); font-family:Georgia,"Times New Roman",serif; }
+.mage-legacy-join-dialog [data-slot="dialog-description"] { color:#526873; }
+.mage-legacy-join-dialog .legacy-page { padding:8px; }
+.mage-legacy-join-dialog .entitlement-select { display:grid; max-width:none; gap:6px; font-weight:700; }
+.mage-legacy-join-dialog .entitlement-select [data-slot="select-trigger"] { width:100%; border-color:rgba(30,77,108,.38); border-radius:2px; background:rgba(248,251,252,.8); }
+.mage-legacy-join-dialog .legacy-page > section,
+.mage-legacy-join-dialog .entitlement-overview > section { border-color:rgba(30,77,108,.28); background:rgba(248,251,252,.72); }
 
 .legacy-join { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:end; }
 
@@ -994,7 +1015,6 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
    -------------------------------------------------------------------------- */
 
 .mta-sheet .power-resource,
-.mta-sheet .nimbus-editor article,
 .mta-sheet .order-current {
   position:relative;
   isolation:isolate;

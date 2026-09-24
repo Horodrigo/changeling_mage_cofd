@@ -56,6 +56,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     const isMobile = useIsMobile();
     const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
     const [desktopTab, setDesktopTab] = useState("principal");
+    const [legacyJoinOpen, setLegacyJoinOpen] = useState(false);
     const sheetTab = isMobile ? (mobileTab.characterId === character.id ? mobileTab.value : "resumo") : desktopTab;
     const setSheetTab = (value: string) => isMobile ? setMobileTab({ characterId: character.id, value }) : setDesktopTab(value);
     const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) || Boolean(findMeritConfiguration(name));
@@ -152,7 +153,9 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     const legacyState = normalizeLegacyState(data.legacy_state);
     const legacyDefinition = findLegacy(legacyState?.definitionId);
     const hasLegacyAccess = (gnosis >= 2 || Boolean(legacyState?.joined));
-   const legacyDisplay = legacyState?.joined ? legacyDefinition?.name ?? "Legacy" : gnosis >= 3 ? t("ui.joinCreate") : gnosis >= 2 ? t("ui.join") : "";
+    const legacyDisplay = legacyState?.joined ? legacyDefinition?.name ?? "Legacy" : hasLegacyAccess ? t("ui.join") : "";
+    const openLegacy = () => legacyState?.joined ? setSheetTab("legacy") : setLegacyJoinOpen(true);
+    const legacyJoinDialog = <Dialog open={legacyJoinOpen} onOpenChange={setLegacyJoinOpen}><DialogContent className="homebrew-dialog mage-legacy-join-dialog"><DialogHeader><DialogTitle>{t("ui.selectLegacy")}</DialogTitle><DialogDescription>{t("ui.selectAnAvailableLegacy")}</DialogDescription></DialogHeader><LegacyPage character={character} updateSheet={updateSheet} onDiscard={() => setLegacyJoinOpen(false)} onJoined={() => { setLegacyJoinOpen(false); setSheetTab("legacy"); }}/></DialogContent></Dialog>;
     const pathDefinition = MTA_PATHS[String(data.path) as keyof typeof MTA_PATHS];
     const sameSystemTerm = (left: string, right: string) => systemTerm(left, "en-US") === systemTerm(right, "en-US");
     const arcanaPresentation = (name: string) => {
@@ -234,7 +237,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             ["Caminho", data.path], ["Ordem", !data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order],
         ];
         const paradoxConditions = conditionCatalog.filter((condition) => `${condition.name} ${condition.description} ${condition.penalty}`.toLocaleLowerCase("pt-BR").includes("paradoxo"));
-        return (<CharacterPaperShell line="MtA" mobile title={t("ui.mage")} subtitle={t("ui.theAWAKENING")}>
+        return (<><CharacterPaperShell line="MtA" mobile title={t("ui.mage")} subtitle={t("ui.theAWAKENING")}>
         <SwipeableSheetTabs value={sheetTab} onValueChange={setSheetTab} tabs={[
                 { value: "resumo", label: t("ui.summary") }, { value: "stats", label: "Stats" },
                 { value: "detalhes", label: t("ui.details") },
@@ -246,7 +249,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             ]}>
           {{
                 resumo: <>
-              <section className="sheet-identity-grid">{identity.map(([label, value]) => <CommonSheetField key={String(label)} label={String(label)} value={value}/>)}{<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/>}</section>
+              <section className="sheet-identity-grid">{identity.map(([label, value]) => <CommonSheetField key={String(label)} label={String(label)} value={value}/>)}{<LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={openLegacy}/>}</section>
               {<div className="sheet-bottom-grid mage-bottom-grid"><section><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></section><section><SheetHeading>{t("ui.obsessions")}</SheetHeading><EditableList values={stringList(data.obsessions)} minimum={obsessionSlots} maximum={obsessionSlots} placeholder={t("ui.writeAnObsession")} onChange={(value) => updateLineData(updateSheet, character, "obsessions", value)}/></section></div>}
               <SheetHeading>{t("ui.experience")}</SheetHeading>
               {<MageExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
@@ -285,9 +288,9 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
                 anotacoes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
             }}
         </SwipeableSheetTabs>
-      </CharacterPaperShell>);
+      </CharacterPaperShell>{legacyJoinDialog}</>);
     }
-    return (<CharacterPaperShell line="MtA" title={t("ui.mage")} subtitle={t("ui.theAWAKENING")}>
+    return (<><CharacterPaperShell line="MtA" title={t("ui.mage")} subtitle={t("ui.theAWAKENING")}>
       {(<Tabs value={sheetTab} onValueChange={setSheetTab} className="ctl-sheet-tabs mta-sheet-tabs">
           <TabsList className="ctl-sheet-tab-list" aria-label={t("ui.mageCharacterPages")}>
             <TabsTrigger value="principal">{t("ui.main")}</TabsTrigger>
@@ -298,7 +301,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <MainSheet className="mage-main-body"
-              identity={<section className="sheet-identity-grid"><CommonSheetField label={t("ui.shadowName")} value={data.shadow_name}/><CommonSheetField label={t("ui.virtue")} value={data.virtue}/><CommonSheetField label={t("ui.path")} value={data.path}/><CommonSheetField label={t("ui.player")} value={character.character.player}/><CommonSheetField label={t("ui.vice")} value={data.vice}/><CommonSheetField label={t("ui.order")} value={!data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label={t("ui.chronicle")} value={character.character.chronicle}/><CommonSheetField label={t("ui.concept")} value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={() => setSheetTab("legacy")}/></section>}
+              identity={<section className="sheet-identity-grid"><CommonSheetField label={t("ui.shadowName")} value={data.shadow_name}/><CommonSheetField label={t("ui.virtue")} value={data.virtue}/><CommonSheetField label={t("ui.path")} value={data.path}/><CommonSheetField label={t("ui.player")} value={character.character.player}/><CommonSheetField label={t("ui.vice")} value={data.vice}/><CommonSheetField label={t("ui.order")} value={!data.order || data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? data.order : MTA_ORDER_LABELS[String(data.order)] ?? data.order}/><CommonSheetField label={t("ui.chronicle")} value={character.character.chronicle}/><CommonSheetField label={t("ui.concept")} value={character.character.concept}/><LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={openLegacy}/></section>}
               attributes={<><SheetHeading>{t("ui.attributes")}</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
               skills={
                 <>
@@ -359,7 +362,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             <div className="companions-page"><MageCompanionPage character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>
           </TabsContent>
         </Tabs>)}
-    </CharacterPaperShell>);
+    </CharacterPaperShell>{legacyJoinDialog}</>);
 }
 function LegacySheetField({ value, enabled, onOpen }: {
     value: string;

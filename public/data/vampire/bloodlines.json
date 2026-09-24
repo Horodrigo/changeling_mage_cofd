@@ -152,5 +152,33 @@
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
     "page": 50
+  },
+  {
+    "id": "morbus", "name": "Morbus", "translatedName": "Morbus", "parentClan": "Mekhet", "nicknames": ["The Afflicted"],
+    "favoredAttributes": ["Intelligence", "Wits"], "disciplines": ["Auspex", "Celerity", "Cachexy", "Obfuscate"], "exclusiveDiscipline": "Cachexy",
+    "summary": "Outcast plague angels who cultivate disease and wield it as a weapon from the shadows.",
+    "baneName": "The Unclean Curse", "baneSummary": "In addition to the Mekhet bane, the Morbus can feed on living mortals only when they are diseased; Kindred Vitae remains nourishing.",
+    "sourceId": "cofd-dark-eras-companion", "source": "Dark Eras Companion", "page": 94
+  },
+  {
+    "id": "bron", "name": "Bron", "translatedName": "Bron", "parentClan": "Ventrue", "nicknames": ["Hedge Knights"],
+    "favoredAttributes": ["Stamina", "Presence"], "disciplines": ["Animalism", "Crochan", "Dominate", "Resilience"], "exclusiveDiscipline": "Crochan",
+    "summary": "Knights errant and bravos who bind themselves to blood, quest, and oath.",
+    "baneName": "The Errant Curse", "baneSummary": "In addition to the Ventrue bane, a change in permanent Blood Potency detaches every Touchstone; each night an unattached Touchstone may be replaced after a failed Humanity roll.",
+    "sourceId": "cofd-dark-eras-2", "source": "Dark Eras 2", "page": 117
+  },
+  {
+    "id": "khaibit", "name": "Khaibit", "translatedName": "Khaibit", "parentClan": "Mekhet", "nicknames": ["Asps"],
+    "favoredAttributes": ["Intelligence", "Wits"], "disciplines": ["Auspex", "Celerity", "Obfuscate", "Vigor"],
+    "summary": "Ancient soldiers who fight the darkness by embracing and mastering it.",
+    "baneName": "The Blinded Curse", "baneSummary": "Bright light that would inhibit ordinary vision inflicts the Blinded Tilt and suppresses Udjat for the scene.",
+    "sourceId": "vtr-onyx-path-khaibit", "source": "Onyx Path Blog: The Shadow and the Asp", "page": 0
+  },
+  {
+    "id": "kerberos", "name": "Kerberos", "translatedName": "Kerberos", "parentClan": "Gangrel", "nicknames": ["Children of Typhon", "Watchdogs"],
+    "favoredAttributes": ["Composure", "Stamina"], "disciplines": ["Animalism", "Majesty", "Protean", "Resilience"],
+    "summary": "Self-reinventing social predators who excel at projecting the Beast through its three aspects.",
+    "baneName": "The Opposing Curse", "baneSummary": "Against anyone not subject to a Predatory Aura Condition, lose 10-again on all non-reflexive actions; Predatory Aura rolls are unaffected.",
+    "sourceId": "vtr-onyx-path-kerberos", "source": "Onyx Path Blog: The Jaws of the Beast", "page": 0
   }
 ]

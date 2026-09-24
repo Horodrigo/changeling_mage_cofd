@@ -48,10 +48,18 @@ export function ownedVampireCoils(powers: Pick<VampirePowers, "coils">, ratings:
   return powers.coils.filter((item) => Number(ratings[item.id] ?? 0) > 0);
 }
 
-export function ownedVampireRituals(powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles">, discipline: "cruac" | "theban", ids: unknown) {
+export function ownedVampireRituals(powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles" | "kimiyaFormulae" | "therionSacrileges">, discipline: VampireRitualDisciplineDefinition["id"], ids: unknown) {
   const selected = new Set(stringList(ids));
-  return (discipline === "cruac" ? powers.cruacRites : powers.thebanMiracles).filter((item) => selected.has(item.id));
+  const catalog = discipline === "cruac" ? powers.cruacRites : discipline === "theban" ? powers.thebanMiracles : discipline === "kimiya" ? powers.kimiyaFormulae : powers.therionSacrileges;
+  return catalog.filter((item) => selected.has(item.id));
 }
+
+const ritualFields = {
+  cruac: ["cruac_rating", "cruac_rite_ids"],
+  theban: ["theban_rating", "theban_miracle_ids"],
+  kimiya: ["kimiya_rating", "kimiya_formula_ids"],
+  therion: ["therion_rating", "therion_sacrilege_ids"],
+} as const;
 
 function selectedConditions(value: unknown): SelectedCondition[] {
   return objectArray(value).map((item) => ({
@@ -700,8 +708,6 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery)
     ? data.blood_sorcery as Record<string, unknown>
     : {};
-  const cruacRating = Number(bloodSorcery.cruac_rating ?? 0);
-  const thebanRating = Number(bloodSorcery.theban_rating ?? 0);
   const clan = reference.clans.find((item) => item.id === data.clan_id);
   const bloodline = bloodlines.find((item) => item.id === data.bloodline_id);
   const covenant = reference.covenants.find((item) => item.id === data.covenant_id);
@@ -832,7 +838,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     <SheetHeading>{t("ui.disciplines")}</SheetHeading>
     <DisciplineCards powers={powers} disciplines={disciplines} coilRatings={coilRatings} locale={locale} onRaiseFamiliar={openCompanions} />
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
-    <RitualDisciplines powers={powers} cruacRating={cruacRating} thebanRating={thebanRating} cruacRiteIds={bloodSorcery.cruac_rite_ids} thebanMiracleIds={bloodSorcery.theban_miracle_ids} locale={locale} />
+    <RitualDisciplines powers={powers} bloodSorcery={bloodSorcery} locale={locale} />
     <PurchasedPowers character={character} powers={powers} locale={locale} />
     <TricksOfTheDamned
       character={character}
@@ -930,8 +936,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
               value={Number(disciplines[name] ?? 0)}
             />
           ))}
-        {(powers.ritualDisciplines ?? []).filter((item) => item.id === "cruac" ? cruacRating > 0 : thebanRating > 0).map((item) => (
-          <VampireDisciplineLine key={item.id} name={localized(item, locale)} value={item.id === "cruac" ? cruacRating : thebanRating} />
+        {(powers.ritualDisciplines ?? []).filter((item) => Number(bloodSorcery[ritualFields[item.id][0]] ?? 0) > 0).map((item) => (
+          <VampireDisciplineLine key={item.id} name={localized(item, locale)} value={Number(bloodSorcery[ritualFields[item.id][0]] ?? 0)} />
         ))}
         {ownedVampireCoils(powers, coilRatings).map((item) => (
           <VampireDisciplineLine key={item.id} name={localized(item, locale)} value={Number(coilRatings[item.id] ?? 0)} />
@@ -1081,15 +1087,16 @@ function PowerMechanics({ mechanics, compact = false }: { mechanics: VampireMech
   </div>;
 }
 
-function RitualDisciplines({ powers, cruacRating, thebanRating, cruacRiteIds, thebanMiracleIds, locale }: { powers: VampirePowers; cruacRating: number; thebanRating: number; cruacRiteIds: unknown; thebanMiracleIds: unknown; locale: string }) {
+function RitualDisciplines({ powers, bloodSorcery, locale }: { powers: VampirePowers; bloodSorcery: Record<string, unknown>; locale: string }) {
   const { t } = useLanguage();
-  const selected = (powers.ritualDisciplines ?? []).filter((item) => item.id === "cruac" ? cruacRating > 0 : thebanRating > 0);
+  const selected = (powers.ritualDisciplines ?? []).filter((item) => Number(bloodSorcery[ritualFields[item.id][0]] ?? 0) > 0);
   if (!selected.length) return null;
   return <><SheetHeading>{t("ui.bloodSorceryDisciplines")}</SheetHeading>
     <div className="vampire-power-grid">
       {selected.map((item: VampireRitualDisciplineDefinition) => {
-        const rating = item.id === "cruac" ? cruacRating : thebanRating;
-        const rituals = ownedVampireRituals(powers, item.id, item.id === "cruac" ? cruacRiteIds : thebanMiracleIds);
+        const [ratingKey, idsKey] = ritualFields[item.id];
+        const rating = Number(bloodSorcery[ratingKey] ?? 0);
+        const rituals = ownedVampireRituals(powers, item.id, bloodSorcery[idsKey]);
         return <details className="contract-power-card vampire-discipline-card" key={item.id}>
           <summary className="contract-power-summary"><strong>{localized(item, locale)}</strong><DotValue value={rating} /><small>{item.summary}</small></summary>
           <div className="contract-power-details has-levels">

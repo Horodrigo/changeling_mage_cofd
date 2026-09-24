@@ -17,6 +17,7 @@ import { MeritPicker } from "@/app/builder/merit-picker";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
@@ -27,8 +28,8 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { createRandomId } from "@/lib/random-id";
 import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
-import type { VampireAnchorDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
+import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
+import { ORDO_MYSTERIES, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
@@ -62,7 +63,7 @@ function displayName(item: { name: string; translatedName: string }, locale: str
 }
 
 export function reconcileCreationCovenantPower(
-  powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles" | "coils">,
+  powers: Pick<VampirePowers, "cruacRites" | "thebanMiracles" | "kimiyaFormulae" | "therionSacrileges" | "coils">,
   previousId: string,
   selectedId: string,
   bloodSorceryValue: unknown,
@@ -72,9 +73,12 @@ export function reconcileCreationCovenantPower(
   const coilRatings = coilRatingsValue && typeof coilRatingsValue === "object" && !Array.isArray(coilRatingsValue) ? { ...coilRatingsValue as Record<string, unknown> } : {};
   const adjust = (id: string, amount: -1 | 1) => {
     if (!id) return;
-    const riteKey = powers.cruacRites.some((item) => item.id === id) ? "cruac_rite_ids" : powers.thebanMiracles.some((item) => item.id === id) ? "theban_miracle_ids" : "";
+    const riteKey = powers.cruacRites.some((item) => item.id === id) ? "cruac_rite_ids"
+      : powers.thebanMiracles.some((item) => item.id === id) ? "theban_miracle_ids"
+        : powers.kimiyaFormulae.some((item) => item.id === id) ? "kimiya_formula_ids"
+          : powers.therionSacrileges.some((item) => item.id === id) ? "therion_sacrilege_ids" : "";
     if (riteKey) {
-      const ratingKey = riteKey === "cruac_rite_ids" ? "cruac_rating" : "theban_rating";
+      const ratingKey = ({ cruac_rite_ids: "cruac_rating", theban_miracle_ids: "theban_rating", kimiya_formula_ids: "kimiya_rating", therion_sacrilege_ids: "therion_rating" } as const)[riteKey];
       bloodSorcery[ratingKey] = Math.max(0, Math.min(5, Number(bloodSorcery[ratingKey] ?? 0) + amount));
       const ids = stringArray(bloodSorcery[riteKey]).filter((item) => item !== id);
       bloodSorcery[riteKey] = amount > 0 ? [...ids, id] : ids;
@@ -156,6 +160,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const powers = catalogs.get<VampirePowers>("vampire-powers");
+  const initialClan = reference.clans.find((item) => item.id === String(initial?.line_data.clan_id ?? ""));
   const customMerits = useMeritHomebrews("VtR", true), homebrewPreferences = useHomebrewPreferences();
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
@@ -166,8 +171,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     purchasedSpecialties: experienceSpecialties(initial),
     grantedMeritSources: ["Vampire Template"],
     adjustAttributes: (values) => {
-      const favored = String(initial?.line_data.favored_attribute ?? "");
-      if (favored && values[favored] > 1) values[favored] -= 1;
+      const favored = initialClan?.favoredAttributeMode === "both" ? initialClan.favoredAttributes : [String(initial?.line_data.favored_attribute ?? "")];
+      for (const name of favored) if (name && values[name] > 1) values[name] -= 1;
       return values;
     },
   });
@@ -204,7 +209,11 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
       : statusCity.trim();
   const purchasedCovenantStatus = selectedCovenant ? vampireCovenantStatus({ merits: common.merits }, covenantId, selectedCovenant.name, selectedCovenant.translatedName) : 0;
   const covenantStatus = Math.max(purchasedCovenantStatus, statusScope === "covenant" && statusGroup ? 1 : 0);
-  const covenantPowerOptions = covenantId === "circle-of-the-crone" ? powers.cruacRites.filter((item) => item.rating === 1) : covenantId === "lancea-et-sanctum" ? powers.thebanMiracles.filter((item) => item.rating === 1) : covenantId === "ordo-dracul" && mysteryId ? powers.coils.filter((item) => item.id === `coil-${mysteryId}`) : [];
+  const covenantPowerOptions = covenantId === "circle-of-the-crone" ? powers.cruacRites.filter((item) => item.rating === 1)
+    : covenantId === "lancea-et-sanctum" ? powers.thebanMiracles.filter((item) => item.rating === 1)
+      : covenantId === "jaliniyya" ? powers.kimiyaFormulae.filter((item) => item.rating === 1)
+        : covenantId === "tenth-choir" ? powers.therionSacrileges.filter((item) => item.rating === 1)
+          : covenantId === "ordo-dracul" && mysteryId ? powers.coils.filter((item) => item.id === `coil-${mysteryId}`) : [];
   const hasCreationCovenantPower = covenantPowerOptions.some((item) => item.id === creationCovenantPowerId);
   const covenantPower = reconcileCreationCovenantPower(powers, String(initial?.line_data.creation_covenant_power_id ?? ""), hasCreationCovenantPower ? creationCovenantPowerId : "", initial?.line_data.blood_sorcery, initialOrdo.coil_ratings);
   const zirnitraRating = Number(covenantPower.coilRatings["coil-zirnitra"] ?? 0);
@@ -229,7 +238,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const add = (key: string, label: string, step = 3) => result.push({ step, key, label });
     if (!common.name.trim()) add("name", t("ui.name"), 1);
     if (!selectedClan) add("clan", t("ui.clan"));
-    if (!selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
+    if (selectedClan?.favoredAttributeMode !== "both" && !selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
     if (!reference.covenants.some((item) => item.id === covenantId)) add("covenant", t("sheet.covenant"));
     if (!statusGroup) add("kindredStatus", t("ui.kindredStatus"));
     if (!reference.anchors.some((item) => item.id === maskId)) add("mask", t("sheet.mask"));
@@ -289,11 +298,13 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const chooseClan = (value: string) => {
     setClanId(value);
     const clan = reference.clans.find((item) => item.id === value);
-    if (!clan?.favoredAttributes.includes(favoredAttribute)) setFavoredAttribute("");
+    if (clan?.favoredAttributeMode === "both" || !clan?.favoredAttributes.includes(favoredAttribute)) setFavoredAttribute("");
+    setDisciplines((current) => ({ ...current, Praestantia: value === "akhud" ? current.Praestantia : 0, Vitiate: value === "bekaak" ? current.Vitiate : 0 }));
     if (value === "nosferatu") setNosferatuEasterEgg(true);
   };
   const chooseCovenant = (value: string) => {
     setCovenantId(value); setCreationCovenantPowerId("");
+    setDisciplines((current) => ({ ...current, "Triadic Evolution": value === "belials-brood" ? current["Triadic Evolution"] : 0 }));
     if (value !== "ordo-dracul") setMysteryId("");
     if (value === "covenantless" && statusScope === "covenant") setStatusScope("clan");
   };
@@ -304,7 +315,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const bpAdvancement = Math.max(0, Number(source?.line_data.blood_potency ?? 1) - Number(source?.line_data.creation_blood_potency ?? source?.line_data.blood_potency ?? 1));
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
     const finalAttributes = { ...common.attributes };
-    if (favoredAttribute) finalAttributes[favoredAttribute] = Math.min(5, Number(common.attributes[favoredAttribute] ?? 1) + 1);
+    const favoredAttributes = selectedClan?.favoredAttributeMode === "both" ? selectedClan.favoredAttributes : favoredAttribute ? [favoredAttribute] : [];
+    for (const name of favoredAttributes) finalAttributes[name] = Math.min(5, Number(common.attributes[name] ?? 1) + 1);
     for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     const finalSkills = { ...common.skills };
     for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
@@ -328,7 +340,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
       ],
       merits: finalMerits,
       line_data: {
-        ...(source?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, covenant_id: covenantId,
+        ...(source?.line_data ?? {}), clan_id: clanId, favored_attribute: favoredAttribute, favored_attributes: favoredAttributes, covenant_id: covenantId,
         kindred_status_scope: statusScope, kindred_status_city: statusCity.trim(), kindred_status_group: statusGroup,
         mask_id: maskId, dirge_id: dirgeId, aspirations: common.aspirations.map((item) => item.trim()).filter(Boolean),
         creation_blood_potency: bloodPotency, blood_potency: finalBloodPotency, creation_covenant_power_id: hasCreationCovenantPower ? creationCovenantPowerId : "",
@@ -367,12 +379,12 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         <span className="kicker">{t("ui.step3VAMPIRE")}</span><h2>{t("ui.vampireTemplate")}</h2>
         <div className="vampire-template-grid vampire-template-standard">
           <div className="vampire-template-primary">
-            <Choice label={t("ui.clan")} value={clanId} setValue={chooseClan} options={reference.clans.map((item) => item.id)} optionLabels={Object.fromEntries(reference.clans.map((item) => [item.id, displayName(item, locale)]))} invalid={missing("clan")} />
+            <GroupedReferenceChoice label={t("ui.clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} />
             <div className="vampire-template-current">
               <strong>{selectedClan ? displayName(selectedClan, locale) : t("ui.noneSelected")}</strong>
               <small>{selectedClan ? selectedClan.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, powers.disciplines, locale)).join(" · ") : t("ui.selectClan")}</small>
             </div>
-            {selectedClan && <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={t("ui.favoredAttribute1")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>}
+            {selectedClan && (selectedClan.favoredAttributeMode === "both" ? <div className="vampire-template-current"><strong>{t("ui.favoredAttribute1")}</strong><small>{selectedClan.favoredAttributes.map((item) => systemTerm(item, locale)).join(" · ")}</small></div> : <div className={missing("favoredAttribute") ? "missing-field block" : ""}><Choice label={t("ui.favoredAttribute1")} value={favoredAttribute} setValue={setFavoredAttribute} options={selectedClan.favoredAttributes} optionLabels={Object.fromEntries(selectedClan.favoredAttributes.map((item) => [item, systemTerm(item, locale)]))} /></div>)}
           </div>
           <CovenantSelector items={reference.covenants} value={covenantId} onChange={chooseCovenant} locale={locale} invalid={missing("covenant")} />
         </div>
@@ -391,7 +403,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         <label>{t("ui.touchstone")}<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
         <h3>{t("ui.disciplines3Dots")}</h3>
         <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>
-          {powers.disciplines.filter((discipline) => !discipline.bloodlineId).map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
+          {powers.disciplines.filter((discipline) => !discipline.bloodlineId && vampireDisciplineAvailable(discipline.name, "", clanId, covenantId)).map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
           {covenantPowerOptions.length > 0 && <DotRow
             name={covenantId === "circle-of-the-crone" ? "Crúac" : covenantId === "lancea-et-sanctum" ? "Theban Sorcery" : displayName(covenantPowerOptions[0], locale)}
             value={hasCreationCovenantPower ? 1 : 0}
@@ -404,8 +416,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         </div>
         <p className="rule-callout">{t("ui.allocate3DotsAtLeast2MustBelong")}</p>
         {Number(disciplines.Protean ?? 0) >= 2 && <div className={`vampire-protean-builder${missing("protean") ? " missing-field block" : ""}`}><h3>{t("ui.proteanChoices")}</h3><ChoiceLines label={t("ui.predatoryAspect")} values={proteanAspects} count={3} placeholder={t("ui.animalAdaptation")} onChange={setProteanAspects} />{Number(disciplines.Protean ?? 0) >= 3 && <ChoiceLines label={t("ui.beastSSkin")} values={proteanForms} count={1} placeholder={t("ui.animalForm")} onChange={setProteanForms} />}{Number(disciplines.Protean ?? 0) >= 4 && <ChoiceLines label={t("ui.unnaturalAspect")} values={proteanUnnatural} count={3} placeholder={t("ui.monstrousAdaptation")} onChange={setProteanUnnatural} />}</div>}
-        {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label={t("ui.mystery")} value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode") }} /></div>}
-        {hasCreationCovenantPower && covenantPowerOptions.length > 1 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={covenantId === "circle-of-the-crone" ? t("ui.freeRite") : t("ui.freeMiracle")} value={creationCovenantPowerId} setValue={setCreationCovenantPowerId} options={covenantPowerOptions.map((item) => item.id)} optionLabels={Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)]))} /></div>}
+        {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label={t("ui.mystery")} value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode"), quintessence: t("ui.quintessence") }} /></div>}
+        {hasCreationCovenantPower && covenantPowerOptions.length > 1 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={covenantId === "circle-of-the-crone" ? t("ui.freeRite") : covenantId === "lancea-et-sanctum" ? t("ui.freeMiracle") : covenantId === "jaliniyya" ? t("ui.freeFormula") : t("ui.freeSacrilege")} value={creationCovenantPowerId} setValue={setCreationCovenantPowerId} options={covenantPowerOptions.map((item) => item.id)} optionLabels={Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)]))} /></div>}
         <Aspirations values={common.aspirations} setValues={common.setAspirations} />
         <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} /></div>
       </div>}
@@ -427,12 +439,22 @@ function CovenantSelector({ items, value, onChange, locale, invalid }: { items: 
       <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {t("ui.selectCovenant")}</Button></DialogTrigger>
       <DialogContent className="merit-dialog vtr-dialog">
         <DialogHeader><DialogTitle>{t("ui.selectCovenant")}</DialogTitle><DialogDescription>{t("ui.selectCovenantDescription")}</DialogDescription></DialogHeader>
-        <Choice label={t("sheet.covenant")} value={value} setValue={onChange} options={items.map((item) => item.id)} optionLabels={Object.fromEntries(items.map((item) => [item.id, displayName(item, locale)]))} />
+        <GroupedReferenceChoice label={t("sheet.covenant")} items={items} value={value} onChange={onChange} locale={locale} />
         {selected && <div className="vampire-selector-detail"><strong>{displayName(selected, locale)}</strong><p>{selected.description}</p>{selected.advantage && <small><strong>{t("ui.advantage")}:</strong> {selected.advantage}</small>}</div>}
         <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
     </Dialog>
   </div>;
+}
+
+function GroupedReferenceChoice({ label, items, value, onChange, locale, invalid = false }: { label: string; items: readonly (VampireClanDefinition | VampireCovenantDefinition)[]; value: string; onChange: (value: string) => void; locale: Locale; invalid?: boolean }) {
+  const { t } = useLanguage();
+  const groups = ["core", "historical", "uncommon"] as const;
+  const labels = { core: t("ui.coreOptions"), historical: t("ui.historicalOptions"), uncommon: t("ui.uncommonOptions") };
+  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={onChange}><SelectTrigger><SelectValue placeholder={t("ui.select")} /></SelectTrigger><SelectContent>{groups.map((group, index) => {
+    const options = items.filter((item) => item.group === group);
+    return options.length ? <SelectGroup key={group}>{index > 0 && <SelectSeparator />}<SelectLabel>{labels[group]}</SelectLabel>{options.map((item) => <SelectItem key={item.id} value={item.id}>{displayName(item, locale)}</SelectItem>)}</SelectGroup> : null;
+  })}</SelectContent></Select></label>;
 }
 
 function ChoiceLines({ label, values, count, placeholder, onChange }: { label: string; values: string[]; count: number; placeholder: string; onChange: (value: string[]) => void }) {

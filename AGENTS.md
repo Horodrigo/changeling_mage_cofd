@@ -211,6 +211,8 @@ Keep the localization runtime in `lib/i18n.tsx`, shared UI messages in `lib/i18n
 
 For source reconstruction, use the offline Codex of Darkness material as an index for candidate identity and citations, not as final authority for mechanics. Source PDFs are authoritative for effects, prerequisites, choices, exceptions, and long-form rule details. Review two-column extraction carefully; never import raw extracted text without checking headers, footers, sidebars, page breaks, and neighboring columns.
 
+Do not use the `pdftotext` executable from the system `PATH`: on this workstation it resolves to an incomplete MiKTeX installation. Use the bundled Python PDF libraries and visual page rendering instead.
+
 Work in small verifiable batches. Reconcile IDs, counts, source, page, required fields, and known exceptions in tests. Structural tests do not replace editorial PDF review. Existing generator and PDF-validation scripts are reproducibility tools, not runtime dependencies.
 
 ### Contract catalog records

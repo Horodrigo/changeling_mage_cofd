@@ -57,7 +57,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
   const disciplineRows = [
     ...Object.entries(disciplines).filter(([, rating]) => Number(rating) > 0).map(([name, rating]) => ({ name: vampireDisciplineDisplayName(name, powers.disciplines, locale), rating: Number(rating) })),
-    ...(powers.ritualDisciplines ?? []).flatMap((item) => { const rating = Number(item.id === "cruac" ? bloodSorcery.cruac_rating : bloodSorcery.theban_rating); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
+    ...(powers.ritualDisciplines ?? []).flatMap((item) => { const rating = Number(bloodSorcery[`${item.id}_rating`] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
     ...powers.coils.flatMap((item) => { const rating = Number(coilRatings[item.id] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
   ];
   const meritRows = character.merits.filter((merit) => !merit.grantedBy || merit.grantedBy === "Clã").map((merit) => {

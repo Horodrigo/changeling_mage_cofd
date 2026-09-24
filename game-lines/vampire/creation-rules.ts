@@ -4,16 +4,22 @@ import { translate, type Locale } from "@/lib/i18n";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
-  "Nightmare", "Obfuscate", "Protean", "Resilience", "Vigor",
+  "Nightmare", "Obfuscate", "Protean", "Resilience", "Vigor", "Praestantia", "Vitiate", "Triadic Evolution",
 ] as const;
 
-export const VAMPIRE_DISCIPLINES = [...VAMPIRE_CREATION_DISCIPLINES, "Dead Signal"] as const;
+export const VAMPIRE_DISCIPLINES = [...VAMPIRE_CREATION_DISCIPLINES, "Dead Signal", "Cachexy", "Crochan"] as const;
 
-export function vampireDisciplineAvailable(name: string, bloodlineId: string) {
-  return name !== "Dead Signal" || bloodlineId === "jharana";
+export function vampireDisciplineAvailable(name: string, bloodlineId: string, clanId = "", covenantId = "") {
+  if (name === "Dead Signal") return bloodlineId === "jharana";
+  if (name === "Cachexy") return bloodlineId === "morbus";
+  if (name === "Crochan") return bloodlineId === "bron";
+  if (name === "Praestantia") return clanId === "akhud";
+  if (name === "Vitiate") return clanId === "bekaak";
+  if (name === "Triadic Evolution") return covenantId === "belials-brood";
+  return true;
 }
 
-export const ORDO_MYSTERIES = ["ascendant", "wyrm", "voivode"] as const;
+export const ORDO_MYSTERIES = ["ascendant", "wyrm", "voivode", "quintessence"] as const;
 
 /**
  * Discipline names are catalog-owned identities, not core trait terms. This is

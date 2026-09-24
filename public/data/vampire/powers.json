@@ -717,6 +717,66 @@
           }
         }
       ]
+    },
+    {
+      "id":"praestantia","name":"Praestantia","translatedName":"Praestantia","clanIds":["akhud"],"summary":"Akhud speed expressed as perfect initiative and Dexterity.","source":"Thousand Years of Night","page":29,
+      "levels":[
+        {"rating":1,"name":"Praestantia •","translatedName":"Praestantia •","summary":"Add Praestantia to Initiative and Dexterity pools; Vitae applies it as a weapon bonus or redirects a failed violent action."},
+        {"rating":2,"name":"Praestantia ••","translatedName":"Praestantia ••","summary":"Increase the persistent and active Praestantia bonuses to two dice."},
+        {"rating":3,"name":"Praestantia •••","translatedName":"Praestantia •••","summary":"Increase the persistent and active Praestantia bonuses to three dice."},
+        {"rating":4,"name":"Praestantia ••••","translatedName":"Praestantia ••••","summary":"Increase the persistent and active Praestantia bonuses to four dice."},
+        {"rating":5,"name":"Praestantia •••••","translatedName":"Praestantia •••••","summary":"Increase the persistent and active Praestantia bonuses to five dice."}
+      ]
+    },
+    {
+      "id":"vitiate","name":"Vitiate","translatedName":"Vitiate","clanIds":["bekaak"],"summary":"Bekaak corruption that weakens bodies by proximity and touch.","source":"Night Horrors: Spilled Blood","page":89,
+      "levels":[
+        {"rating":1,"name":"Vitiate •","translatedName":"Vitiate •","summary":"Close contact penalizes the subject's next Physical action; Vitae strips Initiative or inflicts a temporary impairment."},
+        {"rating":2,"name":"Vitiate ••","translatedName":"Vitiate ••","summary":"Increase Vitiate's persistent penalty and active reach."},
+        {"rating":3,"name":"Vitiate •••","translatedName":"Vitiate •••","summary":"Increase Vitiate's persistent penalty and active reach."},
+        {"rating":4,"name":"Vitiate ••••","translatedName":"Vitiate ••••","summary":"Increase Vitiate's persistent penalty and active reach."},
+        {"rating":5,"name":"Vitiate •••••","translatedName":"Vitiate •••••","summary":"Increase Vitiate's persistent penalty and active reach."}
+      ]
+    },
+    {
+      "id":"cachexy","name":"Cachexy","translatedName":"Cachexy","bloodlineId":"morbus","summary":"The Morbus Discipline of sensing, spreading, and accelerating disease.","source":"Dark Eras Companion","page":112,
+      "levels":[
+        {"rating":1,"name":"Diagnose","translatedName":"Diagnose","summary":"Sense carriers of disease.","dicePool":"Intelligence + Medicine + Cachexy"},
+        {"rating":2,"name":"Contaminate","translatedName":"Contaminate","summary":"Render a space a contagion vector for a disease.","cost":"1 Vitae"},
+        {"rating":3,"name":"Inflame","translatedName":"Inflame","summary":"Exacerbate a disease's symptoms.","cost":"1 Vitae","dicePool":"Wits + Survival + Cachexy − Stamina"},
+        {"rating":4,"name":"Plague-Bearer","translatedName":"Plague-Bearer","summary":"Quickly infect nearby victims with a disease.","cost":"1 Vitae per turn","dicePool":"Intelligence + Medicine + Cachexy"},
+        {"rating":5,"name":"Accelerate Disease","translatedName":"Accelerate Disease","summary":"Worsen even mild sickness to inflict lethal damage.","cost":"1 Willpower","dicePool":"Wits + Survival + Cachexy − Stamina"}
+      ]
+    },
+    {
+      "id":"crochan","name":"Crochan","translatedName":"Crochan","bloodlineId":"bron","summary":"The Bron Discipline of blood, oaths, and indomitable endurance.","source":"Dark Eras 2","page":119,
+      "levels":[
+        {"rating":1,"name":"Swift Flows the Blood","translatedName":"Swift Flows the Blood","summary":"Spend additional Vitae on healing this turn.","cost":"1 Vitae","dicePool":"Intelligence + Medicine + Crochan"},
+        {"rating":2,"name":"Blooding the Hunter","translatedName":"Blooding the Hunter","summary":"Sample a quarry's blood to gain a tracking bonus for the night.","cost":"1 Vitae","dicePool":"Wits + Survival + Crochan"},
+        {"rating":3,"name":"Sealing the Covenant","translatedName":"Sealing the Covenant","summary":"Swear a shared blood oath and take its focus as an added Touchstone.","cost":"1 Willpower + 1 Vitae per oathmate"},
+        {"rating":4,"name":"Blood of My Blood","translatedName":"Blood of My Blood","summary":"Spend Vitae to heal a touched subject immediately.","cost":"1+ Vitae; optional 1 Willpower"},
+        {"rating":5,"name":"Conquering the Challenge of the Axe","translatedName":"Conquering the Challenge of the Axe","summary":"Suffer no damage while honoring an oath not to move or act aggressively.","cost":"2 Vitae + 1 Willpower"}
+      ]
+    },
+    {
+      "id":"triadic-evolution","name":"Triadic Evolution","translatedName":"Triadic Evolution","covenantIds":["belials-brood"],"summary":"Manifestations used by Belial's Brood to refine predatory instinct.","source":"Night Horrors: Spilled Blood","page":60,
+      "levels":[
+        {"rating":1,"name":"Animal Magnetism","translatedName":"Animal Magnetism","summary":"Add Triadic Evolution to mundane Expression, Persuasion, and Socialize for an hour."},
+        {"rating":1,"name":"Don't Look It in the Eye","translatedName":"Don't Look It in the Eye","summary":"Add Triadic Evolution to mundane Animal Ken, Intimidation, and Streetwise for an hour."},
+        {"rating":2,"name":"Camouflage","translatedName":"Camouflage","summary":"Become invisible while motionless for an hour."},
+        {"rating":2,"name":"Cover Your Tracks","translatedName":"Cover Your Tracks","summary":"Leave no scent for several nights."},
+        {"rating":2,"name":"Merely a Flesh Wound","translatedName":"Merely a Flesh Wound","summary":"Ignore wound penalties for several scenes."},
+        {"rating":2,"name":"Sprint","translatedName":"Sprint","summary":"Add Triadic Evolution to Speed and noncombat Athletics for an hour."},
+        {"rating":3,"name":"Acidic Blood","translatedName":"Acidic Blood","summary":"Your blood grants no Vitae and inflicts lethal damage until sunrise."},
+        {"rating":3,"name":"Fight or Flight","translatedName":"Fight or Flight","summary":"Become immune to ambush for an hour."},
+        {"rating":3,"name":"Perfect Ambush","translatedName":"Perfect Ambush","summary":"Add Triadic Evolution to establish surprise for an hour."},
+        {"rating":3,"name":"Trophy","translatedName":"Trophy","summary":"Preserve a body part from a destroyed vampire for years."},
+        {"rating":4,"name":"Instinctual Conversation","translatedName":"Instinctual Conversation","summary":"Telepathically communicate with anyone bearing a Bestial Condition."},
+        {"rating":4,"name":"Riding the Man","translatedName":"Riding the Man","summary":"Add Triadic Evolution to one Intelligence or Wits roll."},
+        {"rating":4,"name":"Survive","translatedName":"Survive","summary":"Add Triadic Evolution to Defense while taking no offensive action."},
+        {"rating":5,"name":"Enter the Zone","translatedName":"Enter the Zone","summary":"Gain the benefits of frenzy for up to an hour."},
+        {"rating":5,"name":"Hounds to the Hunters","translatedName":"Hounds to the Hunters","summary":"Track a recent scent trail through supernatural concealment."}
+      ]
     }
   ],
   "ritualDisciplines": [
@@ -811,6 +871,12 @@
           "situation": "Crúac only: extra Vitae sacrificed beyond the requirement; bonus equals excess Vitae."
         }
       ]
+    },
+    {
+      "id":"kimiya","name":"Kimiya","translatedName":"Kimiya","ritualKind":"kimiya-formula","experienceCostPerDot":4,"freeRitualPerDot":true,"maximumRitualRating":"discipline-rating","statusRequirement":"Jaliniyya Status • or higher","summary":"Jaliniyya blood alchemy; each dot grants one free formula and additional formulae cost two Experiences.","source":"Dark Eras 2","page":143,"cost":"1 Vitae plus blood sacrifice equal to formula rating − 1, minimum 1","dicePool":"Intelligence + Science + Kimiya","action":"Extended","rollResults":{"dramaticFailure":"The ritualist gains Jaded.","success":"The formula takes effect.","exceptionalSuccess":"The ritualist gains Inspired."}
+    },
+    {
+      "id":"therion","name":"Therion","translatedName":"Therion","ritualKind":"therion-sacrilege","experienceCostPerDot":4,"freeRitualPerDot":true,"maximumRitualRating":"discipline-rating","statusRequirement":"Tenth Choir membership in good standing","minimumHumanityToCast":"ritual-rating","summary":"Tenth Choir blood sorcery; each dot grants one free Sacrilege and additional Sacrileges cost two Experiences.","source":"Dark Eras 2","page":344,"cost":"Vitae equal to Sacrilege rating, acquired by feeding from a Grigor","dicePool":"Presence + Intimidation + Therion","action":"Extended","effect":"If Humanity is not higher than the Sacrilege rating, committing it causes a breaking point with dice equal to the ritual rating."
     }
   ],
   "devotions": [
@@ -1294,7 +1360,90 @@
       "dicePool": "Wits + Subterfuge + Obfuscate",
       "action": "Instant",
       "effect": "Project a mostly still, silent image of the chosen subject at a visible location. Touch dispels it; otherwise supernatural piercing uses Clash of Wills."
-    }
+    },
+    {"id":"devotion-annals-death","kind":"devotion","name":"Annals of Death","translatedName":"Annals of Death","prerequisites":"Auspex ••••","experienceCost":1,"dicePool":"Intelligence + Occult + Auspex","summary":"Answer questions about death in a location and foresee deaths.","source":"Thousand Years of Night","page":72},
+    {"id":"devotion-bones-mountain","kind":"devotion","name":"Bones of the Mountain","translatedName":"Bones of the Mountain","prerequisites":"Protean ••••, Resilience •••, Vigor •••","experienceCost":5,"cost":"3 Vitae","summary":"Become living stone and combine formidable physical Disciplines.","source":"Thousand Years of Night","page":73},
+    {"id":"devotion-celebrity","kind":"devotion","name":"Celebrity","translatedName":"Celebrity","prerequisites":"Majesty ••","experienceCost":2,"cost":"3 Vitae","summary":"Turn a fan's praise into a temporary Social Merit.","source":"Thousand Years of Night","page":73},
+    {"id":"devotion-consumption","kind":"devotion","name":"Consumption","translatedName":"Consumption","prerequisites":"Dominate •••••","experienceCost":4,"cost":"1 Vitae + 1 Willpower","summary":"Possess a victim over any distance using only your voice.","source":"Thousand Years of Night","page":74},
+    {"id":"devotion-crush-years","kind":"devotion","name":"Crush of Years","translatedName":"Crush of Years","prerequisites":"Nightmare ••••, Majesty •••","experienceCost":3,"cost":"4 Vitae + 1 Willpower","summary":"Press the weight of centuries upon a target.","source":"Thousand Years of Night","page":74},
+    {"id":"devotion-dead-mans-reprieve","kind":"devotion","name":"Dead Man's Reprieve","translatedName":"Dead Man's Reprieve","prerequisites":"Obfuscate •","experienceCost":1,"cost":"1 Vitae","summary":"Prepare a bath that cloaks its occupants' presence.","source":"Thousand Years of Night","page":128},
+    {"id":"devotion-kin-maker","kind":"devotion","name":"Kin Maker","translatedName":"Kin Maker","prerequisites":"Dominate •••••, Protean •••","experienceCost":4,"cost":"10 Vitae + 1 Willpower","summary":"Pijavica magic that infects another vampire with a gestating childe.","source":"Thousand Years of Night","page":120},
+    {"id":"devotion-legion","kind":"devotion","name":"Legion","translatedName":"Legion","prerequisites":"Animalism •••••, Auspex •••","experienceCost":4,"cost":"1+ Vitae","summary":"Use the senses of all nearby animals of a chosen type.","source":"Thousand Years of Night","page":74},
+    {"id":"devotion-malignant-smog","kind":"devotion","name":"Malignant Smog","translatedName":"Malignant Smog","prerequisites":"Protean •••••","experienceCost":3,"cost":"2 Vitae","summary":"Turn Primeval Miasma into toxic gas that inflicts Tilts.","source":"Thousand Years of Night","page":75},
+    {"id":"devotion-pass-yesteryear","kind":"devotion","name":"Pass Into Yesteryear","translatedName":"Pass Into Yesteryear","prerequisites":"Obfuscate •••, Nightmare •","experienceCost":2,"cost":"2 Vitae + 1 Willpower","summary":"Make others forget those bound to you by Vinculum.","source":"Thousand Years of Night","page":76},
+    {"id":"devotion-preternatural-instinct","kind":"devotion","name":"Preternatural Instinct","translatedName":"Preternatural Instinct","prerequisites":"Auspex ••••, Celerity •","experienceCost":2,"cost":"1 Vitae","summary":"Sense danger before it happens and read traces of hostile intent.","source":"Thousand Years of Night","page":76},
+    {"id":"devotion-spontaneous-ignition","kind":"devotion","name":"Spontaneous Ignition","translatedName":"Spontaneous Ignition","prerequisites":"Celerity •••••, Resilience •","experienceCost":4,"cost":"6 Vitae","summary":"Set a touched target on fire.","source":"Thousand Years of Night","page":76},
+    {"id":"devotion-unbridled-force","kind":"devotion","name":"Unbridled Force","translatedName":"Unbridled Force","prerequisites":"Vigor •••••, Dominate ••","experienceCost":4,"cost":"5 Vitae","summary":"Perform feats of raw strength at a distance.","source":"Thousand Years of Night","page":76},
+
+    {"id":"devotion-aerial-cocoon","kind":"devotion","name":"Aerial Cocoon","translatedName":"Aerial Cocoon","prerequisites":"Protean •","experienceCost":1,"requirement":"Hiding spot has the vampire's Size","summary":"Use Unmarked Grave between concrete or metal walls as a protective cocoon.","source":"Guide to the Night","page":133},
+    {"id":"devotion-bend-space","kind":"devotion","name":"Bend Space","translatedName":"Bend Space","prerequisites":"Auspex ••, Celerity ••••","experienceCost":5,"cost":"2 Vitae; optional 1 Willpower","summary":"Teleport to a visible or familiar place.","source":"Guide to the Night","page":134},
+    {"id":"devotion-best-served-cold","kind":"devotion","name":"Best Served Cold","translatedName":"Best Served Cold","prerequisites":"Vigor •••","experienceCost":2,"cost":"2 Vitae","summary":"Gain +3 to attacks against the person who harmed you.","source":"Guide to the Night","page":135},
+    {"id":"devotion-between-walls","kind":"devotion","name":"Between the Walls","translatedName":"Between the Walls","prerequisites":"Obfuscate •••, Resilience •","experienceCost":2,"cost":"1 Vitae","summary":"Fit through Size 2 spaces and add Obfuscate to ambush rolls.","source":"Guide to the Night","page":136},
+    {"id":"devotion-blood-scenting","kind":"devotion","name":"Blood Scenting","translatedName":"Blood Scenting","prerequisites":"Auspex •••","experienceCost":4,"cost":"1 Vitae","summary":"Identify a target's Clan, Blood Potency, and Disciplines.","source":"Guide to the Night","page":136},
+    {"id":"devotion-distant-control","kind":"devotion","name":"Distant Control","translatedName":"Distant Control","prerequisites":"Dominate ••••, Vigor ••","experienceCost":3,"cost":"2 Vitae","summary":"Issue commands and make Social rolls through a known target's mind.","source":"Guide to the Night","page":135},
+    {"id":"devotion-flush-out","kind":"devotion","name":"Flush Out","translatedName":"Flush Out","prerequisites":"Dominate •, Nightmare •••","experienceCost":2,"cost":"2 Vitae","summary":"Inflict Frightened and drive hidden subjects into the open.","source":"Guide to the Night","page":136},
+    {"id":"devotion-memetic-menace","kind":"devotion","name":"Memetic Menace","translatedName":"Memetic Menace","prerequisites":"Majesty ••, Nightmare ••","experienceCost":2,"cost":"2 Vitae","summary":"Alter recordings of yourself to inflict Swooned or Frightened.","source":"Guide to the Night","page":134},
+    {"id":"devotion-vile-blood","kind":"devotion","name":"Vile Blood","translatedName":"Vile Blood","prerequisites":"Protean •••, Resilience ••","experienceCost":2,"cost":"1 Vitae","summary":"Make your blood poisonous to feeders and combatants.","source":"Guide to the Night","page":136},
+    {"id":"devotion-wrack-mind","kind":"devotion","name":"Wrack the Mind","translatedName":"Wrack the Mind","prerequisites":"Dominate ••••, Majesty •••","experienceCost":3,"cost":"1 Vitae","summary":"Inflict the Agonized Condition.","source":"Guide to the Night","page":135},
+
+    {"id":"devotion-flesh-form","kind":"devotion","name":"Flesh Form","translatedName":"Flesh Form","prerequisites":"Protean ••, Resilience •","experienceCost":1,"cost":"3 Vitae per day","summary":"Consume a human body to imitate its appearance and voice.","source":"Night Horrors: Spilled Blood","page":97},
+    {"id":"devotion-ghost-skin","kind":"devotion","name":"Ghost Skin","translatedName":"Ghost Skin","prerequisites":"Auspex •••••","experienceCost":2,"cost":"1 Willpower","summary":"Perceive and interact with ghosts during Twilight Projection.","source":"Night Horrors: Spilled Blood","page":85},
+    {"id":"devotion-not-so-special","kind":"devotion","name":"Not So Special","translatedName":"Not So Special","prerequisites":"Obfuscate ••, Vigor •••","experienceCost":2,"cost":"1+ Vitae","summary":"Suppress another vampire's Clan-specific Disciplines.","source":"Night Horrors: Spilled Blood","page":105},
+    {"id":"devotion-null-space","kind":"devotion","name":"Null Space","translatedName":"Null Space","prerequisites":"Animalism ••••• or Obfuscate •••••, Vitiate •••","experienceCost":4,"summary":"Use Vitiate without touch inside Lord of the Land or Oubliette.","source":"Night Horrors: Spilled Blood","page":89},
+    {"id":"devotion-pierce-veil","kind":"devotion","name":"Pierce the Veil","translatedName":"Pierce the Veil","prerequisites":"Auspex •","experienceCost":1,"summary":"Use Auspex to perceive ghosts and Willpower to affect them with Disciplines.","source":"Night Horrors: Spilled Blood","page":85},
+    {"id":"devotion-seance","kind":"devotion","name":"Séance","translatedName":"Séance","prerequisites":"Auspex •••, Vigor ••","experienceCost":2,"cost":"1 Willpower","summary":"Force a ghost to Materialize at its Anchor.","source":"Night Horrors: Spilled Blood","page":85},
+    {"id":"devotion-water-hibernation","kind":"devotion","name":"Water Hibernation","translatedName":"Water Hibernation","prerequisites":"Protean •","experienceCost":1,"summary":"Use Unmarked Grave while fully submerged in water.","source":"Night Horrors: Spilled Blood","page":97},
+    {"id":"devotion-sea-witch-gift","kind":"devotion","name":"Sea Witch's Gift","translatedName":"Sea Witch's Gift","prerequisites":"Nereid; Protean ••","experienceCost":1,"cost":"1 Vitae","summary":"Regain legs for an hour while ignoring the Nereid Bane.","source":"Night Horrors: Spilled Blood","page":139},
+    {"id":"devotion-sirens-sweet-visage","kind":"devotion","name":"Siren's Sweet Visage","translatedName":"Siren's Sweet Visage","prerequisites":"Nereid; Obfuscate ••••, Majesty •","experienceCost":2,"cost":"1 Vitae","summary":"Conceal abnormalities and weaken resistance to persuasion or intimidation.","source":"Night Horrors: Spilled Blood","page":140},
+    {"id":"devotion-infectious-bite","kind":"devotion","name":"Infectious Bite","translatedName":"Infectious Bite","bloodlineId":"nosoi","experienceCost":0,"cost":"1 Vitae","summary":"Infect a mortal with the Nosoi blood sickness.","source":"Night Horrors: Spilled Blood","page":32},
+    {"id":"devotion-plague-doctors-mask","kind":"devotion","name":"Plague Doctor's Mask","translatedName":"Plague Doctor's Mask","prerequisites":"Obfuscate ••","bloodlineId":"nosoi","experienceCost":1,"cost":"1 Vitae","summary":"Use Touch of Shadow to mask blood-sickness symptoms.","source":"Night Horrors: Spilled Blood","page":32},
+    {"id":"devotion-tiny-guardian","kind":"devotion","name":"Tiny Guardian","translatedName":"Tiny Guardian","prerequisites":"Protean •••; Swarm Form","bloodlineId":"nosoi","experienceCost":1,"summary":"Bud off intelligent and loyal insect servants.","source":"Night Horrors: Spilled Blood","page":32},
+    {"id":"devotion-city-attunement","kind":"devotion","name":"City Attunement","translatedName":"City Attunement","bloodlineId":"scions-of-the-first-city","experienceCost":0,"cost":"1 Vitae","summary":"Touch the city to see through its eyes and enable other Scion Devotions.","source":"Night Horrors: Spilled Blood","page":44},
+    {"id":"devotion-incriminating-evidence","kind":"devotion","name":"Incriminating Evidence","translatedName":"Incriminating Evidence","prerequisites":"Auspex •••","bloodlineId":"scions-of-the-first-city","experienceCost":1,"summary":"Search your city for evidence of a touched subject's wrongdoing.","source":"Night Horrors: Spilled Blood","page":44},
+    {"id":"devotion-our-mothers-mind","kind":"devotion","name":"Our Mother's Mind","translatedName":"Our Mother's Mind","prerequisites":"Auspex •••••","bloodlineId":"scions-of-the-first-city","experienceCost":3,"cost":"2 Vitae","summary":"Seek and impede a quarry through your city.","source":"Night Horrors: Spilled Blood","page":44},
+    {"id":"devotion-give-take","kind":"devotion","name":"The Give-and-Take","translatedName":"The Give-and-Take","prerequisites":"Celerity ••• or Vigor •••","bloodlineId":"liderc","experienceCost":1,"cost":"2 Vitae","summary":"Gift a vessel Physical Discipline dots while stealing Vice recovery.","source":"Night Horrors: Spilled Blood","page":27},
+    {"id":"devotion-look","kind":"devotion","name":"The Look","translatedName":"The Look","prerequisites":"Majesty ••","bloodlineId":"liderc","experienceCost":1,"cost":"1 Willpower","summary":"Turn exceptional emotional influence into psychic feeding.","source":"Night Horrors: Spilled Blood","page":27},
+    {"id":"devotion-one-got-away","kind":"devotion","name":"The One That Got Away","translatedName":"The One That Got Away","prerequisites":"Obfuscate ••••","bloodlineId":"liderc","experienceCost":2,"cost":"1 Vitae","summary":"Become a sleeping victim's temporary ideal and Vice.","source":"Night Horrors: Spilled Blood","page":27},
+    {"id":"devotion-pledge","kind":"devotion","name":"The Pledge","translatedName":"The Pledge","prerequisites":"Majesty ••","bloodlineId":"liderc","experienceCost":1,"cost":"1 Willpower","summary":"Pledge to a vessel, granting Social Merits and recovering Willpower through passion.","source":"Night Horrors: Spilled Blood","page":27},
+    {"id":"devotion-shapeshifting","kind":"devotion","name":"Shapeshifting","translatedName":"Shapeshifting","prerequisites":"Protean ••, Obfuscate •","bloodlineId":"vardyvle","experienceCost":1,"summary":"Copy physical features from a vessel for a night.","source":"Night Horrors: Spilled Blood","page":49},
+
+    {"id":"devotion-nightmare-journey","kind":"devotion","name":"Nightmare Journey","translatedName":"Nightmare Journey","prerequisites":"Auspex •••••","experienceCost":3,"cost":"1 Vitae + 1 Willpower","summary":"Project into the Primordial Dream and feed from dream forms.","source":"Dark Eras 2","page":143},
+    {"id":"devotion-udjat","kind":"devotion","name":"Udjat","translatedName":"Udjat","bloodlineId":"khaibit","experienceCost":0,"summary":"See perfectly in total darkness and ignore blindness from injury or supernatural powers.","cost":"Optional 1 Vitae","duration":"Scene when Vitae is spent","effect":"Spending Vitae reveals spirits, Strix, angels, and other Twilight beings and prevents Strix possession for the scene. The first clear manifestation of Obtenebration forces witnesses to roll Resolve + Composure or gain Shaken.","source":"Onyx Path Blog: The Shadow and the Asp","page":0},
+    {"id":"devotion-ba","kind":"devotion","name":"Ba","translatedName":"Ba","prerequisites":"Obfuscate ••","bloodlineId":"khaibit","experienceCost":2,"cost":"3 Vitae","summary":"Wear a shadow and become a Twilight being.","effect":"Become immaterial while touching a shadow at least your Size. Move at half Speed along solid objects; only fire, sunlight, Pseshkf, ephemeral attacks, and effects that harm ephemera can affect you, but harmful effects inflict two extra lethal damage.","source":"Onyx Path Blog: The Shadow and the Asp","page":0},
+    {"id":"devotion-iteru","kind":"devotion","name":"Iteru","translatedName":"Iteru","prerequisites":"Celerity ••","bloodlineId":"khaibit","experienceCost":2,"cost":"1 Vitae","action":"Reflexive","summary":"Slip between contiguous shadows and empower a Dodge.","effect":"Emerge anywhere along the same patch of shadow; once per scene a Dodge using Iteru gains rote quality.","source":"Onyx Path Blog: The Shadow and the Asp","page":0},
+    {"id":"devotion-pseshkf","kind":"devotion","name":"Pseshkf","translatedName":"Pseshkf","prerequisites":"Vigor ••","bloodlineId":"khaibit","experienceCost":2,"cost":"1+ Vitae","action":"Instant","summary":"Coat an object in frozen darkness and wield it through Tyet.","effect":"Add Blood Potency to Durability and Vitae spent to Structure. Coated weapons gain +1 weapon rating against physical targets and Blood Potency weapon rating against noncorporeal targets.","source":"Onyx Path Blog: The Shadow and the Asp","page":0},
+    {"id":"devotion-tyet","kind":"devotion","name":"Tyet","translatedName":"Tyet","prerequisites":"Vigor ••","bloodlineId":"khaibit","experienceCost":2,"cost":"1+ Vitae","action":"Instant","summary":"Expel and shape a cloud of supernatural darkness.","effect":"The cloud extends Blood Potency yards per Vitae spent; the Khaibit may shape all connected shadows to distract or deceive.","source":"Onyx Path Blog: The Shadow and the Asp","page":0},
+    {"id":"devotion-hounds-hell","kind":"devotion","name":"Hounds of Hell","translatedName":"Hounds of Hell","bloodlineId":"kerberos","experienceCost":0,"summary":"Hone the Predatory Aura through the Kerberos Beast.","effect":"When pursuing the Beast's aspect after using Predatory Aura, replace the usual +2 bonus with Blood Potency and add the relevant Three Heads of Kerberos rating to lashing-out pools.","source":"Onyx Path Blog: The Jaws of the Beast","page":0},
+
+    {"id":"devotion-22-solid","kind":"devotion","name":".22 Solid","translatedName":".22 Solid","prerequisites":"Protean ••, Resilience •","covenantIds":["carthian-movement"],"experienceCost":1,"cost":"1 Vitae","summary":"Increase Resilience's damage downgrading.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-aegis-defiance","kind":"devotion","name":"Aegis of Defiance","translatedName":"Aegis of Defiance","prerequisites":"Dominate •••, Resilience ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Defy mind-altering effects by acting contrary to them.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-aura-cursive-seduction","kind":"devotion","name":"Aura of Cursive Seduction","translatedName":"Aura of Cursive Seduction","prerequisites":"Majesty •••, Vigor ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Inflict enthralling Conditions when someone lashes out at you.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-bffs","kind":"devotion","name":"BFFs","translatedName":"BFFs","prerequisites":"Majesty ••, Dominate ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Create the convincing facade of a long friendship.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-call-me-maybe","kind":"devotion","name":"Call Me Maybe","translatedName":"Call Me Maybe","prerequisites":"Majesty ••, Resilience •","covenantIds":["carthian-movement"],"experienceCost":1,"summary":"Create a temporary Herd.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-hekireki","kind":"devotion","name":"Hekireki","translatedName":"Hekireki","prerequisites":"Celerity •, Vigor •","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Bank Vitae across turns before releasing an empowered attack.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-holdout","kind":"devotion","name":"Holdout","translatedName":"Holdout","prerequisites":"Protean •, Resilience •","covenantIds":["carthian-movement"],"experienceCost":1,"summary":"Meld objects into your body.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-if-you-cant-duck-it","kind":"devotion","name":"If You Can't Duck It","translatedName":"If You Can't Duck It","prerequisites":"Four dots divided among Celerity, Resilience, and Vigor","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Bless an object with physical Discipline power.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-manic-depression","kind":"devotion","name":"Manic Depression","translatedName":"Manic Depression","prerequisites":"Majesty ••, Nightmare ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Force a victim through rapidly shifting emotional extremes.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-natural-born-killer","kind":"devotion","name":"Natural Born Killer","translatedName":"Natural Born Killer","prerequisites":"Celerity •••, Auspex ••","covenantIds":["carthian-movement"],"experienceCost":3,"summary":"Read opponents intuitively and answer with gunfire.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-preserved-blood","kind":"devotion","name":"Preserved Blood","translatedName":"Preserved Blood","prerequisites":"Resilience •••, Protean •","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Store your Vitae for later use.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-psycho-mantle","kind":"devotion","name":"Psycho Mantle","translatedName":"Psycho Mantle","prerequisites":"Nightmare ••, Resilience •","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Retaliate with a terrifying Predatory Aura.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-punching-fucking","kind":"devotion","name":"Punching and Fucking","translatedName":"Punching and Fucking","prerequisites":"Majesty ••, Vigor •","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Exert Majesty through an unarmed attack.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-sudden-strength","kind":"devotion","name":"Sudden Strength","translatedName":"Sudden Strength","prerequisites":"Celerity ••, Vigor ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Add Celerity to Strength while Celerity is active.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-rapidity","kind":"devotion","name":"Rapidity","translatedName":"Rapidity","prerequisites":"Celerity • to •••••","covenantIds":["carthian-movement"],"experienceCost":1,"summary":"Modify another Devotion so it can activate reflexively.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-rock-is-dead","kind":"devotion","name":"Rock Is Dead","translatedName":"Rock Is Dead","prerequisites":"Vigor ••, Majesty •","covenantIds":["carthian-movement"],"experienceCost":1,"summary":"Strengthen Awe while dulling rival presences.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-slow-steady","kind":"devotion","name":"Slow and Steady","translatedName":"Slow and Steady","prerequisites":"Resilience • to •••••","covenantIds":["carthian-movement"],"experienceCost":1,"summary":"Slow a power to convert its Attribute dice into successes.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-straight-up-murderer","kind":"devotion","name":"Straight Up Fucking Murderer","translatedName":"Straight Up Fucking Murderer","prerequisites":"Celerity ••, Resilience ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Use a maneuver without sacrificing Defense.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-talking-circles","kind":"devotion","name":"Talking Circles","translatedName":"Talking Circles","prerequisites":"Celerity •••, Majesty •","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Accelerate a conversation and cut off an opponent.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-gun-show","kind":"devotion","name":"The Gun Show","translatedName":"The Gun Show","prerequisites":"Vigor •••, Majesty •","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Empower Majesty after a feat of strength.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-tune-in-out","kind":"devotion","name":"Tune In, Tune Out","translatedName":"Tune In, Tune Out","prerequisites":"Auspex ••, Obfuscate ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Suppress all but one sense to hyperextend the remaining one.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-under-my-skin-2","kind":"devotion","name":"Under My Skin","translatedName":"Under My Skin","prerequisites":"Protean •••, Majesty ••","covenantIds":["carthian-movement"],"experienceCost":2,"summary":"Assume the appearance of someone under your Majesty.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-under-my-skin-3","kind":"devotion","name":"Under My Skin (Greater)","translatedName":"Under My Skin (Greater)","prerequisites":"Protean ••••, Majesty •••","covenantIds":["carthian-movement"],"experienceCost":3,"summary":"Exchange appearances with a subject under your Majesty.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-violent-coercion","kind":"devotion","name":"Violent Coercion","translatedName":"Violent Coercion","prerequisites":"Majesty ••, Vigor •","covenantIds":["carthian-movement"],"experienceCost":1,"summary":"Coerce a subject into a task with the threat of violence.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-colossus","kind":"devotion","name":"Colossus","translatedName":"Colossus","prerequisites":"Vigor •••••, Resilience ••••","covenantIds":["invictus"],"experienceCost":5,"summary":"Massively increase the power of your strikes.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-in-vitae-veritas","kind":"devotion","name":"In Vitae Veritas","translatedName":"In Vitae Veritas","prerequisites":"Majesty •••••, Dominate or Nightmare ••••","covenantIds":["invictus"],"experienceCost":5,"summary":"Send Discipline effects through Kindred lineages.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-kissing-cousins","kind":"devotion","name":"Kissing Cousins","translatedName":"Kissing Cousins","prerequisites":"Majesty ••, Vigor ••","covenantIds":["invictus"],"experienceCost":2,"summary":"Make two vampires count as blood relatives.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-knight-commander","kind":"devotion","name":"Knight Commander","translatedName":"Knight Commander","prerequisites":"Majesty ••, Vigor ••","covenantIds":["invictus"],"experienceCost":2,"summary":"Inspire the Charmed to martial greatness.","source":"David A. Hill Jr. Pastebin","page":0},
+    {"id":"devotion-strength-empire","kind":"devotion","name":"Strength of Empire","translatedName":"Strength of Empire","prerequisites":"Dominate ••••, Majesty •••, Vigor or Resilience ••","covenantIds":["invictus"],"experienceCost":4,"summary":"Temporarily steal a physical Discipline from a Vinculum thrall.","source":"David A. Hill Jr. Pastebin","page":0}
   ],
   "cruacRites": [
     {
@@ -1658,7 +1807,14 @@
       "requirement": "Dance as part of casting",
       "duration": "Until sunrise",
       "effect": "Witnesses gain Primeval Truths, the ritualist's touch deals aggravated damage, and Willpower can animate an object as a lizard-like animal for the night."
-    }
+    },
+    {"id":"cruac-manananggals-working","kind":"cruac-rite","name":"Manananggal's Working","translatedName":"Manananggal's Working","rating":4,"experienceCost":2,"targetSuccesses":8,"summary":"Dismember yourself and animate the separated parts independently until sunrise.","source":"Thousand Years of Night","page":78},
+    {"id":"cruac-gwydions-curse","kind":"cruac-rite","name":"Gwydion's Curse","translatedName":"Gwydion's Curse","rating":5,"experienceCost":2,"targetSuccesses":10,"summary":"Animate nearby plants to attack intruders until sunrise.","source":"Thousand Years of Night","page":78},
+    {"id":"cruac-scapegoat","kind":"cruac-rite","name":"Scapegoat","translatedName":"Scapegoat","rating":5,"experienceCost":2,"targetSuccesses":12,"contestedBy":"Resolve","summary":"Transfer breaking points and acquired banes to a mortal vessel for the night.","source":"Thousand Years of Night","page":78},
+    {"id":"cruac-sanguine-augur","kind":"cruac-rite","name":"Sanguine Augur","translatedName":"Sanguine Augur","rating":1,"experienceCost":2,"targetSuccesses":6,"summary":"Dream cryptic revelations about the last vessel you fed from.","source":"Night Horrors: Spilled Blood","page":40},
+    {"id":"cruac-wisdom-blood","kind":"cruac-rite","name":"Wisdom of the Blood","translatedName":"Wisdom of the Blood","rating":3,"experienceCost":2,"targetSuccesses":6,"summary":"Read prophecies about a subject in a torpid vampire's dreams.","source":"Night Horrors: Spilled Blood","page":40},
+    {"id":"cruac-clothos-skein","kind":"cruac-rite","name":"Clotho's Skein","translatedName":"Clotho's Skein","rating":5,"experienceCost":2,"targetSuccesses":9,"contestedBy":"Resolve + Supernatural Tolerance","summary":"Dreamwalk through daysleep connections to implant a suggestion.","source":"Night Horrors: Spilled Blood","page":40},
+    {"id":"cruac-red-blossoms","kind":"cruac-rite","name":"The Red Blossoms","translatedName":"The Red Blossoms","rating":4,"experienceCost":2,"targetSuccesses":6,"summary":"Grow plants into an archway that opens into the Hedge.","source":"Changeling: The Lost Second Edition — The Hedge","page":34}
   ],
   "thebanMiracles": [
     {
@@ -2021,7 +2177,27 @@
       "sacrament": "A rotten feast",
       "duration": "One month",
       "effect": "Vitae above a vampire's Humanity can neither be stored nor used and is vomited out as worthless blood."
-    }
+    },
+    {"id":"theban-curse-isolation","kind":"theban-miracle","name":"Curse of Isolation","translatedName":"Curse of Isolation","rating":4,"experienceCost":2,"targetSuccesses":15,"contestedBy":"Resolve + Blood Potency","sacrament":"Any bladed weapon","summary":"Sever a vampire from a present Touchstone and temporarily steal that bond.","source":"Thousand Years of Night","page":79},
+    {"id":"theban-orison-voices","kind":"theban-miracle","name":"Orison of Voices","translatedName":"Orison of Voices","rating":5,"experienceCost":2,"targetSuccesses":8,"sacrament":"Rosary beads","summary":"For three nights, hear speech anywhere that invokes your name.","source":"Thousand Years of Night","page":79},
+    {"id":"theban-sins-ancestors","kind":"theban-miracle","name":"Sins of the Ancestors","translatedName":"Sins of the Ancestors","rating":5,"experienceCost":2,"targetSuccesses":6,"sacrament":"A quantity of the victim's blood","summary":"Ask simple questions about members of the victim's blood lineage.","source":"Thousand Years of Night","page":79},
+    {"id":"theban-trials-job","kind":"theban-miracle","name":"Trials of Job","translatedName":"Trials of Job","rating":4,"experienceCost":2,"targetSuccesses":10,"resistedBy":"Resolve","summary":"Lay a sequence of escalating biblical trials upon the subject.","source":"Dark Eras 2","page":339}
+  ],
+  "kimiyaFormulae": [
+    {"id":"kimiya-spiders-hijra","kind":"kimiya-formula","name":"Spider's Hijra","translatedName":"Spider's Hijra","rating":1,"targetSuccesses":6,"summary":"Weave a web of Vitae that penalizes others' Physical actions for a night.","source":"Dark Eras 2","page":143},
+    {"id":"kimiya-sayihs-khol","kind":"kimiya-formula","name":"Sayih's Khol","translatedName":"Sayih's Khol","rating":2,"targetSuccesses":5,"summary":"Protect a subject from underwater conditions for a night.","source":"Dark Eras 2","page":143},
+    {"id":"kimiya-al-ajsad","kind":"kimiya-formula","name":"Al-Ajsad","translatedName":"Al-Ajsad","rating":3,"targetSuccesses":6,"summary":"Give undead life to a homunculus servant.","source":"Dark Eras 2","page":143},
+    {"id":"kimiya-ebony-horse","kind":"kimiya-formula","name":"Ebony Horse","translatedName":"Ebony Horse","rating":4,"targetSuccesses":8,"summary":"Animate an object up to Size 7 as a flying vehicle for a night.","source":"Dark Eras 2","page":144},
+    {"id":"kimiya-curse-monkey-prince","kind":"kimiya-formula","name":"Curse of the Monkey Prince","translatedName":"Curse of the Monkey Prince","rating":5,"targetSuccesses":10,"contestedBy":"Stamina + Supernatural Tolerance","summary":"Curse a subject to transform painfully into an animal if they commit a declared transgression.","source":"Dark Eras 2","page":144}
+  ],
+  "therionSacrileges": [
+    {"id":"therion-demons-tongue","kind":"therion-sacrilege","name":"Demon's Tongue","translatedName":"Demon's Tongue","rating":1,"targetSuccesses":5,"summary":"Gain 8-again to Subterfuge and contest supernatural truth powers for the night.","source":"Dark Eras 2","page":345},
+    {"id":"therion-morning-star","kind":"therion-sacrilege","name":"The Morning Star","translatedName":"The Morning Star","rating":1,"targetSuccesses":5,"summary":"Add Therion to the Predatory Aura for the night and assume a dark angelic aspect.","source":"Dark Eras 2","page":345},
+    {"id":"therion-curse-faithful","kind":"therion-sacrilege","name":"Curse the Faithful","translatedName":"Curse the Faithful","rating":2,"targetSuccesses":6,"contestedBy":"Resolve + Supernatural Tolerance","summary":"Replace a mortal witness's Virtue with an additional compulsive Vice.","source":"Dark Eras 2","page":345},
+    {"id":"therion-avatar-apollyon","kind":"therion-sacrilege","name":"Avatar of Apollyon","translatedName":"Avatar of Apollyon","rating":3,"targetSuccesses":8,"summary":"Become the bane of a chosen angelic or demonic quarry for up to a scene.","source":"Dark Eras 2","page":345},
+    {"id":"therion-profanity","kind":"therion-sacrilege","name":"Profanity","translatedName":"Profanity","rating":4,"targetSuccesses":10,"summary":"Sense and desecrate sacred places, weakening alien powers and strengthening Chorists.","source":"Dark Eras 2","page":345},
+    {"id":"therion-apotheosis","kind":"therion-sacrilege","name":"Apotheosis","translatedName":"Apotheosis","rating":5,"targetSuccesses":10,"summary":"Become a vampiric angel wielding the Influences and Numina of consumed divinities.","source":"Dark Eras 2","page":346},
+    {"id":"therion-nine-choirs","kind":"therion-sacrilege","name":"Nine Choirs Bend the Knee","translatedName":"Nine Choirs Bend the Knee","rating":5,"targetSuccesses":10,"summary":"Force nearby angels and demons to Materialize and spend Willpower to disobey.","source":"Dark Eras 2","page":346}
   ],
   "coils": [
     {
@@ -2408,6 +2584,16 @@
           "effect": "Spend three Willpower and five turns to shed vampiric traits for 11 − Blood Potency hours; returning takes 30 minutes and restores limited Vitae."
         }
       ]
+    },
+    {
+      "id":"coil-quintessence","kind":"coil","name":"Mystery of the Quintessence","translatedName":"Mystery of the Quintessence","summary":"Bind the Dragon to a centuries-old domain and become its dread avatar.","source":"Thousand Years of Night","page":81,
+      "levels":[
+        {"rating":1,"name":"Forever Mine","translatedName":"Forever Mine","summary":"Claim a domain occupied for a century and sense forbidden Kindred predation within it."},
+        {"rating":2,"name":"Home Turf","translatedName":"Home Turf","summary":"Residents must spend Willpower to resist your feeding."},
+        {"rating":3,"name":"Smother","translatedName":"Smother","summary":"Suppress natural fire and contest supernatural flames in the domain."},
+        {"rating":4,"name":"In the Motherland's Arms","translatedName":"In the Motherland's Arms","summary":"Gain supernatural Safe Place and Haven protection while sleeping in the domain."},
+        {"rating":5,"name":"Fingers on a Dead Pulse","translatedName":"Fingers on a Dead Pulse","summary":"Read residents' Vices and Conditions and receive domain-wide blood-sympathy visions."}
+      ]
     }
   ],
   "scales": [
@@ -2628,6 +2814,11 @@
       "outcome": "Success steals one Humanity dot from that subject once, leaves the victim in torpor, and forces the Dragon to face a Humanity 1 breaking point and spiritual taint.",
       "manualOnly": true,
       "reversible": false
-    }
+    },
+    {"id":"scale-cold-grave","kind":"scale","name":"Cold of the Grave","translatedName":"Cold of the Grave","prerequisites":"coil-quintessence 3","experienceCost":2,"summary":"Share Smother with every vampire who calls the domain home.","source":"Thousand Years of Night","page":82,"manualOnly":true,"reversible":true},
+    {"id":"scale-spirit-tether","kind":"scale","name":"Spirit Tether","translatedName":"Spirit Tether","prerequisites":"Any coil 2; Resolve ••••","experienceCost":2,"summary":"Gain astral projection through a regimen of Vitae, hallucinogens, and near-torpor.","source":"Night Horrors: Spilled Blood","page":101,"manualOnly":true,"reversible":true},
+    {"id":"scale-psychic-leech","kind":"scale","name":"Psychic Leech","translatedName":"Psychic Leech","prerequisites":"Spirit Tether; Empathy •••","experienceCost":2,"summary":"Drain Vitae from attuned people and places while astrally projected.","source":"Night Horrors: Spilled Blood","page":101,"manualOnly":true,"reversible":true},
+    {"id":"scale-beseech-sleeping","kind":"scale","name":"Beseech the Sleeping","translatedName":"Beseech the Sleeping","prerequisites":"Spirit Tether; Expression ••","experienceCost":2,"summary":"Learn recent memories from sleeping mortals during Spirit Tether.","source":"Night Horrors: Spilled Blood","page":101,"manualOnly":true,"reversible":true},
+    {"id":"scale-command-mind","kind":"scale","name":"Command the Mind","translatedName":"Command the Mind","prerequisites":"Psychic Leech; Manipulation •••; Dominate •","experienceCost":2,"summary":"Spend a permanent Willpower dot to drain Willpower through Vitae.","source":"Night Horrors: Spilled Blood","page":101,"manualOnly":true,"reversible":true}
   ]
 }
