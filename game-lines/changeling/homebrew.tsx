@@ -11,6 +11,7 @@ import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { KithDefinition } from "@/lib/changeling-kiths";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary } from "@/lib/contract-presentation";
 import type { EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-line-contracts/game-line-ui";
 import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
@@ -19,13 +20,14 @@ import type { MeritDefinition } from "@/lib/merits";
 import { EntitlementHomebrewEditor } from "./entitlement-homebrew-editor";
 import { ENTITLEMENT_HOMEBREW_SOURCE_ID, saveEntitlementHomebrews } from "./entitlement-homebrews";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
-import { CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, changelingAnchorRecovery, seemingDisplayName } from "./creation-rules";
+import { CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, seemingDisplayName } from "./creation-rules";
 import { ContractHomebrewEditor } from "./contract-homebrew-editor";
 import { CONTRACT_HOMEBREW_SOURCE_ID, mergeContractHomebrews, saveContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
 import { MeritHomebrewPanel } from "@/app/merit-homebrew-panel";
 
-type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; summary: string; tier?: string; tierOrder?: number; customEntitlement?: EntitlementDefinition; customContract?: ContractDefinition };
+type HomebrewDetail = { label?: string; text: string };
+type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: HomebrewDetail[]; tier?: string; tierOrder?: number; customEntitlement?: EntitlementDefinition; customContract?: ContractDefinition };
 
 function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   if (!catalogs) throw new Error("Changeling Homebrew requires its catalog snapshot.");
@@ -36,15 +38,61 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   const reference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>>; courts: CourtDefinition[]; entitlements: EntitlementDefinition[]; kiths: KithDefinition[] }>("changeling-reference");
   const items: ListedHomebrew[] = [];
   const add = (item: ListedHomebrew) => { if (isHomebrewSource(item.sourceId)) items.push(item); };
-    for (const item of mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts)) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Contratos", "Contracts"), name: locale === "pt-BR" ? item.name : item.originalName, summary: item.summary ?? item.effect ?? item.success ?? item.description ?? "", tier: item.type === "Comum" ? h("Comuns", "Common") : h("Reais", "Royal"), tierOrder: item.type === "Comum" ? 0 : 1, ...(item.homebrew ? { customContract: item } : {}) });
-    for (const item of catalogs.get<MeritDefinition[]>("changeling-merits")) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Méritos", "Merits"), name: locale === "pt-BR" ? item.translatedName : item.name, summary: locale === "pt-BR" ? item.description : item.descriptionEn ?? item.description });
-    for (const item of reference.conditions.filter((condition) => condition.source === "Book of Courts")) { const presented = locale === "pt-BR" ? { ...item, ...reference.presentation[item.id] } : item; add({ id: item.id, sourceId: "h-courts", source: item.source, kind: h("Condições", "Conditions"), name: presented.name, summary: presented.description }); }
-    for (const item of reference.courts) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Cortes", "Courts"), name: locale === "pt-BR" ? item.translatedName : item.name, summary: locale === "pt-BR" ? item.emotionPt : item.emotion });
-    for (const item of reference.kiths) if (item.sourceId) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Frátrias", "Kiths"), name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, summary: item.description });
-    for (const item of [...reference.entitlements, ...customEntitlements]) if (item.sourceId) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: "Entitlements", name: item.name, summary: item.purpose, ...(item.homebrew ? { customEntitlement: item } : {}) });
-    for (const [name, item] of Object.entries(CTL_SEEMINGS)) if ("sourceId" in item) add({ id: `seeming:${name}`, sourceId: item.sourceId, source: item.source, kind: "Seemings", name: seemingDisplayName(name, locale), summary: `${h("Regalia favorecida", "Favored Regalia")}: ${item.regalia}` });
-    for (const item of CTL_NEEDLE_DEFINITIONS) if (item.sourceId) add({ id: `needle:${item.name}`, sourceId: item.sourceId, source: item.source ?? item.sourceId, kind: "Needles", name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, summary: changelingAnchorRecovery("needle", item.name, locale) });
-    for (const item of CTL_THREAD_DEFINITIONS) if (item.sourceId) add({ id: `thread:${item.name}`, sourceId: item.sourceId, source: item.source ?? item.sourceId, kind: "Threads", name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, summary: changelingAnchorRecovery("thread", item.name, locale) });
+  const detail = (label: string | undefined, text: string | undefined): HomebrewDetail[] => text?.trim() ? [{ label, text: text.trim() }] : [];
+  for (const item of mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts)) {
+    const presented = contractPresentation(item, locale), outcomes = contractOutcomeSections(presented, locale), options = contractDisplayOptions(presented, locale);
+    const courtBenefits = Object.entries(presented.courtClauses ?? {}).flatMap(([courtId, text]) => detail(`${h("Cláusula de Corte", "Court Clause")} — ${reference.courts.find((court) => court.id === courtId)?.[locale === "pt-BR" ? "translatedName" : "name"] ?? courtId}`, text));
+    const seemingBenefits = Object.entries(presented.seemingBenefits ?? {}).flatMap(([seeming, text]) => detail(`${h("Benefício de Aparência", "Seeming Benefit")} — ${seemingDisplayName(seeming, locale)}`, text));
+    add({
+      id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Contratos", "Contracts"), name: locale === "pt-BR" ? item.name : item.originalName,
+      details: [
+        ...detail(h("Resumo", "Summary"), contractSummary(presented, locale)),
+        ...(contractHasInvocationRoll(presented) === true ? detail(h("Parada de dados", "Dice Pool"), presented.dicePool ?? h("Não informada", "Not listed")) : []),
+        ...detail(h("Custo", "Cost"), presented.cost ?? h("Conforme descrito", "As described")),
+        ...detail(h("Ação", "Action"), presented.action ?? h("Instantânea", "Instant")),
+        ...detail(h("Duração", "Duration"), presented.duration ?? h("Cena", "Scene")),
+        ...outcomes, ...detail(h("Opções", "Options"), options.join("\n")),
+        ...(presented.detailTables ?? []).flatMap((table) => detail(table.title, table.rows.map((row) => row.join(" — ")).join("\n"))),
+        ...detail(h("Brecha", "Loophole"), presented.loophole), ...seemingBenefits, ...courtBenefits,
+        ...detail(h("Dívida Goblin", "Goblin Debt"), presented.goblinDebt),
+      ],
+      tier: item.type === "Comum" ? h("Comuns", "Common") : h("Reais", "Royal"), tierOrder: item.type === "Comum" ? 0 : 1, ...(item.homebrew ? { customContract: item } : {}),
+    });
+  }
+  for (const item of catalogs.get<MeritDefinition[]>("changeling-merits")) add({
+    id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Méritos", "Merits"), name: locale === "pt-BR" ? item.translatedName : item.name,
+    details: [
+      ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites),
+      ...detail(h("Pré-requisitos alternativos", "Alternative prerequisites"), item.alternativePrerequisites),
+      ...detail(h("Efeito", "Effect"), locale === "pt-BR" ? item.description : item.descriptionEn ?? item.description),
+      ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description)),
+    ],
+  });
+  for (const item of reference.conditions.filter((condition) => condition.source === "Book of Courts")) {
+    const presented = locale === "pt-BR" ? { ...item, ...reference.presentation[item.id] } : item;
+    add({ id: item.id, sourceId: "h-courts", source: item.source, kind: h("Condições", "Conditions"), name: presented.name, details: [...detail(h("Descrição", "Description"), presented.description), ...detail(h("Efeito", "Effect"), presented.penalty), ...detail(h("Resolução", "Resolution"), presented.resolution), ...detail("Beat", presented.beat)] });
+  }
+  for (const item of reference.courts) {
+    const mantle = locale === "pt-BR" ? item.mantleBenefitsPt : item.mantleBenefits;
+    add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Cortes", "Courts"), name: locale === "pt-BR" ? item.translatedName : item.name, details: [...detail(h("Emoção", "Emotion"), locale === "pt-BR" ? item.emotionPt : item.emotion), ...detail(h("Gatilho de Glamour", "Glamour Trigger"), locale === "pt-BR" ? item.glamourTriggerPt : item.glamourTrigger), ...mantle.flatMap((text, index) => detail(`Mantle ${index + 1}`, text))] });
+  }
+  for (const item of reference.kiths) if (item.sourceId) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Frátrias", "Kiths"), name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...detail(h("Descrição", "Description"), item.description), ...detail(h("Bênção", "Blessing"), item.blessing), ...detail(h("Habilidade", "Skill"), item.skill)] });
+  for (const item of [...reference.entitlements, ...customEntitlements]) if (item.sourceId) add({
+    id: item.id, sourceId: item.sourceId, source: item.source, kind: "Entitlements", name: item.name,
+    details: [
+      ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...detail(h("Propósito", "Purpose"), item.purpose),
+      ...detail(h("Privilégios", "Privileges"), item.privileges), ...detail(h("Deveres", "Duties"), item.duties), ...detail(h("Máscara e Mien", "Mask and Mien"), item.maskAndMien),
+      ...detail(h("Heráldica", "Heraldry"), item.heraldry), ...detail(`${h("Token", "Token")} — ${item.token.name}`, item.token.description),
+      ...detail(h("Efeito do Token", "Token Effect"), item.token.effect), ...detail(h("Captura do Token", "Token Catch"), item.token.catch), ...detail(h("Desvantagem do Token", "Token Drawback"), item.token.drawback),
+      ...(item.roles ?? []).flatMap((role) => [...detail(`${h("Papel", "Role")} — ${role.name}`, role.prerequisites), ...detail(`${role.name} — ${h("privilégio", "privilege")}`, role.privilege), ...detail(`${role.name} — ${h("deveres", "duties")}`, role.duties), ...detail(`${role.name} — ${h("bônus do Token", "Token bonus")}`, role.tokenBonus), ...detail(`${role.name} — ${h("desvantagem do Token", "Token drawback")}`, role.tokenDrawback)]),
+      ...item.blessings.flatMap((blessing) => detail(`${h("Bênção", "Blessing")} — ${blessing.name}`, blessing.description)),
+      ...detail(h("Touchstone", "Touchstone"), item.touchstone), ...detail(h("Maldição", "Curse"), item.curse), ...detail("Beat", item.beat), ...detail(h("Lendas", "Legends"), item.legends.join("\n")),
+    ],
+    ...(item.homebrew ? { customEntitlement: item } : {}),
+  });
+  for (const [name, item] of Object.entries(CTL_SEEMINGS)) if ("sourceId" in item) add({ id: `seeming:${name}`, sourceId: item.sourceId, source: item.source, kind: "Seemings", name: seemingDisplayName(name, locale), details: [...detail(h("Atributo favorecido", "Favored Attribute"), item.favored), ...detail(h("Regalia favorecida", "Favored Regalia"), item.regalia), ...detail(h("Bênção", "Blessing"), locale === "pt-BR" ? item.blessing : item.blessingEn), ...detail(h("Maldição", "Curse"), locale === "pt-BR" ? item.curse : item.curseEn)] });
+  for (const item of CTL_NEEDLE_DEFINITIONS) if (item.sourceId) add({ id: `needle:${item.name}`, sourceId: item.sourceId, source: item.source ?? item.sourceId, kind: "Needles", name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...detail(h("Recuperar 1 de Força de Vontade", "Recover 1 Willpower"), locale === "pt-BR" ? item.singleWillpowerPt : item.singleWillpower), ...detail(h("Recuperar toda a Força de Vontade", "Recover all Willpower"), locale === "pt-BR" ? item.allWillpowerPt : item.allWillpower)] });
+  for (const item of CTL_THREAD_DEFINITIONS) if (item.sourceId) add({ id: `thread:${item.name}`, sourceId: item.sourceId, source: item.source ?? item.sourceId, kind: "Threads", name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...detail(h("Recuperar 1 de Força de Vontade", "Recover 1 Willpower"), locale === "pt-BR" ? item.singleWillpowerPt : item.singleWillpower), ...detail(h("Recuperar toda a Força de Vontade", "Recover all Willpower"), locale === "pt-BR" ? item.allWillpowerPt : item.allWillpower)] });
   items.sort((left, right) => (left.tierOrder ?? 0) - (right.tierOrder ?? 0) || left.name.localeCompare(right.name, locale));
   const sources = [...new Map(items.map((item) => [item.sourceId, item.source])).entries()].sort((left, right) => left[1].localeCompare(right[1], locale));
   const toggle = (id: string, enabled: boolean) => saveHomebrewPreferences(setHomebrewEnabled(preferences, id, enabled));
@@ -60,7 +108,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   const removeCustomContract = (id: string) => saveContractHomebrews(customContracts.filter((item) => item.id !== id));
   const renderItem = (item: ListedHomebrew, sourceActive: boolean) => {
     const active = homebrewContentActive(preferences, item.id, item.sourceId);
-    return <article className="homebrew-list-item" key={`${item.kind}:${item.id}`}><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body"><p>{item.summary}</p>{(item.customEntitlement || item.customContract) && <div className="homebrew-list-item-actions">{item.customEntitlement && <><Button type="button" size="sm" variant="outline" onClick={() => setEditingEntitlement(item.customEntitlement ?? null)}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Entitlement?", "Delete Entitlement?")} description={h("Ele deixará de aparecer nas escolhas. Fichas que dependem dele podem perder a apresentação das regras.", "It will disappear from choices. Sheets that depend on it may lose their rules presentation.")} action={h("Excluir", "Delete")} onConfirm={() => removeCustomEntitlement(item.id)}/></>}{item.customContract && <><Button type="button" size="sm" variant="outline" onClick={() => setContractEditor({ open: true, initial: item.customContract ?? null })}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Contrato?", "Delete Contract?")} description={h("Ele deixará de aparecer nas novas escolhas. Fichas existentes conservam os textos já salvos.", "It will disappear from new choices. Existing sheets retain their saved text.")} action={h("Excluir", "Delete")} onConfirm={() => removeCustomContract(item.id)}/></>}</div>}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>;
+    return <article className="homebrew-list-item" key={`${item.kind}:${item.id}`}><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body">{item.details.map((entry, index) => <p key={`${entry.label ?? "detail"}:${index}`}>{entry.label && <strong>{entry.label}:</strong>} {entry.text}</p>)}{(item.customEntitlement || item.customContract) && <div className="homebrew-list-item-actions">{item.customEntitlement && <><Button type="button" size="sm" variant="outline" onClick={() => setEditingEntitlement(item.customEntitlement ?? null)}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Entitlement?", "Delete Entitlement?")} description={h("Ele deixará de aparecer nas escolhas. Fichas que dependem dele podem perder a apresentação das regras.", "It will disappear from choices. Sheets that depend on it may lose their rules presentation.")} action={h("Excluir", "Delete")} onConfirm={() => removeCustomEntitlement(item.id)}/></>}{item.customContract && <><Button type="button" size="sm" variant="outline" onClick={() => setContractEditor({ open: true, initial: item.customContract ?? null })}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Contrato?", "Delete Contract?")} description={h("Ele deixará de aparecer nas novas escolhas. Fichas existentes conservam os textos já salvos.", "It will disappear from new choices. Existing sheets retain their saved text.")} action={h("Excluir", "Delete")} onConfirm={() => removeCustomContract(item.id)}/></>}</div>}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>;
   };
   return <><MeritHomebrewPanel line="CtL" catalog={[...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")]}/><section className="homebrew-panel">
     <div className="panel-heading"><div><h3>{h("Homebrews de Changeling", "Changeling Homebrews")}</h3><p>{h("A ativação controla novas escolhas; fichas existentes conservam os dados que já possuem.", "Activation controls new choices; existing sheets retain data they already own.")}</p></div><Button type="button" size="sm" onClick={() => setContractEditor({ open: true, initial: null })}><Plus/> {h("Criar Contrato", "Create Contract")}</Button></div>

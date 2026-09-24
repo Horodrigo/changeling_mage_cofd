@@ -187,10 +187,22 @@ test("Homebrew shell dispatches line-owned editors lazily", async () => {
 });
 
 test("Changeling Homebrew uses category tabs and compact disclosure rows", async () => {
-  const homebrew = await source("game-lines/changeling/homebrew.tsx");
+  const [homebrew, sheet, css] = await Promise.all([
+    source("game-lines/changeling/homebrew.tsx"),
+    source("game-lines/changeling/sheet-view.tsx"),
+    source("app/css/globals.css"),
+  ]);
 
   assert.match(homebrew, /homebrew-kind-tabs-list/);
   assert.match(homebrew, /homebrew-list-item/);
+  assert.match(homebrew, /contractOutcomeSections/);
+  assert.match(homebrew, /presented\.resolution/);
+  assert.match(homebrew, /item\.token\.effect/);
+  assert.match(homebrew, /item\.singleWillpower/);
+  assert.match(sheet, /item\.name !== "Entitlement" && isExpanded/);
+  assert.match(css, /\.panel\.homebrew-source \{ padding:0; \}/);
+  assert.match(css, /\.homebrew-list-item-body p>strong:first-child \{ color:/);
+  assert.match(css, /\.contract-power-list dt \{ display:inline;/);
   assert.doesNotMatch(homebrew, /className="homebrew-card"/);
 });
 

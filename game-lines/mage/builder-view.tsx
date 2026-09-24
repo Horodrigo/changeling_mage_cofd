@@ -361,7 +361,8 @@ function SpellSelector({
         <div>
           <strong>{spellName(spell)}</strong>
           <small>{arcanaSource(spell)}</small>
-          <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {spell.practice} | <strong>{t("ui.primaryFactor")}:</strong> {spell.primaryFactor}</p>
+          <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {spell.practice}</p>
+          <p className="rule-detail"><strong>{t("ui.primaryFactor")}:</strong> {spell.primaryFactor}</p>
           {spell.withstand && <p className="rule-detail"><strong>{t("ui.withstand")}:</strong> {spell.withstand}</p>}
           {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.join(", ")}</p>}
           <p className="rule-detail">
@@ -394,7 +395,7 @@ function SpellSelector({
           if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
           return (
             <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice} | <strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
+              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
               <div className="contract-power-details">
                 <dl>
                   <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item)}</dd></div>

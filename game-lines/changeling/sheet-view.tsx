@@ -180,7 +180,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         updateSheet(synchronizeEntitlement(next, entitlementCatalog));
     };
     const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 10, 0);
-    const expandedMerits = character.merits.filter((item) => isExpanded(item.name) && !item.grantedBy);
+    const expandedMerits = character.merits.filter((item) => item.name !== "Entitlement" && isExpanded(item.name) && !item.grantedBy);
     const principalMerits = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
     const selectedConditions = [
         ...selectedConditionList(character.current_state?.conditions, conditionCatalog),
