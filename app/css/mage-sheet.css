@@ -424,7 +424,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 }
 
 /* ========================================================================== 
-   Mage: The Awakening — refined visual sheet layer (v2)
+   Mage: The Awakening — visual sheet layer
    --------------------------------------------------------------------------
    Expected assets in /public/mage/style/:
    - vertical-rule.webp
@@ -432,7 +432,6 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
    - attributes-divider.webp
    - box-closed.webp
    - celtic-prism.webp
-   - divider-terminal.webp
    - frame-prism-center.webp
    - mage-paper-texture.webp
    - mage-title.webp
@@ -448,11 +447,12 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   --mta-ink-muted:#50728a;
   --mta-line:rgba(42,91,124,.38);
   --mta-line-strong:rgba(30,77,108,.68);
-  --mta-line-faint:rgba(61,110,141,.18);
   --mta-paper:#f1f5f5;
   --mta-panel:rgba(248,251,251,.66);
   --mta-panel-strong:rgba(250,252,252,.84);
   --mta-shadow:rgba(15,48,72,.13);
+  --mta-frame-rail-edge:145px;
+  --mta-frame-center-clearance:16px;
 
   --sheet-accent:var(--mta-ink);
   --sheet-ink:#253d4b;
@@ -460,17 +460,23 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   position:relative;
   isolation:isolate;
   overflow:hidden;
-  padding:50px 54px 62px;
+  padding:30px 54px 45px;
   border:2px solid rgba(36,82,113,.34);
   border-radius:0;
   outline:0;
 
   background-color:var(--mta-paper);
   background-image:
-    /* upper double rail */
+    /* upper left double rail */
     linear-gradient(to right, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
     linear-gradient(to right, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
-    /* lower double rail */
+    /* upper right double rail */
+    linear-gradient(to right, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
+    linear-gradient(to right, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
+    /* lower left double rail */
+    linear-gradient(to right, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
+    linear-gradient(to right, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
+    /* lower right double rail */
     linear-gradient(to right, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
     linear-gradient(to right, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
     /* left double rail */
@@ -479,35 +485,49 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     /* right double rail */
     linear-gradient(to bottom, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
     linear-gradient(to bottom, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
-    /* restrained paper shading */
-    linear-gradient(90deg, rgba(54,105,137,.045), transparent 8%, transparent 92%, rgba(54,105,137,.045)),
-    linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.12)),
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.32), transparent 30%),
+    radial-gradient(circle at 79% 72%, rgba(62,108,137,.035), transparent 34%),
+    linear-gradient(90deg, rgba(54,105,137,.035), transparent 9%, transparent 91%, rgba(54,105,137,.035)),
     url("/mage/style/mage-paper-texture.webp");
-  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,repeat;
+  background-repeat:
+    no-repeat,no-repeat,no-repeat,no-repeat,
+    no-repeat,no-repeat,no-repeat,no-repeat,
+    no-repeat,no-repeat,no-repeat,no-repeat,
+    no-repeat,no-repeat,no-repeat,no-repeat;
   background-size:
-    calc(100% - 104px) 1px,
-    calc(100% - 124px) 1px,
-    calc(100% - 104px) 1px,
-    calc(100% - 124px) 1px,
-    1px calc(100% - 104px),
-    1px calc(100% - 124px),
-    1px calc(100% - 104px),
-    1px calc(100% - 124px),
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+    1px calc(100% - 264px),
+    1px calc(100% - 264px),
+    1px calc(100% - 264px),
+    1px calc(100% - 264px),
     100% 100%,
     100% 100%,
-    720px 720px;
+    100% 100%,
+    100% 100%;
   background-position:
-    center 25px,
-    center 29px,
-    center calc(100% - 25px),
-    center calc(100% - 29px),
+    left var(--mta-frame-rail-edge) top 25px,
+    left var(--mta-frame-rail-edge) top 29px,
+    right var(--mta-frame-rail-edge) top 25px,
+    right var(--mta-frame-rail-edge) top 29px,
+    left var(--mta-frame-rail-edge) bottom 25px,
+    left var(--mta-frame-rail-edge) bottom 29px,
+    right var(--mta-frame-rail-edge) bottom 25px,
+    right var(--mta-frame-rail-edge) bottom 29px,
     25px center,
     29px center,
     calc(100% - 25px) center,
     calc(100% - 29px) center,
     center,
     center,
-    center top;
+    center,
+    center;
 
   box-shadow:
     0 15px 42px var(--mta-shadow),
@@ -533,20 +553,38 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   position:relative;
 }
 
-/* Top frame center: the container crops the central motif from the tall asset. */
-.mta-sheet .cod-sheet-title {
-  background-image:url("/mage/style/frame-prism-center.webp");
-  background-repeat:no-repeat;
-  background-size:76px 152px;
-  background-position:center -76px;
+/* Full center ornaments. The image is rendered whole, not cropped. */
+.mta-sheet .cod-sheet-title > div::before {
+  content:"";
+  position:absolute;
+  z-index:7;
+  top:-44px;
+  left:50%;
+  width:42px;
+  height:84px;
+  pointer-events:none;
+  background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat;
+  transform:translateX(-50%);
 }
 
-/* Bottom frame center, using the same central motif. */
-.mta-sheet > .ctl-sheet-tabs {
-  background-image:url("/mage/style/frame-prism-center.webp");
-  background-repeat:no-repeat;
-  background-size:76px 152px;
-  background-position:center bottom -76px;
+/* Anchor the lower ornament to the active sheet page. */
+.mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"],
+.mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"] {
+  position:relative;
+}
+
+.mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"]::after,
+.mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"]::after {
+  content:"";
+  position:absolute;
+  z-index:7;
+  left:50%;
+  bottom:-59px;
+  width:42px;
+  height:84px;
+  pointer-events:none;
+  background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat;
+  transform:translateX(-50%) scaleY(-1);
 }
 
 /* Four actual corner ornaments. */
@@ -556,33 +594,33 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 .mta-sheet > .ctl-sheet-tabs::after {
   content:"";
   position:absolute;
-  z-index:5;
-  width:94px;
-  height:94px;
+  z-index:4;
+  width:150px;
+  height:150px;
   pointer-events:none;
   background:url("/mage/style/prism-corner.webp") center/contain no-repeat;
 }
 
 .mta-sheet .cod-sheet-title::before {
-  top:-48px;
-  left:-53px;
+  top:-25px;
+  left:-49px;
 }
 
 .mta-sheet .cod-sheet-title::after {
-  top:-48px;
-  right:-53px;
+  top:-25px;
+  right:-49px;
   transform:scaleX(-1);
 }
 
 .mta-sheet > .ctl-sheet-tabs::before {
-  bottom:-60px;
-  left:-53px;
+  bottom:-40px;
+  left:-49px;
   transform:scaleY(-1);
 }
 
 .mta-sheet > .ctl-sheet-tabs::after {
-  bottom:-60px;
-  right:-53px;
+  bottom:-40px;
+  right:-49px;
   transform:scale(-1,-1);
 }
 
@@ -626,7 +664,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet .cod-sheet-title p {
   position:absolute;
-  top:43%;
+  top:73%;
   right:3px;
   margin:0;
   transform:translateY(-50%);
@@ -737,10 +775,11 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   display:flex;
   align-items:center;
   gap:8px;
-  margin:17px 0 8px;
+  min-height:25px;
+  margin:15px 0 8px;
   padding:0;
   border:0;
-  background:none !important;
+  background:transparent;
   color:var(--mta-ink);
   box-shadow:none;
   font:400 20px/1 Georgia,"Times New Roman",serif;
@@ -749,56 +788,77 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet .official-heading span {
   position:relative;
-  top:-1px;
-  padding:0;
-  background:none !important;
+  z-index:2;
+  top:0;
+  padding:0 2px;
+  background:transparent;
   white-space:nowrap;
 }
 
-/* Thin double rule ending in the divider-terminal ornament. */
+/* Thin double rule with a CSS diamond terminal. */
 .mta-sheet .official-heading::before,
-.mta-sheet .official-heading::after {
+.mta-sheet .official-heading::after,
+.mta-sheet .official-heading.ctl-single-divider::before,
+.mta-sheet .official-heading.ctl-single-divider::after,
+.mta-sheet .official-heading.main-sheet-merits-heading::before,
+.mta-sheet .official-heading.main-sheet-merits-heading::after,
+.mta-sheet .official-heading.main-sheet-aspirations-heading::before,
+.mta-sheet .official-heading.main-sheet-aspirations-heading::after,
+.mta-sheet .official-heading.main-sheet-conditions-heading::before,
+.mta-sheet .official-heading.main-sheet-conditions-heading::after {
   content:"";
   display:block;
   flex:1 1 0;
   min-width:22px;
-  height:18px;
-  background-image:
-    url("/mage/style/divider-terminal.webp"),
-    linear-gradient(to bottom, transparent 43%, var(--mta-line) 43% 48%, transparent 48% 56%, var(--mta-line-faint) 56% 61%, transparent 61%);
-  background-position:right center,left center;
-  background-repeat:no-repeat,no-repeat;
-  background-size:18px 18px,calc(100% - 12px) 100%;
-  opacity:.92;
+  height:9px;
+  border:0;
+  background-color:transparent;
+  background-image:linear-gradient(
+    to bottom,
+    transparent 0 36%,
+    rgba(35,82,113,.50) 36% 48%,
+    transparent 48% 62%,
+    rgba(58,104,135,.22) 62% 72%,
+    transparent 72% 100%
+  );
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  box-shadow:none;
+  opacity:1;
 }
 
-.mta-sheet .official-heading::before { transform:scaleX(-1); }
+.mta-sheet .official-heading::before {
+  clip-path:polygon(5 42%, calc(100% - 7px) 42%, calc(100% - 4px) 0, 100% 50%, calc(100% - 4px) 100%, calc(100% - 7px) 58%, 0 58%);
+}
+
+.mta-sheet .official-heading::after {
+  clip-path:polygon(5 50%, 4px 0, 7px 42%, 100% 42%, 100% 58%, 7px 58%, 4px 100%);
+}
 
 /* Attributes receives the purpose-built divider, but the text itself remains unboxed. */
 .mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid)) {
-  gap:10px;
-  min-height:38px;
-  margin:8px 0 3px;
+  gap:11px;
+  min-height:34px;
+  margin:7px 0 4px;
 }
 
 .mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::before,
 .mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::after {
+  position:static;
+  width:auto;
   height:32px;
+  min-width:25px;
   background-image:url("/mage/style/attributes-divider.webp");
+  background-position:right center;
   background-repeat:no-repeat;
-  background-size:auto 31px;
-  opacity:.82;
+  background-size:auto 111px;
+  clip-path:none;
+  opacity:.72;
 }
 
-.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::before {
-  background-position:right center;
-  transform:none;
-}
-
-.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::after {
-  background-position:right center;
-  transform:scaleX(-1);
-}
+.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::before { transform:none; }
+.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::after { transform:scaleX(-1); }
 
 /* --------------------------------------------------------------------------
    Trait blocks and structural vertical rules
@@ -820,14 +880,34 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 }
 
 .mta-sheet .official-trait-block h4 {
-  margin:0 0 -4px;
+  min-height:19px;
+  margin:0 0 3px;
   color:var(--mta-ink);
-  font:400 18px/1 Georgia,"Times New Roman",serif;
+  font:400 18px/1.12 Georgia,"Times New Roman",serif;
   letter-spacing:.01em;
   text-transform:none;
 }
 
-.mta-sheet .official-trait-grid .official-trait-block h4 { font-size:20px; }
+.mta-sheet .official-trait-grid .official-trait-block h4 {
+  margin-bottom:5px;
+  font-size:20px;
+}
+
+.mta-sheet .official-trait-block > small,
+.mta-sheet .official-trait-block h4 + small,
+.mta-sheet .official-trait-block .official-trait-subtitle {
+  position:static;
+  display:block;
+  min-height:13px;
+  margin:-1px 0 5px;
+  padding:0;
+  color:#657884;
+  font:italic 10px/1.2 Georgia,"Times New Roman",serif;
+  white-space:normal;
+}
+
+.mta-sheet .sheet-skills-column .official-trait-block { margin-bottom:14px; }
+.mta-sheet .sheet-skills-column .official-trait-block:last-child { margin-bottom:0; }
 
 .mta-sheet .official-trait-line {
   min-height:26px;
@@ -900,6 +980,8 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   color:#263b48;
 }
 
+.mta-sheet .editable-line-row input { background:transparent; }
+
 .mta-sheet input:focus,
 .mta-sheet textarea:focus,
 .mta-sheet [data-slot="select-trigger"]:focus {
@@ -912,8 +994,6 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
    -------------------------------------------------------------------------- */
 
 .mta-sheet .power-resource,
-.mta-sheet .experience-panel,
-.mta-sheet .mage-experience-panel,
 .mta-sheet .nimbus-editor article,
 .mta-sheet .order-current {
   position:relative;
@@ -928,9 +1008,27 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   box-shadow:none;
 }
 
-.mta-sheet .power-resource,
-.mta-sheet .experience-panel,
-.mta-sheet .mage-experience-panel { padding:11px 13px; }
+.mta-sheet .power-resource { padding:11px 13px; }
+
+.mta-sheet .experience-panel {
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+  padding:14px 15px 13px;
+  border:0;
+  border-radius:0;
+  background:rgba(250,252,252,.72);
+  box-shadow:none;
+}
+
+.mta-sheet .experience-panel::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-40px -14px -40px;
+  pointer-events:none;
+  background:url("/mage/style/box-closed.webp") center/100% 100% no-repeat;
+}
 
 .mta-sheet .experience-title span,
 .mta-sheet .power-resource .power-rating > span,
@@ -943,10 +1041,22 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet .experience-totals div,
 .mta-sheet .experience-input,
-.mta-sheet .beat-resource,
-.mta-sheet .mage-experience-panel .beat-resource {
+.mta-sheet .beat-resource {
   border-color:rgba(47,96,128,.30);
   background:rgba(250,253,254,.54);
+}
+
+.mta-sheet .mage-experience { gap:5px; }
+.mta-sheet .experience-panel .experience-title { margin-bottom:3px; }
+.mta-sheet .experience-panel .experience-title span { font-size:16px; line-height:1; }
+.mta-sheet .experience-panel .experience-totals { gap:4px; }
+.mta-sheet .experience-panel .experience-totals > div { min-height:54px; padding:5px 4px; }
+.mta-sheet .experience-panel .beat-resource { min-height:31px; padding:4px 6px; }
+.mta-sheet .experience-panel .experience-actions { gap:4px; }
+.mta-sheet .experience-panel .experience-actions button {
+  min-height:28px;
+  padding:3px 6px;
+  font-size:11px;
 }
 
 .mta-sheet .experience-actions button,
@@ -984,11 +1094,11 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   z-index:-1;
   left:50%;
   top:50%;
-  width:170px;
+  width:138px;
   aspect-ratio:1;
   pointer-events:none;
   background:url("/mage/style/celtic-prism.webp") center/contain no-repeat;
-  opacity:.035;
+  opacity:.025;
   transform:translate(-50%,-50%);
 }
 
@@ -1022,13 +1132,13 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   content:"";
   position:absolute;
   z-index:-1;
-  right:-7px;
-  bottom:-8px;
-  width:126px;
+  right:-1px;
+  bottom:1px;
+  width:92px;
   aspect-ratio:1;
   pointer-events:none;
   background:url("/mage/style/moon-prism.webp") center/contain no-repeat;
-  opacity:.065;
+  opacity:.045;
 }
 
 /* Details / magic column receives a restrained circular Supernal diagram. */
@@ -1036,13 +1146,13 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   content:"";
   position:absolute;
   z-index:-1;
-  right:-6px;
-  top:64px;
-  width:190px;
-  height:190px;
+  right:8px;
+  top:84px;
+  width:132px;
+  height:132px;
   pointer-events:none;
-  background:url("/mage/style/prism-circular.webp") center/95px auto no-repeat;
-  opacity:.05;
+  background:url("/mage/style/prism-circular.webp") center/66px auto no-repeat;
+  opacity:.032;
 }
 
 /* Official two-page print composition, retaining the web sheet skin. */
@@ -1198,36 +1308,43 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 @media (max-width:760px) {
   .cod-sheet.mta-sheet {
-    padding:32px 24px 42px;
+    --mta-frame-rail-edge:31px;
+    --mta-frame-center-clearance:22px;
+    padding:28px 20px 40px;
     background-size:
-      calc(100% - 62px) 1px,
-      calc(100% - 78px) 1px,
-      calc(100% - 62px) 1px,
-      calc(100% - 78px) 1px,
-      1px calc(100% - 62px),
-      1px calc(100% - 78px),
-      1px calc(100% - 62px),
-      1px calc(100% - 78px),
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      calc(50% - var(--mta-frame-rail-edge) - var(--mta-frame-center-clearance)) 1px,
+      1px calc(100% - 104px),
+      1px calc(100% - 104px),
+      1px calc(100% - 104px),
+      1px calc(100% - 104px),
       100% 100%,
       100% 100%,
-      600px 600px;
+      100% 100%,
+      100% 100%;
     background-position:
-      center 17px,
-      center 21px,
-      center calc(100% - 17px),
-      center calc(100% - 21px),
-      17px center,
-      21px center,
-      calc(100% - 17px) center,
-      calc(100% - 21px) center,
+      left var(--mta-frame-rail-edge) top 8px,
+      left var(--mta-frame-rail-edge) top 12px,
+      right var(--mta-frame-rail-edge) top 8px,
+      right var(--mta-frame-rail-edge) top 12px,
+      left var(--mta-frame-rail-edge) bottom 8px,
+      left var(--mta-frame-rail-edge) bottom 12px,
+      right var(--mta-frame-rail-edge) bottom 8px,
+      right var(--mta-frame-rail-edge) bottom 12px,
+      8px center,
+      12px center,
+      calc(100% - 8px) center,
+      calc(100% - 12px) center,
       center,
       center,
-      center top;
-  }
-
-  .mta-sheet .cod-sheet-title,
-  .mta-sheet > .ctl-sheet-tabs {
-    background-image:none;
+      center,
+      center;
   }
 
   .mta-sheet .cod-sheet-title::before,
@@ -1243,12 +1360,22 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   .mta-sheet > .ctl-sheet-tabs::before { bottom:-32px; left:-12px; }
   .mta-sheet > .ctl-sheet-tabs::after { bottom:-32px; right:-12px; }
 
+  .mta-sheet .cod-sheet-title { min-height:82px; padding-bottom:6px; }
+
   .mta-sheet .cod-sheet-title span {
-    width:390px;
-    height:88px;
+    width:340px;
+    max-width:100%;
+    height:76px;
   }
 
   .mta-sheet .cod-sheet-title p { display:none; }
+
+  .mta-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
+    min-width:max-content;
+    padding-inline:10px;
+    font-size:16px;
+    letter-spacing:.03em;
+  }
 
   .mta-sheet .official-sheet-body,
   .mta-sheet .official-trait-grid,
@@ -1260,7 +1387,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   .mta-sheet .official-trait-grid > .official-trait-block,
   .mta-sheet .sheet-bottom-grid.mage-bottom-grid > section {
     padding:0;
-    background:none !important;
+    background:none;
   }
 
   .mta-sheet .arcana-sheet-list::before,
@@ -1269,420 +1396,10 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   .mta-sheet .mage-page-main::after {
     display:none;
   }
-}
-
-@media print {
-  .cod-sheet.mta-sheet {
-    box-shadow:none;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
-}
-
-
-/* ==========================================================================
-   Mage: The Awakening — visual corrections v3
-   --------------------------------------------------------------------------
-   This section intentionally overrides a few v2 decisions after visual
-   inspection in the browser.
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Paper texture: one continuous sheet, no visible tile seams
-   -------------------------------------------------------------------------- */
-
-.cod-sheet.mta-sheet {
-  /*
-   * The supplied paper texture is not seamless.  Repeating it produces
-   * obvious horizontal/vertical joins, so render it once across the full
-   * paper and let the soft gradients provide variation.
-   */
-  background-image:
-    linear-gradient(to right, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
-    linear-gradient(to right, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
-    linear-gradient(to right, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
-    linear-gradient(to right, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
-    linear-gradient(to bottom, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
-    linear-gradient(to bottom, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
-    linear-gradient(to bottom, transparent, var(--mta-line-strong) 5%, var(--mta-line-strong) 95%, transparent),
-    linear-gradient(to bottom, transparent, var(--mta-line) 5%, var(--mta-line) 95%, transparent),
-    radial-gradient(circle at 18% 22%, rgba(255,255,255,.32), transparent 30%),
-    radial-gradient(circle at 79% 72%, rgba(62,108,137,.035), transparent 34%),
-    linear-gradient(90deg, rgba(54,105,137,.035), transparent 9%, transparent 91%, rgba(54,105,137,.035)),
-    url("/mage/style/mage-paper-texture.webp") !important;
-
-  background-repeat:
-    no-repeat,no-repeat,no-repeat,no-repeat,
-    no-repeat,no-repeat,no-repeat,no-repeat,
-    no-repeat,no-repeat,no-repeat,no-repeat !important;
-
-  background-size:
-    calc(100% - 104px) 1px,
-    calc(100% - 124px) 1px,
-    calc(100% - 104px) 1px,
-    calc(100% - 124px) 1px,
-    1px calc(100% - 104px),
-    1px calc(100% - 124px),
-    1px calc(100% - 104px),
-    1px calc(100% - 124px),
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100% !important;
-
-  background-position:
-    center 25px,
-    center 29px,
-    center calc(100% - 25px),
-    center calc(100% - 29px),
-    25px center,
-    29px center,
-    calc(100% - 25px) center,
-    calc(100% - 29px) center,
-    center,
-    center,
-    center,
-    center !important;
-}
-
-/* --------------------------------------------------------------------------
-   2. Headings: remove the dark filled bars completely
-   -------------------------------------------------------------------------- */
-
-.mta-sheet .official-heading {
-  min-height:25px;
-  margin:15px 0 8px;
-  background:transparent !important;
-  background-color:transparent !important;
-  box-shadow:none !important;
-}
-
-.mta-sheet .official-heading span {
-  position:relative;
-  z-index:2;
-  top:0;
-  padding:0 2px;
-  background:transparent !important;
-  background-color:transparent !important;
-  box-shadow:none !important;
-}
-
-/*
- * Some of the generated divider images contain opaque/semopaque rectangular
- * pixels outside the ornament.  The headings therefore use clean CSS rules
- * instead of stretching those pixels beside every category title.
- */
-.mta-sheet .official-heading::before,
-.mta-sheet .official-heading::after,
-.mta-sheet .official-heading.ctl-single-divider::before,
-.mta-sheet .official-heading.ctl-single-divider::after,
-.mta-sheet .official-heading.main-sheet-merits-heading::before,
-.mta-sheet .official-heading.main-sheet-merits-heading::after,
-.mta-sheet .official-heading.main-sheet-aspirations-heading::before,
-.mta-sheet .official-heading.main-sheet-aspirations-heading::after,
-.mta-sheet .official-heading.main-sheet-conditions-heading::before,
-.mta-sheet .official-heading.main-sheet-conditions-heading::after {
-  height:9px !important;
-  min-width:22px;
-  border:0 !important;
-  background-color:transparent !important;
-  background-image:
-    linear-gradient(
-      to bottom,
-      transparent 0 36%,
-      rgba(35,82,113,.50) 36% 48%,
-      transparent 48% 62%,
-      rgba(58,104,135,.22) 62% 72%,
-      transparent 72% 100%
-    ) !important;
-  background-position:center !important;
-  background-repeat:no-repeat !important;
-  background-size:100% 100% !important;
-  box-shadow:none !important;
-  opacity:1;
-}
-
-/* Tiny diamond terminal made in CSS; no opaque image fill. */
-.mta-sheet .official-heading::before {
-  clip-path:polygon(0 42%, calc(100% - 7px) 42%, calc(100% - 4px) 0, 100% 50%, calc(100% - 4px) 100%, calc(100% - 7px) 58%, 0 58%);
-}
-
-.mta-sheet .official-heading::after {
-  clip-path:polygon(0 50%, 4px 0, 7px 42%, 100% 42%, 100% 58%, 7px 58%, 4px 100%);
-  transform:none !important;
-}
-
-/*
- * Attributes remains a slightly more important heading, but without the
- * generated filled background that obscured the paper.
- */
-.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid)) {
-  min-height:34px;
-  margin:7px 0 4px;
-  gap:11px;
-}
-
-.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::before,
-.mta-sheet .official-heading:has(+ :is(.official-trait-grid,.mobile-attribute-grid))::after {
-  position:static !important;
-  width:auto !important;
-  height:12px !important;
-  min-width:35px !important;
-  background-image:
-    linear-gradient(
-      to bottom,
-      transparent 0 39%,
-      rgba(31,77,108,.64) 39% 48%,
-      transparent 48% 60%,
-      rgba(56,103,134,.28) 60% 68%,
-      transparent 68% 100%
-    ) !important;
-  transform:none !important;
-  clip-path:none;
-}
-
-/* --------------------------------------------------------------------------
-   3. Skill / Attribute category title spacing
-   -------------------------------------------------------------------------- */
-
-.mta-sheet .official-trait-block h4 {
-  margin:0 0 3px !important;
-  min-height:19px;
-  line-height:1.12 !important;
-}
-
-.mta-sheet .official-trait-grid .official-trait-block h4 {
-  margin-bottom:5px !important;
-}
-
-/* Covers the subtitle emitted by TraitBlock, regardless of whether it is a
-   direct <small> sibling or wrapped by the primitive. */
-.mta-sheet .official-trait-block > small,
-.mta-sheet .official-trait-block h4 + small,
-.mta-sheet .official-trait-block .official-trait-subtitle {
-  position:static !important;
-  display:block;
-  min-height:13px;
-  margin:-1px 0 5px;
-  padding:0 !important;
-  transform:none !important;
-  color:#657884;
-  font:italic 10px/1.2 Georgia,"Times New Roman",serif;
-  white-space:normal;
-}
-
-.mta-sheet .sheet-skills-column .official-trait-block {
-  margin-bottom:14px;
-}
-
-.mta-sheet .sheet-skills-column .official-trait-block:last-child {
-  margin-bottom:0;
-}
-
-/* --------------------------------------------------------------------------
-   4. Experience frame: enlarge the ornament around the content
-   -------------------------------------------------------------------------- */
-
-.mta-sheet .experience-panel,
-.mta-sheet .mage-experience-panel {
-  position:relative;
-  isolation:isolate;
-  overflow:visible;
-  padding:14px 15px 13px !important;
-  background-image:none !important;
-  background-color:rgba(250,252,252,.72) !important;
-}
-
-/*
- * The frame is rendered independently from the panel box, allowing it to be
- * visually larger without increasing every internal control.
- */
-.mta-sheet .experience-panel::before,
-.mta-sheet .mage-experience-panel::before {
-  content:"";
-  position:absolute;
-  z-index:-1;
-  inset:-10px -11px -9px;
-  pointer-events:none;
-  background:url("/mage/style/box-closed.webp") center/100% 100% no-repeat;
-}
-
-/* Compact the contents a little so the frame has breathing room. */
-.mta-sheet .mage-experience-panel {
-  gap:5px;
-}
-
-.mta-sheet .mage-experience-panel .experience-title,
-.mta-sheet .experience-panel .experience-title {
-  margin-bottom:3px;
-}
-
-.mta-sheet .mage-experience-panel .experience-title span,
-.mta-sheet .experience-panel .experience-title span {
-  font-size:16px;
-  line-height:1;
-}
-
-.mta-sheet .mage-experience-panel .experience-totals,
-.mta-sheet .experience-panel .experience-totals {
-  gap:4px;
-}
-
-.mta-sheet .mage-experience-panel .experience-totals > div,
-.mta-sheet .experience-panel .experience-totals > div {
-  min-height:54px;
-  padding:5px 4px;
-}
-
-.mta-sheet .mage-experience-panel .beat-resource,
-.mta-sheet .experience-panel .beat-resource {
-  min-height:31px;
-  padding:4px 6px;
-}
-
-.mta-sheet .mage-experience-panel .experience-actions,
-.mta-sheet .experience-panel .experience-actions {
-  gap:4px;
-}
-
-.mta-sheet .mage-experience-panel .experience-actions button,
-.mta-sheet .experience-panel .experience-actions button {
-  min-height:28px;
-  padding:3px 6px;
-  font-size:11px;
-}
-
-/* --------------------------------------------------------------------------
-   5. Frame center ornaments: show the complete image instead of cropping it
-   -------------------------------------------------------------------------- */
-
-/* Remove the old cropped-background implementation. */
-.mta-sheet .cod-sheet-title,
-.mta-sheet > .ctl-sheet-tabs {
-  background-image:none !important;
-}
-
-/* Full top center ornament. */
-.mta-sheet .cod-sheet-title > div::before {
-  content:"";
-  position:absolute;
-  z-index:7;
-  top:-46px;
-  left:50%;
-  width:42px;
-  height:84px;
-  pointer-events:none;
-  background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat;
-  transform:translateX(-50%);
-}
-
-/*
- * The active page spans the sheet body, so placing the bottom ornament on it
- * anchors the ornament to the actual lower frame instead of the tab strip.
- */
-.mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"],
-.mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"] {
-  position:relative;
-}
-
-.mta-sheet > .ctl-sheet-tabs > [data-slot="tabs-content"][data-state="active"]::after,
-.mta-sheet > .ctl-sheet-tabs > .ctl-sheet-page[data-state="active"]::after {
-  content:"";
-  position:absolute;
-  z-index:7;
-  left:50%;
-  bottom:-55px;
-  width:42px;
-  height:84px;
-  pointer-events:none;
-  background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat;
-  transform:translateX(-50%) scaleY(-1);
-}
-
-/*
- * Keep the full centers inside the sheet's clipping area.  This also leaves
- * enough bottom breathing room for the bottom ornament.
- */
-.cod-sheet.mta-sheet {
-  padding-top:56px;
-  padding-bottom:72px;
-}
-
-/* --------------------------------------------------------------------------
-   6. Preserve the Mage watermark
-   -------------------------------------------------------------------------- */
-
-.cod-sheet.mta-sheet::after {
-  background-image:url("/mage/style/background-mage.webp") !important;
-}
-
-/* --------------------------------------------------------------------------
-   7. Reuse the arcane assets in restrained, section-specific locations
-   -------------------------------------------------------------------------- */
-
-/* Arcanum emblem: a very faint seal behind the Arcana list. */
-.mta-sheet .arcana-sheet-list::after {
-  width:138px;
-  opacity:.025;
-}
-
-/* Wisdom: keep the moon motif, but smaller and offset from the text. */
-.mta-sheet .wisdom-sheet-section::after {
-  right:-1px;
-  bottom:1px;
-  width:92px;
-  opacity:.045;
-}
-
-/* Details page: smaller circular diagram, away from fields and controls. */
-.mta-sheet .mage-page-main::after {
-  right:8px;
-  top:84px;
-  width:132px;
-  height:132px;
-  background-size:66px auto;
-  opacity:.032;
-}
-
-/* --------------------------------------------------------------------------
-   Responsive corrections
-   -------------------------------------------------------------------------- */
-
-@media (max-width:760px) {
-  .cod-sheet.mta-sheet {
-    padding-top:28px;
-    padding-inline:20px;
-    padding-bottom:40px;
-    background-position:
-      center 8px,
-      center 12px,
-      center calc(100% - 8px),
-      center calc(100% - 12px),
-      8px center,
-      12px center,
-      calc(100% - 8px) center,
-      calc(100% - 12px) center,
-      center,
-      center,
-      center,
-      center !important;
-  }
-
-  .mta-sheet .cod-sheet-title { min-height:82px; padding-bottom:6px; }
-  .mta-sheet .cod-sheet-title span { width:340px; max-width:100%; height:76px; }
-
-  .mta-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
-    min-width:max-content;
-    padding-inline:10px;
-    font-size:16px;
-    letter-spacing:.03em;
-  }
 
   .mta-sheet .editable-line-row:has(.editable-line-prefix) input { width:auto; }
 
-  .mta-sheet .official-trait-block h4 {
-    margin-bottom:4px !important;
-  }
+  .mta-sheet .official-trait-block h4 { margin-bottom:4px; }
 
   .mta-sheet .official-trait-block > small,
   .mta-sheet .official-trait-block h4 + small,
@@ -1703,8 +1420,13 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     height:68px;
   }
 
-  .mta-sheet .experience-panel::before,
-  .mta-sheet .mage-experience-panel::before {
-    inset:-7px;
+  .mta-sheet .experience-panel::before { inset:-52px -22px -54px; }
+}
+
+@media print {
+  .cod-sheet.mta-sheet {
+    box-shadow:none;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
   }
 }
