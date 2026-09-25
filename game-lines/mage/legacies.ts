@@ -1,8 +1,9 @@
 import legacyCatalog from "@/game-lines/mage/catalog-data/legacies.json";
+import supplementCatalog from "@/game-lines/mage/catalog-data/legacies-supplement.json";
 
 type LegacyCharacter = {line_data:Record<string,unknown>;skills:Record<string,number>;merits?:Array<{name:string;dots:number}>;specializations?:Array<{skill?:string;name?:string}>};
 
-type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{name:string;dots:number}>};
+type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{name:string;dots:number}>;anyMerits?:Array<{names:string[];dots:number}>};
 
 export type LegacyAttainment = {
   rank: 1|2|3|4|5;
@@ -22,6 +23,7 @@ export type LegacyDefinition = {
   name: string;
   source: string;
   page: number;
+  additionalSources?: Array<{source:string;page:number}>;
   parentage: {paths:string[];orders:string[]};
   rulingArcanum: string;
   prerequisites: string;
@@ -31,7 +33,7 @@ export type LegacyDefinition = {
   yantras: string[];
   oblations: string[];
   attainments: LegacyAttainment[];
-  entryPraxis: string;
+  entryPraxis?: string;
   entryRequirements?: LegacyRequirements;
 };
 
@@ -42,7 +44,7 @@ export type LegacyState = {
   initiationMethod: ""|"tutelage"|"daimonomikon"|"soul-study";
 };
 
-export const LEGACIES=legacyCatalog as unknown as readonly LegacyDefinition[];
+export const LEGACIES=[...legacyCatalog,...supplementCatalog] as unknown as readonly LegacyDefinition[];
 export const ELEVENTH_QUESTION=LEGACIES.find((item)=>item.id==="the-eleventh-question")!;
 export const CHRONOLOGUE=LEGACIES.find((item)=>item.id==="chronologue")!;
 export const ENGINEERS_OF_THE_SYSTEM=LEGACIES.find((item)=>item.id==="engineers-of-the-system")!;
@@ -64,6 +66,7 @@ function legacyRequirementsMet(character:LegacyCharacter,requirements:LegacyRequ
   if(requirements.anySkills){const {names,rating,count=1}=requirements.anySkills;if(names.filter(name=>legacySkillRating(character.skills,name)>=rating).length<count)return false;}
   if(requirements.specializations?.some(required=>!(character.specializations??[]).some(item=>legacySkillRating({[String(item.skill??"")]:1},required.skill)>0&&new RegExp(required.includes??".","i").test(String(item.name??"")))))return false;
   if(requirements.merits?.some(required=>(character.merits??[]).filter(item=>item.name===required.name||required.name==="Status"&&/Status/.test(item.name)).reduce((sum,item)=>sum+Number(item.dots||0),0)<required.dots))return false;
+  if(requirements.anyMerits?.some(required=>!required.names.some(name=>(character.merits??[]).filter(item=>item.name===name||name==="Status"&&/Status/.test(item.name)).reduce((sum,item)=>sum+Number(item.dots||0),0)>=required.dots)))return false;
   return true;
 }
 

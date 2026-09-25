@@ -10,7 +10,7 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
-import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
+import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
 import type { MeritDefinition } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
 import { MTA_ORDER_LABELS } from "./creation-rules";

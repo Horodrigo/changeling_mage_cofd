@@ -22,7 +22,7 @@ const {
   legacyEntryPrerequisites,
   legacyAttainmentPrerequisites,
   normalizeLegacyState,
-} = await vite.ssrLoadModule("/lib/legacies.ts");
+} = await vite.ssrLoadModule("/game-lines/mage/legacies.ts");
 
 const { refundMageAdvancement } = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const { discardLegacyAdvancements } = await vite.ssrLoadModule("/lib/legacy-progression.ts");
@@ -79,11 +79,7 @@ test("Chronologue prerequisites and progression are enforced by domain functions
 });
 
 test("Engineers of the System is present with its canonical progression", () => {
-  assert.deepEqual(LEGACIES.map((item) => item.name), [
-    "The Eleventh Question",
-    "Chronologue",
-    "Engineers of the System",
-  ]);
+  assert.equal(LEGACIES.length, 16);
   assert.equal(ENGINEERS_OF_THE_SYSTEM.source, "Tome of the Pentacle");
   assert.equal(ENGINEERS_OF_THE_SYSTEM.page, 157);
   assert.deepEqual(ENGINEERS_OF_THE_SYSTEM.attainments.map((item) => item.name), [
@@ -91,6 +87,26 @@ test("Engineers of the System is present with its canonical progression", () => 
     "Rebuild the Living Machine",
     "Become the Ecosystem",
   ]);
+});
+
+test("the audited regular Legacy catalog includes all 13 additions and excludes deferred variants", () => {
+  const expected = new Map([
+    ["house-of-ariadne", 5], ["perfected-adepts", 1], ["nighthawks", 2],
+    ["tyrian-archons", 3], ["shapers-of-the-invisible", 3], ["logophages", 2],
+    ["reality-stalkers", 1], ["stone-scribes", 2], ["illumined-path", 1],
+    ["intendants-of-the-building", 3], ["nagaraja", 5],
+    ["keepers-of-the-covenant", 2], ["kitchen-alchemists", 3],
+  ]);
+  assert.equal(new Set(LEGACIES.map((item) => item.id)).size, 16);
+  for (const [id, ranks] of expected) {
+    const legacy = LEGACIES.find((item) => item.id === id);
+    assert.ok(legacy, id);
+    assert.equal(legacy.attainments.length, ranks, id);
+  }
+  assert.deepEqual(
+    LEGACIES.filter((item) => /Hand of Destiny|Keepers of the Chrysalis|Tremere|House Nagaraja/i.test(item.name)),
+    [],
+  );
 });
 
 test("Legacy prerequisites consume canonical English stored trait keys", () => {

@@ -19,7 +19,7 @@ import { refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experienc
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/game-lines/mage/sheet-merit-configurations";
 import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";
-import { findLegacy, normalizeLegacyState } from "@/lib/legacies";
+import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { createRandomId } from "@/lib/random-id";

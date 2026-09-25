@@ -27,7 +27,7 @@ import { mageGnosisSummary, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS
 import { refundMageAdvancement,type MageAdvancementUndo } from "@/lib/experience-refunds";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage,type Locale } from "@/lib/i18n";
-import { findLegacy,normalizeLegacyState } from "@/lib/legacies";
+import { findLegacy,normalizeLegacyState } from "@/game-lines/mage/legacies";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import { mageNimbusConnection,mageNimbusTiltBudget,normalizeNimbusTiltEffects } from "./nimbus";
 import { availableHubrisTiers, hubrisPool, wisdomState } from "./hubris";
