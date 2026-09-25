@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
 import { hasPublishedMageOrder } from "./orders";
+import { MTA_ORDERS } from "./creation-rules";
 
 export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
   const order = String(sheet.line_data.order ?? "Orderless");
@@ -32,6 +33,14 @@ export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
     sheet.line_data.rote_skills = nameless.dots >= 2 && Array.isArray(configuration.level_2_rote_skills) ? configuration.level_2_rote_skills.map(String).filter(Boolean).slice(0, 3) : [];
     sheet.line_data.order_occult_bonus = 0;
   }
+  const baseRoteSkills = order === "Nameless"
+    ? (Array.isArray(sheet.line_data.rote_skills) ? sheet.line_data.rote_skills.map(String) : [])
+    : [...(MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? [])];
+  const factionRoteSkills = sheet.merits
+    .filter((item) => item.name === "Faction Member" && item.dots >= 3)
+    .map((item) => String(normalizeMeritConfiguration(item.configuration).roteSkill ?? ""))
+    .filter(Boolean);
+  sheet.line_data.rote_skills = [...new Set([...baseRoteSkills, ...factionRoteSkills])];
   sheet.line_data.merit_granted_skill_bonuses = skillBonuses;
   return sheet;
 }

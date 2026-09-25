@@ -23,8 +23,8 @@
     "translatedName": "Egregore"
   },
   {
-    "id": "mta-2ed:masque",
-    "name": "Masque",
+    "id": "mta-2ed:masque-style",
+    "name": "Masque (Style)",
     "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
@@ -32,10 +32,9 @@
     "category": "Mage Order Styles",
     "prerequisites": "Guardians of the Veil Status •",
     "requirements": { "status": "Guardians of the Veil", "minimum": 1 },
-    "description": "A Guardian persona assumed by spending Willpower. Willpower cannot be regained while the Masque is maintained, and shedding it takes one minute. Additional Masques cost two dots each and inherit the primary Masque's level.",
-    "descriptionEn": "A Guardian persona assumed by spending Willpower. Willpower cannot be regained while the Masque is maintained, and shedding it takes one minute. Additional Masques cost two dots each and inherit the primary Masque's level.",
+    "description": "The character's primary Guardian persona. Assuming it costs one Willpower that cannot be replenished while the identity is maintained, and shedding it takes one minute.",
+    "descriptionEn": "The character's primary Guardian persona. Assuming it costs one Willpower that cannot be replenished while the identity is maintained, and shedding it takes one minute.",
     "page": 102,
-    "repeatable": true,
     "levels": [
       { "rating": 1, "name": "Identity", "description": "Choose a different Virtue and Vice and use them while the Masque is active." },
       { "rating": 2, "name": "Competency", "description": "Choose Skill Specialties equal to the primary Masque's rating and use them instead of the character's own while the Masque is active." },
@@ -43,6 +42,22 @@
       { "rating": 4, "name": "The Code", "description": "Choose two Acts of Hubris for which the character does not risk Wisdom while the Masque is active." },
       { "rating": 5, "name": "Immersion", "description": "Choose up to five dots of Merits that logically belong to the identity. They are available while the Masque is active and cannot include further Masques." }
     ],
+    "priority": 2,
+    "translatedName": "Masque (Style)"
+  },
+  {
+    "id": "mta-2ed:masque",
+    "name": "Masque",
+    "ratings": [2],
+    "line": "MtA",
+    "sourceId": "mta-2ed",
+    "source": "Mage the Awakening",
+    "category": "Mage Order Styles",
+    "prerequisites": "Awakened; Masque (Style)",
+    "description": "An additional Masque. Each purchase costs two dots and creates another complete persona at the current level of Masque (Style); its choices are recorded independently.",
+    "descriptionEn": "An additional Masque. Each purchase costs two dots and creates another complete persona at the current level of Masque (Style); its choices are recorded independently.",
+    "page": 102,
+    "repeatable": true,
     "priority": 2,
     "translatedName": "Masque"
   },
@@ -99,6 +114,7 @@
     "category": "Mage",
     "prerequisites": "Order Status ••",
     "requirements": { "status": "any", "minimum": 2 },
+    "descriptivePrerequisites": true,
     "description": "Membership in a Pentacle faction. Heretical factions grant +2 effective Status among local faction members but impose −2 Status with other members of the Order; this can raise effective Status above five.",
     "descriptionEn": "Membership in a Pentacle faction. Heretical factions grant +2 effective Status among local faction members but impose −2 Status with other members of the Order; this can raise effective Status above five.",
     "page": 90,

@@ -9,9 +9,9 @@ export const mageRegistration: GameLineRegistration = {
   cardClass: "mta-card",
   summaryClass: "mta-summary",
   catalogGroups: {
-    builder: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
-    sheet: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
-    print: ["core-merits", "mage-merits", "mage-spells", "core-reference", "mage-reference"],
+    builder: ["core-merits", "mage-merits", "mage-spells", "mage-factions", "core-reference", "mage-reference"],
+    sheet: ["core-merits", "mage-merits", "mage-spells", "mage-factions", "core-reference", "mage-reference"],
+    print: ["core-merits", "mage-merits", "mage-spells", "mage-factions", "core-reference", "mage-reference"],
     homebrew: ["core-merits", "mage-merits"],
   },
   loadRules: () => import("./rules").then(({ mageRules }) => mageRules),

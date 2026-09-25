@@ -5,10 +5,12 @@ import {createServer} from "vite";
 import {readFileSync} from "node:fs";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
-const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
+const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
 const merits=await vite.ssrLoadModule("/lib/merits.ts");
+const mageMerits=await vite.ssrLoadModule("/game-lines/mage/merits.ts");
 const orders=await vite.ssrLoadModule("/game-lines/mage/orders.ts");
+const factions=JSON.parse(readFileSync(new URL("../public/data/mage/factions.json",import.meta.url),"utf8"));
 const rawMageCatalog=[
  ...["core","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))),
  ...JSON.parse(readFileSync(new URL("../public/data/mage/merits-supplements.json",import.meta.url),"utf8")),
@@ -18,7 +20,7 @@ const merit=(name)=>mageCatalog.find(item=>item.name===name);
 const base={gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
 test("Mage catalog includes the nine audited supplemental Merits",()=>{
- assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,70);
+ assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,71);
  assert.equal(merit("Mystery Cult Influence").sourceId,"mta-2ed");
  for(const name of ["Egregore","Masque","Prelacy","Profane Tool","Faction Member","Svikiro","Svikiro Channel","Svikiro Ridden","Svikiro Nganga"])
   assert.ok(merit(name),name);
@@ -26,14 +28,19 @@ test("Mage catalog includes the nine audited supplemental Merits",()=>{
  assert.deepEqual(merit("Svikiro Channel").ratings,[1,3]);
  assert.deepEqual(merit("Svikiro Ridden").ratings,[1,3]);
  assert.equal(merit("Egregore").levels.length,5);
- assert.equal(merit("Masque").levels.length,5);
+ assert.deepEqual(merit("Masque").ratings,[2]);
+ assert.equal(merit("Masque").repeatable,true);
+ assert.equal(merit("Masque (Style)").levels.length,5);
+ assert.equal(merit("Masque (Style)").repeatable,undefined);
  assert.equal(merit("Prelacy").levels.length,4);
 });
 test("Mage Order Style and Svikiro prerequisites use canonical stored traits",()=>{
  const status=(domain,dots)=>({name:"Awakened Status",dots,configuration:{domain}});
  assert.equal(merits.meritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Mysterium",1)]}),true);
  assert.equal(merits.meritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Silver Ladder",5)]}),false);
- assert.equal(merits.meritPrerequisitesMet(merit("Masque"),{...base,merits:[status("Guardians of the Veil",1)]}),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Masque (Style)"),{...base,merits:[status("Guardians of the Veil",1)]}),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Masque"),{...base,merits:[{name:"Masque (Style)",dots:1}]}),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Masque"),base),false);
  assert.equal(merits.meritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",3)]}),true);
  assert.equal(merits.meritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",2)]}),false);
  assert.equal(merits.meritPrerequisitesMet(merit("Profane Tool"),{...base,merits:[{name:"Prelacy",dots:2}]}),true);
@@ -90,4 +97,24 @@ test("published Orders and unbounded Mage ratings are represented",()=>{
  assert.equal(orders.hasPublishedMageOrder("Nameless"),false);
  assert.equal(orders.hasPublishedMageOrder("My Custom Order"),false);
  assert.deepEqual(merits.meritRatingsFor(merit("Artifact"),7),[3,4,5,6,7]);
+});
+test("Tome factions are complete and Faction Member validates Order-specific choices",()=>{
+ assert.equal(factions.length,44);
+ assert.equal(new Set(factions.map(item=>item.id)).size,44);
+ assert.deepEqual(Object.fromEntries(["Adamantine Arrow","Guardians of the Veil","Mysterium","Silver Ladder","Free Council"].map(order=>[order,factions.filter(item=>item.orders.length===1&&item.orders[0]===order).length])),{
+  "Adamantine Arrow":7,"Guardians of the Veil":7,Mysterium:7,"Silver Ladder":7,"Free Council":8,
+ });
+ assert.equal(factions.filter(item=>item.orders.length>1).length,8);
+ for(const faction of factions){
+  assert.ok(faction.toolYantra,faction.name);
+  assert.ok(faction.roteSkills.length>=1,faction.name);
+  assert.equal(faction.source,"Tome of the Pentacle",faction.name);
+ }
+ const factionMember=merit("Faction Member");
+ const status=(domain,dots)=>({name:"Awakened Status",dots,configuration:{domain}});
+ const context={...base,order:"Mysterium",merits:[status("Mysterium",2)]};
+ assert.deepEqual(mageMerits.mageMeritSelectionProblems(factionMember,{dots:3,configuration:{factionId:"mta-tome:archivists",roteSkill:"Politics"}},context,factions),[]);
+ assert.ok(mageMerits.mageMeritSelectionProblems(factionMember,{dots:3,configuration:{factionId:"mta-tome:archivists",roteSkill:"Crafts"}},context,factions).length>0);
+ assert.ok(mageMerits.mageMeritSelectionProblems(factionMember,{dots:2,configuration:{factionId:"mta-tome:archivists"}},{...context,order:"Silver Ladder",merits:[status("Silver Ladder",2)]},factions).length>0);
+ assert.ok(mageMerits.mageMeritSelectionProblems(factionMember,{dots:2,configuration:{factionId:"mta-tome:archivists"}},{...context,merits:[status("Mysterium",1)]},factions).length>0);
 });

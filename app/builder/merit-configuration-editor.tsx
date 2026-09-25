@@ -33,6 +33,7 @@ export function MeritConfigurationEditor({
   catalog,
   compact = false,
   inline = false,
+  configurationDots,
   ownedMerits = [],
   renderStructured,
   renderCustomField,
@@ -43,6 +44,7 @@ export function MeritConfigurationEditor({
   catalog: MeritDefinition[];
   compact?: boolean;
   inline?: boolean;
+  configurationDots?: number;
   ownedMerits?: NonNullable<MeritPrerequisiteContext["merits"]>;
   renderStructured?: (props: StructuredMeritEditorProps) => ReactNode;
   renderCustomField?: (kind: string, props: CustomMeritFieldProps) => ReactNode;
@@ -52,7 +54,8 @@ export function MeritConfigurationEditor({
   const definition = definitions.find((item) => item.name === merit.name);
   if (!definition) return null;
   const configuration = normalizeMeritConfiguration(merit.configuration);
-  const visible = definition.fields.filter((field) => (field.minDots ?? 0) <= merit.dots);
+  const effectiveDots = configurationDots ?? merit.dots;
+  const visible = definition.fields.filter((field) => (field.minDots ?? 0) <= effectiveDots);
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const structuredProps = { merit, configuration, onChange, compact };
   const injected = renderStructured?.(structuredProps);
@@ -73,7 +76,7 @@ export function MeritConfigurationEditor({
       return <div key={field.key}>{renderCustomField?.(field.kind, { keyName: field.key, value: Array.isArray(value) ? "" : String(value ?? ""), onChange: (next) => set(field.key, next) })}</div>;
     }
     if (field.kind === "list") {
-      const rowCount = field.fixedRows ?? merit.dots * (field.rowsPerDot ?? 1);
+      const rowCount = field.fixedRows ?? effectiveDots * (field.rowsPerDot ?? 1);
       const label = merit.name === "Contacts" ? t("ui.groupsOrganizationsOrContactName") : merit.name === "Multilingual" ? t("ui.additionalLanguages") : field.label;
       const values = Array.isArray(value) ? value : [String(value ?? "")];
       const count = merit.name === "Multilingual" ? merit.dots * 2 : rowCount;

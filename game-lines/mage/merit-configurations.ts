@@ -3,6 +3,7 @@ import { PUBLISHED_MAGE_ORDERS } from "./orders";
 const field=(key:string,label:string,kind:"text"|"textarea"="text"):MeritConfigField=>({key,label,kind});
 const itemFields=[field("name","Item name"),field("description","Appearance and properties","textarea")];
 const spellFields=[field("spell","Spell and Arcana"),field("trigger","Activation trigger"),field("mana","Mana capacity")];
+const masqueFields=[field("name","Masque name"),field("virtue","Masque Virtue"),field("vice","Masque Vice"),{key:"specialties",label:"Masque Skill Specialties",kind:"list",rowsPerDot:1,minDots:2} as MeritConfigField,{key:"nimbus",label:"Masque Signature Nimbus",kind:"textarea",minDots:3} as MeritConfigField,{key:"hubrisActs",label:"Ignored Acts of Hubris",kind:"list",fixedRows:2,minDots:4} as MeritConfigField,{key:"merits",label:"Identity Merits (up to five dots)",kind:"list",minDots:5} as MeritConfigField];
 const MAGE_CONFIGURATIONS:Array<Omit<MeritConfigDefinition,"line">>=[
   {name:"Adamant Hand",fields:[{key:"skill",label:"Combat Skill",kind:"select",options:["Athletics","Brawl","Weaponry"].map(value=>({value,label:value}))}]},
   {name:"Artifact",fields:[...itemFields,field("effects","Effects, Arcana and Utility Attainments","textarea"),field("trigger","Activation circumstances")]},
@@ -16,6 +17,7 @@ const MAGE_CONFIGURATIONS:Array<Omit<MeritConfigDefinition,"line">>=[
   {name:"Enhanced Item",fields:[...itemFields,field("effects","Spells and allocated enhancements","textarea")]},
   {name:"Enriched Item",fields:[...itemFields,field("spell","Attuned spell")]},
   {name:"Familiar",fields:[field("name","Familiar name"),{key:"entity",label:"Entity type",kind:"select",options:["Ghost","Spirit","Goetia"].map(value=>({value,label:value}))},field("fetter","Twilight or Fettered vessel"),field("traits","Entity traits","textarea")]},
+  {name:"Faction Member",fields:[]},
   {name:"Grimoire",fields:[field("name","Grimoire name"),{key:"rotes",label:"Rotes",kind:"list",rowsPerDot:2}]},
   {name:"Hallow",fields:[field("name","Hallow name"),field("location","Location"),field("resonance","Resonance and tass","textarea")]},
   {name:"Imbued Ally",fields:[{key:"allyId",label:"Retainer or Familiar",kind:"merit",meritNames:["Retainer","Familiar"]},...spellFields]},
@@ -23,7 +25,8 @@ const MAGE_CONFIGURATIONS:Array<Omit<MeritConfigDefinition,"line">>=[
   {name:"Infamous Mentor",fields:[{key:"mentorId",label:"Mentor",kind:"merit",meritNames:["Mentor"]},field("orderStatus","Mentor's Order Status"),field("consiliumStatus","Mentor's Consilium Status"),field("socialMerits","Borrowed Social Merits (total: twice this Merit's dots)","textarea")]},
   {name:"Inheritance",fields:[field("heritage","Bloodline and reputation")]},
   {name:"Mana Battery",fields:itemFields},
-  {name:"Masque",fields:[field("name","Masque name"),field("virtue","Masque Virtue"),field("vice","Masque Vice"),{key:"specialties",label:"Masque Skill Specialties",kind:"list",rowsPerDot:1},{key:"nimbus",label:"Masque Signature Nimbus",kind:"textarea",minDots:3},{key:"hubrisActs",label:"Ignored Acts of Hubris",kind:"list",fixedRows:2,minDots:4},{key:"merits",label:"Identity Merits (up to five dots)",kind:"list",minDots:5}]},
+  {name:"Masque",fields:masqueFields},
+  {name:"Masque (Style)",fields:masqueFields},
   {name:"Order Archive",fields:[{key:"statusId",label:"Consilium / Order Status",kind:"merit",meritNames:["Awakened Status","Consilium/Order Status"]},field("name","Archive name"),{key:"arcana",label:"Protected Arcana",kind:"list"},{key:"assets",label:"Caucus Assets",kind:"list"}]},
   {name:"Perfected Item",fields:[...itemFields,field("material","Perfected metal, amalgam or alloy")]},
   {name:"Profligate Dedication",fields:[{key:"additionalTools",label:"Additional dedicated tools",kind:"list",fixedRows:2}]},

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 8,
+  "catalogVersion": 9,
   "catalogs": {
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
@@ -13,6 +13,7 @@
     "mage-spells-space": { "version": 1, "url": "/data/mage/spells/space.json" },
     "mage-spells-spirit": { "version": 1, "url": "/data/mage/spells/spirit.json" },
     "mage-spells-time": { "version": 1, "url": "/data/mage/spells/time.json" },
+    "mage-factions": { "version": 1, "url": "/data/mage/factions.json" },
     "changeling-contracts-index": { "version": 1, "url": "/data/changeling/contracts/index.json" },
     "changeling-contracts-h-courts": { "version": 1, "url": "/data/changeling/contracts/h-courts.json" },
     "changeling-contracts-ctl-oak-ash-thorn": { "version": 1, "url": "/data/changeling/contracts/ctl-oak-ash-thorn.json" },
@@ -24,8 +25,8 @@
     "merits-index": { "version": 5, "url": "/data/core/merits/index.json" },
     "merits-core": { "version": 5, "url": "/data/core/merits/core.json" },
     "merits-changeling": { "version": 1, "url": "/data/core/merits/changeling.json" },
-    "merits-mage": { "version": 1, "url": "/data/core/merits/mage.json" },
-    "merits-mage-supplements": { "version": 1, "url": "/data/mage/merits-supplements.json" },
+    "merits-mage": { "version": 2, "url": "/data/core/merits/mage.json" },
+    "merits-mage-supplements": { "version": 2, "url": "/data/mage/merits-supplements.json" },
     "core-conditions": { "version": 1, "url": "/data/core/conditions.json" },
     "core-conditions-pt": { "version": 1, "url": "/data/core/conditions-pt.json" },
     "changeling-conditions": { "version": 1, "url": "/data/changeling/conditions.json" },

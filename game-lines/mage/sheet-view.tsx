@@ -42,10 +42,12 @@ import { MageStructuredMeritEditor } from "./merit-configuration-editor";
 import { CompanionPage as MageCompanionPage } from "./companion-page";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import type { MageFactionDefinition } from "./factions";
 export function MageCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
     if (!catalogs)
         throw new Error("Mage sheet requires its catalog snapshot.");
     const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
+    const factionCatalog = catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
     const customMerits = useMeritHomebrews("MtA", true);
     const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")], customMerits);
     const conditionCatalog = [
@@ -262,7 +264,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
             </>,
                 detalhes: <>
               <SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog}/>
-              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog}/>
+              <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} factions={factionCatalog}/>
               <MageOrderSummary data={data}/>
               <SheetHeading>{t("ui.activeSpells")}</SheetHeading><EditableList values={stringList(character.current_state?.active_spells)} minimum={gnosis} maximum={gnosis} placeholder={t("ui.activeSpell")} onChange={(value) => setState("active_spells", value)}/>
               <SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
@@ -380,11 +382,12 @@ function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly Me
             (item.name === "Hollow" ? "Recanto" : item.name), detail = meritConfigurationTitle(item.configuration);
     return detail ? `${base}: ${detail}` : base;
 }
-function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacentContent = false }: {
+function ExpandedMeritList({ merits, character, updateSheet, catalog, factions, hasAdjacentContent = false }: {
     merits: CharacterSheet["merits"];
     character?: CharacterSheet;
     updateSheet?: (sheet: CharacterSheet) => void;
     catalog: readonly MeritDefinition[];
+    factions?: readonly MageFactionDefinition[];
     hasAdjacentContent?: boolean;
 }) {
     const { locale, t } = useLanguage();
@@ -392,7 +395,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, hasAdjacen
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
             const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale), cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = meritLabel(item, catalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && item.name !== "Familiar"
-                ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => <MageStructuredMeritEditor {...props}/>} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
+                ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} configurationDots={item.name === "Masque" ? character.merits.find((candidate) => candidate.name === "Masque (Style)")?.dots : undefined} catalog={[...catalog]} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => <MageStructuredMeritEditor {...props} factions={factions} order={String(character.line_data.order??"")}/>} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next)); }}/>
                 : null;
             if (!style)

@@ -10,7 +10,7 @@ import { useLanguage, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { MTA_PATHS } from "@/game-lines/mage/creation-rules";
-import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { meetsArcanaRequirements } from "@/game-lines/mage/builder-eligibility";
@@ -26,6 +26,8 @@ import { createRandomId } from "@/lib/random-id";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import type { MageFactionDefinition } from "./factions";
+import { mageMeritSelectionProblems } from "./merits";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -122,7 +124,8 @@ export function MageExperiencePanel({
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
     ],customMerits,homebrewPreferences,character.merits.map((item)=>item.name)),
     merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog, ["awakened"]))),
-    spells = catalogs.get<SpellDefinition[]>("mage-spells");
+    spells = catalogs.get<SpellDefinition[]>("mage-spells"),
+    factionCatalog = catalogs.get<MageFactionDefinition[]>("mage-factions");
   const arcana = (
     character.line_data.arcana && typeof character.line_data.arcana === "object"
       ? character.line_data.arcana
@@ -265,7 +268,7 @@ export function MageExperiencePanel({
     if(purchase==="Mérito"){
       if(!selectedMerit||!nextMerit)return setFeedback(t("ui.selectAnAvailableMerit"));
       if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
-      const problems=meritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]));
+      const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]),factionCatalog);
       if(problems.length)return setFeedback(problems.join(" "));
     }
     if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));
@@ -584,7 +587,7 @@ export function MageExperiencePanel({
                 />
               </label>
             )}
-            {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props}/>} onChange={setMageMeritConfiguration}/>}
+            {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={selectedMerit.name === "Masque" ? character.merits.find((item) => item.name === "Masque (Style)")?.dots : undefined} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props} factions={factionCatalog} order={String(character.line_data.order??"")}/>} onChange={setMageMeritConfiguration}/>}
             {purchase === "Especialização" && <>
               <label>{t("ui.skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
               <label>{t("ui.specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>
