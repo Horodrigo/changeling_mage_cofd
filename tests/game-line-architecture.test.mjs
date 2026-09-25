@@ -288,8 +288,9 @@ test("line print surfaces retain their web skins and line-specific tracks", asyn
   assert.doesNotMatch(vampirePrint, /acquiredPowers/);
   assert.match(mageCss, /mage\/style\/background-mage\.webp/);
   assert.match(mageCss, /mta-print-frame/);
-  assert.match(mageCss, /--mta-print-frame-center-clearance:12mm/);
-  assert.match(mageCss, /background-position:center top/);
+  assert.match(mageCss, /--mta-print-frame-center-clearance:8mm/);
+  assert.match(mageCss, /\.mta-print-frame span \{[^}]*background:url\("\/mage\/style\/frame-prism-center\.webp"\) center\/contain no-repeat/);
+  assert.match(mageCss, /\.mta-print-page > :not\(header\):not\(footer\):not\(\.mta-print-frame\)/);
   assert.match(mageCss, /mta-print-heading:has\(\+ \.mta-print-attributes\)/);
   assert.match(mageCss, /right center\/auto 28mm no-repeat/);
   assert.match(mageCss, /\.mta-print-page \.cod-print-experience::before/);
