@@ -1,0 +1,775 @@
+{
+  "vehicles": [
+    {
+      "id": "motocicleta",
+      "name": "Motocicleta",
+      "diceModifier": -1,
+      "size": 7,
+      "durability": 2,
+      "structure": 9,
+      "speed": 100,
+      "acceleration": "Alta",
+      "nameEn": "Motorcycle",
+      "accelerationEn": "High"
+    },
+    {
+      "id": "carro-compacto",
+      "name": "Carro compacto",
+      "diceModifier": -2,
+      "size": 8,
+      "durability": 3,
+      "structure": 11,
+      "speed": 90,
+      "nameEn": "Compact Car"
+    },
+    {
+      "id": "carro-familiar",
+      "name": "Carro familiar",
+      "diceModifier": -3,
+      "size": 12,
+      "durability": 3,
+      "structure": 15,
+      "speed": 80,
+      "nameEn": "Family Car"
+    },
+    {
+      "id": "carro-esportivo",
+      "name": "Carro esportivo",
+      "diceModifier": -1,
+      "size": 10,
+      "durability": 2,
+      "structure": 12,
+      "speed": 140,
+      "acceleration": "Alta",
+      "nameEn": "Sports Car",
+      "accelerationEn": "High"
+    },
+    {
+      "id": "limusine",
+      "name": "Limusine",
+      "diceModifier": -4,
+      "size": 20,
+      "durability": 3,
+      "structure": 18,
+      "speed": 60,
+      "nameEn": "Limousine"
+    },
+    {
+      "id": "van",
+      "name": "Van",
+      "diceModifier": -3,
+      "size": 18,
+      "durability": 3,
+      "structure": 21,
+      "speed": 80,
+      "acceleration": "Lenta",
+      "accelerationEn": "Slow"
+    },
+    {
+      "id": "caminhonete",
+      "name": "Caminhonete",
+      "diceModifier": -2,
+      "size": 15,
+      "durability": 4,
+      "structure": 19,
+      "speed": 80,
+      "acceleration": "Lenta",
+      "nameEn": "Pickup Truck",
+      "accelerationEn": "Slow"
+    },
+    {
+      "id": "suv",
+      "name": "SUV",
+      "diceModifier": -2,
+      "size": 15,
+      "durability": 4,
+      "structure": 19,
+      "speed": 100
+    },
+    {
+      "id": "lancha",
+      "name": "Lancha",
+      "diceModifier": -2,
+      "size": 10,
+      "durability": 2,
+      "structure": 12,
+      "speed": 60,
+      "nameEn": "Motorboat"
+    }
+  ],
+  "animals": [
+    {
+      "id": "morcego",
+      "name": "Morcego",
+      "attributes": "Inteligência 0, Raciocínio 1, Perseverança 0; Força 1, Destreza 4, Vigor 1; Presença 1, Manipulação 0, Compostura 1",
+      "skills": "Atletismo (Voo) 4, Briga 1, Sobrevivência 3",
+      "willpower": 1,
+      "initiative": 9,
+      "defense": 8,
+      "speed": "15 (voo)",
+      "size": 1,
+      "health": 2,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "—",
+          "pool": 2
+        }
+      ],
+      "special": "Enxerga sem penalidade na penumbra e na escuridão total.",
+      "nameEn": "Bat",
+      "attributesEn": "Intelligence 0, Wits 1, Resolve 0; Strength 1, Dexterity 4, Stamina 1; Presence 1, Manipulation 0, Composure 1",
+      "skillsEn": "Athletics (Flight) 4, Brawl 1, Survival 3",
+      "speedEn": "15 (flight)",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "—",
+          "pool": 2
+        }
+      ],
+      "specialEn": "Sees without penalty in dim light or total darkness."
+    },
+    {
+      "id": "texugo",
+      "name": "Texugo",
+      "attributes": "Inteligência 1, Raciocínio 3, Perseverança 3; Força 2, Destreza 3, Vigor 5; Presença 2, Manipulação 1, Compostura 2",
+      "skills": "Atletismo (Escavação) 4, Briga 3, Intimidação 1, Furtividade 2, Sobrevivência 4",
+      "willpower": 5,
+      "initiative": 5,
+      "defense": 7,
+      "speed": "9",
+      "size": 3,
+      "health": 9,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 5
+        }
+      ],
+      "special": "+2 dados para resistir a toxinas e doenças.",
+      "nameEn": "Badger",
+      "attributesEn": "Intelligence 1, Wits 3, Resolve 3; Strength 2, Dexterity 3, Stamina 5; Presence 2, Manipulation 1, Composure 2",
+      "skillsEn": "Athletics (Digging) 4, Brawl 3, Intimidation 1, Stealth 2, Survival 4",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 5
+        }
+      ],
+      "specialEn": "Gain +2 dice to resist toxins and diseases."
+    },
+    {
+      "id": "urso",
+      "name": "Urso",
+      "attributes": "Inteligência 1, Raciocínio 2, Perseverança 4; Força 6, Destreza 2, Vigor 4; Presença 3, Manipulação 1, Compostura 4",
+      "skills": "Atletismo (Escalada) 3, Briga 4, Intimidação 3, Sobrevivência 3",
+      "willpower": 5,
+      "initiative": 6,
+      "defense": 5,
+      "speed": "13",
+      "size": 7,
+      "health": 11,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+2L",
+          "pool": 10
+        },
+        {
+          "name": "Garra",
+          "damage": "+1L",
+          "pool": 10
+        }
+      ],
+      "nameEn": "Bear",
+      "attributesEn": "Intelligence 1, Wits 2, Resolve 4; Strength 6, Dexterity 2, Stamina 4; Presence 3, Manipulation 1, Composure 4",
+      "skillsEn": "Athletics (Climbing) 3, Brawl 4, Intimidation 3, Survival 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+2L",
+          "pool": 10
+        },
+        {
+          "name": "Claw",
+          "damage": "+1L",
+          "pool": 10
+        }
+      ]
+    },
+    {
+      "id": "gato-domestico",
+      "name": "Gato doméstico",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 3; Força 1, Destreza 5, Vigor 3; Presença 3, Manipulação 1, Compostura 3",
+      "skills": "Atletismo 4, Briga 2, Furtividade 3",
+      "willpower": 6,
+      "initiative": 8,
+      "defense": 9,
+      "speed": "13",
+      "size": 2,
+      "health": 5,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 3
+        },
+        {
+          "name": "Garra",
+          "damage": "+0L",
+          "pool": 3
+        }
+      ],
+      "nameEn": "House Cat",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 3; Strength 1, Dexterity 5, Stamina 3; Presence 3, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics 4, Brawl 2, Stealth 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 3
+        },
+        {
+          "name": "Claw",
+          "damage": "+0L",
+          "pool": 3
+        }
+      ]
+    },
+    {
+      "id": "grande-felino",
+      "name": "Grande felino",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 4; Força 5, Destreza 4, Vigor 3; Presença 3, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Escalada) 4, Briga (Garras) 4, Intimidação 3, Furtividade 3, Sobrevivência (Rastreamento) 3",
+      "willpower": 7,
+      "initiative": 8,
+      "defense": 8,
+      "speed": "16",
+      "size": 5,
+      "health": 8,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+2L",
+          "pool": 9
+        },
+        {
+          "name": "Garra",
+          "damage": "+1L",
+          "pool": 10
+        }
+      ],
+      "nameEn": "Big Cat",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 4; Strength 5, Dexterity 4, Stamina 3; Presence 3, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Climbing) 4, Brawl (Claws) 4, Intimidation 3, Stealth 3, Survival (Tracking) 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+2L",
+          "pool": 9
+        },
+        {
+          "name": "Claw",
+          "damage": "+1L",
+          "pool": 10
+        }
+      ]
+    },
+    {
+      "id": "chimpanze",
+      "name": "Chimpanzé",
+      "attributes": "Inteligência 2, Raciocínio 3, Perseverança 2; Força 5, Destreza 4, Vigor 3; Presença 2, Manipulação 2, Compostura 4",
+      "skills": "Atletismo (Escalada) 3, Briga (Mordida) 3, Intimidação 3, Sobrevivência 3",
+      "willpower": 6,
+      "initiative": 8,
+      "defense": 7,
+      "speed": "13",
+      "size": 4,
+      "health": 7,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 9
+        }
+      ],
+      "nameEn": "Chimpanzee",
+      "attributesEn": "Intelligence 2, Wits 3, Resolve 2; Strength 5, Dexterity 4, Stamina 3; Presence 2, Manipulation 2, Composure 4",
+      "skillsEn": "Athletics (Climbing) 3, Brawl (Bite) 3, Intimidation 3, Survival 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 9
+        }
+      ]
+    },
+    {
+      "id": "coiote",
+      "name": "Coiote",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 4; Força 3, Destreza 3, Vigor 3; Presença 4, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 4, Briga 3, Intimidação 3, Furtividade 2, Sobrevivência (Rastreamento) 4",
+      "willpower": 7,
+      "initiative": 6,
+      "defense": 8,
+      "speed": "13",
+      "size": 3,
+      "health": 6,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 6
+        }
+      ],
+      "nameEn": "Coyote",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 4; Strength 3, Dexterity 3, Stamina 3; Presence 4, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 4, Brawl 3, Intimidation 3, Stealth 2, Survival (Tracking) 4",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 6
+        }
+      ]
+    },
+    {
+      "id": "crocodilo",
+      "name": "Crocodilo",
+      "attributes": "Inteligência 1, Raciocínio 2, Perseverança 3; Força 4, Destreza 1, Vigor 4; Presença 2, Manipulação 1, Compostura 4",
+      "skills": "Atletismo (Natação) 3, Briga (Agarrar) 3, Intimidação 3, Furtividade (Pântanos) 2, Sobrevivência 3",
+      "willpower": 7,
+      "initiative": 6,
+      "defense": 5,
+      "speed": "10",
+      "size": 4,
+      "health": 9,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+2L",
+          "pool": 7,
+          "note": "Ao acertar, agarra imediatamente; a vítima sofre -2 para contra-agarrar."
+        }
+      ],
+      "nameEn": "Crocodile",
+      "attributesEn": "Intelligence 1, Wits 2, Resolve 3; Strength 4, Dexterity 1, Stamina 4; Presence 2, Manipulation 1, Composure 4",
+      "skillsEn": "Athletics (Swimming) 3, Brawl (Grappling) 3, Intimidation 3, Stealth (Swamps) 2, Survival 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+2L",
+          "pool": 7,
+          "note": "On a hit, immediately grapples; the victim suffers -2 to counter-grapple."
+        }
+      ]
+    },
+    {
+      "id": "cervo",
+      "name": "Cervo macho",
+      "attributes": "Inteligência 1, Raciocínio 3, Perseverança 3; Força 3, Destreza 3, Vigor 3; Presença 3, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 3, Briga (Chifres) 3, Intimidação 2, Sobrevivência 2",
+      "willpower": 6,
+      "initiative": 6,
+      "defense": 6,
+      "speed": "14",
+      "size": 6,
+      "health": 9,
+      "attacks": [
+        {
+          "name": "Chifres",
+          "damage": "+1L",
+          "pool": 7
+        }
+      ],
+      "nameEn": "Stag",
+      "attributesEn": "Intelligence 1, Wits 3, Resolve 3; Strength 3, Dexterity 3, Stamina 3; Presence 3, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 3, Brawl (Antlers) 3, Intimidation 2, Survival 2",
+      "attacksEn": [
+        {
+          "name": "Antlers",
+          "damage": "+1L",
+          "pool": 7
+        }
+      ]
+    },
+    {
+      "id": "cao-grande",
+      "name": "Cão grande",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 4; Força 4, Destreza 3, Vigor 3; Presença 4, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 4, Briga 3, Intimidação 3, Furtividade 1, Sobrevivência (Rastreamento) 3",
+      "willpower": 7,
+      "initiative": 6,
+      "defense": 8,
+      "speed": "14",
+      "size": 4,
+      "health": 7,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 6
+        }
+      ],
+      "nameEn": "Large Dog",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 4; Strength 4, Dexterity 3, Stamina 3; Presence 4, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 4, Brawl 3, Intimidation 3, Stealth 1, Survival (Tracking) 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 6
+        }
+      ]
+    },
+    {
+      "id": "cao-pequeno",
+      "name": "Cão pequeno",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 4; Força 2, Destreza 3, Vigor 3; Presença 3, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 3, Briga 2, Intimidação 1, Furtividade 1, Sobrevivência (Rastreamento) 3",
+      "willpower": 7,
+      "initiative": 6,
+      "defense": 7,
+      "speed": "11",
+      "size": 2,
+      "health": 5,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 4
+        }
+      ],
+      "nameEn": "Small Dog",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 4; Strength 2, Dexterity 3, Stamina 3; Presence 3, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 3, Brawl 2, Intimidation 1, Stealth 1, Survival (Tracking) 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 4
+        }
+      ]
+    },
+    {
+      "id": "elefante",
+      "name": "Elefante",
+      "attributes": "Inteligência 1, Raciocínio 2, Perseverança 3; Força 9, Destreza 2, Vigor 7; Presença 2, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 2, Briga (Presas) 3, Intimidação 3, Sobrevivência 3",
+      "willpower": 6,
+      "initiative": 5,
+      "defense": 4,
+      "speed": "15",
+      "size": 15,
+      "health": 22,
+      "attacks": [
+        {
+          "name": "Presa",
+          "damage": "+1L",
+          "pool": 13
+        },
+        {
+          "name": "Atropelar",
+          "damage": "+3L",
+          "pool": 12
+        }
+      ],
+      "nameEn": "Elephant",
+      "attributesEn": "Intelligence 1, Wits 2, Resolve 3; Strength 9, Dexterity 2, Stamina 7; Presence 2, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 2, Brawl (Tusks) 3, Intimidation 3, Survival 3",
+      "attacksEn": [
+        {
+          "name": "Tusk",
+          "damage": "+1L",
+          "pool": 13
+        },
+        {
+          "name": "Trample",
+          "damage": "+3L",
+          "pool": 12
+        }
+      ]
+    },
+    {
+      "id": "raposa",
+      "name": "Raposa",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 3; Força 1, Destreza 4, Vigor 3; Presença 2, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 4, Briga 3, Intimidação 1, Furtividade 3, Sobrevivência (Rastreamento) 3",
+      "willpower": 5,
+      "initiative": 7,
+      "defense": 8,
+      "speed": "13",
+      "size": 2,
+      "health": 5,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 4
+        }
+      ],
+      "nameEn": "Fox",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 3; Strength 1, Dexterity 4, Stamina 3; Presence 2, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 4, Brawl 3, Intimidation 1, Stealth 3, Survival (Tracking) 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 4
+        }
+      ]
+    },
+    {
+      "id": "cavalo",
+      "name": "Cavalo",
+      "attributes": "Inteligência 1, Raciocínio 3, Perseverança 3; Força 5, Destreza 3, Vigor 5; Presença 3, Manipulação 1, Compostura 2",
+      "skills": "Atletismo 4, Briga (Coice) 1, Sobrevivência 2",
+      "willpower": 5,
+      "initiative": 5,
+      "defense": 7,
+      "speed": "19",
+      "size": 7,
+      "health": 12,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 5
+        },
+        {
+          "name": "Casco",
+          "damage": "+2L",
+          "pool": 6,
+          "note": "Um acerto impõe a Complicação Derrubado."
+        }
+      ],
+      "special": "Pode erguer quatro vezes o peso de um humano com Força e Atletismo equivalentes.",
+      "nameEn": "Horse",
+      "attributesEn": "Intelligence 1, Wits 3, Resolve 3; Strength 5, Dexterity 3, Stamina 5; Presence 3, Manipulation 1, Composure 2",
+      "skillsEn": "Athletics 4, Brawl (Kicking) 1, Survival 2",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 5
+        },
+        {
+          "name": "Hoof",
+          "damage": "+2L",
+          "pool": 6,
+          "note": "A successful hit inflicts the Knocked Down Tilt."
+        }
+      ],
+      "specialEn": "Can lift four times as much as a human with comparable Strength and Athletics."
+    },
+    {
+      "id": "coruja",
+      "name": "Coruja",
+      "attributes": "Inteligência 1, Raciocínio 2, Perseverança 3; Força 1, Destreza 3, Vigor 2; Presença 3, Manipulação 1, Compostura 3",
+      "skills": "Atletismo 3, Briga (Emboscada) 2, Intimidação 2, Furtividade 2, Sobrevivência 3",
+      "willpower": 6,
+      "initiative": 6,
+      "defense": 6,
+      "speed": "14 (voo)",
+      "size": 2,
+      "health": 4,
+      "attacks": [
+        {
+          "name": "Bico",
+          "damage": "+0L",
+          "pool": 3
+        },
+        {
+          "name": "Garras",
+          "damage": "+1L",
+          "pool": 3
+        }
+      ],
+      "special": "+2 em rolagens de percepção por visão e audição.",
+      "nameEn": "Owl",
+      "attributesEn": "Intelligence 1, Wits 2, Resolve 3; Strength 1, Dexterity 3, Stamina 2; Presence 3, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics 3, Brawl (Ambush) 2, Intimidation 2, Stealth 2, Survival 3",
+      "speedEn": "14 (flight)",
+      "attacksEn": [
+        {
+          "name": "Beak",
+          "damage": "+0L",
+          "pool": 3
+        },
+        {
+          "name": "Claws",
+          "damage": "+1L",
+          "pool": 3
+        }
+      ],
+      "specialEn": "Gain +2 on visual and auditory Perception rolls."
+    },
+    {
+      "id": "rato",
+      "name": "Rato",
+      "attributes": "Inteligência 1, Raciocínio 3, Perseverança 2; Força 1, Destreza 4, Vigor 2; Presença 1, Manipulação 2, Compostura 2",
+      "skills": "Atletismo 3, Furtividade 4, Sobrevivência 1",
+      "willpower": 4,
+      "initiative": 5,
+      "defense": 7,
+      "speed": "6",
+      "size": 1,
+      "health": 3,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "—",
+          "pool": 1
+        }
+      ],
+      "nameEn": "Rat",
+      "attributesEn": "Intelligence 1, Wits 3, Resolve 2; Strength 1, Dexterity 4, Stamina 2; Presence 1, Manipulation 2, Composure 2",
+      "skillsEn": "Athletics 3, Stealth 4, Survival 1",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "—",
+          "pool": 1
+        }
+      ]
+    },
+    {
+      "id": "corvo",
+      "name": "Corvo",
+      "attributes": "Inteligência 2, Raciocínio 4, Perseverança 4; Força 1, Destreza 3, Vigor 2; Presença 3, Manipulação 1, Compostura 3",
+      "skills": "Atletismo 3, Briga 1, Intimidação 2, Sobrevivência 3",
+      "willpower": 7,
+      "initiative": 6,
+      "defense": 7,
+      "speed": "14 (voo)",
+      "size": 2,
+      "health": 4,
+      "attacks": [
+        {
+          "name": "Bico",
+          "damage": "+0L",
+          "pool": 2
+        }
+      ],
+      "nameEn": "Raven",
+      "attributesEn": "Intelligence 2, Wits 4, Resolve 4; Strength 1, Dexterity 3, Stamina 2; Presence 3, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics 3, Brawl 1, Intimidation 2, Survival 3",
+      "speedEn": "14 (flight)",
+      "attacksEn": [
+        {
+          "name": "Beak",
+          "damage": "+0L",
+          "pool": 2
+        }
+      ]
+    },
+    {
+      "id": "cobra",
+      "name": "Cobra",
+      "attributes": "Inteligência 1, Raciocínio 2, Perseverança 3; Força 1, Destreza 3, Vigor 1; Presença 3, Manipulação 1, Compostura 4",
+      "skills": "Atletismo 1, Briga 1, Intimidação 2, Furtividade 4, Sobrevivência 3",
+      "willpower": 7,
+      "initiative": 7,
+      "defense": 4,
+      "speed": "6",
+      "size": 2,
+      "health": 3,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 2,
+          "note": "Espécies venenosas têm Toxicidade 3-10 e podem impor Envenenado."
+        }
+      ],
+      "nameEn": "Snake",
+      "attributesEn": "Intelligence 1, Wits 2, Resolve 3; Strength 1, Dexterity 3, Stamina 1; Presence 3, Manipulation 1, Composure 4",
+      "skillsEn": "Athletics 1, Brawl 1, Intimidation 2, Stealth 4, Survival 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 2,
+          "note": "Venomous species have Toxicity 3–10 and may inflict Poisoned."
+        }
+      ]
+    },
+    {
+      "id": "sapo",
+      "name": "Sapo",
+      "attributes": "Inteligência 0, Raciocínio 2, Perseverança 1; Força 1, Destreza 3, Vigor 1; Presença 1, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Salto) 2, Sobrevivência (Encontrar alimento) 3",
+      "willpower": 4,
+      "initiative": 5,
+      "defense": 5,
+      "speed": "6",
+      "size": 1,
+      "health": 2,
+      "attacks": [],
+      "nameEn": "Toad",
+      "attributesEn": "Intelligence 0, Wits 2, Resolve 1; Strength 1, Dexterity 3, Stamina 1; Presence 1, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Jumping) 2, Survival (Finding Food) 3"
+    },
+    {
+      "id": "furao",
+      "name": "Doninha ou furão",
+      "attributes": "Inteligência 1, Raciocínio 2, Perseverança 2; Força 1, Destreza 3, Vigor 2; Presença 2, Manipulação 1, Compostura 2",
+      "skills": "Atletismo 2, Briga 1, Intimidação 1, Furtividade 4, Sobrevivência 3",
+      "willpower": 4,
+      "initiative": 5,
+      "defense": 5,
+      "speed": "11",
+      "size": 2,
+      "health": 4,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+0L",
+          "pool": 2
+        }
+      ],
+      "nameEn": "Weasel or Ferret",
+      "attributesEn": "Intelligence 1, Wits 2, Resolve 2; Strength 1, Dexterity 3, Stamina 2; Presence 2, Manipulation 1, Composure 2",
+      "skillsEn": "Athletics 2, Brawl 1, Intimidation 1, Stealth 4, Survival 3",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+0L",
+          "pool": 2
+        }
+      ]
+    },
+    {
+      "id": "lobo",
+      "name": "Lobo",
+      "attributes": "Inteligência 1, Raciocínio 4, Perseverança 4; Força 4, Destreza 3, Vigor 3; Presença 4, Manipulação 1, Compostura 3",
+      "skills": "Atletismo (Corrida) 4, Briga 3, Intimidação 3, Furtividade 2, Sobrevivência (Rastreamento) 4",
+      "willpower": 7,
+      "initiative": 6,
+      "defense": 8,
+      "speed": "14",
+      "size": 4,
+      "health": 7,
+      "attacks": [
+        {
+          "name": "Mordida",
+          "damage": "+1L",
+          "pool": 7
+        }
+      ],
+      "nameEn": "Wolf",
+      "attributesEn": "Intelligence 1, Wits 4, Resolve 4; Strength 4, Dexterity 3, Stamina 3; Presence 4, Manipulation 1, Composure 3",
+      "skillsEn": "Athletics (Running) 4, Brawl 3, Intimidation 3, Stealth 2, Survival (Tracking) 4",
+      "attacksEn": [
+        {
+          "name": "Bite",
+          "damage": "+1L",
+          "pool": 7
+        }
+      ]
+    }
+  ]
+}

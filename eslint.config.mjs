@@ -2,6 +2,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import noUntranslatedUiText from "./eslint-rules/no-untranslated-ui-text.mjs";
+import noInlineCatalogData from "./eslint-rules/no-inline-catalog-data.mjs";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -21,6 +22,17 @@ const eslintConfig = defineConfig([
     "**/.next/**",
     "**/build/**",
   ]),
+  {
+    files: ["lib/**/*.{ts,tsx}", "game-lines/**/*.{ts,tsx}"],
+    plugins: {
+      catalogs: {
+        rules: { "no-inline-catalog-data": noInlineCatalogData },
+      },
+    },
+    rules: {
+      "catalogs/no-inline-catalog-data": "error",
+    },
+  },
   {
     files: ["app/**/*.{ts,tsx}", "game-lines/**/*.{ts,tsx}"],
     plugins: {

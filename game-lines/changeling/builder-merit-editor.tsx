@@ -16,6 +16,7 @@ import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import { useLanguage } from "@/lib/i18n";
 import { createRandomId } from "@/lib/random-id";
 import type { TokenDefinition, TokenKind } from "./catalogs/tokens";
+import meritOptions from "./catalog-data/merit-options.json";
 
 type TokenConfigurationItem = { id: string; kind: TokenKind; name: string; rating: number; cost: string; effect: string; description: string; crux: string; catch: string; drawback: string };
 type HedgespunBenefit = "extraordinary" | "alacrity" | "durability";
@@ -97,11 +98,7 @@ function TokenMeritEditor({merit,configuration,onChange,compact,catalog}:{merit:
   </details>;
 }
 
-const HEDGESPUN_BENEFITS:Array<{value:HedgespunBenefit;label:string;labelPt:string;effect:string}>=[
-  {value:"extraordinary",label:"Extraordinary Equipment",labelPt:"Equipamento Extraordinário",effect:"+1 equipment bonus, armor rating, or weapon damage modifier"},
-  {value:"alacrity",label:"Improved Alacrity",labelPt:"Alacridade Aprimorada",effect:"+2 Initiative and Speed"},
-  {value:"durability",label:"Increased Durability",labelPt:"Durabilidade Aumentada",effect:"+1 Durability"},
-];
+const HEDGESPUN_BENEFITS=meritOptions.hedgespunBenefits as Array<{value:HedgespunBenefit;label:string;labelPt:string;effect:string}>;
 function HedgespunItemEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
   const { locale, t }=useLanguage();const item=decodeHedgespunConfiguration(configuration);
   const set=(patch:Partial<typeof item>)=>onChange({...configuration,name:patch.name??item.name,description:patch.description??item.description,extraordinary_detail:patch.extraordinaryDetail??item.extraordinaryDetail,benefits:patch.benefits??item.benefits});
@@ -119,20 +116,7 @@ function HedgespunItemEditor({merit,configuration,onChange,compact}:{merit:Merit
   </details>;
 }
 
-const HOLLOW_OPTIONS = [
-  {name:"Hob Alarm",cost:1,description:"Friendly hobgoblins prevent loss of Defense from surprise and add Hollow dots to actions during the first turn of an action scene. Requires Hob Kin and incurs 1 Goblin Debt each story."},
-  {name:"Luxury Goods",cost:1,description:"Once per chapter, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes."},
-  {name:"Shadow Garden",cost:1,description:"Consumed goblin fruit reappears after one hour as a sensory-perfect but powerless shadow fruit; hunger it satisfies returns one hour later."},
-  {name:"Phantom Phone Booth",cost:1,description:"Call any publicly listed mundane phone from the Hollow without knowing its number; traces falsely identify the recipient's own line."},
-  {name:"Route Zero",cost:1,description:"A one-dot looping trod crosses the Hollow. A traveler who navigates it safely returns to the start and regains 1 Willpower, once per day."},
-  {name:"Size Matters 1",cost:1,group:"size-matters",description:"The Hollow comfortably houses a motley of five or six changelings."},
-  {name:"Size Matters 2",cost:2,group:"size-matters",description:"The Hollow becomes a vast estate or small town."},
-  {name:"Escape Route 1",cost:1,group:"escape-route",description:"Adds a secure stationary one-way emergency exit usable by owners and permitted guests."},
-  {name:"Escape Route 2",cost:2,group:"escape-route",description:"The one-way emergency exit may appear reflexively anywhere inside the Hollow."},
-  {name:"Hidden Entry",cost:2,description:"The entrance vanishes while all contributing owners are inside; finding or forcing it while visible suffers a two-die penalty."},
-  {name:"Easy Access",cost:3,description:"The Hollow has no fixed entrance; spend 1 Glamour to enter through any unlocked mundane door and exit where you entered."},
-  {name:"Home Turf",cost:3,description:"The owner adds Hollow dots to Initiative and Defense against intruders inside the Hollow."},
-] as const;
+const HOLLOW_OPTIONS=meritOptions.hollowOptions;
 function HollowEditor({
   merit,
   configuration,
@@ -229,15 +213,7 @@ function HollowEditor({
   );
 }
 
-const SHARED_BASTION_OPTIONS = [
-  {name:"Buttressed Dreaming",cost:1,description:"Penalizes an opponent's Clash of Wills to force entry by the Shared Bastion rating."},
-  {name:"Fixed Doorway",cost:3,description:"Requires Hollow. Creates a permanent Gate of Horn between that Hollow and the Bastion; each traveler spends 1 Glamour in each direction and may bring a passenger for +1 Glamour."},
-  {name:"Guardian Eidolon",cost:1,description:"Spend 1 Willpower to wake the guardian for a scene. Owners cannot lose Defense to surprise and add Bastion dots to first-turn actions."},
-  {name:"Illusory Armory",cost:2,description:"Once per chapter, spend Glamour to summon an unimportant prop with equipment rating twice Glamour spent, maximum +5; add 1 Willpower for an important prop."},
-  {name:"Permanent Armory",cost:1,description:"Physical equipment remains safely stored in the Bastion. Each non-mundane item requires 1 Willpower per chapter or the Bastion absorbs it."},
-  {name:"Raised Defenses",cost:1,description:"While an owner is inside, double the Bastion rating's defensive bonuses, to a maximum of +5."},
-  {name:"Subtle Speech",cost:2,description:"Fixed eidolons relay private messages of up to five words from the Bastion to waking motley members."},
-] as const;
+const SHARED_BASTION_OPTIONS=meritOptions.sharedBastionOptions;
 
 function SharedBastionEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}) {
   const { t }=useLanguage();

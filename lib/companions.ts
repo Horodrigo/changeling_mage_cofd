@@ -1,51 +1,22 @@
+import data from "./catalog-data/companions.json";
+
 export type Vehicle={id:string;name:string;diceModifier:number;size:number;durability:number;structure:number;speed:number;acceleration?:"Alta"|"Lenta"|"High"|"Slow"};
 export type AnimalAttack={name:string;damage:string;pool:number;note?:string};
 export type Animal={id:string;name:string;attributes:string;skills:string;willpower:number;initiative:number;defense:number;speed:string;size:number;health:number;attacks:AnimalAttack[];special?:string};
+type LocalizedVehicle = Vehicle & { nameEn?: string; accelerationEn?: Vehicle["acceleration"] };
+type LocalizedAnimal = Animal & { nameEn?: string; attributesEn?: string; skillsEn?: string; speedEn?: string; attacksEn?: AnimalAttack[]; specialEn?: string };
 
-export const VEHICLES:Vehicle[]=[
- {id:"motocicleta",name:"Motocicleta",diceModifier:-1,size:7,durability:2,structure:9,speed:100,acceleration:"Alta"},
- {id:"carro-compacto",name:"Carro compacto",diceModifier:-2,size:8,durability:3,structure:11,speed:90},
- {id:"carro-familiar",name:"Carro familiar",diceModifier:-3,size:12,durability:3,structure:15,speed:80},
- {id:"carro-esportivo",name:"Carro esportivo",diceModifier:-1,size:10,durability:2,structure:12,speed:140,acceleration:"Alta"},
- {id:"limusine",name:"Limusine",diceModifier:-4,size:20,durability:3,structure:18,speed:60},
- {id:"van",name:"Van",diceModifier:-3,size:18,durability:3,structure:21,speed:80,acceleration:"Lenta"},
- {id:"caminhonete",name:"Caminhonete",diceModifier:-2,size:15,durability:4,structure:19,speed:80,acceleration:"Lenta"},
- {id:"suv",name:"SUV",diceModifier:-2,size:15,durability:4,structure:19,speed:100},
- {id:"lancha",name:"Lancha",diceModifier:-2,size:10,durability:2,structure:12,speed:60},
-];
+export const VEHICLES = data.vehicles as LocalizedVehicle[];
+export const ANIMALS = data.animals as LocalizedAnimal[];
 
-const animal=(id:string,name:string,attributes:string,skills:string,willpower:number,initiative:number,defense:number,speed:string,size:number,health:number,attacks:AnimalAttack[],special?:string):Animal=>({id,name,attributes,skills,willpower,initiative,defense,speed,size,health,attacks,special});
-export const ANIMALS:Animal[]=[
- animal("morcego","Morcego","Inteligência 0, Raciocínio 1, Perseverança 0; Força 1, Destreza 4, Vigor 1; Presença 1, Manipulação 0, Compostura 1","Atletismo (Voo) 4, Briga 1, Sobrevivência 3",1,9,8,"15 (voo)",1,2,[{name:"Mordida",damage:"—",pool:2}],"Enxerga sem penalidade na penumbra e na escuridão total."),
- animal("texugo","Texugo","Inteligência 1, Raciocínio 3, Perseverança 3; Força 2, Destreza 3, Vigor 5; Presença 2, Manipulação 1, Compostura 2","Atletismo (Escavação) 4, Briga 3, Intimidação 1, Furtividade 2, Sobrevivência 4",5,5,7,"9",3,9,[{name:"Mordida",damage:"+0L",pool:5}],"+2 dados para resistir a toxinas e doenças."),
- animal("urso","Urso","Inteligência 1, Raciocínio 2, Perseverança 4; Força 6, Destreza 2, Vigor 4; Presença 3, Manipulação 1, Compostura 4","Atletismo (Escalada) 3, Briga 4, Intimidação 3, Sobrevivência 3",5,6,5,"13",7,11,[{name:"Mordida",damage:"+2L",pool:10},{name:"Garra",damage:"+1L",pool:10}]),
- animal("gato-domestico","Gato doméstico","Inteligência 1, Raciocínio 4, Perseverança 3; Força 1, Destreza 5, Vigor 3; Presença 3, Manipulação 1, Compostura 3","Atletismo 4, Briga 2, Furtividade 3",6,8,9,"13",2,5,[{name:"Mordida",damage:"+0L",pool:3},{name:"Garra",damage:"+0L",pool:3}]),
- animal("grande-felino","Grande felino","Inteligência 1, Raciocínio 4, Perseverança 4; Força 5, Destreza 4, Vigor 3; Presença 3, Manipulação 1, Compostura 3","Atletismo (Escalada) 4, Briga (Garras) 4, Intimidação 3, Furtividade 3, Sobrevivência (Rastreamento) 3",7,8,8,"16",5,8,[{name:"Mordida",damage:"+2L",pool:9},{name:"Garra",damage:"+1L",pool:10}]),
- animal("chimpanze","Chimpanzé","Inteligência 2, Raciocínio 3, Perseverança 2; Força 5, Destreza 4, Vigor 3; Presença 2, Manipulação 2, Compostura 4","Atletismo (Escalada) 3, Briga (Mordida) 3, Intimidação 3, Sobrevivência 3",6,8,7,"13",4,7,[{name:"Mordida",damage:"+0L",pool:9}]),
- animal("coiote","Coiote","Inteligência 1, Raciocínio 4, Perseverança 4; Força 3, Destreza 3, Vigor 3; Presença 4, Manipulação 1, Compostura 3","Atletismo (Corrida) 4, Briga 3, Intimidação 3, Furtividade 2, Sobrevivência (Rastreamento) 4",7,6,8,"13",3,6,[{name:"Mordida",damage:"+0L",pool:6}]),
- animal("crocodilo","Crocodilo","Inteligência 1, Raciocínio 2, Perseverança 3; Força 4, Destreza 1, Vigor 4; Presença 2, Manipulação 1, Compostura 4","Atletismo (Natação) 3, Briga (Agarrar) 3, Intimidação 3, Furtividade (Pântanos) 2, Sobrevivência 3",7,6,5,"10",4,9,[{name:"Mordida",damage:"+2L",pool:7,note:"Ao acertar, agarra imediatamente; a vítima sofre -2 para contra-agarrar."}]),
- animal("cervo","Cervo macho","Inteligência 1, Raciocínio 3, Perseverança 3; Força 3, Destreza 3, Vigor 3; Presença 3, Manipulação 1, Compostura 3","Atletismo (Corrida) 3, Briga (Chifres) 3, Intimidação 2, Sobrevivência 2",6,6,6,"14",6,9,[{name:"Chifres",damage:"+1L",pool:7}]),
- animal("cao-grande","Cão grande","Inteligência 1, Raciocínio 4, Perseverança 4; Força 4, Destreza 3, Vigor 3; Presença 4, Manipulação 1, Compostura 3","Atletismo (Corrida) 4, Briga 3, Intimidação 3, Furtividade 1, Sobrevivência (Rastreamento) 3",7,6,8,"14",4,7,[{name:"Mordida",damage:"+0L",pool:6}]),
- animal("cao-pequeno","Cão pequeno","Inteligência 1, Raciocínio 4, Perseverança 4; Força 2, Destreza 3, Vigor 3; Presença 3, Manipulação 1, Compostura 3","Atletismo (Corrida) 3, Briga 2, Intimidação 1, Furtividade 1, Sobrevivência (Rastreamento) 3",7,6,7,"11",2,5,[{name:"Mordida",damage:"+0L",pool:4}]),
- animal("elefante","Elefante","Inteligência 1, Raciocínio 2, Perseverança 3; Força 9, Destreza 2, Vigor 7; Presença 2, Manipulação 1, Compostura 3","Atletismo (Corrida) 2, Briga (Presas) 3, Intimidação 3, Sobrevivência 3",6,5,4,"15",15,22,[{name:"Presa",damage:"+1L",pool:13},{name:"Atropelar",damage:"+3L",pool:12}]),
- animal("raposa","Raposa","Inteligência 1, Raciocínio 4, Perseverança 3; Força 1, Destreza 4, Vigor 3; Presença 2, Manipulação 1, Compostura 3","Atletismo (Corrida) 4, Briga 3, Intimidação 1, Furtividade 3, Sobrevivência (Rastreamento) 3",5,7,8,"13",2,5,[{name:"Mordida",damage:"+0L",pool:4}]),
- animal("cavalo","Cavalo","Inteligência 1, Raciocínio 3, Perseverança 3; Força 5, Destreza 3, Vigor 5; Presença 3, Manipulação 1, Compostura 2","Atletismo 4, Briga (Coice) 1, Sobrevivência 2",5,5,7,"19",7,12,[{name:"Mordida",damage:"+0L",pool:5},{name:"Casco",damage:"+2L",pool:6,note:"Um acerto impõe a Complicação Derrubado."}],"Pode erguer quatro vezes o peso de um humano com Força e Atletismo equivalentes."),
- animal("coruja","Coruja","Inteligência 1, Raciocínio 2, Perseverança 3; Força 1, Destreza 3, Vigor 2; Presença 3, Manipulação 1, Compostura 3","Atletismo 3, Briga (Emboscada) 2, Intimidação 2, Furtividade 2, Sobrevivência 3",6,6,6,"14 (voo)",2,4,[{name:"Bico",damage:"+0L",pool:3},{name:"Garras",damage:"+1L",pool:3}],"+2 em rolagens de percepção por visão e audição."),
- animal("rato","Rato","Inteligência 1, Raciocínio 3, Perseverança 2; Força 1, Destreza 4, Vigor 2; Presença 1, Manipulação 2, Compostura 2","Atletismo 3, Furtividade 4, Sobrevivência 1",4,5,7,"6",1,3,[{name:"Mordida",damage:"—",pool:1}]),
- animal("corvo","Corvo","Inteligência 2, Raciocínio 4, Perseverança 4; Força 1, Destreza 3, Vigor 2; Presença 3, Manipulação 1, Compostura 3","Atletismo 3, Briga 1, Intimidação 2, Sobrevivência 3",7,6,7,"14 (voo)",2,4,[{name:"Bico",damage:"+0L",pool:2}]),
- animal("cobra","Cobra","Inteligência 1, Raciocínio 2, Perseverança 3; Força 1, Destreza 3, Vigor 1; Presença 3, Manipulação 1, Compostura 4","Atletismo 1, Briga 1, Intimidação 2, Furtividade 4, Sobrevivência 3",7,7,4,"6",2,3,[{name:"Mordida",damage:"+0L",pool:2,note:"Espécies venenosas têm Toxicidade 3-10 e podem impor Envenenado."}]),
- animal("sapo","Sapo","Inteligência 0, Raciocínio 2, Perseverança 1; Força 1, Destreza 3, Vigor 1; Presença 1, Manipulação 1, Compostura 3","Atletismo (Salto) 2, Sobrevivência (Encontrar alimento) 3",4,5,5,"6",1,2,[]),
- animal("furao","Doninha ou furão","Inteligência 1, Raciocínio 2, Perseverança 2; Força 1, Destreza 3, Vigor 2; Presença 2, Manipulação 1, Compostura 2","Atletismo 2, Briga 1, Intimidação 1, Furtividade 4, Sobrevivência 3",4,5,5,"11",2,4,[{name:"Mordida",damage:"+0L",pool:2}]),
- animal("lobo","Lobo","Inteligência 1, Raciocínio 4, Perseverança 4; Força 4, Destreza 3, Vigor 3; Presença 4, Manipulação 1, Compostura 3","Atletismo (Corrida) 4, Briga 3, Intimidação 3, Furtividade 2, Sobrevivência (Rastreamento) 4",7,6,8,"14",4,7,[{name:"Mordida",damage:"+1L",pool:7}]),
-];
+export function vehiclePresentation(item:Vehicle,locale:"pt-BR"|"en-US"):Vehicle {
+  if(locale==="pt-BR") return item;
+  const localized=item as LocalizedVehicle;
+  return {...item,name:localized.nameEn??item.name,acceleration:localized.accelerationEn??item.acceleration};
+}
 
-const COMPANION_NAMES:Record<string,string>={motocicleta:"Motorcycle","carro-compacto":"Compact Car","carro-familiar":"Family Car","carro-esportivo":"Sports Car",limusine:"Limousine",van:"Van",caminhonete:"Pickup Truck",suv:"SUV",lancha:"Motorboat",morcego:"Bat",texugo:"Badger",urso:"Bear","gato-domestico":"House Cat","grande-felino":"Big Cat",chimpanze:"Chimpanzee",coiote:"Coyote",crocodilo:"Crocodile",cervo:"Stag","cao-grande":"Large Dog","cao-pequeno":"Small Dog",elefante:"Elephant",raposa:"Fox",cavalo:"Horse",coruja:"Owl",rato:"Rat",corvo:"Raven",cobra:"Snake",sapo:"Toad",furao:"Weasel or Ferret",lobo:"Wolf"};
-const STAT_TERMS:Record<string,string>={"Inteligência":"Intelligence","Raciocínio":"Wits","Perseverança":"Resolve","Força":"Strength","Destreza":"Dexterity","Vigor":"Stamina","Presença":"Presence","Manipulação":"Manipulation","Compostura":"Composure","Atletismo":"Athletics","Briga":"Brawl","Intimidação":"Intimidation","Furtividade":"Stealth","Sobrevivência":"Survival","Escalada":"Climbing","Escavação":"Digging","Corrida":"Running","Rastreamento":"Tracking","Agarrar":"Grappling","Pântanos":"Swamps","Natação":"Swimming","Emboscada":"Ambush","Encontrar alimento":"Finding Food","Salto":"Jumping","Coice":"Kicking","Presas":"Tusks","Voo":"Flight","Mordida":"Bite","Garra":"Claw","Garras":"Claws","Chifres":"Antlers","Presa":"Tusk","Atropelar":"Trample","Casco":"Hoof","Bico":"Beak","voo":"flight"};
-const translateStats=(value:string)=>Object.entries(STAT_TERMS).sort((a,b)=>b[0].length-a[0].length).reduce((text,[pt,en])=>text.replaceAll(pt,en),value);
-const EN_ANIMAL_TEXT:Record<string,{special?:string;notes?:Record<string,string>}>= {
- morcego:{special:"Sees without penalty in dim light or total darkness."},texugo:{special:"Gain +2 dice to resist toxins and diseases."},crocodilo:{notes:{"Ao acertar, agarra imediatamente; a vítima sofre -2 para contra-agarrar.":"On a hit, immediately grapples; the victim suffers -2 to counter-grapple."}},cavalo:{special:"Can lift four times as much as a human with comparable Strength and Athletics.",notes:{"Um acerto impõe a Complicação Derrubado.":"A successful hit inflicts the Knocked Down Tilt."}},coruja:{special:"Gain +2 on visual and auditory Perception rolls."},cobra:{notes:{"Espécies venenosas têm Toxicidade 3-10 e podem impor Envenenado.":"Venomous species have Toxicity 3–10 and may inflict Poisoned."}}
-};
-export function vehiclePresentation(item:Vehicle,locale:"pt-BR"|"en-US"):Vehicle{return locale==="pt-BR"?item:{...item,name:COMPANION_NAMES[item.id]??item.name,acceleration:item.acceleration==="Alta"?"High":item.acceleration==="Lenta"?"Slow":item.acceleration}}
-export function animalPresentation(item:Animal,locale:"pt-BR"|"en-US"):Animal{
- if(locale==="pt-BR")return item;const extra=EN_ANIMAL_TEXT[item.id];return {...item,name:COMPANION_NAMES[item.id]??item.name,attributes:translateStats(item.attributes),skills:translateStats(item.skills),speed:translateStats(item.speed),attacks:item.attacks.map((attack)=>({...attack,name:STAT_TERMS[attack.name]??attack.name,note:attack.note?(extra?.notes?.[attack.note]??translateStats(attack.note)):undefined})),special:extra?.special??(item.special?translateStats(item.special):undefined)};
+export function animalPresentation(item:Animal,locale:"pt-BR"|"en-US"):Animal {
+  if(locale==="pt-BR") return item;
+  const localized=item as LocalizedAnimal;
+  return {...item,name:localized.nameEn??item.name,attributes:localized.attributesEn??item.attributes,skills:localized.skillsEn??item.skills,speed:localized.speedEn??item.speed,attacks:localized.attacksEn??item.attacks,special:localized.specialEn??item.special};
 }

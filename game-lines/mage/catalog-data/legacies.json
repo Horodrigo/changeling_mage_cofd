@@ -1,0 +1,298 @@
+[
+  {
+    "id": "the-eleventh-question",
+    "name": "The Eleventh Question",
+    "source": "Mage: The Awakening",
+    "page": 200,
+    "parentage": {
+      "paths": [
+        "Moros"
+      ],
+      "orders": [
+        "Guardians of the Veil",
+        "Mysterium"
+      ]
+    },
+    "rulingArcanum": "Time",
+    "prerequisites": "Time 2, Investigation 2, and Academics, Larceny, Medicine, Occult, or Science 2. The mage must also meet the general Legacy requirements for Gnosis and parentage, or qualify through the first-Attainment Praxis exception.",
+    "initiation": "The prospective Querent must solve the Mystery assigned by the tutor.",
+    "organization": "Querents have no formal hierarchy and commonly work in pairs. Larger gatherings answer a Legacy-wide emergency or an exceptionally strange Mystery.",
+    "theory": "All evidence points toward a holistic, ultimate truth. Secrets obstruct enlightenment and must be exposed, although not everyone deserves the knowledge uncovered.",
+    "yantras": [
+      "Succeeding on an Investigation roll relevant to the spell (+2).",
+      "Verbally explaining a mysterious phenomenon to a trusted associate (+1).",
+      "Collecting samples or recording information relevant to the spell (+2).",
+      "Using stimulants to remain focused (+1, or +2 if this creates an adverse Condition)."
+    ],
+    "oblations": [
+      "Solving a riddle or puzzle.",
+      "Studying esoteric magical theories.",
+      "Pursuing an obsessive or antisocial habit.",
+      "Giving an extended lecture about an intellectually challenging topic."
+    ],
+    "attainments": [
+      {
+        "rank": 1,
+        "name": "The Undisturbed Scene",
+        "prerequisites": "Initiation",
+        "rulingArcanum": 1,
+        "orthodoxGnosis": 2,
+        "novelGnosis": 3,
+        "praxisName": "Perfect Timing",
+        "description": "Emulates Perfect Timing: add Time dots to rolls made to gather information from a location.",
+        "optional": "Matter 1: engage Active Mage Sight (Matter) on arrival; pierce supernatural concealment with automatic successes equal to Matter."
+      },
+      {
+        "rank": 2,
+        "name": "The Unobvious Answer",
+        "prerequisites": "Time 2, Investigation 3",
+        "rulingArcanum": 2,
+        "orthodoxGnosis": 2,
+        "novelGnosis": 3,
+        "praxisName": "Postcognition",
+        "description": "Study a subject for a turn and duplicate Postcognition, with Potency equal to Time dots and Reach for instant use and sensory range.",
+        "optional": "Matter 2: restore diluted or dispersed liquid or particulate matter to a former shape when residue remains, duplicating Shaping by touch."
+      },
+      {
+        "rank": 3,
+        "name": "The Chance Answer",
+        "prerequisites": "Time 3, Investigation 3, plus the other qualifying Skill at 3 or a second listed Skill at 2",
+        "rulingArcanum": 3,
+        "orthodoxGnosis": 4,
+        "novelGnosis": 5,
+        "praxisName": "Divination",
+        "description": "Duplicate Divination with Reach for instant use, sensory range, and specific questions, limited to answers the Querent believes her future self will personally discover.",
+        "optional": "Matter 3: reshape matching raw material without tools into an object relevant to the Querent's personal future."
+      },
+      {
+        "rank": 4,
+        "name": "The Timely Answer",
+        "prerequisites": "Time 4, Investigation 4, and the previous additional Skill requirements",
+        "rulingArcanum": 4,
+        "orthodoxGnosis": 6,
+        "novelGnosis": 7,
+        "praxisName": "Prophecy",
+        "description": "After building a profile for a scene, duplicate Prophecy with Reach for sensory range. A Representational sympathetic Yantra permits use without the subject present.",
+        "optional": "Matter 4: create a representational sympathetic Yantra for the target from impressions of the past or emanations of the future."
+      },
+      {
+        "rank": 5,
+        "name": "The Penultimate Answer",
+        "prerequisites": "Time 5, Investigation 4, plus the qualifying Skill at 4, a second listed Skill at 3, or a third listed Skill at 2",
+        "rulingArcanum": 5,
+        "orthodoxGnosis": 8,
+        "novelGnosis": 9,
+        "description": "After a scene of meditation, project consciousness into the mage's own body up to one year in the future for a scene lasting no more than one hour; later visits overwrite earlier ones.",
+        "optional": "Matter 5: when that future arrives, create or delete nonmagical material objects using combined factors limited by the lower of Time or Matter."
+      }
+    ],
+    "entryPraxis": "Perfect Timing",
+    "entryRequirements": {
+      "arcana": {
+        "Time": 2
+      },
+      "skills": {
+        "Investigation": 2
+      },
+      "anySkills": {
+        "names": [
+          "Academics",
+          "Larceny",
+          "Medicine",
+          "Occult",
+          "Science"
+        ],
+        "rating": 2
+      }
+    }
+  },
+  {
+    "id": "chronologue",
+    "name": "Chronologue",
+    "source": "Night Horrors: Nameless and Accursed",
+    "page": 39,
+    "parentage": {
+      "paths": [
+        "Acanthus"
+      ],
+      "orders": [
+        "Seers of the Throne"
+      ]
+    },
+    "rulingArcanum": "Time",
+    "entryPraxis": "Green Light/Red Light",
+    "prerequisites": "Time 2, Fate 1, and Computer 2. The mage must also meet the general Legacy requirements for Gnosis and parentage, or qualify through the first-Attainment Praxis exception.",
+    "initiation": "The initiate commits to rejecting free will in favor of increasingly precise prediction and predestination.",
+    "organization": "Chronologues arise among Acanthus and the Seers of the Throne, especially mages who use schedules, simulations, and predictive systems to impose an inevitable future.",
+    "theory": "Free will is error in an insufficient model. Time and predictive computation can refine society into a machine that runs exactly as foreseen.",
+    "yantras": [
+      "Timepieces, calendars, and schedules (+1).",
+      "Casting at a time predetermined and agreed to the second (+1, or +2 while opposed or under stress).",
+      "Fulfilling a previously established prophecy or predicted doom (+1)."
+    ],
+    "oblations": [
+      "Ensure an event occurs exactly as predicted.",
+      "Complete at least 12 consecutive hours of productive work without rest.",
+      "Repeat the same activity for at least an hour.",
+      "Precisely follow a schedule of the mage's own creation."
+    ],
+    "attainments": [
+      {
+        "rank": 1,
+        "name": "If-Then-Else",
+        "prerequisites": "Initiation (Time 2, Fate 1, Computer 2)",
+        "rulingArcanum": 1,
+        "orthodoxGnosis": 2,
+        "novelGnosis": 3,
+        "praxisName": "Green Light/Red Light",
+        "requirements": {
+          "arcana": {
+            "Time": 2,
+            "Fate": 1
+          },
+          "skills": {
+            "Computer": 2
+          }
+        },
+        "description": "Emulates Green Light/Red Light on someone other than the mage. Choose one action the subject might take; performing it can reverse the Attainment from beneficial to detrimental effects, or vice versa. Includes Reach for instant use."
+      },
+      {
+        "rank": 2,
+        "name": "Possibility Matrix",
+        "prerequisites": "Time 2, Computer 3",
+        "rulingArcanum": 2,
+        "orthodoxGnosis": 2,
+        "novelGnosis": 3,
+        "praxisName": "Divination",
+        "requirements": {
+          "arcana": {
+            "Time": 2
+          },
+          "skills": {
+            "Computer": 3
+          }
+        },
+        "description": "After a scene coding a digital Imago, emulate Divination at sensory range with detailed answers. Recheck the subject's shifting future every five minutes for up to a scene, even after the subject leaves sensory range. The mage cannot target herself."
+      }
+    ],
+    "entryRequirements": {
+      "arcana": {
+        "Time": 2,
+        "Fate": 1
+      },
+      "skills": {
+        "Computer": 2
+      }
+    }
+  },
+  {
+    "id": "engineers-of-the-system",
+    "name": "Engineers of the System",
+    "source": "Tome of the Pentacle",
+    "page": 157,
+    "parentage": {
+      "paths": [
+        "Thyrsus"
+      ],
+      "orders": [
+        "Seers of the Throne",
+        "Praetorian Ministry"
+      ]
+    },
+    "rulingArcanum": "Space",
+    "entryPraxis": "Correspondence",
+    "prerequisites": "Space 2, Investigation 2, and Intimidation or Survival 2.",
+    "entryRequirements": {
+      "arcana": {
+        "Space": 2
+      },
+      "skills": {
+        "Investigation": 2
+      },
+      "anySkills": {
+        "names": [
+          "Intimidation",
+          "Survival"
+        ],
+        "rating": 2
+      }
+    },
+    "initiation": "The initiate learns to perceive society and living motion as the interacting machinery of a single System.",
+    "organization": "The Legacy is rare and often transmitted through isolated Seer mentors.",
+    "theory": "Physical and social reality form one machine whose joints can be perceived and manipulated.",
+    "yantras": [
+      "Drawing an abstract schematic connecting physical and social factors for an hour (+2).",
+      "Following a trail or visual pattern left by a living being (+1)."
+    ],
+    "oblations": [
+      "Scrawling social and political schematics on the body.",
+      "Hunting food through deception or intimidation."
+    ],
+    "attainments": [
+      {
+        "rank": 1,
+        "name": "See the Bones and Gears",
+        "prerequisites": "Initiation (Space 2, Investigation 2, Intimidation or Survival 2)",
+        "rulingArcanum": 1,
+        "orthodoxGnosis": 2,
+        "novelGnosis": 3,
+        "praxisName": "Correspondence",
+        "requirements": {
+          "arcana": {
+            "Space": 2
+          },
+          "skills": {
+            "Investigation": 2
+          },
+          "anySkills": {
+            "names": [
+              "Intimidation",
+              "Survival"
+            ],
+            "rating": 2
+          }
+        },
+        "description": "Duplicates Correspondence with Potency equal to Space. Reach may reveal additional connections or their owners.",
+        "optional": "Life 1: for one Mana, also duplicate Web of Life with Potency equal to Life and Reach assigned to Scale."
+      },
+      {
+        "rank": 2,
+        "name": "Rebuild the Living Machine",
+        "prerequisites": "Space 2, Investigation 3",
+        "rulingArcanum": 2,
+        "orthodoxGnosis": 2,
+        "novelGnosis": 3,
+        "praxisName": "Borrow Threads",
+        "requirements": {
+          "arcana": {
+            "Space": 2
+          },
+          "skills": {
+            "Investigation": 3
+          }
+        },
+        "description": "For one Mana, duplicates Borrow Threads with Potency equal to Space and Reach assigned to Scale.",
+        "optional": "Life 2: add +1 Potency to Life spells cast on a target with which the mage has a sympathetic connection."
+      },
+      {
+        "rank": 3,
+        "name": "Become the Ecosystem",
+        "prerequisites": "Space 3, Investigation 4",
+        "rulingArcanum": 3,
+        "orthodoxGnosis": 4,
+        "novelGnosis": 5,
+        "praxisName": "Co-Location",
+        "requirements": {
+          "arcana": {
+            "Space": 3
+          },
+          "skills": {
+            "Investigation": 4
+          }
+        },
+        "description": "For one Mana, duplicates Co-Location with Potency equal to Space and Reach assigned to Scale.",
+        "optional": "Life 3: one inhabited location may also receive Mutable Mask with +2 Reach and Potency equal to the lower of Life or Space, allowing impersonation at a distance."
+      }
+    ]
+  }
+]

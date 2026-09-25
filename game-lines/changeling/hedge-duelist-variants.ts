@@ -1,9 +1,3 @@
-export const HEDGE_DUELIST_VARIANTS = [
-  { value: "thousand-falling-leaves", label: "Thousand Falling Leaves", seeming: "Any", description: "Before one attack, inflict −1 Defense on the opponent; a successful attack deals only half its normal damage." },
-  { value: "once-bitten-twice-shy", label: "Once Bitten, Twice Shy", seeming: "Beast", description: "After damaging an opponent with an attack this turn, reduce their Initiative on the next turn by the character's Hedge Duelist dots." },
-  { value: "shadowplay", label: "Shadowplay", seeming: "Darkling", description: "Gain +2 Defense while in darkness or deep shadow." },
-  { value: "treacherous-ground", label: "Treacherous Ground", seeming: "Elemental", description: "Reduce an opponent's Speed by Hedge Duelist dots while that opponent touches the ground." },
-  { value: "unblemished-poise", label: "Unblemished Poise", seeming: "Fairest", description: "While no damage is marked on the character's Health track, add Hedge Duelist dots to Initiative." },
-  { value: "the-crashing-oak", label: "The Crashing Oak", seeming: "Ogre", description: "Gain +3 from an All-Out Attack instead of +2." },
-  { value: "spite-is-strength", label: "Spite is Strength", seeming: "Wizened", description: "Gain +1 to attack rolls this turn if the opponent damaged the character during the previous turn." },
-] as const;
+import variants from "./catalog-data/hedge-duelist-variants.json";
+
+export const HEDGE_DUELIST_VARIANTS = variants;
