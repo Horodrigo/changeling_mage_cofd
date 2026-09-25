@@ -23,11 +23,12 @@ import type { SpellDefinition } from "@/lib/catalog/catalog-types";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meetsArcanaRequirements } from "./builder-eligibility";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { mageGnosisSummary, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS } from "./creation-rules";
+import { mageGnosisSummary, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS } from "./creation-rules";
 import { refundMageAdvancement,type MageAdvancementUndo } from "@/lib/experience-refunds";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage,type Locale } from "@/lib/i18n";
 import { findLegacy,normalizeLegacyState } from "@/game-lines/mage/legacies";
+import { findMageAffiliation } from "@/game-lines/mage/orders";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import { mageNimbusConnection,mageNimbusTiltBudget,normalizeNimbusTiltEffects } from "./nimbus";
 import { availableHubrisTiers, hubrisPool, wisdomState } from "./hubris";
@@ -834,6 +835,7 @@ function MageOrderSummary({ data }: {
     const raw = data.custom_order;
     const custom = raw && typeof raw === "object" ? raw as Record<string, unknown> : undefined;
     const orderKey = String(data.order ?? "Orderless");
+    const affiliation=findMageAffiliation(data.affiliation_id);
     const name = orderKey === "Orderless"
         ? t("ui.orderless")
         : String(custom?.name || (locale === "en-US" ? orderKey : MTA_ORDER_LABELS[orderKey] ?? orderKey));
@@ -842,11 +844,12 @@ function MageOrderSummary({ data }: {
         ? stringList(data.rote_skills)
         : Array.isArray(custom?.roteSkills)
             ? custom.roteSkills.map(String).filter(Boolean)
-            : [...(MTA_ORDERS[orderKey as keyof typeof MTA_ORDERS] ?? [])];
+            : stringList(data.rote_skills);
     return (<section className="mage-order-summary">
       <SheetHeading>{t("ui.order")}</SheetHeading>
       <strong>{name}</strong>
       {description && <p>{description}</p>}
+      {affiliation&&<p><strong>{t("ui.ministry")}:</strong> {affiliation.name} · {affiliation.patronExarch}{affiliation.additionalPatronExarchs?.length?` / ${affiliation.additionalPatronExarchs.join(" / ")}`:""}</p>}
       {skills.length > 0 && <small><strong>{t("ui.roteSkills")}:</strong> {skills.map((skill) => systemTerm(skill, locale)).join(", ")}</small>}
     </section>);
 }

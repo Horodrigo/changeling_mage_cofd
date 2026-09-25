@@ -268,7 +268,7 @@ export function MageExperiencePanel({
     if(purchase==="Mérito"){
       if(!selectedMerit||!nextMerit)return setFeedback(t("ui.selectAnAvailableMerit"));
       if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
-      const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]),factionCatalog);
+      const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]),factionCatalog,character.line_data.affiliation_id);
       if(problems.length)return setFeedback(problems.join(" "));
     }
     if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));

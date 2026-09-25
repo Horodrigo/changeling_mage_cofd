@@ -276,6 +276,19 @@ test("Nameless Order applies its fixed Mystery Cult progression at the correct d
   );
 });
 
+test("Seer Ministries own their Rote Skills while historical affiliations receive no modern starting grants",()=>{
+  const seer={game_line:"MtA",line_data:{order:"Seers of the Throne",affiliation_id:"hegemony"},merits:[],specializations:[]};
+  mageMeritConfigurations.synchronizeMeritGrants(seer);
+  assert.deepEqual(seer.line_data.rote_skills,["Politics","Persuasion","Empathy"]);
+  assert.deepEqual(seer.merits.filter(item=>item.grantedBy==="Ordem").map(item=>item.name).sort(),["Awakened Status","High Speech"]);
+
+  const historical={game_line:"MtA",line_data:{order:"Company of the Codex",affiliation_id:"hegemony",rote_skills:["Firearms"]},merits:[],specializations:[]};
+  mageMeritConfigurations.synchronizeMeritGrants(historical);
+  assert.equal(historical.line_data.affiliation_id,"");
+  assert.deepEqual(historical.line_data.rote_skills,[]);
+  assert.deepEqual(historical.merits,[]);
+});
+
 test("edição preserva Méritos de Experiência e substitui apenas a base de criação", () => {
   const existing = [
     {name:"Allies",instanceId:"creation",dots:4,creationDots:2,experienceDots:2,configuration:{group:"Police"}},

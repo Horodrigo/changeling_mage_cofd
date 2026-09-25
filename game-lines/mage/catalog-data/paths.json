@@ -1,0 +1,7 @@
+[
+  { "id": "acanthus", "name": "Acanthus", "ruling": ["Time", "Fate"], "inferior": "Forces" },
+  { "id": "mastigos", "name": "Mastigos", "ruling": ["Space", "Mind"], "inferior": "Matter" },
+  { "id": "moros", "name": "Moros", "ruling": ["Matter", "Death"], "inferior": "Spirit" },
+  { "id": "obrimos", "name": "Obrimos", "ruling": ["Forces", "Prime"], "inferior": "Death" },
+  { "id": "thyrsus", "name": "Thyrsus", "ruling": ["Life", "Spirit"], "inferior": "Mind" }
+]

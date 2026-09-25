@@ -14,7 +14,7 @@ import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS
 import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
-import { hasPublishedMageOrder } from "./orders";
+import { findMageAffiliation, hasStandardCreationOrderBenefits, mageAffiliationsFor } from "./orders";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
@@ -29,9 +29,9 @@ export type SpellSelection = SpellDefinition & { roteSkill?: string };
 export type CustomOrderDefinition = { name: string; description: string; roteSkills: string[]; initiation?: MeritConfiguration };
 type Setter<T> = (value: T) => void;
 type MissingCheck = (key: string) => boolean;
-type OrderSelectorProps = { order: string; setOrder: Setter<string>; customOrder: CustomOrderDefinition | null; setCustomOrder: Setter<CustomOrderDefinition | null>; orderCatalog?: CustomOrderDefinition[]; invalid?: boolean };
+type OrderSelectorProps = { order: string; setOrder: Setter<string>; setAffiliationId:Setter<string>;customOrder: CustomOrderDefinition | null; setCustomOrder: Setter<CustomOrderDefinition | null>; orderCatalog?: CustomOrderDefinition[]; invalid?: boolean };
 export type MageBuilderViewProps = {
-  path: string; setPath: Setter<string>; order: string; customOrder: CustomOrderDefinition | null; setCustomOrder: Setter<CustomOrderDefinition | null>; setOrder: Setter<string>; orderCatalog?: CustomOrderDefinition[];
+  path: string; setPath: Setter<string>; order: string; affiliationId:string;setAffiliationId:Setter<string>;orderRoteSkills:string[];customOrder: CustomOrderDefinition | null; setCustomOrder: Setter<CustomOrderDefinition | null>; setOrder: Setter<string>; orderCatalog?: CustomOrderDefinition[];
   gnosis: number; setGnosis: Setter<number>; maximumPowerFromMerits: number; powerAdvancement: number; virtue: string; setVirtue: Setter<string>; vice: string; setVice: Setter<string>;
   resistanceBonus: string; setResistanceBonus: Setter<string>; nimbus: string; setNimbus: Setter<string>; tool: string; setTool: Setter<string>;
   arcana: Record<string, number>; setArcana: Setter<Record<string, number>>; rotes: Array<SpellSelection | null>; setRotes: Setter<Array<SpellSelection | null>>;
@@ -56,6 +56,7 @@ function OrderSelector(props: OrderSelectorProps) {
       ? (props.order === "Nameless" ? props.customOrder : null) ?? { name: "", description: "An Order without a recognized name among the great societies of the Awakened.", roteSkills: ["", "", ""], initiation: {} }
       : saved.find((item) => item.name === name) ?? null;
     props.setOrder(name);
+    if(name!=="Seers of the Throne")props.setAffiliationId("");
     props.setCustomOrder(custom);
   };
   return (
@@ -67,7 +68,7 @@ function OrderSelector(props: OrderSelectorProps) {
             t("ui.noneSelected")}
         </strong>
         <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || t("ui.chooseAnOrderToReviewItsDescription")}</p>
-        {hasPublishedMageOrder(props.order) ? <small>
+        {hasStandardCreationOrderBenefits(props.order) ? <small>
           <strong>{t("ui.roteSkills")}:</strong>{" "}
           {(MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => builderText(locale, skill)).join(", ")}
         </small> : null}
@@ -95,6 +96,7 @@ function OrderSelector(props: OrderSelectorProps) {
               "__none",
               "Orderless",
               ...Object.keys(MTA_ORDERS),
+              "Nameless",
               ...saved.map((item) => item.name),
             ]}
             optionLabels={{
@@ -136,7 +138,8 @@ export function MageBuilderView(props: MageBuilderViewProps) {
   const { locale, t } = useLanguage();
   const pathData = MTA_PATHS[props.path as keyof typeof MTA_PATHS];
   const neededPraxes = props.gnosis;
-  const hasCreationOrderBenefits = hasPublishedMageOrder(props.order) || props.order === "Nameless";
+  const hasCreationOrderBenefits = hasStandardCreationOrderBenefits(props.order) || props.order === "Nameless"&&props.orderRoteSkills.length===3;
+  const affiliations=mageAffiliationsFor(props.order),affiliation=findMageAffiliation(props.affiliationId);
   return (
     <div className="builder-section">
       <span className="kicker">{t("ui.step3MAGE")}</span>
@@ -169,6 +172,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
         </div>
         <div className="mta-template-column">
           <OrderSelector {...props} invalid={props.missing("order")} />
+          {affiliations.length>0&&<div className="kith-field"><Choice label={t("ui.ministryOptional")} value={props.affiliationId||"__none"} setValue={(value)=>props.setAffiliationId(value==="__none"?"":value)} options={["__none",...affiliations.map((item)=>item.id)]} optionLabels={{__none:t("ui.noMinistry"),...Object.fromEntries(affiliations.map((item)=>[item.id,item.name]))}}/>{affiliation&&<p>{affiliation.description} · {affiliation.patronExarch}{affiliation.additionalPatronExarchs?.length?` / ${affiliation.additionalPatronExarchs.join(" / ")}`:""}</p>}</div>}
         </div>
         <div className="mta-template-column mta-virtue-vice">
           <label className={props.missing("virtue") ? "missing-field" : ""}>
@@ -187,11 +191,13 @@ export function MageBuilderView(props: MageBuilderViewProps) {
       {props.order && (
         <p className="rule-callout">
           <ShieldCheck />{" "}
-          {!hasPublishedMageOrder(props.order)
-            ? props.order === "Orderless"
+          {hasStandardCreationOrderBenefits(props.order)
+            ? t("ui.orderMemberReceivesHighSpeechFreeOccultDot")
+            : props.order === "Orderless"
               ? t("ui.orderlessReceivesNoHighSpeechFreeOccultDot")
-              : t("ui.aNamelessOrderReceivesHighSpeechAndMystery")
-            : t("ui.orderMemberReceivesHighSpeechFreeOccultDot")}
+              : props.order === "Nameless"
+                ? t("ui.aNamelessOrderReceivesHighSpeechAndMystery")
+                : t("ui.historicalOrderBenefitsNotApplied")}
         </p>
       )}
       <h3>{t("ui.arcana6Dots")}</h3>
@@ -241,6 +247,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
             rote
             arcana={props.arcana}
             catalog={props.spellCatalog}
+            allowedRoteSkills={props.orderRoteSkills}
           />
         </div>
       )}
@@ -283,6 +290,7 @@ function SpellSelector({
   rote = false,
   arcana,
   catalog,
+  allowedRoteSkills,
 }: {
   title: string;
   count: number;
@@ -291,6 +299,7 @@ function SpellSelector({
   rote?: boolean;
   arcana: Record<string, number>;
   catalog: SpellDefinition[];
+  allowedRoteSkills?:string[];
 }) {
   const { locale, t } = useLanguage();
   const spellName = (spell: SpellDefinition) => locale === "pt-BR" ? spell.name : (spell.originalName || spell.name);
@@ -305,6 +314,7 @@ function SpellSelector({
   const filtered = alphabetical(catalog, spellName,locale).filter(
     (spell) =>
       meetsArcanaRequirements(spell.requirements, arcana) &&
+      (!rote||!allowedRoteSkills?.length||spell.roteSkills.some((skill)=>allowedRoteSkills.includes(skill)))&&
       (arcanaFilter === "__all" || Object.hasOwn(spell.requirements, arcanaFilter)) &&
       (levelFilter === "__all" || Object.values(spell.requirements).includes(Number(levelFilter))) &&
       (sourceFilter === "__all" || spell.sourceId === sourceFilter) &&
@@ -366,7 +376,7 @@ function SpellSelector({
           <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {spell.practice}</p>
           <p className="rule-detail"><strong>{t("ui.primaryFactor")}:</strong> {spell.primaryFactor}</p>
           {spell.withstand && <p className="rule-detail"><strong>{t("ui.withstand")}:</strong> {spell.withstand}</p>}
-          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.join(", ")}</p>}
+          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill)).join(", ")}</p>}
           <p className="rule-detail">
             <strong>{t("ui.summary")}:</strong> {spellSummary(spell)}
           </p>
@@ -395,9 +405,10 @@ function SpellSelector({
         {Array.from({ length: count }, (_, index) => {
           const item = values[index];
           if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
+          const roteSkillOptions=item.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill));
           return (
             <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote && item.roteSkills.length > 0 && <span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={item.roteSkill ?? item.roteSkills[0]} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={item.roteSkills}/></span>}</summary>
+              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote&&roteSkillOptions.length>0&&<span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={roteSkillOptions.includes(item.roteSkill??"")?item.roteSkill??"":""} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={roteSkillOptions}/></span>}</summary>
               <div className="contract-power-details">
                 <dl>
                   <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item)}</dd></div>

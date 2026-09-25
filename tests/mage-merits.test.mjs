@@ -94,9 +94,27 @@ test("Infamous Mentor links a Mentor instance of equal rating",()=>{
 });
 test("published Orders and unbounded Mage ratings are represented",()=>{
  assert.equal(orders.hasPublishedMageOrder("Silver Ladder"),true);
+ assert.equal(orders.MAGE_ORDERS.length,17);
+ assert.equal(orders.MAGE_ORDERS.filter(item=>item.creationBenefits).length,6);
+ assert.equal(orders.hasStandardCreationOrderBenefits("Company of the Codex"),false);
+ assert.equal(orders.hasPublishedMageOrder("Tremere"),false);
  assert.equal(orders.hasPublishedMageOrder("Nameless"),false);
  assert.equal(orders.hasPublishedMageOrder("My Custom Order"),false);
+ assert.equal(orders.MAGE_AFFILIATIONS.length,12);
+ assert.equal(Object.isFrozen(orders.MAGE_ORDERS[0].roteSkills),true);
+ assert.equal(Object.isFrozen(orders.MAGE_AFFILIATIONS),true);
+ assert.equal(orders.mageAffiliationsFor("Silver Ladder").length,0);
+ assert.equal(orders.mageAffiliationsFor("Seers of the Throne").length,12);
+ assert.deepEqual(orders.findMageAffiliation("hegemony").roteSkills,["Politics","Persuasion","Empathy"]);
+ assert.deepEqual(orders.findMageAffiliation("geryon").roteSkills,["Larceny","Socialize","Subterfuge"]);
+ assert.deepEqual(new Set(orders.MAGE_AFFILIATIONS.flatMap(item=>[item.patronExarch,...(item.additionalPatronExarchs??[])])),new Set(["Eye","Father","General","Unity","Chancellor","Raptor","Prophet","Nemesis","Ruin"]));
  assert.deepEqual(merits.meritRatingsFor(merit("Artifact"),7),[3,4,5,6,7]);
+});
+test("Prelacy follows the selected Ministry patron",()=>{
+ const context={...base,order:"Seers of the Throne",merits:[{name:"Awakened Status",dots:3,configuration:{domain:"Seers of the Throne"}}]};
+ assert.deepEqual(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"Eye"}},context,factions,"panopticon"),[]);
+ assert.ok(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"General"}},context,factions,"panopticon").some(message=>message.includes("Panopticon")));
+ assert.deepEqual(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"Ruin"}},context,factions,"kyrian"),[]);
 });
 test("Tome factions are complete and Faction Member validates Order-specific choices",()=>{
  assert.equal(factions.length,44);

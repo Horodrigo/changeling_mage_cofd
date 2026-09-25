@@ -3,7 +3,7 @@ const CONTENT_KEYS = new Set([
   "allWillpower", "allWillpowerPt", "attributes", "benefit", "blessing", "blessingEn",
   "causing", "coverage", "curse", "curseEn", "description", "effect", "ending",
   "initiation", "notes", "oblations", "organization", "page", "prerequisites",
-  "roteSkills", "singleWillpower", "singleWillpowerPt", "skills", "source", "sourceId",
+  "roteSkills", "ruling", "inferior", "singleWillpower", "singleWillpowerPt", "skills", "source", "sourceId",
   "special", "theory", "toolYantra", "translatedName", "yantras",
 ]);
 
@@ -54,7 +54,7 @@ const isCatalog = (node) => {
   return values.filter((value) => isRecord(value, false)).length >= 2;
 };
 
-export default {
+const noInlineCatalogDataRule = {
   meta: {
     type: "problem",
     docs: { description: "require published static catalog data to live in JSON resources" },
@@ -74,3 +74,5 @@ export default {
     };
   },
 };
+
+export default noInlineCatalogDataRule;

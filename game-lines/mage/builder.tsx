@@ -17,7 +17,7 @@ import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibi
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
-import { hasPublishedMageOrder } from "./orders";
+import { findMageAffiliation, hasStandardCreationOrderBenefits } from "./orders";
 import { type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
@@ -129,6 +129,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
 
   const [path, setPath] = useState(String(initial?.line_data.path ?? ""));
   const [order, setOrder] = useState(String(initial?.line_data.order || "Orderless"));
+  const [affiliationId, setAffiliationId] = useState(String(initial?.line_data.affiliation_id ?? ""));
   const [customOrder, setCustomOrder] = useState<CustomOrderDefinition | null>(() => normalizeCustomOrder(initial?.line_data.custom_order));
   const [virtue, setVirtue] = useState(String(initial?.line_data.virtue ?? ""));
   const [vice, setVice] = useState(String(initial?.line_data.vice ?? ""));
@@ -149,11 +150,18 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const namelessRoteSkills = Array.isArray(namelessConfiguration.level_2_rote_skills)
     ? namelessConfiguration.level_2_rote_skills.map(String).filter(Boolean)
     : [];
-  const hasCreationOrderBenefits = hasPublishedMageOrder(order) || (order === "Nameless" && namelessInitiationDots >= 2);
-  const hasOrderOccultBonus = hasPublishedMageOrder(order);
+  const selectedAffiliation = findMageAffiliation(affiliationId);
+  const affiliation = selectedAffiliation?.parentOrder === order ? selectedAffiliation : undefined;
+  const orderRoteSkills = order === "Nameless"
+    ? namelessRoteSkills
+    : affiliation?.roteSkills?.length
+      ? affiliation.roteSkills
+      : (MTA_ORDERS[order] ?? []);
+  const hasCreationOrderBenefits = hasStandardCreationOrderBenefits(order) || (order === "Nameless" && namelessInitiationDots >= 2);
+  const hasOrderOccultBonus = hasStandardCreationOrderBenefits(order);
 
   useEffect(() => {
-    const wanted: MeritSelection[] = hasPublishedMageOrder(order)
+    const wanted: MeritSelection[] = hasStandardCreationOrderBenefits(order)
       ? [
           { name: "Awakened Status", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order } },
           { name: "High Speech", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {} },
@@ -204,7 +212,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
-      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog)) add("merits", `${merit.name}: ${message}`);
+      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${merit.name}: ${message}`);
     }
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [
@@ -216,7 +224,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     if (order === "Nameless" && namelessInitiationDots >= 2 && (namelessRoteSkills.length !== 3 || new Set(namelessRoteSkills).size !== 3))
       add("merits", t("ui.chooseThreeDistinctRoteSkillsForMysteryCult"));
     arcanaCreationErrors(arcana, path ? pathData : undefined, locale).forEach((message) => add("arcana", message));
-    if (hasCreationOrderBenefits && rotes.slice(0, 3).filter((item) => item?.roteSkill && meetsArcanaRequirements(item.requirements, arcana)).length !== 3)
+    if (hasCreationOrderBenefits && rotes.slice(0, 3).filter((item) => item?.roteSkill&&orderRoteSkills.includes(item.roteSkill)&&meetsArcanaRequirements(item.requirements, arcana)).length !== 3)
       add("rotes", t("ui.threeUsableRotesAndTheirSkills"));
     if (praxes.slice(0, gnosis).filter((item) => item && meetsArcanaRequirements(item.requirements, arcana)).length !== gnosis)
       add("praxes", `${gnosis} ${t("ui.usablePraxis")}`);
@@ -250,19 +258,19 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
           const definition = meritCatalog.find((entry) => entry.name === item.name);
           return { ...item, configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId, source: definition?.source };
         })),
-        ...(hasPublishedMageOrder(order) && !common.merits.some((item) => item.name === "High Speech") && !source?.merits.some((item) => item.name === "High Speech" && item.experienceDots)
+        ...(hasStandardCreationOrderBenefits(order) && !common.merits.some((item) => item.name === "High Speech") && !source?.merits.some((item) => item.name === "High Speech" && item.experienceDots)
           ? [{ name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]
           : []),
       ],
       line_data: {
-        ...(source?.line_data ?? {}), path, order, custom_order: customOrder, virtue, vice, shadow_name: shadowName,
+        ...(source?.line_data ?? {}), path, order, affiliation_id:affiliationId, custom_order: customOrder, virtue, vice, shadow_name: shadowName,
         resistance_bonus: resistanceBonus,
         order_occult_bonus: hasOrderOccultBonus ? Math.max(0, Math.min(5, (common.skills.Occult ?? 0) + 1) - (common.skills.Occult ?? 0)) : 0,
         creation_gnosis: gnosis, gnosis: Math.min(10, gnosis + sourceProgression.advancement),
         wisdom: Number(source?.line_data.wisdom ?? 7), arcana: finalArcana,
         rotes: hasCreationOrderBenefits ? rotes.filter(Boolean) : [], praxes: praxes.slice(0, gnosis).filter(Boolean),
         ruling_arcana: pathData?.ruling ?? [], inferior_arcanum: pathData?.inferior ?? "",
-        rote_skills: order === "Nameless" ? namelessRoteSkills : (MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? []),
+        rote_skills: hasCreationOrderBenefits ? orderRoteSkills : [],
       },
       derived: {
         Tamanho: 5, Vitalidade: 5 + finalAttributes.Stamina,
@@ -294,7 +302,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     renderAdvancement={(sheet, updateSheet) => <MageExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={t("ui.shadowName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
-    lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} factionCatalog={[...factionCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
+    lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} affiliationId={affiliationId} setAffiliationId={setAffiliationId} orderRoteSkills={orderRoteSkills} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} factionCatalog={[...factionCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
   />;
 }
 

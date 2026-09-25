@@ -1,17 +1,20 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
-import { hasPublishedMageOrder } from "./orders";
+import { findMageAffiliation, hasStandardCreationOrderBenefits } from "./orders";
 import { MTA_ORDERS } from "./creation-rules";
 
 export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
   const order = String(sheet.line_data.order ?? "Orderless");
+  const selectedAffiliation=findMageAffiliation(sheet.line_data.affiliation_id);
+  const affiliation=selectedAffiliation?.parentOrder===order?selectedAffiliation:undefined;
+  if(selectedAffiliation&&!affiliation)sheet.line_data.affiliation_id="";
   const automatic = sheet.merits.filter((item) =>
     (item.grantedBy === "Ordem" && ["Awakened Status", "High Speech"].includes(item.name)) ||
     (item.grantedBy === "Nameless Order" && ["Mystery Cult Initiation", "High Speech"].includes(item.name)),
   );
   sheet.merits = sheet.merits.filter((item) => !automatic.includes(item));
-  if (hasPublishedMageOrder(order)) {
+  if (hasStandardCreationOrderBenefits(order)) {
     const status = automatic.find((item) => item.name === "Awakened Status");
     sheet.merits.push({ ...status, instanceId: status?.instanceId ?? `order-status-${order}`, name: "Awakened Status", dots: Math.max(1, Number(status?.dots ?? 1)), creationDots: Math.max(1, Number(status?.creationDots ?? (Number(status?.dots ?? 1) - Number(status?.experienceDots ?? 0)))), experienceDots: Math.max(0, Number(status?.experienceDots ?? 0)), sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order }, grantedBy: "Ordem" });
     const speech = automatic.find((item) => item.name === "High Speech");
@@ -35,7 +38,9 @@ export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
   }
   const baseRoteSkills = order === "Nameless"
     ? (Array.isArray(sheet.line_data.rote_skills) ? sheet.line_data.rote_skills.map(String) : [])
-    : [...(MTA_ORDERS[order as keyof typeof MTA_ORDERS] ?? [])];
+    : hasStandardCreationOrderBenefits(order)
+      ? [...(affiliation?.roteSkills?.length?affiliation.roteSkills:(MTA_ORDERS[order]??[]))]
+      : [];
   const factionRoteSkills = sheet.merits
     .filter((item) => item.name === "Faction Member" && item.dots >= 3)
     .map((item) => String(normalizeMeritConfiguration(item.configuration).roteSkill ?? ""))

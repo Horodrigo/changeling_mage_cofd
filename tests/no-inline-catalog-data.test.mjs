@@ -16,12 +16,12 @@ test("detector rejects static editorial catalogs", () => {
     `const LEGACY = {id:"legacy",name:"Legacy",source:"Book",page:10,description:"Rule"};`,
     `export const GROUPS = {one:{name:"One",source:"Book",effect:"Rule"},two:{name:"Two",source:"Book",effect:"Rule"}};`,
     `export const ANIMALS = [animal("bat","Bat",1,2),animal("wolf","Wolf",3,4)];`,
+    `export const PATHS={A:{ruling:["Time","Fate"],inferior:"Forces"},B:{ruling:["Space","Mind"],inferior:"Matter"}};`,
   ];
   for (const code of cases) assert.equal(messages(code)[0]?.messageId, "inlineCatalog", code);
 });
 
 test("detector accepts mechanics, configuration, and runtime construction", () => {
-  assert.deepEqual(messages(`export const PATHS={A:{ruling:["Time","Fate"],inferior:"Forces"}};`), []);
   assert.deepEqual(messages(`export const CONFIG=[{name:"Merit",fields:["choice"]}];`), []);
   assert.deepEqual(messages(`export function item(value){return {id:value,name:value,description:value}}`), []);
 });

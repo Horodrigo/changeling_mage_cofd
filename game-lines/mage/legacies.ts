@@ -1,5 +1,6 @@
 import legacyCatalog from "@/game-lines/mage/catalog-data/legacies.json";
 import supplementCatalog from "@/game-lines/mage/catalog-data/legacies-supplement.json";
+import { freezeCatalogData } from "@/lib/catalog/catalog-service";
 
 type LegacyCharacter = {line_data:Record<string,unknown>;skills:Record<string,number>;merits?:Array<{name:string;dots:number}>;specializations?:Array<{skill?:string;name?:string}>};
 
@@ -44,7 +45,7 @@ export type LegacyState = {
   initiationMethod: ""|"tutelage"|"daimonomikon"|"soul-study";
 };
 
-export const LEGACIES=[...legacyCatalog,...supplementCatalog] as unknown as readonly LegacyDefinition[];
+export const LEGACIES=freezeCatalogData([...legacyCatalog,...supplementCatalog]) as unknown as readonly LegacyDefinition[];
 export const ELEVENTH_QUESTION=LEGACIES.find((item)=>item.id==="the-eleventh-question")!;
 export const CHRONOLOGUE=LEGACIES.find((item)=>item.id==="chronologue")!;
 export const ENGINEERS_OF_THE_SYSTEM=LEGACIES.find((item)=>item.id==="engineers-of-the-system")!;

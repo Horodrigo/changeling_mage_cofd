@@ -2,6 +2,7 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { awakenedStatus } from "@/lib/merit-requirements";
 import type { MageFactionDefinition } from "./factions";
 import { findMageFaction, mageFactionAvailable } from "./factions";
+import { findMageAffiliation } from "./orders";
 
 const EXARCHS = new Set(["Eye", "Father", "General", "Unity", "Chancellor", "Raptor", "Prophet", "Nemesis", "Ruin"]);
 const PROFANE_FORMS = new Set(["Scepter", "Robe", "Crown", "Throne", "Ring"]);
@@ -12,6 +13,7 @@ export function mageMeritSelectionProblems(
   selection: { dots: number; configuration?: Record<string, string | string[]> },
   context: MeritPrerequisiteContext,
   factions: readonly MageFactionDefinition[],
+  affiliationId?:unknown,
 ) {
   const problems = meritSelectionProblems(merit, selection, context);
   const configuration = selection.configuration ?? {};
@@ -22,7 +24,11 @@ export function mageMeritSelectionProblems(
     else if (!mageFactionAvailable(faction, context.order)) problems.push("The faction is not available to this Order.");
     else if (selection.dots >= 3 && !faction.roteSkills.includes(String(configuration.roteSkill ?? ""))) problems.push("Select the faction's Rote Skill.");
   }
-  if (merit.name === "Prelacy" && !EXARCHS.has(String(configuration.exarch ?? ""))) problems.push("Select a patron Exarch.");
+  if (merit.name === "Prelacy") {
+    const exarch=String(configuration.exarch??""),affiliation=findMageAffiliation(affiliationId);
+    if(!EXARCHS.has(exarch))problems.push("Select a patron Exarch.");
+    else if(affiliation&&![affiliation.patronExarch,...(affiliation.additionalPatronExarchs??[])].includes(exarch))problems.push(`Prelacy must serve ${affiliation.name}'s patron Exarch.`);
+  }
   if (merit.name === "Profane Tool" && !PROFANE_FORMS.has(String(configuration.form ?? ""))) problems.push("Select a Profane Form.");
   if (merit.name === "Svikiro" && !SVIKIRO_TRADITIONS.has(String(configuration.tradition ?? ""))) problems.push("Select wamasikati or wedzinza.");
   return problems;
