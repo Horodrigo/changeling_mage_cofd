@@ -72,7 +72,16 @@ export function mergeMeritHomebrews(catalog: readonly MeritDefinition[], custom:
 
 export function activeMeritCatalog(catalog: readonly MeritDefinition[], custom: readonly MeritDefinition[], preferences: HomebrewPreferences, ownedNames: readonly string[] = []) {
   const owned = new Set(ownedNames);
-  return mergeMeritHomebrews(catalog, custom).filter((item) => owned.has(item.name) || homebrewContentActive(preferences, item.id, item.sourceId));
+  const merged = mergeMeritHomebrews(catalog, custom);
+  const errata = new Map(merged.filter((item) => item.errataFor && homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)).map((item) => [item.errataFor!, item]));
+  const normal = merged
+    .filter((item) => !item.catalogOnly && !item.errataFor && (owned.has(item.name) || homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)))
+    .map((item) => {
+      const replacement = errata.get(item.id);
+      return replacement ? { ...item, ...replacement, id: item.id, name: item.name, translatedName: item.translatedName, category: replacement.replacementCategory ?? item.category } : item;
+    });
+  const existing = new Set(normal.map((item) => item.id));
+  return [...normal, ...[...errata.entries()].flatMap(([id, item]) => existing.has(id) ? [] : [{ ...item, id, name: item.errataForName ?? item.name, translatedName: item.errataForName ?? item.translatedName, category: item.replacementCategory ?? item.category }])];
 }
 
 export function readMeritHomebrews() {

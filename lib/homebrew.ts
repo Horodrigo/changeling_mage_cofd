@@ -3,13 +3,16 @@ import { setDeviceValue, stageDeviceValue } from "./device-storage";
 export const HOMEBREW_PREFERENCES_KEY = "arquivo-das-trevas:homebrew-preferences:v1";
 export const HOMEBREW_EVENT = "arquivo-das-trevas:homebrew-updated";
 
-export type HomebrewPreferences = { disabledIds: string[] };
+export type HomebrewPreferences = { disabledIds: string[]; enabledIds?: string[] };
 
 export const EMPTY_HOMEBREW_PREFERENCES: HomebrewPreferences = { disabledIds: [] };
 
 export function normalizeHomebrewPreferences(value: unknown): HomebrewPreferences {
   const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
-  return { disabledIds: Array.isArray(raw.disabledIds) ? [...new Set(raw.disabledIds.map(String).filter(Boolean))] : [] };
+  return {
+    disabledIds: Array.isArray(raw.disabledIds) ? [...new Set(raw.disabledIds.map(String).filter(Boolean))] : [],
+    enabledIds: Array.isArray(raw.enabledIds) ? [...new Set(raw.enabledIds.map(String).filter(Boolean))] : [],
+  };
 }
 
 export function readHomebrewPreferences(): HomebrewPreferences {
@@ -30,10 +33,15 @@ export const isHomebrewSource = (sourceId: unknown) => /^(?:h-|homebrew:)/.test(
 export const homebrewCategoryKeys = (category: string, sourceId?: string) =>
   isHomebrewSource(sourceId) ? [category, "Homebrew"] : [category];
 
-export function homebrewContentActive(preferences: HomebrewPreferences, id: string, sourceId?: string) {
+export function homebrewContentActive(preferences: HomebrewPreferences, id: string, sourceId?: string, defaultDisabled = false) {
+  if (defaultDisabled && !preferences.enabledIds?.includes(id)) return false;
   return !isHomebrewSource(sourceId) || (!preferences.disabledIds.includes(id) && !preferences.disabledIds.includes(String(sourceId)));
 }
 
-export function setHomebrewEnabled(preferences: HomebrewPreferences, id: string, enabled: boolean) {
-  return { disabledIds: enabled ? preferences.disabledIds.filter((item) => item !== id) : [...new Set([...preferences.disabledIds, id])] };
+export function setHomebrewEnabled(preferences: HomebrewPreferences, id: string, enabled: boolean, defaultDisabled = false): HomebrewPreferences {
+  if (defaultDisabled) return {
+    ...preferences,
+    enabledIds: enabled ? [...new Set([...(preferences.enabledIds ?? []), id])] : (preferences.enabledIds ?? []).filter((item) => item !== id),
+  };
+  return { ...preferences, disabledIds: enabled ? preferences.disabledIds.filter((item) => item !== id) : [...new Set([...preferences.disabledIds, id])] };
 }

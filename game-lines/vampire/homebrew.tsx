@@ -20,14 +20,14 @@ import { SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } from "./homebrew-catalo
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 
 type Detail = { label: string; text: string };
-type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: Detail[]; parentId?: string };
+type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: Detail[]; parentId?: string; defaultDisabled?: boolean };
 
 function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   if (!catalogs) throw new Error("Vampire Homebrew requires its catalog snapshot.");
   const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
   const preferences = useHomebrewPreferences(), customBloodlines = useBloodlineHomebrews();
   const reference = catalogs.get<VampireReference>("vampire-reference"), powers = catalogs.get<VampirePowers>("vampire-powers"), conditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions");
-  const merits = catalogs.get<readonly MeritDefinition[]>("vampire-merits");
+  const coreMerits = catalogs.get<readonly MeritDefinition[]>("core-merits"), vampireMerits = catalogs.get<readonly MeritDefinition[]>("vampire-merits"), merits = [...coreMerits, ...vampireMerits];
   const bloodSorcery = h("Feitiçaria de Sangue", "Blood Sorcery"), disciplines = h("Disciplinas", "Disciplines");
   const categoryOrder = [h("Méritos", "Merits"), "Clans", "Covenants", "Bloodlines", disciplines, bloodSorcery, h("Devoções", "Devotions"), h("Condições", "Conditions"), "Errata"];
   const nestedDevotions: Record<string, { kind: string; parentId: string }> = {
@@ -39,9 +39,9 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   const [editing, setEditing] = useState<VampireBloodlineDefinition | null>(null);
   const listed: ListedHomebrew[] = [];
   const detail = (label: string, value: unknown): Detail[] => String(value ?? "").trim() ? [{ label, text: String(value).trim() }] : [];
-  const add = (item: { id: string; source: string; sourceId?: string; name: string; translatedName?: string; page?: number }, kind: string, details: Detail[], parentId?: string) => {
+  const add = (item: { id: string; source: string; sourceId?: string; name: string; translatedName?: string; page?: number; defaultDisabled?: boolean; errataFor?: string; errataForName?: string }, kind: string, details: Detail[], parentId?: string) => {
     const sourceId = vampireHomebrewSourceId(item);
-    if (sourceId && isHomebrewSource(sourceId)) listed.push({ id: item.id, sourceId, source: item.source, kind, name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...details, ...detail(h("Página", "Page"), item.page)], parentId });
+    if (sourceId && isHomebrewSource(sourceId)) listed.push({ id: item.id, sourceId, source: item.source, kind: item.errataFor || item.defaultDisabled && item.errataForName ? "Errata" : kind, name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...detail(h("Corrige", "Errata for"), item.errataForName), ...details, ...detail(h("Página", "Page"), item.page)], parentId, defaultDisabled: item.defaultDisabled });
   };
   const mechanics = (item: VampireMechanics): Detail[] => [
     ...detail(h("Custo", "Cost"), item.cost), ...detail(h("Requisito", "Requirement"), item.requirement), ...detail(h("Parada de dados", "Dice Pool"), item.dicePool),
@@ -66,18 +66,18 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   listed.push({ id: SIMPLIFIED_HOLLOW_ID, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", kind: "Errata", name: "Simplified Hollow", details: detail(h("Efeito", "Effect"), h("Substitui a ficha completa do Ka pela parada simplificada baseada em Humanidade.", "Replaces the full Ka sheet with the simplified Humanity-based dice pool.")) });
   listed.sort((left, right) => left.name.localeCompare(right.name, locale));
   const sources = [...new Map(listed.map((item) => [item.sourceId, item.source])).entries()].sort((left, right) => left[1].localeCompare(right[1], locale));
-  const toggle = (id: string, enabled: boolean) => saveHomebrewPreferences(setHomebrewEnabled(preferences, id, enabled));
+  const toggle = (id: string, enabled: boolean, defaultDisabled = false) => saveHomebrewPreferences(setHomebrewEnabled(preferences, id, enabled, defaultDisabled));
   const save = (definition: VampireBloodlineDefinition) => {
     saveBloodlineHomebrews(customBloodlines.map((item) => item.id === definition.id ? definition : item));
     saveHomebrewPreferences(setHomebrewEnabled(setHomebrewEnabled(preferences, BLOODLINE_HOMEBREW_SOURCE_ID, true), definition.id, true));
   };
   const renderItem = (item: ListedHomebrew, sourceActive: boolean) => {
-    const active = homebrewContentActive(preferences, item.id, item.sourceId);
+    const active = homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled);
     const children = listed.filter((entry) => entry.parentId === item.id);
-    return <div key={item.id}><article className="homebrew-list-item"><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body">{item.details.map((entry, index) => <p key={`${entry.label}:${index}`}><strong>{entry.label}:</strong> {entry.text}</p>)}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>{children.length > 0 && <div className="homebrew-item-list homebrew-subitem-list">{children.map((child) => renderItem(child, sourceActive && active))}</div>}</div>;
+    return <div key={item.id}><article className="homebrew-list-item"><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body">{item.details.map((entry, index) => <p key={`${entry.label}:${index}`}><strong>{entry.label}:</strong> {entry.text}</p>)}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked, item.defaultDisabled)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>{children.length > 0 && <div className="homebrew-item-list homebrew-subitem-list">{children.map((child) => renderItem(child, sourceActive && active))}</div>}</div>;
   };
   return <>
-    <MeritHomebrewPanel line="VtR" catalog={[...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...merits]}/>
+    <MeritHomebrewPanel line="VtR" catalog={merits}/>
     <section className="homebrew-panel">
       <div className="panel-heading"><div><h3>{h("Conteúdo publicado de Vampire", "Published Vampire Homebrew")}</h3><p>{h("A ativação controla novas escolhas; fichas existentes conservam o conteúdo que já possuem.", "Activation controls new choices; existing sheets retain content they already own.")}</p></div></div>
       <div className="homebrew-source-list">{sources.map(([sourceId, source]) => {

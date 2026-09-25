@@ -14,6 +14,10 @@ test("Homebrew activation honors both source and individual switches", async () 
   const itemOff = setHomebrewEnabled({ disabledIds: [] }, "some-item", false);
   assert.equal(homebrewContentActive(itemOff, "some-item", "h-courts"), false);
   assert.equal(homebrewContentActive(itemOff, "official-item", "ctl-2ed"), true);
+  assert.equal(homebrewContentActive({ disabledIds: [] }, "errata", "h-vtr-test", true), false);
+  const errataOn = setHomebrewEnabled({ disabledIds: [] }, "errata", true, true);
+  assert.equal(homebrewContentActive(errataOn, "errata", "h-vtr-test", true), true);
+  assert.equal(homebrewContentActive(setHomebrewEnabled(errataOn, "errata", false, true), "errata", "h-vtr-test", true), false);
   assert.deepEqual(homebrewCategoryKeys("Court", "h-courts"), ["Court", "Homebrew"]);
   assert.deepEqual(homebrewCategoryKeys("Court", "ctl-2ed"), ["Court"]);
 });
@@ -33,6 +37,11 @@ test("player-created Merits preserve exact ratings and enforce only structured p
   assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 1 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item] }), false);
   assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }).length, 0);
   assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }, [item.name]).length, 1);
+
+  const base = { ...item, id: "official", name: "Official", translatedName: "Official", sourceId: "official", source: "Official" };
+  const errata = { ...item, id: "homebrew:merit:errata", name: "Official — Errata", translatedName: "Official — Errata", sourceId: "h-vtr-test", source: "Test", defaultDisabled: true, errataFor: "official", description: "Revised.", descriptionEn: "Revised." };
+  assert.equal(activeMeritCatalog([base, errata], [], { disabledIds: [] }).find((entry) => entry.id === "official").description, base.description);
+  assert.equal(activeMeritCatalog([base, errata], [], { disabledIds: [], enabledIds: [errata.id] }).find((entry) => entry.id === "official").description, "Revised.");
 });
 
 test("player-created Changeling Contracts are normalized at storage boundary", async () => {

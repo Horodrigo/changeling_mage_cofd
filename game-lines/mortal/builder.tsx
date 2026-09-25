@@ -24,6 +24,8 @@ import { useLanguage } from "@/lib/i18n";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { systemTerm } from "@/lib/system-terms";
 import { mortalDerived } from "./creation-rules";
 import { MortalExperiencePanel } from "./experience-panel";
@@ -62,7 +64,8 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     experienceHistoryKey: "mortal_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),
   });
-  const meritCatalog = [...catalogs.get<readonly MeritDefinition[]>("core-merits")];
+  const homebrewPreferences = useHomebrewPreferences();
+  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, initial?.merits.map((item) => item.name));
   const [age, setAge] = useState(String(initial?.line_data.age ?? ""));
   const [faction, setFaction] = useState(String(initial?.line_data.faction ?? ""));
   const [groupName, setGroupName] = useState(String(initial?.line_data.group_name ?? ""));

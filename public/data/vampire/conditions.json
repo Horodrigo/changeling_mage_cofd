@@ -798,5 +798,52 @@
     "page": 39,
     "resolution": "Reach the end of the scene.",
     "beat": "Suffer a breaking point from inflicting violence while cut off from the Beast."
+  },
+  {
+    "id": "h-vtr-fire-revolution:contrary",
+    "name": "Contrary",
+    "originalName": "Contrary",
+    "category": "Vampire",
+    "description": "A false belief imposed through the Blood drives the character to contradict evidence and act on it.",
+    "persistent": true,
+    "resolution": "Find evidence that the supposed lie is true after all.",
+    "beat": "Cause disruption because of the false belief.",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "sourceCode": "h-vtr-fire-revolution",
+    "page": 91,
+    "homebrew": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:errata:seed-of-her-divinity",
+    "name": "Seed of Her Divinity — Errata",
+    "originalName": "Seed of Her Divinity",
+    "category": "Errata",
+    "description": "The vampire exceptionally succeeds on three successes instead of five on Social actions with the subject. The Condition fades after nights equal to Presence.",
+    "resolution": "Successfully share and spread the Acolyte's myth using Presence + Expression.",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "sourceCode": "h-vtr-agony-ecstasy",
+    "page": 107,
+    "homebrew": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:seed-of-her-divinity",
+    "errataForName": "Seed of Her Divinity"
+  },
+  {
+    "id": "h-vtr-fire-revolution:errata:carthian-backup",
+    "name": "Carthian Backup — Errata",
+    "originalName": "Carthian Backup",
+    "category": "Environmental Tilt",
+    "description": "A squad called by Army of One deals the Merit rating in lethal damage to the opposing side each turn; Willpower adds two. Its abstract Health is five plus the Merit rating and damage degrades or disperses it.",
+    "resolution": "The backup flees, is incapacitated, or is destroyed.",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "sourceCode": "h-vtr-fire-revolution",
+    "page": 114,
+    "homebrew": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-core:carthian-backup",
+    "errataForName": "Army of One backup rules"
   }
 ]

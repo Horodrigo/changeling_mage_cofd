@@ -186,6 +186,11 @@ export type VampirePurchasablePower = VampireMechanics & {
   source: string;
   page: number;
   levels?: VampirePowerLevel[];
+  sourceId?: string;
+  homebrew?: true;
+  defaultDisabled?: boolean;
+  errataFor?: string;
+  errataForName?: string;
 };
 
 export type VampirePowers = {
@@ -217,4 +222,7 @@ export type VampireCondition = {
   sourceId?: string;
   homebrew?: boolean;
   page: number;
+  defaultDisabled?: boolean;
+  errataFor?: string;
+  errataForName?: string;
 };

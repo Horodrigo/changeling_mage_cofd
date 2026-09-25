@@ -25,7 +25,7 @@ import { vampireMeritEligible } from "./merit-eligibility";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
-import { vampireHomebrewContentActive } from "./homebrew-catalog";
+import { activeVampirePowers, vampireHomebrewContentActive } from "./homebrew-catalog";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
 type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before?: CharacterSheet; undo?: VampireAdvancementUndo };
@@ -88,8 +88,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const beats = Math.max(0, Math.min(5, Math.trunc(Number(state.beats ?? 0))));
   const history = Array.isArray(state.vampire_experience_history) ? state.vampire_experience_history as HistoryEntry[] : [];
   const reference = catalogs.get<VampireReference>("vampire-reference");
-  const powers = catalogs.get<VampirePowers>("vampire-powers");
   const customMerits=useMeritHomebrews("VtR",true),homebrewPreferences=useHomebrewPreferences();
+  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), homebrewPreferences);
   const meritCatalog = activeMeritCatalog([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")],customMerits,homebrewPreferences,character.merits.map((item)=>item.name));
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
   const amount = amountDraft ?? String(available);

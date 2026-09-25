@@ -76,14 +76,14 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.deepEqual(Object.fromEntries(["core", "historical", "uncommon"].map((group) => [group, clans.filter((item) => item.group === group).length])), { core: 5, historical: 5, uncommon: 6 });
   assert.ok(clans.some((item) => item.id === "jiang-shi" && item.group === "uncommon"));
   assert.ok(clans.some((item) => item.id === "twice-cursed" && item.favoredAttributeMode === "both"));
-  assert.deepEqual(Object.fromEntries(["core", "historical", "uncommon", "shadow-cult"].map((group) => [group, covenants.filter((item) => item.group === group).length])), { core: 6, historical: 8, uncommon: 3, "shadow-cult": 4 });
+  assert.deepEqual(Object.fromEntries(["core", "historical", "uncommon", "shadow-cult"].map((group) => [group, covenants.filter((item) => item.group === group).length])), { core: 6, historical: 8, uncommon: 3, "shadow-cult": 6 });
   assert.ok(merits.some((item) => item.id === "vtr-etiquette" && item.levels.length === 5));
   assert.ok(merits.some((item) => item.id === "vtr-hototogisu-status" && item.levels.length === 5));
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 316);
-  assert.equal(powers.cruacRites.length, 48);
+  assert.equal(powers.devotions.length, 357);
+  assert.equal(powers.cruacRites.length, 76);
   assert.equal(powers.thebanMiracles.length, 33);
   assert.equal(powers.kimiyaFormulae.length, 5);
   assert.equal(powers.therionSacrileges.length, 7);
@@ -423,12 +423,13 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
   const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
   const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const coreMerits = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
   const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
-  const { SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
+  const { activeVampireItems, activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
   const items = [
-    ...bloodlines, ...covenants, ...conditions, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions,
+    ...bloodlines, ...covenants, ...conditions, ...coreMerits, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions,
     ...powers.cruacRites, ...powers.thebanMiracles, ...powers.gildedInvocations, ...powers.detournements,
   ].filter((item) => vampireHomebrewSourceId(item)?.startsWith("h-vtr-"));
   const counts = Object.fromEntries(Object.entries(Object.groupBy(items, vampireHomebrewSourceId)).map(([sourceId, entries]) => [sourceId, entries.length]));
@@ -438,10 +439,12 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-false-gods": 106,
     "h-vtr-strange-shades": 89,
     "h-vtr-better-feared": 92,
+    "h-vtr-agony-ecstasy": 95,
+    "h-vtr-fire-revolution": 90,
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 5, "merits-vampire": 9, "vampire-powers": 9, "vampire-conditions": 5 },
+    { "vampire-bloodlines": 5, "merits-vampire": 10, "vampire-powers": 10, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {
@@ -452,6 +455,18 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-false-gods": ["Adrestoi", "Gottlings", "Keravnos", "Malkovians", "Malocusians", "Melissidae", "Rotgrafen", "Typhos", "Warumono"],
   });
   assert.equal(items.some((item) => ["Risen Beast", "Disciple of Dis", "Igor", "Pack Omega", "Predator-Marked", "Treasured Servant", "Beast King", "Show Breed", "Crashes"].includes(item.name)), false);
+  assert.ok(["Hag Blood", "Constituent", "I Know a Guy (Advanced)", "Raise the Witch's Familiar", "Sharing the Familiar's Form", "Uplift", "Childe of Dis"].every((name) => items.some((item) => item.name === name)));
+  assert.equal(items.some((item) => ["Ghoulish Caucus", "Forensic Psychometry"].includes(item.name)), false);
+  assert.deepEqual(coreMerits.filter((item) => item.sourceId === "h-vtr-agony-ecstasy").map((item) => item.name).sort(), ["Carousing", "Mythologist", "Poisoner's Garden", "Roughing It"]);
+  assert.equal(coreMerits.filter((item) => item.sourceId === "h-vtr-fire-revolution").length, 11);
+  assert.ok(coreMerits.filter((item) => ["h-vtr-agony-ecstasy", "h-vtr-fire-revolution"].includes(item.sourceId)).every((item) => item.line === "Core"));
+  const { meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
+  assert.equal(meritPrerequisitesMet(coreMerits.find((item) => item.name === "Experimental Mindset"), { gameLine: "CofD", merits: [], meritCatalog: coreMerits }), true);
+  assert.match(await readFile(`${root}/game-lines/mortal/builder.tsx`, "utf8"), /activeMeritCatalog\(catalogs\.get<readonly MeritDefinition\[]>\("core-merits"\)/);
+  assert.deepEqual(covenants.filter((item) => ["children-of-the-thorns", "faithful-of-propylaia"].includes(item.id)).map((item) => item.group), ["shadow-cult", "shadow-cult"]);
+  assert.ok(merits.filter((item) => item.sourceId === "h-vtr-fire-revolution" && item.category === "Faction").length === 8);
+  assert.ok(merits.filter((item) => item.sourceId === "h-vtr-agony-ecstasy" && item.category === "Tradition").length === 4);
+  assert.ok(merits.filter((item) => ["h-vtr-agony-ecstasy", "h-vtr-fire-revolution"].includes(item.sourceId) && item.defaultDisabled).every((item) => item.errataFor || item.catalogOnly));
   assert.deepEqual(
     merits.filter((item) => item.category === "Necropolis").map((item) => item.name).sort(),
     ["Bleak Annals", "Corrupting Influence", "Dark Hub", "Home Turf", "Honeycomb", "Lost & Found", "Necropolis Arsenal"],
@@ -460,9 +475,16 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.equal(powers.gildedInvocations.some((item) => item.name === "Crowdsourcing"), true);
   assert.equal(homebrewContentActive({ disabledIds: ["h-vtr-false-gods"] }, "gilded-crowdsourcing", "h-vtr-false-gods"), false);
   assert.equal(homebrewContentActive({ disabledIds: [SIMPLIFIED_HOLLOW_ID] }, SIMPLIFIED_HOLLOW_ID, "h-vtr-strange-shades"), false);
+  const amorousErrata = powers.cruacRites.find((item) => item.errataFor === "cruac-mantle-amorous-fire");
+  assert.equal(activeVampirePowers(powers, { disabledIds: [] }).cruacRites.find((item) => item.id === "cruac-mantle-amorous-fire").targetSuccesses, 5);
+  assert.equal(activeVampirePowers(powers, { disabledIds: [], enabledIds: [amorousErrata.id] }).cruacRites.find((item) => item.id === "cruac-mantle-amorous-fire").targetSuccesses, 4);
+  const seedErrata = conditions.find((item) => item.errataFor === "vtr-sotc:seed-of-her-divinity");
+  assert.equal(activeVampireItems(conditions, { disabledIds: [] }).some((item) => item.id === "vtr-sotc:seed-of-her-divinity"), false);
+  assert.equal(activeVampireItems(conditions, { disabledIds: [], enabledIds: [seedErrata.id] }).some((item) => item.id === "vtr-sotc:seed-of-her-divinity"), true);
   const registration = await readFile(`${root}/game-lines/vampire/registration.ts`, "utf8");
   assert.match(registration, /homebrew:\s*\[[^\]]*"vampire-powers"[^\]]*"vampire-conditions"/);
   const homebrew = await readFile(`${root}/game-lines/vampire/homebrew.tsx`, "utf8");
+  assert.match(homebrew, /const coreMerits = catalogs\.get/);
   assert.match(homebrew, /gildedInvocations[\s\S]*"gilded-cage"/);
   assert.match(homebrew, /"Lessons of Erebus": \{ kind: disciplines, parentId: "truths-of-erebus" \}/);
   assert.match(homebrew, /"Blood Tether Lashes": \{ kind: disciplines, parentId: "blood-tether" \}/);
@@ -492,6 +514,12 @@ test("Vampire supports multiple Covenants and grants Shadow Cult Initiation inst
   assert.equal(sheet.merits.find((item) => item.name === "Mystery Cult Initiation")?.configuration.cult, "Followers of Seth");
   assert.equal(sheet.specializations.some((item) => item.skill === "Occult" && item.name === "Spirits"), true);
   assert.equal(vampireCovenantAffiliationDots(sheet, covenants), 5);
+
+  const faithful = { merits: [], specializations: [], line_data: { covenant_id: "faithful-of-propylaia", covenant_ids: ["faithful-of-propylaia"], kindred_status_group: "Faithful of Propylaia" } };
+  synchronizeVampireBuilderMeritGrants(faithful);
+  assert.equal(faithful.merits.find((item) => item.name === "Mystery Cult Initiation")?.configuration.cult, "Faithful of Propylaia");
+  assert.equal(faithful.merits.some((item) => item.name === "Tolerance for Biology"), true);
+  assert.equal(faithful.merits.find((item) => item.name === "Mystery Cult Initiation")?.sourceId, "h-vtr-agony-ecstasy");
 });
 
 test("Vampire normalization preserves the Ka mode and all Covenant memberships", async () => {

@@ -37,7 +37,7 @@ import { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimi
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
-import { SIMPLIFIED_HOLLOW_ID, vampireHomebrewContentActive } from "./homebrew-catalog";
+import { activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewContentActive } from "./homebrew-catalog";
 
 type KindredStatusScope = "covenant" | "clan" | "city";
 
@@ -162,9 +162,9 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
   const reference = catalogs.get<VampireReference>("vampire-reference");
-  const powers = catalogs.get<VampirePowers>("vampire-powers");
   const initialClan = reference.clans.find((item) => item.id === String(initial?.line_data.clan_id ?? ""));
   const customMerits = useMeritHomebrews("VtR", true), homebrewPreferences = useHomebrewPreferences();
+  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), homebrewPreferences);
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),

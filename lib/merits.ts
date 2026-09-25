@@ -31,6 +31,11 @@ export type MeritDefinition = {
   homebrew?: true;
   descriptivePrerequisites?: true;
   narrativePrerequisites?: string;
+  defaultDisabled?: boolean;
+  errataFor?: string;
+  errataForName?: string;
+  catalogOnly?: boolean;
+  replacementCategory?: string;
 };
 
 export const REPEATABLE_MERITS = new Set([

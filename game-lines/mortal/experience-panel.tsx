@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
@@ -18,6 +18,8 @@ import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { meritContextForSheet, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
+import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
 import { refundMortalAdvancement, type MortalAdvancementUndo } from "./experience-rules";
 
@@ -44,7 +46,8 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
   const total = Math.max(available + spent, Math.max(0, Math.trunc(Number(state.experience_total ?? 0))));
   const beats = Math.max(0, Math.min(5, Math.trunc(Number(state.beats ?? 0))));
   const history = Array.isArray(state.mortal_experience_history) ? state.mortal_experience_history as HistoryEntry[] : [];
-  const meritCatalog = useMemo(() => [...catalogs.get<readonly MeritDefinition[]>("core-merits")], [catalogs]);
+  const homebrewPreferences = useHomebrewPreferences();
+  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, character.merits.map((item) => item.name));
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
   const [purchase, setPurchase] = useState<PurchaseType>("attribute");
   const [target, setTarget] = useState("");

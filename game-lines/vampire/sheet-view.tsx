@@ -38,7 +38,7 @@ import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
-import { vampireHomebrewContentActive } from "./homebrew-catalog";
+import { activeVampireItems, activeVampirePowers } from "./homebrew-catalog";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -702,11 +702,11 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const reference = catalogs.get<VampireReference>("vampire-reference");
   const customBloodlines = useBloodlineHomebrews();
   const bloodlines = [...reference.bloodlines, ...customBloodlines.filter((item) => !reference.bloodlines.some((official) => official.id === item.id))];
-  const powers = catalogs.get<VampirePowers>("vampire-powers");
+  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), preferences);
   const customMerits = useMeritHomebrews("VtR", true);
   const merits = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], customMerits);
   const coreConditions = catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions;
-  const vampireConditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions").filter((item) => vampireHomebrewContentActive(preferences, item)) as readonly ConditionDefinition[];
+  const vampireConditions = activeVampireItems(catalogs.get<readonly VampireCondition[]>("vampire-conditions"), preferences) as readonly ConditionDefinition[];
   const conditionCatalog = [...coreConditions, ...vampireConditions];
   const data = character.line_data;
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" && !Array.isArray(data.blood_sorcery)

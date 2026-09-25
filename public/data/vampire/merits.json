@@ -6188,5 +6188,1923 @@
     "prerequisites": "Resilience •",
     "page": 111,
     "homebrew": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:spell-swallowing",
+    "name": "Spell Swallowing",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Tradition",
+    "priority": 10,
+    "translatedName": "Spell Swallowing",
+    "description": "A Clíodhna Crúac Style that fast-casts and consumes rites, absorbs hostile ritual magic, and ultimately devours other supernatural sorcery.",
+    "descriptionEn": "A Clíodhna Crúac Style that fast-casts and consumes rites, absorbs hostile ritual magic, and ultimately devours other supernatural sorcery.",
+    "page": 67,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status ••; Occult ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:neidan-gu",
+    "name": "Neidan Gu",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Tradition",
+    "priority": 10,
+    "translatedName": "Neidan Gu",
+    "description": "A Jiju Crúac Style that replaces outward ceremony with inner alchemy, poisons victims through rites, and makes the ritualist's Vitae toxic.",
+    "descriptionEn": "A Jiju Crúac Style that replaces outward ceremony with inner alchemy, poisons victims through rites, and makes the ritualist's Vitae toxic.",
+    "page": 70,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status ••; Crafts ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:uncaged-indulgence",
+    "name": "Uncaged Indulgence",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Tradition",
+    "priority": 10,
+    "translatedName": "Uncaged Indulgence",
+    "description": "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.",
+    "descriptionEn": "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.",
+    "page": 73,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status ••; Socialize ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:unconscious-alignment",
+    "name": "Unconscious Alignment",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Tradition",
+    "priority": 10,
+    "translatedName": "Unconscious Alignment",
+    "description": "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.",
+    "descriptionEn": "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.",
+    "page": 75,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status ••; Occult ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:annis-bite",
+    "name": "Annis Bite",
+    "ratings": [
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Annis Bite",
+    "description": "Turns the Acolyte's bite into a more fearsome predatory and ritual instrument.",
+    "descriptionEn": "Turns the Acolyte's bite into a more fearsome predatory and ritual instrument.",
+    "page": 90,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:apothecary",
+    "name": "Apothecary",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Apothecary",
+    "description": "A Style for distilling Crúac rites into potions, improving their storage, sharing, potency, and sympathetic reach.",
+    "descriptionEn": "A Style for distilling Crúac rites into potions, improving their storage, sharing, potency, and sympathetic reach.",
+    "page": 90,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Witch's Brew; Crafts or Science •••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:athame",
+    "name": "Athame",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Athame",
+    "description": "Consecrates a ritual blade that assists blood sorcery and retains the significance of its sacrifices.",
+    "descriptionEn": "Consecrates a ritual blade that assists blood sorcery and retains the significance of its sacrifices.",
+    "page": 91,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:banshee",
+    "name": "Banshee",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Banshee",
+    "description": "Allows dangerous fast casting of Crúac with a keening ritual cry.",
+    "descriptionEn": "Allows dangerous fast casting of Crúac with a keening ritual cry.",
+    "page": 91,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Occult •••; Crúac ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:blood-cult",
+    "name": "Blood Cult",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Blood Cult",
+    "description": "Represents a mortal cult that supplies combined Retainer and Staff dots equal to twice the vampire's Herd.",
+    "descriptionEn": "Represents a mortal cult that supplies combined Retainer and Staff dots equal to twice the vampire's Herd.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:closer-family",
+    "name": "Closer Family",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Closer Family",
+    "description": "Deepens the supernatural connection created by Close Family through Crúac.",
+    "descriptionEn": "Deepens the supernatural connection created by Close Family through Crúac.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Close Family; Crúac ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:conflict-of-faith",
+    "name": "Conflict of Faith",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Conflict of Faith",
+    "description": "Lets an Acolyte uphold a second religious vow when facing relevant breaking points.",
+    "descriptionEn": "Lets an Acolyte uphold a second religious vow when facing relevant breaking points.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:hag-blood",
+    "name": "Hag Blood",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Hag Blood",
+    "description": "Lets a ghoul spill lethal blood in place of Vitae for Crúac rites, although a leading ritualist must still supply the first Vitae normally.",
+    "descriptionEn": "Lets a ghoul spill lethal blood in place of Vitae for Crúac rites, although a leading ritualist must still supply the first Vitae normally.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Ghoul"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:hunting-party",
+    "name": "Hunting Party",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Hunting Party",
+    "description": "Coordinates group feeding so participating vampires hunt more effectively and share the resulting benefits.",
+    "descriptionEn": "Coordinates group feeding so participating vampires hunt more effectively and share the resulting benefits.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:infectious-aura",
+    "name": "Infectious Aura",
+    "ratings": [
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Infectious Aura",
+    "description": "Makes the vampire's predatory aura contagious, leaving a supernatural emotional link to affected victims.",
+    "descriptionEn": "Makes the vampire's predatory aura contagious, leaving a supernatural emotional link to affected victims.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Occult •••; Humanity 6 or lower"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:master-s-shadow",
+    "name": "Master's Shadow",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Master's Shadow",
+    "description": "Strengthens a Warden's supernatural bond with a chosen beast or charge.",
+    "descriptionEn": "Strengthens a Warden's supernatural bond with a chosen beast or charge.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Warden or Animal Ken •••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:mythologist-advanced",
+    "name": "Mythologist (Advanced)",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Mythologist (Advanced)",
+    "description": "Extends Mythologist so practical knowledge of myth improves Crúac work.",
+    "descriptionEn": "Extends Mythologist so practical knowledge of myth improves Crúac work.",
+    "page": 92,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Mythologist; Crúac •"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:older-than-i-look",
+    "name": "Older Than I Look",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Older Than I Look",
+    "description": "An Embraced child or teenager leverages the unsettling contrast between apparent and actual age.",
+    "descriptionEn": "An Embraced child or teenager leverages the unsettling contrast between apparent and actual age.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Intimidation ••; Embraced as a child or teenager"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:sacrificial-inurement",
+    "name": "Sacrificial Inurement",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Sacrificial Inurement",
+    "description": "Reduces the emotional and mechanical burden of repeated ritual sacrifice.",
+    "descriptionEn": "Reduces the emotional and mechanical burden of repeated ritual sacrifice.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Resolve •••; Humanity 6 or lower"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:sustaining-the-pack",
+    "name": "Sustaining the Pack",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Sustaining the Pack",
+    "description": "Supports a coordinated pack through shared hunting and blood.",
+    "descriptionEn": "Supports a coordinated pack through shared hunting and blood.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Animal Ken •••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:temple",
+    "name": "Temple",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Temple",
+    "description": "Establishes a shared Acolyte temple whose rating supports covenant rites and contributors.",
+    "descriptionEn": "Establishes a shared Acolyte temple whose rating supports covenant rites and contributors.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Altar; Circle of the Crone Status ••; Safe Place •"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:red-vein-of-fate",
+    "name": "Red Vein of Fate",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Red Vein of Fate",
+    "description": "Reads the occult course of blood and fate through Crúac.",
+    "descriptionEn": "Reads the occult course of blood and fate through Crúac.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Crúac ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:reviled",
+    "name": "Reviled",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Reviled",
+    "description": "Turns a chosen group's hatred into notoriety and leverage, but forbids Status with that group.",
+    "descriptionEn": "Turns a chosen group's hatred into notoriety and leverage, but forbids Status with that group.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Cannot have Kindred Status in the chosen group",
+    "repeatable": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:underground-matron",
+    "name": "Underground Matron",
+    "ratings": [
+      1,
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Underground Matron",
+    "description": "Builds a hidden network that helps Acolytes move and operate between domains.",
+    "descriptionEn": "Builds a hidden network that helps Acolytes move and operate between domains.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Circle of the Crone Status •••; Streetwise"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:witch-s-brew",
+    "name": "Witch's Brew",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Witch's Brew",
+    "description": "Stores a successfully cast Crúac rite in a prepared potion for later use.",
+    "descriptionEn": "Stores a successfully cast Crúac rite in a prepared potion for later use.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Resources •; Occult •••; Crúac •"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:unmasked-devil",
+    "name": "Unmasked Devil",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Circle of the Crone",
+    "priority": 10,
+    "translatedName": "Unmasked Devil",
+    "description": "A Style for openly embodying the Beast and gaining progressively stronger predatory benefits.",
+    "descriptionEn": "A Style for openly embodying the Beast and gaining progressively stronger predatory benefits.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Intimidation •••; Humanity 6 or lower"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:opening-the-void",
+    "name": "Opening the Void",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Opening the Void",
+    "description": "Opens Crúac to the emptiness beyond the world, escalating from void-touched casting to a shadow familiar.",
+    "descriptionEn": "Opens Crúac to the emptiness beyond the world, escalating from void-touched casting to a shadow familiar.",
+    "page": 95,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:omen-plague",
+    "name": "Omen Plague",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Omen Plague",
+    "description": "Makes Crúac omens contagious and increasingly dangerous to those caught in them.",
+    "descriptionEn": "Makes Crúac omens contagious and increasingly dangerous to those caught in them.",
+    "page": 95,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:primal-creation",
+    "name": "Primal Creation",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Primal Creation",
+    "description": "Channels sacrifice into fecund, monstrous creation and permanent transformations.",
+    "descriptionEn": "Channels sacrifice into fecund, monstrous creation and permanent transformations.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:shadow-calling",
+    "name": "Shadow Calling",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Shadow Calling",
+    "description": "Calls and bargains with ephemeral beings through Crúac.",
+    "descriptionEn": "Calls and bargains with ephemeral beings through Crúac.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:sating-the-crone",
+    "name": "Sating the Crone",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Sating the Crone",
+    "description": "Draws greater power from increasingly costly and significant sacrifices.",
+    "descriptionEn": "Draws greater power from increasingly costly and significant sacrifices.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:storm-herald",
+    "name": "Storm Herald",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Storm Herald",
+    "description": "Adds weather, movement, and storm effects to Crúac rites.",
+    "descriptionEn": "Adds weather, movement, and storm effects to Crúac rites.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:void-familiar",
+    "name": "Void Familiar",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Void Familiar",
+    "description": "Develops the familiar created through Opening the Void.",
+    "descriptionEn": "Develops the familiar created through Opening the Void.",
+    "page": 98,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Opening the Void"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:unbridled-chaos",
+    "name": "Unbridled Chaos",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Crúac Style",
+    "priority": 10,
+    "translatedName": "Unbridled Chaos",
+    "description": "Injects escalating supernatural instability into rites and their subjects.",
+    "descriptionEn": "Injects escalating supernatural instability into rites and their subjects.",
+    "page": 98,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:mandragora-garden",
+    "name": "Mandragora Garden",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Mandragora",
+    "priority": 10,
+    "translatedName": "Mandragora Garden",
+    "description": "Maintains a blood-fed garden of ghoul plants that yields Vitae each month and can dispose of helpless prey.",
+    "descriptionEn": "Maintains a blood-fed garden of ghoul plants that yields Vitae each month and can dispose of helpless prey.",
+    "page": 105,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Kindred; Safe Place •"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:sorcerer-s-harvest",
+    "name": "Sorcerer's Harvest",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Mandragora",
+    "priority": 10,
+    "translatedName": "Sorcerer's Harvest",
+    "description": "Uses a personally cultivated Mandragora Garden as an extension of the ritualist's body and prolongs rites cast within it.",
+    "descriptionEn": "Uses a personally cultivated Mandragora Garden as an extension of the ritualist's body and prolongs rites cast within it.",
+    "page": 106,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Mandragora Garden •; Crúac •"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:red-thumb",
+    "name": "Red Thumb",
+    "ratings": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Mandragora",
+    "priority": 10,
+    "translatedName": "Red Thumb",
+    "description": "Makes mandragora hardier and cheaper to cultivate, even allowing delicate plants to survive the transformation.",
+    "descriptionEn": "Makes mandragora hardier and cheaper to cultivate, even allowing delicate plants to survive the transformation.",
+    "page": 106,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Mandragora Garden •; Occult ••"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:witch-s-garden",
+    "name": "Witch's Garden",
+    "ratings": [
+      2,
+      4
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Mandragora",
+    "priority": 10,
+    "translatedName": "Witch's Garden",
+    "description": "Enhances newly created mandragora with a clan Discipline or scene-long mobility; at four dots they gain both.",
+    "descriptionEn": "Enhances newly created mandragora with a clan Discipline or scene-long mobility; at four dots they gain both.",
+    "page": 107,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Red Thumb; Blood Potency 2"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:what-you-ve-done-for-her-lately",
+    "name": "What You've Done for Her Lately",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Mandragora",
+    "priority": 10,
+    "translatedName": "What You've Done for Her Lately",
+    "description": "Extends its witnessed Acolyte ritual benefit from a scene to a night.",
+    "descriptionEn": "Extends its witnessed Acolyte ritual benefit from a scene to a night.",
+    "page": 107,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:bloodroots-associate",
+    "name": "Bloodroots Associate",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Bloodroots Associate",
+    "description": "Connects the character to the Bloodroots faction and grants its political and grassroots benefits.",
+    "descriptionEn": "Connects the character to the Bloodroots faction and grants its political and grassroots benefits.",
+    "page": 70,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:cultist-of-self",
+    "name": "Cultist of Self",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Cultist of Self",
+    "description": "Grants 9-again to agenda-related Streetwise and Survival and limited access to Rule of One, while capping Carthian Status at three.",
+    "descriptionEn": "Grants 9-again to agenda-related Streetwise and Survival and limited access to Rule of One, while capping Carthian Status at three.",
+    "page": 70,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:digital-upriser",
+    "name": "Digital Upriser",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Digital Upriser",
+    "description": "Grants 9-again to agenda-related Computer and Subterfuge and lets I Know a Guy call on Resources.",
+    "descriptionEn": "Grants 9-again to agenda-related Computer and Subterfuge and lets I Know a Guy call on Resources.",
+    "page": 71,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:carthian-atheist",
+    "name": "Carthian Atheist",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Carthian Atheist",
+    "description": "Grants 9-again to agenda-related Academics and Occult and improves the first purchase of Coda Against Sorcery.",
+    "descriptionEn": "Grants 9-again to agenda-related Academics and Occult and improves the first purchase of Coda Against Sorcery.",
+    "page": 71,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:oppositionist",
+    "name": "Oppositionist",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Oppositionist",
+    "description": "Grants 9-again to agenda-related Athletics and Survival and calls on Army of One through faction solidarity.",
+    "descriptionEn": "Grants 9-again to agenda-related Athletics and Survival and calls on Army of One through faction solidarity.",
+    "page": 72,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:sabotage-artist",
+    "name": "Sabotage Artist",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Sabotage Artist",
+    "description": "Grants 9-again to agenda-related Larceny and Stealth and expands I Know a Guy while undermining another covenant.",
+    "descriptionEn": "Grants 9-again to agenda-related Larceny and Stealth and expands I Know a Guy while undermining another covenant.",
+    "page": 72,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:sophocrat",
+    "name": "Sophocrat",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "Sophocrat",
+    "description": "Grants 9-again to agenda-related Academics and Science and substitutes knowledge for Status on low-dot nonphysical Carthian Merits.",
+    "descriptionEn": "Grants 9-again to agenda-related Academics and Science and substitutes knowledge for Status on low-dot nonphysical Carthian Merits.",
+    "page": 73,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:ppi-cadreman",
+    "name": "PPI Cadreman",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Faction",
+    "priority": 10,
+    "translatedName": "PPI Cadreman",
+    "description": "Grants 9-again to agenda-related Occult and Politics and supplies supernatural Contacts and a related Politics Specialty.",
+    "descriptionEn": "Grants 9-again to agenda-related Occult and Politics and supplies supernatural Contacts and a related Politics Specialty.",
+    "page": 73,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:antagonizing-aura",
+    "name": "Antagonizing Aura",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Antagonizing Aura",
+    "description": "Provokes Kindred into following or confronting the character in social scenes.",
+    "descriptionEn": "Provokes Kindred into following or confronting the character in social scenes.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Presence •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:beast-gestalt",
+    "name": "Beast Gestalt",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Beast Gestalt",
+    "description": "Coordinates a colony's Beasts through progressively stronger communal benefits.",
+    "descriptionEn": "Coordinates a colony's Beasts through progressively stronger communal benefits.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Member of a colony"
+  },
+  {
+    "id": "h-vtr-fire-revolution:agent-provocateur",
+    "name": "Agent Provocateur",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Agent Provocateur",
+    "description": "Uses performance and deception to provoke political action.",
+    "descriptionEn": "Uses performance and deception to provoke political action.",
+    "page": 93,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Expression •••; Subterfuge •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:carthian-lawyer",
+    "name": "Carthian Lawyer",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Carthian Lawyer",
+    "description": "Applies legal expertise to Carthian disputes and Law.",
+    "descriptionEn": "Applies legal expertise to Carthian disputes and Law.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••; Academics •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:constituent",
+    "name": "Constituent",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Constituent",
+    "description": "Grants a Carthian regnant's ghoul effective Carthian Status and access to Carthian Laws up to the Merit rating.",
+    "descriptionEn": "Grants a Carthian regnant's ghoul effective Carthian Status and access to Carthian Laws up to the Merit rating.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Politics •••; Ghoul with a Carthian regnant"
+  },
+  {
+    "id": "h-vtr-fire-revolution:devotion-experimenter-advanced",
+    "name": "Devotion Experimenter (Advanced)",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Devotion Experimenter (Advanced)",
+    "description": "Expands Devotion Experimenter with more reliable and productive experimentation.",
+    "descriptionEn": "Expands Devotion Experimenter with more reliable and productive experimentation.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Devotion Experimenter"
+  },
+  {
+    "id": "h-vtr-fire-revolution:cultural-artifact",
+    "name": "Cultural Artifact",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Cultural Artifact",
+    "description": "Owns an object of cultural significance that lends authority and leverage.",
+    "descriptionEn": "Owns an object of cultural significance that lends authority and leverage.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:enforcement",
+    "name": "Enforcement",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Enforcement",
+    "description": "A progressive Style for enforcing Movement decisions through escalating physical pressure.",
+    "descriptionEn": "A progressive Style for enforcing Movement decisions through escalating physical pressure.",
+    "page": 94,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status •; Resolve ••; Brawl ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:firebomber",
+    "name": "Firebomber",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Firebomber",
+    "description": "Uses fire as a revolutionary weapon while controlling panic and collateral risk.",
+    "descriptionEn": "Uses fire as a revolutionary weapon while controlling panic and collateral risk.",
+    "page": 95,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Athletics ••; Resolve •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:fire-branded",
+    "name": "Fire-Branded",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Fire-Branded",
+    "description": "Endures and weaponizes the symbolism and terror of fire.",
+    "descriptionEn": "Endures and weaponizes the symbolism and terror of fire.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Composure •••; Resilience ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:i-know-a-guy-advanced",
+    "name": "I Know a Guy (Advanced)",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "I Know a Guy (Advanced)",
+    "description": "Once per chapter, rolls Intelligence + Manipulation + Contacts to obtain an available item or service through someone who owes a favor.",
+    "descriptionEn": "Once per chapter, rolls Intelligence + Manipulation + Contacts to obtain an available item or service through someone who owes a favor.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Contacts ••; I Know a Guy"
+  },
+  {
+    "id": "h-vtr-fire-revolution:janus",
+    "name": "Janus",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Janus",
+    "description": "Maintains opposed political faces and loyalties without easily revealing the contradiction.",
+    "descriptionEn": "Maintains opposed political faces and loyalties without easily revealing the contradiction.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Subterfuge ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:grassroots",
+    "name": "Grassroots",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Grassroots",
+    "description": "Builds a mutual-aid network that supplies favors, resistance to coercion, and practical credit.",
+    "descriptionEn": "Builds a mutual-aid network that supplies favors, resistance to coercion, and practical credit.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••; Contacts •• or Allies ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:laissez-faire-predator",
+    "name": "Laissez-Faire Predator",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Laissez-Faire Predator",
+    "description": "Feeds opportunistically from accessible vessels and rejects territorial ownership.",
+    "descriptionEn": "Feeds opportunistically from accessible vessels and rejects territorial ownership.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Streetwise •• or Survival ••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:poser",
+    "name": "Poser",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Poser",
+    "description": "Turns a shallow performance of rebellion into social advantage, but cannot coexist with Punk Rock.",
+    "descriptionEn": "Turns a shallow performance of rebellion into social advantage, but cannot coexist with Punk Rock.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Cannot have Punk Rock"
+  },
+  {
+    "id": "h-vtr-fire-revolution:hobbyist-clique-advanced",
+    "name": "Hobbyist Clique (Advanced)",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Hobbyist Clique (Advanced)",
+    "description": "Strengthens a Hobbyist Clique through exceptional expertise in its chosen Skill.",
+    "descriptionEn": "Strengthens a Hobbyist Clique through exceptional expertise in its chosen Skill.",
+    "page": 96,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Hobbyist Clique; chosen Skill •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:punk-rock",
+    "name": "Punk Rock",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Punk Rock",
+    "description": "Rewards genuine rejection of authority, but cannot coexist with Poser.",
+    "descriptionEn": "Rewards genuine rejection of authority, but cannot coexist with Poser.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Cannot have Poser"
+  },
+  {
+    "id": "h-vtr-fire-revolution:strange-laws",
+    "name": "Strange Laws",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Strange Laws",
+    "description": "Adapts Carthian Law to unusual communities and supernatural social structures.",
+    "descriptionEn": "Adapts Carthian Law to unusual communities and supernatural social structures.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Two dots in a Social Merit"
+  },
+  {
+    "id": "h-vtr-fire-revolution:rule-of-one",
+    "name": "Rule of One",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Rule of One",
+    "description": "Lets a self-reliant Firebrand stand alone against group pressure at a cost.",
+    "descriptionEn": "Lets a self-reliant Firebrand stand alone against group pressure at a cost.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Resolve •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:share-and-share-alike",
+    "name": "Share and Share Alike",
+    "ratings": [
+      4
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Share and Share Alike",
+    "description": "Shares a Carthian Law's benefits with others while accepting part of their burden.",
+    "descriptionEn": "Shares a Carthian Law's benefits with others while accepting part of their burden.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Occult ••; one Carthian Law"
+  },
+  {
+    "id": "h-vtr-fire-revolution:true-believer",
+    "name": "True Believer",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "True Believer",
+    "description": "Makes ideological commitment a source of resolve and influence.",
+    "descriptionEn": "Makes ideological commitment a source of resolve and influence.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:show-the-belly",
+    "name": "Show the Belly",
+    "ratings": [
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Show the Belly",
+    "description": "Uses deliberate submission to control the terms of a predatory confrontation.",
+    "descriptionEn": "Uses deliberate submission to control the terms of a predatory confrontation.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Composure •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:unflinching-eye",
+    "name": "Unflinching Eye",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Movement",
+    "priority": 10,
+    "translatedName": "Unflinching Eye",
+    "description": "Maintains focused observation under supernatural or political pressure.",
+    "descriptionEn": "Maintains focused observation under supernatural or political pressure.",
+    "page": 97,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "prerequisites": "Acute Senses; Resolve •••"
+  },
+  {
+    "id": "h-vtr-fire-revolution:beast-of-law",
+    "name": "Beast of Law",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Beast of Law",
+    "description": "The character's Beast recognizes and responds to Carthian Law.",
+    "descriptionEn": "The character's Beast recognizes and responds to Carthian Law.",
+    "page": 99,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:breaking-bread",
+    "name": "Breaking Bread",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Breaking Bread",
+    "description": "A shared meal establishes supernatural hospitality and its consequences.",
+    "descriptionEn": "A shared meal establishes supernatural hospitality and its consequences.",
+    "page": 100,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:birth-control",
+    "name": "Birth Control",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Birth Control",
+    "description": "Regulates the creation of new vampires within the Movement's jurisdiction.",
+    "descriptionEn": "Regulates the creation of new vampires within the Movement's jurisdiction.",
+    "page": 100,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:enforce-elysium",
+    "name": "Enforce Elysium",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Enforce Elysium",
+    "description": "Makes the peace of Elysium carry the supernatural force of Law.",
+    "descriptionEn": "Makes the peace of Elysium carry the supernatural force of Law.",
+    "page": 101,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:i-do-not-recognize-your-authority",
+    "name": "I Do Not Recognize Your Authority",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "I Do Not Recognize Your Authority",
+    "description": "Rejects an outside claimant's supernatural authority.",
+    "descriptionEn": "Rejects an outside claimant's supernatural authority.",
+    "page": 101,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:the-judas-gambit",
+    "name": "The Judas Gambit",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "The Judas Gambit",
+    "description": "Turns a willing sacrifice or betrayal into legal leverage.",
+    "descriptionEn": "Turns a willing sacrifice or betrayal into legal leverage.",
+    "page": 101,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:full-transparency",
+    "name": "Full Transparency",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Full Transparency",
+    "description": "Compels disclosure and punishes concealed dealings under Carthian authority.",
+    "descriptionEn": "Compels disclosure and punishes concealed dealings under Carthian authority.",
+    "page": 101,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:private-property",
+    "name": "Private Property",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Private Property",
+    "description": "Makes a Haven and its boundaries legally and supernaturally protected.",
+    "descriptionEn": "Makes a Haven and its boundaries legally and supernaturally protected.",
+    "page": 102,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:retroactive-continuity",
+    "name": "Retroactive Continuity",
+    "ratings": [
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Retroactive Continuity",
+    "description": "Rewrites the legal continuity of a prior event with permanent consequences.",
+    "descriptionEn": "Rewrites the legal continuity of a prior event with permanent consequences.",
+    "page": 102,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:legal-guardian",
+    "name": "Legal Guardian",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Legal Guardian",
+    "description": "Places another vampire under the character's legal protection.",
+    "descriptionEn": "Places another vampire under the character's legal protection.",
+    "page": 102,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:parlay",
+    "name": "Parlay",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Parlay",
+    "description": "Creates protected space for negotiation under Carthian Law.",
+    "descriptionEn": "Creates protected space for negotiation under Carthian Law.",
+    "page": 102,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:rules-of-engagement",
+    "name": "Rules of Engagement",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Rules of Engagement",
+    "description": "Defines and enforces lawful limits on violence.",
+    "descriptionEn": "Defines and enforces lawful limits on violence.",
+    "page": 103,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:special-reserve",
+    "name": "Special Reserve",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Special Reserve",
+    "description": "Protects a designated feeding reserve through Lex Terrae.",
+    "descriptionEn": "Protects a designated feeding reserve through Lex Terrae.",
+    "page": 103,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:stake-your-claim",
+    "name": "Stake Your Claim",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Stake Your Claim",
+    "description": "Alerts the character when another vampire intrudes on claimed territory.",
+    "descriptionEn": "Alerts the character when another vampire intrudes on claimed territory.",
+    "page": 103,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:working-to-rule",
+    "name": "Working to Rule",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Working to Rule",
+    "description": "Turns strict compliance into organized resistance.",
+    "descriptionEn": "Turns strict compliance into organized resistance.",
+    "page": 103,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:those-responsible",
+    "name": "Those Responsible",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Carthian Law",
+    "priority": 10,
+    "translatedName": "Those Responsible",
+    "description": "Makes leaders answer for the conduct of the institutions they control.",
+    "descriptionEn": "Makes leaders answer for the conduct of the institutions they control.",
+    "page": 103,
+    "homebrew": true,
+    "descriptivePrerequisites": true
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:chorister-errata",
+    "name": "Chorister — Errata",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Chorister — Errata",
+    "description": "Removes automatic access to Crúac and Circle Merits; Acolytes may still teach Crúac at their own risk.",
+    "descriptionEn": "Removes automatic access to Crúac and Circle Merits; Acolytes may still teach Crúac at their own risk.",
+    "page": 107,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:chorister",
+    "errataForName": "Chorister",
+    "prerequisites": "Not a member of the Circle of the Crone"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:temple-guardian-errata",
+    "name": "Temple Guardian — Errata",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Temple Guardian — Errata",
+    "description": "Enyo's Defense applies once per turn; Eris's Glory grants Inspired once per chapter and its Crúac bonuses last until sunrise.",
+    "descriptionEn": "Enyo's Defense applies once per turn; Eris's Glory grants Inspired once per chapter and its Crúac bonuses last until sunrise.",
+    "page": 107,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:temple-guardian",
+    "errataForName": "Temple Guardian"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:viral-mythology-errata",
+    "name": "Viral Mythology — Errata",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Viral Mythology — Errata",
+    "description": "Uses the revised Seed of Her Divinity Condition supplied by this source.",
+    "descriptionEn": "Uses the revised Seed of Her Divinity Condition supplied by this source.",
+    "page": 107,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:viral-mythology",
+    "errataForName": "Viral Mythology"
+  },
+  {
+    "id": "h-vtr-fire-revolution:army-of-one-errata",
+    "name": "Army of One — Errata",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Army of One — Errata",
+    "description": "The rating measures one backup group's quality; it assists teamwork and creates the Carthian Backup Tilt in violence.",
+    "descriptionEn": "The rating measures one backup group's quality; it assists teamwork and creates the Carthian Backup Tilt in violence.",
+    "page": 114,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:army-of-one",
+    "errataForName": "Army of One"
+  },
+  {
+    "id": "h-vtr-fire-revolution:all-roads-lead-to-rome-errata",
+    "name": "All Roads Lead to Rome — Errata",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "All Roads Lead to Rome — Errata",
+    "description": "Optional historical interpretation: Carthian Law may reconstruct powers of the Camarilla from Ancient Roman texts.",
+    "descriptionEn": "Optional historical interpretation: Carthian Law may reconstruct powers of the Camarilla from Ancient Roman texts.",
+    "page": 114,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataForName": "Origin of Carthian Law",
+    "catalogOnly": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:balancing-act-errata",
+    "name": "Balancing Act — Errata",
+    "ratings": [
+      1
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Balancing Act — Errata",
+    "description": "Documents optional strengthening and limiting adjustments for the excluded improvised-Law framework.",
+    "descriptionEn": "Documents optional strengthening and limiting adjustments for the excluded improvised-Law framework.",
+    "page": 114,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataForName": "Optional Carthian Law framework",
+    "catalogOnly": true
+  },
+  {
+    "id": "h-vtr-fire-revolution:smooth-criminal-errata",
+    "name": "Smooth Criminal — Errata",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Smooth Criminal — Errata",
+    "description": "Applies in prepared debate or any setting where the character has a right to make a case; the Storyteller may continue the scene by granting full Willpower and an Experience.",
+    "descriptionEn": "Applies in prepared debate or any setting where the character has a right to make a case; the Storyteller may continue the scene by granting full Willpower and an Experience.",
+    "page": 115,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:smooth-criminal",
+    "errataForName": "Smooth Criminal"
+  },
+  {
+    "id": "h-vtr-fire-revolution:court-jester-errata",
+    "name": "Court Jester — Errata",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Court Jester — Errata",
+    "description": "Treat Court Jester as a Carthian Law.",
+    "descriptionEn": "Treat Court Jester as a Carthian Law.",
+    "page": 115,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:court-jester",
+    "errataForName": "Court Jester",
+    "replacementCategory": "Carthian Law"
+  },
+  {
+    "id": "h-vtr-fire-revolution:jack-booted-thug-errata",
+    "name": "Jack-Booted Thug — Errata",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Jack-Booted Thug — Errata",
+    "description": "Only affects invested citizens in good standing, not outsiders or outlaws outside the domain's political structure.",
+    "descriptionEn": "Only affects invested citizens in good standing, not outsiders or outlaws outside the domain's political structure.",
+    "page": 115,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:jack-booted-thug",
+    "errataForName": "Jack-Booted Thug"
+  },
+  {
+    "id": "h-vtr-fire-revolution:coda-against-sorcery-errata",
+    "name": "Coda Against Sorcery — Errata",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Coda Against Sorcery — Errata",
+    "description": "For vampires, applies only to blood sorcery and associated rituals, not ordinary clan or bloodline Disciplines unless they are Ritual Disciplines.",
+    "descriptionEn": "For vampires, applies only to blood sorcery and associated rituals, not ordinary clan or bloodline Disciplines unless they are Ritual Disciplines.",
+    "page": 115,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:coda-against-sorcery",
+    "errataForName": "Coda Against Sorcery"
+  },
+  {
+    "id": "h-vtr-fire-revolution:mobilize-outrage-errata",
+    "name": "Mobilize Outrage — Errata",
+    "ratings": [
+      1,
+      2,
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-fire-revolution",
+    "source": "Fire & Revolution: Carthians",
+    "category": "Errata",
+    "priority": 10,
+    "translatedName": "Mobilize Outrage — Errata",
+    "description": "Unbreakable must be declared before the combat turn and commits the next instant action to physical violence against the aggressor.",
+    "descriptionEn": "Unbreakable must be declared before the combat turn and commits the next instant action to physical violence against the aggressor.",
+    "page": 115,
+    "homebrew": true,
+    "descriptivePrerequisites": true,
+    "defaultDisabled": true,
+    "errataFor": "vtr-sotc:mobilize-outrage",
+    "errataForName": "Mobilize Outrage"
   }
 ]

@@ -36,7 +36,7 @@ test("contract index and source shards preserve the same unique IDs", async () =
 test("merit index and game-line shards preserve all catalog rows", async () => {
   const index = await readJson("public/data/core/merits/index.json");
   const records = (await Promise.all(["core", "changeling", "mage"].map((name) => readJson(`public/data/core/merits/${name}.json`)))).flat();
-  assert.equal(records.length, 402);
+  assert.equal(records.length, 417);
   assert.deepEqual(new Set(records.map((item) => item.id)), new Set(index.map((item) => item.id)));
 });
 

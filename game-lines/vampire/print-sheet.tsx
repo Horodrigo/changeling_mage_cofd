@@ -14,6 +14,8 @@ import type { VampireCondition, VampirePowers, VampireReference } from "./catalo
 import { objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
+import { activeVampireItems, activeVampirePowers } from "./homebrew-catalog";
 
 function VampirePrintPage({ page, children }: { page: number; children: React.ReactNode }) {
   const { t } = useLanguage();
@@ -38,13 +40,14 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const { locale, t } = useLanguage();
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
   const data = character.line_data;
+  const preferences = useHomebrewPreferences();
   const reference = catalogs.get<VampireReference>("vampire-reference");
-  const powers = catalogs.get<VampirePowers>("vampire-powers");
+  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), preferences);
   const customMerits = useMeritHomebrews("VtR", true);
   const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], customMerits);
   const conditions = [
     ...catalogs.get<{ conditions: Array<{ id: string; name: string }> }>("core-reference").conditions,
-    ...catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
+    ...activeVampireItems(catalogs.get<readonly VampireCondition[]>("vampire-conditions"), preferences),
   ];
   const clan = reference.clans.find((item) => item.id === data.clan_id);
   const bloodline = reference.bloodlines.find((item) => item.id === data.bloodline_id);

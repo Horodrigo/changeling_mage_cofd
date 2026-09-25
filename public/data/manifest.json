@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 7,
+  "catalogVersion": 8,
   "catalogs": {
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
@@ -21,8 +21,8 @@
     "changeling-contracts-ctl-kith-and-kin": { "version": 1, "url": "/data/changeling/contracts/ctl-kith-and-kin.json" },
     "changeling-contracts-ctl-core": { "version": 1, "url": "/data/changeling/contracts/ctl-core.json" },
     "changeling-tokens": { "version": 1, "url": "/data/changeling/tokens.json" },
-    "merits-index": { "version": 4, "url": "/data/core/merits/index.json" },
-    "merits-core": { "version": 4, "url": "/data/core/merits/core.json" },
+    "merits-index": { "version": 5, "url": "/data/core/merits/index.json" },
+    "merits-core": { "version": 5, "url": "/data/core/merits/core.json" },
     "merits-changeling": { "version": 1, "url": "/data/core/merits/changeling.json" },
     "merits-mage": { "version": 1, "url": "/data/core/merits/mage.json" },
     "core-conditions": { "version": 1, "url": "/data/core/conditions.json" },
@@ -35,13 +35,13 @@
     "changeling-kiths-pt": { "version": 1, "url": "/data/changeling/kiths-pt.json" },
     "mage-conditions": { "version": 1, "url": "/data/mage/conditions.json" },
     "vampire-clans": { "version": 4, "url": "/data/vampire/clans.json" },
-    "vampire-covenants": { "version": 4, "url": "/data/vampire/covenants.json" },
+    "vampire-covenants": { "version": 5, "url": "/data/vampire/covenants.json" },
     "vampire-anchors": { "version": 1, "url": "/data/vampire/anchors.json" },
     "vampire-blood-potency": { "version": 1, "url": "/data/vampire/blood-potency.json" },
     "vampire-torpor": { "version": 1, "url": "/data/vampire/torpor.json" },
     "vampire-bloodlines": { "version": 5, "url": "/data/vampire/bloodlines.json" },
-    "merits-vampire": { "version": 9, "url": "/data/vampire/merits.json" },
-    "vampire-powers": { "version": 9, "url": "/data/vampire/powers.json" },
-    "vampire-conditions": { "version": 5, "url": "/data/vampire/conditions.json" }
+    "merits-vampire": { "version": 10, "url": "/data/vampire/merits.json" },
+    "vampire-powers": { "version": 10, "url": "/data/vampire/powers.json" },
+    "vampire-conditions": { "version": 6, "url": "/data/vampire/conditions.json" }
   }
 }
