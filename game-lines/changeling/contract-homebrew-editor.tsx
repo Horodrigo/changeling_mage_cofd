@@ -33,7 +33,7 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
   courts: readonly CourtDefinition[];
   onSave: (definition: ContractDefinition) => void;
 }) {
-  const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
+  const { locale, t } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
   const [value, setValue] = useState<ContractDefinition>(() => initial ? structuredClone(initial) : emptyContract());
   const [error, setError] = useState("");
   const category = categoryFor(value);
@@ -67,9 +67,9 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
       <div className="homebrew-form">
         <Section title={h("Identidade e acesso", "Identity and access")}>
           <Field label={h("Nome *", "Name *")}><Input value={value.name} onChange={(event) => set("name", event.target.value)}/></Field>
-          <Field label={h("Categoria *", "Category *")}><Select value={category} onValueChange={(next) => chooseCategory(next as ContractCategory)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Regalia">Regalia</SelectItem><SelectItem value="Court">{h("Corte", "Court")}</SelectItem><SelectItem value="Independent">{h("Independente", "Independent")}</SelectItem><SelectItem value="Goblin">Goblin</SelectItem></SelectContent></Select></Field>
+          <Field label={h("Categoria *", "Category *")}><Select value={category} onValueChange={(next) => chooseCategory(next as ContractCategory)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Regalia">{t("ui.regalia")}</SelectItem><SelectItem value="Court">{h("Corte", "Court")}</SelectItem><SelectItem value="Independent">{h("Independente", "Independent")}</SelectItem><SelectItem value="Goblin">{t("ui.goblin")}</SelectItem></SelectContent></Select></Field>
           {category !== "Goblin" && <Field label={h("Nível *", "Tier *")}><Select value={value.type} onValueChange={(next) => set("type", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Comum">{h("Comum", "Common")}</SelectItem><SelectItem value="Real">{h("Real", "Royal")}</SelectItem></SelectContent></Select></Field>}
-          {category === "Regalia" && <Field label="Regalia *"><Select value={value.regalia} onValueChange={(next) => set("regalia", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{REGALIA.map((item) => <SelectItem key={item} value={item}>{systemTerm(item, locale)}</SelectItem>)}</SelectContent></Select></Field>}
+          {category === "Regalia" && <Field label={`${t("ui.regalia")} *`}><Select value={value.regalia} onValueChange={(next) => set("regalia", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{REGALIA.map((item) => <SelectItem key={item} value={item}>{systemTerm(item, locale)}</SelectItem>)}</SelectContent></Select></Field>}
           {category === "Court" && <Field label={h("Corte *", "Court *")}><Select value={value.courtIds?.[0]} onValueChange={chooseCourt}><SelectTrigger><SelectValue placeholder={h("Escolha a Corte", "Choose the Court")}/></SelectTrigger><SelectContent>{courts.map((court) => <SelectItem key={court.id} value={court.id}>{locale === "pt-BR" ? court.translatedName : court.name}</SelectItem>)}</SelectContent></Select></Field>}
           <Field wide label={h("Descrição *", "Description *")}><Textarea value={value.description} onChange={(event) => set("description", event.target.value)}/></Field>
         </Section>
