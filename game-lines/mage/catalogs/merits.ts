@@ -2,5 +2,8 @@ import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-group
 import type { MeritDefinition } from "@/lib/merits";
 
 export const mageMeritsCatalogGroup: CatalogGroupModule = {
-  load: (reader) => reader.getCatalog<MeritDefinition[]>("merits-mage"),
+  load: async (reader) => (await Promise.all([
+    reader.getCatalog<MeritDefinition[]>("merits-mage"),
+    reader.getCatalog<MeritDefinition[]>("merits-mage-supplements"),
+  ])).flat(),
 };

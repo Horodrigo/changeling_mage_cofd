@@ -9,15 +9,38 @@ const vite=await createServer({appType:"custom",configFile:false,root,server:{mi
 after(async()=>vite.close());
 const merits=await vite.ssrLoadModule("/lib/merits.ts");
 const orders=await vite.ssrLoadModule("/game-lines/mage/orders.ts");
-const rawMageCatalog=["core","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8")));
+const rawMageCatalog=[
+ ...["core","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))),
+ ...JSON.parse(readFileSync(new URL("../public/data/mage/merits-supplements.json",import.meta.url),"utf8")),
+];
 const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=selected.get(item.name);if(!current||item.priority>current.priority)selected.set(item.name,item);return selected;},new Map()).values()];
 const merit=(name)=>mageCatalog.find(item=>item.name===name);
 const base={gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
-test("Mage catalog uses splat-specific records and leaves deferred merits out",()=>{
- assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,61);
+test("Mage catalog includes the nine audited supplemental Merits",()=>{
+ assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,70);
  assert.equal(merit("Mystery Cult Influence").sourceId,"mta-2ed");
- for(const name of ["Masque","Profane Tool","Egregore","Prelacy","Protective Name"]) assert.equal(merit(name),undefined,name);
+ for(const name of ["Egregore","Masque","Prelacy","Profane Tool","Faction Member","Svikiro","Svikiro Channel","Svikiro Ridden","Svikiro Nganga"])
+  assert.ok(merit(name),name);
+ assert.equal(merit("Protective Name"),undefined);
+ assert.deepEqual(merit("Svikiro Channel").ratings,[1,3]);
+ assert.deepEqual(merit("Svikiro Ridden").ratings,[1,3]);
+ assert.equal(merit("Egregore").levels.length,5);
+ assert.equal(merit("Masque").levels.length,5);
+ assert.equal(merit("Prelacy").levels.length,4);
+});
+test("Mage Order Style and Svikiro prerequisites use canonical stored traits",()=>{
+ const status=(domain,dots)=>({name:"Awakened Status",dots,configuration:{domain}});
+ assert.equal(merits.meritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Mysterium",1)]}),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Silver Ladder",5)]}),false);
+ assert.equal(merits.meritPrerequisitesMet(merit("Masque"),{...base,merits:[status("Guardians of the Veil",1)]}),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",3)]}),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",2)]}),false);
+ assert.equal(merits.meritPrerequisitesMet(merit("Profane Tool"),{...base,merits:[{name:"Prelacy",dots:2}]}),true);
+ const medium={...base,attributes:{Resolve:3,Composure:3}};
+ assert.equal(merits.meritPrerequisitesMet(merit("Svikiro"),medium),true);
+ assert.equal(merits.meritPrerequisitesMet(merit("Svikiro"),{...medium,attributes:{Resolve:2,Composure:3}}),false);
+ assert.equal(merits.meritPrerequisitesMet(merit("Svikiro Nganga"),{...base,merits:[{name:"Svikiro",dots:3}]}),true);
 });
 test("Mage location merits preserve sources, ratings, and linked locations",()=>{
  const locations=[

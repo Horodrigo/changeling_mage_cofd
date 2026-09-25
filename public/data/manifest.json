@@ -25,6 +25,7 @@
     "merits-core": { "version": 5, "url": "/data/core/merits/core.json" },
     "merits-changeling": { "version": 1, "url": "/data/core/merits/changeling.json" },
     "merits-mage": { "version": 1, "url": "/data/core/merits/mage.json" },
+    "merits-mage-supplements": { "version": 1, "url": "/data/mage/merits-supplements.json" },
     "core-conditions": { "version": 1, "url": "/data/core/conditions.json" },
     "core-conditions-pt": { "version": 1, "url": "/data/core/conditions-pt.json" },
     "changeling-conditions": { "version": 1, "url": "/data/changeling/conditions.json" },
