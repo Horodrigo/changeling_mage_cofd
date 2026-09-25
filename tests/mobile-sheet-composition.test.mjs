@@ -1,17 +1,18 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("mobile sheets keep summaries, details, powers, and resource tracks separated", async () => {
-  const [mortal, mortalBuilder, mage, vampire, bloodline, legacy, globals, mortalCss, mageCss, vampireCss] = await Promise.all([
+  const [mortal, mortalBuilder, mage, vampire, bloodline, legacy, paperShell, globals, mortalCss, mageCss, vampireCss] = await Promise.all([
     read("../game-lines/mortal/sheet-view.tsx"),
     read("../game-lines/mortal/builder.tsx"),
     read("../game-lines/mage/sheet-view.tsx"),
     read("../game-lines/vampire/sheet-view.tsx"),
     read("../game-lines/vampire/bloodline-page.tsx"),
     read("../app/workspace/legacy-page.tsx"),
+    read("../app/workspace/character-paper-shell.tsx"),
     read("../app/css/globals.css"),
     read("../app/css/mortal-sheet.css"),
     read("../app/css/mage-sheet.css"),
@@ -50,6 +51,12 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mortal, /integrity-track[^]*DotValue value=\{integrity\} max=\{10\} singleRow/);
   assert.match(mortal, /MortalExperiencePanel/);
   assert.match(mortalCss, /@media \(max-width:767px\)[^]*\.cofd-sheet \.mobile-attribute-grid/);
+  assert.match(mortal, /SheetHeading className="cofd-attributes-heading"/);
+  assert.match(paperShell, /cofd-urban-frame[^]*cofd-frame-center-bottom/);
+  for (const asset of ["paper-texture", "background-mortal", "frame-corner", "section-divider", "column-divider", "frame-center", "attributes-divider"]) {
+    assert.ok((await stat(new URL(`../public/mortal/style/${asset}.webp`, import.meta.url))).size > 0, `${asset}.webp is empty`);
+    assert.match(mortalCss, new RegExp(`/mortal/style/${asset}\\.webp`));
+  }
   assert.doesNotMatch(mortalBuilder, /meritSpent\s*!==\s*7|threeCompleteSpecialties|threeAspirations|answerFiveBreakingPointQuestions/);
   assert.match(mortalBuilder, /meritSpent\s*>\s*7/);
   assert.match(globals, /mobile-character-sheet \.power-resource \.resource-track::before \{ grid-column:1\/-1; \}/);

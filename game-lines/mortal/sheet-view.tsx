@@ -78,7 +78,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
     <SheetField label={t("ui.concept")} value={character.character.concept} />
     <SheetField label={t("ui.groupName")} value={data.group_name} />
   </section>;
-  const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div></>;
+  const attributes = <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div></>;
   const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className={isMobile ? "mobile-trait-stack" : "mortal-skill-stack"}>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={names} values={character.skills} specialties={character.specializations} />)}</div></>;
   const merits = <MeritList character={character} catalog={meritCatalog} />;
   const aspirationList = <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => setLineValue("aspirations", value)} />;

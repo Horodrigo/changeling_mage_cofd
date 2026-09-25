@@ -27,6 +27,14 @@ export function CharacterPaperShell({
   const { t } = useLanguage();
   return (
     <article className={`cod-sheet ${mobile ? "mobile-character-sheet " : ""}${line.toLowerCase()}-sheet`}>
+      {line === "CofD" && <div className="cofd-urban-frame" aria-hidden="true">
+        <span className="cofd-frame-corner cofd-frame-corner-top-left" />
+        <span className="cofd-frame-corner cofd-frame-corner-top-right" />
+        <span className="cofd-frame-corner cofd-frame-corner-bottom-left" />
+        <span className="cofd-frame-corner cofd-frame-corner-bottom-right" />
+        <span className="cofd-frame-center cofd-frame-center-top" />
+        <span className="cofd-frame-center cofd-frame-center-bottom" />
+      </div>}
       {line === "CtL" && <div className="ctl-botanical-frame" aria-hidden="true">
         <span className="ctl-frame-edge ctl-frame-edge-top" />
         <span className="ctl-frame-edge ctl-frame-edge-bottom" />

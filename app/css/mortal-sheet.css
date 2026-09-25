@@ -19,7 +19,80 @@
 .line-summary .cofd-summary, .character-card.cofd-card { border-left:4px solid #315e7a; }
 .line-choice button.mortal-line-choice { border-color:#aec5d2; background:linear-gradient(145deg,#f5fafc,#e7f0f5); }
 .line-choice button.mortal-line-choice:hover { border-color:#477d9d; }
-.cod-sheet.cofd-sheet { --sheet-accent:#315e7a; --sheet-ink:#253b47; background:linear-gradient(135deg,#edf5f8 0,#fffef9 14%,#fffef9 86%,#e8f1f5 100%); }
+.cod-sheet.cofd-sheet {
+  --sheet-accent:#315e7a;
+  --sheet-ink:#253b47;
+  background-color:#e8edf0;
+  background-image:url("/mortal/style/paper-texture.webp");
+  background-repeat:repeat;
+  background-size:1024px 1024px;
+}
+.cofd-sheet::after {
+  background-image:url("/mortal/style/background-mortal.webp");
+  background-position:center 46%;
+  background-size:min(54%,600px) auto;
+  opacity:.08;
+}
+.cofd-urban-frame {
+  position:absolute !important;
+  z-index:3 !important;
+  inset:0;
+  pointer-events:none;
+}
+.cofd-frame-corner {
+  position:absolute;
+  display:block;
+  width:220px;
+  height:220px;
+  background:url("/mortal/style/frame-corner.webp") left top/contain no-repeat;
+}
+.cofd-frame-corner-top-left { top:0; left:0; }
+.cofd-frame-corner-top-right { top:0; right:0; transform:scaleX(-1); }
+.cofd-frame-corner-bottom-left { bottom:0; left:0; transform:scaleY(-1); }
+.cofd-frame-corner-bottom-right { right:0; bottom:0; transform:scale(-1); }
+.cofd-frame-center {
+  position:absolute;
+  left:50%;
+  display:block;
+  width:52px;
+  height:96px;
+  background:url("/mortal/style/frame-center.webp") center/contain no-repeat;
+  transform:translateX(-50%);
+}
+.cofd-frame-center-top { top:-8px; }
+.cofd-frame-center-bottom { bottom:-8px; transform:translateX(-50%) rotate(180deg); }
+.cofd-sheet .official-heading::before,
+.cofd-sheet .official-heading::after {
+  height:14px;
+  background:transparent url("/mortal/style/section-divider.webp") center/100% 14px no-repeat;
+  opacity:.82;
+}
+.cofd-sheet .official-heading::after { transform:scaleX(-1); }
+.cofd-sheet .cod-main-columns { gap:16px; }
+.cofd-sheet .cod-main-columns > section + section {
+  padding-left:14px;
+  background:url("/mortal/style/column-divider.webp") left top/10px 100% no-repeat;
+}
+.cofd-sheet .official-heading.cofd-attributes-heading {
+  position:relative;
+  isolation:isolate;
+  justify-content:center;
+  min-height:52px;
+  margin:0 0 4px;
+}
+.cofd-sheet .official-heading.cofd-attributes-heading::before,
+.cofd-sheet .official-heading.cofd-attributes-heading::after {
+  position:absolute;
+  z-index:0;
+  top:50%;
+  width:calc(50% - 76px);
+  height:48px;
+  background:transparent url("/mortal/style/attributes-divider.webp") right center/100% auto no-repeat;
+  opacity:.9;
+}
+.cofd-sheet .official-heading.cofd-attributes-heading::before { left:0; transform:translateY(-50%); }
+.cofd-sheet .official-heading.cofd-attributes-heading::after { right:0; transform:translateY(-50%) scaleX(-1); }
+.cofd-sheet .official-heading.cofd-attributes-heading span { position:relative; z-index:1; }
 .cofd-sheet .cod-sheet-title span { letter-spacing:-.035em; }
 .cofd-sheet .resource-track { grid-template-columns:repeat(10,minmax(0,1fr)); }
 .cofd-sheet .mortal-skill-stack { display:grid; gap:12px; }
@@ -39,6 +112,19 @@
 
 @media (max-width:767px) {
   .cod-sheet.cofd-sheet { min-width:0; padding:10px; }
+  .cofd-frame-corner { width:118px; height:118px; opacity:.82; }
+  .cofd-frame-center { width:34px; height:64px; }
+  .cofd-frame-center-top { top:-5px; }
+  .cofd-frame-center-bottom { bottom:-5px; }
+  .cofd-sheet .official-heading::before,
+  .cofd-sheet .official-heading::after { height:10px; background-size:100% 10px; }
+  .cofd-sheet .official-heading.cofd-attributes-heading { min-height:36px; }
+  .cofd-sheet .official-heading.cofd-attributes-heading::before,
+  .cofd-sheet .official-heading.cofd-attributes-heading::after {
+    width:calc(50% - 58px);
+    height:32px;
+    background-size:100% auto;
+  }
   .cofd-sheet .sheet-identity-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .cofd-sheet .mobile-attribute-grid { gap:4px; }
   .cofd-sheet .mobile-attribute-grid .official-trait-block { padding:7px 3px; }
