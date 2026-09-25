@@ -42,6 +42,7 @@ import { useState } from "react";
 import { MageStructuredMeritEditor } from "./merit-configuration-editor";
 import { CompanionPage as MageCompanionPage } from "./companion-page";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { useLegacyHomebrews } from "./use-legacy-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import type { MageFactionDefinition } from "./factions";
 export function MageCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
@@ -50,6 +51,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
     const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
     const factionCatalog = catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
     const customMerits = useMeritHomebrews("MtA", true);
+    const customLegacies = useLegacyHomebrews();
     const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")], customMerits);
     const conditionCatalog = [
         ...catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions.filter((condition) => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
@@ -154,7 +156,7 @@ export function MageCharacterPaper({ character, updateState, updateSheet, catalo
         updateSheet(next);
     };
     const legacyState = normalizeLegacyState(data.legacy_state);
-    const legacyDefinition = findLegacy(legacyState?.definitionId);
+    const legacyDefinition = findLegacy(legacyState?.definitionId, customLegacies);
     const hasLegacyAccess = (gnosis >= 2 || Boolean(legacyState?.joined));
     const legacyDisplay = legacyState?.joined ? legacyDefinition?.name ?? "Legacy" : hasLegacyAccess ? t("ui.join") : "";
     const openLegacy = () => legacyState?.joined ? setSheetTab("legacy") : setLegacyJoinOpen(true);

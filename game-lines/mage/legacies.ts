@@ -2,7 +2,7 @@ import legacyCatalog from "@/game-lines/mage/catalog-data/legacies.json";
 import supplementCatalog from "@/game-lines/mage/catalog-data/legacies-supplement.json";
 import { freezeCatalogData } from "@/lib/catalog/catalog-service";
 
-type LegacyCharacter = {line_data:Record<string,unknown>;skills:Record<string,number>;merits?:Array<{name:string;dots:number}>;specializations?:Array<{skill?:string;name?:string}>};
+type LegacyCharacter = {id?:string;line_data:Record<string,unknown>;skills:Record<string,number>;merits?:Array<{name:string;dots:number}>;specializations?:Array<{skill?:string;name?:string}>};
 
 type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{name:string;dots:number}>;anyMerits?:Array<{names:string[];dots:number}>};
 
@@ -22,8 +22,12 @@ export type LegacyAttainment = {
 export type LegacyDefinition = {
   id: string;
   name: string;
+  sourceId?: string;
   source: string;
   page: number;
+  homebrew?: boolean;
+  founderCharacterId?: string;
+  additionalPrerequisites?: string;
   additionalSources?: Array<{source:string;page:number}>;
   parentage: {paths:string[];orders:string[]};
   rulingArcanum: string;
@@ -42,14 +46,14 @@ export type LegacyState = {
   definitionId: string;
   joined: boolean;
   attainmentRanks: number[];
-  initiationMethod: ""|"tutelage"|"daimonomikon"|"soul-study";
+  initiationMethod: ""|"tutelage"|"daimonomikon"|"soul-study"|"founding";
 };
 
 export const LEGACIES=freezeCatalogData([...legacyCatalog,...supplementCatalog]) as unknown as readonly LegacyDefinition[];
 export const ELEVENTH_QUESTION=LEGACIES.find((item)=>item.id==="the-eleventh-question")!;
 export const CHRONOLOGUE=LEGACIES.find((item)=>item.id==="chronologue")!;
 export const ENGINEERS_OF_THE_SYSTEM=LEGACIES.find((item)=>item.id==="engineers-of-the-system")!;
-export const findLegacy=(id:unknown)=>LEGACIES.find(item=>item.id===String(id));
+export const findLegacy=(id:unknown,custom:readonly LegacyDefinition[]=[])=>custom.find(item=>item.id===String(id))??LEGACIES.find(item=>item.id===String(id));
 
 export function legacySkillRating(skills:Record<string,number>,name:string){
   return Number(skills[name]??0);
@@ -82,7 +86,7 @@ function requirementItems(character:LegacyCharacter,requirements:LegacyRequireme
 export function normalizeLegacyState(value:unknown):LegacyState {
   if(!value||typeof value!=="object")return {definitionId:"",joined:false,attainmentRanks:[],initiationMethod:""};
   const state=value as Record<string,unknown>;
-  const method=["tutelage","daimonomikon","soul-study"].includes(String(state.initiationMethod))?String(state.initiationMethod) as LegacyState["initiationMethod"]:"";
+  const method=["tutelage","daimonomikon","soul-study","founding"].includes(String(state.initiationMethod))?String(state.initiationMethod) as LegacyState["initiationMethod"]:"";
   return {definitionId:String(state.definitionId??""),joined:Boolean(state.joined),attainmentRanks:Array.isArray(state.attainmentRanks)?[...new Set(state.attainmentRanks.map(Number).filter(rank=>rank>=1&&rank<=5))].sort():[],initiationMethod:method};
 }
 
@@ -102,6 +106,10 @@ export function legacyEntryPrerequisites(character:LegacyCharacter,definition:Le
     return {...result,items:[{label:"Gnosis 2",met:result.gnosis},{label:"Time 2",met:result.time},{label:"Investigation 2",met:result.investigation},{label:"Qualifying Skill 2",met:result.qualifying},{label:"Moros, Guardian/Mysterium, or Perfect Timing Praxis",met:result.parentage||result.praxis}]};
   }
   const data=character.line_data,gnosis=Number(data.gnosis??1);
+  if(definition.homebrew&&definition.founderCharacterId===character.id){
+    const gnosisMet=gnosis>=3,rulingMet=legacyArcanumRating((data.arcana??{}) as Record<string,number>,definition.rulingArcanum)>=2;
+    return {gnosis:gnosisMet,parentage:true,praxis:false,met:gnosisMet&&rulingMet,items:[{label:"Gnosis 3",met:gnosisMet},{label:`${definition.rulingArcanum} 2`,met:rulingMet}]};
+  }
   const parentage=definition.parentage.paths.includes(String(data.path))||definition.parentage.orders.includes(String(data.order));
   const praxis=[...(Array.isArray(data.praxes)?data.praxes:[]),...(Array.isArray(data.learned_praxes)?data.learned_praxes:[])].some(item=>item&&typeof item==="object"&&String((item as Record<string,unknown>).originalName??(item as Record<string,unknown>).name)===definition.entryPraxis);
   const gnosisMet=gnosis>=2,mechanical=legacyRequirementsMet(character,definition.entryRequirements);

@@ -18,6 +18,7 @@ import { MTA_ORDER_LABELS } from "./creation-rules";
 import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import { useLegacyHomebrews } from "./use-legacy-homebrews";
 
 const objectList = (value: unknown) => Array.isArray(value) ? value as Array<Record<string, unknown>> : [];
 const spellName = (item: Record<string, unknown>, locale: string) => String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName ?? "");
@@ -47,6 +48,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   const data = character.line_data;
   const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
   const customMerits = useMeritHomebrews("MtA", true);
+  const customLegacies = useLegacyHomebrews();
   const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("mage-merits")], customMerits);
   const conditionCatalog = [
     ...catalogs.get<{ conditions: Array<{ id: string; name: string }> }>("core-reference").conditions,
@@ -63,7 +65,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   const praxes = [...objectList(data.praxes), ...objectList(data.learned_praxes)];
   const activeSpells = stringList(character.current_state.active_spells);
   const legacyState = normalizeLegacyState(data.legacy_state);
-  const legacy = legacyState.joined ? findLegacy(legacyState.definitionId) : undefined;
+  const legacy = legacyState.joined ? findLegacy(legacyState.definitionId, customLegacies) : undefined;
   const affiliation=findMageAffiliation(data.affiliation_id);
   const orderBase = !data.order ? "" : data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? String(data.order) : MTA_ORDER_LABELS[String(data.order)] ?? String(data.order);
   const order=affiliation?`${orderBase} · ${affiliation.name}`:orderBase;

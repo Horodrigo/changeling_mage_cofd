@@ -28,6 +28,7 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import type { MageFactionDefinition } from "./factions";
 import { mageMeritSelectionProblems } from "./merits";
+import { useLegacyHomebrews } from "./use-legacy-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -118,7 +119,7 @@ export function MageExperiencePanel({
   const [mageMeritConfiguration,setMageMeritConfiguration] = useState<Record<string,string|string[]>>({});
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
-  const customMerits=useMeritHomebrews("MtA",true),homebrewPreferences=useHomebrewPreferences();
+  const customMerits=useMeritHomebrews("MtA",true),customLegacies=useLegacyHomebrews(),homebrewPreferences=useHomebrewPreferences();
   const meritCatalog = activeMeritCatalog([
       ...catalogs.get<MeritDefinition[]>("core-merits"),
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
@@ -134,7 +135,7 @@ export function MageExperiencePanel({
   const path =
     MTA_PATHS[String(character.line_data.path) as keyof typeof MTA_PATHS];
   const activeLegacy=normalizeLegacyState(character.line_data.legacy_state);
-  const activeLegacyDefinition=findLegacy(activeLegacy.definitionId);
+  const activeLegacyDefinition=findLegacy(activeLegacy.definitionId,customLegacies);
   const knownSpellIds = new Set(
     [
       ...objectList(character.line_data.rotes),

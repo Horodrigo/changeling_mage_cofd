@@ -122,6 +122,13 @@ test("Legacy prerequisites consume canonical English stored trait keys", () => {
   );
 });
 
+test("a player-created Legacy requires its founder to have Gnosis 3 and Ruling Arcanum 2", () => {
+  const definition = { ...ELEVENTH_QUESTION, id: "homebrew:legacy:test", homebrew: true, founderCharacterId: "founder", rulingArcanum: "Time" };
+  assert.equal(legacyEntryPrerequisites({ id: "founder", ...mage({ gnosis: 3 }) }, definition).met, true);
+  assert.equal(legacyEntryPrerequisites({ id: "founder", ...mage({ gnosis: 2 }) }, definition).met, false);
+  assert.equal(legacyEntryPrerequisites({ id: "founder", ...mage({ gnosis: 3, arcana: { Time: 1 } }) }, definition).met, false);
+});
+
 test("Legacy state normalization keeps only valid unique ranks", () => {
   assert.deepEqual(
     normalizeLegacyState({

@@ -28,7 +28,11 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mage, /legacyState\?\.joined \? setSheetTab\("legacy"\) : setLegacyJoinOpen\(true\)/);
   assert.match(mage, /<Dialog open=\{legacyJoinOpen\}[^]*<LegacyPage[^]*onJoined=/);
   assert.doesNotMatch(mage, /joinCreate|Join\/Create/);
-  assert.match(legacy, /alphabetical\(LEGACIES,item=>item\.name\)/);
+  assert.match(legacy, /<SelectItem value="__create__">\{t\("ui\.createALegacy"\)\}<\/SelectItem>/);
+  assert.equal(legacy.match(/ui\.createALegacy/g)?.length, 1);
+  assert.match(legacy, /alphabetical\(mergeLegacyHomebrews\(LEGACIES,availableCustom\),item=>item\.name\)/);
+  assert.doesNotMatch(legacy, /gnosis3PermitsFoundingALegacyFor1/);
+  assert.doesNotMatch(legacy, /onBrowseOpenChange/);
   assert.match(legacy, /<SelectValue placeholder=\{t\("ui\.selectLegacy"\)\}/);
   assert.doesNotMatch(legacy, /value="__select"/);
 
