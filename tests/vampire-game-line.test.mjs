@@ -204,6 +204,25 @@ test("Secrets of the Covenants exposes every printed Merit, Law, Oath, and Wyrm'
   );
 });
 
+test("Vampire Merit filters group affiliations and style variants without changing catalog categories", async () => {
+  const { vampireMeritFilterCategory } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
+  const merits = [
+    ...JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8")),
+    ...JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8")),
+  ];
+  const categories = [...new Set(merits.map(vampireMeritFilterCategory))].sort();
+
+  assert.deepEqual(categories, [
+    "Bloodline", "Carthian Law", "Clan", "Covenant", "Elder", "Errata", "Fighting", "Fighting Styles", "Invictus Oaths", "Kindred", "Locations", "Mental", "Mental Styles", "Physical", "Physical Styles", "Restricted", "Social", "Social Styles", "Supernatural", "Supernatural Styles",
+  ]);
+  assert.equal(merits.filter((item) => vampireMeritFilterCategory(item) === "Covenant").length, 125);
+  assert.equal(vampireMeritFilterCategory({ category: "Erzsébet" }), "Bloodline");
+  assert.equal(vampireMeritFilterCategory({ category: "Invictus" }), "Covenant");
+  assert.equal(vampireMeritFilterCategory({ category: "Mandragora" }), "Covenant");
+  assert.equal(vampireMeritFilterCategory({ category: "Tradition" }), "Covenant");
+  assert.equal(vampireMeritFilterCategory({ category: "Faction" }), "Covenant");
+});
+
 test("Secrets of the Covenants exposes every Crúac rite, Theban miracle, Coil level, and Scale", async () => {
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   const fromSupplement = (items) => items.filter((item) => item.source === "Secrets of the Covenants");

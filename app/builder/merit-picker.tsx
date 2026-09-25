@@ -45,6 +45,7 @@ export function MeritPicker({
   renderConfiguration,
   isInlineConfiguration,
   isEligible = meritPrerequisitesMet,
+  categoryFor = (definition) => definition.category,
 }: {
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
@@ -58,6 +59,7 @@ export function MeritPicker({
   renderConfiguration: (props: MeritConfigurationRenderProps) => ReactNode;
   isInlineConfiguration: (name: string) => boolean;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
+  categoryFor?: (definition: MeritDefinition) => string;
 }) {
   const { locale, t } = useLanguage();
   const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
@@ -66,14 +68,15 @@ export function MeritPicker({
   const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
-  const categories = [...new Set(catalog.flatMap((merit) => homebrewCategoryKeys(merit.category, merit.sourceId)))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
+  const categoryKeys = (merit: MeritDefinition) => homebrewCategoryKeys(categoryFor(merit), merit.sourceId);
+  const categories = [...new Set(catalog.flatMap(categoryKeys))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
   const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
   const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
   const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
     (showAllMerits || isEligible(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => owned.name === item.name) || merits.some((owned) => owned.name === item.name)) &&
-    (category === "all" || homebrewCategoryKeys(item.category, item.sourceId).includes(category)) &&
-    (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""} ${homebrewCategoryKeys(item.category, item.sourceId).join(" ")}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))
+    (category === "all" || categoryKeys(item).includes(category)) &&
+    (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))
   );
   const addMerit = (definition: MeritDefinition) => {
     if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => item.name === definition.name))) return;
@@ -96,7 +99,7 @@ export function MeritPicker({
       const needsConfirmation = ["Fae Mount", "Fae Pet", "Familiar", "Entitlement"].includes(selection.name);
       return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale) : undefined}>
         <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong>
-          <small>{definition ? `${categoryName(definition.category)} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
+          <small>{definition ? `${categoryName(categoryFor(definition))} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
           <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
           {!selection.grantedBy && (needsConfirmation
             ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={t("ui.removefc5df2", { p1: definition ? meritName(definition) : selection.name })} description={t("ui.theMeritAndLinkedBenefitsWillBeRemoved")} action={t("ui.remove7d41cc")} onConfirm={remove} />
@@ -117,7 +120,7 @@ export function MeritPicker({
     <Dialog open={catalogOpen} onOpenChange={setCatalogOpen}><DialogContent className="merit-dialog"><DialogHeader><DialogTitle>{t("ui.selectMerits")}</DialogTitle><DialogDescription>{t("ui.searchByNameOrBrowseCategories")}</DialogDescription></DialogHeader>
       <div className="catalog-filters"><label className="merit-search"><Search aria-hidden="true" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t("ui.searchMeritByNamePrerequisiteOrSource")} /></label><Choice label={t("ui.category")} value={category} setValue={setCategory} options={["all", ...categories]} optionLabels={{ all: t("ui.allCategories"), ...Object.fromEntries(categories.map((item) => [item, categoryName(item)])) }} /><MeritCatalogVisibilityToggle showAll={showAllMerits} setShowAll={setShowAllMerits} /></div>
       <div className="merit-catalog">{categories.map((catalogCategory) => {
-        const items = visibleCatalog.filter((item) => item.category === catalogCategory);
+        const items = visibleCatalog.filter((item) => categoryFor(item) === catalogCategory);
         if (!items.length) return null;
         return <section className="merit-category" key={catalogCategory}><h3>{categoryName(catalogCategory)} <Badge variant="outline">{items.length}</Badge></h3><div>{items.map((definition) => {
           const selected = merits.some((merit) => merit.name === definition.name);

@@ -1,5 +1,26 @@
 import { meritPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 
+const CLAN_MERIT_CATEGORIES = new Set(["Dukhan", "Gangrel", "Nosferatu"]);
+const BLOODLINE_MERIT_CATEGORIES = new Set([
+  "Acteius", "Daimonion", "Dead Wolves", "Erzsébet", "Keepers of the Dark", "Kuufukuji", "Melissidae", "Moda Mortale", "Nelapsi", "Norvegi", "Oberlochs", "Qedeshah", "Rotgrafen", "Star-Crossed", "Typhos", "Verlice", "Warumono", "Wickers", "Xiao", "Yarilo",
+]);
+const COVENANT_MERIT_CATEGORIES = new Set([
+  "Ahl al-Mumit", "al-Amin", "Architects of the Monolith", "Carthian Movement", "Circle of the Crone", "Faction", "Fir'awn", "Gallows Post", "Inconnu", "Invictus", "Lancea et Sanctum", "Legion of the Green", "Mandragora", "Moirai", "Ordo Dracul", "Tradition", "Weihan Cynn",
+]);
+
+export function vampireMeritFilterCategory(merit: Pick<MeritDefinition, "category">) {
+  const category = merit.category;
+  if (CLAN_MERIT_CATEGORIES.has(category)) return "Clan";
+  if (BLOODLINE_MERIT_CATEGORIES.has(category)) return "Bloodline";
+  if (COVENANT_MERIT_CATEGORIES.has(category)) return "Covenant";
+  if (["Necropolis", "Wyrm's Nest"].includes(category)) return "Locations";
+  if (category === "Fighting Style") return "Fighting Styles";
+  if (category === "Social Style") return "Social Styles";
+  if (["Style", "Crúac Style"].includes(category)) return "Supernatural Styles";
+  if (category === "Nereid") return "Restricted";
+  return category;
+}
+
 export function isMortalSupernaturalMerit(merit: MeritDefinition) {
   return merit.mortalOnly === true;
 }

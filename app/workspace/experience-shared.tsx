@@ -232,6 +232,7 @@ export function ExperienceMeritPicker({
   targetDots,
   onSelect,
   isEligible = meritPrerequisitesMet,
+  categoryFor = (definition) => definition.category,
 }: {
   line: PersistedGameLineId;
   archetypes: readonly string[];
@@ -241,6 +242,7 @@ export function ExperienceMeritPicker({
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
+  categoryFor?: (definition: MeritDefinition) => string;
 }) {
   const { locale, t }=useLanguage();
   const [search, setSearch] = useState("");
@@ -248,11 +250,12 @@ export function ExperienceMeritPicker({
   const [showAllMerits, setShowAllMerits] = useState(false);
   const [meritDrafts, setMeritDrafts] = useState<Record<string,{newInstance:boolean;instanceIndex:number;dots:number}>>({});
   const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
+  const categoryKeys=(item:MeritDefinition)=>homebrewCategoryKeys(categoryFor(item),item.sourceId);
   const context=meritContextForSheet(character, meritCatalog, archetypes);
   const catalog = alphabetical([...meritCatalog], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase("pt-BR"),
-    categories = ["Todas", ...new Set(catalog.flatMap((item) => homebrewCategoryKeys(item.category, item.sourceId)))];
+    categories = ["Todas", ...new Set(catalog.flatMap(categoryKeys))];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -298,8 +301,8 @@ export function ExperienceMeritPicker({
             .filter(
               (item) =>
                 (showAllMerits || isEligible(item, context)) &&
-                (category === "Todas" || homebrewCategoryKeys(item.category, item.sourceId).includes(category)) &&
-                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source} ${homebrewCategoryKeys(item.category, item.sourceId).join(" ")}`
+                (category === "Todas" || categoryKeys(item).includes(category)) &&
+                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source} ${categoryKeys(item).join(" ")}`
                   .toLocaleLowerCase("pt-BR")
                   .includes(normalized),
             )
