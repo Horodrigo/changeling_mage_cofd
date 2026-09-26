@@ -14,7 +14,7 @@ import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import {
-  CTL_NEEDLE_DEFINITIONS, CTL_SEEMINGS, CTL_THREAD_DEFINITIONS, REGALIA,
+  CTL_NEEDLE_DEFINITIONS, CTL_THREAD_DEFINITIONS, REGALIA,
   changelingAnchorDisplayName, changelingAnchorRecovery, seemingDisplayName,
 } from "./creation-rules";
 import { SKILLS } from "@/lib/core/character/creation-rules";
@@ -35,6 +35,7 @@ import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewCategoryKeys, homebrewContentActive } from "@/lib/homebrew";
 import type { TokenDefinition } from "./catalogs/tokens";
+import type { SeemingDefinition, SeemingHomebrew } from "./catalog-homebrews";
 
 export type ContractSelection = ContractDefinition;
 export type CustomCourtDefinition = { name: string; emotion: string; mantleBenefits: string[] };
@@ -42,7 +43,7 @@ type BuilderCourtDefinition = CustomCourtDefinition & Partial<CourtDefinition>;
 type Setter<T> = (value: T) => void;
 type MissingCheck = (key: string) => boolean;
 export type ChangelingBuilderViewProps = {
-  seeming: string; setSeeming: Setter<string>; attributes: Record<string, number>;
+  seeming: string; seemingCatalog: Record<string, SeemingDefinition | SeemingHomebrew>; setSeeming: Setter<string>; attributes: Record<string, number>;
   contractCatalog: ContractDefinition[]; contracts: ContractSelection[]; setContracts: Setter<ContractSelection[]>;
   favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
   needle: string; setNeedle: Setter<string>; thread: string; setThread: Setter<string>; touchstone: string; setTouchstone: Setter<string>;
@@ -96,7 +97,7 @@ const contractCategoryKeys = (contract: ContractDefinition) => homebrewCategoryK
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, t } = useLanguage();
   const homebrewPreferences = useHomebrewPreferences();
-  const seemingData = CTL_SEEMINGS[props.seeming as keyof typeof CTL_SEEMINGS];
+  const seemingData = props.seemingCatalog[props.seeming];
   const availableRegalia = [
     ...REGALIA,
     ...props.contractCatalog
@@ -126,10 +127,10 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
             label={t("ui.seeming")}
             value={props.seeming}
             setValue={props.setSeeming}
-            options={Object.entries(CTL_SEEMINGS).filter(([name,item])=>name===props.seeming||homebrewContentActive(homebrewPreferences,`seeming:${name}`,"sourceId" in item?item.sourceId:undefined)).map(([name])=>name)}
-            optionLabels={Object.fromEntries(Object.entries(CTL_SEEMINGS).map(([name,item])=>[
+            options={Object.entries(props.seemingCatalog).filter(([name,item])=>name===props.seeming||homebrewContentActive(homebrewPreferences,"id" in item?item.id:`seeming:${name}`,"sourceId" in item?item.sourceId:undefined)).map(([name])=>name)}
+            optionLabels={Object.fromEntries(Object.entries(props.seemingCatalog).map(([name,item])=>[
               name,
-              t("ui.favorsRegalia", { name: seemingDisplayName(name, locale), regalia: systemTerm(item.regalia, locale) }),
+              t("ui.favorsRegalia", { name: locale === "pt-BR" && "translated" in item ? item.translated : seemingDisplayName(name, locale), regalia: systemTerm(item.regalia, locale) }),
             ]))}
             invalid={props.missing("seeming")}
           />

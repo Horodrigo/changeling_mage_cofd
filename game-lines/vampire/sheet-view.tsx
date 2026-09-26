@@ -27,7 +27,7 @@ import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type { VampireCondition, VampireMechanics, VampirePowers, VampireReference, VampireRitualDisciplineDefinition } from "./catalog-types";
-import { bloodPotencyRow, objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
+import { bloodPotencyRow, objectArray, recordRatings, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
 import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice } from "./detachment";
@@ -39,6 +39,8 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { activeVampireItems, activeVampirePowers } from "./homebrew-catalog";
+import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
+import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
 type EditableRecord = { id: string; subject: string; stage?: number; notes: string };
 
@@ -699,10 +701,12 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const { locale, t } = useLanguage();
   const preferences = useHomebrewPreferences();
   const isMobile = useIsMobile();
-  const reference = catalogs.get<VampireReference>("vampire-reference");
+  const customCatalog = useVampireCatalogHomebrews();
+  const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
   const customBloodlines = useBloodlineHomebrews();
   const bloodlines = [...reference.bloodlines, ...customBloodlines.filter((item) => !reference.bloodlines.some((official) => official.id === item.id))];
-  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), preferences);
+  const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), preferences);
+  const disciplineNames = powers.disciplines.map((item) => item.name);
   const customMerits = useMeritHomebrews("VtR", true);
   const merits = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], customMerits);
   const coreConditions = catalogs.get<{ conditions: ConditionDefinition[] }>("core-reference").conditions;
@@ -717,7 +721,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const covenants = reference.covenants.filter((item) => vampireCovenantIds(data).includes(item.id));
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
-  const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
+  const disciplines = recordRatings(data.disciplines, disciplineNames, 10);
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const limits = bloodPotencyRow(reference, bloodPotency);
   const feedingTierLabel = {
@@ -929,7 +933,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
     aspirationsAfterExperience
     specificPowers={
       <div className="vampire-main-disciplines">
-        {VAMPIRE_DISCIPLINES
+        {disciplineNames
           .filter((name) =>
             clan?.disciplines.includes(name) ||
             Number(disciplines[name] ?? 0) > 0

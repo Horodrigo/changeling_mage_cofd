@@ -10,10 +10,11 @@ export type CourtDefinition = {
   glamourTriggerPt?: string;
   mantleBenefits: string[];
   mantleBenefitsPt: string[];
-  sourceId: "ctl-2ed" | "de2" | "h-courts";
+  sourceId: string;
   source: string;
   page: number;
   additionalPages?: number[];
+  homebrew?: true;
 };
 
 export function courtPageCitation(court: Pick<CourtDefinition, "page" | "additionalPages">) {

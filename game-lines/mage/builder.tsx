@@ -29,6 +29,8 @@ import { MageExperiencePanel } from "./experience-panel";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { activeSpellCatalog } from "./spell-homebrews";
+import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
 import { mageMeritSelectionProblems } from "./merits";
 
@@ -119,9 +121,9 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
       return values;
     },
   });
-  const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
   const factionCatalog = catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
-  const customMerits = useMeritHomebrews("MtA", true), homebrewPreferences = useHomebrewPreferences();
+  const customMerits = useMeritHomebrews("MtA", true), customSpells = useSpellHomebrews(), homebrewPreferences = useHomebrewPreferences();
+  const spellCatalog = activeSpellCatalog(catalogs.get<readonly SpellDefinition[]>("mage-spells"), customSpells, homebrewPreferences);
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("mage-merits"),

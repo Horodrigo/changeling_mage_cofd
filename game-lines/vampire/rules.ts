@@ -4,6 +4,10 @@ import type { GameLineValidationIssue } from "@/lib/game-line-contracts/game-lin
 import { boundedRating, hollowKaLimits, hollowKaRank, objectArray, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineAvailable } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 
+const storedRatingNames = (value: unknown, defaults: readonly string[]) => [
+  ...new Set([...defaults, ...value && typeof value === "object" && !Array.isArray(value) ? Object.keys(value) : []]),
+];
+
 function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const data = character.line_data;
   const state = character.current_state;
@@ -14,8 +18,9 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const covenantIds = vampireCovenantIds(data);
   const savedPrimaryCovenant = String(data.covenant_id ?? "covenantless");
   const covenantId = covenantIds.includes(savedPrimaryCovenant) ? savedPrimaryCovenant : covenantIds[0] ?? "covenantless";
-  const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
-  for (const name of VAMPIRE_DISCIPLINES) if (!vampireDisciplineAvailable(name, bloodlineId, clanId, covenantIds)) disciplines[name] = 0;
+  const disciplineNames = storedRatingNames(data.disciplines, VAMPIRE_DISCIPLINES);
+  const disciplines = recordRatings(data.disciplines, disciplineNames, 10);
+  for (const name of disciplineNames) if (!vampireDisciplineAvailable(name, bloodlineId, clanId, covenantIds)) disciplines[name] = 0;
   const touchstones = objectArray(data.touchstones).map((item, index) => ({
     id: String(item.id ?? `touchstone-${index + 1}`),
     name: String(item.name ?? ""),
@@ -132,7 +137,7 @@ export const vampireRules: GameLineRulesModule = {
     return vampireDerived(
       character.attributes,
       character.skills,
-      recordRatings(character.line_data.disciplines, VAMPIRE_DISCIPLINES, 10),
+      recordRatings(character.line_data.disciplines, storedRatingNames(character.line_data.disciplines, VAMPIRE_DISCIPLINES), 10),
       boundedRating(character.line_data.blood_potency, 1, 10, 1),
     );
   },
@@ -144,7 +149,8 @@ export const vampireRules: GameLineRulesModule = {
     if (!String(character.line_data.clan_id ?? "")) issues.push({ field: "clan_id", message: "Choose a Clan." });
     if (!String(character.line_data.mask_id ?? "")) issues.push({ field: "mask_id", message: "Choose a Mask." });
     if (!String(character.line_data.dirge_id ?? "")) issues.push({ field: "dirge_id", message: "Choose a Dirge." });
-    const disciplines = recordRatings(character.line_data.disciplines, VAMPIRE_CREATION_DISCIPLINES, 10);
+    const savedCreation = character.line_data.creation_disciplines ?? character.line_data.disciplines;
+    const disciplines = recordRatings(savedCreation, storedRatingNames(savedCreation, VAMPIRE_CREATION_DISCIPLINES), 10);
     const covenantDot = String(character.line_data.creation_covenant_power_id ?? "") ? 1 : 0;
     if (Object.values(disciplines).reduce((sum, value) => sum + value, 0) + covenantDot < 3) issues.push({ field: "disciplines", message: "Allocate three Discipline dots." });
     return issues;

@@ -27,7 +27,7 @@ import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSections,contractPresentation,contractSummary,contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { CTL_SEEMINGS, changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
+import { changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
 import { entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
@@ -42,6 +42,8 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { CLARITY_ATTACK_MODIFIERS,CLARITY_BREAKING_POINT_TIERS,clarityAttackPool } from "./clarity";
+import { mergeChangelingReference, mergeChangelingSeemings, type SeemingDefinition, type SeemingHomebrew } from "./catalog-homebrews";
+import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 
 type ChangelingReference = {
     conditions: ConditionDefinition[];
@@ -91,6 +93,10 @@ function displayCourt(catalog: readonly CourtDefinition[], value: unknown, local
     if (["sem corte", "courtless"].includes(raw.trim().toLocaleLowerCase())) return translate(locale, "ui.courtless");
     return presentCourt(catalog, value, locale)?.name ?? raw;
 }
+const seemingName = (catalog: Record<string, SeemingDefinition | SeemingHomebrew>, value: unknown, locale: Locale) => {
+    const name = String(value ?? ""), definition = catalog[name];
+    return locale === "pt-BR" && definition && "translated" in definition ? definition.translated : seemingDisplayName(name, locale);
+};
 export function ChangelingCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
     if (!catalogs)
         throw new Error("Changeling sheet requires its catalog snapshot.");
@@ -99,7 +105,9 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")], customMerits);
     const { locale, t } = useLanguage();
     const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
-    const lineReference = catalogs.get<ChangelingReference>("changeling-reference");
+    const customCatalog = useChangelingCatalogHomebrews();
+    const lineReference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
+    const seemingCatalog = mergeChangelingSeemings(customCatalog);
     const tokenCatalog = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
     const customEntitlements = useEntitlementHomebrews();
     const entitlementCatalog = [...lineReference.entitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
@@ -195,13 +203,13 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     ].filter((item, index, all) => item.id === "bonded" || all.findIndex((other) => other.id === item.id) === index);
     const notes = String(character.current_state?.notes ?? "");
     const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
-    const claritySection = <ClaritySection maximum={clarityMaximum} damage={clarityDamage} wyrd={powerRating} seeming={String(data.seeming ?? "")} onChange={(value) => setState("clarity_damage", value)}/>;
+    const claritySection = <ClaritySection maximum={clarityMaximum} damage={clarityDamage} wyrd={powerRating} seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog} onChange={(value) => setState("clarity_damage", value)}/>;
     if (isMobile) {
         const identity = [
             ["Nome", character.character.name], ["Jogador", character.character.player],
             ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Fio", changelingAnchorDisplayName("thread", data.thread, locale)],
             ["Conceito", character.character.concept],
-            ["Feição", seemingDisplayName(data.seeming, locale)],
+            ["Feição", seemingName(seemingCatalog, data.seeming, locale)],
             [t("ui.kith6a78ff"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [t("ui.court"), displayCourt(lineReference.courts, data.court, locale)],
         ];
         return (<CharacterPaperShell line="CtL" mobile title={t("ui.changelingTitle")} subtitle={t("ui.theLOST")}>
@@ -243,7 +251,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
               <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
               <SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
-              <SeemingLore seeming={String(data.seeming ?? "")}/><KithLore data={data} reference={lineReference}/>
+              <SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/><KithLore data={data} reference={lineReference}/>
             </>,
                 entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={entitlementCatalog}/>,
                 combate: <>
@@ -268,7 +276,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
             <MainSheet className="changeling-main-body"
-              identity={<section className="sheet-identity-grid"><SheetField label={t("ui.name")} value={character.character.name}/><SheetField label={t("ui.needle")} value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label={t("ui.seeming")} value={seemingDisplayName(data.seeming, locale)}/><SheetField label={t("ui.player")} value={character.character.player}/><SheetField label={t("ui.thread")} value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={t("ui.kith6a78ff")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label={t("ui.chronicle")} value={character.character.chronicle}/><SheetField label={t("ui.concept")} value={character.character.concept}/><SheetField label={t("ui.court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
+              identity={<section className="sheet-identity-grid"><SheetField label={t("ui.name")} value={character.character.name}/><SheetField label={t("ui.needle")} value={changelingAnchorDisplayName("needle", data.needle, locale)}/><SheetField label={t("ui.seeming")} value={seemingName(seemingCatalog, data.seeming, locale)}/><SheetField label={t("ui.player")} value={character.character.player}/><SheetField label={t("ui.thread")} value={changelingAnchorDisplayName("thread", data.thread, locale)}/><SheetField label={t("ui.kith6a78ff")} value={presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name}/><SheetField label={t("ui.chronicle")} value={character.character.chronicle}/><SheetField label={t("ui.concept")} value={character.character.concept}/><SheetField label={t("ui.court")} value={displayCourt(lineReference.courts, data.court, locale)}/></section>}
               attributes={<><SheetHeading className="ctl-attributes-heading">{t("ui.attributes")}</SheetHeading><div className="official-trait-grid">{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes}/>)}</div></>}
               skills={
                 <>
@@ -304,7 +312,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             <div className="powers-sheet-grid">
               <section>
                 <SheetHeading>{t("ui.otherTraits")}</SheetHeading>
-                <SeemingLore seeming={String(data.seeming ?? "")}/>
+                <SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/>
                 <KithLore data={data} reference={lineReference}/>
                 <GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
               </section>
@@ -432,18 +440,19 @@ function TrifleUseTrack({ used, onChange }: {
     const { t } = useLanguage();
     return <div className="trifle-use-block"><span>{t("ui.triflesUsed")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={t("ui.of3TriflesUsed", { p1: used })}>{Array.from({ length: 3 }, (_, index) => <button key={index} type="button" className={index < used ? "used" : ""} onClick={() => onChange(index < used ? index : index + 1)} aria-label={t("ui.setUsedTriflesTo", { p1: index < used ? index : index + 1 })}/>)}</div></div>;
 }
-function ClaritySection({ maximum, damage, wyrd, seeming, onChange, }: {
+function ClaritySection({ maximum, damage, wyrd, seeming, seemingCatalog, onChange, }: {
     maximum: number;
     damage: ClarityDamageLevel[];
     wyrd: number;
     seeming: string;
+    seemingCatalog: Record<string, SeemingDefinition | SeemingHomebrew>;
     onChange: (value: ClarityDamageLevel[]) => void;
 }) {
     const { locale, t } = useLanguage();
     const [open,setOpen]=useState(false), [severity,setSeverity]=useState(1), [modifiers,setModifiers]=useState<string[]>([]);
     const tier=CLARITY_BREAKING_POINT_TIERS.find(item=>item.dice===severity)??CLARITY_BREAKING_POINT_TIERS[0];
     const pool=clarityAttackPool(severity,CLARITY_ATTACK_MODIFIERS.filter(([key])=>modifiers.includes(key)).map(([,value])=>value));
-    const seemingData=CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS];
+    const seemingData=seemingCatalog[seeming];
     const current = Math.max(0, maximum - damage.length);
     const cycle = (index: number) => {
         const slots: Array<ClarityDamageLevel | undefined> = Array.from({ length: maximum }, (_, slot) => damage[slot]);
@@ -481,7 +490,7 @@ function ClaritySection({ maximum, damage, wyrd, seeming, onChange, }: {
       <Dialog open={open} onOpenChange={setOpen}><DialogContent className="experience-dialog clarity-breaking-point-dialog ctl-dialog"><DialogHeader><DialogTitle>{t("ui.clarityBreakingPoints")}</DialogTitle><DialogDescription>{t("ui.clarityBreakingPointDescription")}</DialogDescription></DialogHeader><div className="clarity-breaking-point-form">
         <label>{t("ui.baselineSeverity")}<RuleSelect value={String(severity)} onChange={value=>setSeverity(Number(value))} options={CLARITY_BREAKING_POINT_TIERS.map(item=>({value:String(item.dice),label:t("ui.clarityDice",{p1:item.dice})}))}/></label>
         <section className="clarity-breaking-point-examples"><strong>{t("ui.examplesAtSeverity",{p1:severity})}</strong><ul>{tier.examples.map(key=><li key={key}>{t(`ui.${key}`)}</li>)}</ul></section>
-        {seemingData&&<section className="clarity-seeming-breaking-point"><strong>{t("ui.seemingBreakingPoint",{p1:seemingDisplayName(seeming,locale)})}</strong><p>{locale==="pt-BR"?seemingData.curse:seemingData.curseEn}</p></section>}
+        {seemingData&&<section className="clarity-seeming-breaking-point"><strong>{t("ui.seemingBreakingPoint",{p1:seemingName(seemingCatalog,seeming,locale)})}</strong><p>{locale==="pt-BR"?seemingData.curse:seemingData.curseEn}</p></section>}
         <fieldset className="clarity-breaking-point-modifiers"><legend>{t("ui.attackModifiers")}</legend>{CLARITY_ATTACK_MODIFIERS.map(([key,value])=><label key={key}><input type="checkbox" checked={modifiers.includes(key)} onChange={event=>setModifiers(selected=>event.target.checked?[...selected,key]:selected.filter(item=>item!==key))}/><span>{t(`ui.${key}`)} <strong>{value>0?`+${value}`:value}</strong></span></label>)}</fieldset>
         <div className="clarity-breaking-point-total"><strong>{t("ui.clarityAttackPool")}: {pool<=0?t("ui.chanceDie"):t("ui.diceCount",{p1:pool})}</strong><small>{t("ui.clarityDamageReminder",{p1:wyrd})}</small></div>
       </div><DialogFooter><Button type="button" size="sm" className="catalog-dialog-done" onClick={()=>setOpen(false)}>{t("ui.close")}</Button></DialogFooter></DialogContent></Dialog>
@@ -663,11 +672,12 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
         })}
     </div>);
 }
-function SeemingLore({ seeming }: {
+function SeemingLore({ seeming, seemingCatalog }: {
     seeming: string;
+    seemingCatalog: Record<string, SeemingDefinition | SeemingHomebrew>;
 }) {
     const { locale, t } = useLanguage();
-    const definition = CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS];
+    const definition = seemingCatalog[seeming];
     if (!definition)
         return <LorePanel title={t("ui.seeming")} text={t("ui.noSeemingSelected")}/>;
     const page = ({
@@ -679,8 +689,8 @@ function SeemingLore({ seeming }: {
         Wizened: 32,
     } as Record<string, number>)[seeming];
     return (<>
-      <LorePanel title={t("ui.blessingOf", { name: seemingDisplayName(seeming, locale) })} text={locale === "en-US" ? definition.blessingEn : definition.blessing} source={`Changeling the Lost · p. ${page}`}/>
-      <LorePanel title={t("ui.curseOf", { name: seemingDisplayName(seeming, locale) })} text={locale === "en-US" ? definition.curseEn : definition.curse} source={`Changeling the Lost · p. ${page}`}/>
+      <LorePanel title={t("ui.blessingOf", { name: seemingName(seemingCatalog, seeming, locale) })} text={locale === "en-US" ? definition.blessingEn : definition.blessing} source={"source" in definition ? `${definition.source}${definition.page ? ` · p. ${definition.page}` : ""}` : `Changeling the Lost · p. ${page}`}/>
+      <LorePanel title={t("ui.curseOf", { name: seemingName(seemingCatalog, seeming, locale) })} text={locale === "en-US" ? definition.curseEn : definition.curse} source={"source" in definition ? `${definition.source}${definition.page ? ` · p. ${definition.page}` : ""}` : `Changeling the Lost · p. ${page}`}/>
     </>);
 }
 function KithLore({ data, reference }: {

@@ -10,7 +10,8 @@ export type KithDefinition = {
   blessing: string;
   source: string;
   page: number;
-  sourceId?: "h-seemings";
+  sourceId?: string;
+  homebrew?: true;
 };
 
 // Names and IDs stay stable for existing sheets; localization only changes presentation.

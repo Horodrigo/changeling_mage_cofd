@@ -17,7 +17,7 @@ import { meritContextForSheet, meritRatingsFor, type MeritDefinition } from "@/l
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampirePowers, VampireReference, VampirePurchasablePower } from "./catalog-types";
-import { recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
+import { recordRatings, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
 import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
@@ -26,6 +26,8 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { activeVampirePowers, vampireHomebrewContentActive } from "./homebrew-catalog";
+import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
+import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
 type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before?: CharacterSheet; undo?: VampireAdvancementUndo };
@@ -64,10 +66,10 @@ export function freeBloodSorcerySelections(catalog: VampirePurchasablePower[], k
   return selected;
 }
 
-function disciplinePrerequisitesMet(prerequisites: string | undefined, disciplines: Record<string, number>) {
+function disciplinePrerequisitesMet(prerequisites: string | undefined, disciplines: Record<string, number>, disciplineNames: readonly string[]) {
   if (!prerequisites) return true;
   return prerequisites.split(",").every((clause) => {
-    const name = VAMPIRE_DISCIPLINES.find((discipline) => clause.toLocaleLowerCase().includes(discipline.toLocaleLowerCase()));
+    const name = disciplineNames.find((discipline) => clause.toLocaleLowerCase().includes(discipline.toLocaleLowerCase()));
     if (!name) return true;
     const required = [...clause].filter((character) => character === "•").length;
     return Number(disciplines[name] ?? 0) >= required;
@@ -87,9 +89,11 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const total = Math.max(available + spent, Math.max(0, Math.trunc(Number(state.experience_total ?? 0))));
   const beats = Math.max(0, Math.min(5, Math.trunc(Number(state.beats ?? 0))));
   const history = Array.isArray(state.vampire_experience_history) ? state.vampire_experience_history as HistoryEntry[] : [];
-  const reference = catalogs.get<VampireReference>("vampire-reference");
   const customMerits=useMeritHomebrews("VtR",true),homebrewPreferences=useHomebrewPreferences();
-  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), homebrewPreferences);
+  const customCatalog = useVampireCatalogHomebrews();
+  const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
+  const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), homebrewPreferences);
+  const disciplineNames = powers.disciplines.map((item) => item.name);
   const meritCatalog = activeMeritCatalog([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")],customMerits,homebrewPreferences,character.merits.map((item)=>item.name));
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
   const amount = amountDraft ?? String(available);
@@ -112,7 +116,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     if (definition.group === "shadow-cult") return Math.max(0, ...character.merits.filter((item) => item.name === "Mystery Cult Initiation" && [definition.id, definition.name, definition.translatedName].some((name) => String(item.configuration?.cult ?? "").localeCompare(name, undefined, { sensitivity: "base" }) === 0)).map((item) => Number(item.dots) || 0));
     return vampireCovenantStatus(character, id, definition.name, definition.translatedName);
   };
-  const disciplines = recordRatings(character.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
+  const disciplines = recordRatings(character.line_data.disciplines, disciplineNames, 10);
   const bloodSorcery = character.line_data.blood_sorcery && typeof character.line_data.blood_sorcery === "object" ? character.line_data.blood_sorcery as Record<string, unknown> : {};
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" ? character.line_data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
@@ -134,8 +138,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     if (purchase === "attribute") return Object.values(ATTRIBUTES).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
     if (purchase === "skill" || purchase === "specialty") return Object.values(SKILLS).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
     if (purchase === "merit") return target ? [{ value: target, label: meritCatalog.find((item) => item.id === target)?.name ?? target }] : [];
-    if (purchase === "discipline") return VAMPIRE_DISCIPLINES.filter((name) => vampireDisciplineAvailable(name, bloodlineId, String(character.line_data.clan_id ?? ""), covenantIds) && activePower(powers.disciplines.find((item) => item.name === name) ?? { id: name, source: "Vampire: The Requiem Second Edition" })).map((name) => ({ value: name, label: vampireDisciplineDisplayName(name, powers.disciplines, locale) }));
-    if (purchase === "devotion") return powers.devotions.filter((item) => activePower(item) && !knownDevotions.has(item.id) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))) && Number(item.experienceCost ?? 0) > 0 && disciplinePrerequisitesMet(item.prerequisites, disciplines)).map((item) => ({ value: item.id, label: powerName(item, locale) }));
+    if (purchase === "discipline") return disciplineNames.filter((name) => { const discipline = powers.disciplines.find((item) => item.name === name); return vampireDisciplineAvailable(name, bloodlineId, String(character.line_data.clan_id ?? ""), covenantIds) && (!discipline?.clanIds?.length || discipline.clanIds.includes(String(character.line_data.clan_id ?? ""))) && (!discipline?.covenantIds?.length || discipline.covenantIds.some((id) => covenantIds.includes(id))) && activePower(discipline ?? { id: name, source: "Vampire: The Requiem Second Edition" }); }).map((name) => ({ value: name, label: vampireDisciplineDisplayName(name, powers.disciplines, locale) }));
+    if (purchase === "devotion") return powers.devotions.filter((item) => activePower(item) && !knownDevotions.has(item.id) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))) && Number(item.experienceCost ?? 0) > 0 && disciplinePrerequisitesMet(item.prerequisites, disciplines, disciplineNames)).map((item) => ({ value: item.id, label: powerName(item, locale) }));
     const cruacCatalog = powers.cruacRites.filter((item) => activePower(item) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))));
     if (purchase === "cruac") return covenantIds.some((id) => ["circle-of-the-crone", "followers-of-seth"].includes(id)) ? bloodSorceryOptions(cruacCatalog, cruacRating + 1).map((item) => ({ ...item, label: `${item.label} (${t("ui.freeRite")})` })) : [];
     if (purchase === "theban") return covenantIds.some((id) => ["lancea-et-sanctum", "ahl-al-mumit"].includes(id)) ? bloodSorceryOptions(powers.thebanMiracles.filter((item) => activePower(item) && (!item.bloodlineId || item.bloodlineId === bloodlineId)), thebanRating + 1, Number(character.line_data.humanity ?? 7)).map((item) => ({ ...item, label: `${item.label} (${t("ui.freeMiracle")})` })) : [];
@@ -269,7 +273,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     else if (purchase === "detournement") next.line_data.detournement_ids = [...knownDetournements, chosen];
     else if (purchase === "coil") next.line_data.ordo_dracul = { ...ordo, coil_ratings: { ...coilRatings, [chosen]: intendedRating } };
     else if (purchase === "scale") next.line_data.ordo_dracul = { ...ordo, scale_ids: [...knownScales, chosen] };
-    const nextDisciplines = recordRatings(next.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
+    const nextDisciplines = recordRatings(next.line_data.disciplines, disciplineNames, 10);
     next.derived = vampireDerived(next.attributes, next.skills, nextDisciplines, Number(next.line_data.blood_potency ?? 1), reference);
     const purchasedMerit = purchasedMeritIndex >= 0 ? next.merits[purchasedMeritIndex] : undefined;
     const undo: VampireAdvancementUndo = purchase === "attribute" ? { kind: "trait", group: "attributes", name: chosen, amount: ratingAmount }
@@ -368,7 +372,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     }
     const next = structuredClone(character);
     refundVampireAdvancement(next, entry.undo);
-    next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, VAMPIRE_DISCIPLINES, 10), Number(next.line_data.blood_potency ?? 1), reference);
+    next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, disciplineNames, 10), Number(next.line_data.blood_potency ?? 1), reference);
     next.current_state = {
       ...next.current_state,
       experience_available: available + entry.cost,

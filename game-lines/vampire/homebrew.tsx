@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import { MeritHomebrewPanel } from "@/app/merit-homebrew-panel";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
@@ -14,10 +14,13 @@ import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHo
 import { localized, useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
-import { BLOODLINE_HOMEBREW_SOURCE, BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
+import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
 import type { VampireBloodlineDefinition, VampireCondition, VampireMechanics, VampirePowers, VampireReference } from "./catalog-types";
 import { SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } from "./homebrew-catalog";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
+import { VampireCatalogHomebrewEditor, emptyVampireCatalogHomebrew } from "./catalog-homebrew-editor";
+import { saveVampireCatalogHomebrews, VAMPIRE_CATALOG_HOMEBREW_SOURCE_ID, type VampireCatalogHomebrew } from "./catalog-homebrews";
+import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
 type Detail = { label: string; text: string };
 type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: Detail[]; parentId?: string; defaultDisabled?: boolean };
@@ -25,7 +28,7 @@ type ListedHomebrew = { id: string; sourceId: string; source: string; kind: stri
 function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   if (!catalogs) throw new Error("Vampire Homebrew requires its catalog snapshot.");
   const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
-  const preferences = useHomebrewPreferences(), customBloodlines = useBloodlineHomebrews();
+  const preferences = useHomebrewPreferences(), customBloodlines = useBloodlineHomebrews(), customCatalog = useVampireCatalogHomebrews();
   const reference = catalogs.get<VampireReference>("vampire-reference"), powers = catalogs.get<VampirePowers>("vampire-powers"), conditions = catalogs.get<readonly VampireCondition[]>("vampire-conditions");
   const coreMerits = catalogs.get<readonly MeritDefinition[]>("core-merits"), vampireMerits = catalogs.get<readonly MeritDefinition[]>("vampire-merits"), merits = [...coreMerits, ...vampireMerits];
   const bloodSorcery = h("Feitiçaria de Sangue", "Blood Sorcery"), disciplines = h("Disciplinas", "Disciplines");
@@ -36,7 +39,8 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     "Ortam Recipes": { kind: disciplines, parentId: "ortam" },
     "Lithopedia Rites": { kind: bloodSorcery, parentId: "lithopedia" },
   };
-  const [editing, setEditing] = useState<VampireBloodlineDefinition | null>(null);
+  const [bloodlineEditorOpen, setBloodlineEditorOpen] = useState(false), [editingBloodline, setEditingBloodline] = useState<VampireBloodlineDefinition | null>(null);
+  const [editingCatalog, setEditingCatalog] = useState<VampireCatalogHomebrew | null>(null);
   const listed: ListedHomebrew[] = [];
   const detail = (label: string, value: unknown): Detail[] => String(value ?? "").trim() ? [{ label, text: String(value).trim() }] : [];
   const add = (item: { id: string; source: string; sourceId?: string; name: string; translatedName?: string; page?: number; defaultDisabled?: boolean; errataFor?: string; errataForName?: string }, kind: string, details: Detail[], parentId?: string) => {
@@ -68,30 +72,47 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   const sources = [...new Map(listed.map((item) => [item.sourceId, item.source])).entries()].sort((left, right) => left[1].localeCompare(right[1], locale));
   const toggle = (id: string, enabled: boolean, defaultDisabled = false) => saveHomebrewPreferences(setHomebrewEnabled(preferences, id, enabled, defaultDisabled));
   const save = (definition: VampireBloodlineDefinition) => {
-    saveBloodlineHomebrews(customBloodlines.map((item) => item.id === definition.id ? definition : item));
+    saveBloodlineHomebrews(customBloodlines.some((item) => item.id === definition.id) ? customBloodlines.map((item) => item.id === definition.id ? definition : item) : [...customBloodlines, definition]);
     saveHomebrewPreferences(setHomebrewEnabled(setHomebrewEnabled(preferences, BLOODLINE_HOMEBREW_SOURCE_ID, true), definition.id, true));
+  };
+  const saveCatalog = (definition: VampireCatalogHomebrew) => {
+    saveVampireCatalogHomebrews(customCatalog.some((item) => item.id === definition.id) ? customCatalog.map((item) => item.id === definition.id ? definition : item) : [...customCatalog, definition]);
+    saveHomebrewPreferences(setHomebrewEnabled(setHomebrewEnabled(preferences, VAMPIRE_CATALOG_HOMEBREW_SOURCE_ID, true), definition.id, true));
   };
   const renderItem = (item: ListedHomebrew, sourceActive: boolean) => {
     const active = homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled);
     const children = listed.filter((entry) => entry.parentId === item.id);
     return <div key={item.id}><article className="homebrew-list-item"><details><summary><strong>{item.name}</strong></summary><div className="homebrew-list-item-body">{item.details.map((entry, index) => <p key={`${entry.label}:${index}`}><strong>{entry.label}:</strong> {entry.text}</p>)}</div></details><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked, item.defaultDisabled)} aria-label={`${item.name}: ${active ? h("ativo", "active") : h("desativado", "disabled")}`}/></label></article>{children.length > 0 && <div className="homebrew-item-list homebrew-subitem-list">{children.map((child) => renderItem(child, sourceActive && active))}</div>}</div>;
   };
+  const playerGroups = [
+    { id: "clan", label: h("Clãs", "Clans"), items: customCatalog.filter((item) => item.entryType === "clan"), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("clan")) },
+    { id: "bloodline", label: "Bloodlines", items: customBloodlines, create: () => { setEditingBloodline(null); setBloodlineEditorOpen(true); } },
+    { id: "covenant", label: "Covenants", items: customCatalog.filter((item) => item.entryType === "covenant"), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("covenant")) },
+    { id: "discipline", label: h("Disciplinas", "Disciplines"), items: customCatalog.filter((item) => item.entryType === "discipline"), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("discipline")) },
+    { id: "devotion", label: h("Devoções", "Devotions"), items: customCatalog.filter((item) => item.entryType === "power" && item.kind === "devotion"), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("power", "devotion")) },
+    { id: "rites", label: h("Ritos e Milagres", "Rites and Miracles"), items: customCatalog.filter((item) => item.entryType === "power" && ["cruac-rite", "theban-miracle", "kimiya-formula", "therion-sacrilege", "gilded-invocation"].includes(item.kind)), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("power", "cruac-rite")) },
+    { id: "coil", label: h("Espirais do Dragão", "Coils of the Dragon"), items: customCatalog.filter((item) => item.entryType === "power" && item.kind === "coil"), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("power", "coil")) },
+    { id: "scale", label: h("Escalas do Dragão", "Scales of the Dragon"), items: customCatalog.filter((item) => item.entryType === "power" && item.kind === "scale"), create: () => setEditingCatalog(emptyVampireCatalogHomebrew("power", "scale")) },
+  ];
+  const itemSummary = (item: VampireCatalogHomebrew | VampireBloodlineDefinition) => "summary" in item ? item.summary : "description" in item ? item.description : "baneSummary" in item ? item.baneSummary : "";
   return <>
     <MeritHomebrewPanel line="VtR" catalog={merits}/>
+    <section className="homebrew-panel">
+      <div className="panel-heading"><div><h3>{h("Conteúdo criado para Vampire", "Player-created Vampire Content")}</h3><p>{h("Crie, ative e edite opções específicas da linha.", "Create, enable, and edit line-specific options.")}</p></div></div>
+      <div className="homebrew-source-controls"><label className="homebrew-toggle"><span>{h("Clãs e poderes", "Clans and powers")}</span><Switch checked={!preferences.disabledIds.includes(VAMPIRE_CATALOG_HOMEBREW_SOURCE_ID)} onCheckedChange={(checked) => toggle(VAMPIRE_CATALOG_HOMEBREW_SOURCE_ID, checked)}/></label><label className="homebrew-toggle"><span>{h("Bloodlines", "Bloodlines")}</span><Switch checked={!preferences.disabledIds.includes(BLOODLINE_HOMEBREW_SOURCE_ID)} onCheckedChange={(checked) => toggle(BLOODLINE_HOMEBREW_SOURCE_ID, checked)}/></label></div>
+      <Tabs defaultValue="clan" className="homebrew-kind-tabs"><TabsList variant="line" className="homebrew-kind-tabs-list">{playerGroups.map((group) => <TabsTrigger key={group.id} value={group.id}>{group.label}</TabsTrigger>)}</TabsList>{playerGroups.map((group) => <TabsContent key={group.id} value={group.id} className="homebrew-kind-panel"><div className="homebrew-source-toolbar"><strong>{group.label}</strong><Button type="button" size="sm" onClick={group.create}><Plus/> {h("Criar", "Create")}</Button></div>{group.items.length === 0 ? <p>{h("Nenhum item criado pelo jogador.", "No player-created items yet.")}</p> : <div className="homebrew-grid">{[...group.items].sort((left, right) => left.name.localeCompare(right.name, locale)).map((item) => {
+        const bloodline = "parentClan" in item, sourceId = bloodline ? BLOODLINE_HOMEBREW_SOURCE_ID : VAMPIRE_CATALOG_HOMEBREW_SOURCE_ID, sourceActive = !preferences.disabledIds.includes(sourceId), active = homebrewContentActive(preferences, item.id, sourceId);
+        return <article className="homebrew-card" key={item.id}><div><h3>{item.name}</h3><p>{itemSummary(item)}</p></div><div className="homebrew-card-actions"><label className="homebrew-toggle"><span>{active ? h("Ativo", "Active") : h("Desativado", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)}/></label><Button type="button" size="sm" variant="outline" onClick={() => bloodline ? (setEditingBloodline(item), setBloodlineEditorOpen(true)) : setEditingCatalog(item)}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir item?", "Delete item?")} description={h("Ele deixará de aparecer em novas escolhas.", "It will disappear from new choices.")} action={h("Excluir", "Delete")} onConfirm={() => bloodline ? saveBloodlineHomebrews(customBloodlines.filter((entry) => entry.id !== item.id)) : saveVampireCatalogHomebrews(customCatalog.filter((entry) => entry.id !== item.id))}/></div></article>;
+      })}</div>}</TabsContent>)}</Tabs>
+      {bloodlineEditorOpen && <BloodlineHomebrewEditor open initial={editingBloodline} clans={reference.clans} onOpenChange={setBloodlineEditorOpen} onSave={save}/>}
+      {editingCatalog && <VampireCatalogHomebrewEditor key={editingCatalog.id} initial={editingCatalog} onOpenChange={(open) => { if (!open) setEditingCatalog(null); }} onSave={saveCatalog}/>}
+    </section>
     <section className="homebrew-panel">
       <div className="panel-heading"><div><h3>{h("Conteúdo publicado de Vampire", "Published Vampire Homebrew")}</h3><p>{h("A ativação controla novas escolhas; fichas existentes conservam o conteúdo que já possuem.", "Activation controls new choices; existing sheets retain content they already own.")}</p></div></div>
       <div className="homebrew-source-list">{sources.map(([sourceId, source]) => {
         const sourceItems = listed.filter((item) => item.sourceId === sourceId), sourceActive = !preferences.disabledIds.includes(sourceId), kinds = [...new Set(sourceItems.map((item) => item.kind))].sort((left, right) => categoryOrder.indexOf(left) - categoryOrder.indexOf(right));
         return <details className="panel homebrew-source" key={sourceId}><summary className="homebrew-source-summary"><div><Badge variant="outline">{h("Homebrew", "Homebrew")}</Badge><strong>{source}</strong><span>{sourceItems.length} {h("itens implementados", "implemented items")}</span></div></summary><div className="homebrew-source-body"><Tabs defaultValue={kinds[0]} className="homebrew-kind-tabs"><div className="homebrew-source-toolbar"><TabsList variant="line" className="homebrew-kind-tabs-list" aria-label={h("Categorias da fonte", "Source categories")}>{kinds.map((kind) => <TabsTrigger key={kind} value={kind}>{kind}</TabsTrigger>)}</TabsList><label className="homebrew-toggle"><span>{sourceActive ? h("Fonte ativa", "Source active") : h("Fonte desativada", "Source disabled")}</span><Switch checked={sourceActive} onCheckedChange={(checked) => toggle(sourceId, checked)} aria-label={`${source}: ${sourceActive ? h("ativa", "active") : h("desativada", "disabled")}`}/></label></div>{kinds.map((kind) => <TabsContent className="homebrew-kind-panel" value={kind} key={kind}><div className="homebrew-item-list">{sourceItems.filter((item) => item.kind === kind && !item.parentId).map((item) => renderItem(item, sourceActive))}</div></TabsContent>)}</Tabs></div></details>;
       })}</div>
-    </section>
-    <section className="homebrew-panel">
-      <div className="panel-heading"><div><h3>{h("Bloodlines criadas", "Player-created Bloodlines")}</h3><p>{h("Bloodlines criadas por jogadores podem ser ativadas, editadas ou excluídas aqui.", "Player-created Bloodlines can be enabled, edited, or deleted here.")}</p></div></div>
-      {customBloodlines.length === 0 ? <p>{h("Nenhuma Bloodline criada pelo jogador.", "No player-created Bloodlines yet.")}</p> : <div className="homebrew-source-list"><details className="panel homebrew-source"><summary className="homebrew-source-summary"><div><Badge variant="outline">{h("Criado pelo jogador", "Player-created")}</Badge><strong>{BLOODLINE_HOMEBREW_SOURCE}</strong><span>{customBloodlines.length} {h("itens implementados", "implemented items")}</span></div></summary><div className="homebrew-source-body"><div className="homebrew-source-controls"><label className="homebrew-toggle"><span>{!preferences.disabledIds.includes(BLOODLINE_HOMEBREW_SOURCE_ID) ? h("Fonte ativa", "Source active") : h("Fonte desativada", "Source disabled")}</span><Switch checked={!preferences.disabledIds.includes(BLOODLINE_HOMEBREW_SOURCE_ID)} onCheckedChange={(checked) => toggle(BLOODLINE_HOMEBREW_SOURCE_ID, checked)}/></label></div><div className="homebrew-grid">{[...customBloodlines].sort((left, right) => left.name.localeCompare(right.name, locale)).map((item) => {
-        const active = homebrewContentActive(preferences, item.id, item.sourceId), sourceActive = !preferences.disabledIds.includes(BLOODLINE_HOMEBREW_SOURCE_ID);
-        return <article className="homebrew-card" key={item.id}><div><h3>{item.name}</h3><p>{item.summary}</p></div><div className="homebrew-card-actions"><label className="homebrew-toggle"><span>{active ? h("Ativa", "Active") : h("Desativada", "Disabled")}</span><Switch disabled={!sourceActive} checked={active} onCheckedChange={(checked) => toggle(item.id, checked)}/></label><Button type="button" size="sm" variant="outline" onClick={() => setEditing(item)}><Pencil/> {h("Editar", "Edit")}</Button><ConfirmAction trigger={<Button type="button" size="sm" variant="ghost"><Trash2/> {h("Excluir", "Delete")}</Button>} title={h("Excluir Bloodline?", "Delete Bloodline?")} description={h("Ela deixará de aparecer nas escolhas. Fichas que a usam manterão o identificador, mas perderão a apresentação das regras.", "It will disappear from choices. Sheets using it will retain its identifier but lose the rules presentation.")} action={h("Excluir", "Delete")} onConfirm={() => saveBloodlineHomebrews(customBloodlines.filter((entry) => entry.id !== item.id))}/></div></article>;
-      })}</div></div></details></div>}
-      {editing && <BloodlineHomebrewEditor open initial={editing} clans={reference.clans} onOpenChange={(open) => { if (!open) setEditing(null); }} onSave={save}/>}
     </section>
   </>;
 }

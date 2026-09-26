@@ -44,11 +44,14 @@ import { CompanionPage as MageCompanionPage } from "./companion-page";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { useLegacyHomebrews } from "./use-legacy-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import { mergeSpellHomebrews } from "./spell-homebrews";
+import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
 export function MageCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
     if (!catalogs)
         throw new Error("Mage sheet requires its catalog snapshot.");
-    const spellCatalog = catalogs.get<readonly SpellDefinition[]>("mage-spells");
+    const customSpells = useSpellHomebrews();
+    const spellCatalog = mergeSpellHomebrews(catalogs.get<readonly SpellDefinition[]>("mage-spells"), customSpells);
     const factionCatalog = catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
     const customMerits = useMeritHomebrews("MtA", true);
     const customLegacies = useLegacyHomebrews();

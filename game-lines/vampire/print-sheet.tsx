@@ -11,11 +11,13 @@ import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-lin
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import type { VampireCondition, VampirePowers, VampireReference } from "./catalog-types";
-import { objectArray, recordRatings, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
+import { objectArray, recordRatings, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { activeVampireItems, activeVampirePowers } from "./homebrew-catalog";
+import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
+import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
 function VampirePrintPage({ page, children }: { page: number; children: React.ReactNode }) {
   const { t } = useLanguage();
@@ -41,8 +43,9 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
   const data = character.line_data;
   const preferences = useHomebrewPreferences();
-  const reference = catalogs.get<VampireReference>("vampire-reference");
-  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), preferences);
+  const customCatalog = useVampireCatalogHomebrews();
+  const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
+  const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), preferences);
   const customMerits = useMeritHomebrews("VtR", true);
   const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")], customMerits);
   const conditions = [
@@ -54,7 +57,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const covenants = reference.covenants.filter((item) => vampireCovenantIds(data).includes(item.id));
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
-  const disciplines = recordRatings(data.disciplines, VAMPIRE_DISCIPLINES, 10);
+  const disciplines = recordRatings(data.disciplines, powers.disciplines.map((item) => item.name), 10);
   const bloodSorcery = data.blood_sorcery && typeof data.blood_sorcery === "object" ? data.blood_sorcery as Record<string, unknown> : {};
   const ordo = data.ordo_dracul && typeof data.ordo_dracul === "object" ? data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};

@@ -26,6 +26,8 @@ import { createRandomId } from "@/lib/random-id";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { activeSpellCatalog } from "./spell-homebrews";
+import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
 import { mageMeritSelectionProblems } from "./merits";
 import { useLegacyHomebrews } from "./use-legacy-homebrews";
@@ -119,13 +121,13 @@ export function MageExperiencePanel({
   const [mageMeritConfiguration,setMageMeritConfiguration] = useState<Record<string,string|string[]>>({});
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
-  const customMerits=useMeritHomebrews("MtA",true),customLegacies=useLegacyHomebrews(),homebrewPreferences=useHomebrewPreferences();
+  const customMerits=useMeritHomebrews("MtA",true),customSpells=useSpellHomebrews(),customLegacies=useLegacyHomebrews(),homebrewPreferences=useHomebrewPreferences();
   const meritCatalog = activeMeritCatalog([
       ...catalogs.get<MeritDefinition[]>("core-merits"),
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
     ],customMerits,homebrewPreferences,character.merits.map((item)=>item.name)),
     merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog, ["awakened"]))),
-    spells = catalogs.get<SpellDefinition[]>("mage-spells"),
+    spells = activeSpellCatalog(catalogs.get<SpellDefinition[]>("mage-spells"),customSpells,homebrewPreferences),
     factionCatalog = catalogs.get<MageFactionDefinition[]>("mage-factions");
   const arcana = (
     character.line_data.arcana && typeof character.line_data.arcana === "object"

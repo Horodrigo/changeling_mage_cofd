@@ -8,6 +8,7 @@ import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList }
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
+import type { KithDefinition } from "@/lib/changeling-kiths";
 import { kithCreationChoice } from "./kith-choices";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
@@ -22,18 +23,20 @@ import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n
 import type { MeritDefinition } from "@/lib/merits";
 import { normalizeClarityDamage, type ClarityDamageLevel } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
-import { changelingAnchorDisplayName, normalizeChangelingFrailties, seemingDisplayName, CTL_SEEMINGS } from "./creation-rules";
+import { changelingAnchorDisplayName, normalizeChangelingFrailties, seemingDisplayName } from "./creation-rules";
 import { derivedWithPermanentMerits } from "./experience-shared";
 import { expandedConfigurationLines, meritConfigurationTitle } from "./sheet-merit-configurations";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
+import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 
 type ChangelingReference = {
   conditions: ConditionDefinition[];
   presentation: Record<string, Partial<ConditionDefinition>>;
   courts: CourtDefinition[];
   entitlements: EntitlementDefinition[];
-  kiths: Array<{ id: string; name: string; translatedName?: string; skill: string; description: string; blessing: string; source: string; page: number }>;
+  kiths: KithDefinition[];
   kithPresentation: Record<string, { name: string; description: string; blessing: string; skill: string }>;
 };
 
@@ -245,7 +248,9 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const customMerits = useMeritHomebrews("CtL", true);
   const meritCatalog = useMemo(() => mergeMeritHomebrews([...coreMerits, ...changelingMerits], customMerits), [changelingMerits, coreMerits, customMerits]);
   const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
-  const reference = catalogs.get<ChangelingReference>("changeling-reference");
+  const customCatalog = useChangelingCatalogHomebrews();
+  const reference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
+  const seemingCatalog = mergeChangelingSeemings(customCatalog);
   const conditions = useMemo(() => [...coreReference.conditions, ...reference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id], ...reference.presentation[condition.id] } : condition), [coreReference, locale, reference]);
   const data = character.line_data;
   const derived = derivedWithPermanentMerits(character);
@@ -283,9 +288,10 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     ].filter(Boolean);
     return [...new Set(ids)].map((id) => conditions.find((condition) => condition.id === id)).filter((item): item is ConditionDefinition => Boolean(item));
   }, [character.current_state?.conditions, conditions, data.merit_granted_conditions]);
-  const seeming = CTL_SEEMINGS[String(data.seeming ?? "") as keyof typeof CTL_SEEMINGS];
+  const seeming = seemingCatalog[String(data.seeming ?? "")];
+  const seemingName = locale === "pt-BR" && seeming && "translated" in seeming ? seeming.translated : seemingDisplayName(data.seeming, locale);
   const identity = [
-    [t("ui.name"), character.character.name], [t("ui.needle"), changelingAnchorDisplayName("needle", data.needle, locale)], [t("ui.seeming"), seemingDisplayName(data.seeming, locale)],
+    [t("ui.name"), character.character.name], [t("ui.needle"), changelingAnchorDisplayName("needle", data.needle, locale)], [t("ui.seeming"), seemingName],
     [t("ui.player"), character.character.player], [t("ui.thread"), changelingAnchorDisplayName("thread", data.thread, locale)], [t("ui.kith6a78ff"), kith.name],
     [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("ui.court"), courtDisplay],
   ];

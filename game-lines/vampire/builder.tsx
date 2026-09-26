@@ -30,7 +30,7 @@ import { createRandomId } from "@/lib/random-id";
 import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
+import { hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
 import { isShadowCultId, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
@@ -38,17 +38,19 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewContentActive } from "./homebrew-catalog";
+import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
+import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
 type KindredStatusScope = "covenant" | "clan" | "city";
 
-function initialCreationDisciplines(initial?: CharacterSheet | null) {
-  return recordRatings(initial?.line_data.creation_disciplines ?? initial?.line_data.disciplines, VAMPIRE_CREATION_DISCIPLINES, 5);
+function initialCreationDisciplines(initial: CharacterSheet | null | undefined, names: readonly string[]) {
+  return recordRatings(initial?.line_data.creation_disciplines ?? initial?.line_data.disciplines, names, 5);
 }
 
-function disciplineAdvancement(initial?: CharacterSheet | null) {
-  const creation = recordRatings(initial?.line_data.creation_disciplines, VAMPIRE_DISCIPLINES, 10);
-  const current = recordRatings(initial?.line_data.disciplines, VAMPIRE_DISCIPLINES, 10);
-  return Object.fromEntries(VAMPIRE_DISCIPLINES.map((name) => [name, Math.max(0, current[name] - creation[name])]));
+function disciplineAdvancement(initial: CharacterSheet | null | undefined, names: readonly string[]) {
+  const creation = recordRatings(initial?.line_data.creation_disciplines, names, 10);
+  const current = recordRatings(initial?.line_data.disciplines, names, 10);
+  return Object.fromEntries(names.map((name) => [name, Math.max(0, current[name] - creation[name])]));
 }
 
 function experienceSpecialties(initial?: CharacterSheet | null) {
@@ -161,10 +163,13 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
-  const reference = catalogs.get<VampireReference>("vampire-reference");
-  const initialClan = reference.clans.find((item) => item.id === String(initial?.line_data.clan_id ?? ""));
   const customMerits = useMeritHomebrews("VtR", true), homebrewPreferences = useHomebrewPreferences();
-  const powers = activeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), homebrewPreferences);
+  const customCatalog = useVampireCatalogHomebrews();
+  const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
+  const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), homebrewPreferences);
+  const disciplineNames = powers.disciplines.map((item) => item.name);
+  const creationDisciplineNames = [...new Set([...VAMPIRE_CREATION_DISCIPLINES, ...customCatalog.filter((item) => item.entryType === "discipline").map((item) => item.name)])];
+  const initialClan = reference.clans.find((item) => item.id === String(initial?.line_data.clan_id ?? ""));
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),
@@ -196,7 +201,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     return String(baseTouchstone?.name ?? "");
   });
   const [bloodPotency, setBloodPotency] = useState(Number(initial?.line_data.creation_blood_potency ?? initial?.line_data.blood_potency ?? 1));
-  const [disciplines, setDisciplines] = useState<Record<string, number>>(() => initialCreationDisciplines(initial));
+  const [disciplines, setDisciplines] = useState<Record<string, number>>(() => initialCreationDisciplines(initial, creationDisciplineNames));
   const initialChoices = initial?.line_data.discipline_choices && typeof initial.line_data.discipline_choices === "object" && !Array.isArray(initial.line_data.discipline_choices) ? initial.line_data.discipline_choices as Record<string, unknown> : {};
   const initialOrdo = initial?.line_data.ordo_dracul && typeof initial.line_data.ordo_dracul === "object" && !Array.isArray(initial.line_data.ordo_dracul) ? initial.line_data.ordo_dracul as Record<string, unknown> : {};
   const [proteanAspects, setProteanAspects] = useState<string[]>(() => stringArray(initialChoices.protean_aspects));
@@ -217,6 +222,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const [kaManifestations, setKaManifestations] = useState<string[]>(() => stringArray(initialKa.manifestations));
   const [kaNumina, setKaNumina] = useState<string[]>(() => stringArray(initialKa.numina));
   const selectedClan = reference.clans.find((item) => item.id === clanId);
+  const clanCatalog = reference.clans.filter((item) => item.id === clanId || vampireHomebrewContentActive(homebrewPreferences, item));
   const selectedCovenant = reference.covenants.find((item) => item.id === covenantId);
   const availableCovenants = reference.covenants.filter((item) => covenantIds.includes(item.id) || vampireHomebrewContentActive(homebrewPreferences, item));
   const shadowCult = isShadowCultId(covenantId);
@@ -364,8 +370,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   };
 
   const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => {
-    const advancement = disciplineAdvancement(source);
-    const finalDisciplines = Object.fromEntries(VAMPIRE_DISCIPLINES.map((name) => [name, (VAMPIRE_CREATION_DISCIPLINES as readonly string[]).includes(name) ? disciplines[name] + advancement[name] : advancement[name]]));
+    const advancement = disciplineAdvancement(source, disciplineNames);
+    const finalDisciplines = Object.fromEntries(disciplineNames.map((name) => [name, creationDisciplineNames.includes(name) ? (disciplines[name] ?? 0) + (advancement[name] ?? 0) : advancement[name] ?? 0]));
     const bpAdvancement = Math.max(0, Number(source?.line_data.blood_potency ?? 1) - Number(source?.line_data.creation_blood_potency ?? source?.line_data.blood_potency ?? 1));
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
     const finalAttributes = { ...common.attributes };
@@ -434,7 +440,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         <span className="kicker">{t("ui.step3VAMPIRE")}</span><h2>{t("ui.vampireTemplate")}</h2>
         <div className="vampire-template-grid vampire-template-standard">
           <div className="vampire-template-primary">
-            <GroupedReferenceChoice label={t("ui.clan")} items={reference.clans} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} />
+            <GroupedReferenceChoice label={t("ui.clan")} items={clanCatalog} value={clanId} onChange={chooseClan} locale={locale} invalid={missing("clan")} />
             <div className="vampire-template-current">
               <strong>{selectedClan ? displayName(selectedClan, locale) : t("ui.noneSelected")}</strong>
               <small>{selectedClan ? selectedClan.disciplines.map((discipline) => vampireDisciplineDisplayName(discipline, powers.disciplines, locale)).join(" · ") : t("ui.selectClan")}</small>
@@ -455,7 +461,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         <label>{t("ui.touchstone")}<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
         <h3>{t("ui.disciplines3Dots")}</h3>
         <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>
-          {powers.disciplines.filter((discipline) => !discipline.bloodlineId && vampireDisciplineAvailable(discipline.name, "", clanId, covenantIds)).map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
+          {powers.disciplines.filter((discipline) => !discipline.bloodlineId && vampireDisciplineAvailable(discipline.name, "", clanId, covenantIds) && (!discipline.clanIds?.length || discipline.clanIds.includes(clanId)) && (!discipline.covenantIds?.length || discipline.covenantIds.some((id) => covenantIds.includes(id))) && vampireHomebrewContentActive(homebrewPreferences, discipline)).map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
           {covenantPowerOptions.length > 0 && <DotRow
             name={covenantId === "circle-of-the-crone" || covenantId === "followers-of-seth" ? "Crúac" : covenantId === "lancea-et-sanctum" ? "Theban Sorcery" : covenantId === "architects-of-the-monolith" ? "Gilded Cage" : displayName(covenantPowerOptions[0], locale)}
             value={hasCreationCovenantPower ? 1 : 0}
