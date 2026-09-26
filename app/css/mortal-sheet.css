@@ -31,7 +31,7 @@
   background-image:url("/mortal/style/background-mortal.webp");
   background-position:center 46%;
   background-size:min(54%,600px) auto;
-  opacity:.08;
+  opacity:.20;
 }
 .cofd-urban-frame {
   position:absolute !important;
