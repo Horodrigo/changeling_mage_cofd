@@ -49,6 +49,8 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mortal, /mobile-attribute-grid/);
   assert.match(mortal, /mobile-trait-stack/);
   assert.match(mortal, /integrity-track[^]*DotValue value=\{integrity\} max=\{10\} singleRow/);
+  assert.match(mortal, /MortalIntegritySection[^]*mortalBreakingPointPool/);
+  assert.match(paperShell, /cofd-title-mark[^]*chroniclesTitle[^]*ofTitle[^]*darknessTitle/);
   assert.match(mortal, /MortalExperiencePanel/);
   assert.match(mortalCss, /@media \(max-width:767px\)[^]*\.cofd-sheet \.mobile-attribute-grid/);
   assert.match(mortal, /SheetHeading className="cofd-attributes-heading"/);
@@ -64,6 +66,8 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mageCss, /--mta-frame-center-clearance:\d+px/);
   assert.match(mageCss, /left var\(--mta-frame-rail-edge\) top 25px,[\s\S]*right var\(--mta-frame-rail-edge\) top 25px/);
   assert.match(mageCss, /background-image:url\("\/mage\/style\/attributes-divider\.webp"\)/);
+  assert.match(mageCss, /button\[data-state="active"\][^}]*mage-paper-texture\.webp/);
+  assert.match(mortalCss, /button\[data-state="active"\][^}]*paper-texture\.webp/);
   assert.doesNotMatch(mageCss, /visual corrections v3/);
   assert.match(mageCss, /\.legacy-sheet-field button \{[^}]*padding:0 0 0 2px/);
   assert.match(mageCss, /\.mage-legacy-join-dialog \.entitlement-select \[data-slot="select-trigger"\]/);

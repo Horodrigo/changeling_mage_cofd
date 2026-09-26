@@ -10,6 +10,8 @@ const {normalizeStoredSheet,validateCurrentCharacter}=await vite.ssrLoadModule("
 const {creationMerits}=await vite.ssrLoadModule("/lib/merit-progression.ts");
 const {normalizeGameLineCharacter}=await vite.ssrLoadModule("/game-lines/registry/game-line-registry.ts");
 const {isCurrentStoredCharacter,summarizeStoredCharacter}=await vite.ssrLoadModule("/lib/stored-character.ts");
+const {mortalBreakingPointPool,mortalIntegrityModifier}=await vite.ssrLoadModule("/game-lines/mortal/creation-rules.ts");
+const {clarityAttackPool}=await vite.ssrLoadModule("/game-lines/changeling/clarity.ts");
 
 const sheet=(game_line="MtA")=>({id:"sheet",schema_version:2,system:"chronicles-of-darkness",game_line,ruleset:{id:"current",version:1},character:{name:"Test",concept:"",player:"Player"},attributes:{Strength:2},skills:{Occult:3},specializations:[],merits:[{name:"Allies",dots:2}],line_data:{},derived:{},current_state:{},created_at:"2026-01-01",updated_at:"2026-01-01"});
 
@@ -58,6 +60,15 @@ test("Mortal normalization owns Integrity, Breaking Points, and derived traits",
     [normalized.derived.Vitalidade,normalized.derived.Deslocamento,normalized.derived.ForçaDeVontade,normalized.derived.Iniciativa,normalized.derived.Defesa,normalized.derived.Integridade],
     [9,10,5,5,4,0],
   );
+});
+test("Mortal Breaking Point pools apply Integrity bands and cap circumstances",()=>{
+  assert.deepEqual([10,8,7,6,5,4,3,2,1,0].map(mortalIntegrityModifier),[2,2,1,1,0,0,-1,-1,-2,-2]);
+  assert.equal(mortalBreakingPointPool(3,2,7,99,true),12);
+  assert.equal(mortalBreakingPointPool(1,1,1,-99,false),-5);
+});
+test("Changeling Clarity attacks add cumulative modifiers without rolling",()=>{
+  assert.equal(clarityAttackPool(3,[3,-1,-2]),3);
+  assert.equal(clarityAttackPool(99,[]),5);
 });
 test("current sheets apply only the selected line's merit synchronization",async()=>{
   const mage=await normalizeGameLineCharacter(normalizeStoredSheet({...sheet("MtA"),line_data:{order:"Orderless"}}));

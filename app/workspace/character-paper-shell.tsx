@@ -52,8 +52,9 @@ export function CharacterPaperShell({
         <span className="ctl-frame-corner ctl-frame-corner-bottom-right" />
       </div>}
       <header className="cod-sheet-title">
-        <div><span className={line === "CtL" ? "ctl-title-mark" : undefined}>{title}</span><strong>{subtitle}</strong></div>
-        <p>{t("ui.chroniclesOFDARKNESS")}</p>
+        {line === "CofD" ? <div className="cofd-title-mark" aria-label={t("workspace.chroniclesOfDarkness")}>
+          <span aria-hidden="true">{t("ui.chroniclesTitle")}</span><small aria-hidden="true">{t("ui.ofTitle")}</small><strong aria-hidden="true">{t("ui.darknessTitle")}</strong>
+        </div> : <><div><span className={line === "CtL" ? "ctl-title-mark" : undefined}>{title}</span><strong>{subtitle}</strong></div><p>{t("ui.chroniclesOFDARKNESS")}</p></>}
       </header>
       {children}
     </article>

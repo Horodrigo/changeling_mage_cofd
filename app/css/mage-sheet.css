@@ -737,7 +737,10 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet-tabs > [data-slot="tabs-list"] button[data-state="active"] {
   color:#f3f8fa;
-  background:linear-gradient(180deg,#356e8d,#295d7b 54%,#204e69);
+  background-color:#295d7b;
+  background-image:linear-gradient(180deg,rgba(53,110,141,.78),rgba(41,93,123,.82) 54%,rgba(32,78,105,.9)),url("/mage/style/mage-paper-texture.webp");
+  background-position:center;
+  background-size:auto,420px auto;
   box-shadow:inset 0 0 16px rgba(255,255,255,.09);
 }
 

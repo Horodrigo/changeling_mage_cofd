@@ -13,6 +13,8 @@ import { DotValue,HealthTrack,SheetHeading,TraitBlock,stringList } from "@/app/w
 import { SwipeableSheetTabs } from "@/app/workspace/sheet-tabs";
 import { systemTerm } from "@/lib/system-terms";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Dialog,DialogContent,DialogDescription,DialogFooter,DialogHeader,DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Tabs,TabsContent,TabsList,TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -38,6 +40,8 @@ import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import type { TokenDefinition } from "./catalogs/tokens";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
+import { RuleSelect } from "@/app/workspace/rule-select";
+import { CLARITY_ATTACK_MODIFIERS,CLARITY_BREAKING_POINT_TIERS,clarityAttackPool } from "./clarity";
 
 type ChangelingReference = {
     conditions: ConditionDefinition[];
@@ -191,6 +195,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     ].filter((item, index, all) => item.id === "bonded" || all.findIndex((other) => other.id === item.id) === index);
     const notes = String(character.current_state?.notes ?? "");
     const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
+    const claritySection = <ClaritySection maximum={clarityMaximum} damage={clarityDamage} wyrd={powerRating} seeming={String(data.seeming ?? "")} onChange={(value) => setState("clarity_damage", value)}/>;
     if (isMobile) {
         const identity = [
             ["Nome", character.character.name], ["Jogador", character.character.player],
@@ -229,7 +234,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetHeading>{t("ui.expandedMerits")}</SheetHeading><CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/>
               <SheetHeading>{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/>
               <SheetHeading>{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/>
-              <SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/>
+              {claritySection}
               <SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>
             </>,
                 poderes: <>
@@ -291,7 +296,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={<><SheetHeading>{t("ui.clarity")}</SheetHeading><ClarityTrack maximum={clarityMaximum} damage={clarityDamage} onChange={(value) => setState("clarity_damage", value)}/></>} derived={derived} armorId={data.combat_armor} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={claritySection} derived={derived} armorId={data.combat_armor} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>{t("ui.contracts")}</SheetHeading>
@@ -427,12 +432,18 @@ function TrifleUseTrack({ used, onChange }: {
     const { t } = useLanguage();
     return <div className="trifle-use-block"><span>{t("ui.triflesUsed")}: {used}/3</span><div className="trifle-use-track" role="group" aria-label={t("ui.of3TriflesUsed", { p1: used })}>{Array.from({ length: 3 }, (_, index) => <button key={index} type="button" className={index < used ? "used" : ""} onClick={() => onChange(index < used ? index : index + 1)} aria-label={t("ui.setUsedTriflesTo", { p1: index < used ? index : index + 1 })}/>)}</div></div>;
 }
-function ClarityTrack({ maximum, damage, onChange, }: {
+function ClaritySection({ maximum, damage, wyrd, seeming, onChange, }: {
     maximum: number;
     damage: ClarityDamageLevel[];
+    wyrd: number;
+    seeming: string;
     onChange: (value: ClarityDamageLevel[]) => void;
 }) {
-    const { t } = useLanguage();
+    const { locale, t } = useLanguage();
+    const [open,setOpen]=useState(false), [severity,setSeverity]=useState(1), [modifiers,setModifiers]=useState<string[]>([]);
+    const tier=CLARITY_BREAKING_POINT_TIERS.find(item=>item.dice===severity)??CLARITY_BREAKING_POINT_TIERS[0];
+    const pool=clarityAttackPool(severity,CLARITY_ATTACK_MODIFIERS.filter(([key])=>modifiers.includes(key)).map(([,value])=>value));
+    const seemingData=CTL_SEEMINGS[seeming as keyof typeof CTL_SEEMINGS];
     const current = Math.max(0, maximum - damage.length);
     const cycle = (index: number) => {
         const slots: Array<ClarityDamageLevel | undefined> = Array.from({ length: maximum }, (_, slot) => damage[slot]);
@@ -441,9 +452,9 @@ function ClarityTrack({ maximum, damage, onChange, }: {
             level === "mild" ? "severe" : level === "severe" ? undefined : "mild";
         onChange(normalizeClarityDamage(slots, maximum));
     };
-    return (
-    
-    <div className="tracker-block clarity-block">
+    return (<div className="clarity-sheet-section">
+      <div className="clarity-heading-row"><SheetHeading>{t("ui.clarity")}</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" onClick={()=>setOpen(true)}>{t("ui.clarityBreakingPoints")}</Button></div>
+      <div className="tracker-block clarity-block">
       <div className="health-track clarity-track" role="group" aria-label={t("ui.currentClarityOf", { p1: current, p2: maximum })}>
         {Array.from({ length: maximum }, (_, index) => {
             const level = damage[index];
@@ -466,6 +477,14 @@ function ClarityTrack({ maximum, damage, onChange, }: {
         {t("ui.mild")} <span className="legend-mark severe"/>
         {t("ui.severeTheThreeRightmostBoxesMayCauseClarity")}
       </p>
+      </div>
+      <Dialog open={open} onOpenChange={setOpen}><DialogContent className="experience-dialog clarity-breaking-point-dialog"><DialogHeader><DialogTitle>{t("ui.clarityBreakingPoints")}</DialogTitle><DialogDescription>{t("ui.clarityBreakingPointDescription")}</DialogDescription></DialogHeader><div className="clarity-breaking-point-form">
+        <label>{t("ui.baselineSeverity")}<RuleSelect value={String(severity)} onChange={value=>setSeverity(Number(value))} options={CLARITY_BREAKING_POINT_TIERS.map(item=>({value:String(item.dice),label:t("ui.clarityDice",{p1:item.dice})}))}/></label>
+        <section className="clarity-breaking-point-examples"><strong>{t("ui.examplesAtSeverity",{p1:severity})}</strong><ul>{tier.examples.map(key=><li key={key}>{t(`ui.${key}`)}</li>)}</ul></section>
+        {seemingData&&<section className="clarity-seeming-breaking-point"><strong>{t("ui.seemingBreakingPoint",{p1:seemingDisplayName(seeming,locale)})}</strong><p>{locale==="pt-BR"?seemingData.curse:seemingData.curseEn}</p></section>}
+        <fieldset className="clarity-breaking-point-modifiers"><legend>{t("ui.attackModifiers")}</legend>{CLARITY_ATTACK_MODIFIERS.map(([key,value])=><label key={key}><input type="checkbox" checked={modifiers.includes(key)} onChange={event=>setModifiers(selected=>event.target.checked?[...selected,key]:selected.filter(item=>item!==key))}/><span>{t(`ui.${key}`)} <strong>{value>0?`+${value}`:value}</strong></span></label>)}</fieldset>
+        <div className="clarity-breaking-point-total"><strong>{t("ui.clarityAttackPool")}: {pool<=0?t("ui.chanceDie"):t("ui.diceCount",{p1:pool})}</strong><small>{t("ui.clarityDamageReminder",{p1:wyrd})}</small></div>
+      </div><DialogFooter><Button type="button" size="sm" className="catalog-dialog-done" onClick={()=>setOpen(false)}>{t("ui.close")}</Button></DialogFooter></DialogContent></Dialog>
     </div>);
 }
 function GoblinDebtTrack({ value, onChange, }: {

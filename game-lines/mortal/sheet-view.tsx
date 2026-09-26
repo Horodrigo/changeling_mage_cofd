@@ -4,10 +4,13 @@ import { useState } from "react";
 import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { ConditionManager, type ConditionDefinition, type SelectedCondition } from "@/app/workspace/condition-manager";
-import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
+import { convertFifthBeat, derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
 import { MainSheet } from "@/app/workspace/main-sheet";
+import { RuleSelect } from "@/app/workspace/rule-select";
 import { HealthTrack, SheetHeading, TraitBlock, DotValue, stringList } from "@/app/workspace/sheet-primitives";
 import { SwipeableSheetTabs } from "@/app/workspace/sheet-tabs";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
@@ -16,8 +19,9 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
-import { boundedIntegrity } from "./creation-rules";
+import { boundedIntegrity, mortalBreakingPointPool, mortalDerived, mortalIntegrityModifier } from "./creation-rules";
 import { MortalExperiencePanel } from "./experience-panel";
 
 type CoreReference = {
@@ -86,7 +90,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />;
   const healthTrack = <><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={normalizeDamage(state.health_damage, health)} onChange={(value) => setState("health_damage", value)} /></>;
   const willpowerTrack = <><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)} /></>;
-  const integrityTrack = <div className="integrity-sheet-section"><div className="integrity-heading-row"><SheetHeading>{t("ui.integrity")}</SheetHeading></div><div className="integrity-track"><DotValue value={integrity} max={10} singleRow /></div></div>;
+  const integrityTrack = <MortalIntegritySection character={character} integrity={integrity} breakingPoints={breakingPoints} conditions={conditionCatalog} willpower={willpower} updateSheet={updateSheet} />;
 
   if (isMobile) return <CharacterPaperShell line="CofD" mobile title={t("ui.mortal")} subtitle={t("ui.chroniclesOFDARKNESS")}>
     <SwipeableSheetTabs value={activeTab} onValueChange={setActiveTab} tabs={[
@@ -137,6 +141,70 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
       <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></TabsContent>
     </Tabs>
   </CharacterPaperShell>;
+}
+
+type BreakingPointResult = "dramatic-failure" | "failure" | "success" | "exceptional-success";
+
+function MortalIntegritySection({ character, integrity, breakingPoints, conditions, willpower, updateSheet }: {
+  character: CharacterSheet;
+  integrity: number;
+  breakingPoints: string[];
+  conditions: ConditionDefinition[];
+  willpower: number;
+  updateSheet: (sheet: CharacterSheet) => void;
+}) {
+  const { t } = useLanguage();
+  const points = breakingPoints.map((point) => point.trim()).filter(Boolean);
+  const [open, setOpen] = useState(false);
+  const [selectedPoint, setSelectedPoint] = useState("");
+  const [circumstances, setCircumstances] = useState(0);
+  const [meditation, setMeditation] = useState(false);
+  const [result, setResult] = useState<BreakingPointResult>("success");
+  const [condition, setCondition] = useState("guilty");
+  const activePoint = points.includes(selectedPoint) ? selectedPoint : points[0] ?? "";
+  const conditionIds = result === "dramatic-failure" ? ["broken", "fugue", "madness"] : ["guilty", "shaken", "spooked"];
+  const pool = mortalBreakingPointPool(character.attributes.Resolve, character.attributes.Composure, integrity, circumstances, meditation);
+  const outcome = result === "dramatic-failure" ? t("ui.breakingPointDramaticFailure") : result === "failure" ? t("ui.breakingPointFailure") : result === "exceptional-success" ? t("ui.breakingPointExceptionalSuccess") : t("ui.breakingPointSuccess");
+  const chooseResult = (value: BreakingPointResult) => {
+    setResult(value);
+    if (value === "dramatic-failure") setCondition("broken");
+    else if (value !== "exceptional-success") setCondition("guilty");
+  };
+  const close = () => { setOpen(false); setCircumstances(0); setMeditation(false); setResult("success"); setCondition("guilty"); };
+  const apply = () => {
+    if (!activePoint) return;
+    const next = structuredClone(character);
+    const losesIntegrity = result === "dramatic-failure" || result === "failure";
+    if (losesIntegrity) next.line_data.integrity = Math.max(0, integrity - 1);
+    const gainedCondition = result === "exceptional-success" ? "" : condition;
+    const currentConditions = Array.isArray(next.current_state.conditions) ? [...next.current_state.conditions] : [];
+    if (gainedCondition) currentConditions.push({ id: gainedCondition, persistent: result === "dramatic-failure", instanceId: createRandomId() });
+    const patch: Record<string, unknown> = { conditions: currentConditions };
+    if (result === "exceptional-success") patch.willpower_current = Math.min(willpower, Number(next.current_state.willpower_current ?? willpower) + 1);
+    if (result === "dramatic-failure" || result === "exceptional-success") {
+      const available = Math.max(0, Math.trunc(Number(next.current_state.experience_available ?? 0)));
+      const spent = Math.max(0, Math.trunc(Number(next.current_state.experience_spent ?? 0)));
+      const total = Math.max(available + spent, Math.max(0, Math.trunc(Number(next.current_state.experience_total ?? 0))));
+      const beat = convertFifthBeat(Math.min(4, Math.max(0, Math.trunc(Number(next.current_state.beats ?? 0)))) + 1, available, total);
+      Object.assign(patch, { beats: beat.beats, experience_available: beat.available, experience_spent: spent, experience_total: beat.total });
+    }
+    next.current_state = { ...next.current_state, ...patch };
+    next.derived = mortalDerived(next);
+    updateSheet(next);
+    close();
+  };
+  return <div className="integrity-sheet-section">
+    <div className="integrity-heading-row"><SheetHeading>{t("ui.integrity")}</SheetHeading><Button type="button" size="sm" variant="outline" className="builder-add-action" disabled={!points.length} onClick={() => setOpen(true)}>{t("ui.breakingPoint")}</Button></div>
+    <div className="integrity-track"><DotValue value={integrity} max={10} singleRow /><strong className="integrity-current">{t("ui.current")}: {integrity}/10</strong></div>
+    <Dialog open={open} onOpenChange={value => value ? setOpen(true) : close()}><DialogContent className="experience-dialog mortal-breaking-point-dialog"><DialogHeader><DialogTitle>{t("ui.breakingPoint")}</DialogTitle><DialogDescription>{t("ui.breakingPointDescription")}</DialogDescription></DialogHeader><div className="mortal-breaking-point-form">
+      <div className="mortal-breaking-point-list">{points.map(point => <label key={point}><input type="radio" name="mortal-breaking-point" checked={activePoint === point} onChange={() => setSelectedPoint(point)} /><span>{point}</span></label>)}</div>
+      <div className="mortal-breaking-point-reference"><strong>{t("ui.breakingPointPool")}: {pool <= 0 ? t("ui.chanceDie") : t("ui.diceCount", { p1: pool })}</strong><small>{t("ui.resolve")} + {t("ui.composure")} · {t("ui.integrityModifier")} {mortalIntegrityModifier(integrity) >= 0 ? "+" : ""}{mortalIntegrityModifier(integrity)}</small></div>
+      <div className="mortal-breaking-point-modifiers"><label>{t("ui.circumstanceModifier")}<RuleSelect value={String(circumstances)} onChange={value => setCircumstances(Number(value))} options={Array.from({ length: 11 }, (_, index) => index - 5).map(value => ({ value: String(value), label: value > 0 ? `+${value}` : String(value) }))} /></label><label><input type="checkbox" checked={meditation} onChange={event => setMeditation(event.target.checked)} /><span>{t("ui.meditationBonus")}</span></label></div>
+      <label>{t("ui.rollResult")}<RuleSelect value={result} onChange={value => chooseResult(value as BreakingPointResult)} options={[{ value: "dramatic-failure", label: t("ui.dramaticFailure") }, { value: "failure", label: t("ui.failure") }, { value: "success", label: t("ui.success") }, { value: "exceptional-success", label: t("ui.exceptionalSuccess") }]} /></label>
+      {result !== "exceptional-success" && <label>{t("ui.conditionGained")}<RuleSelect value={conditionIds.includes(condition) ? condition : conditionIds[0]} onChange={setCondition} options={conditionIds.map(id => ({ value: id, label: conditions.find(item => item.id === id)?.name ?? id }))} /></label>}
+      <div className="mortal-breaking-point-outcome"><p>{outcome}</p></div>
+    </div><DialogFooter><Button type="button" size="sm" variant="outline" className="catalog-dialog-done" onClick={close}>{t("common.cancel")}</Button><Button type="button" size="sm" className="catalog-selection-action" onClick={apply}>{t("ui.applyResult")}</Button></DialogFooter></DialogContent></Dialog>
+  </div>;
 }
 
 function MeritList({ character, catalog }: { character: CharacterSheet; catalog: readonly MeritDefinition[] }) {
