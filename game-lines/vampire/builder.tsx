@@ -301,8 +301,6 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     return result;
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
-  const [nosferatuEasterEgg, setNosferatuEasterEgg] = useState(false);
-
   useEffect(() => {
     setMerits((current) => {
       const automatic = current.filter((merit) =>
@@ -334,27 +332,11 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     });
   }, [covenantId, selectedCovenant?.name, shadowCult, statusGroup, setMerits]);
 
-  useEffect(() => {
-    if (!nosferatuEasterEgg) return;
-    const timeout = window.setTimeout(() => setNosferatuEasterEgg(false), 15000);
-    const prevent = (event: Event) => { event.preventDefault(); event.stopPropagation(); };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", prevent, true);
-    window.addEventListener("wheel", prevent, { passive: false, capture: true });
-    window.addEventListener("touchmove", prevent, { passive: false, capture: true });
-    return () => {
-      window.clearTimeout(timeout); document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", prevent, true); window.removeEventListener("wheel", prevent, true); window.removeEventListener("touchmove", prevent, true);
-    };
-  }, [nosferatuEasterEgg]);
-
   const chooseClan = (value: string) => {
     setClanId(value);
     const clan = reference.clans.find((item) => item.id === value);
     if (clan?.favoredAttributeMode === "both" || !clan?.favoredAttributes.includes(favoredAttribute)) setFavoredAttribute("");
     setDisciplines((current) => ({ ...current, Praestantia: value === "akhud" ? current.Praestantia : 0, Vitiate: value === "bekaak" ? current.Vitiate : 0 }));
-    if (value === "nosferatu") setNosferatuEasterEgg(true);
   };
   const chooseCovenant = (value: string) => {
     setCovenantId(value); setCovenantIds((current) => value === "covenantless" ? [value] : [...new Set([...current.filter((id) => id !== "covenantless"), value])]); setCreationCovenantPowerId("");
@@ -442,7 +424,6 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   ];
 
   return <>
-    {nosferatuEasterEgg && <div className="nosferatu-easter-egg"><video src="/vampire/easter-eggs/nosferatu.webm" autoPlay playsInline controls={false} disablePictureInPicture /></div>}
     <CharacterBuilderShell line="VtR" templateLabel={t("ui.vampireTemplate")} state={common} issues={issues} draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
       prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
       renderAdvancement={(sheet, updateSheet) => <VampireExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}

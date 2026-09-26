@@ -46,8 +46,6 @@ const SHELL = [
   "/vampire/style/thorns-corner.webp",
   "/vampire/style/vampire-title.webp",
 
-  "/vampire/easter-eggs/nosferatu.webm",
-
   "/version.json",
 ];
 

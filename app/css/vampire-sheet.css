@@ -778,26 +778,6 @@
   text-transform: none;
 }
 
-.nosferatu-easter-egg {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: transparent;
-
-  pointer-events: all;
-}
-
-.nosferatu-easter-egg video {
-  width: min(800px, 90vw);
-  height: auto;
-  object-fit: contain;
-}
-
 .vtr-sheet .official-trait-grid .official-trait-block h4 { font-size: 20px; }
 
 .vtr-sheet .official-trait-line {
