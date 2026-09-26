@@ -5,10 +5,11 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("mobile sheets keep summaries, details, powers, and resource tracks separated", async () => {
-  const [mortal, mortalBuilder, mage, vampire, bloodline, legacy, paperShell, globals, mortalCss, mageCss, vampireCss] = await Promise.all([
+  const [mortal, mortalBuilder, mage, changeling, vampire, bloodline, legacy, paperShell, globals, mortalCss, mageCss, changelingCss, vampireCss] = await Promise.all([
     read("../game-lines/mortal/sheet-view.tsx"),
     read("../game-lines/mortal/builder.tsx"),
     read("../game-lines/mage/sheet-view.tsx"),
+    read("../game-lines/changeling/sheet-view.tsx"),
     read("../game-lines/vampire/sheet-view.tsx"),
     read("../game-lines/vampire/bloodline-page.tsx"),
     read("../app/workspace/legacy-page.tsx"),
@@ -16,6 +17,7 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
     read("../app/css/globals.css"),
     read("../app/css/mortal-sheet.css"),
     read("../app/css/mage-sheet.css"),
+    read("../app/css/changeling-sheet.css"),
     read("../app/css/vampire-sheet.css"),
   ]);
   const mageMobile = mage.slice(mage.indexOf("if (isMobile)"), mage.indexOf('return (<CharacterPaperShell line="MtA" title='));
@@ -55,7 +57,7 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mortalCss, /@media \(max-width:767px\)[^]*\.cofd-sheet \.mobile-attribute-grid/);
   assert.match(mortal, /SheetHeading className="cofd-attributes-heading"/);
   assert.match(paperShell, /cofd-urban-frame[^]*cofd-frame-center-bottom/);
-  for (const asset of ["paper-texture", "background-mortal", "frame-corner", "section-divider", "column-divider", "frame-center", "attributes-divider"]) {
+  for (const asset of ["paper-texture", "selected-tab-texture", "background-mortal", "frame-corner", "section-divider", "column-divider", "frame-center", "attributes-divider"]) {
     assert.ok((await stat(new URL(`../public/mortal/style/${asset}.webp`, import.meta.url))).size > 0, `${asset}.webp is empty`);
     assert.match(mortalCss, new RegExp(`/mortal/style/${asset}\\.webp`));
   }
@@ -66,8 +68,12 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mageCss, /--mta-frame-center-clearance:\d+px/);
   assert.match(mageCss, /left var\(--mta-frame-rail-edge\) top 25px,[\s\S]*right var\(--mta-frame-rail-edge\) top 25px/);
   assert.match(mageCss, /background-image:url\("\/mage\/style\/attributes-divider\.webp"\)/);
-  assert.match(mageCss, /button\[data-state="active"\][^}]*mage-paper-texture\.webp/);
-  assert.match(mortalCss, /button\[data-state="active"\][^}]*paper-texture\.webp/);
+  assert.match(mageCss, /button\[data-state="active"\]::before[^}]*selected-tab-texture\.webp/);
+  assert.match(mortalCss, /button\[data-state="active"\]::before[^}]*selected-tab-texture\.webp/);
+  assert.ok((await stat(new URL("../public/mage/style/selected-tab-texture.webp", import.meta.url))).size > 0);
+  assert.match(changeling, /clarity-breaking-point-dialog ctl-dialog/);
+  assert.match(changelingCss, /\.clarity-breaking-point-dialog \{[^}]*grid-template-rows:auto minmax\(0,1fr\) auto/);
+  assert.match(changelingCss, /\.clarity-breaking-point-modifiers label \{[^}]*font-size:15px/);
   assert.doesNotMatch(mageCss, /visual corrections v3/);
   assert.match(mageCss, /\.legacy-sheet-field button \{[^}]*padding:0 0 0 2px/);
   assert.match(mageCss, /\.mage-legacy-join-dialog \.entitlement-select \[data-slot="select-trigger"\]/);

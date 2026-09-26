@@ -1077,20 +1077,20 @@ background-size:
 .clarity-sheet-section { display:grid; gap:7px; }
 .clarity-heading-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .clarity-heading-row .official-heading { flex:1; margin:0; }
-.clarity-breaking-point-dialog { width:min(760px,calc(100vw - 2rem))!important; max-width:760px!important; max-height:min(90vh,920px); overflow:hidden; }
+.clarity-breaking-point-dialog { width:min(760px,calc(100vw - 2rem))!important; max-width:760px!important; max-height:min(90vh,920px); grid-template-rows:auto minmax(0,1fr) auto; overflow:hidden; }
 .clarity-breaking-point-form { display:grid; min-height:0; gap:12px; overflow-y:auto; padding-right:4px; }
-.clarity-breaking-point-form>label { display:grid; gap:5px; font-size:13px; }
+.clarity-breaking-point-form>label { display:grid; gap:5px; font-size:15px; }
 .clarity-breaking-point-examples,
 .clarity-seeming-breaking-point { padding:9px 11px; border:1px solid color-mix(in srgb,var(--sheet-accent) 30%,#d8d2c8); background:color-mix(in srgb,var(--sheet-accent) 5%,transparent); }
-.clarity-breaking-point-examples ul { columns:2; margin:7px 0 0; padding-left:20px; font-size:12px; line-height:1.4; }
+.clarity-breaking-point-examples ul { columns:2; margin:7px 0 0; padding-left:20px; font-size:15px; line-height:1.45; }
 .clarity-breaking-point-examples li { break-inside:avoid; margin-bottom:4px; }
-.clarity-seeming-breaking-point p { margin:5px 0 0; font-size:12px; line-height:1.4; }
+.clarity-seeming-breaking-point p { margin:5px 0 0; font-size:15px; line-height:1.45; }
 .clarity-breaking-point-modifiers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px 12px; padding:10px; border:1px solid color-mix(in srgb,var(--sheet-accent) 25%,#d8d2c8); }
-.clarity-breaking-point-modifiers legend { padding:0 5px; font-size:13px; font-weight:700; }
-.clarity-breaking-point-modifiers label { display:flex; align-items:flex-start; gap:7px; font-size:12px; }
+.clarity-breaking-point-modifiers legend { padding:0 5px; font-size:16px; font-weight:700; }
+.clarity-breaking-point-modifiers label { display:flex; align-items:flex-start; gap:7px; font-size:15px; line-height:1.4; }
 .clarity-breaking-point-modifiers label span { display:flex; flex:1; justify-content:space-between; gap:8px; }
 .clarity-breaking-point-total { display:grid; gap:3px; padding:9px 11px; border-left:3px solid var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 8%,transparent); }
-.clarity-breaking-point-total small { font-size:11px; }
+.clarity-breaking-point-total small { font-size:14px; line-height:1.4; }
 @media (max-width:620px) {
   .clarity-breaking-point-examples ul { columns:1; }
   .clarity-breaking-point-modifiers { grid-template-columns:1fr; }

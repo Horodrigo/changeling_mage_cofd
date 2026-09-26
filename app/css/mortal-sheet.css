@@ -103,7 +103,8 @@
 .cofd-sheet .official-trait-subtitle,
 .cofd-sheet .official-trait-line small { color:#17384c; font-weight:600; text-shadow:0 1px 0 #fff9; }
 .cofd-sheet :is(small,em,.combat-note,.combat-source,.cod-main-derived-grid span,.tracker-meta span,.tracker-help) { color:#17384c; text-shadow:0 1px 0 #fff9; }
-.cofd-sheet .ctl-sheet-tab-list button[data-state="active"] { background-color:#315e7a; background-image:linear-gradient(rgba(49,94,122,.82),rgba(23,56,76,.92)),url("/mortal/style/paper-texture.webp"); background-position:center; background-size:auto,420px auto; }
+.cofd-sheet .ctl-sheet-tab-list button[data-state="active"] { position:relative; isolation:isolate; background:transparent; box-shadow:none; }
+.cofd-sheet .ctl-sheet-tab-list button[data-state="active"]::before { content:""; position:absolute; z-index:-1; inset:3px; background:#315e7a url("/mortal/style/selected-tab-texture.webp") center/cover no-repeat; box-shadow:0 0 0 1px rgba(23,56,76,.38); }
 .cofd-sheet .resource-track { grid-template-columns:repeat(10,minmax(0,1fr)); }
 .cofd-sheet .mortal-skill-stack { display:grid; gap:12px; }
 .cofd-sheet .integrity-sheet-section { display:grid; gap:7px; margin-top:12px; }

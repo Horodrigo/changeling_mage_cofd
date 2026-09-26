@@ -478,7 +478,7 @@ function ClaritySection({ maximum, damage, wyrd, seeming, onChange, }: {
         {t("ui.severeTheThreeRightmostBoxesMayCauseClarity")}
       </p>
       </div>
-      <Dialog open={open} onOpenChange={setOpen}><DialogContent className="experience-dialog clarity-breaking-point-dialog"><DialogHeader><DialogTitle>{t("ui.clarityBreakingPoints")}</DialogTitle><DialogDescription>{t("ui.clarityBreakingPointDescription")}</DialogDescription></DialogHeader><div className="clarity-breaking-point-form">
+      <Dialog open={open} onOpenChange={setOpen}><DialogContent className="experience-dialog clarity-breaking-point-dialog ctl-dialog"><DialogHeader><DialogTitle>{t("ui.clarityBreakingPoints")}</DialogTitle><DialogDescription>{t("ui.clarityBreakingPointDescription")}</DialogDescription></DialogHeader><div className="clarity-breaking-point-form">
         <label>{t("ui.baselineSeverity")}<RuleSelect value={String(severity)} onChange={value=>setSeverity(Number(value))} options={CLARITY_BREAKING_POINT_TIERS.map(item=>({value:String(item.dice),label:t("ui.clarityDice",{p1:item.dice})}))}/></label>
         <section className="clarity-breaking-point-examples"><strong>{t("ui.examplesAtSeverity",{p1:severity})}</strong><ul>{tier.examples.map(key=><li key={key}>{t(`ui.${key}`)}</li>)}</ul></section>
         {seemingData&&<section className="clarity-seeming-breaking-point"><strong>{t("ui.seemingBreakingPoint",{p1:seemingDisplayName(seeming,locale)})}</strong><p>{locale==="pt-BR"?seemingData.curse:seemingData.curseEn}</p></section>}
