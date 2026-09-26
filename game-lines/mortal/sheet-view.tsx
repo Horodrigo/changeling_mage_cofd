@@ -100,10 +100,10 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
       { value: "combat", label: t("ui.combat") },
       { value: "notes", label: t("ui.notes") },
     ]}>{{
-      summary: <>{identity}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}{integrityTrack}<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></>,
+      summary: <>{identity}{healthTrack}{willpowerTrack}{integrityTrack}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></>,
       stats: <>{attributes}{skills}<SheetHeading>{t("ui.merits")}</SheetHeading>{merits}</>,
       details: <><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
-      combat: <>{healthTrack}{willpowerTrack}<CombatPage character={character} derived={derived} updateSheet={updateSheet} /></>,
+      combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet} />,
       notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></>,
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;

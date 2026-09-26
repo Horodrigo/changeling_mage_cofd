@@ -226,15 +226,18 @@ test("workspace routes builder and sheet surfaces through the registry shells", 
 });
 
 test("workspace print capability is driven entirely by registration", async () => {
-  const [workspace, contract, changeling, mage, vampire] = await Promise.all([
+  const [workspace, contract, mortal, changeling, mage, vampire] = await Promise.all([
     source("app/workspace.tsx"),
     source("lib/game-line-contracts/game-line-registration.ts"),
+    source("game-lines/mortal/registration.ts"),
     source("game-lines/changeling/registration.ts"),
     source("game-lines/mage/registration.ts"),
     source("game-lines/vampire/registration.ts"),
   ]);
 
   assert.match(contract, /loadPrintSheet\?/);
+  assert.match(mortal, /label:\s*"Core: Chronicles of Darkness"/);
+  assert.match(mortal, /loadPrintSheet\s*:/);
   assert.match(changeling, /loadPrintSheet\s*:/);
   assert.match(mage, /loadPrintSheet\s*:/);
   assert.match(vampire, /loadPrintSheet\s*:/);
@@ -257,16 +260,21 @@ test("workspace print capability is driven entirely by registration", async () =
 });
 
 test("line print surfaces retain their web skins and line-specific tracks", async () => {
-  const [changelingPrint, magePrint, vampirePrint, mageCss, vampireCss, paperShell, mainSheet] = await Promise.all([
+  const [mortalPrint, changelingPrint, magePrint, vampirePrint, mortalCss, mageCss, vampireCss, paperShell, mainSheet] = await Promise.all([
+    source("game-lines/mortal/print-sheet.tsx"),
     source("game-lines/changeling/print-sheet.tsx"),
     source("game-lines/mage/print-sheet.tsx"),
     source("game-lines/vampire/print-sheet.tsx"),
+    source("app/css/mortal-sheet.css"),
     source("app/css/mage-sheet.css"),
     source("app/css/vampire-sheet.css"),
     source("app/workspace/character-paper-shell.tsx"),
     source("app/workspace/main-sheet.tsx"),
   ]);
 
+  assert.match(mortalPrint, /PrintIntegrityTrack value=\{integrity\}/);
+  assert.match(mortalPrint, /ui\.breakingPoints/);
+  assert.match(mortalPrint, /cofd-print-combat/);
   assert.match(changelingPrint, /DotValue value=\{1\} max=\{10\} singleRow/);
   assert.match(changelingPrint, /PrintIntegrityTrack value=\{Math\.max\(0, Math\.min\(10,/);
   assert.match(changelingPrint, /ctl-print-equipment-table/);
@@ -286,6 +294,8 @@ test("line print surfaces retain their web skins and line-specific tracks", asyn
   assert.match(vampirePrint, /Array\.from\(\{ length: 10 \}.*const item = equipment/);
   assert.doesNotMatch(vampirePrint, /touchstonesAndBanes/);
   assert.doesNotMatch(vampirePrint, /acquiredPowers/);
+  assert.match(mortalCss, /cofd-print-frame/);
+  assert.match(mortalCss, /mortal\/style\/background-mortal\.webp/);
   assert.match(mageCss, /mage\/style\/background-mage\.webp/);
   assert.match(mageCss, /mta-print-frame/);
   assert.match(mageCss, /--mta-print-frame-center-clearance:8mm/);
@@ -329,7 +339,7 @@ test("production build manifest keeps builder, sheet, and print closures line-is
     }
   }
 
-  for (const line of ["mage", "changeling", "vampire"]) {
+  for (const line of ["mortal", "mage", "changeling", "vampire"]) {
     const key = `game-lines/${line}/print.tsx`;
     assert.ok(manifest[key], `missing manifest entry: ${key}`);
     const others = ["mortal", "mage", "changeling", "vampire"].filter((candidate) => candidate !== line);

@@ -1,0 +1,4 @@
+import { MortalPrintSheet } from "./print-sheet";
+import type { GameLinePrintModule } from "@/lib/game-line-contracts/game-line-ui";
+
+export const mortalPrintSheet: GameLinePrintModule = { Component: MortalPrintSheet };

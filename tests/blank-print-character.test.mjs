@@ -9,7 +9,7 @@ after(async () => vite.close());
 const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
 
 test("blank print sheets contain only baseline Chronicles traits", () => {
-  for (const line of ["CtL", "MtA", "VtR"]) {
+  for (const line of ["CofD", "CtL", "MtA", "VtR"]) {
     const character = blankPrintCharacter(line);
     assert.equal(character.game_line, line);
     assert.deepEqual(new Set(Object.values(character.attributes)), new Set([1]));
