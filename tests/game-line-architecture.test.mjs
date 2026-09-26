@@ -236,7 +236,7 @@ test("workspace print capability is driven entirely by registration", async () =
   ]);
 
   assert.match(contract, /loadPrintSheet\?/);
-  assert.match(mortal, /label:\s*"Core: Chronicles of Darkness"/);
+  assert.match(mortal, /label:\s*"Chronicles of Darkness"/);
   assert.match(mortal, /loadPrintSheet\s*:/);
   assert.match(changeling, /loadPrintSheet\s*:/);
   assert.match(mage, /loadPrintSheet\s*:/);

@@ -4,7 +4,7 @@ import type { GameLineRegistration } from "@/lib/game-line-contracts/game-line-r
 export const mortalRegistration: GameLineRegistration = {
   id: "CofD",
   slug: "mortal",
-  label: "Core: Chronicles of Darkness",
+  label: "Chronicles of Darkness",
   iconSrc: "/mortal-skull.webp",
   cardClass: "cofd-card",
   summaryClass: "cofd-summary",
