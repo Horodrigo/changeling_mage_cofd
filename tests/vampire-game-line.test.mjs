@@ -347,9 +347,12 @@ test("Secrets of the Covenants catalog totals the 107 audited primary mechanics"
 
 test("Vampire Discipline presentation never applies Attribute translations", async () => {
   const { vampireDisciplineDisplayName } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { ruleSelectOptionLabel } = await vite.ssrLoadModule("/app/workspace/rule-select.tsx");
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   assert.equal(vampireDisciplineDisplayName("Vigor", powers.disciplines, "en-US"), "Vigor");
   assert.equal(vampireDisciplineDisplayName("Vigor", powers.disciplines, "pt-BR"), "Ímpeto");
+  assert.equal(ruleSelectOptionLabel({ value: "Vigor", label: "Vigor", localized: true }, "en-US"), "Vigor");
+  assert.equal(ruleSelectOptionLabel({ value: "Stamina", label: "Vigor" }, "en-US"), "Stamina");
   assert.equal(vampireDisciplineDisplayName("Auspex", powers.disciplines, "en-US"), "Auspex");
   assert.equal(vampireDisciplineDisplayName("Auspex", powers.disciplines, "pt-BR"), "Auspícios");
 });
