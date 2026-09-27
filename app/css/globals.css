@@ -169,6 +169,19 @@
 .homebrew-page { display:grid; gap:18px; min-width:0; width:100%; max-width:1200px; margin:0 auto; }
 .homebrew-page > * { min-width:0; max-width:100%; }
 .homebrew-settings { display:flex; align-items:center; justify-content:space-between; gap:1rem; }.homebrew-settings h3, .homebrew-settings p { margin:0; }.homebrew-toggle { display:flex; align-items:center; justify-content:space-between; gap:.65rem; font-size:calc(.82rem + 2px); font-weight:700; }.homebrew-card-actions { display:flex; align-items:center; flex-wrap:wrap; gap:.45rem; }.homebrew-card details { margin-top:.75rem; font-size:calc(.82rem + 2px); }.homebrew-card summary { cursor:pointer; font-weight:700; }.homebrew-card details p { margin-top:.45rem; }.homebrew-page [role="tablist"] { flex-wrap:wrap; height:auto; }
+.data-transfer-dialog { width:min(760px,calc(100vw - 32px)); max-width:760px!important; max-height:90dvh; overflow-y:auto; }
+.data-transfer-tabs>[data-slot="tabs-list"] { display:grid; grid-template-columns:1fr 1fr; width:100%; min-height:44px; height:auto; }
+.data-transfer-tabs [data-slot="tabs-trigger"] { min-height:38px; }
+.data-transfer-content { display:grid; gap:18px; padding-top:8px; }
+.data-transfer-introduction { display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; align-items:start; }
+.data-transfer-introduction>svg { width:32px; height:32px; color:var(--sheet-accent); }
+.data-transfer-introduction h3, .data-transfer-action h4 { margin:0; color:var(--sheet-accent); font-family:Georgia,serif; }
+.data-transfer-introduction h3 { font-size:21px; }.data-transfer-introduction p, .data-transfer-action p { margin:5px 0 0; color:#706970; font-size:13px; line-height:1.5; }
+.data-transfer-actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.data-transfer-action { display:flex; min-width:0; min-height:210px; flex-direction:column; justify-content:space-between; gap:18px; padding:16px; border:1px solid #ddd5df; border-radius:10px; background:#fff; }
+.data-transfer-action-heading { display:grid; grid-template-columns:28px minmax(0,1fr); gap:10px; align-items:start; }.data-transfer-action-heading>svg { width:22px; height:22px; color:var(--sheet-accent); }
+.data-transfer-action-controls { display:grid; gap:8px; }.data-transfer-action-controls>[data-slot="select-trigger"], .data-transfer-action-controls>[data-slot="button"] { width:100%; }
+.data-transfer-empty { margin:0; color:#706970; font-size:13px; }.data-transfer-feedback { margin:0; padding:10px 12px; border-left:3px solid var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 7%,#fff); font-size:13px; }
 .homebrew-hero { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:28px; border:1px solid color-mix(in srgb,var(--sheet-accent) 35%,#ddd); border-radius:14px; background:linear-gradient(135deg,#fff 0%,color-mix(in srgb,var(--sheet-accent) 8%,#fff) 100%); }
 .homebrew-hero h2 { margin:10px 0 6px; font:700 30px Georgia,serif; color:var(--sheet-accent); }.homebrew-hero p { max-width:680px; margin:0; color:#6d656b; }.homebrew-hero>svg { width:58px; height:58px; color:var(--sheet-accent); opacity:.65; }
 .homebrew-panel { margin-top:0; }.homebrew-panel .panel-heading { align-items:flex-start; margin-bottom:18px; }.homebrew-panel .panel-heading>div { min-width:0; }.homebrew-panel .panel-heading>[data-slot="button"] { flex:none; width:11rem; height:36px; }.homebrew-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
@@ -247,6 +260,7 @@
   .homebrew-tabs-list {display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;padding-bottom:5px}.homebrew-tabs-list button {flex:0 0 auto;min-width:112px;min-height:44px;scroll-snap-align:start}
   .homebrew-dialog {width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94dvh!important;padding:14px}.homebrew-levels section {grid-template-columns:34px minmax(0,1fr)}.homebrew-levels section textarea {grid-column:1/-1}
   .homebrew-source-summary {padding:14px}.homebrew-source-summary>div {grid-template-columns:1fr}.homebrew-source-summary strong,.homebrew-source-summary span {white-space:normal}.homebrew-source-summary span {grid-column:auto}.homebrew-source-controls {justify-content:flex-start}.homebrew-section>div,.homebrew-repeat {grid-template-columns:1fr}.homebrew-section>legend {align-items:flex-start;flex-direction:column}.homebrew-section .wide,.homebrew-repeat .wide {grid-column:auto}.homebrew-section-action>[data-slot="button"] {width:100%;min-height:44px}.homebrew-source-toolbar {align-items:stretch;flex-direction:column;gap:0}.homebrew-source-toolbar>.homebrew-toggle {justify-content:flex-end;min-height:44px;padding:8px 0}.homebrew-kind-tabs-list {width:100%}.homebrew-list-item>.homebrew-toggle {font-size:13px}
+  .data-transfer-dialog {width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94dvh!important;padding:14px}.data-transfer-actions {grid-template-columns:1fr}.data-transfer-action {min-height:0}.data-transfer-action-controls>[data-slot="button"] {min-height:44px}
   .experience-merit-choice {width:100%}
   .merit-dialog, .experience-dialog, .condition-dialog, .loadout-dialog {width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94vh!important;padding:14px}
   .companion-card .compact-values, .experience-totals {grid-template-columns:repeat(2,minmax(0,1fr))}

@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   ArrowDownUp,
   ChevronRight,
-  Download,
   FileJson,
   FlaskConical,
   LayoutDashboard,
@@ -15,7 +14,6 @@ import {
   ShieldCheck,
   Sparkles,
   Trash2,
-  Upload,
   UsersRound,
   X,
   ZoomIn,
@@ -68,6 +66,7 @@ const CharacterPrintDialog = lazy(() =>
   import("./workspace/character-print-dialog").then((module) => ({ default: module.CharacterPrintDialog })),
 );
 const Homebrews = lazy(() => import("./homebrews"));
+const DataTransferPanel = lazy(() => import("./data-transfer-panel").then((module) => ({ default: module.DataTransferPanel })));
 
 type View = "inicio" | "personagens" | "homebrew";
 
@@ -91,6 +90,7 @@ export function Workspace({
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
   const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
+  const [dataTransferOpen, setDataTransferOpen] = useState(false);
 
   const {
     characters,
@@ -127,7 +127,6 @@ export function Workspace({
   const [maximumZoom, setMaximumZoom] = useState(1);
   const [printOpen, setPrintOpen] = useState(false);
   const [blankPrintLine, setBlankPrintLine] = useState<PersistedGameLineId | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(max-width: 767px)").matches) return;
@@ -212,25 +211,15 @@ export function Workspace({
     setNotice(t("workspace.characterDeleted", { name: summary.name }));
   }
 
-  function exportCharacter(character: CharacterSheet) {
-    const blob = new Blob([JSON.stringify(character, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `${character.character.name.toLowerCase().replace(/[^a-z0-9]+/gi, "-")}.json`;
-    anchor.click();
-    URL.revokeObjectURL(url);
-  }
-
   async function importCharacter(file: File) {
     try {
       const sheet = await importCharacterFile(file);
       upsertCharacter(sheet);
       setView("personagens");
       setSelected(sheet);
-      setNotice(t("workspace.characterImported", { name: sheet.character.name }));
+      const message = t("workspace.characterImported", { name: sheet.character.name });
+      setNotice(message);
+      return { ok: true, message, characterId: sheet.id };
     } catch (error) {
       if (error instanceof CharacterLifecycleError) {
         const messageKey =
@@ -239,10 +228,13 @@ export function Workspace({
             : error.code === "invalid-json"
               ? "workspace.invalidJson"
               : "workspace.invalidCharacterJson";
-        setNotice(t(messageKey));
-        return;
+        const message = t(messageKey);
+        setNotice(message);
+        return { ok: false, message };
       }
-      setNotice(error instanceof Error ? error.message : t("workspace.invalidJson"));
+      const message = error instanceof Error ? error.message : t("workspace.invalidJson");
+      setNotice(message);
+      return { ok: false, message };
     }
   }
 
@@ -309,17 +301,6 @@ export function Workspace({
           </DropdownMenu>
           </nav>
           <div className="top-panel">
-            <input
-              ref={fileRef}
-              hidden
-              type="file"
-              accept=".json,application/json"
-              onChange={(event) => {
-                const file = event.target.files?.[0];
-                if (file) void importCharacter(file);
-                event.target.value = "";
-              }}
-            />
             <div className="top-profile">
               <strong>{displayName}</strong>
             </div>
@@ -336,24 +317,9 @@ export function Workspace({
                 <Pencil /><span>{t("workspace.edit")}</span>
               </Button>
             </div>}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="sheet-actions-trigger" aria-label={t("workspace.sheetActions")} title={t("workspace.sheetActions")}>
-                  <ArrowDownUp /> <span>{t("workspace.sheetActions")}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className={`sheet-actions-menu${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
-                <DropdownMenuItem onSelect={() => fileRef.current?.click()}>
-                  <Upload /> {t("workspace.importJson")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  disabled={!selected}
-                  onSelect={() => selected && exportCharacter(selected)}
-                >
-                  <Download /> {t("workspace.saveJson")}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button type="button" className="sheet-actions-trigger" onClick={() => setDataTransferOpen(true)} aria-label={t("workspace.sheetActions")} title={t("workspace.sheetActions")}>
+              <ArrowDownUp /> <span>{t("workspace.sheetActions")}</span>
+            </Button>
           </div>
         </header>
         {!selected && <div className="view-heading">
@@ -417,6 +383,7 @@ export function Workspace({
       {blankPrintLine && <CatalogBoundary groups={getGameLineRegistration(blankPrintLine).catalogGroups.print ?? getGameLineRegistration(blankPrintLine).catalogGroups.sheet}>
         <Suspense fallback={<WorkspaceLoading />}><CharacterPrintDialog character={blankPrintCharacter(blankPrintLine)} open onOpenChange={(open) => { if (!open) setBlankPrintLine(null); }}/></Suspense>
       </CatalogBoundary>}
+      {dataTransferOpen && <Suspense fallback={null}><DataTransferPanel open={dataTransferOpen} onOpenChange={setDataTransferOpen} characters={characters} selected={selected} importCharacter={importCharacter}/></Suspense>}
     </main>
   );
 }

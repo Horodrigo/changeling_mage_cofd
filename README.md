@@ -55,6 +55,7 @@ The major boundaries are:
 - `game-lines/mage/` — Mage-owned rules, builder, sheet, experience flow, and catalogs.
 - `game-lines/vampire/` — Vampire-owned rules, builder, sheet, experience flow, and catalogs.
 - `app/workspace/character-lifecycle.ts` — import/open/save/update lifecycle and canonical normalization routing.
+- `app/data-transfer-panel.tsx` — local character and Homebrew import/export with separate validation paths.
 - `app/workspace/character-repository.ts` — browser-local character storage and collection mutation.
 - `lib/catalog/` — generic static catalog loading, cache, and immutable snapshots.
 - `public/data/` — static Core and game-line catalog data.
