@@ -736,31 +736,56 @@
           "rating": 1,
           "name": "Praestantia •",
           "translatedName": "Praestantia •",
-          "summary": "Add Praestantia to Initiative and Dexterity pools; Vitae applies it as a weapon bonus or redirects a failed violent action."
+          "summary": "Add Praestantia to Initiative and Dexterity pools; Vitae applies it as a weapon bonus or redirects a failed violent action.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "Add one die to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds one as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened. A dramatic failure cannot be replaced unless another active effect first reduces it to a normal failure."
         },
         {
           "rating": 2,
           "name": "Praestantia ••",
           "translatedName": "Praestantia ••",
-          "summary": "Increase the persistent and active Praestantia bonuses to two dice."
+          "summary": "Increase the persistent and active Praestantia bonuses to two dice.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "Add two dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds two as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
         },
         {
           "rating": 3,
           "name": "Praestantia •••",
           "translatedName": "Praestantia •••",
-          "summary": "Increase the persistent and active Praestantia bonuses to three dice."
+          "summary": "Increase the persistent and active Praestantia bonuses to three dice.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "Add three dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds three as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
         },
         {
           "rating": 4,
           "name": "Praestantia ••••",
           "translatedName": "Praestantia ••••",
-          "summary": "Increase the persistent and active Praestantia bonuses to four dice."
+          "summary": "Increase the persistent and active Praestantia bonuses to four dice.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "Add four dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds four as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
         },
         {
           "rating": 5,
           "name": "Praestantia •••••",
           "translatedName": "Praestantia •••••",
-          "summary": "Increase the persistent and active Praestantia bonuses to five dice."
+          "summary": "Increase the persistent and active Praestantia bonuses to five dice.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "Add five dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds five as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
         }
       ]
     },
@@ -8290,7 +8315,9 @@
       "targetSuccesses": 10,
       "summary": "Animate nearby plants to attack intruders until sunrise.",
       "source": "Thousand Years of Night",
-      "page": 78
+      "page": 78,
+      "duration": "Until sunrise",
+      "effect": "Vitae soaked into the earth animates trees and large plants within Potency meters. They attack anyone in reach using Blood Potency for all pools, deal 1 bashing, have Durability 2 and no Willpower, and share a Vitae pool equal to the sacrifice as the ritualist chooses. They may spend one Vitae per turn to heal two Structure."
     },
     {
       "id": "cruac-manananggals-working",
@@ -8302,7 +8329,9 @@
       "targetSuccesses": 8,
       "summary": "Dismember yourself and animate the separated parts independently until sunrise.",
       "source": "Thousand Years of Night",
-      "page": 78
+      "page": 78,
+      "duration": "Until sunrise",
+      "effect": "The ritualist cuts off any number of body parts, which move independently and perform tasks. All sacrificed Vitae must be her own. At sunrise the parts return and reattach; a part unable to return bursts, dealing one bashing for a small part, two for a limb, or three for a vital part, then regrows within an hour. Missing useful parts impose appropriate Tilts, and removing much of the body may divide the Vitae pool among the pieces."
     },
     {
       "id": "cruac-scapegoat",
@@ -8315,7 +8344,9 @@
       "contestedBy": "Resolve",
       "summary": "Transfer breaking points and acquired banes to a mortal vessel for the night.",
       "source": "Thousand Years of Night",
-      "page": 78
+      "page": 78,
+      "duration": "Until sunrise",
+      "effect": "Feed the rite's Vitae to a mortal. The ritualist cannot risk detachment, suffer acquired banes, or gain Willpower from Touchstones; the mortal instead suffers those banes and rolls the breaking points with a one-die penalty. When the rite ends, the vampire gains Wanton and suffers −3 to breaking points until it resolves. The rite cannot be performed if the vampire is still immune to a repeated Wanton Condition gained from it that month."
     },
     {
       "id": "cruac-cheval",
@@ -9317,7 +9348,9 @@
       "sacrament": "Any bladed weapon",
       "summary": "Sever a vampire from a present Touchstone and temporarily steal that bond.",
       "source": "Thousand Years of Night",
-      "page": 79
+      "page": 79,
+      "duration": "Seven nights unless the Touchstone Merit is purchased",
+      "effect": "The subject must be present and be another vampire's Touchstone. Success severs that relationship with all normal consequences and makes the subject the ritualist's Touchstone at her current Humanity. The original vampire must rebuild the relationship from the beginning after the effect ends."
     },
     {
       "id": "theban-orison-voices",
@@ -9330,7 +9363,9 @@
       "sacrament": "Rosary beads",
       "summary": "For three nights, hear speech anywhere that invokes your name.",
       "source": "Thousand Years of Night",
-      "page": 79
+      "page": 79,
+      "duration": "Three nights",
+      "effect": "Whenever any voice anywhere speaks the ritualist's name, she hears it along with enough surrounding context to understand the speaker's intent."
     },
     {
       "id": "theban-sins-ancestors",
@@ -9343,7 +9378,8 @@
       "sacrament": "A quantity of the victim's blood",
       "summary": "Ask simple questions about members of the victim's blood lineage.",
       "source": "Thousand Years of Night",
-      "page": 79
+      "page": 79,
+      "effect": "Consecrate the subject's blood and ask simple questions equal to Potency about close blood relatives. For Kindred this includes vampires once or twice removed by blood sympathy and the direct sire/childe line; for mortals, relatives up to two degrees removed and the direct parent/child line. Direct mortal descendants of Kindred also count. Each answer must fit one short sentence; complex questions may consume several questions or be rejected."
     },
     {
       "id": "theban-blandishment-sin",
@@ -9992,31 +10028,36 @@
           "rating": 1,
           "name": "Forever Mine",
           "translatedName": "Forever Mine",
-          "summary": "Claim a domain occupied for a century and sense forbidden Kindred predation within it."
+          "summary": "Claim a domain occupied for a century and sense forbidden Kindred predation within it.",
+          "effect": "The Dragon automatically senses when another Kindred feeds or kills without permission in her domain, though not the offender's identity. She may lash out with Predatory Aura at any range and recognizes the transgressor on a later face-to-face meeting. If the domain is a Touchstone, she gains one Willpower for lashing out whether she wins or loses."
         },
         {
           "rating": 2,
           "name": "Home Turf",
           "translatedName": "Home Turf",
-          "summary": "Residents must spend Willpower to resist your feeding."
+          "summary": "Residents must spend Willpower to resist your feeding.",
+          "effect": "Any denizen of the Dragon's domain must spend one Willpower to resist her feeding actions. Minor Storyteller characters without Willpower cannot resist."
         },
         {
           "rating": 3,
           "name": "Smother",
           "translatedName": "Smother",
-          "summary": "Suppress natural fire and contest supernatural flames in the domain."
+          "summary": "Suppress natural fire and contest supernatural flames in the domain.",
+          "effect": "Natural fires near the Dragon count one step lower for both size and heat, and combustible objects take two turns to ignite. Within her domain, she adds one to Traits resisting supernatural fire or heat and +1 to contested rolls against them. She may reflexively spend three Vitae to Clash with a supernatural fire's creator; victory extinguishes it in a diameter equal to Blood Potency meters."
         },
         {
           "rating": 4,
           "name": "In the Motherland's Arms",
           "translatedName": "In the Motherland's Arms",
-          "summary": "Gain supernatural Safe Place and Haven protection while sleeping in the domain."
+          "summary": "Gain supernatural Safe Place and Haven protection while sleeping in the domain.",
+          "effect": "While sleeping or in torpor within the domain, the Dragon counts as having Haven and Safe Place dots equal to half Blood Potency. When she sleeps in a haven for which she owns the Merits, each is treated as one dot higher, even to six effective dots, whether or not that haven lies in her domain."
         },
         {
           "rating": 5,
           "name": "Fingers on a Dead Pulse",
           "translatedName": "Fingers on a Dead Pulse",
-          "summary": "Read residents' Vices and Conditions and receive domain-wide blood-sympathy visions."
+          "summary": "Read residents' Vices and Conditions and receive domain-wide blood-sympathy visions.",
+          "effect": "By spending one Vitae while interacting with a denizen, immediately learn their Vice and Conditions reflecting shameful secrets, such as Guilty, Leveraged, or Notoriety. Once per scene, observing a denizen regain Willpower from Vice also restores one Willpower to the Dragon. Major events provoking widespread emotion may trigger blood sympathy at the Storyteller's discretion."
         }
       ]
     },
@@ -10436,7 +10477,9 @@
       "source": "Thousand Years of Night",
       "page": 82,
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "procedure": "Collect at least five Vitae from one vampire per large neighborhood or district. Mix it with the Dragon's entire full Vitae pool and ground bones and rotten flesh from at least one corpse exhumed from every cemetery in the domain. Build a pyre near the domain's geographic center and ritually extinguish it with the mixture.",
+      "outcome": "For one year, every vampire who calls the domain home benefits from Smother while within its borders."
     },
     {
       "id": "scale-day-wake-conditioning",
