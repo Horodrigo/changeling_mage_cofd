@@ -426,6 +426,9 @@ test("Vampire sheet presents owned Coils and keeps all rituals under their Disci
   const mine = powers.devotions.find((item) => item.id === "devotion-what-s-mine-is-mine");
   assert.equal(mine.prerequisites, "Dominate •, Resilience •");
   assert.match(mine.effect, /twice her Blood Potency/);
+  assert.equal(powers.devotions.filter((item) => !item.bloodlineId && !item.prerequisites).length, 0);
+  assert.equal(powers.devotions.filter((item) => !item.bloodlineId && !item.effect).length, 0);
+  assert.ok(powers.devotions.find((item) => item.id === "devotion-aegis-defiance").effect.length > 300);
 });
 
 test("Vampire creation and editing persist the selected Covenant Discipline without losing XP advances", async () => {
@@ -464,7 +467,12 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   assert.match(source, /value === "rite" && cruacRating >= 1[\s\S]*value === "scale" && Math\.max/);
   assert.match(source, /levels: mechanicsDetails|details: mechanicsDetails\(definition\), levels/);
   assert.match(source, /add\(t\("ui\.prerequisites"\), item\.prerequisites/);
+  assert.match(source, /Boolean\(item\.prerequisites\) && vampireDisciplinePrerequisitesMet/);
+  assert.match(source, /category: item\.bloodlineId \? t\("sheet\.bloodline"\) : t\("ui\.generalDevotions"\)/);
   assert.match(source, /description: item\.effect \?\? item\.summary, descriptionAfterDetails: true/);
+  const css = await readFile(`${root}/app/css/globals.css`, "utf8");
+  assert.match(css, /\.experience-merit-catalog article > div > strong/);
+  assert.doesNotMatch(css, /\.experience-merit-catalog strong,/);
 });
 
 test("Vampire Experience refunds Kimiya and Therion without discarding later blood sorcery", async () => {
@@ -529,7 +537,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 10, "vampire-powers": 12, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 10, "vampire-powers": 13, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {

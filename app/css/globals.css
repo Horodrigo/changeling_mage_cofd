@@ -202,7 +202,7 @@
 .experience-merit-catalog { min-height:0; overflow-y:auto; display:grid; gap:8px; padding-right:4px; }
 .experience-merit-catalog article { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; padding:10px; border:1px solid #ddd5df; background:#fff; }
 .experience-merit-catalog article.selected { border-color:var(--sheet-accent); }
-.experience-merit-catalog strong, .experience-merit-catalog small { display:block; }.experience-merit-catalog small { color:#756d72; font-size:11px; }
+.experience-merit-catalog article > div > strong, .experience-merit-catalog article > div > small { display:block; }.experience-merit-catalog small { color:#756d72; font-size:11px; }
 .experience-merit-catalog p { margin:5px 0 0; font-size:11px; line-height:1.4; }
 .selectable-catalog-card { cursor:pointer; transition:border-color .16s ease,background-color .16s ease,box-shadow .16s ease,transform .16s ease; }
 .selectable-catalog-card:hover { border-color:color-mix(in srgb,var(--sheet-accent) 58%,#d8d2c8); }
