@@ -104,7 +104,7 @@ test("audited Vampire sourcebooks include their published rules text", async () 
       .filter(([key, value]) => key !== "disciplines" && Array.isArray(value))
       .flatMap(([, value]) => value.flatMap((item) => item.levels?.map((level) => ({ ...level, source: item.source })) ?? [item])),
   ];
-  for (const source of ["Better Feared: Nosferatu", "False Gods: Ventrue", "Sin Again: Daeva", "Strange Shades: Mekhet", "Wild Hunt: Gangrel", "Thousand Years of Night", "Night Horrors: Spilled Blood", "Dark Eras 2", "Dark Eras Companion", "Agony & Ecstasy: Circle of the Crone"]) {
+  for (const source of ["Better Feared: Nosferatu", "False Gods: Ventrue", "Sin Again: Daeva", "Strange Shades: Mekhet", "Wild Hunt: Gangrel", "Thousand Years of Night", "Night Horrors: Spilled Blood", "Dark Eras 2", "Dark Eras Companion", "Agony & Ecstasy: Circle of the Crone", "Changeling: The Lost Second Edition — The Hedge"]) {
     const sourceEntries = entries.filter((item) => item.source === source);
     assert.ok(sourceEntries.length > 0, source);
     assert.deepEqual(sourceEntries.filter((item) => !["effect", "procedure", "outcome", "rollResults"].some((field) => item[field])).map((item) => item.name), [], source);
@@ -588,7 +588,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 24, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 25, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {

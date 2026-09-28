@@ -8003,7 +8003,8 @@
       "targetSuccesses": 6,
       "summary": "Grow plants into an archway that opens into the Hedge.",
       "source": "Changeling: The Lost Second Edition — The Hedge",
-      "page": 34
+      "page": 34,
+      "effect": "The vampire feeds plants with Vitae until they grow into an arch through which one of the Kindred can pass into the Hedge."
     },
     {
       "id": "cruac-clothos-skein",
