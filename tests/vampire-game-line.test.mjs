@@ -113,6 +113,16 @@ test("audited Vampire sourcebooks include their published rules text", async () 
   assert.equal(powers.thebanMiracles.some((item) => item.name === "The Kingdom of Heaven"), false);
 });
 
+test("Vampire Devotions keep published roll results out of Effect", async () => {
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const embeddedResult = /Roll Results|(?:^|\s)(?:Success|Exceptional Success|Failure|Dramatic Failure):/;
+  assert.deepEqual(powers.devotions.filter((item) => embeddedResult.test(item.effect ?? "")).map((item) => item.name), []);
+  assert.equal(powers.devotions.find((item) => item.name === "It's Who You Know").rollResults.success.startsWith("For each success"), true);
+  assert.deepEqual(Object.keys(powers.devotions.find((item) => item.name === "Re: Search").rollResults), ["success", "exceptionalSuccess", "failure", "dramaticFailure"]);
+  assert.equal(powers.devotions.find((item) => item.name === "Tordenvaer").effect, undefined);
+  assert.equal(powers.devotions.find((item) => item.name === "Summoning (Dominate)").suggestedModifiers.length, 5);
+});
+
 test("Vampire core p. 101 exposes Retainer(Ghoul) without changing Core Retainer", async () => {
   const vampireMerits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
   const coreMerits = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
@@ -445,7 +455,7 @@ test("Vampire sheet presents owned Coils and keeps all rituals under their Disci
   assert.equal(mine.prerequisites, "Dominate •, Resilience •");
   assert.match(mine.effect, /twice her Blood Potency/);
   assert.equal(powers.devotions.filter((item) => !item.bloodlineId && !item.prerequisites).length, 0);
-  assert.equal(powers.devotions.filter((item) => !item.bloodlineId && !item.effect).length, 0);
+  assert.equal(powers.devotions.filter((item) => !item.bloodlineId && !["effect", "procedure", "outcome", "rollResults"].some((field) => item[field])).length, 0);
   assert.ok(powers.devotions.find((item) => item.id === "devotion-aegis-defiance").effect.length > 300);
 });
 
@@ -588,7 +598,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 25, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 26, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {
