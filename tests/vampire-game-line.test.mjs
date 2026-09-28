@@ -82,10 +82,10 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 355);
+  assert.equal(powers.devotions.length, 356);
   assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);
-  assert.equal(powers.thebanMiracles.length, 33);
+  assert.equal(powers.thebanMiracles.length, 32);
   assert.equal(powers.kimiyaFormulae.length, 5);
   assert.equal(powers.therionSacrileges.length, 7);
   assert.equal(powers.gildedInvocations.length, 10);
@@ -94,6 +94,20 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.equal(powers.scales.length, 19);
   assert.ok(powers.coils.every((item) => item.levels.length === 5));
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
+});
+
+test("Better Feared powers include their published rules text", async () => {
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const entries = [
+    ...powers.disciplines.flatMap((item) => item.levels.map((level) => ({ ...level, source: item.source }))),
+    ...Object.entries(powers)
+      .filter(([key, value]) => key !== "disciplines" && Array.isArray(value))
+      .flatMap(([, value]) => value.flatMap((item) => item.levels?.map((level) => ({ ...level, source: item.source })) ?? [item])),
+  ].filter((item) => item.source === "Better Feared: Nosferatu");
+  assert.ok(entries.length > 0);
+  assert.deepEqual(entries.filter((item) => !["effect", "procedure", "outcome", "rollResults"].some((field) => item[field])).map((item) => item.name), []);
+  assert.equal(powers.devotions.some((item) => item.name === "Kingdom of Heaven"), true);
+  assert.equal(powers.thebanMiracles.some((item) => item.name === "The Kingdom of Heaven"), false);
 });
 
 test("Vampire core p. 101 exposes Retainer(Ghoul) without changing Core Retainer", async () => {
@@ -571,7 +585,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 14, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 15, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {

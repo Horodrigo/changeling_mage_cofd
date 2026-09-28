@@ -14,6 +14,7 @@
           "name": "The Lidless Eye",
           "translatedName": "The Lidless Eye",
           "summary": "The Lidless Eye, the 1-dot expression of Truths of Erebus.",
+          "effect": "The vampire can see perfectly in total darkness, ignoring all situational penalties and Tilts such as Blinded. Nothing can obscure her sight, even the destruction of her eyes. She also adds her Truths of Erebus dots to Blood Potency for the purposes of Kindred Senses while moving through darkness.",
           "manualOnly": true
         },
         {
@@ -21,6 +22,7 @@
           "name": "The Nocturnal Bounty",
           "translatedName": "The Nocturnal Bounty",
           "summary": "The Nocturnal Bounty, the 2-dot expression of Truths of Erebus.",
+          "effect": "If the vampire rests sealed away from all light, he does not spend Vitae to awaken at the next dusk. While he occupies total darkness, he may also benefit from the Blush of Life. If he does not drink from a living or Kindred vessel at least once a week, he loses access to this effect until he feeds again.",
           "manualOnly": true
         },
         {
@@ -28,6 +30,7 @@
           "name": "The Dreaming Darkness",
           "translatedName": "The Dreaming Darkness",
           "summary": "The Dreaming Darkness, the 3-dot expression of Truths of Erebus.",
+          "effect": "When the vampire rests in total darkness, he experiences true sleep and regains one spent Willpower after a full day's rest. Lygos at this level sometimes receive prophetic dreams from the Dwellers Below, at the Storyteller's discretion.",
           "manualOnly": true
         },
         {
@@ -35,6 +38,7 @@
           "name": "The Caress of Gloom",
           "translatedName": "The Caress of Gloom",
           "summary": "The Caress of Gloom, the 4-dot expression of Truths of Erebus.",
+          "effect": "While the vampire's body remains in total darkness, she heals bashing damage at the same rate as a living person. Exposure to light resets the healing time.",
           "manualOnly": true
         },
         {
@@ -42,6 +46,7 @@
           "name": "The Welcoming Void",
           "translatedName": "The Welcoming Void",
           "summary": "The Welcoming Void, the 5-dot expression of Truths of Erebus.",
+          "effect": "While moving through total darkness or deep shadow, the vampire's mass and Size become suggestions. She can pass through any gap larger than one square inch, cannot be restrained conventionally (attempts to initiate a grapple automatically fail), and ignores Environmental Tilts that impede movement or agility. Direct illumination returns her body to its normal form.",
           "manualOnly": true
         }
       ]
@@ -1678,12 +1683,31 @@
       "bloodlineId": "gethsemani",
       "experienceCost": 1,
       "prerequisites": "Majesty ••, Resilience •",
+      "cost": "1 Vitae",
+      "requirement": "The vampire must inflict the Charmed Condition on the victim within the same scene.",
+      "dicePool": "None",
+      "action": "Reflexive",
+      "duration": "While the Charmed Condition lasts",
+      "effect": "The victim treats the vampire's opinions, arguments, and beliefs as intrinsically true and cannot be convinced otherwise. Attempts to persuade the victim that the vampire lied suffer a penalty equal to the vampire's Majesty dots; halve this penalty, rounding up, when the victim is shown direct evidence such as photographs or video."
+    },
+    {
+      "id": "devotion-kingdom-of-heaven",
+      "kind": "devotion",
+      "name": "Kingdom of Heaven",
+      "translatedName": "Kingdom of Heaven",
+      "summary": "Extends selected Majesty powers across every witness inside the vampire's Oubliette.",
+      "source": "Better Feared: Nosferatu",
+      "page": 42,
+      "manualOnly": true,
+      "bloodlineId": "gethsemani",
+      "experienceCost": 5,
+      "prerequisites": "Majesty •••••, Obfuscate •••••",
       "cost": "1 Willpower",
       "requirement": "The vampire must be within his Oubliette when activating this Devotion.",
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire imbues his Oubliette with the raw force of his faith and charisma, allowing him free reign to use Majesty powers that usually only effect a single victim across crowds of stunned onlookers. The vampire can use Confidant, Green Eyes, Loyalty, and Iron Dogma on groups of people as long as each victim can hear and see him, and is wholly within his Oubliette. A group of humans resists with the highest appropriate Resistance Attribute in the group, but any Kindred present get separate rolls. When using Green Eyes, Iron Dogma, or Loyalty on a group within the Oubliette, the vampire only needs to pay the Vitae costs once per activation, no matter how many people he wants to influence."
+      "effect": "The vampire can use Confidant, Green Eyes, Loyalty, and Iron Dogma on groups, provided every victim can see and hear him and is wholly within his Oubliette. A group of humans resists using the highest appropriate Resistance Attribute among them; each Kindred present rolls separately. Green Eyes, Iron Dogma, and Loyalty require their Vitae cost only once per activation, regardless of the number of targets."
     },
     {
       "id": "devotion-master-of-the-maze",
@@ -1714,7 +1738,10 @@
       "page": 53,
       "manualOnly": true,
       "bloodlineId": "lygos",
-      "category": "Lessons of Erebus"
+      "category": "Lessons of Erebus",
+      "prerequisites": "The Nocturnal Bounty",
+      "procedure": "Working in total darkness, the Lygos opens a Kindred subject's abdomen and removes several internal organs. The procedure takes one hour and inflicts two lethal damage, or two hours without damage. Performing it on oneself requires Resolve + Stamina; failure prevents another attempt until the next night.",
+      "outcome": "For the rest of the night, or until the subject expels it as an instant action, the subject carries true darkness. The expelled cloud extinguishes every light source except fire and sunlight within nine meters for minutes equal to the Lygos' Blood Potency; those lights cannot be reignited during that time."
     },
     {
       "id": "devotion-denial-of-the-enemy",
@@ -1726,7 +1753,10 @@
       "page": 53,
       "manualOnly": true,
       "bloodlineId": "lygos",
-      "category": "Lessons of Erebus"
+      "category": "Lessons of Erebus",
+      "prerequisites": "The Lidless Eye",
+      "procedure": "The Lygos smears one Vitae over the subject's eyes and buries the subject at least two meters underground in a light-proof container for one to six hours while chanting. The Vitae must remain in place. At the end, the Lygos unearths the subject and ritually snuffs a candle.",
+      "outcome": "For as many hours as the subject was buried, ordinary light avoids them. Fire and sunlight are unaffected. The subject cannot be seen or detected by light-gathering technology, though other senses work normally. Supernaturally keen sight triggers a Clash of Wills against Truths of Erebus + Blood Potency. Auspex does not bypass the effect, and the subject cannot end it early."
     },
     {
       "id": "devotion-heart-of-darkness",
@@ -1738,7 +1768,10 @@
       "page": 54,
       "manualOnly": true,
       "bloodlineId": "lygos",
-      "category": "Lessons of Erebus"
+      "category": "Lessons of Erebus",
+      "prerequisites": "The Welcoming Void",
+      "procedure": "In a pitch-black room, the Lygos opens a Kindred subject's ribcage, inflicting one lethal damage, paints the exposed heart with ash and blood, and seals the wound. The coating and Lesson last 24 hours. A Lygos cannot perform this Lesson on himself.",
+      "outcome": "The subject's next breaking point during the Lesson automatically succeeds with one success. After the Heart absorbs the sin, the subject is detached from their highest Touchstone for the following night."
     },
     {
       "id": "devotion-bloody-good-flick",
@@ -7672,7 +7705,9 @@
       "page": 63,
       "manualOnly": true,
       "rating": 1,
-      "bloodlineId": "yagnatia"
+      "bloodlineId": "yagnatia",
+      "targetSuccesses": 4,
+      "effect": "The ritualist spreads the sacrifice over her face and enters daysleep. At the next dusk it has become an ectoplasmic mask resembling someone important to her current schemes. Intelligence + Occult interprets the omen; on success she may ask yes/no/maybe questions equal to the rite's Potency. If she knows Auspex, she may use The Spirit's Touch once that night to ask questions from Uncanny Perception. Wearing the caul grants +3 to Investigation rolls to identify or locate its subject. It turns to ash at night's end."
     },
     {
       "id": "cruac-rite-awaken-the-dukh",
@@ -7684,7 +7719,10 @@
       "page": 64,
       "manualOnly": true,
       "rating": 4,
-      "bloodlineId": "yagnatia"
+      "bloodlineId": "yagnatia",
+      "targetSuccesses": 9,
+      "duration": "One week",
+      "effect": "The vampire bargains with the spirit of an object no larger than Size 5. The spirit gains limited control of its physical form, allowing simple tasks and movement, with a dice pool of Crúac + Size + Potency. The Storyteller decides which actions are possible. An appropriate oblation renews the pact before it expires. The spirit is not compelled to obey, but spattering the object with Vitae ends the rite early and returns it to the Shadow."
     },
     {
       "id": "cruac-rite-divine-right",
@@ -7696,7 +7734,9 @@
       "page": 64,
       "manualOnly": true,
       "rating": 2,
-      "bloodlineId": "yagnatia"
+      "bloodlineId": "yagnatia",
+      "targetSuccesses": 5,
+      "effect": "Before the end of the night, the vampire may invoke this blessing when someone openly questions or defies her authority. That action automatically fails and the challenger gains the Guilty Condition. The rite applies a number of times equal to Potency, then ends."
     },
     {
       "id": "cruac-rite-hawthorn-barrier",
@@ -7708,7 +7748,10 @@
       "page": 64,
       "manualOnly": true,
       "rating": 3,
-      "bloodlineId": "yagnatia"
+      "bloodlineId": "yagnatia",
+      "targetSuccesses": 7,
+      "duration": "24 hours",
+      "effect": "Hawthorn branches placed across an aperture create an invisible Essence ward. Without the vampire's permission, mortals cannot cross; Kindred must roll Resolve + Blood Potency, penalized by the rite's Potency. Failure requires resisting fear frenzy. A Kindred who succeeds and crosses without permission takes lethal damage equal to the Boyar's Crúac dots. One casting can ward multiple apertures within line of sight if enough branches are available. Branches from mandragora grant 9-again to the casting roll."
     },
     {
       "id": "cruac-rite-the-mother-s-blessing",
@@ -7720,7 +7763,10 @@
       "page": 64,
       "manualOnly": true,
       "rating": 3,
-      "bloodlineId": "yagnatia"
+      "bloodlineId": "yagnatia",
+      "targetSuccesses": 8,
+      "duration": "24 hours or one Embrace",
+      "effect": "The subject's next childe begins with a first-stage blood bond to the sire that lasts until the sire releases her, but remains immune to the sire's full Vinculum and to any other Yagnatia's blood bond during that tutelage. The childe gains 8-again to rolls to initiate or detect blood sympathy with Yagnatia. The blessing applies to one Embrace, can affect a vampire only once per lunar month, cannot be cast on oneself, and only works on Boyars."
     },
     {
       "id": "cruac-rite-vessel-of-the-dukh",
@@ -7732,7 +7778,10 @@
       "page": 64,
       "manualOnly": true,
       "rating": 5,
-      "bloodlineId": "yagnatia"
+      "bloodlineId": "yagnatia",
+      "targetSuccesses": 9,
+      "duration": "One month",
+      "effect": "Using a human corpse no more than one night dead, the ritualist creates a Brief Nightmare. A Minion needs no extra successes, a Horde needs three, and a Lone Terror needs five; the extended action's normal roll limit still applies. The Storyteller chooses suitable Dread Powers, excluding Firestarter. The Horror is vulnerable to fire like a Kindred, animalistic but loyal, and regains Willpower by drinking Vitae or human blood. Recasting before expiration and paying all costs renews it. Creating a new Horror is a breaking point at Humanity 2 or higher."
     },
     {
       "id": "cruac-red-blossoms",
@@ -8820,7 +8869,11 @@
       "page": 41,
       "manualOnly": true,
       "rating": 3,
-      "bloodlineId": "gethsemani"
+      "bloodlineId": "gethsemani",
+      "targetSuccesses": 6,
+      "contestedBy": "Resolve + Blood Potency",
+      "sacrament": "A physical likeness of the victim, such as a photograph or artistic rendering",
+      "effect": "A victim within one mile loudly proclaims what they consider their sins for turns equal to the ritualist's Theban Sorcery dots. The victim cannot stop confessing, though they may flee from witnesses or otherwise limit who hears them."
     },
     {
       "id": "theban-miracle-crown-of-thorns",
@@ -8832,7 +8885,12 @@
       "page": 41,
       "manualOnly": true,
       "rating": 1,
-      "bloodlineId": "gethsemani"
+      "bloodlineId": "gethsemani",
+      "targetSuccesses": 5,
+      "resistedBy": "Stamina",
+      "sacrament": "A sprig of thorns, swallowed by the ritualist",
+      "duration": "One scene",
+      "effect": "A victim within one mile takes one bashing damage as a ring of bony thorns erupts from their skull. While the thorns remain, the victim suffers a penalty equal to Potency on Social actions, and many mundane interactions may be impossible. After a scene the thorns recede, leaving gruesome scars for nights equal to the ritualist's Theban Sorcery dots; pious or superstitious witnesses react unfavorably."
     },
     {
       "id": "theban-miracle-holy-visions",
@@ -8844,7 +8902,11 @@
       "page": 41,
       "manualOnly": true,
       "rating": 2,
-      "bloodlineId": "gethsemani"
+      "bloodlineId": "gethsemani",
+      "targetSuccesses": 4,
+      "contestedBy": "Resolve + Blood Potency",
+      "sacrament": "A mirror smeared with the victim's blood",
+      "effect": "After preparing the miracle, the vampire activates it by touching the intended victim before night's end. The victim suffers the Insensate Tilt for turns equal to the ritualist's Theban Sorcery dots while experiencing a rapturous vision around a simple theme chosen by the ritualist. When it ends, the victim gains Inspired regarding that theme."
     },
     {
       "id": "theban-miracle-rain-of-blood",
@@ -8856,7 +8918,11 @@
       "page": 41,
       "manualOnly": true,
       "rating": 4,
-      "bloodlineId": "gethsemani"
+      "bloodlineId": "gethsemani",
+      "targetSuccesses": 11,
+      "sacrament": "A single ruby of any size or cut",
+      "duration": "One scene",
+      "effect": "A storm of corrosive blood fills a radius of up to 40 meters and imposes the Heavy Rain Tilt. Allies anointed with the sign of the cross before casting are immune. Anyone else exposed takes one lethal damage each turn; only full cover prevents it. Mortals reflexively roll Stamina + Composure or suffer the moderate Sick Tilt until they escape. The rain may provoke hunger frenzy but cannot be consumed as Vitae. The ritualist may end the miracle early with an instant action."
     },
     {
       "id": "theban-miracle-stigmatic-feast",
@@ -8868,19 +8934,11 @@
       "page": 42,
       "manualOnly": true,
       "rating": 5,
-      "bloodlineId": "gethsemani"
-    },
-    {
-      "id": "theban-miracle-the-kingdom-of-heaven",
-      "kind": "theban-miracle",
-      "name": "The Kingdom of Heaven",
-      "translatedName": "The Kingdom of Heaven",
-      "summary": "A Gethsemani Theban Miracle of holy terror and supernatural stigmata.",
-      "source": "Better Feared: Nosferatu",
-      "page": 42,
-      "manualOnly": true,
-      "rating": 5,
-      "bloodlineId": "gethsemani"
+      "bloodlineId": "gethsemani",
+      "targetSuccesses": 8,
+      "resistedBy": "Stamina",
+      "sacrament": "A crown of thorns woven by the ritualist and placed on the subject's head",
+      "effect": "A present subject suffers stigmatic wounds for turns equal to Potency, bleeding one Vitae per turn; mortal subjects also take lethal damage from blood loss. Anyone who consumes Vitae shed this way gains one dot in a chosen Physical Attribute, including corresponding derived traits, until sunrise. If the Attribute would exceed the cap from Blood Potency, the drinker instead gains one Willpower. Kindred blood still risks Vitae addiction and the Vinculum."
     },
     {
       "id": "theban-trials-job",
