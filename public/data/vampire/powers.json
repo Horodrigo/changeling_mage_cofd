@@ -377,91 +377,125 @@
           "rating": 1,
           "name": "Animal Magnetism",
           "translatedName": "Animal Magnetism",
-          "summary": "Add Triadic Evolution to mundane Expression, Persuasion, and Socialize for an hour."
+        "summary": "Add Triadic Evolution to mundane Expression, Persuasion, and Socialize for an hour.",
+        "cost": "1 Willpower",
+        "dicePool": "Stamina + Occult + Triadic Evolution",
+        "action": "Extended (maximum rolls equal to unmodified pool; 30 minutes per roll)",
+        "targetSuccesses": 5,
+        "duration": "One hour",
+        "effect": "Add Triadic Evolution dots to mundane Expression, Persuasion, and Socialize actions."
         },
         {
           "rating": 1,
           "name": "Don't Look It in the Eye",
           "translatedName": "Don't Look It in the Eye",
-          "summary": "Add Triadic Evolution to mundane Animal Ken, Intimidation, and Streetwise for an hour."
+        "summary": "Add Triadic Evolution to mundane Animal Ken, Intimidation, and Streetwise for an hour.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 5, "duration": "One hour",
+        "effect": "Add Triadic Evolution dots to mundane Animal Ken, Intimidation, and Streetwise actions."
         },
         {
           "rating": 2,
           "name": "Camouflage",
           "translatedName": "Camouflage",
-          "summary": "Become invisible while motionless for an hour."
+        "summary": "Become invisible while motionless for an hour.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 6, "duration": "One hour",
+        "effect": "While perfectly still and taking no actions, blend into the surroundings and cannot be seen."
         },
         {
           "rating": 2,
           "name": "Cover Your Tracks",
           "translatedName": "Cover Your Tracks",
-          "summary": "Leave no scent for several nights."
+        "summary": "Leave no scent for several nights.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 5, "duration": "Nights equal to Triadic Evolution",
+        "effect": "The Claimed leaves no scent."
         },
         {
           "rating": 2,
           "name": "Merely a Flesh Wound",
           "translatedName": "Merely a Flesh Wound",
-          "summary": "Ignore wound penalties for several scenes."
+        "summary": "Ignore wound penalties for several scenes.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 6, "duration": "Scenes equal to Triadic Evolution",
+        "effect": "Ignore all wound penalties."
         },
         {
           "rating": 2,
           "name": "Sprint",
           "translatedName": "Sprint",
-          "summary": "Add Triadic Evolution to Speed and noncombat Athletics for an hour."
+        "summary": "Add Triadic Evolution to Speed and noncombat Athletics for an hour.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 6, "duration": "One hour",
+        "effect": "Add Triadic Evolution dots to running Speed and noncombat physical maneuvers using Athletics. This never adds to Defense."
         },
         {
           "rating": 3,
           "name": "Acidic Blood",
           "translatedName": "Acidic Blood",
-          "summary": "Your blood grants no Vitae and inflicts lethal damage until sunrise."
+        "summary": "Your blood grants no Vitae and inflicts lethal damage until sunrise.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 7, "duration": "Until sunrise",
+        "effect": "Vampires and Strix drinking the Claimed's blood gain no Vitae and take one lethal damage per Vitae consumed. Mortals and ghouls who drink it take two lethal damage. Blood outside the Claimed's body is not venomous."
         },
         {
           "rating": 3,
           "name": "Fight or Flight",
           "translatedName": "Fight or Flight",
-          "summary": "Become immune to ambush for an hour."
+        "summary": "Become immune to ambush for an hour.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 7, "duration": "One hour",
+        "effect": "The Claimed cannot be surprised; actions initiated against him otherwise function normally."
         },
         {
           "rating": 3,
           "name": "Perfect Ambush",
           "translatedName": "Perfect Ambush",
-          "summary": "Add Triadic Evolution to establish surprise for an hour."
+        "summary": "Add Triadic Evolution to establish surprise for an hour.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 7, "duration": "One hour",
+        "effect": "Add Triadic Evolution dots to Dexterity + Stealth rolls made to establish surprise."
         },
         {
           "rating": 3,
           "name": "Trophy",
           "translatedName": "Trophy",
-          "summary": "Preserve a body part from a destroyed vampire for years."
+        "summary": "Preserve a body part from a destroyed vampire for years.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 7, "duration": "Years equal to Triadic Evolution",
+        "effect": "Preserve one Size 1 body part from a destroyed Kindred instead of allowing it to crumble to ash."
         },
         {
           "rating": 4,
           "name": "Instinctual Conversation",
           "translatedName": "Instinctual Conversation",
-          "summary": "Telepathically communicate with anyone bearing a Bestial Condition."
+        "summary": "Telepathically communicate with anyone bearing a Bestial Condition.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 8, "contestedBy": "Composure + Blood Potency",
+        "effect": "Maintain line-of-sight telepathy with a target who currently has a Bestial Condition, sending and receiving thoughts as images."
         },
         {
           "rating": 4,
           "name": "Riding the Man",
           "translatedName": "Riding the Man",
-          "summary": "Add Triadic Evolution to one Intelligence or Wits roll."
+        "summary": "Add Triadic Evolution to one Intelligence or Wits roll.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 8, "duration": "One hour",
+        "effect": "Add Triadic Evolution dots to one Intelligence or Wits roll. This never adds to Defense."
         },
         {
           "rating": 4,
           "name": "Survive",
           "translatedName": "Survive",
-          "summary": "Add Triadic Evolution to Defense while taking no offensive action."
+        "summary": "Add Triadic Evolution to Defense while taking no offensive action.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 8, "duration": "Scenes equal to Triadic Evolution",
+        "effect": "Add Triadic Evolution dots to Defense as long as the Claimed takes no offensive action against anyone."
         },
         {
           "rating": 5,
           "name": "Enter the Zone",
           "translatedName": "Enter the Zone",
-          "summary": "Gain the benefits of frenzy for up to an hour."
+        "summary": "Gain the benefits of frenzy for up to an hour.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 10, "duration": "Five scenes or one hour, whichever ends first",
+        "effect": "Gain the benefits of frenzy without frenzying: add Blood Potency to Strength, Dexterity, and Stamina rolls and resistances; ignore wound penalties; and grapple and bite as one instant action, dealing the grapple successes as lethal damage and immediately taking one Vitae."
         },
         {
           "rating": 5,
           "name": "Hounds to the Hunters",
           "translatedName": "Hounds to the Hunters",
-          "summary": "Track a recent scent trail through supernatural concealment."
+        "summary": "Track a recent scent trail through supernatural concealment.",
+        "cost": "1 Willpower", "dicePool": "Stamina + Occult + Triadic Evolution", "action": "Extended", "targetSuccesses": 10, "contestedBy": "Composure + Blood Potency",
+        "effect": "Track a chosen target by scent regardless of condition or supernatural concealment, without a Clash of Wills. The target must have been in the area within five nights."
         }
       ]
     },
@@ -480,31 +514,41 @@
           "rating": 1,
           "name": "Vitiate •",
           "translatedName": "Vitiate •",
-          "summary": "Close contact penalizes the subject's next Physical action; Vitae strips Initiative or inflicts a temporary impairment."
+        "summary": "Close contact penalizes the subject's next Physical action; Vitae strips Initiative or inflicts a temporary impairment.",
+        "cost": "None (persistent) or 1 Vitae per active effect", "dicePool": "None", "action": "None (persistent) or reflexive (active)", "duration": "Permanent (persistent) or one turn (active)",
+        "effect": "Anyone touching or closely engaging the vampire suffers −1 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of dealing damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for one turn, or send the victim to the end of Initiative; afterward they reroll Initiative with −1. Outside combat, one turn of touch can inflict a Tilt. Only one such Tilt may affect a victim at once."
         },
         {
           "rating": 2,
           "name": "Vitiate ••",
           "translatedName": "Vitiate ••",
-          "summary": "Increase Vitiate's persistent penalty and active reach."
+        "summary": "Increase Vitiate's persistent penalty and active duration.",
+        "cost": "None (persistent) or 1 Vitae per active effect", "dicePool": "None", "action": "None (persistent) or reflexive (active)", "duration": "Permanent (persistent) or one turn (active)",
+        "effect": "Anyone touching or closely engaging the vampire suffers −2 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for two turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −2. Celerity may negate the Initiative effect through a Clash of Wills."
         },
         {
           "rating": 3,
           "name": "Vitiate •••",
           "translatedName": "Vitiate •••",
-          "summary": "Increase Vitiate's persistent penalty and active reach."
+        "summary": "Increase Vitiate's persistent penalty and active duration.",
+        "cost": "None (persistent) or 1 Vitae per active effect", "dicePool": "None", "action": "None (persistent) or reflexive (active)", "duration": "Permanent (persistent) or one turn (active)",
+        "effect": "Anyone touching or closely engaging the vampire suffers −3 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for three turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −3. Celerity may negate the Initiative effect through a Clash of Wills."
         },
         {
           "rating": 4,
           "name": "Vitiate ••••",
           "translatedName": "Vitiate ••••",
-          "summary": "Increase Vitiate's persistent penalty and active reach."
+        "summary": "Increase Vitiate's persistent penalty and active duration.",
+        "cost": "None (persistent) or 1 Vitae per active effect", "dicePool": "None", "action": "None (persistent) or reflexive (active)", "duration": "Permanent (persistent) or one turn (active)",
+        "effect": "Anyone touching or closely engaging the vampire suffers −4 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for four turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −4. Celerity may negate the Initiative effect through a Clash of Wills."
         },
         {
           "rating": 5,
           "name": "Vitiate •••••",
           "translatedName": "Vitiate •••••",
-          "summary": "Increase Vitiate's persistent penalty and active reach."
+        "summary": "Increase Vitiate's persistent penalty and active duration.",
+        "cost": "None (persistent) or 1 Vitae per active effect", "dicePool": "None", "action": "None (persistent) or reflexive (active)", "duration": "Permanent (persistent) or one turn (active)",
+        "effect": "Anyone touching or closely engaging the vampire suffers −5 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for five turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −5. Celerity may negate the Initiative effect through a Clash of Wills."
         }
       ]
     },
@@ -7960,7 +8004,8 @@
       "contestedBy": "Resolve + Supernatural Tolerance",
       "summary": "Dreamwalk through daysleep connections to implant a suggestion.",
       "source": "Night Horrors: Spilled Blood",
-      "page": 40
+      "page": 40,
+      "effect": "The next time the ritualist rests, her mind remains aware and perceives the dream-threads of every Kindred within one mile. She may designate one target during casting, making that thread obvious, or choose later from vague dream impressions. Success implants one thought or idea: a goal or a changed opinion. It cannot compel self-harm, though it may provoke violence against others, and the target pursues it in their own customary way."
     },
     {
       "id": "cruac-sanguine-augur",
@@ -7972,7 +8017,8 @@
       "targetSuccesses": 6,
       "summary": "Dream cryptic revelations about the last vessel you fed from.",
       "source": "Night Horrors: Spilled Blood",
-      "page": 40
+      "page": 40,
+      "effect": "At the next daysleep, receive a cryptic vision revealing one previously unknown fact about the most recent vessel. Each additional Vitae spent either reveals another fact or makes the original vision less cryptic, never both. For Kindred this may reveal Touchstones, bloodline, Merits, or lineage back a number of generations equal to Crúac; for mortals it may reveal life details or Vinculum strength."
     },
     {
       "id": "cruac-wisdom-blood",
@@ -7984,7 +8030,8 @@
       "targetSuccesses": 6,
       "summary": "Read prophecies about a subject in a torpid vampire's dreams.",
       "source": "Night Horrors: Spilled Blood",
-      "page": 40
+      "page": 40,
+      "effect": "Using a torpid vampire as a medium, ask one question per Vitae spent and receive a brief, truthful prophecy through the target's dreams. Answers remain fleeting and symbolic and may reflect the target's biases; yes-or-no wording does not make them clearer."
     },
     {
       "id": "cruac-donning-beasts-flesh",
@@ -10365,7 +10412,9 @@
       "source": "Night Horrors: Spilled Blood",
       "page": 101,
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "procedure": "Sleep through the night and spend the entire following day under Blush of Life. Repeat this procedure for every use.",
+      "outcome": "While using Spirit Tether, reach into a sleeping mortal's recent memories and learn anything desired about their own experiences during the previous 24 hours. The memories are colored by the mortal's emotions."
     },
     {
       "id": "scale-command-mind",
@@ -10378,7 +10427,9 @@
       "source": "Night Horrors: Spilled Blood",
       "page": 101,
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "procedure": "While tethered, Embrace the vampire's own body by spending one permanent Willpower dot and one Vitae, imbuing it with the spirit's ability to absorb energy.",
+      "outcome": "While in direct skin-to-skin contact with a sapient being, spend Vitae to drain Willpower equal to half Blood Potency, rounded down, minimum one, per Vitae spent."
     },
     {
       "id": "scale-psychic-leech",
@@ -10391,7 +10442,9 @@
       "source": "Night Horrors: Spilled Blood",
       "page": 101,
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "procedure": "Anoint at least one place or person per Blood Potency dot with the vampire's Vitae, then use Spirit Tether and revisit each point to draw the energy back. Vitae used for ghouls or blood bonds counts only if given on the same night.",
+      "outcome": "While tethered, Vitae glows red to the vampire's senses. Spend one Willpower to drain up to Blood Potency Vitae from a target and feed herself. A target driven into starvation must resist frenzy."
     },
     {
       "id": "scale-spirit-tether",
@@ -10404,7 +10457,9 @@
       "source": "Night Horrors: Spilled Blood",
       "page": 101,
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "procedure": "Concoct and ingest or inject a mixture of hallucinogens and Vitae, repeatedly entering a near-torpid state while keeping the mind aware.",
+      "outcome": "Gain the effects of Twilight Projection (Auspex •••••). While projected through Spirit Tether, the vampire may use the other Scales derived from it."
     },
     {
       "id": "scale-grafting-unholy-flesh",
