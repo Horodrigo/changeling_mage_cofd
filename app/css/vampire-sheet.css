@@ -6,7 +6,8 @@
 
 .vtr-card .character-line-icon { background:#d9babc; }
 
-.line-theme-vtr {
+.line-theme-vtr,
+body:has(.line-theme-vtr) {
   --primary:#742d31;
   --secondary:#eadcda;
   --secondary-foreground:#552126;
@@ -616,6 +617,7 @@
 .bloodline-discipline-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
 .bloodline-discipline-list span { border: 1px solid var(--vtr-rule); background: #fff; padding: 5px 8px; color: var(--vtr-ink); font-size: 12px; }
 .bloodline-bane-card { border-left: 4px solid var(--vtr-ink) !important; }
+.vtr-sheet .entitlement-title [data-slot="button"] { min-height:30px; height:30px; border-radius:2px; padding:5px 10px; font:12px/1 Georgia,"Times New Roman",serif; }
 
 .vtr-dialog {
   --sheet-accent: #4d171c;

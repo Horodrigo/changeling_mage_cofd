@@ -1,7 +1,8 @@
 /* Vampire interaction layer: dialogs, Humanity/Detachment, Banes and builder selectors. */
 
-.vtr-dialog,
-body:has(.line-theme-vtr) .experience-dialog {
+:is(.vtr-dialog, body:has(.line-theme-vtr) [data-slot="dialog-content"], body:has(.line-theme-vtr) [data-slot="alert-dialog-content"]) {
+  --sheet-accent: #4d171c;
+  --sheet-ink: #4d171c;
   border-color: rgba(77, 23, 28, .52) !important;
   border-radius: 0 !important;
   background: rgba(238, 229, 219, .99) !important;
@@ -10,36 +11,25 @@ body:has(.line-theme-vtr) .experience-dialog {
   box-shadow: 0 20px 55px rgba(53, 16, 20, .28) !important;
 }
 
-.vtr-dialog [data-slot="dialog-title"],
-.vtr-dialog strong,
-body:has(.line-theme-vtr) .experience-dialog [data-slot="dialog-title"],
-body:has(.line-theme-vtr) .experience-dialog strong {
+:is(.vtr-dialog, body:has(.line-theme-vtr) [data-slot="dialog-content"], body:has(.line-theme-vtr) [data-slot="alert-dialog-content"]) :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong) {
   color: #4d171c;
 }
 
-.vtr-dialog input,
-.vtr-dialog button,
-.vtr-dialog [data-slot="select-trigger"],
-body:has(.line-theme-vtr) .experience-dialog input,
-body:has(.line-theme-vtr) .experience-dialog button,
-body:has(.line-theme-vtr) .experience-dialog [data-slot="select-trigger"] {
+:is(.vtr-dialog, body:has(.line-theme-vtr) [data-slot="dialog-content"], body:has(.line-theme-vtr) [data-slot="alert-dialog-content"]) :is(input, button, [data-slot="select-trigger"]) {
   border-color: rgba(77, 23, 28, .38);
   border-radius: 2px;
 }
 
-.vtr-dialog [data-slot="button"],
-body:has(.line-theme-vtr) .experience-dialog [data-slot="button"] {
+:is(.vtr-dialog, body:has(.line-theme-vtr) [data-slot="dialog-content"], body:has(.line-theme-vtr) [data-slot="alert-dialog-content"]) [data-slot="button"] {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-.vtr-dialog .catalog-selection-action,
-body:has(.line-theme-vtr) .experience-dialog .catalog-selection-action {
+:is(.vtr-dialog, body:has(.line-theme-vtr) [data-slot="dialog-content"], body:has(.line-theme-vtr) [data-slot="alert-dialog-content"]) .catalog-selection-action {
   color: #fff8f3;
   background: #742d31;
 }
 
-.vtr-dialog .catalog-dialog-done,
-body:has(.line-theme-vtr) .experience-dialog .catalog-dialog-done {
+:is(.vtr-dialog, body:has(.line-theme-vtr) [data-slot="dialog-content"], body:has(.line-theme-vtr) [data-slot="alert-dialog-content"]) .catalog-dialog-done {
   color: #4d171c;
   background: rgba(234, 220, 218, .72);
 }

@@ -469,7 +469,12 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   assert.match(source, /add\(t\("ui\.prerequisites"\), item\.prerequisites/);
   assert.match(source, /Boolean\(item\.prerequisites\) && vampireDisciplinePrerequisitesMet/);
   assert.match(source, /category: item\.bloodlineId \? t\("sheet\.bloodline"\) : t\("ui\.generalDevotions"\)/);
+  assert.match(source, /categoryOptions=\{\[t\("ui\.generalDevotions"\), t\("sheet\.bloodline"\)\]\}/);
   assert.match(source, /description: item\.effect \?\? item\.summary, descriptionAfterDetails: true/);
+  const shared = await readFile(`${root}/app/workspace/experience-shared.tsx`, "utf8");
+  assert.match(shared, /categoryOptions \?\? items\.flatMap/);
+  const sheet = await readFile(`${root}/game-lines/vampire/sheet-view.tsx`, "utf8");
+  assert.match(sheet, /return <details className="contract-power-card vampire-discipline-card" key=\{item\.id\}>/);
   const css = await readFile(`${root}/app/css/globals.css`, "utf8");
   assert.match(css, /\.experience-merit-catalog article > div > strong/);
   assert.doesNotMatch(css, /\.experience-merit-catalog strong,/);

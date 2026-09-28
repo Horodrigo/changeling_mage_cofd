@@ -1188,19 +1188,18 @@ function PurchasedPowers({ character, powers, locale }: { character: CharacterSh
   if (!selected.length) return null;
   return <><SheetHeading>{t("sheet.otherPowers")}</SheetHeading><div className="vampire-power-grid">{selected.map((item) => {
     const rating = item.rating;
-    return <article key={item.id}>
-      <header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header>
-      <small>{item.kind} · {item.source} · p. {item.page || "—"}</small>
-      <p>{item.summary}</p>
-      {item.prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {item.prerequisites}</p>}
-      {item.experienceCost !== undefined && <p><strong>{t("ui.experienceCost")}:</strong> {item.experienceCost} {t("ui.xp")}</p>}
-      <PowerMechanics mechanics={item} />
-      {item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}>
-        <strong>{level.rating}. {localized(level, locale)}</strong>
-        <span>{level.summary}</span>
-        <PowerMechanics mechanics={level} compact />
-      </div>)}
-    </article>;
+    return <details className="contract-power-card vampire-discipline-card" key={item.id}>
+      <summary className="contract-power-summary"><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}<small>{item.summary}</small></summary>
+      <div className="contract-power-details">
+        <small>{item.kind} · {item.source} · p. {item.page || "—"}</small>
+        {item.prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {item.prerequisites}</p>}
+        {item.experienceCost !== undefined && <p><strong>{t("ui.experienceCost")}:</strong> {item.experienceCost} {t("ui.xp")}</p>}
+        <PowerMechanics mechanics={item} />
+        {item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}>
+          <strong>{level.rating}. {localized(level, locale)}</strong><span>{level.summary}</span><PowerMechanics mechanics={level} compact />
+        </div>)}
+      </div>
+    </details>;
   })}</div></>;
 }
 

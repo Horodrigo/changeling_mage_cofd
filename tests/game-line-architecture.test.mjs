@@ -52,6 +52,21 @@ test("registrations are metadata plus lazy surface loaders", async () => {
   }
 });
 
+test("portaled dialogs and confirmation actions inherit the active game-line theme", async () => {
+  const styles = {
+    cofd: await source("app/css/mortal-sheet.css"),
+    ctl: await source("app/css/changeling-sheet.css"),
+    mta: await source("app/css/mage-sheet.css"),
+    vtr: `${await source("app/css/vampire-sheet.css")}\n${await source("app/css/vampire-interactions.css")}`,
+  };
+  for (const [line, css] of Object.entries(styles)) {
+    assert.match(css, new RegExp(`body:has\\(\\.line-theme-${line}\\)`));
+    assert.match(css, /data-slot="dialog-content"/);
+    assert.match(css, /data-slot="alert-dialog-content"/);
+  }
+  assert.match(await source("app/css/globals.css"), /:is\(\[data-slot="dialog-footer"\], \[data-slot="alert-dialog-footer"\]\) button[^}]*height:32px/);
+});
+
 test("catalog groups stay lazy and line-scoped", async () => {
   const registry = await source("game-lines/registry/catalog-group-registry.ts");
 

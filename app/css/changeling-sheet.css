@@ -42,6 +42,25 @@
   background: #b9ddc3;
 }
 
+.line-theme-ctl,
+body:has(.line-theme-ctl) {
+  --primary:#315f43;
+  --primary-foreground:#fff;
+  --secondary:#e1ebdf;
+  --secondary-foreground:#263a2c;
+  --accent:#dbe8d9;
+  --accent-foreground:#173823;
+  --ring:#426f50;
+  --line-accent:#315f43;
+  --line-strong:#173823;
+  --line-soft:#edf4e9;
+  --line-border:#b5cbb9;
+  --line-topbar-start:#122a1b;
+  --line-topbar-middle:#21452e;
+  --line-topbar-end:#315f43;
+  --line-topbar-muted:#bdd0c0;
+}
+
 .ctl-template-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
@@ -125,6 +144,23 @@
   color: var(--ctl-ink, #263a2c);
   font-family: "Changeling Sheet", Georgia, serif;
 }
+
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+  --sheet-accent:#315f43;
+  --sheet-ink:#263a2c;
+  border-color:rgba(23,56,35,.5)!important;
+  border-radius:0!important;
+  background:rgba(255,254,249,.98)!important;
+  color:#263a2c;
+  font-family:"Changeling Sheet",Georgia,serif;
+}
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong) { color:#173823; }
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) :is(input,button,[data-slot="select-trigger"]) { border-color:rgba(23,56,35,.38); border-radius:2px; }
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) [data-slot="button"] { font-family:"Changeling Sheet",Georgia,serif; }
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) [data-slot="dialog-description"] { font-size:15px; line-height:1.5; }
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) .experience-merit-catalog strong { font-size:18px; }
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) .experience-merit-catalog small { color:rgba(38,58,44,.72); font-size:15px; line-height:1.45; white-space:normal; }
+body:has(.line-theme-ctl) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) .experience-merit-catalog p { color:#35483a; font-size:17px; line-height:1.5; }
 
 .ctl-dialog [data-slot="dialog-title"],
 .ctl-dialog .official-heading,

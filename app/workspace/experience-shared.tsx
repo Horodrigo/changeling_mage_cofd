@@ -117,6 +117,7 @@ export function ExperiencePowerPicker({
   triggerLabel,
   dialogTitle,
   dialogDescription,
+  categoryOptions,
 }: {
   kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato" | "Disciplina" | "Devoção";
   items: ExperienceCatalogItem[];
@@ -127,6 +128,7 @@ export function ExperiencePowerPicker({
   triggerLabel?: string;
   dialogTitle?: string;
   dialogDescription?: string;
+  categoryOptions?: string[];
 }) {
   const { locale, t }=useLanguage();
   const kindLabel=kind==="Práxis"?t("ui.praxis"):systemTerm(kind,locale);
@@ -135,7 +137,7 @@ export function ExperiencePowerPicker({
   const [secondary, setSecondary] = useState("Todos");
   const normalized = search.trim().toLocaleLowerCase("pt-BR");
   const selected = items.find((item) => item.id === selectedId);
-  const categories = ["Todas", ...new Set(items.flatMap((item) => item.categories ?? [item.category]))];
+  const categories = ["Todas", ...new Set(categoryOptions ?? items.flatMap((item) => item.categories ?? [item.category]))];
   const secondaryCategories = [
     "Todos",
     ...new Set(items.map((item) => item.secondaryCategory).filter(Boolean)),

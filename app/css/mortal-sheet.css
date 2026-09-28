@@ -1,4 +1,5 @@
-.line-theme-cofd {
+.line-theme-cofd,
+body:has(.line-theme-cofd) {
   --primary:#315e7a;
   --secondary:#dce9f0;
   --secondary-foreground:#203f52;
@@ -14,6 +15,20 @@
   --line-topbar-end:#2b5b75;
   --line-topbar-muted:#bfd1db;
 }
+
+body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+  --sheet-accent:#315e7a;
+  --sheet-ink:#253b47;
+  border-color:rgba(49,94,122,.5)!important;
+  border-radius:0!important;
+  background:rgba(239,245,248,.99)!important;
+  color:#253b47;
+  font-family:Georgia,"Times New Roman",serif;
+  box-shadow:0 20px 55px rgba(23,56,76,.22)!important;
+}
+body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong) { color:#315e7a; }
+body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) :is(input,button,[data-slot="select-trigger"]) { border-color:rgba(49,94,122,.38); border-radius:2px; }
+body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) [data-slot="button"] { font-family:Georgia,"Times New Roman",serif; }
 
 .app-shell.line-theme-cofd { background:color-mix(in srgb,var(--line-accent) 5%,var(--background)); }
 .line-summary .cofd-summary, .character-card.cofd-card { border-left:4px solid #315e7a; }

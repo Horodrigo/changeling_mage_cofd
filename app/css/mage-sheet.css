@@ -134,7 +134,8 @@
 
 .order-current small strong { color:#504851; font-family:inherit; font-size:inherit; white-space:normal; }
 
-.line-theme-mta {
+.line-theme-mta,
+body:has(.line-theme-mta) {
   --primary:#397895;
   --secondary:#dce9ef;
   --secondary-foreground:#24495c;
@@ -151,8 +152,9 @@
   --line-topbar-muted:#aec5d1;
 }
 
-body:has(.line-theme-mta) .experience-dialog,
-.mage-hubris-dialog {
+:is(.mage-hubris-dialog, body:has(.line-theme-mta) [data-slot="dialog-content"], body:has(.line-theme-mta) [data-slot="alert-dialog-content"]) {
+  --sheet-accent:#183f5b;
+  --sheet-ink:#253d4b;
   border-color: rgba(30,77,108,.52) !important;
   border-radius: 0 !important;
   background: rgba(241,245,245,.99) !important;
@@ -161,34 +163,23 @@ body:has(.line-theme-mta) .experience-dialog,
   box-shadow: 0 20px 55px rgba(15,48,72,.24) !important;
 }
 
-body:has(.line-theme-mta) .experience-dialog [data-slot="dialog-title"],
-body:has(.line-theme-mta) .experience-dialog strong,
-.mage-hubris-dialog [data-slot="dialog-title"],
-.mage-hubris-dialog strong { color: #183f5b; }
+:is(.mage-hubris-dialog, body:has(.line-theme-mta) [data-slot="dialog-content"], body:has(.line-theme-mta) [data-slot="alert-dialog-content"]) :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong) { color: #183f5b; }
 
-body:has(.line-theme-mta) .experience-dialog input,
-body:has(.line-theme-mta) .experience-dialog button,
-body:has(.line-theme-mta) .experience-dialog [data-slot="select-trigger"],
-.mage-hubris-dialog input,
-.mage-hubris-dialog button,
-.mage-hubris-dialog [data-slot="select-trigger"] {
+:is(.mage-hubris-dialog, body:has(.line-theme-mta) [data-slot="dialog-content"], body:has(.line-theme-mta) [data-slot="alert-dialog-content"]) :is(input, button, [data-slot="select-trigger"]) {
   border-color: rgba(30,77,108,.38);
   border-radius: 2px;
 }
 
-body:has(.line-theme-mta) .experience-dialog [data-slot="button"],
-.mage-hubris-dialog [data-slot="button"] {
+:is(.mage-hubris-dialog, body:has(.line-theme-mta) [data-slot="dialog-content"], body:has(.line-theme-mta) [data-slot="alert-dialog-content"]) [data-slot="button"] {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-body:has(.line-theme-mta) .experience-dialog .catalog-selection-action,
-.mage-hubris-dialog .catalog-selection-action {
+:is(.mage-hubris-dialog, body:has(.line-theme-mta) [data-slot="dialog-content"], body:has(.line-theme-mta) [data-slot="alert-dialog-content"]) .catalog-selection-action {
   color: #f3f8fa;
   background: #285d7b;
 }
 
-body:has(.line-theme-mta) .experience-dialog .catalog-dialog-done,
-.mage-hubris-dialog .catalog-dialog-done {
+:is(.mage-hubris-dialog, body:has(.line-theme-mta) [data-slot="dialog-content"], body:has(.line-theme-mta) [data-slot="alert-dialog-content"]) .catalog-dialog-done {
   color: #183f5b;
   background: rgba(230,240,246,.72);
 }

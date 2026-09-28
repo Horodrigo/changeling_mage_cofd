@@ -841,6 +841,8 @@ button { cursor: pointer; }
 .catalog-selection-checkbox { flex: none; margin-top: 2px; }
 .catalog-selection-action, .catalog-dialog-done { min-height: 32px; height: 32px; padding-inline: 12px; font-size: 12px; }
 .catalog-selection-action svg, .catalog-dialog-done svg { width:14px; height:14px; }
+:is([data-slot="dialog-footer"], [data-slot="alert-dialog-footer"]) button { min-height:32px; height:32px; padding:5px 11px; font-size:12px; }
+body:has([class*="line-theme-"]) :is([data-slot="select-content"], [data-slot="dropdown-menu-content"], [data-slot="context-menu-content"], [data-slot="popover-content"]) { border-color:var(--line-border); border-radius:2px; color:var(--line-strong); }
 .merit-option-locked { opacity: .82; }
 .merit-prerequisites-missing { color: #b42318 !important; font-weight: 600; }
 .merit-prerequisites-missing strong { color: #b42318; }
