@@ -8648,9 +8648,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
+      "duration": "Night",
+      "effect": "Carve an unwanted emotion into a subject, inflicting one lethal damage, and choose a mundane nonpersistent emotional or mental Condition. If the subject would suffer it that night, they instead gain Inspired, Steadfast, or Sated. At Crúac ••• with two additional successes, this can replace any Condition, though supernatural Conditions require a Clash of Wills.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:fires-of-inspiration",
@@ -8664,9 +8665,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
+      "duration": "Night",
+      "effect": "After approaching frenzy while immersed in a creative muse, gain the rite's Potency as bonus dice to one later Crafts action before night's end; that action may be extended.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:witch-s-locus",
@@ -8680,9 +8682,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
+      "duration": "Night; one week at Crúac •• with one additional success",
+      "effect": "Mark the boundary of an area no larger than a small home. Peripheral supernatural signs impose −2 on Composure rolls and attempts to make a good impression in Social maneuvering.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:mantle-of-the-predator-s-eye",
@@ -8696,9 +8699,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
+      "duration": "Night",
+      "effect": "After dancing through the ritual and collapsing from exhaustion, gain Acute Senses and add Crúac dots to Blood Potency for the Merit and Kindred Senses.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:mark-of-the-praecursor",
@@ -8712,9 +8716,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
+      "duration": "One month",
+      "effect": "Cover an area no larger than a manor house in warning sigils. Anyone using supernatural scrying or information-gathering on or inside it weeps black tears through mundane coverings until chapter end; exempt up to Potency people. At Crúac •• with one more success, reflective surfaces show the latest unseen offender's face. At Crúac •••• with three more successes, supernatural concealment in the area automatically provokes a Clash of Wills.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:barrier-of-blood",
@@ -8728,9 +8733,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "One month",
+      "effect": "Smear the sacrifice across a number of entrances equal to the declared Potency. Their Durability increases by Crúac and they seal like walls, though the ritualist and those she touched while casting can pass. Covering every entrance extends the Durability to walls. At Crúac ••• with one more success, supernatural entry such as teleportation or intangibility requires a Clash of Wills.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:painted-fears",
@@ -8744,9 +8750,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "One month",
+      "effect": "Create visual art with an obvious subject. Once per night, any viewer, including the creator, gains Spooked toward the depicted subject until it resolves; no one can be made to fear themselves. At Crúac ••• with one more success, Resolve + Composure − Potency must succeed or the viewer gains Frightened instead.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:path-of-thorns",
@@ -8760,9 +8767,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "Night; activated for one scene",
+      "effect": "Seed the ground with blood, then trigger invisible brambles in a Potency-meter radius. Anyone moving through suffers lethal damage equal to Crúac per turn unless armor fully covers the skin. The caster is rooted and loses Defense but may reflexively end the effect. At Crúac •••• with two more successes, damage becomes aggravated and ending early requires Strength + Stamina.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:rivers-run-dry",
@@ -8776,9 +8784,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "One month",
+      "effect": "Circle an area the size of a large house with blood and remnants from arid flora and fauna. Water cannot reliably enter or remain: it flows backward, spills from containers, or evaporates, generally in conspicuous ways.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:succulent-buboes",
@@ -8792,9 +8801,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "One month",
+      "effect": "Mark a subject's lymph nodes. Their Vitae capacity rises by Crúac + 1, but each Vitae above the normal maximum creates a visible bloody pustule. At Crúac ••••, non-Kindred subjects may spend one stored Vitae per turn on Physical Intensity.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:bleeding-the-tarantula",
@@ -8808,6 +8818,8 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "Until the vampire wakes",
+      "effect": "Carve a spider on the ritualist's arm before daysleep, creating a Size 4 Retainer with rating equal to Crúac, specialized in stealth and guarding her body. Distribute Potency among web Durability, fang weapon rating up to +5, closer blood sympathy, and an immobilizing web attack. Its protective web falls away when she wakes, and blood sympathy may wake her if the spider is destroyed.",
       "homebrew": true,
       "manualOnly": true
     },
@@ -8823,9 +8835,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
+      "duration": "Night",
+      "effect": "The ritualist and participants physically exert themselves and each spend Willpower. Once per turn in combat, each participant may reflexively assist another's instant action using teamwork even when such assistance would normally be unreasonable. At Crúac •••• with one more success, the Acolyte may replace an ally's pool with her own dice and grant 9-again instead.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:soul-wisdom",
@@ -8839,9 +8852,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
+      "duration": "Indefinite until emptied",
+      "effect": "Create an artwork holding the ritualist's Willpower up to Potency. Touching it transfers one stored point back. Once per scene after studying it for a few minutes, spend a stored point remotely to reroll an action without the +3 bonus and keep the second result. The piece cracks when empty, counts as part of the creator for supernatural scrutiny, and only one may exist. At Crúac ••••• with two more successes, it may be refilled and similar pieces made for others.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Indefinite"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:spirit-s-gambol",
@@ -8855,9 +8869,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
+      "duration": "One month",
+      "effect": "Paint symbols inviting one spirit type. A nearby spirit may Fetter itself to the Acolyte and possess her whenever she frenzies, bypassing the normal restriction against controlling a frenzying Beast. It is encouraged to protect her but may pursue its own nature, granting her a Beat when it does. Using ephemeral rules, it gains Fetter and imposes Possession during frenzy; helping the Beast or protecting her restores one Essence.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:suborn-the-outer-realms",
@@ -8871,9 +8886,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
+      "duration": "Indefinite while the charm survives",
+      "effect": "Place a protective charm over a mural in a Safe Place or other Merit-defined location. An alien being entering from another realm or Twilight contests with Resistance + Rank or Resolve + Supernatural Tolerance, penalized by Potency. Failure imposes Dominated, requiring the simple achievable action depicted in the mural, with no memory erasure.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Indefinite"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:blood-mask",
@@ -8887,9 +8903,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
+      "duration": "One night per Crúac dot",
+      "effect": "Mark a reflection with the target's image or name. The first bite and drink that night yields no Vitae but transforms the ritualist into the target, granting Potency as bonus dice to impersonate them. Clothing, powers, and traits do not change; animal features may function externally. At Crúac ••••• with one more success, draining the target dry makes the form indefinite and may replace the vampire's Physical Attributes and Skills for the duration.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "One night per Crúac dot"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:brigid-s-sacrifice",
@@ -8903,9 +8920,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
+      "duration": "Instant",
+      "effect": "Enchant an obsidian blade, sacrifice a sapient being that night at the cost of one Humanity dot (still gaining a Beat), and harmlessly stab a living subject's heart. Removing the blade heals all damage, removes diseases, toxins, negative Tilts and Conditions including persistent ones, restores all Willpower, and makes one Potency-bonus Clash against every harmful supernatural power, removing each one defeated.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Chapter"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:fount-of-ma-at",
@@ -8919,6 +8937,8 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 103,
+      "duration": "One chapter",
+      "effect": "Fill a bowl with blood and identify a victim. Feeding from them that night may drain up to one Skill dot per Potency instead of the same amount of Vitae. The ritualist chooses Skills before learning their ratings and may use the stolen ratings and Specialties instead of, never in addition to, her own; the victim loses them for the duration.",
       "homebrew": true,
       "manualOnly": true
     },
@@ -8934,9 +8954,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 103,
+      "duration": "One month or until the rite is repeated or the pouch is lost",
+      "effect": "Prepare a crow's or rat's eyes in a carried leather pouch. Its shadow serves as a Shadow Potency 1 Strix with Owl Eyes (or Enhanced Senses), fueled only by Vitae the vampire supplies. It obeys the spirit of commands but will not directly oppose true Strix and may scheme independently. It may be retained indefinitely as the three-dot Servant of Dis Merit. At Crúac ••••• with two more successes, create one for another character.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Month"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:idol-of-false-life",
@@ -8950,6 +8971,8 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 103,
+      "duration": "A year and a day",
+      "effect": "Use both parties' blood to bind a present subject to an organic idol. Unpowered equipment placed on the idol affects the subject as though worn or wielded, but each Structure lost by the idol inflicts the same aggravated damage on the subject, ignoring armor and Resilience. A character may have only one idol and cannot normally break the bond early.",
       "homebrew": true,
       "manualOnly": true
     },
@@ -8965,6 +8988,8 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 104,
+      "duration": "One chapter",
+      "effect": "Coat an emblem of a favored goddess in blood. In the presence of an active Theban miracle, brandish it and Clash with the Theban Sorcerer using Potency as a bonus. Victory ends the miracle and empowers the next rite cast this chapter or the next with rote, doubled range, and duration as though cast on a subject with a third-stage Vinculum toward the Acolyte.",
       "homebrew": true,
       "manualOnly": true
     },
@@ -8980,9 +9005,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 104,
+      "duration": "Until the sorcerous Vitae is spent",
+      "effect": "During extreme weather, invoke a storm or chaos deity and take eight unavoidable bashing damage from lightning. If the ritualist survives, gain a separate Vitae pool equal to Potency that ignores normal capacity but may only awaken the vampire, activate Disciplines, or fuel Physical Intensity. The rite cannot be repeated until the pool is empty.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Indefinite"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:curse-of-the-circle",
@@ -8996,10 +9022,11 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 104,
+      "duration": "Until restitution, or every contributor enters torpor or Final Death",
+      "effect": "Build a token from a sympathetic link to the victim and one blood point from each wronged Acolyte. Success creates one-way blood sympathy from every contributor with a pool equal to their number. Once per scene, a contributor may use it without Willpower to curse the victim's next important action by −1 per success, making failure dramatic, or treat successes as Status solely to block the victim's Social Merits.",
       "homebrew": true,
       "manualOnly": true,
-      "contestedBy": "Composure + Blood Potency",
-      "duration": "Indefinite"
+      "contestedBy": "Composure + Blood Potency"
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:walk-the-depths",
@@ -9013,9 +9040,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 105,
+      "duration": "Night",
+      "effect": "Target a dark place untouched by mortals since the last new moon. The caster and everyone touching him may step through shadow to any other mundane place meeting those conditions. Once that night, each traveler may reflexively enter any shadow and return to the origin.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "Night"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:your-goddess-listens",
@@ -9029,9 +9057,10 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 105,
+      "duration": "A year and a day",
+      "effect": "Mark a city with Vitae sigils that supernatural living beings recognize as the Witch's name and a prayer. She hears any prayer using them and gains a link to the supplicant. During that night, she may activate one Discipline effect, including a blood-sorcery ritual, against the supplicant as though present, touching them, or meeting their gaze.",
       "homebrew": true,
-      "manualOnly": true,
-      "duration": "A year and a day"
+      "manualOnly": true
     },
     {
       "id": "h-vtr-agony-ecstasy:errata:mantle-amorous-fire",
@@ -9045,6 +9074,7 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 107,
+      "effect": "Replace the original rite's Presence bonus with the temporary Vice Amorous and remove its Willpower cost. Other Mantle rites retain their normal costs.",
       "homebrew": true,
       "manualOnly": true,
       "errataFor": "cruac-mantle-amorous-fire",
@@ -9063,6 +9093,7 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 107,
+      "effect": "The rite may be cast in advance and applied to its victim at any time before night's end. Once applied, its effect lasts one scene.",
       "homebrew": true,
       "manualOnly": true,
       "errataFor": "cruac-pangs-proserpina",
@@ -9082,6 +9113,7 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 107,
+      "effect": "Potency, rather than successes, determines how many questions may be asked. The Storyteller chooses the vision's subject, and every question must concern that topic.",
       "homebrew": true,
       "manualOnly": true,
       "errataFor": "cruac-pool-forbidden-truths",
