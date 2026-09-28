@@ -1,5 +1,5 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import type { BloodPotencyRow, VampireCovenantDefinition, VampireDisciplineDefinition, VampireReference } from "./catalog-types";
+import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
@@ -43,6 +43,71 @@ export function vampireDisciplineDisplayName(
 ) {
   const definition = catalog.find((item) => item.name === name);
   return locale === "pt-BR" ? definition?.translatedName ?? name : definition?.name ?? name;
+}
+
+export function vampireBloodlineFavoredAttributes(definition: VampireBloodlineDefinition, clan?: VampireClanDefinition) {
+  return [...new Set(definition.favoredAttributes.flatMap((name) => name === "Parent Clan" ? clan?.favoredAttributes ?? [] : [name]))];
+}
+
+export function vampireEditableCreationAttributes(values: Record<string, number>, data: Record<string, unknown>, clan?: VampireClanDefinition) {
+  const next = { ...values };
+  const bloodlineFavored = String(data.bloodline_favored_attribute ?? "");
+  const active = data.bloodline_id && bloodlineFavored ? [bloodlineFavored] : clan?.favoredAttributeMode === "both" ? clan.favoredAttributes : [String(data.favored_attribute ?? "")];
+  for (const name of active) if (name && next[name] > 1) next[name] -= 1;
+  let duplicate = data.bloodline_id ? Math.max(0, Object.values(next).reduce((sum, rating) => sum + Math.max(0, Number(rating) - 1), 0) - 12) : 0;
+  const original = stringArray(data.favored_attributes).length ? stringArray(data.favored_attributes) : clan?.favoredAttributeMode === "both" ? clan.favoredAttributes : [String(data.favored_attribute ?? "")];
+  for (const name of original) if (duplicate > 0 && name && next[name] > 1) { next[name] -= 1; duplicate -= 1; }
+  return next;
+}
+
+export function vampireBloodlineAvailable(definition: VampireBloodlineDefinition, character: Pick<CharacterSheet, "line_data" | "merits">, reference: Pick<VampireReference, "clans" | "covenants">) {
+  const clanId = String(character.line_data.clan_id ?? "");
+  const parentClanIds = definition.parentClanIds?.length
+    ? definition.parentClanIds
+    : reference.clans.filter((clan) => definition.parentClan.split(/\s+or\s+/i).includes(clan.name)).map((clan) => clan.id);
+  if (parentClanIds.length && !parentClanIds.includes(clanId)) return false;
+  if (!definition.covenantIds?.length) return true;
+  const memberships = vampireCovenantIds(character.line_data);
+  return definition.covenantIds.some((id) => {
+    if (!memberships.includes(id)) return false;
+    const covenant = reference.covenants.find((item) => item.id === id);
+    return Boolean(covenant) && vampireCovenantStatus(character, id, covenant!.name, covenant!.translatedName) >= Number(definition.minimumCovenantStatus ?? 1);
+  });
+}
+
+export function vampireDisciplinePrerequisitesMet(prerequisites: string | undefined, disciplines: Record<string, number>, disciplineNames: readonly string[]) {
+  if (!prerequisites) return true;
+  const divided = prerequisites.match(/four dots divided among (.+)/i);
+  if (divided) {
+    const names = disciplineNames.filter((name) => divided[1].toLocaleLowerCase().includes(name.toLocaleLowerCase()));
+    return names.reduce((sum, name) => sum + Number(disciplines[name] ?? 0), 0) >= 4;
+  }
+  return prerequisites.split(/[;,]/).every((clause) => {
+    const names = disciplineNames.filter((name) => clause.toLocaleLowerCase().includes(name.toLocaleLowerCase()));
+    if (!names.length) return true;
+    const shared = Math.max(0, ...[...clause.matchAll(/(•+)/g)].map((match) => match[1].length));
+    const met = (name: string) => {
+      const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const own = clause.match(new RegExp(`${escaped}\\s*(•+)`, "i"))?.[1].length;
+      return Number(disciplines[name] ?? 0) >= (own ?? shared);
+    };
+    return /\bor\b/i.test(clause) ? names.some(met) : names.every(met);
+  });
+}
+
+export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
+  const automatic = powers.devotions.filter((item) => item.bloodlineId && Number(item.experienceCost ?? 0) === 0);
+  const automaticIds = new Set(automatic.map((item) => item.id));
+  const current = stringArray(character.line_data.devotion_ids);
+  const next = current.filter((id) => !automaticIds.has(id));
+  const bloodlineId = String(character.line_data.bloodline_id ?? "");
+  const disciplineNames = powers.disciplines.map((item) => item.name);
+  const disciplines = recordRatings(character.line_data.disciplines, disciplineNames, 10);
+  for (const item of automatic)
+    if (item.bloodlineId === bloodlineId && vampireDisciplinePrerequisitesMet(item.prerequisites, disciplines, disciplineNames)) next.push(item.id);
+  const devotionIds = [...new Set(next)];
+  if (JSON.stringify(devotionIds) === JSON.stringify(current)) return character;
+  return { ...character, line_data: { ...character.line_data, devotion_ids: devotionIds } };
 }
 
 export const BLOOD_POTENCY_ROWS: readonly BloodPotencyRow[] = [

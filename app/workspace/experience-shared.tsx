@@ -100,6 +100,9 @@ type ExperienceCatalogItem = {
   sortPriority?: number;
   description: string;
   meta: string;
+  disabled?: boolean;
+  details?: Array<{ label: string; value: string; warning?: boolean }>;
+  levels?: Array<{ label: string; value: string }>;
 };
 
 export function ExperiencePowerPicker({
@@ -113,7 +116,7 @@ export function ExperiencePowerPicker({
   dialogTitle,
   dialogDescription,
 }: {
-  kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato";
+  kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato" | "Disciplina" | "Devoção";
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;
@@ -142,7 +145,7 @@ export function ExperiencePowerPicker({
       (category === "Todas" || (item.categories ?? [item.category]).includes(category)) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
       (!normalized ||
-        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta}`
+        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta} ${item.details?.map(({ label, value }) => `${label} ${value}`).join(" ") ?? ""}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
     );
@@ -190,6 +193,8 @@ export function ExperiencePowerPicker({
             <SelectableCatalogCard
               key={item.id}
               selected={selectedId === item.id}
+              disabled={item.disabled}
+              className={item.disabled ? "merit-option-locked" : ""}
               label={`${t("ui.select198f7a")} ${item.name}`}
               onToggle={() => onSelect(selectedId === item.id ? "" : item.id)}
             >
@@ -197,6 +202,8 @@ export function ExperiencePowerPicker({
                 <strong>{item.name}</strong>
                 <small>{item.meta}</small>
                 <p>{item.description}</p>
+                {item.details?.map(({ label, value, warning }) => <p className={warning ? "merit-prerequisites-missing" : undefined} key={`${label}-${value}`}><strong>{label}:</strong> {value}</p>)}
+                {item.levels?.map(({ label, value }) => <details key={label} onClick={(event) => event.stopPropagation()}><summary><strong>{label}</strong></summary><p>{value}</p></details>)}
               </div>
             </SelectableCatalogCard>
           ))}

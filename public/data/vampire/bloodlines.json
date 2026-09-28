@@ -24,7 +24,10 @@
     "baneSummary": "Whenever an Ankou would regain Willpower by maintaining the Mask, roll Humanity. On a failure, no Willpower is regained.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 12
+    "page": 12,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "icelus",
@@ -50,7 +53,11 @@
     "baneSummary": "In addition to the parent Clan bane, a failed detachment roll that inflicts Bestial, Competitive, or Wanton also inflicts Mesmerized. Resolving it does not grant the usual +3 resistance to Dominate.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 15
+    "page": 15,
+    "parentClanIds": [
+      "mekhet",
+      "ventrue"
+    ]
   },
   {
     "id": "jharana",
@@ -77,7 +84,10 @@
     "baneSummary": "When a Jharana feeds from the same person more than once in a chapter, roll Humanity. Failure inflicts a Persistent Obsession tied to that person and the signals surrounding them.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 20
+    "page": 20,
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "liderc",
@@ -102,7 +112,10 @@
     "baneSummary": "While Dependent, all attached Touchstones provide only +1 die total to detachment. Defending the subject restores at most 1 Willpower, and a subject who was a Touchstone is lost immediately when the relationship breaks.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 24
+    "page": 24,
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "nosoi",
@@ -127,7 +140,10 @@
     "baneSummary": "Choose a blood-carried ailment. Each night, Vitae gained from blood not infected with that ailment cannot raise the Nosoi's Vitae above her Humanity.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 29
+    "page": 29,
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "parliamentarians",
@@ -153,7 +169,12 @@
     "baneSummary": "When the Parliamentarian's personal order is disrupted, Humanity dots cap all Social dice pools.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 33
+    "page": 33,
+    "parentClanIds": [],
+    "covenantIds": [
+      "carthian-movement"
+    ],
+    "minimumCovenantStatus": 1
   },
   {
     "id": "penumbrae",
@@ -181,7 +202,12 @@
     "baneSummary": "Determine torpor duration using Humanity minus Crúac dots. Waking early costs additional Vitae equal to Crúac, and waking from torpor or Clotho's Skein inflicts False Memories until the next daysleep.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 37
+    "page": 37,
+    "parentClanIds": [],
+    "covenantIds": [
+      "circle-of-the-crone"
+    ],
+    "minimumCovenantStatus": 1
   },
   {
     "id": "scions-of-the-first-city",
@@ -208,7 +234,12 @@
     "baneSummary": "Outside a metropolis, or in a settlement with fewer than 10,000 people, Humanity dots cap every dice pool.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 41
+    "page": 41,
+    "parentClanIds": [],
+    "covenantIds": [
+      "invictus"
+    ],
+    "minimumCovenantStatus": 1
   },
   {
     "id": "vardyvle",
@@ -237,7 +268,10 @@
     "baneSummary": "When feeding from a human she envies, roll Humanity. Failure grants one of the victim's memories and False Memory for a week; dramatic failure also inflicts addiction to the victim's blood.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 45
+    "page": 45,
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "vilseduire",
@@ -264,7 +298,11 @@
     "baneSummary": "A Vilseduire can have no more than one attached Touchstone and treats all breaking points as though at half normal Humanity, rounded down.",
     "sourceId": "vtr-nh-spilled-blood",
     "source": "Night Horrors: Spilled Blood",
-    "page": 50
+    "page": 50,
+    "parentClanIds": [
+      "daeva",
+      "nosferatu"
+    ]
   },
   {
     "id": "morbus",
@@ -290,7 +328,10 @@
     "baneSummary": "In addition to the Mekhet bane, the Morbus can feed on living mortals only when they are diseased; Kindred Vitae remains nourishing.",
     "sourceId": "cofd-dark-eras-companion",
     "source": "Dark Eras Companion",
-    "page": 94
+    "page": 94,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "bron",
@@ -316,7 +357,10 @@
     "baneSummary": "In addition to the Ventrue bane, a change in permanent Blood Potency detaches every Touchstone; each night an unattached Touchstone may be replaced after a failed Humanity roll.",
     "sourceId": "cofd-dark-eras-2",
     "source": "Dark Eras 2",
-    "page": 117
+    "page": 117,
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "khaibit",
@@ -341,7 +385,10 @@
     "baneSummary": "Bright light that would inhibit ordinary vision inflicts the Blinded Tilt and suppresses Udjat for the scene.",
     "sourceId": "vtr-onyx-path-khaibit",
     "source": "Onyx Path Blog: The Shadow and the Asp",
-    "page": 0
+    "page": 0,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "kerberos",
@@ -367,7 +414,10 @@
     "baneSummary": "Against anyone not subject to a Predatory Aura Condition, lose 10-again on all non-reflexive actions; Predatory Aura rolls are unaffected.",
     "sourceId": "vtr-onyx-path-kerberos",
     "source": "Onyx Path Blog: The Jaws of the Beast",
-    "page": 0
+    "page": 0,
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "children-of-judas",
@@ -396,7 +446,10 @@
     "page": 20,
     "homebrew": true,
     "giftName": "A Taste of Grief",
-    "giftSummary": "The first time the vampire feeds from a vessel, she receives an involuntary vision of a tragic event from that person's past."
+    "giftSummary": "The first time the vampire feeds from a vessel, she receives an involuntary vision of a tragic event from that person's past.",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "duchagne",
@@ -425,7 +478,10 @@
     "page": 26,
     "homebrew": true,
     "giftName": "The Spice of Life",
-    "giftSummary": "Once per night, feeding from a victim experiencing extreme sensation can refresh one spent Willpower; causing additional harm imposes -1 on the resulting detachment roll."
+    "giftSummary": "Once per night, feeding from a victim experiencing extreme sensation can refresh one spent Willpower; causing additional harm imposes -1 on the resulting detachment roll.",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "erzsebet",
@@ -457,7 +513,10 @@
     "page": 31,
     "homebrew": true,
     "giftName": "Almost Human",
-    "giftSummary": "Hair and nails grow at will, physical changes persist through daysleep without Willpower, and a permanent blush of life can be intensified with Vitae for mortal healing, masked aura, and exceptional Empathy."
+    "giftSummary": "Hair and nails grow at will, physical changes persist through daysleep without Willpower, and a permanent blush of life can be intensified with Vitae for mortal healing, masked aura, and exceptional Empathy.",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "gulikan",
@@ -486,7 +545,10 @@
     "source": "Sin Again: Daeva",
     "page": 36,
     "homebrew": true,
-    "exclusiveDiscipline": "Ortam"
+    "exclusiveDiscipline": "Ortam",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "moda-mortale",
@@ -515,7 +577,10 @@
     "page": 42,
     "homebrew": true,
     "giftName": "Finishing School",
-    "giftSummary": "Bloodline Status grants Friends Abroad alongside Cacophony Savvy, a qualifying Fighting Style dot, and Taste or a one-Experience refund if Taste is already owned."
+    "giftSummary": "Bloodline Status grants Friends Abroad alongside Cacophony Savvy, a qualifying Fighting Style dot, and Taste or a one-Experience refund if Taste is already owned.",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "nelapsi",
@@ -544,7 +609,10 @@
     "page": 47,
     "homebrew": true,
     "giftName": "The Lessons",
-    "giftSummary": "Nelapsi mentorship is expressed through Quickened Hunger and Shadow Heart, Fame (Advanced), and the Cursed Fiefdom Devotion rather than an automatic power."
+    "giftSummary": "Nelapsi mentorship is expressed through Quickened Hunger and Shadow Heart, Fame (Advanced), and the Cursed Fiefdom Devotion rather than an automatic power.",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "star-crossed",
@@ -573,7 +641,10 @@
     "page": 52,
     "homebrew": true,
     "giftName": "Purification",
-    "giftSummary": "Anoint a mortal with Vitae and Willpower to lock the subject into a renewable 24-hour biological loop that reverses aging, disease, injury, and death while imposing persistent confusion."
+    "giftSummary": "Anoint a mortal with Vitae and Willpower to lock the subject into a renewable 24-hour biological loop that reverses aging, disease, injury, and death while imposing persistent confusion.",
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "xiao",
@@ -602,7 +673,10 @@
     "sourceId": "h-vtr-sin-again",
     "source": "Sin Again: Daeva",
     "page": 57,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "daeva"
+    ]
   },
   {
     "id": "baetyl",
@@ -631,7 +705,10 @@
     "page": 20,
     "homebrew": true,
     "giftName": "The Bezoar Core",
-    "giftSummary": "The vampire can swallow inanimate matter and once per scene spend Vitae to add the consumed material's Size, maximum +5, to Auspex rolls for the scene."
+    "giftSummary": "The vampire can swallow inanimate matter and once per scene spend Vitae to add the consumed material's Size, maximum +5, to Auspex rolls for the scene.",
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "cerrid",
@@ -660,7 +737,10 @@
     "page": 25,
     "homebrew": true,
     "giftName": "The Golden Throat",
-    "giftSummary": "Gain one Expression dot on joining, or another Social Skill if Expression is already maximum; spending Willpower on mundane Expression grants +5 instead of +3."
+    "giftSummary": "Gain one Expression dot on joining, or another Social Skill if Expression is already maximum; spending Willpower on mundane Expression grants +5 instead of +3.",
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "childer-of-the-morrigan",
@@ -690,7 +770,10 @@
     "page": 30,
     "homebrew": true,
     "giftName": "Banshee Crúac",
-    "giftSummary": "Spend Willpower to cast a rite of three dots or less instantly with reduced successes and Potency; failure becomes dramatic and temporarily curses everyone nearby. Beast's Skin always includes a crow or raven form."
+    "giftSummary": "Spend Willpower to cast a rite of three dots or less instantly with reduced successes and Potency; failure becomes dramatic and temporarily curses everyone nearby. Beast's Skin always includes a crow or raven form.",
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "daimonion",
@@ -719,7 +802,10 @@
     "page": 35,
     "homebrew": true,
     "giftName": "An Ear for the Beast",
-    "giftSummary": "Auspex gains an extra question about a vampire's Beast and intimate-contact benefits against frenzy, Bestial Triad Conditions, and draugr."
+    "giftSummary": "Auspex gains an extra question about a vampire's Beast and intimate-contact benefits against frenzy, Bestial Triad Conditions, and draugr.",
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "dead-wolves",
@@ -747,7 +833,10 @@
     "sourceId": "h-vtr-wild-hunt",
     "source": "Wild Hunt: Gangrel",
     "page": 40,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "mystikoi",
@@ -778,7 +867,10 @@
     "homebrew": true,
     "exclusiveDiscipline": "Spiritus Sancti",
     "giftName": "Spiritus Sancti",
-    "giftSummary": "An exclusive five-dot Discipline that refines consumed supernatural essence into a path of bodily and spiritual transcendence."
+    "giftSummary": "An exclusive five-dot Discipline that refines consumed supernatural essence into a path of bodily and spiritual transcendence.",
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "oberlochs",
@@ -805,7 +897,10 @@
     "sourceId": "h-vtr-wild-hunt",
     "source": "Wild Hunt: Gangrel",
     "page": 52,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "verlice",
@@ -835,7 +930,10 @@
     "page": 57,
     "homebrew": true,
     "giftName": "The Ride",
-    "giftSummary": "Anoint a vehicle with Vitae and spend Willpower to make it the vampire's bonded Ride, enabling the bloodline's vehicle Devotions."
+    "giftSummary": "Anoint a vehicle with Vitae and spend Willpower to make it the vampire's bonded Ride, enabling the bloodline's vehicle Devotions.",
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "wickers",
@@ -862,7 +960,10 @@
     "sourceId": "h-vtr-wild-hunt",
     "source": "Wild Hunt: Gangrel",
     "page": 63,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "yarilo",
@@ -889,7 +990,10 @@
     "sourceId": "h-vtr-wild-hunt",
     "source": "Wild Hunt: Gangrel",
     "page": 68,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "gangrel"
+    ]
   },
   {
     "id": "connected",
@@ -919,7 +1023,10 @@
     "homebrew": true,
     "exclusiveDiscipline": "Interface",
     "giftName": "Interface",
-    "giftSummary": "An exclusive five-dot Discipline for sensing, entering, protecting, and controlling digital systems."
+    "giftSummary": "An exclusive five-dot Discipline for sensing, entering, protecting, and controlling digital systems.",
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "csalad",
@@ -950,7 +1057,10 @@
     "homebrew": true,
     "exclusiveDiscipline": "Lithopedia",
     "giftName": "Lithopedia",
-    "giftSummary": "A ritual Discipline whose rites bind the vampire to territory and reveal or direct the memories and forces of the land."
+    "giftSummary": "A ritual Discipline whose rites bind the vampire to territory and reveal or direct the memories and forces of the land.",
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "kuufukuji",
@@ -977,7 +1087,10 @@
     "sourceId": "h-vtr-strange-shades",
     "source": "Strange Shades: Mekhet",
     "page": 31,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "leandros",
@@ -1004,7 +1117,10 @@
     "sourceId": "h-vtr-strange-shades",
     "source": "Strange Shades: Mekhet",
     "page": 36,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "mnemosyne",
@@ -1032,7 +1148,10 @@
     "sourceId": "h-vtr-strange-shades",
     "source": "Strange Shades: Mekhet",
     "page": 42,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "norvegi",
@@ -1061,7 +1180,10 @@
     "sourceId": "h-vtr-strange-shades",
     "source": "Strange Shades: Mekhet",
     "page": 48,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "qedeshah",
@@ -1091,7 +1213,10 @@
     "page": 54,
     "homebrew": true,
     "giftName": "Anointment",
-    "giftSummary": "The bloodline can consecrate selected mortals as anointed attachments used by its protective Merits and Devotions."
+    "giftSummary": "The bloodline can consecrate selected mortals as anointed attachments used by its protective Merits and Devotions.",
+    "parentClanIds": [
+      "mekhet"
+    ]
   },
   {
     "id": "acteius",
@@ -1118,7 +1243,10 @@
     "sourceId": "h-vtr-better-feared",
     "source": "Better Feared: Nosferatu",
     "page": 20,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "candymen",
@@ -1147,7 +1275,10 @@
     "page": 26,
     "homebrew": true,
     "giftName": "The Sweet Stuff",
-    "giftSummary": "The vampire can infuse drugs and treats with Vitae, making consumers valid vessels and enabling the bloodline's addictive Devotions."
+    "giftSummary": "The vampire can infuse drugs and treats with Vitae, making consumers valid vessels and enabling the bloodline's addictive Devotions.",
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "cockscomb-society",
@@ -1180,7 +1311,10 @@
     "page": 32,
     "homebrew": true,
     "giftName": "Old Money",
-    "giftSummary": "The Society's inherited wealth and connections provide lineage-specific social leverage and support its role-playing Devotions."
+    "giftSummary": "The Society's inherited wealth and connections provide lineage-specific social leverage and support its role-playing Devotions.",
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "gethsemani",
@@ -1210,7 +1344,10 @@
     "page": 37,
     "homebrew": true,
     "giftName": "Stigmatica",
-    "giftSummary": "The bloodline's supernatural stigmata enable its signature Theban Miracles and devotional feeding practices."
+    "giftSummary": "The bloodline's supernatural stigmata enable its signature Theban Miracles and devotional feeding practices.",
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "keepers-of-the-dark",
@@ -1237,7 +1374,10 @@
     "sourceId": "h-vtr-better-feared",
     "source": "Better Feared: Nosferatu",
     "page": 43,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "lygos",
@@ -1266,7 +1406,10 @@
     "page": 49,
     "homebrew": true,
     "giftName": "Truths of Erebus",
-    "giftSummary": "The bloodline treats the five Truths as a primary Mystery and may learn Lessons of Erebus as its associated procedures."
+    "giftSummary": "The bloodline treats the five Truths as a primary Mystery and may learn Lessons of Erebus as its associated procedures.",
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "von-schreck-family",
@@ -1296,7 +1439,10 @@
     "page": 55,
     "homebrew": true,
     "giftName": "Know Your Audience",
-    "giftSummary": "The bloodline exploits live spectators and horror fandom to amplify fear, feeding, and its cinematic Devotions."
+    "giftSummary": "The bloodline exploits live spectators and horror fandom to amplify fear, feeding, and its cinematic Devotions.",
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "yagnatia",
@@ -1324,7 +1470,10 @@
     "sourceId": "h-vtr-better-feared",
     "source": "Better Feared: Nosferatu",
     "page": 60,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "nosferatu"
+    ]
   },
   {
     "id": "adrestoi",
@@ -1354,7 +1503,10 @@
     "homebrew": true,
     "exclusiveDiscipline": "Blood Tether",
     "giftName": "Blood Tether",
-    "giftSummary": "A five-dot Discipline that binds a pack to its master and distributes senses, emotion, strength, and feeding across the tether."
+    "giftSummary": "A five-dot Discipline that binds a pack to its master and distributes senses, emotion, strength, and feeding across the tether.",
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "gottlings",
@@ -1382,7 +1534,10 @@
     "sourceId": "h-vtr-false-gods",
     "source": "False Gods: Ventrue",
     "page": 27,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "keravnos",
@@ -1413,7 +1568,10 @@
     "homebrew": true,
     "exclusiveDiscipline": "Surge",
     "giftName": "Surge",
-    "giftSummary": "An exclusive five-dot Discipline that consumes, stores, senses, and redirects electricity."
+    "giftSummary": "An exclusive five-dot Discipline that consumes, stores, senses, and redirects electricity.",
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "malocusians",
@@ -1443,7 +1601,10 @@
     "page": 38,
     "homebrew": true,
     "giftName": "Domus",
-    "giftSummary": "The vampire mystically extends senses and authority through her domicile, empowering its defenses and the bloodline's household Devotions."
+    "giftSummary": "The vampire mystically extends senses and authority through her domicile, empowering its defenses and the bloodline's household Devotions.",
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "melissidae",
@@ -1474,7 +1635,10 @@
     "page": 44,
     "homebrew": true,
     "giftName": "Insectoid Kinship",
-    "giftSummary": "The vampire can communicate with and command insects, laying the foundation for Hivemind and the bloodline's colony Devotions."
+    "giftSummary": "The vampire can communicate with and command insects, laying the foundation for Hivemind and the bloodline's colony Devotions.",
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "rotgrafen",
@@ -1503,7 +1667,10 @@
     "sourceId": "h-vtr-false-gods",
     "source": "False Gods: Ventrue",
     "page": 50,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "typhos",
@@ -1531,7 +1698,10 @@
     "sourceId": "h-vtr-false-gods",
     "source": "False Gods: Ventrue",
     "page": 55,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "warumono",
@@ -1558,7 +1728,10 @@
     "sourceId": "h-vtr-false-gods",
     "source": "False Gods: Ventrue",
     "page": 61,
-    "homebrew": true
+    "homebrew": true,
+    "parentClanIds": [
+      "ventrue"
+    ]
   },
   {
     "id": "malkovians",
@@ -1589,6 +1762,9 @@
     "page": 96,
     "homebrew": true,
     "giftName": "Apophenia",
-    "giftSummary": "The vampire reads meaningful patterns in apparent coincidence, gaining prophetic insight while risking the Pareidolia Condition."
+    "giftSummary": "The vampire reads meaningful patterns in apparent coincidence, gaining prophetic insight while risking the Pareidolia Condition.",
+    "parentClanIds": [
+      "ventrue"
+    ]
   }
 ]

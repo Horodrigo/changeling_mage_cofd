@@ -1190,8 +1190,10 @@ function PurchasedPowers({ character, powers, locale }: { character: CharacterSh
     const rating = item.rating;
     return <article key={item.id}>
       <header><strong>{localized(item, locale)}</strong>{Boolean(rating) && <DotValue value={Number(rating)} />}</header>
-      <small>{item.kind}{item.prerequisites ? ` · ${item.prerequisites}` : ""}</small>
+      <small>{item.kind} · {item.source} · p. {item.page || "—"}</small>
       <p>{item.summary}</p>
+      {item.prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {item.prerequisites}</p>}
+      {item.experienceCost !== undefined && <p><strong>{t("ui.experienceCost")}:</strong> {item.experienceCost} {t("ui.xp")}</p>}
       <PowerMechanics mechanics={item} />
       {item.levels?.filter((level) => level.rating <= Number(rating ?? 0)).map((level) => <div className="vampire-power-level" key={level.rating}>
         <strong>{level.rating}. {localized(level, locale)}</strong>

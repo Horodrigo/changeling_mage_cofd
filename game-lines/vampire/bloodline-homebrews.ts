@@ -18,7 +18,7 @@ export function normalizeBloodlineHomebrew(value: unknown): VampireBloodlineDefi
   if (!id.startsWith("homebrew:bloodline:") || !name || !parentClan || favoredAttributes.length !== 2 || new Set(favoredAttributes).size !== 2 || disciplines.length !== 4 || new Set(disciplines).size !== 4 || !summary || !baneName || !baneSummary) return null;
   const exclusiveDiscipline = text(item.exclusiveDiscipline);
   return {
-    id, name, translatedName: name, parentClan, requirements: text(item.requirements) || undefined,
+    id, name, translatedName: name, parentClan, parentClanIds: textList(item.parentClanIds), requirements: text(item.requirements) || undefined,
     nicknames: textList(item.nicknames), favoredAttributes: favoredAttributes as [string, string], disciplines: disciplines as [string, string, string, string],
     exclusiveDiscipline: exclusiveDiscipline && disciplines.includes(exclusiveDiscipline) ? exclusiveDiscipline : undefined,
     summary, baneName, baneSummary, sourceId: BLOODLINE_HOMEBREW_SOURCE_ID, source: BLOODLINE_HOMEBREW_SOURCE, page: 0, homebrew: true,

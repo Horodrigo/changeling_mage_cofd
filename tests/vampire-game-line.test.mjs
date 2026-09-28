@@ -156,6 +156,58 @@ test("new Clan and Covenant Disciplines are available only to their owning ident
   assert.equal(vampireDisciplineAvailable("Triadic Evolution", "", "gangrel", "invictus"), false);
 });
 
+test("Vampire Bloodlines filter by stable Clan and Covenant Status identities", async () => {
+  const { vampireBloodlineAvailable } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
+  const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
+  const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
+  const reference = { clans, covenants };
+  for (const bloodline of bloodlines) {
+    const expected = clans.filter((clan) => bloodline.parentClan.split(/\s+or\s+/i).includes(clan.name)).map((clan) => clan.id);
+    assert.deepEqual(bloodline.parentClanIds, expected, `${bloodline.name} has stable Parent Clan IDs`);
+  }
+  const character = { line_data: { clan_id: "daeva", covenant_id: "carthian-movement", covenant_ids: ["carthian-movement"] }, merits: [] };
+  assert.equal(vampireBloodlineAvailable(bloodlines.find((item) => item.id === "jharana"), character, reference), true);
+  assert.equal(vampireBloodlineAvailable(bloodlines.find((item) => item.id === "ankou"), character, reference), false);
+  assert.equal(vampireBloodlineAvailable(bloodlines.find((item) => item.id === "parliamentarians"), character, reference), false);
+  character.merits.push({ name: "Kindred Status", dots: 1, configuration: { group: "carthian-movement" } });
+  assert.equal(vampireBloodlineAvailable(bloodlines.find((item) => item.id === "parliamentarians"), character, reference), true);
+  assert.deepEqual(bloodlines.find((item) => item.id === "parliamentarians").covenantIds, ["carthian-movement"]);
+});
+
+test("joining a Vampire Bloodline replaces and later restores the creation Attribute bonus", async () => {
+  const { joinVampireBloodline, removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const { vampireEditableCreationAttributes } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
+  const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
+  const creation = { Intelligence: 3, Wits: 3, Resolve: 2, Strength: 3, Dexterity: 3, Stamina: 1, Presence: 2, Manipulation: 3, Composure: 1 };
+  const character = { attributes: { ...creation, Dexterity: 4 }, line_data: { clan_id: "daeva", favored_attribute: "Dexterity", favored_attributes: ["Dexterity"], disciplines: {}, devotion_ids: [] }, current_state: {}, derived: { LimiteDeCaracteristica: 5 } };
+  const definition = bloodlines.find((item) => item.id === "jharana");
+  const joined = joinVampireBloodline(character, definition, "Manipulation", powers, clans.find((item) => item.id === "daeva"));
+  assert.deepEqual(joined.attributes, { ...creation, Manipulation: 4 });
+  assert.equal(joined.line_data.favored_attribute, "Dexterity");
+  assert.equal(joined.line_data.bloodline_favored_attribute, "Manipulation");
+  assert.deepEqual(vampireEditableCreationAttributes(joined.attributes, joined.line_data, clans.find((item) => item.id === "daeva")), creation);
+  assert.deepEqual(vampireEditableCreationAttributes({ ...joined.attributes, Dexterity: 4 }, joined.line_data, clans.find((item) => item.id === "daeva")), creation);
+  const removed = removeVampireBloodline(joined, definition, powers);
+  assert.deepEqual(removed.attributes, character.attributes);
+  assert.equal(removed.line_data.favored_attribute, "Dexterity");
+  assert.equal(removed.line_data.bloodline_favored_attribute, "");
+});
+
+test("Vampire Devotion prerequisites support alternatives and automatic Bloodline grants", async () => {
+  const { synchronizeAutomaticBloodlineDevotions, vampireDisciplinePrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const names = ["Celerity", "Resilience", "Vigor"];
+  assert.equal(vampireDisciplinePrerequisitesMet("Celerity ••• or Vigor •••", { Celerity: 1, Vigor: 3 }, names), true);
+  assert.equal(vampireDisciplinePrerequisitesMet("Four dots divided among Celerity, Resilience, and Vigor", { Celerity: 1, Resilience: 1, Vigor: 2 }, names), true);
+  assert.equal(vampireDisciplinePrerequisitesMet("Celerity ••; Resilience •", { Celerity: 2, Resilience: 0 }, names), false);
+  const powers = { disciplines: names.map((name) => ({ name })), devotions: [{ id: "free", bloodlineId: "test", experienceCost: 0, prerequisites: "Vigor ••" }] };
+  const character = { line_data: { bloodline_id: "test", disciplines: { Vigor: 1 }, devotion_ids: [] } };
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions(character, powers).line_data.devotion_ids, []);
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions({ ...character, line_data: { ...character.line_data, disciplines: { Vigor: 2 } } }, powers).line_data.devotion_ids, ["free"]);
+});
+
 test("Khaibit and Kerberos automatic Devotions are removed with their Bloodline", async () => {
   const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
@@ -370,6 +422,7 @@ test("Vampire sheet presents owned Coils and keeps all rituals under their Disci
   assert.deepEqual(ownedVampireRituals(powers, "theban", [rite.id, miracle.id]), [miracle]);
   assert.deepEqual(ownedVampireRituals(powers, "kimiya", [formula.id, miracle.id]), [formula]);
   assert.deepEqual(ownedVampireRituals(powers, "gilded-cage", [invocation.id, miracle.id]), [invocation]);
+  assert.equal(powers.coils.find((item) => item.id === "coil-quintessence").name, "Coil of Quintessence");
 });
 
 test("Vampire creation and editing persist the selected Covenant Discipline without losing XP advances", async () => {
@@ -402,6 +455,12 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   assert.equal(purchaseLabel("rite", "en-US"), "Crúac Rite");
   assert.equal(purchaseLabel("miracle", "en-US"), "Theban Miracle");
   assert.deepEqual(freeBloodSorcerySelections(catalog, new Set(), [], 0, 2), ["level-1", "level-2"]);
+  const source = await readFile(`${root}/game-lines/vampire/experience-panel.tsx`, "utf8");
+  assert.match(source, /supernatural", purchases: \["blood-potency", "discipline"\]/);
+  assert.match(source, /powers\.ritualDisciplines\.filter[\s\S]*powers\.coils\.filter/);
+  assert.match(source, /value === "rite" && cruacRating >= 1[\s\S]*value === "scale" && Math\.max/);
+  assert.match(source, /levels: mechanicsDetails|details: mechanicsDetails\(definition\), levels/);
+  assert.match(source, /label: t\("ui\.prerequisites"\), value: item\.prerequisites \?\? t\("ui\.none"\)/);
 });
 
 test("Vampire Experience refunds Kimiya and Therion without discarding later blood sorcery", async () => {
@@ -466,7 +525,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 5, "merits-vampire": 10, "vampire-powers": 10, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 10, "vampire-powers": 11, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {

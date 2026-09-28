@@ -65,6 +65,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       ...data,
       clan_id: clanId,
       bloodline_id: bloodlineId,
+      bloodline_favored_attribute: String(data.bloodline_favored_attribute ?? ""),
       clan_bane_active: data.clan_bane_active !== false,
       favored_attribute: String(data.favored_attribute ?? ""),
       covenant_id: covenantId,

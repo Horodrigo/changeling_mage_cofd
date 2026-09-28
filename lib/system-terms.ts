@@ -103,6 +103,8 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Benefícios da Corte":"Court Benefits",
   "Perícias de Ordem":"Order Skills",
   "Contrato":"Contract",
+  "Disciplina":"Discipline",
+  "Devoção":"Devotion",
   "Benefício de Contrato":"Contract Benefit",
   "Rota":"Rote",
   "Nenhum registro.":"No entries.",
@@ -119,6 +121,7 @@ const PORTUGUESE_TERMS: Record<string,string> = {
   Steed:"Corcel", Sword:"Espada", Chalice:"Cálice", Coin:"Moeda",
   Scepter:"Cetro", Stars:"Estrelas", Thorn:"Espinho",
   "Chess Master":"Mestre de Xadrez", Commander:"Comandante", Composer:"Compositor", Counselor:"Conselheiro", Daredevil:"Audacioso", Dynamo:"Dínamo", Protector:"Protetor", Provider:"Provedor", Scholar:"Erudito", Storyteller:"Contador de Histórias", Teacher:"Professor", Traditionalist:"Tradicionalista", Visionary:"Visionário",
+  Discipline:"Disciplina", Devotion:"Devoção",
   Acceptance:"Aceitação", Anger:"Raiva", Family:"Família", Friendship:"Amizade", Hate:"Ódio", Honor:"Honra", Joy:"Alegria", Love:"Amor", Memory:"Memória", Revenge:"Vingança", "Cold Iron":"Ferro Frio",
   Courtless:"Sem Corte",
 };

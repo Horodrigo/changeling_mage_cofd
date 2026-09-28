@@ -30,7 +30,7 @@ import { createRandomId } from "@/lib/random-id";
 import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName } from "./creation-rules";
+import { hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, synchronizeAutomaticBloodlineDevotions, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireEditableCreationAttributes } from "./creation-rules";
 import { isShadowCultId, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
@@ -178,11 +178,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     experienceHistoryKey: "vampire_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),
     grantedMeritSources: ["Vampire Template", "Vampire Shadow Cult"],
-    adjustAttributes: (values) => {
-      const favored = initialClan?.favoredAttributeMode === "both" ? initialClan.favoredAttributes : [String(initial?.line_data.favored_attribute ?? "")];
-      for (const name of favored) if (name && values[name] > 1) values[name] -= 1;
-      return values;
-    },
+    adjustAttributes: (values) => vampireEditableCreationAttributes(values, initial?.line_data ?? {}, initialClan),
   });
   const setMerits = common.setMerits;
   const [clanId, setClanId] = useState(String(initial?.line_data.clan_id ?? ""));
@@ -376,7 +372,9 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
     const finalAttributes = { ...common.attributes };
     const favoredAttributes = selectedClan?.favoredAttributeMode === "both" ? selectedClan.favoredAttributes : favoredAttribute ? [favoredAttribute] : [];
-    for (const name of favoredAttributes) finalAttributes[name] = Math.min(5, Number(common.attributes[name] ?? 1) + 1);
+    const bloodlineFavored = String(source?.line_data.bloodline_favored_attribute ?? "");
+    const activeFavoredAttributes = source?.line_data.bloodline_id && bloodlineFavored ? [bloodlineFavored] : favoredAttributes;
+    for (const name of activeFavoredAttributes) finalAttributes[name] = Math.min(5, Number(common.attributes[name] ?? 1) + 1);
     for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
     const finalSkills = { ...common.skills };
     for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
@@ -412,7 +410,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
       derived: vampireDerived(finalAttributes, finalSkills, finalDisciplines, finalBloodPotency, reference),
       current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
     };
-    return synchronizeVampireBuilderMeritGrants(completed);
+    return synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(completed), powers);
   };
   const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) {

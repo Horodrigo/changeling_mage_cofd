@@ -48,6 +48,9 @@ export type VampireBloodlineDefinition = {
   name: string;
   translatedName: string;
   parentClan: string;
+  parentClanIds?: string[];
+  covenantIds?: string[];
+  minimumCovenantStatus?: number;
   requirements?: string;
   nicknames: string[];
   favoredAttributes: [string, string];
