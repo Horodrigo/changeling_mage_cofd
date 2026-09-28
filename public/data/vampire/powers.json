@@ -1405,6 +1405,11 @@
           "name": "Cast Off the Scales",
           "translatedName": "Cast Off the Scales",
           "summary": "Cast Off the Scales, the 1-dot expression of Spiritus Sancti.",
+          "cost": "None",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Scene",
+          "effect": "The vampire perceives beings in Twilight, even through supernatural concealment while they remain in his presence, and Kindred Senses can track ephemera as though tracking blood. He may use Disciplines on ephemera that can perceive him, except powers requiring the target to smell Vitae unless Step on the Path is active.",
           "manualOnly": true
         },
         {
@@ -1412,6 +1417,12 @@
           "name": "Step on the Path",
           "translatedName": "Step on the Path",
           "summary": "Step on the Path, the 2-dot expression of Spiritus Sancti.",
+          "cost": "None",
+          "requirement": "Cast Off the Scales must be active.",
+          "dicePool": "Wits + Occult + Spiritus Sancti",
+          "action": "Instant",
+          "duration": "Scene",
+          "rollResults": { "success": "Interact with beings in Twilight as though they were physical, including feeding on them. The vampire must spend Willpower to impose Scarred or Swooning. Ephemera can affect her equally; only her body crosses the boundary, so carried weapons and armor do not.", "exceptionalSuccess": "The effect lasts for the night or until voluntarily ended.", "failure": "The vampire remains limited to the material world.", "dramaticFailure": "Ephemera can affect the vampire, but she cannot affect them." },
           "manualOnly": true
         },
         {
@@ -1419,6 +1430,12 @@
           "name": "Shape the Divine",
           "translatedName": "Shape the Divine",
           "summary": "Shape the Divine, the 3-dot expression of Spiritus Sancti.",
+          "cost": "1 Vitae",
+          "requirement": "Step on the Path must be active.",
+          "dicePool": "Intelligence + Occult + Spiritus Sancti (when a Numen requires a roll)",
+          "action": "Reflexive",
+          "duration": "Scene",
+          "effect": "Gain access to Numina equal to Spiritus Sancti dots. Spend Vitae in place of Essence and use Blood Potency where Rank determines potency. The vampire learns one Numen when gaining this power and learns others by feeding an ephemeral being to discorporation. Replacing a known Numen requires a full day and night before using the new one.",
           "manualOnly": true
         },
         {
@@ -1426,6 +1443,12 @@
           "name": "Consecration of the Self",
           "translatedName": "Consecration of the Self",
           "summary": "Consecration of the Self, the 4-dot expression of Spiritus Sancti.",
+          "cost": "1 Willpower",
+          "requirement": "Fill an ephemeral being's Corpus with lethal damage, then activate the power; a spirit with no Essence cannot resist.",
+          "dicePool": "Resolve + Occult + Spiritus Sancti vs. Resistance + Rank",
+          "action": "Contested; resistance is reflexive",
+          "duration": "Night",
+          "rollResults": { "success": "Devour the spirit and take on its traits. The vampire may exchange Vitae for another ephemera's Essence one-for-one, her fangs become a bane to ephemera, she may choose her own direction of gravity and move at normal Speed, and she may pass through beings and solid objects as an instant action unless Twilight is obstructed. Using the last benefit while Dodging adds Spiritus Sancti dots.", "exceptionalSuccess": "The transformation lasts nights equal to Blood Potency.", "failure": "The spirit's Essence does not merge with the vampire.", "dramaticFailure": "The spirit possesses the vampire for the scene." },
           "manualOnly": true
         },
         {
@@ -1433,6 +1456,12 @@
           "name": "The Kingdom of Heaven",
           "translatedName": "The Kingdom of Heaven",
           "summary": "The Kingdom of Heaven, the 5-dot expression of Spiritus Sancti.",
+          "cost": "3–9 Vitae and 1 Willpower",
+          "requirement": "Scribe holy sigils in Vitae around the perimeter: three for a house or garden, six for a city block or cemetery, and nine for a megamall or city park.",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "One week per Blood Potency dot; longer while the vampire remains",
+          "effect": "Ephemera within the Kingdom gain Materialized. Entities in Twilight approaching within 10 − Blood Potency meters roll Resistance + Rank penalized by Spiritus Sancti; failure compels entry. Leaving without permission costs one Willpower and requires Power + Rank contested by Presence + Intimidation + Spiritus Sancti. The vampire always senses ephemera inside, pays no initial Vitae for Shape of the Divine there, and multiplies Cast Off the Scales' Kindred Senses range by Spiritus Sancti dots. After the duration, the effect ends only when the vampire leaves.",
           "manualOnly": true
         }
       ]
