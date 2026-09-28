@@ -43,7 +43,7 @@
     "vampire-torpor": { "version": 1, "url": "/data/vampire/torpor.json" },
     "vampire-bloodlines": { "version": 6, "url": "/data/vampire/bloodlines.json" },
     "merits-vampire": { "version": 11, "url": "/data/vampire/merits.json" },
-    "vampire-powers": { "version": 17, "url": "/data/vampire/powers.json" },
+    "vampire-powers": { "version": 18, "url": "/data/vampire/powers.json" },
     "vampire-conditions": { "version": 6, "url": "/data/vampire/conditions.json" }
   }
 }

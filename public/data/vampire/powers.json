@@ -603,6 +603,12 @@
           "name": "Digital Whispers",
           "translatedName": "Digital Whispers",
           "summary": "Digital Whispers, the 1-dot expression of Interface.",
+          "cost": "None (or 1 Vitae, optional)",
+          "requirement": "Touch the device.",
+          "dicePool": "Manipulation + Computer + Interface",
+          "action": "Instant",
+          "duration": "Scene; a routine lasts up to one night",
+          "rollResults": { "success": "Verbally command a device to perform any function it can, bypassing locks and passwords. A cluster of nearby devices of one broad type may be commanded together. Direct use adds Interface dots to the equipment bonus. Spending one Vitae and smearing it on the device creates one simple triggered routine for the night.", "exceptionalSuccess": "The device follows commands exactly and may interpret them creatively.", "failure": "The device rejects the Beast.", "dramaticFailure": "Interface cannot affect the device for the night, and mundane use suffers its equipment bonus as a penalty." },
           "manualOnly": true
         },
         {
@@ -610,6 +616,12 @@
           "name": "Un-Brick",
           "translatedName": "Un-Brick",
           "summary": "Un-Brick, the 2-dot expression of Interface.",
+          "cost": "1 Vitae",
+          "requirement": "Smear the device with the Vitae spent.",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "Blood Potency × object Durability nights",
+          "effect": "A broken device returns to full function, including its stored data, for the duration. Spending another Vitae before expiration resets the duration. It gains half Blood Potency, rounded up, as additional Structure, and the vampire may use Digital Whispers on it at any distance. Anyone else using it suffers its equipment bonus as a penalty, and a failed action becomes a dramatic failure.",
           "manualOnly": true
         },
         {
@@ -617,6 +629,12 @@
           "name": "Access Denied",
           "translatedName": "Access Denied",
           "summary": "Access Denied, the 3-dot expression of Interface.",
+          "cost": "2 Vitae",
+          "requirement": "Mark the victim with one of the Vitae spent.",
+          "dicePool": "Presence + Computer + Interface − Stamina",
+          "action": "Instant",
+          "duration": "Night, or until the blood is removed",
+          "rollResults": { "success": "The victim suffers successes as a penalty to use any digital or electronic technology, and failures become dramatic failures. The vampire may also define one routine that infects devices the victim touches; it lasts one night per success.", "exceptionalSuccess": "The victim also loses one Willpower whenever he fails to use a device.", "failure": "The link is not established.", "dramaticFailure": "The Beast uploads incriminating information about the vampire to one of the victim's devices." },
           "manualOnly": true
         },
         {
@@ -624,6 +642,12 @@
           "name": "Going Viral",
           "translatedName": "Going Viral",
           "summary": "Going Viral, the 4-dot expression of Interface.",
+          "cost": "2 Vitae",
+          "requirement": "Spill the Vitae on a breaker or electrical source.",
+          "dicePool": "Presence + Intimidation + Interface",
+          "action": "Instant",
+          "duration": "Scene",
+          "rollResults": { "success": "Inflict the Power Surge Tilt in a radius of Interface × Blood Potency meters. Mobile devices attack nearby victims, stationary devices stop working, and storage devices erase themselves and overheat. The vampire and devices she carries are never targeted.", "exceptionalSuccess": "The vampire gains Sated.", "failure": "Nearby devices flicker or buzz, but nothing else happens.", "dramaticFailure": "The vampire gains Confused." },
           "manualOnly": true
         },
         {
@@ -631,6 +655,12 @@
           "name": "Domain Admin",
           "translatedName": "Domain Admin",
           "summary": "Domain Admin, the 5-dot expression of Interface.",
+          "cost": "3–9 Vitae and 1 Willpower",
+          "requirement": "Mark three, six, or nine strategic digital hubs with Vitae, depending on the domain's size.",
+          "dicePool": "None",
+          "action": "Instant",
+          "duration": "One week per Blood Potency dot; longer while the vampire remains",
+          "effect": "Within the marked domain, the vampire senses every digital device and may access it as though holding it; other Interface powers work remotely and last as long as Domain Admin. If the area has Wi-Fi or another network, spending one Willpower teleports her through it to any device in the domain over one turn. The effect persists while she remains and the marks survive, but ends after its normal duration once she leaves.",
           "manualOnly": true
         }
       ]
@@ -648,35 +678,45 @@
           "rating": 1,
           "name": "Lithopedia •",
           "translatedName": "Lithopedia •",
-          "summary": "Lithopedia •, the 1-dot expression of Lithopedia.",
+          "summary": "Establish territory and cast Lithopedia rites across it; gain one free rite.",
+          "dicePool": "Presence + Occult + Lithopedia",
+          "effect": "Marking a central point with Vitae establishes a territory where the vampire is a legal or de facto resident. Rites must be cast within that territory or a Wyrm's Nest and normally affect up to half a square mile, plus another half mile per Potency, without exceeding the territory. The first dot grants one free rite. A dramatic failure gives Confused.",
           "manualOnly": true
         },
         {
           "rating": 2,
           "name": "Lithopedia ••",
           "translatedName": "Lithopedia ••",
-          "summary": "Lithopedia ••, the 2-dot expression of Lithopedia.",
+          "summary": "Deepen Lithopedia and gain a free two-dot rite with Bloodline Status.",
+          "dicePool": "Presence + Occult + Lithopedia",
+          "effect": "Lithopedia manipulates territories and their denizens rather than individuals. Rites must be cast in established territory or a Wyrm's Nest and normally affect half a square mile, plus another half mile per Potency, within its boundaries. With Bloodline Status, this dot grants a free rite of the appropriate level. A dramatic failure gives Confused.",
           "manualOnly": true
         },
         {
           "rating": 3,
           "name": "Lithopedia •••",
           "translatedName": "Lithopedia •••",
-          "summary": "Lithopedia •••, the 3-dot expression of Lithopedia.",
+          "summary": "Deepen Lithopedia and gain a free three-dot rite with Bloodline Status.",
+          "dicePool": "Presence + Occult + Lithopedia",
+          "effect": "Lithopedia manipulates territories and their denizens rather than individuals. Rites must be cast in established territory or a Wyrm's Nest and normally affect half a square mile, plus another half mile per Potency, within its boundaries. With Bloodline Status, this dot grants a free rite of the appropriate level. A dramatic failure gives Confused.",
           "manualOnly": true
         },
         {
           "rating": 4,
           "name": "Lithopedia ••••",
           "translatedName": "Lithopedia ••••",
-          "summary": "Lithopedia ••••, the 4-dot expression of Lithopedia.",
+          "summary": "Deepen Lithopedia and gain a free four-dot rite with Bloodline Status.",
+          "dicePool": "Presence + Occult + Lithopedia",
+          "effect": "Lithopedia manipulates territories and their denizens rather than individuals. Rites must be cast in established territory or a Wyrm's Nest and normally affect half a square mile, plus another half mile per Potency, within its boundaries. With Bloodline Status, this dot grants a free rite of the appropriate level. A dramatic failure gives Confused.",
           "manualOnly": true
         },
         {
           "rating": 5,
           "name": "Lithopedia •••••",
           "translatedName": "Lithopedia •••••",
-          "summary": "Lithopedia •••••, the 5-dot expression of Lithopedia.",
+          "summary": "Master Lithopedia and gain a free five-dot rite with Bloodline Status.",
+          "dicePool": "Presence + Occult + Lithopedia",
+          "effect": "Lithopedia manipulates territories and their denizens rather than individuals. Rites must be cast in established territory or a Wyrm's Nest and normally affect half a square mile, plus another half mile per Potency, within its boundaries. With Bloodline Status, this dot grants a free rite of the appropriate level. A dramatic failure gives Confused.",
           "manualOnly": true
         }
       ]
@@ -8114,7 +8154,9 @@
       "summary": "Invert the spiritual resonance of an area and alter its Resonant Condition.",
       "source": "Strange Shades: Mekhet",
       "page": 69,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "One week",
+    "effect": "The rite introduces chaos into an area, reversing qualities it previously encouraged and temporarily altering the Resonant Condition of any locus. The area imposes a penalty equal to the caster's Crúac dots on Social or Physical actions it would previously have aided."
     },
     {
       "id": "sethite-cruac-ahmets-pursuit",
@@ -8131,7 +8173,9 @@
       "summary": "Curse a nearby subject through a material focus, inflicting Lost and revealing the target's location for the rest of the night.",
       "source": "Strange Shades: Mekhet",
       "page": 70,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Night",
+    "effect": "Using an effigy or other material focus, curse a victim within one mile with Lost. Even a successful navigation roll, penalized by Potency, sends the victim along the worst route or through the wrong door. The ritualist always knows where the victim runs."
     },
     {
       "id": "sethite-cruac-doom-osiris",
@@ -8147,7 +8191,9 @@
       "summary": "Consecrate a bladed weapon so its attacks inflict aggravated damage upon ephemeral beings.",
       "source": "Strange Shades: Mekhet",
       "page": 70,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Night",
+    "effect": "A bladed weapon deals aggravated damage to ephemeral beings and Strix, even while they are in Twilight if the wielder can perceive them. At dawn the weapon turns to sand."
     },
     {
       "id": "sethite-cruac-feast-ka",
@@ -8164,7 +8210,8 @@
       "summary": "Force a Hollow Mekhet's Ka to materialize and feed it Essence.",
       "source": "Strange Shades: Mekhet",
       "page": 70,
-      "manualOnly": true
+    "manualOnly": true,
+    "effect": "Prepare a meal for a Hollow Mekhet's Ka using foods the vampire enjoyed in life and Vitae. The Ka gains Materialized; if tracking Conditions, the table gains Anchor and Open. If it eats, it gains Essence equal to the Vitae used and cannot manifest to harass the vampire again until her next breaking point, though she may still call it voluntarily. While materialized, it can converse, with its attitude determined by its relationship with the Mekhet."
     },
     {
       "id": "sethite-cruac-hand-of-seth",
@@ -8181,7 +8228,10 @@
       "summary": "Exorcise a possessing ephemeral entity from its host.",
       "source": "Strange Shades: Mekhet",
       "page": 70,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Scene",
+    "requirement": "A scrap of the vessel's DNA, such as hair or fingernails.",
+    "effect": "Force a spirit or Strix out of a body within one mile. A ghost or spirit returns to Twilight, the vessel's ephemeral Conditions are temporarily suppressed, and the entity cannot repossess the victim for the scene. This rite does not affect Claimed."
     },
     {
       "id": "sethite-cruac-thrashing-apeps-coils",
@@ -8197,7 +8247,9 @@
       "summary": "Call violent rain over the ritual area and optionally add heavy winds; prepared allies are protected.",
       "source": "Strange Shades: Mekhet",
       "page": 71,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Night",
+    "effect": "Impale the sacrifice with a spear at the climax of the rite to impose Heavy Rain within a mile, covering roughly a half-mile radius. The ritualist and allies carrying Sethite-blessed charms are immune. Adding one Vitae to the sacrifice also calls one level of Heavy Winds. The Sethite may dismiss the storm with an instant action."
     },
     {
       "id": "cruac-gwydions-curse",
