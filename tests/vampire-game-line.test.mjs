@@ -423,6 +423,9 @@ test("Vampire sheet presents owned Coils and keeps all rituals under their Disci
   assert.deepEqual(ownedVampireRituals(powers, "kimiya", [formula.id, miracle.id]), [formula]);
   assert.deepEqual(ownedVampireRituals(powers, "gilded-cage", [invocation.id, miracle.id]), [invocation]);
   assert.equal(powers.coils.find((item) => item.id === "coil-quintessence").name, "Coil of Quintessence");
+  const mine = powers.devotions.find((item) => item.id === "devotion-what-s-mine-is-mine");
+  assert.equal(mine.prerequisites, "Dominate •, Resilience •");
+  assert.match(mine.effect, /twice her Blood Potency/);
 });
 
 test("Vampire creation and editing persist the selected Covenant Discipline without losing XP advances", async () => {
@@ -460,7 +463,8 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   assert.match(source, /powers\.ritualDisciplines\.filter[\s\S]*powers\.coils\.filter/);
   assert.match(source, /value === "rite" && cruacRating >= 1[\s\S]*value === "scale" && Math\.max/);
   assert.match(source, /levels: mechanicsDetails|details: mechanicsDetails\(definition\), levels/);
-  assert.match(source, /label: t\("ui\.prerequisites"\), value: item\.prerequisites \?\? t\("ui\.none"\)/);
+  assert.match(source, /add\(t\("ui\.prerequisites"\), item\.prerequisites/);
+  assert.match(source, /description: item\.effect \?\? item\.summary, descriptionAfterDetails: true/);
 });
 
 test("Vampire Experience refunds Kimiya and Therion without discarding later blood sorcery", async () => {
@@ -525,7 +529,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 10, "vampire-powers": 11, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 10, "vampire-powers": 12, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {

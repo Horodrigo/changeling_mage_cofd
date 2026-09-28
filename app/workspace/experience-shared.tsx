@@ -102,6 +102,8 @@ type ExperienceCatalogItem = {
   meta: string;
   disabled?: boolean;
   details?: Array<{ label: string; value: string; warning?: boolean }>;
+  footerDetails?: Array<{ label: string; value: string; warning?: boolean }>;
+  descriptionAfterDetails?: boolean;
   levels?: Array<{ label: string; value: string }>;
 };
 
@@ -145,7 +147,7 @@ export function ExperiencePowerPicker({
       (category === "Todas" || (item.categories ?? [item.category]).includes(category)) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
       (!normalized ||
-        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta} ${item.details?.map(({ label, value }) => `${label} ${value}`).join(" ") ?? ""}`
+        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta} ${[...(item.details ?? []), ...(item.footerDetails ?? [])].map(({ label, value }) => `${label} ${value}`).join(" ")}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
     );
@@ -201,8 +203,10 @@ export function ExperiencePowerPicker({
               <div>
                 <strong>{item.name}</strong>
                 <small>{item.meta}</small>
-                <p>{item.description}</p>
+                {!item.descriptionAfterDetails && <p>{item.description}</p>}
                 {item.details?.map(({ label, value, warning }) => <p className={warning ? "merit-prerequisites-missing" : undefined} key={`${label}-${value}`}><strong>{label}:</strong> {value}</p>)}
+                {item.descriptionAfterDetails && <p>{item.description}</p>}
+                {item.footerDetails?.map(({ label, value, warning }) => <p className={warning ? "merit-prerequisites-missing" : undefined} key={`${label}-${value}`}><strong>{label}:</strong> {value}</p>)}
                 {item.levels?.map(({ label, value }) => <details key={label} onClick={(event) => event.stopPropagation()}><summary><strong>{label}</strong></summary><p>{value}</p></details>)}
               </div>
             </SelectableCatalogCard>
