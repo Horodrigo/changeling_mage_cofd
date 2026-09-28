@@ -211,37 +211,62 @@
       "levels": [
         {
           "rating": 1,
-          "name": "Live Current",
-          "translatedName": "Live Current",
-          "summary": "Live Current, the 1-dot expression of Surge.",
+          "name": "Surge •",
+          "translatedName": "Surge •",
+          "summary": "Sense, consume, redirect, and charge electricity with one dot of Surge.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "The vampire senses electrical sources and can track current using the Kindred Senses rules for finding blood. By touching a source or endpoint, she draws one Vitae per turn, safely taking up to one Vitae per scene; each excess Vitae causes one bashing damage. She may spend Vitae to redirect current up to two meters or charge one level of electricity before releasing it. Surge cannot feed itself or another Keravnos.",
           "manualOnly": true
         },
         {
           "rating": 2,
-          "name": "Battery",
-          "translatedName": "Battery",
-          "summary": "Battery, the 2-dot expression of Surge.",
+          "name": "Surge ••",
+          "translatedName": "Surge ••",
+          "summary": "Sense, consume, redirect, and charge electricity with two dots of Surge.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "The vampire senses electrical sources and can track current using the Kindred Senses rules for finding blood. By touching a source or endpoint, she draws one Vitae per turn, safely taking up to two Vitae per scene; each excess Vitae causes one bashing damage. She may spend Vitae to redirect current up to four meters or charge up to two levels of electricity before releasing it. Surge cannot feed itself or another Keravnos.",
           "manualOnly": true
         },
         {
           "rating": 3,
-          "name": "Grid Sense",
-          "translatedName": "Grid Sense",
-          "summary": "Grid Sense, the 3-dot expression of Surge.",
+          "name": "Surge •••",
+          "translatedName": "Surge •••",
+          "summary": "Sense, consume, redirect, and charge electricity with three dots of Surge.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "The vampire senses electrical sources and can track current using the Kindred Senses rules for finding blood. By touching a source or endpoint, she draws one Vitae per turn, safely taking up to three Vitae per scene; each excess Vitae causes one bashing damage. She may spend Vitae to redirect current up to six meters or charge up to three levels of electricity before releasing it. Surge cannot feed itself or another Keravnos.",
           "manualOnly": true
         },
         {
           "rating": 4,
-          "name": "Arc Flash",
-          "translatedName": "Arc Flash",
-          "summary": "Arc Flash, the 4-dot expression of Surge.",
+          "name": "Surge ••••",
+          "translatedName": "Surge ••••",
+          "summary": "Sense, consume, redirect, and charge electricity with four dots of Surge.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "The vampire senses electrical sources and can track current using the Kindred Senses rules for finding blood. By touching a source or endpoint, she draws one Vitae per turn, safely taking up to four Vitae per scene; each excess Vitae causes one bashing damage. She may spend Vitae to redirect current up to eight meters or charge up to four levels of electricity before releasing it. Surge cannot feed itself or another Keravnos.",
           "manualOnly": true
         },
         {
           "rating": 5,
-          "name": "Living Storm",
-          "translatedName": "Living Storm",
-          "summary": "Living Storm, the 5-dot expression of Surge.",
+          "name": "Surge •••••",
+          "translatedName": "Surge •••••",
+          "summary": "Sense, consume, redirect, and charge electricity with five dots of Surge.",
+          "cost": "None (persistent) or 1 Vitae per active effect",
+          "dicePool": "None",
+          "action": "None (persistent) or reflexive (active)",
+          "duration": "Permanent (persistent) or one turn (active)",
+          "effect": "The vampire senses electrical sources and can track current using the Kindred Senses rules for finding blood. By touching a source or endpoint, she draws one Vitae per turn, safely taking up to five Vitae per scene; each excess Vitae causes one bashing damage. She may spend Vitae to redirect current up to ten meters or charge up to five levels of electricity before releasing it. Surge cannot feed itself or another Keravnos.",
           "manualOnly": true
         }
       ]
@@ -9505,7 +9530,10 @@
       "summary": "Turn nearby strangers into a temporary source of coordinated information and assistance.",
       "source": "False Gods: Ventrue",
       "page": 136,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Night",
+    "requirement": "Ways and Means: Walk from a place frequented by the desired people to the target, using polished quartz to capture and direct their energy, then leave it at the epicenter.",
+    "effect": "The invocation attracts people who embody a specified emotion or group identity to an area about the size of a large city block. This is not compulsion; anyone who follows the impulse refreshes one spent Willpower. For the rest of the night, the ritualist exceptionally succeeds with three successes when searching the area for such people, including with supernatural senses such as Beast's Hackles."
     },
     {
       "id": "gilded-green-light",
@@ -9518,7 +9546,10 @@
       "summary": "Make urban routes and systems favor movement through the affected area.",
       "source": "False Gods: Ventrue",
       "page": 136,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Until sunrise",
+    "requirement": "Ways and Means: A detailed map of the area with its routes traced in pencil using a straightedge.",
+    "effect": "The urban landscape subtly becomes more efficient: alleys shorten, paths smooth, and crossing lights synchronize. Rolls to travel through the area gain the Advanced Action quality: roll twice and keep the better result."
     },
     {
       "id": "gilded-cordon",
@@ -9531,7 +9562,10 @@
       "summary": "Turn a boundary into an occult barrier that discourages or blocks passage.",
       "source": "False Gods: Ventrue",
       "page": 137,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "24 hours",
+    "requirement": "Ways and Means: Cast inside a legal building with jurisdiction over the target area and smear one Vitae on an official record connected to the subject.",
+    "effect": "A subject currently within the chosen area cannot escape by mundane means; every mundane attempt automatically fails as the city produces barriers and coincidences. Supernatural escape triggers a Clash of Wills."
     },
     {
       "id": "gilded-gerrymandering",
@@ -9544,7 +9578,10 @@
       "summary": "Redefine which places and people count as belonging to the Invocation's area.",
       "source": "False Gods: Ventrue",
       "page": 137,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "One scene after the crowd gathers",
+    "requirement": "Ways and Means: A space capable of holding the intended crowd, plus photographs or detailed plans marking every exit.",
+    "effect": "Within one hour, traffic and civic infrastructure gather up to 100 people, plus another 100 per Potency, into a predefined space. Crowdsourcing may define the type of people gathered. They are not compelled to remain, but attempts to leave during the scene suffer a penalty equal to Gilded Cage dots, reduced by one per 100 people in the crowd. A mass attempt to escape may cause the Stampede Tilt."
     },
     {
       "id": "gilded-red-light",
@@ -9557,7 +9594,10 @@
       "summary": "Make urban routes and systems obstruct movement through the affected area.",
       "source": "False Gods: Ventrue",
       "page": 137,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Night",
+    "requirement": "Ways and Means: A detailed map of the area with its routes traced using a straightedge, then damaged beyond use.",
+    "effect": "The urban landscape develops obstacles and inefficiencies. Rolls to navigate or travel quickly through it automatically fail, and all travel takes three times as long. The ritualist is immune while on foot or controlling her own vehicle and may grant immunity to up to Potency other people using geomantic symbols. Where Green Light overlaps, only the ritualist and her allies receive Green Light's benefit."
     },
     {
       "id": "gilded-semiotics",
@@ -9570,7 +9610,10 @@
       "summary": "Rewrite the social meaning of signs and landmarks within the affected area.",
       "source": "False Gods: Ventrue",
       "page": 137,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "One month",
+    "requirement": "Ways and Means: A diagram marking the symbol's location and a visible covenant symbol created by the ritualist.",
+    "effect": "The symbol carries a specific behavioral resonance. Actions within visual range that further that resonance gain 8-again. The effect may be renewed before expiration by a Mason who knows Semiotics spending one Willpower and touching the object; removing or destroying it ends the invocation."
     },
     {
       "id": "gilded-rapid-transit",
@@ -9583,7 +9626,10 @@
       "summary": "Create an impossibly efficient route between prepared points in the city.",
       "source": "False Gods: Ventrue",
       "page": 138,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "Until the end of the night or until used",
+    "requirement": "Ways and Means: Mark the destination on a physical map using the point of a precious gemstone and keep the gem until activation.",
+    "effect": "The ritualist may teleport to the marked destination as a reflexive action. She may take anything she is touching, limited to a number of Size 3+ objects or people equal to Potency, and cannot carry anything larger than herself. The gemstone remains at the departure point."
     },
     {
       "id": "gilded-rezoning",
@@ -9596,7 +9642,10 @@
       "summary": "Change the supernatural character and permitted uses of an urban district.",
       "source": "False Gods: Ventrue",
       "page": 138,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "One month",
+    "requirement": "Ways and Means: A pint of blood from several residents, used to draw a detailed picture of the area.",
+    "effect": "The invocation changes an area's physical and metaphysical trajectory toward prosperity or decline. Actions opposing that change automatically fail unless the actor spends Willpower; this expenditure permits the roll but grants no +3 bonus."
     },
     {
       "id": "gilded-synopticon",
@@ -9609,7 +9658,10 @@
       "summary": "Use the city's systems and observers as a supernatural surveillance network.",
       "source": "False Gods: Ventrue",
       "page": 138,
-      "manualOnly": true
+    "manualOnly": true,
+    "duration": "One hour, plus one hour per additional Potency",
+    "requirement": "Ways and Means: Give reflective objects to at least two people and spill one Vitae at each cardinal direction around their building.",
+    "effect": "The reflective objects record everything their bearers see and hear while inside the building. Smearing another mirror with one Vitae provides a live feed for minutes equal to Potency; additional periods cost another Vitae. Afterward, the ritualist may drink the blood used in the Ways and Means to review each feed once in real time. Reviewing everything instantaneously causes Distracted for the rest of the scene."
     },
     {
       "id": "gilded-remise-a-neuf",
@@ -9622,7 +9674,11 @@
       "summary": "Renew a district according to the Architects' intended design.",
       "source": "False Gods: Ventrue",
       "page": 139,
-      "manualOnly": true
+    "manualOnly": true,
+    "cost": "1 Willpower dot",
+    "duration": "Indefinite",
+    "requirement": "Ways and Means: Cast within the target area over its original blueprints or government property plans.",
+    "effect": "The ritualist rearranges streets, alleys, paths, rooms, or whole buildings within a large city block or a single building. She cannot merge rooms or create impossible architecture. The Storyteller sets the limits but should favor permissive interpretations. Ending the invocation restores the spent Willpower dot; if it was already repurchased, the character instead gains a Beat."
     }
   ],
   "detournements": [

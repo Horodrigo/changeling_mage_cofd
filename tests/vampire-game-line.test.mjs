@@ -96,16 +96,19 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(powers.disciplines.every((item) => item.source && item.page));
 });
 
-test("Better Feared powers include their published rules text", async () => {
+test("audited Vampire sourcebooks include their published rules text", async () => {
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
   const entries = [
     ...powers.disciplines.flatMap((item) => item.levels.map((level) => ({ ...level, source: item.source }))),
     ...Object.entries(powers)
       .filter(([key, value]) => key !== "disciplines" && Array.isArray(value))
       .flatMap(([, value]) => value.flatMap((item) => item.levels?.map((level) => ({ ...level, source: item.source })) ?? [item])),
-  ].filter((item) => item.source === "Better Feared: Nosferatu");
-  assert.ok(entries.length > 0);
-  assert.deepEqual(entries.filter((item) => !["effect", "procedure", "outcome", "rollResults"].some((field) => item[field])).map((item) => item.name), []);
+  ];
+  for (const source of ["Better Feared: Nosferatu", "False Gods: Ventrue"]) {
+    const sourceEntries = entries.filter((item) => item.source === source);
+    assert.ok(sourceEntries.length > 0, source);
+    assert.deepEqual(sourceEntries.filter((item) => !["effect", "procedure", "outcome", "rollResults"].some((field) => item[field])).map((item) => item.name), [], source);
+  }
   assert.equal(powers.devotions.some((item) => item.name === "Kingdom of Heaven"), true);
   assert.equal(powers.thebanMiracles.some((item) => item.name === "The Kingdom of Heaven"), false);
 });
@@ -585,7 +588,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 15, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 16, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {
