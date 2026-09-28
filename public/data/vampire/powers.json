@@ -120,14 +120,16 @@
           "name": "Diagnose",
           "translatedName": "Diagnose",
           "summary": "Sense carriers of disease.",
-          "dicePool": "Intelligence + Medicine + Cachexy"
+      "cost": "None", "dicePool": "Intelligence + Medicine + Cachexy", "action": "Instant", "duration": "Scene",
+      "rollResults": { "success": "Sense every person or animal in line of sight carrying an infection, including Kindred carriers; Obfuscate triggers a Clash of Wills.", "exceptionalSuccess": "Also identify the diseases present.", "failure": "Receive no impression.", "dramaticFailure": "Receive a completely false or misleading impression." }
         },
         {
           "rating": 2,
           "name": "Contaminate",
           "translatedName": "Contaminate",
           "summary": "Render a space a contagion vector for a disease.",
-          "cost": "1 Vitae"
+      "cost": "1 Vitae", "requirement": "Spill the Vitae on an object or area no larger than one square meter.", "dicePool": "None", "action": "Instant", "duration": "One night",
+      "effect": "Anyone touching the contaminated surface with bare skin reflexively rolls Stamina. Failure infects them with the chosen disease; success resists, and exceptional success grants immunity to supernatural attempts to inflict that same disease. Kindred suffer no symptoms but may carry it."
         },
         {
           "rating": 3,
@@ -135,7 +137,8 @@
           "translatedName": "Inflame",
           "summary": "Exacerbate a disease's symptoms.",
           "cost": "1 Vitae",
-          "dicePool": "Wits + Survival + Cachexy − Stamina"
+      "dicePool": "Wits + Survival + Cachexy − Stamina", "action": "Instant",
+      "rollResults": { "success": "A mortal's existing illness flares, imposing −2 to all rolls for turns equal to successes in addition to its normal Tilt. Only one instance may affect a victim at once, though later uses can extend it.", "exceptionalSuccess": "The victim also collapses on the first turn and cannot act or defend.", "failure": "No effect.", "dramaticFailure": "Cure the disease or send it into remission for the story; this result cannot be chosen voluntarily." }
         },
         {
           "rating": 4,
@@ -143,7 +146,8 @@
           "translatedName": "Plague-Bearer",
           "summary": "Quickly infect nearby victims with a disease.",
           "cost": "1 Vitae per turn",
-          "dicePool": "Intelligence + Medicine + Cachexy"
+      "dicePool": "Intelligence + Medicine + Cachexy", "action": "Instant",
+      "rollResults": { "success": "Per success, infect up to three mortals or one vampire with a chosen disease within 10 meters per Stamina dot. On later turns the vampire may keep infecting the same number of new targets while moving up to Speed, but cannot speak or take complex actions.", "exceptionalSuccess": "No additional effect beyond the increased number of targets.", "failure": "Infect no one and cannot use Plague-Bearer again until the next sunset.", "dramaticFailure": "Infect no one and cannot use any Cachexy power until the next sunset." }
         },
         {
           "rating": 5,
@@ -151,7 +155,8 @@
           "translatedName": "Accelerate Disease",
           "summary": "Worsen even mild sickness to inflict lethal damage.",
           "cost": "1 Willpower",
-          "dicePool": "Wits + Survival + Cachexy − Stamina"
+      "dicePool": "Wits + Survival + Cachexy − Stamina", "action": "Instant", "requirement": "The target must be infected and cannot be Kindred.",
+      "rollResults": { "success": "The disease inflicts one lethal damage per success in a manner appropriate to its symptoms.", "exceptionalSuccess": "The victim also collapses on the first turn and cannot act or defend.", "failure": "No effect.", "dramaticFailure": "Cure the disease or send it into remission for the story; this result cannot be chosen voluntarily." }
         }
       ]
     },
