@@ -27,6 +27,48 @@ test("static Merit catalogs have stable IDs, valid ratings and known line owners
   }
 });
 
+test("Changeling Merit descriptions retain the audited mechanical details", async () => {
+  const merits = await json(new URL("../public/data/core/merits/changeling.json", import.meta.url));
+  const requiredDetails = {
+    "ctl-2ed:acute-senses": /total darkness/,
+    "ctl-2ed:arcadian-metabolism": /Aggravated damage healing is unchanged/,
+    "ctl-2ed:brownie-s-boon": /one-eighth/,
+    "ctl-2ed:cloak-of-leaves": /physical Tilts/,
+    "ctl-2ed:cold-hearted": /Once per scene/,
+    "ctl-2ed:court-goodwill": /both ratings fall by one until reparations/,
+    "ctl-2ed:diviner": /Gate of Ivory or Horn/,
+    "ctl-2ed:dream-warrior": /directly affect the fight/,
+    "ctl-2ed:faerie-favor": /Sanctity of Merits/,
+    "ctl-2ed:gentrified-bearing": /maximum of \+5 dice/,
+    "ctl-2ed:goblin-bounty": /safely stored/,
+    "ctl-2ed:hedge-brawler": /cannot turn a normal success into an exceptional success/,
+    "ctl-2ed:hedge-sense": /Icons, food, shelter, or goblin fruit/,
+    "ctl-2ed:hob-kin": /Hob Alarm/,
+    "ctl-2ed:lethal-mien": /activate or suppress/,
+    "ctl-2ed:manymask": /height and build remain fixed/,
+    "ctl-2ed:noblesse-oblige": /Spring adds Initiative/,
+    "ctl-2ed:parallel-lives": /Gain a Beat/,
+    "ctl-2ed:token": /oath-forged token/,
+    "ctl-2ed:touchstone": /final box/,
+    "ctl-the-hedge:frightful-incantation": /cannot replace a hecatomb that consists of an action/,
+    "ctl-the-hedge:hedge-sorcerer": /Unopened Doors impose Frailties/,
+    "ctl-the-hedge:magic-dreams": /dreamer remains asleep/,
+    "ctl-hedge:motley-awareness": /only another three-dot owner can reply/,
+    "de2:librarian": /who possesses it/,
+    "de2:oath-blood-liege": /Oathbreaker/,
+    "h-courts:improvised-ritual": /cannot create missing ingredients/,
+    "h-courts:ice-water-veins": /unless the harvested emotion is sorrow/,
+  };
+
+  const byId = new Map(merits.map((merit) => [merit.id, merit]));
+  for (const [id, pattern] of Object.entries(requiredDetails)) {
+    const merit = byId.get(id);
+    assert.ok(merit, id);
+    assert.match(merit.description, pattern, id);
+    assert.equal(merit.descriptionEn, merit.description, `${id}: English canonical text drifted`);
+  }
+});
+
 test("Changeling static identity catalogs use unique IDs and retain source metadata", async () => {
   const files = [
     "../public/data/changeling/kiths.json",
