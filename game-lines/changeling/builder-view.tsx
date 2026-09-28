@@ -351,12 +351,12 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
   const creationChoiceOptions=creationChoice?.kind==="specialty"
     ? props.specialties.filter(item=>creationChoice.skillNames?.includes(systemTerm(item.skill,"en-US"))&&item.name.trim()).map(item=>`${systemTerm(item.skill,"en-US")}: ${item.name.trim()}`)
     : [...(creationChoice?.options??[])];
-  const filtered = allKiths.filter(
-    (item) =>
-      (skillFilter==="all"||kithSkillOptions(item).includes(skillFilter))&&
+  const filtered = allKiths.filter((item) => {
+    const presentation = kithText(item);
+    return (skillFilter==="all"||kithSkillOptions(item).includes(skillFilter))&&
       (sourceFilter==="all"||item.source===sourceFilter)&&
-      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${kithSkillOptions(item).join(" ")} ${item.skill} ${item.description} ${item.blessing} ${item.source}`).includes(normalized)),
-  );
+      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${kithSkillOptions(item).join(" ")} ${presentation.skill} ${presentation.description} ${presentation.blessing} ${item.source}`).includes(normalized));
+  });
   const choose = (item: KithDefinition & {homebrew?:true}) => {
     if(item.id!==selected?.id)props.setKithChoice("");
     props.setKith(item.id === "chimera-book-of-seemings" ? item.id : item.name);

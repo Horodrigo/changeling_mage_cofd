@@ -39,7 +39,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   const [entitlementEditorOpen, setEntitlementEditorOpen] = useState(false), [editingEntitlement, setEditingEntitlement] = useState<EntitlementDefinition | null>(null);
   const [editingCatalog, setEditingCatalog] = useState<ChangelingCatalogHomebrew | null>(null);
   const [contractEditor, setContractEditor] = useState<{ open: boolean; initial: ContractDefinition | null }>({ open: false, initial: null });
-  const rawReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>>; courts: CourtDefinition[]; entitlements: EntitlementDefinition[]; kiths: KithDefinition[] }>("changeling-reference");
+  const rawReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>>; courts: CourtDefinition[]; entitlements: EntitlementDefinition[]; kiths: KithDefinition[]; kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }> }>("changeling-reference");
   const reference = mergeChangelingReference(rawReference, customCatalog);
   const categoryOrder = [h("Méritos", "Merits"), "Seemings", h("Cortes", "Courts"), h("Frátrias", "Kiths"), "Entitlements", h("Contratos", "Contracts"), "Needles", "Threads", h("Condições", "Conditions"), "Errata"];
   const categoryRank = (kind: string) => { const index = categoryOrder.indexOf(kind); return index < 0 ? categoryOrder.length : index; };
@@ -83,7 +83,10 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     const mantle = locale === "pt-BR" ? item.mantleBenefitsPt : item.mantleBenefits;
     add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Cortes", "Courts"), name: locale === "pt-BR" ? item.translatedName : item.name, details: [...detail(h("Emoção", "Emotion"), locale === "pt-BR" ? item.emotionPt : item.emotion), ...detail(h("Gatilho de Glamour", "Glamour Trigger"), locale === "pt-BR" ? item.glamourTriggerPt : item.glamourTrigger), ...mantle.flatMap((text, index) => detail(`Mantle ${index + 1}`, text))] });
   }
-  for (const item of rawReference.kiths) if (item.sourceId) add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Frátrias", "Kiths"), name: locale === "pt-BR" ? item.translatedName ?? item.name : item.name, details: [...detail(h("Descrição", "Description"), item.description), ...detail(h("Bênção", "Blessing"), item.blessing), ...detail(h("Habilidade", "Skill"), item.skill)] });
+  for (const item of rawReference.kiths) if (item.sourceId) {
+    const presented = locale === "pt-BR" ? rawReference.kithPresentation[item.id] ?? item : item;
+    add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Frátrias", "Kiths"), name: presented.name, details: [...detail(h("Descrição", "Description"), presented.description), ...detail(h("Bênção", "Blessing"), presented.blessing), ...detail(h("Habilidade", "Skill"), presented.skill)] });
+  }
   for (const item of rawReference.entitlements) if (item.sourceId) add({
     id: item.id, sourceId: item.sourceId, source: item.source, kind: "Entitlements", name: item.name,
     details: [
