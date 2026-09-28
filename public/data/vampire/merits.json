@@ -5028,11 +5028,13 @@
     "line": "VtR",
     "sourceId": "vtr-2ed",
     "source": "Vampire: The Requiem Second Edition",
-    "category": "Kindred",
+    "category": "Gangrel",
     "priority": 10,
     "translatedName": "Alfa da Alcateia",
     "description": "Exerce domínio sobre animais ou uma matilha ligada ao vampiro.",
     "descriptionEn": "Exerts dominance over animals or a pack bound to the vampire.",
+    "prerequisites": "Gangrel",
+    "descriptivePrerequisites": true,
     "page": 114
   },
   {

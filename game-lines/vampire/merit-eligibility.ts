@@ -38,6 +38,7 @@ export function zirnitraMortalMeritCount(context: MeritPrerequisiteContext) {
 export function vampireMeritEligible(merit: MeritDefinition, context: MeritPrerequisiteContext, zirnitraRating: number) {
   if (!meritPrerequisitesMet(merit, context)) return false;
   const requiredIdentity: Record<string, string> = {
+    Gangrel: "gangrel",
     "Star-Crossed": "star-crossed",
     Xiao: "xiao",
     Typhos: "typhos",

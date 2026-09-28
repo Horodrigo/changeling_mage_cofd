@@ -44,6 +44,7 @@ export function activeVampirePowers(powers: VampirePowers, preferences: Homebrew
   return {
     ...powers,
     devotions: activeVampireItems(powers.devotions, preferences),
+    lashes: activeVampireItems(powers.lashes, preferences),
     cruacRites: activeVampireItems(powers.cruacRites, preferences),
     thebanMiracles: activeVampireItems(powers.thebanMiracles, preferences),
     kimiyaFormulae: activeVampireItems(powers.kimiyaFormulae, preferences),

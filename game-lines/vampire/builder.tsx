@@ -30,7 +30,7 @@ import { createRandomId } from "@/lib/random-id";
 import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, synchronizeAutomaticBloodlineDevotions, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireEditableCreationAttributes } from "./creation-rules";
+import { BLOOD_TETHER_PACK_GRANT, hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireEditableCreationAttributes } from "./creation-rules";
 import { isShadowCultId, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
@@ -177,7 +177,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "vampire_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),
-    grantedMeritSources: ["Vampire Template", "Vampire Shadow Cult"],
+    grantedMeritSources: ["Vampire Template", "Vampire Shadow Cult", BLOOD_TETHER_PACK_GRANT],
     adjustAttributes: (values) => vampireEditableCreationAttributes(values, initial?.line_data ?? {}, initialClan),
   });
   const setMerits = common.setMerits;
@@ -243,7 +243,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const disciplineDots = Object.values(disciplines).reduce((sum, value) => sum + value, 0);
   const totalDisciplineDots = disciplineDots + Number(hasCreationCovenantPower);
   const inClanDots = selectedClan?.disciplines.reduce((sum, name) => sum + Number(disciplines[name] ?? 0), 0) ?? 0;
-  const meritSpent = common.merits.reduce((sum, merit) => sum + Math.max(0, Number(merit.dots ?? 0) - (["Vampire Template", "Vampire Shadow Cult"].includes(String(merit.grantedBy ?? "")) ? 1 : 0)), 0);
+  const meritSpent = common.merits.reduce((sum, merit) => sum + Math.max(0, Number(merit.dots ?? 0) - (["Vampire Template", "Vampire Shadow Cult", BLOOD_TETHER_PACK_GRANT].includes(String(merit.grantedBy ?? "")) ? 1 : 0)), 0);
   const meritBudget = Math.max(0, 10 - (bloodPotency - 1) * 5);
   const maxBloodPotency = Math.max(1, Math.min(3, 1 + Math.floor(Math.max(0, 10 - meritSpent) / 5)));
   const setAttributePriority = (priorities: string[]) => { common.setAttributePriority(priorities); common.setAttributes((values) => reconcileTraitAllocation(values, ATTRIBUTES, priorities, 1, [5, 4, 3])); };
@@ -404,13 +404,13 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         creation_blood_potency: bloodPotency, blood_potency: finalBloodPotency, creation_covenant_power_id: hasCreationCovenantPower ? creationCovenantPowerId : "",
         creation_disciplines: disciplines, disciplines: finalDisciplines, humanity: Number(source?.line_data.humanity ?? 7),
         discipline_choices: { ...initialChoices, protean_aspects: proteanAspects.map((value) => value.trim()).filter(Boolean), protean_forms: proteanForms.map((value) => value.trim()).filter(Boolean), protean_unnatural_aspect: proteanUnnatural.map((value) => value.trim()).filter(Boolean) },
-        touchstones: finalTouchstones, devotion_ids: source?.line_data.devotion_ids ?? [], detournement_ids: source?.line_data.detournement_ids ?? [], blood_sorcery: bloodSorcery, ordo_dracul: ordoDracul, banes: source?.line_data.banes ?? [],
+        touchstones: finalTouchstones, devotion_ids: source?.line_data.devotion_ids ?? [], lash_ids: source?.line_data.lash_ids ?? [], blood_tether_pack_active: source?.line_data.blood_tether_pack_active === true, detournement_ids: source?.line_data.detournement_ids ?? [], blood_sorcery: bloodSorcery, ordo_dracul: ordoDracul, banes: source?.line_data.banes ?? [],
         hollow_ka: clanId === "hollow-mekhet" ? { name: kaName.trim(), concept: kaConcept.trim(), simplified: simplifiedHollow, rank: kaRank, power: kaPower, finesse: kaFinesse, resistance: kaResistance, bane: kaBane.trim(), anchors: kaAnchors.map((value) => value.trim()).filter(Boolean), influences: kaInfluences.map((value) => value.trim()).filter(Boolean), manifestations: kaManifestations.map((value) => value.trim()).filter(Boolean), numina: kaNumina.map((value) => value.trim()).filter(Boolean) } : undefined,
       },
       derived: vampireDerived(finalAttributes, finalSkills, finalDisciplines, finalBloodPotency, reference),
       current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
     };
-    return synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(completed), powers);
+    return synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(completed), powers));
   };
   const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) {

@@ -149,42 +149,48 @@
       "translatedName": "Blood Tether",
       "bloodlineId": "adrestoi",
       "summary": "The Adrestoi Discipline for binding a pack to its chosen master.",
+      "effect": "Blood Tether is the bond that runs through an Adrestoi pack, connecting their Beasts and allowing them to more safely experience extremes of emotion and self-control. This Discipline is similar to the Coils of the Dragon, but the Blood Tether is a collective evolution, not a personal one. Unlike a Coil, to access these abilities a character must be part of a pack. Furthermore, this pack must have a master, the vampire who initiated it. A pack master must be an Adrestoi, have five dots of Blood Tether, and invest a dot of Willpower into his pack’s creation. In addition to the benefits of this Discipline, the pack master gains the Pack Alpha Merit (Vampire, p. 114). Sanctity of Merits does not apply. To add members, the pack master must feed an initiate a Vitae and invest them with a Willpower point. Vitae can come from any pack member, but Willpower must come from the master. Pack members aren’t required to know Blood Tether, or even be vampires, but they gain no special benefits beyond being subject to Lashes. Should the master meet Final Death, the pack shatters. He can also step down by reclaiming his Willpower dot, but if no one else fills his shoes, the pack ends. Leaving a pack only requires spending a Willpower point to sever the link, but this might incur a breaking point (Humanity 3/Integrity −3). Unchained with Bloodline Status treat Blood Tether as if it were their primary Mystery, but they cannot learn it without a teacher. If an Adrestoi joins the Ordo Dracul, she can keep this cost break or pursue a new Mystery. She cannot have two primary Mysteries. A character can only belong to one pack.",
       "source": "False Gods: Ventrue",
-      "page": 23,
+      "page": 24,
       "levels": [
         {
           "rating": 1,
           "name": "Bound Awareness",
           "translatedName": "Bound Awareness",
-          "summary": "Bound Awareness, the 1-dot expression of Blood Tether.",
+          "summary": "Navigate the supernatural distance between packmates.",
+          "effect": "To gain mastery over the swell of collective emotions, the Adrestoi must first navigate the distances between her fellows. The vampire treats packmates as twice-removed in terms of blood sympathy if they are not already more closely related.",
           "manualOnly": true
         },
         {
           "rating": 2,
           "name": "Pack Extremities",
           "translatedName": "Pack Extremities",
-          "summary": "Pack Extremities, the 2-dot expression of Blood Tether.",
+          "summary": "Draw strength from nearby packmates when resisting frenzy.",
+          "effect": "A burden shared is a burden lessened. When resisting involuntary frenzy, the vampire takes her Blood Tether dots as a bonus if any packmates are in her immediate presence. If she exceptionally succeeds, these packmates refresh a Willpower.",
           "manualOnly": true
         },
         {
           "rating": 3,
           "name": "Mass Euphoria",
           "translatedName": "Mass Euphoria",
-          "summary": "Mass Euphoria, the 3-dot expression of Blood Tether.",
+          "summary": "Turn shared pain and rage into collective pleasure.",
+          "effect": "The vampire channels the will of her pack to turn pain and rage into pleasure. If the vampire exceptionally succeeds resisting frenzy with Pack Extremities, she gains the Ecstatic Condition. In addition, it only costs a Vitae rather than a Willpower to initiate or detect sympathy with packmates.",
           "manualOnly": true
         },
         {
           "rating": 4,
           "name": "Beast Mastery",
           "translatedName": "Beast Mastery",
-          "summary": "Beast Mastery, the 4-dot expression of Blood Tether.",
+          "summary": "Draw on the pack when releasing and directing the Beast.",
+          "effect": "The vampire can draw the pack’s power into herself at the point of the Beast’s release. The bonus from Pack Extremities now applies to riding the wave. Furthermore, all packmates are considered once-removed for the purposes of blood sympathy.",
           "manualOnly": true
         },
         {
           "rating": 5,
           "name": "Long Leash",
           "translatedName": "Long Leash",
-          "summary": "Long Leash, the 5-dot expression of Blood Tether.",
+          "summary": "Owe loyalty only to the collective at the pinnacle of Blood Tether.",
+          "effect": "At the pinnacle of Blood Tether, an Adrestoi owes loyalty only to the collective. The vampire gains her Blood Tether dots as a bonus to resisting blood bonds, and if she has an existing third-stage Vinculum to a non-packmate, it shatters. Finally, detecting and initiating blood sympathy with packmates now exceptionally succeeds on three successes instead of five.",
           "manualOnly": true
         }
       ]
@@ -2718,32 +2724,6 @@
       "dicePool": "Presence + Intimidation + Majesty vs. Composure + Blood Potency",
       "action": "Contested; resistance is reflexive",
       "effect": "Issue a clear task the subject can complete within one hour without realistically risking death or torpor. Success inflicts Coerced. Completing or refusing the task resolves it; refusal or waiting out the hour deals lethal damage equal to Vigor. A subject may carry only one Coerced instance from each vampire, and multiple instances cannot contradict one another."
-    },
-    {
-      "id": "devotion-iron-joy",
-      "kind": "devotion",
-      "name": "Iron Joy",
-      "translatedName": "Iron Joy",
-      "summary": "Shares pain and exultation across the Blood Tether.",
-      "source": "False Gods: Ventrue",
-      "page": 25,
-      "manualOnly": true,
-      "bloodlineId": "adrestoi",
-      "category": "Blood Tether Lashes"
-    },
-    {
-      "id": "devotion-shared-feast",
-      "kind": "devotion",
-      "name": "Shared Feast",
-      "translatedName": "Shared Feast",
-      "summary": "Distributes the benefit of feeding through the tethered pack.",
-      "source": "False Gods: Ventrue",
-      "page": 26,
-      "manualOnly": true,
-      "bloodlineId": "adrestoi",
-      "category": "Blood Tether Lashes",
-      "condition": "Subsumed",
-      "effect": "Your Pilot is in control, whether for your own good or on behalf of the Hundred Faces and their mysterious agenda. Any action you take out of accordance with its will is penalized by half your Covenant Status, rounding up, and you do not benefit from the usual bonus to your enhanced Skill(s), if applicable. This Condition ends without resolving at the end of the night. Resolution: Defend an Anchor to the point of recovering all Willpower. Suffer a breaking point due to the Pilot’s desires. Follow the Pilot’s directive to the letter. The Brethren of the Hundred FacesThe Brethren of the Hundred Faces The MaskersThe Maskers Humanity Skill Boost Duration 8–10 One action 6–7 Two actions 4–5 One scene 2–3 Two scenes 1 One night"
     },
     {
       "id": "devotion-borrowed-talent",
@@ -7647,6 +7627,38 @@
       "dicePool": "None",
       "action": "Instant",
       "effect": "The vampire smells out all possible predefined forms the creature possesses. Each flickers through her aura over the course of a few seconds. Her keen senses also pick out the potential strengths of this potential foe, learning which of the subject’s forms she should fear the most."
+    }
+  ],
+  "lashes": [
+    {
+      "id": "devotion-iron-joy",
+      "kind": "lash",
+      "name": "Iron Joy",
+      "translatedName": "Iron Joy",
+      "rating": 2,
+      "prerequisites": "Pack Extremities",
+      "summary": "Offer a mortal the pack's emotional high while protecting him from other predators.",
+      "source": "False Gods: Ventrue",
+      "page": 24,
+      "manualOnly": true,
+      "bloodlineId": "adrestoi",
+      "procedure": "With this Lash, the Unchained can offer a fleeting sense of their emotional highs to temporarily stun, seduce, or entice a mortal, while also keeping him safe from the will of other predators. The vampire makes a scratch to draw the mortal’s blood, then makes a matching scratch on herself, mingling their blood with clasped hands or bloodied kisses. This costs a Vitae.",
+      "outcome": "The blood offering obliterates other thoughts or goals in the subject’s mind. They become compliant and suggestible, eager to obey the pack. In addition to the usual effects of drinking Vitae, for the next week, any pack member using mental or social Disciplines on the subject treats a normal success as an exceptional success. However, the subject’s pleasure in submission hardens his will, adding the vampire’s Blood Tether dots as a bonus to all Resolve rolls (except when resisting the pack’s abilities)."
+    },
+    {
+      "id": "devotion-shared-feast",
+      "kind": "lash",
+      "name": "Shared Feast",
+      "translatedName": "Shared Feast",
+      "rating": 3,
+      "prerequisites": "Mass Euphoria",
+      "summary": "Bind a mortal's feeding to the pack through a shared vessel of blood.",
+      "source": "False Gods: Ventrue",
+      "page": 25,
+      "manualOnly": true,
+      "bloodlineId": "adrestoi",
+      "procedure": "To establish this Lash, the vampire and a mortal subject feed from the same vessel of blood. The vessel must include one Vitae each from at least two members of the pack, including the one initiating the Lash. Performing this ritual does not risk blood bonds, but it does risk addiction.",
+      "outcome": "Once a night, the mortal regains a point of Willpower for being fed upon. In return, the pack member who granted this feeding gains double the Vitae she normally would. This effect lasts for feedings equal to Vitae spent into the Lash."
     }
   ],
   "cruacRites": [

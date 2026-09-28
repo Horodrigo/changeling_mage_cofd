@@ -1,7 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import type { GameLineValidationIssue } from "@/lib/game-line-contracts/game-line-rules";
-import { boundedRating, hollowKaLimits, hollowKaRank, objectArray, recordRatings, stringArray, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineAvailable } from "./creation-rules";
+import { boundedRating, hollowKaLimits, hollowKaRank, LEGACY_BLOOD_TETHER_LASH_IDS, objectArray, recordRatings, stringArray, synchronizeBloodTetherPack, VAMPIRE_CREATION_DISCIPLINES, VAMPIRE_DISCIPLINES, vampireCovenantIds, vampireDerived, vampireDisciplineAvailable } from "./creation-rules";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 
 const storedRatingNames = (value: unknown, defaults: readonly string[]) => [
@@ -82,7 +82,9 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       aspirations: Array.isArray(data.aspirations) ? data.aspirations.map(String).slice(0, 3) : ["", "", ""],
       touchstones,
       undead_companions: undeadCompanions,
-      devotion_ids: stringArray(data.devotion_ids),
+      devotion_ids: stringArray(data.devotion_ids).filter((id) => !LEGACY_BLOOD_TETHER_LASH_IDS.includes(id as typeof LEGACY_BLOOD_TETHER_LASH_IDS[number])),
+      lash_ids: bloodlineId === "adrestoi" ? stringArray(data.lash_ids) : [],
+      blood_tether_pack_active: data.blood_tether_pack_active === true,
       detournement_ids: stringArray(data.detournement_ids),
       banes,
       kindred_status_scope: ["covenant", "clan", "city"].includes(String(data.kindred_status_scope ?? "")) ? String(data.kindred_status_scope) : "covenant",
@@ -143,7 +145,7 @@ export const vampireRules: GameLineRulesModule = {
     );
   },
   synchronizeCharacter(character) {
-    return synchronizeVampireBuilderMeritGrants(structuredClone(character));
+    return synchronizeBloodTetherPack(synchronizeVampireBuilderMeritGrants(structuredClone(character)));
   },
   validateCreation(character) {
     const issues: GameLineValidationIssue[] = [];

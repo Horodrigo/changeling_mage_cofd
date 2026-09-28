@@ -1,5 +1,5 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampirePowers, VampireReference } from "./catalog-types";
+import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampirePowers, VampirePurchasablePower, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
@@ -30,6 +30,71 @@ export function vampireDisciplineAvailable(name: string, bloodlineId: string, cl
 }
 
 export const ORDO_MYSTERIES = ["ascendant", "wyrm", "voivode", "quintessence"] as const;
+export const BLOOD_TETHER_PACK_GRANT = "Blood Tether Pack";
+export const LEGACY_BLOOD_TETHER_LASH_IDS = ["devotion-iron-joy", "devotion-shared-feast"] as const;
+
+export function vampireBloodTetherLashes(powers: Pick<VampirePowers, "disciplines" | "lashes" | "scales">): VampirePurchasablePower[] {
+  const levels = powers.disciplines.find((item) => item.id === "blood-tether")?.levels ?? [];
+  const voivode = powers.scales.flatMap((item) => {
+    const match = item.prerequisites?.match(/^coil-voivode\s+(\d)$/i);
+    if (!match) return [];
+    const rating = Number(match[1]);
+    return [{ ...item, kind: "lash" as const, rating, prerequisites: levels.find((level) => level.rating === rating)?.name ?? `Blood Tether ${rating}` }];
+  });
+  return [...powers.lashes, ...voivode].sort((left, right) => Number(left.rating ?? 0) - Number(right.rating ?? 0));
+}
+
+function bloodTetherRating(character: CharacterSheet) {
+  const disciplines = character.line_data.disciplines && typeof character.line_data.disciplines === "object" && !Array.isArray(character.line_data.disciplines)
+    ? character.line_data.disciplines as Record<string, unknown>
+    : {};
+  return Number(disciplines["Blood Tether"] ?? 0);
+}
+
+function grantPackAlpha(character: CharacterSheet) {
+  if ((character.merits ?? []).some((merit) => merit.name === "Pack Alpha")) return character;
+  character.merits = [...(character.merits ?? []), {
+    instanceId: "blood-tether-pack-alpha",
+    name: "Pack Alpha",
+    dots: 1,
+    creationDots: 1,
+    experienceDots: 0,
+    sourceId: "vtr-2ed",
+    source: "Vampire: The Requiem Second Edition",
+    grantedBy: BLOOD_TETHER_PACK_GRANT,
+  }];
+  return character;
+}
+
+export function createBloodTetherPack(character: CharacterSheet) {
+  if (character.line_data.blood_tether_pack_active === true || String(character.line_data.bloodline_id ?? "") !== "adrestoi" || bloodTetherRating(character) < 5) return character;
+  const next = structuredClone(character);
+  next.line_data.blood_tether_pack_active = true;
+  next.current_state.willpower_lost_dots = Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0)) + 1;
+  const maximum = Math.max(1, Number(next.derived.ForçaDeVontade ?? 1) - Number(next.current_state.willpower_lost_dots));
+  next.current_state.willpower_current = Math.min(maximum, Number(next.current_state.willpower_current ?? maximum));
+  return grantPackAlpha(next);
+}
+
+export function leaveBloodTetherPack(character: CharacterSheet) {
+  const active = character.line_data.blood_tether_pack_active === true;
+  const granted = (character.merits ?? []).some((merit) => merit.grantedBy === BLOOD_TETHER_PACK_GRANT);
+  if (!active && !granted) return character;
+  const next = structuredClone(character);
+  next.line_data.blood_tether_pack_active = false;
+  if (active) next.current_state.willpower_lost_dots = Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0) - 1);
+  next.merits = (next.merits ?? []).filter((merit) => merit.grantedBy !== BLOOD_TETHER_PACK_GRANT);
+  return next;
+}
+
+export function synchronizeBloodTetherPack(character: CharacterSheet) {
+  const active = character.line_data.blood_tether_pack_active === true;
+  const eligible = String(character.line_data.bloodline_id ?? "") === "adrestoi" && bloodTetherRating(character) >= 5;
+  if (active && !eligible) return leaveBloodTetherPack(character);
+  if (active) return (character.merits ?? []).some((merit) => merit.name === "Pack Alpha") ? character : grantPackAlpha(structuredClone(character));
+  if ((character.merits ?? []).some((merit) => merit.grantedBy === BLOOD_TETHER_PACK_GRANT)) return leaveBloodTetherPack(character);
+  return character;
+}
 
 /**
  * Discipline names are catalog-owned identities, not core trait terms. This is

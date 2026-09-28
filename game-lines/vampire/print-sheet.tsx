@@ -11,7 +11,7 @@ import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-lin
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import type { VampireCondition, VampirePowers, VampireReference } from "./catalog-types";
-import { objectArray, recordRatings, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
+import { BLOOD_TETHER_PACK_GRANT, objectArray, recordRatings, vampireBloodTetherLashes, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName } from "./creation-rules";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -66,7 +66,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
     ...(powers.ritualDisciplines ?? []).flatMap((item) => { const key = item.id === "gilded-cage" ? "gilded_cage_rating" : `${item.id}_rating`; const rating = Number(bloodSorcery[key] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
     ...powers.coils.flatMap((item) => { const rating = Number(coilRatings[item.id] ?? 0); return rating > 0 ? [{ name: localized(item, locale), rating }] : []; }),
   ];
-  const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Clã", "Vampire Template", "Vampire Shadow Cult"].includes(merit.grantedBy)).map((merit) => {
+  const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Clã", "Vampire Template", "Vampire Shadow Cult", BLOOD_TETHER_PACK_GRANT].includes(merit.grantedBy)).map((merit) => {
     const definition = meritCatalog.find((item) => item.name === merit.name);
     const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
     const detail = meritConfigurationTitle(merit.configuration);
@@ -80,12 +80,15 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const devotionIds = new Set(stringList(data.devotion_ids));
   const detournementIds = new Set(stringList(data.detournement_ids));
   const devotions = [...powers.devotions.filter((item) => devotionIds.has(item.id)), ...powers.detournements.filter((item) => detournementIds.has(item.id))].map((item) => localized(item, locale));
+  const lashIds = new Set(stringList(data.lash_ids));
+  const lashes = vampireBloodTetherLashes(powers).filter((item) => lashIds.has(item.id)).map((item) => localized(item, locale));
   const bloodBonds = objectArray(character.current_state.blood_bonds).map((item) => [String(item.subject ?? "").trim(), Number(item.stage) > 0 ? `${t("ui.stage")} ${Number(item.stage)}` : "", String(item.notes ?? "").trim()].filter(Boolean).join(" · "));
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-  const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const baseWillpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const willpower = Math.max(1, baseWillpower - Math.max(0, Math.min(baseWillpower - 1, Number(character.current_state.willpower_lost_dots ?? 0))));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
   const selectedConditions = objectArray(character.current_state.conditions).map((item) => conditions.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
   const touchstonesByRating = new Map(objectArray(data.touchstones).flatMap((item) => {
@@ -115,7 +118,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
     <VampirePrintPage page={2}>
       <div className="vtr-print-second-grid">
         <section><Heading>{t("ui.otherTraits")}</Heading><PrintRatedLines values={overflowTraits} minimum={13}/><Heading>{t("ui.rites")}</Heading><PrintLines values={rites.map((item) => `${localized(item, locale)} ${item.rating ?? ""}`)} minimum={5}/><Heading>{t("ui.miracles")}</Heading><PrintLines values={miracles.map((item) => `${localized(item, locale)} ${item.rating ?? ""}`)} minimum={5}/><Heading>{t("ui.conditions")}</Heading><PrintLines values={selectedConditions} minimum={7}/></section>
-        <section><Heading>{t("ui.devotions")}</Heading><PrintLines values={devotions.slice(0, 10)} minimum={10}/><Heading>{t("ui.bloodBonds")}</Heading><PrintLines values={bloodBonds.slice(0, 5)} minimum={5}/><Heading>{t("ui.combat")}</Heading><div className="vtr-print-combat"><header><span>{t("combat.weapons")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.strength")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.strength}</span><span>{weapon?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="vtr-print-equipment"><header><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 10 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div></section>
+        <section><Heading>{t("ui.devotions")}</Heading><PrintLines values={devotions.slice(0, 10)} minimum={lashes.length ? 4 : 10}/>{lashes.length > 0 && <><Heading>{t("ui.lashesOfBloodTether")}</Heading><PrintLines values={lashes.slice(0, 6)} minimum={6}/></>}<Heading>{t("ui.bloodBonds")}</Heading><PrintLines values={bloodBonds.slice(0, 5)} minimum={5}/><Heading>{t("ui.combat")}</Heading><div className="vtr-print-combat"><header><span>{t("combat.weapons")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.strength")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.strength}</span><span>{weapon?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="vtr-print-equipment"><header><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 10 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div></section>
       </div>
     </VampirePrintPage>
   </div>;

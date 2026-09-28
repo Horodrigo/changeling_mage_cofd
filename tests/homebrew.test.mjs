@@ -118,7 +118,7 @@ test("player-created Vampire catalog entries merge into their owning catalogs", 
   const clan = normalizeVampireCatalogHomebrew({ entryType: "clan", id: "homebrew:vampire:clan:test", name: "Nocturne", favoredAttributes: ["Intelligence", "Composure"], disciplines: ["Auspex", "Obfuscate", "Vigor"], baneName: "Silent Blood", baneSummary: "Speech costs Vitae." });
   const devotion = normalizeVampireCatalogHomebrew({ entryType: "power", id: "homebrew:vampire:power:test", kind: "devotion", name: "Night Bridge", summary: "Cross one shadow.", rating: 2, experienceCost: 2 });
   assert.equal(mergeVampireReference({ clans: [], covenants: [], anchors: [], bloodPotency: [], torpor: [], bloodlines: [] }, [clan]).clans[0].name, "Nocturne");
-  assert.equal(mergeVampirePowers({ disciplines: [], ritualDisciplines: [], devotions: [], cruacRites: [], thebanMiracles: [], kimiyaFormulae: [], therionSacrileges: [], gildedInvocations: [], coils: [], scales: [], detournements: [] }, [devotion]).devotions[0].name, "Night Bridge");
+  assert.equal(mergeVampirePowers({ disciplines: [], ritualDisciplines: [], devotions: [], lashes: [], cruacRites: [], thebanMiracles: [], kimiyaFormulae: [], therionSacrileges: [], gildedInvocations: [], coils: [], scales: [], detournements: [] }, [devotion]).devotions[0].name, "Night Bridge");
   assert.equal(normalizeVampireCatalogHomebrew({ entryType: "clan", id: "bad", name: "Bad" }), null);
 });
 

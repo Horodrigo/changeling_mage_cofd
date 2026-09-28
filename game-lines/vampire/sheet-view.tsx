@@ -6,6 +6,7 @@ import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-edit
 import { CharacterPaperShell, EditableList, NotesArea, PowerResource, ResourceTrack, SheetField, boundedNumber, updateLineData } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { ConditionManager, type ConditionDefinition, type SelectedCondition } from "@/app/workspace/condition-manager";
+import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { HealthTrack, SheetHeading, TraitBlock, DotValue, stringList } from "@/app/workspace/sheet-primitives";
 import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
 import { commonExpandedConfigurationLines, configuredDefinitionLines } from "@/app/workspace/merit-configuration-presentation";
@@ -27,7 +28,7 @@ import type { MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type { VampireCondition, VampireMechanics, VampirePowers, VampireReference, VampireRitualDisciplineDefinition } from "./catalog-types";
-import { bloodPotencyRow, objectArray, recordRatings, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
+import { BLOOD_TETHER_PACK_GRANT, bloodPotencyRow, createBloodTetherPack, leaveBloodTetherPack, objectArray, recordRatings, vampireBloodTetherLashes, vampireCovenantIds, vampireDerived, vampireDisciplineDisplayName, vampireSunlightSummary } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
 import { VampireCompanionPage } from "./companion-page";
 import { DETACHMENT_BREAKING_POINT_OPTIONS, DETACHMENT_BREAKING_POINT_TIERS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireDetachmentBaseDice } from "./detachment";
@@ -731,7 +732,8 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   } satisfies Record<typeof limits.feedingTier, string>;
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-  const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const baseWillpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const willpower = Math.max(1, baseWillpower - boundedNumber(character.current_state.willpower_lost_dots, baseWillpower - 1, 0));
   const vitaeMaximum = typeof limits.vitaeMaximum === "number" ? limits.vitaeMaximum : Number(character.attributes.Stamina ?? 1) + Number(disciplines.Resilience ?? 0);
   const vitae = boundedNumber(character.current_state.vitae_current, vitaeMaximum, vitaeMaximum);
   const currentWillpower = boundedNumber(character.current_state.willpower_current, willpower, willpower);
@@ -844,7 +846,7 @@ export function VampireCharacterPaper({ character, updateState, updateSheet, cat
   const powersPage = <>
     {isMobile && <PowerResource name={t("ui.bloodPotency")} rating={bloodPotency} resourceName="Vitae" current={vitae} maximum={vitaeMaximum} perTurn={limits.vitaePerTurn} onChange={(value) => setState("vitae_current", value)} />}
     <SheetHeading>{t("ui.disciplines")}</SheetHeading>
-    <DisciplineCards powers={powers} disciplines={disciplines} coilRatings={coilRatings} locale={locale} onRaiseFamiliar={openCompanions} />
+    <DisciplineCards character={character} updateSheet={updateSheet} powers={powers} disciplines={disciplines} coilRatings={coilRatings} locale={locale} onRaiseFamiliar={openCompanions} />
     {Number(disciplines.Protean ?? 0) >= 2 && <ProteanChoicesEditor character={character} updateSheet={updateSheet} rating={Number(disciplines.Protean ?? 0)} />}
     <RitualDisciplines powers={powers} bloodSorcery={bloodSorcery} locale={locale} />
     <PurchasedPowers character={character} powers={powers} locale={locale} />
@@ -1032,8 +1034,11 @@ function VampireDisciplineLine({ name, value }: { name: string; value: number })
 }
 
 
-function DisciplineCards({ powers, disciplines, coilRatings, locale, onRaiseFamiliar }: { powers: VampirePowers; disciplines: Record<string, number>; coilRatings: Record<string, number>; locale: string; onRaiseFamiliar: () => void }) {
+function DisciplineCards({ character, updateSheet, powers, disciplines, coilRatings, locale, onRaiseFamiliar }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; powers: VampirePowers; disciplines: Record<string, number>; coilRatings: Record<string, number>; locale: string; onRaiseFamiliar: () => void }) {
   const { t } = useLanguage();
+  const lashIds = new Set(stringList(character.line_data.lash_ids));
+  const ownedLashes = vampireBloodTetherLashes(powers).filter((lash) => lashIds.has(lash.id));
+  const packActive = character.line_data.blood_tether_pack_active === true;
   const selected = [
     ...powers.disciplines.filter((item) => Number(disciplines[item.name] ?? 0) > 0).map((item) => ({ item, rating: Number(disciplines[item.name] ?? 0) })),
     ...ownedVampireCoils(powers, coilRatings).map((item) => ({ item, rating: Number(coilRatings[item.id] ?? 0) })),
@@ -1055,6 +1060,18 @@ function DisciplineCards({ powers, disciplines, coilRatings, locale, onRaiseFami
             </summary>
             <div className="contract-power-details"><PowerMechanics mechanics={level} compact />{item.id === "animalism" && level.rating === 2 && <Button type="button" size="sm" variant="outline" onClick={onRaiseFamiliar}>{t("ui.use")}</Button>}</div>
           </details>)}
+          {item.id === "blood-tether" && ownedLashes.map((lash) => <details className="contract-power-card vampire-discipline-level" key={lash.id}>
+            <summary className="contract-power-summary"><strong>{localized(lash, locale)}</strong><small>{lash.summary}</small></summary>
+            <div className="contract-power-details"><p><strong>{t("ui.prerequisites")}:</strong> {lash.prerequisites}</p><PowerMechanics mechanics={lash} compact /></div>
+          </details>)}
+          {item.id === "blood-tether" && rating >= 5 && <ConfirmAction
+            trigger={<Button type="button" size="sm" className="builder-add-action" variant={packActive ? "destructive" : "default"}>{t(packActive ? "ui.leavePack" : "ui.createPack")}</Button>}
+            title={t(packActive ? "ui.leavePackTitle" : "ui.createPackTitle")}
+            description={t(packActive ? "ui.leavePackDescription" : "ui.createPackDescription")}
+            action={t(packActive ? "ui.leavePack" : "ui.createPack")}
+            destructive={packActive}
+            onConfirm={() => updateSheet(packActive ? leaveBloodTetherPack(character) : createBloodTetherPack(character))}
+          />}
         </div>
       </details>;
     })}
@@ -1154,7 +1171,7 @@ function VampireExpandedMeritList({ character, updateSheet, merits, catalog, loc
 
 function MeritList({ character, catalog, locale }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; locale: string }) {
   const { t } = useLanguage();
-  const visible = character.merits.filter((item) => !item.grantedBy || ["Vampire Template", "Vampire Shadow Cult"].includes(item.grantedBy));
+  const visible = character.merits.filter((item) => !item.grantedBy || ["Vampire Template", "Vampire Shadow Cult", BLOOD_TETHER_PACK_GRANT].includes(item.grantedBy));
   if (!visible.length) return <em className="rule-callout merit-empty" >{t("ui.noMeritSelected")}</em>;
   return <div className="sheet-merits single-column">{visible.map((merit, index) => {
     const definition = catalog.find((item) => item.name === merit.name);

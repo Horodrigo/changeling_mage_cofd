@@ -14,7 +14,7 @@ import { systemTerm } from "@/lib/system-terms";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
 import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
 import type { VampireBloodlineDefinition, VampirePowers, VampireReference } from "./catalog-types";
-import { stringArray, synchronizeAutomaticBloodlineDevotions, vampireBloodlineAvailable, vampireBloodlineFavoredAttributes, vampireDisciplineDisplayName } from "./creation-rules";
+import { leaveBloodTetherPack, stringArray, synchronizeAutomaticBloodlineDevotions, vampireBloodlineAvailable, vampireBloodlineFavoredAttributes, vampireDisciplineDisplayName } from "./creation-rules";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 
 function replaceFavoredAttributes(character: CharacterSheet, previous: readonly string[], replacement: readonly string[]) {
@@ -38,17 +38,17 @@ export function joinVampireBloodline(character: CharacterSheet, definition: Vamp
 
 export function removeVampireBloodline(character: CharacterSheet, definition?: VampireBloodlineDefinition, powers?: VampirePowers) {
   const restore = stringArray(character.line_data.favored_attributes).length ? stringArray(character.line_data.favored_attributes) : [String(character.line_data.favored_attribute ?? "")];
-  const next = replaceFavoredAttributes(character, [String(character.line_data.bloodline_favored_attribute ?? "")], restore);
+  const next = leaveBloodTetherPack(replaceFavoredAttributes(character, [String(character.line_data.bloodline_favored_attribute ?? "")], restore));
   const history = Array.isArray(next.current_state.vampire_experience_history) ? next.current_state.vampire_experience_history as Array<Record<string, unknown>> : [];
   const exclusive = new Set((powers?.disciplines ?? []).filter((item) => item.bloodlineId === definition?.id).map((item) => item.name));
   if (definition?.exclusiveDiscipline) exclusive.add(definition.exclusiveDiscipline);
-  const refunded = history.filter((entry) => { const undo = entry.undo as Record<string, unknown> | undefined; return undo?.kind === "discipline" && exclusive.has(String(undo.name ?? "")); });
+  const refunded = history.filter((entry) => { const undo = entry.undo as Record<string, unknown> | undefined; return undo?.kind === "lash" || undo?.kind === "discipline" && exclusive.has(String(undo.name ?? "")); });
   const refund = refunded.reduce((sum, entry) => sum + Math.max(0, Number(entry.cost ?? 0)), 0);
   const disciplines = next.line_data.disciplines && typeof next.line_data.disciplines === "object" ? { ...next.line_data.disciplines as Record<string, unknown> } : {};
   for (const name of exclusive) disciplines[name] = 0;
   const automatic = new Set((powers?.devotions ?? []).filter((item) => item.bloodlineId === definition?.id && Number(item.experienceCost ?? 0) === 0).map((item) => item.id));
   const devotionIds = Array.isArray(next.line_data.devotion_ids) ? next.line_data.devotion_ids.map(String).filter((id) => !automatic.has(id)) : [];
-  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", disciplines, devotion_ids: devotionIds };
+  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", disciplines, devotion_ids: devotionIds, lash_ids: [], blood_tether_pack_active: false };
   next.current_state = { ...next.current_state, experience_available: Math.max(0, Number(next.current_state.experience_available ?? 0)) + refund, experience_spent: Math.max(0, Number(next.current_state.experience_spent ?? 0) - refund), vampire_experience_history: history.filter((entry) => !refunded.includes(entry)) };
   return powers ? synchronizeAutomaticBloodlineDevotions(next, powers) : next;
 }

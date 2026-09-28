@@ -82,7 +82,8 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 357);
+  assert.equal(powers.devotions.length, 355);
+  assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);
   assert.equal(powers.thebanMiracles.length, 33);
   assert.equal(powers.kimiyaFormulae.length, 5);
@@ -431,6 +432,34 @@ test("Vampire sheet presents owned Coils and keeps all rituals under their Disci
   assert.ok(powers.devotions.find((item) => item.id === "devotion-aegis-defiance").effect.length > 300);
 });
 
+test("Adrestoi Blood Tether exposes Lashes and grants Gangrel-only Pack Alpha through Pack creation", async () => {
+  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const { BLOOD_TETHER_PACK_GRANT, createBloodTetherPack, leaveBloodTetherPack, synchronizeBloodTetherPack, vampireBloodTetherLashes } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { vampireMeritEligible } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
+  const packAlpha = merits.find((item) => item.id === "vtr-pack-alpha");
+  const lashes = vampireBloodTetherLashes(powers);
+  assert.equal(packAlpha.category, "Gangrel");
+  assert.equal(vampireMeritEligible(packAlpha, { gameLine: "VtR", archetypes: ["vampire", "ventrue"], meritCatalog: merits, merits: [] }, 0), false);
+  assert.equal(vampireMeritEligible(packAlpha, { gameLine: "VtR", archetypes: ["vampire", "gangrel"], meritCatalog: merits, merits: [] }, 0), true);
+  assert.deepEqual(lashes.map((item) => item.name), ["Blood Cleansing Ritual", "Iron Joy", "Sanguinary Invigoration", "Shared Feast", "Fealty's Reward", "Mass Embrace"]);
+  assert.match(lashes.find((item) => item.name === "Iron Joy").outcome, /normal success as an exceptional success/);
+  assert.equal(powers.devotions.some((item) => ["Iron Joy", "Shared Feast"].includes(item.name)), false);
+
+  const character = {
+    merits: [], line_data: { clan_id: "ventrue", bloodline_id: "adrestoi", disciplines: { "Blood Tether": 5 } },
+    current_state: { willpower_current: 5, willpower_lost_dots: 0 }, derived: { ForçaDeVontade: 5 },
+  };
+  const created = createBloodTetherPack(character);
+  assert.equal(created.line_data.blood_tether_pack_active, true);
+  assert.equal(created.current_state.willpower_lost_dots, 1);
+  assert.equal(created.merits.find((item) => item.name === "Pack Alpha")?.grantedBy, BLOOD_TETHER_PACK_GRANT);
+  assert.equal(synchronizeBloodTetherPack(created), created);
+  const left = leaveBloodTetherPack(created);
+  assert.equal(left.current_state.willpower_lost_dots, 0);
+  assert.equal(left.merits.some((item) => item.name === "Pack Alpha"), false);
+});
+
 test("Vampire creation and editing persist the selected Covenant Discipline without losing XP advances", async () => {
   const { reconcileCreationCovenantPower } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
   const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
@@ -527,7 +556,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
   const { activeVampireItems, activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
   const items = [
-    ...bloodlines, ...covenants, ...conditions, ...coreMerits, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions,
+    ...bloodlines, ...covenants, ...conditions, ...coreMerits, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions, ...powers.lashes,
     ...powers.cruacRites, ...powers.thebanMiracles, ...powers.gildedInvocations, ...powers.detournements,
   ].filter((item) => vampireHomebrewSourceId(item)?.startsWith("h-vtr-"));
   const counts = Object.fromEntries(Object.entries(Object.groupBy(items, vampireHomebrewSourceId)).map(([sourceId, entries]) => [sourceId, entries.length]));
@@ -542,7 +571,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   });
   assert.deepEqual(
     Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 6, "merits-vampire": 10, "vampire-powers": 13, "vampire-conditions": 6 },
+    { "vampire-bloodlines": 6, "merits-vampire": 11, "vampire-powers": 14, "vampire-conditions": 6 },
   );
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {
@@ -585,7 +614,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.match(homebrew, /const coreMerits = catalogs\.get/);
   assert.match(homebrew, /gildedInvocations[\s\S]*"gilded-cage"/);
   assert.match(homebrew, /"Lessons of Erebus": \{ kind: disciplines, parentId: "truths-of-erebus" \}/);
-  assert.match(homebrew, /"Blood Tether Lashes": \{ kind: disciplines, parentId: "blood-tether" \}/);
+  assert.match(homebrew, /powers\.lashes\.forEach\(\(item\) => add\(item, disciplines,[\s\S]*"blood-tether"\)\)/);
   assert.match(homebrew, /"Ortam Recipes": \{ kind: disciplines, parentId: "ortam" \}/);
   assert.match(homebrew, /"Lithopedia Rites": \{ kind: bloodSorcery, parentId: "lithopedia" \}/);
   assert.match(homebrew, /item\.id === "lithopedia" \? bloodSorcery : disciplines/);

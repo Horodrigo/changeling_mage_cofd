@@ -35,7 +35,6 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   const categoryOrder = [h("Méritos", "Merits"), "Clans", "Covenants", "Bloodlines", disciplines, bloodSorcery, h("Devoções", "Devotions"), h("Condições", "Conditions"), "Errata"];
   const nestedDevotions: Record<string, { kind: string; parentId: string }> = {
     "Lessons of Erebus": { kind: disciplines, parentId: "truths-of-erebus" },
-    "Blood Tether Lashes": { kind: disciplines, parentId: "blood-tether" },
     "Ortam Recipes": { kind: disciplines, parentId: "ortam" },
     "Lithopedia Rites": { kind: bloodSorcery, parentId: "lithopedia" },
   };
@@ -62,6 +61,7 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   powers.disciplines.forEach((item) => add(item, item.id === "lithopedia" ? bloodSorcery : disciplines, [...detail(h("Resumo", "Summary"), item.summary), ...detail("Bloodline", item.bloodlineId), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.summary))]));
   powers.ritualDisciplines.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.statusRequirement), ...mechanics(item)]));
   powers.devotions.forEach((item) => { const placement = item.category ? nestedDevotions[item.category] : undefined; add(item, placement?.kind ?? item.category ?? h("Devoções", "Devotions"), [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId); });
+  powers.lashes.forEach((item) => add(item, disciplines, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether"));
   powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
   powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)]));
   powers.gildedInvocations.forEach((item) => add(item, bloodSorcery, [...detail(h("Disciplina", "Discipline"), "Gilded Cage"), ...detail(h("Resumo", "Summary"), item.summary), ...detail(h("Nível", "Level"), item.rating), ...mechanics(item)], "gilded-cage"));
