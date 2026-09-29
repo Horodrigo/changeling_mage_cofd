@@ -196,7 +196,7 @@ export function ExperiencePanel({
             label: `${presented.name} · ${seemingDisplayName(seeming,locale)}`,
           }));
     const clauseOptions = availableForeignClauseCourtIds(definition, currentCourtId, goodwill, extraClauseKeys)
-      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${presented.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
+      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${presented.name} · ${t("ui.clause")}: ${courtDisplayName(courtId, locale)}` }));
     return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
@@ -824,7 +824,7 @@ export function ExperiencePanel({
                     line="CtL"
                     items={benefitOptions.map((option)=>{
                       const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause", presented=contract?contractPresentation(contract,locale,reference.contractPresentation):undefined;
-                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?presented?.courtClauses?.[choice]??"":presented?.seemingBenefits?.[choice as keyof typeof presented.seemingBenefits]??"",meta:`${presented?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
+                      return {id:option.value,name:option.label,category:isClause?t("ui.clause"):t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?presented?.courtClauses?.[choice]??"":presented?.seemingBenefits?.[choice as keyof typeof presented.seemingBenefits]??"",meta:`${presented?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
                     })}
                     selectedId={benefitKey || benefitOptions[0]?.value || ""}
                     onSelect={setBenefitKey}

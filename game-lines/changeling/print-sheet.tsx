@@ -142,19 +142,19 @@ function contractPrintData(baseDefinition: ContractDefinition, character: Charac
   rows.push([t("ui.loophole"), definition.loophole ?? "-"]);
   benefits.forEach((benefit) => rows.push([`${t("ui.benefitFor")} ${seemingDisplayName(benefit.key, locale)}`, benefit.text]));
   if (courtBenefit) rows.push([t("ui.courtBenefit"), courtBenefit]);
-  clauses.forEach((clause) => rows.push([`Clause · ${courtName(courts, clause.courtId, locale)}`, clause.text]));
+  clauses.forEach((clause) => rows.push([`${t("ui.clause")} · ${courtName(courts, clause.courtId, locale)}`, clause.text]));
   definition.detailTables?.forEach((table) => rows.push([table.title, <table className="ctl-print-detail-table" key={table.title}><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row, rowIndex) => <tr key={`${table.title}-${rowIndex}`}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table>]));
   if (definition.goblinDebt) rows.push([t("ui.goblinDebt"), definition.goblinDebt]);
   const name = locale === "en-US" ? definition.originalName ?? definition.name : definition.name;
   const kind = definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal");
   const courtNames = definition.courtIds?.map((courtId) => courtName(courts, courtId, locale)).filter(Boolean).join(", ");
   const access = definition.categoryKind === "Corte" ? definition.courtFamily || courtNames || systemTerm(definition.regalia, locale) : systemTerm(definition.regalia, locale);
-  const roll = contractHasInvocationRoll(definition) === true && definition.dicePool?.trim() ? definition.dicePool : "None";
+  const roll = contractHasInvocationRoll(definition) === true && definition.dicePool?.trim() ? definition.dicePool : t("ui.none");
   const facts: Array<[string, ReactNode]> = [
-    [`${t("ui.cost")}:`, definition.cost?.trim() || "None"],
+    [`${t("ui.cost")}:`, definition.cost?.trim() || t("ui.none")],
     [`${t("ui.roll")}:`, roll],
   ];
-  return { title: name, access: access || "None", kind, facts, rows: rows.filter(([, value]) => Boolean(value)) };
+  return { title: name, access: access || t("ui.none"), kind, facts, rows: rows.filter(([, value]) => Boolean(value)) };
 }
 
 function ContractCard({ data, rows, continued = false, detailed }: { data: ContractPrintData; rows: Array<[string, ReactNode]>; continued?: boolean; detailed: boolean }) {
