@@ -45,3 +45,9 @@
 - `The Gouging Curse`: traduzido como **A Maldição da Mutilação**, pois o efeito pode atingir olhos, ouvidos, braços ou pernas.
 - `Shrike's Larder`: traduzido como **Despensa do Picanço**, mantendo a referência à ave que empala suas presas.
 - `Witch's Brambles`: traduzido como **Silvas da Bruxa**; **Sarças da Bruxa** seria coerente com `Briar's Herald`, mas perderia a distinção entre os títulos originais.
+
+## Lote: Independentes — *Kith and Kin*, pp. 58–64
+
+- `Retainer` e `Staff`, citados nos efeitos, foram apresentados provisoriamente como **Lacaio** e **Equipe**. A terminologia será uniformizada na tradução integral de Méritos.
+- `fetch` permanece **simulacro**, conforme a tradução já adotada nos textos de Fratrias.
+- `Pomp and Circumstance`: traduzido como **Pompa e Circunstância**, preservando a expressão e o título musical reconhecíveis em português.

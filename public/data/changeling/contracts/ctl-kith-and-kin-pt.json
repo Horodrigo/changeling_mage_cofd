@@ -694,5 +694,149 @@
       "Beast": "Em vez disso, a Fera pode aprimorar um ataque de mordida que cause dano letal ou agravado.",
       "Darkling": "O Trevoso acrescenta um sucesso ao usar apenas mudanças sutis, mas subtrai um ao usar qualquer mudança de paradigma."
     }
+  },
+  "ctl-kith-and-kin:coming-darkness": {
+    "name": "Escuridão Vindoura",
+    "description": "Arranque a sombra do changeling para criar escuridão total em um raio de Fado × 5 metros. Quem estiver dentro testa Raciocínio + Compostura ou fica Atordoado e sofre Cego enquanto permanecer ali; o invocador é imune. Luz mágica provoca um Choque de Vontades. Sair antes do fim pode deixar a sombra para trás, exigindo recuperá-la e prendê-la novamente na Sebe com uma mudança sutil de quatro sucessos.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Apague uma chama ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Beast": "A Fera concede visão noturna nítida a até metade do Fado em personagens dentro da área.",
+      "Darkling": "O Trevoso aumenta o raio máximo para Fado × 10 metros."
+    }
+  },
+  "ctl-kith-and-kin:pomp-and-circumstance": {
+    "name": "Pompa e Circunstância",
+    "description": "Defina um refúgio claramente delimitado com Fado × 10 metros. Convidados não desejados não conseguem entrar, espionagem e rastreamento mundanos falham, e intrusão sobrenatural provoca um Choque de Vontades. Pagar o custo maior também o oculta completamente de Monteiros e Fae Verdadeiros. Declare até Fado regras de comportamento compreendidas por todos que entrarem; qualquer violação encerra o efeito e dá Desmoralizado a todos no interior.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Disponha um círculo ininterrupto de papoulas ao redor da área mais cedo na mesma cena.",
+    "seemingBenefits": {
+      "Beast": "A Fera detecta qualquer pessoa que passe ou invada uma área de Fado × 20 metros ao redor do refúgio.",
+      "Wizened": "O Mirrado pode aplicar seus pontos de Local Seguro ou Refúgio ao local da reunião."
+    }
+  },
+  "ctl-kith-and-kin:shadow-puppet": {
+    "name": "Fantoche de Sombra",
+    "description": "Anime uma criatura de sombra substancial como um Lacaio com nível igual à metade do Fado, usando uma das Especializações do changeling. Ela age na Iniciativa dele e recebe um Poder Temível goblin, Fado 1, Glamour 6 e uma caixa de Vitalidade. Sua destruição remove a parte correspondente da sombra dele até que seja recolocada na Sebe com uma mudança sutil de quatro sucessos.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Faça um espetáculo de sombras para pelo menos três pessoas durante pelo menos cinco minutos na mesma cena.",
+    "seemingBenefits": {
+      "Beast": "Um fantoche em forma de animal recebe +3 dados de Percepção, voo ou um ataque desarmado +1L.",
+      "Darkling": "O Trevoso pode gastar ● para se mover instantaneamente entre duas sombras percebidas; isso falha em escuridão completa ou luz sem sombras."
+    }
+  },
+  "ctl-kith-and-kin:dread-companion": {
+    "name": "Companheiro Temível",
+    "description": "Ofereça uma recompensa a um fantasma da Sebe e o vincule com um bracelete de silvas, tornando-se um Fio adicional. A dupla deve permanecer a até Fado × 10 metros, pode compartilhar Glamour para benefício mútuo, e o vínculo protege o fantasma no mundo mundano e pode estender a Máscara do changeling até ele.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Resistência + Fado",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "O fantasma é vinculado, e as ações solicitadas pelo changeling afirmam seu Fio; ele pode gastar ● para recusar o uso de seus poderes, Numina ou Influências.",
+    "exceptionalSuccess": "O fantasma não pode recusar, a menos que o pedido o coloque em perigo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O fantasma da Sebe ofendido ataca imediatamente o changeling.",
+    "loophole": "Faça o fantasma da Sebe afirmar seu próprio Fio durante a mesma cena.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso obtém acesso ao Numen Desmaterializar enquanto estiver vinculado.",
+      "Fairest": "A duração torna-se até o Belíssimo deixar a Sebe."
+    }
+  },
+  "ctl-kith-and-kin:listen-with-winds-ears": {
+    "name": "Ouvir com os Ouvidos do Vento",
+    "description": "Perceba sempre que alguém pronunciar o nome verdadeiro do changeling em um raio de Fado × 3,2 quilômetros. Teste Raciocínio + Investigação + Fado, disputado por Compostura + Fado de quem fala, para ouvir a conversa por um turno enquanto fica surdo às falas próximas; um sucesso excepcional estende a escuta por um número de turnos igual aos sucessos excedentes. Durante a escuta, pagar o custo maior teleporta o changeling até quem falou e encerra o Contrato.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até ser usado para teletransporte",
+    "loophole": "Durante a mesma cena, apresente o changeling por seu nome verdadeiro a alguém que ele nunca tenha conhecido.",
+    "seemingBenefits": {
+      "Beast": "A Fera dobra o Deslocamento pela cena depois de chegar à localização de quem falou.",
+      "Fairest": "Em vez disso, o Belíssimo arrasta até sua localização a pessoa que pronunciou seu nome."
+    }
+  },
+  "ctl-kith-and-kin:steal-influence": {
+    "name": "Roubar Influência",
+    "description": "Toque uma criatura e escolha uma Influência que ela possua, gastando ● por ponto que deseje roubar pela cena. A vítima perde acesso a esses pontos; o changeling pode ativá-los pagando Glamour mesmo que outro recurso fosse normalmente exigido.",
+    "dicePool": "Raciocínio + Furto + Fado contra Perseverança + Fado",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Roube um ponto da Influência escolhida por Glamour gasto; normalmente, o custo não pode ser dividido entre Influências diferentes.",
+    "exceptionalSuccess": "Compre permanentemente até o nível roubado por 2 Experiências por ponto, sujeito ao limite normal de metade do Fado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo pode usar reflexivamente a Influência com um desconto de Glamour igual à quantidade gasta na invocação fracassada.",
+    "loophole": "O alvo causou pelo menos 1 ponto de dano letal ou agravado ao changeling durante a mesma cena.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode dividir o Glamour entre várias Influências.",
+      "Elemental": "O Elemental pode transformar os pontos roubados em uma ou mais Influências tematicamente relacionadas durante o efeito."
+    }
+  },
+  "ctl-kith-and-kin:earths-gentle-movements": {
+    "name": "Movimentos Suaves da Terra",
+    "description": "Remodele permanentemente terra natural descoberta com o changeling no centro, afetando um metro quadrado por sucesso. Altere elevação, forma ou consistência e expulse material natural indesejado; qualquer pessoa na área em movimento testa Destreza + Atletismo ou sofre Derrubado.",
+    "dicePool": "Força + Ofícios + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Remodele permanentemente a área permitida.",
+    "exceptionalSuccess": "Divida os sucessos entre dois efeitos diferentes dentro da área afetada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A terra engole e Imobiliza o changeling como se ele estivesse preso por um item.",
+    "loophole": "Coloque uma pedrinha sob a língua do changeling.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental afeta dois metros quadrados por sucesso.",
+      "Wizened": "Em vez disso, o Mirrado pode remodelar construtivamente pedra natural, usando Destreza + Ofícios + Fado."
+    }
+  },
+  "ctl-kith-and-kin:earths-impenetrable-walls": {
+    "name": "Muralhas Impenetráveis da Terra",
+    "description": "Ao longo de cinco turnos, erga uma fortaleza de pedra de Tamanho Fado × 10 sobre terreno natural livre enquanto cria uma Inclinação Terremoto à qual o changeling é imune. Ela é um Local Seguro de metade do Fado com Durabilidade 2. Cada sucesso depois do primeiro acrescenta Durabilidade, Tamanho, proteção ambiental, provisões ou, na Sebe, um Refúgio de metade do Fado.",
+    "dicePool": "Força + Ofícios + Fado",
+    "action": "Instantânea; a construção leva cinco turnos",
+    "duration": "Um capítulo",
+    "success": "A fortaleza projetada se ergue com uma característica adicional da lista por sucesso depois do primeiro.",
+    "exceptionalSuccess": "Sucessos adicionais fornecem características adicionais normalmente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Crie a Inclinação Terremoto por cinco turnos sem uma fortaleza, e o changeling não é imune.",
+    "loophole": "Defenda com sucesso o changeling ou outra pessoa de um ataque durante a mesma cena.",
+    "seemingBenefits": {
+      "Fairest": "Na Sebe, o Belíssimo também recebe Equipe temporária de metade do Fado, representando seguidores hobgoblins adequados.",
+      "Ogre": "O Ogro subtrai metade do Fado em sucessos das tentativas de outro personagem de fiar a fortaleza ou seu interior."
+    }
+  },
+  "ctl-kith-and-kin:cracked-mirror": {
+    "name": "Espelho Rachado",
+    "description": "Embace um espelho, escreva o nome do changeling e revele seu simulacro. O custo menor permite espionar pelo ponto de vista do simulacro durante a cena, embora ele sempre saiba que houve uma tentativa. Pagar o custo maior troca suas localizações através do espaço dos espelhos e encerra imediatamente o Contrato. Um simulacro disposto não disputa.",
+    "dicePool": "Manipulação + Furto + Fado contra Vigor + Fado",
+    "action": "Disputada",
+    "duration": "Uma cena ou até o changeling trocar de lugar",
+    "success": "Veja e ouça os arredores do simulacro como se o acompanhasse de perto; pela Força de Vontade adicional, troque de lugar com ele.",
+    "exceptionalSuccess": "A troca desorienta o simulacro e inflige Confuso.",
+    "failure": "O Contrato falha, mas o simulacro descobre a tentativa.",
+    "dramaticFailure": "O simulacro descobre a tentativa e pode pagar ● para invocar Espelho Rachado imediatamente, sem rolagem, pagando ○ opcionalmente para trocar de lugar, sem precisar do Eco Mímico.",
+    "loophole": "Faça uma rachadura significativa no espelho usado para invocar o Contrato.",
+    "seemingBenefits": {
+      "Darkling": "Em um sucesso excepcional, o Trevoso oculta do simulacro a tentativa de espionagem.",
+      "Fairest": "Um simulacro disposto pode trocar de lugar com o Belíssimo sem o custo adicional de Força de Vontade."
+    }
+  },
+  "ctl-kith-and-kin:momentary-respite": {
+    "name": "Trégua Momentânea",
+    "description": "Quebre um dispositivo de medição do tempo para suspender os efeitos do tempo sobre o changeling. Escolha uma proteção por sucesso: encerre uma Inclinação Pessoal; ignore penalidades por ferimentos; proteja a caixa de Vitalidade desprotegida mais à direita contra dano agravado; ignore uma toxina, doença ou Condição Persistente. As escolhas, exceto penalidades por ferimentos, podem ser repetidas. Durante o efeito, o beneficiário não pode se curar naturalmente, recuperar Força de Vontade descansando, recuperar Clareza por meio de Pedras de Contato, gastar Experiências nem envelhecer.",
+    "dicePool": "Vigor + Sobrevivência + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena, extensível uma cena por vez",
+    "success": "Aplique uma proteção temporal listada por sucesso. Em cada cena consecutiva depois da primeira, sofra um ponto de ruptura com um dado mais o número de cenas consecutivas ativas; o Tempo retalia caso seja mantido por mais de um ano e um dia.",
+    "exceptionalSuccess": "Sucessos adicionais fornecem proteções adicionais normalmente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre Imóvel indefinidamente, até que um Choque de Vontades bem-sucedido contra sua própria parada de Choque rompa a maldição do Tempo.",
+    "loophole": "Abrace ou envolva-se em um objeto reconfortante que represente descanso ou sono.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental também pode escolher ignorar uma Inclinação Ambiental, repetindo a escolha para Inclinações diferentes.",
+      "Ogre": "O Ogro pode invocá-lo sobre um personagem que consinta, pagando todos os custos e sofrendo todas as consequências; invocá-lo novamente encerra a instância anterior."
+    }
   }
 }

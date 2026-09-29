@@ -279,6 +279,20 @@ test("tradução pt-BR do bloco Thorn de Kith and Kin está completa", () => {
   assert.equal(JSON.parse(readFileSync(new URL("../public/data/changeling/conditions-pt.json",import.meta.url),"utf8")).comatose.name,"Comatoso");
 });
 
+test("tradução pt-BR do bloco Independent conclui Kith and Kin", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Independent");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+  const all=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>id.startsWith("ctl-kith-and-kin:")).sort(),all.map((item)=>item.id).sort());
+});
+
 test("bloco Jewels do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels");
   assert.equal(items.length,10);
