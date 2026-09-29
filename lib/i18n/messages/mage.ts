@@ -3,6 +3,9 @@ export const mageMessages = {
     "ui": {
       "activeSpells": "Feitiços Ativos",
       "arcana": "Arcanos",
+      "arcanum": "Arcano",
+      "attribute": "Atributo",
+      "lostWillpowerDot": "Ponto perdido de Força de Vontade",
       "magicalTools": "Ferramentas Mágicas",
       "nimbusTilt": "Inclinação do Nimbus",
       "paradoxConditions": "Condições do Paradoxo",
@@ -205,6 +208,9 @@ export const mageMessages = {
     "ui": {
       "activeSpells": "Active Spells",
       "arcana": "Arcana",
+      "arcanum": "Arcanum",
+      "attribute": "Attribute",
+      "lostWillpowerDot": "Lost Willpower dot",
       "magicalTools": "Magical Tools",
       "nimbusTilt": "Nimbus Tilt",
       "paradoxConditions": "Paradox Conditions",

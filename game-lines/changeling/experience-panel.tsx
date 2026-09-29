@@ -711,7 +711,7 @@ export function ExperiencePanel({
                     setTargetRating(0);
                     setFeedback("");
                   }}
-                  options={groupedPurchaseOptions(builderMode ? [
+                  options={groupedPurchaseOptions<ChangelingPurchaseType>(builderMode ? [
                     { group: "core", purchases: ["attribute", "skill", "merit"] },
                     { group: "supernatural", purchases: ["wyrd", "contract"] },
                   ] : PURCHASE_GROUPS, (value) => t(PURCHASE_LABEL_KEYS[value]), locale)}

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { MTA_PATHS } from "@/game-lines/mage/creation-rules";
@@ -34,11 +34,14 @@ import { useLegacyHomebrews } from "./use-legacy-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
-const PURCHASE_TYPE_EN:Record<string,string>={Atributo:"Attribute",Perícia:"Skill",Mérito:"Merit",Especialização:"Specialty",Arcano:"Arcanum",Gnose:"Gnosis",Rota:"Rote",Práxis:"Praxis",Sabedoria:"Wisdom","Ponto perdido de Força de Vontade":"Lost Willpower dot"};
-const purchaseTypeLabel=(value:string,locale:Locale)=>locale==="en-US"?(PURCHASE_TYPE_EN[value]??systemTerm(value,locale)):value;
+type MagePurchaseType = "attribute" | "skill" | "specialty" | "merit" | "arcanum" | "gnosis" | "rote" | "praxis" | "wisdom" | "willpower";
+const PURCHASE_LABEL_KEYS = {
+  attribute: "ui.attribute", skill: "ui.skill", specialty: "ui.specialty", merit: "ui.merit", arcanum: "ui.arcanum",
+  gnosis: "ui.gnosis", rote: "ui.rote", praxis: "ui.praxis", wisdom: "ui.wisdom", willpower: "ui.lostWillpowerDot",
+} as const;
 const groupedTraitOptions=(groups:Record<string,readonly string[]>)=>Object.entries(groups).flatMap(([group,values])=>values.map(value=>({value,label:value,group})));
 const ATTRIBUTE_OPTIONS=groupedTraitOptions(ATTRIBUTES);
 const SKILL_OPTIONS=groupedTraitOptions(SKILLS);
@@ -60,11 +63,11 @@ type MageXpEntry = {
   previousLostWillpower?: number;
 };
 const MAGE_PURCHASE_GROUPS = [
-  { group: "core", purchases: ["Atributo", "Perícia", "Especialização", "Mérito"] },
-  { group: "supernatural", purchases: ["Gnose", "Arcano"] },
-  { group: "integrity", purchases: ["Sabedoria", "Ponto perdido de Força de Vontade"] },
-  { group: "acquired", purchases: ["Rota", "Práxis"] },
-] as const;
+  { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
+  { group: "supernatural", purchases: ["gnosis", "arcanum"] },
+  { group: "integrity", purchases: ["wisdom", "willpower"] },
+  { group: "acquired", purchases: ["rote", "praxis"] },
+] as const satisfies readonly ExperiencePurchaseGroup<MagePurchaseType>[];
 const MAGE_PURCHASES = MAGE_PURCHASE_GROUPS.flatMap(({ purchases }) => [...purchases]);
 export function MageExperiencePanel({
   character,
@@ -111,7 +114,7 @@ export function MageExperiencePanel({
     : [];
   const [regularInput, setRegularInput] = useState<string | null>(null),
     [arcaneInput, setArcaneInput] = useState<string | null>(null);
-  const [purchase, setPurchase] = useState<string>(MAGE_PURCHASES[0]),
+  const [purchase, setPurchase] = useState<MagePurchaseType>(MAGE_PURCHASES[0]),
     [target, setTarget] = useState<string>(Object.values(ATTRIBUTES).flat()[0]);
   const [targetRating, setTargetRating] = useState(0);
   const [mageSpecialtySkill,setMageSpecialtySkill]=useState<string>(Object.values(SKILLS).flat()[0]);
@@ -152,15 +155,15 @@ export function MageExperiencePanel({
       meetsArcanaRequirements(spell.requirements, arcana),
   );
   const options =
-    purchase === "Atributo"
+    purchase === "attribute"
       ? Object.values(ATTRIBUTES).flat()
-      : purchase === "Perícia" || purchase === "Especialização"
+      : purchase === "skill" || purchase === "specialty"
         ? Object.values(SKILLS).flat()
-        : purchase === "Mérito"
+        : purchase === "merit"
           ? merits.map((item) => item.id)
-          : purchase === "Arcano"
+          : purchase === "arcanum"
             ? Object.keys(arcana)
-            : purchase === "Rota" || purchase === "Práxis"
+            : purchase === "rote" || purchase === "praxis"
               ? availableSpells.map((item) => item.id)
               : [purchase];
   const chosenTarget=target||options[0]||"";
@@ -184,16 +187,16 @@ export function MageExperiencePanel({
     availableSpells.find((item) => item.id === target) ?? availableSpells[0];
   const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
   const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
-  const ratedCurrent = purchase === "Atributo" ? Number(character.attributes[chosenTarget] ?? 1)
-    : purchase === "Perícia" ? Number(character.skills[chosenTarget] ?? 0)
-      : purchase === "Arcano" ? Number(arcana[chosenTarget] ?? 0)
-        : purchase === "Gnose" ? Number(character.line_data.gnosis ?? 1)
-          : purchase === "Sabedoria" ? Number(character.line_data.wisdom ?? 7)
-            : purchase === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum - lostWillpower
+  const ratedCurrent = purchase === "attribute" ? Number(character.attributes[chosenTarget] ?? 1)
+    : purchase === "skill" ? Number(character.skills[chosenTarget] ?? 0)
+      : purchase === "arcanum" ? Number(arcana[chosenTarget] ?? 0)
+        : purchase === "gnosis" ? Number(character.line_data.gnosis ?? 1)
+          : purchase === "wisdom" ? Number(character.line_data.wisdom ?? 7)
+            : purchase === "willpower" ? permanentWillpowerMaximum - lostWillpower
               : 0;
-  const ratedMaximum = purchase === "Atributo" || purchase === "Perícia" ? traitMaximum
-    : ["Arcano", "Gnose", "Sabedoria"].includes(purchase) ? 10
-      : purchase === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum
+  const ratedMaximum = purchase === "attribute" || purchase === "skill" ? traitMaximum
+    : ["arcanum", "gnosis", "wisdom"].includes(purchase) ? 10
+      : purchase === "willpower" ? permanentWillpowerMaximum
         : 0;
   const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
   const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
@@ -201,16 +204,16 @@ export function MageExperiencePanel({
     label: string = systemTerm(chosenTarget,locale),
     mode: "regular" | "arcane" | "either" = "regular",
     minimumRegular = 0;
-  if (purchase === "Atributo") { cost = 4 * ratingAmount; label = `${systemTerm(chosenTarget, locale)} ${intendedRating}`; }
-  else if (purchase === "Perícia") { cost = 2 * ratingAmount; label = `${systemTerm(chosenTarget, locale)} ${intendedRating}`; }
-  else if (purchase === "Especialização") {
+  if (purchase === "attribute") { cost = 4 * ratingAmount; label = `${systemTerm(chosenTarget, locale)} ${intendedRating}`; }
+  else if (purchase === "skill") { cost = 2 * ratingAmount; label = `${systemTerm(chosenTarget, locale)} ${intendedRating}`; }
+  else if (purchase === "specialty") {
     cost = 1;
     label = `${t("ui.specialty")} ${systemTerm(mageSpecialtySkill,locale)}: ${mageSpecialtyName.trim()||t("ui.newSpecialty")}`;
   }
-  else if (purchase === "Mérito") {
+  else if (purchase === "merit") {
     cost = nextMerit ? nextMerit - (ownedMerit?.dots ?? 0) : 0;
     label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? t("ui.merit");
-  } else if (purchase === "Arcano") {
+  } else if (purchase === "arcanum") {
     const current = Number(arcana[chosenTarget] ?? 0);
     const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&activeLegacyDefinition?.rulingArcanum===systemTerm(chosenTarget,"en-US");
     const inferior = path?.inferior === chosenTarget;
@@ -219,22 +222,22 @@ export function MageExperiencePanel({
     minimumRegular = ratingPurchaseCost(Math.max(current, limit), intendedRating, 5);
     mode = minimumRegular < cost ? "either" : "regular";
     label = `${systemTerm(chosenTarget,locale)} ${intendedRating}`;
-  } else if (purchase === "Gnose") {
+  } else if (purchase === "gnosis") {
     cost = 5 * ratingAmount;
     mode = "either";
     label = `${t("ui.gnosis")} ${intendedRating}`;
-  } else if (purchase === "Rota") {
+  } else if (purchase === "rote") {
     cost = 1;
     label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.rote");
-  } else if (purchase === "Práxis") {
+  } else if (purchase === "praxis") {
     cost = 1;
     mode = "arcane";
     label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.praxis");
-  } else if (purchase === "Sabedoria") {
+  } else if (purchase === "wisdom") {
     cost = 2 * ratingAmount;
     mode = "arcane";
     label = `${t("ui.wisdom")} ${intendedRating}`;
-  } else if (purchase === "Ponto perdido de Força de Vontade") {
+  } else if (purchase === "willpower") {
     cost = lostWillpower ? ratingAmount : 0;
     label = lostWillpower
       ? `${t("ui.willpower")} ${intendedRating}`
@@ -268,25 +271,25 @@ export function MageExperiencePanel({
     });
   }
   function buy() {
-    if(purchase==="Mérito"){
+    if(purchase==="merit"){
       if(!selectedMerit||!nextMerit)return setFeedback(t("ui.selectAnAvailableMerit"));
       if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
       const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]),factionCatalog,character.line_data.affiliation_id);
       if(problems.length)return setFeedback(problems.join(" "));
     }
-    if(purchase==="Especialização"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));
+    if(purchase==="specialty"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));
     if (cost < 1 || (!builderMode && (regular < splitRegular || arcane < splitArcane))) {
       setFeedback(t("ui.insufficientExperienceOrUnavailablePurchase"));
       return;
     }
-    if ((purchase === "Gnose" && Number(character.line_data.gnosis ?? 1) >= 10) ||
-        (purchase === "Sabedoria" && Number(character.line_data.wisdom ?? 7) >= 10) ||
-        (purchase === "Arcano" && Number(arcana[chosenTarget] ?? 0) >= 10) ||
-        (purchase === "Atributo" && Number(character.attributes[chosenTarget] ?? 1) >= traitMaximum) ||
-        (purchase === "Perícia" && Number(character.skills[chosenTarget] ?? 0) >= traitMaximum))
+    if ((purchase === "gnosis" && Number(character.line_data.gnosis ?? 1) >= 10) ||
+        (purchase === "wisdom" && Number(character.line_data.wisdom ?? 7) >= 10) ||
+        (purchase === "arcanum" && Number(arcana[chosenTarget] ?? 0) >= 10) ||
+        (purchase === "attribute" && Number(character.attributes[chosenTarget] ?? 1) >= traitMaximum) ||
+        (purchase === "skill" && Number(character.skills[chosenTarget] ?? 0) >= traitMaximum))
       return setFeedback(t("ui.thisTraitHasReachedItsDotLimit"));
     if (
-      (purchase === "Rota" || purchase === "Práxis") &&
+      (purchase === "rote" || purchase === "praxis") &&
       (!selectedSpell ||
         !meetsArcanaRequirements(selectedSpell.requirements, arcana))
     ) {
@@ -301,11 +304,11 @@ export function MageExperiencePanel({
       specializations: structuredClone(next.specializations),
       line_data: structuredClone(next.line_data),
     };
-    if (purchase === "Atributo")
+    if (purchase === "attribute")
       next.attributes[chosenTarget] = intendedRating;
-    else if (purchase === "Perícia")
+    else if (purchase === "skill")
       next.skills[chosenTarget] = intendedRating;
-    else if (purchase === "Mérito" && selectedMerit && nextMerit) {
+    else if (purchase === "merit" && selectedMerit && nextMerit) {
       const found =
         mageMeritInstance >= 0
           ? next.merits[mageMeritInstance]
@@ -326,16 +329,16 @@ export function MageExperiencePanel({
           configuration: normalizeMeritConfiguration(mageMeritConfiguration),
           instanceId:createRandomId(),
         });
-    } else if (purchase === "Especialização")
+    } else if (purchase === "specialty")
       next.specializations.push({ skill: mageSpecialtySkill, name: mageSpecialtyName.trim() });
-    else if (purchase === "Arcano")
+    else if (purchase === "arcanum")
       next.line_data = {
         ...next.line_data,
         arcana: { ...arcana, [chosenTarget]: intendedRating },
       };
-    else if (purchase === "Gnose")
+    else if (purchase === "gnosis")
       next.line_data = withMagePowerRating(next, intendedRating);
-    else if (purchase === "Rota" && selectedSpell)
+    else if (purchase === "rote" && selectedSpell)
       next.line_data = {
         ...next.line_data,
         learned_rotes: [
@@ -343,7 +346,7 @@ export function MageExperiencePanel({
           { ...selectedSpell, roteSkill: selectedSpell.roteSkills[0] },
         ],
       };
-    else if (purchase === "Práxis" && selectedSpell)
+    else if (purchase === "praxis" && selectedSpell)
       next.line_data = {
         ...next.line_data,
         learned_praxes: [
@@ -351,12 +354,12 @@ export function MageExperiencePanel({
           selectedSpell,
         ],
       };
-    else if (purchase === "Sabedoria")
+    else if (purchase === "wisdom")
       next.line_data = {
         ...next.line_data,
         wisdom: intendedRating,
       };
-    else if (purchase === "Ponto perdido de Força de Vontade")
+    else if (purchase === "willpower")
       next.current_state = {
         ...next.current_state,
         willpower_lost_dots: Math.max(
@@ -366,20 +369,20 @@ export function MageExperiencePanel({
       };
     recalculateCoreDerived(next);
     let undo: MageAdvancementUndo;
-    if (purchase === "Atributo" || purchase === "Perícia")
-      undo = { kind: "trait", group: purchase === "Atributo" ? "attributes" : "skills", name: chosenTarget, amount: ratingAmount };
-    else if (purchase === "Arcano") undo = { kind: "arcana", name: chosenTarget, amount: ratingAmount, creditedArcane:activeLegacy.joined&&activeLegacyDefinition&&path?.ruling.some(item=>systemTerm(String(item),"en-US")===activeLegacyDefinition.rulingArcanum)&&systemTerm(chosenTarget,"en-US")===activeLegacyDefinition.rulingArcanum?ratingAmount:0 };
-    else if (purchase === "Gnose") undo = { kind: "gnosis", amount: ratingAmount };
-    else if (purchase === "Sabedoria") undo = { kind: "wisdom", amount: ratingAmount };
-    else if (purchase === "Mérito") {
+    if (purchase === "attribute" || purchase === "skill")
+      undo = { kind: "trait", group: purchase === "attribute" ? "attributes" : "skills", name: chosenTarget, amount: ratingAmount };
+    else if (purchase === "arcanum") undo = { kind: "arcana", name: chosenTarget, amount: ratingAmount, creditedArcane:activeLegacy.joined&&activeLegacyDefinition&&path?.ruling.some(item=>systemTerm(String(item),"en-US")===activeLegacyDefinition.rulingArcanum)&&systemTerm(chosenTarget,"en-US")===activeLegacyDefinition.rulingArcanum?ratingAmount:0 };
+    else if (purchase === "gnosis") undo = { kind: "gnosis", amount: ratingAmount };
+    else if (purchase === "wisdom") undo = { kind: "wisdom", amount: ratingAmount };
+    else if (purchase === "merit") {
       const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
       if (index < 0) return setFeedback(t("ui.thePurchasedMeritCouldNotBeIdentified"));
       const instanceId = next.merits[index].instanceId ?? createRandomId();
       next.merits[index].instanceId = instanceId;
       undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId };
-    } else if (purchase === "Especialização") undo = { kind: "specialty", skill: mageSpecialtySkill, name: mageSpecialtyName.trim() };
-    else if (purchase === "Rota" || purchase === "Práxis")
-      undo = { kind: "spell", key: purchase === "Rota" ? "learned_rotes" : "learned_praxes", id: selectedSpell.id };
+    } else if (purchase === "specialty") undo = { kind: "specialty", skill: mageSpecialtySkill, name: mageSpecialtyName.trim() };
+    else if (purchase === "rote" || purchase === "praxis")
+      undo = { kind: "spell", key: purchase === "rote" ? "learned_rotes" : "learned_praxes", id: selectedSpell.id };
     else undo = { kind: "willpower", amount: ratingAmount };
     const entry: MageXpEntry = {
       undo,
@@ -404,7 +407,7 @@ export function MageExperiencePanel({
     };
     updateSheet(synchronizeMeritGrants(next));
     setFeedback(t("ui.purchased", { p1: label }));
-    if(purchase==="Especialização")setMageSpecialtyName("");
+    if(purchase==="specialty")setMageSpecialtyName("");
   }
   function markWillpowerLoss() {
     if (lostWillpower >= maximumLostWillpower) {
@@ -559,19 +562,19 @@ export function MageExperiencePanel({
               <RuleSelect
                 value={purchase}
                 onChange={(value) => {
-                  setPurchase(value);
+                  setPurchase(value as MagePurchaseType);
                   setTarget("");
                   setTargetRating(0);
                   setRegularSplit(0);
                 }}
-                options={groupedPurchaseOptions(builderMode ? [
-                  { group: "core", purchases: ["Atributo", "Perícia", "Mérito"] },
-                  { group: "supernatural", purchases: ["Gnose", "Arcano"] },
-                  { group: "acquired", purchases: ["Rota", "Práxis"] },
-                ] : MAGE_PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
+                options={groupedPurchaseOptions<MagePurchaseType>(builderMode ? [
+                  { group: "core", purchases: ["attribute", "skill", "merit"] },
+                  { group: "supernatural", purchases: ["gnosis", "arcanum"] },
+                  { group: "acquired", purchases: ["rote", "praxis"] },
+                ] : MAGE_PURCHASE_GROUPS, (value) => t(PURCHASE_LABEL_KEYS[value]), locale)}
               />
             </label>
-            {purchase === "Mérito" && (
+            {purchase === "merit" && (
               <label>
                 {t("ui.merit")}
                 <ExperienceMeritPicker
@@ -590,19 +593,19 @@ export function MageExperiencePanel({
                 />
               </label>
             )}
-            {purchase==="Mérito"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={selectedMerit.name === "Masque" ? character.merits.find((item) => item.name === "Masque (Style)")?.dots : undefined} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props} factions={factionCatalog} order={String(character.line_data.order??"")}/>} onChange={setMageMeritConfiguration}/>}
-            {purchase === "Especialização" && <>
+            {purchase==="merit"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={selectedMerit.name === "Masque" ? character.merits.find((item) => item.name === "Masque (Style)")?.dots : undefined} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props} factions={factionCatalog} order={String(character.line_data.order??"")}/>} onChange={setMageMeritConfiguration}/>}
+            {purchase === "specialty" && <>
               <label>{t("ui.skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
               <label>{t("ui.specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>
             </>}
-            {purchase !== "Mérito" && purchase !== "Especialização" &&
-              ((purchase === "Rota" || purchase === "Práxis") ||
+            {purchase !== "merit" && purchase !== "specialty" &&
+              ((purchase === "rote" || purchase === "praxis") ||
                 options.length > 1) && (
               <label>
                 {t("ui.trait")}
-                {purchase === "Rota" || purchase === "Práxis" ? (
+                {purchase === "rote" || purchase === "praxis" ? (
                   <ExperiencePowerPicker
-                    kind={purchase}
+                    kind={purchase === "rote" ? "Rota" : "Práxis"}
                     items={availableSpells.map((spell) => {
                       const requirements = Object.entries(spell.requirements).sort(
                         (a, b) => b[1] - a[1],
@@ -625,9 +628,9 @@ export function MageExperiencePanel({
                     value={chosenTarget}
                     onChange={(value) => { setTarget(value); setTargetRating(0); }}
                     options={
-                      purchase === "Atributo"
+                      purchase === "attribute"
                         ? ATTRIBUTE_OPTIONS
-                        : purchase === "Perícia" || purchase === "Especialização"
+                        : purchase === "skill"
                           ? SKILL_OPTIONS
                           : options.map((value) => ({ value, label: value }))
                     }

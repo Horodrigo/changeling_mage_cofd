@@ -49,7 +49,7 @@ const isCatalog = (node) => {
   if (node.type !== "ObjectExpression") return false;
   const idTextEntries = node.properties.filter((property) =>
     property.type === "Property"
-    && propertyName(property).includes(":")
+    && /^[a-z0-9-]+(?::[a-z0-9-]+)+$/.test(propertyName(property))
     && unwrap(property.value)?.type === "Literal"
     && typeof unwrap(property.value).value === "string",
   );

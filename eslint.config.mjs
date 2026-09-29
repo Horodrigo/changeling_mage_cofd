@@ -41,7 +41,7 @@ const eslintConfig = defineConfig([
       },
     },
     rules: {
-      "i18n/no-untranslated-ui-text": "warn",
+      "i18n/no-untranslated-ui-text": "error",
     },
   },
   {
