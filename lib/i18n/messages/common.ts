@@ -472,7 +472,7 @@ export const commonMessages = {
       "searchMeritByNamePrerequisiteOrSource": "Buscar mérito por nome, pré-requisito ou fonte…",
       "secondary": "Secundária",
       "seeThisMeritSDescriptionToAssignOr": "Consulte a descrição deste Mérito para distribuir ou usar suas características internas.",
-      "seemingAndKith": "Semblante e Frátria",
+      "seemingAndKith": "Feição e Frátria",
       "select": "Selecione",
       "select198f7a": "Selecionar",
       "selectARole": "Selecione um papel",

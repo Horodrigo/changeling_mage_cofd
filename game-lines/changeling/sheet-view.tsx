@@ -202,7 +202,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             ["Nome", character.character.name], ["Jogador", character.character.player],
             ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Linha", changelingAnchorDisplayName("thread", data.thread, locale)],
             ["Conceito", character.character.concept],
-            ["Semblante", seemingName(seemingCatalog, data.seeming, locale)],
+            ["Feição", seemingName(seemingCatalog, data.seeming, locale)],
             [t("ui.kith6a78ff"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [t("ui.court"), displayCourt(lineReference.courts, data.court, locale)],
         ];
         return (<CharacterPaperShell line="CtL" mobile title={t("ui.changelingTitle")} subtitle={t("ui.theLOST")}>

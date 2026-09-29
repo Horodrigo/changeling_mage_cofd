@@ -92,7 +92,7 @@ export function ExperienceRules() {
   const { locale, t } = useLanguage();
   const beatRowsPt = ["Cumprir uma Aspiração", "Resolver uma Condição", "Aceitar uma falha dramática", "Render-se em combate", "Sofrer dano nas caixas finais de Vitalidade", "Encerrar uma sessão", "Sofrer dano de Lucidez", "Liberar Desvario involuntariamente"];
   const beatRowsEn = ["Fulfill an Aspiration", "Resolve a Condition", "Accept a dramatic failure", "Surrender in combat", "Take damage in the final Health boxes", "End a session", "Take Clarity damage", "Release Bedlam involuntarily"];
-  const costRowsPt = [["Atributo", "4 por ponto"], ["Perícia", "2 por ponto"], ["Mérito", "1 por ponto"], ["Especialização", "1"], ["Contrato favorecido", "Comum 2 · Real 3"], ["Contrato não favorecido", "Comum 3 · Real 4"], ["Contrato Goblin", "2"], ["Benefício de outro Semblante", "1"], ["Fado", "5 por ponto"], ["Ponto perdido de Força de Vontade", "1"]];
+  const costRowsPt = [["Atributo", "4 por ponto"], ["Perícia", "2 por ponto"], ["Mérito", "1 por ponto"], ["Especialização", "1"], ["Contrato favorecido", "Comum 2 · Real 3"], ["Contrato não favorecido", "Comum 3 · Real 4"], ["Contrato Goblin", "2"], ["Benefício de outra Feição", "1"], ["Fado", "5 por ponto"], ["Ponto perdido de Força de Vontade", "1"]];
   const costRowsEn = [["Attribute", "4 per dot"], ["Skill", "2 per dot"], ["Merit", "1 per dot"], ["Specialty", "1"], ["Favored Contract", "Common 2 · Royal 3"], ["Non-favored Contract", "Common 3 · Royal 4"], ["Goblin Contract", "2"], ["Benefit of another Seeming", "1"], ["Wyrd", "5 per dot"], ["Lost Willpower dot", "1"]];
   const beatRows = locale === "en-US" ? beatRowsEn : beatRowsPt;
   const costRows = locale === "en-US" ? costRowsEn : costRowsPt;

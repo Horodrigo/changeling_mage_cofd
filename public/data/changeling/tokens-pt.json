@@ -123,8 +123,8 @@
   },
   {
     "id": "ctl-oak-ash-thorn:seeming-song",
-    "name": "Canção do Semblante",
-    "effect": "Canções de Semblante consistem em som mágico engarrafado para uso posterior. Qualquer partitura ou gravação pode dar origem a uma canção de Semblante, embora a maioria das melodias de Bagatelas reflita o Semblante, a corte ou alguma outra característica definidora de seu criador. Uma canção de Semblante retirada do frasco e imbuída de Glamour agita o coração e o Fado de todos que a escutam. Durante a cena, qualquer changeling que ouça a melodia pode empregar o benefício do Semblante do usuário em qualquer Contrato Arcadiano que invoque, mesmo que não o tenha aprendido. Se um hobgoblin ou outra criatura Fae sem Semblante ativar a canção, isso certamente terá consequências estranhas."
+    "name": "Canção da Feição",
+    "effect": "Canções de Feição consistem em som mágico engarrafado para uso posterior. Qualquer partitura ou gravação pode dar origem a uma canção de Feição, embora a maioria das melodias de Bagatelas reflita a Feição, a corte ou alguma outra característica definidora de seu criador. Uma canção de Feição retirada do frasco e imbuída de Glamour agita o coração e o Fado de todos que a escutam. Durante a cena, qualquer changeling que ouça a melodia pode empregar o benefício da Feição do usuário em qualquer Contrato Arcadiano que invoque, mesmo que não o tenha aprendido. Se um hobgoblin ou outra criatura Fae sem Feição ativar a canção, isso certamente terá consequências estranhas."
   },
   {
     "id": "ctl-oak-ash-thorn:sorcerers-brew",

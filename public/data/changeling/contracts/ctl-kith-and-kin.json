@@ -561,7 +561,7 @@
     "dramaticFailure": "The would-be subject learns of the attempt and that the changeling regards them as a rival.",
     "loophole": "During the scene, the changeling throws a temper tantrum before someone outside her motley.",
     "seemingBenefits": {
-      "Beast": "For +● when learning a location, track it for the chapter.",
+      "Beast": "For +1 Glamour when learning a location, track it for the chapter.",
       "Ogre": "When learning a name or face, roll Manipulation + Intimidation vs. Resolve + Empathy to inflict Paranoid."
     }
   },
@@ -597,7 +597,7 @@
     "originalName": "Unmask the Dark Horse",
     "type": "Comum",
     "page": 46,
-    "description": "The changeling publicly challenges a rival and may pay +● to replace one of her Aspirations with one directly opposing the target's.",
+    "description": "The changeling publicly challenges a rival and may pay +1 Glamour to replace one of her Aspirations with one directly opposing the target's.",
     "hasRoll": true,
     "dicePool": "Presence + Persuasion + Wyrd vs. Composure + Tolerance",
     "cost": "●●",
@@ -652,7 +652,7 @@
     "action": "Instant",
     "duration": "One scene",
     "success": "Apply purchased temporary shifts consistent with the proclamation's emotional tenor.",
-    "exceptionalSuccess": "For +● and +○, successes may also purchase subtle or paradigm shifts.",
+    "exceptionalSuccess": "For +1 Glamour and +1 Willpower, successes may also purchase subtle or paradigm shifts.",
     "failure": "The Contract fails.",
     "dramaticFailure": "Incite Bedlam in everyone present, including the changeling.",
     "loophole": "Point and declaim with a real scepter.",
@@ -683,7 +683,7 @@
     "dramaticFailure": "The changeling suffers the consequences of reneging despite assigning no quest.",
     "loophole": "Give the quester a provision of significant practical value for the quest.",
     "seemingBenefits": {
-      "Darkling": "After default, spend ○ and win Manipulation + Larceny + Wyrd vs. Resolve + Wyrd to transfer consequences to an informed witness.",
+      "Darkling": "After default, spend Willpower and win Manipulation + Larceny + Wyrd vs. Resolve + Wyrd to transfer consequences to an informed witness.",
       "Fairest": "Assign the same quest to up to half Wyrd subjects with proportionate rewards."
     }
   },
@@ -731,7 +731,7 @@
     "duration": "One scene",
     "loophole": "Break a miniature scepter crafted from precious metals and gems.",
     "seemingBenefits": {
-      "Fairest": "For +●●, a successful attack or intimidation inflicts Persistent Awestruck instead of Demoralized.",
+      "Fairest": "For +2 Glamour, a successful attack or intimidation inflicts Persistent Awestruck instead of Demoralized.",
       "Wizened": "Summon the scepter to a free hand; an unwilling holder contests Presence + Intimidation with Strength + Stamina."
     }
   },
@@ -1090,7 +1090,7 @@
     "loophole": "Hold a fresh, no-more-than-one-day-old clipping of the plant species chosen for the transformation.",
     "seemingBenefits": {
       "Elemental": "Target up to Wyrd characters, tracking each progression separately.",
-      "Wizened": "Seal the accepted promise without Glamour; increasing seal severity costs ● instead of ○."
+      "Wizened": "Seal the accepted promise without Glamour; increasing seal severity costs ● instead of Willpower."
     }
   },
   {
@@ -1151,7 +1151,7 @@
     "originalName": "Shrike's Larder",
     "type": "Real",
     "page": 57,
-    "description": "Spend ● per effect, up to all three, to curse one target with spines: −2 to chase movement rolls and no Edge, bypassed for one turn with ○; −3 Initiative; or halved Speed, bypassed for one turn by taking 1 bashing damage.",
+    "description": "Spend ● per effect, up to all three, to curse one target with spines: −2 to chase movement rolls and no Edge, bypassed for one turn with Willpower; −3 Initiative; or halved Speed, bypassed for one turn by taking 1 bashing damage.",
     "hasRoll": false,
     "dicePool": "None",
     "cost": "● to ●●●",
@@ -1396,7 +1396,7 @@
     "success": "See and hear the fetch's surroundings as though following nearby; for the additional Willpower, exchange locations with the fetch.",
     "exceptionalSuccess": "The switch disorients the fetch and inflicts Confused.",
     "failure": "The Contract fails, but the fetch knows about the attempt.",
-    "dramaticFailure": "The fetch learns of the attempt and may pay ● to invoke Cracked Mirror immediately without a roll, optionally paying ○ to switch places, without needing the Mimic Echo.",
+    "dramaticFailure": "The fetch learns of the attempt and may pay ● to invoke Cracked Mirror immediately without a roll, optionally paying Willpower to switch places, without needing the Mimic Echo.",
     "loophole": "Put a significant crack in the mirror used to invoke the Contract.",
     "seemingBenefits": {
       "Darkling": "On an exceptional success, conceal the spying attempt from the fetch.",

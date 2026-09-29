@@ -75,8 +75,8 @@
     "duration": "Uma cena ou até ser destruído",
     "loophole": "Realize um favor significativo para o elemento ou material escolhido durante a cena.",
     "seemingBenefits": {
-      "Elemental": "Por +●○, funda-se ao servo, substitua seus Atributos pelos dele quando desejar, torne-se imune ao material ou elemento dele e some +1L aos modificadores de armas.",
-      "Fairest": "Por +○, vincule um servo a um Vão indefinidamente enquanto ele permanecer lá."
+      "Elemental": "Por +1 Glamour e FdV, funda-se ao servo, substitua seus Atributos pelos dele quando desejar, torne-se imune ao material ou elemento dele e some +1L aos modificadores de armas.",
+      "Fairest": "Por +1 FdV, vincule um servo a um Vão indefinidamente enquanto ele permanecer lá."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -143,7 +143,7 @@
     "duration": "Um capítulo ou até o plano ter sucesso ou fracassar",
     "loophole": "Desenhe o plano, a hierarquia ou o índice do repositório em papel com pelo menos 50 anos.",
     "seemingBenefits": {
-      "Elemental": "Por +○, um repositório dura uma história e passa a abranger uma Especialização Mental que o Elemental possua.",
+      "Elemental": "Por +1 FdV, um repositório dura uma história e passa a abranger uma Especialização Mental que o Elemental possua.",
       "Fairest": "Crie uma organização adequada para combater a influência de um inimigo em vez de um plano."
     },
     "supplementalSeemingBenefits": {
@@ -168,7 +168,7 @@
     "loophole": "Dance enquanto toca a flauta, imitando a espécie desejada.",
     "seemingBenefits": {
       "Beast": "Mantenha um vínculo empático, perceba a condição e localização relativa dos animais e dê novas ordens à distância.",
-      "Fairest": "Por +●, convoque e comande uma segunda espécie."
+      "Fairest": "Por + 1 de Glamour, convoque e comande uma segunda espécie."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -260,7 +260,7 @@
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
-        "Beast": "Uma vez por cena, a vítima sofre metade do Fado em dano contundente ao usar a parada amaldiçoada, até o próximo cruzamento do horizonte.",
+        "Beast": "Uma vez por cena, a vítima sofre metade do Fado em dano contundente ao usar a parada amaldiçoada, até o sol cruzar novamente o horizonte.",
         "Darkling": "O Trevoso recupera 1 ponto de Força de Vontade se o alvo sofrer uma falha dramática por causa do Contrato em sua presença.",
         "Elemental": "O Elemental pode gastar 1 Glamour adicional para conceder 9-novamente ou remover 10-novamente da ação.",
         "Fairest": "O Belíssimo recupera 1 ponto de Força de Vontade se o alvo obtiver um sucesso excepcional por causa do Contrato em sua presença."
@@ -332,7 +332,7 @@
     }
   },
   "ctl-core:changeling-hours": {
-    "name": "Horas do Changeling",
+    "name": "Horas Trocadas",
     "description": "Manipule o tempo de um objeto: repare 1 ponto de Estrutura por turno, até Ofícios; inflija 1 ponto de dano que ignora Durabilidade por turno, até Ofícios; ou congele-o de modo imóvel e torne-o imune a dano ou alteração.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
@@ -340,7 +340,7 @@
     "loophole": "Nomeie um antigo proprietário do objeto que não seja o atual.",
     "seemingBenefits": {
       "Elemental": "O Elemental também pode afetar manifestações de seu elemento associado.",
-      "Wizened": "Por +○, o Mirrado torna permanente o efeito de congelamento; tentativas de sobrepujá-lo provocam um Choque de Vontades."
+      "Wizened": "Por +1 FdV, o Mirrado torna permanente o efeito de congelamento; tentativas de sobrepujá-lo provocam um Choque de Vontades."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -384,7 +384,7 @@
     "loophole": "Passe um minuto procurando teatralmente pela característica e demonstre surpresa ao encontrá-la.",
     "seemingBenefits": {
       "Fairest": "Em vez disso, o Belíssimo pode mudar a Virtude ou o Vício de uma pessoa próxima com Manipulação + Subterfúgio + Fado, disputado por Perseverança + Fado.",
-      "Wizened": "Por +●, o Mirrado pode criar um objeto inteiramente novo que pudesse ser encontrado razoavelmente na área."
+      "Wizened": "Por + 1 de Glamour, o Mirrado pode criar um objeto inteiramente novo que pudesse ser encontrado razoavelmente na área."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -408,7 +408,7 @@
     "loophole": "Induza o proprietário do original a declarar uma dívida para com o changeling durante a cena.",
     "seemingBenefits": {
       "Fairest": "O Belíssimo pode roubar um reflexo vivo com características mundanas limitadas pelo Fado e nenhuma característica sobrenatural; ele é amistoso e deferente. Em uma falha dramática, uma pessoa do espelho busca vingança.",
-      "Wizened": "Por +●, o Mirrado preserva as propriedades sobrenaturais do objeto copiado."
+      "Wizened": "Por + 1 de Glamour, o Mirrado preserva as propriedades sobrenaturais do objeto copiado."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -420,7 +420,7 @@
     }
   },
   "ctl-core:tatterdemalions-workshop": {
-    "name": "Oficina do Esfarrapado",
+    "name": "Oficina do Maltrapilho",
     "description": "Realize em um turno uma ação improvisada de Construir Equipamento para criar qualquer objeto mundano de Tamanho 5 ou menor com materiais improvisados e sem as ferramentas adequadas. Reduza as penalidades por bônus ou benefícios pela metade do Fado, arredondada para cima.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
@@ -549,7 +549,7 @@
     "loophole": "Diga o segredo em voz alta e em público entre mortais que possam ouvi-lo.",
     "seemingBenefits": {
       "Darkling": "O Trevoso recebe Informado a respeito do proprietário atual ou, se possuir o objeto, de um antigo proprietário descrito.",
-      "Wizened": "O Mirrado pode gastar +● por cada ponto adicional da história do objeto que deseje observar."
+      "Wizened": "O Mirrado pode gastar +1 de Glamour por cada ponto adicional da história do objeto que deseje observar."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -618,19 +618,19 @@
     }
   },
   "ctl-core:riddle-kith": {
-    "name": "Enigma de Frátria",
-    "description": "Molde o Semblante Fae de um changeling para se parecer com os adornos de outra Frátria sem copiar sua bênção nem mudar o Semblante aparente. Não é possível copiar o Semblante Fae de uma pessoa específica; forçar a mudança é um ponto de ruptura de três dados.",
+    "name": "Monta-Rostos",
+    "description": "Molde o Semblante Fae de um changeling para se parecer com os adornos de outra Frátria sem copiar sua bênção nem mudar a Feição aparente. Não é possível copiar o Semblante Fae de uma pessoa específica; forçar a mudança é um ponto de ruptura de três dados.",
     "dicePool": "Manipulação + Furto + Fado contra Compostura + Tolerância",
     "action": "Instantânea para alvos dispostos; disputada para alvos indispostos",
     "duration": "Uma cena",
     "success": "O alvo se parece externamente com a Frátria escolhida.",
-    "exceptionalSuccess": "Ao escolher a si mesmo como alvo, gaste ○ para tornar a aparência indefinida.",
+    "exceptionalSuccess": "Ao escolher a si mesmo como alvo, gaste FdV para tornar a aparência indefinida.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O alvo perde todos os benefícios de Frátria pela cena sem assumir outro Semblante Fae.",
     "loophole": "Durante a cena, dê algo sem exigir recompensa além de gratidão a um changeling da Frátria desejada.",
     "seemingBenefits": {
       "Darkling": "O alvo do Trevoso perde o benefício da própria Frátria e recebe o benefício da Frátria imitada.",
-      "Elemental": "O Elemental também pode fazer o alvo parecer pertencer a outro Semblante."
+      "Elemental": "O Elemental também pode fazer o alvo parecer pertencer a outra Feição."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -643,22 +643,22 @@
     }
   },
   "ctl-core:skinmask": {
-    "name": "Mascarilha de Pele",
-    "description": "Recite três fatos conhecidos sobre um mortal ou alvo Mascarado que tenha encontrado antes e copie sua aparência externa; para um changeling, copie a Mascarilha e o Semblante Fae. Rolagens Sociais continuam necessárias para imitar o comportamento. Copiar alguém semelhante ao futuro humano que o changeling não viveu restaura 1 ponto de Força de Vontade.",
+    "name": "Máscara de Pele",
+    "description": "Recite três fatos conhecidos sobre um mortal ou sobre a Mascarilha de um changeling que tenha encontrado antes e copie sua aparência externa; para um changeling, copie a Mascarilha e o Semblante Fae. Rolagens Sociais continuam necessárias para imitar o comportamento. Copiar alguém semelhante ao futuro humano que o changeling não viveu restaura 1 ponto de Força de Vontade.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",
     "loophole": "Segure um objeto pertencente à pessoa que será copiada.",
     "seemingBenefits": {
-      "Darkling": "Depois de copiar uma identidade três vezes, o Trevoso pode comprá-la como Identidade Alternativa em qualquer nível e assumi-la reflexivamente por ●.",
+      "Darkling": "Depois de copiar uma identidade três vezes, o Trevoso pode comprá-la como Identidade Alternativa em qualquer nível e assumi-la reflexivamente por 1 ponto de Glamour.",
       "Fairest": "O Belíssimo recebe +3 para imitar o comportamento do alvo copiado."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
-        "Grimm": "O Grimm recupera 2 pontos de Força de Vontade ao assumir a aparência que teria sem o sequestro.",
+        "Grimm": "O Grimm recupera 2 pontos de Força de Vontade ao assumir a aparência que teria tido sem o Cativeiro.",
         "Beast": "A Fera também recupera 1 ponto de Força de Vontade ao assumir uma personalidade significativamente diferente da sua.",
         "Elemental": "O Elemental também recupera 1 ponto de Força de Vontade ao assumir uma forma significativamente diferente da sua.",
-        "Ogre": "O próximo ponto de ruptura do Ogro na forma sofre −2, uma vez por dia antes da mudança do horizonte.",
+        "Ogre": "O próximo ponto de ruptura do Ogro na forma sofre −2, uma vez por dia até antes da mudança do sol no horizonte.",
         "Wizened": "O Mirrado pode usar uma Perícia Mental copiada quando ela for superior ao próprio nível."
       }
     }
@@ -685,6 +685,223 @@
         "Elemental": "O Elemental obtém sucesso excepcional com três sucessos.",
         "Fairest": "O Belíssimo pode gastar 1 Glamour adicional para aplicar o efeito a outra pessoa e permanecer ciente das mudanças resultantes.",
         "Ogre": "Se for revivido, o Ogro recebe modificador de arma +5 no próximo ataque bem-sucedido contra seu assassino."
+      }
+    }
+  },
+  "ctl-core:cloak-of-night": {
+    "name": "Capa da Noite",
+    "description": "Sob luz fraca ou no escuro, cubra até Destreza companheiros dispostos. Um único teste de Furtividade, com bônus igual à metade do Fado arredondada para cima, oculta o grupo até alguém chamar atenção; cada integrante pode realizar uma ação reflexiva baseada em Furtividade por turno.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até chamar atenção",
+    "loophole": "Todos vestem roupas associadas a furtivos ou patifes, como mascarilhas ou capas.",
+    "seemingBenefits": {
+      "Darkling": "O grupo conserva os benefícios mesmo depois de chamar atenção.",
+      "Ogre": "Use Vigor em vez de Destreza para determinar quantos companheiros são protegidos."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Exale uma aura territorial que faz personagens desprotegidos evitarem sua posição inconscientemente.",
+        "Elemental": "Crie ao redor de si uma área plausível e imóvel de escuridão com até Fado metros.",
+        "Fairest": "Invoque com Presença em vez de Destreza.",
+        "Wizened": "Receba 8-novamente em Furtividade."
+      }
+    }
+  },
+  "ctl-core:fae-cunning": {
+    "name": "Astúcia Fae",
+    "description": "Aplique Defesa contra Armas de Fogo e conserve-a quando estiver surpreso ou distraído; negação sobrenatural provoca Choque de Vontades. Uma Esquiva bem-sucedida pode redirecionar o ataque para outro alvo válido, acertando-o automaticamente com sucessos iguais à Presença.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "loophole": "Desafie um oponente para um duelo imediato.",
+    "seemingBenefits": {
+      "Elemental": "Some Perseverança à Iniciativa e ao Deslocamento.",
+      "Ogre": "Armas mundanas que atingirem o Ogro sofrem dano igual ao Vigor, sujeito à Durabilidade."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Some metade de Atletismo, arredondada para cima, ao dano infligido ao Esquivar.",
+        "Darkling": "Fique invisível por um turno completo depois de uma Esquiva excepcional.",
+        "Fairest": "Também imponha Enamorado ao atacante.",
+        "Wizened": "Receba +2 de Defesa contra Armas de Fogo."
+      }
+    }
+  },
+  "ctl-core:shared-burden": {
+    "name": "Fardo Compartilhado",
+    "description": "Deixe sangue escorrer sobre o alvo e inflija dano letal ao changeling; cada ponto cura 2 pontos de dano, primeiro contusivo e depois letal, mas nunca agravado. Dano autoinfligido desta forma não pode ser curado magicamente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Segure uma tira de pele de pelo menos oito centímetros da criatura que causou os ferimentos.",
+    "seemingBenefits": {
+      "Ogre": "Cure 3 pontos de dano por ponto de dano letal infligido.",
+      "Wizened": "Cure dano letal antes do contusivo."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Os primeiros níveis de dano sofridos, em quantidade igual ao Fado, são contusivos.",
+        "Darkling": "Role Fado; a cada dois sucessos, anule 1 ponto de dano do Contrato.",
+        "Elemental": "Sofra 1 ponto de dano agravado para curar todos os ferimentos contusivos e letais do alvo.",
+        "Fairest": "Cure dano agravado gastando 1 ponto de Força de Vontade por ferimento agravado."
+      }
+    }
+  },
+  "ctl-core:thorns-and-brambles": {
+    "name": "Espinhos e Silvas",
+    "description": "Crie um raio móvel de Fado jardas ou metros de silvas e escolha uma manifestação. Na Sebe, elas permanecem imóveis e também ameaçam o changeling.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "options": [
+      "Erva-sanguessuga: personagens que se movem acima de Deslocamento 2 perdem 1 Glamour por turno, até Fado por vítima.",
+      "Silvado: cada movimento exige Destreza + Atletismo reflexivo ou inflige Imobilizado; a Durabilidade é igual ao Fado.",
+      "Campo de Espinhos: ataque uma vez por turno qualquer pessoa que o atravesse com Fado dados e +0L; ele pode permanecer imóvel."
+    ],
+    "loophole": "Espalhe atrás do changeling um punhado de espinhos da Sebe.",
+    "seemingBenefits": {
+      "Darkling": "Receba o Glamour drenado pela Erva-sanguessuga.",
+      "Ogre": "Testes de Atletismo do Silvado sofrem penalidade igual à Força."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Campo de Espinhos possui modificador de dano +2L.",
+        "Elemental": "Aplique Força como penalidade às tentativas de Destreza + Atletismo para evitar o Silvado.",
+        "Fairest": "Centralize o raio de silvas em um aliado para que ele acompanhe esse personagem.",
+        "Wizened": "Cure um ferimento contusivo ou letal por Glamour roubado pela Erva-sanguessuga."
+      }
+    }
+  },
+  "ctl-core:trapdoor-spiders-trick": {
+    "name": "Truque da Aranha-de-Alçapão",
+    "description": "Atravesse uma abertura e disfarce-a visualmente como intransponível ou inexistente. Percepção sobrenatural pode atravessar a ilusão por meio de um Choque de Vontades. Pagar o custo maior estende a ilusão até o amanhecer ou o anoitecer.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até o sol cruzar novamente o horizonte",
+    "loophole": "Atraia primeiro um inimigo ou rival através da abertura.",
+    "seemingBenefits": {
+      "Ogre": "Marque a ilusão para que os aliados enxerguem através dela automaticamente.",
+      "Wizened": "A ilusão cobre todos os sentidos, e apenas percepção sobrenatural pode detectá-la."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Marque a ilusão com perigo, impondo Abalado a quem a investigar.",
+        "Darkling": "Não precisa atravessar a passagem para usar o efeito.",
+        "Elemental": "Não precisa gastar Força de Vontade para estender a duração.",
+        "Fairest": "Imponha −3 às tentativas ou Choques para revelar a ilusão."
+      }
+    }
+  },
+  "ctl-core:fortifying-presence": {
+    "name": "Presença Fortificante",
+    "description": "Passe uma cena inteira oferecendo apoio significativo ou uma nova perspectiva a um alvo, que ainda deve disputar a invocação.",
+    "dicePool": "Presença + Empatia + Fado contra Perseverança + Tolerância",
+    "action": "Disputada; leva uma cena inteira",
+    "duration": "Instantânea",
+    "success": "Cure 2 pontos de dano leve de Lucidez ou 1 de dano severo de Lucidez; Condições de Lucidez não são afetadas.",
+    "exceptionalSuccess": "Torne-se uma Touchstone temporária até depois do próximo ataque de Lucidez do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre um ataque de Lucidez com dois dados.",
+    "loophole": "Declare amizade ao alvo diante de várias testemunhas durante a invocação.",
+    "seemingBenefits": {
+      "Fairest": "Conceda Defesa igual à Presença contra o próximo ataque de Lucidez sofrido pelo alvo nesta história.",
+      "Ogre": "Em vez disso, ataque a Lucidez do alvo com Empatia dados, abrindo mão permanentemente da capacidade de curar esse alvo e possivelmente causando um ponto de ruptura."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Cure três pontos de dano leve de Lucidez em vez de dois.",
+        "Darkling": "O alvo ignora o próximo ponto de dano leve de Lucidez neste capítulo.",
+        "Elemental": "Suprima uma Condição de Lucidez do alvo pelo capítulo sem resolvê-la.",
+        "Wizened": "O próximo ponto de ruptura fracassado do alvo torna-se dramático."
+      }
+    }
+  },
+  "ctl-core:hedgewall": {
+    "name": "Muralha da Sebe",
+    "description": "Construa um castelo de espinhos com até Fado × 10 jardas ou metros de extensão. Suas muralhas concedem cobertura substancial contra ataques à distância, possuem Durabilidade 3 e Tamanho 8, bloqueiam a passagem e causam 1 ponto de dano letal por turno de escalada sem proteção.",
+    "dicePool": "Inteligência + Sobrevivência + Fado",
+    "action": "Prolongada; cinco sucessos, um turno por teste",
+    "duration": "Uma cena",
+    "success": "A Muralha da Sebe assume a disposição escolhida.",
+    "exceptionalSuccess": "Acrescente gratuitamente uma manifestação de Espinhos e Silvas.",
+    "failure": "O Contrato falha; na Sebe, trate a falha como dramática.",
+    "dramaticFailure": "O labirinto impõe Perdido ao changeling e aos aliados; na Sebe, também alerta um hobgoblin territorial hostil.",
+    "loophole": "Plante uma semente ou muda da Sebe imediatamente antes da invocação.",
+    "seemingBenefits": {
+      "Beast": "Inimigos no interior sofrem −2 em testes de Perseverança.",
+      "Ogre": "A duração se estende até o sol cruzar novamente o horizonte."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Ilusões menores e inofensivas impõem Fado como penalidade às ações de escalada e concentração.",
+        "Elemental": "Gaste 1 ponto de Força de Vontade para invocar o efeito de sucesso excepcional.",
+        "Fairest": "Intrusos sofrem −2 de Compostura enquanto estiverem distraídos pelo esplendor do castelo.",
+        "Wizened": "Crie sentinelas inanimadas e gaste uma ação instantânea se concentrando para enxergar através de uma delas."
+      }
+    }
+  },
+  "ctl-core:pure-clarity": {
+    "name": "Lucidez Pura",
+    "description": "Escolha uma ação nesta cena que causaria um ponto de ruptura e não o sofra; o Contrato pode ser invocado retroativamente na mesma cena e apenas uma vez por cena.",
+    "dicePool": "Perseverança + Compostura + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até ser usado",
+    "success": "Ignore o ponto de ruptura escolhido.",
+    "exceptionalSuccess": "Receba armadura 2 contra o próximo ataque de Lucidez, mantida até ser acionada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Receba uma Condição de Lucidez escolhida pelo Narrador que não cura Lucidez ao ser resolvida.",
+    "loophole": "Use uma manopla de metal verdadeiro em uma mão e uma luva de seda na outra.",
+    "seemingBenefits": {
+      "Fairest": "Também se proteja de ações infligidas ao Belíssimo.",
+      "Ogre": "Invoque o Contrato para proteger um companheiro em vez de si."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Se evitar um ponto de ruptura, aliados presentes recebem +3 nas próximas ações.",
+        "Darkling": "Recupere a Força de Vontade caso o efeito não seja necessário durante a cena.",
+        "Elemental": "Force outro changeling a sofrer o ponto de ruptura evitado, possivelmente causando um ponto de ruptura para você.",
+        "Wizened": "Gaste 1 ponto adicional de Força de Vontade para aplicar o efeito a dois pontos de ruptura."
+      }
+    }
+  },
+  "ctl-core:vow-of-no-compromise": {
+    "name": "Juramento Intransigente",
+    "description": "Toque um alvo, faça uma promessa em voz alta e reduza um ponto de dano agravado a letal; o changeling recebe Estoico. É permitido escolher a si mesmo como alvo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Destrua uma representação do Fae Verdadeiro ou mate um de seus servos.",
+    "seemingBenefits": {
+      "Ogre": "Também receba Inspirado em relação a punir quem causou o dano reduzido.",
+      "Elemental": "Não precisa tocar enquanto o alvo estiver cercado ou submerso no elemento associado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Conceda ao alvo dois pontos de Perícias Físicas até o próximo amanhecer ou anoitecer.",
+        "Darkling": "Conceda Inabalável a um alvo que não seja você.",
+        "Fairest": "Conceda +1 a um Atributo de Resistência escolhido até o próximo amanhecer ou anoitecer, recalculando características derivadas.",
+        "Wizened": "Conceda ao alvo +3 de Defesa contra o personagem que o feriu até o próximo amanhecer ou anoitecer."
+      }
+    }
+  },
+  "ctl-core:whispers-of-morning": {
+    "name": "Sussurros da Manhã",
+    "description": "Torne-se sem peso e intangível com tudo o que carrega: atravesse barreiras físicas e não toque nem seja tocado, exceto por magia. Interaja com Fae incorpóreos e Fantasmas da Sebe, mas não com seres comuns do Crepúsculo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Não carregue armas nem use armadura; adquirir qualquer uma encerra o Contrato, a menos que seu custo seja pago.",
+    "seemingBenefits": {
+      "Ogre": "Carregue uma pessoa e estenda o efeito, disputando Presença + Ocultismo + Fado contra Vigor + Fado de um alvo indisposto.",
+      "Wizened": "Pegue objetos de Tamanho 1 e escolha se permanecem intangíveis quando soltos."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Gaste 1 ponto de Força de Vontade para interagir corporalmente pela cena; ataques causam apenas dano contusivo, e os sucessos são limitados pelo menor valor entre Fado e Força.",
+        "Darkling": "Sintonize-se reflexivamente com fantasmas no Crepúsculo e torne tangível um fantasma tocado enquanto o contato persistir.",
+        "Elemental": "Escolha livremente se conta como corpóreo ao interagir com o elemento de afinidade.",
+        "Fairest": "Escolha personagens que ainda possam perceber e ouvir você."
       }
     }
   }

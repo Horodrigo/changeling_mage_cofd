@@ -19,7 +19,7 @@ test("léxico pt-BR de Changeling é aplicado aos termos canônicos",()=>{
     "Wild Hunt":"Caçada Selvagem",Huntsman:"Monteiro",Huntsmen:"Monteiros",Keeper:"Carcereiro",Contract:"Contrato","Goblin Contract":"Contrato Goblin",Court:"Corte",
     "Spring Court":"Corte da Primavera","Winter Court":"Corte do Inverno","Summer Court":"Corte do Verão","Autumn Court":"Corte do Outono",Privateer:"Corsário",
     "Goblin Debt":"Débito Goblin",Bedlam:"Desvario",Fetch:"Duplo",Echoes:"Ecos",Thorns:"Espinhos","Dream Roads":"Estradas dos Sonhos",Wyrd:"Fado",
-    "Hedge Ghosts":"Fantasmas da Sebe",Fae:"Fae","True Fae":"Fae Verdadeiro",Faerie:"Feéria",Seeming:"Semblante",Freehold:"Povoado",Frailty:"Fragilidade",Kith:"Frátria",
+    "Hedge Ghosts":"Fantasmas da Sebe",Fae:"Fae","True Fae":"Fae Verdadeiro",Faerie:"Feéria",Seeming:"Feição",Freehold:"Povoado",Frailty:"Fragilidade",Kith:"Frátria",
     "Goblin Fruit":"Fruta Goblin",Glamour:"Glamour",Goblin:"Goblin",Hobgoblin:"Hobgoblin",Icon:"Ícone",Oath:"Juramento",Loyalist:"Legalista","True Loyalist":"Legalista Verdadeiro",
     Lord:"Lorde",Clarity:"Lucidez",Mantle:"Manto",Mask:"Mascarilha","Goblin Market":"Mercado Goblin","Hedge Shaping":"Tecer a Sebe",Hedgespinning:"Tecer a Sebe",
     Oneiromancy:"Oniromancia",Oneiropomp:"Onirompo",Others:"Outros",Token:"Penhor",Lost:"Perdido",Portaling:"Passagem",Promise:"Promessa",Oathbreaker:"Quebrador de Juramento",

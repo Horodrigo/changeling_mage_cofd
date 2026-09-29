@@ -84,7 +84,7 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
           <Field wide label={h("Brecha *", "Loophole *")}><Textarea value={value.loophole ?? ""} onChange={(event) => set("loophole", event.target.value)}/></Field>
           {category === "Goblin" && <Field wide label={h("Débito Goblin", "Goblin Debt")}><Textarea value={value.goblinDebt ?? ""} onChange={(event) => set("goblinDebt", event.target.value)}/></Field>}
         </Section>
-        <Section title={h("Benefícios de Semblante opcionais", "Optional Seeming benefits")}>
+        <Section title={h("Benefícios de Feição opcionais", "Optional Seeming benefits")}>
           {SEEMINGS.map((seeming) => <Field wide key={seeming} label={seemingDisplayName(seeming, locale)}><Textarea value={value.seemingBenefits?.[seeming] ?? ""} onChange={(event) => setSeemingBenefit(seeming, event.target.value)}/></Field>)}
         </Section>
       </div>

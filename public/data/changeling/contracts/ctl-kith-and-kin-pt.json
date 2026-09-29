@@ -12,7 +12,7 @@
     }
   },
   "ctl-kith-and-kin:frail-as-the-dying-word": {
-    "name": "Frágil como a Palavra Agonizante",
+    "name": "Frágil como o Último Suspiro",
     "description": "Ao tocar o alvo, o changeling engana o Fado para que aplique a ele uma das próprias Fragilidades.",
     "dicePool": "Manipulação + Ocultismo + Fado contra Compostura + Tolerância",
     "action": "Disputada",
@@ -24,7 +24,7 @@
     "loophole": "O changeling sofreu os efeitos da Fragilidade escolhida durante a mesma cena.",
     "seemingBenefits": {
       "Fairest": "O Belíssimo pode infligir uma Fragilidade pertencente a qualquer ser Fae presente, em vez de uma das suas.",
-      "Darkling": "Por +●, o Trevoso transfere a Fragilidade em vez de compartilhá-la, perdendo-a durante o efeito. Isso não pode transferir sua perdição por ferro."
+      "Darkling": "Por +1 de Glamour, o Trevoso transfere a Fragilidade em vez de compartilhá-la, perdendo-a durante o efeito. Isso não pode transferir sua perdição por ferro."
     }
   },
   "ctl-kith-and-kin:sleeps-sweet-embrace": {
@@ -237,7 +237,7 @@
   },
   "ctl-kith-and-kin:exchange-of-gilded-contracts": {
     "name": "Troca de Contratos Dourados",
-    "description": "Com o consentimento de outro changeling, tome emprestado um Contrato Comum que ele conheça. Quem toma emprestado recebe apenas os benefícios de seu próprio Semblante e não pode usar a Brecha do Contrato; quem o empresta perde o acesso e recebe temporariamente Troca de Contratos Dourados, que só pode encerrar a troca reflexivamente.",
+    "description": "Com o consentimento de outro changeling, tome emprestado um Contrato Comum que ele conheça. Quem toma emprestado recebe apenas os benefícios de sua própria Feição e não pode usar a Brecha do Contrato; quem o empresta perde o acesso e recebe temporariamente Troca de Contratos Dourados, que só pode encerrar a troca reflexivamente.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Até um capítulo",
@@ -331,7 +331,7 @@
     "dramaticFailure": "O alvo pretendido descobre a tentativa e que o changeling o considera um rival.",
     "loophole": "Durante a cena, o changeling faz uma birra diante de alguém que não pertença a seu Retalho.",
     "seemingBenefits": {
-      "Beast": "Por +● ao descobrir uma localização, a Fera pode rastreá-la pelo capítulo.",
+      "Beast": "Por +1 de Glamour ao descobrir uma localização, a Fera pode rastreá-la pelo capítulo.",
       "Ogre": "Ao descobrir um nome ou rosto, o Ogro pode testar Manipulação + Intimidação contra Perseverança + Empatia para infligir Paranoico."
     }
   },
@@ -349,7 +349,7 @@
   },
   "ctl-kith-and-kin:unmask-the-dark-horse": {
     "name": "Desmascarar o Azarão",
-    "description": "O changeling desafia publicamente um rival e pode pagar +● para substituir uma de suas Aspirações por outra que se oponha diretamente à do alvo.",
+    "description": "O changeling desafia publicamente um rival e pode pagar +1 de Glamour para substituir uma de suas Aspirações por outra que se oponha diretamente à do alvo.",
     "dicePool": "Presença + Persuasão + Fado contra Compostura + Tolerância",
     "action": "Disputada",
     "duration": "Instantânea",
@@ -382,7 +382,7 @@
     "action": "Instantânea",
     "duration": "Uma cena",
     "success": "Aplique as mudanças temporárias compradas que sejam coerentes com o teor emocional da proclamação.",
-    "exceptionalSuccess": "Por +● e +○, os sucessos também podem comprar mudanças sutis ou de paradigma.",
+    "exceptionalSuccess": "Por +1 de Glamour e +1 FdV, os sucessos também podem comprar mudanças sutis ou de paradigma.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "Incite Desvario em todos os presentes, inclusive o changeling.",
     "loophole": "Aponte e declame com um cetro verdadeiro.",
@@ -403,7 +403,7 @@
     "dramaticFailure": "O changeling sofre as consequências de quebrar o acordo, embora não tenha designado missão alguma.",
     "loophole": "Dê a quem recebe a missão uma provisão de valor prático significativo para realizá-la.",
     "seemingBenefits": {
-      "Darkling": "Depois de quebrar o acordo, o Trevoso pode gastar ○ e vencer Manipulação + Furto + Fado contra Perseverança + Fado para transferir as consequências a uma testemunha informada.",
+      "Darkling": "Depois de quebrar o acordo, o Trevoso pode gastar FdV e vencer Manipulação + Furto + Fado contra Perseverança + Fado para transferir as consequências a uma testemunha informada.",
       "Fairest": "O Belíssimo pode designar a mesma missão a até metade do Fado em alvos, oferecendo recompensas proporcionais."
     }
   },
@@ -431,7 +431,7 @@
     "duration": "Uma cena",
     "loophole": "Quebre um cetro em miniatura fabricado com metais preciosos e gemas.",
     "seemingBenefits": {
-      "Fairest": "Por +●●, um ataque ou Intimidação bem-sucedido inflige Maravilhado Persistente, em vez de Desmoralizado.",
+      "Fairest": "Por +2 de Glamour, um ataque ou Intimidação bem-sucedido inflige Maravilhado Persistente, em vez de Desmoralizado.",
       "Wizened": "O Mirrado pode invocar o cetro para uma mão livre; alguém que o segure contra a vontade dele disputa Presença + Intimidação contra Força + Vigor."
     }
   },
@@ -640,7 +640,7 @@
     "loophole": "Segure um corte fresco, com no máximo um dia, da espécie vegetal escolhida para a transformação.",
     "seemingBenefits": {
       "Elemental": "O Elemental pode escolher até Fado personagens como alvo, acompanhando separadamente o progresso de cada um.",
-      "Wizened": "O Mirrado pode selar a promessa aceita sem Glamour; aumentar a severidade do selo custa ●, em vez de ○."
+      "Wizened": "O Mirrado pode selar a promessa aceita sem Glamour; aumentar a severidade do selo custa ●, em vez de FdV."
     }
   },
   "ctl-kith-and-kin:awaken-portal": {
@@ -673,7 +673,7 @@
   },
   "ctl-kith-and-kin:shrikes-larder": {
     "name": "Despensa do Picanço",
-    "description": "Gaste ● por efeito, até os três, para amaldiçoar um alvo com espinhos: −2 em rolagens de movimento em perseguições e nenhuma Vantagem, ignorados por um turno com ○; −3 de Iniciativa; ou metade do Deslocamento, ignorada por um turno ao sofrer 1 ponto de dano contundente.",
+    "description": "Gaste ● por efeito, até os três, para amaldiçoar um alvo com espinhos: −2 em rolagens de movimento em perseguições e nenhuma Vantagem, ignorados por um turno com FdV; −3 de Iniciativa; ou metade do Deslocamento, ignorada por um turno ao sofrer 1 ponto de dano contundente.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",
@@ -816,7 +816,7 @@
     "success": "Veja e ouça os arredores do Duplo como se o acompanhasse de perto; pela Força de Vontade adicional, troque de lugar com ele.",
     "exceptionalSuccess": "A troca desorienta o Duplo e inflige Confuso.",
     "failure": "O Contrato falha, mas o Duplo descobre a tentativa.",
-    "dramaticFailure": "O Duplo descobre a tentativa e pode pagar ● para invocar Espelho Rachado imediatamente, sem rolagem, pagando ○ opcionalmente para trocar de lugar, sem precisar do Eco Mímico.",
+    "dramaticFailure": "O Duplo descobre a tentativa e pode pagar ● para invocar Espelho Rachado imediatamente, sem rolagem, pagando FdV opcionalmente para trocar de lugar, sem precisar do Eco Mímico.",
     "loophole": "Faça uma rachadura significativa no espelho usado para invocar o Contrato.",
     "seemingBenefits": {
       "Darkling": "Em um sucesso excepcional, o Trevoso oculta do Duplo a tentativa de espionagem.",

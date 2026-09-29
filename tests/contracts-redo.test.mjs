@@ -364,6 +364,19 @@ test("bloco Shield do livro básico está completo", () => {
   assert.equal(items.find((item)=>item.originalName==="Thorns and Brambles")?.options?.length,3);
 });
 
+test("tradução pt-BR do bloco Shield está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Shield");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
+});
+
 test("bloco Steed está completo e preserva a exceção de Flickering Hours", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Steed");
   assert.equal(items.length,10);

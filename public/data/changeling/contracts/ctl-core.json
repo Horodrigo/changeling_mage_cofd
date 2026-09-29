@@ -115,8 +115,8 @@
     "duration": "One scene or until destroyed",
     "loophole": "Perform a significant favor for the chosen element or material during the scene.",
     "seemingBenefits": {
-      "Elemental": "For +●○, merge with it, substitute its Attributes where desired, become immune to its material or element, and add +1L to weapon modifiers.",
-      "Fairest": "For +○, bind one servant to a Hollow indefinitely while it remains there."
+      "Elemental": "For +1 Glamour and Willpower, merge with it, substitute its Attributes where desired, become immune to its material or element, and add +1L to weapon modifiers.",
+      "Fairest": "For +1 Willpower, bind one servant to a Hollow indefinitely while it remains there."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -213,7 +213,7 @@
     "duration": "One chapter or until the plan succeeds or fails",
     "loophole": "Draw the plan, hierarchy, or repository index on paper at least 50 years old.",
     "seemingBenefits": {
-      "Elemental": "For +○, a repository lasts one story and expands to a Mental Specialty the Elemental possesses.",
+      "Elemental": "For +1 Willpower, a repository lasts one story and expands to a Mental Specialty the Elemental possesses.",
       "Fairest": "Create an organization suited to counter an enemy's influence instead of a plan."
     },
     "supplementalSeemingBenefits": {
@@ -248,7 +248,7 @@
     "loophole": "Dance while playing the flute, mimicking the desired species.",
     "seemingBenefits": {
       "Beast": "Maintain an empathic link, awareness of condition and relative location, and give new orders remotely.",
-      "Fairest": "For +●, summon and command a second species."
+      "Fairest": "For +1 Glamour, summon and command a second species."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -500,7 +500,7 @@
     "loophole": "Name a former, but not current, owner of the object.",
     "seemingBenefits": {
       "Elemental": "Also affect instances of the Elemental's associated element.",
-      "Wizened": "For +○, make the freezing effect permanent; attempts to override it prompt a Clash of Wills."
+      "Wizened": "For +1 Willpower, make the freezing effect permanent; attempts to override it prompt a Clash of Wills."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -564,7 +564,7 @@
     "loophole": "Spend one minute theatrically searching for the feature and express surprise upon finding it.",
     "seemingBenefits": {
       "Fairest": "Instead change one nearby person's Virtue or Vice with Manipulation + Subterfuge + Wyrd contested by Resolve + Wyrd.",
-      "Wizened": "For +●, create an entirely new object reasonably found in the area."
+      "Wizened": "For +1 Glamour, create an entirely new object reasonably found in the area."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -598,7 +598,7 @@
     "loophole": "Coax the original's owner into expressing a debt to the changeling during the scene.",
     "seemingBenefits": {
       "Fairest": "Steal a living reflection with mundane traits capped by Wyrd and no supernatural traits; it is friendly and deferential. On dramatic failure, a mirror person instead seeks revenge.",
-      "Wizened": "For +●, preserve supernatural properties of the copied object."
+      "Wizened": "For +1 Glamour, preserve supernatural properties of the copied object."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -799,7 +799,7 @@
     "loophole": "Speak the secret aloud in public among mortals who can hear it.",
     "seemingBenefits": {
       "Darkling": "Gain Informed about the current owner, or a described previous owner if the Darkling owns it.",
-      "Wizened": "Spend +● per additional point in its history viewed."
+      "Wizened": "Spend +1 Glamour per additional point in its history viewed."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -904,7 +904,7 @@
     "action": "Instant for willing targets; Contested for unwilling targets",
     "duration": "One scene",
     "success": "The target outwardly resembles the chosen kith.",
-    "exceptionalSuccess": "When self-targeting, spend ○ to make the appearance indefinite.",
+    "exceptionalSuccess": "When self-targeting, spend Willpower to make the appearance indefinite.",
     "failure": "The Contract fails.",
     "dramaticFailure": "The target loses all kith benefits for the scene without assuming another mien.",
     "loophole": "Give something without recompense beyond gratitude to a changeling of the desired kith during the scene.",
@@ -1611,7 +1611,7 @@
     "loophole": "Eat fur, a talon, or another piece of the animal being emulated.",
     "seemingBenefits": {
       "Beast": "Become immune to mundane fatigue; supernatural fatigue prompts a Clash of Wills.",
-      "Darkling": "For +●, add venomous fangs or claws: Wyrd Toxicity hourly outside action scenes, or grave Poisoned on a successful action-scene attack."
+      "Darkling": "For +1 Glamour, add venomous fangs or claws: Wyrd Toxicity hourly outside action scenes, or grave Poisoned on a successful action-scene attack."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -1936,7 +1936,7 @@
     "loophole": "Coax the target into doubting their own sanity during the scene, even jokingly.",
     "seemingBenefits": {
       "Elemental": "Add Wyrd to successful Clarity-attack successes when determining its damage pool.",
-      "Fairest": "For +●, delay the effect until a chosen trigger within one day."
+      "Fairest": "For +1 Glamour, delay the effect until a chosen trigger within one day."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -2090,7 +2090,7 @@
     "success": "Per success, downgrade one wound from aggravated to lethal, lethal to bashing, or bashing to healed.",
     "exceptionalSuccess": "Also heal all remaining bashing damage.",
     "failure": "The Contract fails.",
-    "dramaticFailure": "Upgrade one bashing wound to lethal, or lethal to aggravated; spend +○ to prevent this if it would kill the patient.",
+    "dramaticFailure": "Upgrade one bashing wound to lethal, or lethal to aggravated; spend +1 Willpower to prevent this if it would kill the patient.",
     "loophole": "Add the changeling's blood to the ointment, taking 1 lethal damage."
   },
   {
@@ -2229,7 +2229,7 @@
     "cost": "●●",
     "action": "Reflexive and Contested",
     "duration": "Until the conflict ends",
-    "success": "The target must spend ○ to flee; otherwise they must keep trying to win and cannot suffer Beaten Down.",
+    "success": "The target must spend Willpower to flee; otherwise they must keep trying to win and cannot suffer Beaten Down.",
     "exceptionalSuccess": "The target also cannot retreat to range and must remain within five yards or meters.",
     "failure": "The Contract fails.",
     "dramaticFailure": "The target heals Mantle damage and gains +1 Initiative.",
@@ -2412,7 +2412,7 @@
     "action": "Contested; takes at least a few minutes",
     "duration": "One scene",
     "success": "Inflict Shaken on any or all listeners who lose the contest.",
-    "exceptionalSuccess": "Affected listeners must also spend ○ to act against the changeling.",
+    "exceptionalSuccess": "Affected listeners must also spend Willpower to act against the changeling.",
     "failure": "The Contract fails.",
     "dramaticFailure": "The changeling gains Shaken.",
     "loophole": "Weave the Contract into an urban legend already familiar to every listener."
@@ -2495,7 +2495,7 @@
     "cost": "●●",
     "action": "Contested",
     "duration": "One scene",
-    "success": "Inflict Frightened and require ○ for any rolled action; optionally let observers see the same fear. Changeling targets may suffer a Clarity attack.",
+    "success": "Inflict Frightened and require Willpower for any rolled action; optionally let observers see the same fear. Changeling targets may suffer a Clarity attack.",
     "exceptionalSuccess": "Also inflict Immobilized for Mantle turns.",
     "failure": "The Contract fails.",
     "dramaticFailure": "The changeling perceives the target as his own greatest fear and gains Spooked.",
@@ -2642,7 +2642,7 @@
     "action": "Contested; requires a scene of conversation",
     "duration": "Instant",
     "success": "Soothe the target's regrets without erasing their source and inflict Swooned regarding the changeling.",
-    "exceptionalSuccess": "The changeling may spend ○ to permanently suppress or alter the memory that caused the regret, unless reversed by supernatural means.",
+    "exceptionalSuccess": "The changeling may spend Willpower to permanently suppress or alter the memory that caused the regret, unless reversed by supernatural means.",
     "failure": "The Contract fails.",
     "dramaticFailure": "The target refuses to speak willingly to the changeling for one chapter.",
     "loophole": "The target accepted a valuable or sentimental gift from the changeling during the scene."

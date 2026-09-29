@@ -1,6 +1,6 @@
 {
   "ctl-dark-eras:draw-likeness": {
-    "name": "Traçar Semelhança",
+    "name": "Retratar o Procurado",
     "description": "O changeling nomeia um criminoso marcado, um crime específico ou um tipo geral de crime e desenha a aparência do alvo em qualquer superfície plana que possa ser riscada com grafite. Para um crime geral, o alvo é a pessoa mais próxima que o tenha cometido no último mês lunar; se não houver tal alvo, o Contrato falha.",
     "dicePool": "Raciocínio + Investigação + Manto contra Compostura + Fado",
     "action": "Disputada",
