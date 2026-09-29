@@ -1,5 +1,5 @@
 [
-   {
+  {
     "id": "ctl-2ed:soul-compass",
     "name": "A Bússola da Alma",
     "effect": "Esta bússola pode ter sido um item indispensável de escoteiro, uma antiguidade ou um presente estimado do programa de verão do centro de natureza local. Ela parece ser um brinquedo barato e inoperante até ser imbuída de Glamour. Em sua forma verdadeira, é uma bússola de prata brilhante, com um mostrador iridescente e uma agulha que parece um único espinho terrivelmente afiado. O mostrador da bússola é vazio, exceto por manchas que sugerem sangue antigo. A agulha aponta na direção do Ícone mais próximo do portador, ou na direção do Ícone de qualquer changeling que derrame sobre o mostrador uma quantidade de sangue equivalente a um ponto de dano letal. A Bússola da Alma não informa distância, altitude nem perigo; apenas a direção que o portador deve seguir para encontrá-lo.",
@@ -37,15 +37,15 @@
   {
     "id": "ctl-2ed:golden-hairnettle",
     "name": "Urtiga Dourada de Cabelo",
-    "effect": "A maioria das pessoas não pegaria um elástico de cabelo deixado no chão. Changelings sabem melhor. Em sua forma verdadeira, este token aparece como um belo adorno dourado para os cabelos, que se entrelaça perfeitamente com qualquer penteado usado pelo portador naquele momento. Ela recebe +1 em suas rolagens de Presença e, uma vez por cena, um sucesso em uma dessas rolagens impõe ao alvo a Condição Encantado (p. 345), enquanto a Urtiga Dourada de Cabelo cintila e brilha de forma sedutora em seu penteado.",
+    "effect": "A maioria das pessoas não pegaria um elástico de cabelo deixado no chão. Changelings sabem melhor. Em sua forma verdadeira, este token aparece como um belo adorno dourado para os cabelos, que se entrelaça perfeitamente com qualquer penteado usado pelo portador naquele momento. Ela recebe +1 em suas rolagens de Presença e, uma vez por cena, um sucesso em uma dessas rolagens impõe ao alvo a Condição Enamorado (p. 345), enquanto a Urtiga Dourada de Cabelo cintila e brilha de forma sedutora em seu penteado.",
     "catch": "O usuário deve realizar um favor significativo para outra pessoa sem ganhar nada em troca para ativar o token, dentro da mesma cena.",
     "drawback": "O usuário atrai atenção mesmo quando não quer. Seu jogador sofre uma penalidade de −2 em todas as rolagens para passar despercebido ou agir furtivamente até falhar em uma delas; ele pode optar por falhar deliberadamente. Quando isso acontecer, receba um Beat."
   },
   {
     "id": "ctl-2ed:book-of-things-strange-and-wondrous",
     "name": "Livro das Coisas Estranhas e Maravilhosas",
-    "effect": "Às vezes, um changeling não pode simplesmente ir à biblioteca ou telefonar para um amigo para conseguir a informação de que precisa. Às vezes, precisa perguntar ao próprio Wyrd. Este token normalmente se parece com um romance barato de brochura, daqueles encontrados em qualquer bom brechó. Quando ativado, transforma-se em um enorme grimório, repleto de desenhos estranhos e línguas mortas. Folhear o livro concede ao usuário uma rolagem de Inteligência + uma Habilidade Mental relevante, que obtém sucesso excepcional com três sucessos em vez de cinco. Se o usuário tiver sucesso, adquire o conhecimento que buscava sobre qualquer assunto escolhido. Em um sucesso excepcional, adquire a Condição Informado em relação ao tema e aprende mais detalhes, inclusive coisas que não estão registradas em nenhum outro lugar, como um mapa das armadilhas de um prédio abandonado ou o Título do Fae Verdadeiro que sequestrou seu amigo.",
-    "catch": "O conhecimento buscado pelo usuário deve servir para virar o jogo contra alguém que possua uma vantagem significativa sobre ele, como por meio das Condições Segredo Embaraçoso (p. 338) ou Coagido (p. 342).",
+    "effect": "Às vezes, um changeling não pode simplesmente ir à biblioteca ou telefonar para um amigo para conseguir a informação de que precisa. Às vezes, precisa perguntar ao próprio Fado. Este token normalmente se parece com um romance barato de brochura, daqueles encontrados em qualquer bom brechó. Quando ativado, transforma-se em um enorme grimório, repleto de desenhos estranhos e línguas mortas. Folhear o livro concede ao usuário uma rolagem de Inteligência + uma Habilidade Mental relevante, que obtém sucesso excepcional com três sucessos em vez de cinco. Se o usuário tiver sucesso, adquire o conhecimento que buscava sobre qualquer assunto escolhido. Em um sucesso excepcional, adquire a Condição Informado em relação ao tema e aprende mais detalhes, inclusive coisas que não estão registradas em nenhum outro lugar, como um mapa das armadilhas de um prédio abandonado ou o Título do Fae Verdadeiro que sequestrou seu amigo.",
+    "catch": "O conhecimento buscado pelo usuário deve servir para virar o jogo contra alguém que possua uma vantagem significativa sobre ele, como por meio das Condições Segredo Constrangedor (p. 338) ou Coagido (p. 342).",
     "drawback": "A próxima pessoa que ler o livro saberá exatamente quem o leu por último e o que estava procurando. Isso é contado por usuário, não por uso — se um changeling usar o livro três vezes seguidas e o goblin que o roubou dele o utilizar em seguida, esse goblin saberá exatamente o que ele procurava nas três ocasiões. Se isso causar dano ou perigo ao personagem, receba um Beat."
   },
   {
@@ -60,13 +60,14 @@
     "name": "Vale-Dívida",
     "effect": "Este token é muito mais valioso do que parece à primeira vista. Dormente, é apenas um pedaço de papel sujo. Ativado, torna-se um certificado ornamentado com ouro e prata, trazendo o nome de quem o ativou e exalando um leve cheiro de pão quente. Sempre que a Dívida Goblin do personagem fosse cobrada — por exemplo, quando o Narrador a usar para impor uma penalidade ou para conceder a Condição Habitante da Sebe — ele pode entregar o Vale-Dívida a outra pessoa de uma maneira relevante à situação e evitar as consequências naquele momento. Ele continua mantendo toda a sua Dívida, mas contorna temporariamente seus efeitos. Ao entregar o Vale-Dívida, o personagem perde a capacidade de usá-lo novamente até que se passe um mês lunar. Feudos Livres onde um Vale-Dívida circula vivem em constante barganha e negociata, pois todos tentam enganar o sistema dos goblins tempo suficiente para extrair alguma vantagem dele.",
     "catch": "O usuário deve assinar o próprio nome com sangue no contrato, tornando-o para sempre visível a qualquer pessoa que o utilize depois dele.",
-    "drawback": "O personagem adquire a Condição Má Reputação entre os habitantes da Sebe, que passam a vê-lo como alguém que não paga o que deve."
-  },{
+    "drawback": "O personagem adquire a Condição Notoriedade entre os habitantes da Sebe, que passam a vê-lo como alguém que não paga o que deve."
+  },
+  {
     "id": "ctl-2ed:arisaema",
     "name": "Arisaema",
-    "effect": "Batizado em homenagem a uma planta mortal mais conhecida como “raiz-de-dragão”, este token não parece grande coisa à primeira vista. Sua Mascarilha é um facão quebrado ou uma faca de cozinha cega. Para alguém capaz de enxergar sua forma verdadeira, ele parece um kukri de cerca de sessenta centímetros, com uma lâmina cintilante e iridescente. O portador recebe +3 dados em rolagens de Esquiva (após dobrar a Defesa) enquanto luta pela própria vida. Sempre que esquiva com sucesso de um ataque corpo a corpo, o atacante sente uma dor ardente subir e descer pelos braços, adquirindo a Inclinação Envenenado moderada. Se isso ocorrer uma segunda vez contra o mesmo atacante na mesma cena, a Inclinação torna-se grave.",
+    "effect": "Batizado em homenagem a uma planta mortal mais conhecida como “raiz-de-dragão”, este token não parece grande coisa à primeira vista. Sua Máscara é um facão quebrado ou uma faca de cozinha cega. Para alguém capaz de enxergar sua forma verdadeira, ele parece um kukri de cerca de sessenta centímetros, com uma lâmina cintilante e iridescente. O portador recebe +3 dados em rolagens de Esquiva (após dobrar a Defesa) enquanto luta pela própria vida. Sempre que esquiva com sucesso de um ataque corpo a corpo, o atacante sente uma dor ardente subir e descer pelos braços, adquirindo a Inclinação Envenenado moderada. Se isso ocorrer uma segunda vez contra o mesmo atacante na mesma cena, a Inclinação torna-se grave.",
     "catch": "O usuário deve obter um sucesso excepcional em uma rolagem baseada em Destreza ou Raciocínio enquanto empunha a Arisaema.",
-    "drawback": "Assistir alguém se contorcer em agonia por causa de veneno onírico diluído nunca é agradável; o usuário adquire a Condição Assustado."
+    "drawback": "Assistir alguém se contorcer em agonia por causa de veneno onírico diluído nunca é agradável; o usuário adquire a Condição Assombrado."
   },
   {
     "id": "ctl-2ed:red-shoes",
@@ -85,7 +86,7 @@
   {
     "id": "ctl-2ed:silver-thread",
     "name": "Fio de Prata",
-    "effect": "Fios esguios, porém impossivelmente resistentes, de prata arcadiana ligam todos os Helldivers cativos aos seus mestres Fae Verdadeiros. Recolhido por Darklings, Beasts e Ogres, trabalhado por Wizened e Elementals e trançado pelos Fairest, um Fio de Prata é o grito coletivo de sofrimento dos Perdidos. Ele não desaparece simplesmente quando um Helldiver desgarrado o rompe. Em vez disso, pedaços de Fio de Prata encontrados na Sebe são tokens valiosos. Quando dois fae juram um pacto sobre um pedaço de Fio de Prata, ele os liga enquanto o juramento permanecer intacto, e o Fio se divide em uma parte para cada um. Uma vez por capítulo, se um deles ativar o token e puxar seu Fio de Prata, o outro pode puxar de volta, transportando o primeiro usuário até sua localização. O processo leva cinco turnos completos (ou 15 segundos) e pode ser interrompido se qualquer uma das partes perder contato com o Fio. Se o usuário não fizer parte de nenhum juramento ainda intacto, não poderá usar o Fio de Prata para resgatar outras pessoas do perigo. Contudo, ele também possui outra função importante. Qualquer rolagem de Política ou Socialização feita para negociar com um Fae Verdadeiro recebe +1, pois os Fae Verdadeiros estão desesperados para recuperar sua valiosa propriedade.",
+    "effect": "Fios esguios, porém impossivelmente resistentes, de prata arcadiana ligam todos os Mergulhadores Infernais cativos aos seus mestres Fae Verdadeiros. Recolhido por Trevosos, Feras e Ogros, trabalhado por Mirrados e Elementais e trançado pelos Belíssimos, um Fio de Prata é o grito coletivo de sofrimento dos Perdidos. Ele não desaparece simplesmente quando um Mergulhador Infernal desgarrado o rompe. Em vez disso, pedaços de Fio de Prata encontrados na Sebe são tokens valiosos. Quando dois feéricos juram um pacto sobre um pedaço de Fio de Prata, ele os liga enquanto o juramento permanecer intacto, e o Fio se divide em uma parte para cada um. Uma vez por capítulo, se um deles ativar o token e puxar seu Fio de Prata, o outro pode puxar de volta, transportando o primeiro usuário até sua localização. O processo leva cinco turnos completos (ou 15 segundos) e pode ser interrompido se qualquer uma das partes perder contato com o Fio. Se o usuário não fizer parte de nenhum juramento ainda intacto, não poderá usar o Fio de Prata para resgatar outras pessoas do perigo. Contudo, ele também possui outra função importante. Qualquer rolagem de Política ou Socialização feita para negociar com um Fae Verdadeiro recebe +1, pois os Fae Verdadeiros estão desesperados para recuperar sua valiosa propriedade.",
     "catch": "Ambos os usuários devem gritar sua intenção, chamando imediatamente a atenção de qualquer pessoa — ou coisa — presente na cena.",
     "drawback": "O Fio de Prata é literalmente feito de prata e fica extremamente evidente enquanto brilha no bolso do usuário. Qualquer pessoa que veja o usuário enquanto ele o carrega deve obter sucesso em uma rolagem de Perseverança + Autocontrole para evitar tentar adquiri-lo de qualquer maneira possível, realizando uma nova rolagem em cada cena em que o vir. Mesmo que não saiba que o Fio está ali, sabe que ele carrega algo que deseja. Se o usuário perder o Fio dessa forma, ou sofrer algum outro dano ou perda em decorrência dessas tentativas, receba um Beat."
   },
@@ -113,7 +114,7 @@
   {
     "id": "ctl-oak-ash-thorn:barterers-coin",
     "name": "Moeda do Barganhador",
-    "effect": "Esta moeda não parece grande coisa, com azinhavre manchando sua superfície. Quando ativada, ela adquire uma cor esmeralda brilhante antes de desaparecer em uma nuvem de fumaça dourada. Até o fim da cena, o usuário da moeda recebe +1 e 8-again em todas as rolagens para barganhar ou negociar."
+    "effect": "Esta moeda não parece grande coisa, com azinhavre manchando sua superfície. Quando ativada, ela adquire uma cor esmeralda brilhante antes de desaparecer em uma nuvem de fumaça dourada. Até o fim da cena, o usuário da moeda recebe +1 e 8-novamente em todas as rolagens para barganhar ou negociar."
   },
   {
     "id": "ctl-oak-ash-thorn:kraken-ink",
@@ -122,8 +123,8 @@
   },
   {
     "id": "ctl-oak-ash-thorn:seeming-song",
-    "name": "Canção da Semblante",
-    "effect": "Canções de Semblante consistem em som mágico engarrafado para uso posterior. Qualquer partitura ou gravação pode dar origem a uma canção de Semblante, embora a maioria das melodias de trifles reflita o Semblante, a corte ou alguma outra característica definidora de seu criador. Uma canção de Semblante retirada do frasco e imbuída de Glamour agita o coração e o Fado de todos que a escutam. Durante a cena, qualquer changeling que ouça a melodia pode empregar o benefício do Semblante do usuário em qualquer Contrato Arcadiano que invoque, mesmo que não o tenha aprendido. Se um hobgoblin ou outra criatura feérica sem Semblante ativar a canção, isso certamente terá consequências estranhas."
+    "name": "Canção do Semblante",
+    "effect": "Canções de Semblante consistem em som mágico engarrafado para uso posterior. Qualquer partitura ou gravação pode dar origem a uma canção de Semblante, embora a maioria das melodias de Bagatelas reflita o Semblante, a corte ou alguma outra característica definidora de seu criador. Uma canção de Semblante retirada do frasco e imbuída de Glamour agita o coração e o Fado de todos que a escutam. Durante a cena, qualquer changeling que ouça a melodia pode empregar o benefício do Semblante do usuário em qualquer Contrato Arcadiano que invoque, mesmo que não o tenha aprendido. Se um hobgoblin ou outra criatura feérica sem Semblante ativar a canção, isso certamente terá consequências estranhas."
   },
   {
     "id": "ctl-oak-ash-thorn:sorcerers-brew",
@@ -133,19 +134,19 @@
   {
     "id": "ctl-oak-ash-thorn:troll-teeth",
     "name": "Dentes de Troll",
-    "effect": "Esses trifles parecem pedaços alongados de calcário, mas changelings os reconhecem como caninos e presas quebradas. Os dentes de trolls ficam quebradiços depois de removidos e racham com facilidade quando imbuídos de Glamour. Larvas contorcidas com rostos goblins e uma podridão negra e craterada corroem seu interior. Para ativar o trifle, o usuário escolhe um personagem que consiga ver e esmaga o dente. O alvo sente, ao mesmo tempo, todas as pequenas dores, dores articulares e espasmos musculares que já teve. Embora isso não cause dano, a dor atormenta a vítima, impondo penalidades por ferimentos como se a caixa de Vitalidade mais à direita estivesse preenchida com dano até o fim da cena. Penalidades adicionais por ferimentos causadas por dano real se acumulam até um máximo de −5."
+    "effect": "Essas Bagatelas parecem pedaços alongados de calcário, mas changelings os reconhecem como caninos e presas quebradas. Os dentes de trolls ficam quebradiços depois de removidos e racham com facilidade quando imbuídos de Glamour. Larvas contorcidas com rostos goblins e uma podridão negra e craterada corroem seu interior. Para ativar a Bagatela, o usuário escolhe um personagem que consiga ver e esmaga o dente. O alvo sente, ao mesmo tempo, todas as pequenas dores, dores articulares e espasmos musculares que já teve. Embora isso não cause dano, a dor atormenta a vítima, impondo penalidades por ferimentos como se a caixa de Vitalidade mais à direita estivesse preenchida com dano até o fim da cena. Penalidades adicionais por ferimentos causadas por dano real se acumulam até um máximo de −5."
   },
   {
     "id": "ctl-oak-ash-thorn:winning-ticket",
     "name": "Bilhete Premiado",
-    "effect": "Bilhetes de loteria despertam um verdadeiro tesouro de superstições modernas. Este bilhete carrega sua própria parcela de sorte; quando ativado, uma massa de vinhas espinhosas irrompe dele e o despedaça. Durante a cena, todo palpite aleatório feito pelo usuário está completamente correto. Ela pode adivinhar a senha de um celular na primeira tentativa, ligar para uma pessoa específica sem saber seu número e escolher a bifurcação correta de uma estrada sem qualquer investigação. Isso não transmite conhecimento nem torna mais fácil navegar pela Sebe, e o changeling não se lembra das informações específicas que adivinhou depois que o poder do trifle termina."
+    "effect": "Bilhetes de loteria despertam um verdadeiro tesouro de superstições modernas. Este bilhete carrega sua própria parcela de sorte; quando ativado, uma massa de vinhas espinhosas irrompe dele e o despedaça. Durante a cena, todo palpite aleatório feito pelo usuário está completamente correto. Ela pode adivinhar a senha de um celular na primeira tentativa, ligar para uma pessoa específica sem saber seu número e escolher a bifurcação correta de uma estrada sem qualquer investigação. Isso não transmite conhecimento nem torna mais fácil navegar pela Sebe, e o changeling não se lembra das informações específicas que adivinhou depois que o poder da Bagatela termina."
   },
   {
     "id": "ctl-oak-ash-thorn:nameless-mask",
     "name": "Máscara Sem Nome",
     "catch": "O usuário permanece anônimo para todos os demais presentes durante toda a cena enquanto houver pessoas que poderiam reconhecê-lo. Se for reconhecido depois de usar o bauble, mas antes do fim da cena, deve pagar imediatamente qualquer custo de Glamour que tenha evitado.",
     "crux": "Eu me perco em mim mesmo, sozinho entre as massas sem rosto.",
-    "description": "Criadas a partir de restos de eidolons, as Máscaras Sem Nome são indistintas, esculpidas em madeira e desprovidas de qualquer característica marcante. Os Gentry que criam essas Máscaras nunca as vestem; em vez disso, obrigam seus servos a usá-las, para garantir que nada distraia do esplendor dos Fae Verdadeiros. Os mais astutos entre esses servos usam suas Máscaras Sem Nome para escapar de volta através da Sebe, embora alguns de seus companheiros dos Feudos Livres argumentem que seus Guardiões talvez os tenham deixado fugir de propósito."
+    "description": "Criadas a partir de restos de eidolons, as Máscaras Sem Nome são indistintas, esculpidas em madeira e desprovidas de qualquer característica marcante. Os Fae Verdadeiros que criam essas Máscaras nunca as vestem; em vez disso, obrigam seus servos a usá-las, para garantir que nada distraia do esplendor dos Fae Verdadeiros. Os mais astutos entre esses servos usam suas Máscaras Sem Nome para escapar de volta através da Sebe, embora alguns de seus companheiros dos Feudos Livres argumentem que seus Guardiões talvez os tenham deixado fugir de propósito."
   },
   {
     "id": "ctl-oak-ash-thorn:spider-shawl",
@@ -166,7 +167,7 @@
     "name": "Pingente do Pânico",
     "catch": "O usuário deliberadamente perde um prazo importante próprio enquanto usa o Pingente do Pânico.",
     "crux": "Um prazo esquecido me deixa completa e irremediavelmente fodido.",
-    "description": "Todo mundo tem esse sonho. Ela está no palco sob os holofotes, mas não decorou nenhuma letra da música. A tese dele, ainda nem começada, vence em uma hora. Eles têm uma entrevista do outro lado da cidade, esqueceram de se preparar e não conseguem chegar a tempo. O sonhador permanece à beira de uma ruína criada por ele próprio. Os Gentry adoram o pânico cego e descontrolado que esses sonhos provocam e o forjam em pedras escuras de calcedônia engastadas em ouro rosé."
+    "description": "Todo mundo tem esse sonho. Ela está no palco sob os holofotes, mas não decorou nenhuma letra da música. A tese dele, ainda nem começada, vence em uma hora. Eles têm uma entrevista do outro lado da cidade, esqueceram de se preparar e não conseguem chegar a tempo. O sonhador permanece à beira de uma ruína criada por ele próprio. Os Fae Verdadeiros adoram o pânico cego e descontrolado que esses sonhos provocam e o forjam em pedras escuras de calcedônia engastadas em ouro rosé."
   },
   {
     "id": "ctl-oak-ash-thorn:kids-latchkey",

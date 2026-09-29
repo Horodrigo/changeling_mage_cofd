@@ -111,9 +111,14 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
     if (item.kind === "trifle") assert.ok(item.effect, item.id);
     if (item.kind === "bauble") assert.ok(item.description && item.crux && item.catch, item.id);
   }
-  assert.equal(new Set(presentation.map((item) => item.id)).size, presentation.length);
-  assert.ok(presentation.every((item) => items.some((canonical) => canonical.id === item.id) && item.name));
-  assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Wyrd|Huntsm(?:an|en)|Berserk)\b/i);
+  assert.deepEqual(presentation.map((item) => item.id).sort(), items.map((item) => item.id).sort());
+  for (const canonical of items) {
+    const localized = presentation.find((item) => item.id === canonical.id);
+    for (const field of ["name", "effect", "description", "crux", "catch", "drawback"].filter((field) => canonical[field])) {
+      assert.ok(localized?.[field]?.trim(), `${canonical.id}.${field}`);
+    }
+  }
+  assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Wyrd|Huntsm(?:an|en)|Berserk|Swooned|Spooked|Gentry|Darklings|Beasts|Ogres|Wizened|Elementals|Fairest|trifles?)\b/i);
 });
 
 test("Changeling contract shards have globally unique IDs and required structural fields", async () => {
