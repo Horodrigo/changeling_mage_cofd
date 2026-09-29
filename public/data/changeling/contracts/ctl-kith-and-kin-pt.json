@@ -1,1 +1,154 @@
-{}
+{
+  "ctl-kith-and-kin:filling-the-cup": {
+    "name": "Encher o Cálice",
+    "description": "O changeling identifica pessoas que estejam sentindo emoções intensas em um raio de Fado × 40 metros, descobrindo a direção, a distância aproximada e se cada emoção é positiva ou negativa. Ele também percebe automaticamente qualquer Bedlam incitado dentro desse alcance.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até o changeling recuperar Glamour, o que ocorrer primeiro",
+    "loophole": "Ao invocar o Contrato, o changeling declara publicamente sua emoção mais forte no momento e a causa ou o objeto dela.",
+    "seemingBenefits": {
+      "Beast": "Depois de identificar anteriormente as emoções de uma pessoa conhecida com este ou outro poder pertinente, a Fera consegue reconhecê-la novamente à distância pelo cheiro de seus sentimentos.",
+      "Fairest": "O Belíssimo consegue distinguir as pessoas no alcance que sentem uma emoção intensa relacionada a ele, embora descubra a emoção, e não a identidade da pessoa."
+    }
+  },
+  "ctl-kith-and-kin:frail-as-the-dying-word": {
+    "name": "Frágil como a Palavra Agonizante",
+    "description": "Ao tocar o alvo, o changeling engana o Fado para que aplique a ele uma das próprias Fragilidades.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo adquire uma das Fragilidades menores do changeling. Se já a possuir, ela se torna maior durante o efeito; um alvo que já sofra sua versão maior não é afetado. O changeling conserva a Fragilidade.",
+    "exceptionalSuccess": "Em vez disso, o changeling pode infligir uma Fragilidade maior ou duas Fragilidades menores. Ferro conta como maior.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O Fado inflige ao changeling uma nova Fragilidade maior pela cena.",
+    "loophole": "O changeling sofreu os efeitos da Fragilidade escolhida durante a mesma cena.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode infligir uma Fragilidade pertencente a qualquer ser feérico presente, em vez de uma das suas.",
+      "Darkling": "Por +●, o Trevoso transfere a Fragilidade em vez de compartilhá-la, perdendo-a durante o efeito. Isso não pode transferir sua perdição por ferro."
+    }
+  },
+  "ctl-kith-and-kin:sleeps-sweet-embrace": {
+    "name": "Doce Abraço do Sono",
+    "description": "O changeling toca o alvo e substitui seus sonhos por um sono restaurador e sem sonhos. A invocação só é resistida se o alvo não estiver disposto.",
+    "dicePool": "Manipulação + Expressão + Fado − Perseverança",
+    "action": "Instantânea ou resistida",
+    "duration": "Um número de dias igual aos sucessos",
+    "success": "Sempre que dormir durante o efeito, o alvo cura 1 ponto de dano letal por hora, mas não recupera Força de Vontade com o descanso. Ele não possui Bastião e não pode ser afetado por oniromancia nem magia dos sonhos. Uma duração superior a dois dias causa Dissociação até que ele recupere toda a Força de Vontade após o fim do Contrato.",
+    "exceptionalSuccess": "O alvo só sofre Dissociação se o efeito durar mais de três dias.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Na próxima vez que dormir, o changeling não consegue meditar, entrar pelo Portal de Marfim nem sonhar. Ele sofre as desvantagens do Contrato por uma noite, sem receber sua cura.",
+    "loophole": "Durante a mesma cena, o changeling convence ou força o alvo a consumir por completo uma bebida preparada para induzir o sono.",
+    "seemingBenefits": {
+      "Beast": "A Fera acrescenta dois dias à duração do Contrato.",
+      "Darkling": "Enquanto dorme, o alvo do Trevoso parece ter morrido recentemente em qualquer exame mundano; detecção sobrenatural provoca um Choque de Vontades."
+    }
+  },
+  "ctl-kith-and-kin:curses-cure": {
+    "name": "Cura da Maldição",
+    "description": "O changeling mistura o sangue do alvo, ervas da Sebe, sua saliva e vinho para produzir uma dose completa de antídoto destinada a uma única vítima envenenada.",
+    "dicePool": "Inteligência + Medicina + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Beber a dose inteira reduz à metade o tempo de recuperação de um veneno ou torna um veneno letal sobrevivível. Condições relacionadas desaparecem sem serem resolvidas. Veneno sobrenatural exige um Choque de Vontades.",
+    "exceptionalSuccess": "O veneno é curado completa e imediatamente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling envenena a si mesmo e recebe Fatigado, que se torna a Inclinação Envenenado moderada em cenas de ação.",
+    "loophole": "O changeling prova a mesma toxina durante a cena; o Contrato não o protege dessa exposição.",
+    "seemingBenefits": {
+      "Beast": "Durante o capítulo, a Fera pode morder um oponente agarrado como uma ação de agarramento exclusiva para infligir Envenenado moderado.",
+      "Wizened": "Em vez disso, o Mirrado pode reduzir a gravidade de uma doença ou encerrar os efeitos de uma droga; Condições relacionadas desaparecem sem serem resolvidas."
+    }
+  },
+  "ctl-kith-and-kin:dreamers-phalanx": {
+    "name": "Falange dos Sonhadores",
+    "description": "Pessoas adormecidas e dispostas, em contato físico, entram em um sonho compartilhado cujos Bastiões distintos contam como um só para a oniromancia. Cada uma recebe +1 de Fortificação por participante, até +5, contra intrusos; trabalho em equipe nos Bastiões vinculados recebe 8-novamente, e mudanças de local podem mover os alvos entre Bastiões. Despertar alguém à força por magia destrói todos os Bastiões vinculados.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo ou até todos os participantes despertarem",
+    "loophole": "Todos os participantes pertencem ao mesmo juramento firmado, inclusive um juramento feito para esse fim durante a mesma cena.",
+    "seemingBenefits": {
+      "Beast": "Todos os participantes recebem +2 em ações disputadas por um oniromante externo que invada qualquer Bastião vinculado.",
+      "Wizened": "O trabalho em equipe entre os participantes também obtém sucesso excepcional com três sucessos."
+    }
+  },
+  "ctl-kith-and-kin:closing-deaths-door": {
+    "name": "Fechar a Porta da Morte",
+    "description": "Com um gesto íntimo, o changeling tenta devolver à vida um personagem morto recentemente.",
+    "dicePool": "Manipulação + Empatia + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Um personagem morto há no máximo um capítulo retorna com todas as caixas de Vitalidade preenchidas por dano agravado, exceto a caixa intacta mais à direita. O changeling adquire Dívida Goblin igual ao número de horas desde a morte, no mínimo 1 e sujeita ao máximo habitual.",
+    "exceptionalSuccess": "O Contrato pode reviver alguém que tenha morrido em qualquer momento da história atual; caso contrário, um alvo morto há mais de um capítulo não pode ser revivido.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O cadáver se torna uma marionete irracional com uma caixa de Vitalidade, sem Força de Vontade e com todas as paradas de dados iguais ao Fado do changeling.",
+    "loophole": "A pessoa falecida é a Pedra de Contato do changeling, alguém Tocado pelos Fae prometido a ele ou alguém ligado a ele por um juramento pessoal.",
+    "seemingBenefits": {
+      "Fairest": "O personagem revivido recebe Enamorado em relação ao Belíssimo.",
+      "Darkling": "O Trevoso vivencia brevemente os momentos finais da pessoa falecida pelo ponto de vista dela."
+    }
+  },
+  "ctl-kith-and-kin:feast-of-plenty": {
+    "name": "Banquete da Fartura",
+    "description": "O changeling oferece publicamente a todos os presentes comida, bebida, remédios ou confortos semelhantes que lhe foram dados livremente.",
+    "dicePool": "Presença + Socialização + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "O Contrato cria alimento ou remédio apropriado em quantidade suficiente para todos os presentes. Um participante disposto remove uma Condição física não Persistente ou uma Inclinação Pessoal física e recupera Força de Vontade igual à metade dos sucessos, arredondada para cima, mas recebe Endividado em relação ao changeling. O changeling não pode se beneficiar do próprio banquete.",
+    "exceptionalSuccess": "Endividado torna-se Persistente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Notoriedade.",
+    "loophole": "Durante a cena, o changeling cumprimenta todos os presentes pelo nome com um gesto, descobrindo e usando antes da invocação quaisquer nomes que ainda não conheça.",
+    "seemingBenefits": {
+      "Elemental": "Todos que percebem o banquete disputam com Compostura + Fado ou são compelidos a participar.",
+      "Ogre": "Os participantes recebem +1 de Defesa pelo restante do capítulo."
+    }
+  },
+  "ctl-kith-and-kin:still-waters-run-deep": {
+    "name": "Águas Tranquilas São Profundas",
+    "description": "O alvo observa a respiração serena do changeling enquanto ele suprime tanto sua agitação emocional quanto sua alegria.",
+    "dicePool": "Manipulação + Subterfúgio + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Suprima um número de Condições emocionais igual aos sucessos, inclusive Condições de Clareza e Bedlam. Seus efeitos, resoluções e Beats ficam suspensos, e o alvo não pode adquirir novas Condições emocionais, fiar a Sebe, tecer sonhos, incitar Bedlam nem colher Glamour de seres vivos durante a cena.",
+    "exceptionalSuccess": "Sucessos adicionais apenas aumentam o número de Condições suprimidas.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe uma Condição prejudicial suprimida do alvo ou Desmoralizado, à escolha do Narrador, e deve resolvê-la normalmente.",
+    "loophole": "Durante a cena, o changeling escreve ao menos um parágrafo sobre seu estado emocional atual e o sela em uma garrafa.",
+    "seemingBenefits": {
+      "Wizened": "O Mirrado pode suprimir Condições puramente mentais, além das emocionais.",
+      "Ogre": "O Ogro pode resolver uma Condição temporária suprimida durante o efeito e recebe seu Beat de resolução no lugar do alvo."
+    }
+  },
+  "ctl-kith-and-kin:poison-the-well": {
+    "name": "Envenenar o Poço",
+    "description": "O changeling envenena a relação do alvo com o tema de um Mérito Social.",
+    "dicePool": "Manipulação + Expressão + Fado − Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "Um Mérito Social mundano fica inacessível, e seu tema passa a prejudicar ativamente o alvo. Na Sebe, um Mérito de conexão específico de changeling que seja elegível pode continuar disponível, mas inflige Dívida Goblin igual ao seu nível a cada uso; isso conta como fiar a Sebe sem a penalidade de invocação habitual.",
+    "exceptionalSuccess": "O alvo também recebe Notoriedade.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling envenena as próprias conexões mais importantes, desvinculando uma Pedra de Contato de sua trilha de Clareza pelo capítulo.",
+    "loophole": "Durante a cena, o changeling interage pessoalmente com o tema do Mérito para provocar conflito ou sabotar o recurso.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo obtém acesso ao Mérito envenenado durante o efeito do Contrato.",
+      "Elemental": "Quando o Contrato termina, o Mérito do alvo retorna à razão de um ponto por cena, em vez de voltar imediatamente."
+    }
+  },
+  "ctl-kith-and-kin:shared-cup": {
+    "name": "Cálice Compartilhado",
+    "description": "O changeling divide igualmente uma bebida ou refeição com um grupo, criando um vínculo emocional sobrenatural entre participantes dispostos ou desavisados.",
+    "dicePool": "Presença + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Instantânea ou disputada",
+    "duration": "Um capítulo",
+    "success": "Vincule um número de participantes igual aos sucessos, incluindo o changeling. Suas impressões Sociais melhoram em um nível, e eles sofrem −3 para disputar as ações Sociais uns dos outros. Condições emocionais, Inclinações Pessoais, Força de Vontade recuperada e Glamour recuperado propagam-se pelo grupo; participantes sem Fado recebem Inspirado em vez de Glamour. Fiar a Sebe e Bedlam obtêm sucesso excepcional com três sucessos.",
+    "exceptionalSuccess": "Sucessos adicionais aumentam o número máximo de participantes.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling incita Bedlam involuntariamente em todos os participantes, sem rolagem.",
+    "loophole": "Durante a cena da refeição compartilhada, o changeling coleta sangue, cabelo, aparas de unha ou outra parte do corpo de cada participante.",
+    "seemingBenefits": {
+      "Darkling": "Ao pagar ● quando um efeito compartilhado fosse ocorrer, o Trevoso pode se excluir brevemente desse efeito e de todos os efeitos passivos; os outros podem perceber isso com Raciocínio + Compostura, disputado por Raciocínio + Fado do Trevoso.",
+      "Fairest": "Todos os demais participantes recebem Enamorado em relação ao Belíssimo no momento da invocação."
+    }
+  }
+}
