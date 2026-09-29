@@ -23,7 +23,7 @@ export const changelingMessages = {
       "increasedDurability": "Durabilidade Aumentada",
       "extraordinaryEquipmentDrawback": "Enquanto o item estiver em uso, tentativas de passar despercebido à vista de todos ou desviar atenção falham automaticamente e concedem uma Batida. Um usuário não feérico sofre −1 em tarefas que exigem concentração ou interação Social.",
       "trod": "Trilha",
-      "favorsRegalia": "{name} - favorece a {regalia}",
+      "favorsRegalia": "{name} - favorece {regalia}",
       "beatsTitle": "{count} Beat{plural}",
       "glamour": "Glamour",
       "abilities": "Habilidades",

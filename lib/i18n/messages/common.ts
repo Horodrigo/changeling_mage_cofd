@@ -502,7 +502,7 @@ export const commonMessages = {
       "specialty": "Especialização",
       "specificPowers": "Poderes Específicos",
       "speed": "Deslocamento",
-      "spend1GlamourFor2ToAMundane": "Gaste 1 Glamour para receber +2 numa ação Social mundana contra um ser feérico, exceto Caçadores, quando a ação reforça o papel ou os deveres do Título e o alvo os conhece.",
+      "spend1GlamourFor2ToAMundane": "Gaste 1 Glamour para receber +2 numa ação Social mundana contra um ser feérico, exceto Monteiros, quando a ação reforça o papel ou os deveres do Título e o alvo os conhece.",
       "spend1VitaeFor2OnRollsUsing": "Gaste 1 Vitae para receber +2 nas rolagens de um Atributo Físico escolhido durante o turno.",
       "spendExperience": "Gastar Experiência",
       "spentPerTurn": "gasto por turno:",
