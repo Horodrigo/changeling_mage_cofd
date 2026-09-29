@@ -290,5 +290,149 @@
       "Darkling": "Depois da traição, o alvo também recebe Notoriedade e fica isolado daqueles que traiu.",
       "Elemental": "As salvaguardas que poderiam impedir a traição falham; por exemplo, um ataque traiçoeiro recebe surpresa."
     }
+  },
+  "ctl-kith-and-kin:burning-ambition": {
+    "name": "Ambição Ardente",
+    "description": "Depois de tomar algo sem permissão, o changeling recebe uma Aspiração adicional que reflete aquilo ou aquele que mais deseja. Cumpri-la concede um Beat, restaura Força de Vontade igual à metade do Fado e inflige Competitivo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até a Aspiração ser cumprida",
+    "loophole": "Durante a cena, ela queima por completo um símbolo de uma obrigação que deve a outra pessoa.",
+    "seemingBenefits": {
+      "Beast": "Se a Fera consumir o objeto de seu desejo, cumprir a Aspiração restaura toda a Força de Vontade.",
+      "Fairest": "Se o objeto for um personagem, cumprir a Aspiração dá a ele Enamorado em relação ao Belíssimo."
+    }
+  },
+  "ctl-kith-and-kin:jealous-vengeance": {
+    "name": "Vingança Invejosa",
+    "description": "O changeling nomeia alguém que esteja impedindo seu desejo e lança um ultimato: saia do caminho ou sofra uma maldição.",
+    "dicePool": "Presença + Intimidação + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "A menos que o alvo faça tudo ao seu alcance para sair do caminho durante o capítulo, inflija Cego (temporário), Bestial, Segredo Constrangedor, Culpado, Coagido, Letárgico, Paranoico, Devastado, Imprudente ou Assombrado. A Condição não pode ser resolvida até que o alvo supere o changeling em uma disputa.",
+    "exceptionalSuccess": "Inflija duas das Condições listadas.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Notoriedade.",
+    "loophole": "Durante a cena, o alvo recebeu Quebrador de Juramento por causa do changeling.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental também pode escolher Mudo, e Cego torna-se Persistente.",
+      "Ogre": "O Ogro obtém sucesso excepcional com três sucessos."
+    }
+  },
+  "ctl-kith-and-kin:litany-of-rivals": {
+    "name": "Litania dos Rivais",
+    "description": "O changeling nomeia uma Aspiração e interroga água parada sobre as pessoas que se opõem a ela de forma mais imediata ou perigosa.",
+    "dicePool": "Inteligência + Ocultismo + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Para cada sucesso, descubra um novo detalhe sobre um rival pertinente: nome, rosto, localização, uma Fragilidade ou fraqueza, ou o nome ou rosto de um aliado próximo. As respostas podem tratar de rivais diferentes.",
+    "exceptionalSuccess": "Sucessos adicionais fornecem respostas adicionais.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo pretendido descobre a tentativa e que o changeling o considera um rival.",
+    "loophole": "Durante a cena, o changeling faz uma birra diante de alguém que não pertença a seu Retalho.",
+    "seemingBenefits": {
+      "Beast": "Por +● ao descobrir uma localização, a Fera pode rastreá-la pelo capítulo.",
+      "Ogre": "Ao descobrir um nome ou rosto, o Ogro pode testar Manipulação + Intimidação contra Perseverança + Empatia para infligir Paranoico."
+    }
+  },
+  "ctl-kith-and-kin:knights-oath": {
+    "name": "Juramento do Cavaleiro",
+    "description": "Uma pessoa disposta que não seja changeling é nomeada cavaleiro em uma cerimônia e acrescenta metade do Fado à Iniciativa e à Defesa enquanto perceber o changeling, bem como a ações Sociais realizadas em nome dele. Desobediência ou traição inflige Acovardado e alerta o changeling.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "O changeling unge o cavaleiro com sangue proveniente de pelo menos 1 ponto de dano letal que infligiu a si mesmo durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "Em caso de traição, o Trevoso também descobre exatamente quando e onde ela ocorreu, bem como as emoções do cavaleiro.",
+      "Fairest": "O Belíssimo pode nomear até Fado alvos cavaleiros com uma invocação, realizando o gesto para cada um."
+    }
+  },
+  "ctl-kith-and-kin:unmask-the-dark-horse": {
+    "name": "Desmascarar o Azarão",
+    "description": "O changeling desafia publicamente um rival e pode pagar +● para substituir uma de suas Aspirações por outra que se oponha diretamente à do alvo.",
+    "dicePool": "Presença + Persuasão + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Descubra uma Aspiração de curto prazo e inflija Competitivo, que não pode ser resolvido até o alvo derrotar o changeling em uma disputa ou luta.",
+    "exceptionalSuccess": "Descubra todas as Aspirações do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Frenético.",
+    "loophole": "Faça o desafio diante de uma grande multidão que contenha alguém amado, um amigo ou um colega do alvo.",
+    "seemingBenefits": {
+      "Fairest": "O desafio e a competição resultante são transmitidos sobrenaturalmente ao vivo em um raio de oito quilômetros.",
+      "Beast": "Derrotar o alvo durante o efeito inflige Notoriedade."
+    }
+  },
+  "ctl-kith-and-kin:a-benevolent-hand": {
+    "name": "Uma Mão Benevolente",
+    "description": "Depois de fazer um gesto que beneficie outra pessoa sem ajudar a si mesmo, o changeling melhora as primeiras impressões com todos que conhecer durante o capítulo, até o nível perfeito. Ações Sociais bem-sucedidas podem conceder pontos temporários de Aliados, até cinco.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "O changeling abre mão de algo importante ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Elemental": "Cada sucesso qualificado concede 2 pontos de Aliados, em vez de 1.",
+      "Wizened": "Em vez disso, o Mirrado recebe um ponto temporário separado de Recursos, até cinco."
+    }
+  },
+  "ctl-kith-and-kin:fake-it-til-you-make-it": {
+    "name": "Finja até Conseguir",
+    "description": "Uma proclamação altera a realidade mundana em um raio de 10 metros, como ao fiar a Sebe. Gaste sucessos em mudanças sutis por +2 cada; o cenário não resiste, personagens resistem, e o efeito não pode aniquilar alguém instantaneamente. A invocação causa um ponto de ruptura com quatro dados.",
+    "dicePool": "Presença + Persuasão + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Aplique as mudanças temporárias compradas que sejam coerentes com o teor emocional da proclamação.",
+    "exceptionalSuccess": "Por +● e +○, os sucessos também podem comprar mudanças sutis ou de paradigma.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Incite Bedlam em todos os presentes, inclusive o changeling.",
+    "loophole": "Aponte e declame com um cetro verdadeiro.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo dá a uma testemunha uma Condição temporária Delirante, resolvida ao aceitar uma de suas mentiras.",
+      "Wizened": "Mudanças que afetem objetos inanimados ou estruturas fabricados por humanos custam 2 sucessos a menos."
+    }
+  },
+  "ctl-kith-and-kin:tempters-quest": {
+    "name": "Missão do Tentador",
+    "description": "Designe uma missão clara e realizável que não dure mais que uma história e prometa uma recompensa que avance a Aspiração mais importante do alvo.",
+    "dicePool": "Presença + Persuasão + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma história",
+    "success": "O alvo recebe Obsessão Persistente, substitui uma Aspiração pela missão e não pode recuperar Força de Vontade por meio de Âncoras após um capítulo sem progresso. Negar a recompensa conquistada dá ao changeling Coagido e o marca como Quebrador de Juramento.",
+    "exceptionalSuccess": "Uma sessão sem progresso também inflige Letárgico.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre as consequências de quebrar o acordo, embora não tenha designado missão alguma.",
+    "loophole": "Dê a quem recebe a missão uma provisão de valor prático significativo para realizá-la.",
+    "seemingBenefits": {
+      "Darkling": "Depois de quebrar o acordo, o Trevoso pode gastar ○ e vencer Manipulação + Furto + Fado contra Perseverança + Fado para transferir as consequências a uma testemunha informada.",
+      "Fairest": "O Belíssimo pode designar a mesma missão a até metade do Fado em alvos, oferecendo recompensas proporcionais."
+    }
+  },
+  "ctl-kith-and-kin:curse-of-hidden-strings": {
+    "name": "Maldição dos Fios Ocultos",
+    "description": "Destrua um item que contenha a assinatura do alvo e escolha uma obrigação documentada que o changeling conheça, além de uma ação benéfica relacionada capaz de romper a maldição.",
+    "dicePool": "Manipulação + Furto + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo esquece seu envolvimento, mas continua vinculado. A ação definida encerra a maldição e revela a obrigação e o culpado; o término normal restaura a memória sem identificar o changeling.",
+    "exceptionalSuccess": "A duração torna-se um capítulo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Coagido em relação ao alvo.",
+    "loophole": "Durante a cena, rompa consciente e deliberadamente um dos acordos do próprio changeling.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode afetar até Fado alvos que compartilhem a obrigação.",
+      "Wizened": "Em vez de apagar a obrigação, o Mirrado faz o alvo acreditar que a deve a ele."
+    }
+  },
+  "ctl-kith-and-kin:spare-not-the-rod": {
+    "name": "Não Poupe a Vara",
+    "description": "Crie um cetro de Glamour empunhado com uma mão: uma arma corpo a corpo 0C sem penalidade de Iniciativa ou uma arma de ataque à distância 0L com alcance de 30 metros pelo custo de ● por ataque. Um ataque ou Intimidação bem-sucedido inflige Desmoralizado. Somente personagens com Fado podem usar seu ataque à distância.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Quebre um cetro em miniatura fabricado com metais preciosos e gemas.",
+    "seemingBenefits": {
+      "Fairest": "Por +●●, um ataque ou Intimidação bem-sucedido inflige Maravilhado Persistente, em vez de Desmoralizado.",
+      "Wizened": "O Mirrado pode invocar o cetro para uma mão livre; alguém que o segure contra a vontade dele disputa Presença + Intimidação contra Força + Vigor."
+    }
   }
 }

@@ -25,3 +25,8 @@
 
 - `Book of Black and Red`: traduzido como **Livro do Preto e do Vermelho**, preservando a referência contábil a registros positivos e negativos.
 - `Grand Revel of the Harvest`: traduzido como **Grande Folia da Colheita**; **Grande Celebração da Colheita** seria uma alternativa menos festiva e mais literal.
+
+## Lote: Cetro — *Kith and Kin*, pp. 44–48
+
+- `Unmask the Dark Horse`: traduzido como **Desmascarar o Azarão**, usando o sentido idiomático de concorrente inesperado, não a imagem literal de um cavalo escuro.
+- `Fake It ‘Til You Make It`: traduzido como **Finja até Conseguir**, preservando o sentido proverbial em vez da estrutura literal.
