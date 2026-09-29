@@ -36,8 +36,8 @@
   },
   {
     "id": "ctl-2ed:golden-hairnettle",
-    "name": "Urtiga Dourada de Cabelo",
-    "effect": "A maioria das pessoas não pegaria um elástico de cabelo deixado no chão. Changelings sabem melhor. Em sua forma verdadeira, este token aparece como um belo adorno dourado para os cabelos, que se entrelaça perfeitamente com qualquer penteado usado pelo portador naquele momento. Ela recebe +1 em suas rolagens de Presença e, uma vez por cena, um sucesso em uma dessas rolagens impõe ao alvo a Condição Enamorado (p. 345), enquanto a Urtiga Dourada de Cabelo cintila e brilha de forma sedutora em seu penteado.",
+    "name": "Erva de Cachinhos Dourados",
+    "effect": "A maioria das pessoas não pegaria um elástico de cabelo deixado no chão. Changelings sabem melhor. Em sua forma verdadeira, este token aparece como um belo adorno dourado para os cabelos, que se entrelaça perfeitamente com qualquer penteado usado pelo portador naquele momento. O usuário recebe +1 em suas rolagens de Presença e, uma vez por cena, um sucesso em uma dessas rolagens impõe ao alvo a Condição Enamorado (p. 345), enquanto a Erva de Cachinhos Dourados cintila e brilha de forma sedutora em seu penteado.",
     "catch": "O usuário deve realizar um favor significativo para outra pessoa sem ganhar nada em troca para ativar o token, dentro da mesma cena.",
     "drawback": "O usuário atrai atenção mesmo quando não quer. Seu jogador sofre uma penalidade de −2 em todas as rolagens para passar despercebido ou agir furtivamente até falhar em uma delas; ele pode optar por falhar deliberadamente. Quando isso acontecer, receba um Beat."
   },
@@ -57,8 +57,8 @@
   },
   {
     "id": "ctl-2ed:iou",
-    "name": "Vale-Dívida",
-    "effect": "Este token é muito mais valioso do que parece à primeira vista. Dormente, é apenas um pedaço de papel sujo. Ativado, torna-se um certificado ornamentado com ouro e prata, trazendo o nome de quem o ativou e exalando um leve cheiro de pão quente. Sempre que a Dívida Goblin do personagem fosse cobrada — por exemplo, quando o Narrador a usar para impor uma penalidade ou para conceder a Condição Habitante da Sebe — ele pode entregar o Vale-Dívida a outra pessoa de uma maneira relevante à situação e evitar as consequências naquele momento. Ele continua mantendo toda a sua Dívida, mas contorna temporariamente seus efeitos. Ao entregar o Vale-Dívida, o personagem perde a capacidade de usá-lo novamente até que se passe um mês lunar. Feudos Livres onde um Vale-Dívida circula vivem em constante barganha e negociata, pois todos tentam enganar o sistema dos goblins tempo suficiente para extrair alguma vantagem dele.",
+    "name": "Nota Promissória",
+    "effect": "Este token é muito mais valioso do que parece à primeira vista. Dormente, é apenas um pedaço de papel sujo. Ativado, torna-se um certificado ornamentado com ouro e prata, trazendo o nome de quem o ativou e exalando um leve cheiro de pão quente. Sempre que a Dívida Goblin do personagem fosse cobrada — por exemplo, quando o Narrador a usar para impor uma penalidade ou para conceder a Condição Habitante da Sebe — ele pode entregar a Nota Promissória a outra pessoa de uma maneira relevante à situação e evitar as consequências naquele momento. Ele continua mantendo toda a sua Dívida, mas contorna temporariamente seus efeitos. Ao entregar a Nota Promissória, o personagem perde a capacidade de usá-la novamente até que se passe um mês lunar. Feudos Livres onde uma Nota Promissória circula vivem em constante barganha e negociata, pois todos tentam enganar o sistema dos goblins tempo suficiente para extrair alguma vantagem dele.",
     "catch": "O usuário deve assinar o próprio nome com sangue no contrato, tornando-o para sempre visível a qualquer pessoa que o utilize depois dele.",
     "drawback": "O personagem adquire a Condição Notoriedade entre os habitantes da Sebe, que passam a vê-lo como alguém que não paga o que deve."
   },

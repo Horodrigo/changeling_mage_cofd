@@ -119,6 +119,8 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
     }
   }
   assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Wyrd|Huntsm(?:an|en)|Berserk|Swooned|Spooked|Gentry|Darklings|Beasts|Ogres|Wizened|Elementals|Fairest|trifles?)\b/i);
+  assert.equal(presentation.find((item) => item.id === "ctl-2ed:golden-hairnettle")?.name, "Erva de Cachinhos Dourados");
+  assert.equal(presentation.find((item) => item.id === "ctl-2ed:iou")?.name, "Nota Promissória");
 });
 
 test("Changeling contract shards have globally unique IDs and required structural fields", async () => {
