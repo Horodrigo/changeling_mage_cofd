@@ -30,3 +30,10 @@
 
 - `Unmask the Dark Horse`: traduzido como **Desmascarar o Azarão**, usando o sentido idiomático de concorrente inesperado, não a imagem literal de um cavalo escuro.
 - `Fake It ‘Til You Make It`: traduzido como **Finja até Conseguir**, preservando o sentido proverbial em vez da estrutura literal.
+
+## Lote: Estrelas — *Kith and Kin*, pp. 49–52
+
+- `Straight On ‘Til Morning`: traduzido como **Em Frente até o Amanhecer**, preservando a referência a *Peter Pan* sem acrescentar a parte da citação ausente no título inglês.
+- `Cynosure`: traduzido como **Estrela-Guia**, usando o sentido original de guia celeste; **Centro das Atenções** preservaria melhor o sentido figurado moderno.
+- `Star Light, Star Bright`: traduzido como **Luz das Estrelas, Estrela Brilhante**; a cantiga inglesa não possui uma versão portuguesa consolidada identificada no catálogo.
+- `Wishing Roads`: traduzido no texto como **Estradas dos Desejos**.

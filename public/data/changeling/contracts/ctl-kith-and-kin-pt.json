@@ -434,5 +434,129 @@
       "Fairest": "Por +●●, um ataque ou Intimidação bem-sucedido inflige Maravilhado Persistente, em vez de Desmoralizado.",
       "Wizened": "O Mirrado pode invocar o cetro para uma mão livre; alguém que o segure contra a vontade dele disputa Presença + Intimidação contra Força + Vigor."
     }
+  },
+  "ctl-kith-and-kin:pole-star": {
+    "name": "Estrela Polar",
+    "description": "Nomeie uma pessoa, lugar ou objeto. O corpo do changeling aponta infalivelmente em sua direção, revelando o rumo, mas não a localização nem a distância. Encontrar um alvo oculto sobrenaturalmente provoca um Choque de Vontades, e o Contrato só funciona no mundo mundano.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Segure um pedaço do alvo ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Beast": "A Fera recebe +2 dados em um Choque de Vontades para revelar um alvo oculto.",
+      "Wizened": "O Mirrado pode fazer ao Narrador uma pergunta sobre um oponente ou obstáculo no caminho."
+    }
+  },
+  "ctl-kith-and-kin:straight-on-til-morning": {
+    "name": "Em Frente até o Amanhecer",
+    "description": "Escolha um destino e viaje incansavelmente, sem precisar de alimento nem descanso, até alcançá-lo. Ignore efeitos adversos de Inclinações Ambientais pelo caminho e receba 8-novamente em rolagens de navegação nas Estradas dos Desejos; encontros e obstáculos ainda impedem a jornada normalmente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até o changeling chegar ao destino",
+    "loophole": "Prometa dormir quando a tarefa terminar e faça um aliado selar a declaração; Glamour não pode refutar o selamento, e o changeling recebe Fatigado quando o Contrato termina.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode estender o Contrato a até Fado companheiros de viagem.",
+      "Ogre": "O Ogro recebe Resoluto."
+    }
+  },
+  "ctl-kith-and-kin:cynosure": {
+    "name": "Estrela-Guia",
+    "description": "Ao conversar com franqueza sobre um de seus próprios sonhos, o changeling leva o alvo a revelar uma Aspiração e recebe orientação estelar até uma oportunidade capaz de avançá-la durante o próximo capítulo ou história.",
+    "dicePool": "Manipulação + Empatia + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Descubra uma Aspiração escolhida pelo alvo e um evento ou oportunidade que ajudaria a cumpri-la. Uma Aspiração de curto prazo pode ser resolvida por completo; uma de longo prazo avança até a próxima etapa significativa.",
+    "exceptionalSuccess": "Descubra também o nome de alguém que já tenha ligação com o changeling e que seria imensamente útil ao objetivo do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo sofre um revés e culpa o changeling, ou tem sucesso apesar da sabotagem dele e descobre que ele tentou interferir.",
+    "loophole": "Deixe escapar, durante a mesma cena, uma oportunidade de cumprir uma das Aspirações do changeling.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso recebe Informado a respeito da Aspiração do alvo.",
+      "Ogre": "O Ogro recebe +2 dados para convencer o alvo a agir com ousadia em busca da Aspiração."
+    }
+  },
+  "ctl-kith-and-kin:shooting-star": {
+    "name": "Estrela Cadente",
+    "description": "A obra de um criador captura brevemente a atenção do público. O alvo recebe um ponto de Fama ou +1 dado no bônus Social de Fama caso isso ultrapassasse três pontos. Changelings recebem +1 para colher Glamour de pessoas afetadas por essa Fama.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "Conclua durante a mesma cena uma ação de Construir Equipamento para uma obra criativa; uma Fera pode, em vez disso, obter sucesso em uma façanha impressionante de Atletismo.",
+    "seemingBenefits": {
+      "Beast": "A Fera pode escolher como alvo alguém que realize façanhas de excelência física, em vez de uma obra criativa.",
+      "Fairest": "O Belíssimo recebe +2 em rolagens para colher Glamour de pessoas afetadas pela Fama do alvo, em vez de +1."
+    }
+  },
+  "ctl-kith-and-kin:retrograde": {
+    "name": "Movimento Retrógrado",
+    "description": "Enquanto conta uma história sobre o alvo, o changeling gesticula no sentido anti-horário e invoca uma série de pequenos infortúnios sobre as comunicações, finanças, viagens e afazeres cotidianos do alvo.",
+    "dicePool": "Presença + Expressão + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "Assuntos rotineiros que não exigem rolagem dão errado para o alvo sempre que isso for inconveniente.",
+    "exceptionalSuccess": "O alvo também faz cada parada de dados duas vezes e fica com o pior resultado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Em vez disso, a sorte do changeling azeda e impõe −2 a todas as ações dele pelo capítulo.",
+    "loophole": "Gire no sentido anti-horário enquanto conta a história.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode nomear até Fado assuntos rotineiros específicos que darão errado; evitar as ações previstas não causa um infortúnio substituto.",
+      "Elemental": "O Elemental pode declarar uma Inclinação ambiental ou pessoal ligada ao clima para afetar o alvo no momento mais inconveniente durante o Contrato."
+    }
+  },
+  "ctl-kith-and-kin:frozen-star": {
+    "name": "Estrela Congelada",
+    "description": "Trace entre as estrelas a imagem de uma pessoa, lugar ou objeto conhecido e nomeie um sujeito visível que não seja o changeling. O alvo deve ser razoavelmente alcançável antes do nascer do sol e não pode ter sido escolhido expressamente para prejudicar o sujeito.",
+    "dicePool": "Inteligência + (Empatia ou Persuasão) + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Até o próximo nascer do sol ou até o sujeito tocar o alvo",
+    "success": "O sujeito abandona sua atividade atual e viaja em direção ao alvo traçado. Ao chegar ou quando a duração expirar, o efeito termina, e o sujeito recebe Abalado sem se lembrar de qualquer motivo para a perseguição.",
+    "exceptionalSuccess": "Tocar o alvo não encerra o efeito; o sujeito recebe Viciado Persistente em relação a ele até a Condição ser resolvida normalmente ou até o próximo nascer do sol.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O agente dos Fae Verdadeiros mais próximo descobre a localização do changeling, é atraído até ele conforme determina o Contrato, e o changeling recebe Caçado.",
+    "loophole": "Mantenha contato físico com o alvo ou com um pedaço dele enquanto traça o sujeito nas estrelas.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso também inflige Assombrado, levando o sujeito a alcançar o alvo o mais depressa possível.",
+      "Fairest": "Se o Belíssimo traçar a si mesmo como alvo, o sujeito adquire um ponto de Dívida Goblin por cena passada longe de sua presença."
+    }
+  },
+  "ctl-kith-and-kin:star-light-star-bright": {
+    "name": "Luz das Estrelas, Estrela Brilhante",
+    "description": "Descubra um desejo que o alvo tenha feito no último mês ou um desejo aleatório feito em um raio de 1,6 quilômetro caso nenhum alvo seja especificado. O changeling escolhe como realizá-lo dentro de suas capacidades reais, mas recebe Quebrador de Juramento Persistente caso não o faça até o fim da história. Pagar o custo maior permite acrescentar uma desvantagem ao desejo concedido.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Induza o alvo a fazer o desejo na presença do changeling durante a mesma cena.",
+    "seemingBenefits": {
+      "Ogre": "Se o alvo não for feérico, o Ogro recebe +2 em uma tentativa de colher Glamour dele.",
+      "Wizened": "O Mirrado também descobre a força subjacente que motiva o desejo, como medo, dificuldade ou arrependimento."
+    }
+  },
+  "ctl-kith-and-kin:light-of-ancient-stars": {
+    "name": "Luz de Estrelas Antigas",
+    "description": "Faça até Fado perguntas sobre um acontecimento passado ligado a alguém que o changeling conheça melhor que um simples conhecido, ou sobre um acontecimento conhecido em um local que ela tenha visitado pessoalmente. O Narrador responde com sinceridade.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Cante os nomes das estrelas de uma constelação que esteja visível no céu.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso recebe Informado a respeito do acontecimento; a Condição desaparece sem conceder Beat se não for resolvida até o fim do capítulo.",
+      "Wizened": "O Mirrado recebe uma imagem nítida de um objeto simples de Tamanho 3 ou menor que estivesse presente e +2 para construir uma réplica mundana, incluindo textos exatos ou diagramas simples, mas não sua interpretação."
+    }
+  },
+  "ctl-kith-and-kin:pinch-of-stardust": {
+    "name": "Pitada de Poeira Estelar",
+    "description": "Construa com retalhos e luz estelar um simulacro que o alvo recorda como alguém confiável e importante. Ele pode se tornar uma Pedra de Contato, um mentor ou um ente querido equivalente, inflige Delirante Persistente e causa o ponto de ruptura ou risco de Clareza apropriado quando se desfaz. Escolher um changeling como alvo faz da invocação um ponto de ruptura de quatro dados, em vez de três.",
+    "dicePool": "Inteligência + Ofícios + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea para um alvo disposto; disputada para um alvo hostil",
+    "duration": "Um capítulo ou até Delirante ser resolvido",
+    "success": "Crie a entidade com Ecos iguais ao Fado e vincule-a como Pedra de Contato ou relação importante equivalente. Um changeling que escolha a si mesmo como alvo esquece a invocação e acredita que ela é real.",
+    "exceptionalSuccess": "Os amigos e entes queridos mais próximos do alvo também se lembram da criatura como real, embora evidências possam despertar suspeitas e eles não recebam Delirante.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A criação torna-se um duplo mal-intencionado do changeling, agindo como um segundo simulacro que sabe o que é.",
+    "loophole": "Acrescente à criatura uma parte do changeling, como cabelo, sangue ou aparas de unha.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso ouve qualquer segredo que o alvo sussurre à criatura.",
+      "Wizened": "Por +●, a criação dura até o fim da história."
+    }
   }
 }
