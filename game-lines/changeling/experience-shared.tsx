@@ -9,13 +9,15 @@ import { changelingContractExperienceCost } from "@/lib/changeling-regalia";
 import { permanentClarityBonus } from "@/lib/resource-rules";
 import { derivedWithPermanentMerits as derivedWithCommonMerits } from "@/app/workspace/experience-shared";
 
+export type ChangelingPurchaseType = "attribute" | "skill" | "specialty" | "merit" | "wyrd" | "contract" | "willpower" | "contract-benefit";
+
 export function contractExperienceCost(contract: ContractDefinition, character: CharacterSheet) {
   return changelingContractExperienceCost(contract, character.line_data);
 }
 
 export function purchasePreview(input: {
   locale: Locale;
-  purchaseType: string;
+  purchaseType: ChangelingPurchaseType;
   character: CharacterSheet;
   attribute: string;
   skill: string;
@@ -31,27 +33,27 @@ export function purchasePreview(input: {
   targetRating: number;
 }) {
   const { purchaseType, character, locale } = input;
-  if (purchaseType === "Atributo") return { label: `${systemTerm(input.attribute,locale)} ${input.targetRating}`, cost: 4 * (input.targetRating - Number(character.attributes[input.attribute] ?? 1)) };
-  if (purchaseType === "Perícia") return { label: `${systemTerm(input.skill,locale)} ${input.targetRating}`, cost: 2 * (input.targetRating - Number(character.skills[input.skill] ?? 0)) };
-  if (purchaseType === "Mérito") return {
+  if (purchaseType === "attribute") return { label: `${systemTerm(input.attribute,locale)} ${input.targetRating}`, cost: 4 * (input.targetRating - Number(character.attributes[input.attribute] ?? 1)) };
+  if (purchaseType === "skill") return { label: `${systemTerm(input.skill,locale)} ${input.targetRating}`, cost: 2 * (input.targetRating - Number(character.skills[input.skill] ?? 0)) };
+  if (purchaseType === "merit") return {
     label: input.nextMeritRating
       ? `${locale === "en-US" ? input.selectedMerit?.name : input.selectedMerit?.translatedName} ${input.nextMeritRating}`
       : translate(locale, "ui.noAdditionalRating"),
     cost: input.nextMeritRating ? input.nextMeritRating - (input.ownedMerit?.dots ?? 0) : 0,
   };
-  if (purchaseType === "Especialização") return {
+  if (purchaseType === "specialty") return {
     label: `${systemTerm(input.specialtySkill,locale)}: ${input.specialtyName || translate(locale, "ui.newSpecialty")}`,
     cost: 1,
   };
-  if (purchaseType === "Contrato") return {
+  if (purchaseType === "contract") return {
     label: (locale === "en-US" ? input.selectedContract?.originalName : input.selectedContract?.name) ?? translate(locale, "ui.noContractAvailable"),
     cost: input.selectedContract ? contractExperienceCost(input.selectedContract, character) : 0,
   };
-  if (purchaseType === "Benefício de Contrato") return {
+  if (purchaseType === "contract-benefit") return {
     label: input.benefitKey ? translate(locale, "ui.benefitFromAnotherSeeming") : translate(locale, "ui.noBenefitAvailable"),
     cost: input.benefitKey ? 1 : 0,
   };
-  if (purchaseType === "Fado") return {
+  if (purchaseType === "wyrd") return {
     label: input.wyrd < 10 ? `${translate(locale, "ui.wyrd")} ${input.targetRating}` : translate(locale, "ui.maximumWyrd"),
     cost: input.wyrd < 10 ? 5 * (input.targetRating - input.wyrd) : 0,
   };

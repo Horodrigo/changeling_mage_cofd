@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/changeling/creation-rules";
@@ -35,8 +35,8 @@ import { activeMeritCatalog } from "@/lib/merit-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
-import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived, type ChangelingPurchaseType } from "./experience-shared";
 type ExperienceUndo =
   | {
       kind: "trait";
@@ -69,17 +69,16 @@ type ExperienceEntry = {
   undo?: ExperienceUndo;
 };
 const PURCHASE_GROUPS = [
-  { group: "core", purchases: ["Atributo", "Perícia", "Especialização", "Mérito"] },
-  { group: "supernatural", purchases: ["Fado", "Contrato"] },
-  { group: "integrity", purchases: ["Ponto perdido de Força de Vontade"] },
-  { group: "acquired", purchases: ["Benefício de Contrato"] },
-] as const;
+  { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
+  { group: "supernatural", purchases: ["wyrd", "contract"] },
+  { group: "integrity", purchases: ["willpower"] },
+  { group: "acquired", purchases: ["contract-benefit"] },
+] as const satisfies readonly ExperiencePurchaseGroup<ChangelingPurchaseType>[];
 const PURCHASE_TYPES = PURCHASE_GROUPS.flatMap(({ purchases }) => [...purchases]);
-const PURCHASE_TYPE_EN:Record<string,string>={
-  Atributo:"Attribute", Perícia:"Skill", Mérito:"Merit", Especialização:"Specialty", Contrato:"Contract",
-  "Benefício de Contrato":"Contract Benefit", Fado:"Wyrd", "Ponto perdido de Força de Vontade":"Lost Willpower dot",
-};
-const purchaseTypeLabel=(value:string,locale:Locale)=>locale==="en-US"?(PURCHASE_TYPE_EN[value]??systemTerm(value,locale)):value;
+const PURCHASE_LABEL_KEYS = {
+  attribute: "ui.attribute", skill: "ui.skill", specialty: "ui.specialty", merit: "ui.merit",
+  wyrd: "ui.wyrd", contract: "ui.contract", willpower: "ui.lostWillpowerDot", "contract-benefit": "ui.contractBenefit",
+} as const;
 const groupedTraitOptions = (
   groups: Record<string, readonly string[]>,
 ) =>
@@ -132,7 +131,7 @@ export function ExperiencePanel({
       : []
   ).filter((entry) => entry.kind === "spend");
   const [experienceInput, setExperienceInput] = useState(String(available));
-  const [purchaseType, setPurchaseType] = useState<string>(PURCHASE_TYPES[0]);
+  const [purchaseType, setPurchaseType] = useState<ChangelingPurchaseType>(PURCHASE_TYPES[0]);
   const [targetRating, setTargetRating] = useState(0);
   const [attribute, setAttribute] = useState<string>(
     Object.values(ATTRIBUTES).flat()[0],
@@ -218,14 +217,14 @@ export function ExperiencePanel({
     0,
   );
   const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
-  const ratedCurrent = purchaseType === "Atributo" ? Number(character.attributes[attribute] ?? 1)
-    : purchaseType === "Perícia" ? Number(character.skills[skill] ?? 0)
-      : purchaseType === "Fado" ? wyrd
-        : purchaseType === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum - lostWillpower
+  const ratedCurrent = purchaseType === "attribute" ? Number(character.attributes[attribute] ?? 1)
+    : purchaseType === "skill" ? Number(character.skills[skill] ?? 0)
+      : purchaseType === "wyrd" ? wyrd
+        : purchaseType === "willpower" ? permanentWillpowerMaximum - lostWillpower
           : 0;
-  const ratedMaximum = purchaseType === "Atributo" || purchaseType === "Perícia" ? traitMaximum
-    : purchaseType === "Fado" ? 10
-      : purchaseType === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum
+  const ratedMaximum = purchaseType === "attribute" || purchaseType === "skill" ? traitMaximum
+    : purchaseType === "wyrd" ? 10
+      : purchaseType === "willpower" ? permanentWillpowerMaximum
         : 0;
   const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
   const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
@@ -443,7 +442,7 @@ export function ExperiencePanel({
     setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description, p2: refund }));
   }
   function buy() {
-    if (purchaseType === "Atributo") {
+    if (purchaseType === "attribute") {
       const current = Number(character.attributes[attribute] ?? 1);
       if (current >= traitMaximum)
         return setFeedback(
@@ -467,7 +466,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Perícia") {
+    if (purchaseType === "skill") {
       const current = Number(character.skills[skill] ?? 0);
       if (current >= traitMaximum)
         return setFeedback(
@@ -485,7 +484,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Mérito") {
+    if (purchaseType === "merit") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
       if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
@@ -525,7 +524,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Especialização") {
+    if (purchaseType === "specialty") {
       if (!specialtyName.trim())
         return setFeedback(t("ui.enterTheSpecialtyName"));
       const name = specialtyName.trim();
@@ -538,7 +537,7 @@ export function ExperiencePanel({
       setSpecialtyName("");
       return;
     }
-    if (purchaseType === "Contrato") {
+    if (purchaseType === "contract") {
       if (!selectedContract)
         return setFeedback(t("ui.noContractIsAvailableForThisPurchase"));
       const cost = contractExperienceCost(selectedContract, character);
@@ -556,7 +555,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Benefício de Contrato") {
+    if (purchaseType === "contract-benefit") {
       const value = benefitKey || benefitOptions[0]?.value;
       if (!value)
         return setFeedback(t("ui.noAdditionalBenefitOrClauseIsAvailable"));
@@ -578,7 +577,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Fado") {
+    if (purchaseType === "wyrd") {
       if (wyrd >= 10) return setFeedback(t("ui.wyrdHasAlreadyReached10"));
       spend(5 * ratingAmount, `${t("ui.wyrd")} ${intendedRating}`, { kind: "wyrd", previous: wyrd, amount: ratingAmount }, (next) => {
         next.line_data = { ...withChangelingPowerRating(next, intendedRating), frailties: normalizeChangelingFrailties(next.line_data.frailties, intendedRating) };
@@ -708,17 +707,17 @@ export function ExperiencePanel({
                 <RuleSelect
                   value={purchaseType}
                   onChange={(value) => {
-                    setPurchaseType(value);
+                    setPurchaseType(value as ChangelingPurchaseType);
                     setTargetRating(0);
                     setFeedback("");
                   }}
                   options={groupedPurchaseOptions(builderMode ? [
-                    { group: "core", purchases: ["Atributo", "Perícia", "Mérito"] },
-                    { group: "supernatural", purchases: ["Fado", "Contrato"] },
-                  ] : PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
+                    { group: "core", purchases: ["attribute", "skill", "merit"] },
+                    { group: "supernatural", purchases: ["wyrd", "contract"] },
+                  ] : PURCHASE_GROUPS, (value) => t(PURCHASE_LABEL_KEYS[value]), locale)}
                 />
               </label>
-              {purchaseType === "Atributo" && (
+              {purchaseType === "attribute" && (
                 <label>
                   {t("ui.attribute")}
                   <RuleSelect
@@ -728,7 +727,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Perícia" && (
+              {purchaseType === "skill" && (
                 <label>
                   {t("ui.skill")}
                   <RuleSelect
@@ -738,7 +737,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Mérito" && (
+              {purchaseType === "merit" && (
                 <label>
                   {t("ui.merit")}
                   <ExperienceMeritPicker
@@ -756,7 +755,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Especialização" && (
+              {purchaseType === "specialty" && (
                 <>
                   <label>
                     {t("ui.skill")}
@@ -776,7 +775,7 @@ export function ExperiencePanel({
                   </label>
                 </>
               )}
-              {purchaseType === "Contrato" && (
+              {purchaseType === "contract" && (
                 <label>
                   {t("ui.contract")}
                   <ExperiencePowerPicker
@@ -797,7 +796,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Benefício de Contrato" && (
+              {purchaseType === "contract-benefit" && (
                 <label>
                   {t("ui.benefit")}
                   <ExperiencePowerPicker

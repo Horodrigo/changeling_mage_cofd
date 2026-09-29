@@ -17,6 +17,7 @@ test("detector rejects static editorial catalogs", () => {
     `export const GROUPS = {one:{name:"One",source:"Book",effect:"Rule"},two:{name:"Two",source:"Book",effect:"Rule"}};`,
     `export const ANIMALS = [animal("bat","Bat",1,2),animal("wolf","Wolf",3,4)];`,
     `export const PATHS={A:{ruling:["Time","Fate"],inferior:"Forces"},B:{ruling:["Space","Mind"],inferior:"Matter"}};`,
+    `export const TEXT={"book:a":"A","book:b":"B","book:c":"C","book:d":"D","book:e":"E"};`,
   ];
   for (const code of cases) assert.equal(messages(code)[0]?.messageId, "inlineCatalog", code);
 });
