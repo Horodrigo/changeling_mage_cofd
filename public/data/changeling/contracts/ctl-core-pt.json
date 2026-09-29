@@ -438,5 +438,127 @@
         "Fairest": "O Belíssimo cria um exemplar ideal, inclusive quanto à marca, que concede 9-novamente a todos os usos."
       }
     }
+  },
+  "ctl-core:glimpse-of-a-distant-mirror": {
+    "name": "Vislumbre de um Espelho Distante",
+    "description": "Transforme uma superfície reflexiva em uma janela visual através de outra superfície que tenha refletido anteriormente o rosto do changeling. Qualquer pessoa pode olhar por ela, limitada pela nitidez das superfícies; depois, o changeling vê indícios perturbadores de pessoas do espelho durante a cena.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Use um espelho pertencente a um inimigo jurado sem reivindicar sua propriedade.",
+    "seemingBenefits": {
+      "Beast": "A Fera também pode enxergar através de uma superfície que reflita alguém ligado a ela por promessa ou pacto, ou que invoque seu nome.",
+      "Darkling": "O Trevoso transmite som e pode permitir que as pessoas do outro lado o vejam e ouçam."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm também pode enxergar através de um reflexo que mostre alguém fácil de enganar ou manipular.",
+        "Elemental": "O Elemental enxerga perfeitamente através de uma superfície reflexiva opaca.",
+        "Fairest": "O Belíssimo pode gastar 1 ponto de Força de Vontade para usar um Contrato Comum sobre alguém visto pelo espelho.",
+        "Ogre": "O Ogro pode quebrar a superfície reflexiva distante, causando Fado dados de dano contundente a quem estiver diretamente diante dela.",
+        "Wizened": "O Mirrado também pode enxergar através de uma superfície que reflita alguém que o tenha enganado ou lhe deva um favor."
+      }
+    }
+  },
+  "ctl-core:know-the-competition": {
+    "name": "Conheça a Concorrência",
+    "description": "Desafie um oponente para um jogo que dure pelo menos dez minutos e estude como ele pensa e emprega seus recursos.",
+    "dicePool": "Manipulação + Socialização + Fado contra Compostura + Tolerância",
+    "action": "Disputada; leva pelo menos 10 minutos",
+    "duration": "Instantânea",
+    "success": "Vença e descubra a Virtude, o Vício ou as Âncoras equivalentes do alvo, além de uma Aspiração.",
+    "exceptionalSuccess": "Descubra também uma segunda Aspiração.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Perca, e o oponente descobre a Agulha, o Fio e uma Aspiração do changeling.",
+    "loophole": "Provoque o alvo para que ele desafie o changeling para o jogo.",
+    "seemingBenefits": {
+      "Beast": "Uma vez antes do amanhecer, a Fera pode pensar no alvo para saber sua localização exata, atividade atual e planos presentes de partir.",
+      "Darkling": "O Trevoso pode observar até Fado oponentes ao mesmo tempo em um jogo com vários participantes."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm descobre duas Aspirações e qual delas o alvo está mais perto de cumprir.",
+        "Elemental": "O Elemental pode escolher perder o jogo para receber +2 em ações Sociais com o oponente pelo capítulo.",
+        "Fairest": "O Belíssimo também descobre a Perícia Social mais alta e as Especializações associadas.",
+        "Ogre": "O Ogro recebe 8-novamente em Intimidação contra o alvo pela cena.",
+        "Wizened": "O Mirrado também descobre a Perícia Mental mais alta e as Especializações associadas."
+      }
+    }
+  },
+  "ctl-core:portents-and-visions": {
+    "name": "Presságios e Visões",
+    "description": "Recite por pelo menos um minuto uma sequência cada vez mais rápida de acontecimentos, nomes, objetos e lugares enquanto vê o alvo, ou um espelho ao escolher a si mesmo, e decida revelar o passado ou o futuro próximo.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Disputada; leva pelo menos um minuto",
+    "duration": "Instantânea",
+    "success": "Passado: veja o acontecimento mais importante para os interesses atuais que ocorreu com o alvo, mesmo que tenha sido esquecido, ou a promessa ou acordo mais recente dele. Futuro: veja o acontecimento, promessa ou acordo mais importante e provável nos próximos dias; o changeling e um alvo avisado recebem Informado.",
+    "exceptionalSuccess": "Desperte no alvo as emoções associadas ao acontecimento e inflija uma Condição apropriada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Veja um acontecimento falso e sinais da aproximação dos Fae Verdadeiros, recebendo Paranoico.",
+    "loophole": "Rasgue uma imagem do alvo.",
+    "seemingBenefits": {
+      "Darkling": "Em vez disso, o Trevoso vê um crime ou transgressão do passado e inflige Culpado a respeito disso.",
+      "Elemental": "Em vez disso, o Elemental vê o próximo acontecimento violento e concede Gigante ao alvo por uma cena caso ele ocorra."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm vê a última obra de mídia que afetou mais profundamente o alvo.",
+        "Beast": "A Fera recebe +3 para invocar o Contrato se o alvo puder vê-la.",
+        "Fairest": "Em vez disso, o Belíssimo vê um encontro romântico do passado e dá ao alvo Inspirado a respeito dele; não pode escolher a si mesmo como alvo.",
+        "Ogre": "Em vez disso, o Ogro vê um encontro assustador do passado e dá ao alvo Assombrado a respeito dele.",
+        "Wizened": "O Mirrado pode usar o Contrato em objetos inanimados."
+      }
+    }
+  },
+  "ctl-core:read-lucidity": {
+    "name": "Ler a Lucidez",
+    "description": "Leia de relance a estabilidade mental de outra pessoa.",
+    "dicePool": "Manipulação + Empatia + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Descubra a Clareza máxima e atual do alvo em termos relativos e todas as suas Condições de Clareza.",
+    "exceptionalSuccess": "Descubra também as circunstâncias do dano de Clareza mais recente do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Receba valores incorretos de Clareza sem perceber o erro.",
+    "loophole": "Toque diretamente a pele do alvo com a sua.",
+    "seemingBenefits": {
+      "Beast": "Em um sucesso excepcional, a Fera rola os sucessos da invocação como um ataque psíquico de Clareza.",
+      "Darkling": "Em um sucesso excepcional, o Trevoso concede ao alvo Defesa igual ao Raciocínio contra o próximo ataque de Clareza nesta sessão."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "Em um sucesso excepcional, o Grimm descobre a identidade de uma Pedra de Contato e pode anulá-la no próximo ponto de ruptura do alvo.",
+        "Elemental": "Em um sucesso excepcional, o próximo ponto de ruptura do Elemental neste capítulo sofre −1 dado.",
+        "Fairest": "Em um sucesso excepcional, o Belíssimo cura 1 ponto de dano leve de Clareza do alvo.",
+        "Ogre": "Em um sucesso excepcional, o Ogro recebe +3 no próximo Contrato usado sobre o alvo.",
+        "Wizened": "Em um sucesso excepcional, o Mirrado abre automaticamente uma Porta na próxima manobra Social com o alvo."
+      }
+    }
+  },
+  "ctl-core:walls-have-ears": {
+    "name": "As Paredes Têm Ouvidos",
+    "description": "Conte a um objeto um segredo Arcadiano e compre uma ou mais revelações sobre ele.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "options": [
+      "Descubra a construção e os pontos fracos: reduza a Durabilidade pela metade contra o changeling e acrescente Inteligência para consertá-lo ou modificá-lo.",
+      "Descubra seu uso perfeito: receba 9-novamente ao empunhá-lo ou usá-lo.",
+      "Veja a última pessoa que o manuseou e todos que estavam a até três metros dela naquele momento."
+    ],
+    "loophole": "Diga o segredo em voz alta e em público entre mortais que possam ouvi-lo.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso recebe Informado a respeito do proprietário atual ou, se possuir o objeto, de um antigo proprietário descrito.",
+      "Wizened": "O Mirrado pode gastar +● por cada ponto adicional da história do objeto que deseje observar."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm pode gastar 1 Glamour para descobrir o nome da pessoa com a ligação emocional mais forte com o objeto.",
+        "Beast": "A Fera obtém sucesso excepcional com três sucessos ao emboscar a última pessoa que tocou o objeto.",
+        "Elemental": "O Elemental recebe 8-novamente, em vez de 9-novamente, ao empunhar o item.",
+        "Fairest": "O Belíssimo recebe dois efeitos pelo primeiro Glamour gasto.",
+        "Ogre": "O Ogro reduz a Durabilidade do objeto em três quartos, arredondada para baixo."
+      }
+    }
   }
 }

@@ -61,3 +61,7 @@
 
 - `Changeling Hours`: traduzido como **Horas do Changeling**, mantendo “changeling” como nome da criatura e evitando sugerir uma mecânica de transformação.
 - `Tatterdemalion's Workshop`: traduzido como **Oficina do Esfarrapado**; **Oficina do Maltrapilho** seria uma alternativa igualmente possível para o termo arcaico.
+
+## Lote: Espelho Comuns — *Changeling: The Lost*, pp. 136–138
+
+- `Glimpse of a Distant Mirror`: “mirror people” foi apresentado como **pessoas do espelho**, preservando a referência como categoria ficcional sem criar um nome próprio não estabelecido.

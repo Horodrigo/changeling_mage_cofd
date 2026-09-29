@@ -331,6 +331,19 @@ test("bloco Mirror do livro básico está completo sem Options duplicadas", () =
   assert.equal(items.find((item)=>item.originalName==="Walls Have Ears")?.options?.length,3);
 });
 
+test("tradução pt-BR dos Contratos Comuns de Mirror está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror"&&item.type==="Comum");
+  assert.equal(items.length,5);
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
+});
+
 test("bloco Shield do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Shield");
   assert.equal(items.length,10);
