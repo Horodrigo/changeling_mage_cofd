@@ -1,1 +1,1358 @@
-{}
+{
+  "h-courts:circadian:frost-fire-glance": {
+    "name": "Olhar de Gelo e Fogo",
+    "description": "Torna um pequeno objeto visível perigosamente quente ou frio.",
+    "dicePool": "Nenhuma",
+    "cost": "●/●●",
+    "action": "Instantânea",
+    "duration": "Manto turnos",
+    "effect": "Escolha um objeto visível de Tamanho 3 ou menor. Qualquer pessoa que o segure deve obter sucesso em Perseverança + Vigor ou soltá-lo; mantê-lo causa 1 ponto de dano contusivo a cada turno. Gastar 2 Glamour faz com que o dano seja letal.",
+    "courtClauses": {
+      "sun": "O objeto pega fogo e, a partir daí, queima e sofre dano normalmente até ser apagado.",
+      "moon": "O objeto torna-se tentador de tocar; o Narrador pode oferecer Força de Vontade a um personagem disposto a agarrá-lo, inclusive alguém que o tenha soltado e tente novamente."
+    },
+    "loophole": "O objeto pertence ao changeling."
+  },
+  "h-courts:circadian:horizon-step": {
+    "name": "Passo do Horizonte",
+    "description": "Cria uma ponte ou escada simples a partir da luz do sol ou da lua.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Faça surgir uma ponte ou escada simples onde o changeling está. Ela pode ter até Manto × 2 metros de comprimento, possui apenas alguns centímetros de espessura e quase não pesa, mas sustenta qualquer pessoa e resiste à destruição mundana.",
+    "courtClauses": {
+      "sun": "Adicione um recurso de segurança, como corrimãos ou degraus de plataforma.",
+      "moon": "Gaste 1 Glamour adicional para tornar a estrutura invisível."
+    },
+    "loophole": "O changeling está usando suspensórios."
+  },
+  "h-courts:circadian:secrets-and-lies": {
+    "name": "Segredos e Mentiras",
+    "description": "Descobre um segredo ou engano guardado pelo alvo.",
+    "dicePool": "Raciocínio + Investigação + Manto contra Perseverança + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Descubra o segredo ou engano que ocupa a mente do alvo naquele momento. Para buscar um segredo específico, induza o alvo a pensar nele.",
+    "exceptionalSuccess": "Restrinja o segredo desejado a uma categoria, como política ou romance.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo percebe que alguém tentou sondar sua mente.",
+    "courtClauses": {
+      "sun": "Descubra a identidade de mais uma pessoa envolvida.",
+      "moon": "Gaste 1 Glamour adicional para testemunhar até um turno das circunstâncias em torno do segredo ou engano, pela perspectiva do alvo."
+    },
+    "loophole": "O changeling cometeu um crime nas últimas 24 horas."
+  },
+  "h-courts:circadian:shimmering-mirage": {
+    "name": "Miragem Cintilante",
+    "description": "Cerca alguém de luz ofuscante ou de um eco lunar que dificulta ataques.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Manto turnos",
+    "effect": "Escolha o changeling ou outro personagem na cena. Ataques contra o alvo começam com uma penalidade igual ao Manto, reduzida em um a cada turno até desaparecer. O Contrato não pode terminar antes do tempo nem ser invocado novamente antes de sua duração completa se encerrar.",
+    "courtClauses": {
+      "sun": "Um atacante bem-sucedido deve obter sucesso em Perseverança + Compostura ou sofrer Cego.",
+      "moon": "Um atacante bem-sucedido deve obter sucesso em Perseverança + Compostura ou receber Confuso."
+    },
+    "loophole": "O changeling olha diretamente para o sol ou para a lua ao invocar o Contrato."
+  },
+  "h-courts:circadian:twin-beacons": {
+    "name": "Faróis Gêmeos",
+    "description": "Ilumina o caminho à frente enquanto obscurece o rastro deixado para trás.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Adicione Manto aos testes de Investigação e percepção durante exploração ou viagem. Rastreadores que perseguem o changeling subtraem Manto.",
+    "courtClauses": {
+      "sun": "O changeling não pode ser surpreendido.",
+      "moon": "O changeling sabe automaticamente se alguém o está perseguindo e quantos perseguidores existem."
+    },
+    "loophole": "O changeling carrega uma lanterna."
+  },
+  "h-courts:circadian:celestial-summons": {
+    "name": "Convocação Celestial",
+    "description": "Obriga um alvo no mesmo Povoado ou cidade a se dirigir até o changeling.",
+    "dicePool": "Presença + Persuasão + Fado contra Compostura + Fado",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Até o fim do capítulo ou até o alvo chegar",
+    "success": "O alvo sabe que o changeling deseja sua presença e vai até ele assim que for razoavelmente possível, sem se colocar em risco grave. Ele deve estar no mesmo Povoado ou cidade e possuir algum meio viável de alcançá-lo.",
+    "exceptionalSuccess": "O Contrato funciona além do Povoado, inclusive na Sebe. O changeling pode adiar seu início até que o alvo mude de local antes do próximo nascer ou pôr do sol.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo fica sabendo da tentativa fracassada.",
+    "courtClauses": {
+      "sun": "Se o alvo convocado for um aliado, ele recupera 1 Força de Vontade.",
+      "moon": "Oculte a identidade do changeling, de modo que o alvo saiba apenas que precisa chegar a determinado lugar."
+    },
+    "loophole": "O changeling possui alguma forma de autoridade sobre o alvo."
+  },
+  "h-courts:circadian:climate-change": {
+    "name": "Mudança Climática",
+    "description": "Traz calor ou frio extremos a uma ampla área ao redor.",
+    "dicePool": "Perseverança + Sobrevivência + Manto",
+    "cost": "●●○",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Inflija Calor Extremo para o Sol ou Frio Extremo para a Lua em uma área de até dois quilômetros ao redor do changeling. O changeling é imune a essa Complicação.",
+    "exceptionalSuccess": "Dobre a área máxima afetada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling não pode usar Contratos pelo restante da cena.",
+    "courtClauses": {
+      "sun": "Inflija Doente por insolação a uma pessoa atingida pela Complicação.",
+      "moon": "Crie uma nevasca intensa e inflija Perdido a uma pessoa atingida pela Complicação."
+    },
+    "loophole": "A Complicação ambiental real afetou a área no último mês."
+  },
+  "h-courts:circadian:celestial-might": {
+    "name": "Poder Celestial",
+    "description": "Canaliza luz solar ou lunar para uma arma, permitindo que ela cause dano agravado.",
+    "dicePool": "Destreza + Ocultismo + Manto",
+    "cost": "●○",
+    "action": "Instantânea",
+    "duration": "Manto turnos",
+    "success": "Ao ar livre, no período apropriado da Corte, transforme o bônus de dano de uma arma em agravado (mínimo um); os sucessos obtidos ainda causam o tipo normal de dano da arma.",
+    "exceptionalSuccess": "A invocação é Reflexiva.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A arma reflete a luz e causa 1 ponto de dano agravado ao changeling.",
+    "courtClauses": {
+      "sun": "Adicione dois dados aos testes de percepção pelo restante da cena.",
+      "moon": "Escureça a área em até dez metros e adicione dois dados aos testes de Furtividade pelo restante da cena."
+    },
+    "loophole": "A arma traz uma imagem permanente do sol ou da lua apropriados."
+  },
+  "h-courts:circadian:celestial-shield": {
+    "name": "Escudo Celestial",
+    "description": "Molda luz solar ou lunar em um escudo portátil ou barricada imóvel.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Crie um escudo portátil ou uma barricada de Tamanho 6 que abrigue até três pessoas. O escudo reduz todo dano, exceto ferro frio, em dois. A barricada fornece Ocultação Substancial, Cobertura Resistente, Durabilidade igual ao Manto e a mesma redução de dano.",
+    "courtClauses": {
+      "sun": "O escudo portátil não impõe penalidade de Iniciativa.",
+      "moon": "A barricada pode tornar-se opaca e ocultar quem estiver atrás dela."
+    },
+    "loophole": "O changeling usa o escudo para proteger outra pessoa sob seus cuidados ou autoridade."
+  },
+  "h-courts:circadian:vigil-of-silver-and-gold": {
+    "name": "Vigília de Prata e Ouro",
+    "description": "Protege uma área pertencente ao changeling ou sob sua responsabilidade e percebe todos que cruzam seus limites.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Até o próximo pôr ou nascer do sol",
+    "effect": "Trace um sol ou uma lua em quatro cantos de uma área de até 300 metros quadrados. Perceba todos que entram ou saem, reconhecendo conhecidos e recebendo uma descrição geral de estranhos ou seres sobrenaturais. Ocultação sobrenatural provoca um Choque de Vontades.",
+    "courtClauses": {
+      "sun": "Adicione Manto aos testes de Socialização envolvendo qualquer pessoa detectada pelo Contrato.",
+      "moon": "Adicione Manto aos testes de Investigação envolvendo qualquer pessoa detectada pelo Contrato."
+    },
+    "loophole": "O changeling possui terreno ou edifício dentro da área protegida."
+  },
+  "h-courts:undercourt:goodnight-moon": {
+    "name": "Boa-Noite, Lua",
+    "description": "Conta uma história de infância querida para conceder a um companheiro um sono restaurador.",
+    "dicePool": "Presença + Expressão + Fado",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Conceda a outro personagem um sono tranquilo. Enquanto dorme, o alvo reduz pela metade o tempo de cura do dano físico atual; um changeling também cura um dano grave de Lucidez ou todos os danos leves de Lucidez.",
+    "exceptionalSuccess": "O alvo também cura Condições associadas à perda de Lucidez.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O sono não concede benefício e o alvo desperta com um dano leve adicional de Lucidez.",
+    "loophole": "Tanto o changeling quanto o alvo estão usando pijamas."
+  },
+  "h-courts:undercourt:pep-talk": {
+    "name": "Discurso Motivacional",
+    "description": "Incentiva alguém a dar o melhor de si em uma Perícia escolhida.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Após uma breve conversa de incentivo, o alvo recebe Inspirado em relação a uma Perícia que escolher.",
+    "loophole": "O changeling não possui pontos nessa Perícia."
+  },
+  "h-courts:undercourt:nothing-to-see-here": {
+    "name": "Nada para Ver Aqui",
+    "description": "Reduz o impacto emocional de um acontecimento traumático ou sobrenatural recente e auxilia na recuperação.",
+    "dicePool": "Manipulação + Empatia + Fado contra Compostura + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Converse sobre um acontecimento do último dia. O alvo mantém a lembrança, mas seu impacto emocional diminui e sua mente fornece uma explicação mundana, se necessário. Adicione Manto a ações posteriores envolvendo o trauma, incluindo pontos de ruptura e insônia.",
+    "exceptionalSuccess": "Resolva as Condições causadas pelo acontecimento.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo se lembra negativamente da conversa, como se o changeling tivesse negado sua experiência.",
+    "loophole": "O changeling vivenciou o acontecimento junto do alvo."
+  },
+  "h-courts:undercourt:rooted-in-the-past": {
+    "name": "Enraizado no Passado",
+    "description": "Usa nostalgia para proteger as emoções do changeling contra influências.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "effect": "Concentre-se em uma pessoa ou acontecimento querido para tornar-se imune a Condições emocionais, inclusive suprimindo uma Condição atual conhecida. Influências emocionais sobrenaturais sofrem uma penalidade igual ao Manto da Subcorte.",
+    "loophole": "O changeling come uma comida favorita da infância."
+  },
+  "h-courts:undercourt:safeguarded-supplies": {
+    "name": "Suprimentos Protegidos",
+    "description": "Protege um objeto complexo para que continue funcionando na Sebe.",
+    "dicePool": "Inteligência + Ofícios + Manto",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "success": "Um objeto complexo escolhido funciona normalmente na Sebe, embora infraestruturas indisponíveis, como a Internet, continuem indisponíveis.",
+    "exceptionalSuccess": "Conceda ao objeto +1 Equipamento ou +1 Durabilidade.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O objeto parece funcionar, mas apresenta defeito em um momento inoportuno.",
+    "loophole": "O changeling dormiu com o objeto sob o travesseiro na noite anterior."
+  },
+  "h-courts:undercourt:family-friendly-feud": {
+    "name": "Briga para Toda a Família",
+    "description": "Torna a violência nas proximidades menos letal.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Reduza em um grau todo dano violento nas proximidades: agravado torna-se letal, letal torna-se contusivo e contusivo é reduzido pela metade, arredondando para cima. Isso afeta todos os presentes, inclusive o changeling.",
+    "loophole": "O changeling não disse nenhum palavrão no último dia."
+  },
+  "h-courts:undercourt:frozen-in-time": {
+    "name": "Congelado no Tempo",
+    "description": "Prende um alvo que esteja ouvindo em um ciclo de memória falada.",
+    "dicePool": "Manipulação + Ocultismo + Manto contra Perseverança + Fado",
+    "cost": "●●",
+    "action": "Disputada",
+    "duration": "Fado turnos",
+    "success": "O alvo fixa-se em uma frase pronunciada e sofre Atordoado. Ele precisa ouvir as palavras, mas não precisa compreendê-las; sofrer dano letal encerra o efeito antecipadamente.",
+    "exceptionalSuccess": "O alvo também recebe Abalado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre Atordoado por um turno.",
+    "loophole": "Há um relógio analógico visível nas proximidades."
+  },
+  "h-courts:undercourt:hearths-respite": {
+    "name": "Repouso do Lar",
+    "description": "Transforma a casa ou estabelecimento do changeling em um santuário de calma e recuperação.",
+    "dicePool": "Compostura + Empatia + Manto",
+    "cost": "●○",
+    "action": "Instantânea",
+    "duration": "Uma semana",
+    "success": "Depois de limpar ou redecorar um local que possua ou habite, changelings bem-vindos curam um dano leve de Lucidez por hora passada dentro dele. Quem comer ou beber ali recebe -2 em seu próximo ataque de Lucidez ou +2 em seu primeiro ponto de ruptura de Integridade durante a semana seguinte. Testes agressivos ou violentos no local perdem 10-novamente.",
+    "exceptionalSuccess": "Um personagem que cure Lucidez também cura sua Condição de Lucidez mais antiga.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O Contrato não pode ser tentado novamente por uma semana.",
+    "loophole": "Uma foto visível da família mortal do changeling está pendurada nas proximidades."
+  },
+  "h-courts:undercourt:protection-of-the-innocent": {
+    "name": "Proteção do Inocente",
+    "description": "Coloca um mortal sob forte proteção contra danos sobrenaturais.",
+    "dicePool": "Perseverança + Medicina + Manto",
+    "cost": "●●●○",
+    "action": "Instantânea",
+    "duration": "Um mês lunar",
+    "success": "Poderes sobrenaturais que tenham o mortal como alvo subtraem Manto de sua ativação; poderes sem testes falham. O mortal recebe armadura geral igual ao Manto contra dano sobrenatural, e ataques mundanos feitos por seres sobrenaturais perdem 10-novamente.",
+    "exceptionalSuccess": "O mortal também recebe 1 ponto de armadura geral contra dano mundano.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Obsessão pela segurança do mortal.",
+    "loophole": "O Contrato nunca foi usado antes nesse mortal."
+  },
+  "h-courts:undercourt:shared-remembrance": {
+    "name": "Recordação Compartilhada",
+    "description": "Vivencia uma das lembranças do alvo através dos sentidos dele.",
+    "dicePool": "Raciocínio + Empatia + Manto contra Perseverança + Fado",
+    "cost": "●●",
+    "action": "Disputada",
+    "duration": "Até uma hora ou a duração da lembrança",
+    "success": "Veja uma lembrança conhecida identificada por hora, data ou conteúdo, ou a lembrança emocionalmente intensa mais recente do alvo. Receba 8-novamente em testes de Empatia envolvendo o alvo pelo restante do capítulo.",
+    "exceptionalSuccess": "Veja até três horas de lembranças.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Lampejos de memória invadem a realidade, impondo -2 aos testes de percepção durante a cena.",
+    "loophole": "O changeling conta ao alvo uma de suas próprias lembranças importantes."
+  },
+  "h-courts:weather:brainstorm": {
+    "name": "Tempestade de Ideias",
+    "description": "Envia um lampejo de inspiração aos pensamentos de outra pessoa.",
+    "dicePool": "Nenhuma",
+    "cost": "●/●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Conceda Inspirado por uma nova ideia relacionada aos pensamentos atuais do alvo, ou Informado ao fornecer uma ideia específica sobre um assunto que o changeling conheça. Por 2 Glamour, conceda ambos a respeito desse assunto. O alvo acredita que a ideia é sua, mas não precisa agir de acordo com ela.",
+    "courtClauses": {
+      "calm": "Adicione Manto aos testes de trabalho em equipe que ajudem voluntariamente o alvo a agir com base na ideia.",
+      "storm": "Em vez disso, sobrecarregue o alvo com ideias aleatórias, infligindo Distraído pela cena."
+    },
+    "loophole": "O alvo está dormindo tranquilamente e recebe a inspiração ao despertar."
+  },
+  "h-courts:weather:cloud-gazing": {
+    "name": "Contemplação das Nuvens",
+    "description": "Lê os padrões do clima para prever acontecimentos nas próximas 24 horas.",
+    "dicePool": "Raciocínio + Sobrevivência + Manto",
+    "cost": "●",
+    "action": "Prolongada (5 sucessos; um minuto por teste)",
+    "duration": "Instantânea",
+    "success": "Faça até Manto perguntas de sim ou não sobre acontecimentos nas próximas 24 horas; “talvez” é possível quando houver ambiguidade. Durante o mesmo dia, adicione Manto a um teste que provoque ou impeça um acontecimento previsto.",
+    "exceptionalSuccess": "A ação aprimorada também recebe 8-novamente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Receba informações falsas, e o próximo teste fracassado torna-se uma falha dramática sem conceder uma Batida.",
+    "courtClauses": {
+      "calm": "O changeling também pode interpretar o voo de pássaros ou insetos.",
+      "storm": "O changeling também pode interpretar ondas quebrando ou folhas levadas por rajadas."
+    },
+    "loophole": "Desenhe um olho na condensação de uma janela."
+  },
+  "h-courts:weather:light-as-a-feather": {
+    "name": "Leve como uma Pena",
+    "description": "Convoca ventos para impedir danos causados por uma queda.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "effect": "O changeling e qualquer pessoa que o esteja tocando não sofrem dano de queda, independentemente da altura.",
+    "courtClauses": {
+      "calm": "Estenda a proteção a até Manto alvos visíveis.",
+      "storm": "Os ventos devolvem o cortesão da Tempestade em queda ao ponto de onde ele caiu."
+    },
+    "loophole": "O changeling está ao ar livre sob vento natural."
+  },
+  "h-courts:weather:troubled-hearts-confession": {
+    "name": "Confissão do Coração Aflito",
+    "description": "Descobre o que mais perturba o alvo no momento.",
+    "dicePool": "Raciocínio + Empatia + Manto contra Compostura + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Descubra o que mais perturba os pensamentos do alvo, mesmo que ele próprio não tenha consciência disso.",
+    "exceptionalSuccess": "Receba Informado a respeito do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling confessa seus próprios problemas e recebe Alavancado em relação ao alvo.",
+    "courtClauses": {
+      "calm": "Descubra também o que mais facilmente aliviaria o estresse do alvo.",
+      "storm": "Descubra também o que mais facilmente motivaria o alvo a enfrentar o problema."
+    },
+    "loophole": "Changeling e alvo seguram as mãos voluntariamente."
+  },
+  "h-courts:weather:whispering-winds": {
+    "name": "Ventos Sussurrantes",
+    "description": "Envia uma breve mensagem falada pelo vento.",
+    "dicePool": "Nenhuma",
+    "cost": "●/●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Leve até Manto frases curtas até um alvo a até Manto × 2 quilômetros, ao longo de vento ininterrupto, permitindo uma ação Social mundana que não exija resposta nem contato visual. Um Glamour adicional transmite a mensagem por uma área ampla.",
+    "courtClauses": {
+      "calm": "Adicione Manto às ações de Persuasão realizadas através do Contrato.",
+      "storm": "Adicione Manto às ações de Intimidação realizadas através do Contrato."
+    },
+    "loophole": "O changeling contou um segredo a um inimigo desde a última vez em que o sol cruzou o horizonte."
+  },
+  "h-courts:weather:nothing-to-see-here": {
+    "name": "Nada para Ver Aqui",
+    "description": "Convoca uma névoa densa que oculta percepções e atividade sobrenatural.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "A névoa preenche uma área externa de Manto × 2 quilômetros e penetra por aberturas. A percepção sofre -Manto e a Furtividade mundana recebe +Manto; o changeling e até Manto pessoas nomeadas ignoram a penalidade. Ocultação sobrenatural recebe 9-novamente, e mortais com Perseverança abaixo do Manto racionalizam acontecimentos sobrenaturais.",
+    "courtClauses": {
+      "calm": "Poderes sobrenaturais óbvios usados diante de testemunhas mortais exigem um Choque de Vontades.",
+      "storm": "Suprima a racionalização dos mortais e, em vez disso, inflija Paranoico por meio de indícios de ameaças impossíveis."
+    },
+    "loophole": "Desde o último nascer do sol, passe pelo menos duas horas consecutivas acordado e vendado ou privado da visão de outra forma."
+  },
+  "h-courts:weather:rain-of-terror": {
+    "name": "Chuva de Terror",
+    "description": "Conjura uma vasta tempestade de fenômenos impossíveis que traumatiza testemunhas.",
+    "dicePool": "Inteligência + Ocultismo + Manto contra Compostura + Fado (cada vítima)",
+    "cost": "●●○",
+    "action": "Disputada e prolongada (cada 5 sucessos acrescenta uma cena; dois turnos por teste; máximo de Manto testes)",
+    "duration": "Uma cena por 5 sucessos",
+    "success": "Crie uma tempestade impossível, porém inofensiva, em um raio de Manto × 2 quilômetros. Outros em seu interior recebem Distraído; testemunhas mortais recebem Amedrontado, Assustado ou Abalado, e alvos diretamente expostos que fracassem na disputa também recebem Loucura. Todos esses efeitos terminam sem resolução quando a tempestade acaba.",
+    "exceptionalSuccess": "Alvos que recebam Loucura também recebem Delirante ou Fuga, escolhida uma única vez para todos.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Loucura devido a alucinações.",
+    "courtClauses": {
+      "calm": "Conjure um espetáculo maravilhoso; mortais recebem Inspirado em vez de Condições de medo.",
+      "storm": "Cause (Manto − Durabilidade) de dano letal a cada 10 minutos em pessoas e estruturas desprotegidas."
+    },
+    "loophole": "Do ponto mais alto da área, espalhe amostras que simulem o clima pretendido."
+  },
+  "h-courts:weather:storm-of-the-century": {
+    "name": "Tempestade do Século",
+    "description": "Constrói uma tempestade violenta e prolongada a partir de efeitos selecionáveis.",
+    "dicePool": "Presença + Sobrevivência + Manto",
+    "cost": "●●●○",
+    "action": "Prolongada (5 sucessos; dois turnos por teste; máximo de Manto testes)",
+    "duration": "Manto horas",
+    "success": "Ao ar livre, convoque uma tempestade centrada no changeling em uma área de Manto × 2 quilômetros. Ela afeta todos, exceto os protegidos, e não pode terminar antes do tempo. Atribua cada sucesso a uma opção.",
+    "exceptionalSuccess": "Dobre a duração total.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Um relâmpago atinge o changeling, causando Manto + Fado de dano contusivo, mesmo que ele possua imunidade.",
+    "options": [
+      "Aumente Ambiente Extremo em 1, até Manto − 1.",
+      "Imponha uma Complicação Ambiental apropriada.",
+      "Adicione trovões e relâmpagos; os sucessos investidos determinam cegueira ou surdez e descargas aleatórias ou direcionadas. Relâmpagos causam Manto + Fado de dano contusivo.",
+      "Torne uma pessoa ou objeto imune à tempestade.",
+      "Estenda a duração em Manto horas."
+    ],
+    "courtClauses": {
+      "calm": "Inverta o efeito para reduzir Ambiente Extremo em até Manto ou remover esse mesmo número de Complicações Ambientais.",
+      "storm": "Conjure clima severo dentro de toda a estrutura atual."
+    },
+    "loophole": "Entalhe um raio na carne do changeling e sofra 1 ponto de dano letal."
+  },
+  "h-courts:weather:tempestuous-hearts": {
+    "name": "Corações Tempestuosos",
+    "description": "Canaliza Desvario através de um fenômeno climático marcante.",
+    "dicePool": "Nenhuma",
+    "cost": "●●●○",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Incite Desvario, com seu custo incluído, canalizando Glamour para um fenômeno climático notável. Qualquer pessoa que perceba esse clima é afetada como se percebesse o changeling.",
+    "courtClauses": {
+      "calm": "Canalize-o através de tempo calmo em uma área de até Manto × 2 quilômetros.",
+      "storm": "Adicione Manto ao teste para incitar Desvario."
+    },
+    "loophole": "Incite Desvario sem se concentrar em uma única emoção, intensificando as emoções atuais de cada pessoa."
+  },
+  "h-courts:weather:thunder-steed": {
+    "name": "Corcel do Trovão",
+    "description": "Viaja através de uma tempestade como um raio.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Ao ar livre, sob uma tempestade ou céu completamente nublado, desapareça em um relâmpago e reapareça sob a mesma tempestade a até Manto × 2 quilômetros. Qualquer outra pessoa atingida na partida ou chegada sofre Manto + Fado de dano contusivo.",
+    "courtClauses": {
+      "calm": "Leve consigo até Manto companheiros que estejam tocando o changeling e proteja-os dos relâmpagos.",
+      "storm": "A partida e a chegada criam ondas de choque de Manto × 3 metros; fracassar em um teste Reflexivo de Destreza + Atletismo com sucessos iguais ao Manto inflige Derrubado."
+    },
+    "loophole": "Desde a última vez em que o sol cruzou o horizonte, passe uma hora exposto à chuva natural."
+  },
+  "h-courts:zodiac:balancing-the-four-humours": {
+    "name": "Equilibrando os Quatro Humores",
+    "description": "Reequilibra os elementos simbólicos de um paciente para curar doenças.",
+    "dicePool": "Nenhuma",
+    "cost": "●/●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Por 1 Glamour, cure instantaneamente uma doença leve ou moderada. Por 2, reduza uma doença grave a moderada, tornando possível a recuperação ou remissão. Doenças crônicas e enfermidades sem cura moderna plausível não são afetadas.",
+    "courtClauses": {
+      "fire": "Resolva também Competitivo, Frenético ou uma Condição colérica semelhante.",
+      "earth": "Resolva também Letárgico, Quebrado ou uma Condição melancólica semelhante.",
+      "air": "Resolva também Devasso, Distraído ou uma Condição sanguínea semelhante.",
+      "water": "Resolva também Retraído, Estoico ou uma Condição fleumática semelhante."
+    },
+    "loophole": "Use um tratamento antiquado, como sangria, trepanação ou vidro aquecido, que cause dano."
+  },
+  "h-courts:zodiac:horoscope": {
+    "name": "Horóscopo",
+    "description": "Imprime no alvo um conselho astrológico amplo até o nascer do sol.",
+    "dicePool": "Inteligência + Ocultismo + Manto contra Perseverança + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Até o próximo nascer do sol",
+    "success": "Nomeie o alvo e dê um conselho não específico. Testes que sigam esse conselho recebem Manto dados. O changeling não pode ter a si mesmo como alvo; um alvo consentido pode abrir mão da resistência.",
+    "exceptionalSuccess": "A duração passa a ser um mês lunar ou até o zodíaco entrar em outro signo, o que ocorrer primeiro.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Pelo restante da cena, todo fracasso do changeling torna-se uma falha dramática sem conceder Batida.",
+    "courtClauses": {
+      "fire": "Adicione três dados quando o conselho envolver ambição ou aventura.",
+      "earth": "Adicione três dados quando envolver riqueza ou trabalho.",
+      "air": "Adicione três dados quando envolver viagens ou aprendizado.",
+      "water": "Adicione três dados quando envolver amor ou relacionamentos."
+    },
+    "loophole": "O conselho coincide com o horóscopo publicado do alvo para aquele dia em uma publicação que esteja à mão."
+  },
+  "h-courts:zodiac:match-made-in-heaven": {
+    "name": "Par Feito no Céu",
+    "description": "Coloca duas pessoas em sintonia emocional ou as afasta.",
+    "dicePool": "Manipulação + Expressão + Manto contra maior Compostura + Fado",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Inflija Enamorado em ambos os alvos ao aumentar a compatibilidade, ou Desdenhoso em ambos ao reduzi-la.",
+    "exceptionalSuccess": "Cada alvo deve cumprir a resolução duas vezes; apenas a resolução final concede uma Batida.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Inflija a Condição oposta à pretendida.",
+    "courtClauses": {
+      "fire": "Uma vez por capítulo enquanto estiver afetado, cada alvo recupera 1 Força de Vontade por uma interação significativa com o outro.",
+      "earth": "Trabalho em equipe envolvendo ambos os alvos recebe +2 com Enamorado ou -2 com Desdenhoso.",
+      "air": "Afete até Manto + 1 pessoas, pagando 1 Glamour adicional por cada uma depois da segunda.",
+      "water": "Ambos os alvos recebem 9-novamente em Empatia envolvendo um ao outro."
+    },
+    "loophole": "Uma terceira pessoa pediu ao changeling que atuasse como casamenteiro ou como elemento de sabotagem."
+  },
+  "h-courts:zodiac:star-sign": {
+    "name": "Signo Estelar",
+    "description": "Lê as influências astrológicas que moldam a personalidade de um alvo.",
+    "dicePool": "Raciocínio + Ocultismo + Manto contra Compostura + Fado",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Descubra influências relevantes do mapa natal e a forma geral da personalidade do alvo, incluindo Linha e Agulha, Virtude e Vício ou equivalentes.",
+    "exceptionalSuccess": "Receba +2 em testes mundanos para prever ou influenciar as ações do alvo por um mês.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Desorientado.",
+    "courtClauses": {
+      "fire": "Descubra a maior fonte de confiança do alvo e Condições, Complicações ou Aspirações relacionadas.",
+      "earth": "Descubra a determinação atual do alvo, Condições ou Complicações relacionadas e sua Força de Vontade disponível.",
+      "air": "Descubra quem ou o que inspira o alvo e Condições, Complicações ou Aspirações relacionadas.",
+      "water": "Descubra de quem ou do que o alvo mais sente pena e Condições, Complicações ou Touchstones relacionados."
+    },
+    "loophole": "Consulte as estrelas do alvo como parte de uma leitura astrológica genuína."
+  },
+  "h-courts:zodiac:stellar-thread": {
+    "name": "Linha Estelar",
+    "description": "Permite que o destino conduza o changeling até algo importante para uma Aspiração.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Acontecimentos e decisões fatídicos conduzem o changeling até uma pessoa, lugar ou coisa importante para uma Aspiração escolhida. Se o tempo acabar primeiro, ele obtém uma noção vaga do destino e de como encontrá-lo mais tarde.",
+    "courtClauses": {
+      "fire": "Ao chegar, adicione Manto ao primeiro teste para usar ou afetar o objetivo.",
+      "earth": "Adicione Manto aos testes para superar obstáculos entre o changeling e o objetivo.",
+      "air": "Chegar a tempo inicia outra jornada de uma cena rumo a um novo objetivo que logo se tornará importante.",
+      "water": "Em vez disso, procure um Duplo que esteja prestes a se tornar importante."
+    },
+    "loophole": "O changeling procura uma solução para um problema urgente quando resta no máximo uma hora."
+  },
+  "h-courts:zodiac:aether-crossing": {
+    "name": "Travessia do Éter",
+    "description": "Entra em uma grande massa elemental e emerge por outro ponto de sua extensão ininterrupta.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Toque uma manifestação de fogo, terra, ar ou água grande o bastante para conter o changeling. Entre nela e emerja do outro lado ou em outro ponto de sua extensão contínua a até Manto metros, contornando barreiras quando o elemento possuir acesso ininterrupto.",
+    "courtClauses": {
+      "fire": "Após emergir de um incêndio intenso, incendeie objetos tocados por três turnos sem sofrer dano até seguir adiante.",
+      "earth": "Trate minerais e metais manufaturados, como concreto e aço, como contínuos com terra e pedra naturais.",
+      "air": "Viaje em uma rajada por até Manto minutos antes de ser depositado em segurança.",
+      "water": "Saia de um corpo d’água em qualquer ponto a até Manto × 2 quilômetros; a duração passa a ser uma cena."
+    },
+    "loophole": "Carregue uma amostra de cada elemento, como uma chama, um ventilador ligado, terra e água."
+  },
+  "h-courts:zodiac:age-of-aquarius": {
+    "name": "Era de Aquário",
+    "description": "Sobrepõe ao alvo um destino social e uma identidade alternativos.",
+    "dicePool": "Manipulação + Socialização + Manto contra Perseverança + Fado",
+    "cost": "●●●○",
+    "action": "Disputada",
+    "duration": "Uma semana ou um capítulo, o que for mais curto",
+    "success": "Nomeie uma categoria social ampla. Todos, exceto o changeling e seu Retalho, percebem o alvo como pertencente a ela; até amigos fazem Raciocínio + Compostura − Manto para reconhecê-lo. Conceda o dobro do Manto em pontos temporários de Méritos adequados ao papel e suprima Méritos incompatíveis, que podem usar Santidade dos Méritos.",
+    "exceptionalSuccess": "A duração passa a ser uma história ou uma semana, o que for mais longo; elementos aprovados pelo Narrador podem tornar-se permanentes se comprados com Experiência.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Dissociação e perde 10-novamente em todas as ações pela cena.",
+    "courtClauses": {
+      "fire": "Suprima o destino imposto por uma cena e melhore em dois níveis a impressão do changeling junto ao alvo.",
+      "earth": "Ignore penalidades por Perícias não treinadas relevantes ao papel e adicione Manto aos bônus de equipamento pertinentes.",
+      "air": "Ações alinhadas ao papel recebem 9-novamente; ações alinhadas à personalidade original perdem 10-novamente.",
+      "water": "Um Perdido pode, em vez disso, ser socialmente identificado como seu Duplo, recebendo os Méritos relevantes dele sem perder os próprios; os associados do Duplo deixam de tratá-lo como real."
+    },
+    "loophole": "Durante a mesma cena, o alvo expressou insatisfação com a própria vida ou desejo de mudança."
+  },
+  "h-courts:zodiac:assuming-the-stellar-mantle": {
+    "name": "Assumindo o Manto Estelar",
+    "description": "Faz emergir o signo solar de um alvo e concede três Especializações de Perícia apropriadas.",
+    "dicePool": "Manipulação + Persuasão + Manto contra Compostura + Fado",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma semana",
+    "success": "Conceda ao alvo as três Especializações de Perícia temporárias listadas para seu signo solar. Ações que as utilizem alcançam sucesso excepcional com três sucessos e restauram 1 Força de Vontade nesse resultado; changelings podem recuperar 1 Glamour em vez disso.",
+    "exceptionalSuccess": "A duração vai até o zodíaco mudar de signo, ou atravessa também o signo seguinte se a mudança ocorrer em menos de uma semana.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "As piores qualidades do signo do próprio changeling se intensificam, infligindo Competitivo, Paranoico, Retraído ou Devasso pela cena.",
+    "courtClauses": {
+      "fire": "Imponha as qualidades de qualquer signo de fogo escolhido.",
+      "earth": "Imponha as qualidades de qualquer signo de terra escolhido.",
+      "air": "Imponha as qualidades de qualquer signo de ar escolhido.",
+      "water": "Imponha as qualidades de qualquer signo de água escolhido."
+    },
+    "detailTables": [
+      {
+        "title": "Exemplos de Mantos Estelares",
+        "columns": [
+          "Signo",
+          "Especializações"
+        ],
+        "rows": [
+          [
+            "Áries",
+            "Ameaças Diretas; Liderança; Esportes"
+          ],
+          [
+            "Touro",
+            "Farra; Jardinagem; Encarar"
+          ],
+          [
+            "Gêmeos",
+            "Duplo Sentido; Fofoca; Quebra-Cabeças"
+          ],
+          [
+            "Câncer",
+            "Acalmar Emoções; Culinária; Diagnóstico"
+          ],
+          [
+            "Leão",
+            "Delegar; Drama; Discursos"
+          ],
+          [
+            "Virgem",
+            "Esconder-se à Vista; Primeiros Socorros; Literatura"
+          ],
+          [
+            "Libra",
+            "Arbitragem; Deferência; Motivações"
+          ],
+          [
+            "Escorpião",
+            "Detectar Mentiras; Segredos; Sedução"
+          ],
+          [
+            "Sagitário",
+            "Tradução; Navegação; Direção Fora de Estrada"
+          ],
+          [
+            "Capricórnio",
+            "Ocultar Emoções; Interrogatório; Escândalos"
+          ],
+          [
+            "Aquário",
+            "Organização; Programação; Pesquisa"
+          ],
+          [
+            "Peixes",
+            "Música; Sermões; Revelar Emoções"
+          ]
+        ]
+      }
+    ],
+    "loophole": "O zodíaco está atualmente no signo do alvo."
+  },
+  "h-courts:zodiac:elemental-cycle": {
+    "name": "Ciclo Elemental",
+    "description": "Transforma permanentemente uma massa limitada de um elemento clássico em outro.",
+    "dicePool": "Nenhuma",
+    "cost": "●●●○",
+    "action": "Instantânea",
+    "duration": "Permanente",
+    "effect": "Transforme até Manto de Tamanho de material predominantemente composto de fogo, terra, ar ou água em uma forma comum de outro elemento. Se isso fizer material cair sobre alguém, cause Manto de dano contusivo, a menos que tenha sucesso em Destreza + Atletismo.",
+    "courtClauses": {
+      "fire": "O fogo criado arde durante a cena sem combustível e resiste a tentativas mundanas de apagá-lo, mas não se espalha diretamente.",
+      "earth": "Uma vez por história, a terra criada pode ser qualquer mineral ou metal natural não processado, exceto ferro.",
+      "air": "O ar criado pode tornar-se uma rajada que inflige Derrubado.",
+      "water": "Triplique a área afetada ao criar água."
+    },
+    "loophole": "Transforme seguindo o ciclo: fogo em terra, terra em ar, ar em água ou água em fogo."
+  },
+  "h-courts:zodiac:restringing-the-loom": {
+    "name": "Reatando o Tear",
+    "description": "Rompe um fado, destino ou condenação imposto externamente.",
+    "dicePool": "Nenhuma",
+    "cost": "●●○",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Encerre um destino mágico imposto externamente, como Roda de Fiar, Horóscopo, magia de mago ou uma maldição fantasmagórica, mas não um destino inerente. Normalmente isso provoca um Choque de Vontades, adicionando Manto à parada do changeling.",
+    "courtClauses": {
+      "fire": "O Choque adversário não recebe truques de dados como 10-novamente.",
+      "earth": "Use um Atributo de Resistência em vez de Refinamento na parada do Choque do changeling.",
+      "air": "O Choque do changeling recebe 8-novamente.",
+      "water": "O Choque adversário não adiciona bônus de duração."
+    },
+    "loophole": "O destino foi imposto pelo changeling ou por um membro de seu Retalho."
+  },
+  "h-courts:directional:break-in": {
+    "name": "Arrombamento",
+    "description": "Abre um Caminho da Sebe trancado sem sua Chave exigida, a um custo pessoal duradouro.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Descubra a Chave exigida pelo portal e abra-o apenas para o changeling. Depois disso, esse Caminho da Sebe reconhece o changeling como intruso e se recusa a abrir para ele pelo restante da história, mesmo com sua Chave.",
+    "courtClauses": {
+      "north": "Permita que mais um personagem atravesse; apenas o cortesão do Norte sofre a proibição duradoura.",
+      "east": "Recupere 1 Força de Vontade ao fim da cena se o changeling usar o portal enquanto outros desejam fazê-lo, mas não podem.",
+      "south": "Até Manto changelings podem atravessar, mas todos sofrem a proibição duradoura.",
+      "west": "Deixe o portal aberto para uma pessoa adicional; atravessá-lo causa 1 ponto de dano letal a essa pessoa.",
+      "center": "Ignore a proibição duradoura gastando 1 Força de Vontade e realizando uma breve cerimônia para apaziguar o portal."
+    },
+    "loophole": "Incentive um mortal próximo a ceder ao próprio Vício."
+  },
+  "h-courts:directional:key-to-the-heart": {
+    "name": "Chave do Coração",
+    "description": "Descobre a forma de alavancagem mais eficaz para uma manobra Social contra o alvo.",
+    "dicePool": "Manipulação + Empatia + Manto contra Compostura + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Descubra o que melhor melhoraria a impressão do alvo durante uma manobra Social, como um suborno adequado, um presente ou o Vício do alvo.",
+    "exceptionalSuccess": "Abra automaticamente a primeira Porta do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo recebe duas Portas.",
+    "courtClauses": {
+      "north": "Receba 9-novamente durante a manobra ao usar a Perícia Social de menor nível do changeling que possua pelo menos um ponto.",
+      "east": "Ações que usem Alavancagem Suave recebem 9-novamente.",
+      "south": "Testes que usem Alavancagem de Vício recebem 9-novamente.",
+      "west": "Receba 9-novamente se a melhor alavancagem for uma ameaça de violência.",
+      "center": "Melhore em um nível a impressão que o cortesão causa."
+    },
+    "loophole": "Declare abertamente uma fraqueza semelhante do changeling onde outras pessoas possam ouvir."
+  },
+  "h-courts:directional:know-the-path": {
+    "name": "Conhecer o Caminho",
+    "description": "Descobre o destino de um trod e navega instintivamente por sua rota.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Descubra o destino do trod e o ambiente geral ao redor, e receba +2 em ações realizadas durante a viagem por ele.",
+    "courtClauses": {
+      "north": "Receba +3 em vez disso ao seguir uma rota muito mais longa do que o necessário.",
+      "east": "Recupere 1 Força de Vontade ao chegar se nenhum Glamour tiver sido gasto durante a viagem.",
+      "south": "Adicione Manto à Defesa após iniciar violência durante a viagem.",
+      "west": "Descubra perigos específicos à espreita logo fora do trod.",
+      "center": "Primeiras impressões causadas enquanto estiver no trod nunca são hostis."
+    },
+    "loophole": "Carregue um mapa físico de uma área que o changeling nunca visitou."
+  },
+  "h-courts:directional:redirect-trod": {
+    "name": "Redirecionar o trod",
+    "description": "Envia perseguidores que saem de um trod para um destino alternativo imprevisível.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Ao sair de um trod, desloque o destino dele para perseguidores em até Fado × 2 quilômetros no mundo mortal ou distância equivalente na Sebe. O Contrato escolhe o novo destino.",
+    "courtClauses": {
+      "north": "Também inflija Atordoado ao perseguidor.",
+      "east": "Por 1 Glamour adicional, restrinja a saída a cinco destinos possíveis; o Narrador escolhe qual deles.",
+      "south": "Aplique o redirecionamento ao próprio changeling, invocando-o logo antes de sair do trod.",
+      "west": "Cause Manto dados de dano letal ao perseguidor.",
+      "center": "Envie o perseguidor de volta à entrada do trod."
+    },
+    "loophole": "Esmague ou quebre uma bússola de alguma forma."
+  },
+  "h-courts:directional:show-me-the-way": {
+    "name": "Mostre-me o Caminho",
+    "description": "Encontra a rota mais rápida até uma pessoa amada ou objeto estimado nas proximidades.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Saiba o caminho mais rápido até um membro do Retalho, Touchstone, parente mortal de sangue ou objeto estimado dentro de aproximadamente uma cidade de porte médio, chegando até ele em uma cena. Ocultação sobrenatural provoca um Choque de Vontades.",
+    "courtClauses": {
+      "north": "Recupere 1 Força de Vontade ao levar uma cena adicional para concluir a viagem.",
+      "east": "Adicione Manto a qualquer Choque de Vontades resultante.",
+      "south": "Rastreie alguém ou algo que o changeling odeia em vez disso.",
+      "west": "Receba Senso de Perigo enquanto segue o caminho, ou +2 de Iniciativa se o changeling já o possuir e for atacado.",
+      "center": "Reduza o custo de ativação para 1 Glamour."
+    },
+    "loophole": "Carregue uma parte do alvo procurado, como cabelo ou uma peça de roupa."
+  },
+  "h-courts:directional:all-roads-closed": {
+    "name": "Todas as Rotas Fechadas",
+    "description": "Preenche todas as rotas até um local defendido com perigos obstrutivos.",
+    "dicePool": "Inteligência + Manha + Manto",
+    "cost": "●●●●●",
+    "action": "Prolongada (10 sucessos; um minuto por teste)",
+    "duration": "Um capítulo",
+    "success": "Obstrua todas as rotas num raio de Manto × 2 quilômetros que levem a um local visitado anteriormente. Viajantes devem gastar 1 Força de Vontade para tentar atravessá-las e sofrem -Manto nos testes relevantes. Mortais depois esquecem ou racionalizam os acontecimentos. Na Sebe, trate isso como uma mudança de paradigma com até o número de sucessos da ativação em alterações gratuitas.",
+    "exceptionalSuccess": "Perceba a localização e o progresso, mas não a identidade, de qualquer pessoa tentando encontrar ou atacar o local defendido.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Qualquer pessoa que procure ou ataque o local recebe Manto dados para alcançá-lo.",
+    "courtClauses": {
+      "north": "Defensores recebem 2 pontos de armadura geral que se acumulam com outras armaduras.",
+      "east": "Defensores rolam Iniciativa duas vezes e mantêm o melhor resultado, além de adicionarem Manto ao Deslocamento.",
+      "south": "Aplique uma Complicação Ambiental a uma rota, com nível de até metade do Manto, arredondando para cima.",
+      "west": "Defensores recebem +1 ao dano de armas em ataques realizados para defender o local.",
+      "center": "Uma vez por uso, recupere 1 Força de Vontade quando alguém abandonar uma tentativa de chegar ao local."
+    },
+    "loophole": "Caminhe 800 passos em uma direção cardinal para longe do local."
+  },
+  "h-courts:directional:cast-out": {
+    "name": "Expulsar",
+    "description": "Expulsa um alvo pelo Caminho da Sebe mais próximo e o deixa preso do outro lado.",
+    "dicePool": "Presença + Ocultismo + Manto contra Vigor + Fado",
+    "cost": "●●",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Force o Caminho da Sebe escolhido nas proximidades a se abrir e empurre o oponente através dele. O portal se fecha e recusa a vítima durante a duração; escolha o portal caso haja vários presentes.",
+    "exceptionalSuccess": "Opcionalmente, cause Manto de dano contusivo à vítima.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling é expulso e fica preso no lugar da vítima.",
+    "courtClauses": {
+      "north": "Estenda o aprisionamento da vítima por uma cena.",
+      "east": "Roube 1 Força de Vontade da vítima.",
+      "south": "Pague 1 Glamour a menos ao defender o Povoado contra a vítima.",
+      "west": "Um sucesso normal também causa o efeito de sucesso excepcional; um sucesso excepcional causa dano letal.",
+      "center": "Estabeleça uma condição para a fuga; a concordância cria o equivalente a uma Selagem reforçada que Glamour não pode anular."
+    },
+    "loophole": "Force juntos dois ímãs que se repelem e nunca se tocaram."
+  },
+  "h-courts:directional:create-path": {
+    "name": "Criar Caminho",
+    "description": "Tece temporariamente a Sebe para criar um trod até um ponto final escolhido.",
+    "dicePool": "Presença + Sobrevivência + Manto",
+    "cost": "●●●○",
+    "action": "Prolongada (10 sucessos; um turno de Tecer a Sebe por teste)",
+    "duration": "Até o changeling concluir a viagem",
+    "success": "Enquanto estiver na Sebe, crie um trod com nível igual ao Manto até um destino escolhido. Ele permanece visível e utilizável por outros até o changeling concluir a viagem.",
+    "exceptionalSuccess": "Defina os marcos do trod para proporcionar certo grau de segurança.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Um trod se abre para um destino desastroso ou contém uma falha catastrófica escolhida pelo Narrador.",
+    "courtClauses": {
+      "north": "Ações de outras pessoas para localizar o trod sofrem -Manto.",
+      "east": "Ações de outras pessoas para localizar o trod recebem +Manto.",
+      "south": "Outros viajantes devem gastar Força de Vontade para tentar testes de navegação, sem receber +3.",
+      "west": "Outros devem obter sucesso em Perseverança + Compostura − Manto para entrar no trod.",
+      "center": "Ações de navegação no trod alcançam sucesso excepcional com três sucessos."
+    },
+    "loophole": "Possua um dos Ícones do changeling recuperado pessoalmente dos Espinhos nas últimas 24 horas."
+  },
+  "h-courts:directional:escape-route": {
+    "name": "Rota de Fuga",
+    "description": "Abre um portal sem pedir permissão e, opcionalmente, controla seu destino.",
+    "dicePool": "Nenhuma",
+    "cost": "●● (+ ○ opcional)",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Ao realizar uma Passagem para entrar ou sair da Sebe, abra o portão sem fazer um pedido. Ele se fecha bruscamente após o changeling e exige sua Chave pelo restante da cena. Gaste 1 Força de Vontade para escolher um destino que não seja um local seguro onde o changeling não seja bem-vindo; depois disso, o portal retoma seu destino normal.",
+    "courtClauses": {
+      "north": "Adicione um custo de 1 Força de Vontade à ativação do Caminho da Sebe.",
+      "east": "Use qualquer abertura em forma de portal, mesmo que ela não possa ser fechada.",
+      "south": "Altere a Chave do portal pela cena para algo que possa ser descoberto ou realizado em uma cena.",
+      "west": "Receba +3 em Iniciativa e Deslocamento durante a cena seguinte.",
+      "center": "Redirecione o portal para a casa ou Vão do changeling sem gastar Força de Vontade."
+    },
+    "loophole": "Crie uma nuvem, como fumaça, poeira ou farinha."
+  },
+  "h-courts:directional:labyrinth": {
+    "name": "Labirinto",
+    "description": "Aprisiona a percepção de uma vítima dentro de um labirinto ilusório.",
+    "dicePool": "Manipulação + Subterfúgio + Manto contra Perseverança + Fado",
+    "cost": "●●",
+    "action": "Disputada",
+    "duration": "Manto turnos",
+    "success": "A vítima não pode realizar ações Físicas nem se beneficiar da Defesa. Em cada turno posterior, pode disputar Perseverança + Fado contra os sucessos da ativação para escapar; dano letal encerra o efeito. Escapar inflige Atordoado e, para uma vítima changeling, um ataque de Lucidez com Manto dados. Em seguida, o cortesão sofre um ataque de Lucidez de três dados.",
+    "exceptionalSuccess": "A vítima permanece presa pela cena e não pode rolar para escapar, embora dano ainda a liberte.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling fica preso como a vítima pretendida e sofre o ataque de Lucidez correspondente.",
+    "courtClauses": {
+      "north": "A vítima sofre -2 nos testes para escapar antes do fim.",
+      "east": "Recupere 1 Força de Vontade se a vítima escapar antes do fim.",
+      "south": "A invocação alcança sucesso excepcional com três sucessos.",
+      "west": "Inflija Desmoralizado depois que a vítima escapar.",
+      "center": "A vítima pode aceitar Derrotado para encerrar o efeito antes do fim e evitar o ataque de Lucidez; o cortesão ainda sofre o seu."
+    },
+    "loophole": "Carregue um quebra-cabeça montado e devolva-o ao estado desmontado."
+  },
+  "h-courts:dragon:all-as-one": {
+    "name": "Todos como Um",
+    "description": "Melhora as contribuições de um grupo que realiza trabalho em equipe.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma tarefa antes do fim da cena",
+    "effect": "Até Manto participantes de uma única ação de trabalho em equipe recebem 9-novamente; escolha os beneficiários se o grupo for maior. O Contrato pode ser invocado repetidamente.",
+    "courtClauses": {
+      "society-morning": "Ao criar algo novo, os beneficiários recebem 8-novamente.",
+      "society-day": "Em uma ação prolongada, receba um sucesso automático por participante.",
+      "society-night": "Para uma tarefa que o grupo queira manter oculta, os beneficiários também recebem Ação Avançada."
+    },
+    "loophole": "Carregue algo criado pelo trabalho coletivo de insetos, como um favo de mel ou parte de um formigueiro."
+  },
+  "h-courts:dragon:equilibrium": {
+    "name": "Equilíbrio",
+    "description": "Mantém o equilíbrio físico contra terreno difícil e forças externas.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "effect": "Adicione Manto aos testes de Destreza ou Atletismo em que equilíbrio seja relevante.",
+    "courtClauses": {
+      "society-morning": "Gaste 1 Glamour adicional para adicionar Manto ao Deslocamento.",
+      "society-day": "Receba 9-novamente quando um fracasso causaria dano.",
+      "society-night": "Adicione Manto à Iniciativa."
+    },
+    "loophole": "Realize a ação em defesa do Povoado."
+  },
+  "h-courts:dragon:find-the-center": {
+    "name": "Encontrar o Centro",
+    "description": "Estabiliza as percepções do changeling durante um ponto de ruptura de Lucidez.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "effect": "Ao sofrer um ponto de ruptura na presença de pelo menos dois outros membros da Sociedade do changeling, subtraia dois dados do ataque de Lucidez.",
+    "courtClauses": {
+      "society-morning": "Uma vez por capítulo, todas as testemunhas sofrem -1 Fado em seus próximos pontos de ruptura.",
+      "society-day": "Recupere 1 Força de Vontade se o ataque de Lucidez fracassar.",
+      "society-night": "A próxima ação de Furtividade na cena recebe 9-novamente."
+    },
+    "loophole": "Queime um incenso feito pessoalmente pelo changeling."
+  },
+  "h-courts:dragon:self-harmony": {
+    "name": "Harmonia Interior",
+    "description": "Fortalece a Defesa, inclusive contra armas de fogo, por meio da harmonia corporal.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "effect": "Adicione Manto à Defesa e à Esquiva. Essa Defesa adicional também se aplica contra ataques com Armas de Fogo.",
+    "courtClauses": {
+      "society-morning": "Gaste 1 Glamour adicional para remover Envenenado ou Doente.",
+      "society-day": "Receba também 1 ponto de armadura geral.",
+      "society-night": "Depois que um ataque errar, receba +2 no próximo ataque."
+    },
+    "loophole": "Pratique uma arte marcial durante a cena."
+  },
+  "h-courts:dragon:tat-tvam-asi": {
+    "name": "Tat Tvam Asi",
+    "description": "Resiste a Desvario e a influências emocionais sobrenaturais comparáveis.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "effect": "Oponentes subtraem Manto de ações resistidas que inflijam Desvario ou influência emocional semelhante, ou o changeling adiciona Manto à resistência disputada.",
+    "courtClauses": {
+      "society-morning": "Se for afetado apesar da defesa, recupere 2 Força de Vontade; o excedente acima do máximo desaparece ao fim da cena.",
+      "society-day": "Se for afetado, gaste 1 Força de Vontade para suprimir o poder por um turno.",
+      "society-night": "Receba Resoluto após resistir com sucesso ao efeito."
+    },
+    "loophole": "Pratique um ato de autoafirmação ou autocuidado durante a cena."
+  },
+  "h-courts:dragon:harmony-enforced": {
+    "name": "Harmonia Imposta",
+    "description": "Suprime a violência física em todo um conflito próximo.",
+    "dicePool": "Presença + Empatia + Manto contra maior Perseverança + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Todos em até Fado × 10 metros recebem Derrotado, representando hostilidade reduzida. O conflito subjacente permanece; a Complicação termina se o changeling que invocou o Contrato iniciar violência.",
+    "exceptionalSuccess": "Receba +2 em testes Sociais feitos para resolver o conflito.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A violência começa ou se intensifica; a intenção de cada combatente ganha um caráter letal e eles se tornam imunes a Derrotado mundano.",
+    "courtClauses": {
+      "society-morning": "Adicione Manto ao primeiro teste de uma manobra Social na mesma cena.",
+      "society-day": "A invocação alcança sucesso excepcional com três sucessos.",
+      "society-night": "Com um sucesso, escolha o efeito de falha dramática sem receber uma Batida; penas de corvo são necessárias para usar a Brecha dessa forma."
+    },
+    "loophole": "Espalhe penas de pomba pela área afetada."
+  },
+  "h-courts:dragon:one-with-the-elements": {
+    "name": "Uno com os Elementos",
+    "description": "Torna-se imune às Complicações Ambientais presentes e redireciona o dano causado por elas.",
+    "dicePool": "Nenhuma",
+    "cost": "●○",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Torne-se imune às Complicações Ambientais presentes na ativação; novas Complicações exigem outra invocação. Sempre que uma delas causaria dano, dispute Manipulação + Sobrevivência + Manto contra Vigor + Fado de uma vítima visível para redirecionar esse dano.",
+    "courtClauses": {
+      "society-morning": "Adicione Manto à Iniciativa durante a duração.",
+      "society-day": "Ignore o custo de Força de Vontade quando o Contrato ajudar diretamente a concluir um projeto.",
+      "society-night": "Adicione mais metade do Manto, arredondando para cima, às ações de redirecionamento."
+    },
+    "loophole": "Cause em si mesmo 1 ponto de dano contusivo com algo relacionado à Complicação relevante."
+  },
+  "h-courts:dragon:shifting-balance": {
+    "name": "Equilíbrio Mutável",
+    "description": "Redistribui Defesa, Iniciativa e Deslocamento entre personagens voluntários.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Redistribua Manto + 1 pontos naturais entre Defesa, Iniciativa e Deslocamento de personagens voluntários, inclusive do changeling. Nenhuma característica pode cair abaixo de zero e cada alvo só pode ser afetado uma vez por cena.",
+    "courtClauses": {
+      "society-morning": "Ao afetar outra pessoa, descubra a Agulha e a Linha desse personagem ou equivalentes.",
+      "society-day": "Também desloque pontos de Atributos, mas apenas dentro da mesma categoria Mental, Física ou Social.",
+      "society-night": "Também desloque armadura geral ao custo de dois pontos por ponto de armadura."
+    },
+    "loophole": "Equilibre uma balança usando símbolos de madeira, fogo, terra, metal e água."
+  },
+  "h-courts:dragon:steal-harmony": {
+    "name": "Roubar Harmonia",
+    "description": "Penaliza uma categoria de Perícias da vítima por várias ações.",
+    "dicePool": "Presença + Empatia + Manto − Compostura",
+    "cost": "●○",
+    "action": "Resistida",
+    "duration": "Um número de ações afetadas igual aos sucessos",
+    "success": "Escolha Perícias Mentais, Físicas ou Sociais. A vítima sofre -Manto nas próximas ações dessa categoria em quantidade igual aos sucessos da ativação.",
+    "exceptionalSuccess": "Escolha uma segunda categoria de Perícias.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre a penalidade no lugar da vítima.",
+    "courtClauses": {
+      "society-morning": "Receba um bônus equivalente na categoria de Perícias penalizada.",
+      "society-day": "A Força de Vontade da vítima concede apenas +2 dados ou +1 Resistência.",
+      "society-night": "A penalidade pode afetar Iniciativa ou Deslocamento em vez disso."
+    },
+    "loophole": "Roube algo físico ou intangível da vítima nas últimas 24 horas."
+  },
+  "h-courts:dragon:weaponize-mob": {
+    "name": "Armar a Multidão",
+    "description": "Transforma uma multidão tensa em um tumulto dirigido contra um alvo escolhido.",
+    "dicePool": "Manipulação + Persuasão + Manto − maior Compostura do grupo",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Conforme a Complicação Tumulto",
+    "success": "Faça um discurso ou grito de mobilização que inflija Tumulto e direcione a multidão contra uma pessoa ou organização. O alvo sofre o dano completo da Complicação; outros sofrem metade. O changeling é visivelmente responsável.",
+    "exceptionalSuccess": "O dano do Tumulto torna-se letal.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A multidão se volta contra o changeling.",
+    "courtClauses": {
+      "society-morning": "Garanta que a multidão pare antes de incapacitar ou matar o alvo.",
+      "society-day": "Receba +3 em testes para escapar da situação em escalada.",
+      "society-night": "Passe despercebido como instigador e designe um bode expiatório."
+    },
+    "loophole": "Invoque-o onde uma discussão ou outro conflito já tenha transformado a situação em um barril de pólvora."
+  },
+  "h-courts:tide:any-port-in-a-storm": {
+    "name": "Qualquer Porto na Tempestade",
+    "description": "Localiza o abrigo mais próximo contra o perigo atual do changeling.",
+    "dicePool": "Raciocínio + Sobrevivência + Manto",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Descubra o refúgio seguro mais próximo em até Fado × 2 quilômetros e adicione Manto aos testes feitos para alcançá-lo.",
+    "exceptionalSuccess": "Descubra todos os abrigos adequados ao alcance e sua condição geral.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O perigo piora e o Contrato não pode ser usado novamente neste capítulo.",
+    "courtClauses": {
+      "high-tide": "Aumente a Durabilidade do abrigo em Manto contra ataques enquanto ele protege o changeling.",
+      "ebb-tide": "Alcance sucesso excepcional com três sucessos.",
+      "low-tide": "Aplique -Manto aos testes de Investigação e Percepção feitos para encontrar o abrigo.",
+      "flood-tide": "O abrigo fornece pontos de Lugar Seguro iguais ao Manto."
+    },
+    "loophole": "Use um símbolo da Estrela do Norte como joia, broche ou tatuagem."
+  },
+  "h-courts:tide:fair-winds-and-following-seas": {
+    "name": "Bons Ventos e Mares Favoráveis",
+    "description": "Distribui uma reserva de dados de bônus entre companheiros.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Distribua Manto dados de bônus entre um ou mais alvos, no máximo três por pessoa. Cada dado pode aprimorar uma ação e expira ao fim da cena.",
+    "courtClauses": {
+      "high-tide": "Para cada dado gasto, receba bônus igual em Iniciativa ou Defesa nesta cena e na próxima.",
+      "ebb-tide": "Gaste 1 Glamour adicional para usar a reserva nas próprias ações do changeling.",
+      "low-tide": "Descubra o Vício ou equivalente de qualquer pessoa que use um dado concedido.",
+      "flood-tide": "Aumente a reserva em metade do Manto, arredondando para cima."
+    },
+    "loophole": "Lance ao mar uma pena de albatroz."
+  },
+  "h-courts:tide:mirrorways": {
+    "name": "Caminhos do Espelho",
+    "description": "Usa uma grande superfície reflexiva como Caminho da Sebe.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Transforme uma superfície reflexiva delimitada, grande o bastante para atravessar, em um Caminho da Sebe; uma superfície sem limites abre apenas o suficiente para a passagem do changeling.",
+    "courtClauses": {
+      "high-tide": "Restrinja os seguidores a uma pessoa nomeada ou categoria de pessoas.",
+      "ebb-tide": "Mantenha o portal aberto por Manto turnos adicionais.",
+      "low-tide": "Não pode ser surpreendido por uma emboscada além do portal e recebe +2 de Iniciativa.",
+      "flood-tide": "Invoque Reflexivamente; o portal se fecha imediatamente após a passagem."
+    },
+    "loophole": "Beba uma xícara de água do mar."
+  },
+  "h-courts:tide:the-sea-remembers": {
+    "name": "O Mar se Lembra",
+    "description": "Pede ao mar que localize um objeto perdido ou restaure uma lembrança perdida.",
+    "dicePool": "Raciocínio + Ocultismo + Manto",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Revele a localização de um objeto perdido ou restaure uma lembrança perdida. Ocultação sobrenatural provoca um Choque de Vontades. Cada alvo só pode ser tentado uma vez.",
+    "exceptionalSuccess": "Receba Informado a respeito da resposta.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Um objeto carregado pelo changeling se perde.",
+    "courtClauses": {
+      "high-tide": "Recupere a lembrança perdida de outra pessoa local em vez disso.",
+      "ebb-tide": "Receba +2 em ações para recuperar o objeto até a maré mudar.",
+      "low-tide": "Uma vez por lembrança por capítulo, receba Inspirado ao revelar uma lembrança restaurada a outra pessoa.",
+      "flood-tide": "Recupere duas lembranças ou localize dois objetos."
+    },
+    "loophole": "Medite com sucesso por uma hora desde a última mudança da maré."
+  },
+  "h-courts:tide:widows-walk": {
+    "name": "Mirante da Viúva",
+    "description": "Observa uma área com percepção ampliada e perspicácia investigativa.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Adicione Manto às ações de Percepção e Investigação referentes à área observada.",
+    "courtClauses": {
+      "high-tide": "Receba Senso de Perigo; dobre seu bônus se já o possuir.",
+      "ebb-tide": "Pague apenas 1 Glamour para invocar o Contrato.",
+      "low-tide": "Receba Observador Treinado em um ponto, aumente-o para três ou receba ação de rotina em seus testes apropriados se já estiver no máximo.",
+      "flood-tide": "Estenda o efeito por uma cena adicional."
+    },
+    "loophole": "Atravesse uma passarela da viúva desde a última mudança da maré."
+  },
+  "h-courts:tide:davy-jones-locker": {
+    "name": "Baú de Davy Jones",
+    "description": "Conjura uma violenta tempestade marinha e a aprimora com Inundado, Afogamento ou destroços.",
+    "dicePool": "Presença + Sobrevivência + Manto",
+    "cost": "●+○ (+ até ●●)",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Enquanto estiver sobre ou ao lado de água profunda o bastante para nadar, crie os efeitos de tempestade selecionados. O changeling e sua embarcação atual ficam isentos.",
+    "exceptionalSuccess": "Crie também um Ambiente Extremo com nível igual à metade do Manto, arredondando para cima.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling ou sua embarcação sofre Manto de dano letal.",
+    "options": [
+      "Base: Chuvas Pesadas no corpo d’água afetado ou em um raio de Manto × 100 metros, o que for menor.",
+      "+1 Glamour: inflija Inundado em uma embarcação ou estrutura; qualquer pessoa completamente submersa também sofre Afogamento.",
+      "+1 Glamour: destroços causam Manto de dano contusivo a cada dois turnos, reduzido por armadura ou Durabilidade."
+    ],
+    "courtClauses": {
+      "high-tide": "Gaste 1 Glamour para infligir Derrotado a qualquer pessoa ferida pela tempestade.",
+      "ebb-tide": "Crie um olho calmo acessível apenas ao Retalho, com raio de até Manto metros.",
+      "low-tide": "Crie um falso olho com raio de até Manto metros que inflige Atordoado a quem entrar.",
+      "flood-tide": "Uma vez por turno, invoque um relâmpago com Destreza + Manto menos Defesa e modificador de arma 2L."
+    },
+    "loophole": "Assobie de memória uma canção marítima inteira."
+  },
+  "h-courts:tide:dredge-the-depths": {
+    "name": "Dragando as Profundezas",
+    "description": "Localiza objetos valiosos e úteis em uma ampla área.",
+    "dicePool": "Raciocínio + Investigação + Manto",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Defina um tipo de objeto valioso mundano e localize um exemplar acessível por sucesso, até Manto, em uma área de Manto × 100 metros. Segurança mundana é contornada; segurança mágica provoca um Choque de Vontades.",
+    "exceptionalSuccess": "Localize mais metade do Manto em tesouros, arredondando para cima.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Os objetos valiosos tornam-se mais difíceis de encontrar e o Contrato não funciona pelo restante do capítulo.",
+    "courtClauses": {
+      "high-tide": "Inclua objetos sobrenaturais valiosos, como Penhores ou Frutas Goblin.",
+      "ebb-tide": "Saiba qual dos tesouros revelados é o mais útil ou valioso.",
+      "low-tide": "Encontre também informações físicas, como um diário, dispositivo oculto ou mapa antigo.",
+      "flood-tide": "Alcance sucesso excepcional com três sucessos."
+    },
+    "loophole": "Ofereça ao mar algo pessoalmente valioso durante a mesma cena."
+  },
+  "h-courts:tide:gone-by-the-board": {
+    "name": "Perdido ao Mar",
+    "description": "Garante que um objeto perdido nomeado acabe retornando ao dono.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Até o objeto retornar, por no máximo uma semana",
+    "effect": "Um objeto perdido nomeado segue um caminho plausível, embora possivelmente tortuoso, de volta ao dono em até uma semana.",
+    "courtClauses": {
+      "high-tide": "Em vez disso, imponha -Manto às tentativas de localizar o objeto até a próxima maré alta.",
+      "ebb-tide": "Gaste 1 Glamour adicional para fazê-lo chegar até o fim do capítulo ou do dia, caso demorasse mais.",
+      "low-tide": "Faça uma pergunta de sim, não ou talvez sobre o destinatário do objeto.",
+      "flood-tide": "Reduza o custo de ativação para 1 Glamour."
+    },
+    "loophole": "Invoque durante a mesma maré em que o objeto foi perdido."
+  },
+  "h-courts:tide:red-sky-at-morning": {
+    "name": "Céu Vermelho pela Manhã",
+    "description": "Recebe um aviso visível pouco antes de uma ameaça iminente.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Até o próximo nascer do sol",
+    "effect": "O céu ou teto fica vermelho até Manto minutos antes de uma ameaça iminente. O changeling e até Manto outros Perdidos não podem ser surpreendidos e recebem +3 em Iniciativa e Defesa após o aviso.",
+    "courtClauses": {
+      "high-tide": "Estenda os bônus a mais Manto cortesãos da Maré Alta em boa situação.",
+      "ebb-tide": "Permita que personagens que não conseguem ver através da Mascarilha percebam e se beneficiem do aviso.",
+      "low-tide": "Gaste 1 Glamour para descobrir a natureza da ameaça.",
+      "flood-tide": "Receba o aviso uma cena inteira antes."
+    },
+    "loophole": "Dê um sinal de alerta, como tocar um sino ou soar a buzina de um navio, durante a invocação."
+  },
+  "h-courts:tide:red-sky-at-night": {
+    "name": "Céu Vermelho à Noite",
+    "description": "Restaura a determinação de um grupo por meio de entretenimento compartilhado.",
+    "dicePool": "Nenhuma",
+    "cost": "●●○",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Ofereça entretenimento a até o dobro do Manto em participantes; cada um recupera 1 Força de Vontade gasta e recebe Inspirado.",
+    "courtClauses": {
+      "high-tide": "Até Inspirado ser resolvido, receba +2 nos testes para colher Glamour.",
+      "ebb-tide": "Restaure 2 Força de Vontade para cada participante em vez disso.",
+      "low-tide": "Descubra a Virtude, Linha ou equivalente de cada participante.",
+      "flood-tide": "Conceda Resoluto em vez de Inspirado individualmente para cada alvo."
+    },
+    "loophole": "Ofereça a todos comida ou bebida preparada pelo changeling."
+  },
+  "h-courts:traders:caveat-emptor": {
+    "name": "Caveat Emptor",
+    "description": "Faz um vendedor revelar um fato omitido sobre os bens de uma transação negociada.",
+    "dicePool": "Manipulação + Persuasão + Manto contra Compostura + Fado",
+    "cost": "●",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "O vendedor revela involuntariamente um fato omitido. Outros segredos exigem novas invocações, mas o changeling sabe quando não resta nenhum.",
+    "exceptionalSuccess": "Revele todos os segredos sobre o item, inclusive fatos que o comerciante desconhece.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling revela um segredo pessoal que aumenta o preço negociado.",
+    "courtClauses": {
+      "coins": "Alcance sucesso excepcional com três sucessos.",
+      "barter": "Descubra também o que o comerciante realmente considera um preço justo.",
+      "favors": "Remova uma Porta de uma manobra Social envolvendo o vendedor.",
+      "shady-deals": "Descubra também um pequeno segredo sobre o comerciante."
+    },
+    "loophole": "Flagre o vendedor em uma mentira durante a cena sem usar um Contrato."
+  },
+  "h-courts:traders:faceless-masses": {
+    "name": "Massas sem Rosto",
+    "description": "Torna-se comum e esquecível dentro de uma multidão.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "As feições mudam para parecerem banais no ambiente; buscas pelo changeling sofrem -Manto.",
+    "courtClauses": {
+      "coins": "Em vez disso, destaque-se, concedendo +Manto às tentativas de encontrar o changeling.",
+      "barter": "Por 1 Glamour adicional, troque de aparência com uma pessoa voluntária pela cena.",
+      "favors": "O primeiro personagem que fracassar em encontrar o changeling sofre Derrubado.",
+      "shady-deals": "Crie uma distração que permita Manto turnos de fuga sem perseguição."
+    },
+    "loophole": "Tenha comprado ou trocado por uma máscara no último dia."
+  },
+  "h-courts:traders:lets-make-a-deal": {
+    "name": "Vamos Fazer um Acordo",
+    "description": "Encontra a pessoa que vende aquilo de que o Fado acredita que o changeling mais precisa.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "effect": "Dentro de um local de negócios ou comércio, os acontecimentos colocam o changeling frente a frente com alguém que possui aquilo que ele desejava ao invocar. O Fado ignora segurança, sentimentos e intenções.",
+    "courtClauses": {
+      "coins": "Adicione Manto à Persuasão ao negociar com o vendedor.",
+      "barter": "Saiba exatamente o que o vendedor deseja pelo item.",
+      "favors": "Encontre também alguém disposto a dar gratuitamente uma versão menos que ideal.",
+      "shady-deals": "Encontre o vendedor adequado menos propenso a trair o changeling."
+    },
+    "loophole": "Deixe cair uma moeda de cobre puro como pagamento ao Fado."
+  },
+  "h-courts:traders:stockpile-surplus": {
+    "name": "Estocar o Excedente",
+    "description": "Armazena temporariamente Glamour acima do máximo normal do changeling.",
+    "dicePool": "Nenhuma",
+    "cost": "●",
+    "action": "Instantânea",
+    "duration": "Até o próximo nascer ou pôr do sol",
+    "effect": "Aumente o Glamour máximo em Manto; o excedente desaparece quando o Contrato termina.",
+    "courtClauses": {
+      "coins": "Aumente a capacidade extra em metade do Manto, arredondando para cima.",
+      "barter": "Uma vez antes de expirar, troque Reflexivamente 2 Glamour excedentes por 1 Força de Vontade.",
+      "favors": "Aumente a capacidade de outro changeling em vez disso, usando o Manto desse alvo.",
+      "shady-deals": "Estenda a duração para 24 horas se Glamour tiver sido colhido da emoção da Corte na mesma cena."
+    },
+    "loophole": "Encontre, sem magia, o esconderijo de um esquilo ou animal semelhante nas últimas 24 horas."
+  },
+  "h-courts:traders:window-shopper": {
+    "name": "Só Dando uma Olhada",
+    "description": "Cria credenciais que permitem acesso temporário a uma área comercial restrita.",
+    "dicePool": "Nenhuma",
+    "cost": "●/●●",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até as regras serem quebradas",
+    "effect": "Crie credenciais temporárias que contornem guardas ou barreiras não físicas, mas não fechaduras físicas nem requisitos inerentes. Escrutínio sobrenatural apropriado provoca um Choque de Vontades. Comprar algo ou causar uma perturbação expõe o changeling; por 2 Glamour, uma compra é permitida.",
+    "courtClauses": {
+      "coins": "Receba +2 em ações Sociais dentro do local.",
+      "barter": "Saiba automaticamente qual é o melhor negócio disponível.",
+      "favors": "Permita uma compra adicional antes da exposição.",
+      "shady-deals": "Permita uma perturbação antes da exposição."
+    },
+    "loophole": "Carregue uma versão danificada ou expirada da credencial apropriada."
+  },
+  "h-courts:traders:always-solvent": {
+    "name": "Sempre Solvente",
+    "description": "Produz moeda apropriada ao local para uma compra significativa.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Instantânea",
+    "duration": "Até sair da área comercial",
+    "effect": "Produza dinheiro, bens de escambo ou Penhores do Mercado Goblin suficientes para uma compra significativa, até Disponibilidade Manto + 1 (máximo 5) ou essa quantidade de Penhores. A moeda não gasta se desfaz quando o changeling sai.",
+    "courtClauses": {
+      "coins": "Pague apenas 1 Glamour onde dinheiro for a forma preferida.",
+      "barter": "Pague apenas 1 Glamour onde escambo for a forma preferida.",
+      "favors": "Reduza em um, mínimo um, a exigência de Disponibilidade ou Penhores da primeira transação.",
+      "shady-deals": "Após a primeira transação, faça a moeda retornar para ser reutilizada; a parte enganada pode perceber."
+    },
+    "loophole": "Carregue moedas de pelo menos cinco países diferentes."
+  },
+  "h-courts:traders:cook-the-books": {
+    "name": "Fraudar a Contabilidade",
+    "description": "Nega a cobrança de Débito Goblin e impede novas cobranças temporariamente.",
+    "dicePool": "Nenhuma",
+    "cost": "●●",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "effect": "Invoque quando um Débito Goblin for cobrado para negá-lo sem ganhar Débito; o Narrador não pode gastar Débito contra o changeling durante a duração. Cada uso adicional em um capítulo rola um dado cumulativo após o pagamento; qualquer 1 ou 10 faz o Contrato falhar.",
+    "courtClauses": {
+      "coins": "Reduza também o Débito Goblin em um, mas o Contrato não pode responder à próxima cobrança.",
+      "barter": "Aceite o efeito do Débito, mas recupere 1 Força de Vontade.",
+      "favors": "Invoque em nome de outra pessoa.",
+      "shady-deals": "Uma vez por história, redirecione o efeito do Débito para outro personagem na cena sem reduzir o Débito do changeling."
+    },
+    "loophole": "Admita durante a cena ter trapaceado ou enganado alguém que o changeling explorou."
+  },
+  "h-courts:traders:if-two-are-dead": {
+    "name": "Se Dois Estiverem Mortos",
+    "description": "Impede os participantes de revelar um acordo a pessoas de fora.",
+    "dicePool": "Presença + Intimidação + Manto contra Compostura + Fado",
+    "cost": "● por alvo + ○",
+    "action": "Disputada",
+    "duration": "Uma história",
+    "success": "Cada alvo presente que saiba do acordo, inclusive o changeling, não pode compartilhar seus detalhes com pessoas não envolvidas por nenhum meio. Faça um teste contra cada alvo; alvos voluntários podem abrir mão da resistência.",
+    "exceptionalSuccess": "Recupere a Força de Vontade gasta.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Os alvos tornam-se imunes a usos posteriores deste Contrato.",
+    "courtClauses": {
+      "coins": "Descubra também um segredo de um dos alvos, escolhido pelo Narrador.",
+      "barter": "Receba Ação Avançada ao proteger um acordo que o changeling testemunhou.",
+      "favors": "O changeling pode encerrar o efeito antes do tempo.",
+      "shady-deals": "Secretamente, isente o changeling da restrição."
+    },
+    "loophole": "Compartilhe um segredo significativo diferente com cada alvo pretendido."
+  },
+  "h-courts:traders:raise-the-band": {
+    "name": "Reunir o Bando",
+    "description": "Recruta um bando de hobgoblins para defender o Povoado por meio da violência.",
+    "dicePool": "Nenhuma",
+    "cost": "●●●○",
+    "action": "Instantânea",
+    "duration": "Até o próximo nascer ou pôr do sol",
+    "effect": "Assuma Débito Goblin igual a 10 − Manto e aplique Bando de Hobgoblins à área. O bando chega por Caminhos da Sebe próximos em poucos turnos. A invocação exige um objetivo defensivo violento em favor do Povoado.",
+    "courtClauses": {
+      "coins": "Gaste 1 Glamour adicional para aumentar o dano do bando em dois.",
+      "barter": "Prometa aos goblins um serviço como Selagem forte em vez de assumir Débito; o Narrador o define.",
+      "favors": "Gaste 1 Glamour adicional para aumentar a Vitalidade do bando em três.",
+      "shady-deals": "Assuma apenas 7 − Manto de Débito Goblin."
+    },
+    "loophole": "Reúna os hobgoblins sem magia de antemão e anime-os com um discurso empolgante."
+  },
+  "h-courts:traders:supply-and-demand": {
+    "name": "Oferta e Demanda",
+    "description": "Força um comerciante a aceitar algo que pertence ao changeling como pagamento.",
+    "dicePool": "Presença + Intimidação + Manto contra Perseverança + Fado",
+    "cost": "●●",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "O comerciante aceita algo pertencente ao changeling em troca de mercadorias vendáveis, mas decide o que será e pode cobrar um preço abusivo. O uso no Mercado Goblin inflige Notoriedade ali.",
+    "exceptionalSuccess": "As mercadorias aceitas recebem desconto.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling é punido como se tivesse violado as leis do Mercado.",
+    "courtClauses": {
+      "coins": "Gaste 1 Glamour adicional para forçar o comerciante a escolher outro pagamento.",
+      "barter": "Alcance sucesso excepcional com três sucessos.",
+      "favors": "Force a aceitação de uma tarefa em vez de moeda, embora o comerciante a defina.",
+      "shady-deals": "Receba também um item promocional mundano de Tamanho 2 ou menor."
+    },
+    "loophole": "Esteja em algum lugar onde o comerciante saiba que o changeling não deveria estar."
+  }
+}

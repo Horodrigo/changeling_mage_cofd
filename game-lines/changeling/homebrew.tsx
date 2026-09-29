@@ -89,7 +89,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     id: item.id, sourceId: item.sourceId, source: item.source, kind: "Entitlements", name: item.name,
     details: [
       ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...detail(h("Propósito", "Purpose"), item.purpose),
-      ...detail(h("Privilégios", "Privileges"), item.privileges), ...detail(h("Deveres", "Duties"), item.duties), ...detail(h("Mascarilha e Semblante Fae", "Mask and Mien"), item.maskAndMien),
+      ...detail(h("Privilégios", "Privileges"), item.privileges), ...detail(h("Deveres", "Duties"), item.duties), ...detail(h("Mascarilha e Semblante Feérico", "Mask and Mien"), item.maskAndMien),
       ...detail(h("Heráldica", "Heraldry"), item.heraldry), ...detail(`${h("Penhor", "Token")} — ${item.token.name}`, item.token.description),
       ...detail(h("Efeito do Penhor", "Token Effect"), item.token.effect), ...detail(h("Captura do Penhor", "Token Catch"), item.token.catch), ...detail(h("Desvantagem do Penhor", "Token Drawback"), item.token.drawback),
       ...(item.roles ?? []).flatMap((role) => [...detail(`${h("Papel", "Role")} — ${role.name}`, role.prerequisites), ...detail(`${role.name} — ${h("privilégio", "privilege")}`, role.privilege), ...detail(`${role.name} — ${h("deveres", "duties")}`, role.duties), ...detail(`${role.name} — ${h("bônus do Penhor", "Token bonus")}`, role.tokenBonus), ...detail(`${role.name} — ${h("desvantagem do Penhor", "Token drawback")}`, role.tokenDrawback)]),

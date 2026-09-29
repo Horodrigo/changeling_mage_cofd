@@ -97,6 +97,21 @@ test("família Traders conclui os 80 Contratos de Book of Courts", () => {
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts").length, 80);
 });
 
+test("tradução pt-BR de Book of Courts cobre os 80 Contratos e preserva sua estrutura", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id) => id.startsWith("h-courts:")).sort(), items.map((item) => item.id).sort());
+  for (const item of items) {
+    const text = CONTRACT_PRESENTATION_PT[item.id];
+    for (const field of ["name", "description", "dicePool", "cost", "action", "duration", "loophole"]) assert.ok(text[field]?.trim(), `${item.id}.${field}`);
+    for (const field of item.hasRoll ? ["success", "exceptionalSuccess", "failure", "dramaticFailure"] : ["effect"]) assert.ok(text[field]?.trim(), `${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.courtClauses ?? {}).sort(), Object.keys(item.courtClauses ?? {}).sort());
+    assert.equal(text.options?.length, item.options?.length);
+  }
+  const localized = JSON.stringify(items.map((item) => CONTRACT_PRESENTATION_PT[item.id]));
+  assert.doesNotMatch(localized, /\b(?:Wyrd|Willpower|Bedlam|Clarity|Goblin Debt|freehold|motley|fetch|Thread|Needle|Hollow|Hedgespinning|Token)\b/i);
+  assert.doesNotMatch(localized, /\b(?:Autocontrole|Lábia)\b/);
+});
+
 test("catálogo de Tilts contém o Core, fontes oficiais aprovadas e extensões de Book of Courts", async () => {
   const { TILTS } = await vite.ssrLoadModule("/lib/tilts.ts");
   assert.equal(TILTS.filter((tilt) => tilt.sourceCode === "CofD").length, 22);

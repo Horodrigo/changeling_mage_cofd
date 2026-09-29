@@ -141,9 +141,9 @@
 .loadout-catalog article { border:1px solid #d8d2c8; border-radius:7px; background:#fffefa; padding:10px; }
 .loadout-catalog article.selected { border-color:var(--sheet-accent); background:color-mix(in srgb,var(--sheet-accent) 7%,#fff); }
 .loadout-catalog header, .companion-card header { display:flex; justify-content:space-between; gap:8px; align-items:start; }
-.loadout-catalog strong, .companion-card strong { color:var(--sheet-accent); font-size:13px; }
-.loadout-catalog small, .companion-card small { display:block; color:#756d72; font-size:10px; line-height:1.4; }
-.loadout-catalog p, .companion-card p { margin:5px 0 0; font:11px/1.45 Inter,Arial,sans-serif; }
+.loadout-catalog strong, .companion-card strong { color:var(--sheet-accent); font-size:18px; }
+.loadout-catalog small, .companion-card small { display:block; color:#756d72; font-size:15px; line-height:1.4; }
+.loadout-catalog p, .companion-card p { margin:5px 0 0; font:15px/1.45 Inter,Arial,sans-serif; }
 .companions-page { display:grid; gap:24px; }
 .companion-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
 .companion-card { border:1px solid color-mix(in srgb,var(--sheet-accent) 34%,#d8d2c8); background:#fffefa; padding:11px; }

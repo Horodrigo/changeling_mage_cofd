@@ -619,14 +619,14 @@
   },
   "ctl-core:riddle-kith": {
     "name": "Monta-Rostos",
-    "description": "Molde o Semblante Fae de um changeling para se parecer com os adornos de outra Frátria sem copiar sua bênção nem mudar a Feição aparente. Não é possível copiar o Semblante Fae de uma pessoa específica; forçar a mudança é um ponto de ruptura de três dados.",
+    "description": "Molde o Semblante Feérico de um changeling para se parecer com os adornos de outra Frátria sem copiar sua bênção nem mudar a Feição aparente. Não é possível copiar o Semblante Feérico de uma pessoa específica; forçar a mudança é um ponto de ruptura de três dados.",
     "dicePool": "Manipulação + Furto + Fado contra Compostura + Tolerância",
     "action": "Instantânea para alvos dispostos; disputada para alvos indispostos",
     "duration": "Uma cena",
     "success": "O alvo se parece externamente com a Frátria escolhida.",
     "exceptionalSuccess": "Ao escolher a si mesmo como alvo, gaste FdV para tornar a aparência indefinida.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "O alvo perde todos os benefícios de Frátria pela cena sem assumir outro Semblante Fae.",
+    "dramaticFailure": "O alvo perde todos os benefícios de Frátria pela cena sem assumir outro Semblante Feérico.",
     "loophole": "Durante a cena, dê algo sem exigir recompensa além de gratidão a um changeling da Frátria desejada.",
     "seemingBenefits": {
       "Darkling": "O alvo do Trevoso perde o benefício da própria Frátria e recebe o benefício da Frátria imitada.",
@@ -637,14 +637,14 @@
         "Grimm": "O Grimm pode gastar 1 ponto de Força de Vontade para aplicar o efeito de sucesso excepcional sem obtê-lo na rolagem.",
         "Beast": "A Fera concede ao alvo +1 de dano letal em ataques desarmados.",
         "Fairest": "O Belíssimo concede ao alvo +2 em Socialização com personagens que percebam a beleza aprimorada.",
-        "Ogre": "O Ogro concede ao alvo +2 em Intimidação com personagens que percebam o Semblante Fae aprimorado.",
+        "Ogre": "O Ogro concede ao alvo +2 em Intimidação com personagens que percebam o Semblante Feérico aprimorado.",
         "Wizened": "Em um sucesso excepcional, o Mirrado pode alterar indefinidamente outro alvo disposto; cada personagem só pode receber este efeito uma vez."
       }
     }
   },
   "ctl-core:skinmask": {
     "name": "Máscara de Pele",
-    "description": "Recite três fatos conhecidos sobre um mortal ou sobre a Mascarilha de um changeling que tenha encontrado antes e copie sua aparência externa; para um changeling, copie a Mascarilha e o Semblante Fae. Rolagens Sociais continuam necessárias para imitar o comportamento. Copiar alguém semelhante ao futuro humano que o changeling não viveu restaura 1 ponto de Força de Vontade.",
+    "description": "Recite três fatos conhecidos sobre um mortal ou sobre a Mascarilha de um changeling que tenha encontrado antes e copie sua aparência externa; para um changeling, copie a Mascarilha e o Semblante Feérico. Rolagens Sociais continuam necessárias para imitar o comportamento. Copiar alguém semelhante ao futuro humano que o changeling não viveu restaura 1 ponto de Força de Vontade.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",
@@ -750,7 +750,7 @@
   },
   "ctl-core:thorns-and-brambles": {
     "name": "Espinhos e Silvas",
-    "description": "Crie um raio móvel de Fado jardas ou metros de silvas e escolha uma manifestação. Na Sebe, elas permanecem imóveis e também ameaçam o changeling.",
+    "description": "Crie um raio móvel de Fado metros de silvas e escolha uma manifestação. Na Sebe, elas permanecem imóveis e também ameaçam o changeling.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",
@@ -819,7 +819,7 @@
   },
   "ctl-core:hedgewall": {
     "name": "Muralha da Sebe",
-    "description": "Construa um castelo de espinhos com até Fado × 10 jardas ou metros de extensão. Suas muralhas concedem cobertura substancial contra ataques à distância, possuem Durabilidade 3 e Tamanho 8, bloqueiam a passagem e causam 1 ponto de dano letal por turno de escalada sem proteção.",
+    "description": "Construa um castelo de espinhos com até Fado × 10 metros de extensão. Suas muralhas concedem cobertura substancial contra ataques à distância, possuem Durabilidade 3 e Tamanho 8, bloqueiam a passagem e causam 1 ponto de dano letal por turno de escalada sem proteção.",
     "dicePool": "Inteligência + Sobrevivência + Fado",
     "action": "Prolongada; cinco sucessos, um turno por teste",
     "duration": "Uma cena",

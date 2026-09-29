@@ -51,7 +51,7 @@ export function EntitlementHomebrewEditor({ open, onOpenChange, initial, onSave 
           <Field wide label={h("Propósito *", "Purpose *")}><Textarea value={value.purpose} onChange={(event) => set("purpose", event.target.value)}/></Field>
           <Field wide label={h("Privilégios *", "Privileges *")}><Textarea value={value.privileges} onChange={(event) => set("privileges", event.target.value)}/></Field>
           <Field wide label={h("Deveres *", "Duties *")}><Textarea value={value.duties} onChange={(event) => set("duties", event.target.value)}/></Field>
-          <Field wide label={h("Mascarilha e Semblante Fae", "Mask and Mien")}><Textarea value={value.maskAndMien} onChange={(event) => set("maskAndMien", event.target.value)}/></Field>
+          <Field wide label={h("Mascarilha e Semblante Feérico", "Mask and Mien")}><Textarea value={value.maskAndMien} onChange={(event) => set("maskAndMien", event.target.value)}/></Field>
         </Section>
         <Section title={h("Touchstone e consequências", "Touchstone and consequences")}>
           <Field wide label={h("Touchstone do Entitlement *", "Entitlement Touchstone *")}><Textarea value={value.touchstone} onChange={(event) => set("touchstone", event.target.value)}/></Field>

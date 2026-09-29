@@ -9,6 +9,7 @@
 
 - `Huntsman` e `Huntsmen` são sempre **Monteiro** e **Monteiros**. `Hunter` permanece **Caçador**.
 - As Condições `Cowed`, `Berserk` e `Fatigued` são sempre **Acovardado**, **Frenético** e **Fatigado**.
+- `Seeming`, `Mien` e `True Fae` são distintos: **Feição**, **Semblante Feérico** e **Feé Verdadeiro**, respectivamente.
 
 ## Lote: fontes suplementares menores
 
@@ -76,3 +77,10 @@
 - `Cloak of Night`: traduzido como **Capa de Noite**.
 - `Thorns and Brambles`: as manifestações foram apresentadas como **Erva-sanguessuga**, **Silvado** e **Campo de Espinhos** para `Leechweed`, `Briarpatch` e `Field of Thorns`.
 - `Vow of No Compromise`: traduzido como **Juramento Intransigente**.
+
+## Lote: *Book of Courts*
+
+- `Widow's Walk`: traduzido como **Mirante da Viúva**.
+- `Gone by the Board`: traduzido como **Perdido ao Mar**.
+- `Cook the Books`: traduzido como **Fraudar a Contabilidade**.
+- `Beat`: o lote usa **Batida**, enquanto partes mais antigas da interface e de outros catálogos ainda preservam **Beat**. Auditar a convenção global antes de uniformizar o restante do aplicativo.

@@ -369,7 +369,7 @@ export const commonMessages = {
       "lost": "Perdida",
       "main": "Principal",
       "marked": "marcadas",
-      "maskAndMien": "Mascarilha e Semblante Fae",
+      "maskAndMien": "Mascarilha e Semblante Feérico",
       "mayBePurchasedMultipleTimes": " · pode ser comprado várias vezes",
       "membersDaimonomikaAndSoulStonesOfTheSame": "Membros, Daimonomika e Soul Stones da mesma Legacy são Yantras simpáticos de +2 para seus membros.",
       "merit": "Mérito",

@@ -116,7 +116,7 @@
   "cloakskin": {
     "name": "Pele de Manto",
     "description": "Perdidos solitários cuja Mascarilha é invisível.",
-    "blessing": "Recebe +1 em todos os testes Sociais. Com 1 Glamour e Presença + Furtividade + Fado, torna a Semblante Fae invisível por uma cena, inclusive para câmeras. Testes visuais para detectá-lo falham; testes com outros sentidos sofrem −3.",
+    "blessing": "Recebe +1 em todos os testes Sociais. Com 1 Glamour e Presença + Furtividade + Fado, torna o Semblante Feérico invisível por uma cena, inclusive para câmeras. Testes visuais para detectá-lo falham; testes com outros sentidos sofrem −3.",
     "skill": "Social"
   },
   "concubus": {
@@ -194,7 +194,7 @@
   "gravewight": {
     "name": "Espectro Tumular",
     "description": "Perdidos ligados à morte.",
-    "blessing": "Escolha Empatia ou Intimidação: 3 sucessos contam como excepcionais ao influenciar alguém com sua Semblante Fae, presença física ou conhecimento da morte. Gaste 1 Glamour para ver e ouvir fantasmas no Crepúsculo; sua presença também facilita manifestações próximas.",
+    "blessing": "Escolha Empatia ou Intimidação: 3 sucessos contam como excepcionais ao influenciar alguém com suo Semblante Feérico, presença física ou conhecimento da morte. Gaste 1 Glamour para ver e ouvir fantasmas no Crepúsculo; sua presença também facilita manifestações próximas.",
     "skill": "Empatia ou Intimidação"
   },
   "gremlin": {
@@ -266,7 +266,7 @@
   "mirrorskin": {
     "name": "Pele de Espelho",
     "description": "Perdidos que aprenderam a esvaziar a própria natureza e tornar-se qualquer pessoa ou ninguém.",
-    "blessing": "3 sucessos contam como excepcionais em Furtividade enquanto disfarçado. Com 1 Glamour e Raciocínio + Subterfúgio + Fado reflexivo, remodela a Mascarilha; +1 Glamour também remodela a Semblante Fae. O efeito é indefinido, exige nova ativação para desfazê-lo e provoca Confronto de Vontades contra detecção sobrenatural.",
+    "blessing": "3 sucessos contam como excepcionais em Furtividade enquanto disfarçado. Com 1 Glamour e Raciocínio + Subterfúgio + Fado reflexivo, remodela a Mascarilha; +1 Glamour também remodela o Semblante Feérico. O efeito é indefinido, exige nova ativação para desfazê-lo e provoca Confronto de Vontades contra detecção sobrenatural.",
     "skill": "Furtividade"
   },
   "moonborn": {

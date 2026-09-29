@@ -29,7 +29,7 @@
   },
   "ctl-oak-ash-thorn:full-fathom-five": {
     "name": "A Cinco Braças",
-    "description": "No turno após a invocação, o changeling obtém uma imagem mental completa do espaço físico num raio de Fado × 10 jardas ou metros. Ele supera automaticamente ocultação e surpresa mundanas, recebe Manto como bônus de dados contra tentativas sobrenaturais, ignora escuridão e baixa visibilidade, fica imune a Cego e Surdo, compensa até Manto dados de penalidades em ataques à distância e soma Manto à Iniciativa e metade do Manto, arredondada para cima, à Defesa. O efeito é evidente, isolamento acústico o bloqueia e outro ruído alto exige Raciocínio + Compostura + Manto para mantê-lo.",
+    "description": "No turno após a invocação, o changeling obtém uma imagem mental completa do espaço físico num raio de Fado × 10 metros. Ele supera automaticamente ocultação e surpresa mundanas, recebe Manto como bônus de dados contra tentativas sobrenaturais, ignora escuridão e baixa visibilidade, fica imune a Cego e Surdo, compensa até Manto dados de penalidades em ataques à distância e soma Manto à Iniciativa e metade do Manto, arredondada para cima, à Defesa. O efeito é evidente, isolamento acústico o bloqueia e outro ruído alto exige Raciocínio + Compostura + Manto para mantê-lo.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Fado turnos em cenas de ação ou Fado minutos nas demais cenas",
@@ -37,7 +37,7 @@
   },
   "ctl-oak-ash-thorn:the-widening-gyre": {
     "name": "A Espiral que se Alarga",
-    "description": "O changeling torna-se o centro de um vórtice móvel com raio de Fado × 10 jardas ou metros e realiza um único teste contra cada personagem ao alcance. Pode excluir alvos percebidos por +● cada; personagens que entrem depois disputam normalmente, a menos que ele pague o mesmo custo para excluí-los.",
+    "description": "O changeling torna-se o centro de um vórtice móvel com raio de Fado × 10 metros e realiza um único teste contra cada personagem ao alcance. Pode excluir alvos percebidos por +● cada; personagens que entrem depois disputam normalmente, a menos que ele pague o mesmo custo para excluí-los.",
     "dicePool": "Presença + Atletismo + Manto contra Vigor + Fado",
     "cost": "●● + ○; +● por alvo excluído",
     "action": "Disputada",
@@ -54,7 +54,7 @@
     "dicePool": "Presença + Política + Manto contra Perseverança + Fado",
     "action": "Disputada",
     "duration": "Instantânea",
-    "success": "O alvo recebe uma Condição temporária Quebrador de Juramento que não exige o perdão adicional do Fado para ser resolvida; enquanto durar, o Semblante Fae do alvo reflete visivelmente a transgressão.",
+    "success": "O alvo recebe uma Condição temporária Quebrador de Juramento que não exige o perdão adicional do Fado para ser resolvida; enquanto durar, o Semblante Feérico do alvo reflete visivelmente a transgressão.",
     "exceptionalSuccess": "O alvo também não pode dizer nada que não acredite ser verdade até o fim do capítulo.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O alvo descobre o último ato grave de desobediência, traição ou desonestidade do changeling e pode impor-lhe Coagido.",
