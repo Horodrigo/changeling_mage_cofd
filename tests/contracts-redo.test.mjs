@@ -184,7 +184,6 @@ test("bloco Crown do livro básico está completo", () => {
 
 test("tradução pt-BR do bloco Crown é completa e preserva a identidade canônica", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Crown");
-  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).sort(),items.map((item)=>item.id).sort());
   for(const item of items){
     const text=CONTRACT_PRESENTATION_PT[item.id];
     for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
@@ -203,7 +202,18 @@ test("tradução pt-BR do bloco Crown é completa e preserva a identidade canôn
   assert.match(JSON.stringify(tumult),/Frenético/);
   assert.match(JSON.stringify(tumult),/Fatigado/);
   assert.doesNotMatch(JSON.stringify(tumult),/\b(?:Cowed|Berserk|Fatigued)\b/);
-  assert.doesNotMatch(JSON.stringify(CONTRACT_PRESENTATION_PT),/\b(?:Wyrd|Willpower|Huntsm(?:an|en))\b/i);
+  assert.doesNotMatch(JSON.stringify(Object.values(CONTRACT_PRESENTATION_PT)),/\b(?:Wyrd|Willpower|Huntsm(?:an|en))\b/i);
+});
+
+test("traduções pt-BR das fontes suplementares menores estão completas", () => {
+  const sourceIds=new Set(["ctl-dark-eras","ctl-the-hedge","ctl-oak-ash-thorn"]);
+  const items=CONTRACTS.filter((item)=>sourceIds.has(item.sourceId));
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>sourceIds.has(id.split(":")[0])).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+  }
 });
 
 test("bloco Jewels do livro básico está completo", () => {
