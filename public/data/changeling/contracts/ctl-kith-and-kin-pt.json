@@ -52,7 +52,7 @@
     "success": "Beber a dose inteira reduz à metade o tempo de recuperação de um veneno ou torna um veneno letal sobrevivível. Condições relacionadas desaparecem sem serem resolvidas. Veneno sobrenatural exige um Choque de Vontades.",
     "exceptionalSuccess": "O veneno é curado completa e imediatamente.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "O changeling envenena a si mesmo e recebe Fatigado, que se torna a Inclinação Envenenado moderada em cenas de ação.",
+    "dramaticFailure": "O changeling envenena a si mesmo e recebe Fatigado, que se torna a Complicação Envenenado moderada em cenas de ação.",
     "loophole": "O changeling prova a mesma toxina durante a cena; o Contrato não o protege dessa exposição.",
     "seemingBenefits": {
       "Beast": "Durante o capítulo, a Fera pode morder um oponente agarrado como uma ação de agarramento exclusiva para infligir Envenenado moderado.",
@@ -93,7 +93,7 @@
     "dicePool": "Presença + Socialização + Fado",
     "action": "Instantânea",
     "duration": "Instantânea",
-    "success": "O Contrato cria alimento ou remédio apropriado em quantidade suficiente para todos os presentes. Um participante disposto remove uma Condição física não Persistente ou uma Inclinação Pessoal física e recupera Força de Vontade igual à metade dos sucessos, arredondada para cima, mas recebe Endividado em relação ao changeling. O changeling não pode se beneficiar do próprio banquete.",
+    "success": "O Contrato cria alimento ou remédio apropriado em quantidade suficiente para todos os presentes. Um participante disposto remove uma Condição física não Persistente ou uma Complicação Pessoal física e recupera Força de Vontade igual à metade dos sucessos, arredondada para cima, mas recebe Endividado em relação ao changeling. O changeling não pode se beneficiar do próprio banquete.",
     "exceptionalSuccess": "Endividado torna-se Persistente.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O changeling recebe Notoriedade.",
@@ -141,7 +141,7 @@
     "dicePool": "Presença + Ocultismo + Fado contra Compostura + Tolerância",
     "action": "Instantânea ou disputada",
     "duration": "Um capítulo",
-    "success": "Vincule um número de participantes igual aos sucessos, incluindo o changeling. Suas impressões Sociais melhoram em um nível, e eles sofrem −3 para disputar as ações Sociais uns dos outros. Condições emocionais, Inclinações Pessoais, Força de Vontade recuperada e Glamour recuperado propagam-se pelo grupo; participantes sem Fado recebem Inspirado em vez de Glamour. Tecer a Sebe e Desvario obtêm sucesso excepcional com três sucessos.",
+    "success": "Vincule um número de participantes igual aos sucessos, incluindo o changeling. Suas impressões Sociais melhoram em um nível, e eles sofrem −3 para disputar as ações Sociais uns dos outros. Condições emocionais, Complicações Pessoais, Força de Vontade recuperada e Glamour recuperado propagam-se pelo grupo; participantes sem Fado recebem Inspirado em vez de Glamour. Tecer a Sebe e Desvario obtêm sucesso excepcional com três sucessos.",
     "exceptionalSuccess": "Sucessos adicionais aumentam o número máximo de participantes.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O changeling incita Desvario involuntariamente em todos os participantes, sem rolagem.",
@@ -225,7 +225,7 @@
   },
   "ctl-kith-and-kin:blood-debt": {
     "name": "Dívida de Sangue",
-    "description": "Sempre que alguém inflige dano letal ou agravado de Vitalidade, ou dano leve ou severo de Lucidez, ao changeling, o agressor sofre 1 ponto de dano letal que ignora armadura. Acrescente 1 ponto de dano para cada um destes efeitos: causar perda de Força de Vontade, causar perda de Glamour e infligir uma Condição ou Inclinação.",
+    "description": "Sempre que alguém inflige dano letal ou agravado de Vitalidade, ou dano leve ou severo de Lucidez, ao changeling, o agressor sofre 1 ponto de dano letal que ignora armadura. Acrescente 1 ponto de dano para cada um destes efeitos: causar perda de Força de Vontade, causar perda de Glamour e infligir uma Condição ou Complicação.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",
@@ -449,7 +449,7 @@
   },
   "ctl-kith-and-kin:straight-on-til-morning": {
     "name": "Em Frente até o Amanhecer",
-    "description": "Escolha um destino e viaje incansavelmente, sem precisar de alimento nem descanso, até alcançá-lo. Ignore efeitos adversos de Inclinações Ambientais pelo caminho e receba 8-novamente em rolagens de navegação nas Estradas dos Desejos; encontros e obstáculos ainda impedem a jornada normalmente.",
+    "description": "Escolha um destino e viaje incansavelmente, sem precisar de alimento nem descanso, até alcançá-lo. Ignore efeitos adversos de Complicações Ambientais pelo caminho e receba 8-novamente em rolagens de navegação nas Estradas dos Desejos; encontros e obstáculos ainda impedem a jornada normalmente.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Até o changeling chegar ao destino",
@@ -500,7 +500,7 @@
     "loophole": "Gire no sentido anti-horário enquanto conta a história.",
     "seemingBenefits": {
       "Darkling": "O Trevoso pode nomear até Fado assuntos rotineiros específicos que darão errado; evitar as ações previstas não causa um infortúnio substituto.",
-      "Elemental": "O Elemental pode declarar uma Inclinação ambiental ou pessoal ligada ao clima para afetar o alvo no momento mais inconveniente durante o Contrato."
+      "Elemental": "O Elemental pode declarar uma Complicação ambiental ou pessoal ligada ao clima para afetar o alvo no momento mais inconveniente durante o Contrato."
     }
   },
   "ctl-kith-and-kin:frozen-star": {
@@ -629,7 +629,7 @@
   },
   "ctl-kith-and-kin:acanthas-fury": {
     "name": "Fúria de Acantha",
-    "description": "Inicie uma transformação de oito estágios, um por minuto, do alvo em uma planta espinhosa de Tamanho 4–12. Em cada estágio, ofereça uma tarefa realizável, inofensiva e com duração de uma cena; aceitar faz a transformação regredir, mas romper a promessa a reinicia. Os estágios impõem penalidades pela luz solar, Vigor reduzido, Inclinações nos membros, Imobilizado e, por fim, a forma completa de planta. A invocação é um ponto de ruptura de quatro dados.",
+    "description": "Inicie uma transformação de oito estágios, um por minuto, do alvo em uma planta espinhosa de Tamanho 4–12. Em cada estágio, ofereça uma tarefa realizável, inofensiva e com duração de uma cena; aceitar faz a transformação regredir, mas romper a promessa a reinicia. Os estágios impõem penalidades pela luz solar, Vigor reduzido, Complicações nos membros, Imobilizado e, por fim, a forma completa de planta. A invocação é um ponto de ruptura de quatro dados.",
     "dicePool": "Presença + Sobrevivência + Fado contra Vigor + Tolerância",
     "action": "Disputada",
     "duration": "Uma cena",
@@ -793,14 +793,14 @@
   },
   "ctl-kith-and-kin:earths-impenetrable-walls": {
     "name": "Muralhas Impenetráveis da Terra",
-    "description": "Ao longo de cinco turnos, erga uma fortaleza de pedra de Tamanho Fado × 10 sobre terreno natural livre enquanto cria uma Inclinação Terremoto à qual o changeling é imune. Ela é um Local Seguro de metade do Fado com Durabilidade 2. Cada sucesso depois do primeiro acrescenta Durabilidade, Tamanho, proteção ambiental, provisões ou, na Sebe, um Vão de metade do Fado.",
+    "description": "Ao longo de cinco turnos, erga uma fortaleza de pedra de Tamanho Fado × 10 sobre terreno natural livre enquanto cria uma Complicação Terremoto à qual o changeling é imune. Ela é um Local Seguro de metade do Fado com Durabilidade 2. Cada sucesso depois do primeiro acrescenta Durabilidade, Tamanho, proteção ambiental, provisões ou, na Sebe, um Vão de metade do Fado.",
     "dicePool": "Força + Ofícios + Fado",
     "action": "Instantânea; a construção leva cinco turnos",
     "duration": "Um capítulo",
     "success": "A fortaleza projetada se ergue com uma característica adicional da lista por sucesso depois do primeiro.",
     "exceptionalSuccess": "Sucessos adicionais fornecem características adicionais normalmente.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Crie a Inclinação Terremoto por cinco turnos sem uma fortaleza, e o changeling não é imune.",
+    "dramaticFailure": "Crie a Complicação Terremoto por cinco turnos sem uma fortaleza, e o changeling não é imune.",
     "loophole": "Defenda com sucesso o changeling ou outra pessoa de um ataque durante a mesma cena.",
     "seemingBenefits": {
       "Fairest": "Na Sebe, o Belíssimo também recebe Equipe temporária de metade do Fado, representando seguidores hobgoblins adequados.",
@@ -825,7 +825,7 @@
   },
   "ctl-kith-and-kin:momentary-respite": {
     "name": "Trégua Momentânea",
-    "description": "Quebre um dispositivo de medição do tempo para suspender os efeitos do tempo sobre o changeling. Escolha uma proteção por sucesso: encerre uma Inclinação Pessoal; ignore penalidades por ferimentos; proteja a caixa de Vitalidade desprotegida mais à direita contra dano agravado; ignore uma toxina, doença ou Condição Persistente. As escolhas, exceto penalidades por ferimentos, podem ser repetidas. Durante o efeito, o beneficiário não pode se curar naturalmente, recuperar Força de Vontade descansando, recuperar Lucidez por meio de Touchstones, gastar Experiências nem envelhecer.",
+    "description": "Quebre um dispositivo de medição do tempo para suspender os efeitos do tempo sobre o changeling. Escolha uma proteção por sucesso: encerre uma Complicação Pessoal; ignore penalidades por ferimentos; proteja a caixa de Vitalidade desprotegida mais à direita contra dano agravado; ignore uma toxina, doença ou Condição Persistente. As escolhas, exceto penalidades por ferimentos, podem ser repetidas. Durante o efeito, o beneficiário não pode se curar naturalmente, recuperar Força de Vontade descansando, recuperar Lucidez por meio de Touchstones, gastar Experiências nem envelhecer.",
     "dicePool": "Vigor + Sobrevivência + Fado",
     "action": "Instantânea",
     "duration": "Uma cena, extensível uma cena por vez",
@@ -835,7 +835,7 @@
     "dramaticFailure": "O changeling sofre Imóvel indefinidamente, até que um Choque de Vontades bem-sucedido contra sua própria parada de Choque rompa a maldição do Tempo.",
     "loophole": "Abrace ou envolva-se em um objeto reconfortante que represente descanso ou sono.",
     "seemingBenefits": {
-      "Elemental": "O Elemental também pode escolher ignorar uma Inclinação Ambiental, repetindo a escolha para Inclinações diferentes.",
+      "Elemental": "O Elemental também pode escolher ignorar uma Complicação Ambiental, repetindo a escolha para Complicações diferentes.",
       "Ogre": "O Ogro pode invocá-lo sobre um personagem que consinta, pagando todos os custos e sofrendo todas as consequências; invocá-lo novamente encerra a instância anterior."
     }
   }

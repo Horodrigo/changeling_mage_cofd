@@ -157,8 +157,8 @@
   },
   "ctl-core:pipes-of-the-beastcaller": {
     "name": "Flauta do Encantador de Feras",
-    "description": "Toque uma flauta de prata para chamar todos os animais de uma espécie nomeada num raio de Empatia com Animais milhas e dar-lhes comandos verbais compreensíveis.",
-    "dicePool": "Manipulação + Empatia com Animais + Fado contra Perseverança + Compostura",
+    "description": "Toque uma flauta de prata para chamar todos os animais de uma espécie nomeada num raio de Emp. c/ Animais milhas e dar-lhes comandos verbais compreensíveis.",
+    "dicePool": "Manipulação + Emp. c/ Animais + Fado contra Perseverança + Compostura",
     "action": "Instantânea para animais dispostos; disputada para animais hostis",
     "duration": "Até a tarefa ser concluída ou tornar-se impossível",
     "success": "Os animais se reúnem, obedecem a comandos simples da melhor forma possível e retornam para informar a conclusão ou um obstáculo insuperável.",
@@ -299,7 +299,7 @@
     "dramaticFailure": "O changeling fica Desorientado.",
     "loophole": "Coma o olho de uma criatura ao invocar o Contrato.",
     "seemingBenefits": {
-      "Elemental": "Em vez disso, o Elemental faz o alvo acreditar que um elemento o envolve, impondo Inclinações adequadas escolhidas pelo Narrador.",
+      "Elemental": "Em vez disso, o Elemental faz o alvo acreditar que um elemento o envolve, impondo Complicações adequadas escolhidas pelo Narrador.",
       "Wizened": "O Mirrado também inflige Desorientado."
     },
     "supplementalSeemingBenefits": {
@@ -613,7 +613,7 @@
         "Beast": "A Fera pode enxergar pelos olhos de animais refletidos na visão.",
         "Elemental": "O Elemental vê as auras e os estados emocionais dos personagens refletidos.",
         "Ogre": "O Ogro obtém sucesso excepcional com três sucessos quando o acontecimento envolve violência ou medo.",
-        "Wizened": "O Mirrado percebe Vitalidade, Durabilidade e Inclinações pertinentes das pessoas e equipamentos na cena."
+        "Wizened": "O Mirrado percebe Vitalidade, Durabilidade e Complicações pertinentes das pessoas e equipamentos na cena."
       }
     }
   },

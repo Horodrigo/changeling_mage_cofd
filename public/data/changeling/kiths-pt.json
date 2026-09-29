@@ -44,8 +44,8 @@
   "beastcaller": {
     "name": "Chamador de Feras",
     "description": "Perdidos ligados às feras goblin.",
-    "blessing": "3 sucessos contam como excepcionais em Empatia com Animais para domar feras goblins. Com 1 Glamour e Presença + Empatia com Animais + Fado, possui uma fera por Fado turnos. Cada dano letal nela causa 1 contusivo em você; cada agravado causa 1 letal. Se ela morrer ou perder a consciência, você retorna ao próprio corpo e sofre mais 1 agravado.",
-    "skill": "Empatia com Animais"
+    "blessing": "3 sucessos contam como excepcionais em Emp. c/ Animais para domar feras goblins. Com 1 Glamour e Presença + Emp. c/ Animais + Fado, possui uma fera por Fado turnos. Cada dano letal nela causa 1 contusivo em você; cada agravado causa 1 letal. Se ela morrer ou perder a consciência, você retorna ao próprio corpo e sofre mais 1 agravado.",
+    "skill": "Emp. c/ Animais"
   },
   "becquerel": {
     "name": "Becquerel",
@@ -56,7 +56,7 @@
   "blightbent": {
     "name": "Corrompido",
     "description": "Perdidos permanentemente maculados por venenos e poluição.",
-    "blessing": "Ao testar Vigor + Perseverança contra doenças ou venenos, reduz dano agravado a letal, letal a contusivo ou ignora contusivo. Após agarrar com sucesso, gaste 1 Glamour para impor a Inclinação Envenenado.",
+    "blessing": "Ao testar Vigor + Perseverança contra doenças ou venenos, reduz dano agravado a letal, letal a contusivo ou ignora contusivo. Após agarrar com sucesso, gaste 1 Glamour para impor a Complicação Envenenado.",
     "skill": "Doença ou Veneno"
   },
   "bricoleur": {
@@ -344,7 +344,7 @@
   "sandharrowed": {
     "name": "Flagelado pela Areia",
     "description": "Perdidos que sobreviveram aos desertos de Arcádia.",
-    "blessing": "3 sucessos contam como excepcionais em Sobrevivência para atravessar uma área com Inclinação Ambiental. Uma vez por cena, antes de atacar com Briga ou Armas Brancas, gaste 1 Glamour. Se acertar, o alvo fica Imobilizado em uma coluna de areia com Durabilidade 2, que também concede cobertura à própria vítima.",
+    "blessing": "3 sucessos contam como excepcionais em Sobrevivência para atravessar uma área com Complicação Ambiental. Uma vez por cena, antes de atacar com Briga ou Armas Brancas, gaste 1 Glamour. Se acertar, o alvo fica Imobilizado em uma coluna de areia com Durabilidade 2, que também concede cobertura à própria vítima.",
     "skill": "Sobrevivência"
   },
   "shadowsoul": {
@@ -416,7 +416,7 @@
   "venombite": {
     "name": "Mordida Venenosa",
     "description": "Perdidos que se tornaram venenosos, consumidos por ressentimentos mesquinhos.",
-    "blessing": "3 sucessos contam como excepcionais em Briga para agarrar. Uma vez por cena, gaste 1 Glamour antes de atacar com Briga: se acertar, causa dano letal e impõe a versão grave da Inclinação Envenenado.",
+    "blessing": "3 sucessos contam como excepcionais em Briga para agarrar. Uma vez por cena, gaste 1 Glamour antes de atacar com Briga: se acertar, causa dano letal e impõe a versão grave da Complicação Envenenado.",
     "skill": "Briga"
   },
   "whisperwisp": {
@@ -446,8 +446,8 @@
   "chimera-book-of-seemings": {
     "name": "Quimera",
     "description": "Perdidos adaptáveis formados por partes díspares.",
-    "blessing": "Ao interagir pela primeira vez com um animal ou humano usando Empatia com Animais ou Socialização, 3 sucessos contam como excepcionais. Gaste 1 Glamour e escolha Perícias Mentais, Físicas ou Sociais; redistribua os pontos da categoria, sem elevar nenhuma acima de 5, pela cena. Use até Fado vezes ao dia, no máximo uma vez por cena.",
-    "skill": "Empatia com Animais ou Socialização"
+    "blessing": "Ao interagir pela primeira vez com um animal ou humano usando Emp. c/ Animais ou Socialização, 3 sucessos contam como excepcionais. Gaste 1 Glamour e escolha Perícias Mentais, Físicas ou Sociais; redistribua os pontos da categoria, sem elevar nenhuma acima de 5, pela cena. Use até Fado vezes ao dia, no máximo uma vez por cena.",
+    "skill": "Emp. c/ Animais ou Socialização"
   },
   "chirurgeon": {
     "name": "Cirurgião",
@@ -488,7 +488,7 @@
   "palewraith": {
     "name": "Espectro Pálido",
     "description": "Sombras quase esquecidas que se apagam da percepção.",
-    "blessing": "3 sucessos contam como excepcionais em Furtividade para evitar detecção onde há pouca ou nenhuma luz natural. Gaste 1 Glamour para reduzir ou extinguir luz em um raio de Fado × 3 metros. O Narrador aplica bônus, Inclinações ou modificadores adequados; o Espectro Pálido enxerga normalmente na escuridão que cria.",
+    "blessing": "3 sucessos contam como excepcionais em Furtividade para evitar detecção onde há pouca ou nenhuma luz natural. Gaste 1 Glamour para reduzir ou extinguir luz em um raio de Fado × 3 metros. O Narrador aplica bônus, Complicações ou modificadores adequados; o Espectro Pálido enxerga normalmente na escuridão que cria.",
     "skill": "Furtividade"
   },
   "treasured": {

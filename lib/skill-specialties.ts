@@ -15,7 +15,7 @@ export const SKILL_SPECIALTY_SUGGESTIONS:Record<string,string[]>={
   "Furtividade":["Camuflagem","Multidões","Esconder-se","Mover-se no Escuro","Mover-se Silenciosamente","Seguir Alvos","Vigilância"],
   "Sobrevivência":["Coleta","Caça","Navegação","Meteorologia","Abrigos"],
   "Armas Brancas":["Porretes","Duelos","Armas Improvisadas","Facas","Espadas"],
-  "Empatia com Animais":["Necessidades Animais","Cães","Animais Exóticos","Cavalos","Treinamento","Ataque Iminente","Animais Selvagens"],
+  "Emp. c/ Animais":["Necessidades Animais","Cães","Animais Exóticos","Cavalos","Treinamento","Ataque Iminente","Animais Selvagens"],
   "Empatia":["Sentimentos Ocultos","Acalmar","Emoções","Mentiras","Motivações","Personalidades"],
   "Expressão":["Dança Clássica","Composição","Drama","Reportagens","Jornalismo","Instrumento Musical","Discursos"],
   "Intimidação":["Ameaças Diretas","Interrogatório","Olhar Assassino","Ameaças Físicas","Tortura","Ameaças Veladas"],
@@ -54,6 +54,6 @@ const ENGLISH_SPECIALTIES:Record<string,string[]>={
 
 export function skillSpecialtySuggestions(skill:string,locale:"pt-BR"|"en-US") {
   if(locale==="en-US") return ENGLISH_SPECIALTIES[skill] ?? [];
-  const portugueseSkill=(Object.entries({"Erudição":"Academics","Computação":"Computer","Ofícios":"Crafts","Investigação":"Investigation","Medicina":"Medicine","Ocultismo":"Occult","Política":"Politics","Ciência":"Science","Atletismo":"Athletics","Briga":"Brawl","Condução":"Drive","Armas de Fogo":"Firearms","Furto":"Larceny","Furtividade":"Stealth","Sobrevivência":"Survival","Armas Brancas":"Weaponry","Empatia com Animais":"Animal Ken","Empatia":"Empathy","Expressão":"Expression","Intimidação":"Intimidation","Persuasão":"Persuasion","Socialização":"Socialize","Manha":"Streetwise","Subterfúgio":"Subterfuge"} as Record<string,string>).find(([, english]) => english === skill)?.[0]) ?? skill;
+  const portugueseSkill=(Object.entries({"Erudição":"Academics","Computação":"Computer","Ofícios":"Crafts","Investigação":"Investigation","Medicina":"Medicine","Ocultismo":"Occult","Política":"Politics","Ciência":"Science","Atletismo":"Athletics","Briga":"Brawl","Condução":"Drive","Armas de Fogo":"Firearms","Furto":"Larceny","Furtividade":"Stealth","Sobrevivência":"Survival","Armas Brancas":"Weaponry","Emp. c/ Animais":"Animal Ken","Empatia":"Empathy","Expressão":"Expression","Intimidação":"Intimidation","Persuasão":"Persuasion","Socialização":"Socialize","Manha":"Streetwise","Subterfúgio":"Subterfuge"} as Record<string,string>).find(([, english]) => english === skill)?.[0]) ?? skill;
   return SKILL_SPECIALTY_SUGGESTIONS[portugueseSkill] ?? [];
 }
