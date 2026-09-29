@@ -222,5 +222,113 @@
         "Wizened": "Receba +3 para invocar um destino envolvendo objetos ou máquinas e Resoluto em ações que o favoreçam."
       }
     }
+  },
+  "ctl-core:blessing-of-perfection": {
+    "name": "Bênção da Perfeição",
+    "description": "Abençoe um objeto para substituir seu bônus de equipamento pelo Fado em uma ação, ou incentive a ação de Ofícios, Medicina ou Informática de outra pessoa para substituir essa Perícia pelo Fado.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma ação",
+    "loophole": "Aceite pagamento pelo Contrato e depois enterre as moedas ou o objeto negociado.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo também pode substituir Expressão, Persuasão ou Socialização de outra pessoa pelo Fado.",
+      "Wizened": "Um objeto abençoado pelo Mirrado conserva seu bônus em todos os usos durante a cena."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A Fera também pode aplicar o Contrato ao Atletismo, à Briga ou à Sobrevivência de outro personagem.",
+        "Darkling": "O Trevoso também pode aplicá-lo ao Furto, à Furtividade ou ao Subterfúgio de outro personagem.",
+        "Elemental": "Uma Perícia abençoada pelo Elemental conserva o bônus em todas as rolagens da cena.",
+        "Ogre": "O Ogro dobra o Fado, até +5, ao abençoar uma arma."
+      }
+    }
+  },
+  "ctl-core:changing-fortunes": {
+    "name": "Mudança de Fortuna",
+    "description": "Manipule a próxima rolagem do alvo, afetando um mesmo alvo apenas uma vez por capítulo.",
+    "dicePool": "Raciocínio + Ocultismo + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Uma ação",
+    "success": "Para cada sucesso, acrescente ou subtraia dois dados da próxima rolagem ou altere em um o limiar de sucesso excepcional dela, em qualquer combinação. O limiar não pode cair abaixo de um, e um dado de sorte não pode obter sucesso excepcional.",
+    "exceptionalSuccess": "Em vez disso, especifique um gatilho para o efeito; ele expira sem ser usado ao fim da cena.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Aplique contra o changeling os efeitos rolados, escolhidos pelo Narrador.",
+    "loophole": "Sofra uma falha dramática em uma das ações do changeling nesta cena; como alternativa, sofrer uma falha dramática mais tarde na cena reembolsa o Glamour.",
+    "seemingBenefits": {
+      "Ogre": "O alvo recebe Abalado sempre que usa a parada amaldiçoada, até o sol cruzar novamente o horizonte.",
+      "Wizened": "Depois da rolagem afetada, o Mirrado força uma nova rolagem; o segundo resultado prevalece."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Uma vez por cena, a vítima sofre metade do Fado em dano contundente ao usar a parada amaldiçoada, até o próximo cruzamento do horizonte.",
+        "Darkling": "O Trevoso recupera 1 ponto de Força de Vontade se o alvo sofrer uma falha dramática por causa do Contrato em sua presença.",
+        "Elemental": "O Elemental pode gastar 1 Glamour adicional para conceder 9-novamente ou remover 10-novamente da ação.",
+        "Fairest": "O Belíssimo recupera 1 ponto de Força de Vontade se o alvo obtiver um sucesso excepcional por causa do Contrato em sua presença."
+      }
+    }
+  },
+  "ctl-core:light-shy": {
+    "name": "Aversão à Luz",
+    "description": "Torne-se invisível à Máscara e a todos os sentidos, embora tecnologias de gravação ainda detectem o changeling. Uma ação agressiva, dano ou qualquer efeito sobrenatural sobre outra pessoa encerra o Contrato.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até ser rompido",
+    "loophole": "Permaneça imóvel na escuridão ou em sombra profunda por um minuto.",
+    "seemingBenefits": {
+      "Darkling": "Tecnologias de gravação também não conseguem detectar o Trevoso.",
+      "Wizened": "O Mirrado pode escolher um objeto como alvo; testemunhas racionalizam sua ausência, mas um contato acidental encerra o efeito."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A Fera pode conceder o efeito a um animal por meio do toque.",
+        "Elemental": "Uma vez por capítulo, o Elemental pode usar um efeito sobrenatural sobre alguém sem encerrar este Contrato.",
+        "Fairest": "O Belíssimo aparece como outra pessoa conhecida em gravações de áudio ou vídeo.",
+        "Ogre": "Uma vez por capítulo, o Ogro pode realizar uma ação agressiva contra outra pessoa sem encerrar o efeito."
+      }
+    }
+  },
+  "ctl-core:murkblur": {
+    "name": "Turvação Sombria",
+    "description": "Sobrecarregue os sentidos do alvo com uma beleza Arcadiana impossível.",
+    "dicePool": "Manipulação + Subterfúgio + Fado contra Raciocínio + Tolerância",
+    "action": "Disputada",
+    "duration": "Um turno",
+    "success": "Inflija Cego nos dois olhos.",
+    "exceptionalSuccess": "Inflija também Surdo nos dois ouvidos.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling fica Desorientado.",
+    "loophole": "Coma o olho de uma criatura ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Elemental": "Em vez disso, o Elemental faz o alvo acreditar que um elemento o envolve, impondo Inclinações adequadas escolhidas pelo Narrador.",
+      "Wizened": "O Mirrado também inflige Desorientado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A Fera também inflige Braço Lesionado ou Perna Lesionada.",
+        "Darkling": "O Trevoso pode gastar 1 Glamour adicional para fazer a vítima perder a próxima ação.",
+        "Fairest": "O Belíssimo insere visões idealizadas de si mesmo, impondo −3 ao próximo ataque da vítima contra ele.",
+        "Ogre": "O Ogro também inflige Espancado em uma invocação bem-sucedida."
+      }
+    }
+  },
+  "ctl-core:trivial-reworking": {
+    "name": "Reformulação Trivial",
+    "description": "Coloque sob a Máscara um objeto mundano de Tamanho 3 ou menor e altere seus aspectos visuais, preservando sua forma básica. A ilusão afeta todos os sentidos mundanos, mas não testes físicos nem seres que enxerguem através da Máscara.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Toque outro objeto semelhante à ilusão desejada durante a mesma cena.",
+    "seemingBenefits": {
+      "Darkling": "Subtraia a Manipulação do Trevoso das tentativas de detectar a falsificação.",
+      "Wizened": "O Mirrado pode afetar um objeto de qualquer Tamanho."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A Fera pode usar o Contrato em um animal sem obrigá-lo a agir contra sua natureza.",
+        "Elemental": "O Elemental recebe +3 em ações Sociais auxiliadas por um item feito para parecer natural, em vez de manufaturado.",
+        "Fairest": "O objeto alterado pelo Belíssimo resiste a inspeções sofisticadas.",
+        "Ogre": "Seres normalmente imunes à Máscara precisam vencer um Choque de Vontades contra o Ogro para enxergar através do efeito."
+      }
+    }
   }
 }

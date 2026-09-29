@@ -51,3 +51,8 @@
 - `Retainer` e `Staff`, citados nos efeitos, foram apresentados provisoriamente como **Lacaio** e **Equipe**. A terminologia será uniformizada na tradução integral de Méritos.
 - `fetch` permanece **simulacro**, conforme a tradução já adotada nos textos de Fratrias.
 - `Pomp and Circumstance`: traduzido como **Pompa e Circunstância**, preservando a expressão e o título musical reconhecíveis em português.
+
+## Lote: Joias Comuns — *Changeling: The Lost*, pp. 132–133
+
+- `Murkblur`: traduzido como **Turvação Sombria**, tratando o título composto como a combinação de obscuridade e visão turva.
+- `Light-Shy`: traduzido como **Aversão à Luz**, privilegiando o efeito do título sobre a construção literal “tímido à luz”.
