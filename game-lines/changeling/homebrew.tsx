@@ -59,7 +59,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
         ...outcomes, ...detail(h("Opções", "Options"), options.join("\n")),
         ...(presented.detailTables ?? []).flatMap((table) => detail(table.title, table.rows.map((row) => row.join(" — ")).join("\n"))),
         ...detail(h("Brecha", "Loophole"), presented.loophole), ...seemingBenefits, ...courtBenefits,
-        ...detail(h("Dívida Goblin", "Goblin Debt"), presented.goblinDebt),
+        ...detail(h("Débito Goblin", "Goblin Debt"), presented.goblinDebt),
       ],
       tier: item.type === "Comum" ? h("Comuns", "Common") : h("Reais", "Royal"), tierOrder: item.type === "Comum" ? 0 : 1, ...(item.homebrew ? { customContract: item } : {}),
     });
@@ -89,10 +89,10 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     id: item.id, sourceId: item.sourceId, source: item.source, kind: "Entitlements", name: item.name,
     details: [
       ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...detail(h("Propósito", "Purpose"), item.purpose),
-      ...detail(h("Privilégios", "Privileges"), item.privileges), ...detail(h("Deveres", "Duties"), item.duties), ...detail(h("Máscara e Mien", "Mask and Mien"), item.maskAndMien),
-      ...detail(h("Heráldica", "Heraldry"), item.heraldry), ...detail(`${h("Token", "Token")} — ${item.token.name}`, item.token.description),
-      ...detail(h("Efeito do Token", "Token Effect"), item.token.effect), ...detail(h("Captura do Token", "Token Catch"), item.token.catch), ...detail(h("Desvantagem do Token", "Token Drawback"), item.token.drawback),
-      ...(item.roles ?? []).flatMap((role) => [...detail(`${h("Papel", "Role")} — ${role.name}`, role.prerequisites), ...detail(`${role.name} — ${h("privilégio", "privilege")}`, role.privilege), ...detail(`${role.name} — ${h("deveres", "duties")}`, role.duties), ...detail(`${role.name} — ${h("bônus do Token", "Token bonus")}`, role.tokenBonus), ...detail(`${role.name} — ${h("desvantagem do Token", "Token drawback")}`, role.tokenDrawback)]),
+      ...detail(h("Privilégios", "Privileges"), item.privileges), ...detail(h("Deveres", "Duties"), item.duties), ...detail(h("Mascarilha e Semblante Fae", "Mask and Mien"), item.maskAndMien),
+      ...detail(h("Heráldica", "Heraldry"), item.heraldry), ...detail(`${h("Penhor", "Token")} — ${item.token.name}`, item.token.description),
+      ...detail(h("Efeito do Penhor", "Token Effect"), item.token.effect), ...detail(h("Captura do Penhor", "Token Catch"), item.token.catch), ...detail(h("Desvantagem do Penhor", "Token Drawback"), item.token.drawback),
+      ...(item.roles ?? []).flatMap((role) => [...detail(`${h("Papel", "Role")} — ${role.name}`, role.prerequisites), ...detail(`${role.name} — ${h("privilégio", "privilege")}`, role.privilege), ...detail(`${role.name} — ${h("deveres", "duties")}`, role.duties), ...detail(`${role.name} — ${h("bônus do Penhor", "Token bonus")}`, role.tokenBonus), ...detail(`${role.name} — ${h("desvantagem do Penhor", "Token drawback")}`, role.tokenDrawback)]),
       ...item.blessings.flatMap((blessing) => detail(`${h("Bênção", "Blessing")} — ${blessing.name}`, blessing.description)),
       ...detail(h("Touchstone", "Touchstone"), item.touchstone), ...detail(h("Maldição", "Curse"), item.curse), ...detail("Beat", item.beat), ...detail(h("Lendas", "Legends"), item.legends.join("\n")),
     ],

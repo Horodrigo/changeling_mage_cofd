@@ -20,7 +20,7 @@
     }
   },
   "ctl-core:mask-of-superiority": {
-    "name": "Máscara de Superioridade",
+    "name": "Mascarilha de Superioridade",
     "description": "Entre em um local como se tivesse o direito de pertencer a uma organização ali representada.",
     "dicePool": "Presença + Subterfúgio + Fado",
     "action": "Instantânea",
@@ -76,7 +76,7 @@
     "loophole": "Realize um favor significativo para o elemento ou material escolhido durante a cena.",
     "seemingBenefits": {
       "Elemental": "Por +●○, funda-se ao servo, substitua seus Atributos pelos dele quando desejar, torne-se imune ao material ou elemento dele e some +1L aos modificadores de armas.",
-      "Fairest": "Por +○, vincule um servo a um Refúgio indefinidamente enquanto ele permanecer lá."
+      "Fairest": "Por +○, vincule um servo a um Vão indefinidamente enquanto ele permanecer lá."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -269,7 +269,7 @@
   },
   "ctl-core:light-shy": {
     "name": "Aversão à Luz",
-    "description": "Torne-se invisível à Máscara e a todos os sentidos, embora tecnologias de gravação ainda detectem o changeling. Uma ação agressiva, dano ou qualquer efeito sobrenatural sobre outra pessoa encerra o Contrato.",
+    "description": "Torne-se invisível à Mascarilha e a todos os sentidos, embora tecnologias de gravação ainda detectem o changeling. Uma ação agressiva, dano ou qualquer efeito sobrenatural sobre outra pessoa encerra o Contrato.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena ou até ser rompido",
@@ -313,7 +313,7 @@
   },
   "ctl-core:trivial-reworking": {
     "name": "Reformulação Trivial",
-    "description": "Coloque sob a Máscara um objeto mundano de Tamanho 3 ou menor e altere seus aspectos visuais, preservando sua forma básica. A ilusão afeta todos os sentidos mundanos, mas não testes físicos nem seres que enxerguem através da Máscara.",
+    "description": "Coloque sob a Mascarilha um objeto mundano de Tamanho 3 ou menor e altere seus aspectos visuais, preservando sua forma básica. A ilusão afeta todos os sentidos mundanos, mas não testes físicos nem seres que enxerguem através da Mascarilha.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",
@@ -327,7 +327,7 @@
         "Beast": "A Fera pode usar o Contrato em um animal sem obrigá-lo a agir contra sua natureza.",
         "Elemental": "O Elemental recebe +3 em ações Sociais auxiliadas por um item feito para parecer natural, em vez de manufaturado.",
         "Fairest": "O objeto alterado pelo Belíssimo resiste a inspeções sofisticadas.",
-        "Ogre": "Seres normalmente imunes à Máscara precisam vencer um Choque de Vontades contra o Ogro para enxergar através do efeito."
+        "Ogre": "Seres normalmente imunes à Mascarilha precisam vencer um Choque de Vontades contra o Ogro para enxergar através do efeito."
       }
     }
   },
@@ -469,7 +469,7 @@
     "success": "Vença e descubra a Virtude, o Vício ou as Âncoras equivalentes do alvo, além de uma Aspiração.",
     "exceptionalSuccess": "Descubra também uma segunda Aspiração.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Perca, e o oponente descobre a Agulha, o Fio e uma Aspiração do changeling.",
+    "dramaticFailure": "Perca, e o oponente descobre a Agulha, a Linha e uma Aspiração do changeling.",
     "loophole": "Provoque o alvo para que ele desafie o changeling para o jogo.",
     "seemingBenefits": {
       "Beast": "Uma vez antes do amanhecer, a Fera pode pensar no alvo para saber sua localização exata, atividade atual e planos presentes de partir.",
@@ -516,20 +516,20 @@
     "dicePool": "Manipulação + Empatia + Fado contra Compostura + Tolerância",
     "action": "Disputada",
     "duration": "Instantânea",
-    "success": "Descubra a Clareza máxima e atual do alvo em termos relativos e todas as suas Condições de Clareza.",
-    "exceptionalSuccess": "Descubra também as circunstâncias do dano de Clareza mais recente do alvo.",
+    "success": "Descubra a Lucidez máxima e atual do alvo em termos relativos e todas as suas Condições de Lucidez.",
+    "exceptionalSuccess": "Descubra também as circunstâncias do dano de Lucidez mais recente do alvo.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Receba valores incorretos de Clareza sem perceber o erro.",
+    "dramaticFailure": "Receba valores incorretos de Lucidez sem perceber o erro.",
     "loophole": "Toque diretamente a pele do alvo com a sua.",
     "seemingBenefits": {
-      "Beast": "Em um sucesso excepcional, a Fera rola os sucessos da invocação como um ataque psíquico de Clareza.",
-      "Darkling": "Em um sucesso excepcional, o Trevoso concede ao alvo Defesa igual ao Raciocínio contra o próximo ataque de Clareza nesta sessão."
+      "Beast": "Em um sucesso excepcional, a Fera rola os sucessos da invocação como um ataque psíquico de Lucidez.",
+      "Darkling": "Em um sucesso excepcional, o Trevoso concede ao alvo Defesa igual ao Raciocínio contra o próximo ataque de Lucidez nesta sessão."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
-        "Grimm": "Em um sucesso excepcional, o Grimm descobre a identidade de uma Pedra de Contato e pode anulá-la no próximo ponto de ruptura do alvo.",
+        "Grimm": "Em um sucesso excepcional, o Grimm descobre a identidade de uma Touchstone e pode anulá-la no próximo ponto de ruptura do alvo.",
         "Elemental": "Em um sucesso excepcional, o próximo ponto de ruptura do Elemental neste capítulo sofre −1 dado.",
-        "Fairest": "Em um sucesso excepcional, o Belíssimo cura 1 ponto de dano leve de Clareza do alvo.",
+        "Fairest": "Em um sucesso excepcional, o Belíssimo cura 1 ponto de dano leve de Lucidez do alvo.",
         "Ogre": "Em um sucesso excepcional, o Ogro recebe +3 no próximo Contrato usado sobre o alvo.",
         "Wizened": "Em um sucesso excepcional, o Mirrado abre automaticamente uma Porta na próxima manobra Social com o alvo."
       }
@@ -558,6 +558,133 @@
         "Elemental": "O Elemental recebe 8-novamente, em vez de 9-novamente, ao empunhar o item.",
         "Fairest": "O Belíssimo recebe dois efeitos pelo primeiro Glamour gasto.",
         "Ogre": "O Ogro reduz a Durabilidade do objeto em três quartos, arredondada para baixo."
+      }
+    }
+  },
+  "ctl-core:props-and-scenery": {
+    "name": "Adereços e Cenário",
+    "description": "Transforme-se em um objeto inanimado com suas características padrão e Tamanho igual ou inferior ao do changeling.",
+    "dicePool": "Manipulação + Persuasão + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "options": [
+      "+1 de Durabilidade, repetível.",
+      "Mobilidade limitada apropriada à forma.",
+      "Aumente ou reduza o Tamanho em 1, repetível.",
+      "Outros benefícios aprovados pelo Narrador."
+    ],
+    "success": "Assuma a forma e compre um benefício listado por sucesso.",
+    "exceptionalSuccess": "Por 3 Experiências, aprenda permanentemente a forma e assuma-a reflexivamente por ●, sem rolagem, benefícios de um sucesso ou Brecha; a invocação normal continua possível.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Fique brevemente deformado e sofra um ataque de Lucidez com metade do Fado em dados, arredondada para cima.",
+    "loophole": "Invoque diante de várias pessoas enquanto ninguém estiver olhando diretamente para o changeling.",
+    "seemingBenefits": {
+      "Darkling": "A duração do Trevoso se estende até o sol cruzar novamente o horizonte.",
+      "Ogre": "O Ogro pode assumir objetos com até o dobro do Tamanho normal por padrão."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm pode assumir uma forma permanente como se tivesse rolado três sucessos sempre que ela se adequar ao papel ou disfarce atual.",
+        "Beast": "A forma da Fera é móvel e se desloca com metade do Deslocamento normal.",
+        "Elemental": "O Elemental pode alterar a forma sem ser visto e sem mudar as características compradas; a aquisição permanente ainda exige sucesso excepcional.",
+        "Fairest": "O Belíssimo se torna uma versão ideal que observadores escolhem primeiro entre objetos semelhantes.",
+        "Wizened": "Uma forma funcional do Mirrado concede +2 de equipamento a quem a empunhar, além do bônus normal."
+      }
+    }
+  },
+  "ctl-core:reflections-of-the-past": {
+    "name": "Reflexos do Passado",
+    "description": "Retroceda uma superfície reflexiva para mostrar até uma cena de um momento passado especificado ou acontecimento conhecido, visível a todos os observadores pelo ângulo original da superfície.",
+    "dicePool": "Inteligência + Ocultismo + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Observe até uma semana, mês, estação, ano ou década no passado por um a cinco pontos de Glamour, respectivamente.",
+    "exceptionalSuccess": "Espreite pelas bordas do reflexo para ver detalhes fora do ângulo original.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Veja um acontecimento falso e sinais da aproximação dos Fae Verdadeiros, recebendo Paranoico.",
+    "loophole": "Depois de sofrer pelo menos 1 ponto de dano letal nesta cena, deixe sangue cair sobre a superfície.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode usar tino para detectar fenômenos sobrenaturais no acontecimento refletido.",
+      "Fairest": "O Belíssimo inflige Coagido a um personagem visto na visão."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm identifica automaticamente qualquer pessoa na cena agindo de modo atípico ou sob coerção.",
+        "Beast": "A Fera pode enxergar pelos olhos de animais refletidos na visão.",
+        "Elemental": "O Elemental vê as auras e os estados emocionais dos personagens refletidos.",
+        "Ogre": "O Ogro obtém sucesso excepcional com três sucessos quando o acontecimento envolve violência ou medo.",
+        "Wizened": "O Mirrado percebe Vitalidade, Durabilidade e Inclinações pertinentes das pessoas e equipamentos na cena."
+      }
+    }
+  },
+  "ctl-core:riddle-kith": {
+    "name": "Enigma de Frátria",
+    "description": "Molde o Semblante Fae de um changeling para se parecer com os adornos de outra Frátria sem copiar sua bênção nem mudar o Semblante aparente. Não é possível copiar o Semblante Fae de uma pessoa específica; forçar a mudança é um ponto de ruptura de três dados.",
+    "dicePool": "Manipulação + Furto + Fado contra Compostura + Tolerância",
+    "action": "Instantânea para alvos dispostos; disputada para alvos indispostos",
+    "duration": "Uma cena",
+    "success": "O alvo se parece externamente com a Frátria escolhida.",
+    "exceptionalSuccess": "Ao escolher a si mesmo como alvo, gaste ○ para tornar a aparência indefinida.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo perde todos os benefícios de Frátria pela cena sem assumir outro Semblante Fae.",
+    "loophole": "Durante a cena, dê algo sem exigir recompensa além de gratidão a um changeling da Frátria desejada.",
+    "seemingBenefits": {
+      "Darkling": "O alvo do Trevoso perde o benefício da própria Frátria e recebe o benefício da Frátria imitada.",
+      "Elemental": "O Elemental também pode fazer o alvo parecer pertencer a outro Semblante."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm pode gastar 1 ponto de Força de Vontade para aplicar o efeito de sucesso excepcional sem obtê-lo na rolagem.",
+        "Beast": "A Fera concede ao alvo +1 de dano letal em ataques desarmados.",
+        "Fairest": "O Belíssimo concede ao alvo +2 em Socialização com personagens que percebam a beleza aprimorada.",
+        "Ogre": "O Ogro concede ao alvo +2 em Intimidação com personagens que percebam o Semblante Fae aprimorado.",
+        "Wizened": "Em um sucesso excepcional, o Mirrado pode alterar indefinidamente outro alvo disposto; cada personagem só pode receber este efeito uma vez."
+      }
+    }
+  },
+  "ctl-core:skinmask": {
+    "name": "Mascarilha de Pele",
+    "description": "Recite três fatos conhecidos sobre um mortal ou alvo Mascarado que tenha encontrado antes e copie sua aparência externa; para um changeling, copie a Mascarilha e o Semblante Fae. Rolagens Sociais continuam necessárias para imitar o comportamento. Copiar alguém semelhante ao futuro humano que o changeling não viveu restaura 1 ponto de Força de Vontade.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Segure um objeto pertencente à pessoa que será copiada.",
+    "seemingBenefits": {
+      "Darkling": "Depois de copiar uma identidade três vezes, o Trevoso pode comprá-la como Identidade Alternativa em qualquer nível e assumi-la reflexivamente por ●.",
+      "Fairest": "O Belíssimo recebe +3 para imitar o comportamento do alvo copiado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "O Grimm recupera 2 pontos de Força de Vontade ao assumir a aparência que teria sem o sequestro.",
+        "Beast": "A Fera também recupera 1 ponto de Força de Vontade ao assumir uma personalidade significativamente diferente da sua.",
+        "Elemental": "O Elemental também recupera 1 ponto de Força de Vontade ao assumir uma forma significativamente diferente da sua.",
+        "Ogre": "O próximo ponto de ruptura do Ogro na forma sofre −2, uma vez por dia antes da mudança do horizonte.",
+        "Wizened": "O Mirrado pode usar uma Perícia Mental copiada quando ela for superior ao próprio nível."
+      }
+    }
+  },
+  "ctl-core:unravel-the-tapestry": {
+    "name": "Desfiar a Tapeçaria",
+    "description": "Retroceda os últimos dez segundos, ou um turno completo de Iniciativa, e escolha ações diferentes enquanto todos sem poder temporal semelhante repetem suas ações originais. O efeito é acionado automaticamente uma vez por história se o changeling morrer e puder pagar; sobreviver concede Assombrado.",
+    "dicePool": "Raciocínio + Ocultismo + Fado",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "success": "Repita o intervalo e altere as ações do changeling.",
+    "exceptionalSuccess": "Receba 8-novamente nas rolagens feitas durante o tempo repetido.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Receba Insensato e, caso volte a agir em Iniciativa nesta cena, assuma automaticamente a Iniciativa mais baixa.",
+    "loophole": "Contraia uma dívida não paga durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "Antes do tempo recomeçar, o Trevoso pode mover-se reflexivamente até Furtividade metros.",
+      "Wizened": "O Mirrado recebe um ataque surpresa contra um alvo viável durante a repetição."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Grimm": "Depois de uma ação fracassada de Subterfúgio, o Grimm recebe 8-novamente para tentar outra vez, mesmo sem uma invocação excepcional.",
+        "Beast": "A Fera pode reviver mais de uma vez se pagar os custos; ressurreições posteriores infligem três pontos de dano leve de Lucidez.",
+        "Elemental": "O Elemental obtém sucesso excepcional com três sucessos.",
+        "Fairest": "O Belíssimo pode gastar 1 Glamour adicional para aplicar o efeito a outra pessoa e permanecer ciente das mudanças resultantes.",
+        "Ogre": "Se for revivido, o Ogro recebe modificador de arma +5 no próximo ataque bem-sucedido contra seu assassino."
       }
     }
   }

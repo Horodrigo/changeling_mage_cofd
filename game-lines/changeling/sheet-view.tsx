@@ -200,9 +200,9 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     if (isMobile) {
         const identity = [
             ["Nome", character.character.name], ["Jogador", character.character.player],
-            ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Fio", changelingAnchorDisplayName("thread", data.thread, locale)],
+            ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Linha", changelingAnchorDisplayName("thread", data.thread, locale)],
             ["Conceito", character.character.concept],
-            ["Feição", seemingName(seemingCatalog, data.seeming, locale)],
+            ["Semblante", seemingName(seemingCatalog, data.seeming, locale)],
             [t("ui.kith6a78ff"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [t("ui.court"), displayCourt(lineReference.courts, data.court, locale)],
         ];
         return (<CharacterPaperShell line="CtL" mobile title={t("ui.changelingTitle")} subtitle={t("ui.theLOST")}>
@@ -333,7 +333,7 @@ function SheetField({ label, value }: {
     value: unknown;
 }) {
     const { locale } = useLanguage();
-    const anchorKind = label === "Agulha" ? "needle" : label === "Fio" ? "thread" : null;
+    const anchorKind = label === "Agulha" ? "needle" : label === "Linha" ? "thread" : null;
     const tooltip = anchorKind ? changelingAnchorRecovery(anchorKind, systemTerm(String(value ?? ""), "en-US"), locale) : "";
     return (<div className="official-field" title={tooltip || undefined} data-tooltip={tooltip || undefined} tabIndex={tooltip ? 0 : undefined}>
       <span>{systemTerm(label, locale)}</span>
@@ -345,7 +345,7 @@ function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly Me
     const base = locale === "en-US"
         ? definition?.name ?? item.name
         : definition?.translatedName ??
-            (item.name === "Hollow" ? "Recanto" : item.name), detail = meritConfigurationTitle(item.configuration, locale, courtCatalog);
+            (item.name === "Hollow" ? "Vão" : item.name), detail = meritConfigurationTitle(item.configuration, locale, courtCatalog);
     return detail ? `${base}: ${detail}` : base;
 }
 function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatalog, entitlementCatalog, tokenCatalog, hasAdjacentContent = false }: {
@@ -369,7 +369,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
             const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
-                ? "Tokens"
+                ? t("ui.tokens")
                 : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>

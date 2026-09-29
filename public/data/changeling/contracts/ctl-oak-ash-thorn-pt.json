@@ -1,7 +1,7 @@
 {
   "ctl-oak-ash-thorn:donning-the-grand-mantle": {
     "name": "Vestir o Grande Manto",
-    "description": "O changeling canaliza o poder do patrono de seu Manto, abandona a Máscara e proclama sua afiliação. Usar o Contrato mais de uma vez por história impõe Coagido em relação ao patrono até que o changeling conceda o favor ou a história termine.",
+    "description": "O changeling canaliza o poder do patrono de seu Manto, abandona a Mascarilha e proclama sua afiliação. Usar o Contrato mais de uma vez por história impõe Coagido em relação ao patrono até que o changeling conceda o favor ou a história termine.",
     "dicePool": "Presença + Expressão + Manto",
     "action": "Instantânea",
     "duration": "Uma cena",
@@ -21,7 +21,7 @@
   },
   "ctl-oak-ash-thorn:autonomous-payload": {
     "name": "Carga Autônoma",
-    "description": "Sobre uma senda da BriarNet, o changeling abre um portal digital para a Sebe e transforma a si mesmo e a seguidores voluntários em dados dentro de um computador ou repositório digital. Cada repositório funciona como um Bastião cuja Fortificação reflete sua segurança. Eles podem fiar a Sebe para contornar a segurança ou alterar dados e viajar por sinais conectados. Quando o Contrato termina, emergem fisicamente, a menos que ele seja invocado novamente. A invocação sofre oposição do personagem com o melhor acesso e controle sobre o repositório.",
+    "description": "Sobre uma senda da BriarNet, o changeling abre um portal digital para a Sebe e transforma a si mesmo e a seguidores voluntários em dados dentro de um computador ou repositório digital. Cada repositório funciona como um Bastião cuja Fortificação reflete sua segurança. Eles podem tecer a Sebe para contornar a segurança ou alterar dados e viajar por sinais conectados. Quando o Contrato termina, emergem fisicamente, a menos que ele seja invocado novamente. A invocação sofre oposição do personagem com o melhor acesso e controle sobre o repositório.",
     "dicePool": "Manipulação + Computação + Manto contra (Inteligência ou Computação) + Fortificação",
     "action": "Disputada",
     "duration": "Uma cena",
@@ -54,7 +54,7 @@
     "dicePool": "Presença + Política + Manto contra Perseverança + Fado",
     "action": "Disputada",
     "duration": "Instantânea",
-    "success": "O alvo recebe uma Condição temporária Quebrador de Juramento que não exige o perdão adicional do Fado para ser resolvida; enquanto durar, o semblante feérico do alvo reflete visivelmente a transgressão.",
+    "success": "O alvo recebe uma Condição temporária Quebrador de Juramento que não exige o perdão adicional do Fado para ser resolvida; enquanto durar, o Semblante Fae do alvo reflete visivelmente a transgressão.",
     "exceptionalSuccess": "O alvo também não pode dizer nada que não acredite ser verdade até o fim do capítulo.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O alvo descobre o último ato grave de desobediência, traição ou desonestidade do changeling e pode impor-lhe Coagido.",

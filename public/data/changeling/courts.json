@@ -2,7 +2,7 @@
   {
     "id": "spring",
     "name": "Spring Court",
-    "translatedName": "Primavera",
+    "translatedName": "Corte da Primavera",
     "emotion": "Desire",
     "emotionPt": "Desejo",
     "mantleBenefits": [
@@ -27,7 +27,7 @@
   {
     "id": "summer",
     "name": "Summer Court",
-    "translatedName": "Verão",
+    "translatedName": "Corte do Verão",
     "emotion": "Wrath",
     "emotionPt": "Ira",
     "mantleBenefits": [
@@ -39,10 +39,10 @@
     ],
     "mantleBenefitsPt": [
       "Some o Manto às ações para intimidar ou subjugar.",
-      "Some o Manto às ações de combate ao defender sua comunidade feérica contra as Fadas.",
+      "Some o Manto às ações de combate ao defender seu Povoado dos Fae.",
       "Receba armadura geral e balística igual ao Manto ao proteger ou lutar por outra pessoa.",
       "Supere automaticamente obstáculos mundanos ao derrubá-los ou afastá-los.",
-      "Cause dano agravado ao defender um membro de sua comunidade feérica."
+      "Cause dano agravado ao defender um membro de seu Povoado."
     ],
     "additionalPages": [117, 165],
     "sourceId": "ctl-2ed",
@@ -52,7 +52,7 @@
   {
     "id": "autumn",
     "name": "Autumn Court",
-    "translatedName": "Outono",
+    "translatedName": "Corte do Outono",
     "emotion": "Fear",
     "emotionPt": "Medo",
     "mantleBenefits": [
@@ -63,10 +63,10 @@
       "Spend 2 Glamour to reproduce and retarget a magical effect used on you earlier in the scene."
     ],
     "mantleBenefitsPt": [
-      "Some o Manto às ações para estudar ou investigar as Fadas.",
+      "Some o Manto às ações para estudar ou investigar a Feéria.",
       "Some o Manto às ações para amedrontar alguém.",
-      "Gaste um Glamour a menos ao ativar Contratos contra uma ameaça das Fadas.",
-      "Uma vez por história, quite Dívida Goblin igual ao Manto sem sofrer seus efeitos habituais.",
+      "Gaste um Glamour a menos ao ativar Contratos contra uma ameaça da Feéria.",
+      "Uma vez por história, quite Débito Goblin igual ao Manto sem sofrer seus efeitos habituais.",
       "Gaste 2 Glamour para reproduzir e redirecionar um efeito mágico usado contra você anteriormente na cena."
     ],
     "additionalPages": [118, 165],
@@ -77,7 +77,7 @@
   {
     "id": "winter",
     "name": "Winter Court",
-    "translatedName": "Inverno",
+    "translatedName": "Corte do Inverno",
     "emotion": "Sorrow",
     "emotionPt": "Tristeza",
     "mantleBenefits": [
@@ -187,7 +187,7 @@
     "mantleBenefitsPt": [
       "Some o Manto a testes mundanos para aliviar o sofrimento de um humano ou changeling.",
       "Some o Manto a testes mundanos para resistir ou ajudar outros a resistir a intimidação e ameaças.",
-      "Incite Bedlam para encerrar uma emoção escolhida e sua Condição em vez de impô-la; emoções sobrenaturais provocam Choque de Vontades.",
+      "Incite Desvario para encerrar uma emoção escolhida e sua Condição em vez de impô-la; emoções sobrenaturais provocam Choque de Vontades.",
       "Uma vez por capítulo, recupere 1 Força de Vontade após sofrer uma falha ou falha dramática.",
       "Gaste 1 Glamour para criar uma bolha de três metros que o protege de Inclinações Ambientais pela cena."
     ],
@@ -307,7 +307,7 @@
     "mantleBenefitsPt": [
       "Some o Manto a testes mundanos para compreender ou revelar sentimentos verdadeiros ou dor.",
       "Some o Manto a ataques mundanos para desarmar ou incapacitar alguém digno de piedade.",
-      "Ecos de simulacros usados em sua presença custam +1 Glamour; gastar assim o último Glamour causa 1 dano letal.",
+      "Ecos de Duplos usados em sua presença custam +1 Glamour; gastar assim o último Glamour causa 1 dano letal.",
       "Uma vez por capítulo ao curar dano de Lucidez, cure um nível adicional.",
       "Dobre a velocidade de cura natural; acumula com Metabolismo Arcadiano."
     ],
@@ -405,7 +405,7 @@
       "Some o Manto a testes mundanos para elaborar estratégias ou empregar táticas de combate.",
       "Some o Manto à Defesa.",
       "Uma vez por capítulo, aplique a qualidade de rota a um ataque ou ação de Esquiva.",
-      "Ignore a armadura de criaturas da Sebe ou agentes das Fadas; armadura sobrenatural provoca Choque de Vontades."
+      "Ignore a armadura de criaturas da Sebe ou agentes dos Fae; armadura sobrenatural provoca Choque de Vontades."
     ],
     "sourceId": "h-courts",
     "source": "Book of Courts",
@@ -452,7 +452,7 @@
       "Some o Manto ao reunir informações sobre um assunto novo.",
       "Some o Manto aos testes ligados à instabilidade ou impermanência.",
       "Recupere Força de Vontade quando uma verdade implicar um amigo ou aliado.",
-      "Convença automaticamente outro changeling a revelar informação importante para a segurança da comunidade; resistência sobrenatural provoca Choque de Vontades.",
+      "Convença automaticamente outro changeling a revelar informação importante para a segurança do Povoado; resistência sobrenatural provoca Choque de Vontades.",
       "Uma vez por sessão, revele uma verdade desconhecida para transferir sua Condição negativa de Lucidez a outro changeling."
     ],
     "glamourTrigger": "Gaining new knowledge through reckless pursuit",
@@ -501,10 +501,10 @@
       "Deal aggravated damage to a target you planned to attack."
     ],
     "mantleBenefitsPt": [
-      "Some o Manto ao pesquisar um problema que a comunidade já enfrentou.",
+      "Some o Manto ao pesquisar um problema que o Povoado já enfrentou.",
       "Some o Manto ao seguir ou investigar um novo informante.",
       "Recupere Força de Vontade ao escolher deliberadamente uma ação que imponha uma Condição.",
-      "Some o Manto ao ocultar um fato sobre você ou sua comunidade.",
+      "Some o Manto ao ocultar um fato sobre você ou seu Povoado.",
       "Cause dano agravado contra um alvo cujo ataque você planejou."
     ],
     "additionalPages": [280],
@@ -740,7 +740,7 @@
       "Some o Manto ao persuadir alguém a prestar um juramento.",
       "Some o Manto ao descobrir se está sendo enganado.",
       "Uma vez por sessão, gaste Força de Vontade para receber Recursos temporários iguais ao Manto, até cinco pontos.",
-      "Uma vez por história, reduza a Dívida Goblin pelo Manto.",
+      "Uma vez por história, reduza o Débito Goblin pelo Manto.",
       "Uma vez por cena, gaste Força de Vontade para descobrir o desejo íntimo de um personagem presente."
     ],
     "glamourTrigger": "Finding and obtaining something owed",
@@ -766,7 +766,7 @@
       "Some o Manto ao interpretar a situação de alguém por seu comportamento.",
       "Some o Manto ao fechar acordos em Tumbledown.",
       "Recupere Força de Vontade ao resolver Quebrador de Juramento ou ajudar alguém a resolvê-la.",
-      "Uma vez por sessão, substitua uma Condição imposta pela Dívida Goblin por outra do mesmo tipo.",
+      "Uma vez por sessão, substitua uma Condição imposta pelo Débito Goblin por outra do mesmo tipo.",
       "Uma vez por sessão, pergunte se um acordo contém uma brecha ou armadilha desvantajosa para você."
     ],
     "additionalPages": [292],
@@ -793,7 +793,7 @@
       "Some o Manto ao convencer alguém a fazer uma barganha.",
       "Receba o Mérito Faz-Tudo.",
       "Quem tentar trapacear ou mentir sobre um acordo ou promessa sofre penalidade igual ao Manto.",
-      "Uma vez por sessão, receba um ponto de Dívida Goblin para transferir a outro personagem uma obrigação de uma barganha.",
+      "Uma vez por sessão, receba um ponto de Débito Goblin para transferir a outro personagem uma obrigação de uma barganha.",
       "Uma vez por sessão, refaça uma ação que quite um favor devido e escolha um dos resultados."
     ],
     "glamourTrigger": "Making good on a significant promise made in the same chapter",
@@ -818,7 +818,7 @@
     "mantleBenefitsPt": [
       "Some o Manto ao arrombar uma fechadura ou invadir um lugar proibido.",
       "Some o Manto ao escapar despercebido de uma situação ruim.",
-      "Use Contratos Goblin sem receber Dívida Goblin um número de vezes igual ao Manto.",
+      "Use Contratos Goblin sem receber Débito Goblin um número de vezes igual ao Manto.",
       "Gaste Força de Vontade para ignorar Quebrador de Juramento por um turno.",
       "Uma vez por sessão, refaça um ataque surpresa e escolha um dos resultados."
     ],

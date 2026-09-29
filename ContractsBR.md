@@ -1,4 +1,4 @@
-# Auditoria da tradução dos Contracts
+# Auditoria da tradução dos Contratos
 
 ## Lote: Coroa — *Changeling: The Lost*, pp. 128–132
 
@@ -49,7 +49,7 @@
 ## Lote: Independentes — *Kith and Kin*, pp. 58–64
 
 - `Retainer` e `Staff`, citados nos efeitos, foram apresentados provisoriamente como **Lacaio** e **Equipe**. A terminologia será uniformizada na tradução integral de Méritos.
-- `fetch` permanece **simulacro**, conforme a tradução já adotada nos textos de Fratrias.
+- `fetch` é sempre **Duplo**. `Simulacro` permanece apenas quando o original usa *simulacrum* como entidade genérica.
 - `Pomp and Circumstance`: traduzido como **Pompa e Circunstância**, preservando a expressão e o título musical reconhecíveis em português.
 
 ## Lote: Joias Comuns — *Changeling: The Lost*, pp. 132–133
@@ -65,3 +65,8 @@
 ## Lote: Espelho Comuns — *Changeling: The Lost*, pp. 136–138
 
 - `Glimpse of a Distant Mirror`: “mirror people” foi apresentado como **pessoas do espelho**, preservando a referência como categoria ficcional sem criar um nome próprio não estabelecido.
+
+## Lote: Espelho Reais — *Changeling: The Lost*, pp. 138–139
+
+- `Riddle-Kith`: traduzido como **Enigma de Frátria**, preservando `Kith` como **Frátria** conforme a convenção definida.
+- `Skinmask`: traduzido como **Mascarilha de Pele**, mantendo a composição direta do título e o léxico de `Mask`.

@@ -82,9 +82,9 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
           {!value.hasRoll && <Field wide label={h("Efeito", "Effect")}><Textarea value={value.effect ?? ""} onChange={(event) => set("effect", event.target.value)}/></Field>}
           {value.hasRoll && <><Field wide label={h("Sucesso", "Success")}><Textarea value={value.success ?? ""} onChange={(event) => set("success", event.target.value)}/></Field><Field wide label={h("Sucesso excepcional", "Exceptional success")}><Textarea value={value.exceptionalSuccess ?? ""} onChange={(event) => set("exceptionalSuccess", event.target.value)}/></Field><Field wide label={h("Falha", "Failure")}><Textarea value={value.failure ?? ""} onChange={(event) => set("failure", event.target.value)}/></Field><Field wide label={h("Falha dramática", "Dramatic failure")}><Textarea value={value.dramaticFailure ?? ""} onChange={(event) => set("dramaticFailure", event.target.value)}/></Field></>}
           <Field wide label={h("Brecha *", "Loophole *")}><Textarea value={value.loophole ?? ""} onChange={(event) => set("loophole", event.target.value)}/></Field>
-          {category === "Goblin" && <Field wide label={h("Dívida Goblin", "Goblin Debt")}><Textarea value={value.goblinDebt ?? ""} onChange={(event) => set("goblinDebt", event.target.value)}/></Field>}
+          {category === "Goblin" && <Field wide label={h("Débito Goblin", "Goblin Debt")}><Textarea value={value.goblinDebt ?? ""} onChange={(event) => set("goblinDebt", event.target.value)}/></Field>}
         </Section>
-        <Section title={h("Benefícios de Feição opcionais", "Optional Seeming benefits")}>
+        <Section title={h("Benefícios de Semblante opcionais", "Optional Seeming benefits")}>
           {SEEMINGS.map((seeming) => <Field wide key={seeming} label={seemingDisplayName(seeming, locale)}><Textarea value={value.seemingBenefits?.[seeming] ?? ""} onChange={(event) => setSeemingBenefit(seeming, event.target.value)}/></Field>)}
         </Section>
       </div>

@@ -46,7 +46,7 @@ import type { ChangelingReference } from "./catalogs/reference";
 const translateRegalia = (value: string) => value;
 
 function translateCourt(value: string) {
-  return ({ Courtless: "Sem Corte", Spring: "Primavera", Summer: "Verão", Autumn: "Outono", Winter: "Inverno" } as Record<string, string>)[value] ?? value;
+  return ({ Courtless: "Sem Corte", Spring: "spring", Primavera: "spring", Summer: "summer", Verão: "summer", Autumn: "autumn", Outono: "autumn", Winter: "winter", Inverno: "winter" } as Record<string, string>)[value] ?? value;
 }
 
 function normalizeCustomCourt(value: unknown): CustomCourtDefinition | null {

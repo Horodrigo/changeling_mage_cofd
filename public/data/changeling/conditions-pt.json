@@ -16,7 +16,7 @@
   "stoic": {
     "name": "Estoico",
     "description": "O personagem fecha-se emocionalmente, ocultando traumas mas bloqueando cura de Lucidez e expressão sincera.",
-    "penalty": "+2 em Subterfúgio para ocultar emoções; −2 em Hedgespinning; não cura Lucidez enquanto persistir."
+    "penalty": "+2 em Subterfúgio para ocultar emoções; −2 em Tecer a Sebe; não cura Lucidez enquanto persistir."
   },
   "withdrawn": {
     "name": "Retraído",
@@ -40,7 +40,7 @@
     "description": "Um inimigo sério persegue o personagem para feri-lo ou atormentá-lo."
   },
   "goblin-queen": {
-    "name": "Rainha Goblin",
+    "name": "Rainha dos Goblins",
     "category": "Sobrenatural",
     "description": "A natureza goblin fragmentada prende o personagem na Sebe e atrai seguidores hobgoblins."
   },
@@ -52,7 +52,7 @@
   "ravaged": {
     "name": "Devastado",
     "category": "Sobrenatural",
-    "description": "Predação feérica destruiu sonhos ou emoções, deixando o personagem vazio e incapaz de descansar.",
+    "description": "Predação Fae destruiu sonhos ou emoções, deixando o personagem vazio e incapaz de descansar.",
     "penalty": "−2 em todos os testes; não recupera Força de Vontade dormindo."
   },
   "behind-your-eyes": {
@@ -67,8 +67,8 @@
     "name": "Amaldiçoado",
     "description": "Uma maldição imposta por outro changeling persiste enquanto ele mantiver a rotina ou exigência definida."
   },
-  "deep-kenning": {
-    "name": "Kenning Profundo",
+  "deep-tino": {
+    "name": "Tino Profundo",
     "description": "Lucidez restaurada concede um lampejo de conhecimento sobre fenômenos sobrenaturais próximos."
   },
   "dream-assailant": {
@@ -93,7 +93,7 @@
   },
   "enchanted-obligation": {
     "name": "Obrigação Encantada",
-    "description": "Uma barganha encantada protege o changeling enquanto concede ao mortal visão através da Máscara e acesso a sua ajuda feérica."
+    "description": "Uma barganha encantada protege o changeling enquanto concede ao mortal visão através da Mascarilha e acesso a sua ajuda Fae."
   },
   "glamour-addicted": {
     "name": "Viciado em Glamour",
@@ -109,15 +109,15 @@
   },
   "indebted": {
     "name": "Endividado",
-    "description": "O personagem deve um serviço a um ser feérico e pode pagar aceitando dano, uma Condition prejudicial ou uma Inclinação pessoal."
+    "description": "O personagem deve um serviço a um ser Fae e pode pagar aceitando dano, uma Condition prejudicial ou uma Inclinação pessoal."
   },
   "kithseeker": {
-    "name": "Buscador de Fratria",
-    "description": "O changeling enfrenta cinco provações na Sebe para encontrar uma Fratria que corresponda ao chamado de sua alma."
+    "name": "Buscador de Frátria",
+    "description": "O changeling enfrenta cinco provações na Sebe para encontrar uma Frátria que corresponda ao chamado de sua alma."
   },
   "oathbreaker": {
     "name": "Quebrador de Juramento",
-    "description": "O Wyrd marca quem violou um juramento e desperta desconfiança entre os changelings.",
+    "description": "O Fado marca quem violou um juramento e desperta desconfiança entre os changelings.",
     "penalty": "−1 em ações Sociais com changelings; não pode selar declarações com Glamour."
   },
   "obliged": {
@@ -135,14 +135,14 @@
   },
   "empty-heart": {
     "name": "Coração Vazio",
-    "description": "O changeling substituiu o coração por um Token de nível não superior ao Fado mediante uma mudança de paradigma de sete sucessos nos Espinhos, após ao menos uma cena completa ali, gastando 1 Glamour e sofrendo 1 dano letal. O Token vinculado desaparece em sua alma, não pode ser roubado ou alterado, não exige Glamour nem Catch para ativar e seu Drawback pode ser transferido a um alvo tocado uma vez por capítulo mediante o gasto de 1 Força de Vontade. Aumente o Glamour máximo e o Glamour gasto por turno pelo nível do Token. Se morrer, o corpo se desfaz e ela entra no próprio Bastião com Lost e Soul Shocked; deve recuperar o Token de seu eidolon, alcançar a Sebe e fiar um novo corpo com uma mudança de paradigma de sete sucessos ou cinco mudanças sutis de três sucessos.",
-    "penalty": "Recebe um novo tabu maior e soma o nível do Token a todas as paradas de dano de Lucidez. Quem possuir o coração físico pode selar suas declarações sem Glamour, impedir que ela refute esses selamentos, gastar 1 Força de Vontade para substituir uma de suas Aspirações pelo capítulo e vincular seu destino a juramentos feitos sobre o coração. Destruir o coração inflige Ravaged e 1 dano agravado ao fim de cada cena até que ela fie um substituto com nove sucessos e gaste um ponto permanente de Força de Vontade.",
-    "resolution": "Após outra cena completa nos Espinhos, realize uma mudança de paradigma de sete sucessos e sofra 1 dano letal para liberar o Token e restaurar o coração original. Liberar o Token sem o coração inflige Soul Shocked, que não pode ser resolvida até que o vazio seja preenchido. Uma Bagatela vinculada ainda é destruída quando usada; um Bauble não pode ser vinculado."
+    "description": "O changeling substituiu o coração por um Penhor de nível não superior ao Fado mediante uma mudança de paradigma de sete sucessos nos Espinhos, após ao menos uma cena completa ali, gastando 1 Glamour e sofrendo 1 dano letal. O Penhor vinculado desaparece em sua alma, não pode ser roubado ou alterado, não exige Glamour nem Catch para ativar e seu Drawback pode ser transferido a um alvo tocado uma vez por capítulo mediante o gasto de 1 Força de Vontade. Aumente o Glamour máximo e o Glamour gasto por turno pelo nível do Penhor. Se morrer, o corpo se desfaz e ela entra no próprio Bastião com Perdido e Soul Shocked; deve recuperar o Penhor de seu eidolon, alcançar a Sebe e fiar um novo corpo com uma mudança de paradigma de sete sucessos ou cinco mudanças sutis de três sucessos.",
+    "penalty": "Recebe um novo tabu maior e soma o nível do Penhor a todas as paradas de dano de Lucidez. Quem possuir o coração físico pode selar suas declarações sem Glamour, impedir que ela refute esses selamentos, gastar 1 Força de Vontade para substituir uma de suas Aspirações pelo capítulo e vincular seu destino a juramentos feitos sobre o coração. Destruir o coração inflige Ravaged e 1 dano agravado ao fim de cada cena até que ela teça um substituto com nove sucessos e gaste um ponto permanente de Força de Vontade.",
+    "resolution": "Após outra cena completa nos Espinhos, realize uma mudança de paradigma de sete sucessos e sofra 1 dano letal para liberar o Penhor e restaurar o coração original. Liberar o Penhor sem o coração inflige Soul Shocked, que não pode ser resolvida até que o vazio seja preenchido. Uma Bagatela vinculada ainda é destruída quando usada; um Bauble não pode ser vinculado."
   },
   "magpies-misfortune": {
     "name": "Infortúnio da Pega",
-    "description": "O personagem roubou o Token heráldico de um nobre changeling e sofre sua maldição. O Narrador recebe um número de azarações igual ao nível do Token e pode gastar uma por cena para transformar uma falha comum do personagem em falha dramática. Quando todas forem gastas, o personagem tem um capítulo completo para devolver a heráldica; caso contrário, o Narrador recebe um novo conjunto no início do capítulo seguinte. Um ladrão posterior também recebe esta Condição, mas um destinatário voluntário não recebe a maldição nem liberta seu portador atual.",
-    "resolution": "Devolva o Token ou realize um ato apropriado de restituição caso o nobre original já o tenha recuperado. O Narrador conserva e pode gastar normalmente quaisquer azarações restantes após a resolução.",
+    "description": "O personagem roubou o Penhor heráldico de um nobre changeling e sofre sua maldição. O Narrador recebe um número de azarações igual ao nível do Penhor e pode gastar uma por cena para transformar uma falha comum do personagem em falha dramática. Quando todas forem gastas, o personagem tem um capítulo completo para devolver a heráldica; caso contrário, o Narrador recebe um novo conjunto no início do capítulo seguinte. Um ladrão posterior também recebe esta Condição, mas um destinatário voluntário não recebe a maldição nem liberta seu portador atual.",
+    "resolution": "Devolva o Penhor ou realize um ato apropriado de restituição caso o nobre original já o tenha recuperado. O Narrador conserva e pode gastar normalmente quaisquer azarações restantes após a resolução.",
     "beat": "O Narrador inflige uma azaração."
   }
 }

@@ -1,8 +1,8 @@
 {
   "absinthial": {
     "name": "Absintial",
-    "description": "Fadas verdes que destilam as bebidas oníricas de Arcádia.",
-    "blessing": "3 sucessos contam como excepcionais em Ofícios para preparar consumíveis com ingredientes feéricos. Uma vez por cena, gaste 1 Glamour, toque o alvo e teste Presença + Ofícios contra Compostura + Fado: imponha Insensato e, quando terminar, Confuso. Não afeta Fae Verdadeiros nem Monteiros.",
+    "description": "Fae verdes que destilam as bebidas oníricas de Arcádia.",
+    "blessing": "3 sucessos contam como excepcionais em Ofícios para preparar consumíveis com ingredientes Fae. Uma vez por cena, gaste 1 Glamour, toque o alvo e teste Presença + Ofícios contra Compostura + Fado: imponha Insensato e, quando terminar, Confuso. Não afeta Fae Verdadeiros nem Monteiros.",
     "skill": "Ofícios"
   },
   "airtouched": {
@@ -32,7 +32,7 @@
   "asclepian": {
     "name": "Asclepiano",
     "description": "Curandeiros que realizam seu trabalho com materiais improvisados.",
-    "blessing": "3 sucessos contam como excepcionais em Medicina para primeiros socorros. Seu toque estabiliza ferimentos. Com 1 Glamour e Inteligência + Medicina, realiza cirurgia improvisada, tratando até lesões normalmente incuráveis ou morte ocorrida na última cena. Enxertos são permanentes e podem resolver Condições Físicas Persistentes; somente em changelings ficam ocultos pela Máscara.",
+    "blessing": "3 sucessos contam como excepcionais em Medicina para primeiros socorros. Seu toque estabiliza ferimentos. Com 1 Glamour e Inteligência + Medicina, realiza cirurgia improvisada, tratando até lesões normalmente incuráveis ou morte ocorrida na última cena. Enxertos são permanentes e podem resolver Condições Físicas Persistentes; somente em changelings ficam ocultos pela Mascarilha.",
     "skill": "Medicina"
   },
   "bearskin": {
@@ -74,13 +74,13 @@
   "bright-one": {
     "name": "Resplandecente",
     "description": "Seres radiantes e luminosos, acesos pela chama interior de suas paixões.",
-    "blessing": "3 sucessos contam como excepcionais em Socialização para ser o centro das atenções. Emite um brilho normalmente oculto pela Máscara. Por 1 Glamour a cada turno, intensifica-o: inimigos que o veem sofrem 1 dano contusivo e −2 nas ações Físicas e Mentais naquele turno.",
+    "blessing": "3 sucessos contam como excepcionais em Socialização para ser o centro das atenções. Emite um brilho normalmente oculto pela Mascarilha. Por 1 Glamour a cada turno, intensifica-o: inimigos que o veem sofrem 1 dano contusivo e −2 nas ações Físicas e Mentais naquele turno.",
     "skill": "Socialização"
   },
   "chalomot": {
     "name": "Calomote",
     "description": "Batedores dos Fae Verdadeiros nas Estradas dos Sonhos, especializados em invadir Bastiões.",
-    "blessing": "3 sucessos contam como excepcionais em Empatia para avaliar a força de um Bastião. Gaste 1 Glamour para receber bônus à tecelagem onírica igual à metade do Fado, arredondada para baixo, mínimo 1, pela cena. Cada Glamour adicional estende o benefício a outro oniromante no Bastião, até cinco.",
+    "blessing": "3 sucessos contam como excepcionais em Empatia para avaliar a força de um Bastião. Gaste 1 Glamour para receber bônus à Tecelagem de Sonhos igual à metade do Fado, arredondada para baixo, mínimo 1, pela cena. Cada Glamour adicional estende o benefício a outro oniromante no Bastião, até cinco.",
     "skill": "Empatia"
   },
   "chatelaine": {
@@ -115,8 +115,8 @@
   },
   "cloakskin": {
     "name": "Pele de Manto",
-    "description": "Perdidos solitários cuja Máscara é invisível.",
-    "blessing": "Recebe +1 em todos os testes Sociais. Com 1 Glamour e Presença + Furtividade + Fado, torna a Aparência feérica invisível por uma cena, inclusive para câmeras. Testes visuais para detectá-lo falham; testes com outros sentidos sofrem −3.",
+    "description": "Perdidos solitários cuja Mascarilha é invisível.",
+    "blessing": "Recebe +1 em todos os testes Sociais. Com 1 Glamour e Presença + Furtividade + Fado, torna a Semblante Fae invisível por uma cena, inclusive para câmeras. Testes visuais para detectá-lo falham; testes com outros sentidos sofrem −3.",
     "skill": "Social"
   },
   "concubus": {
@@ -128,7 +128,7 @@
   "cyclopean": {
     "name": "Ciclópico",
     "description": "Perdidos transformados em gigantes ou estruturas magníficas, muitas vezes marcados por deficiência.",
-    "blessing": "3 sucessos contam como excepcionais em Investigação para rastrear seres feéricos, exceto Monteiros. Uma vez por cena, gaste 1 Glamour para reduzir em 2 as penalidades de ataques localizados, até o mínimo de −1; esses ataques causam dano letal em vez de contusivo.",
+    "blessing": "3 sucessos contam como excepcionais em Investigação para rastrear seres Fae, exceto Monteiros. Uma vez por cena, gaste 1 Glamour para reduzir em 2 as penalidades de ataques localizados, até o mínimo de −1; esses ataques causam dano letal em vez de contusivo.",
     "skill": "Investigação"
   },
   "delver": {
@@ -140,13 +140,13 @@
   "doppelganger": {
     "name": "Sósia",
     "description": "Ladrões de traços familiares.",
-    "blessing": "3 sucessos contam como excepcionais em Empatia para conquistar confiança. Gaste 1 Glamour e teste Presença + Empatia + Fado contra Perseverança + Fado para incorporar à Máscara um traço físico ou vocal do alvo. Ele perde o traço por Fado dias; deve receber uma tarefa que permita recuperá-lo antes.",
+    "blessing": "3 sucessos contam como excepcionais em Empatia para conquistar confiança. Gaste 1 Glamour e teste Presença + Empatia + Fado contra Perseverança + Fado para incorporar à Mascarilha um traço físico ou vocal do alvo. Ele perde o traço por Fado dias; deve receber uma tarefa que permita recuperá-lo antes.",
     "skill": "Empatia"
   },
   "draconic": {
     "name": "Dracônico",
     "description": "Changelings transformados em grandiosas feras guardiãs.",
-    "blessing": "Escolha Briga ou Armas Brancas: 3 sucessos contam como excepcionais ao defender algo ou alguém importante. Ao despir a Máscara, gaste mais 1 Glamour para amedrontar todos os oponentes que percebam sua demonstração de poder. Também pode gastar 1 Glamour reflexivamente para voar a Deslocamento 60 por Fado turnos; uma investida aérea recebe +2.",
+    "blessing": "Escolha Briga ou Armas Brancas: 3 sucessos contam como excepcionais ao defender algo ou alguém importante. Ao despir a Mascarilha, gaste mais 1 Glamour para amedrontar todos os oponentes que percebam sua demonstração de poder. Também pode gastar 1 Glamour reflexivamente para voar a Deslocamento 60 por Fado turnos; uma investida aérea recebe +2.",
     "skill": "Briga ou Armas Brancas"
   },
   "dryad": {
@@ -157,14 +157,14 @@
   },
   "enkrateia": {
     "name": "Autodomínio",
-    "description": "Conselheiros e mediadores de Arcádia que serviam como a voz da razão para seus Guardiões.",
+    "description": "Conselheiros e mediadores de Arcádia que serviam como a voz da razão para seus Carcereiros.",
     "blessing": "Ao tentar acalmar um conflito, usa a maior entre Empatia, Persuasão e Subterfúgio. Em ações prolongadas de Investigação, a perda de dados só começa depois do terceiro teste consecutivo.",
     "skill": "Empatia, Persuasão ou Subterfúgio"
   },
   "farwalker": {
     "name": "Andarilho Distante",
     "description": "Patrulheiros do ermo, perfeitamente à vontade na natureza.",
-    "blessing": "3 sucessos contam como excepcionais em Sobrevivência para obter abrigo, comida ou água. Com 1 Glamour, cria por um dia um Local Seguro 1 no ermo, ou usa o nível do seu Local Seguro existente. Abriga metade do Fado em pessoas, arredondada para baixo, mínimo 1; cada Glamour extra abriga mais uma. Na Sebe, reduz em um grau a hostilidade da área e pode copiar uma característica de seu Refúgio.",
+    "blessing": "3 sucessos contam como excepcionais em Sobrevivência para obter abrigo, comida ou água. Com 1 Glamour, cria por um dia um Local Seguro 1 no ermo, ou usa o nível do seu Local Seguro existente. Abriga metade do Fado em pessoas, arredondada para baixo, mínimo 1; cada Glamour extra abriga mais uma. Na Sebe, reduz em um grau a hostilidade da área e pode copiar uma característica de seu Vão.",
     "skill": "Sobrevivência"
   },
   "flowering": {
@@ -187,14 +187,14 @@
   },
   "glimmerwisp": {
     "name": "Névoa Cintilante",
-    "description": "Perdidos transformados em névoas de Faerie para encobrir atos vergonhosos e monstruosos.",
+    "description": "Perdidos transformados em névoas de Feéria para encobrir atos vergonhosos e monstruosos.",
     "blessing": "3 sucessos contam como excepcionais em Persuasão para desviar a atenção de algo terrível ou maravilhoso. Com 1 Glamour e Manipulação + Persuasão + Fado, cria névoa por uma cena em um cômodo ou área de até dez metros. Quem falhar em Perseverança + Compostura deixa de ver atos vergonhosos ou causadores de pontos de ruptura cometidos por outros na névoa.",
     "skill": "Persuasão"
   },
   "gravewight": {
     "name": "Espectro Tumular",
     "description": "Perdidos ligados à morte.",
-    "blessing": "Escolha Empatia ou Intimidação: 3 sucessos contam como excepcionais ao influenciar alguém com sua Aparência feérica, presença física ou conhecimento da morte. Gaste 1 Glamour para ver e ouvir fantasmas no Crepúsculo; sua presença também facilita manifestações próximas.",
+    "blessing": "Escolha Empatia ou Intimidação: 3 sucessos contam como excepcionais ao influenciar alguém com sua Semblante Fae, presença física ou conhecimento da morte. Gaste 1 Glamour para ver e ouvir fantasmas no Crepúsculo; sua presença também facilita manifestações próximas.",
     "skill": "Empatia ou Intimidação"
   },
   "gremlin": {
@@ -211,14 +211,14 @@
   },
   "helldiver": {
     "name": "Mergulhador Infernal",
-    "description": "Espiões e exploradores presos a Faerie por um cordão de prata.",
+    "description": "Espiões e exploradores presos a Feéria por um cordão de prata.",
     "blessing": "3 sucessos contam como excepcionais em Furto em reinos sobrenaturais. Com 1 Glamour e Destreza + Ocultismo, torna-se incorpóreo e invisível em 10 − Lucidez atual turnos, mínimo 1. Interage com seres imateriais e pode atravessar portais de outros reinos por 1 Glamour. Retornar exige novo gasto e teste; durante a transição, só age reflexivamente.",
     "skill": "Furto"
   },
   "hunterheart": {
     "name": "Coração de Caçador",
     "description": "Caçadores que escaparam de um cativeiro em Arcádia marcado pela predação sangrenta.",
-    "blessing": "Escolha Investigação ou Sobrevivência: 3 sucessos contam como excepcionais ao rastrear criaturas de Faerie. Se o alvo vir seus olhos, gaste 1 Glamour e teste Presença + Fado contra Compostura + Tolerância Sobrenatural. O jogador do alvo escolhe entre Insensato e Amedrontado; seus ataques desarmados contra a vítima afetada causam dano letal.",
+    "blessing": "Escolha Investigação ou Sobrevivência: 3 sucessos contam como excepcionais ao rastrear criaturas de Feéria. Se o alvo vir seus olhos, gaste 1 Glamour e teste Presença + Fado contra Compostura + Tolerância Sobrenatural. O jogador do alvo escolhe entre Insensato e Amedrontado; seus ataques desarmados contra a vítima afetada causam dano letal.",
     "skill": "Investigação ou Sobrevivência"
   },
   "leechfinger": {
@@ -266,12 +266,12 @@
   "mirrorskin": {
     "name": "Pele de Espelho",
     "description": "Perdidos que aprenderam a esvaziar a própria natureza e tornar-se qualquer pessoa ou ninguém.",
-    "blessing": "3 sucessos contam como excepcionais em Furtividade enquanto disfarçado. Com 1 Glamour e Raciocínio + Subterfúgio + Fado reflexivo, remodela a Máscara; +1 Glamour também remodela a Aparência feérica. O efeito é indefinido, exige nova ativação para desfazê-lo e provoca Confronto de Vontades contra detecção sobrenatural.",
+    "blessing": "3 sucessos contam como excepcionais em Furtividade enquanto disfarçado. Com 1 Glamour e Raciocínio + Subterfúgio + Fado reflexivo, remodela a Mascarilha; +1 Glamour também remodela a Semblante Fae. O efeito é indefinido, exige nova ativação para desfazê-lo e provoca Confronto de Vontades contra detecção sobrenatural.",
     "skill": "Furtividade"
   },
   "moonborn": {
     "name": "Nascido da Lua",
-    "description": "Perdidos instigados a paixões selvagens para divertir seus Guardiões.",
+    "description": "Perdidos instigados a paixões selvagens para divertir seus Carcereiros.",
     "blessing": "Escolha Empatia ou Intimidação: 3 sucessos contam como excepcionais para alterar emoções. Uma vez por capítulo, gaste 1 Glamour e teste Manipulação + Expressão contra Compostura + Fado de até Fado alvos. Quem falhar recebe Competitivo, Amedrontado, Imprudente, Letárgico ou Devasso, à sua escolha.",
     "skill": "Empatia ou Intimidação"
   },
@@ -283,19 +283,19 @@
   },
   "nightsinger": {
     "name": "Cantor Noturno",
-    "description": "Sereias e vocalistas cujas canções moviam a própria terra de Faerie.",
+    "description": "Sereias e vocalistas cujas canções moviam a própria terra de Feéria.",
     "blessing": "3 sucessos contam como excepcionais em Expressão para cantar ou compor. Com 1 Glamour, teste Presença + Expressão + Fado contra Compostura + Tolerância Sobrenatural de quem ouvir. Quem falhar fica Enamorado e imóvel enquanto a canção continuar, mas conserva Defesa. Pode ser conduzido pela mão; interromper a audição, vencer um poder oposto ou causar dano igual ao Vigor quebra o transe.",
     "skill": "Expressão"
   },
   "notary": {
     "name": "Tabelião",
     "description": "Humanos usados como documentos vivos para os juramentos dos Fae Verdadeiros.",
-    "blessing": "3 sucessos contam como excepcionais em Política para negociar, ler ou interpretar promessas feéricas. Uma vez por capítulo, anula o custo de Glamour de uma promessa de cuja criação participe, sem teste. Pode recitar perfeitamente seus termos enquanto ela durar.",
+    "blessing": "3 sucessos contam como excepcionais em Política para negociar, ler ou interpretar promessas Fae. Uma vez por capítulo, anula o custo de Glamour de uma promessa de cuja criação participe, sem teste. Pode recitar perfeitamente seus termos enquanto ela durar.",
     "skill": "Política"
   },
   "nymph": {
     "name": "Ninfa",
-    "description": "Changelings que habitavam os oceanos e cursos d’água de Faerie.",
+    "description": "Changelings que habitavam os oceanos e cursos d’água de Feéria.",
     "blessing": "3 sucessos contam como excepcionais em Atletismo ao nadar. Com 1 Glamour e Vigor + Atletismo, desenvolve guelras e cauda pela cena: respira ar e água, dobra o Deslocamento aquático e ignora penalidades para usar armas ou realizar tarefas submerso.",
     "skill": "Atletismo"
   },
@@ -361,7 +361,7 @@
   },
   "snowskin": {
     "name": "Pele de Neve",
-    "description": "Aqueles que escaparam de Faerie apagando o próprio calor e congelando-se.",
+    "description": "Aqueles que escaparam de Feéria apagando o próprio calor e congelando-se.",
     "blessing": "3 sucessos contam como excepcionais em Subterfúgio para ocultar emoções. Ao humilhar alguém diante de uma plateia, gaste 1 Glamour e teste Presença + Intimidação + Fado contra Compostura + Tolerância Sobrenatural. O alvo fica Abalado e sofre −2 nos testes Sociais com outros changelings até resolver a Condição.",
     "skill": "Subterfúgio"
   },
@@ -409,7 +409,7 @@
   },
   "veneficus": {
     "name": "Venéfico",
-    "description": "Herbalistas e cozinheiros de Faerie.",
+    "description": "Herbalistas e cozinheiros de Feéria.",
     "blessing": "3 sucessos contam como excepcionais em Sobrevivência para identificar frutas goblins. Gaste 1 Glamour reflexivamente para tornar comestível uma planta tóxica ou tornar tóxica uma planta comestível.",
     "skill": "Sobrevivência"
   },
@@ -427,8 +427,8 @@
   },
   "wisewitch": {
     "name": "Bruxo Sábio",
-    "description": "Changelings permanentemente tocados pelo Título de um Guardião.",
-    "blessing": "3 sucessos contam como excepcionais em Persuasão para alertar alguém sobre perigo sobrenatural. Pode firmar promessas com espíritos e anjos não feéricos.",
+    "description": "Changelings permanentemente tocados pelo Título de um Carcereiro.",
+    "blessing": "3 sucessos contam como excepcionais em Persuasão para alertar alguém sobre perigo sobrenatural. Pode firmar promessas com espíritos e anjos não Fae.",
     "skill": "Persuasão"
   },
   "witchtooth": {
@@ -451,13 +451,13 @@
   },
   "chirurgeon": {
     "name": "Cirurgião",
-    "description": "Especialistas feéricos em remodelar corpos.",
+    "description": "Especialistas Fae em remodelar corpos.",
     "blessing": "3 sucessos contam como excepcionais em Medicina para cirurgia. Toque um alvo imóvel, gaste um ou mais Glamour e teste Destreza + Medicina, disputado por Vigor + Tolerância Sobrenatural se relutante. Remodela aparência dentro da anatomia humana ou changeling e concede 8-novamente em duas Perícias Físicas ou Sociais influenciadas pela aparência por uma cena por Glamour. Não pode usar em si.",
     "skill": "Medicina"
   },
   "dancer": {
     "name": "Dançarino",
-    "description": "Artistas feéricos definidos pela graça e pelo movimento.",
+    "description": "Artistas Fae definidos pela graça e pelo movimento.",
     "blessing": "3 sucessos contam como excepcionais em Expressão para apresentações físicas. Use Expressão no lugar de Atletismo em ações de graça, equilíbrio ou flexibilidade. Gaste 1 Glamour para usar Expressão no lugar de Atletismo no cálculo da Defesa durante cenas violentas; Esquivar triplica a Defesa enquanto ativo.",
     "skill": "Expressão"
   },
@@ -469,7 +469,7 @@
   },
   "echoveil": {
     "name": "Véu de Ecos",
-    "description": "Músicos sombrios usados como atmosfera para horrores feéricos.",
+    "description": "Músicos sombrios usados como atmosfera para horrores Fae.",
     "blessing": "3 sucessos contam como excepcionais em Expressão para afetar outros com música triste ou assustadora. Gaste 1 Glamour para criar uma paisagem sonora pela cena; tentativas de causar, manipular ou aumentar medo ou tristeza recebem +2. Teste Manipulação + Expressão + Fado contra a maior Compostura + Tolerância Sobrenatural dos ouvintes para impor Abalado a todos que a ouvem.",
     "skill": "Expressão"
   },
@@ -481,7 +481,7 @@
   },
   "gargantuan": {
     "name": "Gargantuesco",
-    "description": "Gigantes feéricos criados para dominar pela escala.",
+    "description": "Gigantes Fae criados para dominar pela escala.",
     "blessing": "3 sucessos contam como excepcionais em Intimidação ao impressionar ou assustar por seu tamanho. Gaste 1 Glamour para somar metade do Fado, arredondada para cima, a Tamanho, Força e Presença pela cena, inclusive acima dos limites normais, recalculando características derivadas. Outro Glamour estende por uma cena; dano nas caixas temporárias desaparece ao encolher.",
     "skill": "Intimidação"
   },

@@ -11,7 +11,7 @@ O schema do personagem não possui gênero gramatical. Nomes flexionáveis perma
 - `Darkling` → `Trevoso`
 - `Fairest` → `Belíssimo`
 - `Wizened` → `Mirrado`
-- `Kith` → `Fratria` na interface
+- `Kith` → `Frátria` na interface
 
 ## Mecânicas auditadas
 

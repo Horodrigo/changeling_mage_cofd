@@ -123,6 +123,23 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
   assert.equal(presentation.find((item) => item.id === "ctl-2ed:iou")?.name, "Nota Promissória");
 });
 
+test("apresentações pt-BR de Changeling respeitam o léxico definido", async () => {
+  const files = [
+    "../public/data/changeling/conditions-pt.json",
+    "../public/data/changeling/kiths-pt.json",
+    "../public/data/changeling/tokens-pt.json",
+  ];
+  const contracts = (await jsonFiles(new URL("../public/data/changeling/contracts/", import.meta.url)))
+    .filter((catalog) => !Array.isArray(catalog));
+  const courts = await json(new URL("../public/data/changeling/courts.json", import.meta.url));
+  const localizedCourts = courts.flatMap((court) => [court.translatedName, court.emotionPt, ...(court.mantleBenefitsPt ?? [])]);
+  const text = JSON.stringify([...(await Promise.all(files.map((file) => json(new URL(file, import.meta.url))))), ...contracts, localizedCourts]);
+
+  assert.doesNotMatch(text, /\b(?:Wyrd|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt)\b/);
+  assert.doesNotMatch(text, /\b(?:Clareza|Feição|Fratria|Máscara|Recanto)\b|Dívida Goblin|Feudos? Livres?/);
+  assert.deepEqual(courts.slice(0,4).map((court) => court.translatedName), ["Corte da Primavera","Corte do Verão","Corte do Outono","Corte do Inverno"]);
+});
+
 test("Changeling contract shards have globally unique IDs and required structural fields", async () => {
   const directory = new URL("../public/data/changeling/contracts/", import.meta.url);
   const contracts = (await jsonFiles(directory)).filter(Array.isArray).flat();

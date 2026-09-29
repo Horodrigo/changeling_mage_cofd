@@ -193,7 +193,7 @@ test("tradução pt-BR do bloco Crown é completa e preserva a identidade canôn
   }
   const mask=items.find((item)=>item.id==="ctl-core:mask-of-superiority"), localized=contractPresentation(mask,"pt-BR",CONTRACT_PRESENTATION_PT);
   assert.equal(localized.id,mask.id);
-  assert.equal(localized.name,"Máscara de Superioridade");
+  assert.equal(localized.name,"Mascarilha de Superioridade");
   assert.equal(mask.name,"Mask of Superiority");
   const hostile=contractPresentation(contractWithSupplementalBenefits(items[0],["h-seemings"]),"pt-BR",CONTRACT_PRESENTATION_PT);
   assert.match(hostile.seemingBenefits.Darkling,/Furtividade e Furto/);
@@ -202,7 +202,7 @@ test("tradução pt-BR do bloco Crown é completa e preserva a identidade canôn
   assert.match(JSON.stringify(tumult),/Frenético/);
   assert.match(JSON.stringify(tumult),/Fatigado/);
   assert.doesNotMatch(JSON.stringify(tumult),/\b(?:Cowed|Berserk|Fatigued)\b/);
-  assert.doesNotMatch(JSON.stringify(Object.values(CONTRACT_PRESENTATION_PT)),/\b(?:Wyrd|Willpower|Huntsm(?:an|en))\b/i);
+  assert.doesNotMatch(JSON.stringify(Object.values(CONTRACT_PRESENTATION_PT)),/\b(?:Wyrd|Willpower|Huntsm(?:an|en)|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt)\b/i);
 });
 
 test("traduções pt-BR das fontes suplementares menores estão completas", () => {
@@ -334,6 +334,19 @@ test("bloco Mirror do livro básico está completo sem Options duplicadas", () =
 test("tradução pt-BR dos Contratos Comuns de Mirror está completa", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror"&&item.type==="Comum");
   assert.equal(items.length,5);
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
+});
+
+test("tradução pt-BR do bloco Mirror está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
   for(const item of items){
     const text=CONTRACT_PRESENTATION_PT[item.id];
     for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
