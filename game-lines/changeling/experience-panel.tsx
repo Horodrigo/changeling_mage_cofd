@@ -33,6 +33,8 @@ import { useContractHomebrews } from "./use-contract-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
+import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
+import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -93,17 +95,18 @@ export function ExperiencePanel({
   character,
   updateSheet,
   catalogs,
+  reference,
   builderMode = false,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   catalogs: CatalogSnapshot;
+  reference: ChangelingReference;
   builderMode?: boolean;
 }) {
   const { locale, t }=useLanguage();
   const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews(),customMerits=useMeritHomebrews("CtL",true);
   const contractCatalog = mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts);
-  const reference = catalogs.get<ChangelingReference>("changeling-reference");
   const staticEntitlements: readonly EntitlementDefinition[] = reference.entitlements;
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
@@ -161,8 +164,12 @@ export function ExperiencePanel({
   const ownedContractIds = new Set(
     ownedContracts.map((item) => String(item.id ?? "")),
   );
+  const favoredRegalia = changelingFavoredRegalia(character.line_data);
   const contractOptions = contractsCatalog.filter(
-    (item) => !ownedContractIds.has(item.id) && homebrewContentActive(homebrewPreferences,item.id,item.sourceId),
+    (item) =>
+      !ownedContractIds.has(item.id) &&
+      homebrewContentActive(homebrewPreferences,item.id,item.sourceId) &&
+      canSelectContract(item, favoredRegalia, String(character.line_data.court ?? ""), reference.courts),
   );
   const extraBenefits = objectList(character.line_data.extra_contract_benefits);
   const extraKeys = new Set(
@@ -210,8 +217,7 @@ export function ExperiencePanel({
   const nextMeritRating = availableMeritRatings.includes(meritDots)
     ? meritDots
     : availableMeritRatings[0];
-  const selectedContract =
-    contractsCatalog.find((item) => item.id === contractId) ?? contractOptions[0];
+  const selectedContract = contractOptions.find((item) => item.id === contractId) ?? contractOptions[0];
   const wyrd = Math.max(1, Number(character.line_data.wyrd ?? 1));
   const traitMaximum = Math.max(5, wyrd);
   const lostWillpower = boundedNumber(
@@ -786,11 +792,12 @@ export function ExperiencePanel({
                     line="CtL"
                     items={contractOptions.map((item) => {
                       const presented=contractPresentation(item,locale,reference.contractPresentation);
+                      const categoryKey=contractCategoryKey(item), category=categoryKey==="court"?t("ui.court"):categoryKey==="independent"?t("ui.independent"):categoryKey==="goblin"?t("ui.goblin"):systemTerm(categoryKey,locale);
                       return {
                         id: item.id,
                         name: presented.name,
-                        category: systemTerm(item.regalia,locale),
-                        categories: homebrewCategoryKeys(systemTerm(item.regalia,locale), item.sourceId),
+                        category,
+                        categories: homebrewCategoryKeys(category, item.sourceId),
                         secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
                         sortPriority: Number(item.type === "Real"),
                         description: contractOutcomeSections(presented,locale).map(section=>section.text).join(" "),

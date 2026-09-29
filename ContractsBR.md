@@ -61,7 +61,7 @@
 ## Lote: Joias Reais — *Changeling: The Lost*, pp. 134–135
 
 - `Changeling Hours`: traduzido como **Horas Trocadas**.
-- `Tatterdemalion's Workshop`: traduzido como **Oficina do Maltrapilho**.
+- `Tatterdemalion's Workshop`: traduzido como **Oficina do Latoeiro**.
 
 ## Lote: Espelho Comuns — *Changeling: The Lost*, pp. 136–138
 
@@ -78,9 +78,25 @@
 - `Thorns and Brambles`: as manifestações foram apresentadas como **Erva-sanguessuga**, **Silvado** e **Campo de Espinhos** para `Leechweed`, `Briarpatch` e `Field of Thorns`.
 - `Vow of No Compromise`: traduzido como **Juramento Intransigente**.
 
+## Lote: Corcel — *Changeling: The Lost*, pp. 144–147
+
+- `Nevertread`: traduzido como **Passos sem Rastro**.
+- `Flickering Hours`: traduzido como **Horas Oscilantes**.
+- `Flesh Too Solid`: apresentado provisoriamente como **Carne Muito Sólida**.
+
+## Lote: Espada e Primavera — *Changeling: The Lost*, pp. 147–153
+
+- `Might of the Terrible Brute`: traduzido como **Poder do Bruto Terrível**.
+- `Wyrd-Faced Stranger`: traduzido como **Estranho de Rosto Fadado**.
+- `Sunburnt Heart`: traduzido como **Coração Abrasado**.
+- `Slipknot Dreams`: traduzido como **Sonhos de Nó Corrediço**.
+- `Glib Tongue`: traduzido como **Língua Ladina**.
+- `Lost Visage`: traduzido como **Rosto Perdido**, preservando `Mien` exclusivamente como **Semblante Feérico**.
+- `Uncanny`: traduzido como **Prodigioso**.
+
 ## Lote: *Book of Courts*
 
 - `Widow's Walk`: traduzido como **Mirante da Viúva**.
 - `Gone by the Board`: traduzido como **Perdido ao Mar**.
 - `Cook the Books`: traduzido como **Fraudar a Contabilidade**.
-- `Beat`: o lote usa **Batida**, enquanto partes mais antigas da interface e de outros catálogos ainda preservam **Beat**. Auditar a convenção global antes de uniformizar o restante do aplicativo.
+- `Beat`: o lote usa **Ato**, enquanto partes mais antigas da interface e de outros catálogos ainda preservam **Beat**.

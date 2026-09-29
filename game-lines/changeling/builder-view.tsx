@@ -18,7 +18,7 @@ import {
   changelingAnchorDisplayName, changelingAnchorRecovery, seemingDisplayName,
 } from "./creation-rules";
 import { SKILLS } from "@/lib/core/character/creation-rules";
-import { canSelectInitialContract } from "./builder-eligibility";
+import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { courtPageCitation, type CourtDefinition } from "@/lib/changeling-courts";
 import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
@@ -83,13 +83,6 @@ function courtDisplayName(catalog: readonly BuilderCourtDefinition[], value: unk
     return translate(locale as "pt-BR" | "en-US", "ui.courtless");
   const definition = findCourt(catalog, value);
   return definition ? courtName(definition, locale) : raw;
-}
-
-function contractCategoryKey(contract: ContractDefinition) {
-  if (contract.goblin || contract.regalia === "Goblin") return "goblin";
-  if (contract.categoryKind === "Corte" || contract.regalia === "All" || contract.courtIds?.length || contract.courtClauses) return "court";
-  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
-  return contract.regalia;
 }
 
 const contractCategoryKeys = (contract: ContractDefinition) => homebrewCategoryKeys(contractCategoryKey(contract), contract.sourceId);
@@ -509,7 +502,7 @@ function ContractSelector({
   const availableContracts = alphabetical(catalog, contractName,locale)
     .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
     .filter((contract) =>
-      canSelectInitialContract(
+      canSelectContract(
         contract,
         changelingFavoredRegalia({primary_regalia:primaryRegalia, second_regalia:secondRegalia, kith, kith_custom:customKith}),
         court,

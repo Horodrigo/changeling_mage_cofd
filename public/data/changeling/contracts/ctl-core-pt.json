@@ -75,8 +75,8 @@
     "duration": "Uma cena ou até ser destruído",
     "loophole": "Realize um favor significativo para o elemento ou material escolhido durante a cena.",
     "seemingBenefits": {
-      "Elemental": "Por +1 Glamour e FdV, funda-se ao servo, substitua seus Atributos pelos dele quando desejar, torne-se imune ao material ou elemento dele e some +1L aos modificadores de armas.",
-      "Fairest": "Por +1 FdV, vincule um servo a um Vão indefinidamente enquanto ele permanecer lá."
+      "Elemental": "Por +1 Glamour e Força de Vontade, funda-se ao servo, substitua seus Atributos pelos dele quando desejar, torne-se imune ao material ou elemento dele e some +1L aos modificadores de armas.",
+      "Fairest": "Por +1 Força de Vontade, vincule um servo a um Vão indefinidamente enquanto ele permanecer lá."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -143,7 +143,7 @@
     "duration": "Um capítulo ou até o plano ter sucesso ou fracassar",
     "loophole": "Desenhe o plano, a hierarquia ou o índice do repositório em papel com pelo menos 50 anos.",
     "seemingBenefits": {
-      "Elemental": "Por +1 FdV, um repositório dura uma história e passa a abranger uma Especialização Mental que o Elemental possua.",
+      "Elemental": "Por +1 Força de Vontade, um repositório dura uma história e passa a abranger uma Especialização Mental que o Elemental possua.",
       "Fairest": "Crie uma organização adequada para combater a influência de um inimigo em vez de um plano."
     },
     "supplementalSeemingBenefits": {
@@ -335,12 +335,13 @@
     "name": "Horas Trocadas",
     "description": "Manipule o tempo de um objeto: repare 1 ponto de Estrutura por turno, até Ofícios; inflija 1 ponto de dano que ignora Durabilidade por turno, até Ofícios; ou congele-o de modo imóvel e torne-o imune a dano ou alteração.",
     "dicePool": "Nenhuma",
+    "cost": "●, +● por 5 de Tamanho",
     "action": "Instantânea",
     "duration": "Um capítulo",
     "loophole": "Nomeie um antigo proprietário do objeto que não seja o atual.",
     "seemingBenefits": {
       "Elemental": "O Elemental também pode afetar manifestações de seu elemento associado.",
-      "Wizened": "Por +1 FdV, o Mirrado torna permanente o efeito de congelamento; tentativas de sobrepujá-lo provocam um Choque de Vontades."
+      "Wizened": "Por +1 Força de Vontade, o Mirrado torna permanente o efeito de congelamento; tentativas de sobrepujá-lo provocam um Choque de Vontades."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {
@@ -420,7 +421,7 @@
     }
   },
   "ctl-core:tatterdemalions-workshop": {
-    "name": "Oficina do Maltrapilho",
+    "name": "Oficina do Latoeiro",
     "description": "Realize em um turno uma ação improvisada de Construir Equipamento para criar qualquer objeto mundano de Tamanho 5 ou menor com materiais improvisados e sem as ferramentas adequadas. Reduza as penalidades por bônus ou benefícios pela metade do Fado, arredondada para cima.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
@@ -539,6 +540,7 @@
     "name": "As Paredes Têm Ouvidos",
     "description": "Conte a um objeto um segredo Arcadiano e compre uma ou mais revelações sobre ele.",
     "dicePool": "Nenhuma",
+    "cost": "● por segredo",
     "action": "Instantânea",
     "duration": "Uma cena",
     "options": [
@@ -596,6 +598,7 @@
     "name": "Reflexos do Passado",
     "description": "Retroceda uma superfície reflexiva para mostrar até uma cena de um momento passado especificado ou acontecimento conhecido, visível a todos os observadores pelo ângulo original da superfície.",
     "dicePool": "Inteligência + Ocultismo + Fado",
+    "cost": "● a ●●●●●",
     "action": "Instantânea",
     "duration": "Instantânea",
     "success": "Observe até uma semana, mês, estação, ano ou década no passado por um a cinco pontos de Glamour, respectivamente.",
@@ -624,7 +627,7 @@
     "action": "Instantânea para alvos dispostos; disputada para alvos indispostos",
     "duration": "Uma cena",
     "success": "O alvo se parece externamente com a Frátria escolhida.",
-    "exceptionalSuccess": "Ao escolher a si mesmo como alvo, gaste FdV para tornar a aparência indefinida.",
+    "exceptionalSuccess": "Ao escolher a si mesmo como alvo, gaste Força de Vontade para tornar a aparência indefinida.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O alvo perde todos os benefícios de Frátria pela cena sem assumir outro Semblante Feérico.",
     "loophole": "Durante a cena, dê algo sem exigir recompensa além de gratidão a um changeling da Frátria desejada.",
@@ -904,5 +907,983 @@
         "Fairest": "Escolha personagens que ainda possam perceber e ouvir você."
       }
     }
+  },
+  "ctl-core:boon-of-the-scuttling-spider": {
+    "name": "Dádiva da Aranha Rastejante",
+    "description": "Mova-se com o Deslocamento normal e aja sem impedimentos sobre paredes, tetos, superfícies escorregadias ou qualquer superfície sólida capaz de sustentar o changeling.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Engula uma aranha viva.",
+    "seemingBenefits": {
+      "Beast": "Use a manobra de agarrão Imobilizar como se tivesse alcançado sucesso excepcional.",
+      "Darkling": "Receba +2 em Furtividade ao atravessar superfícies improváveis."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Elemental": "Esprema-se por qualquer abertura grande o bastante para passar a cabeça, usando o Deslocamento normal.",
+        "Fairest": "Mova-se sobre superfícies incapazes de sustentar seu peso.",
+        "Ogre": "Ataque enquanto se move com o dobro do Deslocamento.",
+        "Wizened": "Multiplique o Deslocamento ao rastejar por 1,5, arredondando para cima."
+      }
+    }
+  },
+  "ctl-core:dreamsteps": {
+    "name": "Passos Oníricos",
+    "description": "Toque uma pessoa adormecida nas proximidades, sincronize a respiração e passe do mundo mundano para o Bastião desse sonhador.",
+    "dicePool": "Inteligência + Empatia + Fado contra Fortificação",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Entre no Bastião do sonhador pelo Portal de Marfim, em vez de entrar no próprio Bastião do changeling.",
+    "exceptionalSuccess": "O Bastião sofre −1 de Fortificação até o sonhador despertar.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Entre no sonho, mas sofra Carne Muito Sólida, enquanto o Bastião recebe +1 de Fortificação até o sonhador despertar.",
+    "loophole": "Segure o ursinho de pelúcia do alvo ou outro objeto reconfortante de sua infância durante a invocação.",
+    "seemingBenefits": {
+      "Beast": "Assuma o Semblante Feérico de um pesadelo testemunhado e, uma vez neste capítulo, imponha Assombrado ao interagir com o sonhador desperto.",
+      "Fairest": "Receba Informado a respeito do sonhador."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Receba Inspirado pelo conteúdo fascinante da mente do sonhador.",
+        "Elemental": "Apareça como qualquer pessoa que o sonhador conheça na vida desperta.",
+        "Ogre": "Assuma o Semblante Feérico de qualquer sonho positivo testemunhado e, uma vez neste capítulo, conceda Resoluto ao sonhador.",
+        "Wizened": "Crie um adereço simples a partir de um desejo, adicionando Fado dados à Persuasão com o sonhador."
+      }
+    }
+  },
+  "ctl-core:nevertread": {
+    "name": "Passos sem Rastro",
+    "description": "Altere todas as pegadas deixadas após a invocação para que se pareçam com outro rastro, tornando impossível o rastreamento mundano e provocando um Choque de Vontades no rastreamento sobrenatural. As pegadas permanecem alteradas após o efeito terminar.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Deixe uma pista oculta ou visível que revele a identidade do changeling caso seja encontrada.",
+    "seemingBenefits": {
+      "Beast": "Estenda o efeito a um número de companheiros igual ao dobro da Furtividade.",
+      "Wizened": "Deixe armadilhas com pontos efetivos de Lugar Seguro iguais à Destreza."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Receba +3 nos Choques de Vontades relacionados.",
+        "Elemental": "Gaste 1 Glamour adicional para criar um rastro falso nas proximidades.",
+        "Fairest": "Crie uma distração natural que os perseguidores precisam estudar por um minuto ou gastar 1 Força de Vontade para ignorar.",
+        "Ogre": "Em vez disso, crie uma trilha segura e marcada que conceda +2 de Defesa aos aliados enquanto a seguirem."
+      }
+    }
+  },
+  "ctl-core:pathfinder": {
+    "name": "Desbravador",
+    "description": "Misture sangue ou saliva com terra da Sebe e desenhe uma bússola que revele a direção e a distância até a característica geral escolhida mais próxima da Sebe, como um Mercado, Vão, Fruta Goblin ou Portal de Chifre. Ela nada revela sobre criaturas à espreita.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Sofra pelo menos 1 ponto de dano causado por parte da Sebe durante a cena.",
+    "seemingBenefits": {
+      "Beast": "Descubra também a quantidade e a intenção hostil das criaturas próximas.",
+      "Wizened": "Saiba se as Frutas Goblin próximas são benéficas ou nocivas e identifique seus tipos."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Conheça as mercadorias gerais dos Mercados Goblin próximos e se seus proprietários são, em linhas gerais, honestos.",
+        "Elemental": "Localize também o exemplar mais próximo do elemento de afinidade.",
+        "Fairest": "Quando várias rotas servirem, saiba qual é a melhor.",
+        "Ogre": "Saiba também qual é a rota mais segura até o alvo pretendido."
+      }
+    }
+  },
+  "ctl-core:seven-league-leap": {
+    "name": "Salto de Sete Léguas",
+    "description": "Faça um teste de salto e percorra uma trajetória de 10 metros por ponto de Fado.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Um turno",
+    "loophole": "Use botas roubadas de um inimigo durante a cena.",
+    "seemingBenefits": {
+      "Beast": "Receba +10 de Deslocamento pela cena e, ao usar o Contrato em uma perseguição a pé, obtenha a Vantagem no próximo turno.",
+      "Ogre": "Use o salto como um ataque desarmado com +2 de Força e inflija Derrubado se acertar."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Use o salto para se esconder de um inimigo sem teste quando houver um local de aterrissagem oculto.",
+        "Elemental": "Mude a trajetória uma vez no ar.",
+        "Fairest": "Percorra 15 metros por ponto de Fado, em vez de 10.",
+        "Wizened": "Adicione Fado à próxima ação Física depois de aterrissar."
+      }
+    }
+  },
+  "ctl-core:chrysalis": {
+    "name": "Crisálida",
+    "description": "Ao aprender o Contrato, escolha duas formas animais conhecidas de Tamanho 1–7 e transforme-se em qualquer uma delas, copiando Atributos Físicos, Tamanho, Deslocamento, Vitalidade, sentidos mundanos, movimento e comunicação com a espécie. Formas míticas concedem sua anatomia, mas não poderes sobrenaturais.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Esteja no habitat natural do animal escolhido e perto o bastante para tocar um exemplar.",
+    "seemingBenefits": {
+      "Beast": "Escolha duas formas animais adicionais.",
+      "Ogre": "Escolha animais de até Tamanho 15."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Pode tornar-se menor que Tamanho 0 por 1 Glamour adicional.",
+        "Elemental": "Gaste 1 Força de Vontade para combinar as duas formas, usando as características mais altas e escolhendo o Tamanho.",
+        "Fairest": "Uma forma mítica recebe um Poder Temível aprovado pelo Narrador.",
+        "Wizened": "Pode tornar-se uma máquina animalesca com armadura 1/1 e transferir um ponto entre dois Atributos Físicos."
+      }
+    }
+  },
+  "ctl-core:flickering-hours": {
+    "name": "Horas Oscilantes",
+    "description": "Escolha cada viajante afetado quando o Contrato for invocado, inclusive perseguidores hostis próximos, e reduza pela metade ou dobre o fluxo de tempo desse alvo através da Sebe. Até o sol cruzar novamente o horizonte, cada alvo acelerado também recebe Pés Ligeiros com pontos efetivos iguais ao Fado do changeling, no máximo três, e sempre possui a Vantagem em uma perseguição. Um alvo indisposto pode libertar-se vencendo Perseverança + Fado em uma disputa contra Raciocínio + Ocultismo + Fado do changeling; essa é uma resistência ao Efeito contínuo, não um teste de invocação.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até o changeling sair da Sebe",
+    "loophole": "Quebre um relógio antigo ou outro instrumento antigo de medição do tempo ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Beast": "Depois de pagar uma vez o custo de Força de Vontade para incluir outras pessoas, estenda livremente o Contrato a qualquer um encontrado durante a viagem.",
+      "Elemental": "O caminho deixado para trás torna-se quase intransponível e aplica os efeitos mecânicos da Complicação Gelo, descrita de acordo com o elemento associado ao Elemental."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Uma vez por dia, pause o tempo por Fado turnos antes do efeito normal do Contrato.",
+        "Fairest": "Não precisa gastar Força de Vontade para estender o efeito ao Retalho ou a parceiros de juramento ou barganha.",
+        "Ogre": "Uma vítima indisposta deve causar ao Ogro dano letal igual ao Vigor antes de tentar escapar.",
+        "Wizened": "Antes de expirar, gaste reflexivamente 1 Glamour para inverter a alteração do fluxo temporal."
+      }
+    }
+  },
+  "ctl-core:leaping-toward-nightfall": {
+    "name": "Salto Rumo ao Anoitecer",
+    "description": "Toque um objeto de até Tamanho 5 ou um personagem e envie-o adiante no tempo, preservando localização e impulso. Alvos sencientes podem disputar; o deslocamento máximo é de um dia por sucesso e não pode terminar antes do tempo.",
+    "dicePool": "Inteligência + Ocultismo + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea para objetos ou alvos voluntários; Disputada para alvos indispostos",
+    "duration": "Até o momento futuro escolhido",
+    "success": "O alvo desaparece e reaparece no momento predeterminado, deslocado para o lado de qualquer ocupante de seu espaço original.",
+    "exceptionalSuccess": "Em vez disso, faça o alvo chegar ao lado de um personagem a quem o changeling deva uma dívida.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Um alvo aleatório é deslocado e chega com Volátil, se for um objeto, ou Assombrado, se for um personagem.",
+    "loophole": "Destrua uma peça, um Ícone ou um objeto onírico pertencente ao alvo.",
+    "seemingBenefits": {
+      "Beast": "Um alvo senciente que chegue recebe Desorientado, que só pode ser resolvido com um aliado ou desaparece sem conceder um Ato ao fim da cena.",
+      "Darkling": "Apague permanentemente a lembrança do alvo sobre a cena de invocação; ela pode ser restaurada sobrenaturalmente por meio de um Choque de Vontades."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Elemental": "Gaste 1 Força de Vontade para enviar o alvo a até Fado × 2 quilômetros de distância.",
+        "Fairest": "Use o Contrato em si mesmo.",
+        "Ogre": "Na chegada, conceda armadura 2/2 ou Durabilidade 3 por uma cena.",
+        "Wizened": "Gaste 1 Força de Vontade para definir um retorno em até Fado horas; retornar inflige Abalado."
+      }
+    }
+  },
+  "ctl-core:mirror-walk": {
+    "name": "Caminhar pelos Espelhos",
+    "description": "Abra uma superfície reflexiva tocada para o espaço dos espelhos e saia por outro espelho tocado anteriormente no mundo mundano ou na Sebe. Leve companheiros de mãos dadas ou alcance um objeto através da passagem; ambas as superfícies devem comportar o que passar por elas.",
+    "dicePool": "Raciocínio + Sobrevivência + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Abra a rota e atravesse até o espelho escolhido.",
+    "exceptionalSuccess": "Ambos os espelhos permanecem como portais de mão dupla pela cena, utilizáveis por qualquer pessoa com permissão.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Fique Perdido no espaço dos espelhos, derrubando ali qualquer objeto que estivesse sendo recuperado.",
+    "loophole": "Diga corretamente o nome ou descreva alguém refletido naquele momento no espelho de saída.",
+    "seemingBenefits": {
+      "Beast": "Termine dentro do espaço dos espelhos e receba +2 para navegar ou lidar com seus habitantes pela cena.",
+      "Elemental": "Depois de sair, adquira uma aparência espelhada e fique invisível por um número de minutos igual aos sucessos da invocação."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Com sucesso excepcional, gaste 1 Força de Vontade para tornar o portal indefinido até que ele toque ferro.",
+        "Fairest": "Com sucesso excepcional, restrinja quem pode entrar ou exclua uma categoria escolhida.",
+        "Ogre": "Com sucesso excepcional, transforme o portal aberto em uma armadilha que cause Fado dados de dano letal a perseguidores.",
+        "Wizened": "Deixe o portal aberto com sucesso excepcional, mas, depois que os aliados chegarem, sua saída passa a ser aleatória em um raio de Fado × 2 quilômetros."
+      }
+    }
+  },
+  "ctl-core:talon-and-wing": {
+    "name": "Garra e Asa",
+    "description": "Gaste ● por característica animal escolhida; os efeitos se acumulam.",
+    "dicePool": "Nenhuma",
+    "cost": "● por efeito",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "options": [
+      "Movimento: receba o modo de locomoção de um animal e +10 de Deslocamento.",
+      "Sentidos: receba +3 em Percepção e ignore penalidades por penumbra ou escuridão.",
+      "Garras: ataques desarmados recebem +0L ou causam dano agravado se já causarem dano letal."
+    ],
+    "loophole": "Coma pelos, uma garra ou outro pedaço do animal imitado.",
+    "seemingBenefits": {
+      "Beast": "Torne-se imune à fadiga mundana; fadiga sobrenatural provoca um Choque de Vontades.",
+      "Darkling": "Por +1 Glamour, acrescente presas ou garras venenosas: Toxicidade igual ao Fado a cada hora fora de cenas de ação, ou Envenenado grave em um ataque bem-sucedido durante uma cena de ação."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Elemental": "Escolha também a mente de um animal, recebendo Ação Avançada em Furtividade e Sobrevivência.",
+        "Fairest": "Escolha também a graça de um animal, calculando a Defesa com o maior valor entre Destreza e Raciocínio.",
+        "Ogre": "As garras recebem +2 de dano.",
+        "Wizened": "Gaste apenas 1 Glamour por dois efeitos."
+      }
+    }
+  },
+  "ctl-core:elemental-weapon": {
+    "name": "Arma Elemental",
+    "description": "Molde um elemento próximo em uma arma arcaica com características normais e gaste os sucessos para aprimorá-la.",
+    "dicePool": "Presença + Sobrevivência + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "options": [
+      "+1 no modificador da arma por sucesso, até o máximo de três.",
+      "Reduza a penalidade de Iniciativa em um por sucesso, até o máximo de três.",
+      "Acrescente 20/40/80 ao alcance por sucesso, até o máximo de três."
+    ],
+    "success": "Crie a arma e distribua os sucessos entre seus aprimoramentos.",
+    "exceptionalSuccess": "Os sucessos adicionais concedem aprimoramentos adicionais normalmente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O elemento reage descontroladamente e inflige uma Complicação apropriada ao changeling.",
+    "loophole": "Realize um truque vistoso e inofensivo com o elemento mundano como uma ação instantânea imediatamente antes da invocação.",
+    "seemingBenefits": {
+      "Darkling": "Crie a arma a partir de sombras e, ao acertar, inflija Cego em vez de dano.",
+      "Elemental": "Com o elemento de afinidade, incorpore a arma à Mascarilha e ao Semblante Feérico e, uma vez, dispute Presença + Intimidação contra Vigor + Fado para infligir Atordoado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Ataques Totais com a arma concedem +4 em vez de +2.",
+        "Fairest": "Gaste 1 Glamour adicional para receber dois benefícios por sucesso da invocação.",
+        "Ogre": "Receba +3 de Defesa enquanto empunhar a arma.",
+        "Wizened": "Invoque usando Ofícios."
+      }
+    }
+  },
+  "ctl-core:might-of-the-terrible-brute": {
+    "name": "Poder do Bruto Terrível",
+    "description": "Depois de vencer uma disputa de agarrão, escolha uma manobra de agarrão que rouba 1 ponto de Força e o acrescenta ao changeling, até +5. Força 0 inflige Imobilizado; o bônus pode exceder os limites impostos pelo Fado.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "loophole": "Agarre vários oponentes ao mesmo tempo.",
+    "seemingBenefits": {
+      "Beast": "Ao invocar, escolha roubar Destreza em vez de Força.",
+      "Elemental": "Receba também os efeitos do Mérito Gigante."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Inflija Abalado se roubar todo o Atributo.",
+        "Fairest": "Exceda em um o limite de Atributo derivado do Fado.",
+        "Ogre": "Ações para controlar um agarrão obtêm sucesso excepcional com três sucessos.",
+        "Wizened": "Pode roubar Vigor em vez de Força, conforme escolhido na invocação."
+      }
+    }
+  },
+  "ctl-core:overpowering-dread": {
+    "name": "Pavor Avassalador",
+    "description": "Destrua metodicamente um objeto enquanto encara um alvo para dominá-lo pelo medo.",
+    "dicePool": "Presença + Intimidação + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Inflija Amedrontado.",
+    "exceptionalSuccess": "A próxima invocação contra o alvo depois que este Contrato terminar não custa Glamour.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Assombrado.",
+    "loophole": "Permaneça nas sombras e surpreenda o alvo.",
+    "seemingBenefits": {
+      "Elemental": "Afete um alvo adicional, disputando separadamente.",
+      "Fairest": "Em vez disso, faça o alvo temer os arredores e então conforte-o para infligir Enamorado em relação ao Belíssimo."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Inflija Bestial em vez de Amedrontado.",
+        "Darkling": "Amedrontado dura uma cena adicional.",
+        "Ogre": "Receba 9-novamente na invocação.",
+        "Wizened": "Faça outro personagem presente parecer a fonte do medo."
+      }
+    }
+  },
+  "ctl-core:primal-glory": {
+    "name": "Glória Primordial",
+    "description": "Toque um elemento para receber imunidade a dano mundano causado por ele, sofrer metade do dano de fontes mágicas, receber armadura 1/1 e irradiar uma aura que causa 1 ponto de dano letal por turno a oponentes em combate corpo a corpo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Consuma o elemento de alguma maneira.",
+    "seemingBenefits": {
+      "Elemental": "Com o elemento de afinidade, cause o dano a todos em um raio de Fado metros.",
+      "Ogre": "Torne-se completamente imune às manifestações mágicas do elemento."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A armadura causa 2 pontos de dano letal em vez de 1.",
+        "Darkling": "Receba 9-novamente na Esquiva enquanto estiver protegido.",
+        "Fairest": "Receba +1 de Presença pela duração.",
+        "Wizened": "Receba um ponto adicional de armadura geral ou balística."
+      }
+    }
+  },
+  "ctl-core:touch-of-wrath": {
+    "name": "Toque da Ira",
+    "description": "Toque um objeto e arruíne o material que o compõe.",
+    "dicePool": "Inteligência + Ofícios + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Cause 1 ponto de dano à Estrutura por sucesso.",
+    "exceptionalSuccess": "O dano ignora Durabilidade.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Um objeto não pretendido recebe Volátil.",
+    "loophole": "Durante a cena, o proprietário roubou, tentou roubar ou tentou trapacear o changeling.",
+    "seemingBenefits": {
+      "Elemental": "Cause o dobro do dano a objetos feitos inteiramente de materiais naturais.",
+      "Wizened": "Use o Contrato à distância, apenas vendo o objeto, sem tocá-lo."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Cause o dobro do dano a objetos inteiramente manufaturados.",
+        "Darkling": "Invoque com Furto.",
+        "Fairest": "Com sucesso, molde esculturas ou relevos simples no objeto.",
+        "Ogre": "Invoque com Briga."
+      }
+    }
+  },
+  "ctl-core:elemental-fury": {
+    "name": "Fúria Elemental",
+    "description": "Crie uma Complicação Ambiental escolhida por ponto de Glamour gasto em um raio de 20 metros, permanecendo imune. Gaste Glamour adicional para ampliar o raio em 20 metros por ponto.",
+    "dicePool": "Nenhuma",
+    "cost": "● por Complicação; +● por 20 metros",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Proclame publicamente sua raiva, vingança ou fúria.",
+    "seemingBenefits": {
+      "Elemental": "Ao invocar, cause dano contusivo igual à Presença em todos na área.",
+      "Fairest": "Isole das Complicações quaisquer alvos visíveis escolhidos."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Inflija também Desorientado em todos na área.",
+        "Darkling": "Furtividade obtém sucesso excepcional com três sucessos enquanto o efeito estiver ativo.",
+        "Ogre": "Cada ponto adicional de Glamour amplia o alcance em 30 metros, em vez de 20.",
+        "Wizened": "Acrescente um pulso eletromagnético que desativa tecnologia digital por Fado turnos."
+      }
+    }
+  },
+  "ctl-core:oathbreakers-punishment": {
+    "name": "Punição do Quebrador de Juramento",
+    "description": "Perceba a promessa quebrada mais grave pela qual o alvo ainda não se redimiu e molde pesadelos despertos ligados a ela.",
+    "dicePool": "Raciocínio + Empatia + Fado − Compostura",
+    "action": "Instantânea",
+    "duration": "Uma quinzena ou até ser usado",
+    "success": "Crie um pesadelo desperto por sucesso para ocorrer dentro de uma quinzena. Cada um dura uma cena e se torna um alvo válido de Oniromancia, com Bastião e Estrada dos Sonhos.",
+    "exceptionalSuccess": "Descubra todos os votos quebrados sem reparação e baseie os pesadelos em qualquer combinação deles.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo descobre o juramento quebrado ou acordo renegado mais significativo do changeling.",
+    "loophole": "Durante a cena, o alvo fez ao changeling uma promessa que ainda está em vigor.",
+    "seemingBenefits": {
+      "Wizened": "Descubra todos os detalhes do juramento quebrado.",
+      "Elemental": "Torne a promessa quebrada evidente aos observadores e inflija Notoriedade."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Gaste 1 ponto de Força de Vontade para infligir também Devasso.",
+        "Darkling": "A vítima recebe Amedrontado quando o pesadelo termina.",
+        "Fairest": "Gaste 1 ponto de Força de Vontade para infligir também Obsessão em reparar a transgressão mais grave.",
+        "Ogre": "Cada pesadelo criado pode causar até Fado dados de dano contusivo."
+      }
+    }
+  },
+  "ctl-core:red-revenge": {
+    "name": "Vingança Rubra",
+    "description": "Receba +3 de Iniciativa, Intimidação e em todos os Atributos Físicos, inclusive nas características derivadas; receba também armadura 3/3 e Frenético.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Invoque para vingar uma pessoa amada ou um amigo.",
+    "seemingBenefits": {
+      "Elemental": "Receba +1 no modificador de arma em ataques de Briga e Armas Brancas.",
+      "Ogre": "Os ataques também infligem Derrubado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Atletismo e Briga obtêm sucesso excepcional com três sucessos.",
+        "Darkling": "Receba também +3 de Defesa.",
+        "Fairest": "Acrescente também +5 a um Atributo escolhido.",
+        "Wizened": "Conceda o efeito do Contrato a outro personagem voluntário."
+      }
+    }
+  },
+  "ctl-core:relentless-pursuit": {
+    "name": "Perseguição Implacável",
+    "description": "Diga o nome ou descreva um alvo para saber sua direção, distância aproximada e reino em que se encontra. Evasão sobrenatural provoca um Choque de Vontades.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até o sol cruzar novamente o horizonte",
+    "loophole": "Possua uma parte do corpo, um Ícone ou um objeto onírico pertencente ao alvo.",
+    "seemingBenefits": {
+      "Beast": "Vislumbre também o que o alvo está fazendo no momento da invocação.",
+      "Elemental": "A cada passagem do sol pelo horizonte, gaste ● para estender a duração e receber um modificador cumulativo de +1 em perseguições, até +5."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Gaste 1 Glamour para receber Observador Treinado 1 ao notar a presa; caso já possua 3 pontos, receba ação de rotina em Percepção.",
+        "Fairest": "Receba 9-novamente e remova o 10-novamente do alvo em ações mundanas disputadas de perseguição.",
+        "Ogre": "Conceda a um aliado desaparecido que esteja sendo rastreado +2 de Perseverança e Compostura pela duração.",
+        "Wizened": "Saiba a distância exata até o alvo."
+      }
+    }
+  },
+  "ctl-core:thief-of-reason": {
+    "name": "Ladrão da Razão",
+    "description": "Corrói a estabilidade mental do alvo com uma risada crescente e horrível. Causar dano de Lucidez com sucesso é um ponto de ruptura de quatro dados.",
+    "dicePool": "Presença + Subterfúgio + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Role os sucessos da invocação como um ataque de Lucidez; o dano também remove 1 ponto de Força de Vontade. O dano equivalente em não changelings é temporário até o fim da cena.",
+    "exceptionalSuccess": "Os sucessos adicionais fortalecem normalmente o ataque de Lucidez.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Dissociação.",
+    "loophole": "Durante a cena, induza o alvo a duvidar da própria sanidade, mesmo que em tom de brincadeira.",
+    "seemingBenefits": {
+      "Elemental": "Acrescente Fado aos sucessos do ataque de Lucidez bem-sucedido ao determinar sua parada de dano.",
+      "Fairest": "Por +1 Glamour, adie o efeito até um gatilho escolhido dentro de um dia."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Se a vítima sofrer dano de Lucidez, inflija também Acovardado.",
+        "Darkling": "Implante uma lembrança falsa do que causou o ponto de ruptura.",
+        "Ogre": "Limite o dano de Lucidez da vítima, até o mínimo de 1, e sofra −1 em seu próprio ponto de ruptura.",
+        "Wizened": "Conceda 8-novamente ao ataque de Lucidez."
+      }
+    }
+  },
+  "ctl-core:cupids-arrow": {
+    "name": "Flecha de Cupido",
+    "description": "Toque a pele ou o cabelo do alvo para extrair e estudar seus desejos.",
+    "dicePool": "Raciocínio + Empatia + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Descubra o desejo mais ardente do alvo e quaisquer Condições ou Complicações ligadas a ele, mesmo que inconscientes, e opcionalmente redirecione essa paixão e seus efeitos para um novo objeto.",
+    "exceptionalSuccess": "Descubra também todos os obstáculos entre o alvo e o desejo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Acredite por engano que o alvo deseja algo escolhido pelo Narrador ou pelo jogador do alvo.",
+    "loophole": "Segure uma flor viva de hera."
+  },
+  "ctl-core:dreams-of-the-earth": {
+    "name": "Sonhos da Terra",
+    "description": "Cante uma canção de ninar para um alvo visível e coloque-o em um sono sobrenatural.",
+    "dicePool": "Presença + Expressão + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Minutos iguais aos sucessos",
+    "success": "O alvo adormece e somente dano letal pode despertá-lo; depois, continua dormindo normalmente.",
+    "exceptionalSuccess": "O sono sobrenatural dura a cena inteira.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling dorme sobrenaturalmente por Manto minutos.",
+    "loophole": "Jogue areia nos olhos do alvo; contra um alvo indisposto, isso exige Destreza + Atletismo − Defesa."
+  },
+  "ctl-core:gift-of-warm-breath": {
+    "name": "Dádiva do Sopro Quente",
+    "description": "Toque um alvo voluntário e remova todas as penalidades de fadiga, Complicações ligadas à fadiga, enfermidades temporárias como Doente ou Envenenado e todo o dano contusivo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Dê ao alvo comida ou bebida preparada pelo changeling."
+  },
+  "ctl-core:springs-kiss": {
+    "name": "Beijo da Primavera",
+    "description": "Convoque chuva de qualquer intensidade num raio de Manto quilômetros, normalmente permitindo Chuva Forte; pague o custo maior para infligir também Inundado.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Use galochas e capa de chuva amarelo-vivas."
+  },
+  "ctl-core:wyrd-faced-stranger": {
+    "name": "Estranho de Rosto Fadado",
+    "description": "Apareça como a pessoa que o alvo mais deseja ver, inclusive um estranho imaginário. Contra um grupo, use um alvo, mas a maior Compostura se opõe; todos veem a mesma identidade. Receba Manto dados em testes Sociais necessários para sustentar a representação.",
+    "dicePool": "Presença + Subterfúgio + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Assuma a aparência desejada.",
+    "exceptionalSuccess": "O engano dura até a próxima alvorada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Sem perceber, apareça como a pessoa que o alvo menos deseja ver.",
+    "loophole": "Carregue algo de valor emocional para o alvo."
+  },
+  "ctl-core:blessing-of-spring": {
+    "name": "Bênção da Primavera",
+    "description": "Dê a uma planta, animal ou criatura sapiente um cordial preparado durante um dia. O alvo avança meses, floresce ou amadurece, cura todas as feridas e doenças ou venenos temporários; um changeling também remove uma Condição temporária de Lucidez e cura 1 ponto de Lucidez sem receber um Ato. As mudanças se revertem depois da cena, e o alvo precisa consumir três dias de alimento.",
+    "dicePool": "Inteligência + Medicina + Manto contra Vigor + Tolerância",
+    "action": "Instantânea para plantas e animais; Disputada para criaturas sapientes",
+    "duration": "Uma cena",
+    "success": "Aplique os efeitos temporários de crescimento e cura.",
+    "exceptionalSuccess": "Avance um ano inteiro, regenere membros, remova uma Condição Persistente de Lucidez e cure 2 pontos de Lucidez, acelere gestações voluntárias em 12 meses e torne permanentes os nascimentos ocorridos durante a cena.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "As criaturas recebem Fatigado, e as plantas murcham.",
+    "loophole": "Decore o alvo com fitas e dance ao redor dele."
+  },
+  "ctl-core:gift-of-warm-blood": {
+    "name": "Dádiva do Sangue Quente",
+    "description": "Cubra as feridas do alvo com um unguento de sonhos e flores primaveris recordadas.",
+    "dicePool": "Raciocínio + Medicina + Manto",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Por sucesso, rebaixe um ferimento agravado para letal, letal para contusivo ou contusivo para curado.",
+    "exceptionalSuccess": "Cure também todo o dano contusivo restante.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Eleve um ferimento contusivo para letal ou letal para agravado; gaste +1 ponto de Força de Vontade para evitar isso caso matasse o paciente.",
+    "loophole": "Acrescente o sangue do changeling ao unguento, sofrendo 1 ponto de dano letal."
+  },
+  "ctl-core:pandoras-gift": {
+    "name": "Dádiva de Pandora",
+    "description": "Depois que o alvo tocar uma ferramenta, material ou o changeling, comece dentro de uma hora a Construir Equipamento que expresse o desejo do alvo. Reduza o tempo de construção à metade; o objeto dura até a próxima passagem do sol pelo horizonte. Usá-lo com sucesso como suborno concede +3 dados Sociais e reembolsa 1 Glamour.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até o sol cruzar novamente o horizonte",
+    "loophole": "Durante a cena, receba do alvo, sem condições, um presente valioso ou sentimental."
+  },
+  "ctl-core:prince-of-ivy": {
+    "name": "Príncipe da Hera",
+    "description": "Cuspa no chão enquanto nomeia inimigos para criar trepadeiras móveis e agarradoras. A cada turno, faça um novo agarrão a até três metros de uma planta sem gastar a ação instantânea; sacrifique a ação para um segundo e a Defesa para um terceiro. As plantas rolam 3 + sucessos da invocação.",
+    "dicePool": "Presença + Expressão + Manto",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "As plantas crescem e agarram os inimigos escolhidos.",
+    "exceptionalSuccess": "No início de cada novo turno de Iniciativa, cause 1 ponto de dano contusivo a cada alvo agarrado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "As plantas atacam o changeling e seus aliados por Manto turnos.",
+    "loophole": "Fique descalço sobre a terra e corte a mão para aspergir sangue, sofrendo 1 ponto de dano letal."
+  },
+  "ctl-core:waking-the-inner-fae": {
+    "name": "Despertar o Fae Interior",
+    "description": "Dê ao alvo uma coroa de flores invisível que o impele a perseguir seus desejos. O alvo recebe Devasso; uma vez por cena durante a história, tentá-lo com sucesso restaura 1 ponto de Força de Vontade. Somente um alvo assim pode fornecer Força de Vontade por vez.",
+    "dicePool": "Manipulação + Expressão + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "O alvo aceita a coroa e recebe os efeitos descritos.",
+    "exceptionalSuccess": "Inflija também Obsessão Persistente pelo maior desejo atual do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling precisa usar a coroa, recebe Imprudente e não pode recuperar Força de Vontade por meio da Linha durante a cena.",
+    "loophole": "Conte ao alvo um dos desejos secretos do changeling na última cena."
+  },
+  "ctl-core:baleful-sense": {
+    "name": "Sentido Funesto",
+    "description": "Fareje a raiva mais profunda do alvo e redirecione seu objeto.",
+    "dicePool": "Raciocínio + Intimidação + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Descubra a maior ira do alvo e as Condições ou Complicações relacionadas, mesmo que ele a negue, e opcionalmente transfira todas para um novo objeto.",
+    "exceptionalSuccess": "Descubra suas origens e restrições e, sem teste, instigue um ataque físico não suicida contra a fonte da ira.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre −2 nos próximos testes de Manto.",
+    "loophole": "Durante a cena, provoque o alvo até ele gritar com o changeling."
+  },
+  "ctl-core:child-of-the-hearth": {
+    "name": "Filho da Lareira",
+    "description": "Inflija Calor Extremo ou Frio Extremo em uma área do tamanho de um salão, permanecendo imune, e remova do changeling a Complicação Pessoal correspondente. Isso funciona sem luz solar visível.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Sopre uma brasa ou centelha que esteja se apagando."
+  },
+  "ctl-core:helios-light": {
+    "name": "Luz de Hélio",
+    "description": "Irradie luz solar verdadeira em um raio de Manto × 20 metros. Observadores que olhem diretamente sofrem Cego; criaturas vulneráveis à luz solar sofrem metade do dano normal.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Seja incapaz de enxergar na escuridão absoluta."
+  },
+  "ctl-core:high-summers-zeal": {
+    "name": "Zelo do Alto Verão",
+    "description": "Quando um inimigo tentar fugir de um conflito violento em andamento, desafie-o a continuar.",
+    "dicePool": "Presença + Persuasão + Manto contra Compostura + Tolerância",
+    "action": "Reflexiva e Disputada",
+    "duration": "Até o conflito terminar",
+    "success": "O alvo precisa gastar Força de Vontade para fugir; caso contrário, deve continuar tentando vencer e não pode sofrer Derrotado.",
+    "exceptionalSuccess": "O alvo também não pode recuar para atacar à distância e precisa permanecer a até cinco metros.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo cura Manto pontos de dano e recebe +1 de Iniciativa.",
+    "loophole": "O oponente derramou o primeiro sangue."
+  },
+  "ctl-core:vigilance-of-ares": {
+    "name": "Vigilância de Ares",
+    "description": "Detecte automaticamente emboscadas, armadilhas ocultas e ataques-surpresa e acrescente Manto à Iniciativa.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "loophole": "Realize um exercício marcial durante a cena."
+  },
+  "ctl-core:fiery-tongue": {
+    "name": "Língua Flamejante",
+    "description": "Profira uma afirmação verdadeira de superioridade como uma repreensão fisicamente devastadora.",
+    "dicePool": "Presença + Intimidação + Manto − Perseverança",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Cause dano contusivo igual aos sucessos, ou letal contra Fae, remova duas Portas de Manobra Social e torne a impressão Hostil.",
+    "exceptionalSuccess": "Cause dano letal, ou agravado contra Fae.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Receba Mudo até o fim da cena.",
+    "loophole": "Afirme verbalmente possuir status, bem ou habilidade genuinamente superior ao alvo."
+  },
+  "ctl-core:flames-of-summer": {
+    "name": "Chamas do Verão",
+    "description": "Receba +2 em todos os testes Físicos, ignore penalidades de ferimentos e permaneça consciente sem testar Vigor quando a última caixa de Vitalidade for preenchida.",
+    "dicePool": "Força + Sobrevivência + Manto",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Receba os benefícios físicos.",
+    "exceptionalSuccess": "As chamas acrescentam +1L aos ataques desarmados.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A Força cai para 1 por Manto turnos.",
+    "loophole": "Imediatamente antes da invocação, esmague violentamente e coma um pedaço de gelo."
+  },
+  "ctl-core:helios-judgment": {
+    "name": "Julgamento de Hélio",
+    "description": "Ao ar livre, puxe para baixo um raio de sol arremessável que retorna, com Dano (Manto)L, alcances 10/30/50, Iniciativa −2, Força 2 e Tamanho 4. Pelo custo maior, o dano torna-se agravado.",
+    "dicePool": "Destreza + Atletismo + Manto",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Crie e empunhe a arma de luz solar verdadeira.",
+    "exceptionalSuccess": "Acertos também infligem Derrubado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Deixe o raio cair e provoque Terremoto.",
+    "loophole": "O alvo usa ou toca ouro puro."
+  },
+  "ctl-core:solstice-revelation": {
+    "name": "Revelação do Solstício",
+    "description": "Inunde um raio de 30 metros com uma luz reveladora. Disfarces mundanos testam Manipulação + Fado, penalizado pelo Manto, ou falham; tornar-se oculto é impossível, ocultação sobrenatural provoca um Choque de Vontades e qualquer pessoa pode testar Raciocínio + Compostura para atravessar a Mascarilha.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Revele publicamente um segredo mantido de propósito."
+  },
+  "ctl-core:sunburnt-heart": {
+    "name": "Coração Abrasado",
+    "description": "Incendeie o coração do alvo com a raiva acumulada.",
+    "dicePool": "Manipulação + Persuasão + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Inflija Frenético e receba Manto dados para redirecionar a fúria do alvo para longe do changeling.",
+    "exceptionalSuccess": "Afete um segundo alvo em uma disputa separada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Na próxima ação contra o changeling, o alvo obtém sucesso excepcional com três sucessos.",
+    "loophole": "Projete uma luz intensa nos olhos do alvo, a menos que ele a evite com Raciocínio + Compostura reflexivo."
+  },
+  "ctl-core:autumns-fury": {
+    "name": "Fúria do Outono",
+    "description": "Crie uma tempestade móvel em um raio de Manto × 20 metros, infligindo Chuva Forte e Vento Forte enquanto o changeling permanece imune. Pelo custo maior, a cada turno ataque reflexivamente todos os demais na área com Presença + Ocultismo − Defesa e relâmpagos de 1L.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Erga uma haste metálica e então a abaixe na direção dos inimigos como uma ação instantânea."
+  },
+  "ctl-core:last-harvest": {
+    "name": "Última Colheita",
+    "description": "Receba 9-novamente na próxima colheita de Glamour de um alvo, ou 8-novamente se a emoção ressoar com o Outono. Pode ser usado uma vez por capítulo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma tentativa de colheita",
+    "loophole": "Tenha como alvo a própria Touchstone do changeling."
+  },
+  "ctl-core:tale-of-the-baba-yaga": {
+    "name": "Conto da Baba Yaga",
+    "description": "Conte durante vários minutos uma lenda urbana conhecida e dispute com cada ouvinte individualmente.",
+    "dicePool": "Manipulação + Subterfúgio + Manto contra Compostura + Tolerância",
+    "action": "Disputada; leva pelo menos alguns minutos",
+    "duration": "Uma cena",
+    "success": "Inflija Abalado em qualquer ouvinte que perca a disputa.",
+    "exceptionalSuccess": "Os ouvintes afetados também precisam gastar Força de Vontade para agir contra o changeling.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Abalado.",
+    "loophole": "Entreteça o Contrato em uma lenda urbana que todos os ouvintes já conheçam."
+  },
+  "ctl-core:twilights-harbinger": {
+    "name": "Arauto do Crepúsculo",
+    "description": "Escolha um acontecimento ou circunstância em curso. Treze minutos antes do fim, ou três turnos de ação antes, um animal portador de presságio encontra e avisa o changeling.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até terminar o mês lunar ou o acontecimento",
+    "loophole": "Carregue um objeto significativamente ligado a alguém essencial para o acontecimento escolhido."
+  },
+  "ctl-core:witches-intuition": {
+    "name": "Intuição das Bruxas",
+    "description": "Revele um dos medos secretos do changeling para perceber e redirecionar o medo do alvo.",
+    "dicePool": "Raciocínio + Subterfúgio + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Descubra o maior medo do alvo e as Condições ou Complicações ligadas a ele e, opcionalmente, redirecione-as para outro objeto.",
+    "exceptionalSuccess": "Descubra também o que causou, agrava e alivia o medo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Revele um medo que o alvo ainda não conhecia.",
+    "loophole": "Coma qualquer parte do alvo, até mesmo um fio de cabelo, unha ou gota de sangue."
+  },
+  "ctl-core:famines-bulwark": {
+    "name": "Baluarte da Fome",
+    "description": "Leia presságios para questionar a situação atual.",
+    "dicePool": "Raciocínio + Ocultismo + Manto",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Faça uma pergunta de sim ou não por sucesso; todas as respostas, exceto uma, são verdadeiras, salvo se apenas uma pergunta for feita.",
+    "exceptionalSuccess": "Todas as respostas são verdadeiras, e o changeling percebe um caminho até o fenômeno sobrenatural não Fae mais próximo caso o persiga nesta cena.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Receba um presságio falso e Obsessão temporária, resolvida ao colocar o changeling ou seus aliados em perigo enquanto o persegue.",
+    "loophole": "Coma o fruto mais recente de uma planta cultivada pessoalmente."
+  },
+  "ctl-core:mien-of-the-baba-yaga": {
+    "name": "Semblante Feérico da Baba Yaga",
+    "description": "Aproxime-se sem ser visto enquanto sons ominosos anunciam o changeling e então apareça como o maior medo do alvo.",
+    "dicePool": "Presença + Intimidação + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Inflija Amedrontado e exija Força de Vontade para qualquer ação que envolva teste; opcionalmente, permita que observadores vejam o mesmo medo. Alvos changeling podem sofrer um ataque de Lucidez.",
+    "exceptionalSuccess": "Inflija também Imobilizado por Manto turnos.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling percebe o alvo como seu próprio maior medo e recebe Assombrado.",
+    "loophole": "Sussurre o nome ou título específico do maior medo do alvo."
+  },
+  "ctl-core:riding-the-falling-leaves": {
+    "name": "Cavalgando as Folhas Cadentes",
+    "description": "Torne-se uma revoada coesa de folhas de outono, voe com Deslocamento −3, passe por frestas estreitas e Esquive reflexivamente uma vez por turno, exceto contra ataques que prejudiquem folhas. Uma Esquiva bem-sucedida pode gastar ● para infligir Assombrado. Ataques físicos e manipulação de objetos tornam-se impossíveis.",
+    "dicePool": "Destreza + Ocultismo + Manto",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Assuma a forma de folhas.",
+    "exceptionalSuccess": "Voe com o Deslocamento total e carregue até Manto objetos de Tamanho 1.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Fique parcialmente transformado e Imobilizado por Manto turnos.",
+    "loophole": "No momento da invocação, apanhe um objeto que esteja caindo naturalmente ou sendo levado pelo vento."
+  },
+  "ctl-core:sorcerers-rebuke": {
+    "name": "Repreensão do Feiticeiro",
+    "description": "Toque um oponente e invoque o Outono para definhar seu poder sobrenatural.",
+    "dicePool": "Manipulação + Ocultismo + Manto",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Remova Glamour ou outro recurso sobrenatural em quantidade igual aos sucessos.",
+    "exceptionalSuccess": "Inflija também Acovardado em relação ao changeling.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Assombrado.",
+    "loophole": "No início desta cena, faça uma advertência ou ameaça grandiosa que dure pelo menos 30 segundos."
+  },
+  "ctl-core:tasting-the-harvest": {
+    "name": "Saboreando a Colheita",
+    "description": "Consuma o medo declarado de cada alvo, inclusive o do próprio changeling.",
+    "dicePool": "Presença + Subterfúgio + Manto",
+    "cost": "● por alvo",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Os alvos tornam-se imunes ao medo natural, acrescentam Manto às disputas contra medo sobrenatural e recebem +1 em ações contra um medo designado pelo changeling.",
+    "exceptionalSuccess": "Disputas contra medo sobrenatural obtêm sucesso excepcional com três sucessos, e ataques direcionados recebem +1 no modificador da arma.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Todos os alvos recebem Abalado.",
+    "loophole": "Assuste legitimamente um alvo durante a cena."
+  },
+  "ctl-core:the-dragon-knows": {
+    "name": "O Dragão Sabe",
+    "description": "Prove um objeto descartado pelo alvo ou toque-o e prove as pontas dos próprios dedos para perceber e manipular os arrependimentos do alvo.",
+    "dicePool": "Raciocínio + Empatia + Manto contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Descubra o arrependimento mais profundo do alvo e quaisquer Condições ou Complicações ligadas a ele, mesmo que inconscientes ou esquecidas. O changeling pode redirecionar esse arrependimento e as Condições ou Complicações associadas para um novo objeto.",
+    "exceptionalSuccess": "Receba +2 em testes Sociais feitos para destruir as esperanças do alvo pela duração.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Desmoralizado.",
+    "loophole": "Olhe nos olhos do alvo por pelo menos alguns segundos ininterruptos."
+  },
+  "ctl-core:heart-of-ice": {
+    "name": "Coração de Gelo",
+    "description": "Congele o coração e a pele do changeling. Ele se torna imune ao frio mundano e sobrenatural, ao dano causado exclusivamente por frio, a todas as Complicações Ambientais exceto as baseadas em calor e a ataques especificamente dirigidos ao coração. Não pode receber Condições emocionais enquanto o Contrato durar.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "loophole": "Antes da invocação, fique descalço em algo frio por (6 − Manto) turnos."
+  },
+  "ctl-core:ice-queens-call": {
+    "name": "Chamado da Rainha do Gelo",
+    "description": "Cuspa no chão para chamar Fantasmas da Sebe invernais e criar uma área fria crescente com a Complicação Nevasca até Manto × 20 metros. O changeling é imune, e sussurros pesarosos preenchem a área.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Veja ou faça alguém tremer de frio."
+  },
+  "ctl-core:slipknot-dreams": {
+    "name": "Sonhos de Nó Corrediço",
+    "description": "Converse com um alvo por uma cena, consuma seus arrependimentos e incentive-o a depositar as esperanças no changeling.",
+    "dicePool": "Manipulação + Empatia + Manto contra Perseverança + Tolerância",
+    "action": "Disputada; exige uma cena de conversa",
+    "duration": "Instantânea",
+    "success": "Acalme os arrependimentos do alvo sem apagar sua origem e inflija Enamorado em relação ao changeling.",
+    "exceptionalSuccess": "O changeling pode gastar Força de Vontade para suprimir ou alterar permanentemente a lembrança que causou o arrependimento, a menos que isso seja revertido por meios sobrenaturais.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo se recusa a falar voluntariamente com o changeling por um capítulo.",
+    "loophole": "Durante a cena, o alvo aceitou do changeling um presente valioso ou sentimental."
+  },
+  "ctl-core:touch-of-winter": {
+    "name": "Toque do Inverno",
+    "description": "Toque a superfície de um líquido para congelar instantaneamente um diâmetro de cinco metros ao redor do changeling, expandindo-o em mais cinco metros a cada turno enquanto o contato continuar. A superfície sustenta Manto pessoas e derrete naturalmente quando o Contrato termina.",
+    "dicePool": "Inteligência + Ciência + Manto",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Congele o líquido e continue expandindo a área congelada enquanto mantiver o contato.",
+    "exceptionalSuccess": "Restaure instantaneamente o líquido a qualquer momento ou imponha a Complicação Gelo a qualquer momento; o changeling é imune.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre Manto pontos de dano contusivo por congelamento.",
+    "loophole": "Imediatamente antes da invocação, derreta completamente pelo menos um punhado de gelo."
+  },
+  "ctl-core:ermines-winter-coat": {
+    "name": "Casaco Invernal do Arminho",
+    "description": "Vista branco e misture-se aos arredores, recebendo +3 de Furtividade e impondo −3 aos ataques. Entre vários seres não Fae, reduza o Fado à metade para bônus usados para rastrear ou identificar o changeling e receba +3 em Choques de Vontades para parecer mortal ao fortalecer a Mascarilha. Desfazer a Mascarilha encerra o Contrato.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Crie um pequeno esconderijo fechado e oculte o changeling dentro dele durante a invocação."
+  },
+  "ctl-core:fallow-fields": {
+    "name": "Campos em Pousio",
+    "description": "Escreva e coma o nome de alguém amado pelo alvo para drenar toda emoção positiva.",
+    "dicePool": "Manipulação + Empatia + Manto contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Dias iguais ao Manto",
+    "success": "O alvo não consegue recordar o amor, não pode recuperar Força de Vontade por meio de Virtude, Vício ou características equivalentes e recebe Quebrado.",
+    "exceptionalSuccess": "Ao pronunciar uma palavra durante a mesma história, faça o alvo reviver a perda e receber novamente Quebrado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Quebrado.",
+    "loophole": "Escreva o nome de uma das Touchstones do alvo."
+  },
+  "ctl-core:field-of-regret": {
+    "name": "Campo do Arrependimento",
+    "description": "Convoque os fantasmas daqueles que morreram perdidos na Sebe em uma noite de inverno e lance-os através dos alvos visíveis.",
+    "dicePool": "Presença + Empatia + Manto − Perseverança",
+    "cost": "● por alvo, ○",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Cause dano letal igual aos sucessos da invocação e remova 1 ponto de Força de Vontade de cada alvo.",
+    "exceptionalSuccess": "Cada alvo perde 2 pontos de Força de Vontade.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Desorientado.",
+    "loophole": "Cante uma música melancólica e permita que um fantasma possua o changeling por pelo menos 10 segundos."
+  },
+  "ctl-core:mantle-of-frost": {
+    "name": "Manto de Geada",
+    "description": "Irradie uma aura móvel de Frio Extremo que congela instantaneamente em um diâmetro de 20 metros. Os demais sofrem −1 cumulativo em todos os testes a cada turno, até −5; depois disso, sofrem 1 ponto de dano letal por turno. Sair remove a penalidade, mas retornar restaura seu valor atual. Dano superior ao Vigor inflige Imobilizado. O changeling é imune.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Retire dramaticamente um casaco, deixe-o cair como um manto e destrua-o."
+  },
+  "ctl-core:winters-curse": {
+    "name": "Maldição do Inverno",
+    "description": "Toque um alvo para congelar seu coração. Monteiros que carregam Títulos Fae no lugar do coração são imunes.",
+    "dicePool": "Presença + Sobrevivência + Manto contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo não pode cooperar em trabalho em equipe, gastar Força de Vontade, recuperá-la por meio de Linha, Virtude ou âncoras equivalentes, nem sofrer pontos de ruptura. Abandona aliados e Aspirações; todas as impressões Sociais permanecem Medianas, exceto a do changeling, que acrescenta Manto aos testes Sociais contra o alvo. Os pontos de ruptura adiados ocorrem depois.",
+    "exceptionalSuccess": "Escolha outro personagem presente: a impressão do alvo em relação a ele torna-se Hostil, e esse personagem sofre Manto como penalidade em testes Sociais contra o alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling congela o próprio coração e recebe Estoico.",
+    "loophole": "Imediatamente antes da invocação, engula um cubo de gelo inteiro."
+  },
+  "ctl-core:blessing-of-forgetfulness": {
+    "name": "Bênção do Esquecimento",
+    "description": "Passe a mão sobre a testa do alvo para apagar um acontecimento contínuo que não tenha durado mais que uma cena.",
+    "dicePool": "Manipulação + Subterfúgio + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Remova permanentemente o acontecimento e deixe a mente do alvo substituí-lo por uma lembrança falsa plausível e inofensiva. Evidências conclusivas podem convencê-lo depois de que o acontecimento ocorreu.",
+    "exceptionalSuccess": "Nenhuma persuasão ou evidência mundana pode convencer o alvo de que o acontecimento ocorreu.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling esquece os cinco minutos anteriores.",
+    "loophole": "O acontecimento feriu o alvo, mas o changeling prestou ajuda ou demonstrou bondade.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:glib-tongue": {
+    "name": "Língua Ladina",
+    "description": "Conte diretamente uma mentira a um mortal, que acredita nela a menos que seja comprovadamente falsa. Contra um alvo sobrenatural, acrescente Fado como dados de bônus a Subterfúgio, até +5.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Durante a mesma cena, conte a outro alvo uma mentira que prejudique alguém.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:goblins-eye": {
+    "name": "Olho do Goblin",
+    "description": "O Tino pode provocar um Choque de Vontades separado para cada fenômeno oculto por magia. Para um alvo sobrenatural revelado pelo Tino, faça uma pergunta por sucesso sobre sua natureza verdadeira, fraquezas, ativação, duração, Regalia mais próxima, poder relativo ou Promessa, débito ou Juramento diretamente associado.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "options": [
+      "Qual é a verdadeira natureza desta magia?",
+      "Qual é uma fraqueza, perdição, brecha ou condição que este fenômeno possui? Esta pergunta pode ser escolhida repetidamente.",
+      "Como ativo este Penhor ou efeito?",
+      "Quanto tempo este fenômeno durará?",
+      "Com qual Regalia este fenômeno mais se alinha?",
+      "Qual é o nível de poder deste fenômeno em relação ao meu Fado?",
+      "Existe uma Promessa, débito ou Juramento diretamente associado a este fenômeno?"
+    ],
+    "loophole": "Queime uma pena de coruja e marque as pálpebras do changeling com as cinzas.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:goblins-luck": {
+    "name": "Sorte do Goblin",
+    "description": "Faça um palpite aleatório entre um conjunto finito de possibilidades e obtenha um pequeno resultado de sorte, como escolher a estrada correta ou ganhar um prêmio menor numa raspadinha.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Estenda livremente o benefício do Contrato a um rival hostil ou inimigo.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:huntsmans-clarion": {
+    "name": "Clarim do Monteiro",
+    "description": "Invoque o Contrato na Sebe para sentir a presença, mas não a localização, de qualquer Feé Verdadeiro, Monteiro, outro habitante de Arcádia ou do próprio Duplo do changeling num raio de Fado quilômetros. O changeling não precisa permanecer na Sebe.",
+    "dicePool": "Raciocínio + Empatia + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Perceba sempre que uma ameaça de Arcádia listada ou o Duplo do changeling estiver ao alcance.",
+    "exceptionalSuccess": "O Contrato dura até o sol cruzar novamente o horizonte.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Caçado, perseguido por um agente dos Fae ou talvez pelo próprio Carcereiro.",
+    "loophole": "Permaneça vendado pela duração.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:lost-visage": {
+    "name": "Rosto Perdido",
+    "description": "Imediatamente após o fim de uma cena, apague o changeling das lembranças mortais dela: as testemunhas esquecem sua aparência e recordam seu nome de modo muito equivocado. Alvos sobrenaturais podem resistir com um Choque de Vontades; Feés Verdadeiros e Monteiros são imunes.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Deixe no local uma posse pessoal característica.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:mantle-mask": {
+    "name": "Mascarilha de Manto",
+    "description": "Atenue cosmeticamente o Manto verdadeiro do changeling e pareça possuir o Manto de outra Corte até o mesmo valor, ou nenhum Manto. Isso não concede os benefícios mecânicos da Corte falsa.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Imediatamente antes da invocação, decore a pele do changeling com símbolos da Corte cujo Manto será imitado.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:sight-of-truth-and-lies": {
+    "name": "Visão da Verdade e das Mentiras",
+    "description": "Reconheça qualquer mentira mundana dita por perto com base naquilo em que o falante acredita, sem descobrir a verdade. Engano sobrenatural provoca um Choque de Vontades. O changeling não pode mentir; fazê-lo encerra o Contrato.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Invoque o Contrato numa ocasião oficial, como uma audiência da Corte ou reunião comercial mundana.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:uncanny": {
+    "name": "Prodigioso",
+    "description": "Conceda a qualidade de rotina à próxima ação mundana do changeling que não seja resistida nem disputada, inclusive a testes individuais dentro de uma ação prolongada sem reduzir o tempo exigido.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Uma ação instantânea ou um teste de ação prolongada",
+    "loophole": "O changeling não possui pontos na Perícia usada para a tarefa.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
+  },
+  "ctl-core:wayward-guide": {
+    "name": "Guia Desgarrado",
+    "description": "Altere placas ao longo do caminho do changeling e inflija Perdido em um mortal por ponto de Glamour gasto. Se o changeling tiver a si mesmo como alvo, rastreadores sobrenaturais precisam vencer um Choque de Vontades ou perder seu rastro pela cena.",
+    "dicePool": "Nenhuma",
+    "cost": "● por alvo",
+    "action": "Instantânea",
+    "duration": "Instantânea ou uma cena",
+    "loophole": "O changeling também se permite ser afetado e recebe Confuso.",
+    "goblinDebt": "Receba 1 Débito Goblin por uma invocação bem-sucedida."
   }
 }

@@ -22,7 +22,7 @@ export const changelingMessages = {
       "extraordinaryEquipment": "Equipamento Extraordinário",
       "improvedAlacrity": "Alacridade Aprimorada",
       "increasedDurability": "Durabilidade Aumentada",
-      "extraordinaryEquipmentDrawback": "Enquanto o item estiver em uso, tentativas de passar despercebido à vista de todos ou desviar atenção falham automaticamente e concedem uma Batida. Um usuário não Fae sofre −1 em tarefas que exigem concentração ou interação Social.",
+      "extraordinaryEquipmentDrawback": "Enquanto o item estiver em uso, tentativas de passar despercebido à vista de todos ou desviar atenção falham automaticamente e concedem um Ato. Um usuário não Fae sofre −1 em tarefas que exigem concentração ou interação Social.",
       "trod": "trod",
       "favorsRegalia": "{name} - favorece {regalia}",
       "beatsTitle": "{count} Beat{plural}",

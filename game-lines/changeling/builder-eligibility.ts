@@ -9,26 +9,34 @@ function courtCanonicalId(courts: readonly CourtDefinition[], value: unknown) {
   )?.id ?? raw;
 }
 
-export function canSelectInitialContract(
+export function canSelectContract(
   contract: { type: "Comum" | "Real"; regalia: string; categoryKind?: string; courtClauses?: Record<string, string>; courtIds?: string[] },
   favoredRegalia: readonly string[],
   court: string,
   courts: readonly CourtDefinition[],
 ) {
+  const selectedCourt = courtCanonicalId(courts, court).toLocaleLowerCase();
+  const hasCourt = Boolean(selectedCourt) && !["courtless", "sem corte"].includes(selectedCourt);
   if (contract.categoryKind === "Corte") {
     if (contract.courtIds?.length || contract.courtClauses) {
-      const normalized = courtCanonicalId(courts, court).toLocaleLowerCase();
       return (contract.courtIds ?? Object.keys(contract.courtClauses ?? {}))
-        .some((key) => key.toLocaleLowerCase() === normalized);
+        .some((key) => courtCanonicalId(courts, key).toLocaleLowerCase() === selectedCourt);
     }
-    return Boolean(court) && (contract.regalia === "All" || contract.regalia === court);
+    return hasCourt && (contract.regalia === "All" || courtCanonicalId(courts, contract.regalia).toLocaleLowerCase() === selectedCourt);
   }
   if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
   const isCourtContract = new Set([
     "Primavera", "Verão", "Outono", "Inverno", "Cortes Adicionais",
     ...courts.map((definition) => definition.translatedName),
   ]).has(contract.regalia);
-  if (isCourtContract) return Boolean(court) && contract.regalia === court;
+  if (isCourtContract) return hasCourt && courtCanonicalId(courts, contract.regalia).toLocaleLowerCase() === selectedCourt;
   if (contract.type === "Real") return favoredRegalia.includes(contract.regalia);
   return true;
+}
+
+export function contractCategoryKey(contract: { goblin?: boolean; regalia: string; categoryKind?: string; courtIds?: string[]; courtClauses?: Record<string, string> }) {
+  if (contract.goblin || contract.regalia === "Goblin") return "goblin";
+  if (contract.categoryKind === "Corte" || contract.regalia === "All" || contract.courtIds?.length || contract.courtClauses) return "court";
+  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
+  return contract.regalia;
 }

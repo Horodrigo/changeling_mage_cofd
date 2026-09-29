@@ -296,7 +296,7 @@
     "success": "Faça até Manto perguntas de sim ou não sobre acontecimentos nas próximas 24 horas; “talvez” é possível quando houver ambiguidade. Durante o mesmo dia, adicione Manto a um teste que provoque ou impeça um acontecimento previsto.",
     "exceptionalSuccess": "A ação aprimorada também recebe 8-novamente.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Receba informações falsas, e o próximo teste fracassado torna-se uma falha dramática sem conceder uma Batida.",
+    "dramaticFailure": "Receba informações falsas, e o próximo teste fracassado torna-se uma falha dramática sem conceder um Ato.",
     "courtClauses": {
       "calm": "O changeling também pode interpretar o voo de pássaros ou insetos.",
       "storm": "O changeling também pode interpretar ondas quebrando ou folhas levadas por rajadas."
@@ -369,7 +369,7 @@
     "cost": "●●○",
     "action": "Disputada e prolongada (cada 5 sucessos acrescenta uma cena; dois turnos por teste; máximo de Manto testes)",
     "duration": "Uma cena por 5 sucessos",
-    "success": "Crie uma tempestade impossível, porém inofensiva, em um raio de Manto × 2 quilômetros. Outros em seu interior recebem Distraído; testemunhas mortais recebem Amedrontado, Assustado ou Abalado, e alvos diretamente expostos que fracassem na disputa também recebem Loucura. Todos esses efeitos terminam sem resolução quando a tempestade acaba.",
+    "success": "Crie uma tempestade impossível, porém inofensiva, em um raio de Manto × 2 quilômetros. Outros em seu interior recebem Distraído; testemunhas mortais recebem Amedrontado, Assombrado ou Abalado, e alvos diretamente expostos que fracassem na disputa também recebem Loucura. Todos esses efeitos terminam sem resolução quando a tempestade acaba.",
     "exceptionalSuccess": "Alvos que recebam Loucura também recebem Delirante ou Fuga, escolhida uma única vez para todos.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O changeling recebe Loucura devido a alucinações.",
@@ -457,7 +457,7 @@
     "success": "Nomeie o alvo e dê um conselho não específico. Testes que sigam esse conselho recebem Manto dados. O changeling não pode ter a si mesmo como alvo; um alvo consentido pode abrir mão da resistência.",
     "exceptionalSuccess": "A duração passa a ser um mês lunar ou até o zodíaco entrar em outro signo, o que ocorrer primeiro.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Pelo restante da cena, todo fracasso do changeling torna-se uma falha dramática sem conceder Batida.",
+    "dramaticFailure": "Pelo restante da cena, todo fracasso do changeling torna-se uma falha dramática sem conceder Atos.",
     "courtClauses": {
       "fire": "Adicione três dados quando o conselho envolver ambição ou aventura.",
       "earth": "Adicione três dados quando envolver riqueza ou trabalho.",
@@ -474,7 +474,7 @@
     "action": "Instantânea",
     "duration": "Instantânea",
     "success": "Inflija Enamorado em ambos os alvos ao aumentar a compatibilidade, ou Desdenhoso em ambos ao reduzi-la.",
-    "exceptionalSuccess": "Cada alvo deve cumprir a resolução duas vezes; apenas a resolução final concede uma Batida.",
+    "exceptionalSuccess": "Cada alvo deve cumprir a resolução duas vezes; apenas a resolução final concede um Ato.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "Inflija a Condição oposta à pretendida.",
     "courtClauses": {
@@ -939,7 +939,7 @@
     "courtClauses": {
       "society-morning": "Adicione Manto ao primeiro teste de uma manobra Social na mesma cena.",
       "society-day": "A invocação alcança sucesso excepcional com três sucessos.",
-      "society-night": "Com um sucesso, escolha o efeito de falha dramática sem receber uma Batida; penas de corvo são necessárias para usar a Brecha dessa forma."
+      "society-night": "Com um sucesso, escolha o efeito de falha dramática sem receber um Ato; penas de corvo são necessárias para usar a Brecha dessa forma."
     },
     "loophole": "Espalhe penas de pomba pela área afetada."
   },

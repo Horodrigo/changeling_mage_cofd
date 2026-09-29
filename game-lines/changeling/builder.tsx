@@ -16,7 +16,7 @@ import {
   canonicalChangelingAnchorName,
   normalizeChangelingFrailties,
 } from "./creation-rules";
-import { canSelectInitialContract } from "./builder-eligibility";
+import { canSelectContract } from "./builder-eligibility";
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
@@ -183,8 +183,8 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
     if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", t("ui.kithBlessingChoice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: seemingCatalog[seeming]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
     if (
-      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectInitialContract(item, favoredRegalia, court, reference.courts)).length !== 4 ||
-      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectInitialContract(item, favoredRegalia, court, reference.courts)).length !== 2
+      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectContract(item, favoredRegalia, court, reference.courts)).length !== 4 ||
+      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectContract(item, favoredRegalia, court, reference.courts)).length !== 2
     ) add(3, "contracts", t("ui.fourCommonContractsAndTwoRoyalContractsAllowed"));
     return result;
   })();
@@ -257,7 +257,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
     line="CtL" templateLabel={t("ui.lostTemplate")} state={common} issues={issues}
     draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
     prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
-    renderAdvancement={(sheet, updateSheet) => <ExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
+    renderAdvancement={(sheet, updateSheet) => <ExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} reference={reference} builderMode />}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<ChangelingBuilderView seeming={seeming} seemingCatalog={seemingCatalog} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contractPresentation={reference.contractPresentation} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} tokenCatalog={tokenCatalog} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}

@@ -63,6 +63,7 @@
     "name": "Falange dos Sonhadores",
     "description": "Pessoas adormecidas e dispostas, em contato físico, entram em um sonho compartilhado cujos Bastiões distintos contam como um só para a oniromancia. Cada uma recebe +1 de Fortificação por participante, até +5, contra intrusos; trabalho em equipe nos Bastiões vinculados recebe 8-novamente, e mudanças de local podem mover os alvos entre Bastiões. Despertar alguém à força por magia destrói todos os Bastiões vinculados.",
     "dicePool": "Nenhuma",
+    "cost": "● + ● por alvo além do segundo",
     "action": "Instantânea",
     "duration": "Um capítulo ou até todos os participantes despertarem",
     "loophole": "Todos os participantes pertencem ao mesmo juramento firmado, inclusive um juramento feito para esse fim durante a mesma cena.",
@@ -109,14 +110,14 @@
     "dicePool": "Manipulação + Subterfúgio + Fado − Perseverança",
     "action": "Instantânea",
     "duration": "Uma cena",
-    "success": "Suprima um número de Condições emocionais igual aos sucessos, inclusive Condições de Lucidez e Desvario. Seus efeitos, resoluções e Beats ficam suspensos, e o alvo não pode adquirir novas Condições emocionais, tecer a Sebe, tecer sonhos, incitar Desvario nem colher Glamour de seres vivos durante a cena.",
+    "success": "Suprima um número de Condições emocionais igual aos sucessos, inclusive Condições de Lucidez e Desvario. Seus efeitos, resoluções e Atos ficam suspensos, e o alvo não pode adquirir novas Condições emocionais, tecer a Sebe, tecer sonhos, incitar Desvario nem colher Glamour de seres vivos durante a cena.",
     "exceptionalSuccess": "Sucessos adicionais apenas aumentam o número de Condições suprimidas.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O changeling recebe uma Condição prejudicial suprimida do alvo ou Desmoralizado, à escolha do Narrador, e deve resolvê-la normalmente.",
     "loophole": "Durante a cena, o changeling escreve ao menos um parágrafo sobre seu estado emocional atual e o sela em uma garrafa.",
     "seemingBenefits": {
       "Wizened": "O Mirrado pode suprimir Condições puramente mentais, além das emocionais.",
-      "Ogre": "O Ogro pode resolver uma Condição temporária suprimida durante o efeito e recebe seu Beat de resolução no lugar do alvo."
+      "Ogre": "O Ogro pode resolver uma Condição temporária suprimida durante o efeito e recebe seu Ato de resolução no lugar do alvo."
     }
   },
   "ctl-kith-and-kin:poison-the-well": {
@@ -139,6 +140,7 @@
     "name": "Cálice Compartilhado",
     "description": "O changeling divide igualmente uma bebida ou refeição com um grupo, criando um vínculo emocional sobrenatural entre participantes dispostos ou desavisados.",
     "dicePool": "Presença + Ocultismo + Fado contra Compostura + Tolerância",
+    "cost": "● + ● por alvo além do segundo",
     "action": "Instantânea ou disputada",
     "duration": "Um capítulo",
     "success": "Vincule um número de participantes igual aos sucessos, incluindo o changeling. Suas impressões Sociais melhoram em um nível, e eles sofrem −3 para disputar as ações Sociais uns dos outros. Condições emocionais, Complicações Pessoais, Força de Vontade recuperada e Glamour recuperado propagam-se pelo grupo; participantes sem Fado recebem Inspirado em vez de Glamour. Tecer a Sebe e Desvario obtêm sucesso excepcional com três sucessos.",
@@ -185,7 +187,7 @@
     "dicePool": "Manipulação + Erudição + Fado − Compostura",
     "action": "Instantânea",
     "duration": "Um capítulo por sucesso",
-    "success": "A vítima não recebe bônus de equipamento, dano ou armadura de itens que não tenha fabricado; falhas ao usá-los tornam-se dramáticas sem conceder um Beat. Ela perde Recursos criados externamente e não pode receber bônus de trabalho em equipe.",
+    "success": "A vítima não recebe bônus de equipamento, dano ou armadura de itens que não tenha fabricado; falhas ao usá-los tornam-se dramáticas sem conceder um Ato. Ela perde Recursos criados externamente e não pode receber bônus de trabalho em equipe.",
     "exceptionalSuccess": "Os sucessos da invocação também se tornam um ataque imediato de Lucidez ou uma penalidade de ponto de ruptura para um alvo sem Lucidez.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "Pelo capítulo, o changeling perde seus Recursos para o alvo e assume 1 ponto do Débito Goblin dele, caso exista.",
@@ -293,7 +295,7 @@
   },
   "ctl-kith-and-kin:burning-ambition": {
     "name": "Ambição Ardente",
-    "description": "Depois de tomar algo sem permissão, o changeling recebe uma Aspiração adicional que reflete aquilo ou aquele que mais deseja. Cumpri-la concede um Beat, restaura Força de Vontade igual à metade do Fado e inflige Competitivo.",
+    "description": "Depois de tomar algo sem permissão, o changeling recebe uma Aspiração adicional que reflete aquilo ou aquele que mais deseja. Cumpri-la concede um Ato, restaura Força de Vontade igual à metade do Fado e inflige Competitivo.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Até a Aspiração ser cumprida",
@@ -382,7 +384,7 @@
     "action": "Instantânea",
     "duration": "Uma cena",
     "success": "Aplique as mudanças temporárias compradas que sejam coerentes com o teor emocional da proclamação.",
-    "exceptionalSuccess": "Por +1 de Glamour e +1 FdV, os sucessos também podem comprar mudanças sutis ou de paradigma.",
+    "exceptionalSuccess": "Por +1 de Glamour e +1 de Força de Vontade, os sucessos também podem comprar mudanças sutis ou de paradigma.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "Incite Desvario em todos os presentes, inclusive o changeling.",
     "loophole": "Aponte e declame com um cetro verdadeiro.",
@@ -403,7 +405,7 @@
     "dramaticFailure": "O changeling sofre as consequências de quebrar o acordo, embora não tenha designado missão alguma.",
     "loophole": "Dê a quem recebe a missão uma provisão de valor prático significativo para realizá-la.",
     "seemingBenefits": {
-      "Darkling": "Depois de quebrar o acordo, o Trevoso pode gastar FdV e vencer Manipulação + Furto + Fado contra Perseverança + Fado para transferir as consequências a uma testemunha informada.",
+      "Darkling": "Depois de quebrar o acordo, o Trevoso pode gastar Força de Vontade e vencer Manipulação + Furto + Fado contra Perseverança + Fado para transferir as consequências a uma testemunha informada.",
       "Fairest": "O Belíssimo pode designar a mesma missão a até metade do Fado em alvos, oferecendo recompensas proporcionais."
     }
   },
@@ -539,7 +541,7 @@
     "duration": "Instantânea",
     "loophole": "Cante os nomes das estrelas de uma constelação que esteja visível no céu.",
     "seemingBenefits": {
-      "Darkling": "O Trevoso recebe Informado a respeito do acontecimento; a Condição desaparece sem conceder Beat se não for resolvida até o fim do capítulo.",
+      "Darkling": "O Trevoso recebe Informado a respeito do acontecimento; a Condição desaparece sem conceder um Ato se não for resolvida até o fim do capítulo.",
       "Wizened": "O Mirrado recebe uma imagem nítida de um objeto simples de Tamanho 3 ou menor que estivesse presente e +2 para construir uma réplica mundana, incluindo textos exatos ou diagramas simples, mas não sua interpretação."
     }
   },
@@ -561,7 +563,7 @@
   },
   "ctl-kith-and-kin:briars-herald": {
     "name": "Arauto da Sarça",
-    "description": "Provoque um alvo e prometa tornar-se um espinho em seu caminho. A até 100 metros do changeling, o alvo perde 10-novamente e toda falha torna-se dramática sem conceder Beats; o changeling percebe cada rolagem fracassada independentemente da distância.",
+    "description": "Provoque um alvo e prometa tornar-se um espinho em seu caminho. A até 100 metros do changeling, o alvo perde 10-novamente e toda falha torna-se dramática sem conceder Atos; o changeling percebe cada rolagem fracassada independentemente da distância.",
     "dicePool": "Manipulação + Furto + Fado contra Compostura + Tolerância",
     "action": "Instantânea",
     "duration": "Um capítulo",
@@ -640,7 +642,7 @@
     "loophole": "Segure um corte fresco, com no máximo um dia, da espécie vegetal escolhida para a transformação.",
     "seemingBenefits": {
       "Elemental": "O Elemental pode escolher até Fado personagens como alvo, acompanhando separadamente o progresso de cada um.",
-      "Wizened": "O Mirrado pode selar a promessa aceita sem Glamour; aumentar a severidade do selo custa ●, em vez de FdV."
+      "Wizened": "O Mirrado pode selar a promessa aceita sem Glamour; aumentar a severidade do selo custa ●, em vez de Força de Vontade."
     }
   },
   "ctl-kith-and-kin:awaken-portal": {
@@ -661,7 +663,7 @@
     "dicePool": "Presença + Ocultismo + Fado contra Perseverança + Tolerância",
     "action": "Disputada",
     "duration": "Uma história",
-    "success": "Se o alvo realizar o ato proibido, espinhos invisíveis infligem 1 ponto de dano letal e Comatoso. Não changelings precisam de intervenção onírica ou de um Choque de Vontades sobrenatural para despertar; caso contrário, a Condição desaparece sem conceder Beat ao fim da história.",
+    "success": "Se o alvo realizar o ato proibido, espinhos invisíveis infligem 1 ponto de dano letal e Comatoso. Não changelings precisam de intervenção onírica ou de um Choque de Vontades sobrenatural para despertar; caso contrário, a Condição desaparece sem conceder um Ato ao fim da história.",
     "exceptionalSuccess": "Comatoso deve ser resolvido normalmente e não desaparece ao fim da história.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "Em vez disso, o changeling recebe Comatoso.",
@@ -673,8 +675,9 @@
   },
   "ctl-kith-and-kin:shrikes-larder": {
     "name": "Despensa do Picanço",
-    "description": "Gaste ● por efeito, até os três, para amaldiçoar um alvo com espinhos: −2 em rolagens de movimento em perseguições e nenhuma Vantagem, ignorados por um turno com FdV; −3 de Iniciativa; ou metade do Deslocamento, ignorada por um turno ao sofrer 1 ponto de dano contundente.",
+    "description": "Gaste ● por efeito, até os três, para amaldiçoar um alvo com espinhos: −2 em rolagens de movimento em perseguições e nenhuma Vantagem, ignorados por um turno com Força de Vontade; −3 de Iniciativa; ou metade do Deslocamento, ignorada por um turno ao sofrer 1 ponto de dano contundente.",
     "dicePool": "Nenhuma",
+    "cost": "● a ●●●",
     "action": "Instantânea",
     "duration": "Uma cena",
     "loophole": "Empale uma efígie do alvo em um espinho ou outro objeto pequeno e perfurante.",
@@ -763,6 +766,7 @@
     "name": "Roubar Influência",
     "description": "Toque uma criatura e escolha uma Influência que ela possua, gastando ● por ponto que deseje roubar pela cena. A vítima perde acesso a esses pontos; o changeling pode ativá-los pagando Glamour mesmo que outro recurso fosse normalmente exigido.",
     "dicePool": "Raciocínio + Furto + Fado contra Perseverança + Fado",
+    "cost": "● por ponto de Influência",
     "action": "Disputada",
     "duration": "Uma cena",
     "success": "Roube um ponto da Influência escolhida por Glamour gasto; normalmente, o custo não pode ser dividido entre Influências diferentes.",
@@ -816,7 +820,7 @@
     "success": "Veja e ouça os arredores do Duplo como se o acompanhasse de perto; pela Força de Vontade adicional, troque de lugar com ele.",
     "exceptionalSuccess": "A troca desorienta o Duplo e inflige Confuso.",
     "failure": "O Contrato falha, mas o Duplo descobre a tentativa.",
-    "dramaticFailure": "O Duplo descobre a tentativa e pode pagar ● para invocar Espelho Rachado imediatamente, sem rolagem, pagando FdV opcionalmente para trocar de lugar, sem precisar do Eco Mímico.",
+    "dramaticFailure": "O Duplo descobre a tentativa e pode pagar ● para invocar Espelho Rachado imediatamente, sem rolagem, pagando Força de Vontade opcionalmente para trocar de lugar, sem precisar do Eco Mímico.",
     "loophole": "Faça uma rachadura significativa no espelho usado para invocar o Contrato.",
     "seemingBenefits": {
       "Darkling": "Em um sucesso excepcional, o Trevoso oculta do Duplo a tentativa de espionagem.",
@@ -827,6 +831,7 @@
     "name": "Trégua Momentânea",
     "description": "Quebre um dispositivo de medição do tempo para suspender os efeitos do tempo sobre o changeling. Escolha uma proteção por sucesso: encerre uma Complicação Pessoal; ignore penalidades por ferimentos; proteja a caixa de Vitalidade desprotegida mais à direita contra dano agravado; ignore uma toxina, doença ou Condição Persistente. As escolhas, exceto penalidades por ferimentos, podem ser repetidas. Durante o efeito, o beneficiário não pode se curar naturalmente, recuperar Força de Vontade descansando, recuperar Lucidez por meio de Touchstones, gastar Experiências nem envelhecer.",
     "dicePool": "Vigor + Sobrevivência + Fado",
+    "cost": "●; ○ por cena adicional",
     "action": "Instantânea",
     "duration": "Uma cena, extensível uma cena por vez",
     "success": "Aplique uma proteção temporal listada por sucesso. Em cada cena consecutiva depois da primeira, sofra um ponto de ruptura com um dado mais o número de cenas consecutivas ativas; o Tempo retalia caso seja mantido por mais de um ano e um dia.",

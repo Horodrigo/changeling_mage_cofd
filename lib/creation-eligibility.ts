@@ -1,14 +1,3 @@
-import { CTL_COURT_DEFINITIONS } from "./changeling-courts";
-
-const COURT_CONTRACT_GROUPS = new Set([
-  "Primavera",
-  "Verão",
-  "Outono",
-  "Inverno",
-  "Cortes Adicionais",
-  ...CTL_COURT_DEFINITIONS.map((court) => court.translatedName),
-]);
-
 export function meetsArcanaRequirements(
   requirements: Record<string, number>,
   arcana: Record<string, number>,
@@ -17,7 +6,6 @@ export function meetsArcanaRequirements(
     ([arcanum, dots]) => Number(arcana[arcanum] ?? 0) >= dots,
   );
 }
-
 export function arcanaCreationErrors(
   arcana: Record<string, number>,
   path?: { ruling: readonly string[]; inferior?: string },
@@ -56,26 +44,3 @@ export function arcanaCreationErrors(
     errors.push(`O Arcano Inferior ${path.inferior} deve começar com 0 pontos`);
   return errors;
 }
-
-export function canSelectInitialContract(
-  contract: { type: "Comum" | "Real"; regalia: string; categoryKind?: string; courtClauses?: Record<string, string>; courtIds?: string[] },
-  favoredRegalia: readonly string[],
-  court: string,
-) {
-  const customKind = (contract as { categoryKind?: string }).categoryKind;
-  if (customKind === "Corte") {
-    if (contract.courtIds?.length || contract.courtClauses) {
-      const normalized = courtCanonicalId(court).toLocaleLowerCase();
-      return (contract.courtIds ?? Object.keys(contract.courtClauses ?? {})).some((key) => key.toLocaleLowerCase() === normalized);
-    }
-    return Boolean(court) && (contract.regalia === "All" || contract.regalia === court);
-  }
-  if (customKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
-  const isCourtContract =
-    COURT_CONTRACT_GROUPS.has(contract.regalia) ||
-    CTL_COURT_DEFINITIONS.some((definition) => definition.translatedName === contract.regalia);
-  if (isCourtContract) return Boolean(court) && contract.regalia === court;
-  if (contract.type === "Real") return favoredRegalia.includes(contract.regalia);
-  return true;
-}
-import { courtCanonicalId } from "./changeling-courts";

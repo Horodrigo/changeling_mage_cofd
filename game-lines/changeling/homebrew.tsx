@@ -47,7 +47,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   for (const item of catalogs.get<ContractDefinition[]>("changeling-contracts")) {
     const presented = contractPresentation(item, locale, reference.contractPresentation), outcomes = contractOutcomeSections(presented, locale), options = contractDisplayOptions(presented, locale);
     const courtBenefits = Object.entries(presented.courtClauses ?? {}).flatMap(([courtId, text]) => detail(`${h("Cláusula de Corte", "Court Clause")} — ${reference.courts.find((court) => court.id === courtId)?.[locale === "pt-BR" ? "translatedName" : "name"] ?? courtId}`, text));
-    const seemingBenefits = Object.entries(presented.seemingBenefits ?? {}).flatMap(([seeming, text]) => detail(`${h("Benefício de Aparência", "Seeming Benefit")} — ${seemingDisplayName(seeming, locale)}`, text));
+    const seemingBenefits = Object.entries(presented.seemingBenefits ?? {}).flatMap(([seeming, text]) => detail(`${h("Benefício de Feição", "Seeming Benefit")} — ${seemingDisplayName(seeming, locale)}`, text));
     add({
       id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Contratos", "Contracts"), name: presented.name,
       details: [

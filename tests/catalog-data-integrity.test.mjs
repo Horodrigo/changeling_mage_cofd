@@ -119,6 +119,7 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
     }
   }
   assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Wyrd|Huntsm(?:an|en)|Berserk|Swooned|Spooked|Gentry|Darklings|Beasts|Ogres|Wizened|Elementals|Fairest|trifles?)\b/i);
+  assert.doesNotMatch(JSON.stringify(presentation), /\bBeats?\b/);
   assert.doesNotMatch(JSON.stringify(presentation), /\bAutocontrole\b|Semblante Fae/);
   assert.equal(presentation.find((item) => item.id === "ctl-2ed:golden-hairnettle")?.name, "Erva de Cachinhos Dourados");
   assert.equal(presentation.find((item) => item.id === "ctl-2ed:iou")?.name, "Nota Promissória");
