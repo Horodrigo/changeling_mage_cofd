@@ -297,8 +297,8 @@ export const changelingMessages = {
       "blessingOf": "Bênção de {name}",
       "curseOf": "Maldição de {name}",
       "experiencePurchase": "{description} adquirido por {cost} Experiência{plural}.",
-      "experienceSingular": "Experiência",
-      "experiencePlural": "Experiências",
+      "experienceSingular": "Ponto de Experiência",
+      "experiencePlural": "Pontos de Experiência",
       "damageMild": "dano leve",
       "damageSevere": "dano grave"
     }
