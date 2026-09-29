@@ -160,6 +160,7 @@ test("limita Contratos Reais às Regalias favorecidas e Contratos de Corte à Co
       favored,
       "Inverno",
       courtCatalog.CTL_COURT_DEFINITIONS,
+      [{ name: "Mantle", dots: 3, configuration: { court: "Winter" } }],
     ),
     true,
   );
@@ -178,6 +179,7 @@ test("limita Contratos Reais às Regalias favorecidas e Contratos de Corte à Co
       favored,
       "autumn",
       courtCatalog.CTL_COURT_DEFINITIONS,
+      [{ name: "Mantle", dots: 1, configuration: { court: "Autumn Court" } }],
     ),
     true,
   );
@@ -190,6 +192,7 @@ test("Contrato Court (All) pode ser escolhido por membro de qualquer Corte", () 
       [],
       "Crystal Web",
       courtCatalog.CTL_COURT_DEFINITIONS,
+      [{ name: "Mantle", dots: 3, configuration: { court: "Crystal Web" } }],
     ),
     true,
   );
@@ -218,8 +221,23 @@ test("Contratos Independent não dependem de Regalia favorecida nem de Corte", (
 
 test("Contrato compartilhado de Corte usa a Clause da Corte canônica", () => {
   const contract = { type: "Comum", categoryKind: "Corte", regalia: "Circadian", courtClauses: { sun: "A", moon: "B" } };
-  assert.equal(changelingRules.canSelectContract(contract, [], "Corte do Sol", courtCatalog.CTL_COURT_DEFINITIONS), true);
+  assert.equal(changelingRules.canSelectContract(contract, [], "Corte do Sol", courtCatalog.CTL_COURT_DEFINITIONS, [{ name: "Mantle", dots: 1, configuration: { court: "sun" } }]), true);
   assert.equal(changelingRules.canSelectContract(contract, [], "winter", courtCatalog.CTL_COURT_DEFINITIONS), false);
+});
+
+test("Contratos de Corte exigem Manto 1/3 ou Benevolência da Corte 2/5 na Corte correspondente", () => {
+  const common = { type: "Comum", categoryKind: "Corte", regalia: "Autumn" };
+  const royal = { type: "Real", categoryKind: "Corte", regalia: "Autumn" };
+  const canSelect = (contract, merits) => changelingRules.canSelectContract(contract, [], "autumn", courtCatalog.CTL_COURT_DEFINITIONS, merits);
+  const merit = (name, dots, court) => [{ name, dots, configuration: { court } }];
+  assert.equal(canSelect(common, merit("Mantle", 1, "Autumn Court")), true);
+  assert.equal(canSelect(common, merit("Court Goodwill", 1, "Autumn")), false);
+  assert.equal(canSelect(common, merit("Court Goodwill", 2, "Autumn")), true);
+  assert.equal(canSelect(royal, merit("Mantle", 2, "Autumn")), false);
+  assert.equal(canSelect(royal, merit("Mantle", 3, "Autumn")), true);
+  assert.equal(canSelect(royal, merit("Court Goodwill", 4, "Autumn")), false);
+  assert.equal(canSelect(royal, merit("Court Goodwill", 5, "Autumn")), true);
+  assert.equal(canSelect(royal, merit("Mantle", 5, "Summer")), false);
 });
 
 test("criação, edição e experiência compartilham as categorias de Contrato", () => {

@@ -176,6 +176,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           customKith={props.customKith}
           court={props.court}
           courtCatalog={props.courtCatalog}
+          merits={props.merits}
           catalog={props.contractCatalog}
           presentation={props.contractPresentation}
         />
@@ -466,6 +467,7 @@ function ContractSelector({
   customKith,
   court,
   courtCatalog,
+  merits,
   catalog,
   presentation,
 }: {
@@ -478,6 +480,7 @@ function ContractSelector({
   customKith: boolean;
   court: string;
   courtCatalog: CourtDefinition[];
+  merits: MeritSelection[];
   catalog: ContractDefinition[];
   presentation: ContractPresentationCatalog;
 }) {
@@ -507,6 +510,7 @@ function ContractSelector({
         changelingFavoredRegalia({primary_regalia:primaryRegalia, second_regalia:secondRegalia, kith, kith_custom:customKith}),
         court,
         courtCatalog,
+        merits,
       ) &&
       (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&
       (categoryFilter === "all" || contractCategoryKeys(contract).includes(categoryFilter)) &&

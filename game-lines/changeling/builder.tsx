@@ -183,8 +183,8 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
     if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", t("ui.kithBlessingChoice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: seemingCatalog[seeming]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
     if (
-      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectContract(item, favoredRegalia, court, reference.courts)).length !== 4 ||
-      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectContract(item, favoredRegalia, court, reference.courts)).length !== 2
+      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectContract(item, favoredRegalia, court, reference.courts, common.merits)).length !== 4 ||
+      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectContract(item, favoredRegalia, court, reference.courts, common.merits)).length !== 2
     ) add(3, "contracts", t("ui.fourCommonContractsAndTwoRoyalContractsAllowed"));
     return result;
   })();

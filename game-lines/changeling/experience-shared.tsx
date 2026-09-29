@@ -25,6 +25,7 @@ export function purchasePreview(input: {
   nextMeritRating?: number;
   ownedMerit?: CharacterSheet["merits"][number];
   selectedContract?: ContractDefinition;
+  selectedContractName?: string;
   specialtySkill: string;
   specialtyName: string;
   benefitKey?: string;
@@ -46,7 +47,7 @@ export function purchasePreview(input: {
     cost: 1,
   };
   if (purchaseType === "contract") return {
-    label: (locale === "en-US" ? input.selectedContract?.originalName : input.selectedContract?.name) ?? translate(locale, "ui.noContractAvailable"),
+    label: input.selectedContractName ?? input.selectedContract?.name ?? translate(locale, "ui.noContractAvailable"),
     cost: input.selectedContract ? contractExperienceCost(input.selectedContract, character) : 0,
   };
   if (purchaseType === "contract-benefit") return {

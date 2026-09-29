@@ -41,10 +41,11 @@ test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", 
 });
 
 test("Changeling usa IDs estáveis nas compras e traduz apenas a apresentação", () => {
-  const character = { attributes: { Strength: 2 }, skills: { Athletics: 1 }, derived: { ForçaDeVontade: 4 } };
+  const character = { attributes: { Strength: 2 }, skills: { Athletics: 1 }, derived: { ForçaDeVontade: 4 }, line_data: {} };
   const base = { locale: "pt-BR", character, attribute: "Strength", skill: "Athletics", specialtySkill: "Athletics", specialtyName: "", wyrd: 2, lostWillpower: 1, targetRating: 3 };
   assert.deepEqual(changelingExperience.purchasePreview({ ...base, purchaseType: "attribute" }), { label: "Força 3", cost: 4 });
   assert.deepEqual(changelingExperience.purchasePreview({ ...base, locale: "en-US", purchaseType: "wyrd" }), { label: "Wyrd 3", cost: 5 });
+  assert.deepEqual(changelingExperience.purchasePreview({ ...base, purchaseType: "contract", selectedContract: { name: "Distill the Hidden", type: "Comum" }, selectedContractName: "Destilar o Oculto" }), { label: "Destilar o Oculto", cost: 3 });
 });
 
 test("avanços da criação viram Experiência gasta sem exigir saldo prévio", () => {

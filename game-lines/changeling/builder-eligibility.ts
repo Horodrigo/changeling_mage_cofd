@@ -1,10 +1,11 @@
 import type { CourtDefinition } from "@/lib/changeling-courts";
+import type { MeritSelection } from "@/lib/core/character/character-types";
 
 function courtCanonicalId(courts: readonly CourtDefinition[], value: unknown) {
   const raw = String(value ?? "").trim();
   const normalized = raw.toLocaleLowerCase();
   return courts.find((item) =>
-    [item.id, item.name, item.translatedName, item.name.replace(/ Court$/, "")]
+    [item.id, item.name, item.translatedName, item.name.replace(/ Court$/, ""), item.translatedName.replace(/^Corte (?:da|de|do|das|dos) /, "")]
       .some((candidate) => candidate.toLocaleLowerCase() === normalized),
   )?.id ?? raw;
 }
@@ -14,22 +15,28 @@ export function canSelectContract(
   favoredRegalia: readonly string[],
   court: string,
   courts: readonly CourtDefinition[],
+  merits: readonly Pick<MeritSelection, "name" | "dots" | "configuration">[] = [],
 ) {
   const selectedCourt = courtCanonicalId(courts, court).toLocaleLowerCase();
-  const hasCourt = Boolean(selectedCourt) && !["courtless", "sem corte"].includes(selectedCourt);
-  if (contract.categoryKind === "Corte") {
-    if (contract.courtIds?.length || contract.courtClauses) {
-      return (contract.courtIds ?? Object.keys(contract.courtClauses ?? {}))
-        .some((key) => courtCanonicalId(courts, key).toLocaleLowerCase() === selectedCourt);
-    }
-    return hasCourt && (contract.regalia === "All" || courtCanonicalId(courts, contract.regalia).toLocaleLowerCase() === selectedCourt);
-  }
-  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
-  const isCourtContract = new Set([
+  const courtContract = contract.categoryKind === "Corte" || new Set([
     "Primavera", "Verão", "Outono", "Inverno", "Cortes Adicionais",
     ...courts.map((definition) => definition.translatedName),
   ]).has(contract.regalia);
-  if (isCourtContract) return hasCourt && courtCanonicalId(courts, contract.regalia).toLocaleLowerCase() === selectedCourt;
+  if (courtContract) {
+    const mantleRequired = contract.type === "Comum" ? 1 : 3;
+    const goodwillRequired = contract.type === "Comum" ? 2 : 5;
+    const qualifies = (merit: Pick<MeritSelection, "name" | "dots">) =>
+      merit.name === "Mantle" && merit.dots >= mantleRequired ||
+      merit.name === "Court Goodwill" && merit.dots >= goodwillRequired;
+    const meritCourt = (merit: Pick<MeritSelection, "name" | "configuration">) =>
+      courtCanonicalId(courts, merit.configuration?.court || (merit.name === "Mantle" ? selectedCourt : "")).toLocaleLowerCase();
+    const hasAccess = (targetCourt: string) => merits.some((merit) => meritCourt(merit) === targetCourt && qualifies(merit));
+    if (contract.regalia === "All") return merits.some((merit) => qualifies(merit) && !["", "courtless", "sem corte"].includes(meritCourt(merit)));
+    const targetCourts = contract.courtIds ?? Object.keys(contract.courtClauses ?? {});
+    return (targetCourts.length ? targetCourts : [contract.regalia])
+      .some((target) => hasAccess(courtCanonicalId(courts, target).toLocaleLowerCase()));
+  }
+  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
   if (contract.type === "Real") return favoredRegalia.includes(contract.regalia);
   return true;
 }

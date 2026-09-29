@@ -169,7 +169,7 @@ export function ExperiencePanel({
     (item) =>
       !ownedContractIds.has(item.id) &&
       homebrewContentActive(homebrewPreferences,item.id,item.sourceId) &&
-      canSelectContract(item, favoredRegalia, String(character.line_data.court ?? ""), reference.courts),
+      canSelectContract(item, favoredRegalia, String(character.line_data.court ?? ""), reference.courts, character.merits),
   );
   const extraBenefits = objectList(character.line_data.extra_contract_benefits);
   const extraKeys = new Set(
@@ -218,6 +218,9 @@ export function ExperiencePanel({
     ? meritDots
     : availableMeritRatings[0];
   const selectedContract = contractOptions.find((item) => item.id === contractId) ?? contractOptions[0];
+  const selectedContractName = selectedContract
+    ? contractPresentation(selectedContract, locale, reference.contractPresentation).name
+    : undefined;
   const wyrd = Math.max(1, Number(character.line_data.wyrd ?? 1));
   const traitMaximum = Math.max(5, wyrd);
   const lostWillpower = boundedNumber(
@@ -552,7 +555,7 @@ export function ExperiencePanel({
       const cost = contractExperienceCost(selectedContract, character);
       spend(
         cost,
-        `${t("ui.contract")} ${selectedContract.name}`,
+        `${t("ui.contract")} ${selectedContractName ?? selectedContract.name}`,
         { kind: "contract", id: selectedContract.id },
         (next) => {
           const learned = objectList(next.line_data.learned_contracts);
@@ -570,10 +573,13 @@ export function ExperiencePanel({
         return setFeedback(t("ui.noAdditionalBenefitOrClauseIsAvailable"));
       const [kind, chosenContract, choice] = value.split("::");
       const definition = findContractInCatalog(chosenContract);
+      const definitionName = definition
+        ? contractPresentation(definition, locale, reference.contractPresentation).name
+        : t("ui.contract");
       const isClause = kind === "clause";
       spend(
         1,
-        isClause ? `${t("ui.clauseFor")} ${courtDisplayName(choice, locale)} · ${definition?.name ?? t("ui.contract")}` : `${t("ui.benefitFor")} ${seemingDisplayName(choice,locale)} · ${definition?.name ?? t("ui.contract")}`,
+        isClause ? `${t("ui.clauseFor")} ${courtDisplayName(choice, locale)} · ${definitionName}` : `${t("ui.benefitFor")} ${seemingDisplayName(choice,locale)} · ${definitionName}`,
         isClause ? { kind: "clause", contractId: chosenContract, courtId: choice } : { kind: "benefit", contractId: chosenContract, seeming: choice },
         (next) => {
           next.line_data = {
@@ -619,6 +625,7 @@ export function ExperiencePanel({
     nextMeritRating,
     ownedMerit,
     selectedContract,
+    selectedContractName,
     specialtySkill,
     specialtyName,
     benefitKey: benefitKey || benefitOptions[0]?.value,
