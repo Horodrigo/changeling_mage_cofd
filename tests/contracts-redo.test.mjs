@@ -228,6 +228,19 @@ test("tradução pt-BR do bloco Chalice de Kith and Kin está completa", () => {
   }
 });
 
+test("tradução pt-BR do bloco Coin de Kith and Kin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Coin");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+  assert.match(CONTRACT_PRESENTATION_PT["ctl-kith-and-kin:thirty-pieces"].dramaticFailure,/Retalho/);
+});
+
 test("bloco Jewels do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels");
   assert.equal(items.length,10);

@@ -20,3 +20,8 @@
 
 - `Frail as the Dying Word`: traduzido como **Frágil como a Palavra Agonizante**. **Frágil como a Última Palavra** seria uma alternativa menos literal, mas mais idiomática.
 - `Still Waters Run Deep`: traduzido como **Águas Tranquilas São Profundas**, preservando a imagem do provérbio inglês; **Águas Paradas São Profundas** seria mais literal.
+
+## Lote: Moeda — *Kith and Kin*, pp. 39–44
+
+- `Book of Black and Red`: traduzido como **Livro do Preto e do Vermelho**, preservando a referência contábil a registros positivos e negativos.
+- `Grand Revel of the Harvest`: traduzido como **Grande Folia da Colheita**; **Grande Celebração da Colheita** seria uma alternativa menos festiva e mais literal.

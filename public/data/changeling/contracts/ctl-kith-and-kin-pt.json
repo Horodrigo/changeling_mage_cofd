@@ -150,5 +150,145 @@
       "Darkling": "Ao pagar ● quando um efeito compartilhado fosse ocorrer, o Trevoso pode se excluir brevemente desse efeito e de todos os efeitos passivos; os outros podem perceber isso com Raciocínio + Compostura, disputado por Raciocínio + Fado do Trevoso.",
       "Fairest": "Todos os demais participantes recebem Enamorado em relação ao Belíssimo no momento da invocação."
     }
+  },
+  "ctl-kith-and-kin:book-of-black-and-red": {
+    "name": "Livro do Preto e do Vermelho",
+    "description": "O changeling descobre as cinco dívidas e obrigações juramentadas, mundanas ou sobrenaturais, mais importantes que pesam sobre um alvo visível, inclusive sua Dívida Goblin. Explorar esse conhecimento durante o capítulo concede +2 e dá ao alvo Coagido em relação a ela.",
+    "dicePool": "Raciocínio + Erudição + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Descubra as cinco dívidas e obrigações mais importantes do alvo e o total de sua Dívida Goblin.",
+    "exceptionalSuccess": "Descubra também o credor, a origem e o obstáculo ao pagamento de cada dívida.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling adquire 1 ponto de Dívida Goblin.",
+    "loophole": "O alvo permitiu que o changeling examinasse seus registros ou contas durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode se interpor em uma dívida que não seja Goblin nem de promessa: o alvo passa a dever a ele, enquanto ele deve ao credor original; não pagar concede a ele Quebrador de Juramento.",
+      "Wizened": "O Mirrado precisa de apenas três sucessos para obter um sucesso excepcional ao explorar esse conhecimento."
+    }
+  },
+  "ctl-kith-and-kin:give-and-take": {
+    "name": "Dar e Receber",
+    "description": "Com consentimento, troque até metade do Fado do changeling em pontos entre categorias diferentes de Glamour, Força de Vontade, moeda social ou pontos de Méritos em escala pessoal. Trocas de Méritos duram uma cena, exigem os pré-requisitos, não podem afetar Méritos em escala mundial e não podem trocar um Mérito por outro.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea, ou uma cena para Méritos",
+    "loophole": "As partes trocam permanentemente presentes físicos novos de valor ou significado equivalentes.",
+    "seemingBenefits": {
+      "Ogre": "O Ogro pode trocar pontos de dano leve de Clareza.",
+      "Wizened": "A troca não precisa ser equivalente, mas cada parte deve contribuir consensualmente com pelo menos um ponto."
+    }
+  },
+  "ctl-kith-and-kin:beggar-knight": {
+    "name": "Cavaleiro Mendigo",
+    "description": "O changeling amaldiçoa alguém que consiga ouvi-la e compreendê-la para que se beneficie apenas das coisas que ele próprio fabricar.",
+    "dicePool": "Manipulação + Erudição + Fado − Compostura",
+    "action": "Instantânea",
+    "duration": "Um capítulo por sucesso",
+    "success": "A vítima não recebe bônus de equipamento, dano ou armadura de itens que não tenha fabricado; falhas ao usá-los tornam-se dramáticas sem conceder um Beat. Ela perde Recursos criados externamente e não pode receber bônus de trabalho em equipe.",
+    "exceptionalSuccess": "Os sucessos da invocação também se tornam um ataque imediato de Clareza ou uma penalidade de ponto de ruptura para um alvo sem Clareza.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Pelo capítulo, o changeling perde seus Recursos para o alvo e assume 1 ponto da Dívida Goblin dele, caso exista.",
+    "loophole": "Durante a cena, a vítima se beneficiou diretamente do trabalho de outra pessoa, em vez do próprio.",
+    "seemingBenefits": {
+      "Elemental": "As posses mundanas que a vítima não fabricou se deterioram até serem transferidas permanentemente e se desintegram caso sejam devolvidas.",
+      "Wizened": "A maldição também nega a outras pessoas os Recursos produzidos pelo trabalho construtivo da vítima até que a participação dela termine."
+    }
+  },
+  "ctl-kith-and-kin:coin-mark": {
+    "name": "Marca da Moeda",
+    "description": "O changeling encanta uma moeda, cédula, presente ou outro objeto negociado. Ela sempre sabe sua direção e distância e descobre a identidade de cada novo proprietário e o preço da transação. Depois de interagir com o proprietário, pode gastar ● para infligir Avareza.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma história",
+    "loophole": "O changeling marca permanentemente seu nome no objeto.",
+    "seemingBenefits": {
+      "Beast": "A Fera pode infligir Apreensivo em relação ao objeto, em vez de Avareza.",
+      "Wizened": "O Mirrado pode estalar os dedos reflexivamente para fazer o objeto retornar imediatamente à sua posse."
+    }
+  },
+  "ctl-kith-and-kin:grease-the-wheels": {
+    "name": "Lubrificar as Engrenagens",
+    "description": "A interação direta com o funcionário correto faz com que um resultado administrativo ou burocrático normalmente disponível seja resolvido a favor do changeling em um décimo do tempo habitual, sem escrutínio nem burocracia.",
+    "dicePool": "Presença + Persuasão + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "O processo administrativo é resolvido favoravelmente em um décimo do tempo normal, desde que a organização normalmente pudesse produzir esse resultado.",
+    "exceptionalSuccess": "O processo é resolvido de imediato e favoravelmente, apesar da total improbabilidade.",
+    "failure": "O processo segue normalmente.",
+    "dramaticFailure": "A questão fica irremediavelmente paralisada ao menos pelo restante da história.",
+    "loophole": "O funcionário aceita um suborno ou presente do changeling durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "A interação do Trevoso não deixa vestígio, exceto quando isso lhe for útil.",
+      "Fairest": "O Belíssimo recebe Conectado em relação à organização."
+    }
+  },
+  "ctl-kith-and-kin:blood-debt": {
+    "name": "Dívida de Sangue",
+    "description": "Sempre que alguém inflige dano letal ou agravado de Vitalidade, ou dano leve ou severo de Clareza, ao changeling, o agressor sofre 1 ponto de dano letal que ignora armadura. Acrescente 1 ponto de dano para cada um destes efeitos: causar perda de Força de Vontade, causar perda de Glamour e infligir uma Condição ou Inclinação.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Uma joia ou outro adorno corta ou perfura o changeling pouco antes, durante a cena.",
+    "seemingBenefits": {
+      "Elemental": "A retaliação do Elemental começa com 2 pontos de dano letal.",
+      "Ogre": "Enquanto estiver consciente, o Ogro pode retaliar contra o dano infligido a seus aliados, em vez do dano causado a ele."
+    }
+  },
+  "ctl-kith-and-kin:exchange-of-gilded-contracts": {
+    "name": "Troca de Contratos Dourados",
+    "description": "Com o consentimento de outro changeling, tome emprestado um Contrato Comum que ele conheça. Quem toma emprestado recebe apenas os benefícios de seu próprio Semblante e não pode usar a Brecha do Contrato; quem o empresta perde o acesso e recebe temporariamente Troca de Contratos Dourados, que só pode encerrar a troca reflexivamente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até um capítulo",
+    "loophole": "Durante a cena, cada parte usa uma máscara convincente da outra.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode explorar a Brecha do Contrato tomado emprestado.",
+      "Ogre": "O Ogro conserva o Contrato tomado emprestado até o fim do capítulo mesmo que ele seja retomado, mas perde sua Brecha depois disso."
+    }
+  },
+  "ctl-kith-and-kin:golden-promise": {
+    "name": "Promessa Dourada",
+    "description": "O changeling projeta uma riqueza impossível para reduzir a Disponibilidade de um serviço viável que deseje obter.",
+    "dicePool": "Presença + Socialização + Fado − Disponibilidade",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Reduza a Disponibilidade de um serviço em um número igual aos sucessos, possivelmente até zero; invocações repetidas podem reduzi-la ainda mais, e nenhuma recompensa adicional é exigida além da Disponibilidade reduzida.",
+    "exceptionalSuccess": "O changeling também recebe Conectado em relação ao fornecedor.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A encenação é desmascarada, e ela recebe Notoriedade.",
+    "loophole": "O changeling chega exibindo riqueza ostensiva e a ostenta abertamente.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode dividir os sucessos entre vários serviços na cena.",
+      "Wizened": "O Mirrado acrescenta +1 ao bônus de equipamento do serviço adquirido."
+    }
+  },
+  "ctl-kith-and-kin:grand-revel-of-the-harvest": {
+    "name": "Grande Folia da Colheita",
+    "description": "Pela cena, todos que celebrarem deliberadamente, exceto o changeling, obtêm sucesso excepcional em rolagens Sociais com três sucessos e melhoram as impressões Sociais em um nível. Até o fim do capítulo, os personagens afetados recuperam +1 de Força de Vontade, curam +1 ponto de dano de Vitalidade ou Clareza do mesmo tipo e acrescentam +1 de bônus de equipamento aos ganhos inesperados que adquirirem.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "O changeling oferece um banquete a todos os presentes e participa visivelmente de cada folia.",
+    "seemingBenefits": {
+      "Beast": "Os festeiros recebem +2 em rolagens Físicas para competições mútuas e entretenimento físico durante a cena.",
+      "Fairest": "As impressões Sociais melhoram dois níveis, em vez de um."
+    }
+  },
+  "ctl-kith-and-kin:thirty-pieces": {
+    "name": "Trinta Moedas",
+    "description": "O changeling implanta uma ordem para cometer uma traição genuína, imediatamente ou quando ocorrer um gatilho antes do fim da história. Ela não pode compelir automutilação nem um ato que não seja traiçoeiro, e uma nova invocação substitui outra que esteja pendente.",
+    "dicePool": "Raciocínio + Empatia + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea",
+    "duration": "Até ser acionado ou a história terminar",
+    "success": "O alvo comete a traição especificada quando for apropriado e recebe Culpado.",
+    "exceptionalSuccess": "O alvo também recebe Fuga depois da traição.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Antes do fim do capítulo, alguém conhecido pelo Retalho os trai, e o changeling recebe uma Condição prejudicial apropriada.",
+    "loophole": "Durante a história, o alvo aceitou o pagamento do changeling para trair seus companheiros, mesmo sem a intenção de cumprir o acordo.",
+    "seemingBenefits": {
+      "Darkling": "Depois da traição, o alvo também recebe Notoriedade e fica isolado daqueles que traiu.",
+      "Elemental": "As salvaguardas que poderiam impedir a traição falham; por exemplo, um ataque traiçoeiro recebe surpresa."
+    }
   }
 }
