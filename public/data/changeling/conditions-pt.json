@@ -60,6 +60,7 @@
     "description": "Um fantasma da Sebe, hobgoblin ou Fae Verdadeiro compartilha os sentidos do changeling e pode descobrir seus segredos."
   },
   "comatose": {
+    "name": "Comatoso",
     "description": "Com Lucidez zero, o changeling recua para um sonho contínuo que acredita ser realidade."
   },
   "cursed": {

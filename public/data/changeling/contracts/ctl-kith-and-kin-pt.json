@@ -558,5 +558,141 @@
       "Darkling": "O Trevoso ouve qualquer segredo que o alvo sussurre à criatura.",
       "Wizened": "Por +●, a criação dura até o fim da história."
     }
+  },
+  "ctl-kith-and-kin:briars-herald": {
+    "name": "Arauto da Sarça",
+    "description": "Provoque um alvo e prometa tornar-se um espinho em seu caminho. A até 100 metros do changeling, o alvo perde 10-novamente e toda falha torna-se dramática sem conceder Beats; o changeling percebe cada rolagem fracassada independentemente da distância.",
+    "dicePool": "Manipulação + Furto + Fado contra Compostura + Tolerância",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "success": "A maldição entra em vigor, e o alvo sabe que o changeling é responsável, mesmo na ausência de provas.",
+    "exceptionalSuccess": "Cada rolagem fracassada dentro do alcance também inflige 1 ponto de dano letal.",
+    "failure": "O Contrato falha, e o changeling sofre um efeito menor de selo rompido escolhido pelo Narrador.",
+    "dramaticFailure": "Em vez disso, o changeling sofre um efeito maior de selo rompido.",
+    "loophole": "Faça, direta ou indiretamente, um espinho, agulha ou objeto pontiagudo semelhante furar o alvo e extrair sangue.",
+    "seemingBenefits": {
+      "Darkling": "Sempre que a vítima falhar, o Trevoso pode sussurrar uma mensagem de até 37 palavras através de qualquer distância e receber uma resposta.",
+      "Wizened": "O Mirrado pode especificar uma cláusula curta cujo cumprimento encerre o Contrato antes do tempo."
+    }
+  },
+  "ctl-kith-and-kin:by-the-pricking-of-my-thumbs": {
+    "name": "Pelo Formigar dos Meus Polegares",
+    "description": "Estenda audição, visão, olfato e tato através de uma planta viva percebida, alternando entre ela e o changeling com uma ação instantânea. Agir em assuntos não relacionados enquanto habita uma planta impõe −3 às ações, à Defesa e à Iniciativa.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Durante a mesma cena, prepare uma poção com hera venenosa, tritão e cardos e olhe através dela.",
+    "seemingBenefits": {
+      "Beast": "A Fera pode usar a planta habitada como arma natural de Força + Briga ou Armas Brancas que causa dano contundente, ou letal caso possua espinhos ou agulhas.",
+      "Darkling": "O Trevoso pode ocupar simultaneamente até Perseverança plantas, transferindo ou recolhendo uma extensão sensorial por ação instantânea."
+    }
+  },
+  "ctl-kith-and-kin:thistles-rebuke": {
+    "name": "Repreensão do Cardo",
+    "description": "Faça espinhos crescerem das roupas ou armadura, acrescentando dois pontos de armadura geral, causando 1 ponto de dano letal a quem tocar ou enfrentar o changeling em combate corpo a corpo e 2 pontos de dano letal por turno de agarramento. Dispare-os a até 50 metros como uma arma 2L, abrindo mão dos outros benefícios naquele turno.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Beba um copo inteiro de água imediatamente antes da invocação.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental pode recolher ou estender os espinhos reflexivamente; estendê-los causa 2 pontos de dano letal a qualquer pessoa que o esteja tocando.",
+      "Fairest": "O Belíssimo pode tornar o efeito invisível até para observadores que enxerguem através da Máscara."
+    }
+  },
+  "ctl-kith-and-kin:the-gouging-curse": {
+    "name": "A Maldição da Mutilação",
+    "description": "Faça um aviso que proíba uma ação instantânea específica que o alvo poderia realizar durante o capítulo.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "success": "Se o alvo realizar a ação proibida, farpas infligem Braço Lesionado, Cego de um olho, Surdo de um ouvido ou Perna Lesionada até o Contrato terminar.",
+    "exceptionalSuccess": "Acionar a maldição também inflige Culpado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Imprudente.",
+    "loophole": "Faça um acordo que permita à vítima proibir uma ação do changeling; violá-lo exige pagar imediatamente ● e sofrer 1 ponto de dano letal, ou o Contrato termina.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode especificar outra ação válida que encerre a maldição antes do tempo, mas inflija Maravilhado Persistente em relação a ele.",
+      "Ogre": "Se o ato proibido fosse ferir um aliado, a duração torna-se uma história."
+    }
+  },
+  "ctl-kith-and-kin:embrace-of-nettles": {
+    "name": "Abraço das Urtigas",
+    "description": "Enquanto estiver nos Espinhos da Sebe, responda a uma mudança da Sebe desviando-a para outro alvo; adiando até metade do Fado em sucessos para a próxima rolagem bem-sucedida e imune da Sebe; ou acrescentando até metade do Fado em sucessos tanto à rolagem dela quanto à próxima rolagem bem-sucedida do changeling para fiar a Sebe nesta cena. Cada opção deve ser usada antes que alguma possa ser repetida.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "loophole": "Deixe um bem pessoal significativo para a Sebe consumir; recuperá-lo mais tarde concede 2 pontos de Dívida Goblin.",
+    "seemingBenefits": {
+      "Darkling": "Ao adiar, o Trevoso anula até Manipulação ou metade do Fado em sucessos, conforme preferir.",
+      "Fairest": "Ao intensificar, o Belíssimo pode conceder os sucessos de bônus posteriores a um aliado."
+    }
+  },
+  "ctl-kith-and-kin:acanthas-fury": {
+    "name": "Fúria de Acantha",
+    "description": "Inicie uma transformação de oito estágios, um por minuto, do alvo em uma planta espinhosa de Tamanho 4–12. Em cada estágio, ofereça uma tarefa realizável, inofensiva e com duração de uma cena; aceitar faz a transformação regredir, mas romper a promessa a reinicia. Os estágios impõem penalidades pela luz solar, Vigor reduzido, Inclinações nos membros, Imobilizado e, por fim, a forma completa de planta. A invocação é um ponto de ruptura de quatro dados.",
+    "dicePool": "Presença + Sobrevivência + Fado contra Vigor + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "A transformação em estágios começa e pode ser revertida aceitando a tarefa vinculante.",
+    "exceptionalSuccess": "Recupere 1 ponto de Força de Vontade quando o alvo cumprir a promessa com sucesso.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Caçado.",
+    "loophole": "Segure um corte fresco, com no máximo um dia, da espécie vegetal escolhida para a transformação.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental pode escolher até Fado personagens como alvo, acompanhando separadamente o progresso de cada um.",
+      "Wizened": "O Mirrado pode selar a promessa aceita sem Glamour; aumentar a severidade do selo custa ●, em vez de ○."
+    }
+  },
+  "ctl-kith-and-kin:awaken-portal": {
+    "name": "Despertar Portal",
+    "description": "Espalhe sangue sobre uma entrada desprotegida de um Caminho da Sebe, Bastião ou Refúgio para despertá-la como um goblin imóvel. Ela percebe os arredores, comunica-se mentalmente através de qualquer distância e permite usar kenning pelo ponto de vista dela; bloquear ou selar a entrada inibe seus sentidos.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "Antes de despertá-la, passe pelo menos 15 minutos durante a cena limpando, consertando ou melhorando a entrada e seus arredores.",
+    "seemingBenefits": {
+      "Beast": "O portal recebe uma mordida reflexiva de Presença + Intimidação, 2L, que lança intrusos cinco metros para fora.",
+      "Elemental": "O portal recebe uma Influência de dois pontos no elemento escolhido pelo Elemental."
+    }
+  },
+  "ctl-kith-and-kin:crown-of-thorns": {
+    "name": "Coroa de Espinhos",
+    "description": "Entregue anonimamente uma proibição escrita contra uma ação instantânea específica.",
+    "dicePool": "Presença + Ocultismo + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma história",
+    "success": "Se o alvo realizar o ato proibido, espinhos invisíveis infligem 1 ponto de dano letal e Comatoso. Não changelings precisam de intervenção onírica ou de um Choque de Vontades sobrenatural para despertar; caso contrário, a Condição desaparece sem conceder Beat ao fim da história.",
+    "exceptionalSuccess": "Comatoso deve ser resolvido normalmente e não desaparece ao fim da história.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Em vez disso, o changeling recebe Comatoso.",
+    "loophole": "Entrelace uma coroa verdadeira de espinhos e coloque-a na cabeça do alvo durante a mesma cena.",
+    "seemingBenefits": {
+      "Beast": "O alvo adormecido perde 1 ponto de Força de Vontade por noite e não pode recuperar Força de Vontade descansando.",
+      "Darkling": "Enquanto estiver disfarçado ou passar despercebido, o Trevoso obtém sucesso excepcional com três sucessos ao manipular o alvo para que realize o ato proibido."
+    }
+  },
+  "ctl-kith-and-kin:shrikes-larder": {
+    "name": "Despensa do Picanço",
+    "description": "Gaste ● por efeito, até os três, para amaldiçoar um alvo com espinhos: −2 em rolagens de movimento em perseguições e nenhuma Vantagem, ignorados por um turno com ○; −3 de Iniciativa; ou metade do Deslocamento, ignorada por um turno ao sofrer 1 ponto de dano contundente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Empale uma efígie do alvo em um espinho ou outro objeto pequeno e perfurante.",
+    "seemingBenefits": {
+      "Beast": "A Fera colhe 2 pontos de Glamour por sucesso da vítima, em vez de 1.",
+      "Wizened": "O Mirrado pode escolher um veículo como alvo, aplicando os efeitos aos ocupantes e esvaziando os pneus."
+    }
+  },
+  "ctl-kith-and-kin:witchs-brambles": {
+    "name": "Silvas da Bruxa",
+    "description": "Ao realizar uma ação mundana com um objeto preciso, de Tamanho 1 ou menor, que perfure carne, sofra −3 e gaste os sucessos excedentes em mudanças sutis como se fiasse a Sebe, sem seus outros efeitos. Em um sucesso excepcional, pagar o custo maior permite uma mudança de paradigma. O Contrato não produz efeito na Sebe nem em outro reino sobrenatural.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "loophole": "Perfure a própria carne do changeling com o objeto pontiagudo usado para a invocação.",
+    "seemingBenefits": {
+      "Beast": "Em vez disso, a Fera pode aprimorar um ataque de mordida que cause dano letal ou agravado.",
+      "Darkling": "O Trevoso acrescenta um sucesso ao usar apenas mudanças sutis, mas subtrai um ao usar qualquer mudança de paradigma."
+    }
   }
 }

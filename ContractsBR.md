@@ -37,3 +37,11 @@
 - `Cynosure`: traduzido como **Estrela-Guia**, usando o sentido original de guia celeste; **Centro das Atenções** preservaria melhor o sentido figurado moderno.
 - `Star Light, Star Bright`: traduzido como **Luz das Estrelas, Estrela Brilhante**; a cantiga inglesa não possui uma versão portuguesa consolidada identificada no catálogo.
 - `Wishing Roads`: traduzido no texto como **Estradas dos Desejos**.
+
+## Lote: Espinho — *Kith and Kin*, pp. 53–58
+
+- `Briar's Herald`: traduzido como **Arauto da Sarça** para distinguir *briar* da Regalia Espinho e da Sebe.
+- `By the Pricking of My Thumbs`: traduzido como **Pelo Formigar dos Meus Polegares**, preservando a referência a *Macbeth*.
+- `The Gouging Curse`: traduzido como **A Maldição da Mutilação**, pois o efeito pode atingir olhos, ouvidos, braços ou pernas.
+- `Shrike's Larder`: traduzido como **Despensa do Picanço**, mantendo a referência à ave que empala suas presas.
+- `Witch's Brambles`: traduzido como **Silvas da Bruxa**; **Sarças da Bruxa** seria coerente com `Briar's Herald`, mas perderia a distinção entre os títulos originais.
