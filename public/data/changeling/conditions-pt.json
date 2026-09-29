@@ -57,7 +57,7 @@
   },
   "behind-your-eyes": {
     "name": "Atrás de Seus Olhos",
-    "description": "Um fantasma da Sebe, hobgoblin ou Fae Verdadeiro compartilha os sentidos do changeling e pode descobrir seus segredos."
+    "description": "Um fantasma da Sebe, hobgoblin ou Feé Verdadeiro compartilha os sentidos do changeling e pode descobrir seus segredos."
   },
   "comatose": {
     "name": "Comatoso",
@@ -88,7 +88,7 @@
   },
   "egomaniac": {
     "name": "Egomaníaco",
-    "description": "Sem Lucidez, o changeling imita o ego ilimitado dos Fae Verdadeiros e ignora as necessidades alheias.",
+    "description": "Sem Lucidez, o changeling imita o ego ilimitado dos Feé Verdadeiros e ignora as necessidades alheias.",
     "penalty": "Falhas em testes Sociais tornam-se falhas dramáticas sem conceder Beat."
   },
   "enchanted-obligation": {

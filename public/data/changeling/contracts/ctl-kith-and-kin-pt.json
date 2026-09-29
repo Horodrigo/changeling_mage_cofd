@@ -512,7 +512,7 @@
     "success": "O sujeito abandona sua atividade atual e viaja em direção ao alvo traçado. Ao chegar ou quando a duração expirar, o efeito termina, e o sujeito recebe Abalado sem se lembrar de qualquer motivo para a perseguição.",
     "exceptionalSuccess": "Tocar o alvo não encerra o efeito; o sujeito recebe Viciado Persistente em relação a ele até a Condição ser resolvida normalmente ou até o próximo nascer do sol.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "O agente dos Fae Verdadeiros mais próximo descobre a localização do changeling, é atraído até ele conforme determina o Contrato, e o changeling recebe Caçado.",
+    "dramaticFailure": "O agente dos Feé Verdadeiros mais próximo descobre a localização do changeling, é atraído até ele conforme determina o Contrato, e o changeling recebe Caçado.",
     "loophole": "Mantenha contato físico com o alvo ou com um pedaço dele enquanto traça o sujeito nas estrelas.",
     "seemingBenefits": {
       "Darkling": "O Trevoso também inflige Assombrado, levando o sujeito a alcançar o alvo o mais depressa possível.",
@@ -709,7 +709,7 @@
   },
   "ctl-kith-and-kin:pomp-and-circumstance": {
     "name": "Pompa e Circunstância",
-    "description": "Defina um refúgio claramente delimitado com Fado × 10 metros. Convidados não desejados não conseguem entrar, espionagem e rastreamento mundanos falham, e intrusão sobrenatural provoca um Choque de Vontades. Pagar o custo maior também o oculta completamente de Monteiros e Fae Verdadeiros. Declare até Fado regras de comportamento compreendidas por todos que entrarem; qualquer violação encerra o efeito e dá Desmoralizado a todos no interior.",
+    "description": "Defina um refúgio claramente delimitado com Fado × 10 metros. Convidados não desejados não conseguem entrar, espionagem e rastreamento mundanos falham, e intrusão sobrenatural provoca um Choque de Vontades. Pagar o custo maior também o oculta completamente de Monteiros e Feé Verdadeiros. Declare até Fado regras de comportamento compreendidas por todos que entrarem; qualquer violação encerra o efeito e dá Desmoralizado a todos no interior.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",

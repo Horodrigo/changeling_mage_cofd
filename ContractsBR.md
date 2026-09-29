@@ -69,10 +69,10 @@
 ## Lote: Espelho Reais — *Changeling: The Lost*, pp. 138–139
 
 - `Riddle-Kith`: traduzido como **Monta-Rostos**.
-- `Skinmask`: traduzido como **Mascarilha de Pele**, mantendo a composição direta do título e o léxico de `Mask`.
+- `Skinmask`: traduzido como **Máscara de Pele**.
 
 ## Lote: Escudo — *Changeling: The Lost*, pp. 140–143
 
-- `Cloak of Night`: traduzido como **Capa da Noite**, evitando confusão com o termo mecânico **Manto**.
+- `Cloak of Night`: traduzido como **Capa de Noite**.
 - `Thorns and Brambles`: as manifestações foram apresentadas como **Erva-sanguessuga**, **Silvado** e **Campo de Espinhos** para `Leechweed`, `Briarpatch` e `Field of Thorns`.
-- `Vow of No Compromise`: traduzido como **Juramento Intransigente**; **Juramento Sem Concessões** seria a alternativa mais literal.
+- `Vow of No Compromise`: traduzido como **Juramento Intransigente**.

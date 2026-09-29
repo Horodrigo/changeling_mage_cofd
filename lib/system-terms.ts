@@ -124,7 +124,7 @@ const PORTUGUESE_TERMS: Record<string,string> = {
   "Wild Hunt":"Caçada Selvagem", Huntsman:"Monteiro", Huntsmen:"Monteiros", Keeper:"Carcereiro", Keepers:"Carcereiros",
   Contract:"Contrato", Contracts:"Contratos", "Goblin Contract":"Contrato Goblin", Court:"Corte", "Spring Court":"Corte da Primavera", "Summer Court":"Corte do Verão", "Autumn Court":"Corte do Outono", "Winter Court":"Corte do Inverno",
   Privateer:"Corsário", "Goblin Debt":"Débito Goblin", Bedlam:"Desvario", Fetch:"Duplo", Echoes:"Ecos", Thorns:"Espinhos", "Dream Roads":"Estradas dos Sonhos", Wyrd:"Fado",
-  "Hedge Ghosts":"Fantasmas da Sebe", Fae:"Fae", "True Fae":"Fae Verdadeiro", Faerie:"Feéria", Seeming:"Semblante", Freehold:"Povoado", Frailty:"Fragilidade", Kith:"Frátria",
+  "Hedge Ghosts":"Fantasmas da Sebe", Fae:"Fae", "True Fae":"Feé Verdadeiro", Faerie:"Feéria", Seeming:"Semblante", Freehold:"Povoado", Frailty:"Fragilidade", Kith:"Frátria",
   "Goblin Fruit":"Fruta Goblin", Glamour:"Glamour", Goblin:"Goblin", Hobgoblin:"Hobgoblin", Icon:"Ícone", Oath:"Juramento", Loyalist:"Legalista", "True Loyalist":"Legalista Verdadeiro", Lord:"Lorde",
   Clarity:"Lucidez", Mantle:"Manto", Mask:"Mascarilha", "Goblin Market":"Mercado Goblin", "Hedge Shaping":"Tecer a Sebe", Hedgespinning:"Tecer a Sebe", Oneiromancy:"Oniromancia", Oneiropomp:"Onirompo",
   Others:"Outros", Token:"Penhor", Lost:"Perdido", Portaling:"Passagem", Promise:"Promessa", Oathbreaker:"Quebrador de Juramento", "Bridge-Burner":"Queima-Pontes", "Goblin Queen":"Rainha dos Goblins", "Goblin King":"Rei dos Goblins",

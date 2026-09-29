@@ -494,7 +494,7 @@
     "success": "Passado: veja o acontecimento mais importante para os interesses atuais que ocorreu com o alvo, mesmo que tenha sido esquecido, ou a promessa ou acordo mais recente dele. Futuro: veja o acontecimento, promessa ou acordo mais importante e provável nos próximos dias; o changeling e um alvo avisado recebem Informado.",
     "exceptionalSuccess": "Desperte no alvo as emoções associadas ao acontecimento e inflija uma Condição apropriada.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Veja um acontecimento falso e sinais da aproximação dos Fae Verdadeiros, recebendo Paranoico.",
+    "dramaticFailure": "Veja um acontecimento falso e sinais da aproximação dos Feé Verdadeiros, recebendo Paranoico.",
     "loophole": "Rasgue uma imagem do alvo.",
     "seemingBenefits": {
       "Darkling": "Em vez disso, o Trevoso vê um crime ou transgressão do passado e inflige Culpado a respeito disso.",
@@ -601,7 +601,7 @@
     "success": "Observe até uma semana, mês, estação, ano ou década no passado por um a cinco pontos de Glamour, respectivamente.",
     "exceptionalSuccess": "Espreite pelas bordas do reflexo para ver detalhes fora do ângulo original.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "Veja um acontecimento falso e sinais da aproximação dos Fae Verdadeiros, recebendo Paranoico.",
+    "dramaticFailure": "Veja um acontecimento falso e sinais da aproximação dos Feé Verdadeiros, recebendo Paranoico.",
     "loophole": "Depois de sofrer pelo menos 1 ponto de dano letal nesta cena, deixe sangue cair sobre a superfície.",
     "seemingBenefits": {
       "Darkling": "O Trevoso pode usar tino para detectar fenômenos sobrenaturais no acontecimento refletido.",
@@ -689,7 +689,7 @@
     }
   },
   "ctl-core:cloak-of-night": {
-    "name": "Capa da Noite",
+    "name": "Capa de Noite",
     "description": "Sob luz fraca ou no escuro, cubra até Destreza companheiros dispostos. Um único teste de Furtividade, com bônus igual à metade do Fado arredondada para cima, oculta o grupo até alguém chamar atenção; cada integrante pode realizar uma ação reflexiva baseada em Furtividade por turno.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
@@ -871,7 +871,7 @@
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Instantânea",
-    "loophole": "Destrua uma representação do Fae Verdadeiro ou mate um de seus servos.",
+    "loophole": "Destrua uma representação do Feé Verdadeiro ou mate um de seus servos.",
     "seemingBenefits": {
       "Ogre": "Também receba Inspirado em relação a punir quem causou o dano reduzido.",
       "Elemental": "Não precisa tocar enquanto o alvo estiver cercado ou submerso no elemento associado."

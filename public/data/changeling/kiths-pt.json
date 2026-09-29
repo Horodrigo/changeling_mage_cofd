@@ -2,7 +2,7 @@
   "absinthial": {
     "name": "Absintial",
     "description": "Fae verdes que destilam as bebidas oníricas de Arcádia.",
-    "blessing": "3 sucessos contam como excepcionais em Ofícios para preparar consumíveis com ingredientes Fae. Uma vez por cena, gaste 1 Glamour, toque o alvo e teste Presença + Ofícios contra Compostura + Fado: imponha Insensato e, quando terminar, Confuso. Não afeta Fae Verdadeiros nem Monteiros.",
+    "blessing": "3 sucessos contam como excepcionais em Ofícios para preparar consumíveis com ingredientes Fae. Uma vez por cena, gaste 1 Glamour, toque o alvo e teste Presença + Ofícios contra Compostura + Fado: imponha Insensato e, quando terminar, Confuso. Não afeta Feé Verdadeiros nem Monteiros.",
     "skill": "Ofícios"
   },
   "airtouched": {
@@ -79,7 +79,7 @@
   },
   "chalomot": {
     "name": "Calomote",
-    "description": "Batedores dos Fae Verdadeiros nas Estradas dos Sonhos, especializados em invadir Bastiões.",
+    "description": "Batedores dos Feé Verdadeiros nas Estradas dos Sonhos, especializados em invadir Bastiões.",
     "blessing": "3 sucessos contam como excepcionais em Empatia para avaliar a força de um Bastião. Gaste 1 Glamour para receber bônus à Tecelagem de Sonhos igual à metade do Fado, arredondada para baixo, mínimo 1, pela cena. Cada Glamour adicional estende o benefício a outro oniromante no Bastião, até cinco.",
     "skill": "Empatia"
   },
@@ -259,7 +259,7 @@
   },
   "manikin": {
     "name": "Manequim",
-    "description": "Perdidos transformados em telas vivas para a arte dos Fae Verdadeiros.",
+    "description": "Perdidos transformados em telas vivas para a arte dos Feé Verdadeiros.",
     "blessing": "3 sucessos contam como excepcionais em Socialização para se integrar a uma situação. Com 1 Glamour e Presença + Ofícios, oculta defeitos de um objeto pela cena e recebe bônus Social igual aos sucessos, máximo +5. Usar o objeto para melhorar uma impressão a eleva um passo adicional; a qualidade física não muda.",
     "skill": "Socialização"
   },
@@ -289,7 +289,7 @@
   },
   "notary": {
     "name": "Tabelião",
-    "description": "Humanos usados como documentos vivos para os juramentos dos Fae Verdadeiros.",
+    "description": "Humanos usados como documentos vivos para os juramentos dos Feé Verdadeiros.",
     "blessing": "3 sucessos contam como excepcionais em Política para negociar, ler ou interpretar promessas Fae. Uma vez por capítulo, anula o custo de Glamour de uma promessa de cuja criação participe, sem teste. Pode recitar perfeitamente seus termos enquanto ela durar.",
     "skill": "Política"
   },
