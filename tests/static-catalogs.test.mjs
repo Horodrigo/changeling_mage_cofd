@@ -25,12 +25,11 @@ test("spell index and Arcana shards preserve the same unique IDs", async () => {
   assert.deepEqual(new Set(records.map((item) => item.id)), new Set(index.map((item) => item.id)));
 });
 
-test("contract index and source shards preserve the same unique IDs", async () => {
-  const index = await readJson("public/data/changeling/contracts/index.json");
-  const shards = [...new Set(index.map((item) => item.shard))];
+test("contract source shards preserve unique IDs", async () => {
+  const shards = ["h-courts", "ctl-oak-ash-thorn", "ctl-the-hedge", "ctl-dark-eras", "ctl-kith-and-kin", "ctl-core"];
   const records = (await Promise.all(shards.map((name) => readJson(`public/data/changeling/contracts/${name}.json`)))).flat();
   assert.equal(records.filter((item) => !item.sourceId.startsWith("h-")).length, 180);
-  assert.deepEqual(new Set(records.map((item) => item.id)), new Set(index.map((item) => item.id)));
+  assert.equal(new Set(records.map((item) => item.id)).size, records.length);
 });
 
 test("merit index and game-line shards preserve all catalog rows", async () => {

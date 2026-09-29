@@ -1,0 +1,116 @@
+[
+  {
+    "id": "ctl-2ed:arisaema",
+    "name": "Arisaema",
+    "effect": "Batizado em homenagem a uma planta mortal mais conhecida como “raiz-de-dragão”, este token não parece grande coisa à primeira vista. Sua Mascarilha é um facão quebrado ou uma faca de cozinha cega. Para alguém capaz de enxergar sua forma verdadeira, ele parece um kukri de cerca de sessenta centímetros, com uma lâmina cintilante e iridescente. O portador recebe +3 dados em rolagens de Esquiva (após dobrar a Defesa) enquanto luta pela própria vida. Sempre que esquiva com sucesso de um ataque corpo a corpo, o atacante sente uma dor ardente subir e descer pelos braços, adquirindo a Inclinação Envenenado moderada. Se isso ocorrer uma segunda vez contra o mesmo atacante na mesma cena, a Inclinação torna-se grave.",
+    "catch": "O usuário deve obter um sucesso excepcional em uma rolagem baseada em Destreza ou Raciocínio enquanto empunha a Arisaema.",
+    "drawback": "Assistir alguém se contorcer em agonia por causa de veneno onírico diluído nunca é agradável; o usuário adquire a Condição Assustado."
+  },
+  {
+    "id": "ctl-2ed:red-shoes",
+    "name": "Sapatos Vermelhos",
+    "effect": "Nem todos os changelings são particularmente graciosos ou ágeis. Alguns são completamente desajeitados. À primeira vista, os Sapatos Vermelhos parecem desconfortáveis, fora de moda e pequenos demais. Quando ativados, ajustam-se ao usuário como uma luva e ficam incrivelmente elegantes — mas são sempre de algum tom de vermelho. Qualquer pessoa que ative e use os Sapatos Vermelhos recebe +2 em quaisquer rolagens envolvendo Destreza ou Presença e sofre −2 em rolagens envolvendo Força ou Manipulação.",
+    "catch": "A beleza dói. Para caber nos Sapatos Vermelhos, o usuário deve contorcer dolorosamente os pés, sofrendo três pontos de dano contusivo devido a bolhas estouradas e feridas.",
+    "drawback": "Os sapatos não querem soltar o usuário, desejando mantê-lo belo e gracioso. No início de cada cena em que os estiver usando, ele deve gastar um ponto de Força de Vontade para evitar ativá-los; se não tiver Força de Vontade para isso, receba um Beat. Tirar os sapatos exige uma rolagem de Força + Atletismo. Outra pessoa pode ajudá-lo por meio de trabalho em equipe (p. 190), mas, se falharem, o usuário chuta involuntariamente seu aliado com um ataque desarmado, enquanto os sapatos protestam."
+  },
+  {
+    "id": "ctl-2ed:blood-pennon",
+    "name": "Pendão de Sangue",
+    "effect": "Às vezes, um simples chamado às armas contra os Outros ou os Monteiros não é suficiente. A batalha contra a Caçada Selvagem significa morte ou, pior, recaptura. Este token parece uma flâmula barata de algum time esportivo, mas, quando ativado, desenrola-se e se transforma em um enorme estandarte escarlate, manchado com o sangue de inimigos mortos há muito tempo e tremulando em uma brisa que talvez nem exista. Qualquer changeling que consiga ver o Pendão de Sangue ignora todas as penalidades por ferimentos, e seu jogador obtém sucesso excepcional com três sucessos em vez de cinco nas rolagens de ataque. Feudos Livres, cortes e até alguns motleys abastados levam o Pendão de Sangue para batalhas que não podem evitar.",
+    "catch": "O usuário deve oferecer parte do sangue de seu coração, apunhalando-se com a haste afiada do Pendão de Sangue; em vez disso, pode retirar o sangue de um sacrifício voluntário. Isso causa um ponto de dano letal e impõe a Condição Frenético (p. 334) à pessoa cujo sangue foi derramado.",
+    "drawback": "Violência gera violência. Qualquer grupo que empunhe o Pendão de Sangue torna-se imediatamente óbvio, sofrendo uma penalidade de dois dados em rolagens de Furtividade. Além disso, quando a batalha termina, os lacaios e aliados do inimigo passam a perseguir os changelings com uma fúria assassina e obstinada, concedendo a todos do grupo a Condição Caçado."
+  },
+  {
+    "id": "ctl-2ed:silver-thread",
+    "name": "Fio de Prata",
+    "effect": "Fios esguios, porém impossivelmente resistentes, de prata arcadiana ligam todos os Helldivers cativos aos seus mestres Verdadeiros Feéricos. Recolhido por Darklings, Beasts e Ogres, trabalhado por Wizened e Elementals e trançado pelos Fairest, um Fio de Prata é o grito coletivo de sofrimento dos Perdidos. Ele não desaparece simplesmente quando um Helldiver desgarrado o rompe. Em vez disso, pedaços de Fio de Prata encontrados na Sebe são tokens valiosos. Quando dois feéricos juram um pacto sobre um pedaço de Fio de Prata, ele os liga enquanto o juramento permanecer intacto, e o Fio se divide em uma parte para cada um. Uma vez por capítulo, se um deles ativar o token e puxar seu Fio de Prata, o outro pode puxar de volta, transportando o primeiro usuário até sua localização. O processo leva cinco turnos completos (ou 15 segundos) e pode ser interrompido se qualquer uma das partes perder contato com o Fio. Se o usuário não fizer parte de nenhum juramento ainda intacto, não poderá usar o Fio de Prata para resgatar outras pessoas do perigo. Contudo, ele também possui outra função importante. Qualquer rolagem de Política ou Socialização feita para negociar com um Verdadeiro Feérico recebe +1, pois os Verdadeiros Feéricos estão desesperados para recuperar sua valiosa propriedade.",
+    "catch": "Ambos os usuários devem gritar sua intenção, chamando imediatamente a atenção de qualquer pessoa — ou coisa — presente na cena.",
+    "drawback": "O Fio de Prata é literalmente feito de prata e fica extremamente evidente enquanto brilha no bolso do usuário. Qualquer pessoa que veja o usuário enquanto ele o carrega deve obter sucesso em uma rolagem de Perseverança + Autocontrole para evitar tentar adquiri-lo de qualquer maneira possível, realizando uma nova rolagem em cada cena em que o vir. Mesmo que não saiba que o Fio está ali, sabe que ele carrega algo que deseja. Se o usuário perder o Fio dessa forma, ou sofrer algum outro dano ou perda em decorrência dessas tentativas, receba um Beat."
+  },
+  {
+    "id": "ctl-2ed:crown-of-thorns",
+    "name": "Coroa de Espinhos",
+    "effect": "Para muitos changelings, a ideia de usar outra pessoa de forma impiedosa equivale a se tornar como um Verdadeiro Feérico. Para outros, porém, poder nunca é suficiente — eles decidem se tornar o caçador, e não a caça. Este token parece uma coroa de ouropel barato. Quando um changeling a coloca na cabeça e a ativa, ela floresce em uma magnífica coroa de vinhas, flores e espinhos cruéis. A cada turno em que a coroa estiver ativa, o changeling deve realizar uma das ações a seguir como ação instantânea. Drenar: O usuário extrai poder dos seres sobrenaturais presentes na cena, recebendo um ponto de Glamour de cada um, enquanto cada alvo perde um ponto de seu respectivo recurso de poder. Ela não recebe Glamour daqueles que já não têm poder para oferecer. Usuários que não sejam changelings recebem pontos de seu próprio recurso de poder, ou Força de Vontade caso não possuam um. Esta habilidade não permite que um recurso ultrapasse o máximo normal do usuário. Se o recurso de um personagem for esvaziado dessa forma, seu jogador recebe um Beat, no máximo uma vez por cena. Comandar: O jogador do usuário faz uma rolagem de Presença + Perseverança + Fado, disputada pela Perseverança + Tolerância Sobrenatural do alvo, para obrigá-lo a realizar uma única ação que não lhe cause dano. Se um personagem ferir alguém de quem gosta, quebrar uma promessa ou voltar atrás em um acordo por causa de uma ordem que seguiu, seu jogador recebe um Beat, no máximo uma vez por cena. Banir: O usuário rola seu Fado como parada de dados, disputada pela Tolerância Sobrenatural do alvo (ou um dado de sorte, caso ele não possua nenhuma), para bani-lo imediatamente para a Sebe. Uma falha dramática impede o alvo de retornar sem a ajuda de alguém capaz de abrir portões da Sebe, mesmo que normalmente pudesse fazê-lo sozinho. Ferir: O usuário causa a si mesmo um ponto de dano letal, que também é infligido a todas as outras pessoas presentes na cena, ignorando armadura. Nenhuma magia pode curar o dano que o usuário inflige a si mesmo com este token. Se um personagem ficar inconsciente por dano causado dessa forma, seu jogador recebe um Beat, no máximo uma vez por cena. Este token só permite seu uso por seres que possuam trilhas de Clareza ou outras características equivalentes que meçam estabilidade mental ou metafísica, como Integridade. Changelings suspeitam que os juramentos que o criaram eram indescritivelmente terríveis. Tentar deliberadamente contornar o espírito do acordo do token — como dar ordens triviais a aliados ou passar a Coroa entre os membros de um motley para roubar o Glamour uns dos outros e acumular Beats — faz o Fado retaliar; o Narrador decide os efeitos, que podem variar desde o surgimento de um Monteiro vindo da Sebe até todo o motley adquirir uma Condição ou receber cinco pontos de Dívida Goblin de uma só vez.",
+    "catch": "O usuário deve aceitar um ponto de Dívida Goblin em troca de ativar a Coroa, pois fica em dívida com o próprio Fado pelo uso de seu poder destrutivo.",
+    "drawback": "A Coroa de Espinhos não distingue amigo de inimigo. Como observado acima, o usuário deve utilizar uma das quatro habilidades em cada rodada enquanto ela estiver ativa. Ele não pode desativá-la antes do fim da cena, a menos que aceite a Condição Loucura (p. 343); se já possuir essa Condição, não poderá ativar o token até que ela seja resolvida. Além disso, quando o token é desativado, ele sofre um ataque de Clareza com uma parada de três dados (ou um ponto de ruptura equivalente, para não changelings). Se o usuário tiver sofrido dano ou perda significativa enquanto usava a Coroa — por exemplo, banindo para a Sebe um companheiro de motley contra sua vontade, ficando inconsciente por dano auto-infligido ou prejudicando um relacionamento ao comandar um aliado — receba um Beat."
+  },
+  {
+    "id": "de2:alexandrian-lamp",
+    "name": "Lâmpada Alexandrina",
+    "effect": "Esta simples lâmpada de cobre está disponível por troca ou moeda, a um preço justo, no Mercado Goblin de Alexandria. A lâmpada é colocada dentro da Sebe (logo na entrada já funciona), e qualquer pessoa que a estiver segurando quando ela tocar o chão sempre conseguirá encontrar o caminho de volta até ela, recebendo +2 em testes para navegar de volta à lâmpada e garantindo que o caminho jamais possa ser completamente bloqueado. Apenas membros do grupo original podem mover a lâmpada depois que ela for colocada no chão.",
+    "catch": "O portador da lâmpada não pode ocultar sua presença pelo restante da cena após segurá-la, pois seu corpo brilha com uma tonalidade flamejante, independentemente de tentativas sobrenaturais de ocultação.",
+    "drawback": "O portador da lâmpada adquire a Condição Letárgico assim que ela é colocada no chão, pois segurá-la drena sua energia."
+  },
+  {
+    "id": "de2:oath-sand",
+    "name": "Areia do Juramento",
+    "effect": "Esta areia, retirada da base da Pirâmide de Quéops, é uma das razões pelas quais os Perdidos viajam até lá. Deixar a areia escorrer entre os dedos concede +2 a qualquer ação social que envolva dar sua palavra — seja negociando Contratos Goblin, firmando juramentos ou prometendo à capitã da guarda que você não causará problemas na cidade dela.",
+    "catch": "O changeling não pode ter contado uma mentira nas 24 horas anteriores ao uso deste token; caso contrário, ele não produz efeito.",
+    "drawback": "A ação social realizada pelo changeling depois de usar o último punhado da Areia do Juramento sofre uma penalidade de −1, pois sua aparência de respeitabilidade desaparece."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:barterers-coin",
+    "name": "Moeda do Barganhador",
+    "effect": "Esta moeda não parece grande coisa, com azinhavre manchando sua superfície. Quando ativada, ela adquire uma cor esmeralda brilhante antes de desaparecer em uma nuvem de fumaça dourada. Até o fim da cena, o usuário da moeda recebe +1 e 8-again em todas as rolagens para barganhar ou negociar."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:kraken-ink",
+    "name": "Tinta de Kraken",
+    "effect": "Krakens não apenas espreitam as profundezas aquáticas da Sebe, mas também vagam por suas margens e até por seus céus. Ao contrário da tinta de lula, a tinta de kraken funciona tanto no ar quanto na água, sublimando-se em fumaça. Changelings e goblins estabilizam a tinta de kraken refinando-a em um pó leve e fácil de transportar, que permanece inerte até ser imbuído de Glamour. Quando um changeling lança um punhado do pó ativo, ele explode em uma fumaça negra, impondo a Inclinação Cego (Changeling, p. 327) a todos os presentes até o fim da cena."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:seeming-song",
+    "name": "Canção da Semblante",
+    "effect": "Canções de Semblante consistem em som mágico engarrafado para uso posterior. Qualquer partitura ou gravação pode dar origem a uma canção de Semblante, embora a maioria das melodias de trifles reflita o Semblante, a corte ou alguma outra característica definidora de seu criador. Uma canção de Semblante retirada do frasco e imbuída de Glamour agita o coração e o Fado de todos que a escutam. Durante a cena, qualquer changeling que ouça a melodia pode empregar o benefício do Semblante do usuário em qualquer Contrato Arcadiano que invoque, mesmo que não o tenha aprendido. Se um hobgoblin ou outra criatura feérica sem Semblante ativar a canção, isso certamente terá consequências estranhas."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:sorcerers-brew",
+    "name": "Poção do Feiticeiro",
+    "effect": "Para mortais, esta mistura parece água lodosa e repugnante, coletada de algum pântano ou cano de esgoto. Imbuída de Glamour, ela não fica menos nojenta, mas adquire cores neon vibrantes, com olhos e corações de tritões flutuando em seu interior. O gosto revira o estômago, e alguns changelings têm dificuldade para manter a bebida no corpo. Para aqueles que conseguem suportá-la, o usuário obtém sucesso excepcional com três sucessos ao usar qualquer poder feérico, como incitar Bedlam, invocar Contratos ou usar seu kenning, durante toda a cena."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:troll-teeth",
+    "name": "Dentes de Troll",
+    "effect": "Esses trifles parecem pedaços alongados de calcário, mas changelings os reconhecem como caninos e presas quebradas. Os dentes de trolls ficam quebradiços depois de removidos e racham com facilidade quando imbuídos de Glamour. Larvas contorcidas com rostos goblins e uma podridão negra e craterada corroem seu interior. Para ativar o trifle, o usuário escolhe um personagem que consiga ver e esmaga o dente. O alvo sente, ao mesmo tempo, todas as pequenas dores, dores articulares e espasmos musculares que já teve. Embora isso não cause dano, a dor atormenta a vítima, impondo penalidades por ferimentos como se a caixa de Vitalidade mais à direita estivesse preenchida com dano até o fim da cena. Penalidades adicionais por ferimentos causadas por dano real se acumulam até um máximo de −5."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:winning-ticket",
+    "name": "Bilhete Premiado",
+    "effect": "Bilhetes de loteria despertam um verdadeiro tesouro de superstições modernas. Este bilhete carrega sua própria parcela de sorte; quando ativado, uma massa de vinhas espinhosas irrompe dele e o despedaça. Durante a cena, todo palpite aleatório feito pelo usuário está completamente correto. Ela pode adivinhar a senha de um celular na primeira tentativa, ligar para uma pessoa específica sem saber seu número e escolher a bifurcação correta de uma estrada sem qualquer investigação. Isso não transmite conhecimento nem torna mais fácil navegar pela Sebe, e o changeling não se lembra das informações específicas que adivinhou depois que o poder do trifle termina."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:nameless-mask",
+    "name": "Máscara Sem Nome",
+    "catch": "O usuário permanece anônimo para todos os demais presentes durante toda a cena enquanto houver pessoas que poderiam reconhecê-lo. Se for reconhecido depois de usar o bauble, mas antes do fim da cena, deve pagar imediatamente qualquer custo de Glamour que tenha evitado.",
+    "crux": "Eu me perco em mim mesmo, sozinho entre as massas sem rosto.",
+    "description": "Criadas a partir de restos de eidolons, as Máscaras Sem Nome são indistintas, esculpidas em madeira e desprovidas de qualquer característica marcante. Os Gentry que criam essas Máscaras nunca as vestem; em vez disso, obrigam seus servos a usá-las, para garantir que nada distraia do esplendor dos Verdadeiros Feéricos. Os mais astutos entre esses servos usam suas Máscaras Sem Nome para escapar de volta através da Sebe, embora alguns de seus companheiros dos Feudos Livres argumentem que seus Guardiões talvez os tenham deixado fugir de propósito."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:spider-shawl",
+    "name": "Xale de Aranha",
+    "catch": "O usuário come uma aranha viva imediatamente antes de ativar o xale.",
+    "crux": "Aranhas rastejam por toda parte, tecendo teias com pernas demais.",
+    "description": "Teias prateadas e padrões de aranhas negras cruzam este xale vermelho de gaze, feito de seda finamente fiada. Um dos Bons Primos o teceu a partir de sonhos de aracnofobia aguda."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:delicate-knife",
+    "name": "A Faca Delicada",
+    "catch": "Uma vez desembainhada na cena, a faca deve provar sangue da lâmina até o cabo antes de ser ativada.",
+    "crux": "A maior ameaça é aquela que não pode ser vista.",
+    "description": "O Verdadeiro Feérico que criou este bauble não alterou em nada o adereço original. Nos sonhos, ele era a arma favorita de um assassino, rápida e letal. A Bondosa precisava possuir um estilete tão elegante, então o arrancou do sonho e teceu ao redor dele uma treliça de metal. Agora, sonhos de morte súbita o acompanham por onde quer que vá."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:panic-pendant",
+    "name": "Pingente do Pânico",
+    "catch": "O usuário deliberadamente perde um prazo importante próprio enquanto usa o Pingente do Pânico.",
+    "crux": "Um prazo esquecido me deixa completa e irremediavelmente fodido.",
+    "description": "Todo mundo tem esse sonho. Ela está no palco sob os holofotes, mas não decorou nenhuma letra da música. A tese dele, ainda nem começada, vence em uma hora. Eles têm uma entrevista do outro lado da cidade, esqueceram de se preparar e não conseguem chegar a tempo. O sonhador permanece à beira de uma ruína criada por ele próprio. Os Gentry adoram o pânico cego e descontrolado que esses sonhos provocam e o forjam em pedras escuras de calcedônia engastadas em ouro rosé."
+  },
+  {
+    "id": "ctl-oak-ash-thorn:kids-latchkey",
+    "name": "Chave da Criança",
+    "catch": "O usuário abandona deliberadamente um companheiro ou ente querido a um destino terrível quando sua presença é necessária, dentro da mesma cena.",
+    "crux": "Até aqueles que mais amam você irão embora cedo ou tarde.",
+    "description": "Esta chave de casa manchada foi forjada a partir do eidolon do pai do sonhador, que estava sempre do outro lado de uma porta se fechando ou se afastando em seu carro luxuoso sempre que o sonhador se aproximava. O Verdadeiro Feérico se encantou com a dor primorosa produzida por essa figura de abandono e amor distante, e a chave gasta pelo tempo que dela surgiu transmite solidão e ressentimento."
+  }
+]

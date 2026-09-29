@@ -84,8 +84,3 @@ export interface ContractDefinition {
   page: number;
   homebrew?: true;
 }
-
-export type ContractIndexEntry = Pick<
-  ContractDefinition,
-  "id" | "name" | "originalName" | "type" | "categoryKind" | "regalia" | "sourceId" | "source" | "page"
-> & { shard: string };

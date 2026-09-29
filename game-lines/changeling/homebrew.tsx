@@ -7,10 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
-import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
-import type { CourtDefinition } from "@/lib/changeling-courts";
-import type { KithDefinition } from "@/lib/changeling-kiths";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary } from "@/lib/contract-presentation";
 import type { EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -28,6 +25,7 @@ import { MeritHomebrewPanel } from "@/app/merit-homebrew-panel";
 import { ChangelingCatalogHomebrewEditor, emptyChangelingCatalogHomebrew } from "./catalog-homebrew-editor";
 import { CHANGELING_CATALOG_HOMEBREW_SOURCE_ID, mergeChangelingReference, saveChangelingCatalogHomebrews, type ChangelingCatalogHomebrew } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
+import type { ChangelingReference } from "./catalogs/reference";
 
 type HomebrewDetail = { label?: string; text: string };
 type ListedHomebrew = { id: string; sourceId: string; source: string; kind: string; name: string; details: HomebrewDetail[]; tier?: string; tierOrder?: number; customEntitlement?: EntitlementDefinition; customContract?: ContractDefinition };
@@ -39,7 +37,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   const [entitlementEditorOpen, setEntitlementEditorOpen] = useState(false), [editingEntitlement, setEditingEntitlement] = useState<EntitlementDefinition | null>(null);
   const [editingCatalog, setEditingCatalog] = useState<ChangelingCatalogHomebrew | null>(null);
   const [contractEditor, setContractEditor] = useState<{ open: boolean; initial: ContractDefinition | null }>({ open: false, initial: null });
-  const rawReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>>; courts: CourtDefinition[]; entitlements: EntitlementDefinition[]; kiths: KithDefinition[]; kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }> }>("changeling-reference");
+  const rawReference = catalogs.get<ChangelingReference>("changeling-reference");
   const reference = mergeChangelingReference(rawReference, customCatalog);
   const categoryOrder = [h("Méritos", "Merits"), "Seemings", h("Cortes", "Courts"), h("Frátrias", "Kiths"), "Entitlements", h("Contratos", "Contracts"), "Needles", "Threads", h("Condições", "Conditions"), "Errata"];
   const categoryRank = (kind: string) => { const index = categoryOrder.indexOf(kind); return index < 0 ? categoryOrder.length : index; };
@@ -47,11 +45,11 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   const add = (item: ListedHomebrew) => { if (isHomebrewSource(item.sourceId)) items.push(item); };
   const detail = (label: string | undefined, text: string | undefined): HomebrewDetail[] => text?.trim() ? [{ label, text: text.trim() }] : [];
   for (const item of catalogs.get<ContractDefinition[]>("changeling-contracts")) {
-    const presented = contractPresentation(item, locale), outcomes = contractOutcomeSections(presented, locale), options = contractDisplayOptions(presented, locale);
+    const presented = contractPresentation(item, locale, reference.contractPresentation), outcomes = contractOutcomeSections(presented, locale), options = contractDisplayOptions(presented, locale);
     const courtBenefits = Object.entries(presented.courtClauses ?? {}).flatMap(([courtId, text]) => detail(`${h("Cláusula de Corte", "Court Clause")} — ${reference.courts.find((court) => court.id === courtId)?.[locale === "pt-BR" ? "translatedName" : "name"] ?? courtId}`, text));
     const seemingBenefits = Object.entries(presented.seemingBenefits ?? {}).flatMap(([seeming, text]) => detail(`${h("Benefício de Aparência", "Seeming Benefit")} — ${seemingDisplayName(seeming, locale)}`, text));
     add({
-      id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Contratos", "Contracts"), name: locale === "pt-BR" ? item.name : item.originalName,
+      id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Contratos", "Contracts"), name: presented.name,
       details: [
         ...detail(h("Resumo", "Summary"), contractSummary(presented, locale)),
         ...(contractHasInvocationRoll(presented) === true ? detail(h("Parada de dados", "Dice Pool"), presented.dicePool ?? h("Não informada", "Not listed")) : []),

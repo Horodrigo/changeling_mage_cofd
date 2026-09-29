@@ -1,0 +1,226 @@
+{
+  "ctl-core:hostile-takeover": {
+    "name": "Aquisição Hostil",
+    "description": "Declare o direito de ocupar uma moradia. A segurança mundana ignora o changeling, portas se abrem e sentinelas animais ou hobgoblins dão passagem. Estenda o efeito a até Presença companheiros mantidos à vista. Moradias sobrenaturais provocam um Choque de Vontades, e o Contrato não pode superar um residente que também o conheça.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Carregue um objeto pertencente ao proprietário ou principal residente.",
+    "seemingBenefits": {
+      "Beast": "As sentinelas animais servem ativamente à Fera.",
+      "Fairest": "Receba +2 no Choque de Vontades contra o proprietário de uma moradia sobrenatural."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Receba +3 em Furtividade e Furto dentro da moradia.",
+        "Elemental": "Uma vez antes do fim do efeito, entre por uma abertura e saia por outra dentro da moradia.",
+        "Ogre": "Pode afetar moradias controladas por personagens que conheçam este Contrato, provocando um Choque de Vontades.",
+        "Wizened": "Aparelhos domésticos complexos o servem dentro de suas capacidades físicas normais."
+      }
+    }
+  },
+  "ctl-core:mask-of-superiority": {
+    "name": "Máscara de Superioridade",
+    "description": "Entre em um local como se tivesse o direito de pertencer a uma organização ali representada.",
+    "dicePool": "Presença + Subterfúgio + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Os observadores acreditam que o changeling possui Status na organização escolhida igual à Presença. Agir fora do papel pode exigir Presença + Subterfúgio, disputado por Raciocínio + Empatia, para preservar o engano.",
+    "exceptionalSuccess": "Os observadores acreditam que o changeling é um Aliado de confiança com nível igual à Presença e relevam a maior parte das lacunas em seu conhecimento institucional.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Os membros reconhecem a mentira imediatamente e tornam-se hostis.",
+    "loophole": "Vista-se de modo vagamente compatível com o código de vestimenta da organização.",
+    "seemingBenefits": {
+      "Fairest": "Reduza em um as Portas iniciais em Manobras Sociais contra personagens afetados.",
+      "Ogre": "Some os sucessos da invocação, no máximo +5, aos testes de Intimidação contra quem acreditar no embuste."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Pode usar o efeito em animais.",
+        "Darkling": "No fim da cena, as pessoas que interagiram com o Trevoso não conseguem recordar sua aparência em detalhes, a menos que ele tenha sido desmascarado como intruso.",
+        "Elemental": "Receba 8-novamente em Presença + Subterfúgio ao agir fora do papel.",
+        "Wizened": "Pareça integrar a equipe de manutenção; testes para notar o Mirrado em áreas proibidas sofrem uma penalidade igual à metade dos sucessos da invocação, arredondada para cima."
+      }
+    }
+  },
+  "ctl-core:paralyzing-presence": {
+    "name": "Presença Paralisante",
+    "description": "Subjugue um alvo cuja atenção o changeling capturou com uma presença magnífica e terrível.",
+    "dicePool": "Presença + Intimidação + Fado contra Compostura + Tolerância Sobrenatural",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo sofre Insensato.",
+    "exceptionalSuccess": "O alvo também recebe Acovardado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo, nada impressionado, impõe Abalado ao changeling.",
+    "loophole": "Toque o alvo enquanto ele estiver sozinho.",
+    "seemingBenefits": {
+      "Darkling": "Use Manipulação em vez de Presença.",
+      "Fairest": "Receba +3 dados para invocar o Contrato."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Gaste 1 Força de Vontade para aplicar o efeito de sucesso excepcional sem obtê-lo no teste.",
+        "Elemental": "Aplique o benefício a outro personagem na linha de visão da vítima.",
+        "Ogre": "Gaste 1 Glamour adicional para causar 1 ponto de dano letal sem encerrar Insensato.",
+        "Wizened": "Receba +2 em ataques localizados contra a vítima Insensata."
+      }
+    }
+  },
+  "ctl-core:summon-the-loyal-servant": {
+    "name": "Convocar o Servo Leal",
+    "description": "Anime uma gota de sangue e matéria efêmera ou descartada das proximidades, criando um servo simples e leal com Poder 1, Acuidade 3, Resistência 2, ferro como única fragilidade e Tamanho 1–7. Ele possui vantagens naturais apropriadas, obedece a comandos simples e vigia ameaças.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até ser destruído",
+    "loophole": "Realize um favor significativo para o elemento ou material escolhido durante a cena.",
+    "seemingBenefits": {
+      "Elemental": "Por +●○, funda-se ao servo, substitua seus Atributos pelos dele quando desejar, torne-se imune ao material ou elemento dele e some +1L aos modificadores de armas.",
+      "Fairest": "Por +○, vincule um servo a um Refúgio indefinidamente enquanto ele permanecer lá."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "O servo recebe +1 em Resistência.",
+        "Darkling": "O servo não pode ser imobilizado nem agarrado.",
+        "Ogre": "O servo recebe +1 em Poder.",
+        "Wizened": "O servo compreende comandos complexos e possui a inteligência de uma criança pequena."
+      }
+    }
+  },
+  "ctl-core:tumult": {
+    "name": "Tumulto",
+    "description": "Escreva o nome verdadeiro de um alvo visível numa folha e dobre-a como um pássaro de origami para ler e manipular fragmentos de sonhos e pesadelos.",
+    "dicePool": "Presença + Empatia + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Descubra se o alvo possui Desorientado, Culpado, Perdido, Paranoico, Obsessão, Assombrado, Estoico ou Retraído. Para cada sucesso, imponha uma das Condições temporárias listadas ou defina um gatilho que adie o Contrato.",
+    "exceptionalSuccess": "Aplique um efeito adicional.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe uma das Condições listadas, à escolha do jogador.",
+    "loophole": "Plante um pássaro de origami no alvo durante a cena.",
+    "seemingBenefits": {
+      "Fairest": "Também leia e imponha Inspirado, Enamorado e Devasso.",
+      "Ogre": "Também leia e imponha Bestial, Acovardado e Amedrontado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Também leia ou imponha Frenético, Imprudente e Abalado.",
+        "Darkling": "Também leia ou imponha Informado, Coagido e Notoriedade.",
+        "Elemental": "Também leia ou imponha Competitivo, Confuso e Distraído.",
+        "Wizened": "Também leia ou imponha Fatigado, Letárgico ou Volátil; Volátil afeta um item empunhado."
+      }
+    }
+  },
+  "ctl-core:discreet-summons": {
+    "name": "Convocação Discreta",
+    "description": "Introduza a mão sem olhar num recipiente pequeno para convocar um objeto, ou abra uma porta e convide um hobgoblin de Fado 3 ou inferior a realizar uma tarefa.",
+    "dicePool": "Manipulação + Persuasão + Fado contra Compostura + Tolerância Sobrenatural",
+    "action": "Instantânea para um objeto; disputada para um hobgoblin",
+    "duration": "Uma cena ou até ser liberado ou ignorado",
+    "success": "Produza um objeto funcional de Tamanho 1 e Disponibilidade 3 ou inferior que já tenha visto ou manuseado, ou convoque um hobgoblin normal para realizar uma tarefa. Um hobgoblin devidamente persuadido vem de bom grado e torna o teste não disputado.",
+    "exceptionalSuccess": "O objeto pode ter Tamanho 5 e Disponibilidade 5; o hobgoblin serve com entusiasmo ao espírito da missão e realiza tarefas subsequentes úteis.",
+    "failure": "A convocação falha.",
+    "dramaticFailure": "Retire um item com Volátil, ou convoque um hobgoblin secretamente hostil.",
+    "loophole": "Retire o objeto das posses de um inimigo, ou prometa e entregue algo prática ou moralmente difícil de obter para o hobgoblin.",
+    "seemingBenefits": {
+      "Darkling": "Retire o objeto ou hobgoblin de uma sombra ou espaço escuro grande o bastante.",
+      "Fairest": "O hobgoblin serve até o próximo nascer ou pôr do sol, mesmo quando ignorado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Convoque um animal mundano como se fosse um hobgoblin.",
+        "Elemental": "Transforme o objeto produzido em outro depois de escondê-lo da vista por um turno.",
+        "Ogre": "Conjure normalmente um objeto de até Tamanho 3, ou de até Tamanho 6 com sucesso excepcional.",
+        "Wizened": "Gaste 1 Força de Vontade para aplicar o efeito de sucesso excepcional sem obtê-lo no teste."
+      }
+    }
+  },
+  "ctl-core:masterminds-gambit": {
+    "name": "Gambito do Estrategista",
+    "description": "Passe pelo menos cinco minutos monologando sobre um objetivo concreto para criar, em pergaminho, um plano ou repositório que concede +5 de equipamento. Ele dura até o fim do capítulo ou até obter sucesso ou fracassar definitivamente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea; leva pelo menos cinco minutos",
+    "duration": "Um capítulo ou até o plano ter sucesso ou fracassar",
+    "loophole": "Desenhe o plano, a hierarquia ou o índice do repositório em papel com pelo menos 50 anos.",
+    "seemingBenefits": {
+      "Elemental": "Por +○, um repositório dura uma história e passa a abranger uma Especialização Mental que o Elemental possua.",
+      "Fairest": "Crie uma organização adequada para combater a influência de um inimigo em vez de um plano."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Receba Resoluto ao usar o repositório com sucesso excepcional, além de qualquer outra Condição.",
+        "Darkling": "Investigações que usem informações do repositório obtêm sucesso excepcional com três sucessos.",
+        "Ogre": "Receba +2 no dano da arma quando o plano envolver violência.",
+        "Wizened": "O repositório também concede 8-novamente."
+      }
+    }
+  },
+  "ctl-core:pipes-of-the-beastcaller": {
+    "name": "Flauta do Encantador de Feras",
+    "description": "Toque uma flauta de prata para chamar todos os animais de uma espécie nomeada num raio de Empatia com Animais milhas e dar-lhes comandos verbais compreensíveis.",
+    "dicePool": "Manipulação + Empatia com Animais + Fado contra Perseverança + Compostura",
+    "action": "Instantânea para animais dispostos; disputada para animais hostis",
+    "duration": "Até a tarefa ser concluída ou tornar-se impossível",
+    "success": "Os animais se reúnem, obedecem a comandos simples da melhor forma possível e retornam para informar a conclusão ou um obstáculo insuperável.",
+    "exceptionalSuccess": "Controle-os por um dia e uma noite e dê novos comandos sempre que falar com eles; maus-tratos ou exigências impossíveis permitem uma nova disputa.",
+    "failure": "A convocação falha.",
+    "dramaticFailure": "Um animal grande e hostil ou um enxame chega e ataca o changeling.",
+    "loophole": "Dance enquanto toca a flauta, imitando a espécie desejada.",
+    "seemingBenefits": {
+      "Beast": "Mantenha um vínculo empático, perceba a condição e localização relativa dos animais e dê novas ordens à distância.",
+      "Fairest": "Por +●, convoque e comande uma segunda espécie."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "Os animais subordinados impõem −5 às tentativas de notá-los enquanto agem furtivamente.",
+        "Elemental": "Conceda aos animais imunidade ao dano de um elemento escolhido.",
+        "Ogre": "Os animais tornam-se imunes ao medo, inclusive sobrenatural.",
+        "Wizened": "Os subordinados recebem +2 em ações de Inteligência e Raciocínio."
+      }
+    }
+  },
+  "ctl-core:the-royal-court": {
+    "name": "A Corte Real",
+    "description": "Assuma a liderança de uma reunião e impeça todos os presentes de infligir dano corporal. Compulsões sobrenaturais à violência provocam um Choque de Vontades. O Contrato não pode deter violência já em curso.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Fique de pé e profira um discurso de pelo menos cinco minutos.",
+    "seemingBenefits": {
+      "Fairest": "Também proíba intimidação e ameaças Sociais, mas permita interações amistosas.",
+      "Wizened": "Também proíba dano mental, inclusive ataques à Lucidez, mas não pontos de ruptura."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Pode encerrar violência já em curso, afetando no máximo Fado + 1 mortais.",
+        "Darkling": "Escolha um personagem que ficará isento.",
+        "Elemental": "Por uma cena após o fim do efeito, os personagens afetados sofrem −2 em ações violentas.",
+        "Ogre": "Receba +3 nos Choques de Vontades relacionados."
+      }
+    }
+  },
+  "ctl-core:spinning-wheel": {
+    "name": "Roca",
+    "description": "Nomeie uma experiência razoavelmente provável e não excessivamente específica que o alvo viverá no próximo mês lunar. O changeling pode manter até Fado destinos pendentes.",
+    "dicePool": "Inteligência + Ocultismo + Fado − Perseverança",
+    "action": "Prolongada; cada teste leva 10 minutos; o alvo é o maior valor entre Fado e Perseverança",
+    "duration": "Até o mês lunar terminar ou o evento ocorrer",
+    "success": "Aplique os sucessos da invocação, no máximo ±5, como bônus aos testes que conduzam ao evento e penalidades aos testes que o obstruam. O Contrato cria o evento, não o resultado dele.",
+    "exceptionalSuccess": "Especifique uma ação que o alvo possa realizar para impedir a experiência e encerrar o Contrato.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre uma falha dramática num teste crucial escolhido pelo Narrador durante o próximo capítulo.",
+    "loophole": "Espete o alvo com uma agulha ou alfinete e extraia sangue; fazer isso com um alvo disposto causa 1 ponto de dano letal.",
+    "seemingBenefits": {
+      "Fairest": "Receba +3 para invocar um destino positivo e Inspirado em ações que o favoreçam.",
+      "Ogre": "Receba +3 para invocar um destino negativo e Resoluto em ações que o favoreçam."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "Receba +3 para invocar destinos envolvendo animais ou a natureza e Resoluto em ações que os favoreçam.",
+        "Darkling": "Receba +3 para invocar um destino estranho e Inspirado em ações que o favoreçam.",
+        "Elemental": "Receba +3 para invocar um destino que envolva você e Inspirado em ações que o favoreçam.",
+        "Wizened": "Receba +3 para invocar um destino envolvendo objetos ou máquinas e Resoluto em ações que o favoreçam."
+      }
+    }
+  }
+}

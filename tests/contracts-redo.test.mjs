@@ -12,11 +12,13 @@ const contractShards = ["h-courts","ctl-oak-ash-thorn","ctl-the-hedge","ctl-dark
 const CONTRACTS = contractShards.flatMap((name) =>
   JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}.json`, import.meta.url), "utf8")),
 );
+const CONTRACT_PRESENTATION_PT = Object.assign({}, ...contractShards.map((name) =>
+  JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}-pt.json`, import.meta.url), "utf8")),
+));
 const CONTRACT_NAME_ALIASES = Object.fromEntries(
   CONTRACTS.flatMap((contract) => [[contract.name, contract.id], [contract.originalName, contract.id]]),
 );
-const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
-const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+const { contractPresentation, contractSummary, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
 
 test("catálogo contém os 180 Contratos oficiais auditados", () => {
@@ -33,7 +35,6 @@ test("catálogo contém os 180 Contratos oficiais auditados", () => {
     assert.equal(official.some((contract) => contract.originalName === removedName), false);
   }
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
-  assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
 
 test("Book of Courts inicia com a família Circadian compartilhada e Clauses canônicas", () => {
@@ -179,6 +180,30 @@ test("bloco Crown do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Crown");
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[128,128,129,129,129,130,130,131,131,132]);
+});
+
+test("tradução pt-BR do bloco Crown é completa e preserva a identidade canônica", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Crown");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+  }
+  const mask=items.find((item)=>item.id==="ctl-core:mask-of-superiority"), localized=contractPresentation(mask,"pt-BR",CONTRACT_PRESENTATION_PT);
+  assert.equal(localized.id,mask.id);
+  assert.equal(localized.name,"Máscara de Superioridade");
+  assert.equal(mask.name,"Mask of Superiority");
+  const hostile=contractPresentation(contractWithSupplementalBenefits(items[0],["h-seemings"]),"pt-BR",CONTRACT_PRESENTATION_PT);
+  assert.match(hostile.seemingBenefits.Darkling,/Furtividade e Furto/);
+  const tumult=CONTRACT_PRESENTATION_PT["ctl-core:tumult"];
+  assert.match(JSON.stringify(tumult),/Acovardado/);
+  assert.match(JSON.stringify(tumult),/Frenético/);
+  assert.match(JSON.stringify(tumult),/Fatigado/);
+  assert.doesNotMatch(JSON.stringify(tumult),/\b(?:Cowed|Berserk|Fatigued)\b/);
+  assert.doesNotMatch(JSON.stringify(CONTRACT_PRESENTATION_PT),/\b(?:Wyrd|Willpower|Huntsm(?:an|en))\b/i);
 });
 
 test("bloco Jewels do livro básico está completo", () => {

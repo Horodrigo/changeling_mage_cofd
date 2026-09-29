@@ -8,16 +8,15 @@ import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList }
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
-import type { KithDefinition } from "@/lib/changeling-kiths";
 import { kithCreationChoice } from "./kith-choices";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
-import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits, type ContractPresentationCatalog } from "@/lib/contract-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { normalizeEntitlementState, type EntitlementDefinition } from "@/lib/entitlements";
+import { normalizeEntitlementState } from "@/lib/entitlements";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
@@ -30,15 +29,7 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
-
-type ChangelingReference = {
-  conditions: ConditionDefinition[];
-  presentation: Record<string, Partial<ConditionDefinition>>;
-  courts: CourtDefinition[];
-  entitlements: EntitlementDefinition[];
-  kiths: KithDefinition[];
-  kithPresentation: Record<string, { name: string; description: string; blessing: string; skill: string }>;
-};
+import type { ChangelingReference } from "./catalogs/reference";
 
 type PrintBlock = PrintFlowItem & { node: ReactNode };
 
@@ -129,9 +120,9 @@ function PrintCard({ title, meta, children, className = "" }: { title: ReactNode
 
 type ContractPrintData = { title: string; access: string; kind: string; facts: Array<[string, ReactNode]>; rows: Array<[string, ReactNode]> };
 
-function contractPrintData(baseDefinition: ContractDefinition, character: CharacterSheet, courts: readonly CourtDefinition[], locale: Locale, t: Translator): ContractPrintData {
-  const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale);
-  const summary = contractSummary(baseDefinition, locale);
+function contractPrintData(baseDefinition: ContractDefinition, character: CharacterSheet, courts: readonly CourtDefinition[], presentation: ContractPresentationCatalog, locale: Locale, t: Translator): ContractPrintData {
+  const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale, presentation);
+  const summary = contractSummary(definition, locale);
   const data = character.line_data;
   const benefits = [String(data.seeming ?? ""), ...objectList(data.extra_contract_benefits).filter((item) => String(item.contractId) === definition.id).map((item) => String(item.seeming))]
     .filter((value, index, all) => value && all.indexOf(value) === index)
@@ -302,7 +293,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     const blocks: PrintBlock[] = [];
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
     if (options.powerDetails) contracts.forEach((contract, contractIndex) => {
-      const card = contractPrintData(contract, character, reference.courts, locale, t);
+      const card = contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t);
       const chunks = Array.from({ length: Math.max(1, Math.ceil(card.rows.length / 4)) }, (_, index) => card.rows.slice(index * 4, index * 4 + 4));
       chunks.forEach((rows, chunkIndex) => add("contracts", t("ui.contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed/>));
     });
@@ -344,7 +335,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const experienceBeats = Math.max(0, Math.min(5, Math.trunc(Number(character.current_state?.experience_beats ?? 0) || 0)));
   const meritRows = principalMerits.slice(0, 8);
   const pageTwoMerits = [...principalMerits.slice(8), ...expanded.filter((merit) => !principalMerits.includes(merit))];
-  const contractRows = contracts.slice(0, 10).map((contract) => contractPrintData(contract, character, reference.courts, locale, t));
+  const contractRows = contracts.slice(0, 10).map((contract) => contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t));
   const seemingBlessing = seeming ? (locale === "en-US" ? seeming.blessingEn : seeming.blessing) : "";
   const seemingCurse = seeming ? (locale === "en-US" ? seeming.curseEn : seeming.curse) : "";
   return <div className="game-print-document ctl-print-document">

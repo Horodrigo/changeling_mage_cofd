@@ -22,8 +22,6 @@ import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-lin
 import { useLanguage } from "@/lib/i18n";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import type { KithDefinition } from "@/lib/changeling-kiths";
-import type { CourtDefinition } from "@/lib/changeling-courts";
-import type { EntitlementDefinition } from "@/lib/entitlements";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractWithSupplementalBenefits } from "@/lib/contract-presentation";
@@ -43,13 +41,7 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
-
-type ChangelingReference = {
-  courts: CourtDefinition[];
-  entitlements: EntitlementDefinition[];
-  kiths: KithDefinition[];
-  kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }>;
-};
+import type { ChangelingReference } from "./catalogs/reference";
 
 const translateRegalia = (value: string) => value;
 
@@ -102,7 +94,8 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
   const customCatalog = useChangelingCatalogHomebrews();
   const reference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
   const seemingCatalog = mergeChangelingSeemings(customCatalog);
-  const tokenCatalog = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
+  const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
+  const tokenCatalog = locale === "pt-BR" ? tokens.map((item) => ({ ...item, ...reference.tokenPresentation.find((text) => text.id === item.id) })) : tokens;
   const customContracts = useContractHomebrews();
   const customMerits = useMeritHomebrews("CtL", true);
   const initialContractIds = new Set((Array.isArray(initial?.line_data.contracts) ? initial.line_data.contracts : []).map((item) => String((item as Record<string, unknown>).id ?? "")));
@@ -267,7 +260,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
     renderAdvancement={(sheet, updateSheet) => <ExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
-    lineTemplate={<ChangelingBuilderView seeming={seeming} seemingCatalog={seemingCatalog} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} tokenCatalog={tokenCatalog} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}
+    lineTemplate={<ChangelingBuilderView seeming={seeming} seemingCatalog={seemingCatalog} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contractPresentation={reference.contractPresentation} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={reference.entitlements} tokenCatalog={tokenCatalog} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}
   />;
 }
 

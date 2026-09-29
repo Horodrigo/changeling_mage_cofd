@@ -24,7 +24,7 @@ import type { CourtDefinition } from "@/lib/changeling-courts";
 import { kithCreationChoice } from "./kith-choices";
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
-import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSections,contractPresentation,contractSummary,contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSections,contractPresentation,contractSummary,contractWithSupplementalBenefits, type ContractPresentationCatalog } from "@/lib/contract-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
@@ -44,15 +44,7 @@ import { RuleSelect } from "@/app/workspace/rule-select";
 import { CLARITY_ATTACK_MODIFIERS,CLARITY_BREAKING_POINT_TIERS,clarityAttackPool } from "./clarity";
 import { mergeChangelingReference, mergeChangelingSeemings, type SeemingDefinition, type SeemingHomebrew } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
-
-type ChangelingReference = {
-    conditions: ConditionDefinition[];
-    presentation: Record<string, Partial<ConditionDefinition>>;
-    courts: CourtDefinition[];
-    entitlements: EntitlementDefinition[];
-    kiths: KithDefinition[];
-    kithPresentation: Record<string, Pick<KithDefinition, "description" | "blessing" | "skill"> & { name: string }>;
-};
+import type { ChangelingReference } from "./catalogs/reference";
 
 function normalizedCatalogName(value: unknown) {
     return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("pt-BR");
@@ -108,7 +100,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const customCatalog = useChangelingCatalogHomebrews();
     const lineReference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
     const seemingCatalog = mergeChangelingSeemings(customCatalog);
-    const tokenCatalog = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
+    const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
+    const tokenCatalog = locale === "pt-BR" ? tokens.map((item) => ({ ...item, ...lineReference.tokenPresentation.find((text) => text.id === item.id) })) : tokens;
     const customEntitlements = useEntitlementHomebrews();
     const entitlementCatalog = [...lineReference.entitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
@@ -248,7 +241,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 poderes: <>
               <PowerResource name={t("ui.wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
               <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data)}/>
-              <SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
+              <SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
               <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
               <SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
               <SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/><KithLore data={data} reference={lineReference}/>
@@ -308,7 +301,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>{t("ui.contracts")}</SheetHeading>
-            <ContractPowerList contracts={contracts} catalog={contractCatalog} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
+            <ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
             <div className="powers-sheet-grid">
               <section>
                 <SheetHeading>{t("ui.otherTraits")}</SheetHeading>
@@ -559,9 +552,10 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
         })) : (<em className="rule-callout merit-empty">{t("ui.noMeritSelected")}</em>)}
     </div>);
 }
-function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, extraBenefits = [], extraClauses = [], }: {
+function ContractPowerList({ contracts, catalog, presentation, courtCatalog, seeming, court, extraBenefits = [], extraClauses = [], }: {
     contracts: Array<Record<string, unknown>>;
     catalog: readonly ContractDefinition[];
+    presentation: ContractPresentationCatalog;
     courtCatalog: readonly CourtDefinition[];
     seeming: string;
     court: string;
@@ -575,8 +569,8 @@ function ContractPowerList({ contracts, catalog, courtCatalog, seeming, court, e
             .map((item, index) => {
             const baseDefinition = catalog.find((entry) => entry.id === String(item.id ?? "") || entry.name === String(item.name ?? "")) ??
                 (item as unknown as ContractDefinition);
-            const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale);
-            const summary = contractSummary(baseDefinition, locale);
+            const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale, presentation);
+            const summary = contractSummary(definition, locale);
             if (!definition?.id)
                 return null;
             const benefits = [

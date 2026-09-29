@@ -44,7 +44,7 @@
   "beastcaller": {
     "name": "Chamador de Feras",
     "description": "Perdidos ligados às feras goblin.",
-    "blessing": "3 sucessos contam como excepcionais em Empatia com Animais para domar feras goblins. Com 1 Glamour e Presença + Empatia com Animais + Fado, possui uma fera por Fado turnos. Cada dano letal nela causa 1 contundente em você; cada agravado causa 1 letal. Se ela morrer ou perder a consciência, você retorna ao próprio corpo e sofre mais 1 agravado.",
+    "blessing": "3 sucessos contam como excepcionais em Empatia com Animais para domar feras goblins. Com 1 Glamour e Presença + Empatia com Animais + Fado, possui uma fera por Fado turnos. Cada dano letal nela causa 1 contusivo em você; cada agravado causa 1 letal. Se ela morrer ou perder a consciência, você retorna ao próprio corpo e sofre mais 1 agravado.",
     "skill": "Empatia com Animais"
   },
   "becquerel": {
@@ -56,7 +56,7 @@
   "blightbent": {
     "name": "Corrompido",
     "description": "Perdidos permanentemente maculados por venenos e poluição.",
-    "blessing": "Ao testar Vigor + Perseverança contra doenças ou venenos, reduz dano agravado a letal, letal a contundente ou ignora contundente. Após agarrar com sucesso, gaste 1 Glamour para impor a Inclinação Envenenado.",
+    "blessing": "Ao testar Vigor + Perseverança contra doenças ou venenos, reduz dano agravado a letal, letal a contusivo ou ignora contusivo. Após agarrar com sucesso, gaste 1 Glamour para impor a Inclinação Envenenado.",
     "skill": "Doença ou Veneno"
   },
   "bricoleur": {
@@ -74,7 +74,7 @@
   "bright-one": {
     "name": "Resplandecente",
     "description": "Seres radiantes e luminosos, acesos pela chama interior de suas paixões.",
-    "blessing": "3 sucessos contam como excepcionais em Socialização para ser o centro das atenções. Emite um brilho normalmente oculto pela Máscara. Por 1 Glamour a cada turno, intensifica-o: inimigos que o veem sofrem 1 dano contundente e −2 nas ações Físicas e Mentais naquele turno.",
+    "blessing": "3 sucessos contam como excepcionais em Socialização para ser o centro das atenções. Emite um brilho normalmente oculto pela Máscara. Por 1 Glamour a cada turno, intensifica-o: inimigos que o veem sofrem 1 dano contusivo e −2 nas ações Físicas e Mentais naquele turno.",
     "skill": "Socialização"
   },
   "chalomot": {
@@ -128,7 +128,7 @@
   "cyclopean": {
     "name": "Ciclópico",
     "description": "Perdidos transformados em gigantes ou estruturas magníficas, muitas vezes marcados por deficiência.",
-    "blessing": "3 sucessos contam como excepcionais em Investigação para rastrear seres feéricos, exceto Monteiros. Uma vez por cena, gaste 1 Glamour para reduzir em 2 as penalidades de ataques localizados, até o mínimo de −1; esses ataques causam dano letal em vez de contundente.",
+    "blessing": "3 sucessos contam como excepcionais em Investigação para rastrear seres feéricos, exceto Monteiros. Uma vez por cena, gaste 1 Glamour para reduzir em 2 as penalidades de ataques localizados, até o mínimo de −1; esses ataques causam dano letal em vez de contusivo.",
     "skill": "Investigação"
   },
   "delver": {
@@ -224,7 +224,7 @@
   "leechfinger": {
     "name": "Dedos de Sanguessuga",
     "description": "Parasitas secretos que drenam a força vital alheia.",
-    "blessing": "3 sucessos contam como excepcionais em Medicina para avaliar a saúde de uma possível vítima. Após um turno de contato, gaste 1 Glamour para causar 1 dano contundente e reduzir em um grau um ferimento próprio. Pode repetir a cada turno de contato. Contra changelings, causa 2 danos e reduz dois ferimentos por ponto de Glamour.",
+    "blessing": "3 sucessos contam como excepcionais em Medicina para avaliar a saúde de uma possível vítima. Após um turno de contato, gaste 1 Glamour para causar 1 dano contusivo e reduzir em um grau um ferimento próprio. Pode repetir a cada turno de contato. Contra changelings, causa 2 danos e reduz dois ferimentos por ponto de Glamour.",
     "skill": "Medicina"
   },
   "lethipomp": {
@@ -308,7 +308,7 @@
   "playmate": {
     "name": "Companheiro de Brincadeiras",
     "description": "Amigos, bichos de estimação e brinquedos que sobreviviam por amor e confiança.",
-    "blessing": "3 sucessos contam como excepcionais em Persuasão para fazer alguém gostar de você ou de seus amigos. Toque um ferido e gaste 1 Glamour para curar dano contundente ou letal, recebendo respectivamente dano leve ou grave de Lucidez. Aplique o leve primeiro; não pode curar além das caixas de Lucidez disponíveis.",
+    "blessing": "3 sucessos contam como excepcionais em Persuasão para fazer alguém gostar de você ou de seus amigos. Toque um ferido e gaste 1 Glamour para curar dano contusivo ou letal, recebendo respectivamente dano leve ou grave de Lucidez. Aplique o leve primeiro; não pode curar além das caixas de Lucidez disponíveis.",
     "skill": "Persuasão"
   },
   "plaguesmith": {
@@ -398,7 +398,7 @@
   "uttervoice": {
     "name": "Voz Absoluta",
     "description": "Changelings cuja frustração afiou a voz como uma lâmina.",
-    "blessing": "3 sucessos contam como excepcionais em Intimidação usando a voz. Por 1 Glamour, teste Presença + Fado contra Compostura + Fado de todos que ouvirem, inclusive aliados. Quem falhar sofre 1 dano contundente, ou letal com sucesso excepcional. O grito quebra vidro e ignora Durabilidade inferior a 2. Também se ativa acidentalmente quando um teste de Presença se beneficia de 10-novamente.",
+    "blessing": "3 sucessos contam como excepcionais em Intimidação usando a voz. Por 1 Glamour, teste Presença + Fado contra Compostura + Fado de todos que ouvirem, inclusive aliados. Quem falhar sofre 1 dano contusivo, ou letal com sucesso excepcional. O grito quebra vidro e ignora Durabilidade inferior a 2. Também se ativa acidentalmente quando um teste de Presença se beneficia de 10-novamente.",
     "skill": "Intimidação"
   },
   "valkyrie": {

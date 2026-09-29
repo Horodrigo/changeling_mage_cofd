@@ -11,7 +11,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/changeling/creation-rules";
 import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
-import { contractOutcomeSections, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
 import type { EntitlementDefinition } from "@/lib/entitlements";
@@ -32,6 +32,7 @@ import { mergeContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import type { ChangelingReference } from "./catalogs/reference";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -102,7 +103,8 @@ export function ExperiencePanel({
   const { locale, t }=useLanguage();
   const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews(),customMerits=useMeritHomebrews("CtL",true);
   const contractCatalog = mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts);
-  const staticEntitlements = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
+  const reference = catalogs.get<ChangelingReference>("changeling-reference");
+  const staticEntitlements: readonly EntitlementDefinition[] = reference.entitlements;
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
   const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
@@ -175,6 +177,7 @@ export function ExperiencePanel({
   const benefitOptions = ownedContracts.flatMap((saved) => {
     const definition = findContractInCatalog(String(saved.id ?? saved.name ?? ""));
     if (!definition) return [];
+    const presented = contractPresentation(definition, locale, reference.contractPresentation);
     const seemingOptions = Object.keys(definition.seemingBenefits ?? {})
           .filter(
             (seeming) =>
@@ -183,10 +186,10 @@ export function ExperiencePanel({
           )
           .map((seeming) => ({
             value: `benefit::${definition.id}::${seeming}`,
-            label: `${definition.name} · ${seemingDisplayName(seeming,locale)}`,
+            label: `${presented.name} · ${seemingDisplayName(seeming,locale)}`,
           }));
     const clauseOptions = availableForeignClauseCourtIds(definition, currentCourtId, goodwill, extraClauseKeys)
-      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${definition.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
+      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${presented.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
     return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
@@ -781,16 +784,19 @@ export function ExperiencePanel({
                   <ExperiencePowerPicker
                     kind="Contrato"
                     line="CtL"
-                    items={contractOptions.map((item) => ({
-                      id: item.id,
-                      name: locale==="en-US"?item.originalName:item.name,
-                      category: systemTerm(item.regalia,locale),
-                      categories: homebrewCategoryKeys(systemTerm(item.regalia,locale), item.sourceId),
-                      secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
-                      sortPriority: Number(item.type === "Real"),
-                      description: contractOutcomeSections(item,locale).map(section=>section.text).join(" "),
-                      meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
-                    }))}
+                    items={contractOptions.map((item) => {
+                      const presented=contractPresentation(item,locale,reference.contractPresentation);
+                      return {
+                        id: item.id,
+                        name: presented.name,
+                        category: systemTerm(item.regalia,locale),
+                        categories: homebrewCategoryKeys(systemTerm(item.regalia,locale), item.sourceId),
+                        secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
+                        sortPriority: Number(item.type === "Real"),
+                        description: contractOutcomeSections(presented,locale).map(section=>section.text).join(" "),
+                        meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
+                      };
+                    })}
                     selectedId={selectedContract?.id ?? ""}
                     onSelect={setContractId}
                   />
@@ -803,8 +809,8 @@ export function ExperiencePanel({
                     kind="Benefício de Contrato"
                     line="CtL"
                     items={benefitOptions.map((option)=>{
-                      const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause";
-                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
+                      const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause", presented=contract?contractPresentation(contract,locale,reference.contractPresentation):undefined;
+                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?presented?.courtClauses?.[choice]??"":presented?.seemingBenefits?.[choice as keyof typeof presented.seemingBenefits]??"",meta:`${presented?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
                     })}
                     selectedId={benefitKey || benefitOptions[0]?.value || ""}
                     onSelect={setBenefitKey}

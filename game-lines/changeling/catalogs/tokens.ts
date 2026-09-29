@@ -17,6 +17,8 @@ export type TokenDefinition = {
   page: number;
 };
 
+export type TokenPresentation = Pick<TokenDefinition, "id"> & Partial<Omit<TokenDefinition, "id">>;
+
 export const changelingTokensCatalogGroup: CatalogGroupModule = {
   load: (reader) => reader.getCatalog<TokenDefinition[]>("changeling-tokens"),
 };
