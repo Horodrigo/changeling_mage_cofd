@@ -109,7 +109,7 @@
   },
   "indebted": {
     "name": "Endividado",
-    "description": "O personagem deve um serviço a um ser Fae e pode pagar aceitando dano, uma Condition prejudicial ou uma Inclinação pessoal."
+    "description": "O personagem deve um serviço a um ser Fae e pode pagar aceitando dano, uma Condition prejudicial ou uma Complicação pessoal."
   },
   "kithseeker": {
     "name": "Buscador de Frátria",

@@ -673,13 +673,13 @@ const GREATER_ATTAINMENTS: Record<string, [
     ],
     Forces: [
         "Imunidade Ambiental",
-        "Com Mana, ignora Inclinações Ambientais e Ambientes Extremos pela cena.",
+        "Com Mana, ignora Complicações Ambientais e Ambientes Extremos pela cena.",
         "Environmental Immunity",
         "Spend Mana to ignore Environmental Tilts and Extreme Environments for the scene.",
     ],
     Life: [
         "Autonomia Corporal",
-        "Pode repelir reflexivamente poderes que alterem ou firam seu corpo ou imponham Inclinações Pessoais.",
+        "Pode repelir reflexivamente poderes que alterem ou firam seu corpo ou imponham Complicações Pessoais.",
         "Body Autonomy",
         "Reflexively repel powers that alter or harm the body or impose Personal Tilts.",
     ],

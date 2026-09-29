@@ -65,7 +65,7 @@
   {
     "id": "ctl-2ed:arisaema",
     "name": "Arisaema",
-    "effect": "Batizado em homenagem a uma planta mortal mais conhecida como “raiz-de-dragão”, este penhor não parece grande coisa à primeira vista. Sua Mascarilha é um facão quebrado ou uma faca de cozinha cega. Para alguém capaz de enxergar sua forma verdadeira, ele parece um kukri de cerca de sessenta centímetros, com uma lâmina cintilante e iridescente. O portador recebe +3 dados em rolagens de Esquiva (após dobrar a Defesa) enquanto luta pela própria vida. Sempre que esquiva com sucesso de um ataque corpo a corpo, o atacante sente uma dor ardente subir e descer pelos braços, adquirindo a Inclinação Envenenado moderada. Se isso ocorrer uma segunda vez contra o mesmo atacante na mesma cena, a Inclinação torna-se grave.",
+    "effect": "Batizado em homenagem a uma planta mortal mais conhecida como “raiz-de-dragão”, este penhor não parece grande coisa à primeira vista. Sua Mascarilha é um facão quebrado ou uma faca de cozinha cega. Para alguém capaz de enxergar sua forma verdadeira, ele parece um kukri de cerca de sessenta centímetros, com uma lâmina cintilante e iridescente. O portador recebe +3 dados em rolagens de Esquiva (após dobrar a Defesa) enquanto luta pela própria vida. Sempre que esquiva com sucesso de um ataque corpo a corpo, o atacante sente uma dor ardente subir e descer pelos braços, adquirindo a Complicação Envenenado moderada. Se isso ocorrer uma segunda vez contra o mesmo atacante na mesma cena, a Complicação torna-se grave.",
     "catch": "O usuário deve obter um sucesso excepcional em uma rolagem baseada em Destreza ou Raciocínio enquanto empunha a Arisaema.",
     "drawback": "Assistir alguém se contorcer em agonia por causa de veneno onírico diluído nunca é agradável; o usuário adquire a Condição Assombrado."
   },
@@ -119,7 +119,7 @@
   {
     "id": "ctl-oak-ash-thorn:kraken-ink",
     "name": "Tinta de Kraken",
-    "effect": "Krakens não apenas espreitam as profundezas aquáticas da Sebe, mas também vagam por suas margens e até por seus céus. Ao contrário da tinta de lula, a tinta de kraken funciona tanto no ar quanto na água, sublimando-se em fumaça. Changelings e goblins estabilizam a tinta de kraken refinando-a em um pó leve e fácil de transportar, que permanece inerte até ser imbuído de Glamour. Quando um changeling lança um punhado do pó ativo, ele explode em uma fumaça negra, impondo a Inclinação Cego (Changeling, p. 327) a todos os presentes até o fim da cena."
+    "effect": "Krakens não apenas espreitam as profundezas aquáticas da Sebe, mas também vagam por suas margens e até por seus céus. Ao contrário da tinta de lula, a tinta de kraken funciona tanto no ar quanto na água, sublimando-se em fumaça. Changelings e goblins estabilizam a tinta de kraken refinando-a em um pó leve e fácil de transportar, que permanece inerte até ser imbuído de Glamour. Quando um changeling lança um punhado do pó ativo, ele explode em uma fumaça negra, impondo a Complicação Cego (Changeling, p. 327) a todos os presentes até o fim da cena."
   },
   {
     "id": "ctl-oak-ash-thorn:seeming-song",

@@ -12,7 +12,7 @@ const english: Record<string, string> = {
   Política: "Politics", Ciência: "Science", Atletismo: "Athletics", Briga: "Brawl",
   Condução: "Drive", "Armas de Fogo": "Firearms", Furto: "Larceny",
   "Armas Brancas": "Weaponry", Furtividade: "Stealth", Sobrevivência: "Survival",
-  "Empatia com Animais": "Animal Ken", Empatia: "Empathy", Expressão: "Expression",
+  "Emp. c/ Animais": "Animal Ken", Empatia: "Empathy", Expressão: "Expression",
   Intimidação: "Intimidation", Persuasão: "Persuasion", Socialização: "Socialize",
   Manha: "Streetwise", Subterfúgio: "Subterfuge",
   Morte: "Death", Destino: "Fate", Forças: "Forces", Vida: "Life", Matéria: "Matter",

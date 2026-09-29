@@ -17,8 +17,8 @@
     "dicePool": "Destreza + (Armas de Fogo ou Atletismo) + Manto contra Vigor + Fado",
     "action": "Reflexiva e disputada",
     "duration": "Instantânea",
-    "success": "O changeling derruba um item do alvo sem causar dano, exigindo uma ação instantânea para recuperá-lo; alternativamente, impõe uma Inclinação Pessoal apropriada que o alvo possa remediar com uma ação instantânea. O alvo também recebe Coagido em relação às testemunhas que não sejam o changeling.",
-    "exceptionalSuccess": "O changeling escolhe onde o item desalojado cai. Qualquer Inclinação Pessoal imposta dura pela cena.",
+    "success": "O changeling derruba um item do alvo sem causar dano, exigindo uma ação instantânea para recuperá-lo; alternativamente, impõe uma Complicação Pessoal apropriada que o alvo possa remediar com uma ação instantânea. O alvo também recebe Coagido em relação às testemunhas que não sejam o changeling.",
+    "exceptionalSuccess": "O changeling escolhe onde o item desalojado cai. Qualquer Complicação Pessoal imposta dura pela cena.",
     "failure": "O Contrato falha.",
     "dramaticFailure": "O Contrato falha, e o changeling não pode usá-lo novamente nesta cena.",
     "loophole": "O alvo rompeu um impasse com o changeling no último turno."

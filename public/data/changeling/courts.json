@@ -141,7 +141,7 @@
       "Inimigos subtraem seu Manto de testes para enganá-lo ou manipulá-lo.",
       "Uma vez por cena, some o Manto a um teste de Contrato que descubra uma informação específica.",
       "Uma vez por capítulo, reduza à metade o dano físico ou de Lucidez sofrido diretamente por sua curiosidade; quando aplicável, reduza à metade a duração da Condição resultante.",
-      "Durante uma noite, ignore exaustão ou Inclinações Ambientais por uma cena um número de vezes igual ao Manto."
+      "Durante uma noite, ignore exaustão ou Complicações Ambientais por uma cena um número de vezes igual ao Manto."
     ],
     "sourceId": "h-courts",
     "source": "Book of Courts",
@@ -189,7 +189,7 @@
       "Some o Manto a testes mundanos para resistir ou ajudar outros a resistir a intimidação e ameaças.",
       "Incite Desvario para encerrar uma emoção escolhida e sua Condição em vez de impô-la; emoções sobrenaturais provocam Choque de Vontades.",
       "Uma vez por capítulo, recupere 1 Força de Vontade após sofrer uma falha ou falha dramática.",
-      "Gaste 1 Glamour para criar uma bolha de três metros que o protege de Inclinações Ambientais pela cena."
+      "Gaste 1 Glamour para criar uma bolha de três metros que o protege de Complicações Ambientais pela cena."
     ],
     "sourceId": "h-courts",
     "source": "Book of Courts",
@@ -213,7 +213,7 @@
       "Tentativas mundanas de amedrontá-lo subtraem seu Manto.",
       "Quando o clima prejudicaria os sentidos, some o Manto à percepção em vez disso.",
       "Seus ataques desarmados usam o Manto como dano de arma enquanto relâmpagos percorrem seus membros.",
-      "Gaste 1 Glamour para transformar penalidades de Inclinações Ambientais em bônus pela cena; isso não impede ferimentos."
+      "Gaste 1 Glamour para transformar penalidades de Complicações Ambientais em bônus pela cena; isso não impede ferimentos."
     ],
     "sourceId": "h-courts",
     "source": "Book of Courts",
@@ -332,7 +332,7 @@
       "Some o Manto a testes mundanos para resistir a fadiga, privação ou desmaio.",
       "Some o Manto a testes mundanos para resistir a tortura e dor.",
       "Receba duas Batidas em vez de uma ao sofrer dano nas três últimas caixas de Vitalidade.",
-      "Gaste 1 Glamour para ignorar uma Inclinação Pessoal por um turno.",
+      "Gaste 1 Glamour para ignorar uma Complicação Pessoal por um turno.",
       "Uma vez por capítulo, ignore todo o dano de um ataque que não envolva ferro frio."
     ],
     "sourceId": "h-courts",
@@ -610,7 +610,7 @@
       "Some o Manto ao sobreviver a ambientes extremos ou privações e reduza suas penalidades em um.",
       "Seus ataques físicos causam 1L quando você inicia uma luta individual.",
       "Considere Compostura um ponto maior ao resistir a tentativas de alterar seu estado emocional.",
-      "Nunca sofra a Inclinação Derrotado."
+      "Nunca sofra a Complicação Derrotado."
     ],
     "glamourTrigger": "Definitively winning a significant fight",
     "glamourTriggerPt": "Vencer definitivamente uma luta significativa",
@@ -632,7 +632,7 @@
       "Enemies with lower Wyrd suffer Mantle as a penalty to hit you."
     ],
     "mantleBenefitsPt": [
-      "Some o Manto ao impor Inclinações.",
+      "Some o Manto ao impor Complicações.",
       "Some o Manto ao minar a autoridade ou reputação de alguém.",
       "Uma vez por sessão, refaça um teste de Atributo de Poder e escolha um dos resultados.",
       "Rompa automaticamente barreiras e impedimentos mundanos.",
