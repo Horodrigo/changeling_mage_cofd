@@ -20,8 +20,9 @@ test("all Kith IDs have complete Portuguese names, descriptions, blessings, and 
  assert.deepEqual(Object.keys(KITH_TEXT_PT).sort(),KITHS.map(x=>x.id).sort());
  for(const kith of KITHS){const text=KITH_TEXT_PT[kith.id]; for(const field of ["name","description","blessing","skill"]) assert.ok(text[field]?.trim(),`${kith.id}.${field}`); assert.equal(text.name,kith.translatedName);}
 });
-test("documented source ambiguities remain explicit",()=>{
- assert.match(KITH_TEXT_EN.lethipomp.blessing,/does not specify the resistance pool/i);
+test("audited Kith edge cases remain explicit",()=>{
+ assert.match(KITH_TEXT_EN.lethipomp.blessing,/contested by Composure \+ Empathy \+ Wyrd/i);
+ assert.match(KITH_TEXT_PT.lethipomp.blessing,/contra Compostura \+ Empatia \+ Fado/i);
  assert.match(KITH_TEXT_EN.whisperwisp.blessing,/choose Stealth or Persuasion/i);
  assert.match(KITH_TEXT_EN.sandharrowed.blessing,/grants the victim cover/i);
 });
