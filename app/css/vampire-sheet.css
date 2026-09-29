@@ -1328,9 +1328,14 @@ body:has(.line-theme-vtr) {
   }
 
   .vtr-sheet .sheet-identity-grid {
-    gap: 6px 14px;
-    padding: 14px 3px 6px;
-  }
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+
+  gap: 6px 10px;
+  padding: 0px 0px 0px;
+ }
 
   .vtr-sheet .official-field { gap: 5px; }
   .vtr-sheet .official-field span { font-size: 15px; }
