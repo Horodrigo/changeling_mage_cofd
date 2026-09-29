@@ -7,7 +7,8 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,server:{middlewareMode:true,hmr:false},optimizeDeps:{noDiscovery:true,include:[]}});
 after(async()=>vite.close());
 const kithModule=await vite.ssrLoadModule("/lib/changeling-kiths.ts");
-kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json",import.meta.url),"utf8")),JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json",import.meta.url),"utf8")));
+const KITH_TEXT_PT=JSON.parse(readFileSync(new URL("../public/data/changeling/kiths-pt.json",import.meta.url),"utf8"));
+kithModule.replaceKithCatalog(JSON.parse(readFileSync(new URL("../public/data/changeling/kiths.json",import.meta.url),"utf8")),KITH_TEXT_PT);
 const {KITHS,kithPresentation,kithSkillOptions}=kithModule;
 const KITH_TEXT_EN=Object.fromEntries(KITHS.map(({id,description,blessing,skill})=>[id,{description,blessing,skill}]));
 const {KITH_CREATION_CHOICES}=await vite.ssrLoadModule("/game-lines/changeling/kith-choices.ts");
@@ -15,8 +16,13 @@ test("all 73 official and 12 Book of Seemings Kith IDs have complete English pre
  assert.equal(KITHS.length,85); assert.equal(KITHS.filter(x=>x.sourceId==="h-seemings").length,12); assert.deepEqual(Object.keys(KITH_TEXT_EN).sort(),KITHS.map(x=>x.id).sort());
  for(const kith of KITHS){const text=KITH_TEXT_EN[kith.id]; for(const field of ["description","blessing","skill"]) assert.ok(text[field]?.trim(),`${kith.id}.${field}`);}
 });
-test("documented source ambiguities remain explicit",()=>{
- assert.match(KITH_TEXT_EN.lethipomp.blessing,/does not specify the resistance pool/i);
+test("all Kith IDs have complete Portuguese names, descriptions, blessings, and Skills",()=>{
+ assert.deepEqual(Object.keys(KITH_TEXT_PT).sort(),KITHS.map(x=>x.id).sort());
+ for(const kith of KITHS){const text=KITH_TEXT_PT[kith.id]; for(const field of ["name","description","blessing","skill"]) assert.ok(text[field]?.trim(),`${kith.id}.${field}`); assert.equal(text.name,kith.translatedName);}
+});
+test("audited Kith edge cases remain explicit",()=>{
+ assert.match(KITH_TEXT_EN.lethipomp.blessing,/contested by Composure \+ Empathy \+ Wyrd/i);
+ assert.match(KITH_TEXT_PT.lethipomp.blessing,/contra Compostura \+ Empatia \+ Fado/i);
  assert.match(KITH_TEXT_EN.whisperwisp.blessing,/choose Stealth or Persuasion/i);
  assert.match(KITH_TEXT_EN.sandharrowed.blessing,/grants the victim cover/i);
 });

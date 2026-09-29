@@ -91,6 +91,7 @@ test("Changeling static identity catalogs use unique IDs and retain source metad
 
 test("Changeling Token catalog contains editable Token, Trifle, and Bauble text", async () => {
   const items = await json(new URL("../public/data/changeling/tokens.json", import.meta.url));
+  const presentation = await json(new URL("../public/data/changeling/tokens-pt.json", import.meta.url));
   const counts = Object.groupBy(items, (item) => item.kind);
 
   assert.deepEqual(
@@ -110,11 +111,38 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
     if (item.kind === "trifle") assert.ok(item.effect, item.id);
     if (item.kind === "bauble") assert.ok(item.description && item.crux && item.catch, item.id);
   }
+  assert.deepEqual(presentation.map((item) => item.id).sort(), items.map((item) => item.id).sort());
+  for (const canonical of items) {
+    const localized = presentation.find((item) => item.id === canonical.id);
+    for (const field of ["name", "effect", "description", "crux", "catch", "drawback"].filter((field) => canonical[field])) {
+      assert.ok(localized?.[field]?.trim(), `${canonical.id}.${field}`);
+    }
+  }
+  assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Wyrd|Huntsm(?:an|en)|Berserk|Swooned|Spooked|Gentry|Darklings|Beasts|Ogres|Wizened|Elementals|Fairest|trifles?)\b/i);
+  assert.equal(presentation.find((item) => item.id === "ctl-2ed:golden-hairnettle")?.name, "Erva de Cachinhos Dourados");
+  assert.equal(presentation.find((item) => item.id === "ctl-2ed:iou")?.name, "Nota Promissória");
+});
+
+test("apresentações pt-BR de Changeling respeitam o léxico definido", async () => {
+  const files = [
+    "../public/data/changeling/conditions-pt.json",
+    "../public/data/changeling/kiths-pt.json",
+    "../public/data/changeling/tokens-pt.json",
+  ];
+  const contracts = (await jsonFiles(new URL("../public/data/changeling/contracts/", import.meta.url)))
+    .filter((catalog) => !Array.isArray(catalog));
+  const courts = await json(new URL("../public/data/changeling/courts.json", import.meta.url));
+  const localizedCourts = courts.flatMap((court) => [court.translatedName, court.emotionPt, ...(court.mantleBenefitsPt ?? [])]);
+  const text = JSON.stringify([...(await Promise.all(files.map((file) => json(new URL(file, import.meta.url))))), ...contracts, localizedCourts]);
+
+  assert.doesNotMatch(text, /\b(?:Wyrd|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt)\b/);
+  assert.doesNotMatch(text, /\b(?:Clareza|Feição|Fratria|Máscara|Recanto)\b|Dívida Goblin|Feudos? Livres?/);
+  assert.deepEqual(courts.slice(0,4).map((court) => court.translatedName), ["Corte da Primavera","Corte do Verão","Corte do Outono","Corte do Inverno"]);
 });
 
 test("Changeling contract shards have globally unique IDs and required structural fields", async () => {
   const directory = new URL("../public/data/changeling/contracts/", import.meta.url);
-  const contracts = (await jsonFiles(directory)).flat();
+  const contracts = (await jsonFiles(directory)).filter(Array.isArray).flat();
   const ids = contracts.map((item) => item.id);
 
   assert.equal(new Set(ids).size, ids.length, "Contract IDs must be globally unique");

@@ -25,7 +25,7 @@ import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/cha
 import type { EntitlementDefinition } from "@/lib/entitlements";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
-import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, type ContractPresentationCatalog } from "@/lib/contract-presentation";
 import type { MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
@@ -44,7 +44,7 @@ type Setter<T> = (value: T) => void;
 type MissingCheck = (key: string) => boolean;
 export type ChangelingBuilderViewProps = {
   seeming: string; seemingCatalog: Record<string, SeemingDefinition | SeemingHomebrew>; setSeeming: Setter<string>; attributes: Record<string, number>;
-  contractCatalog: ContractDefinition[]; contracts: ContractSelection[]; setContracts: Setter<ContractSelection[]>;
+  contractCatalog: ContractDefinition[]; contractPresentation: ContractPresentationCatalog; contracts: ContractSelection[]; setContracts: Setter<ContractSelection[]>;
   favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
   needle: string; setNeedle: Setter<string>; thread: string; setThread: Setter<string>; touchstone: string; setTouchstone: Setter<string>;
   wyrd: number; setWyrd: Setter<number>; maximumPowerFromMerits: number; powerAdvancement: number;
@@ -184,6 +184,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           court={props.court}
           courtCatalog={props.courtCatalog}
           catalog={props.contractCatalog}
+          presentation={props.contractPresentation}
         />
       </div>
       <div className={props.missing("merits") ? "missing-field block" : ""}>
@@ -351,12 +352,12 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
   const creationChoiceOptions=creationChoice?.kind==="specialty"
     ? props.specialties.filter(item=>creationChoice.skillNames?.includes(systemTerm(item.skill,"en-US"))&&item.name.trim()).map(item=>`${systemTerm(item.skill,"en-US")}: ${item.name.trim()}`)
     : [...(creationChoice?.options??[])];
-  const filtered = allKiths.filter(
-    (item) =>
-      (skillFilter==="all"||kithSkillOptions(item).includes(skillFilter))&&
+  const filtered = allKiths.filter((item) => {
+    const presentation = kithText(item);
+    return (skillFilter==="all"||kithSkillOptions(item).includes(skillFilter))&&
       (sourceFilter==="all"||item.source===sourceFilter)&&
-      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${kithSkillOptions(item).join(" ")} ${item.skill} ${item.description} ${item.blessing} ${item.source}`).includes(normalized)),
-  );
+      (!normalized||kithSearchText(`${item.translatedName ?? ""} ${item.name} ${kithSkillOptions(item).join(" ")} ${presentation.skill} ${presentation.description} ${presentation.blessing} ${item.source}`).includes(normalized));
+  });
   const choose = (item: KithDefinition & {homebrew?:true}) => {
     if(item.id!==selected?.id)props.setKithChoice("");
     props.setKith(item.id === "chimera-book-of-seemings" ? item.id : item.name);
@@ -473,6 +474,7 @@ function ContractSelector({
   court,
   courtCatalog,
   catalog,
+  presentation,
 }: {
   contracts: ContractSelection[];
   setContracts: (value: ContractSelection[]) => void;
@@ -484,9 +486,10 @@ function ContractSelector({
   court: string;
   courtCatalog: CourtDefinition[];
   catalog: ContractDefinition[];
+  presentation: ContractPresentationCatalog;
 }) {
   const { locale, t } = useLanguage();
-  const contractName = (item: ContractDefinition | ContractSelection) => locale === "pt-BR" ? item.name : (item.originalName || item.name);
+  const contractName = (item: ContractDefinition | ContractSelection) => contractPresentation(item,locale,presentation).name;
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -595,8 +598,8 @@ function ContractSelector({
               <h3>{categoryLabel(category)} <Badge variant="outline">{items.length}</Badge></h3>
               <div>
                 {items.map((contract) => {
-                  const presented = contractPresentation(contract, locale);
-                  const summary = contractSummary(contract, locale);
+                  const presented = contractPresentation(contract, locale, presentation);
+                  const summary = contractSummary(presented, locale);
                   const displayOptions = contractDisplayOptions(presented, locale);
                   const outcomeSections = contractOutcomeSections(presented, locale);
                   const selected = contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName);
@@ -614,7 +617,7 @@ function ContractSelector({
       <div className="contract-power-list creation-contract-list">
         {contracts.map((item,index)=>{
           if(!item.name)return <article className="creation-contract-empty" key={index}><Badge variant={index<4?"secondary":"outline"}>{index<4?t("ui.common"):t("ui.royal")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
-          const presented=contractPresentation(item,locale),summary=contractSummary(item,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
+          const presented=contractPresentation(item,locale,presentation),summary=contractSummary(presented,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
           const benefit=presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
           return <details className="contract-power-card" key={`${item.id}-${index}`}>
             <summary className="contract-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?t("ui.common"):t("ui.royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
@@ -657,8 +660,8 @@ function ContractSelector({
                 </h3>
                 <div>
                   {items.map((contract) => {
-                    const presented = contractPresentation(contract, locale);
-                    const summary = contractSummary(contract, locale);
+                    const presented = contractPresentation(contract, locale, presentation);
+                    const summary = contractSummary(presented, locale);
                     const displayOptions = contractDisplayOptions(presented, locale);
                     const outcomeSections = contractOutcomeSections(presented, locale);
                     const selected = contracts.some(

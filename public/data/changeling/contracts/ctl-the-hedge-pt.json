@@ -1,0 +1,18 @@
+{
+  "ctl-the-hedge:distill-the-hidden": {
+    "name": "Destilar o Oculto",
+    "description": "O personagem transforma uma lembrança pessoalmente significativa de um alvo voluntário num tipo escolhido de objeto físico. O objeto é permanente, mas pode ser perdido, quebrado, consumido, armazenado, negociado ou usado como ingrediente. O alvo esquece o acontecimento; outro participante relevante sofre Devastado ou outro efeito apropriado.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Permanente",
+    "loophole": "O criador também estava presente no acontecimento. Ele recebe Confuso por perder a experiência e esquece o próprio papel nela, mas recorda o que o objeto característico contém."
+  },
+  "ctl-the-hedge:wyrd-debt": {
+    "name": "Dívida do Fado",
+    "description": "Depois de pedir três vezes que alguém pague uma dívida, o personagem invoca o Fado. O alvo recebe uma Condição escolhida entre Amnésia, Bestial, Cego, Delirante, Agressor dos Sonhos, Fatigado, Viciado em Glamour, Caçado, Letárgico, Loucura, Mudo ou Paranoico; sua resolução passa a ser o pagamento da dívida, em vez da resolução normal.",
+    "dicePool": "Presença + Intimidação + Fado − Compostura",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "O personagem fez o pedido ao alvo em três ocasiões distintas."
+  }
+}

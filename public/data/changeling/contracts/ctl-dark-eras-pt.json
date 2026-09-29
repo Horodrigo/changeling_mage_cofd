@@ -1,0 +1,26 @@
+{
+  "ctl-dark-eras:draw-likeness": {
+    "name": "Retratar o Procurado",
+    "description": "O changeling nomeia um criminoso marcado, um crime específico ou um tipo geral de crime e desenha a aparência do alvo em qualquer superfície plana que possa ser riscada com grafite. Para um crime geral, o alvo é a pessoa mais próxima que o tenha cometido no último mês lunar; se não houver tal alvo, o Contrato falha.",
+    "dicePool": "Raciocínio + Investigação + Manto contra Compostura + Fado",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Comparar a imagem com o rosto do alvo torna-se uma ação de rotina, e cada pessoa que a examina pela primeira vez recebe gratuitamente uma Pista sobre o paradeiro ou a atividade recente do alvo.",
+    "exceptionalSuccess": "Os observadores recordam imediatamente quando e onde viram o alvo pela última vez, sujeito a um Choque de Vontades contra efeitos que suprimam a lembrança. A imagem sugere o futuro paradeiro ou atividade do alvo e concede Informado a respeito do criminoso.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo pretendido descobre que o changeling o está caçando e recebe informações sobre ele como se fosse o alvo do Contrato e tivesse obtido um sucesso excepcional.",
+    "loophole": "Uma vítima de um dos crimes do alvo descreveu-o ao changeling durante esta cena."
+  },
+  "ctl-dark-eras:peacemakers-draw": {
+    "name": "Saque do Pacificador",
+    "description": "O changeling pode invocar este Contrato em qualquer ponto da ordem de Iniciativa, até interrompendo outro turno. Ele prepara reflexivamente uma arma de ataque à distância ou cria uma arma comum de Glamour e saliva, e pode invocá-lo repetidas vezes no mesmo turno enquanto tiver munição e Glamour. Cada invocação conta como um ataque e ignora cobertura por meio de ricochetes impossíveis.",
+    "dicePool": "Destreza + (Armas de Fogo ou Atletismo) + Manto contra Vigor + Fado",
+    "action": "Reflexiva e disputada",
+    "duration": "Instantânea",
+    "success": "O changeling derruba um item do alvo sem causar dano, exigindo uma ação instantânea para recuperá-lo; alternativamente, impõe uma Inclinação Pessoal apropriada que o alvo possa remediar com uma ação instantânea. O alvo também recebe Coagido em relação às testemunhas que não sejam o changeling.",
+    "exceptionalSuccess": "O changeling escolhe onde o item desalojado cai. Qualquer Inclinação Pessoal imposta dura pela cena.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O Contrato falha, e o changeling não pode usá-lo novamente nesta cena.",
+    "loophole": "O alvo rompeu um impasse com o changeling no último turno."
+  }
+}

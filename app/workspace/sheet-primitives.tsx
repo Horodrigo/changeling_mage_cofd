@@ -5,7 +5,7 @@ import { systemTerm } from "@/lib/system-terms";
 import { normalizeDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
 import { RuleSelect } from "./rule-select";
 
-function damageLabel(value:DamageLevel|undefined){return value==="bashing"?"contundente":value==="lethal"?"letal":value==="aggravated"?"agravado":"vazio";}
+function damageLabel(value:DamageLevel|undefined){return value==="bashing"?"contusivo":value==="lethal"?"letal":value==="aggravated"?"agravado":"vazio";}
 
 export function pretty(value:string){return value.replace(/([A-Z])/g," $1").replace(/_/g," ").trim();}
 export function stringList(value:unknown){return Array.isArray(value)?value.map(String):[];}

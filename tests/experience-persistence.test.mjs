@@ -10,6 +10,7 @@ after(() => vite.close());
 const power = await vite.ssrLoadModule("/lib/power-progression.ts");
 const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
+const changelingExperience = await vite.ssrLoadModule("/game-lines/changeling/experience-shared.tsx");
 const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
 const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
@@ -37,6 +38,13 @@ test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", 
     { value: "Wisdom", label: "Wisdom", group: "Integridade e Recuperação" },
     { value: "Rote", label: "Rote", group: "Poderes Adquiridos" },
   ]);
+});
+
+test("Changeling usa IDs estáveis nas compras e traduz apenas a apresentação", () => {
+  const character = { attributes: { Strength: 2 }, skills: { Athletics: 1 }, derived: { ForçaDeVontade: 4 } };
+  const base = { locale: "pt-BR", character, attribute: "Strength", skill: "Athletics", specialtySkill: "Athletics", specialtyName: "", wyrd: 2, lostWillpower: 1, targetRating: 3 };
+  assert.deepEqual(changelingExperience.purchasePreview({ ...base, purchaseType: "attribute" }), { label: "Força 3", cost: 4 });
+  assert.deepEqual(changelingExperience.purchasePreview({ ...base, locale: "en-US", purchaseType: "wyrd" }), { label: "Wyrd 3", cost: 5 });
 });
 
 test("avanços da criação viram Experiência gasta sem exigir saldo prévio", () => {

@@ -47,6 +47,13 @@ const isCatalog = (node) => {
     return calls.length >= 2;
   }
   if (node.type !== "ObjectExpression") return false;
+  const idTextEntries = node.properties.filter((property) =>
+    property.type === "Property"
+    && /^[a-z0-9-]+(?::[a-z0-9-]+)+$/.test(propertyName(property))
+    && unwrap(property.value)?.type === "Literal"
+    && typeof unwrap(property.value).value === "string",
+  );
+  if (idTextEntries.length >= 5) return true;
   if (isRecord(node) && ["source", "sourceId", "page"].some((key) => objectKeys(node).has(key))) return true;
   const values = node.properties
     .filter((property) => property.type === "Property")

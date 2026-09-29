@@ -19,6 +19,8 @@ test("all six official Seemings and Grimm provide complete Portuguese and Englis
     assert.ok(seeming.curseEn,`${name}: English curse`);
     assert.ok(seeming.regalia,`${name}: Regalia`);
     assert.ok(seeming.favored,`${name}: favored Attribute category`);
+    assert.match(seeming.blessing,/^Receba um ponto adicional em um Atributo/,`${name}: complete Portuguese blessing`);
+    assert.match(seeming.curse,/arredondada para cima/,`${name}: complete Portuguese curse`);
   }
 });
 

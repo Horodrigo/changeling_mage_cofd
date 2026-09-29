@@ -1,0 +1,842 @@
+{
+  "ctl-kith-and-kin:filling-the-cup": {
+    "name": "Encher o Cálice",
+    "description": "O changeling identifica pessoas que estejam sentindo emoções intensas em um raio de Fado × 40 metros, descobrindo a direção, a distância aproximada e se cada emoção é positiva ou negativa. Ele também percebe automaticamente qualquer Desvario incitado dentro desse alcance.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até o changeling recuperar Glamour, o que ocorrer primeiro",
+    "loophole": "Ao invocar o Contrato, o changeling declara publicamente sua emoção mais forte no momento e a causa ou o objeto dela.",
+    "seemingBenefits": {
+      "Beast": "Depois de identificar anteriormente as emoções de uma pessoa conhecida com este ou outro poder pertinente, a Fera consegue reconhecê-la novamente à distância pelo cheiro de seus sentimentos.",
+      "Fairest": "O Belíssimo consegue distinguir as pessoas no alcance que sentem uma emoção intensa relacionada a ele, embora descubra a emoção, e não a identidade da pessoa."
+    }
+  },
+  "ctl-kith-and-kin:frail-as-the-dying-word": {
+    "name": "Frágil como o Último Suspiro",
+    "description": "Ao tocar o alvo, o changeling engana o Fado para que aplique a ele uma das próprias Fragilidades.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo adquire uma das Fragilidades menores do changeling. Se já a possuir, ela se torna maior durante o efeito; um alvo que já sofra sua versão maior não é afetado. O changeling conserva a Fragilidade.",
+    "exceptionalSuccess": "Em vez disso, o changeling pode infligir uma Fragilidade maior ou duas Fragilidades menores. Ferro conta como maior.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O Fado inflige ao changeling uma nova Fragilidade maior pela cena.",
+    "loophole": "O changeling sofreu os efeitos da Fragilidade escolhida durante a mesma cena.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode infligir uma Fragilidade pertencente a qualquer ser Fae presente, em vez de uma das suas.",
+      "Darkling": "Por +1 de Glamour, o Trevoso transfere a Fragilidade em vez de compartilhá-la, perdendo-a durante o efeito. Isso não pode transferir sua perdição por ferro."
+    }
+  },
+  "ctl-kith-and-kin:sleeps-sweet-embrace": {
+    "name": "Doce Abraço do Sono",
+    "description": "O changeling toca o alvo e substitui seus sonhos por um sono restaurador e sem sonhos. A invocação só é resistida se o alvo não estiver disposto.",
+    "dicePool": "Manipulação + Expressão + Fado − Perseverança",
+    "action": "Instantânea ou resistida",
+    "duration": "Um número de dias igual aos sucessos",
+    "success": "Sempre que dormir durante o efeito, o alvo cura 1 ponto de dano letal por hora, mas não recupera Força de Vontade com o descanso. Ele não possui Bastião e não pode ser afetado por oniromancia nem magia dos sonhos. Uma duração superior a dois dias causa Dissociação até que ele recupere toda a Força de Vontade após o fim do Contrato.",
+    "exceptionalSuccess": "O alvo só sofre Dissociação se o efeito durar mais de três dias.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Na próxima vez que dormir, o changeling não consegue meditar, entrar pelo Portal de Marfim nem sonhar. Ele sofre as desvantagens do Contrato por uma noite, sem receber sua cura.",
+    "loophole": "Durante a mesma cena, o changeling convence ou força o alvo a consumir por completo uma bebida preparada para induzir o sono.",
+    "seemingBenefits": {
+      "Beast": "A Fera acrescenta dois dias à duração do Contrato.",
+      "Darkling": "Enquanto dorme, o alvo do Trevoso parece ter morrido recentemente em qualquer exame mundano; detecção sobrenatural provoca um Choque de Vontades."
+    }
+  },
+  "ctl-kith-and-kin:curses-cure": {
+    "name": "Cura da Maldição",
+    "description": "O changeling mistura o sangue do alvo, ervas da Sebe, sua saliva e vinho para produzir uma dose completa de antídoto destinada a uma única vítima envenenada.",
+    "dicePool": "Inteligência + Medicina + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Beber a dose inteira reduz à metade o tempo de recuperação de um veneno ou torna um veneno letal sobrevivível. Condições relacionadas desaparecem sem serem resolvidas. Veneno sobrenatural exige um Choque de Vontades.",
+    "exceptionalSuccess": "O veneno é curado completa e imediatamente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling envenena a si mesmo e recebe Fatigado, que se torna a Inclinação Envenenado moderada em cenas de ação.",
+    "loophole": "O changeling prova a mesma toxina durante a cena; o Contrato não o protege dessa exposição.",
+    "seemingBenefits": {
+      "Beast": "Durante o capítulo, a Fera pode morder um oponente agarrado como uma ação de agarramento exclusiva para infligir Envenenado moderado.",
+      "Wizened": "Em vez disso, o Mirrado pode reduzir a gravidade de uma doença ou encerrar os efeitos de uma droga; Condições relacionadas desaparecem sem serem resolvidas."
+    }
+  },
+  "ctl-kith-and-kin:dreamers-phalanx": {
+    "name": "Falange dos Sonhadores",
+    "description": "Pessoas adormecidas e dispostas, em contato físico, entram em um sonho compartilhado cujos Bastiões distintos contam como um só para a oniromancia. Cada uma recebe +1 de Fortificação por participante, até +5, contra intrusos; trabalho em equipe nos Bastiões vinculados recebe 8-novamente, e mudanças de local podem mover os alvos entre Bastiões. Despertar alguém à força por magia destrói todos os Bastiões vinculados.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo ou até todos os participantes despertarem",
+    "loophole": "Todos os participantes pertencem ao mesmo juramento firmado, inclusive um juramento feito para esse fim durante a mesma cena.",
+    "seemingBenefits": {
+      "Beast": "Todos os participantes recebem +2 em ações disputadas por um Onirompo externo que invada qualquer Bastião vinculado.",
+      "Wizened": "O trabalho em equipe entre os participantes também obtém sucesso excepcional com três sucessos."
+    }
+  },
+  "ctl-kith-and-kin:closing-deaths-door": {
+    "name": "Fechar a Porta da Morte",
+    "description": "Com um gesto íntimo, o changeling tenta devolver à vida um personagem morto recentemente.",
+    "dicePool": "Manipulação + Empatia + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Um personagem morto há no máximo um capítulo retorna com todas as caixas de Vitalidade preenchidas por dano agravado, exceto a caixa intacta mais à direita. O changeling adquire Débito Goblin igual ao número de horas desde a morte, no mínimo 1 e sujeita ao máximo habitual.",
+    "exceptionalSuccess": "O Contrato pode reviver alguém que tenha morrido em qualquer momento da história atual; caso contrário, um alvo morto há mais de um capítulo não pode ser revivido.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O cadáver se torna uma marionete irracional com uma caixa de Vitalidade, sem Força de Vontade e com todas as paradas de dados iguais ao Fado do changeling.",
+    "loophole": "A pessoa falecida é a Touchstone do changeling, alguém Tocado por Fae prometido a ele ou alguém ligado a ele por um juramento pessoal.",
+    "seemingBenefits": {
+      "Fairest": "O personagem revivido recebe Enamorado em relação ao Belíssimo.",
+      "Darkling": "O Trevoso vivencia brevemente os momentos finais da pessoa falecida pelo ponto de vista dela."
+    }
+  },
+  "ctl-kith-and-kin:feast-of-plenty": {
+    "name": "Banquete da Fartura",
+    "description": "O changeling oferece publicamente a todos os presentes comida, bebida, remédios ou confortos semelhantes que lhe foram dados livremente.",
+    "dicePool": "Presença + Socialização + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "O Contrato cria alimento ou remédio apropriado em quantidade suficiente para todos os presentes. Um participante disposto remove uma Condição física não Persistente ou uma Inclinação Pessoal física e recupera Força de Vontade igual à metade dos sucessos, arredondada para cima, mas recebe Endividado em relação ao changeling. O changeling não pode se beneficiar do próprio banquete.",
+    "exceptionalSuccess": "Endividado torna-se Persistente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Notoriedade.",
+    "loophole": "Durante a cena, o changeling cumprimenta todos os presentes pelo nome com um gesto, descobrindo e usando antes da invocação quaisquer nomes que ainda não conheça.",
+    "seemingBenefits": {
+      "Elemental": "Todos que percebem o banquete disputam com Compostura + Fado ou são compelidos a participar.",
+      "Ogre": "Os participantes recebem +1 de Defesa pelo restante do capítulo."
+    }
+  },
+  "ctl-kith-and-kin:still-waters-run-deep": {
+    "name": "Águas Tranquilas São Profundas",
+    "description": "O alvo observa a respiração serena do changeling enquanto ele suprime tanto sua agitação emocional quanto sua alegria.",
+    "dicePool": "Manipulação + Subterfúgio + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Suprima um número de Condições emocionais igual aos sucessos, inclusive Condições de Lucidez e Desvario. Seus efeitos, resoluções e Beats ficam suspensos, e o alvo não pode adquirir novas Condições emocionais, tecer a Sebe, tecer sonhos, incitar Desvario nem colher Glamour de seres vivos durante a cena.",
+    "exceptionalSuccess": "Sucessos adicionais apenas aumentam o número de Condições suprimidas.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe uma Condição prejudicial suprimida do alvo ou Desmoralizado, à escolha do Narrador, e deve resolvê-la normalmente.",
+    "loophole": "Durante a cena, o changeling escreve ao menos um parágrafo sobre seu estado emocional atual e o sela em uma garrafa.",
+    "seemingBenefits": {
+      "Wizened": "O Mirrado pode suprimir Condições puramente mentais, além das emocionais.",
+      "Ogre": "O Ogro pode resolver uma Condição temporária suprimida durante o efeito e recebe seu Beat de resolução no lugar do alvo."
+    }
+  },
+  "ctl-kith-and-kin:poison-the-well": {
+    "name": "Envenenar o Poço",
+    "description": "O changeling envenena a relação do alvo com o tema de um Mérito Social.",
+    "dicePool": "Manipulação + Expressão + Fado − Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "Um Mérito Social mundano fica inacessível, e seu tema passa a prejudicar ativamente o alvo. Na Sebe, um Mérito de conexão específico de changeling que seja elegível pode continuar disponível, mas inflige Débito Goblin igual ao seu nível a cada uso; isso conta como tecer a Sebe sem a penalidade de invocação habitual.",
+    "exceptionalSuccess": "O alvo também recebe Notoriedade.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling envenena as próprias conexões mais importantes, desvinculando uma Touchstone de sua trilha de Lucidez pelo capítulo.",
+    "loophole": "Durante a cena, o changeling interage pessoalmente com o tema do Mérito para provocar conflito ou sabotar o recurso.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo obtém acesso ao Mérito envenenado durante o efeito do Contrato.",
+      "Elemental": "Quando o Contrato termina, o Mérito do alvo retorna à razão de um ponto por cena, em vez de voltar imediatamente."
+    }
+  },
+  "ctl-kith-and-kin:shared-cup": {
+    "name": "Cálice Compartilhado",
+    "description": "O changeling divide igualmente uma bebida ou refeição com um grupo, criando um vínculo emocional sobrenatural entre participantes dispostos ou desavisados.",
+    "dicePool": "Presença + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Instantânea ou disputada",
+    "duration": "Um capítulo",
+    "success": "Vincule um número de participantes igual aos sucessos, incluindo o changeling. Suas impressões Sociais melhoram em um nível, e eles sofrem −3 para disputar as ações Sociais uns dos outros. Condições emocionais, Inclinações Pessoais, Força de Vontade recuperada e Glamour recuperado propagam-se pelo grupo; participantes sem Fado recebem Inspirado em vez de Glamour. Tecer a Sebe e Desvario obtêm sucesso excepcional com três sucessos.",
+    "exceptionalSuccess": "Sucessos adicionais aumentam o número máximo de participantes.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling incita Desvario involuntariamente em todos os participantes, sem rolagem.",
+    "loophole": "Durante a cena da refeição compartilhada, o changeling coleta sangue, cabelo, aparas de unha ou outra parte do corpo de cada participante.",
+    "seemingBenefits": {
+      "Darkling": "Ao pagar ● quando um efeito compartilhado fosse ocorrer, o Trevoso pode se excluir brevemente desse efeito e de todos os efeitos passivos; os outros podem perceber isso com Raciocínio + Compostura, disputado por Raciocínio + Fado do Trevoso.",
+      "Fairest": "Todos os demais participantes recebem Enamorado em relação ao Belíssimo no momento da invocação."
+    }
+  },
+  "ctl-kith-and-kin:book-of-black-and-red": {
+    "name": "Livro do Preto e do Vermelho",
+    "description": "O changeling descobre as cinco dívidas e obrigações juramentadas, mundanas ou sobrenaturais, mais importantes que pesam sobre um alvo visível, inclusive sua Débito Goblin. Explorar esse conhecimento durante o capítulo concede +2 e dá ao alvo Coagido em relação a ela.",
+    "dicePool": "Raciocínio + Erudição + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Descubra as cinco dívidas e obrigações mais importantes do alvo e o total de sua Débito Goblin.",
+    "exceptionalSuccess": "Descubra também o credor, a origem e o obstáculo ao pagamento de cada dívida.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling adquire 1 ponto de Débito Goblin.",
+    "loophole": "O alvo permitiu que o changeling examinasse seus registros ou contas durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode se interpor em uma dívida que não seja Goblin nem de promessa: o alvo passa a dever a ele, enquanto ele deve ao credor original; não pagar concede a ele Quebrador de Juramento.",
+      "Wizened": "O Mirrado precisa de apenas três sucessos para obter um sucesso excepcional ao explorar esse conhecimento."
+    }
+  },
+  "ctl-kith-and-kin:give-and-take": {
+    "name": "Dar e Receber",
+    "description": "Com consentimento, troque até metade do Fado do changeling em pontos entre categorias diferentes de Glamour, Força de Vontade, moeda social ou pontos de Méritos em escala pessoal. Trocas de Méritos duram uma cena, exigem os pré-requisitos, não podem afetar Méritos em escala mundial e não podem trocar um Mérito por outro.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea, ou uma cena para Méritos",
+    "loophole": "As partes trocam permanentemente presentes físicos novos de valor ou significado equivalentes.",
+    "seemingBenefits": {
+      "Ogre": "O Ogro pode trocar pontos de dano leve de Lucidez.",
+      "Wizened": "A troca não precisa ser equivalente, mas cada parte deve contribuir consensualmente com pelo menos um ponto."
+    }
+  },
+  "ctl-kith-and-kin:beggar-knight": {
+    "name": "Cavaleiro Mendigo",
+    "description": "O changeling amaldiçoa alguém que consiga ouvi-la e compreendê-la para que se beneficie apenas das coisas que ele próprio fabricar.",
+    "dicePool": "Manipulação + Erudição + Fado − Compostura",
+    "action": "Instantânea",
+    "duration": "Um capítulo por sucesso",
+    "success": "A vítima não recebe bônus de equipamento, dano ou armadura de itens que não tenha fabricado; falhas ao usá-los tornam-se dramáticas sem conceder um Beat. Ela perde Recursos criados externamente e não pode receber bônus de trabalho em equipe.",
+    "exceptionalSuccess": "Os sucessos da invocação também se tornam um ataque imediato de Lucidez ou uma penalidade de ponto de ruptura para um alvo sem Lucidez.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Pelo capítulo, o changeling perde seus Recursos para o alvo e assume 1 ponto da Débito Goblin dele, caso exista.",
+    "loophole": "Durante a cena, a vítima se beneficiou diretamente do trabalho de outra pessoa, em vez do próprio.",
+    "seemingBenefits": {
+      "Elemental": "As posses mundanas que a vítima não fabricou se deterioram até serem transferidas permanentemente e se desintegram caso sejam devolvidas.",
+      "Wizened": "A maldição também nega a outras pessoas os Recursos produzidos pelo trabalho construtivo da vítima até que a participação dela termine."
+    }
+  },
+  "ctl-kith-and-kin:coin-mark": {
+    "name": "Marca da Moeda",
+    "description": "O changeling encanta uma moeda, cédula, presente ou outro objeto negociado. Ela sempre sabe sua direção e distância e descobre a identidade de cada novo proprietário e o preço da transação. Depois de interagir com o proprietário, pode gastar ● para infligir Avareza.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma história",
+    "loophole": "O changeling marca permanentemente seu nome no objeto.",
+    "seemingBenefits": {
+      "Beast": "A Fera pode infligir Apreensivo em relação ao objeto, em vez de Avareza.",
+      "Wizened": "O Mirrado pode estalar os dedos reflexivamente para fazer o objeto retornar imediatamente à sua posse."
+    }
+  },
+  "ctl-kith-and-kin:grease-the-wheels": {
+    "name": "Lubrificar as Engrenagens",
+    "description": "A interação direta com o funcionário correto faz com que um resultado administrativo ou burocrático normalmente disponível seja resolvido a favor do changeling em um décimo do tempo habitual, sem escrutínio nem burocracia.",
+    "dicePool": "Presença + Persuasão + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "O processo administrativo é resolvido favoravelmente em um décimo do tempo normal, desde que a organização normalmente pudesse produzir esse resultado.",
+    "exceptionalSuccess": "O processo é resolvido de imediato e favoravelmente, apesar da total improbabilidade.",
+    "failure": "O processo segue normalmente.",
+    "dramaticFailure": "A questão fica irremediavelmente paralisada ao menos pelo restante da história.",
+    "loophole": "O funcionário aceita um suborno ou presente do changeling durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "A interação do Trevoso não deixa vestígio, exceto quando isso lhe for útil.",
+      "Fairest": "O Belíssimo recebe Conectado em relação à organização."
+    }
+  },
+  "ctl-kith-and-kin:blood-debt": {
+    "name": "Dívida de Sangue",
+    "description": "Sempre que alguém inflige dano letal ou agravado de Vitalidade, ou dano leve ou severo de Lucidez, ao changeling, o agressor sofre 1 ponto de dano letal que ignora armadura. Acrescente 1 ponto de dano para cada um destes efeitos: causar perda de Força de Vontade, causar perda de Glamour e infligir uma Condição ou Inclinação.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Uma joia ou outro adorno corta ou perfura o changeling pouco antes, durante a cena.",
+    "seemingBenefits": {
+      "Elemental": "A retaliação do Elemental começa com 2 pontos de dano letal.",
+      "Ogre": "Enquanto estiver consciente, o Ogro pode retaliar contra o dano infligido a seus aliados, em vez do dano causado a ele."
+    }
+  },
+  "ctl-kith-and-kin:exchange-of-gilded-contracts": {
+    "name": "Troca de Contratos Dourados",
+    "description": "Com o consentimento de outro changeling, tome emprestado um Contrato Comum que ele conheça. Quem toma emprestado recebe apenas os benefícios de sua própria Feição e não pode usar a Brecha do Contrato; quem o empresta perde o acesso e recebe temporariamente Troca de Contratos Dourados, que só pode encerrar a troca reflexivamente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até um capítulo",
+    "loophole": "Durante a cena, cada parte usa uma máscara convincente da outra.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode explorar a Brecha do Contrato tomado emprestado.",
+      "Ogre": "O Ogro conserva o Contrato tomado emprestado até o fim do capítulo mesmo que ele seja retomado, mas perde sua Brecha depois disso."
+    }
+  },
+  "ctl-kith-and-kin:golden-promise": {
+    "name": "Promessa Dourada",
+    "description": "O changeling projeta uma riqueza impossível para reduzir a Disponibilidade de um serviço viável que deseje obter.",
+    "dicePool": "Presença + Socialização + Fado − Disponibilidade",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Reduza a Disponibilidade de um serviço em um número igual aos sucessos, possivelmente até zero; invocações repetidas podem reduzi-la ainda mais, e nenhuma recompensa adicional é exigida além da Disponibilidade reduzida.",
+    "exceptionalSuccess": "O changeling também recebe Conectado em relação ao fornecedor.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A encenação é desmascarada, e ela recebe Notoriedade.",
+    "loophole": "O changeling chega exibindo riqueza ostensiva e a ostenta abertamente.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode dividir os sucessos entre vários serviços na cena.",
+      "Wizened": "O Mirrado acrescenta +1 ao bônus de equipamento do serviço adquirido."
+    }
+  },
+  "ctl-kith-and-kin:grand-revel-of-the-harvest": {
+    "name": "Grande Folia da Colheita",
+    "description": "Pela cena, todos que celebrarem deliberadamente, exceto o changeling, obtêm sucesso excepcional em rolagens Sociais com três sucessos e melhoram as impressões Sociais em um nível. Até o fim do capítulo, os personagens afetados recuperam +1 de Força de Vontade, curam +1 ponto de dano de Vitalidade ou Lucidez do mesmo tipo e acrescentam +1 de bônus de equipamento aos ganhos inesperados que adquirirem.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "O changeling oferece um banquete a todos os presentes e participa visivelmente de cada folia.",
+    "seemingBenefits": {
+      "Beast": "Os festeiros recebem +2 em rolagens Físicas para competições mútuas e entretenimento físico durante a cena.",
+      "Fairest": "As impressões Sociais melhoram dois níveis, em vez de um."
+    }
+  },
+  "ctl-kith-and-kin:thirty-pieces": {
+    "name": "Trinta Moedas",
+    "description": "O changeling implanta uma ordem para cometer uma traição genuína, imediatamente ou quando ocorrer um gatilho antes do fim da história. Ela não pode compelir automutilação nem um ato que não seja traiçoeiro, e uma nova invocação substitui outra que esteja pendente.",
+    "dicePool": "Raciocínio + Empatia + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea",
+    "duration": "Até ser acionado ou a história terminar",
+    "success": "O alvo comete a traição especificada quando for apropriado e recebe Culpado.",
+    "exceptionalSuccess": "O alvo também recebe Fuga depois da traição.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Antes do fim do capítulo, alguém conhecido pelo Retalho os trai, e o changeling recebe uma Condição prejudicial apropriada.",
+    "loophole": "Durante a história, o alvo aceitou o pagamento do changeling para trair seus companheiros, mesmo sem a intenção de cumprir o acordo.",
+    "seemingBenefits": {
+      "Darkling": "Depois da traição, o alvo também recebe Notoriedade e fica isolado daqueles que traiu.",
+      "Elemental": "As salvaguardas que poderiam impedir a traição falham; por exemplo, um ataque traiçoeiro recebe surpresa."
+    }
+  },
+  "ctl-kith-and-kin:burning-ambition": {
+    "name": "Ambição Ardente",
+    "description": "Depois de tomar algo sem permissão, o changeling recebe uma Aspiração adicional que reflete aquilo ou aquele que mais deseja. Cumpri-la concede um Beat, restaura Força de Vontade igual à metade do Fado e inflige Competitivo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até a Aspiração ser cumprida",
+    "loophole": "Durante a cena, ela queima por completo um símbolo de uma obrigação que deve a outra pessoa.",
+    "seemingBenefits": {
+      "Beast": "Se a Fera consumir o objeto de seu desejo, cumprir a Aspiração restaura toda a Força de Vontade.",
+      "Fairest": "Se o objeto for um personagem, cumprir a Aspiração dá a ele Enamorado em relação ao Belíssimo."
+    }
+  },
+  "ctl-kith-and-kin:jealous-vengeance": {
+    "name": "Vingança Invejosa",
+    "description": "O changeling nomeia alguém que esteja impedindo seu desejo e lança um ultimato: saia do caminho ou sofra uma maldição.",
+    "dicePool": "Presença + Intimidação + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "A menos que o alvo faça tudo ao seu alcance para sair do caminho durante o capítulo, inflija Cego (temporário), Bestial, Segredo Constrangedor, Culpado, Coagido, Letárgico, Paranoico, Devastado, Imprudente ou Assombrado. A Condição não pode ser resolvida até que o alvo supere o changeling em uma disputa.",
+    "exceptionalSuccess": "Inflija duas das Condições listadas.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Notoriedade.",
+    "loophole": "Durante a cena, o alvo recebeu Quebrador de Juramento por causa do changeling.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental também pode escolher Mudo, e Cego torna-se Persistente.",
+      "Ogre": "O Ogro obtém sucesso excepcional com três sucessos."
+    }
+  },
+  "ctl-kith-and-kin:litany-of-rivals": {
+    "name": "Litania dos Rivais",
+    "description": "O changeling nomeia uma Aspiração e interroga água parada sobre as pessoas que se opõem a ela de forma mais imediata ou perigosa.",
+    "dicePool": "Inteligência + Ocultismo + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Para cada sucesso, descubra um novo detalhe sobre um rival pertinente: nome, rosto, localização, uma Fragilidade ou fraqueza, ou o nome ou rosto de um aliado próximo. As respostas podem tratar de rivais diferentes.",
+    "exceptionalSuccess": "Sucessos adicionais fornecem respostas adicionais.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo pretendido descobre a tentativa e que o changeling o considera um rival.",
+    "loophole": "Durante a cena, o changeling faz uma birra diante de alguém que não pertença a seu Retalho.",
+    "seemingBenefits": {
+      "Beast": "Por +1 de Glamour ao descobrir uma localização, a Fera pode rastreá-la pelo capítulo.",
+      "Ogre": "Ao descobrir um nome ou rosto, o Ogro pode testar Manipulação + Intimidação contra Perseverança + Empatia para infligir Paranoico."
+    }
+  },
+  "ctl-kith-and-kin:knights-oath": {
+    "name": "Juramento do Cavaleiro",
+    "description": "Uma pessoa disposta que não seja changeling é nomeada cavaleiro em uma cerimônia e acrescenta metade do Fado à Iniciativa e à Defesa enquanto perceber o changeling, bem como a ações Sociais realizadas em nome dele. Desobediência ou traição inflige Acovardado e alerta o changeling.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "O changeling unge o cavaleiro com sangue proveniente de pelo menos 1 ponto de dano letal que infligiu a si mesmo durante a cena.",
+    "seemingBenefits": {
+      "Darkling": "Em caso de traição, o Trevoso também descobre exatamente quando e onde ela ocorreu, bem como as emoções do cavaleiro.",
+      "Fairest": "O Belíssimo pode nomear até Fado alvos cavaleiros com uma invocação, realizando o gesto para cada um."
+    }
+  },
+  "ctl-kith-and-kin:unmask-the-dark-horse": {
+    "name": "Desmascarar o Azarão",
+    "description": "O changeling desafia publicamente um rival e pode pagar +1 de Glamour para substituir uma de suas Aspirações por outra que se oponha diretamente à do alvo.",
+    "dicePool": "Presença + Persuasão + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "Descubra uma Aspiração de curto prazo e inflija Competitivo, que não pode ser resolvido até o alvo derrotar o changeling em uma disputa ou luta.",
+    "exceptionalSuccess": "Descubra todas as Aspirações do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Frenético.",
+    "loophole": "Faça o desafio diante de uma grande multidão que contenha alguém amado, um amigo ou um colega do alvo.",
+    "seemingBenefits": {
+      "Fairest": "O desafio e a competição resultante são transmitidos sobrenaturalmente ao vivo em um raio de oito quilômetros.",
+      "Beast": "Derrotar o alvo durante o efeito inflige Notoriedade."
+    }
+  },
+  "ctl-kith-and-kin:a-benevolent-hand": {
+    "name": "Uma Mão Benevolente",
+    "description": "Depois de fazer um gesto que beneficie outra pessoa sem ajudar a si mesmo, o changeling melhora as primeiras impressões com todos que conhecer durante o capítulo, até o nível perfeito. Ações Sociais bem-sucedidas podem conceder pontos temporários de Aliados, até cinco.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "O changeling abre mão de algo importante ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Elemental": "Cada sucesso qualificado concede 2 pontos de Aliados, em vez de 1.",
+      "Wizened": "Em vez disso, o Mirrado recebe um ponto temporário separado de Recursos, até cinco."
+    }
+  },
+  "ctl-kith-and-kin:fake-it-til-you-make-it": {
+    "name": "Finja até Conseguir",
+    "description": "Uma proclamação altera a realidade mundana em um raio de 10 metros, como ao tecer a Sebe. Gaste sucessos em mudanças sutis por +2 cada; o cenário não resiste, personagens resistem, e o efeito não pode aniquilar alguém instantaneamente. A invocação causa um ponto de ruptura com quatro dados.",
+    "dicePool": "Presença + Persuasão + Fado − Perseverança",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "Aplique as mudanças temporárias compradas que sejam coerentes com o teor emocional da proclamação.",
+    "exceptionalSuccess": "Por +1 de Glamour e +1 FdV, os sucessos também podem comprar mudanças sutis ou de paradigma.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Incite Desvario em todos os presentes, inclusive o changeling.",
+    "loophole": "Aponte e declame com um cetro verdadeiro.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo dá a uma testemunha uma Condição temporária Delirante, resolvida ao aceitar uma de suas mentiras.",
+      "Wizened": "Mudanças que afetem objetos inanimados ou estruturas fabricados por humanos custam 2 sucessos a menos."
+    }
+  },
+  "ctl-kith-and-kin:tempters-quest": {
+    "name": "Missão do Tentador",
+    "description": "Designe uma missão clara e realizável que não dure mais que uma história e prometa uma recompensa que avance a Aspiração mais importante do alvo.",
+    "dicePool": "Presença + Persuasão + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma história",
+    "success": "O alvo recebe Obsessão Persistente, substitui uma Aspiração pela missão e não pode recuperar Força de Vontade por meio de Âncoras após um capítulo sem progresso. Negar a recompensa conquistada dá ao changeling Coagido e o marca como Quebrador de Juramento.",
+    "exceptionalSuccess": "Uma sessão sem progresso também inflige Letárgico.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre as consequências de quebrar o acordo, embora não tenha designado missão alguma.",
+    "loophole": "Dê a quem recebe a missão uma provisão de valor prático significativo para realizá-la.",
+    "seemingBenefits": {
+      "Darkling": "Depois de quebrar o acordo, o Trevoso pode gastar FdV e vencer Manipulação + Furto + Fado contra Perseverança + Fado para transferir as consequências a uma testemunha informada.",
+      "Fairest": "O Belíssimo pode designar a mesma missão a até metade do Fado em alvos, oferecendo recompensas proporcionais."
+    }
+  },
+  "ctl-kith-and-kin:curse-of-hidden-strings": {
+    "name": "Maldição dos Fios Ocultos",
+    "description": "Destrua um item que contenha a assinatura do alvo e escolha uma obrigação documentada que o changeling conheça, além de uma ação benéfica relacionada capaz de romper a maldição.",
+    "dicePool": "Manipulação + Furto + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo esquece seu envolvimento, mas continua vinculado. A ação definida encerra a maldição e revela a obrigação e o culpado; o término normal restaura a memória sem identificar o changeling.",
+    "exceptionalSuccess": "A duração torna-se um capítulo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Coagido em relação ao alvo.",
+    "loophole": "Durante a cena, rompa consciente e deliberadamente um dos acordos do próprio changeling.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode afetar até Fado alvos que compartilhem a obrigação.",
+      "Wizened": "Em vez de apagar a obrigação, o Mirrado faz o alvo acreditar que a deve a ele."
+    }
+  },
+  "ctl-kith-and-kin:spare-not-the-rod": {
+    "name": "Não Poupe a Vara",
+    "description": "Crie um cetro de Glamour empunhado com uma mão: uma arma corpo a corpo 0C sem penalidade de Iniciativa ou uma arma de ataque à distância 0L com alcance de 30 metros pelo custo de ● por ataque. Um ataque ou Intimidação bem-sucedido inflige Desmoralizado. Somente personagens com Fado podem usar seu ataque à distância.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Quebre um cetro em miniatura fabricado com metais preciosos e gemas.",
+    "seemingBenefits": {
+      "Fairest": "Por +2 de Glamour, um ataque ou Intimidação bem-sucedido inflige Maravilhado Persistente, em vez de Desmoralizado.",
+      "Wizened": "O Mirrado pode invocar o cetro para uma mão livre; alguém que o segure contra a vontade dele disputa Presença + Intimidação contra Força + Vigor."
+    }
+  },
+  "ctl-kith-and-kin:pole-star": {
+    "name": "Estrela Polar",
+    "description": "Nomeie uma pessoa, lugar ou objeto. O corpo do changeling aponta infalivelmente em sua direção, revelando o rumo, mas não a localização nem a distância. Encontrar um alvo oculto sobrenaturalmente provoca um Choque de Vontades, e o Contrato só funciona no mundo mundano.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Segure um pedaço do alvo ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Beast": "A Fera recebe +2 dados em um Choque de Vontades para revelar um alvo oculto.",
+      "Wizened": "O Mirrado pode fazer ao Narrador uma pergunta sobre um oponente ou obstáculo no caminho."
+    }
+  },
+  "ctl-kith-and-kin:straight-on-til-morning": {
+    "name": "Em Frente até o Amanhecer",
+    "description": "Escolha um destino e viaje incansavelmente, sem precisar de alimento nem descanso, até alcançá-lo. Ignore efeitos adversos de Inclinações Ambientais pelo caminho e receba 8-novamente em rolagens de navegação nas Estradas dos Desejos; encontros e obstáculos ainda impedem a jornada normalmente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Até o changeling chegar ao destino",
+    "loophole": "Prometa dormir quando a tarefa terminar e faça um aliado selar a declaração; Glamour não pode refutar o selamento, e o changeling recebe Fatigado quando o Contrato termina.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode estender o Contrato a até Fado companheiros de viagem.",
+      "Ogre": "O Ogro recebe Resoluto."
+    }
+  },
+  "ctl-kith-and-kin:cynosure": {
+    "name": "Estrela-Guia",
+    "description": "Ao conversar com franqueza sobre um de seus próprios sonhos, o changeling leva o alvo a revelar uma Aspiração e recebe orientação estelar até uma oportunidade capaz de avançá-la durante o próximo capítulo ou história.",
+    "dicePool": "Manipulação + Empatia + Fado contra Compostura + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Descubra uma Aspiração escolhida pelo alvo e um evento ou oportunidade que ajudaria a cumpri-la. Uma Aspiração de curto prazo pode ser resolvida por completo; uma de longo prazo avança até a próxima etapa significativa.",
+    "exceptionalSuccess": "Descubra também o nome de alguém que já tenha ligação com o changeling e que seria imensamente útil ao objetivo do alvo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo sofre um revés e culpa o changeling, ou tem sucesso apesar da sabotagem dele e descobre que ele tentou interferir.",
+    "loophole": "Deixe escapar, durante a mesma cena, uma oportunidade de cumprir uma das Aspirações do changeling.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso recebe Informado a respeito da Aspiração do alvo.",
+      "Ogre": "O Ogro recebe +2 dados para convencer o alvo a agir com ousadia em busca da Aspiração."
+    }
+  },
+  "ctl-kith-and-kin:shooting-star": {
+    "name": "Estrela Cadente",
+    "description": "A obra de um criador captura brevemente a atenção do público. O alvo recebe um ponto de Fama ou +1 dado no bônus Social de Fama caso isso ultrapassasse três pontos. Changelings recebem +1 para colher Glamour de pessoas afetadas por essa Fama.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "Conclua durante a mesma cena uma ação de Construir Equipamento para uma obra criativa; uma Fera pode, em vez disso, obter sucesso em uma façanha impressionante de Atletismo.",
+    "seemingBenefits": {
+      "Beast": "A Fera pode escolher como alvo alguém que realize façanhas de excelência física, em vez de uma obra criativa.",
+      "Fairest": "O Belíssimo recebe +2 em rolagens para colher Glamour de pessoas afetadas pela Fama do alvo, em vez de +1."
+    }
+  },
+  "ctl-kith-and-kin:retrograde": {
+    "name": "Movimento Retrógrado",
+    "description": "Enquanto conta uma história sobre o alvo, o changeling gesticula no sentido anti-horário e invoca uma série de pequenos infortúnios sobre as comunicações, finanças, viagens e afazeres cotidianos do alvo.",
+    "dicePool": "Presença + Expressão + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "Assuntos rotineiros que não exigem rolagem dão errado para o alvo sempre que isso for inconveniente.",
+    "exceptionalSuccess": "O alvo também faz cada parada de dados duas vezes e fica com o pior resultado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Em vez disso, a sorte do changeling azeda e impõe −2 a todas as ações dele pelo capítulo.",
+    "loophole": "Gire no sentido anti-horário enquanto conta a história.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode nomear até Fado assuntos rotineiros específicos que darão errado; evitar as ações previstas não causa um infortúnio substituto.",
+      "Elemental": "O Elemental pode declarar uma Inclinação ambiental ou pessoal ligada ao clima para afetar o alvo no momento mais inconveniente durante o Contrato."
+    }
+  },
+  "ctl-kith-and-kin:frozen-star": {
+    "name": "Estrela Congelada",
+    "description": "Trace entre as estrelas a imagem de uma pessoa, lugar ou objeto conhecido e nomeie um sujeito visível que não seja o changeling. O alvo deve ser razoavelmente alcançável antes do nascer do sol e não pode ter sido escolhido expressamente para prejudicar o sujeito.",
+    "dicePool": "Inteligência + (Empatia ou Persuasão) + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Até o próximo nascer do sol ou até o sujeito tocar o alvo",
+    "success": "O sujeito abandona sua atividade atual e viaja em direção ao alvo traçado. Ao chegar ou quando a duração expirar, o efeito termina, e o sujeito recebe Abalado sem se lembrar de qualquer motivo para a perseguição.",
+    "exceptionalSuccess": "Tocar o alvo não encerra o efeito; o sujeito recebe Viciado Persistente em relação a ele até a Condição ser resolvida normalmente ou até o próximo nascer do sol.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O agente dos Feé Verdadeiros mais próximo descobre a localização do changeling, é atraído até ele conforme determina o Contrato, e o changeling recebe Caçado.",
+    "loophole": "Mantenha contato físico com o alvo ou com um pedaço dele enquanto traça o sujeito nas estrelas.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso também inflige Assombrado, levando o sujeito a alcançar o alvo o mais depressa possível.",
+      "Fairest": "Se o Belíssimo traçar a si mesmo como alvo, o sujeito adquire um ponto de Débito Goblin por cena passada longe de sua presença."
+    }
+  },
+  "ctl-kith-and-kin:star-light-star-bright": {
+    "name": "Luz das Estrelas, Estrela Brilhante",
+    "description": "Descubra um desejo que o alvo tenha feito no último mês ou um desejo aleatório feito em um raio de 1,6 quilômetro caso nenhum alvo seja especificado. O changeling escolhe como realizá-lo dentro de suas capacidades reais, mas recebe Quebrador de Juramento Persistente caso não o faça até o fim da história. Pagar o custo maior permite acrescentar uma desvantagem ao desejo concedido.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Induza o alvo a fazer o desejo na presença do changeling durante a mesma cena.",
+    "seemingBenefits": {
+      "Ogre": "Se o alvo não for Fae, o Ogro recebe +2 em uma tentativa de colher Glamour dele.",
+      "Wizened": "O Mirrado também descobre a força subjacente que motiva o desejo, como medo, dificuldade ou arrependimento."
+    }
+  },
+  "ctl-kith-and-kin:light-of-ancient-stars": {
+    "name": "Luz de Estrelas Antigas",
+    "description": "Faça até Fado perguntas sobre um acontecimento passado ligado a alguém que o changeling conheça melhor que um simples conhecido, ou sobre um acontecimento conhecido em um local que ela tenha visitado pessoalmente. O Narrador responde com sinceridade.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Cante os nomes das estrelas de uma constelação que esteja visível no céu.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso recebe Informado a respeito do acontecimento; a Condição desaparece sem conceder Beat se não for resolvida até o fim do capítulo.",
+      "Wizened": "O Mirrado recebe uma imagem nítida de um objeto simples de Tamanho 3 ou menor que estivesse presente e +2 para construir uma réplica mundana, incluindo textos exatos ou diagramas simples, mas não sua interpretação."
+    }
+  },
+  "ctl-kith-and-kin:pinch-of-stardust": {
+    "name": "Pitada de Poeira Estelar",
+    "description": "Construa com retalhos e luz estelar um simulacro que o alvo recorda como alguém confiável e importante. Ele pode se tornar uma Touchstone, um mentor ou um ente querido equivalente, inflige Delirante Persistente e causa o ponto de ruptura ou risco de Lucidez apropriado quando se desfaz. Escolher um changeling como alvo faz da invocação um ponto de ruptura de quatro dados, em vez de três.",
+    "dicePool": "Inteligência + Ofícios + Fado contra Perseverança + Tolerância",
+    "action": "Instantânea para um alvo disposto; disputada para um alvo hostil",
+    "duration": "Um capítulo ou até Delirante ser resolvido",
+    "success": "Crie a entidade com Ecos iguais ao Fado e vincule-a como Touchstone ou relação importante equivalente. Um changeling que escolha a si mesmo como alvo esquece a invocação e acredita que ela é real.",
+    "exceptionalSuccess": "Os amigos e entes queridos mais próximos do alvo também se lembram da criatura como real, embora evidências possam despertar suspeitas e eles não recebam Delirante.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A criação torna-se um Duplo mal-intencionado do changeling, agindo como um segundo Duplo que sabe o que é.",
+    "loophole": "Acrescente à criatura uma parte do changeling, como cabelo, sangue ou aparas de unha.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso ouve qualquer segredo que o alvo sussurre à criatura.",
+      "Wizened": "Por +●, a criação dura até o fim da história."
+    }
+  },
+  "ctl-kith-and-kin:briars-herald": {
+    "name": "Arauto da Sarça",
+    "description": "Provoque um alvo e prometa tornar-se um espinho em seu caminho. A até 100 metros do changeling, o alvo perde 10-novamente e toda falha torna-se dramática sem conceder Beats; o changeling percebe cada rolagem fracassada independentemente da distância.",
+    "dicePool": "Manipulação + Furto + Fado contra Compostura + Tolerância",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "success": "A maldição entra em vigor, e o alvo sabe que o changeling é responsável, mesmo na ausência de provas.",
+    "exceptionalSuccess": "Cada rolagem fracassada dentro do alcance também inflige 1 ponto de dano letal.",
+    "failure": "O Contrato falha, e o changeling sofre um efeito menor de selo rompido escolhido pelo Narrador.",
+    "dramaticFailure": "Em vez disso, o changeling sofre um efeito maior de selo rompido.",
+    "loophole": "Faça, direta ou indiretamente, um espinho, agulha ou objeto pontiagudo semelhante furar o alvo e extrair sangue.",
+    "seemingBenefits": {
+      "Darkling": "Sempre que a vítima falhar, o Trevoso pode sussurrar uma mensagem de até 37 palavras através de qualquer distância e receber uma resposta.",
+      "Wizened": "O Mirrado pode especificar uma cláusula curta cujo cumprimento encerre o Contrato antes do tempo."
+    }
+  },
+  "ctl-kith-and-kin:by-the-pricking-of-my-thumbs": {
+    "name": "Pelo Formigar dos Meus Polegares",
+    "description": "Estenda audição, visão, olfato e tato através de uma planta viva percebida, alternando entre ela e o changeling com uma ação instantânea. Agir em assuntos não relacionados enquanto habita uma planta impõe −3 às ações, à Defesa e à Iniciativa.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Durante a mesma cena, prepare uma poção com hera venenosa, tritão e cardos e olhe através dela.",
+    "seemingBenefits": {
+      "Beast": "A Fera pode usar a planta habitada como arma natural de Força + Briga ou Armas Brancas que causa dano contundente, ou letal caso possua espinhos ou agulhas.",
+      "Darkling": "O Trevoso pode ocupar simultaneamente até Perseverança plantas, transferindo ou recolhendo uma extensão sensorial por ação instantânea."
+    }
+  },
+  "ctl-kith-and-kin:thistles-rebuke": {
+    "name": "Repreensão do Cardo",
+    "description": "Faça espinhos crescerem das roupas ou armadura, acrescentando dois pontos de armadura geral, causando 1 ponto de dano letal a quem tocar ou enfrentar o changeling em combate corpo a corpo e 2 pontos de dano letal por turno de agarramento. Dispare-os a até 50 metros como uma arma 2L, abrindo mão dos outros benefícios naquele turno.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Beba um copo inteiro de água imediatamente antes da invocação.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental pode recolher ou estender os espinhos reflexivamente; estendê-los causa 2 pontos de dano letal a qualquer pessoa que o esteja tocando.",
+      "Fairest": "O Belíssimo pode tornar o efeito invisível até para observadores que enxerguem através da Mascarilha."
+    }
+  },
+  "ctl-kith-and-kin:the-gouging-curse": {
+    "name": "A Maldição da Mutilação",
+    "description": "Faça um aviso que proíba uma ação instantânea específica que o alvo poderia realizar durante o capítulo.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Compostura + Tolerância",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "success": "Se o alvo realizar a ação proibida, farpas infligem Braço Lesionado, Cego de um olho, Surdo de um ouvido ou Perna Lesionada até o Contrato terminar.",
+    "exceptionalSuccess": "Acionar a maldição também inflige Culpado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Imprudente.",
+    "loophole": "Faça um acordo que permita à vítima proibir uma ação do changeling; violá-lo exige pagar imediatamente ● e sofrer 1 ponto de dano letal, ou o Contrato termina.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode especificar outra ação válida que encerre a maldição antes do tempo, mas inflija Maravilhado Persistente em relação a ele.",
+      "Ogre": "Se o ato proibido fosse ferir um aliado, a duração torna-se uma história."
+    }
+  },
+  "ctl-kith-and-kin:embrace-of-nettles": {
+    "name": "Abraço das Urtigas",
+    "description": "Enquanto estiver nos Espinhos da Sebe, responda a uma mudança da Sebe desviando-a para outro alvo; adiando até metade do Fado em sucessos para a próxima rolagem bem-sucedida e imune da Sebe; ou acrescentando até metade do Fado em sucessos tanto à rolagem dela quanto à próxima rolagem bem-sucedida do changeling para tecer a Sebe nesta cena. Cada opção deve ser usada antes que alguma possa ser repetida.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "loophole": "Deixe um bem pessoal significativo para a Sebe consumir; recuperá-lo mais tarde concede 2 pontos de Débito Goblin.",
+    "seemingBenefits": {
+      "Darkling": "Ao adiar, o Trevoso anula até Manipulação ou metade do Fado em sucessos, conforme preferir.",
+      "Fairest": "Ao intensificar, o Belíssimo pode conceder os sucessos de bônus posteriores a um aliado."
+    }
+  },
+  "ctl-kith-and-kin:acanthas-fury": {
+    "name": "Fúria de Acantha",
+    "description": "Inicie uma transformação de oito estágios, um por minuto, do alvo em uma planta espinhosa de Tamanho 4–12. Em cada estágio, ofereça uma tarefa realizável, inofensiva e com duração de uma cena; aceitar faz a transformação regredir, mas romper a promessa a reinicia. Os estágios impõem penalidades pela luz solar, Vigor reduzido, Inclinações nos membros, Imobilizado e, por fim, a forma completa de planta. A invocação é um ponto de ruptura de quatro dados.",
+    "dicePool": "Presença + Sobrevivência + Fado contra Vigor + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "A transformação em estágios começa e pode ser revertida aceitando a tarefa vinculante.",
+    "exceptionalSuccess": "Recupere 1 ponto de Força de Vontade quando o alvo cumprir a promessa com sucesso.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Caçado.",
+    "loophole": "Segure um corte fresco, com no máximo um dia, da espécie vegetal escolhida para a transformação.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental pode escolher até Fado personagens como alvo, acompanhando separadamente o progresso de cada um.",
+      "Wizened": "O Mirrado pode selar a promessa aceita sem Glamour; aumentar a severidade do selo custa ●, em vez de FdV."
+    }
+  },
+  "ctl-kith-and-kin:awaken-portal": {
+    "name": "Despertar Portal",
+    "description": "Espalhe sangue sobre uma entrada desprotegida de um Caminho da Sebe, Bastião ou Vão para despertá-la como um goblin imóvel. Ela percebe os arredores, comunica-se mentalmente através de qualquer distância e permite usar tino pelo ponto de vista dela; bloquear ou selar a entrada inibe seus sentidos.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "Antes de despertá-la, passe pelo menos 15 minutos durante a cena limpando, consertando ou melhorando a entrada e seus arredores.",
+    "seemingBenefits": {
+      "Beast": "O portal recebe uma mordida reflexiva de Presença + Intimidação, 2L, que lança intrusos cinco metros para fora.",
+      "Elemental": "O portal recebe uma Influência de dois pontos no elemento escolhido pelo Elemental."
+    }
+  },
+  "ctl-kith-and-kin:crown-of-thorns": {
+    "name": "Coroa de Espinhos",
+    "description": "Entregue anonimamente uma proibição escrita contra uma ação instantânea específica.",
+    "dicePool": "Presença + Ocultismo + Fado contra Perseverança + Tolerância",
+    "action": "Disputada",
+    "duration": "Uma história",
+    "success": "Se o alvo realizar o ato proibido, espinhos invisíveis infligem 1 ponto de dano letal e Comatoso. Não changelings precisam de intervenção onírica ou de um Choque de Vontades sobrenatural para despertar; caso contrário, a Condição desaparece sem conceder Beat ao fim da história.",
+    "exceptionalSuccess": "Comatoso deve ser resolvido normalmente e não desaparece ao fim da história.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Em vez disso, o changeling recebe Comatoso.",
+    "loophole": "Entrelace uma coroa verdadeira de espinhos e coloque-a na cabeça do alvo durante a mesma cena.",
+    "seemingBenefits": {
+      "Beast": "O alvo adormecido perde 1 ponto de Força de Vontade por noite e não pode recuperar Força de Vontade descansando.",
+      "Darkling": "Enquanto estiver disfarçado ou passar despercebido, o Trevoso obtém sucesso excepcional com três sucessos ao manipular o alvo para que realize o ato proibido."
+    }
+  },
+  "ctl-kith-and-kin:shrikes-larder": {
+    "name": "Despensa do Picanço",
+    "description": "Gaste ● por efeito, até os três, para amaldiçoar um alvo com espinhos: −2 em rolagens de movimento em perseguições e nenhuma Vantagem, ignorados por um turno com FdV; −3 de Iniciativa; ou metade do Deslocamento, ignorada por um turno ao sofrer 1 ponto de dano contundente.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Empale uma efígie do alvo em um espinho ou outro objeto pequeno e perfurante.",
+    "seemingBenefits": {
+      "Beast": "A Fera colhe 2 pontos de Glamour por sucesso da vítima, em vez de 1.",
+      "Wizened": "O Mirrado pode escolher um veículo como alvo, aplicando os efeitos aos ocupantes e esvaziando os pneus."
+    }
+  },
+  "ctl-kith-and-kin:witchs-brambles": {
+    "name": "Silvas da Bruxa",
+    "description": "Ao realizar uma ação mundana com um objeto preciso, de Tamanho 1 ou menor, que perfure carne, sofra −3 e gaste os sucessos excedentes em mudanças sutis como se tecesse a Sebe, sem seus outros efeitos. Em um sucesso excepcional, pagar o custo maior permite uma mudança de paradigma. O Contrato não produz efeito na Sebe nem em outro reino sobrenatural.",
+    "dicePool": "Nenhuma",
+    "action": "Reflexiva",
+    "duration": "Instantânea",
+    "loophole": "Perfure a própria carne do changeling com o objeto pontiagudo usado para a invocação.",
+    "seemingBenefits": {
+      "Beast": "Em vez disso, a Fera pode aprimorar um ataque de mordida que cause dano letal ou agravado.",
+      "Darkling": "O Trevoso acrescenta um sucesso ao usar apenas mudanças sutis, mas subtrai um ao usar qualquer mudança de paradigma."
+    }
+  },
+  "ctl-kith-and-kin:coming-darkness": {
+    "name": "Escuridão Vindoura",
+    "description": "Arranque a sombra do changeling para criar escuridão total em um raio de Fado × 5 metros. Quem estiver dentro testa Raciocínio + Compostura ou fica Atordoado e sofre Cego enquanto permanecer ali; o invocador é imune. Luz mágica provoca um Choque de Vontades. Sair antes do fim pode deixar a sombra para trás, exigindo recuperá-la e prendê-la novamente na Sebe com uma mudança sutil de quatro sucessos.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Apague uma chama ao invocar o Contrato.",
+    "seemingBenefits": {
+      "Beast": "A Fera concede visão noturna nítida a até metade do Fado em personagens dentro da área.",
+      "Darkling": "O Trevoso aumenta o raio máximo para Fado × 10 metros."
+    }
+  },
+  "ctl-kith-and-kin:pomp-and-circumstance": {
+    "name": "Pompa e Circunstância",
+    "description": "Defina um refúgio claramente delimitado com Fado × 10 metros. Convidados não desejados não conseguem entrar, espionagem e rastreamento mundanos falham, e intrusão sobrenatural provoca um Choque de Vontades. Pagar o custo maior também o oculta completamente de Monteiros e Feé Verdadeiros. Declare até Fado regras de comportamento compreendidas por todos que entrarem; qualquer violação encerra o efeito e dá Desmoralizado a todos no interior.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Disponha um círculo ininterrupto de papoulas ao redor da área mais cedo na mesma cena.",
+    "seemingBenefits": {
+      "Beast": "A Fera detecta qualquer pessoa que passe ou invada uma área de Fado × 20 metros ao redor do refúgio.",
+      "Wizened": "O Mirrado pode aplicar seus pontos de Local Seguro ou Vão ao local da reunião."
+    }
+  },
+  "ctl-kith-and-kin:shadow-puppet": {
+    "name": "Fantoche de Sombra",
+    "description": "Anime uma criatura de sombra substancial como um Lacaio com nível igual à metade do Fado, usando uma das Especializações do changeling. Ela age na Iniciativa dele e recebe um Poder Temível goblin, Fado 1, Glamour 6 e uma caixa de Vitalidade. Sua destruição remove a parte correspondente da sombra dele até que seja recolocada na Sebe com uma mudança sutil de quatro sucessos.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "loophole": "Faça um espetáculo de sombras para pelo menos três pessoas durante pelo menos cinco minutos na mesma cena.",
+    "seemingBenefits": {
+      "Beast": "Um fantoche em forma de animal recebe +3 dados de Percepção, voo ou um ataque desarmado +1L.",
+      "Darkling": "O Trevoso pode gastar ● para se mover instantaneamente entre duas sombras percebidas; isso falha em escuridão completa ou luz sem sombras."
+    }
+  },
+  "ctl-kith-and-kin:dread-companion": {
+    "name": "Companheiro Temível",
+    "description": "Ofereça uma recompensa a um fantasma da Sebe e o vincule com um bracelete de silvas, tornando-se uma Linha adicional. A dupla deve permanecer a até Fado × 10 metros, pode compartilhar Glamour para benefício mútuo, e o vínculo protege o fantasma no mundo mundano e pode estender a Mascarilha do changeling até ele.",
+    "dicePool": "Manipulação + Ocultismo + Fado contra Resistência + Fado",
+    "action": "Disputada",
+    "duration": "Um capítulo",
+    "success": "O fantasma é vinculado, e as ações solicitadas pelo changeling afirmam sua Linha; ele pode gastar ● para recusar o uso de seus poderes, Numina ou Influências.",
+    "exceptionalSuccess": "O fantasma não pode recusar, a menos que o pedido o coloque em perigo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O fantasma da Sebe ofendido ataca imediatamente o changeling.",
+    "loophole": "Faça o fantasma da Sebe afirmar sua própria Linha durante a mesma cena.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso obtém acesso ao Numen Desmaterializar enquanto estiver vinculado.",
+      "Fairest": "A duração torna-se até o Belíssimo deixar a Sebe."
+    }
+  },
+  "ctl-kith-and-kin:listen-with-winds-ears": {
+    "name": "Ouvir com os Ouvidos do Vento",
+    "description": "Perceba sempre que alguém pronunciar o nome verdadeiro do changeling em um raio de Fado × 3,2 quilômetros. Teste Raciocínio + Investigação + Fado, disputado por Compostura + Fado de quem fala, para ouvir a conversa por um turno enquanto fica surdo às falas próximas; um sucesso excepcional estende a escuta por um número de turnos igual aos sucessos excedentes. Durante a escuta, pagar o custo maior teleporta o changeling até quem falou e encerra o Contrato.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até ser usado para teletransporte",
+    "loophole": "Durante a mesma cena, apresente o changeling por seu nome verdadeiro a alguém que ele nunca tenha conhecido.",
+    "seemingBenefits": {
+      "Beast": "A Fera dobra o Deslocamento pela cena depois de chegar à localização de quem falou.",
+      "Fairest": "Em vez disso, o Belíssimo arrasta até sua localização a pessoa que pronunciou seu nome."
+    }
+  },
+  "ctl-kith-and-kin:steal-influence": {
+    "name": "Roubar Influência",
+    "description": "Toque uma criatura e escolha uma Influência que ela possua, gastando ● por ponto que deseje roubar pela cena. A vítima perde acesso a esses pontos; o changeling pode ativá-los pagando Glamour mesmo que outro recurso fosse normalmente exigido.",
+    "dicePool": "Raciocínio + Furto + Fado contra Perseverança + Fado",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "Roube um ponto da Influência escolhida por Glamour gasto; normalmente, o custo não pode ser dividido entre Influências diferentes.",
+    "exceptionalSuccess": "Compre permanentemente até o nível roubado por 2 Experiências por ponto, sujeito ao limite normal de metade do Fado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo pode usar reflexivamente a Influência com um desconto de Glamour igual à quantidade gasta na invocação fracassada.",
+    "loophole": "O alvo causou pelo menos 1 ponto de dano letal ou agravado ao changeling durante a mesma cena.",
+    "seemingBenefits": {
+      "Darkling": "O Trevoso pode dividir o Glamour entre várias Influências.",
+      "Elemental": "O Elemental pode transformar os pontos roubados em uma ou mais Influências tematicamente relacionadas durante o efeito."
+    }
+  },
+  "ctl-kith-and-kin:earths-gentle-movements": {
+    "name": "Movimentos Suaves da Terra",
+    "description": "Remodele permanentemente terra natural descoberta com o changeling no centro, afetando um metro quadrado por sucesso. Altere elevação, forma ou consistência e expulse material natural indesejado; qualquer pessoa na área em movimento testa Destreza + Atletismo ou sofre Derrubado.",
+    "dicePool": "Força + Ofícios + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "success": "Remodele permanentemente a área permitida.",
+    "exceptionalSuccess": "Divida os sucessos entre dois efeitos diferentes dentro da área afetada.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A terra engole e Imobiliza o changeling como se ele estivesse preso por um item.",
+    "loophole": "Coloque uma pedrinha sob a língua do changeling.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental afeta dois metros quadrados por sucesso.",
+      "Wizened": "Em vez disso, o Mirrado pode remodelar construtivamente pedra natural, usando Destreza + Ofícios + Fado."
+    }
+  },
+  "ctl-kith-and-kin:earths-impenetrable-walls": {
+    "name": "Muralhas Impenetráveis da Terra",
+    "description": "Ao longo de cinco turnos, erga uma fortaleza de pedra de Tamanho Fado × 10 sobre terreno natural livre enquanto cria uma Inclinação Terremoto à qual o changeling é imune. Ela é um Local Seguro de metade do Fado com Durabilidade 2. Cada sucesso depois do primeiro acrescenta Durabilidade, Tamanho, proteção ambiental, provisões ou, na Sebe, um Vão de metade do Fado.",
+    "dicePool": "Força + Ofícios + Fado",
+    "action": "Instantânea; a construção leva cinco turnos",
+    "duration": "Um capítulo",
+    "success": "A fortaleza projetada se ergue com uma característica adicional da lista por sucesso depois do primeiro.",
+    "exceptionalSuccess": "Sucessos adicionais fornecem características adicionais normalmente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Crie a Inclinação Terremoto por cinco turnos sem uma fortaleza, e o changeling não é imune.",
+    "loophole": "Defenda com sucesso o changeling ou outra pessoa de um ataque durante a mesma cena.",
+    "seemingBenefits": {
+      "Fairest": "Na Sebe, o Belíssimo também recebe Equipe temporária de metade do Fado, representando seguidores hobgoblins adequados.",
+      "Ogre": "O Ogro subtrai metade do Fado em sucessos das tentativas de outro personagem de fiar a fortaleza ou seu interior."
+    }
+  },
+  "ctl-kith-and-kin:cracked-mirror": {
+    "name": "Espelho Rachado",
+    "description": "Embace um espelho, escreva o nome do changeling e revele seu Duplo. O custo menor permite espionar pelo ponto de vista do Duplo durante a cena, embora ele sempre saiba que houve uma tentativa. Pagar o custo maior troca suas localizações através do espaço dos espelhos e encerra imediatamente o Contrato. Um Duplo disposto não disputa.",
+    "dicePool": "Manipulação + Furto + Fado contra Vigor + Fado",
+    "action": "Disputada",
+    "duration": "Uma cena ou até o changeling trocar de lugar",
+    "success": "Veja e ouça os arredores do Duplo como se o acompanhasse de perto; pela Força de Vontade adicional, troque de lugar com ele.",
+    "exceptionalSuccess": "A troca desorienta o Duplo e inflige Confuso.",
+    "failure": "O Contrato falha, mas o Duplo descobre a tentativa.",
+    "dramaticFailure": "O Duplo descobre a tentativa e pode pagar ● para invocar Espelho Rachado imediatamente, sem rolagem, pagando FdV opcionalmente para trocar de lugar, sem precisar do Eco Mímico.",
+    "loophole": "Faça uma rachadura significativa no espelho usado para invocar o Contrato.",
+    "seemingBenefits": {
+      "Darkling": "Em um sucesso excepcional, o Trevoso oculta do Duplo a tentativa de espionagem.",
+      "Fairest": "Um Duplo disposto pode trocar de lugar com o Belíssimo sem o custo adicional de Força de Vontade."
+    }
+  },
+  "ctl-kith-and-kin:momentary-respite": {
+    "name": "Trégua Momentânea",
+    "description": "Quebre um dispositivo de medição do tempo para suspender os efeitos do tempo sobre o changeling. Escolha uma proteção por sucesso: encerre uma Inclinação Pessoal; ignore penalidades por ferimentos; proteja a caixa de Vitalidade desprotegida mais à direita contra dano agravado; ignore uma toxina, doença ou Condição Persistente. As escolhas, exceto penalidades por ferimentos, podem ser repetidas. Durante o efeito, o beneficiário não pode se curar naturalmente, recuperar Força de Vontade descansando, recuperar Lucidez por meio de Touchstones, gastar Experiências nem envelhecer.",
+    "dicePool": "Vigor + Sobrevivência + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena, extensível uma cena por vez",
+    "success": "Aplique uma proteção temporal listada por sucesso. Em cada cena consecutiva depois da primeira, sofra um ponto de ruptura com um dado mais o número de cenas consecutivas ativas; o Tempo retalia caso seja mantido por mais de um ano e um dia.",
+    "exceptionalSuccess": "Sucessos adicionais fornecem proteções adicionais normalmente.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling sofre Imóvel indefinidamente, até que um Choque de Vontades bem-sucedido contra sua própria parada de Choque rompa a maldição do Tempo.",
+    "loophole": "Abrace ou envolva-se em um objeto reconfortante que represente descanso ou sono.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental também pode escolher ignorar uma Inclinação Ambiental, repetindo a escolha para Inclinações diferentes.",
+      "Ogre": "O Ogro pode invocá-lo sobre um personagem que consinta, pagando todos os custos e sofrendo todas as consequências; invocá-lo novamente encerra a instância anterior."
+    }
+  }
+}

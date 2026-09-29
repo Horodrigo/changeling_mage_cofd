@@ -37,6 +37,7 @@ const noUntranslatedUiText = {
       attributeText: "{{attribute}} must use t(\"semantic.key\") instead of a literal.",
       legacyTr: "The legacy tr(portuguese, english) API is not allowed; use t(\"semantic.key\").",
       localeConditional: "Do not select UI copy with a locale conditional; use t(\"semantic.key\", params?).",
+      purchaseValue: "Purchase values must use stable lowercase IDs; localize their labels with t(\"semantic.key\").",
     },
   },
   create(context) {
@@ -63,6 +64,15 @@ const noUntranslatedUiText = {
         if (node.parent?.type === "MemberExpression" && node.parent.computed) return;
         if (hasLocaleReference(node.test) && (isTextLiteral(node.consequent) || isTextLiteral(node.alternate))) {
           context.report({ node, messageId: "localeConditional" });
+        }
+      },
+      Property(node) {
+        const name = node.computed ? "" : node.key.type === "Identifier" ? node.key.name : String(node.key.value ?? "");
+        if (name !== "purchases" || node.value.type !== "ArrayExpression") return;
+        for (const item of node.value.elements) {
+          if (item?.type === "Literal" && typeof item.value === "string" && !/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(item.value)) {
+            context.report({ node: item, messageId: "purchaseValue" });
+          }
         }
       },
     };

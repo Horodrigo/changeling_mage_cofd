@@ -1,0 +1,75 @@
+{
+  "ctl-oak-ash-thorn:donning-the-grand-mantle": {
+    "name": "Vestir o Grande Manto",
+    "description": "O changeling canaliza o poder do patrono de seu Manto, abandona a Mascarilha e proclama sua afiliação. Usar o Contrato mais de uma vez por história impõe Coagido em relação ao patrono até que o changeling conceda o favor ou a história termine.",
+    "dicePool": "Presença + Expressão + Manto",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "O changeling recebe imediatamente Manto 5 pela duração. Para cada ponto de Manto que já possuía, recupera 1 Glamour gasto e recebe +1 em testes estreitamente alinhados aos temas do Manto, incluindo testes para invocar seus Contratos de Corte.",
+    "exceptionalSuccess": "Este uso não conta para o limite seguro de uma vez por história.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling recebe Coagido conforme descrito, sem obter os benefícios do Contrato.",
+    "loophole": "Nenhuma."
+  },
+  "ctl-oak-ash-thorn:hidden-protocol": {
+    "name": "Protocolo Oculto",
+    "description": "O changeling usa qualquer dispositivo eletrônico de entrada para enviar pela Sebe uma mensagem de até 20 palavras a um destinatário nomeado, sem informações de contato, sinal ou acesso a rede. A mensagem chega ao destinatário por um meio incidental e pode ser notada ou interceptada; tentativas de rastreá-la ou interceptá-la se opõem ao teste de invocação.",
+    "dicePool": "Raciocínio + Computação + Fado",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "O changeling envia a mensagem usando tecnologia consideravelmente obsoleta, como telefone de disco, telégrafo, máquina de escrever ou computador Apple IIe."
+  },
+  "ctl-oak-ash-thorn:autonomous-payload": {
+    "name": "Carga Autônoma",
+    "description": "Sobre uma senda da BriarNet, o changeling abre um portal digital para a Sebe e transforma a si mesmo e a seguidores voluntários em dados dentro de um computador ou repositório digital. Cada repositório funciona como um Bastião cuja Fortificação reflete sua segurança. Eles podem tecer a Sebe para contornar a segurança ou alterar dados e viajar por sinais conectados. Quando o Contrato termina, emergem fisicamente, a menos que ele seja invocado novamente. A invocação sofre oposição do personagem com o melhor acesso e controle sobre o repositório.",
+    "dicePool": "Manipulação + Computação + Manto contra (Inteligência ou Computação) + Fortificação",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "loophole": "O changeling usa um chapéu preto ou branco e obedece às implicações éticas dele pela duração. Se as violar, deve pagar o custo de Glamour ou o Contrato termina imediatamente."
+  },
+  "ctl-oak-ash-thorn:full-fathom-five": {
+    "name": "A Cinco Braças",
+    "description": "No turno após a invocação, o changeling obtém uma imagem mental completa do espaço físico num raio de Fado × 10 jardas ou metros. Ele supera automaticamente ocultação e surpresa mundanas, recebe Manto como bônus de dados contra tentativas sobrenaturais, ignora escuridão e baixa visibilidade, fica imune a Cego e Surdo, compensa até Manto dados de penalidades em ataques à distância e soma Manto à Iniciativa e metade do Manto, arredondada para cima, à Defesa. O efeito é evidente, isolamento acústico o bloqueia e outro ruído alto exige Raciocínio + Compostura + Manto para mantê-lo.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Fado turnos em cenas de ação ou Fado minutos nas demais cenas",
+    "loophole": "O changeling usa um microfone, megafone ou outro meio para transmitir sua voz muito mais alto que o normal, atraindo atenção mortal significativa."
+  },
+  "ctl-oak-ash-thorn:the-widening-gyre": {
+    "name": "A Espiral que se Alarga",
+    "description": "O changeling torna-se o centro de um vórtice móvel com raio de Fado × 10 jardas ou metros e realiza um único teste contra cada personagem ao alcance. Pode excluir alvos percebidos por +● cada; personagens que entrem depois disputam normalmente, a menos que ele pague o mesmo custo para excluí-los.",
+    "dicePool": "Presença + Atletismo + Manto contra Vigor + Fado",
+    "cost": "●● + ○; +● por alvo excluído",
+    "action": "Disputada",
+    "duration": "Uma cena",
+    "success": "O alvo deve mover todo o seu Deslocamento em direção ao changeling a cada turno, a menos que gaste 1 Força de Vontade para se ancorar naquele turno. Ainda pode usar sua ação instantânea para mover-se normalmente. Personagens afetados que entrem no alcance corpo a corpo do changeling sofrem Derrubado.",
+    "exceptionalSuccess": "Quem cair no chão dentro do alcance corpo a corpo do changeling também sofre Imobilizado.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O changeling apenas deixa a si mesmo tonto e sofre Confuso.",
+    "loophole": "O changeling usa um chapéu autêntico de marinheiro, como um tricórnio ou quepe branco, ao invocar o Contrato."
+  },
+  "ctl-oak-ash-thorn:upholding-the-principle": {
+    "name": "Defender o Princípio",
+    "description": "O changeling deve possuir prova, evidência ou confissão de que outro changeling traiu um membro da Casa, agiu de modo desonesto ou imoral ou pretende fazê-lo, e então apertar a mão do alvo. Sem tal evidência, o Contrato não pode ser invocado apenas para descobrir más intenções.",
+    "dicePool": "Presença + Política + Manto contra Perseverança + Fado",
+    "action": "Disputada",
+    "duration": "Instantânea",
+    "success": "O alvo recebe uma Condição temporária Quebrador de Juramento que não exige o perdão adicional do Fado para ser resolvida; enquanto durar, o Semblante Fae do alvo reflete visivelmente a transgressão.",
+    "exceptionalSuccess": "O alvo também não pode dizer nada que não acredite ser verdade até o fim do capítulo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O alvo descobre o último ato grave de desobediência, traição ou desonestidade do changeling e pode impor-lhe Coagido.",
+    "loophole": "Nenhuma."
+  },
+  "ctl-oak-ash-thorn:ancestors-wisdom": {
+    "name": "Sabedoria dos Ancestrais",
+    "description": "O changeling realiza uma cerimônia de pelo menos 10 minutos para convocar o fantasma de um ancestral da Casa de In.",
+    "dicePool": "Presença + Ocultismo + Manto",
+    "action": "Instantânea; leva 10 minutos",
+    "duration": "Uma cena",
+    "success": "O Narrador escolhe um membro falecido da Casa cujo fantasma aparece até o fim da cena com todas as memórias que possuía. O changeling deve obter sua cooperação.",
+    "exceptionalSuccess": "O fantasma já está disposto a cooperar e não precisa ser convencido.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "Em vez disso, o changeling convoca o fantasma hostil de um traidor falecido da Casa.",
+    "loophole": "Nenhuma."
+  }
+}

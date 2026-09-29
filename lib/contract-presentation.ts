@@ -1,6 +1,12 @@
 import type { ContractDefinition } from "./catalog/contract-catalog";
 import type { Locale } from "./i18n";
-import { CONTRACT_TEXT_EN } from "./contracts-en";
+
+export type ContractPresentation = Pick<ContractDefinition, "name" | "description"> & Partial<Pick<ContractDefinition,
+  "summary" | "effect" | "dicePool" | "loophole" | "seemingBenefits" | "courtClauses" |
+  "supplementalSeemingBenefits" | "cost" | "action" | "duration" | "success" |
+  "exceptionalSuccess" | "failure" | "dramaticFailure" | "options" | "detailTables" | "goblinDebt"
+>>;
+export type ContractPresentationCatalog = Record<string, ContractPresentation>;
 
 export type ContractMechanics = Pick<ContractDefinition,
   "description" | "effect" | "dicePool" | "hasRoll" | "success" | "exceptionalSuccess" | "failure" | "dramaticFailure"
@@ -15,30 +21,24 @@ export function contractHasInvocationRoll(contract: Pick<ContractDefinition, "di
   return !/^(nenhum[a]?|none|sem (?:teste|jogada)|n\/?a|[-—])\.?$/.test(pool);
 }
 
-export function contractDisplayName(contract:Pick<ContractDefinition,"id"|"name"|"originalName">,locale:Locale="en-US") {
-  return locale==="en-US"?contract.originalName:contract.name;
-}
-
 export function contractDisplayOptions(contract:Pick<ContractDefinition,"id"|"options">,locale:Locale="en-US") {
-  if (locale === "en-US") return CONTRACT_TEXT_EN[contract.id]?.options ?? contract.options ?? [];
+  void locale;
   return contract.options ?? [];
 }
 
-export function contractPresentation(contract:ContractDefinition,locale:Locale="en-US"):ContractDefinition {
-  if (locale !== "en-US") return contract;
-  const english=CONTRACT_TEXT_EN[contract.id];
-  const description=contractHasInvocationRoll(contract) === true
-    ? english?.summary ?? contract.description
-    : english?.description ?? contract.description;
-  return { ...contract, ...english, description };
+export function contractPresentation(contract:ContractDefinition,locale:Locale="en-US",catalog:ContractPresentationCatalog={}):ContractDefinition {
+  const localized=locale==="pt-BR"?catalog[contract.id]:undefined;
+  if(!localized)return contract;
+  const localizedBenefits={...localized.seemingBenefits,...Object.assign({},...Object.values(localized.supplementalSeemingBenefits??{}))};
+  const seemingBenefits=Object.fromEntries(Object.entries(contract.seemingBenefits??{}).map(([key,text])=>[key,localizedBenefits[key as keyof typeof localizedBenefits]??text]));
+  return { ...contract, ...localized, seemingBenefits };
 }
 
 export function contractSummary(contract:ContractDefinition,locale:Locale="en-US") {
+  void locale;
   if (contract.summary?.trim()) return contract.summary.trim();
   if (contractHasInvocationRoll(contract) !== true) return "";
-  return locale === "en-US"
-    ? CONTRACT_TEXT_EN[contract.id]?.summary?.trim() ?? contract.description.trim()
-    : contract.description.trim();
+  return contract.description.trim();
 }
 
 export function contractWithSupplementalBenefits(contract:ContractDefinition,activeSourceIds:readonly string[]) {
@@ -50,17 +50,14 @@ export function contractWithSupplementalBenefits(contract:ContractDefinition,act
 }
 
 export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="en-US") {
-  const english=locale==="en-US"&&contract.id?CONTRACT_TEXT_EN[contract.id]:undefined;
-  const description=english?.description??contract.description;
-  const success=english?.success??contract.success;
-  const main = contract.effect?.trim() || success?.trim() || description.trim();
+  const main = contract.effect?.trim() || contract.success?.trim() || contract.description.trim();
   if (contractHasInvocationRoll(contract) !== true) {
     return main ? [{ label: locale==="en-US"?"Effect":"Efeito", text: main }] : [];
   }
   return [
     { label: locale==="en-US"?"Success":"Sucesso", text: main },
-    { label: locale==="en-US"?"Exceptional Success":"Sucesso Excepcional", text: (english?.exceptionalSuccess??contract.exceptionalSuccess)?.trim() },
-    { label: locale==="en-US"?"Failure":"Falha", text: (english?.failure??contract.failure)?.trim() },
-    { label: locale==="en-US"?"Dramatic Failure":"Falha Dramática", text: (english?.dramaticFailure??contract.dramaticFailure)?.trim() },
+    { label: locale==="en-US"?"Exceptional Success":"Sucesso Excepcional", text: contract.exceptionalSuccess?.trim() },
+    { label: locale==="en-US"?"Failure":"Falha", text: contract.failure?.trim() },
+    { label: locale==="en-US"?"Dramatic Failure":"Falha Dramática", text: contract.dramaticFailure?.trim() },
   ].filter((section): section is { label: string; text: string } => Boolean(section.text));
 }

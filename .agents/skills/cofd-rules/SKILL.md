@@ -111,6 +111,8 @@ Before asserting a specific mechanic, prerequisite, cost, rating, dice pool, exc
 
 When reconstructing rules from PDFs, treat extracted text as an aid rather than authoritative reading order. CofD books commonly use two columns, sidebars, stat blocks, headers, footers, and content continued across page or column boundaries. Visually inspect every relevant page, map physical PDF pages to printed page numbers, and verify neighboring columns before treating headings or paragraphs as complete.
 
+Before reviewing a source PDF, read and follow the stable project-local workflow in `../cofd-pdf-review/SKILL.md`. Do not resolve or announce a versioned plugin-cache path for this repository workflow.
+
 Read `references/verification-checklist.md` for high-risk tasks.
 
 ## Token discipline

@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/changeling/creation-rules";
 import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
-import { contractOutcomeSections, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
+import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
 import type { EntitlementDefinition } from "@/lib/entitlements";
@@ -32,11 +32,12 @@ import { mergeContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import type { ChangelingReference } from "./catalogs/reference";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition } from "@/app/workspace/experience-shared";
-import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived } from "./experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived, type ChangelingPurchaseType } from "./experience-shared";
 type ExperienceUndo =
   | {
       kind: "trait";
@@ -69,17 +70,16 @@ type ExperienceEntry = {
   undo?: ExperienceUndo;
 };
 const PURCHASE_GROUPS = [
-  { group: "core", purchases: ["Atributo", "Perícia", "Especialização", "Mérito"] },
-  { group: "supernatural", purchases: ["Fado", "Contrato"] },
-  { group: "integrity", purchases: ["Ponto perdido de Força de Vontade"] },
-  { group: "acquired", purchases: ["Benefício de Contrato"] },
-] as const;
+  { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
+  { group: "supernatural", purchases: ["wyrd", "contract"] },
+  { group: "integrity", purchases: ["willpower"] },
+  { group: "acquired", purchases: ["contract-benefit"] },
+] as const satisfies readonly ExperiencePurchaseGroup<ChangelingPurchaseType>[];
 const PURCHASE_TYPES = PURCHASE_GROUPS.flatMap(({ purchases }) => [...purchases]);
-const PURCHASE_TYPE_EN:Record<string,string>={
-  Atributo:"Attribute", Perícia:"Skill", Mérito:"Merit", Especialização:"Specialty", Contrato:"Contract",
-  "Benefício de Contrato":"Contract Benefit", Fado:"Wyrd", "Ponto perdido de Força de Vontade":"Lost Willpower dot",
-};
-const purchaseTypeLabel=(value:string,locale:Locale)=>locale==="en-US"?(PURCHASE_TYPE_EN[value]??systemTerm(value,locale)):value;
+const PURCHASE_LABEL_KEYS = {
+  attribute: "ui.attribute", skill: "ui.skill", specialty: "ui.specialty", merit: "ui.merit",
+  wyrd: "ui.wyrd", contract: "ui.contract", willpower: "ui.lostWillpowerDot", "contract-benefit": "ui.contractBenefit",
+} as const;
 const groupedTraitOptions = (
   groups: Record<string, readonly string[]>,
 ) =>
@@ -103,7 +103,8 @@ export function ExperiencePanel({
   const { locale, t }=useLanguage();
   const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews(),customMerits=useMeritHomebrews("CtL",true);
   const contractCatalog = mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts);
-  const staticEntitlements = catalogs.get<{ entitlements: readonly EntitlementDefinition[] }>("changeling-reference").entitlements;
+  const reference = catalogs.get<ChangelingReference>("changeling-reference");
+  const staticEntitlements: readonly EntitlementDefinition[] = reference.entitlements;
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
   const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
@@ -132,7 +133,7 @@ export function ExperiencePanel({
       : []
   ).filter((entry) => entry.kind === "spend");
   const [experienceInput, setExperienceInput] = useState(String(available));
-  const [purchaseType, setPurchaseType] = useState<string>(PURCHASE_TYPES[0]);
+  const [purchaseType, setPurchaseType] = useState<ChangelingPurchaseType>(PURCHASE_TYPES[0]);
   const [targetRating, setTargetRating] = useState(0);
   const [attribute, setAttribute] = useState<string>(
     Object.values(ATTRIBUTES).flat()[0],
@@ -176,6 +177,7 @@ export function ExperiencePanel({
   const benefitOptions = ownedContracts.flatMap((saved) => {
     const definition = findContractInCatalog(String(saved.id ?? saved.name ?? ""));
     if (!definition) return [];
+    const presented = contractPresentation(definition, locale, reference.contractPresentation);
     const seemingOptions = Object.keys(definition.seemingBenefits ?? {})
           .filter(
             (seeming) =>
@@ -184,10 +186,10 @@ export function ExperiencePanel({
           )
           .map((seeming) => ({
             value: `benefit::${definition.id}::${seeming}`,
-            label: `${definition.name} · ${seemingDisplayName(seeming,locale)}`,
+            label: `${presented.name} · ${seemingDisplayName(seeming,locale)}`,
           }));
     const clauseOptions = availableForeignClauseCourtIds(definition, currentCourtId, goodwill, extraClauseKeys)
-      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${definition.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
+      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${presented.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
     return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
@@ -218,14 +220,14 @@ export function ExperiencePanel({
     0,
   );
   const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
-  const ratedCurrent = purchaseType === "Atributo" ? Number(character.attributes[attribute] ?? 1)
-    : purchaseType === "Perícia" ? Number(character.skills[skill] ?? 0)
-      : purchaseType === "Fado" ? wyrd
-        : purchaseType === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum - lostWillpower
+  const ratedCurrent = purchaseType === "attribute" ? Number(character.attributes[attribute] ?? 1)
+    : purchaseType === "skill" ? Number(character.skills[skill] ?? 0)
+      : purchaseType === "wyrd" ? wyrd
+        : purchaseType === "willpower" ? permanentWillpowerMaximum - lostWillpower
           : 0;
-  const ratedMaximum = purchaseType === "Atributo" || purchaseType === "Perícia" ? traitMaximum
-    : purchaseType === "Fado" ? 10
-      : purchaseType === "Ponto perdido de Força de Vontade" ? permanentWillpowerMaximum
+  const ratedMaximum = purchaseType === "attribute" || purchaseType === "skill" ? traitMaximum
+    : purchaseType === "wyrd" ? 10
+      : purchaseType === "willpower" ? permanentWillpowerMaximum
         : 0;
   const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
   const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
@@ -443,7 +445,7 @@ export function ExperiencePanel({
     setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description, p2: refund }));
   }
   function buy() {
-    if (purchaseType === "Atributo") {
+    if (purchaseType === "attribute") {
       const current = Number(character.attributes[attribute] ?? 1);
       if (current >= traitMaximum)
         return setFeedback(
@@ -467,7 +469,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Perícia") {
+    if (purchaseType === "skill") {
       const current = Number(character.skills[skill] ?? 0);
       if (current >= traitMaximum)
         return setFeedback(
@@ -485,7 +487,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Mérito") {
+    if (purchaseType === "merit") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
       if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
@@ -525,7 +527,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Especialização") {
+    if (purchaseType === "specialty") {
       if (!specialtyName.trim())
         return setFeedback(t("ui.enterTheSpecialtyName"));
       const name = specialtyName.trim();
@@ -538,7 +540,7 @@ export function ExperiencePanel({
       setSpecialtyName("");
       return;
     }
-    if (purchaseType === "Contrato") {
+    if (purchaseType === "contract") {
       if (!selectedContract)
         return setFeedback(t("ui.noContractIsAvailableForThisPurchase"));
       const cost = contractExperienceCost(selectedContract, character);
@@ -556,7 +558,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Benefício de Contrato") {
+    if (purchaseType === "contract-benefit") {
       const value = benefitKey || benefitOptions[0]?.value;
       if (!value)
         return setFeedback(t("ui.noAdditionalBenefitOrClauseIsAvailable"));
@@ -578,7 +580,7 @@ export function ExperiencePanel({
       );
       return;
     }
-    if (purchaseType === "Fado") {
+    if (purchaseType === "wyrd") {
       if (wyrd >= 10) return setFeedback(t("ui.wyrdHasAlreadyReached10"));
       spend(5 * ratingAmount, `${t("ui.wyrd")} ${intendedRating}`, { kind: "wyrd", previous: wyrd, amount: ratingAmount }, (next) => {
         next.line_data = { ...withChangelingPowerRating(next, intendedRating), frailties: normalizeChangelingFrailties(next.line_data.frailties, intendedRating) };
@@ -708,17 +710,17 @@ export function ExperiencePanel({
                 <RuleSelect
                   value={purchaseType}
                   onChange={(value) => {
-                    setPurchaseType(value);
+                    setPurchaseType(value as ChangelingPurchaseType);
                     setTargetRating(0);
                     setFeedback("");
                   }}
-                  options={groupedPurchaseOptions(builderMode ? [
-                    { group: "core", purchases: ["Atributo", "Perícia", "Mérito"] },
-                    { group: "supernatural", purchases: ["Fado", "Contrato"] },
-                  ] : PURCHASE_GROUPS, (value) => purchaseTypeLabel(value,locale), locale)}
+                  options={groupedPurchaseOptions<ChangelingPurchaseType>(builderMode ? [
+                    { group: "core", purchases: ["attribute", "skill", "merit"] },
+                    { group: "supernatural", purchases: ["wyrd", "contract"] },
+                  ] : PURCHASE_GROUPS, (value) => t(PURCHASE_LABEL_KEYS[value]), locale)}
                 />
               </label>
-              {purchaseType === "Atributo" && (
+              {purchaseType === "attribute" && (
                 <label>
                   {t("ui.attribute")}
                   <RuleSelect
@@ -728,7 +730,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Perícia" && (
+              {purchaseType === "skill" && (
                 <label>
                   {t("ui.skill")}
                   <RuleSelect
@@ -738,7 +740,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Mérito" && (
+              {purchaseType === "merit" && (
                 <label>
                   {t("ui.merit")}
                   <ExperienceMeritPicker
@@ -756,7 +758,7 @@ export function ExperiencePanel({
                   />
                 </label>
               )}
-              {purchaseType === "Especialização" && (
+              {purchaseType === "specialty" && (
                 <>
                   <label>
                     {t("ui.skill")}
@@ -776,36 +778,39 @@ export function ExperiencePanel({
                   </label>
                 </>
               )}
-              {purchaseType === "Contrato" && (
+              {purchaseType === "contract" && (
                 <label>
                   {t("ui.contract")}
                   <ExperiencePowerPicker
                     kind="Contrato"
                     line="CtL"
-                    items={contractOptions.map((item) => ({
-                      id: item.id,
-                      name: locale==="en-US"?item.originalName:item.name,
-                      category: systemTerm(item.regalia,locale),
-                      categories: homebrewCategoryKeys(systemTerm(item.regalia,locale), item.sourceId),
-                      secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
-                      sortPriority: Number(item.type === "Real"),
-                      description: contractOutcomeSections(item,locale).map(section=>section.text).join(" "),
-                      meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
-                    }))}
+                    items={contractOptions.map((item) => {
+                      const presented=contractPresentation(item,locale,reference.contractPresentation);
+                      return {
+                        id: item.id,
+                        name: presented.name,
+                        category: systemTerm(item.regalia,locale),
+                        categories: homebrewCategoryKeys(systemTerm(item.regalia,locale), item.sourceId),
+                        secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
+                        sortPriority: Number(item.type === "Real"),
+                        description: contractOutcomeSections(presented,locale).map(section=>section.text).join(" "),
+                        meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
+                      };
+                    })}
                     selectedId={selectedContract?.id ?? ""}
                     onSelect={setContractId}
                   />
                 </label>
               )}
-              {purchaseType === "Benefício de Contrato" && (
+              {purchaseType === "contract-benefit" && (
                 <label>
                   {t("ui.benefit")}
                   <ExperiencePowerPicker
                     kind="Benefício de Contrato"
                     line="CtL"
                     items={benefitOptions.map((option)=>{
-                      const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause";
-                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?contract?.courtClauses?.[choice]??"":contract?.seemingBenefits?.[choice as keyof typeof contract.seemingBenefits]??"",meta:`${contract?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
+                      const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause", presented=contract?contractPresentation(contract,locale,reference.contractPresentation):undefined;
+                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?presented?.courtClauses?.[choice]??"":presented?.seemingBenefits?.[choice as keyof typeof presented.seemingBenefits]??"",meta:`${presented?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
                     })}
                     selectedId={benefitKey || benefitOptions[0]?.value || ""}
                     onSelect={setBenefitKey}

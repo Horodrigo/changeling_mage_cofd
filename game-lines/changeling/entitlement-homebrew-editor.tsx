@@ -51,7 +51,7 @@ export function EntitlementHomebrewEditor({ open, onOpenChange, initial, onSave 
           <Field wide label={h("Propósito *", "Purpose *")}><Textarea value={value.purpose} onChange={(event) => set("purpose", event.target.value)}/></Field>
           <Field wide label={h("Privilégios *", "Privileges *")}><Textarea value={value.privileges} onChange={(event) => set("privileges", event.target.value)}/></Field>
           <Field wide label={h("Deveres *", "Duties *")}><Textarea value={value.duties} onChange={(event) => set("duties", event.target.value)}/></Field>
-          <Field wide label={h("Mask e Mien", "Mask and Mien")}><Textarea value={value.maskAndMien} onChange={(event) => set("maskAndMien", event.target.value)}/></Field>
+          <Field wide label={h("Mascarilha e Semblante Fae", "Mask and Mien")}><Textarea value={value.maskAndMien} onChange={(event) => set("maskAndMien", event.target.value)}/></Field>
         </Section>
         <Section title={h("Touchstone e consequências", "Touchstone and consequences")}>
           <Field wide label={h("Touchstone do Entitlement *", "Entitlement Touchstone *")}><Textarea value={value.touchstone} onChange={(event) => set("touchstone", event.target.value)}/></Field>
@@ -59,10 +59,10 @@ export function EntitlementHomebrewEditor({ open, onOpenChange, initial, onSave 
           <Field wide label={h("Gatilho de Beat *", "Beat trigger *")}><Textarea value={value.beat} onChange={(event) => set("beat", event.target.value)}/></Field>
           <Field wide label={h("Lendas (uma por linha)", "Legends (one per line)")}><Textarea value={value.legends.join("\n")} onChange={(event) => set("legends", event.target.value.split("\n"))}/></Field>
         </Section>
-        <Section title={h("Heraldry e Token", "Heraldry and Token")}>
+        <Section title={h("Heráldica e Penhor", "Heraldry and Token")}>
           <Field wide label={h("Heraldry", "Heraldry")}><Textarea value={value.heraldry} onChange={(event) => set("heraldry", event.target.value)}/></Field>
-          <Field label={h("Nome do Token *", "Token name *")}><Input value={value.token.name} onChange={(event) => set("token", { ...value.token, name: event.target.value })}/></Field>
-          <Field wide label={h("Descrição do Token", "Token description")}><Textarea value={value.token.description} onChange={(event) => set("token", { ...value.token, description: event.target.value })}/></Field>
+          <Field label={h("Nome do Penhor *", "Token name *")}><Input value={value.token.name} onChange={(event) => set("token", { ...value.token, name: event.target.value })}/></Field>
+          <Field wide label={h("Descrição do Penhor", "Token description")}><Textarea value={value.token.description} onChange={(event) => set("token", { ...value.token, description: event.target.value })}/></Field>
           <Field wide label={h("Efeito *", "Effect *")}><Textarea value={value.token.effect} onChange={(event) => set("token", { ...value.token, effect: event.target.value })}/></Field>
           <Field wide label={h("Catch", "Catch")}><Textarea value={value.token.catch} onChange={(event) => set("token", { ...value.token, catch: event.target.value })}/></Field>
           <Field wide label={h("Desvantagem", "Drawback")}><Textarea value={value.token.drawback} onChange={(event) => set("token", { ...value.token, drawback: event.target.value })}/></Field>
@@ -84,8 +84,8 @@ export function EntitlementHomebrewEditor({ open, onOpenChange, initial, onSave 
             <Field wide label={h("Privilégio", "Privilege")}><Textarea value={item.privilege} onChange={(event) => updateRole(index, { privilege: event.target.value })}/></Field>
             <Field wide label={h("Deveres", "Duties")}><Textarea value={item.duties} onChange={(event) => updateRole(index, { duties: event.target.value })}/></Field>
             <Field label={h("Cor heráldica", "Heraldry color")}><Input value={item.heraldryColor ?? ""} onChange={(event) => updateRole(index, { heraldryColor: event.target.value })}/></Field>
-            <Field wide label={h("Bônus do Token", "Token bonus")}><Textarea value={item.tokenBonus} onChange={(event) => updateRole(index, { tokenBonus: event.target.value })}/></Field>
-            <Field wide label={h("Desvantagem do Token", "Token drawback")}><Textarea value={item.tokenDrawback} onChange={(event) => updateRole(index, { tokenDrawback: event.target.value })}/></Field>
+            <Field wide label={h("Bônus do Penhor", "Token bonus")}><Textarea value={item.tokenBonus} onChange={(event) => updateRole(index, { tokenBonus: event.target.value })}/></Field>
+            <Field wide label={h("Desvantagem do Penhor", "Token drawback")}><Textarea value={item.tokenDrawback} onChange={(event) => updateRole(index, { tokenDrawback: event.target.value })}/></Field>
             <Button type="button" size="sm" variant="ghost" onClick={() => set("roles", (value.roles ?? []).filter((_, itemIndex) => itemIndex !== index))}><Trash2/> {h("Remover", "Remove")}</Button>
           </div>)}
         </Section>

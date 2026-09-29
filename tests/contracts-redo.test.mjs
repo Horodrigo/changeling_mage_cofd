@@ -12,11 +12,13 @@ const contractShards = ["h-courts","ctl-oak-ash-thorn","ctl-the-hedge","ctl-dark
 const CONTRACTS = contractShards.flatMap((name) =>
   JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}.json`, import.meta.url), "utf8")),
 );
+const CONTRACT_PRESENTATION_PT = Object.assign({}, ...contractShards.map((name) =>
+  JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}-pt.json`, import.meta.url), "utf8")),
+));
 const CONTRACT_NAME_ALIASES = Object.fromEntries(
   CONTRACTS.flatMap((contract) => [[contract.name, contract.id], [contract.originalName, contract.id]]),
 );
-const { CONTRACT_TEXT_EN } = await vite.ssrLoadModule("/lib/contracts-en.ts");
-const { contractPresentation, contractSummary } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+const { contractPresentation, contractSummary, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
 
 test("catálogo contém os 180 Contratos oficiais auditados", () => {
@@ -33,7 +35,6 @@ test("catálogo contém os 180 Contratos oficiais auditados", () => {
     assert.equal(official.some((contract) => contract.originalName === removedName), false);
   }
   assert.equal(CONTRACT_NAME_ALIASES["Ancestors' Wisdom"], "ctl-oak-ash-thorn:ancestors-wisdom");
-  assert.deepEqual(CONTRACT_TEXT_EN, {});
 });
 
 test("Book of Courts inicia com a família Circadian compartilhada e Clauses canônicas", () => {
@@ -181,10 +182,145 @@ test("bloco Crown do livro básico está completo", () => {
   assert.deepEqual(items.map((item)=>item.page),[128,128,129,129,129,130,130,131,131,132]);
 });
 
+test("tradução pt-BR do bloco Crown é completa e preserva a identidade canônica", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Crown");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+  }
+  const mask=items.find((item)=>item.id==="ctl-core:mask-of-superiority"), localized=contractPresentation(mask,"pt-BR",CONTRACT_PRESENTATION_PT);
+  assert.equal(localized.id,mask.id);
+  assert.equal(localized.name,"Mascarilha de Superioridade");
+  assert.equal(mask.name,"Mask of Superiority");
+  const hostile=contractPresentation(contractWithSupplementalBenefits(items[0],["h-seemings"]),"pt-BR",CONTRACT_PRESENTATION_PT);
+  assert.match(hostile.seemingBenefits.Darkling,/Furtividade e Furto/);
+  const tumult=CONTRACT_PRESENTATION_PT["ctl-core:tumult"];
+  assert.match(JSON.stringify(tumult),/Acovardado/);
+  assert.match(JSON.stringify(tumult),/Frenético/);
+  assert.match(JSON.stringify(tumult),/Fatigado/);
+  assert.doesNotMatch(JSON.stringify(tumult),/\b(?:Cowed|Berserk|Fatigued)\b/);
+  assert.doesNotMatch(JSON.stringify(Object.values(CONTRACT_PRESENTATION_PT)),/\b(?:Wyrd|Willpower|Huntsm(?:an|en)|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt)\b/i);
+});
+
+test("traduções pt-BR das fontes suplementares menores estão completas", () => {
+  const sourceIds=new Set(["ctl-dark-eras","ctl-the-hedge","ctl-oak-ash-thorn"]);
+  const items=CONTRACTS.filter((item)=>sourceIds.has(item.sourceId));
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>sourceIds.has(id.split(":")[0])).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+  }
+});
+
+test("tradução pt-BR do bloco Chalice de Kith and Kin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Chalice");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+});
+
+test("tradução pt-BR do bloco Coin de Kith and Kin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Coin");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+  assert.match(CONTRACT_PRESENTATION_PT["ctl-kith-and-kin:thirty-pieces"].dramaticFailure,/Retalho/);
+});
+
+test("tradução pt-BR do bloco Scepter de Kith and Kin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Scepter");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+  assert.match(CONTRACT_PRESENTATION_PT["ctl-kith-and-kin:litany-of-rivals"].loophole,/Retalho/);
+});
+
+test("tradução pt-BR do bloco Stars de Kith and Kin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Stars");
+  assert.equal(items.length,9);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+});
+
+test("tradução pt-BR do bloco Thorn de Kith and Kin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Thorn");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+  assert.equal(JSON.parse(readFileSync(new URL("../public/data/changeling/conditions-pt.json",import.meta.url),"utf8")).comatose.name,"Comatoso");
+});
+
+test("tradução pt-BR do bloco Independent conclui Kith and Kin", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin"&&item.regalia==="Independent");
+  assert.equal(items.length,10);
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+  }
+  const all=CONTRACTS.filter((item)=>item.sourceId==="ctl-kith-and-kin");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>id.startsWith("ctl-kith-and-kin:")).sort(),all.map((item)=>item.id).sort());
+});
+
 test("bloco Jewels do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels");
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[132,132,133,133,133,134,134,134,135,135]);
+});
+
+test("tradução pt-BR dos Contratos Comuns de Jewels está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels"&&item.type==="Comum");
+  assert.equal(items.length,5);
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+  }
+});
+
+test("tradução pt-BR do bloco Jewels está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+  }
 });
 
 test("bloco Mirror do livro básico está completo sem Options duplicadas", () => {
@@ -195,11 +331,50 @@ test("bloco Mirror do livro básico está completo sem Options duplicadas", () =
   assert.equal(items.find((item)=>item.originalName==="Walls Have Ears")?.options?.length,3);
 });
 
+test("tradução pt-BR dos Contratos Comuns de Mirror está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror"&&item.type==="Comum");
+  assert.equal(items.length,5);
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
+});
+
+test("tradução pt-BR do bloco Mirror está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
+});
+
 test("bloco Shield do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Shield");
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[140,140,140,141,142,142,142,143,143,143]);
   assert.equal(items.find((item)=>item.originalName==="Thorns and Brambles")?.options?.length,3);
+});
+
+test("tradução pt-BR do bloco Shield está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Shield");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id)=>items.some((item)=>item.id===id)).sort(),items.map((item)=>item.id).sort());
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
 });
 
 test("bloco Steed está completo e preserva a exceção de Flickering Hours", () => {

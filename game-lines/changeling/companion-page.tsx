@@ -16,7 +16,7 @@ import type { DamageLevel } from "@/lib/resource-rules";
 const FAE_MOUNT_ABILITIES = [
   ["manyleague", "Manyleague", "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado.", "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner."],
   ["chatterbox", "Chatterbox", "Fala e entende claramente o dono e transmite mensagens simples no idioma dele.", "Speaks with and clearly understands its owner and conveys simple messages in the owner's language."],
-  ["actormask", "Actormask", "Pode deixar a Sebe; por 1 Glamour por cena mantém uma Máscara no mundo mundano.", "May leave the Hedge; for 1 Glamour per scene it maintains a Mask in the mundane world."],
+  ["actormask", "Actormask", "Pode deixar a Sebe; por 1 Glamour por cena mantém uma Mascarilha no mundo mundano.", "May leave the Hedge; for 1 Glamour per scene it maintains a Mask in the mundane world."],
   ["armorshell", "Armorshell", "Armadura 3/2 e ocultação parcial para o cavaleiro.", "Gain Armor 3/2 and provide partial concealment to the rider."],
   ["burdenback", "Burdenback", "Carrega pessoas adicionais iguais aos pontos do Mérito e recebe +2 Vigor.", "Carry additional people equal to Merit dots and gain +2 Stamina."],
   ["dreamspun", "Dreamspun", "Ressurge após uma noite completa de sono do dono e recebe Furtividade igual aos pontos do Mérito.", "Return after the owner completes a full night's sleep and gain Stealth equal to Merit dots."],
