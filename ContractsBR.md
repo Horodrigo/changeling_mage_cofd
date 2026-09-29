@@ -56,3 +56,8 @@
 
 - `Murkblur`: traduzido como **Turvação Sombria**, tratando o título composto como a combinação de obscuridade e visão turva.
 - `Light-Shy`: traduzido como **Aversão à Luz**, privilegiando o efeito do título sobre a construção literal “tímido à luz”.
+
+## Lote: Joias Reais — *Changeling: The Lost*, pp. 134–135
+
+- `Changeling Hours`: traduzido como **Horas do Changeling**, mantendo “changeling” como nome da criatura e evitando sugerir uma mecânica de transformação.
+- `Tatterdemalion's Workshop`: traduzido como **Oficina do Esfarrapado**; **Oficina do Maltrapilho** seria uma alternativa igualmente possível para o termo arcaico.

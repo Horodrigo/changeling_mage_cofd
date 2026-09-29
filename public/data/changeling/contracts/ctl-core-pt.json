@@ -330,5 +330,113 @@
         "Ogre": "Seres normalmente imunes à Máscara precisam vencer um Choque de Vontades contra o Ogro para enxergar através do efeito."
       }
     }
+  },
+  "ctl-core:changeling-hours": {
+    "name": "Horas do Changeling",
+    "description": "Manipule o tempo de um objeto: repare 1 ponto de Estrutura por turno, até Ofícios; inflija 1 ponto de dano que ignora Durabilidade por turno, até Ofícios; ou congele-o de modo imóvel e torne-o imune a dano ou alteração.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Um capítulo",
+    "loophole": "Nomeie um antigo proprietário do objeto que não seja o atual.",
+    "seemingBenefits": {
+      "Elemental": "O Elemental também pode afetar manifestações de seu elemento associado.",
+      "Wizened": "Por +○, o Mirrado torna permanente o efeito de congelamento; tentativas de sobrepujá-lo provocam um Choque de Vontades."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "O efeito de congelamento da Fera cura um ponto de dano contundente por turno, até Sobrevivência; torna-se permanente se a duração cobrir o tempo de cura natural.",
+        "Darkling": "O Trevoso acelera e retrocede sem alterar visivelmente o objeto.",
+        "Fairest": "O Belíssimo pode gastar 1 ponto de Força de Vontade para tornar permanente o retrocesso, sujeito a Choque de Vontades contra magia que tente sobrepujá-lo.",
+        "Ogre": "O Ogro pode gastar 1 ponto de Força de Vontade para tornar permanente a aceleração, sujeita a Choque de Vontades contra magia que tente sobrepujá-la."
+      }
+    }
+  },
+  "ctl-core:dance-of-the-toys": {
+    "name": "Dança dos Brinquedos",
+    "description": "Desperte um dispositivo mecânico visível a até 10 × Fado metros e dê-lhe uma ordem simples. Ele não pode ultrapassar seu movimento normal; ações que causem dano usam os sucessos da invocação como parada de ataque. Alterar seu comportamento exige Força + Perseverança superior aos sucessos da invocação.",
+    "dicePool": "Manipulação + Ofícios + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "O dispositivo se anima e segue a única ordem.",
+    "exceptionalSuccess": "Compre-o como um Lacaio permanente de um ponto; caso contrário, ele permanece animado por um capítulo.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "O dispositivo se anima e volta-se ativamente contra o changeling.",
+    "loophole": "Inscreva um nome único no objeto e chame-o à vida por esse nome.",
+    "seemingBenefits": {
+      "Beast": "A Fera concede inteligência semelhante à de um animal e permite ordens múltiplas ou complexas.",
+      "Wizened": "O Mirrado permite movimento além da operação normal com Deslocamento igual ao Fado, encerrando o efeito se o dispositivo sair do alcance."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Darkling": "O Trevoso torna o dispositivo invisível até ele interagir, sujeito a Choque de Vontades contra visão de ilusões.",
+        "Elemental": "Uma vez por cena, o dispositivo do Elemental produz reflexivamente uma quantidade de seu elemento favorito suficiente para preencher um metro quadrado.",
+        "Fairest": "Um sucesso comum permite ao Belíssimo comprar o dispositivo como Lacaio de pelo menos dois pontos.",
+        "Ogre": "Aplique a Força do Ogro como penalidade às tentativas de alterar o curso do dispositivo."
+      }
+    }
+  },
+  "ctl-core:hidden-reality": {
+    "name": "Realidade Oculta",
+    "description": "Crie uma característica pequena em um objeto inanimado existente de qualquer Tamanho, desde que ela pudesse ter existido o tempo todo e ninguém tenha visto sua ausência nesta cena. Ela desaparece ao fim da cena ou quando fica sem supervisão.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Uma cena ou até ficar sem supervisão",
+    "loophole": "Passe um minuto procurando teatralmente pela característica e demonstre surpresa ao encontrá-la.",
+    "seemingBenefits": {
+      "Fairest": "Em vez disso, o Belíssimo pode mudar a Virtude ou o Vício de uma pessoa próxima com Manipulação + Subterfúgio + Fado, disputado por Perseverança + Fado.",
+      "Wizened": "Por +●, o Mirrado pode criar um objeto inteiramente novo que pudesse ser encontrado razoavelmente na área."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A Fera pode aplicar o Contrato a formas de vida simples, como plantas e insetos.",
+        "Darkling": "A alteração do Trevoso é perturbadora e inflige Abalado a quem a encontrar.",
+        "Elemental": "O Elemental pode fazer Fado + 1 alterações adicionais na área.",
+        "Ogre": "Uma vez por capítulo, o Ogro pode gastar 1 Glamour adicional para o efeito durar até o próximo nascer do sol."
+      }
+    }
+  },
+  "ctl-core:stealing-the-solid-reflection": {
+    "name": "Roubar o Reflexo Sólido",
+    "description": "Puxe através de uma superfície reflexiva grande o suficiente uma cópia mundana e espelhada de um objeto. Nem o original nem a cópia possuem reflexo enquanto o Contrato durar.",
+    "dicePool": "Força + Furto + Fado",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "success": "O objeto refletido torna-se sólido pela cena, mas não possui propriedades sobrenaturais.",
+    "exceptionalSuccess": "O reflexo permanece sólido até o sol cruzar novamente o horizonte.",
+    "failure": "O Contrato falha.",
+    "dramaticFailure": "A superfície se estilhaça, e o original sofre dano igual ao Fado, ignorando Durabilidade.",
+    "loophole": "Induza o proprietário do original a declarar uma dívida para com o changeling durante a cena.",
+    "seemingBenefits": {
+      "Fairest": "O Belíssimo pode roubar um reflexo vivo com características mundanas limitadas pelo Fado e nenhuma característica sobrenatural; ele é amistoso e deferente. Em uma falha dramática, uma pessoa do espelho busca vingança.",
+      "Wizened": "Por +●, o Mirrado preserva as propriedades sobrenaturais do objeto copiado."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A cópia da Fera recebe metade do Vigor, arredondada para cima, como Durabilidade.",
+        "Darkling": "O Trevoso pode copiar objetos que produzam até mesmo um reflexo tênue.",
+        "Elemental": "O Elemental pode copiar coisas insubstanciais ou fluidas, como água ou fogo.",
+        "Ogre": "O Ogro pode danificar a cópia para infligir o mesmo dano ao original."
+      }
+    }
+  },
+  "ctl-core:tatterdemalions-workshop": {
+    "name": "Oficina do Esfarrapado",
+    "description": "Realize em um turno uma ação improvisada de Construir Equipamento para criar qualquer objeto mundano de Tamanho 5 ou menor com materiais improvisados e sem as ferramentas adequadas. Reduza as penalidades por bônus ou benefícios pela metade do Fado, arredondada para cima.",
+    "dicePool": "Nenhuma",
+    "action": "Instantânea",
+    "duration": "Instantânea",
+    "loophole": "Use óculos grandes e antigos e ferramentas arcaicas.",
+    "seemingBenefits": {
+      "Ogre": "Os materiais usados pelo Ogro não precisam ser plausíveis para o objeto resultante.",
+      "Wizened": "O Mirrado pode improvisar um objeto complexo de qualquer Tamanho."
+    },
+    "supplementalSeemingBenefits": {
+      "h-seemings": {
+        "Beast": "A Fera recebe +3 para Construir Equipamento ao usar apenas materiais naturais.",
+        "Darkling": "O Trevoso escolhe fazer o objeto não conceder bônus de equipamento ou não funcionar para outras pessoas.",
+        "Elemental": "O Elemental pode gastar 1 Glamour para guardar o objeto de forma impossível em qualquer recipiente de Tamanho 1 ou maior até ele ser usado ou o sol nascer.",
+        "Fairest": "O Belíssimo cria um exemplar ideal, inclusive quanto à marca, que concede 9-novamente a todos os usos."
+      }
+    }
   }
 }
