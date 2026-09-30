@@ -1,5 +1,5 @@
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
-import { commonExpandedConfigurationLines, decodeConfiguredRows } from "@/app/workspace/merit-configuration-presentation";
+import { commonExpandedConfigurationLines, configuredDefinitionLines, decodeConfiguredRows } from "@/app/workspace/merit-configuration-presentation";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { meritConfigurationTitle as coreMeritConfigurationTitle, normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { HEDGE_DUELIST_VARIANTS } from "./hedge-duelist-variants";
@@ -80,8 +80,8 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     if (item.description.trim()) lines.push(`${translate(locale, "ui.maskAndMien")}: ${item.description}`);
     const benefits = [
       ["extraordinary", translate(locale, "ui.extraordinaryEquipment"), item.extraordinaryDetail],
-      ["alacrity", translate(locale, "ui.improvedAlacrity"), "+2 Initiative and Speed"],
-      ["durability", translate(locale, "ui.increasedDurability"), "+1 Durability"],
+      ["alacrity", translate(locale, "ui.improvedAlacrity"), translate(locale, "ui.hedgespunAlacrityDetail")],
+      ["durability", translate(locale, "ui.increasedDurability"), translate(locale, "ui.hedgespunDurabilityDetail")],
     ] as const;
     for (const [key, label, detail] of benefits) {
       const count = selectedBenefits.filter((benefit) => benefit === key).length;
@@ -116,24 +116,20 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
   if (name === "Court Goodwill") {
     const court = courtDisplayName(courtCatalog, configuration.court, locale) || translate(locale, "ui.notSelected");
     const mantle = Math.max(0, dots - 2);
-    return locale === "en-US" ? [
-      `Court: ${court}.`,
-      `Allies: functions as Allies ${dots} within that Court.`,
-      `Mantle equivalence: ${mantle}; Court Goodwill can satisfy only Mantle prerequisites from 1 to 3.`,
-      "Mentor: functions as Mentor 1 through the Court contact.",
-    ] : [
-      `Corte: ${court}.`,
-      `Aliados: funciona como Aliados ${dots} dentro dessa Corte.`,
-      `Equivalência de Manto: ${mantle}; Benevolência da Corte só pode satisfazer pré-requisitos de Manto entre 1 e 3.`,
-      "Mentor: funciona como Mentor 1 por meio do contato na Corte.",
+    return [
+      translate(locale, "ui.courtGoodwillCourt", { court }),
+      translate(locale, "ui.courtGoodwillAllies", { dots }),
+      translate(locale, "ui.courtGoodwillMantle", { mantle }),
+      translate(locale, "ui.courtGoodwillMentor"),
     ];
   }
   if (name === "Hedge Duelist") {
     const selected = String(configuration.firstManeuver ?? "");
     const variant = HEDGE_DUELIST_VARIANTS.find((item) => item.label === selected);
-    return variant ? [`${variant.label} (${variant.seeming}): ${variant.description}`] : [];
+    return variant ? [`${translate(locale, `ui.hedgeDuelist.${variant.value}.choice`)}: ${translate(locale, `ui.hedgeDuelist.${variant.value}.description`)}`] : [];
   }
-  return commonExpandedConfigurationLines(name, dots, value, locale) ?? [];
+  return commonExpandedConfigurationLines(name, dots, value, locale)
+    ?? configuredDefinitionLines(findMeritConfiguration(name), dots, value, locale);
 }
 
 export { decodeConfiguredRows, normalizeMeritConfiguration };

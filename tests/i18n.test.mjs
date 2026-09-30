@@ -70,6 +70,55 @@ test("Mage Order labels follow the active locale", async () => {
   assert.equal(mageOrderLabel("Adamantine Arrow", "pt-BR"), "Seta Adamantina");
 });
 
+test("Merit configuration labels and canonical option presentations resolve in both locales", async () => {
+  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const catalogs = [
+    ["/app/builder/common-merit-configurations.ts", "COMMON_MERIT_CONFIGURATIONS"],
+    ["/game-lines/changeling/builder-merit-configurations.ts", "CHANGELING_MERIT_CONFIGURATIONS"],
+    ["/game-lines/mage/merit-configurations.ts", "MAGE_MERIT_CONFIGURATIONS"],
+    ["/game-lines/vampire/merit-configurations.ts", "VAMPIRE_MERIT_CONFIGURATIONS"],
+  ];
+  for (const [path, exported] of catalogs) {
+    const loaded = await vite.ssrLoadModule(path);
+    for (const definition of loaded[exported]) {
+      for (const field of definition.fields) {
+        assert.match(field.label, /^ui\./, `${definition.name}: ${field.key}`);
+        for (const key of [field.label, field.placeholder, ...(field.options ?? []).map((option) => option.label)].filter((key) => key?.startsWith("ui."))) {
+          for (const locale of ["pt-BR", "en-US"]) assert.doesNotMatch(translate(locale, key), /missing translation/, key);
+        }
+        for (const option of field.options ?? []) assert.doesNotMatch(option.value, /^ui\./, "Localized keys must never become persisted choices");
+      }
+    }
+  }
+  const { MAGE_MERIT_CONFIGURATIONS } = await vite.ssrLoadModule("/game-lines/mage/merit-configurations.ts");
+  const options = (name) => MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === name).fields.find((field) => field.options).options.map((option) => option.value);
+  assert.deepEqual(options("Prelacy"), ["Eye", "Father", "General", "Unity", "Chancellor", "Raptor", "Prophet", "Nemesis", "Ruin"]);
+  assert.deepEqual(options("Profane Tool"), ["Scepter", "Robe", "Crown", "Throne", "Ring"]);
+});
+
+test("expanded Merit configuration translates selected options but preserves authored text and locked fields", async () => {
+  const { configuredDefinitionLines } = await vite.ssrLoadModule("/app/workspace/merit-configuration-presentation.ts");
+  const { MAGE_MERIT_CONFIGURATIONS } = await vite.ssrLoadModule("/game-lines/mage/merit-configurations.ts");
+  const definition = MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === "Familiar");
+  const configuration = { name: "Ghost", entity: "Ghost", traits: "Spirit" };
+  const before = JSON.stringify(configuration);
+  assert.deepEqual(configuredDefinitionLines(definition, 2, configuration, "pt-BR"), [
+    "Nome do Familiar: Ghost", "Tipo de entidade: Fantasma", "Características da entidade: Spirit",
+  ]);
+  assert.deepEqual(configuredDefinitionLines(definition, 2, configuration, "en-US"), [
+    "Familiar name: Ghost", "Entity type: Ghost", "Entity traits: Spirit",
+  ]);
+  assert.equal(JSON.stringify(configuration), before);
+  const masque = MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === "Masque (Style)");
+  assert.deepEqual(configuredDefinitionLines(masque, 1, { nimbus: "Hidden" }, "pt-BR"), []);
+  const { expandedConfigurationLines } = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
+  assert.deepEqual(expandedConfigurationLines("Artifact", 3, {}, "pt-BR"), ["Capacidade de Mana: 6", "Gnose efetiva: 2"]);
+  const changeling = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
+  assert.deepEqual(changeling.expandedConfigurationLines("Hedge Duelist", 1, { firstManeuver: "Shadowplay" }, "pt-BR"), [
+    "Jogo de Sombras (Trevoso): Ganhe +2 de Defesa enquanto estiver na escuridão ou em sombras profundas.",
+  ]);
+});
+
 test("legacy tr() UI translation helper is not reintroduced in active app surfaces", async () => {
   const candidates = [
     "../app/workspace.tsx",

@@ -1,6 +1,6 @@
 # Auditoria editorial do dicionário pt-BR
 
-As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e substitua a proposta quando preferir outra redação.
+As decisões já auditadas foram incorporadas à interface e aos Títulos. As novas propostas para revisão estão na seção final; nomes de Méritos permanecem registrados para a tradução de seus catálogos.
 
 ## Termos gerais
 
@@ -8,7 +8,7 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | --- | --- | --- |
 | Beat | Ato | Usado também em *Arcane Beat* → **Ato Arcano**. |
 | Breaking Point | Ponto de Ruptura | Aplicado em Mortal e Vampire. |
-| Catch | Brecha | Refere-se à condição especial de ativação de Penhores. |
+| Catch | Gatilho | Ativa o Penhor mesmo para quem normalmente não teria poder para fazê-lo; distinto de *Loophole* → **Brecha**. |
 | Bonded | Vinculado | Nome da Condição; aguarda a tradução integral do catálogo de Condições. |
 
 ## Mage
@@ -16,11 +16,11 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
 | Hubris | Húbris | |
-| Attainment | Conquista | |
+| Attainment | Aperfeiçoamento | |
 | Inured spell | Feitiço Habituado | |
-| Enlightened / Understanding / Falling | Iluminação / Compreensão / Queda | Patamares do teste de Húbris. |
+| Enlightened / Understanding / Falling | Iluminado / Consciente / Caído | Patamares do teste de Húbris. |
 | Nameless Order | Ordem sem Nome | |
-| Mystery Cult Initiation | Iniciação em Culto de Mistério | |
+| Mystery Cult Initiation | Iniciação em Culto dos Mistérios | |
 
 **Pendente de outro catálogo:** `Megalomaniacal` e `Rampant` foram mantidos nos resultados de Húbris porque são nomes de Condições e devem acompanhar a tradução integral desse catálogo.
 
@@ -32,7 +32,7 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Kindred | Membros | Em prosa corrente, usa-se **vampiro** quando a referência não é ao grupo social. |
 | Dirge | Lamento | |
 | Pack / Pack Alpha | Matilha / Alfa da Matilha | |
-| Lashes of Blood Tether | Açoites do Laço de Sangue | |
+| Lashes of Blood Tether | Açoites do Grilhão de Sangue | |
 | Predatory Aspect / Unnatural Aspect | Aspecto Predatório / Aspecto Sobrenatural | |
 | Simplified Hollow | Vazio Simplificado | Regra alternativa de *Strange Shades*. |
 
@@ -49,67 +49,67 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 
 | Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
-| Baron of the Lesser Ones | Barão dos Seres Menores | Primeiro Título do lote; o sentido de *Lesser Ones* pode admitir uma forma mais idiomática. |
+| Baron of the Lesser Ones | Barão dos Subalternos | |
 | Master of Keys | Mestre das Chaves | |
 | Thorn Dancer | Dançarino dos Espinhos | Foi adotado o masculino fixo, sem exibir pares de gênero. |
 | Sibylline Fisher | Pescador Sibilino | |
-| Spiderborn Rider | Cavaleiro Nascido da Aranha | |
-| BriarNet | BriarNet | Mantido como nome próprio; a opção **Rede de Silvados** não foi aplicada. |
+| Spiderborn Rider | Cavaleiro da Aranha | |
+| BriarNet | BriarNet | Mantido como nome próprio. |
 | Cracking Software | Software de Invasão | Nome mecânico citado pelo Programa Pítia; deve acompanhar a futura auditoria dos Méritos. |
-| Adjudicator of the Wheel | Adjudicador da Roda | |
-| The Blackbird Bishop | Bispo Melro | |
+| Adjudicator of the Wheel | Árbitros da Roda | |
+| The Blackbird Bishop | Bispo Negro | |
 | Diviners of Worms | Adivinhos dos Vermes | |
 | Duchess of Truth and Loss | Duquesa da Verdade e da Perda | |
 | Guildmaster of Goldspinners | Mestre da Guilda dos Fiandeiros de Ouro | **Goldspinners** foi interpretado literalmente como fiandeiros de ouro. |
-| Paragon of Story Heroes | Paragão dos Heróis das Histórias | **Paragão** existe em português, mas é pouco corrente. |
+| Paragon of Story Heroes | Paragão dos Heróis das Histórias | |
 | Sacred Band of the Golden Standard | Bando Sagrado do Estandarte Dourado | |
 | Golden Bands | Faixas Douradas | Pode se referir tanto a faixas quanto a braçadeiras; o texto mecânico não especifica a forma. |
 | Squire of the Broken Bough | Escudeiro do Ramo Partido | |
-| Companion of the Resigned | Companheiro do Resignado | |
-| Infinite Popup Book | Livro Pop-up Infinito | **Pop-up** foi mantido por ser a forma corrente para livros com estruturas tridimensionais. |
+| Companion of the Resigned | Companheiro dos Resignados | |
+| Infinite Popup Book | Livro Pop-up Infinito | |
 | Castellan of the Broken Cage | Castelão da Jaula Quebrada | |
-| Chrysalid | crisálida | Usado como substantivo comum no texto do Castelão. |
-| Knights of the Knowledge of the Tongue | Cavaleiros do Saber da Língua | **Tongue** foi interpretado literalmente; o contexto culinário também admite uma adaptação ligada ao paladar. |
-| Legate of the Black Apple | Legado da Maçã Negra | **Legado** é o título diplomático, não o substantivo no sentido de herança; a forma é correta, mas pouco corrente. |
+| Chrysalid | Crisálida | |
+| Knights of the Knowledge of the Tongue | Cavaleiros do Conhecimento do Paladar | |
+| Legate of the Black Apple | O Legado da Maçã Negra | |
 | Sprite | Fagulha | Ser feérico citado em **Elemento Divino**; convém uniformizar quando esse catálogo for localizado. |
-| Margrave of the Brim | Margrave da Orla | **Margrave** foi mantido como título nobiliárquico; **Brim** foi interpretado como a orla da Sebe. |
+| Margrave of the Brim | Margrave da Orla | |
 | Bane | Flagelo | Nome do papel marcial dos Nobres Sábios dos Confins Desconhecidos. |
-| Bugbear Mask | Máscara de Bicho-papão | **Bugbear** foi interpretado como a criatura do folclore, não como urso. |
-| The Tolltaker Knight | O Cavaleiro Cobrador | **Tolltaker** foi adaptado para a função de cobrar o preço prometido. |
+| Bugbear Mask | Máscara de Bicho-papão | |
+| The Tolltaker Knight | O Cavaleiro Cobrador | |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.
 
 ## Textos dinâmicos fora dos dicionários
 
-Estes textos já foram localizados no código, mas não devem ser consolidados no dicionário sem a revisão editorial indicada abaixo.
+Os textos de interface e os resumos mecânicos abaixo usam chaves semânticas nos dicionários. As decisões auditadas foram preservadas.
 
 ### Configuração de Méritos
 
-Os rótulos de configuração ainda são definidos em inglês junto às regras dos Méritos em `app/builder/common-merit-configurations.ts`, `game-lines/changeling/builder-merit-configurations.ts`, `game-lines/mage/merit-configurations.ts` e `game-lines/vampire/merit-configurations.ts`. Eles devem ser migrados para chaves de i18n durante a tradução dos Méritos, preservando `key`, valores e opções canônicas armazenadas.
+Os rótulos de configuração de Core, Changeling, Mage e Vampire foram migrados para `ui.meritConfig.*`, preservando `key`, valores e opções canônicas armazenadas. Opções de Perícias e Atributos são localizadas somente na apresentação; textos livres do jogador não são traduzidos. As formas dos nomes de Méritos abaixo orientam a tradução separada dos catálogos.
 
-| Grupo | Rótulos que exigem decisão editorial |
+| Grupo | Rótulos e traduções |
 | --- | --- |
-| Comum | `Staff`, `Retainer`, `Safe Place`, `Striking Looks`, `Area of Expertise`, `Defensive Combat`, `Fighting Finesse`, `Quick Draw`, `Unseen Sense` e `Professional Training`. |
-| Changeling | `Hedge Duelist`, `Blood and Bone`, `Eerie Eyes`, `Know-It-All`, `Material Affinity`, `Mover and Shaker`, `Running with the Wolves`, `Still Waters Run Deep`, `Elemental Warrior`, `Fae Pet`, `A Taste of Honey`, `Rageaholic`, `Acquired Taste`, `Favored Phobia`, `Grief Connoisseur` e `Strange Favor`. |
-| Mage | `Artifact`, `Astral Adept`, `Awakened Status`, `Broad Dedication`, `Cabal Theme`, `Daimonomikon`, `Demesne`, `Destiny`, `Enhanced Item`, `Enriched Item`, `Familiar`, `Grimoire`, `Hallow`, `Imbued Ally`, `Imbued Item`, `Infamous Mentor`, `Inheritance`, `Mana Battery`, `Masque`, `Order Archive`, `Perfected Item`, `Prelacy`, `Profane Tool`, `Shadow Name`, `Shadow Self`, `Sanctum`, `Soul Stone`, `Supernal Watcher` e `Techné`. |
-| Vampire | `Kindred Status`, `Haven`, `Herd`, `Retainer (Ghoul)`, `Practiced Puppeteer`, `Friends in Low Places`, `Hiding Place`, `Contract with the Uncanny` e `The Three Heads of Kerberos`. |
+| Comum | `Staff` → Funcionários · `Retainer` → Lacaio · `Safe Place` → Local Seguro · `Striking Looks` → Aparência Impressionante · `Area of Expertise` → Área de Especialização · `Defensive Combat` → Combate Defensivo · `Fighting Finesse` → Finesse de Combate · `Quick Draw` → Saque Rápido · `Unseen Sense` → Sentido Sobrenatural · `Professional Training` → Treinamento Profissional |
+| Changeling | `Hedge Duelist` → Duelista da Sebe · `Blood and Bone` → Sangue e Osso · `Eerie Eyes` → Olhos Inquietantes · `Know-It-All` → Sabe-Tudo · `Material Affinity` → Afinidade Material · `Mover and Shaker` → Influente · `Running with the Wolves` → Correndo com os Lobos · `Still Waters Run Deep` → Águas Calmas São Profundas · `Elemental Warrior` → Guerreiro Elemental · `Fae Pet` → Mascote Feérico · `A Taste of Honey` → Um Gosto de Mel · `Rageaholic` → Viciado em Fúria · `Acquired Taste` → Gosto Adquirido · `Favored Phobia` → Fobia Favorita · `Grief Connoisseur` → Conhecedor do Luto · `Strange Favor` → Favor Estranho |
+| Mage | `Artifact` → Artefato · `Astral Adept` → Adepto Astral · `Awakened Status` → Status dos Despertos · `Broad Dedication` → Dedicação Ampla · `Cabal Theme` → Tema de Cabala · `Daimonomikon` → Daimonomikon · `Demesne` → Demesne · `Destiny` → Destino · `Enhanced Item` → Item Aprimorado · `Enriched Item` → Item Enriquecido · `Familiar` → Familiar · `Grimoire` → Grimório · `Hallow` → Santuário · `Imbued Ally` → Aliado Imbuído · `Imbued Item` → Item Imbuído · `Infamous Mentor` → Mentor Infame · `Inheritance` → Herança · `Mana Battery` → Bateria de Mana · `Masque` → Máscara · `Order Archive` → Arquivo da Ordem · `Perfected Item` → Item Aperfeiçoado · `Prelacy` → Prelado · `Profane Tool` → Ferramenta Profana · `Shadow Name` → Nome das Sombras · `Shadow Self` → Eu das Sombras · `Sanctum` → Santuário · `Soul Stone` → Pedra da Alma · `Supernal Watcher` → Vigia Superno · `Techné` → Techné |
+| Vampire | `Kindred Status` → Status dos Membros · `Haven` → Refúgio · `Herd` → Rebanho · `Retainer (Ghoul)` → Lacaio (Ghoul) · `Practiced Puppeteer` → Titereiro Experiente · `Friends in Low Places` → Amigos em Lugares Baixos · `Hiding Place` → Esconderijo · `Contract with the Uncanny` → Pacto com o Estranho · `The Three Heads of Kerberos` → As Três Cabeças de Cérbero |
 
 ### Regras vampíricas exibidas dinamicamente
 
-`game-lines/vampire/sheet-view.tsx` ainda contém blocos mecânicos bilíngues embutidos. A interface portuguesa funciona, mas mistura termos canônicos ingleses. Formas propostas para a revisão:
+Os blocos mecânicos de `game-lines/vampire/sheet-view.tsx` foram migrados para chaves com parâmetros. Formas auditadas e aplicadas:
 
-| Inglês ainda exibido | Forma proposta | Observação |
+| Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
 | Strength / Dexterity / Stamina | Força / Destreza / Vigor | Atributos. |
-| Blood Potency | Potência do Sangue | |
+| Blood Potency | Potência de Sangue | |
 | Willpower | Força de Vontade | |
 | Health | Vitalidade | Nome usado atualmente pela ficha. |
 | Daysleep / Embrace | Sono Diurno / Abraço | |
-| Lashing Out | Investida Predatória | Nome da ação; requer confirmação. |
+| Lashing Out | Incitar a Fera | |
 | Fight / Flight | Lutar / Fugir | Opções de reação à Aura Predatória. |
 | Power Attribute | Atributo de Poder | |
 | Brawl / grapple / Feed | Briga / agarrão / Alimentar-se | |
-| Feeding Grounds | Território de Caça | |
+| Feeding Grounds | Campo de Caça | |
 | Starting Vitae | Vitae Inicial | |
 | Coil | Espiral | |
 | Kindred senses | Sentidos Vampíricos | Evita a forma pouco natural **Sentidos dos Membros**. |
@@ -118,4 +118,22 @@ Os nomes de Condições citados nesses blocos (`Swooning`, `Drained` e outros) d
 
 ### Dívida técnica de i18n
 
-Os editores de Homebrew ainda usam uma função local `h(português, inglês)` em vez de chaves semânticas do dicionário. Os textos estão apresentados nos dois idiomas, mas essa forma contorna a proteção do ESLint. A migração deve abranger os editores e inventários de Homebrew de Core, Changeling, Mage e Vampire; depois disso, a regra `no-untranslated-ui-text` deve rejeitar também esse padrão local.
+Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Vampire usam chaves semânticas. A regra `no-untranslated-ui-text` rejeita o padrão local `h(português, inglês)` e os testes protegem essa restrição.
+
+## Novas propostas para auditoria
+
+| Inglês | Forma aplicada | Observação |
+| --- | --- | --- |
+| Doom | Sina | Campo de configuração de Destiny; distingue a sina da vantagem Destino. |
+| Fettered vessel | Receptáculo vinculado | Campo do Familiar; descreve onde a entidade está vinculada. |
+| Utility Attainments | Aperfeiçoamentos Utilitários | Segue a decisão Attainment → Aperfeiçoamento. |
+| Raptor | Rapina | Nome do Exarca; pode ser revisto como título próprio. |
+| Profane Form: Robe | Manto | Forma da Ferramenta Profana, não o Mérito Manto de Changeling. |
+| Dread Power | Poder Sobrenatural | Rótulo do Mascote Feérico; deve acompanhar o catálogo de Poderes Sobrenaturais. |
+| Thousand Falling Leaves | Mil Folhas Caindo | Manobra de Duelista da Sebe. |
+| Once Bitten, Twice Shy | Gato Escaldado | Adaptação do provérbio, sem restringir a manobra a felinos. |
+| Shadowplay | Jogo de Sombras | Manobra de Duelista da Sebe. |
+| Treacherous Ground | Solo Traiçoeiro | Manobra de Duelista da Sebe. |
+| Unblemished Poise | Compostura Imaculada | Nome da manobra; não corresponde ao Atributo Compostura. |
+| The Crashing Oak | A Queda do Carvalho | Nome da manobra que melhora o Ataque Total. |
+| Spite is Strength | Despeito é Força | Manobra de Duelista da Sebe. |

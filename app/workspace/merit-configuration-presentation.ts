@@ -6,15 +6,19 @@ export function configuredDefinitionLines(
   definition: MeritConfigDefinition | undefined,
   dots: number,
   value: unknown,
+  locale: Locale = "en-US",
 ) {
   if (!definition) return [];
   const configuration = normalizeMeritConfiguration(value);
-  return definition.fields.filter((field) => field.kind !== "merit").flatMap((field) => {
+  return definition.fields.filter((field) => field.kind !== "merit" && (field.minDots ?? 0) <= dots).flatMap((field) => {
     const stored = configuration[field.key];
     const text = Array.isArray(stored)
       ? stored.slice(0, field.fixedRows ?? dots * (field.rowsPerDot ?? 1)).filter(Boolean).join(", ")
       : String(stored ?? "");
-    return text.trim() ? [`${field.label}: ${text}`] : [];
+    const option = field.kind === "select" ? field.options?.find((item) => item.value === text) : undefined;
+    const displayed = option ? (option.label.startsWith("ui.") ? translate(locale, option.label) : systemTerm(option.label, locale)) : text;
+    const label = field.label.startsWith("ui.") ? translate(locale, field.label) : field.label;
+    return text.trim() ? [`${label}: ${displayed}`] : [];
   });
 }
 
@@ -33,14 +37,14 @@ export function commonExpandedConfigurationLines(
     const assets = Array.isArray(configuration.asset_skills) ? configuration.asset_skills.filter(Boolean) : [];
     if (profession) lines.push(`${translate(locale, "ui.profession")}: ${profession}`);
     if (dots >= 1 && contacts.length) lines.push(`${translate(locale, "ui.contacts")}: ${contacts.join(", ")}`);
-    if (dots >= 2 && assets.length) lines.push(`${translate(locale, "ui.assetSkills")}: ${assets.join(", ")}`);
+    if (dots >= 2 && assets.length) lines.push(`${translate(locale, "ui.assetSkills")}: ${assets.map((skill) => systemTerm(skill, locale)).join(", ")}`);
     for (const index of [1, 2]) {
       const skill = String(configuration[`specialty_${index}_skill`] ?? "").trim();
       const specialty = String(configuration[`specialty_${index}_name`] ?? "").trim();
-      if (dots >= 3 && skill && specialty) lines.push(`${translate(locale, "ui.specialty")}: ${skill} (${specialty})`);
+      if (dots >= 3 && skill && specialty) lines.push(`${translate(locale, "ui.specialty")}: ${systemTerm(skill, locale)} (${specialty})`);
     }
     const boosted = String(configuration.boosted_skill ?? "").trim();
-    if (dots >= 4 && boosted) lines.push(`${translate(locale, "ui.skillIncrease")}: ${boosted} +1`);
+    if (dots >= 4 && boosted) lines.push(`${translate(locale, "ui.skillIncrease")}: ${systemTerm(boosted, locale)} +1`);
     return lines;
   }
   if (name === "Contacts") {
@@ -64,7 +68,7 @@ export function commonExpandedConfigurationLines(
       if (type === "specialty") {
         const skill = String(configuration[`${prefix}_specialty_skill`] ?? "").trim();
         const specialty = String(configuration[`${prefix}_specialty_name`] ?? "").trim();
-        if (skill || specialty) benefits.push(`${translate(locale, "ui.specialty")}: ${skill}${skill && specialty ? " (" : ""}${specialty}${skill && specialty ? ")" : ""}`);
+        if (skill || specialty) benefits.push(`${translate(locale, "ui.specialty")}: ${systemTerm(skill, locale)}${skill && specialty ? " (" : ""}${specialty}${skill && specialty ? ")" : ""}`);
       }
       if (type === "skill" || type === "merit_skill") {
         const skill = String(configuration[`${prefix}_skill`] ?? "").trim();

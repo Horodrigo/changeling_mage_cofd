@@ -60,6 +60,20 @@ test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()
     assert.ok(canonical,id);
     assert.deepEqual(presentation.blessings.map((item)=>item.id),canonical.blessings.map((item)=>item.id),id);
     assert.deepEqual((presentation.roles??[]).map((item)=>item.id),(canonical.roles??[]).map((item)=>item.id),id);
+    for(const field of ["name","meritName","prerequisites","purpose","privileges","duties","maskAndMien","heraldry","touchstone","curse","beat"]){
+      assert.ok(presentation[field]?.trim(), `${id}: ${field}`);
+    }
+    assert.equal(presentation.legends.length,canonical.legends.length,id);
+    assert.ok(presentation.legends.every((legend)=>legend.trim()),id);
+    for(const field of ["name","description","effect","catch","drawback"]) assert.ok(presentation.token[field]?.trim(), `${id}: token.${field}`);
+    for(const blessing of canonical.blessings){
+      const translatedBlessing=presentation.blessings.find((item)=>item.id===blessing.id);
+      for(const field of ["name","description","choiceLabel"]) if(blessing[field]) assert.ok(translatedBlessing[field]?.trim(), `${id}: ${blessing.id}.${field}`);
+    }
+    for(const role of canonical.roles??[]){
+      const translatedRole=presentation.roles.find((item)=>item.id===role.id);
+      for(const field of ["name","prerequisites","privilege","duties","heraldryColor","tokenBonus","tokenDrawback"]) if(role[field]) assert.ok(translatedRole[field]?.trim(), `${id}: ${role.id}.${field}`);
+    }
   }
 });
 

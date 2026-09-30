@@ -2199,11 +2199,13 @@ function VampireExpandedMeritList({
           configDefinition,
           merit.dots,
           merit.configuration,
+          locale,
         ).length
           ? configuredDefinitionLines(
               configDefinition,
               merit.dots,
               merit.configuration,
+              locale,
             )
           : (commonExpandedConfigurationLines(
               merit.name,
