@@ -8,6 +8,12 @@ export const vampireMessages = {
     },
     "ui": {
       "vampireTitle": "VAMPIRE",
+      "cruac": "Crúac",
+      "thebanSorcery": "Feitiçaria Tebana",
+      "kimiya": "Kimiya",
+      "therion": "Therion",
+      "gildedCage": "Gaiola Dourada",
+      "detournement": "Detournement",
       "meritConfig": {
         "clanCovenantOrCity": "Clã, Coalizão ou cidade",
         "kindredStatusExample": "Círculo da Anciã, Daeva, Londres…",
@@ -380,6 +386,12 @@ export const vampireMessages = {
     },
     "ui": {
       "vampireTitle": "VAMPIRE",
+      "cruac": "Crúac",
+      "thebanSorcery": "Theban Sorcery",
+      "kimiya": "Kimiya",
+      "therion": "Therion",
+      "gildedCage": "Gilded Cage",
+      "detournement": "Detournement",
       "meritConfig": {
         "clanCovenantOrCity": "Clan, Covenant or city",
         "kindredStatusExample": "Circle of the Crone, Daeva, London…",

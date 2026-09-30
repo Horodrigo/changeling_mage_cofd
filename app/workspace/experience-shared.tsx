@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
@@ -22,15 +22,14 @@ export type ExperiencePurchaseGroup<T extends string> = {
 };
 
 const EXPERIENCE_GROUP_LABELS = {
-  core: ["Core", "Core"],
-  supernatural: ["Sobrenatural", "Supernatural"],
-  integrity: ["Integridade e Recuperação", "Integrity & Recovery"],
-  acquired: ["Poderes Adquiridos", "Acquired Powers"],
+  core: "ui.experienceGroupCore",
+  supernatural: "ui.experienceGroupSupernatural",
+  integrity: "ui.experienceGroupIntegrity",
+  acquired: "ui.experienceGroupAcquired",
 } as const;
 
-export function groupedPurchaseOptions<T extends string>(groups: readonly ExperiencePurchaseGroup<T>[], label: (value: T) => string, locale: string) {
-  const language = locale === "pt-BR" ? 0 : 1;
-  return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: EXPERIENCE_GROUP_LABELS[group][language] })));
+export function groupedPurchaseOptions<T extends string>(groups: readonly ExperiencePurchaseGroup<T>[], label: (value: T) => string, locale: Locale) {
+  return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: translate(locale, EXPERIENCE_GROUP_LABELS[group]) })));
 }
 
 export function experiencePurchaseBalances(available: number, spent: number, total: number, cost: number, builderMode = false) {

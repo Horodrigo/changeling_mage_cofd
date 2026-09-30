@@ -12,7 +12,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage, type Locale, type MessageKey } from "@/lib/i18n";
 import { meritContextForSheet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
@@ -39,13 +39,13 @@ const PURCHASE_GROUPS = [
   { group: "acquired", purchases: ["devotion", "lash", "rite", "miracle", "formula", "sacrilege", "invocation", "detournement", "scale"] },
 ] as const satisfies readonly ExperiencePurchaseGroup<PurchaseType>[];
 
-export function purchaseLabel(type: PurchaseType, locale: string) {
-  const labels: Record<PurchaseType, [string, string]> = {
-    attribute: ["Atributo", "Attribute"], skill: ["Perícia", "Skill"], specialty: ["Especialização", "Specialty"], merit: ["Mérito", "Merit"],
-    discipline: ["Disciplina", "Discipline"], "blood-potency": ["Potência de Sangue", "Blood Potency"], humanity: ["Humanidade", "Humanity"], willpower: ["Ponto perdido de Força de Vontade", "Lost Willpower dot"],
-    devotion: ["Devoção", "Devotion"], lash: ["Lashes of Blood Tether", "Lashes of Blood Tether"], cruac: ["Crúac", "Crúac"], theban: ["Feitiçaria Tebana", "Theban Sorcery"], kimiya: ["Kimiya", "Kimiya"], therion: ["Therion", "Therion"], gilded: ["Gilded Cage", "Gilded Cage"], rite: ["Rito Crúac", "Crúac Rite"], miracle: ["Milagre Tebano", "Theban Miracle"], formula: ["Fórmula Kimiya", "Kimiya Formula"], sacrilege: ["Sacrilégio Therion", "Therion Sacrilege"], invocation: ["Invocação Gilded", "Gilded Invocation"], detournement: ["Detournement", "Detournement"], coil: ["Espiral do Dragão", "Coil of the Dragon"], scale: ["Escala do Dragão", "Scale of the Dragon"],
+export function purchaseLabel(type: PurchaseType, locale: Locale) {
+  const labels: Record<PurchaseType, MessageKey> = {
+    attribute: "ui.attribute", skill: "ui.skill", specialty: "ui.specialty", merit: "ui.merit",
+    discipline: "ui.discipline", "blood-potency": "ui.bloodPotency", humanity: "ui.humanity", willpower: "ui.lostWillpowerDot",
+    devotion: "ui.devotion", lash: "ui.lashesOfBloodTether", cruac: "ui.cruac", theban: "ui.thebanSorcery", kimiya: "ui.kimiya", therion: "ui.therion", gilded: "ui.gildedCage", rite: "ui.cruacRite", miracle: "ui.thebanMiracle", formula: "ui.kimiyaFormula", sacrilege: "ui.therionSacrilege", invocation: "ui.gildedInvocation", detournement: "ui.detournement", coil: "ui.coilOfTheDragon", scale: "ui.scaleOfTheDragon",
   };
-  return labels[type][locale === "pt-BR" ? 0 : 1];
+  return translate(locale, labels[type]);
 }
 
 function powerName(item: Pick<VampirePurchasablePower, "name" | "translatedName">, locale: string) { return locale === "pt-BR" ? item.translatedName : item.name; }

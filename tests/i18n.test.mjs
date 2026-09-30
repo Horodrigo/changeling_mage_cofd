@@ -3,6 +3,8 @@ import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 import { createServer } from "vite";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({
@@ -68,6 +70,28 @@ test("Mage Order labels follow the active locale", async () => {
 
   assert.equal(mageOrderLabel("Adamantine Arrow", "en-US"), "Adamantine Arrow");
   assert.equal(mageOrderLabel("Adamantine Arrow", "pt-BR"), "Seta Adamantina");
+});
+
+test("Vampire purchase labels use audited dictionary terms in both locales", async () => {
+  const { purchaseLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
+  assert.equal(purchaseLabel("lash", "pt-BR"), "Açoites do Grilhão de Sangue");
+  assert.equal(purchaseLabel("lash", "en-US"), "Lashes of Blood Tether");
+  assert.equal(purchaseLabel("invocation", "pt-BR"), "Invocação Dourada");
+  assert.equal(purchaseLabel("rite", "en-US"), "Crúac Rite");
+});
+
+test("experience rule tables resolve every message and preserve the published cost labels", async () => {
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const ctl = await vite.ssrLoadModule("/game-lines/changeling/experience-shared.tsx");
+  const mage = await vite.ssrLoadModule("/game-lines/mage/experience-shared.tsx");
+  for (const Component of [ctl.ExperienceRules, mage.MageExperienceRules]) {
+    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(Component)));
+    assert.doesNotMatch(markup, /missing translation/);
+    assert.match(markup, /Attribute/);
+  }
+  assert.equal(translate("pt-BR", "ui.beatRiskHubris"), "Arriscar um Ato de Húbris");
+  assert.equal(translate("pt-BR", "ui.favoredContractCost"), "Comum 2 · Real 3");
+  assert.equal(translate("en-US", "ui.mixedExperiencePerDot", { cost: 4 }), "4/dot, regular and/or Arcane");
 });
 
 test("Merit configuration labels and canonical option presentations resolve in both locales", async () => {

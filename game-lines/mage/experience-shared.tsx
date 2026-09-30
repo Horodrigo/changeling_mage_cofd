@@ -4,39 +4,21 @@ import { useLanguage } from "@/lib/i18n";
 
 /** Mage-only experience rules kept outside the common picker closure. */
 export function MageExperienceRules() {
-  const { locale, t } = useLanguage();
-  const beatsPt = [
-    "Cumprir ou avançar uma Aspiração",
-    "Resolver uma Condição",
-    "Aceitar falha dramática",
-    "Fim do capítulo",
+  const { t } = useLanguage();
+  const beats = [t("ui.beatAdvanceAspiration"), t("ui.beatCondition"), t("ui.beatDramaticFailure"), t("ui.beatEndChapter")];
+  const arcane = [t("ui.beatAdvanceObsession"), t("ui.beatMagicalCondition"), t("ui.beatSpellcastingFailure"), t("ui.beatRiskHubris"), t("ui.beatLegacyTutoring"), t("ui.beatSupernaturalEncounter")];
+  const costs = [
+    [t("ui.attribute"), t("ui.regularExperiencePerDot", { cost: 4 })],
+    [t("ui.skill"), t("ui.regularExperiencePerDot", { cost: 2 })],
+    [t("ui.merit"), t("ui.regularExperiencePerDot", { cost: 1 })],
+    [t("ui.arcanumUpToLimit"), t("ui.mixedExperiencePerDot", { cost: 4 })],
+    [t("ui.arcanumAboveLimit"), t("ui.aboveLimitExperiencePerDot", { cost: 5 })],
+    [t("ui.gnosis"), t("ui.mixedExperiencePerDot", { cost: 5 })],
+    [t("ui.rote"), t("ui.regularExperienceCost", { cost: 1 })],
+    [t("ui.praxis"), t("ui.arcaneExperienceCost", { cost: 1 })],
+    [t("ui.wisdom"), t("ui.arcaneExperiencePerDot", { cost: 2 })],
+    [t("ui.lostWillpowerDot"), t("ui.regularExperienceCost", { cost: 1 })],
   ];
-  const beatsEn = ["Fulfill or advance an Aspiration", "Resolve a Condition", "Accept a dramatic failure", "End of the chapter"];
-  const arcanePt = [
-    "Cumprir ou avançar uma Obsessão",
-    "Resolver Condição criada por magia, Paradoxo ou efeito mágico",
-    "Falha dramática em conjuração",
-    "Arriscar Ato de Hubris",
-    "Tutoria de Legado",
-    "Encontro novo e significativo com o sobrenatural",
-  ];
-  const arcaneEn = ["Fulfill or advance an Obsession", "Resolve a Condition created by magic, Paradox, or a magical effect", "Dramatic failure on spellcasting", "Risk an Act of Hubris", "Legacy tutoring", "A new and significant encounter with the supernatural"];
-  const costsPt = [
-    ["Atributo", "4/ponto, comum"],
-    ["Perícia", "2/ponto, comum"],
-    ["Mérito", "1/ponto, comum"],
-    ["Arcano até o limite", "4/ponto, comum e/ou Arcana"],
-    ["Arcano acima do limite", "5/ponto, somente comum + professor"],
-    ["Gnose", "5/ponto, comum e/ou Arcana"],
-    ["Rota", "1, comum"],
-    ["Práxis", "1, somente Arcana"],
-    ["Sabedoria", "2/ponto, somente Arcana"],
-    ["Força de Vontade perdida", "1, comum"],
-  ];
-  const costsEn = [["Attribute", "4/dot, regular"], ["Skill", "2/dot, regular"], ["Merit", "1/dot, regular"], ["Arcanum up to the limit", "4/dot, regular and/or Arcane"], ["Arcanum above the limit", "5/dot, regular only + teacher"], ["Gnosis", "5/dot, regular and/or Arcane"], ["Rote", "1, regular"], ["Praxis", "1, Arcane only"], ["Wisdom", "2/dot, Arcane only"], ["Lost Willpower dot", "1, regular"]];
-  const beats = locale === "en-US" ? beatsEn : beatsPt;
-  const arcane = locale === "en-US" ? arcaneEn : arcanePt;
-  const costs = locale === "en-US" ? costsEn : costsPt;
   return (
     <div className="experience-rule-menus">
       <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table>

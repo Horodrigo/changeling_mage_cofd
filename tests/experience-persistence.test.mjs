@@ -32,8 +32,8 @@ test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", 
     { group: "acquired", purchases: ["Rote"] },
   ];
   assert.deepEqual(experienceShared.groupedPurchaseOptions(groups, (value) => value, "pt-BR"), [
-    { value: "Attribute", label: "Attribute", group: "Core" },
-    { value: "Merit", label: "Merit", group: "Core" },
+    { value: "Attribute", label: "Attribute", group: "Básico" },
+    { value: "Merit", label: "Merit", group: "Básico" },
     { value: "Gnosis", label: "Gnosis", group: "Sobrenatural" },
     { value: "Wisdom", label: "Wisdom", group: "Integridade e Recuperação" },
     { value: "Rote", label: "Rote", group: "Poderes Adquiridos" },

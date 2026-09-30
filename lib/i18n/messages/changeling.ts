@@ -1,6 +1,14 @@
 export const changelingMessages = {
   "pt-BR": {
     "ui": {
+      "beatClarityDamage": "Sofrer dano de Lucidez",
+      "beatInvoluntaryBedlam": "Liberar Desvario involuntariamente",
+      "favoredContract": "Contrato favorecido",
+      "goblinContract": "Contrato Goblin",
+      "nonFavoredContract": "Contrato não favorecido",
+      "anotherSeemingBenefit": "Benefício de outra Feição",
+      "favoredContractCost": "Comum 2 · Real 3",
+      "nonFavoredContractCost": "Comum 3 · Real 4",
       "hedgeDuelist": {
         "thousand-falling-leaves": { "choice": "Mil Folhas Caindo (qualquer Feição)", "description": "Antes de um ataque, imponha −1 à Defesa do oponente; se o ataque for bem-sucedido, cause apenas metade do dano normal." },
         "once-bitten-twice-shy": { "choice": "Gato Escaldado (Fera)", "description": "Após causar dano a um oponente com um ataque neste turno, reduza a Iniciativa dele no próximo turno pelos pontos de Duelista da Sebe do personagem." },
@@ -426,7 +434,6 @@ export const changelingMessages = {
       "wyrdAtCreation": "Fado inicial",
       "wyrdFrailty": "Fragilidade de Fado {p1}",
       "wyrdHasAlreadyReached10": "Fado já atingiu 10.",
-      "lostWillpowerDot": "Ponto perdido de Força de Vontade",
       "clarityBoxChange": "Caixa {index}: {state}. Clique para alterar.",
       "blessingOf": "Bênção de {name}",
       "curseOf": "Maldição de {name}",
@@ -439,6 +446,14 @@ export const changelingMessages = {
   },
   "en-US": {
     "ui": {
+      "beatClarityDamage": "Take Clarity damage",
+      "beatInvoluntaryBedlam": "Release Bedlam involuntarily",
+      "favoredContract": "Favored Contract",
+      "goblinContract": "Goblin Contract",
+      "nonFavoredContract": "Non-favored Contract",
+      "anotherSeemingBenefit": "Benefit of another Seeming",
+      "favoredContractCost": "Common 2 · Royal 3",
+      "nonFavoredContractCost": "Common 3 · Royal 4",
       "hedgeDuelist": {
         "thousand-falling-leaves": { "choice": "Thousand Falling Leaves (Any)", "description": "Before one attack, inflict −1 Defense on the opponent; a successful attack deals only half its normal damage." },
         "once-bitten-twice-shy": { "choice": "Once Bitten, Twice Shy (Beast)", "description": "After damaging an opponent with an attack this turn, reduce their Initiative on the next turn by the character's Hedge Duelist dots." },
@@ -864,7 +879,6 @@ export const changelingMessages = {
       "wyrdAtCreation": "Wyrd at creation",
       "wyrdFrailty": "Wyrd {p1} Frailty",
       "wyrdHasAlreadyReached10": "Wyrd has already reached 10.",
-      "lostWillpowerDot": "Lost Willpower dot",
       "clarityBoxChange": "Box {index}: {state}. Press to change.",
       "blessingOf": "{name} Blessing",
       "curseOf": "{name} Curse",

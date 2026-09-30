@@ -124,6 +124,8 @@ Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Va
 
 | Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
+| Core (grupo de compras) | Básico | Rótulo de apresentação; o identificador do grupo permanece `core`. |
+| Gilded Cage | Gaiola Dourada | Tipo de compra; segue Invocação Dourada. |
 | Doom | Sina | Campo de configuração de Destiny; distingue a sina da vantagem Destino. |
 | Fettered vessel | Receptáculo vinculado | Campo do Familiar; descreve onde a entidade está vinculada. |
 | Utility Attainments | Aperfeiçoamentos Utilitários | Segue a decisão Attainment → Aperfeiçoamento. |
