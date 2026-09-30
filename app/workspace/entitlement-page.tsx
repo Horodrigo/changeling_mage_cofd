@@ -3,66 +3,674 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
-import { entitlementPrerequisitesMet, normalizeEntitlementState, type EntitlementAllocation, type EntitlementDefinition, type EntitlementState } from "@/lib/entitlements";
+import {
+  entitlementPrerequisitesMet,
+  normalizeEntitlementState,
+  type EntitlementAllocation,
+  type EntitlementDefinition,
+  type EntitlementState,
+} from "@/lib/entitlements";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } from "@/game-lines/changeling/builder-merit-grants";
-import { CTL_THREADS, changelingAnchorRecovery } from "@/game-lines/changeling/creation-rules";
+import {
+  CTL_THREADS,
+  changelingAnchorRecovery,
+} from "@/game-lines/changeling/creation-rules";
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { RuleSelect } from "./rule-select";
 import { ConfirmAction } from "./confirm-action";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
-import { homebrewContentActive, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
+import {
+  homebrewContentActive,
+  saveHomebrewPreferences,
+  setHomebrewEnabled,
+} from "@/lib/homebrew";
 import { EntitlementHomebrewEditor } from "@/game-lines/changeling/entitlement-homebrew-editor";
-import { ENTITLEMENT_HOMEBREW_SOURCE_ID, saveEntitlementHomebrews } from "@/game-lines/changeling/entitlement-homebrews";
+import {
+  ENTITLEMENT_HOMEBREW_SOURCE_ID,
+  saveEntitlementHomebrews,
+} from "@/game-lines/changeling/entitlement-homebrews";
 import { useEntitlementHomebrews } from "@/game-lines/changeling/use-entitlement-homebrews";
-export function EntitlementPage({character,updateSheet,catalog}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;catalog:readonly EntitlementDefinition[]}){
-  const { locale, t }=useLanguage(),wyrd=Math.max(1,Math.min(10,Number(character.line_data.wyrd??1)));
-  const preferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),[editorOpen,setEditorOpen]=useState(false);
-  const allEntitlements=useMemo(()=>[...catalog,...customEntitlements.filter((custom)=>!catalog.some((item)=>item.id===custom.id))],[catalog,customEntitlements]);
-  const currentId=String((character.line_data.entitlement as Record<string,unknown>|undefined)?.definitionId??character.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy)?.configuration?.definitionId??"");
-  const availableEntitlements=allEntitlements.filter((item)=>homebrewContentActive(preferences,item.id,item.sourceId)||item.id===currentId);
-  const state=normalizeEntitlementState(character.line_data.entitlement,wyrd,allEntitlements),definition=allEntitlements.find((item)=>item.id===state.definitionId);
-  const save=(nextState:EntitlementState,definitions:readonly EntitlementDefinition[]=allEntitlements)=>{const next=structuredClone(character);next.line_data={...next.line_data,entitlement:normalizeEntitlementState(nextState,wyrd,definitions)};const merit=next.merits.find((item)=>item.name==="Entitlement"&&!item.grantedBy);if(merit)merit.configuration={...normalizeMeritConfiguration(merit.configuration),definitionId:nextState.definitionId,roleId:nextState.roleId};updateSheet(synchronizeMeritGrants(next,definitions));};
-  const patch=(next:Partial<EntitlementState>)=>save({...state,...next});
-  const choice=(key:string,value:string)=>patch({choices:{...state.choices,[key]:value}});
-  const activeBlessings=new Set(state.allocations.filter((item)=>item.target==="blessing").map((item)=>item.blessingId));
-  const nextSequence=Math.max(-1,...state.allocations.map((item)=>item.sequence))+1;
-  const changeAllocation=(allocation:EntitlementAllocation|undefined,value:string)=>{
-    let allocations=state.allocations.filter((item)=>item.id!==allocation?.id);
-    if(value!=="none") allocations=[...allocations,value==="token"?{id:allocation?.id??createRandomId(),target:"token",sequence:allocation?.sequence??nextSequence}:{id:allocation?.id??createRandomId(),target:"blessing",blessingId:value.slice(9),sequence:allocation?.sequence??nextSequence}];
-    patch({allocations});
+export function EntitlementPage({
+  character,
+  updateSheet,
+  catalog,
+}: {
+  character: CharacterSheet;
+  updateSheet: (sheet: CharacterSheet) => void;
+  catalog: readonly EntitlementDefinition[];
+}) {
+  const { locale, t } = useLanguage(),
+    wyrd = Math.max(1, Math.min(10, Number(character.line_data.wyrd ?? 1)));
+  const preferences = useHomebrewPreferences(),
+    customEntitlements = useEntitlementHomebrews(),
+    [editorOpen, setEditorOpen] = useState(false);
+  const allEntitlements = useMemo(
+    () => [
+      ...catalog,
+      ...customEntitlements.filter(
+        (custom) => !catalog.some((item) => item.id === custom.id),
+      ),
+    ],
+    [catalog, customEntitlements],
+  );
+  const currentId = String(
+    (character.line_data.entitlement as Record<string, unknown> | undefined)
+      ?.definitionId ??
+      character.merits.find(
+        (item) => item.name === "Entitlement" && !item.grantedBy,
+      )?.configuration?.definitionId ??
+      "",
+  );
+  const availableEntitlements = allEntitlements.filter(
+    (item) =>
+      homebrewContentActive(preferences, item.id, item.sourceId) ||
+      item.id === currentId,
+  );
+  const state = normalizeEntitlementState(
+      character.line_data.entitlement,
+      wyrd,
+      allEntitlements,
+    ),
+    definition = allEntitlements.find((item) => item.id === state.definitionId);
+  const save = (
+    nextState: EntitlementState,
+    definitions: readonly EntitlementDefinition[] = allEntitlements,
+  ) => {
+    const next = structuredClone(character);
+    next.line_data = {
+      ...next.line_data,
+      entitlement: normalizeEntitlementState(nextState, wyrd, definitions),
+    };
+    const merit = next.merits.find(
+      (item) => item.name === "Entitlement" && !item.grantedBy,
+    );
+    if (merit)
+      merit.configuration = {
+        ...normalizeMeritConfiguration(merit.configuration),
+        definitionId: nextState.definitionId,
+        roleId: nextState.roleId,
+      };
+    updateSheet(synchronizeMeritGrants(next, definitions));
   };
-  const selectDefinition=(definitionId:string,definitions:readonly EntitlementDefinition[]=allEntitlements)=>save({...state,definitionId,roleId:"",accepted:false,touchstone:{name:"",status:"active"},allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}},definitions);
-  const selectOrCreate=(value:string)=>value==="__create__"?setEditorOpen(true):selectDefinition(value);
-  const createEntitlement=(item:EntitlementDefinition)=>{const custom=saveEntitlementHomebrews([...customEntitlements,item]);saveHomebrewPreferences(setHomebrewEnabled(setHomebrewEnabled(preferences,ENTITLEMENT_HOMEBREW_SOURCE_ID,true),item.id,true));selectDefinition(item.id,[...catalog,...custom]);};
-  const editor=editorOpen?<EntitlementHomebrewEditor open onOpenChange={setEditorOpen} onSave={createEntitlement}/>:null;
-  if(!definition)return <div className="entitlement-page"><h3 className="official-heading"><span>{t("ui.entitlement")}</span></h3><label className="entitlement-select">{t("ui.title")}<Select onValueChange={selectOrCreate}><SelectTrigger><SelectValue placeholder={t("ui.selectAnEntitlement")}/></SelectTrigger><SelectContent><SelectItem value="__create__">{t("ui.createHomebrewEntitlement")}</SelectItem>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>{editor}</div>;
-  const role=definition.roles?.find((item)=>item.id===state.roleId),prerequisitesMet=entitlementPrerequisitesMet(definition,state,character);
-  const conditional=definition.blessings.filter((item)=>item.conditional&&activeBlessings.has(item.id));
-  const tokenCount=state.allocations.filter((item)=>item.target==="token").length,canAccept=prerequisitesMet&&state.touchstone.status==="active"&&Boolean(state.touchstone.name.trim()),operational=state.accepted&&canAccept;
-  const allocationRows=[...state.allocations,...(state.allocations.length<wyrd?[undefined]:[])];
-  return <div className="entitlement-page">
-    <header className="entitlement-title"><div><h2>{definition.name}</h2><p>{definition.meritName} •••• · {definition.sourceCode} p. {definition.page}</p></div>{state.accepted?<ConfirmAction trigger={<Button type="button" size="sm" variant="destructive">{t("ui.removeEntitlement")}</Button>} title={t("ui.removefc5df2", { p1: definition.name })} description={t("ui.theEntitlementItsRanksBlessingsHeraldryAndAll")} action={t("ui.removeEntitlement")} onConfirm={()=>save({...state,accepted:false,allocations:[],choices:{},suspendedBenefitIds:[],token:{rating:0,storedGlamour:0}})}/>:<Button type="button" size="sm" disabled={!canAccept} onClick={()=>patch({accepted:true})}>{t("ui.acceptEntitlement")}</Button>}</header>
-    {!state.accepted&&<label className="entitlement-select">{t("ui.title")}<Select value={definition.id} onValueChange={selectOrCreate}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="__create__">{t("ui.createHomebrewEntitlement")}</SelectItem>{availableEntitlements.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.meritName}</SelectItem>)}</SelectContent></Select></label>}
-    {!state.accepted&&definition.roles&&<label className="entitlement-select">{t("ui.role")}<Select value={state.roleId||undefined} onValueChange={(roleId)=>patch({roleId})}><SelectTrigger><SelectValue placeholder={t("ui.selectARole")}/></SelectTrigger><SelectContent>{definition.roles.map((item)=><SelectItem key={item.id} value={item.id}>{item.name} · {item.prerequisites}</SelectItem>)}</SelectContent></Select></label>}
-    <p className={`entitlement-prerequisites ${prerequisitesMet?"met":"unmet"}`}><strong>{t("ui.prerequisites")}:</strong> {role?`${definition.prerequisites} ${role.name}: ${role.prerequisites}.`:definition.prerequisites}</p>
-    <section className={`entitlement-touchstone${state.touchstone.name.trim()?"":" missing"}`}><h3>{t("ui.entitlementTouchstone")}</h3><p>{definition.touchstone}</p><div className="entitlement-choice-row"><Input value={state.touchstone.name} onChange={(event)=>patch({touchstone:{...state.touchstone,name:event.target.value}})} placeholder={t("ui.touchstoneName")}/><RuleSelect value={state.touchstone.status} onChange={(status)=>patch({touchstone:{...state.touchstone,status:status as EntitlementState["touchstone"]["status"]}})} options={[{value:"active",label:t("ui.active")},{value:"lost",label:t("ui.lost")},{value:"suspended",label:t("ui.suspended")} ]}/></div></section>
-    <div className="entitlement-overview"><section><h3>{t("ui.purpose")}</h3><p>{definition.purpose}</p></section><section><h3>{t("ui.privileges")}</h3><p>{definition.privileges}</p>{role&&<p><strong>{role.name}:</strong> {role.privilege}</p>}</section><section><h3>{t("ui.duties")}</h3><p>{definition.duties}</p>{role&&<p><strong>{role.name}:</strong> {role.duties}</p>}</section><section><h3>{t("ui.maskAndMien")}</h3><p>{definition.maskAndMien}</p></section></div>
-    {definition.id==="baron-lesser-ones"&&state.allocations.length>=2&&<label className="entitlement-select">{t("ui.goblinFeaturesUpTo", { p1: Math.floor(state.allocations.length/2) })}<textarea value={state.choices["goblin-features"]??""} onChange={(event)=>choice("goblin-features",event.target.value)} placeholder={t("ui.oneFeaturePerLine")}/></label>}
-    {definition.id==="dauphines-wayward-children"&&<label className="entitlement-select">{t("ui.currentWards")}<textarea value={state.choices.wards??""} onChange={(event)=>choice("wards",event.target.value)} placeholder={t("ui.oneWardPerLine")}/></label>}
-    <section className="entitlement-inherent"><h3>{t("ui.inherentPrivilege")}</h3><p>{t("ui.spend1GlamourFor2ToAMundane")}</p></section>
-    {state.accepted&&!canAccept&&<p className="entitlement-inactive">{t("ui.theEntitlementIsInactiveWhileItsPrerequisitesOr")}</p>}
-    <section><h3>{t("ui.entitlementRanks")} · {state.allocations.length}/{wyrd}</h3><div className="entitlement-allocations">{allocationRows.map((allocation,index)=>{const current=allocation?.target==="token"?"token":allocation?.blessingId?`blessing:${allocation.blessingId}`:"none";return <label key={allocation?.id??"new"}>{t("ui.rank")} {index+1}<Select disabled={!state.accepted} value={current} onValueChange={(value)=>changeAllocation(allocation,value)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="none">{t("ui.unallocated")}</SelectItem>{(current==="token"||tokenCount<5)&&<SelectItem value="token">{t("ui.heraldryToken")}</SelectItem>}{definition.blessings.filter((item)=>current===`blessing:${item.id}`||!activeBlessings.has(item.id)).map((item)=><SelectItem key={item.id} value={`blessing:${item.id}`}>{item.name}</SelectItem>)}</SelectContent></Select></label>;})}</div></section>
-    <section><h3>{t("ui.blessings")}</h3><div className="entitlement-blessings">{definition.blessings.filter((blessing)=>!state.accepted||activeBlessings.has(blessing.id)).map((blessing)=>{const active=activeBlessings.has(blessing.id),suspended=state.suspendedBenefitIds.includes(blessing.id);return <article key={blessing.id} className={`${active?"active":""} ${suspended||active&&!operational?"suspended":""}`}><header><strong>{blessing.name}</strong><span>{active?t("ui.acquired"):t("ui.notAcquired")}{blessing.conditional?` · ${t("ui.conditional")}`:""}</span></header><p>{blessing.description}</p>{active&&blessing.id==="inherited-expertise"&&<div className="entitlement-choice-row"><RuleSelect value={state.choices["inherited-expertise-skill"]??""} onChange={(value)=>choice("inherited-expertise-skill",value)} options={Object.values(SKILLS).flat().map((name)=>({value:name,label:systemTerm(name,"en-US")}))}/><Input value={state.choices["inherited-expertise-name"]??""} onChange={(event)=>choice("inherited-expertise-name",event.target.value)} placeholder={t("ui.specialty")}/></div>}{active&&blessing.id==="inherited-token"&&<div className="entitlement-token-fields">{[["name",t("ui.name")],["cost",t("ui.cost")],["effect",t("ui.effect")],["catch",t("ui.catch")],["drawback",t("ui.drawback")]].map(([key,label])=><label key={key}>{label}<Input value={state.choices[`inherited-token-${key}`]??""} onChange={(event)=>choice(`inherited-token-${key}`,event.target.value)}/></label>)}</div>}{active&&blessing.id==="hidden-library"&&<RuleSelect value={state.choices[blessing.id]??""} onChange={(value)=>choice(blessing.id,value)} options={SKILLS.Mental.map((name)=>({value:name,label:systemTerm(name,"en-US")}))}/>} {active&&blessing.id==="predecessors-thread"&&<label>{blessing.choiceLabel}<RuleSelect value={state.choices[blessing.id]??""} onChange={(value)=>choice(blessing.id,value)} options={CTL_THREADS.map((name)=>({value:name,label:systemTerm(name,locale)}))}/>{state.choices[blessing.id]&&<small className="entitlement-choice-help">{changelingAnchorRecovery("thread",state.choices[blessing.id],locale)}</small>}</label>}{active&&blessing.choiceLabel&&!['inherited-expertise','inherited-token','hidden-library','predecessors-thread'].includes(blessing.id)&&<label>{blessing.choiceLabel}<Input value={state.choices[blessing.id]??""} onChange={(event)=>choice(blessing.id,event.target.value)}/></label>}</article>;})}</div></section>
-    <section className={`entitlement-heraldry${operational?"":" entitlement-disabled"}`}><h3>{t("ui.heraldry")} · {definition.token.name} {"•".repeat(tokenCount)}</h3><p><strong>{definition.heraldry}</strong> {definition.token.description}</p>{role&&<p><strong>{role.heraldryColor}:</strong> {role.tokenBonus} {t("ui.drawback")}: {role.tokenDrawback}.</p>}<p><strong>{t("combat.effectLabel")}</strong> {definition.token.effect}</p><p><strong>{t("ui.catch")}:</strong> {definition.token.catch}</p><p><strong>{t("ui.drawback")}:</strong> {definition.token.drawback}</p></section>
-    {conditional.length>0&&<section><h3>{t("ui.conditionalBenefits")}</h3><p>{t("ui.suspendOnlyTheBenefitsTheStorytellerDeterminedWere")}</p>{conditional.map((item)=><label className="entitlement-suspension" key={item.id}><input type="checkbox" checked={state.suspendedBenefitIds.includes(item.id)} onChange={(event)=>patch({suspendedBenefitIds:event.target.checked?[...state.suspendedBenefitIds,item.id]:state.suspendedBenefitIds.filter((id)=>id!==item.id)})}/>{t("ui.suspend")} {item.name}</label>)}</section>}
-    <div className="entitlement-overview"><section><h3>{t("ui.curse")}</h3><p>{definition.curse}</p><p><strong>{t("ui.currentAdditionalDice")}:</strong> +{state.allocations.length}</p></section><section><h3>{t("ui.beat")}</h3><p>{definition.beat}</p>{definition.id==="master-of-keys"&&state.allocations.length>0&&<label className="stored-glamour">{t("ui.additionalAspiration")}<Input value={state.choices["dangerous-secret-aspiration"]??""} onChange={(event)=>choice("dangerous-secret-aspiration",event.target.value)} placeholder={t("ui.pursueADangerousSecret")}/></label>}</section></div>
-    <section><h3>{t("ui.legends")}</h3><ul>{definition.legends.map((legend)=><li key={legend}>{legend}</li>)}</ul></section>
-    {editor}
-  </div>;
+  const patch = (next: Partial<EntitlementState>) =>
+    save({ ...state, ...next });
+  const choice = (key: string, value: string) =>
+    patch({ choices: { ...state.choices, [key]: value } });
+  const activeBlessings = new Set(
+    state.allocations
+      .filter((item) => item.target === "blessing")
+      .map((item) => item.blessingId),
+  );
+  const nextSequence =
+    Math.max(-1, ...state.allocations.map((item) => item.sequence)) + 1;
+  const changeAllocation = (
+    allocation: EntitlementAllocation | undefined,
+    value: string,
+  ) => {
+    let allocations = state.allocations.filter(
+      (item) => item.id !== allocation?.id,
+    );
+    if (value !== "none")
+      allocations = [
+        ...allocations,
+        value === "token"
+          ? {
+              id: allocation?.id ?? createRandomId(),
+              target: "token",
+              sequence: allocation?.sequence ?? nextSequence,
+            }
+          : {
+              id: allocation?.id ?? createRandomId(),
+              target: "blessing",
+              blessingId: value.slice(9),
+              sequence: allocation?.sequence ?? nextSequence,
+            },
+      ];
+    patch({ allocations });
+  };
+  const selectDefinition = (
+    definitionId: string,
+    definitions: readonly EntitlementDefinition[] = allEntitlements,
+  ) =>
+    save(
+      {
+        ...state,
+        definitionId,
+        roleId: "",
+        accepted: false,
+        touchstone: { name: "", status: "active" },
+        allocations: [],
+        choices: {},
+        suspendedBenefitIds: [],
+        token: { rating: 0, storedGlamour: 0 },
+      },
+      definitions,
+    );
+  const selectOrCreate = (value: string) =>
+    value === "__create__" ? setEditorOpen(true) : selectDefinition(value);
+  const createEntitlement = (item: EntitlementDefinition) => {
+    const custom = saveEntitlementHomebrews([...customEntitlements, item]);
+    saveHomebrewPreferences(
+      setHomebrewEnabled(
+        setHomebrewEnabled(preferences, ENTITLEMENT_HOMEBREW_SOURCE_ID, true),
+        item.id,
+        true,
+      ),
+    );
+    selectDefinition(item.id, [...catalog, ...custom]);
+  };
+  const editor = editorOpen ? (
+    <EntitlementHomebrewEditor
+      open
+      onOpenChange={setEditorOpen}
+      onSave={createEntitlement}
+    />
+  ) : null;
+  if (!definition)
+    return (
+      <div className="entitlement-page">
+        <h3 className="official-heading">
+          <span>{t("ui.entitlement")}</span>
+        </h3>
+        <label className="entitlement-select">
+          {t("ui.title")}
+          <Select onValueChange={selectOrCreate}>
+            <SelectTrigger>
+              <SelectValue placeholder={t("ui.selectAnEntitlement")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="__create__">
+                {t("ui.createHomebrewEntitlement")}
+              </SelectItem>
+              {availableEntitlements.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  {item.name} · {item.meritName}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </label>
+        {editor}
+      </div>
+    );
+  const role = definition.roles?.find((item) => item.id === state.roleId),
+    prerequisitesMet = entitlementPrerequisitesMet(
+      definition,
+      state,
+      character,
+    );
+  const conditional = definition.blessings.filter(
+    (item) => item.conditional && activeBlessings.has(item.id),
+  );
+  const tokenCount = state.allocations.filter(
+      (item) => item.target === "token",
+    ).length,
+    canAccept =
+      prerequisitesMet &&
+      state.touchstone.status === "active" &&
+      Boolean(state.touchstone.name.trim()),
+    operational = state.accepted && canAccept;
+  const allocationRows = [
+    ...state.allocations,
+    ...(state.allocations.length < wyrd ? [undefined] : []),
+  ];
+  return (
+    <div className="entitlement-page">
+      <header className="entitlement-title">
+        <div>
+          <h2>{definition.name}</h2>
+          <p>
+            {definition.meritName} •••• · {definition.sourceCode} p.{" "}
+            {definition.page}
+          </p>
+        </div>
+        {state.accepted ? (
+          <ConfirmAction
+            trigger={
+              <Button type="button" size="sm" variant="destructive">
+                {t("ui.removeEntitlement")}
+              </Button>
+            }
+            title={t("ui.removefc5df2", { p1: definition.name })}
+            description={t("ui.theEntitlementItsRanksBlessingsHeraldryAndAll")}
+            action={t("ui.removeEntitlement")}
+            onConfirm={() =>
+              save({
+                ...state,
+                accepted: false,
+                allocations: [],
+                choices: {},
+                suspendedBenefitIds: [],
+                token: { rating: 0, storedGlamour: 0 },
+              })
+            }
+          />
+        ) : (
+          <Button
+            type="button"
+            size="sm"
+            disabled={!canAccept}
+            onClick={() => patch({ accepted: true })}
+          >
+            {t("ui.acceptEntitlement")}
+          </Button>
+        )}
+      </header>
+      {!state.accepted && (
+        <label className="entitlement-select">
+          {t("ui.title")}
+          <Select value={definition.id} onValueChange={selectOrCreate}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="__create__">
+                {t("ui.createHomebrewEntitlement")}
+              </SelectItem>
+              {availableEntitlements.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  {item.name} · {item.meritName}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </label>
+      )}
+      {!state.accepted && definition.roles && (
+        <label className="entitlement-select">
+          {t("ui.role")}
+          <Select
+            value={state.roleId || undefined}
+            onValueChange={(roleId) => patch({ roleId })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={t("ui.selectARole")} />
+            </SelectTrigger>
+            <SelectContent>
+              {definition.roles.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  {item.name} · {item.prerequisites}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </label>
+      )}
+      <p
+        className={`entitlement-prerequisites ${prerequisitesMet ? "met" : "unmet"}`}
+      >
+        <strong>{t("ui.prerequisites")}:</strong>{" "}
+        {role
+          ? `${definition.prerequisites} ${role.name}: ${role.prerequisites}.`
+          : definition.prerequisites}
+      </p>
+      <section
+        className={`entitlement-touchstone${state.touchstone.name.trim() ? "" : " missing"}`}
+      >
+        <h3>{t("ui.entitlementTouchstone")}</h3>
+        <p>{definition.touchstone}</p>
+        <div className="entitlement-choice-row">
+          <Input
+            value={state.touchstone.name}
+            onChange={(event) =>
+              patch({
+                touchstone: { ...state.touchstone, name: event.target.value },
+              })
+            }
+            placeholder={t("ui.touchstoneName")}
+          />
+          <RuleSelect
+            value={state.touchstone.status}
+            onChange={(status) =>
+              patch({
+                touchstone: {
+                  ...state.touchstone,
+                  status: status as EntitlementState["touchstone"]["status"],
+                },
+              })
+            }
+            options={[
+              { value: "active", label: t("ui.active") },
+              { value: "lost", label: t("ui.lost") },
+              { value: "suspended", label: t("ui.suspended") },
+            ]}
+          />
+        </div>
+      </section>
+      <div className="entitlement-overview">
+        <section>
+          <h3>{t("ui.purpose")}</h3>
+          <p>{definition.purpose}</p>
+        </section>
+        <section>
+          <h3>{t("ui.privileges")}</h3>
+          <p>{definition.privileges}</p>
+          {role && (
+            <p>
+              <strong>{role.name}:</strong> {role.privilege}
+            </p>
+          )}
+        </section>
+        <section>
+          <h3>{t("ui.duties")}</h3>
+          <p>{definition.duties}</p>
+          {role && (
+            <p>
+              <strong>{role.name}:</strong> {role.duties}
+            </p>
+          )}
+        </section>
+        <section>
+          <h3>{t("ui.maskAndMien")}</h3>
+          <p>{definition.maskAndMien}</p>
+        </section>
+      </div>
+      {definition.id === "baron-lesser-ones" &&
+        state.allocations.length >= 2 && (
+          <label className="entitlement-select">
+            {t("ui.goblinFeaturesUpTo", {
+              p1: Math.floor(state.allocations.length / 2),
+            })}
+            <textarea
+              value={state.choices["goblin-features"] ?? ""}
+              onChange={(event) =>
+                choice("goblin-features", event.target.value)
+              }
+              placeholder={t("ui.oneFeaturePerLine")}
+            />
+          </label>
+        )}
+      {definition.id === "dauphines-wayward-children" && (
+        <label className="entitlement-select">
+          {t("ui.currentWards")}
+          <textarea
+            value={state.choices.wards ?? ""}
+            onChange={(event) => choice("wards", event.target.value)}
+            placeholder={t("ui.oneWardPerLine")}
+          />
+        </label>
+      )}
+      <section className="entitlement-inherent">
+        <h3>{t("ui.inherentPrivilege")}</h3>
+        <p>{t("ui.spend1GlamourFor2ToAMundane")}</p>
+      </section>
+      {state.accepted && !canAccept && (
+        <p className="entitlement-inactive">
+          {t("ui.theEntitlementIsInactiveWhileItsPrerequisitesOr")}
+        </p>
+      )}
+      <section>
+        <h3>
+          {t("ui.entitlementRanks")} · {state.allocations.length}/{wyrd}
+        </h3>
+        <div className="entitlement-allocations">
+          {allocationRows.map((allocation, index) => {
+            const current =
+              allocation?.target === "token"
+                ? "token"
+                : allocation?.blessingId
+                  ? `blessing:${allocation.blessingId}`
+                  : "none";
+            return (
+              <label key={allocation?.id ?? "new"}>
+                {t("ui.rank")} {index + 1}
+                <Select
+                  disabled={!state.accepted}
+                  value={current}
+                  onValueChange={(value) => changeAllocation(allocation, value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">{t("ui.unallocated")}</SelectItem>
+                    {(current === "token" || tokenCount < 5) && (
+                      <SelectItem value="token">
+                        {t("ui.heraldryToken")}
+                      </SelectItem>
+                    )}
+                    {definition.blessings
+                      .filter(
+                        (item) =>
+                          current === `blessing:${item.id}` ||
+                          !activeBlessings.has(item.id),
+                      )
+                      .map((item) => (
+                        <SelectItem key={item.id} value={`blessing:${item.id}`}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </label>
+            );
+          })}
+        </div>
+      </section>
+      <section>
+        <h3>{t("ui.blessings")}</h3>
+        <div className="entitlement-blessings">
+          {definition.blessings
+            .filter(
+              (blessing) => !state.accepted || activeBlessings.has(blessing.id),
+            )
+            .map((blessing) => {
+              const active = activeBlessings.has(blessing.id),
+                suspended = state.suspendedBenefitIds.includes(blessing.id);
+              return (
+                <article
+                  key={blessing.id}
+                  className={`${active ? "active" : ""} ${suspended || (active && !operational) ? "suspended" : ""}`}
+                >
+                  <header>
+                    <strong>{blessing.name}</strong>
+                    <span>
+                      {active ? t("ui.acquired") : t("ui.notAcquired")}
+                      {blessing.conditional ? ` · ${t("ui.conditional")}` : ""}
+                    </span>
+                  </header>
+                  <p>{blessing.description}</p>
+                  {active && blessing.id === "inherited-expertise" && (
+                    <div className="entitlement-choice-row">
+                      <RuleSelect
+                        value={state.choices["inherited-expertise-skill"] ?? ""}
+                        onChange={(value) =>
+                          choice("inherited-expertise-skill", value)
+                        }
+                        options={Object.values(SKILLS)
+                          .flat()
+                          .map((name) => ({
+                            value: name,
+                            label: systemTerm(name, "en-US"),
+                          }))}
+                      />
+                      <Input
+                        value={state.choices["inherited-expertise-name"] ?? ""}
+                        onChange={(event) =>
+                          choice("inherited-expertise-name", event.target.value)
+                        }
+                        placeholder={t("ui.specialty")}
+                      />
+                    </div>
+                  )}
+                  {active && blessing.id === "inherited-token" && (
+                    <div className="entitlement-token-fields">
+                      {[
+                        ["name", t("ui.name")],
+                        ["cost", t("ui.cost")],
+                        ["effect", t("ui.effect")],
+                        ["catch", t("ui.catch")],
+                        ["drawback", t("ui.drawback")],
+                      ].map(([key, label]) => (
+                        <label key={key}>
+                          {label}
+                          <Input
+                            value={
+                              state.choices[`inherited-token-${key}`] ?? ""
+                            }
+                            onChange={(event) =>
+                              choice(
+                                `inherited-token-${key}`,
+                                event.target.value,
+                              )
+                            }
+                          />
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                  {active && blessing.id === "hidden-library" && (
+                    <RuleSelect
+                      value={state.choices[blessing.id] ?? ""}
+                      onChange={(value) => choice(blessing.id, value)}
+                      options={SKILLS.Mental.map((name) => ({
+                        value: name,
+                        label: systemTerm(name, "en-US"),
+                      }))}
+                    />
+                  )}{" "}
+                  {active && blessing.id === "predecessors-thread" && (
+                    <label>
+                      {blessing.choiceLabel}
+                      <RuleSelect
+                        value={state.choices[blessing.id] ?? ""}
+                        onChange={(value) => choice(blessing.id, value)}
+                        options={CTL_THREADS.map((name) => ({
+                          value: name,
+                          label: systemTerm(name, locale),
+                        }))}
+                      />
+                      {state.choices[blessing.id] && (
+                        <small className="entitlement-choice-help">
+                          {changelingAnchorRecovery(
+                            "thread",
+                            state.choices[blessing.id],
+                            locale,
+                          )}
+                        </small>
+                      )}
+                    </label>
+                  )}
+                  {active &&
+                    blessing.choiceLabel &&
+                    ![
+                      "inherited-expertise",
+                      "inherited-token",
+                      "hidden-library",
+                      "predecessors-thread",
+                    ].includes(blessing.id) && (
+                      <label>
+                        {blessing.choiceLabel}
+                        <Input
+                          value={state.choices[blessing.id] ?? ""}
+                          onChange={(event) =>
+                            choice(blessing.id, event.target.value)
+                          }
+                        />
+                      </label>
+                    )}
+                </article>
+              );
+            })}
+        </div>
+      </section>
+      <section
+        className={`entitlement-heraldry${operational ? "" : " entitlement-disabled"}`}
+      >
+        <h3>
+          {t("ui.heraldry")} · {definition.token.name} {"•".repeat(tokenCount)}
+        </h3>
+        <p>
+          <strong>{definition.heraldry}</strong> {definition.token.description}
+        </p>
+        {role && (
+          <p>
+            <strong>{role.heraldryColor}:</strong> {role.tokenBonus}{" "}
+            {t("ui.drawback")}: {role.tokenDrawback}.
+          </p>
+        )}
+        <p>
+          <strong>{t("combat.effectLabel")}</strong> {definition.token.effect}
+        </p>
+        <p>
+          <strong>{t("ui.catch")}:</strong> {definition.token.catch}
+        </p>
+        <p>
+          <strong>{t("ui.drawback")}:</strong> {definition.token.drawback}
+        </p>
+      </section>
+      {conditional.length > 0 && (
+        <section>
+          <h3>{t("ui.conditionalBenefits")}</h3>
+          <p>{t("ui.suspendOnlyTheBenefitsTheStorytellerDeterminedWere")}</p>
+          {conditional.map((item) => (
+            <label className="entitlement-suspension" key={item.id}>
+              <input
+                type="checkbox"
+                checked={state.suspendedBenefitIds.includes(item.id)}
+                onChange={(event) =>
+                  patch({
+                    suspendedBenefitIds: event.target.checked
+                      ? [...state.suspendedBenefitIds, item.id]
+                      : state.suspendedBenefitIds.filter(
+                          (id) => id !== item.id,
+                        ),
+                  })
+                }
+              />
+              {t("ui.suspend")} {item.name}
+            </label>
+          ))}
+        </section>
+      )}
+      <div className="entitlement-overview">
+        <section>
+          <h3>{t("ui.curse")}</h3>
+          <p>{definition.curse}</p>
+          <p>
+            <strong>{t("ui.currentAdditionalDice")}:</strong> +
+            {state.allocations.length}
+          </p>
+        </section>
+        <section>
+          <h3>{t("ui.beat")}</h3>
+          <p>{definition.beat}</p>
+          {definition.id === "master-of-keys" &&
+            state.allocations.length > 0 && (
+              <label className="stored-glamour">
+                {t("ui.additionalAspiration")}
+                <Input
+                  value={state.choices["dangerous-secret-aspiration"] ?? ""}
+                  onChange={(event) =>
+                    choice("dangerous-secret-aspiration", event.target.value)
+                  }
+                  placeholder={t("ui.pursueADangerousSecret")}
+                />
+              </label>
+            )}
+        </section>
+      </div>
+      <section>
+        <h3>{t("ui.legends")}</h3>
+        <ul>
+          {definition.legends.map((legend) => (
+            <li key={legend}>{legend}</li>
+          ))}
+        </ul>
+      </section>
+      {editor}
+    </div>
+  );
 }
