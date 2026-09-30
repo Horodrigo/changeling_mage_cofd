@@ -139,3 +139,18 @@ Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Va
 | Unblemished Poise | Compostura Imaculada | Nome da manobra; não corresponde ao Atributo Compostura. |
 | The Crashing Oak | A Queda do Carvalho | Nome da manobra que melhora o Ataque Total. |
 | Spite is Strength | Despeito é Força | Manobra de Duelista da Sebe. |
+| Hob Alarm | Alarme Hob | Melhoria de Vão; segue Parentesco Hob para Hob Kin. |
+| Luxury Goods | Artigos de Luxo | Melhoria de Vão. |
+| Shadow Garden | Jardim de Sombras | Melhoria de Vão. |
+| Phantom Phone Booth | Cabine Telefônica Fantasma | Melhoria de Vão. |
+| Route Zero | Rota Zero | Nome próprio da melhoria; trod permanece trod. |
+| Size Matters | Tamanho Importa | Melhorias de Vão de um e dois pontos. |
+| Escape Route | Rota de Fuga | Melhorias de Vão de um e dois pontos. |
+| Hidden Entry / Easy Access / Home Turf | Entrada Oculta / Acesso Fácil / Território Próprio | Melhorias de Vão. |
+| Buttressed Dreaming | Sonhar Fortificado | Melhoria de Bastião Compartilhado. |
+| Fixed Doorway | Passagem Fixa | Melhoria de Bastião Compartilhado. |
+| Gate of Horn | Portal de Chifre | Portal entre Vão e Bastião. |
+| Guardian Eidolon | Eidolon Guardião | Melhoria de Bastião Compartilhado. |
+| Illusory Armory / Permanent Armory | Arsenal Ilusório / Arsenal Permanente | Melhorias de Bastião Compartilhado. |
+| Raised Defenses / Subtle Speech | Defesas Reforçadas / Fala Sutil | Melhorias de Bastião Compartilhado. |
+| Prop | Adereço | Objeto da cena de sonho; há distinção entre importante e não importante. |

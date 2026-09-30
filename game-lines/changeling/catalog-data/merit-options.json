@@ -3,123 +3,164 @@
     {
       "value": "extraordinary",
       "label": "Extraordinary Equipment",
-      "labelPt": "Equipamento Extraordinário",
-      "effect": "+1 equipment bonus, armor rating, or weapon damage modifier"
+      "effect": "+1 equipment bonus, armor rating, or weapon damage modifier",
+      "labelKey": "ui.meritOptions.hedgespun.extraordinary.name",
+      "effectKey": "ui.meritOptions.hedgespun.extraordinary.description"
     },
     {
       "value": "alacrity",
       "label": "Improved Alacrity",
-      "labelPt": "Alacridade Aprimorada",
-      "effect": "+2 Initiative and Speed"
+      "effect": "+2 Initiative and Speed",
+      "labelKey": "ui.meritOptions.hedgespun.alacrity.name",
+      "effectKey": "ui.meritOptions.hedgespun.alacrity.description"
     },
     {
       "value": "durability",
       "label": "Increased Durability",
-      "labelPt": "Durabilidade Aumentada",
-      "effect": "+1 Durability"
+      "effect": "+1 Durability",
+      "labelKey": "ui.meritOptions.hedgespun.durability.name",
+      "effectKey": "ui.meritOptions.hedgespun.durability.description"
     }
   ],
   "hollowOptions": [
     {
       "name": "Hob Alarm",
       "cost": 1,
-      "description": "Friendly hobgoblins prevent loss of Defense from surprise and add Hollow dots to actions during the first turn of an action scene. Requires Hob Kin and incurs 1 Goblin Debt each story."
+      "description": "Friendly hobgoblins prevent loss of Defense from surprise and add Hollow dots to actions during the first turn of an action scene. Requires Hob Kin and incurs 1 Goblin Debt each story.",
+      "nameKey": "ui.meritOptions.hollow.hobAlarm.name",
+      "descriptionKey": "ui.meritOptions.hollow.hobAlarm.description"
     },
     {
       "name": "Luxury Goods",
       "cost": 1,
-      "description": "Once per chapter, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes."
+      "description": "Once per chapter, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes.",
+      "nameKey": "ui.meritOptions.hollow.luxuryGoods.name",
+      "descriptionKey": "ui.meritOptions.hollow.luxuryGoods.description"
     },
     {
       "name": "Shadow Garden",
       "cost": 1,
-      "description": "Consumed goblin fruit reappears after one hour as a sensory-perfect but powerless shadow fruit; hunger it satisfies returns one hour later."
+      "description": "Consumed goblin fruit reappears after one hour as a sensory-perfect but powerless shadow fruit; hunger it satisfies returns one hour later.",
+      "nameKey": "ui.meritOptions.hollow.shadowGarden.name",
+      "descriptionKey": "ui.meritOptions.hollow.shadowGarden.description"
     },
     {
       "name": "Phantom Phone Booth",
       "cost": 1,
-      "description": "Call any publicly listed mundane phone from the Hollow without knowing its number; traces falsely identify the recipient's own line."
+      "description": "Call any publicly listed mundane phone from the Hollow without knowing its number; traces falsely identify the recipient's own line.",
+      "nameKey": "ui.meritOptions.hollow.phantomPhoneBooth.name",
+      "descriptionKey": "ui.meritOptions.hollow.phantomPhoneBooth.description"
     },
     {
       "name": "Route Zero",
       "cost": 1,
-      "description": "A one-dot looping trod crosses the Hollow. A traveler who navigates it safely returns to the start and regains 1 Willpower, once per day."
+      "description": "A one-dot looping trod crosses the Hollow. A traveler who navigates it safely returns to the start and regains 1 Willpower, once per day.",
+      "nameKey": "ui.meritOptions.hollow.routeZero.name",
+      "descriptionKey": "ui.meritOptions.hollow.routeZero.description"
     },
     {
       "name": "Size Matters 1",
       "cost": 1,
       "group": "size-matters",
-      "description": "The Hollow comfortably houses a motley of five or six changelings."
+      "description": "The Hollow comfortably houses a motley of five or six changelings.",
+      "nameKey": "ui.meritOptions.hollow.sizeMatters1.name",
+      "descriptionKey": "ui.meritOptions.hollow.sizeMatters1.description"
     },
     {
       "name": "Size Matters 2",
       "cost": 2,
       "group": "size-matters",
-      "description": "The Hollow becomes a vast estate or small town."
+      "description": "The Hollow becomes a vast estate or small town.",
+      "nameKey": "ui.meritOptions.hollow.sizeMatters2.name",
+      "descriptionKey": "ui.meritOptions.hollow.sizeMatters2.description"
     },
     {
       "name": "Escape Route 1",
       "cost": 1,
       "group": "escape-route",
-      "description": "Adds a secure stationary one-way emergency exit usable by owners and permitted guests."
+      "description": "Adds a secure stationary one-way emergency exit usable by owners and permitted guests.",
+      "nameKey": "ui.meritOptions.hollow.escapeRoute1.name",
+      "descriptionKey": "ui.meritOptions.hollow.escapeRoute1.description"
     },
     {
       "name": "Escape Route 2",
       "cost": 2,
       "group": "escape-route",
-      "description": "The one-way emergency exit may appear reflexively anywhere inside the Hollow."
+      "description": "The one-way emergency exit may appear reflexively anywhere inside the Hollow.",
+      "nameKey": "ui.meritOptions.hollow.escapeRoute2.name",
+      "descriptionKey": "ui.meritOptions.hollow.escapeRoute2.description"
     },
     {
       "name": "Hidden Entry",
       "cost": 2,
-      "description": "The entrance vanishes while all contributing owners are inside; finding or forcing it while visible suffers a two-die penalty."
+      "description": "The entrance vanishes while all contributing owners are inside; finding or forcing it while visible suffers a two-die penalty.",
+      "nameKey": "ui.meritOptions.hollow.hiddenEntry.name",
+      "descriptionKey": "ui.meritOptions.hollow.hiddenEntry.description"
     },
     {
       "name": "Easy Access",
       "cost": 3,
-      "description": "The Hollow has no fixed entrance; spend 1 Glamour to enter through any unlocked mundane door and exit where you entered."
+      "description": "The Hollow has no fixed entrance; spend 1 Glamour to enter through any unlocked mundane door and exit where you entered.",
+      "nameKey": "ui.meritOptions.hollow.easyAccess.name",
+      "descriptionKey": "ui.meritOptions.hollow.easyAccess.description"
     },
     {
       "name": "Home Turf",
       "cost": 3,
-      "description": "The owner adds Hollow dots to Initiative and Defense against intruders inside the Hollow."
+      "description": "The owner adds Hollow dots to Initiative and Defense against intruders inside the Hollow.",
+      "nameKey": "ui.meritOptions.hollow.homeTurf.name",
+      "descriptionKey": "ui.meritOptions.hollow.homeTurf.description"
     }
   ],
   "sharedBastionOptions": [
     {
       "name": "Buttressed Dreaming",
       "cost": 1,
-      "description": "Penalizes an opponent's Clash of Wills to force entry by the Shared Bastion rating."
+      "description": "Penalizes an opponent's Clash of Wills to force entry by the Shared Bastion rating.",
+      "nameKey": "ui.meritOptions.sharedBastion.buttressedDreaming.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.buttressedDreaming.description"
     },
     {
       "name": "Fixed Doorway",
       "cost": 3,
-      "description": "Requires Hollow. Creates a permanent Gate of Horn between that Hollow and the Bastion; each traveler spends 1 Glamour in each direction and may bring a passenger for +1 Glamour."
+      "description": "Requires Hollow. Creates a permanent Gate of Horn between that Hollow and the Bastion; each traveler spends 1 Glamour in each direction and may bring a passenger for +1 Glamour.",
+      "nameKey": "ui.meritOptions.sharedBastion.fixedDoorway.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.fixedDoorway.description"
     },
     {
       "name": "Guardian Eidolon",
       "cost": 1,
-      "description": "Spend 1 Willpower to wake the guardian for a scene. Owners cannot lose Defense to surprise and add Bastion dots to first-turn actions."
+      "description": "Spend 1 Willpower to wake the guardian for a scene. Owners cannot lose Defense to surprise and add Bastion dots to first-turn actions.",
+      "nameKey": "ui.meritOptions.sharedBastion.guardianEidolon.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.guardianEidolon.description"
     },
     {
       "name": "Illusory Armory",
       "cost": 2,
-      "description": "Once per chapter, spend Glamour to summon an unimportant prop with equipment rating twice Glamour spent, maximum +5; add 1 Willpower for an important prop."
+      "description": "Once per chapter, spend Glamour to summon an unimportant prop with equipment rating twice Glamour spent, maximum +5; add 1 Willpower for an important prop.",
+      "nameKey": "ui.meritOptions.sharedBastion.illusoryArmory.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.illusoryArmory.description"
     },
     {
       "name": "Permanent Armory",
       "cost": 1,
-      "description": "Physical equipment remains safely stored in the Bastion. Each non-mundane item requires 1 Willpower per chapter or the Bastion absorbs it."
+      "description": "Physical equipment remains safely stored in the Bastion. Each non-mundane item requires 1 Willpower per chapter or the Bastion absorbs it.",
+      "nameKey": "ui.meritOptions.sharedBastion.permanentArmory.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.permanentArmory.description"
     },
     {
       "name": "Raised Defenses",
       "cost": 1,
-      "description": "While an owner is inside, double the Bastion rating's defensive bonuses, to a maximum of +5."
+      "description": "While an owner is inside, double the Bastion rating's defensive bonuses, to a maximum of +5.",
+      "nameKey": "ui.meritOptions.sharedBastion.raisedDefenses.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.raisedDefenses.description"
     },
     {
       "name": "Subtle Speech",
       "cost": 2,
-      "description": "Fixed eidolons relay private messages of up to five words from the Bastion to waking motley members."
+      "description": "Fixed eidolons relay private messages of up to five words from the Bastion to waking motley members.",
+      "nameKey": "ui.meritOptions.sharedBastion.subtleSpeech.name",
+      "descriptionKey": "ui.meritOptions.sharedBastion.subtleSpeech.description"
     }
   ]
 }

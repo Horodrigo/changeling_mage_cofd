@@ -1,6 +1,102 @@
 export const changelingMessages = {
   "pt-BR": {
     "ui": {
+      "meritOptions": {
+        "hollow": {
+          "hobAlarm": {
+            "name": "Alarme Hob",
+            "description": "Hobgoblins amistosos impedem a perda de Defesa por surpresa e acrescentam os pontos de Vão às ações no primeiro turno de uma cena de ação. Exige Parentesco Hob e gera 1 Débito Goblin por história."
+          },
+          "luxuryGoods": {
+            "name": "Artigos de Luxo",
+            "description": "Uma vez por capítulo, role os pontos de Vão para produzir um item temporário mundano ou tecido na Sebe, com Disponibilidade ou graduação não superior ao número de sucessos."
+          },
+          "shadowGarden": {
+            "name": "Jardim de Sombras",
+            "description": "Uma Fruta Goblin consumida reaparece após uma hora como uma fruta de sombra, perfeita aos sentidos, mas sem poderes; a fome que ela sacia retorna uma hora depois."
+          },
+          "phantomPhoneBooth": {
+            "name": "Cabine Telefônica Fantasma",
+            "description": "Do Vão, ligue para qualquer telefone mundano listado publicamente sem conhecer seu número; rastreamentos identificam falsamente a própria linha do destinatário."
+          },
+          "routeZero": {
+            "name": "Rota Zero",
+            "description": "Um trod circular de um ponto atravessa o Vão. Uma vez por dia, quem o percorre em segurança retorna ao início e recupera 1 ponto de Força de Vontade."
+          },
+          "sizeMatters1": {
+            "name": "Tamanho Importa 1",
+            "description": "O Vão abriga confortavelmente um Retalho de cinco ou seis changelings."
+          },
+          "sizeMatters2": {
+            "name": "Tamanho Importa 2",
+            "description": "O Vão se torna uma vasta propriedade ou uma pequena cidade."
+          },
+          "escapeRoute1": {
+            "name": "Rota de Fuga 1",
+            "description": "Acrescenta uma saída de emergência fixa e segura, de mão única, que pode ser usada pelos proprietários e pelos convidados autorizados."
+          },
+          "escapeRoute2": {
+            "name": "Rota de Fuga 2",
+            "description": "A saída de emergência de mão única pode surgir reflexivamente em qualquer lugar dentro do Vão."
+          },
+          "hiddenEntry": {
+            "name": "Entrada Oculta",
+            "description": "A entrada desaparece enquanto todos os proprietários que contribuíram estiverem dentro do Vão; encontrar ou forçar a entrada enquanto ela estiver visível impõe uma penalidade de dois dados."
+          },
+          "easyAccess": {
+            "name": "Acesso Fácil",
+            "description": "O Vão não possui entrada fixa; gaste 1 Glamour para entrar por qualquer porta mundana destrancada e sair por onde entrou."
+          },
+          "homeTurf": {
+            "name": "Território Próprio",
+            "description": "O proprietário acrescenta os pontos de Vão à Iniciativa e à Defesa contra intrusos dentro do Vão."
+          }
+        },
+        "sharedBastion": {
+          "buttressedDreaming": {
+            "name": "Sonhar Fortificado",
+            "description": "Imponha à Disputa de Vontades de um oponente para forçar a entrada uma penalidade igual à graduação de Bastião Compartilhado."
+          },
+          "fixedDoorway": {
+            "name": "Passagem Fixa",
+            "description": "Exige Vão. Cria um Portal de Chifre permanente entre o Vão e o Bastião; cada viajante gasta 1 Glamour em cada direção e pode levar um passageiro por +1 Glamour."
+          },
+          "guardianEidolon": {
+            "name": "Eidolon Guardião",
+            "description": "Gaste 1 ponto de Força de Vontade para despertar o guardião por uma cena. Os proprietários não podem perder Defesa por surpresa e acrescentam os pontos de Bastião às ações do primeiro turno."
+          },
+          "illusoryArmory": {
+            "name": "Arsenal Ilusório",
+            "description": "Uma vez por capítulo, gaste Glamour para invocar um adereço não importante com bônus de equipamento igual ao dobro do Glamour gasto, até +5; acrescente 1 ponto de Força de Vontade para um adereço importante."
+          },
+          "permanentArmory": {
+            "name": "Arsenal Permanente",
+            "description": "Equipamentos físicos permanecem armazenados em segurança no Bastião. Cada item não mundano exige 1 ponto de Força de Vontade por capítulo, ou o Bastião o absorve."
+          },
+          "raisedDefenses": {
+            "name": "Defesas Reforçadas",
+            "description": "Enquanto um proprietário estiver dentro, dobre os bônus defensivos da graduação do Bastião, até +5."
+          },
+          "subtleSpeech": {
+            "name": "Fala Sutil",
+            "description": "Eidolons fixos transmitem mensagens privadas de até cinco palavras do Bastião aos membros do Retalho que estejam acordados."
+          }
+        },
+        "hedgespun": {
+          "extraordinary": {
+            "name": "Equipamento Extraordinário",
+            "description": "+1 de bônus de equipamento, graduação de armadura ou modificador de dano de arma"
+          },
+          "alacrity": {
+            "name": "Alacridade Aprimorada",
+            "description": "+2 de Iniciativa e Deslocamento"
+          },
+          "durability": {
+            "name": "Durabilidade Aumentada",
+            "description": "+1 de Durabilidade"
+          }
+        }
+      },
       "beatClarityDamage": "Sofrer dano de Lucidez",
       "beatInvoluntaryBedlam": "Liberar Desvario involuntariamente",
       "favoredContract": "Contrato favorecido",
@@ -446,6 +542,102 @@ export const changelingMessages = {
   },
   "en-US": {
     "ui": {
+      "meritOptions": {
+        "hollow": {
+          "hobAlarm": {
+            "name": "Hob Alarm",
+            "description": "Friendly hobgoblins prevent loss of Defense from surprise and add Hollow dots to actions during the first turn of an action scene. Requires Hob Kin and incurs 1 Goblin Debt each story."
+          },
+          "luxuryGoods": {
+            "name": "Luxury Goods",
+            "description": "Once per chapter, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes."
+          },
+          "shadowGarden": {
+            "name": "Shadow Garden",
+            "description": "Consumed goblin fruit reappears after one hour as a sensory-perfect but powerless shadow fruit; hunger it satisfies returns one hour later."
+          },
+          "phantomPhoneBooth": {
+            "name": "Phantom Phone Booth",
+            "description": "Call any publicly listed mundane phone from the Hollow without knowing its number; traces falsely identify the recipient's own line."
+          },
+          "routeZero": {
+            "name": "Route Zero",
+            "description": "A one-dot looping trod crosses the Hollow. A traveler who navigates it safely returns to the start and regains 1 Willpower, once per day."
+          },
+          "sizeMatters1": {
+            "name": "Size Matters 1",
+            "description": "The Hollow comfortably houses a motley of five or six changelings."
+          },
+          "sizeMatters2": {
+            "name": "Size Matters 2",
+            "description": "The Hollow becomes a vast estate or small town."
+          },
+          "escapeRoute1": {
+            "name": "Escape Route 1",
+            "description": "Adds a secure stationary one-way emergency exit usable by owners and permitted guests."
+          },
+          "escapeRoute2": {
+            "name": "Escape Route 2",
+            "description": "The one-way emergency exit may appear reflexively anywhere inside the Hollow."
+          },
+          "hiddenEntry": {
+            "name": "Hidden Entry",
+            "description": "The entrance vanishes while all contributing owners are inside; finding or forcing it while visible suffers a two-die penalty."
+          },
+          "easyAccess": {
+            "name": "Easy Access",
+            "description": "The Hollow has no fixed entrance; spend 1 Glamour to enter through any unlocked mundane door and exit where you entered."
+          },
+          "homeTurf": {
+            "name": "Home Turf",
+            "description": "The owner adds Hollow dots to Initiative and Defense against intruders inside the Hollow."
+          }
+        },
+        "sharedBastion": {
+          "buttressedDreaming": {
+            "name": "Buttressed Dreaming",
+            "description": "Penalizes an opponent's Clash of Wills to force entry by the Shared Bastion rating."
+          },
+          "fixedDoorway": {
+            "name": "Fixed Doorway",
+            "description": "Requires Hollow. Creates a permanent Gate of Horn between that Hollow and the Bastion; each traveler spends 1 Glamour in each direction and may bring a passenger for +1 Glamour."
+          },
+          "guardianEidolon": {
+            "name": "Guardian Eidolon",
+            "description": "Spend 1 Willpower to wake the guardian for a scene. Owners cannot lose Defense to surprise and add Bastion dots to first-turn actions."
+          },
+          "illusoryArmory": {
+            "name": "Illusory Armory",
+            "description": "Once per chapter, spend Glamour to summon an unimportant prop with equipment rating twice Glamour spent, maximum +5; add 1 Willpower for an important prop."
+          },
+          "permanentArmory": {
+            "name": "Permanent Armory",
+            "description": "Physical equipment remains safely stored in the Bastion. Each non-mundane item requires 1 Willpower per chapter or the Bastion absorbs it."
+          },
+          "raisedDefenses": {
+            "name": "Raised Defenses",
+            "description": "While an owner is inside, double the Bastion rating's defensive bonuses, to a maximum of +5."
+          },
+          "subtleSpeech": {
+            "name": "Subtle Speech",
+            "description": "Fixed eidolons relay private messages of up to five words from the Bastion to waking motley members."
+          }
+        },
+        "hedgespun": {
+          "extraordinary": {
+            "name": "Extraordinary Equipment",
+            "description": "+1 equipment bonus, armor rating, or weapon damage modifier"
+          },
+          "alacrity": {
+            "name": "Improved Alacrity",
+            "description": "+2 Initiative and Speed"
+          },
+          "durability": {
+            "name": "Increased Durability",
+            "description": "+1 Durability"
+          }
+        }
+      },
       "beatClarityDamage": "Take Clarity damage",
       "beatInvoluntaryBedlam": "Release Bedlam involuntarily",
       "favoredContract": "Favored Contract",

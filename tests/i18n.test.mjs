@@ -143,6 +143,35 @@ test("expanded Merit configuration translates selected options but preserves aut
   ]);
 });
 
+test("Changeling structure options localize presentation without altering canonical saved choices", async () => {
+  const { translate, LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const options = JSON.parse(readFileSync(new URL("../game-lines/changeling/catalog-data/merit-options.json", import.meta.url), "utf8"));
+  for (const collection of Object.values(options)) {
+    for (const item of collection) {
+      for (const locale of ["pt-BR", "en-US"]) {
+        for (const key of [item.nameKey ?? item.labelKey, item.descriptionKey ?? item.effectKey]) assert.doesNotMatch(translate(locale, key), /missing translation/);
+      }
+      assert.equal(translate("en-US", item.nameKey ?? item.labelKey), item.name ?? item.label);
+      assert.equal(translate("en-US", item.descriptionKey ?? item.effectKey), item.description ?? item.effect);
+    }
+  }
+  const { expandedConfigurationLines } = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
+  const value = { name: "Shadow Garden", features: ["Shadow Garden|1", "My garden|1"] };
+  const before = JSON.stringify(value);
+  const pt = expandedConfigurationLines("Hollow", 2, value, "pt-BR");
+  assert.ok(pt.includes("Nome: Shadow Garden"), "Authored names must not be translated");
+  assert.ok(pt.some((line) => line.endsWith("Jardim de Sombras, My garden")));
+  assert.ok(expandedConfigurationLines("Hollow", 2, value, "en-US").some((line) => line.endsWith("Shadow Garden, My garden")));
+  assert.ok(expandedConfigurationLines("Stable Trod", 1, { enhancement: "Hob Alarm" }, "pt-BR").some((line) => line.endsWith("Alarme Hob")));
+  assert.equal(JSON.stringify(value), before);
+  const { renderChangelingStructuredMeritEditor } = await vite.ssrLoadModule("/game-lines/changeling/builder-merit-editor.tsx");
+  for (const name of ["Hollow", "Shared Bastion", "Hedgespun Item", "Stable Trod"]) {
+    const editor = renderChangelingStructuredMeritEditor({ merit: { name, dots: 5 }, configuration: {}, onChange: () => {}, compact: false }, [], []);
+    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, editor));
+    assert.doesNotMatch(markup, /missing translation/, name);
+  }
+});
+
 test("legacy tr() UI translation helper is not reintroduced in active app surfaces", async () => {
   const candidates = [
     "../app/workspace.tsx",

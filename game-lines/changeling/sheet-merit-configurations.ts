@@ -6,6 +6,7 @@ import { HEDGE_DUELIST_VARIANTS } from "./hedge-duelist-variants";
 import { translate, type Locale } from "@/lib/i18n";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
+import meritOptions from "./catalog-data/merit-options.json";
 
 export type TokenKind = "token" | "trifle" | "bauble";
 export type TokenConfigurationItem = { id: string; kind: TokenKind; name: string; rating: number; cost: string; effect: string; description: string; crux: string; catch: string; drawback: string };
@@ -98,7 +99,12 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     const features = Array.isArray(configuration.features) ? configuration.features : [];
     if (configuredName) lines.push(`${translate(locale, "ui.name")}: ${configuredName}`);
     if (location) lines.push(`${translate(locale, "ui.locationAndAppearance")}: ${location}`);
-    if (features.length) lines.push(`${translate(locale, "ui.features")}: ${features.map((item) => String(item).split("|")[0]).join(", ")}`);
+    const options = name === "Hollow" ? meritOptions.hollowOptions : meritOptions.sharedBastionOptions;
+    if (features.length) lines.push(`${translate(locale, "ui.features")}: ${features.map((item) => {
+      const canonical = String(item).split("|")[0];
+      const option = options.find((entry) => entry.name === canonical);
+      return option ? translate(locale, option.nameKey) : canonical;
+    }).join(", ")}`);
     return lines;
   }
   if (name === "Stable Trod") {
@@ -106,7 +112,8 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     const configuredName = String(configuration.name ?? "").trim();
     const enhancement = String(configuration.enhancement ?? "").trim();
     if (configuredName) lines.push(`${translate(locale, "ui.trod")}: ${configuredName}`);
-    if (enhancement) lines.push(`${translate(locale, "ui.sharedHollowEnhancement")}: ${enhancement}`);
+    const option = meritOptions.hollowOptions.find((entry) => entry.name === enhancement);
+    if (enhancement) lines.push(`${translate(locale, "ui.sharedHollowEnhancement")}: ${option ? translate(locale, option.nameKey) : enhancement}`);
     return lines;
   }
   if (name === "Workshop") {
