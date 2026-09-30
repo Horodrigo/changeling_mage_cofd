@@ -16,7 +16,7 @@ const corePt = await json("public/data/core/merits/pt-BR/core.json");
 const changelingPt = await json("public/data/changeling/merits-pt.json");
 
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
-  assert.equal(Object.keys(corePt).length, 34);
+  assert.equal(Object.keys(corePt).length, 59);
   assert.equal(Object.keys(changelingPt).length, 53);
   for (const item of changeling.filter((item) => !item.sourceId.startsWith("h-"))) {
     assert.ok(changelingPt[item.id], item.id);

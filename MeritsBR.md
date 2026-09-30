@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 34/202 registros Core e 53/154 Changeling. Todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos, incluindo as cinco manobras de Guerreiro Elemental, três de Apresentação Encantadora e onze de Duelista da Sebe. Ainda faltam 168 registros Core e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 59/202 registros Core e 53/154 Changeling. Todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos, incluindo as cinco manobras de Guerreiro Elemental, três de Apresentação Encantadora e onze de Duelista da Sebe. Ainda faltam 143 registros Core e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -73,6 +73,29 @@ Observações mecânicas adicionais, sem correção incidental:
 | Motley Awareness | Percepção do Retalho | Percepção dos demais membros, não consciência coletiva literal. |
 
 Fontes inspecionadas visualmente: The Hedge pp. 66–69, 115 e 118–119; Oak, Ash, and Thorn p. 33; Kith and Kin p. 69; Dark Eras 2 pp. 75–76 e 107. Os resumos cadastrados foram preservados, sem incluir regras ausentes.
+
+## Novas escolhas para auditoria — segundo lote Core
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Citywalker | Andarilho Urbano | Deslocamento entre cidades por correspondências ocultas. |
+| Crack Driver | Motorista Exímio | Distingue-se do Estilo Stunt Driver. |
+| Double Jointed | Hiperflexibilidade | Característica de mobilidade articular, não articulações adicionais. |
+| Fighting Finesse | Refinamento de Combate | Uso de Destreza no lugar de Força. |
+| Fixer | Facilitador | Intermediário de serviços. |
+| Fleet of Foot | Pés Ligeiros | Deslocamento e fuga a pé. |
+| Greyhound | Galgo | Mantém a metáfora de um perseguidor veloz. |
+| Hobbyist Clique | Grupo de Entusiastas | Comunidade dedicada a um passatempo. |
+| bane / Rank | Flagelo / Posto | Terminologia de entidades efêmeras em Arsenal Esotérico; conferir na futura tradução das regras dessas entidades. |
+
+Fontes inspecionadas visualmente neste lote: Chronicles of Darkness pp. 45, 48, 51, 56–57, 61, 139 e 236; pp. 44 e 47 já haviam sido inspecionadas no lote inicial. Os requisitos “Somente mortais” foram preservados; traduzir um Mérito Core não o torna acessível a Changelings.
+
+Observações mecânicas adicionais, sem correção incidental:
+
+- `Citywalker`, p. 236: o resumo canônico coloca oito horas de sono antes do teste. No livro, dormir oito horas remove a restrição a novas tentativas após uma falha; não é uma exigência para cada uso. A tradução mantém o resumo cadastrado.
+- `Cheap Shot`, p. 61: o resumo não contém a penalidade cumulativa de −2 para novos usos na mesma cena. Não foi acrescentada na tradução.
+- `Choke Hold`, p. 61: o resumo omite o limiar de sucessos maior que o dobro do Vigor e a duração de (6 − Vigor) minutos. Não foram acrescentados na tradução.
+- `Fighting Finesse` e `Interdisciplinary Specialty`: os livros exigem Especializações apropriadas; os requisitos canônicos resumidos não as incluem. A tradução mantém os requisitos existentes.
 
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 

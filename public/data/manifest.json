@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 15,
+  "catalogVersion": 16,
   "catalogs": {
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
@@ -30,7 +30,7 @@
     "changeling-tokens-pt": { "version": 2, "url": "/data/changeling/tokens-pt.json" },
     "merits-index": { "version": 5, "url": "/data/core/merits/index.json" },
     "merits-core": { "version": 5, "url": "/data/core/merits/core.json" },
-    "merits-core-pt": { "version": 2, "url": "/data/core/merits/pt-BR/core.json" },
+    "merits-core-pt": { "version": 3, "url": "/data/core/merits/pt-BR/core.json" },
     "merits-changeling": { "version": 2, "url": "/data/core/merits/changeling.json" },
     "merits-changeling-pt": { "version": 3, "url": "/data/changeling/merits-pt.json" },
     "merits-mage": { "version": 2, "url": "/data/core/merits/mage.json" },

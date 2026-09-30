@@ -161,5 +161,127 @@
     "name": "Advogado de Regras",
     "prerequisites": "Perseverança •••; Erudição ••",
     "description": "Um Estilo Mental progressivo para explorar a redação literal, argumentos técnicos, atrasos procedimentais e revisões repetidas."
+  },
+  "core-2ed:aura-reading": {
+    "name": "Leitura de Aura",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Raciocínio + Empatia − Compostura para ler a aura de um alvo e fazer uma pergunta por sucesso sobre emoções, intenção, honestidade, foco, agressividade ou natureza sobrenatural. Criaturas sobrenaturais podem perceber que estão sendo examinadas."
+  },
+  "core-2ed:automatic-writing": {
+    "name": "Escrita Automática",
+    "prerequisites": "Somente mortais",
+    "description": "Após meditar e gastar Força de Vontade, um teste de Raciocínio + Compostura pode produzir pistas por meio de escrita automática, sob o risco de atrair um espírito assombrador."
+  },
+  "core-2ed:biokinesis": {
+    "name": "Biocinese",
+    "prerequisites": "Somente mortais",
+    "description": "Cura na metade do tempo normal. Gasta Força de Vontade e se concentra por um minuto para transferir, por uma hora, um ponto de Atributo Físico por ponto neste Mérito entre Atributos Físicos, sem elevar nenhum Atributo acima de cinco."
+  },
+  "core-2ed:cheap-shot": {
+    "name": "Golpe Baixo",
+    "prerequisites": "Luta de Rua •••, Subterfúgio ••",
+    "description": "Durante uma luta, pode disputar reflexivamente Destreza + Subterfúgio contra Raciocínio + Compostura para negar a Defesa de um oponente no próximo turno por meio de truques sujos e distrações."
+  },
+  "core-2ed:choke-hold": {
+    "name": "Estrangulamento",
+    "prerequisites": "Briga ••",
+    "description": "Após uma manobra Segurar bem-sucedida, permite usar a manobra de agarrão Estrangular: acumula sucessos ao longo de vários turnos para deixar a vítima inconsciente por alguns minutos."
+  },
+  "core-2ed:citywalker": {
+    "name": "Andarilho Urbano",
+    "prerequisites": "Somente mortais; Manha ••",
+    "description": "Em uma cidade com pelo menos 250 mil habitantes, passa oito horas dormindo e testa Perseverança + Manha para percorrer correspondências ocultas até outra cidade conhecida; o resultado determina se o personagem chega, sofre um atraso ou entra no reino dos pesadelos."
+  },
+  "core-2ed:clairvoyance": {
+    "name": "Clarividência",
+    "prerequisites": "Somente mortais",
+    "description": "Após uma meditação bem-sucedida, gasta Força de Vontade e testa Raciocínio + Ocultismo para projetar os sentidos até outro local por um método de vidência escolhido. O método e a conexão simpática modificam o teste."
+  },
+  "core-2ed:crack-driver": {
+    "name": "Motorista Exímio",
+    "prerequisites": "Condução •••",
+    "description": "Quando não realiza ações além de Condução, adiciona sua Compostura como bônus aos testes de Condução e como penalidade às tentativas de inutilizar seu veículo. Com três pontos, pode realizar uma ação reflexiva de Condução uma vez por turno."
+  },
+  "core-2ed:cursed": {
+    "name": "Amaldiçoado",
+    "prerequisites": "Somente mortais",
+    "description": "Define uma sina que se estende por toda a crônica. Recebe +2 em Perseverança + Compostura contra medo ou insegurança não relacionados a essa sina e recebe um Ato adicional quando dano letal preenche as últimas três caixas de Vitalidade."
+  },
+  "core-2ed:defensive-combat": {
+    "name": "Combate Defensivo",
+    "prerequisites": "Briga • ou Armas Brancas •",
+    "description": "Pode substituir Atletismo pela Perícia escolhida ao calcular a Defesa, desde que esteja equipado para realizar ataques com essa Perícia."
+  },
+  "core-2ed:demolisher": {
+    "name": "Demolidor",
+    "prerequisites": "Força ou Inteligência •••",
+    "description": "Ao quebrar objetos, ignora um ponto de Durabilidade por ponto em Demolidor."
+  },
+  "core-2ed:double-jointed": {
+    "name": "Hiperflexibilidade",
+    "prerequisites": "Destreza •••",
+    "description": "Desloca articulações à vontade e escapa automaticamente de amarras mundanas. Quando estiver agarrado e não agir de forma agressiva, impõe uma penalidade igual à sua Destreza aos testes do atacante para dominá-lo."
+  },
+  "core-2ed:esoteric-armory": {
+    "name": "Arsenal Esotérico",
+    "description": "Reuniu materiais esotéricos suficientes para fornecer os Flagelos de entidades efêmeras com Posto igual ou inferior à pontuação neste Mérito."
+  },
+  "core-2ed:fighting-finesse": {
+    "name": "Refinamento de Combate",
+    "prerequisites": "Destreza •••",
+    "description": "Pode substituir Força por Destreza em testes de uma Especialização escolhida de Briga ou Armas Brancas."
+  },
+  "core-2ed:fixer": {
+    "name": "Facilitador",
+    "prerequisites": "Contatos ••, Raciocínio •••",
+    "description": "Obtém serviços como se sua Disponibilidade fosse um ponto menor."
+  },
+  "core-2ed:fleet-of-foot": {
+    "name": "Pés Ligeiros",
+    "prerequisites": "Atletismo ••",
+    "description": "Adiciona os pontos em Pés Ligeiros ao Deslocamento e os aplica como penalidade aos testes de quem persegue o personagem em uma perseguição a pé."
+  },
+  "core-2ed:giant": {
+    "name": "Gigante",
+    "description": "+1 de Tamanho. Disponível apenas na criação do personagem."
+  },
+  "core-2ed:good-time-management": {
+    "name": "Boa Gestão do Tempo",
+    "prerequisites": "Erudição ou Ciência ••",
+    "description": "Realiza testes de ações prolongadas na metade do tempo necessário."
+  },
+  "core-2ed:greyhound": {
+    "name": "Galgo",
+    "prerequisites": "Atletismo •••, Raciocínio •••, Vigor •••",
+    "description": "Obtém um sucesso excepcional com três sucessos em uma ação de perseguição."
+  },
+  "core-2ed:hardy": {
+    "name": "Resistente",
+    "prerequisites": "Vigor •••",
+    "description": "Adiciona os pontos em Resistente como bônus aos testes contra doenças, venenos, privação, asfixia e inconsciência."
+  },
+  "core-2ed:hobbyist-clique": {
+    "name": "Grupo de Entusiastas",
+    "prerequisites": "Qualquer Perícia ••",
+    "description": "Enquanto mantiver contato com os demais entusiastas, o apoio deles concede 9-novamente nos testes da Perícia ligada ao passatempo do personagem e +2 dados nas ações prolongadas que usem essa Perícia."
+  },
+  "core-2ed:holistic-awareness": {
+    "name": "Consciência Holística",
+    "description": "Testa Raciocínio + Sobrevivência para substituir equipamento por materiais coletados na natureza ao tratar pacientes com Medicina, a menos que o paciente sofra penalidades por ferimentos de dano letal ou agravado."
+  },
+  "core-2ed:indomitable": {
+    "name": "Indomável",
+    "prerequisites": "Perseverança •••",
+    "description": "Recebe +2 em uma parada disputada ou característica de resistência aplicada contra influência mental sobrenatural."
+  },
+  "core-2ed:inspiring": {
+    "name": "Inspirador",
+    "prerequisites": "Presença •••",
+    "description": "Testa Presença + Expressão para conceder a Condição Inspirado."
+  },
+  "core-2ed:interdisciplinary-specialty": {
+    "name": "Especialização Interdisciplinar",
+    "prerequisites": "Qualquer Perícia •••",
+    "description": "Escolhe uma Especialização na Perícia correspondente. Aplica o dado de bônus da Especialização aos testes pertinentes de qualquer Perícia, exceto aos testes sem treinamento."
   }
 }
