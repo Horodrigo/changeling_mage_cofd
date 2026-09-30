@@ -229,7 +229,7 @@ Foram traduzidos os 62 registros, seus requisitos alternativos e as cinco manobr
 | Iron Toes | Dedos de Ferro | Dedos dos pés; o nome não concede contato inofensivo com ferro. |
 | Token Crucible | Cadinho de Penhores | Instalação de criação no Vão. |
 | Scour the Mask | Desgastar a Mascarilha | Processo citado no resumo de Mascote Fae; termo para uniformização futura. |
-| Dread Power | Poder Temível | Forma já presente no dicionário Changeling; há um rótulo antigo do mascote que usa Poder Sobrenatural, a uniformizar na apresentação. |
+| Dread Power | Poder Temível | Forma já presente no dicionário Changeling e uniformizada também no editor de Mascote Fae. |
 | Paranoid / Confused | Paranoico / Confuso | Condições citadas; Confuso já aparece nas Frátrias, e Paranoico requer uniformização quando tiver apresentação própria. |
 
 Observações mecânicas para uma auditoria separada:
@@ -238,3 +238,9 @@ Observações mecânicas para uma auditoria separada:
 - `Meat Shield: Remember Me?` não explicita a parada de resistência do atacante no resumo cadastrado. Ela não foi inventada na tradução.
 - `Material Affinity` mantém Ação Avançada, termo já usado nas Frátrias e nos Contratos; não foi substituído por qualidade de rotina.
 - Os requisitos alternativos de Feição foram traduzidos nos dois campos existentes. Não houve mudança no cálculo de elegibilidade nem na quantidade de instâncias.
+
+## Integração da apresentação
+
+Criação/edição, compra por Experiência, ficha e impressão Changeling usam os textos de apresentação por ID. As categorias dos Méritos Core e Changeling foram movidas para os dicionários e compartilhadas pelas duas telas de compra e pelo editor homebrew, sem alterar as categorias armazenadas. Graduações no catálogo de criação são exibidas como pontos gráficos, preservando valores descontínuos. O editor homebrew usa rótulos traduzidos para referências a Méritos, mas continua salvando seus nomes canônicos e preservando o conteúdo escrito pelo jogador.
+
+As regras sem níveis agora também exibem a descrição e os requisitos ao expandir a ficha. Na impressão detalhada, a descrição geral de um Estilo não é mais omitida quando suas manobras aparecem.

@@ -1,5 +1,13 @@
 export const changelingMessages = {
   "pt-BR": {
+    "meritCategories": {
+      "Changeling": "Changeling",
+      "Changeling Courts": "Cortes Changeling",
+      "Changeling Seemings": "Feições Changeling",
+      "Entitlement": "Títulos",
+      "Court": "Cortes",
+      "Seeming": "Feições"
+    },
     "ui": {
       "mountAbilities": {
         "manyleague": { "name": "Muitas Léguas", "description": "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado." },
@@ -149,8 +157,8 @@ export const changelingMessages = {
         "physicalElement": "Elemento físico",
         "name": "Nome",
         "animal": "Animal",
-        "dreadPower": "Poder Sobrenatural",
-        "petDreadPowerName": "Nome do Poder Sobrenatural do mascote",
+        "dreadPower": "Poder Temível",
+        "petDreadPowerName": "Nome do Poder Temível do mascote",
         "chosenDesire": "Desejo escolhido",
         "chosenWrath": "Forma de ira escolhida",
         "sapientSupernaturalKind": "Tipo sobrenatural sapiente",
@@ -555,6 +563,14 @@ export const changelingMessages = {
     }
   },
   "en-US": {
+    "meritCategories": {
+      "Changeling": "Changeling",
+      "Changeling Courts": "Changeling Courts",
+      "Changeling Seemings": "Changeling Seemings",
+      "Entitlement": "Entitlements",
+      "Court": "Courts",
+      "Seeming": "Seemings"
+    },
     "ui": {
       "mountAbilities": {
         "manyleague": { "name": "Manyleague", "description": "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner." },

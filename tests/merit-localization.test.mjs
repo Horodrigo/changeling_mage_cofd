@@ -3,6 +3,8 @@ import test, { after } from "node:test";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const json = async (path) => JSON.parse(await readFile(new URL(`../${path}`, import.meta.url), "utf8"));
@@ -100,4 +102,42 @@ test("Merit groups load only their own canonical and presentation catalogs into 
   assert.deepEqual(requests.sort(), ["merits-changeling", "merits-changeling-pt", "merits-core", "merits-core-pt"]);
   assert.ok(Object.isFrozen(snapshot[0][0].presentationPt));
   assert.ok(Object.isFrozen(snapshot[0].find((item) => item.name === "Armed Defense").presentationPt.levels));
+});
+
+test("Core and Changeling Merit categories use dictionaries without translating custom categories", async () => {
+  const { meritCategoryLabel } = await vite.ssrLoadModule("/lib/merit-ui.ts");
+  const { messages } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  for (const category of new Set([...core, ...changeling].map((item) => item.category))) {
+    for (const locale of ["pt-BR", "en-US"]) {
+      assert.equal(meritCategoryLabel(category, locale), messages[locale].meritCategories[category]);
+    }
+  }
+  assert.equal(meritCategoryLabel("Fighting Styles", "pt-BR"), "Estilos de Combate");
+  assert.equal(meritCategoryLabel("Changeling Seemings", "pt-BR"), "Feições Changeling");
+  for (const locale of ["pt-BR", "en-US"]) assert.equal(meritCategoryLabel("Minha categoria", locale), "Minha categoria");
+  for (const path of ["app/builder/merit-picker.tsx", "app/workspace/experience-shared.tsx", "app/merit-homebrew-panel.tsx"]) {
+    assert.match(await readFile(new URL(`../${path}`, import.meta.url), "utf8"), /meritCategoryLabel\(/, path);
+  }
+});
+
+test("Builder and Experience selected Merit names retain canonical identity and locale presentation", async () => {
+  const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { MeritPicker } = await vite.ssrLoadModule("/app/builder/merit-picker.tsx");
+  const { ExperienceMeritPicker } = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const catalog = withMeritPresentation(changeling, changelingPt);
+  const definition = catalog.find((item) => item.id === "h-seemings:meat-shield");
+  const character = { ...blankPrintCharacter("CtL"), merits: [{ name: definition.name, dots: 2, sourceId: definition.sourceId, source: definition.source, configuration: {} }] };
+  const before = structuredClone(character);
+  const picker = createElement(MeritPicker, { merits: character.merits, setMerits: () => {}, catalog, context: { gameLine: "CtL", merits: [] }, spent: 2, budget: 10, renderConfiguration: () => null, isInlineConfiguration: () => false });
+  const experience = createElement(ExperienceMeritPicker, { line: "CtL", archetypes: [], meritCatalog: catalog, character, selectedId: definition.id, targetDots: 3, onSelect: () => {} });
+  for (const element of [picker, experience]) {
+    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, element));
+    assert.match(markup, /Meat Shield/);
+    assert.doesNotMatch(markup, /Escudo de Carne|undefined|missing translation/);
+  }
+  assert.deepEqual(character, before);
+  for (const locale of ["pt-BR", "en-US"]) {
+    assert.equal(meritPresentation(definition, locale).name, locale === "pt-BR" ? "Escudo de Carne" : "Meat Shield");
+  }
 });

@@ -8,7 +8,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
-import { alphabetical } from "@/lib/option-order";
+import { alphabetical, compareOptionLabels } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { systemTerm } from "@/lib/system-terms";
 import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle";
@@ -16,6 +16,7 @@ import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { meritCategoryLabel } from "@/lib/merit-ui";
 
 export type ExperiencePurchaseGroup<T extends string> = {
   group: "core" | "supernatural" | "integrity" | "acquired";
@@ -259,16 +260,17 @@ export function ExperienceMeritPicker({
 }) {
   const { locale, t }=useLanguage();
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Todas");
+  const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
   const [meritDrafts, setMeritDrafts] = useState<Record<string,{newInstance:boolean;instanceIndex:number;dots:number}>>({});
-  const meritName=(item:MeritDefinition)=>locale==="en-US"?item.name:item.translatedName;
+  const meritName=(item:MeritDefinition)=>meritPresentation(item,locale).name;
+  const categoryName=(value:string)=>meritCategoryLabel(value,locale);
   const categoryKeys=(item:MeritDefinition)=>homebrewCategoryKeys(categoryFor(item),item.sourceId);
   const context=meritContextForSheet(character, meritCatalog, archetypes);
   const catalog = alphabetical([...meritCatalog], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
-    normalized = search.toLocaleLowerCase("pt-BR"),
-    categories = ["Todas", ...new Set(catalog.flatMap(categoryKeys))];
+    normalized = search.toLocaleLowerCase(locale),
+    categories = ["all", ...[...new Set(catalog.flatMap(categoryKeys))].sort((left,right)=>compareOptionLabels(categoryName(left),categoryName(right),locale))];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -305,7 +307,7 @@ export function ExperienceMeritPicker({
           <RuleSelect
             value={category}
             onChange={setCategory}
-            options={categories.map((value) => ({ value, label: value }))}
+            options={categories.map((value) => ({ value, label: value === "all" ? t("ui.allCategories") : categoryName(value) }))}
           />
           <MeritCatalogVisibilityToggle showAll={showAllMerits} setShowAll={setShowAllMerits} />
         </div>
@@ -314,7 +316,7 @@ export function ExperienceMeritPicker({
             .filter(
               (item) =>
                 (showAllMerits || isEligible(item, context)) &&
-                (category === "Todas" || categoryKeys(item).includes(category)) &&
+                (category === "all" || categoryKeys(item).includes(category)) &&
                 `${meritName(item)} ${item.name} ${meritPresentation(item, locale).description} ${meritPresentation(item, locale).prerequisites ?? ""} ${item.source} ${categoryKeys(item).join(" ")}`
                   .toLocaleLowerCase(locale)
                   .includes(normalized),

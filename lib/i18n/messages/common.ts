@@ -1,5 +1,20 @@
 export const commonMessages = {
   "pt-BR": {
+    "meritCategories": {
+      "Mental": "Mentais",
+      "Physical": "Físicos",
+      "Social": "Sociais",
+      "Supernatural": "Sobrenaturais",
+      "Fighting": "Combate",
+      "Fighting Style": "Estilos de Combate",
+      "Fighting Styles": "Estilos de Combate",
+      "Mental Styles": "Estilos Mentais",
+      "Physical Styles": "Estilos Físicos",
+      "Social Styles": "Estilos Sociais",
+      "Supernatural Styles": "Estilos Sobrenaturais",
+      "Historical": "Históricos",
+      "Homebrew": "Homebrew"
+    },
     "common": {
       "close": "Fechar",
       "cancel": "Cancelar",
@@ -679,6 +694,21 @@ export const commonMessages = {
     }
   },
   "en-US": {
+    "meritCategories": {
+      "Mental": "Mental",
+      "Physical": "Physical",
+      "Social": "Social",
+      "Supernatural": "Supernatural",
+      "Fighting": "Fighting",
+      "Fighting Style": "Fighting Styles",
+      "Fighting Styles": "Fighting Styles",
+      "Mental Styles": "Mental Styles",
+      "Physical Styles": "Physical Styles",
+      "Social Styles": "Social Styles",
+      "Supernatural Styles": "Supernatural Styles",
+      "Historical": "Historical",
+      "Homebrew": "Homebrew"
+    },
     "common": {
       "close": "Close",
       "cancel": "Cancel",

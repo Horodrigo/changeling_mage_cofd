@@ -25,6 +25,7 @@ import { createRandomId } from "@/lib/random-id";
 import { experienceMeritDots } from "@/lib/merit-progression";
 import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { meritCategoryLabel } from "@/lib/merit-ui";
 
 export type MeritConfigurationRenderProps = {
   merit: MeritSelection;
@@ -63,15 +64,15 @@ export function MeritPicker({
   categoryFor?: (definition: MeritDefinition) => string;
 }) {
   const { locale, t } = useLanguage();
-  const meritName = (definition: MeritDefinition) => locale === "pt-BR" ? definition.translatedName : definition.name;
-  const categoryName = (category: string) => locale === "pt-BR" ? meritCategoryLabel(category) : category;
+  const meritName = (definition: MeritDefinition) => meritPresentation(definition, locale).name;
+  const categoryName = (category: string) => meritCategoryLabel(category, locale);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
   const categoryKeys = (merit: MeritDefinition) => homebrewCategoryKeys(categoryFor(merit), merit.sourceId);
   const categories = [...new Set(catalog.flatMap(categoryKeys))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
-  const normalizedSearch = search.trim().toLocaleLowerCase("pt-BR");
+  const normalizedSearch = search.trim().toLocaleLowerCase(locale);
   const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
   const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
     (showAllMerits || isEligible(item, context)) &&
@@ -128,7 +129,7 @@ export function MeritPicker({
           const repeatable = isRepeatableDefinition(definition);
           const prerequisitesMet = isEligible(definition, context);
           const presented = meritPresentation(definition, locale);
-          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : formatRatings(meritRatingsFor(definition))}</small>{presented.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}<p>{presented.description}</p>{presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}</div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
+          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : meritRatingsFor(definition).map((rating) => "•".repeat(rating)).join(", ")}</small>{presented.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}<p>{presented.description}</p>{presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}</div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
         })}</div></section>;
       })}{!visibleCatalog.length && <em>{t("ui.noMeritsMatchTheFilters")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
     </DialogContent></Dialog>
@@ -142,12 +143,4 @@ function isRepeatableDefinition(definition: MeritDefinition) {
 function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {
   const presented = meritPresentation(definition, locale);
   return presented.prerequisites ? `${translate(locale, "ui.prerequisites")}: ${presented.prerequisites}\n${presented.description}` : presented.description;
-}
-
-function meritCategoryLabel(category: string) {
-  return ({ Mental: "Mentais", Physical: "Físicos", Social: "Sociais", Supernatural: "Sobrenaturais", "Supernatural Styles": "Estilos Sobrenaturais", "Fighting Style": "Estilos de Combate", Changeling: "Changeling", Awakened: "Despertos", Entitlement: "Títulos Feéricos", Court: "Cortes", Seeming: "Feições", Historical: "Históricos", Order: "Ordens", "Mystery Cult": "Cultos de Mistério" } as Record<string, string>)[category] ?? category;
-}
-
-function formatRatings(ratings: number[]) {
-  return ratings.length === 1 ? `${ratings[0]} ponto${ratings[0] === 1 ? "" : "s"}` : `${ratings.join(", ")} pontos`;
 }

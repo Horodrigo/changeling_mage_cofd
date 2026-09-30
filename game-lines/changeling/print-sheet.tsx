@@ -179,7 +179,8 @@ function ExpandedMeritCard({ merit, catalog, courts, detailed }: { merit: Charac
     {!!configured.length && <div className="ctl-print-configured">{configured.map((line, index) => <p key={index}>{line}</p>)}</div>}
     {detailed && presented && <div className="ctl-print-merit-details">
       {presented.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {presented.prerequisites}</p>}
-      {levels.length ? levels.map((level, index) => <p key={`${level.rating}-${index}`}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>) : <p>{presented.description}</p>}
+      <p>{presented.description}</p>
+      {levels.map((level, index) => <p key={`${level.rating}-${index}`}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>)}
     </div>}
   </PrintCard>;
 }

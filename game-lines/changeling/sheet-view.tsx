@@ -370,7 +370,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
     const visible = merits.filter((item) => !item.grantedBy && !["Fae Mount", "Fae Pet"].includes(item.name));
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
-            const style = catalog.find((entry) => entry.name === item.name && entry.levels?.length), configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
+            const definition = catalog.find((entry) => entry.name === item.name), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
                 ? t("ui.tokens")
                 : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
@@ -383,11 +383,15 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 <DotValue value={item.dots}/>
               </summary>
               <div className="expanded-merit-body">
+                {definition && <>
+                  {meritPresentation(definition, locale).prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {meritPresentation(definition, locale).prerequisites}</p>}
+                  <p>{meritPresentation(definition, locale).description}</p>
+                </>}
                 {configured.length ? (configured.map((line, index) => (<section key={`${item.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                       {tokenItems[index]?.kind === "trifle" && <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${tokenItems[index].id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${tokenItems[index].id || index}`, value)}/>}
-                    </section>))) : (<p>
+                    </section>))) : !definition && (<p>
                     {t("ui.seeThisMeritSDescriptionToAssignOr")}
                   </p>)}
                 {configurationEditor}
@@ -409,6 +413,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
               <DotValue value={item.dots}/>
             </summary>
             <div className="expanded-merit-body">
+              <p>{presented.description}</p>
               {configured.length
                     ? <>{configured.map((line, index) => (<section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
