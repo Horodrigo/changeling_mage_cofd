@@ -16,10 +16,8 @@ const corePt = await json("public/data/core/merits/pt-BR/core.json");
 const changelingPt = await json("public/data/changeling/merits-pt.json");
 
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
-  assert.equal(Object.keys(corePt).length, 179);
-  for (const item of core.filter((item) => item.sourceId !== "hurt-locker" || !item.levels)) {
-    assert.ok(corePt[item.id], item.id);
-  }
+  assert.equal(Object.keys(corePt).length, 202);
+  assert.deepEqual(Object.keys(corePt).sort(), core.map((item) => item.id).sort());
   assert.equal(Object.keys(changelingPt).length, 53);
   for (const item of changeling.filter((item) => !item.sourceId.startsWith("h-"))) {
     assert.ok(changelingPt[item.id], item.id);
@@ -69,7 +67,7 @@ test("switching Merit locale changes presentation, never eligibility or canonica
 });
 
 test("missing pt-BR Merit entries explicitly retain English and user-authored text", async () => {
-  const untranslated = core.find((item) => !corePt[item.id]);
+  const untranslated = withMeritPresentation([{ ...core[0], id: "test:untranslated-merit", translatedName: undefined }], corePt)[0];
   assert.deepEqual(meritPresentation(untranslated, "pt-BR"), meritPresentation(untranslated, "en-US"));
   const { normalizeMeritHomebrew, activeMeritCatalog } = await vite.ssrLoadModule("/lib/merit-homebrews.ts");
   const custom = normalizeMeritHomebrew({ id: "homebrew:merit:test", name: "Meu Mérito", line: "Core", category: "Mental", ratings: [1], description: "Texto escrito pelo jogador." });

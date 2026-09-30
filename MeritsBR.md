@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 179/202 registros Core e 53/154 Changeling. Todos os registros Core sem benefícios por nível e todos os registros Core de fontes diferentes de Hurt Locker estão traduzidos, assim como todos os 53 Méritos de fontes oficiais de Changeling. As manobras e os benefícios por nível cadastrados nos lotes concluídos foram incluídos. Ainda faltam 23 registros Core de Hurt Locker com níveis e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 202/202 registros Core e 53/154 Changeling. Todos os Méritos Core e todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos. As manobras e os benefícios por nível cadastrados nos lotes concluídos foram incluídos. Ainda faltam 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -159,6 +159,30 @@ Observações mecânicas adicionais, sem correção incidental:
 - `Object Fetishism`: o resumo usa “session”, enquanto o livro p. 42 usa “chapter”. A tradução mantém “sessão”.
 - `Curse Effigy`: o catálogo apresenta a parada letal como Intelligence + Medicine − Stamina + Supernatural Tolerance, sem agrupar a resistência. A tradução mantém essa forma; o agrupamento e a elegibilidade requerem auditoria mecânica separada.
 - Os resumos gerais e sobrenaturais de Hurt Locker omitem vários limiares, durações, limites e desvantagens presentes no livro. Foi traduzido todo o conteúdo cadastrado, sem reconstruir campos mecânicos ausentes.
+
+## Novas escolhas para auditoria — estilos de Hurt Locker
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Avoidance | Evasão | Evitar confronto ou transferir a atenção dos atacantes. |
+| Berserker | Guerreiro Furioso | Distingue o Estilo da Condição Berserk/Frenético e da Complicação Insano. |
+| Bowmanship / Combat Archery | Tiro com Arco / Tiro com Arco em Combate | Mantém os dois Estilos distintos. |
+| Fated Ferocity | Ferocidade Predestinada | Oposição à sina associada ao Mérito Amaldiçoado. |
+| K-9 | K-9 | Mantém a designação de trabalho com cães. |
+| Kino Mutai / Systema | Kino Mutai / Systema | Nomes próprios das artes marciais mantidos. |
+| Powered Projectile | Projétil Propulsionado | Abrange armas não movidas por pólvora, incluindo bestas e zarabatanas. |
+| Staff Fighting | Combate com Bastão | Distingue o nome da arma de Funcionários, outro sentido de staff. |
+| Strength Performance | Demonstração de Força | Feitos e exibições de força. |
+| Handling | Manobrabilidade | Característica de veículos. |
+| Impaled | Empalado | Complicação citada em Armas de Arremesso; ainda não possui registro próprio no catálogo atual de Complicações. |
+
+Fontes inspecionadas visualmente para os estilos: Hurt Locker pp. 46–56, 73–74 e 76–77. Todos os 76 registros Core atribuídos a Hurt Locker foram traduzidos, sem inventar manobras adicionais.
+
+Observações mecânicas adicionais, sem correção incidental:
+
+- `Vaulting Defense`, Hurt Locker p. 52: tanto o resumo quanto o trecho impresso usam “Melee”, que não corresponde ao nome de uma Perícia Core de CofD. A tradução usa “Combate Corpo a Corpo”; não foi substituído mecanicamente por Armas Brancas sem uma correção explícita de regra.
+- `Mounted Combat`, Hurt Locker p. 51: o livro apresenta Animal Ken ••, enquanto o catálogo exige Animal Ken •••. A tradução mantém Trato com Animais •••.
+- `Bowmanship` e `Falconry` continuam sem detalhes que não estejam nos resumos canônicos, como certos limiares, limites e modificadores. Não foram reconstruídos por meio da tradução.
 
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 

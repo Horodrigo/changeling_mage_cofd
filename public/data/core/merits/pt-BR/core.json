@@ -1262,5 +1262,611 @@
     "name": "Alma Vingativa",
     "prerequisites": "Somente mortais",
     "description": "Após testemunhar ou descobrir rapidamente a morte de um ente querido, recebe 8-novamente a cada capítulo em um número de ações até a Integridade da vítima para encontrar ou punir os responsáveis, até que a vingança seja satisfeita."
+  },
+  "hurt-locker:aggressive-driving": {
+    "name": "Direção Agressiva",
+    "prerequisites": "Perseverança •••, Condução •••, Reflexos Rápidos •••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Derrapagem Potente",
+        "description": "Faz uma curva fechada para receber sucessos de bônus em uma perseguição disputada, testando Destreza + Condução + Manobrabilidade e sofrendo um ponto de dano de Estrutura."
+      },
+      {
+        "rating": 2,
+        "name": "Bater e Fugir",
+        "description": "Testa Destreza + Condução + Manobrabilidade − Defesa para raspar no para-choque de um carro e fazê-lo perder tração."
+      },
+      {
+        "rating": 3,
+        "name": "Manobra em J",
+        "description": "Uma vez por cena, ao ser alcançado em uma perseguição de carros, gasta Força de Vontade e testa Destreza + Condução + Manobrabilidade − 2 para dar uma guinada e reiniciar a perseguição na direção oposta."
+      },
+      {
+        "rating": 4,
+        "name": "Cortar e Frear",
+        "description": "Ao acumular uma vantagem em sucessos superior ao Raciocínio do perseguidor, pode frear e forçá-lo a testar Perseverança + Compostura + Manobrabilidade para frear a tempo de evitar uma colisão."
+      }
+    ]
+  },
+  "hurt-locker:avoidance": {
+    "name": "Evasão",
+    "prerequisites": "Manipulação •••, Atletismo ••, Furtividade ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Insignificância",
+        "description": "Testa Manipulação + Furtividade − Compostura para parecer indefeso demais para valer a pena atacar."
+      },
+      {
+        "rating": 2,
+        "name": "À Sombra de um Aliado",
+        "description": "Ao Esquivar e se jogar no chão atrás de um aliado, ele pode interceptar ataques contra o personagem."
+      },
+      {
+        "rating": 3,
+        "name": "Acerte se Puder",
+        "description": "Disputa um ataque a cada turno com Manipulação + Persuasão + Evasão para frustrar o ataque e impor Braço Lesionado."
+      },
+      {
+        "rating": 4,
+        "name": "Fingir-se de Morto",
+        "description": "Ao sofrer dano letal, disputa Manipulação + Subterfúgio contra Raciocínio + Compostura para parecer morto."
+      }
+    ]
+  },
+  "hurt-locker:berserker": {
+    "name": "Guerreiro Furioso",
+    "prerequisites": "Força •••, Vigor de Ferro •••",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Névoa Vermelha",
+        "description": "Gasta Força de Vontade para provocar em si a Complicação Insano."
+      },
+      {
+        "rating": 2,
+        "name": "Grito de Guerra",
+        "description": "Disputa Força + Intimidação contra Perseverança + Compostura como ação instantânea para penalizar ações que não sejam Esquivar."
+      },
+      {
+        "rating": 3,
+        "name": "Brutalidade Maníaca",
+        "description": "Ataques Totais desarmados recebem +1 para atingir partes específicas do alvo. Ataques Totais armados podem substituir a pontuação da arma pela Durabilidade ao custo de danificar a arma."
+      }
+    ]
+  },
+  "hurt-locker:bowmanship": {
+    "name": "Tiro com Arco",
+    "prerequisites": "Destreza •••, Armas de Fogo ••, Observador Treinado •",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Tiro em Arco",
+        "description": "Dobra o alcance."
+      },
+      {
+        "rating": 2,
+        "name": "Na Mosca",
+        "description": "Pode reduzir a pontuação da arma para receber +1 e 8-novamente em um disparo contra uma parte específica do alvo."
+      },
+      {
+        "rating": 3,
+        "name": "Do Nada",
+        "description": "Ao realizar um disparo de emboscada sem ser notado, testa Destreza + Furtividade para forçar um teste de Raciocínio + Compostura, penalizado pelos sucessos, para evitar Abalado."
+      },
+      {
+        "rating": 4,
+        "name": "Morte Vinda de Cima",
+        "description": "Dispara por cima de cobertura sem teto para ignorar um ponto de ocultação a cada 10 jardas de distância adicional no arco do disparo."
+      }
+    ]
+  },
+  "hurt-locker:boxing": {
+    "name": "Boxe",
+    "prerequisites": "Força ••, Destreza ••, Vigor ••, Briga ••, Atletismo ••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Proteção da Cabeça",
+        "description": "+1 de Defesa contra Briga e −1 nos ataques contra a cabeça do personagem."
+      },
+      {
+        "rating": 2,
+        "name": "Jab Defensivo",
+        "description": "Causa dano contundente que perfura armadura quando sua Defesa ou Esquiva supera um ataque corpo a corpo."
+      },
+      {
+        "rating": 3,
+        "name": "Especialista em Nocautes",
+        "description": "Atordoa um oponente como se ele tivesse −1 de Tamanho, ou −2 de Tamanho com um golpe direcionado à cabeça."
+      },
+      {
+        "rating": 4,
+        "name": "Combinação",
+        "description": "Golpes bem-sucedidos adicionam Destreza como dados de bônus."
+      },
+      {
+        "rating": 5,
+        "name": "Fora de Combate",
+        "description": "Ataques que atordoem mantêm o alvo atordoado por um número de turnos igual ao dano causado; o oponente precisa gastar Força de Vontade para permanecer consciente."
+      }
+    ]
+  },
+  "hurt-locker:chain-weapons": {
+    "name": "Armas de Corrente",
+    "prerequisites": "Força •••, Destreza •••, Atletismo ••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com duas manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Defesa Imponente",
+        "description": "Sacrifica a Defesa para causar dano contundente igual à pontuação da arma +1 ao ser atingido em combate corpo a corpo."
+      },
+      {
+        "rating": 2,
+        "name": "Derrubar o Teto",
+        "description": "Ataca um objeto suspenso, com penalidade igual ao Tamanho dele, para causar sua Estrutura em dano contundente aos alvos abaixo."
+      }
+    ]
+  },
+  "hurt-locker:combat-archery": {
+    "name": "Tiro com Arco em Combate",
+    "prerequisites": "Força •••, Atletismo ••, Saque Rápido (Arco)",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Encaixe Rápido",
+        "description": "Ignora penalidades de Iniciativa do arco e encaixa flechas reflexivamente."
+      },
+      {
+        "rating": 2,
+        "name": "Mira Reflexiva",
+        "description": "Ignora penalidades por disparar contra alvos em combate corpo a corpo."
+      },
+      {
+        "rating": 3,
+        "name": "Disparo Parta",
+        "description": "Ao Esquivar, causa os sucessos excedentes como dano de ataque ao primeiro atacante corpo a corpo cujo ataque superar a cada turno."
+      },
+      {
+        "rating": 4,
+        "name": "Chuva de Flechas",
+        "description": "Realiza ataques de rajada automática média com penalidades de alcance triplicadas."
+      },
+      {
+        "rating": 5,
+        "name": "Disparo Acrobático",
+        "description": "Realiza simultaneamente um ataque de Tiro com Arco em Combate e uma ação de Atletismo, ambos com −2."
+      }
+    ]
+  },
+  "hurt-locker:drone-control": {
+    "name": "Controle de Drones",
+    "prerequisites": "Inteligência •••, Computação •••, Condução ••",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Imersão Remota",
+        "description": "Recebe 9-novamente nas ações de percepção realizadas por seu dispositivo remoto."
+      },
+      {
+        "rating": 2,
+        "name": "Interface",
+        "description": "Gasta um ponto de Força de Vontade para realizar uma ação adicional que não seja de combate por seu dispositivo neste turno."
+      },
+      {
+        "rating": 3,
+        "name": "Sobrecarga",
+        "description": "Causa um ponto de dano de Estrutura para conceder +2 às ações Físicas do dispositivo neste turno."
+      }
+    ]
+  },
+  "hurt-locker:falconry": {
+    "name": "Falcoaria",
+    "prerequisites": "Raciocínio •••, Trato com Animais •••, Condição Vinculado",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Vigília do Predador",
+        "description": "A presença da ave de rapina impõe Abalado a animais de Tamanho igual ou menor que o dela, e predadores inferiores fogem."
+      },
+      {
+        "rating": 2,
+        "name": "Rasante",
+        "description": "A ave disputa Presença + Intimidação contra Perseverança + Compostura para impor uma penalidade de −3 às ações."
+      },
+      {
+        "rating": 3,
+        "name": "Buscar Item",
+        "description": "Ordena à ave que traga um objeto. Ela pode realizar o equivalente a um Ataque Total para Desarmar um oponente com um sucesso excepcional."
+      },
+      {
+        "rating": 4,
+        "name": "Arranhar os Olhos",
+        "description": "A ave ataca com −1 para cegar um alvo."
+      }
+    ]
+  },
+  "hurt-locker:fated-ferocity": {
+    "name": "Ferocidade Predestinada",
+    "prerequisites": "Somente mortais; Amaldiçoado ••, Vigor ••, Perseverança •••",
+    "description": "Um Estilo sobrenatural progressivo que transforma a sina de Amaldiçoado em desafio ao destino.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Antes de Morrer",
+        "description": "Concluir uma Aspiração recupera Força de Vontade e concede +1 de Defesa contra o próximo ataque naquela cena."
+      },
+      {
+        "rating": 2,
+        "name": "Morrer com Dignidade",
+        "description": "Torna-se imune a tentativas mundanas ou sobrenaturais de forçar o abandono de uma Aspiração antes da morte."
+      },
+      {
+        "rating": 3,
+        "name": "Sem Limites",
+        "description": "Em vez de realizar um Ataque Total, sofre uma quantidade de dano contundente até a pontuação do Estilo e recebe o mesmo número de dados de bônus, mais um."
+      },
+      {
+        "rating": 4,
+        "name": "Hoje Não",
+        "description": "Converte em agravado o dano letal que preencheria a última caixa de Vitalidade, até sua pontuação em Perseverança, deixando essa caixa vazia."
+      },
+      {
+        "rating": 5,
+        "name": "Não Parta Mansamente",
+        "description": "Contra a origem da sina de Amaldiçoado, gasta toda a Força de Vontade restante para receber o mesmo número de dados de bônus; ataques também aumentam a gravidade do dano."
+      }
+    ]
+  },
+  "hurt-locker:k-9": {
+    "name": "K-9",
+    "prerequisites": "Raciocínio •••, Trato com Animais •••, Condição Vinculado",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Detecção",
+        "description": "Sob orientação, o cão recebe a qualidade de rotina para rastrear um tipo de cheiro escolhido com Raciocínio + Sobrevivência."
+      },
+      {
+        "rating": 2,
+        "name": "Mordida Direcionada",
+        "description": "Ordena ao cão que ataque partes específicas do alvo em combate, reduzindo a penalidade em 2."
+      },
+      {
+        "rating": 3,
+        "name": "Posicionamento Tático",
+        "description": "Ao enfrentar um oponente em conjunto, escolhe papéis para o personagem e seu cão a cada turno. Um recebe +1 de Defesa, e o outro +2 no ataque. Ignora penalidades por disparar contra alvos em combate corpo a corpo perto do cão."
+      },
+      {
+        "rating": 4,
+        "name": "Mordida de Derrubada",
+        "description": "Ordena ao cão que inicie um agarrão com uma mordida, realizando Segurar ou Derrubar imediatamente."
+      }
+    ]
+  },
+  "hurt-locker:kino-mutai": {
+    "name": "Kino Mutai",
+    "prerequisites": "Destreza ••, Perseverança •••, Briga ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Mordida Treinada",
+        "description": "Causa +2 de dano com a manobra Causar Dano de um agarrão ao morder, ou +1 com mordidas inumanas."
+      },
+      {
+        "rating": 2,
+        "name": "Rasgar",
+        "description": "Recebe a manobra Rasgar de um agarrão: causa um ponto de dano contundente e dor incapacitante."
+      },
+      {
+        "rating": 3,
+        "name": "Ataque Treinado aos Olhos",
+        "description": "Recebe a manobra Atacar os Olhos de um agarrão: cega o oponente enquanto estiver segurado."
+      },
+      {
+        "rating": 4,
+        "name": "Mordida Contínua",
+        "description": "Causa dano letal com a manobra Causar Dano de um agarrão ao morder."
+      }
+    ]
+  },
+  "hurt-locker:mounted-combat": {
+    "name": "Combate Montado",
+    "prerequisites": "Destreza •••, Atletismo ••, Trato com Animais •••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Sela Firme",
+        "description": "+3 para permanecer montado durante o combate."
+      },
+      {
+        "rating": 2,
+        "name": "Investida Firme",
+        "description": "Sacrifica a Defesa para combinar uma investida com um Ataque Total."
+      },
+      {
+        "rating": 3,
+        "name": "Escaramuça",
+        "description": "Aceita −2 no ataque para receber +2 de Defesa e atacar na metade do movimento da montaria."
+      },
+      {
+        "rating": 4,
+        "name": "Fera Empinada",
+        "description": "Testa Raciocínio + Trato com Animais como trabalho em equipe para melhorar o ataque da montaria."
+      }
+    ]
+  },
+  "hurt-locker:powered-projectile": {
+    "name": "Projétil Propulsionado",
+    "prerequisites": "Destreza •••, Atletismo ••, Armas de Fogo ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Recarga Rápida",
+        "description": "Recarrega a arma um turno mais rápido, até um mínimo de uma ação reflexiva."
+      },
+      {
+        "rating": 2,
+        "name": "Disparo de Interceptação",
+        "description": "Ao Mirar, pode disparar contra projéteis em voo como alvos específicos para desviar sua trajetória."
+      },
+      {
+        "rating": 3,
+        "name": "Penetração",
+        "description": "Sacrifica a Defesa para realizar um ataque com +2 de perfuração de armadura."
+      },
+      {
+        "rating": 4,
+        "name": "Transpassar",
+        "description": "Reduz em dois dados as penalidades para atingir partes específicas do alvo; Complicações resultantes persistem enquanto o projétil estiver cravado."
+      }
+    ]
+  },
+  "hurt-locker:psychokinetic-combat": {
+    "name": "Combate Psicocinético",
+    "prerequisites": "Somente mortais; Psicocinese ••• ou •••••",
+    "description": "Um Estilo sobrenatural progressivo que usa Psicocinese como arma enquanto estiver ativa.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Coroa de Energia",
+        "description": "Projeta um campo de energia por um número de turnos igual aos sucessos de ativação de Psicocinese, causando um ponto de dano letal a atacantes corpo a corpo, ou dois com Psicocinese cinco."
+      },
+      {
+        "rating": 2,
+        "name": "Mente sobre a Matéria",
+        "description": "Ataques psicocinéticos recebem perfuração de armadura 2 e ignoram cobertura."
+      },
+      {
+        "rating": 3,
+        "name": "Potencial Aprisionado",
+        "description": "Prepara um objeto próximo por ativação para detoná-lo reflexivamente, causando três pontos de dano contundente e criando um campo de Tamanho 3."
+      },
+      {
+        "rating": 4,
+        "name": "Imbuir Arma",
+        "description": "Aceita dano letal até a última caixa de Vitalidade para adicionar o mesmo valor ao dano da arma no próximo ataque; com a versão menor de Psicocinese, precisa de uma fonte de energia próxima."
+      },
+      {
+        "rating": 5,
+        "name": "Colher Energia Psíquica",
+        "description": "Recupera um ponto de Força de Vontade sempre que Psicocinese causar dano a um personagem."
+      }
+    ]
+  },
+  "hurt-locker:spear-and-bayonet": {
+    "name": "Lança e Baioneta",
+    "prerequisites": "Força •••, Destreza ••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Base Firme",
+        "description": "Ataques Totais e investidas contra a arma firmada do personagem sofrem o dano da arma, que pode esgotar a Armadura contra um ataque subsequente."
+      },
+      {
+        "rating": 2,
+        "name": "Manter à Distância",
+        "description": "Gasta Força de Vontade para ameaçar um oponente com arma mais curta. Ele precisa recuar ou Esquivar; caso contrário, perde a Defesa por um turno."
+      },
+      {
+        "rating": 3,
+        "name": "Golpear e Ampliar",
+        "description": "Sacrifica a Defesa para torcer uma ferida causada, provocando um turno de dano letal por sangramento para cada sucesso de ataque."
+      }
+    ]
+  },
+  "hurt-locker:staff-fighting": {
+    "name": "Combate com Bastão",
+    "prerequisites": "Força ••, Destreza •••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Empunhadura Curta",
+        "description": "Pode trocar o bônus de Defesa do bastão por um dado de bônus no ataque."
+      },
+      {
+        "rating": 2,
+        "name": "Golpear a Arma",
+        "description": "Disputa Força + Armas Brancas contra Força + Atletismo para desarmar um oponente."
+      },
+      {
+        "rating": 3,
+        "name": "Defesa Saltitante",
+        "description": "Gasta Força de Vontade para adicionar seus pontos em Combate Corpo a Corpo como bônus de Defesa contra um único ataque em um turno."
+      },
+      {
+        "rating": 4,
+        "name": "Golpe Tornado",
+        "description": "Gira a arma como uma rajada automática média efetiva contra três alvos no alcance."
+      }
+    ]
+  },
+  "hurt-locker:strength-performance": {
+    "name": "Demonstração de Força",
+    "prerequisites": "Força •••, Vigor ••, Atletismo ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Truques de Força",
+        "description": "Recebe +1 em feitos não violentos de Força, ou +2 ao usar Expressão ou Intimidação."
+      },
+      {
+        "rating": 2,
+        "name": "Levantamento",
+        "description": "Recebe a qualidade de rotina em feitos de Força + Vigor e ações de combate para demolir estruturas."
+      },
+      {
+        "rating": 3,
+        "name": "Empurrar/Puxar",
+        "description": "Dobra a Força efetiva para deslocar objetos ao longo de uma superfície plana, ou a multiplica por cinco com rodas ou outras formas de reduzir o atrito."
+      },
+      {
+        "rating": 4,
+        "name": "Mais Forte que Você",
+        "description": "Testes de Força bem-sucedidos recebem um sucesso adicional gratuito."
+      }
+    ]
+  },
+  "hurt-locker:systema": {
+    "name": "Systema",
+    "prerequisites": "Destreza •••, Raciocínio ••, Atletismo •••",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Rolamento",
+        "description": "Ignora penalidades para atacar estando caído e testa Destreza para mitigar dano contundente de impactos."
+      },
+      {
+        "rating": 2,
+        "name": "Equilíbrio",
+        "description": "Disputa tentativas de derrubá-lo com dois sucessos gratuitos."
+      },
+      {
+        "rating": 3,
+        "name": "Postura de Combate",
+        "description": "Impõe Caído ao obter um número de sucessos igual à Força da vítima ao atingi-la em combate corpo a corpo, ou adiciona um ponto de dano se já estiver impondo Caído."
+      }
+    ]
+  },
+  "hurt-locker:tactical-telepathy": {
+    "name": "Telepatia Tática",
+    "prerequisites": "Somente mortais; Telepatia •••••",
+    "description": "Um Estilo sobrenatural progressivo que conecta aliados e perturba inimigos por meio de Telepatia.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Uma Só Mente",
+        "description": "Usa um teste de Telepatia para conectar qualquer número de mentes durante a cena, com −1 por alvo após o primeiro."
+      },
+      {
+        "rating": 2,
+        "name": "Ruído Branco",
+        "description": "Um teste bem-sucedido de Telepatia pode impor Atordoado além dos efeitos normais."
+      },
+      {
+        "rating": 3,
+        "name": "Uníssono",
+        "description": "Personagens conectados por Uma Só Mente podem agir simultaneamente na Iniciativa do usuário."
+      },
+      {
+        "rating": 4,
+        "name": "Desviar o Pensamento",
+        "description": "Aplica os sucessos de Telepatia como penalidade às ações de um alvo que não sejam Esquivar durante uma cena; Perseverança + Compostura pode encerrar o efeito antes disso."
+      },
+      {
+        "rating": 5,
+        "name": "Esforço Compartilhado",
+        "description": "Após um vínculo prolongado, aliados conectados podem gastar Força de Vontade nos testes uns dos outros apesar do limite normal por teste."
+      }
+    ]
+  },
+  "hurt-locker:thrown-weapons": {
+    "name": "Armas de Arremesso",
+    "prerequisites": "Destreza •••, Atletismo ••, Saque Rápido (Arremesso)",
+    "description": "Um Estilo progressivo com duas manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Arremesso Praticado",
+        "description": "Adiciona Atletismo como bônus à Iniciativa enquanto empunhar essas armas de arremesso."
+      },
+      {
+        "rating": 2,
+        "name": "Artes de Empalamento",
+        "description": "Sacrifica a Defesa para impor a Complicação Empalado em um ataque contra uma parte específica do alvo."
+      }
+    ]
+  },
+  "hurt-locker:two-weapon-fighting": {
+    "name": "Combate com Duas Armas",
+    "prerequisites": "Raciocínio •••, Armas Brancas •••, Refinamento de Combate",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Empunhadura Equilibrada",
+        "description": "Não soma as penalidades de Iniciativa enquanto a penalidade da arma na mão inábil não superar a da arma na mão principal."
+      },
+      {
+        "rating": 2,
+        "name": "Golpe Protetor",
+        "description": "Adiciona a pontuação da arma na mão inábil, com mínimo de +1, à Defesa contra o primeiro ataque em um turno."
+      },
+      {
+        "rating": 3,
+        "name": "Ataque Duplo",
+        "description": "Ataques Totais com ambas as armas ignoram um ponto de Defesa e adicionam a pontuação da arma na mão inábil, com mínimo de +1. Incompatível com Golpe Duplo."
+      },
+      {
+        "rating": 4,
+        "name": "Golpe Duplo",
+        "description": "Gasta Força de Vontade para atingir dois alvos simultaneamente, um com cada arma. Aplica a maior Defesa, mais um, aos dois ataques."
+      }
+    ]
+  },
+  "hurt-locker:weapon-and-shield": {
+    "name": "Arma e Escudo",
+    "prerequisites": "Força •••, Vigor •••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Golpe de Escudo",
+        "description": "Adiciona o Tamanho do escudo como dados de bônus ao Esquivar. Sucessos de Esquiva que excedam os do oponente causam dano contundente."
+      },
+      {
+        "rating": 2,
+        "name": "Focinho de Javali",
+        "description": "Pode realizar Ataques Totais sem sacrificar o bônus de Defesa do escudo, adicionando +1 de Defesa a aliados que também usem esta manobra."
+      },
+      {
+        "rating": 3,
+        "name": "Prender a Arma",
+        "description": "Desarma atacantes quando seus ataques corpo a corpo erram."
+      },
+      {
+        "rating": 4,
+        "name": "Casco de Tartaruga",
+        "description": "Trata o escudo como cobertura protetora com Durabilidade igual ao Tamanho dele, +1 para cada aliado adjacente com escudo."
+      }
+    ]
   }
 }
