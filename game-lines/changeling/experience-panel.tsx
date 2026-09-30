@@ -14,7 +14,7 @@ import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
-import type { EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/lib/entitlements";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
 import { refundChangelingPowerRating, withChangelingPowerRating } from "@/game-lines/changeling/builder-power-progression";
@@ -107,7 +107,7 @@ export function ExperiencePanel({
   const { locale, t }=useLanguage();
   const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews(),customMerits=useMeritHomebrews("CtL",true);
   const contractCatalog = mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts);
-  const staticEntitlements: readonly EntitlementDefinition[] = reference.entitlements;
+  const staticEntitlements: readonly EntitlementDefinition[] = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
   const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);

@@ -8,6 +8,23 @@ export type EntitlementDefinition={
   blessings:EntitlementBlessing[];roles?:EntitlementRole[];touchstone:string;curse:string;beat:string;legends:string[];
 };
 
+export type EntitlementPresentation=Omit<EntitlementDefinition,"id"|"source"|"sourceCode"|"page"|"sourceId"|"homebrew">;
+export type EntitlementPresentationCatalog=Record<string,EntitlementPresentation>;
+
+export function entitlementPresentation(definition:EntitlementDefinition,locale:"pt-BR"|"en-US",catalog:EntitlementPresentationCatalog):EntitlementDefinition{
+  if(locale==="en-US")return definition;
+  const translated=catalog[definition.id];
+  if(!translated)return definition;
+  const blessings=new Map(translated.blessings.map((item)=>[item.id,item]));
+  const roles=new Map((translated.roles??[]).map((item)=>[item.id,item]));
+  return {...definition,...translated,id:definition.id,source:definition.source,sourceCode:definition.sourceCode,page:definition.page,sourceId:definition.sourceId,
+    token:{...definition.token,...translated.token},
+    blessings:definition.blessings.map((item)=>({...item,...blessings.get(item.id),id:item.id})),
+    ...(definition.roles?{roles:definition.roles.map((item)=>({...item,...roles.get(item.id),id:item.id}))}:{})};
+}
+
+export const entitlementCatalogPresentation=(definitions:readonly EntitlementDefinition[],locale:"pt-BR"|"en-US",catalog:EntitlementPresentationCatalog)=>definitions.map((definition)=>entitlementPresentation(definition,locale,catalog));
+
 export const entitlementAvailable=(definition:EntitlementDefinition,activeSourceIds:ReadonlySet<string>)=>!definition.sourceId||activeSourceIds.has(definition.sourceId);
 
 export const findEntitlement=(catalog:readonly EntitlementDefinition[],id:unknown)=>catalog.find((item)=>item.id===String(id??""));

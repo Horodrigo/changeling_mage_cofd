@@ -9,7 +9,7 @@ import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary } from "@/lib/contract-presentation";
-import type { EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-line-contracts/game-line-ui";
 import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { localized, useLanguage } from "@/lib/i18n";
@@ -85,7 +85,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     const presented = locale === "pt-BR" ? rawReference.kithPresentation[item.id] ?? item : item;
     add({ id: item.id, sourceId: item.sourceId, source: item.source, kind: h("Frátrias", "Kiths"), name: presented.name, details: [...detail(h("Descrição", "Description"), presented.description), ...detail(h("Bênção", "Blessing"), presented.blessing), ...detail(h("Habilidade", "Skill"), presented.skill)] });
   }
-  for (const item of rawReference.entitlements) if (item.sourceId) add({
+  for (const item of entitlementCatalogPresentation(rawReference.entitlements, locale, rawReference.entitlementPresentation)) if (item.sourceId) add({
     id: item.id, sourceId: item.sourceId, source: item.source, kind: "Entitlements", name: item.name,
     details: [
       ...detail(h("Pré-requisitos", "Prerequisites"), item.prerequisites), ...detail(h("Propósito", "Purpose"), item.purpose),

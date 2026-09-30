@@ -28,7 +28,7 @@ import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSection
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
-import { entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation,entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
@@ -103,7 +103,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
     const tokenCatalog = locale === "pt-BR" ? tokens.map((item) => ({ ...item, ...lineReference.tokenPresentation.find((text) => text.id === item.id) })) : tokens;
     const customEntitlements = useEntitlementHomebrews();
-    const entitlementCatalog = [...lineReference.entitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
+    const officialEntitlements = entitlementCatalogPresentation(lineReference.entitlements, locale, lineReference.entitlementPresentation);
+    const entitlementCatalog = [...officialEntitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
     const conditionCatalog = [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
     const isMobile = useIsMobile();

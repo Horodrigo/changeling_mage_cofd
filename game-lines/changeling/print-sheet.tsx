@@ -16,7 +16,7 @@ import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSecti
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { normalizeEntitlementState } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, normalizeEntitlementState } from "@/lib/entitlements";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
@@ -291,6 +291,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     : derivedTraitsWithArmor(derived, data.combat_armor);
   const flowBlocks = useMemo(() => {
     const blocks: PrintBlock[] = [];
+    const entitlementCatalog = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
     if (options.powerDetails) contracts.forEach((contract, contractIndex) => {
       const card = contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t);
@@ -303,8 +304,8 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     equipment.forEach((item, index) => add("equipment", t("ui.equipment"), `equipment-${item.id}-${index}`, <PrintCard title={item.name} meta={`${item.category} · ${t("ui.bonus")} ${item.bonus} · ${t("ui.durability")} ${item.durability} · ${t("ui.size")} ${item.size}`}><p>{item.effect}</p></PrintCard>));
     vehicles.forEach((vehicle, index) => add("equipment", t("ui.equipment"), `vehicle-${vehicle.id}-${index}`, <PrintCard title={vehicle.name} meta={`${t("ui.modifier")} ${signed(vehicle.diceModifier)} · ${t("ui.size")} ${vehicle.size} · ${t("ui.durability")} ${vehicle.durability} · ${t("ui.structure")} ${vehicle.structure} · ${t("ui.speed")} ${vehicle.speed}`}/>));
     selectedConditions.forEach((condition, index) => add("conditions", t("ui.conditions"), `condition-${condition.id}-${index}`, <PrintCard title={condition.name} meta={`${condition.sourceCode} · p. ${condition.page}`}>{condition.penalty && <p><b>{t("ui.penalty")}:</b> {condition.penalty}</p>}</PrintCard>));
-    const entitlementState = normalizeEntitlementState(data.entitlement, powerRating, reference.entitlements);
-    const entitlement = reference.entitlements.find((item) => item.id === entitlementState.definitionId);
+    const entitlementState = normalizeEntitlementState(data.entitlement, powerRating, entitlementCatalog);
+    const entitlement = entitlementCatalog.find((item) => item.id === entitlementState.definitionId);
     if (entitlement && entitlementState.accepted) {
       const activeBlessings = entitlementState.allocations.filter((item) => item.target === "blessing").map((item) => entitlement.blessings.find((blessing) => blessing.id === item.blessingId)).filter((item): item is NonNullable<typeof item> => Boolean(item));
       add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>{t("ui.entitlementTouchstone")}:</b> {entitlementState.touchstone.name}</p><p><b>{t("ui.privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>{t("ui.curse")}:</b> {entitlement.curse}</p></PrintCard>);

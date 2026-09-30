@@ -1,0 +1,59 @@
+{
+  "baron-lesser-ones": {
+    "name": "Barão dos Seres Menores",
+    "meritName": "Vínculo do Barão",
+    "prerequisites": "Empatia 2; Intimidação ou Persuasão 2; Porte Aristocrático, Parentesco Hob ou Especialização Interdisciplinar (Goblins).",
+    "purpose": "Atuar como contato, mediador, mensageiro e, quando necessário, defensor entre os Perdidos e os nativos da Sebe.",
+    "privileges": "Goblins tratam o Barão como parente, confiam-lhe fofocas e acordos exclusivos e o favorecem ao atribuir tarefas que quitem Débito Goblin.",
+    "duties": "Mediar conflitos e negociações entre changelings e hobgoblins, entregar mensagens ou pacotes e defender o lado que estiver com a razão, em vez de servir aos próprios interesses.",
+    "maskAndMien": "Roupas resistentes de viagem ou trajes diplomáticos exibem motivos sinuosos de espinhos que registram as negociações do Barão. As feições Fae do Barão lembram um hobgoblin escolhido, acrescentando uma característica goblin a cada dois pontos investidos.",
+    "heraldry": "Um escudo composto de silvados estilizados entrelaçados.",
+    "token": {
+      "name": "Selo de Espinhos",
+      "description": "Um anel-sinete de estanho e cornalina cujo selo brilha quando está ativo.",
+      "effect": "No mundo mundano, localiza automaticamente o portal da Sebe mais próximo. Na Sebe, gaste 1 Glamour até um número de vezes por capítulo igual à graduação para fazer o Narrador rolar duas vezes e ficar com o pior resultado em uma rolagem de perseguição na Sebe. Some a graduação às rolagens feitas para entregar em segurança uma missiva ou pacote que ostente o selo.",
+      "catch": "Afixe o selo a uma missiva ou pacote que o usuário não queira que seja entregue em segurança e envie-o de boa-fé durante a mesma cena.",
+      "drawback": "A ativação inflige temporariamente a Condição Vício na Sebe, até o Barão ceder a ela em um momento extremamente inconveniente ou perigoso."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "hobgoblin-allies",
+        "name": "Aliados Hobgoblins",
+        "description": "Receba Aliados iguais à metade do Fado, arredondada para cima, para um grupo específico de hobgoblins. Esses Aliados se lembram de favores realizados por Barões anteriores.",
+        "conditional": true,
+        "choiceLabel": "Grupo de hobgoblins"
+      },
+      {
+        "id": "hostile-oath",
+        "name": "Juramento Hostil Herdado",
+        "description": "Receba um juramento hostil contra um changeling específico, herdado de uma inimizade não resolvida causada por um predecessor. Cumpri-lo definitivamente restaura toda a Força de Vontade gasta.",
+        "choiceLabel": "Juramento e alvo"
+      }
+    ],
+    "touchstone": "Um mortal que o Barão resgatou de um perigo na Sebe.",
+    "curse": "Ataques de Lucidez sofridos ao favorecer interesses de hobgoblins em detrimento dos interesses de changelings adicionam uma quantidade de dados de dano igual aos pontos investidos neste Mérito.",
+    "beat": "Resolver um conflito com goblins, pacificamente ou não, de uma maneira que cause transtornos pessoais ao Barão ou ao Retalho.",
+    "legends": [
+      "Um Barão tornou-se Rainha dos Goblins e construiu na Sebe um fundo de dívidas e favores.",
+      "Um Barão Queima-Pontes travou guerra contra habitantes da Sebe até que um sucessor assumiu o Título e reparou os danos.",
+      "Um Barão herdou um juramento de vingança contra o próprio marido e se sacrificou para cumpri-lo."
+    ]
+  }
+}

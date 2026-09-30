@@ -45,4 +45,10 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Crux | Cerne | Categoria de Penhor. |
 | Clause | Cláusula | |
 
+## Títulos de Changeling
+
+| Inglês | Forma aplicada | Observação |
+| --- | --- | --- |
+| Baron of the Lesser Ones | Barão dos Seres Menores | Primeiro Título do lote; o sentido de *Lesser Ones* pode admitir uma forma mais idiomática. |
+
 Títulos de livros permanecem no idioma original conforme a política do projeto.

@@ -9,7 +9,8 @@ const vite=await createServer({appType:"custom",configFile:false,root,resolve:{a
 after(async()=>vite.close());
 const entitlementModule=await vite.ssrLoadModule("/lib/entitlements.ts");
 const ENTITLEMENTS=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json",import.meta.url),"utf8"));
-const {normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
+const ENTITLEMENTS_PT=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements-pt.json",import.meta.url),"utf8"));
+const {entitlementPresentation,normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
 const {synchronizeChangelingBuilderMeritGrants}=await vite.ssrLoadModule("/game-lines/changeling/builder-merit-grants.ts");
 const synchronizeMeritGrants=(character)=>synchronizeChangelingBuilderMeritGrants(character,ENTITLEMENTS);
 const {refundMeritDots}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
@@ -27,6 +28,17 @@ test("catálogo contém seis Entitlements oficiais, oito de Courts e treze de Se
   const merit=CHANGELING_MERITS.find((item)=>item.name==="Entitlement");
   assert.deepEqual(merit?.ratings,[4]);assert.equal(merit?.source,"Oak, Ash, and Thorn");assert.equal(Boolean(merit?.repeatable),false);
   assert.ok(ENTITLEMENTS.every((item)=>item.blessings.length===5&&item.token.catch&&item.token.drawback&&item.touchstone&&item.curse&&item.beat));
+});
+
+test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()=>{
+  const source=ENTITLEMENTS.find((item)=>item.id==="baron-lesser-ones");
+  const translated=entitlementPresentation(source,"pt-BR",ENTITLEMENTS_PT);
+  assert.equal(translated.id,source.id);
+  assert.equal(translated.source,source.source);
+  assert.equal(translated.name,"Barão dos Seres Menores");
+  assert.deepEqual(translated.blessings.map((item)=>item.id),source.blessings.map((item)=>item.id));
+  assert.match(translated.beat,/Retalho/);
+  assert.equal(entitlementPresentation(source,"en-US",ENTITLEMENTS_PT),source);
 });
 
 test("reduzir Fado remove a alocação mais nova",()=>{
