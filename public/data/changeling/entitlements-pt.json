@@ -143,5 +143,226 @@
       "Um Acompanhante organizou uma caça aos ovos para escolher em segredo o herdeiro do Lírio Azul.",
       "O assassino mortal de uma Dama Viúva guardou o Lírio Violeta, à espera do changeling que viria buscá-lo."
     ]
+  },
+  "master-of-keys": {
+    "name": "Mestre das Chaves",
+    "meritName": "Maestria das Chaves",
+    "prerequisites": "Investigação 2, Empatia 2 e qualquer Mérito voltado a revelar segredos, como Adivinho, Sentido da Sebe ou Observador Treinado.",
+    "purpose": "Descobrir segredos relevantes, lugares ocultos, maravilhas trancadas e chaves metafóricas, preservando-os então para o Título.",
+    "privileges": "Seres sobrenaturais costumam conceder acesso a santuários e recursos secretos porque, de outro modo, o Mestre poderia encontrar um caminho para dentro; segredos e tesouros descobertos são a principal recompensa do Título.",
+    "duties": "Buscar continuamente segredos relevantes e impedir que sejam revelados indiscriminadamente ou usados contra o Mestre e seus aliados.",
+    "maskAndMien": "Chaves caem constantemente das roupas do Mestre na Mascarilha. No Semblante Feérico, dedos das mãos, dos pés e até a língua tornam-se chaves, jamais feitas de ferro.",
+    "heraldry": "A Última Chave: uma chave de prata ameaçadora, com um desenho elegante de trepadeiras rastejantes e olhos atentos.",
+    "token": {
+      "name": "Última Chave",
+      "description": "A chave que representa o destino incognoscível do Mestre; sua Mascarilha e seu Semblante Feérico são idênticos.",
+      "effect": "Uma vez por noite de luar, escurece passivamente quando está perto de alguém que, em segredo, pretende causar dano mortal ao Mestre. Se o Mestre permitir conscientemente que esse inimigo aja, recupera 1 Força de Vontade. Quando ativada, concede qualidade de rotina a um número de rolagens por história igual à graduação para destrancar barreiras físicas, Sociais ou místicas que usem chaves.",
+      "catch": "Sofra uma falha dramática em uma das próprias ações durante a cena, antes ou depois da ativação; uma falha dramática posterior reembolsa o Glamour gasto.",
+      "drawback": "O usuário sofre uma Obsessão temporária relacionada ao que for encontrado após destrancar algo."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "hidden-library",
+        "name": "Biblioteca Oculta",
+        "description": "Receba Lugar Seguro 1 contendo Biblioteca 2 para uma Perícia Mental escolhida. A Última Chave pode fazer qualquer porta mundana levar até lá por meio de Passagem.",
+        "conditional": true,
+        "choiceLabel": "Perícia Mental da Biblioteca"
+      },
+      {
+        "id": "rekey-hedgeway",
+        "name": "Recodificar Caminho da Sebe",
+        "description": "Gaste 1 Glamour adicional ao usar Passagem por um portal fechável da Sebe para atribuir ao Caminho da Sebe dormente uma nova Chave que mortais poderiam pesquisar, possuir ou executar.",
+        "choiceLabel": "Exemplo de nova Chave"
+      }
+    ],
+    "touchstone": "Um mortal cujo segredo o Mestre conhece e preserva. Esta Touchstone é Condicional.",
+    "curse": "Ataques de Lucidez sofridos ao decidir preservar um segredo cuja revelação ajudaria o Mestre ou um aliado adicionam uma quantidade de dados de dano igual aos pontos investidos neste Mérito.",
+    "beat": "Após investir ao menos um ponto, mantenha uma Aspiração adicional ligada à busca de um segredo perigoso; substitua-a ao fim do capítulo depois de cumpri-la.",
+    "legends": [
+      "Um Mestre abriu o Submundo e trocou a própria vida para salvar o Povoado de um exército de fantasmas.",
+      "Um Mestre encontrou o coração de um Monteiro em sonhos e o vinculou ao próprio Fado como um Penhor.",
+      "Um Mestre negociou os segredos de changelings fugitivos com a Dama Sorridente e transmitiu adiante a perigosa barganha."
+    ]
+  },
+  "thorn-dancer": {
+    "name": "Dançarino dos Espinhos",
+    "meritName": "Ileso",
+    "prerequisites": "Socialização 2, Esportes 3, Expressão 2 e ao menos uma Especialização relacionada a movimento, como Luta Livre, Parkour ou Balé.",
+    "purpose": "Viajar pela Sebe com graça e estilo, guiar outros por seus perigos e preservar as histórias encontradas pelo caminho.",
+    "privileges": "Mover-se pela Sebe sem temer muitos dos perigos que ameaçam changelings comuns. Cortes, Povoados, Bosques, Vãos, hobgoblins e até alguns Feés Verdadeiros reagem intensamente à fama e à liberdade do Dançarino.",
+    "duties": "Transportar outros pela Sebe e transformar a viagem em uma apresentação memorável; o Título não exige que todos os passageiros sejam levados em segurança.",
+    "maskAndMien": "O Dançarino dos Espinhos parece imaculado e nitidamente em foco. Suas características Fae tornam-se deliberadas e vívidas, o cheiro de chuva e terra fresca o acompanha e brisas suaves fazem suas roupas ondularem.",
+    "heraldry": "Uma sandália alada circundada, mas não perfurada, por uma roseira.",
+    "token": {
+      "name": "Talaria",
+      "description": "Sandálias casuais velhas na Mascarilha; botas gladiadoras de trepadeiras floridas, com asas esvoaçantes, no Semblante Feérico.",
+      "effect": "Passivamente, ignore níveis ambientais de 1 a 3 e dano de queda de menos de 30 jardas ou metros. Quando ativada na Sebe, ignore Condições infligidas pelos Espinhos; gaste 1 Força de Vontade por outra pessoa para estender essa proteção.",
+      "catch": "Aceite Imprudente em vez de gastar Glamour para ativar a Talaria.",
+      "drawback": "Receba Notoriedade sempre que a Talaria for ativada na Sebe."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "hedge-native-merits",
+        "name": "Nativo da Sebe",
+        "description": "Receba automaticamente Metabolismo Arcadiano e Parentesco Hob."
+      },
+      {
+        "id": "hedge-clarity-guard",
+        "name": "Proteção de Lucidez da Sebe",
+        "description": "Ataques de Lucidez sofridos na Sebe são reduzidos em dois dados, em vez de um."
+      }
+    ],
+    "touchstone": "A primeira música que fez o Dançarino dos Espinhos chorar após assumir o Título.",
+    "curse": "Ataques de Lucidez sofridos fora da Sebe adicionam uma quantidade de dados de dano igual aos pontos investidos neste Mérito.",
+    "beat": "Ajudar voluntariamente alguém a atravessar uma região da Sebe infestada de inimigos, sem pagamento nem juramento.",
+    "legends": [
+      "Um Dançarino desprezou um Rei da Primavera para ajudar a esposa Juramentada dele, que havia ficado presa na forma de hobgoblin.",
+      "A voz de um Dançarino assassinado assombrou seu Retalho por meio de sonhos até que vingassem sua morte.",
+      "Um Monteiro se apaixonou por um Dançarino durante a perseguição e talvez ainda procure o atual portador do Título."
+    ]
+  },
+  "sibylline-fisher": {
+    "name": "Pescador Sibilino",
+    "meritName": "Terceiro Olho",
+    "prerequisites": "Informática 3, Investigação 2, Fado 3.",
+    "purpose": "Coletar segredos da BriarNet, dos sonhos e dos Espinhos e então ligar verdades ocultas às pessoas que as procuram.",
+    "privileges": "Segredos se revelam em fragmentos, suplicantes procuram o Pescador como oráculo ou corretor de informações e até Feés Verdadeiros e Monteiros podem pagar generosamente por respostas verdadeiras.",
+    "duties": "Buscar segredos relevantes, interpretá-los em seu contexto e entregá-los a quem precisa ouvi-los, aceitando as perguntas e consequências que vierem depois.",
+    "maskAndMien": "A marca de um olho fechado aparece como cicatriz, tatuagem ou gravação em um dispositivo na Mascarilha. O Semblante Feérico recebe um olho oracular negro como breu e descoberto, cuja posição muda quando é ocultado.",
+    "heraldry": "Um olho fechado estilizado, cercado pelas cifras e símbolos pessoais do Título individual de cada Pescador.",
+    "token": {
+      "name": "Programa Pítia",
+      "description": "Um programa codificado com Glamour e acessível em qualquer dispositivo conectado à internet, que aparece na Mascarilha como um site ou aplicativo sem acabamento.",
+      "effect": "A ativação organiza os segredos acumulados em uma revelação do passado, presente ou futuro. Passado concede Pistas de Investigação ou vantagem Social igual à graduação. Presente funciona como Software de Invasão, usando a graduação como bônus, inclusive na BriarNet. Futuro extrai uma promessa do Fado depois que o Pescador aceita dano, uma Condição prejudicial ou outro preço definido pelo Narrador.",
+      "catch": "O Pescador recebeu uma petição formal, não recebeu compensação e não espera recebê-la.",
+      "drawback": "Receba Notoriedade porque os habitantes da Sebe reconhecem que o Pescador sabe demais."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "secrets-cannot-hide",
+        "name": "Segredos Não Podem se Esconder",
+        "description": "Saiba automaticamente a redação exata de fados e destinos ligados às pessoas que encontra. Rolagens de Investigação para revelar um segredo recebem novamente 8."
+      },
+      {
+        "id": "oracular-gravity",
+        "name": "Gravidade Oracular",
+        "description": "Ao agir de acordo com os deveres do oráculo, role Presença + Expressão, penalizada pelo tamanho do grupo (−1 para grupo pequeno, −2 para pequena multidão, −3 para grande multidão), para receber Conectado (Persistente).",
+        "conditional": true
+      }
+    ],
+    "touchstone": "Um suplicante mortal que procurou repetidamente os conselhos do Pescador desde que ele assumiu o Título. Esta Touchstone é Condicional.",
+    "curse": "Sofra um ataque de Lucidez sempre que um dos segredos do próprio Pescador for revelado, mesmo voluntariamente.",
+    "beat": "Ligar um segredo à pessoa que tenta mantê-lo oculto.",
+    "legends": [
+      "Dizem que um sétimo Pescador procurou outros reinos por uma porta dos fundos da BriarNet e nunca retornou.",
+      "Os Pescadores chantagearam um Carcereiro para que devolvesse um dos seus, mas nenhum deles se lembra do segredo que usaram.",
+      "Um Pescador apagou as próprias memórias depois de descobrir um segredo insuportável, mas seu sucessor repetiu o mesmo caminho."
+    ]
+  },
+  "spiderborn-rider": {
+    "name": "Cavaleiro Nascido da Aranha",
+    "meritName": "Quebrador de Correntes",
+    "prerequisites": "Perseverança 3.",
+    "purpose": "Percorrer livremente os trods, opor-se à escravidão e à coerção e manter a Sebe segura para changelings que recusam mestres.",
+    "privileges": "Os Cavaleiros são reconhecidos por suas cores como libertadores intransigentes, com quem se pode contar quando correntes, Corsários ou governantes tirânicos ameaçam os Perdidos.",
+    "duties": "Jamais entregar um changeling a Corsários; ajudar quem pedir para escapar do cativeiro; não aceitar mestre algum; e preservar a escolha pessoal, mesmo quando isso atrapalhar os planos dos aliados.",
+    "maskAndMien": "O Cavaleiro sempre veste um colete cujos emblemas contam sua história. No Semblante Feérico, a teia azul rompida e o raio tornam-se tatuagem, padrão corporal ou marca sobre uma pele semelhante a tecido.",
+    "heraldry": "Uma teia azul rasgada por um raio.",
+    "token": {
+      "name": "As Cores",
+      "description": "Emblemas ou insígnias em um colete sem mangas que identificam um Cavaleiro Nascido da Aranha.",
+      "effect": "Gaste 1 Glamour após trocar um olhar e um aperto de mãos, até um número de vezes por capítulo igual à graduação, para descobrir todos os juramentos, compromissos e vínculos formais que uma pessoa possui. Some a graduação às rolagens de Intimidação contra servos dos Fae.",
+      "catch": "Durante o restante do capítulo, não gaste Força de Vontade para melhorar suas próprias paradas de dados, a menos que fazê-lo beneficie outras pessoas explicitamente.",
+      "drawback": "Receba Abalado quando o medo do Cativeiro e de uma nova captura dominar o Cavaleiro."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "indomitable-rider",
+        "name": "Cavaleiro Indomável",
+        "description": "Receba Indomável. Se já possuir esse Mérito, em vez disso receba dois dados adicionais para resistir a influência mental sobrenatural.",
+        "conditional": true
+      },
+      {
+        "id": "where-needed",
+        "name": "Onde For Mais Necessário",
+        "description": "Ao encontrar um caminho pela Sebe, gaste 1 Glamour para ser conduzido não aonde deseja ir, mas aonde é mais necessário."
+      }
+    ],
+    "touchstone": "Um mortal conhecido antes de assumir o Título, que recorda ao Cavaleiro o quanto ele mudou e por que a Sebe agora é seu verdadeiro lar.",
+    "curse": "Ataques de Lucidez sofridos após recusar-se a ajudar outro changeling na Sebe ou outras pessoas em necessidade comparável adicionam uma quantidade de dados de dano igual aos pontos investidos neste Mérito.",
+    "beat": "Libertar alguém de uma Barganha perigosa ou tornar a Sebe mais segura para todos os Perdidos.",
+    "legends": [
+      "Um Cavaleiro sem nome combateu os Reis da Estrada e talvez agora os governe e sabote em segredo.",
+      "Um Cavaleiro morreu lutando contra o próprio Retalho para impedi-los de libertar hobgoblins devotados a uma Rainha dos Goblins.",
+      "Um Cavaleiro paranoico exilou-se na Sebe para destruir a própria mente, em vez de correr o risco de servir ao seu Carcereiro."
+    ]
   }
 }

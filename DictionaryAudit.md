@@ -52,5 +52,11 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Baron of the Lesser Ones | Barão dos Seres Menores | Primeiro Título do lote; o sentido de *Lesser Ones* pode admitir uma forma mais idiomática. |
 | Dauphines of Wayward Children | Delfinas das Crianças Desgarradas | |
 | Sophomore / Chaperone / Dowager | Segundo-anista / Acompanhante / Dama Viúva | Papéis internos das Delfinas; **Segundo-anista** e **Dama Viúva** merecem revisão de fluidez. |
+| Master of Keys | Mestre das Chaves | |
+| Thorn Dancer | Dançarino dos Espinhos | Foi adotado o masculino fixo, sem exibir pares de gênero. |
+| Sibylline Fisher | Pescador Sibilino | |
+| Spiderborn Rider | Cavaleiro Nascido da Aranha | |
+| BriarNet | BriarNet | Mantido como nome próprio; a opção **Rede de Silvados** não foi aplicada. |
+| Cracking Software | Software de Invasão | Nome mecânico citado pelo Programa Pítia; deve acompanhar a futura auditoria dos Méritos. |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.
