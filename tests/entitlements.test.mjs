@@ -31,6 +31,8 @@ test("catálogo contém seis Entitlements oficiais, oito de Courts e treze de Se
 });
 
 test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()=>{
+  assert.equal(Object.keys(ENTITLEMENTS_PT).length,27);
+  assert.deepEqual(Object.keys(ENTITLEMENTS_PT).sort(),ENTITLEMENTS.map((item)=>item.id).sort());
   const source=ENTITLEMENTS.find((item)=>item.id==="baron-lesser-ones");
   const translated=entitlementPresentation(source,"pt-BR",ENTITLEMENTS_PT);
   assert.equal(translated.id,source.id);

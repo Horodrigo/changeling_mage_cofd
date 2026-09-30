@@ -69,5 +69,12 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Infinite Popup Book | Livro Pop-up Infinito | **Pop-up** foi mantido por ser a forma corrente para livros com estruturas tridimensionais. |
 | Castellan of the Broken Cage | Castelão da Jaula Quebrada | |
 | Chrysalid | crisálida | Usado como substantivo comum no texto do Castelão. |
+| Knights of the Knowledge of the Tongue | Cavaleiros do Saber da Língua | **Tongue** foi interpretado literalmente; o contexto culinário também admite uma adaptação ligada ao paladar. |
+| Legate of the Black Apple | Legado da Maçã Negra | **Legado** é o título diplomático, não o substantivo no sentido de herança; a forma é correta, mas pouco corrente. |
+| Sprite | Fagulha | Ser feérico citado em **Elemento Divino**; convém uniformizar quando esse catálogo for localizado. |
+| Margrave of the Brim | Margrave da Orla | **Margrave** foi mantido como título nobiliárquico; **Brim** foi interpretado como a orla da Sebe. |
+| Bane | Flagelo | Nome do papel marcial dos Nobres Sábios dos Confins Desconhecidos. |
+| Bugbear Mask | Máscara de Bicho-papão | **Bugbear** foi interpretado como a criatura do folclore, não como urso. |
+| The Tolltaker Knight | O Cavaleiro Cobrador | **Tolltaker** foi adaptado para a função de cobrar o preço prometido. |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.

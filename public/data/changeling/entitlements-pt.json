@@ -878,5 +878,599 @@
     "curse": "Ataques de Lucidez sofridos quando uma crisálida enfrenta consequências negativas da atenção do Castelão adicionam uma quantidade de dados igual aos pontos investidos.",
     "beat": "Ser confrontado por alguém da vida de uma crisálida.",
     "legends": []
+  },
+  "duke-icebound-heart": {
+    "name": "Duque do Coração Preso no Gelo",
+    "meritName": "Promessas Congeladas",
+    "prerequisites": "Presença ou Manipulação 3, Socialização 2, Empatia 2.",
+    "purpose": "Conquistar corações, parti-los e personificar a distância fria do libertino consumado.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Promessas Congeladas.",
+    "duties": "O portador do Título deve conquistar corações, parti-los, personificar a distância fria do libertino consumado e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Duque do Coração Preso no Gelo.",
+    "token": {
+      "name": "Coração do Inverno",
+      "description": "O Penhor heráldico hereditário do Duque do Coração Preso no Gelo; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Ao ativar, diga o nome de um alvo conhecido para tornar-se por um momento o foco dos pensamentos dele, em qualquer lugar do mundo. Gaste 1 Glamour em uma reunião social para perceber as ligações emocionais entre os presentes. Some a graduação do Penhor à sedução, ao romance e à manipulação social aparentemente inocente.",
+      "catch": "Escreva o nome completo de alguém que ame de verdade, mostre-o a uma pessoa nova e então queime-o.",
+      "drawback": "Receba Lascivo até resolvê-lo ou até que desapareça depois do próximo sono do usuário."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "icebound-social-merits",
+        "name": "Posição Social Congelada",
+        "description": "Receba uma quantidade de pontos de Méritos Sociais mundanos igual à metade do Fado, arredondada para cima, representando os métodos e a reputação do Duque.",
+        "conditional": true,
+        "choiceLabel": "Méritos Sociais"
+      },
+      {
+        "id": "escape-machinations",
+        "name": "Escapar das Maquinações",
+        "description": "Receba +3 em Defesa e Deslocamento ao escapar de perigos causados pelas próprias tramas do Duque."
+      }
+    ],
+    "touchstone": "Um mortal cujo coração o Duque partiu, no passado ou no presente.",
+    "curse": "Ataques de Lucidez sofridos enquanto outra pessoa padece por causa das ações intencionais do portador do Título adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sofrer uma consequência negativa por causa de um romance atual ou passado.",
+    "legends": []
+  },
+  "eternal-echo": {
+    "name": "O Eco Eterno",
+    "meritName": "Memória do Eco",
+    "prerequisites": "Autocontrole 3, Erudição 2, Expressão 2.",
+    "purpose": "Registrar as vidas e histórias dos Perdidos para que sua verdade não desapareça.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Memória do Eco.",
+    "duties": "O portador do Título deve registrar as vidas e histórias dos Perdidos para que sua verdade não desapareça e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Eco Eterno.",
+    "token": {
+      "name": "Registro dos Perdidos",
+      "description": "O Penhor heráldico hereditário do Eco Eterno; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Reproduza qualquer gravação conhecida; caso contrário, faça uma rolagem de Raciocínio + Ocultismo com um bônus igual à graduação ou ouça um áudio aleatório em caso de falha. Segurá-lo penaliza, pela graduação, as paradas de Ponto de Ruptura causadas por seu conteúdo. Gaste 1 Glamour para gravar uma cena de áudio permanente e perfeito. Uma vez por ativação, transfira uma gravação para a memória ou uma cena da memória para o Registro; conserve uma quantidade de memórias alheias igual à graduação.",
+      "catch": "Conte ao Registro uma verdade que nunca contou a ninguém.",
+      "drawback": "Esqueça a verdade usada para ativar o Registro."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "echo-eidetic",
+        "name": "Eco Eidético",
+        "description": "Receba Memória Eidética; se já a possuir, receba dois pontos de Mérito para distribuir. Gaste 1 Glamour para dobrar o bônus desse Mérito."
+      },
+      {
+        "id": "immutable-memory",
+        "name": "Memória Imutável",
+        "description": "A memória do Eco não pode ser alterada artificialmente. Some os pontos investidos às rolagens para resistir à revelação forçada de informações."
+      }
+    ],
+    "touchstone": "A família mortal de um changeling registrado no Registro dos Perdidos ainda na memória dos vivos.",
+    "curse": "Ataques de Lucidez causados pela descoberta de mentiras importantes adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Ouvir uma história moralmente repugnante, ou a história de um inimigo, sem julgar quem a conta.",
+    "legends": []
+  },
+  "knights-knowledge-tongue": {
+    "name": "Cavaleiros do Saber da Língua",
+    "meritName": "Sinfonia para os Sentidos",
+    "prerequisites": "Vigor 3, Ofícios 2 com Especialização em Culinária.",
+    "purpose": "Criar uma culinária transformadora com ingredientes raros e compartilhar maravilhas sensoriais.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Sinfonia para os Sentidos.",
+    "duties": "O portador do Título deve criar uma culinária transformadora com ingredientes raros, compartilhar maravilhas sensoriais e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada aos Cavaleiros do Saber da Língua.",
+    "token": {
+      "name": "Colheres Medidoras Mágicas",
+      "description": "O Penhor heráldico hereditário dos Cavaleiros do Saber da Língua; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "As colheres sempre medem com perfeição e concedem ação de rotina ao cozinhar. Gaste 1 Glamour enquanto cozinha para conceder a cada comensal Inspirado para uma Perícia escolhida ou um ponto de um Mérito de Changeling que não seja Manto até o fim do dia, ignorando pré-requisitos. Some a graduação do Penhor à Percepção baseada em olfato ou paladar.",
+      "catch": "Coma três bocados de um alimento que o usuário deteste.",
+      "drawback": "Quando exposto a sensações intensas ou desagradáveis, faça uma rolagem de Perseverança + Vigor; uma falha impõe Distraído pela cena."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "culinary-network",
+        "name": "Rede Culinária",
+        "description": "Receba Fado/2 pontos, arredondados para cima, divididos entre Contatos e Aliados ligados a alimentos e ingredientes raros.",
+        "conditional": true,
+        "choiceLabel": "Contatos culinários"
+      },
+      {
+        "id": "ingredient-lore",
+        "name": "Conhecimento de Ingredientes",
+        "description": "Receba +3 para localizar ou identificar ingredientes incomuns e reconheça qualquer animal com o qual já tenha cozinhado."
+      }
+    ],
+    "touchstone": "Um utensílio de cozinha mundano ou livro de receitas favorito.",
+    "curse": "Ataques de Lucidez sofridos quando a culinária do Cavaleiro causa um desastre adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sofrer dano pessoal enquanto busca ingredientes raros.",
+    "legends": []
+  },
+  "legate-black-apple": {
+    "name": "Legado da Maçã Negra",
+    "meritName": "Bênção do Pomar",
+    "prerequisites": "Duas Perícias Sociais em 4+, Perseverança e Autocontrole combinados 7+, Fado 3+.",
+    "purpose": "Atuar como diplomata e protetor entre os Perdidos e as perigosas sociedades feéricas.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Bênção do Pomar.",
+    "duties": "O portador do Título deve atuar como diplomata e protetor entre os Perdidos e as perigosas sociedades feéricas e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Legado da Maçã Negra.",
+    "token": {
+      "name": "Pingente de Maçã",
+      "description": "O Penhor heráldico hereditário do Legado da Maçã Negra; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Sussurre o Título de um Feé Verdadeiro para compeli-lo a responder a um pedido de negociação; ao ativar, receba ao menos Fado minutos para apresentar seu caso antes que ele possa agir. Some a graduação às ações de Raciocínio ou Manipulação ligadas aos deveres do Legado. Uma vez por dia, gaste 1 Glamour para somar Autocontrole à Defesa pela cena.",
+      "catch": "Deixe o espinho do pingente perfurar o usuário e sofra 1 ponto de dano letal.",
+      "drawback": "Depois de realizar qualquer ataque físico, sofra −2 em todas as ações de Raciocínio, Manipulação e Destreza pelo restante da cena."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "orchard-courage",
+        "name": "Coragem do Pomar",
+        "description": "Gaste 1 Glamour para conceder +3 para resistir ao medo e à intimidação pela cena."
+      },
+      {
+        "id": "legate-hedge-merits",
+        "name": "Comitiva da Sebe",
+        "description": "Receba Fado/2 pontos de Mérito, arredondados para cima, distribuídos entre Montaria Fae, Sentido da Sebe, Conhecedor da Sebe e Parente dos Hobs.",
+        "conditional": true,
+        "choiceLabel": "Méritos da Sebe"
+      }
+    ],
+    "touchstone": "Um mortal que o Legado ou um predecessor salvou da Nobreza quando criança.",
+    "curse": "Ataques de Lucidez envolvendo alguém a quem o Legado não pôde ajudar adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sofrer ferimentos físicos graves ou dano de Lucidez enquanto cumpre os deveres do Título.",
+    "legends": []
+  },
+  "lost-pantheon": {
+    "name": "O Panteão Perdido",
+    "meritName": "Encarnação Primordial",
+    "prerequisites": "Presença 3, Ocultismo 2 com Especialização na divindade escolhida, Fado 3+.",
+    "purpose": "Encarnar o domínio de uma divindade antiga e estabelecer seu culto no Povoado.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Encarnação Primordial.",
+    "duties": "O portador do Título deve encarnar o domínio de uma divindade antiga, estabelecer seu culto no Povoado e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Panteão Perdido.",
+    "token": {
+      "name": "Medalhão Celestial",
+      "description": "O Penhor heráldico hereditário do Panteão Perdido; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Se for roubado, o Medalhão retorna ao seu guardião legítimo em até 24 horas. Receba novamente 8 em primeiras impressões com humanos, aprimorado para ação de rotina com adoradores. Gaste 1 Glamour em um local sagrado ou ritual para somar a graduação, pela cena, às ações que exijam adoração, obediência ou dever. Colher Glamour de adoradores voluntários lhes concede Inspirado e Devastado.",
+      "catch": "Mergulhe ou passe o Medalhão pelo elemento da divindade por uma hora enquanto recita preces.",
+      "drawback": "Pelo restante do dia, receba Distraído devido a visões incessantes do Fado."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "pantheon-temple",
+        "name": "Templo Consagrado",
+        "description": "Consagre como templo um Vão permitido; quem entrar sem fazer uma oferenda deve superar Perseverança + Autocontrole, penalizados pelos pontos investidos."
+      },
+      {
+        "id": "divine-element",
+        "name": "Elemento Divino",
+        "description": "Gaste 1 Força de Vontade para imbuir um objeto com o elemento da divindade pela cena; uma Fagulha alinhada pode absorvê-lo uma vez por dia para curar um ponto de dano superficial de Lucidez.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "Um ícone, relíquia, estátua ou objeto sagrado que represente a divindade.",
+    "curse": "Ataques de Lucidez sofridos quando outras pessoas desprezam, desacreditam ou ignoram a divindade adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Colocar o domínio da divindade acima das necessidades do Retalho, da Corte ou do Povoado, ou entrar em perigo por ele.",
+    "legends": []
+  },
+  "magistrates-wax-mask": {
+    "name": "Magistrados da Máscara de Cera",
+    "meritName": "Discrição do Magistrado",
+    "prerequisites": "Autocontrole 3, Socialização 2, Dissimulação 3.",
+    "purpose": "Servir clientes com discrição absoluta, permanecendo invisível e indecifrável.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Discrição do Magistrado.",
+    "duties": "O portador do Título deve servir clientes com discrição absoluta, permanecer invisível e indecifrável e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada aos Magistrados da Máscara de Cera.",
+    "token": {
+      "name": "Máscaras de Cera",
+      "description": "O Penhor heráldico hereditário dos Magistrados da Máscara de Cera; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Pressione uma Máscara de Servo contra uma efígie de forma humana e nomeie uma profissão para animá-la por 24 horas, com a Mascarilha fortalecida e habilidades limitadas à profissão. Ative a Máscara de Mestre e gaste 1 Glamour por efígie para comandá-las por 24 horas.",
+      "catch": "Servo: sele a Máscara com sangue e sofra 1 ponto de dano contundente. Mestre: pague irremediavelmente a cada efígie uma hora do salário mínimo local.",
+      "drawback": "Às vezes, as efígies servis revelam sua verdadeira natureza. A Máscara de Mestre causa 1 ponto de dano letal por serviço prometido que o usuário definitivamente deixa de realizar."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "magistrate-unnoticed",
+        "name": "Magistrado Despercebido",
+        "description": "A menos que atraia atenção ativamente, rolagens simples de Percepção só percebem o Magistrado com um sucesso excepcional.",
+        "conditional": true
+      },
+      {
+        "id": "perfect-discretion",
+        "name": "Discrição Perfeita",
+        "description": "Some Fado/2, arredondado para cima, às rolagens de Autocontrole ou Dissimulação para ocultar reações e depois negar ter testemunhado um acontecimento.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "Um passatempo solitário praticado sem companhia.",
+    "curse": "Ataques de Lucidez sofridos ao favorecer as próprias necessidades em detrimento das de um cliente adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sacrificar a segurança pessoal em nome do profissionalismo.",
+    "legends": []
+  },
+  "magus-gilded-thorns": {
+    "name": "Mago dos Espinhos Dourados",
+    "meritName": "Coração dos Silvados",
+    "prerequisites": "Autocontrole 3, Furtividade 2, Sentido da Sebe, Fado 2+.",
+    "purpose": "Comungar com a Sebe, abrigar viajantes e voltar seus caminhos contra perseguidores.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Coração dos Silvados.",
+    "duties": "O portador do Título deve comungar com a Sebe, abrigar viajantes, voltar seus caminhos contra perseguidores e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Mago dos Espinhos Dourados.",
+    "token": {
+      "name": "Coroa de Espinhos",
+      "description": "O Penhor heráldico hereditário do Mago dos Espinhos Dourados; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Sintonize o usuário com a lógica impossível da Sebe e imponha a graduação do Penhor contra seres desacostumados a ela.",
+      "catch": "Sofra voluntariamente 1 ponto de dano letal causado pela Sebe.",
+      "drawback": "Remover a Coroa impõe Confuso enquanto o usuário se readapta à realidade mundana."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "false-trail",
+        "name": "Rastro Falso",
+        "description": "Gaste 1 Glamour para fazer os rastros de um viajante da Sebe apontarem para outro lugar, a menos que o rastreamento alcance um sucesso excepcional; até os Monteiros são enganados até que o viajante saia."
+      },
+      {
+        "id": "deep-hedge-sight",
+        "name": "Visão Profunda da Sebe",
+        "description": "Some Fado/2, arredondado para cima, à navegação; com Fado 3, enxergue através de portais da Sebe e, com Fado 6, veja o que aguarda no fim de uma trod.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "Um jardim mundano exuberante, normalmente centrado em um arbusto espinhoso.",
+    "curse": "Ataques de Lucidez causados pela falta de contato humano adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Negar abrigo a um changeling em fuga ou ajudar seu perseguidor feérico conforme o capricho da Sebe.",
+    "legends": []
+  },
+  "margrave-brim": {
+    "name": "Margrave da Orla",
+    "meritName": "Trenodia dos Espinhos",
+    "prerequisites": "Briga ou Armamento 3, Sobrevivência 2, Fado 2+.",
+    "purpose": "Guardar, mapear e estabilizar a Sebe ao redor de Povoados vulneráveis.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Trenodia dos Espinhos.",
+    "duties": "O portador do Título deve guardar, mapear e estabilizar a Sebe ao redor de Povoados vulneráveis e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Margrave da Orla.",
+    "token": {
+      "name": "Lâmina Petrificada",
+      "description": "O Penhor heráldico hereditário do Margrave da Orla; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Revele perigos próximos da Sebe e guie o portador por terreno hostil; a graduação da Lâmina reforça o combate e a navegação pertinentes ao Título.",
+      "catch": "Anuncie-se em voz alta e mantenha a espada erguida por ao menos um minuto.",
+      "drawback": "Receba Imprudente, convencido de que nenhum desafio ou inimigo está além de suas capacidades."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "hedge-interdisciplinary",
+        "name": "Especialização Interdisciplinar da Sebe",
+        "description": "Receba Especialização Interdisciplinar voltada à Sebe.",
+        "conditional": true
+      },
+      {
+        "id": "hedge-chase",
+        "name": "Mestre das Perseguições na Sebe",
+        "description": "Em uma perseguição na Sebe, reduza a quantidade básica de sucessos necessários para vencer em duas vezes os pontos investidos neste Mérito."
+      }
+    ],
+    "touchstone": "Um mortal cuja vida melhorou com a ajuda do Margrave.",
+    "curse": "Ataques de Lucidez sofridos quando alguém a quem prometeu proteção ou orientação sofre ferimentos físicos adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Ajudar uma pessoa ingrata ou alguém que questionou a capacidade do Margrave.",
+    "legends": []
+  },
+  "noble-sages": {
+    "name": "Nobres Sábios dos Confins Desconhecidos",
+    "meritName": "Especialidade do Sábio",
+    "prerequisites": "Ocultismo 2, mais o papel escolhido: Arquivista — Inteligência 3 e Erudição 2; Diplomata — Raciocínio 3 e Persuasão 2; Flagelo — Perseverança 3 e Esportes 2.",
+    "purpose": "Estudar seres sobrenaturais não feéricos como arquivista, diplomata ou caçador.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Especialidade do Sábio.",
+    "duties": "O portador do Título deve estudar seres sobrenaturais não feéricos como arquivista, diplomata ou caçador e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada aos Nobres Sábios dos Confins Desconhecidos.",
+    "token": {
+      "name": "Anéis Arcanos",
+      "description": "O Penhor heráldico hereditário dos Nobres Sábios dos Confins Desconhecidos; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Enquanto examina um sujeito em pessoa, nomeie um tipo de ser sobrenatural para receber uma identificação infalível de sim ou não.",
+      "catch": "Recite um conhecimento sobre o ser nomeado que este usuário nunca tenha usado antes para a Brecha.",
+      "drawback": "Receba Obsessão voltada a aprender algo novo sobre o ser nomeado."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "supernatural-contacts",
+        "name": "Contatos Sobrenaturais",
+        "description": "Receba Contatos iguais a Fado/2, arredondado para cima, cada qual representando uma comunidade sobrenatural não feérica diferente.",
+        "conditional": true,
+        "choiceLabel": "Comunidades sobrenaturais"
+      },
+      {
+        "id": "supernatural-barfly",
+        "name": "Frequentador Sobrenatural",
+        "description": "Receba uma versão de Frequentador de Bares que se aplica a encontros de criaturas sobrenaturais não feéricas e ignora os pré-requisitos habituais."
+      }
+    ],
+    "touchstone": "Um estudioso mundano de folclore, mitologia ou cultura popular voltada a monstros.",
+    "curse": "Ataques de Lucidez causados por quebrar uma promessa feita a seres sobrenaturais não feéricos adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Colocar a busca por conhecimento sobrenatural acima das necessidades do Retalho, da Corte ou do Povoado.",
+    "legends": [],
+    "roles": [
+      {
+        "id": "archivist",
+        "name": "Arquivista",
+        "prerequisites": "Inteligência 3, Erudição 2, Ocultismo 2",
+        "privilege": "Catalogar e interpretar conhecimentos sobrenaturais.",
+        "duties": "Preservar registros precisos de seres não feéricos.",
+        "tokenBonus": "Usar o Anel Arcano como investigador e estudioso.",
+        "tokenDrawback": "Obsessão"
+      },
+      {
+        "id": "diplomat",
+        "name": "Diplomata",
+        "prerequisites": "Raciocínio 3, Persuasão 2, Ocultismo 2",
+        "privilege": "Negociar com comunidades sobrenaturais não feéricas.",
+        "duties": "Manter canais de comunicação e honrar acordos.",
+        "tokenBonus": "Usar o Anel Arcano para identificar aqueles que encontra em uma negociação.",
+        "tokenDrawback": "Obsessão"
+      },
+      {
+        "id": "bane",
+        "name": "Flagelo",
+        "prerequisites": "Perseverança 3, Esportes 2, Ocultismo 2",
+        "privilege": "Confrontar seres sobrenaturais não feéricos perigosos.",
+        "duties": "Proteger os outros quando a pesquisa e a diplomacia falharem.",
+        "tokenBonus": "Usar o Anel Arcano para identificar uma presa antes de agir.",
+        "tokenDrawback": "Obsessão"
+      }
+    ]
+  },
+  "scarecrow-minister": {
+    "name": "O Ministro Espantalho",
+    "meritName": "Dever do Espantalho",
+    "prerequisites": "Autocontrole 3, Empatia 2 com Especialização em Medo, Intimidação 3.",
+    "purpose": "Proteger mortais cultivando o medo, os avisos e as lendas admonitórias.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Dever do Espantalho.",
+    "duties": "O portador do Título deve proteger mortais cultivando o medo, os avisos e as lendas admonitórias e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Ministro Espantalho.",
+    "token": {
+      "name": "Máscara de Bicho-papão",
+      "description": "O Penhor heráldico hereditário do Ministro Espantalho; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Amplifique o medo e personifique um monstro admonitório escolhido enquanto a Máscara estiver sendo usada.",
+      "catch": "Assuste alguém que o usuário considere amigo ou aliado durante a mesma cena.",
+      "drawback": "A Máscara adere à pele pelo resto do dia; removê-la exige Força e causa três dados de dano contundente."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "read-fears",
+        "name": "Ler Medos",
+        "description": "Depois de obter sucesso com Empatia contra um ser sapiente, faça uma rolagem de Fado e descubra um medo por sucesso; isso é automático."
+      },
+      {
+        "id": "fear-harvest",
+        "name": "Colheita de Medo",
+        "description": "Colheitas de Glamour bem-sucedidas criadas pelo medo recebem uma quantidade de Glamour adicional igual aos pontos investidos."
+      }
+    ],
+    "touchstone": "Um mortal protegido do sobrenatural pelo Ministro, que o assustou para afastá-lo dele.",
+    "curse": "Ataques de Lucidez sofridos depois de receber Condições baseadas em medo, como Assustado ou Aterrorizado, adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sacrificar objetivos ou relacionamentos pessoais para fortalecer uma lenda urbana ou história admonitória.",
+    "legends": []
+  },
+  "tolltaker-knight": {
+    "name": "O Cavaleiro Cobrador",
+    "meritName": "Juramento do Cavaleiro",
+    "prerequisites": "Autocontrole 3, Briga ou Armamento 2, Intimidação 2.",
+    "purpose": "Aceitar uma presa e cobrar o preço prometido sem abandonar a caçada.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Juramento do Cavaleiro.",
+    "duties": "O portador do Título deve aceitar uma presa, cobrar o preço prometido sem abandonar a caçada e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Cavaleiro Cobrador.",
+    "token": {
+      "name": "Estrela-guia Luminosa",
+      "description": "O Penhor heráldico hereditário do Cavaleiro Cobrador; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Rastreie uma presa identificada; gaste 1 Glamour enquanto enxerga um alvo que foge ou se esconde para impor −3 ao Deslocamento e à Furtividade dele pela cena.",
+      "catch": "Faça uma promessa ao Fado, tratada como uma Selagem sem custo de Glamour.",
+      "drawback": "Sofra −5 em Furtividade e Dissimulação pelo restante da cena."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "tolltaker-quarry",
+        "name": "Presa do Cobrador",
+        "description": "Gaste 1 Força de Vontade antes de um combate com a presa para reduzir pela metade a Defesa dela, arredondada para cima, e impor −2 à Iniciativa; só pode haver uma presa por vez."
+      },
+      {
+        "id": "predecessor-payment",
+        "name": "Pagamento do Predecessor",
+        "description": "Receba um Penhor ou Vão com graduação Fado/2, arredondada para cima, herdado como pagamento por uma missão difícil de um predecessor.",
+        "conditional": true,
+        "choiceLabel": "Penhor ou Vão"
+      }
+    ],
+    "touchstone": "Um objeto tomado da primeira recompensa do Cavaleiro.",
+    "curse": "Ataques de Lucidez sofridos quando alguém é prejudicado por cumprir uma promessa adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "A reputação do Cavaleiro faz alguém pensar mal dele.",
+    "legends": []
   }
 }
