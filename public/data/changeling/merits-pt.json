@@ -278,5 +278,66 @@
         "description": "Durante um Duelo da Sebe, testes de ataque não sofrem penalidade para gerar sucessos de moldagem ao Tecer a Sebe."
       }
     ]
+  },
+  "ctl-the-hedge:frightful-incantation": {
+    "name": "Encantamento Aterrador",
+    "prerequisites": "Feiticeiro da Sebe, Manto •• que imponha Condições de Desvario baseadas em medo, Perseverança ••",
+    "description": "Usa elementos do Manto ou do Semblante Feérico do personagem no lugar de hecatombes para abrir, por história, um número de Portas igual ao Manto. Cada Porta substituída exige que esse elemento seja relacionado dramaticamente ao ritual; isso não pode substituir uma hecatombe que consista em uma ação."
+  },
+  "ctl-the-hedge:hedge-sorcerer": {
+    "name": "Feiticeiro da Sebe",
+    "prerequisites": "Ocultismo •, Mentor ••",
+    "description": "Realiza rituais de Feitiçaria da Sebe após reunir os componentes necessários. Os rituais usam hecatombes ligadas ao feiticeiro, à Sebe, ao ambiente e a qualquer alvo externo; dedica sucessos de Tecer a Sebe, gasta 2 Glamour e testa Raciocínio + Ocultismo + Fado para cada Porta. Portas não abertas impõem Fragilidades, enquanto rituais fracassados podem causar Condições Persistentes ou dano de Lucidez."
+  },
+  "de2:hedgewise": {
+    "name": "Conhecedor da Sebe",
+    "description": "Recebe +2 ao usar Tino para detectar passagens da Sebe, mesmo ocultas por magia, e 9-novamente ao Tecer a Sebe."
+  },
+  "de2:librarian": {
+    "name": "Bibliotecário",
+    "description": "Melhora em um nível a impressão inicial com bibliotecários e estudiosos; o comportamento posterior determina se o bônus permanece. O personagem sabe onde encontrar informações registradas em um livro ou pergaminho, ou quem as possui, e recebe +2 nos testes para pesquisar registros escritos."
+  },
+  "ctl-the-hedge:magic-dreams": {
+    "name": "Sonhos Mágicos",
+    "prerequisites": "Feiticeiro da Sebe, Ocultismo •••",
+    "description": "Realiza Feitiçaria da Sebe dentro de um Bastião, usando Oniromancia em vez de Tecer a Sebe no teste final. Provações realizadas para eidolons podem abrir Portas quando incluem autossacrifício; não precisam ocorrer durante a conjuração, mas permanecem válidas apenas enquanto o feiticeiro continuar naquele Bastião e o sonhador permanecer adormecido."
+  },
+  "de2:oath-blood-liege": {
+    "name": "Juramento: Suserano de Sangue",
+    "description": "Jura servir a um vampiro específico e recebe esse suserano como Mentor de dois pontos. Uma vez por mês lunar, o vampiro pode exigir uma tarefa que não coloque o changeling em perigo significativo, e o changeling deve obedecer tanto ao espírito quanto à letra do pedido. Abrir mão deste Mérito redireciona um Monteiro ou Feé Verdadeiro ao vampiro, concede três pontos de Méritos substitutos conforme a Santidade dos Méritos, resolve a Condição Obrigado do vampiro e concede Quebrador de Juramento ao changeling."
+  },
+  "oak-ash-thorn:entitlement": {
+    "name": "Título",
+    "prerequisites": "Changeling; os requisitos adicionais do Título escolhido",
+    "description": "Um Título feérico que concede Heráldica, deveres, um Touchstone, uma maldição e graduações iguais ao Fado, que podem ser investidas em seu Penhor heráldico ou em bênçãos."
+  },
+  "ctl-kith-kin:dramaturge": {
+    "name": "Dramaturgo",
+    "prerequisites": "Raciocínio •••, Expressão •••, Subterfúgio •••",
+    "description": "Ao cumprir a Brecha de um Contrato enquanto segura um objeto com forte dramaturgia apropriada àquele Contrato, o changeling pode aplicar um benefício adicional de Feição que não possua ou tornar a invocação reflexiva sem pagar Glamour adicional. Um objeto comum permite três usos de Contratos Comuns ou um uso de Contrato Real antes que sua conexão se esgote. Um Ícone concede ambos os benefícios de uma vez e então é destruído. O changeling também recebe 9-novamente em testes para realizar um galoshin."
+  },
+  "ctl-kith-kin:understudy": {
+    "name": "Substituto de Cena",
+    "prerequisites": "Dramaturgo, Expressão ••••",
+    "description": "Como ação instantânea, o changeling veste ou empunha um item que represente dramaturgicamente outro changeling presente na cena, ou um cujo Ícone possua. Durante a cena, sempre que um dos personagens cumprir a Brecha de um Contrato, o outro também a cumpre. Quando sua contraparte invocar um Contrato pela Brecha, o dramaturgo pode copiar para si quaisquer efeitos que tenham como alvo apenas o usuário do Contrato. Escolher uma nova contraparte encerra o vínculo anterior."
+  },
+  "ctl-hedge:shared-bastion": {
+    "name": "Bastião Compartilhado",
+    "description": "O personagem e seu Retalho mantêm um Bastião compartilhado permanente. Os membros despertam sem precisar encontrar uma saída; sua pontuação penaliza tentativas de alterar o destino ou a mente deles e de rastrear pessoas adormecidas em seu interior. Apenas intrusos com Fado ou Tolerância Sobrenatural superior à pontuação podem forçar a entrada. Sua pontuação também permite adquirir um valor equivalente em características do Bastião."
+  },
+  "ctl-hedge:calming-eidolons": {
+    "name": "Eidolons Calmantes",
+    "prerequisites": "Bastião Compartilhado",
+    "description": "Reduz pelos pontos neste Mérito a penalidade de Compostura do sonhador contra Alterações Sutis realizadas pelos proprietários do Bastião compartilhado, até uma penalidade mínima de um dado."
+  },
+  "ctl-hedge:motley-awareness": {
+    "name": "Percepção do Retalho",
+    "prerequisites": "Bastião Compartilhado",
+    "description": "Com um ponto, cada membro do Retalho recebe +1 em testes Sociais com os demais enquanto alguém possuir este Mérito. Com três pontos, o proprietário percebe o humor geral de cada membro e mudanças significativas a qualquer distância, e pode enviar mensagens privadas de três palavras. Em cenas de ação, enviar uma mensagem substitui falar em voz alta, e apenas outro proprietário com três pontos pode responder. O proprietário sofre a maior penalidade de percepção por Lucidez presente no Retalho, mas outras mecânicas baseadas em Lucidez permanecem inalteradas."
+  },
+  "ctl-hedge:somnambulation": {
+    "name": "Sonambulismo",
+    "prerequisites": "Bastião Compartilhado",
+    "description": "Um eidolon cuida do corpo adormecido do personagem enquanto ele viaja pelos sonhos. Com três pontos, realiza cuidados pessoais básicos; com quatro, executa tarefas mundanas simples que não exijam testes. Ficar sem sono REM esgota a Força de Vontade e, com quatro pontos, dormir com Força de Vontade 0 pode causar Comatoso em um teste de Lucidez fracassado."
   }
 }

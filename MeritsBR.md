@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 34/202 registros Core e 40/154 Changeling. Todos os 40 Méritos do livro básico de Changeling estão traduzidos, incluindo as cinco manobras de Guerreiro Elemental, três de Apresentação Encantadora e onze de Duelista da Sebe. Ainda faltam 168 registros Core e 114 Changeling. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 34/202 registros Core e 53/154 Changeling. Todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos, incluindo as cinco manobras de Guerreiro Elemental, três de Apresentação Encantadora e onze de Duelista da Sebe. Ainda faltam 168 registros Core e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -58,6 +58,21 @@ Observações mecânicas adicionais, sem correção incidental:
 
 - `Glamour Fasting` e `Market Sense`: os resumos canônicos usam “session”, enquanto as passagens do livro usam “chapter”. As traduções mantêm “sessão”, para não alterar a periodicidade cadastrada.
 - `Hedgespun Item`: o registro canônico resume os benefícios e não contém as desvantagens descritas no livro. A tradução mantém o registro atual; não reconstrói conteúdo mecânico ausente.
+
+## Novas escolhas para auditoria — suplementos oficiais Changeling
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Frightful Incantation | Encantamento Aterrador | A magia se alimenta do medo associado ao Manto. |
+| Hedge Sorcerer / Hedge Sorcery | Feiticeiro da Sebe / Feitiçaria da Sebe | Distingue a prática ritual de simplesmente Tecer a Sebe. |
+| hecatombs | hecatombes | Sacrifícios rituais: podem ser componentes físicos ou ações, não apenas mortes. |
+| Hedgewise | Conhecedor da Sebe | Afinidade com a detecção de passagens e com Tecer a Sebe. |
+| Oath: Blood Liege | Juramento: Suserano de Sangue | Serviço a um vampiro específico. |
+| Understudy | Substituto de Cena | Papel teatral de quem assume o lugar de outro intérprete. |
+| Calming Eidolons | Eidolons Calmantes | Mantém eidolon como nome da entidade onírica. |
+| Motley Awareness | Percepção do Retalho | Percepção dos demais membros, não consciência coletiva literal. |
+
+Fontes inspecionadas visualmente: The Hedge pp. 66–69, 115 e 118–119; Oak, Ash, and Thorn p. 33; Kith and Kin p. 69; Dark Eras 2 pp. 75–76 e 107. Os resumos cadastrados foram preservados, sem incluir regras ausentes.
 
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 
