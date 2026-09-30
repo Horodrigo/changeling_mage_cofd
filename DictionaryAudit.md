@@ -65,5 +65,9 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Sacred Band of the Golden Standard | Bando Sagrado do Estandarte Dourado | |
 | Golden Bands | Faixas Douradas | Pode se referir tanto a faixas quanto a braçadeiras; o texto mecânico não especifica a forma. |
 | Squire of the Broken Bough | Escudeiro do Ramo Partido | |
+| Companion of the Resigned | Companheiro do Resignado | |
+| Infinite Popup Book | Livro Pop-up Infinito | **Pop-up** foi mantido por ser a forma corrente para livros com estruturas tridimensionais. |
+| Castellan of the Broken Cage | Castelão da Jaula Quebrada | |
+| Chrysalid | crisálida | Usado como substantivo comum no texto do Castelão. |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.

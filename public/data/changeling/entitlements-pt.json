@@ -773,5 +773,110 @@
     "curse": "Ataques de Lucidez sofridos quando alguém quebra um juramento ou compromisso formal com o Escudeiro adicionam uma quantidade de dados igual aos pontos investidos.",
     "beat": "Sofrer grande dificuldade ou ferimento grave ao defender a causa de outra pessoa.",
     "legends": []
+  },
+  "companion-resigned": {
+    "name": "Companheiro do Resignado",
+    "meritName": "Melhor Amigo para Sempre",
+    "prerequisites": "Empatia 3, Expressão 2, Furtividade 2.",
+    "purpose": "Tornar-se o companheiro inabalável de alguém que perdeu a esperança.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Melhor Amigo para Sempre.",
+    "duties": "O portador do Título deve tornar-se o companheiro inabalável de alguém que perdeu a esperança e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Companheiro do Resignado.",
+    "token": {
+      "name": "Livro Pop-up Infinito",
+      "description": "O Penhor heráldico hereditário do Companheiro do Resignado; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Mostre o livro a uma pessoa para receber novamente 8 em ações de Empatia, Expressão e Dissimulação com ela durante 24 horas. Sem ser observado, esconda entre as páginas um objeto de Tamanho 2 ou menor. Uma vez por capítulo, sussurre o nome de uma pessoa próxima em apuros para descobrir sua localização e circunstâncias aproximadas, sujeito a Confronto de Vontades contra ocultação mágica.",
+      "catch": "Conte ao livro uma anedota curta sobre um amigo que ele jamais tenha ouvido.",
+      "drawback": "Enquanto extrai poder do livro, perca três dados para detectar mentiras ou resistir à manipulação emocional de estranhos e inimigos."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "true-friend-project",
+        "name": "Projeto de Amigo Verdadeiro",
+        "description": "Receba Amigo Verdadeiro para o projeto atual do Companheiro. Quando a vida dele estiver consertada ou não puder ser consertada, Santidade dos Méritos se aplica somente a um novo projeto de Amigo Verdadeiro.",
+        "conditional": true,
+        "choiceLabel": "Amigo atual"
+      },
+      {
+        "id": "friend-present-stealth",
+        "name": "Sempre Há Outro Primo",
+        "description": "Receba +5 em Furtividade em qualquer cena na qual o amigo do Companheiro esteja presente.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "O melhor amigo atual do Companheiro.",
+    "curse": "Ataques de Lucidez por ferir alguém que não seja obviamente hostil adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Animar alguém que antes estava desalentado.",
+    "legends": []
+  },
+  "castellan-broken-cage": {
+    "name": "Castelão da Jaula Quebrada",
+    "meritName": "Centelha da Metamorfose",
+    "prerequisites": "Manipulação 3, Empatia ou Socialização 2, Fado 2+.",
+    "purpose": "Impulsionar as crisálidas escolhidas além das convenções, rumo a uma transformação pessoal radical.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Centelha da Metamorfose.",
+    "duties": "O portador do Título deve impulsionar as crisálidas escolhidas além das convenções, rumo a uma transformação pessoal radical, e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Castelão da Jaula Quebrada.",
+    "token": {
+      "name": "Medalhão Lepidóptero",
+      "description": "O Penhor heráldico hereditário do Castelão da Jaula Quebrada; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Saiba a localização e a atividade da crisálida atual, some a graduação às rolagens que incentivem a mudança e gaste 1 Glamour para conceder a uma crisálida ação de rotina em uma ação relacionada a crescimento por cena.",
+      "catch": "Faça uma alteração perceptível e difícil de reverter nos arredores.",
+      "drawback": "Depois de obter sucesso com uma parada de dados, repetir essa parada na mesma cena sofre uma penalidade cumulativa de −1."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "former-chrysalids",
+        "name": "Antigas Crisálidas",
+        "description": "Receba Aliados iguais à metade do Fado, arredondada para cima, representando antigas crisálidas agradecidas.",
+        "conditional": true,
+        "choiceLabel": "Crisálidas aliadas"
+      },
+      {
+        "id": "desire-sense",
+        "name": "Sentir Desejos",
+        "description": "Saiba sempre quando alguém mente sobre o que deseja; desejos inconscientes produzem uma impressão mais tênue."
+      }
+    ],
+    "touchstone": "Uma antiga crisálida cuja vida foi completamente transformada pelo Castelão.",
+    "curse": "Ataques de Lucidez sofridos quando uma crisálida enfrenta consequências negativas da atenção do Castelão adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Ser confrontado por alguém da vida de uma crisálida.",
+    "legends": []
   }
 }
