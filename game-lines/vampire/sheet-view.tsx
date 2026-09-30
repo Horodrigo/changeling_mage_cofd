@@ -58,6 +58,7 @@ import { meritConfigurationTitle } from "@/lib/core/character/merit-configuratio
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type {
@@ -2259,7 +2260,7 @@ function VampireExpandedMeritList({
                 </section>
               ))}
               {!configured.length && definition?.description && (
-                <p>{definition.description}</p>
+                <p>{meritPresentation(definition, locale).description}</p>
               )}
               {editor}
             </div>
@@ -2277,7 +2278,7 @@ function MeritList({
 }: {
   character: CharacterSheet;
   catalog: readonly MeritDefinition[];
-  locale: string;
+  locale: Locale;
 }) {
   const { t } = useLanguage();
   const visible = character.merits.filter(
@@ -2299,8 +2300,9 @@ function MeritList({
         const definition = catalog.find((item) => item.name === merit.name);
         const displayName = localized(definition, locale) || merit.name;
         const configuredName = meritConfigurationTitle(merit.configuration);
-        const tooltip = definition
-          ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
+        const presented = definition && meritPresentation(definition, locale);
+        const tooltip = presented
+          ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`
           : merit.source;
         return (
           <div

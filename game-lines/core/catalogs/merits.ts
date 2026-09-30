@@ -1,6 +1,13 @@
 import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-groups";
-import type { MeritDefinition } from "@/lib/merits";
+import type { MeritDefinition, MeritPresentationCatalog } from "@/lib/merits";
+import { withMeritPresentation } from "@/lib/merit-presentation";
 
 export const coreMeritsCatalogGroup: CatalogGroupModule = {
-  load: (reader) => reader.getCatalog<MeritDefinition[]>("merits-core"),
+  async load(reader) {
+    const [catalog, portuguese] = await Promise.all([
+      reader.getCatalog<MeritDefinition[]>("merits-core"),
+      reader.getCatalog<MeritPresentationCatalog>("merits-core-pt"),
+    ]);
+    return withMeritPresentation(catalog, portuguese);
+  },
 };

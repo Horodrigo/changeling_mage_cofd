@@ -1,0 +1,43 @@
+{
+  "ctl-2ed:acute-senses": {
+    "name": "Sentidos Aguçados",
+    "prerequisites": "Raciocínio ou Compostura •••",
+    "description": "Dobra o alcance e a acuidade da visão, da audição e do olfato, mas não permite enxergar na escuridão total. Adiciona o Fado aos testes de percepção e aos testes para lembrar ou identificar detalhes; isso substitui o bônus normal de percepção concedido pela Lucidez máxima."
+  },
+  "ctl-2ed:arcadian-metabolism": {
+    "name": "Metabolismo Arcadiano",
+    "description": "Na Sebe, cura um ponto de dano contundente por minuto e um ponto de dano letal por dia. A cura de dano agravado não muda."
+  },
+  "ctl-2ed:brownie-s-boon": {
+    "name": "Dádiva do Brownie",
+    "description": "Quando ninguém observa, reduz pela metade o intervalo de qualquer ação estendida mundana. Gasta 1 Glamour para reduzir esse intervalo pela metade novamente. Em um sucesso excepcional de um teste individual, escolher o benefício de redução de tempo reduz o intervalo desse teste a um oitavo do normal."
+  },
+  "ctl-2ed:cloak-of-leaves": {
+    "name": "Manto de Folhas",
+    "prerequisites": "Manto da Corte do Outono •••",
+    "description": "Habilidades sobrenaturais usadas para causar dano ao personagem ou impor Complicações físicas sofrem uma penalidade igual aos pontos neste Mérito. Isso inclui Contratos, bênçãos de Frátrias, Disciplinas, feitiços e outras habilidades sobrenaturais inatas."
+  },
+  "ctl-2ed:cold-hearted": {
+    "name": "Coração Frio",
+    "prerequisites": "Manto da Corte do Inverno •••",
+    "description": "Uma vez por cena, gasta 1 Força de Vontade para ignorar os efeitos de uma Condição de Lucidez durante a cena. A Condição permanece, nenhum dano de Lucidez é curado e ela se resolve normalmente se o personagem cumprir sua resolução."
+  },
+  "ctl-2ed:court-goodwill": {
+    "name": "Boa Vontade da Corte",
+    "description": "Adquire este Mérito separadamente para cada Corte, mas nunca para a Corte do Manto do próprio personagem. Concede os efeitos do Manto dessa Corte com uma pontuação dois pontos abaixo de Boa Vontade da Corte, funciona como Aliados com sua pontuação integral e concede um Mentor de um ponto como representante da Corte. Tentativas de impedir o uso de um Mérito de alguém com Manto da mesma Corte falham automaticamente; quando duas pontuações de Boa Vontade da mesma Corte se opõem, ambas diminuem em um ponto até que sejam feitas reparações."
+  },
+  "ctl-2ed:defensive-dreamscaping": {
+    "name": "Moldagem Onírica Defensiva",
+    "description": "Adiciona metade do Fado, arredondada para baixo, à Defesa do personagem em Forma Onírica."
+  },
+  "ctl-2ed:diviner": {
+    "name": "Adivinho",
+    "prerequisites": "Compostura •••, Raciocínio •••",
+    "description": "Entra no próprio Bastião pelo Portão de Marfim ou de Chifre e faz ao Narrador uma pergunta de sim ou não, que deve ser respondida corretamente, ou com “talvez” quando nenhuma resposta se aplicar. Perguntas complementares relacionadas são permitidas, com um total de perguntas por capítulo limitado aos pontos neste Mérito."
+  },
+  "ctl-2ed:dream-warrior": {
+    "name": "Guerreiro Onírico",
+    "prerequisites": "Fado ••, um Atributo Social •••, uma Especialização em Briga ou Armas Brancas",
+    "description": "Ao distribuir os sucessos de um ataque de Briga ou Armas Brancas coberto pela Especialização do personagem para uma alteração oniromântica sutil, recebe um sucesso adicional que deve afetar diretamente o combate. Uma Especialização em ambas as Perícias concede o benefício aos dois tipos de ataque."
+  }
+}

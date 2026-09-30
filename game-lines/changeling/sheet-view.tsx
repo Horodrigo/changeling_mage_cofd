@@ -33,6 +33,7 @@ import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui"
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
@@ -392,6 +393,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 {configurationEditor}
               </div>
             </details>);
+            const presented = meritPresentation(style, locale);
             return (<details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
             <summary>
               <div>
@@ -401,7 +403,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 </h4>
                 <small>
                   {style.source} · p. {style.page}
-                  <> · {t("ui.prerequisites")}: {style.prerequisites || t("ui.none")}</>
+                  <> · {t("ui.prerequisites")}: {presented.prerequisites || t("ui.none")}</>
                 </small>
               </div>
               <DotValue value={item.dots}/>
@@ -411,8 +413,8 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                     ? <>{configured.map((line, index) => (<section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
-                    </section>))}{item.name === "Hedge Duelist" && (style.levels ?? []).filter((level) => level.rating > 1 && level.rating <= item.dots).map((level, index) => <section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
-                    : (style.levels ?? [])
+                    </section>))}{item.name === "Hedge Duelist" && (presented.levels ?? []).filter((level) => level.rating > 1 && level.rating <= item.dots).map((level, index) => <section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
+                    : (presented.levels ?? [])
                         .filter((level) => level.rating <= item.dots)
                         .map((level, index) => (<section key={`${style.name}-${level.rating}-${index}`}>
                         <strong>
@@ -541,8 +543,9 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
     return (<div className="sheet-merits single-column">
       {visible.length ? (visible.map((item, index) => {
             const definition = availableCatalog.find((entry) => entry.name === item.name);
-            const tooltip = definition
-                ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
+            const presented = definition && meritPresentation(definition, locale);
+            const tooltip = presented
+                ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`
                 : item.source;
             return (<div className="sheet-merit-row" key={`${item.name}-${index}`} title={tooltip}>
               <div className="sheet-merit-main">

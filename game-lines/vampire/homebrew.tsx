@@ -13,6 +13,7 @@ import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-l
 import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
 import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
 import type { VampireBloodlineDefinition, VampireCondition, VampireMechanics, VampirePowers, VampireReference } from "./catalog-types";
@@ -54,7 +55,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     ...detail(t("ui.procedure"), item.procedure), ...detail(t("ui.outcome"), item.outcome),
     ...Object.entries(item.rollResults ?? {}).flatMap(([label, text]) => detail(label, text)),
   ];
-  merits.forEach((item) => add(item, t("ui.merits"), [...detail(t("ui.ratings"), item.ratings.join(", ")), ...detail(t("ui.prerequisites"), item.prerequisites), ...detail(t("ui.effect"), locale === "pt-BR" ? item.description : item.descriptionEn ?? item.description), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]));
+  merits.forEach((item) => {
+    const presented = meritPresentation(item, locale);
+    add(item, t("ui.merits"), [...detail(t("ui.ratings"), item.ratings.join(", ")), ...detail(t("ui.prerequisites"), presented.prerequisites), ...detail(t("ui.effect"), presented.description), ...(presented.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]);
+  });
   reference.clans.forEach((item) => add(item, t("ui.clans"), [...detail(t("ui.favoredAttributes"), item.favoredAttributes.join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.join(", ")), ...detail(item.baneName, item.baneSummary)]));
   reference.covenants.forEach((item) => add(item, t("ui.covenants"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.advantage"), item.advantage)]));
   reference.bloodlines.forEach((item) => add(item, t("ui.bloodlines"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.parentClan"), item.parentClan), ...detail(t("ui.prerequisites"), item.requirements), ...detail(t("ui.favoredAttributes"), item.favoredAttributes.join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.join(", ")), ...detail(item.giftName ?? "", item.giftSummary), ...detail(item.baneName, item.baneSummary)]));

@@ -88,6 +88,7 @@ import {
   synchronizeMeritGrants,
 } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { normalizeDamage, powerResourceLimits } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
@@ -1360,7 +1361,7 @@ function ExpandedMeritList({
                     <>
                       {" "}
                       · {t("ui.prerequisites")}:{" "}
-                      {style.prerequisites || t("ui.none")}
+                      {meritPresentation(style, locale).prerequisites || t("ui.none")}
                     </>
                   )}
                 </small>
@@ -1387,7 +1388,7 @@ function ExpandedMeritList({
                   ))}
                 </>
               ) : (
-                (style.levels ?? [])
+                (meritPresentation(style, locale).levels ?? [])
                   .filter((level) => level.rating <= item.dots)
                   .map((level, index) => (
                     <section key={`${style.name}-${level.rating}-${index}`}>
@@ -2260,8 +2261,9 @@ function MeritSheetList({
           const definition = availableCatalog.find(
             (entry) => entry.name === item.name,
           );
-          const tooltip = definition
-            ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
+          const presented = definition && meritPresentation(definition, locale);
+          const tooltip = presented
+            ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`
             : item.source;
           return (
             <div

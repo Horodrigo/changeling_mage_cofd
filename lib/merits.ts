@@ -4,6 +4,14 @@ import type { MessageKey, TranslationParams } from "./i18n";
 
 export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
+export type MeritPresentation = {
+  name: string;
+  description: string;
+  prerequisites?: string;
+  alternativePrerequisites?: string;
+  levels?: MeritLevel[];
+};
+export type MeritPresentationCatalog = Readonly<Record<string, MeritPresentation>>;
 export type MeritDefinition = {
   id: string;
   name: string;
@@ -16,6 +24,7 @@ export type MeritDefinition = {
   translatedName: string;
   description: string;
   descriptionEn: string;
+  presentationPt?: MeritPresentation;
   prerequisites?: string;
   page: number;
   levels?: MeritLevel[];

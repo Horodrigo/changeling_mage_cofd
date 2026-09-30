@@ -14,6 +14,7 @@ import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-l
 import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { EntitlementHomebrewEditor } from "./entitlement-homebrew-editor";
 import { ENTITLEMENT_HOMEBREW_SOURCE_ID, saveEntitlementHomebrews } from "./entitlement-homebrews";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
@@ -67,10 +68,10 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
   for (const item of catalogs.get<MeritDefinition[]>("changeling-merits")) add({
     id: item.id, sourceId: item.sourceId, source: item.source, kind: t("ui.merits"), name: locale === "pt-BR" ? item.translatedName : item.name,
     details: [
-      ...detail(t("ui.prerequisites"), item.prerequisites),
-      ...detail(t("ui.alternativePrerequisites"), item.alternativePrerequisites),
-      ...detail(t("ui.effect"), locale === "pt-BR" ? item.description : item.descriptionEn ?? item.description),
-      ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description)),
+      ...detail(t("ui.prerequisites"), meritPresentation(item, locale).prerequisites),
+      ...detail(t("ui.alternativePrerequisites"), meritPresentation(item, locale).alternativePrerequisites),
+      ...detail(t("ui.effect"), meritPresentation(item, locale).description),
+      ...(meritPresentation(item, locale).levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description)),
     ],
   });
   for (const item of reference.conditions.filter((condition) => condition.source === "Book of Courts")) {

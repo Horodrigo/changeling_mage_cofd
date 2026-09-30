@@ -20,6 +20,7 @@ import { entitlementCatalogPresentation, normalizeEntitlementState } from "@/lib
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { normalizeClarityDamage, type ClarityDamageLevel } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { changelingAnchorDisplayName, normalizeChangelingFrailties, seemingDisplayName } from "./creation-rules";
@@ -168,16 +169,17 @@ function ContractCard({ data, rows, continued = false, detailed }: { data: Contr
 function ExpandedMeritCard({ merit, catalog, courts, detailed }: { merit: CharacterSheet["merits"][number]; catalog: readonly MeritDefinition[]; courts: readonly CourtDefinition[]; detailed: boolean }) {
   const { locale, t } = useLanguage();
   const definition = catalog.find((item) => item.name === merit.name);
+  const presented = definition && meritPresentation(definition, locale);
   const configured = expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, courts);
   const configuredTitle = meritConfigurationTitle(merit.configuration, locale, courts);
   const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
   const title = configuredTitle ? `${name}: ${configuredTitle}` : name;
-  const levels = definition?.levels?.filter((level) => level.rating <= merit.dots) ?? [];
+  const levels = presented?.levels?.filter((level) => level.rating <= merit.dots) ?? [];
   return <PrintCard title={`${title} ${"•".repeat(merit.dots)}`} meta={definition ? `${definition.source} · p. ${definition.page || "-"}` : merit.source} className={detailed ? "detailed" : "compact"}>
     {!!configured.length && <div className="ctl-print-configured">{configured.map((line, index) => <p key={index}>{line}</p>)}</div>}
-    {detailed && definition && <div className="ctl-print-merit-details">
-      {definition.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {definition.prerequisites}</p>}
-      {levels.length ? levels.map((level) => <p key={level.rating}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>) : <p>{locale === "en-US" ? definition.descriptionEn : definition.description}</p>}
+    {detailed && presented && <div className="ctl-print-merit-details">
+      {presented.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {presented.prerequisites}</p>}
+      {levels.length ? levels.map((level, index) => <p key={`${level.rating}-${index}`}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>) : <p>{presented.description}</p>}
     </div>}
   </PrintCard>;
 }

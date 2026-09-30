@@ -1,0 +1,165 @@
+{
+  "core-2ed:allies": {
+    "name": "Aliados",
+    "description": "O personagem tem influência e boa vontade junto a um grupo escolhido, proporcionais aos seus pontos neste Mérito. A cada sessão, pode recorrer aos Aliados para pedir favores cujo valor, de 1 a 5, é definido pelo Narrador, até o limite de sua pontuação no Mérito. Favores acima desse limite exigem um teste de Manipulação + Persuasão + Aliados."
+  },
+  "core-2ed:alternate-identity": {
+    "name": "Identidade Alternativa",
+    "description": "O personagem estabeleceu uma identidade falsa: um histórico informal com um ponto, uma aparência de documentação com dois, ou uma trilha documental impecável com três. Recebe +1 nos testes de Subterfúgio para manter a identidade falsa, ou +2 com três pontos."
+  },
+  "core-2ed:ambidextrous": {
+    "name": "Ambidestro",
+    "description": "Ignora as penalidades por usar a mão não dominante. Disponível apenas na criação do personagem."
+  },
+  "core-2ed:anonymity": {
+    "name": "Anonimato",
+    "prerequisites": "Não possuir Fama",
+    "description": "Tentativas de encontrar o personagem por registros documentais ou testemunhas sofrem uma penalidade de um dado por ponto de Anonimato."
+  },
+  "core-2ed:area-of-expertise": {
+    "name": "Área de Especialização",
+    "prerequisites": "Perseverança ••",
+    "description": "Aumenta para +2 o bônus de dados de uma Especialização."
+  },
+  "core-2ed:armed-defense": {
+    "name": "Defesa Armada",
+    "prerequisites": "Destreza •••, Armas Brancas ••, Combate Defensivo (Armas Brancas)",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      { "rating": 1, "name": "Cobrir os Ângulos", "description": "Ao Esquivar, reduz em 1 a penalidade na Defesa causada por múltiplos atacantes." },
+      { "rating": 2, "name": "Ponto Fraco", "description": "Desarma o oponente quando sua Defesa supera o ataque dele." },
+      { "rating": 3, "name": "Defesa Agressiva", "description": "Gasta um ponto de Força de Vontade para causar dano letal ao superar um ataque com uma Esquiva. Incompatível com Ponto Fraco e Explorar a Vantagem." },
+      { "rating": 4, "name": "Guarda de Ferro", "description": "Troca pontos da pontuação da arma por um bônus na Defesa." },
+      { "rating": 5, "name": "Explorar a Vantagem", "description": "Uma vez por turno, ao superar um ataque com uma Esquiva, gasta Força de Vontade para retaliar com um ataque desarmado com penalidade de −2." }
+    ]
+  },
+  "core-2ed:automotive-genius": {
+    "name": "Gênio Automotivo",
+    "prerequisites": "Ofícios •••, Condução •, Ciência •",
+    "description": "Aumenta o limite de modificações de um veículo para três vezes a pontuação em Ofícios, mais o número de Especializações pertinentes em Ofícios."
+  },
+  "core-2ed:barfly": {
+    "name": "Habitué",
+    "prerequisites": "Socialização ••",
+    "description": "O personagem consegue acesso a qualquer ambiente social. Tentativas de reconhecê-lo como alguém que não pertence ao local sofrem uma penalidade igual aos seus pontos em Socialização."
+  },
+  "core-2ed:closed-book": {
+    "name": "Livro Fechado",
+    "prerequisites": "Manipulação •••, Perseverança •••",
+    "description": "Adiciona os pontos neste Mérito ao número de Portas do personagem e como bônus de dados para disputar ações de avaliação Social."
+  },
+  "core-2ed:common-sense": {
+    "name": "Bom Senso",
+    "description": "Uma vez por capítulo, realiza um teste de Raciocínio + Compostura como ação instantânea para fazer ao Narrador uma pergunta sobre riscos e escolhas."
+  },
+  "core-2ed:contacts": {
+    "name": "Contatos",
+    "description": "Escolhe um grupo ou uma área para cada ponto de Contatos. O personagem pode realizar um teste de Manipulação + a Perícia Social pertinente para obter informações ou descobrir podres por meio de conhecidos de qualquer um desses grupos ou áreas."
+  },
+  "core-2ed:danger-sense": {
+    "name": "Sentido de Perigo",
+    "description": "Recebe um bônus de +2 para detectar uma emboscada."
+  },
+  "core-2ed:direction-sense": {
+    "name": "Senso de Direção",
+    "description": "Mantém uma noção perfeita de sua localização e orientação relativas e ignora penalidades para navegar ou encontrar o caminho."
+  },
+  "core-2ed:eidetic-memory": {
+    "name": "Memória Eidética",
+    "description": "Dispensa testes para recordar acontecimentos ou informações. Recebe um bônus de +2 para lembrar detalhes minuciosos ocultos entre outras informações."
+  },
+  "core-2ed:encyclopedic-knowledge": {
+    "name": "Conhecimento Enciclopédico",
+    "description": "Realiza um teste de Inteligência + Raciocínio para lembrar curiosidades úteis relacionadas a uma área ou atividade específica."
+  },
+  "core-2ed:eye-for-the-strange": {
+    "name": "Olhar para o Estranho",
+    "prerequisites": "Perseverança ••, Ocultismo •",
+    "description": "Realiza um teste de Inteligência + Compostura para identificar indícios de envolvimento sobrenatural."
+  },
+  "core-2ed:fame": {
+    "name": "Fama",
+    "prerequisites": "Não possuir Anonimato",
+    "description": "O personagem é conhecido por algo: localmente ou em um círculo específico com um ponto, amplamente em uma região com dois, ou universalmente com três. Adiciona seus pontos em Fama como bônus de dados aos testes Sociais dirigidos a quem se impressiona com sua reputação e aos testes de outros personagens para encontrá-lo ou identificá-lo."
+  },
+  "core-2ed:fast-reflexes": {
+    "name": "Reflexos Rápidos",
+    "prerequisites": "Raciocínio ou Destreza •••",
+    "description": "Adiciona os pontos em Reflexos Rápidos à Iniciativa."
+  },
+  "mta-2ed:advanced-library": {
+    "name": "Biblioteca Avançada",
+    "prerequisites": "Biblioteca •••; pontuação não superior à de Local Seguro",
+    "description": "A biblioteca é vasta o bastante para conter informações úteis e diretas sobre assuntos sobrenaturais. Escolhe um assunto por ponto de Biblioteca Avançada. A cada história, uma vez por assunto, o personagem pode receber a Condição Informado ao consultar a biblioteca sobre esse assunto."
+  },
+  "h-vtr-agony-ecstasy:mythologist": {
+    "name": "Mitólogo",
+    "prerequisites": "Ocultismo •• com duas Especializações em mitologia",
+    "description": "Estuda várias tradições míticas em profundidade suficiente para identificar padrões, símbolos e correspondências rituais."
+  },
+  "h-vtr-agony-ecstasy:carousing": {
+    "name": "Farra",
+    "prerequisites": "Presença •••; Socialização ••",
+    "description": "Um Estilo Social progressivo para iniciar, manter e tirar proveito de uma festa."
+  },
+  "h-vtr-agony-ecstasy:poisoner-s-garden": {
+    "name": "Jardim do Envenenador",
+    "prerequisites": "Ciência ou Sobrevivência •••; Local Seguro •",
+    "description": "Cultiva plantas tóxicas cada vez mais perigosas em um Local Seguro."
+  },
+  "h-vtr-agony-ecstasy:roughing-it": {
+    "name": "Vida ao Relento",
+    "prerequisites": "Vigor •••; Sobrevivência •• com uma Especialização em atividades ao ar livre",
+    "description": "Suporta exposição prolongada e privação graças à prática de viver ao ar livre."
+  },
+  "h-vtr-fire-revolution:experimental-mindset": {
+    "name": "Mentalidade Experimental",
+    "description": "Aborda problemas incertos por meio de experimentos controlados e aprende com tentativas malsucedidas."
+  },
+  "h-vtr-fire-revolution:the-fix-is-in": {
+    "name": "Jogo Marcado",
+    "prerequisites": "Subterfúgio ••; Furto ••; Cabalista Eleitoral •",
+    "description": "Usa preparação antecipada, influência e recursos para manipular uma eleição."
+  },
+  "h-vtr-fire-revolution:electioneer": {
+    "name": "Cabalista Eleitoral",
+    "prerequisites": "Política ••; Recursos •",
+    "description": "Um Estilo Social progressivo para angariar votos, fazer propaganda, difamar adversários, arrecadar fundos e exigir uma recontagem."
+  },
+  "h-vtr-fire-revolution:flexible-loyalties": {
+    "name": "Lealdades Flexíveis",
+    "description": "Muda de lado sem abrir mão de toda a sua posição ou credibilidade."
+  },
+  "h-vtr-fire-revolution:objection": {
+    "name": "Objeção!",
+    "prerequisites": "Expressão ••",
+    "description": "Interrompe e redireciona uma discussão por meio de procedimentos retóricos bem praticados."
+  },
+  "h-vtr-fire-revolution:poll-watcher": {
+    "name": "Fiscal Eleitoral",
+    "prerequisites": "Raciocínio •••; Política ••",
+    "description": "Identifica irregularidades, manipulação e problemas de procedimento em uma eleição."
+  },
+  "h-vtr-fire-revolution:rabblerouser": {
+    "name": "Agitador",
+    "prerequisites": "Inspirador; Expressão ••",
+    "description": "Mobiliza uma multidão por meio de discursos públicos provocativos."
+  },
+  "h-vtr-fire-revolution:turnabout": {
+    "name": "Virada de Mesa",
+    "description": "Reverte a vantagem retórica de um oponente durante um debate."
+  },
+  "h-vtr-fire-revolution:ratfucker": {
+    "name": "Sabotador Político",
+    "description": "Usa golpes baixos para atrapalhar um adversário político ou uma campanha."
+  },
+  "h-vtr-fire-revolution:you-ll-be-first-against-the-wall": {
+    "name": "Você Será o Primeiro no Paredão",
+    "description": "Usa ameaças revolucionárias para intimidar alvos mundanos com mais eficácia."
+  },
+  "h-vtr-fire-revolution:rules-lawyer": {
+    "name": "Advogado das Regras",
+    "prerequisites": "Perseverança •••; Erudição ••",
+    "description": "Um Estilo Mental progressivo para explorar a redação literal, argumentos técnicos, atrasos procedimentais e revisões repetidas."
+  }
+}
