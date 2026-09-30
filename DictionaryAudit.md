@@ -121,6 +121,8 @@ Os nomes de Condições citados nesses blocos (`Swooning`, `Drained` e outros) d
 
 Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Vampire usam chaves semânticas. A regra `no-untranslated-ui-text` rejeita o padrão local `h(português, inglês)` e os testes protegem essa restrição.
 
+Os avisos de validação de Méritos também retornam chaves e parâmetros, apresentados pela interface com `t()`. Regras, escolhas e pré-requisitos canônicos não dependem do idioma; textos de pré-requisitos do catálogo seguem o fallback inglês enquanto sua tradução estiver adiada.
+
 ## Decisões complementares aprovadas
 
 | Inglês | Forma aplicada | Observação |

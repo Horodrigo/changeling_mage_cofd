@@ -1,6 +1,18 @@
 export const mageMessages = {
   "pt-BR": {
     "ui": {
+      "meritSelectStatusDomain": "Selecione o domínio do Status.",
+      "meritStatusOutsideOrder": "O Status fora da sua própria Ordem não pode exceder um ponto.",
+      "meritAdamantHandSkill": "Escolha Atletismo, Briga ou Armas Brancas com três pontos ou mais.",
+      "meritCabalThemeRequired": "Informe o nome e a descrição do tema da cabala.",
+      "meritOrderStatusRequired": "É necessário Status de Ordem 2.",
+      "meritSelectFaction": "Selecione uma facção publicada.",
+      "meritFactionUnavailable": "A facção não está disponível para esta Ordem.",
+      "meritSelectFactionRoteSkill": "Selecione a Perícia de Rota da facção.",
+      "meritSelectPatronExarch": "Selecione um Exarca patrono.",
+      "meritPrelacyPatron": "Prelado deve servir ao Exarca patrono de {affiliation}.",
+      "meritSelectProfaneForm": "Selecione uma Forma Profana.",
+      "meritSelectSvikiroTradition": "Selecione wamasikati ou wedzinza.",
       "familiarNumina": {
         "awe": "Fascínio",
         "blast": "Rajada",
@@ -389,6 +401,18 @@ export const mageMessages = {
   },
   "en-US": {
     "ui": {
+      "meritSelectStatusDomain": "Select a Status domain.",
+      "meritStatusOutsideOrder": "Status outside your own Order cannot exceed one dot.",
+      "meritAdamantHandSkill": "Choose Athletics, Brawl or Weaponry at three dots or higher.",
+      "meritCabalThemeRequired": "Enter the cabal theme name and description.",
+      "meritOrderStatusRequired": "Order Status 2 is required.",
+      "meritSelectFaction": "Select a published faction.",
+      "meritFactionUnavailable": "The faction is not available to this Order.",
+      "meritSelectFactionRoteSkill": "Select the faction's Rote Skill.",
+      "meritSelectPatronExarch": "Select a patron Exarch.",
+      "meritPrelacyPatron": "Prelacy must serve {affiliation}'s patron Exarch.",
+      "meritSelectProfaneForm": "Select a Profane Form.",
+      "meritSelectSvikiroTradition": "Select wamasikati or wedzinza.",
       "familiarNumina": {
         "awe": "Awe",
         "blast": "Blast",

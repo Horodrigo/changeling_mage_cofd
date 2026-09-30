@@ -284,7 +284,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", t("ui.coilOfZirnitra"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${message}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${t(message.key,message.params)}`);
       if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     if (clanId === "hollow-mekhet") {

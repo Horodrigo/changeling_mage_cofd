@@ -103,6 +103,32 @@ test("Vampire purchase labels use audited dictionary terms in both locales", asy
   assert.equal(purchaseLabel("rite", "en-US"), "Crúac Rite");
 });
 
+test("Merit validation returns semantic messages and resolves them in both locales", async () => {
+  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { meritSelectionProblems } = await vite.ssrLoadModule("/lib/merits.ts");
+  const { mageMeritSelectionProblems } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
+  const context={gameLine:"MtA",order:"Mysterium",attributes:{Strength:1},skills:{},merits:[]};
+  const definition=(name)=>({name,line:"MtA",ratings:[1,2,3],prerequisites:"Strength •••"});
+  const problems=[
+    ...meritSelectionProblems(definition("Sanctum"),{dots:3},context),
+    ...meritSelectionProblems(definition("Awakened Status"),{dots:2},context),
+    ...meritSelectionProblems(definition("Awakened Status"),{dots:2,configuration:{domain:"Silver Ladder"}},context),
+    ...meritSelectionProblems(definition("Adamant Hand"),{dots:1},context),
+    ...meritSelectionProblems(definition("Cabal Theme"),{dots:1},context),
+    ...["Faction Member","Prelacy","Profane Tool","Svikiro"].flatMap(name=>mageMeritSelectionProblems(definition(name),{dots:3},context,[])),
+  ];
+  const before=JSON.stringify(problems);
+  for(const problem of problems){
+    assert.match(problem.key,/^ui\.merit/);
+    for(const locale of ["pt-BR","en-US"]) assert.doesNotMatch(translate(locale,problem.key,problem.params),/missing translation|\{\w+\}/);
+  }
+  const linked=problems.find(problem=>problem.key==="ui.meritSelectLinked");
+  assert.deepEqual(linked.params,{merits:"Safe Place",minimum:3});
+  assert.match(translate("pt-BR",linked.key,linked.params),/^Selecione/);
+  assert.match(translate("en-US",linked.key,linked.params),/^Select/);
+  assert.equal(JSON.stringify(problems),before);
+});
+
 test("experience rule tables resolve every message and preserve the published cost labels", async () => {
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const ctl = await vite.ssrLoadModule("/game-lines/changeling/experience-shared.tsx");
