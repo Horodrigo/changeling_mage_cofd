@@ -64,7 +64,7 @@ test("portaled dialogs and confirmation actions inherit the active game-line the
     assert.match(css, /data-slot="dialog-content"/);
     assert.match(css, /data-slot="alert-dialog-content"/);
   }
-  assert.match(await source("app/css/globals.css"), /:is\(\[data-slot="dialog-footer"\], \[data-slot="alert-dialog-footer"\]\) button[^}]*height:32px/);
+  assert.match(await source("app/css/globals.css"), /:is\(\[data-slot="dialog-footer"\],\s*\[data-slot="alert-dialog-footer"\]\)\s+button[^}]*height:\s*32px/);
 });
 
 test("catalog groups stay lazy and line-scoped", async () => {
