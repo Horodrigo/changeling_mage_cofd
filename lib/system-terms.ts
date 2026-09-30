@@ -114,6 +114,8 @@ const ENGLISH_TERMS: Record<string,string> = {
   };
 
 const PORTUGUESE_TERMS: Record<string,string> = {
+  Death:"Morte", Fate:"Destino", Forces:"Forças", Life:"Vida", Matter:"Matéria", Mind:"Mente", Prime:"Primórdio", Space:"Espaço", Spirit:"Espírito", Time:"Tempo",
+  Beast:"Fera", Darkling:"Trevoso", Elemental:"Elemental", Fairest:"Belíssimo", Ogre:"Ogro", Wizened:"Mirrado",
   Mental:"Mental", Physical:"Físico", Social:"Social",
   Intelligence:"Inteligência", Wits:"Raciocínio", Resolve:"Perseverança", Strength:"Força", Dexterity:"Destreza", Stamina:"Vigor", Presence:"Presença", Manipulation:"Manipulação", Composure:"Compostura",
   Academics:"Erudição", Computer:"Computação", Crafts:"Ofícios", Investigation:"Investigação", Medicine:"Medicina", Occult:"Ocultismo", Politics:"Política", Science:"Ciência", Athletics:"Atletismo", Brawl:"Briga", Drive:"Condução", Firearms:"Armas de Fogo", Larceny:"Furto", Weaponry:"Armas Brancas", Stealth:"Furtividade", Survival:"Sobrevivência", "Animal Ken":"Emp. c/ Animais", Empathy:"Empatia", Expression:"Expressão", Intimidation:"Intimidação", Persuasion:"Persuasão", Socialize:"Socialização", Streetwise:"Manha", Subterfuge:"Subterfúgio",

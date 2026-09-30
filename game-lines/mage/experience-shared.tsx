@@ -1,6 +1,7 @@
 "use client";
 
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, type Locale } from "@/lib/i18n";
+import { systemTerm } from "@/lib/system-terms";
 
 /** Mage-only experience rules kept outside the common picker closure. */
 export function MageExperienceRules() {
@@ -34,8 +35,8 @@ export function MageExperienceRules() {
   );
 }
 
-export function formatSpellRequirements(requirements: Record<string, number>) {
+export function formatSpellRequirements(requirements: Record<string, number>, locale: Locale = "en-US") {
   return Object.entries(requirements)
-    .map(([arcanum, dots]) => `${arcanum} ${dots}`)
+    .map(([arcanum, dots]) => `${systemTerm(arcanum, locale)} ${dots}`)
     .join(" + ");
 }

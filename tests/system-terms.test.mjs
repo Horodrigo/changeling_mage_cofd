@@ -28,3 +28,11 @@ test("léxico pt-BR de Changeling é aplicado aos termos canônicos",()=>{
   };
   for(const [en,pt] of Object.entries(glossary)) assert.equal(systemTerm(en,"pt-BR"),pt,en);
 });
+
+test("Arcanos e Feições canônicos têm apresentação portuguesa e preservam os nomes ingleses",()=>{
+  const terms={Death:"Morte",Fate:"Destino",Forces:"Forças",Life:"Vida",Matter:"Matéria",Mind:"Mente",Prime:"Primórdio",Space:"Espaço",Spirit:"Espírito",Time:"Tempo",Beast:"Fera",Darkling:"Trevoso",Elemental:"Elemental",Fairest:"Belíssimo",Ogre:"Ogro",Wizened:"Mirrado"};
+  for(const [en,pt] of Object.entries(terms)){
+    assert.equal(systemTerm(en,"pt-BR"),pt);
+    assert.equal(systemTerm(en,"en-US"),en);
+  }
+});

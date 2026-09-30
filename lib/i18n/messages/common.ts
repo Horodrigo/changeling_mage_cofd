@@ -664,7 +664,10 @@ export const commonMessages = {
       "yourLocalCharacterSheetsRemainAvailable": "Suas fichas locais continuam disponíveis.",
       "resourceMaximum": "{name} máximo:",
       "healthBoxChange": "Caixa {index}: {state}. Clique para alterar.",
-      "damageEmpty": "vazia"
+      "damageEmpty": "vazia",
+      "damageBashing": "dano contusivo",
+      "damageLethal": "dano letal",
+      "damageAggravated": "dano agravado"
     },
     "builder": {
       "eligibility": {
@@ -1337,7 +1340,10 @@ export const commonMessages = {
       "yourLocalCharacterSheetsRemainAvailable": "Your local character sheets remain available.",
       "resourceMaximum": "{name} maximum:",
       "healthBoxChange": "Box {index}: {state}. Click to change.",
-      "damageEmpty": "empty"
+      "damageEmpty": "empty",
+      "damageBashing": "bashing damage",
+      "damageLethal": "lethal damage",
+      "damageAggravated": "aggravated damage"
     },
     "builder": {
       "eligibility": {

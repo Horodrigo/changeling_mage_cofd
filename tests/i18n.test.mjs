@@ -94,6 +94,44 @@ test("experience rule tables resolve every message and preserve the published co
   assert.equal(translate("en-US", "ui.mixedExperiencePerDot", { cost: 4 }), "4/dot, regular and/or Arcane");
 });
 
+test("dynamic Health and Arcanum labels follow locale, and Kith choice keys resolve", async () => {
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { HealthTrack } = await vite.ssrLoadModule("/app/workspace/sheet-primitives.tsx");
+  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(HealthTrack, { health: 4, damage: ["bashing", "lethal", "aggravated"], onChange: () => {} })));
+  for (const state of ["bashing damage", "lethal damage", "aggravated damage", "empty"]) assert.match(markup, new RegExp(state));
+  assert.doesNotMatch(markup, /contusivo|agravado|vazi[ao]/);
+  assert.equal(translate("pt-BR", "ui.damageBashing"), "dano contusivo");
+  const { formatSpellRequirements } = await vite.ssrLoadModule("/game-lines/mage/experience-shared.tsx");
+  const requirements = { Death: 2, Spirit: 1 };
+  assert.equal(formatSpellRequirements(requirements, "pt-BR"), "Morte 2 + Espírito 1");
+  assert.equal(formatSpellRequirements(requirements, "en-US"), "Death 2 + Spirit 1");
+  assert.deepEqual(requirements, { Death: 2, Spirit: 1 });
+  const { KITH_CREATION_CHOICES } = await vite.ssrLoadModule("/game-lines/changeling/kith-choices.ts");
+  for (const choice of Object.values(KITH_CREATION_CHOICES)) {
+    for (const locale of ["pt-BR", "en-US"]) for (const key of [choice.labelKey, choice.placeholderKey].filter(Boolean)) assert.doesNotMatch(translate(locale, key), /missing translation/);
+  }
+});
+
+test("Fae Mount ability labels and descriptions resolve for every canonical choice", async () => {
+  const { translate, LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  for (const id of ["manyleague","chatterbox","actormask","armorshell","burdenback","dreamspun","thornbeast","hedgefoot"]) {
+    for (const locale of ["pt-BR","en-US"]) for (const field of ["name","description"]) assert.doesNotMatch(translate(locale, `ui.mountAbilities.${id}.${field}`), /missing translation/);
+  }
+  assert.equal(translate("pt-BR","ui.mountAbilities.chatterbox.name"),"Tagarela");
+  assert.equal(translate("en-US","ui.mountAbilities.chatterbox.name"),"Chatterbox");
+  const auditedNames={actormask:"Mascarilhado",armorshell:"Blindagem",burdenback:"Carregador",dreamspun:"Onírico",thornbeast:"Fera dos Espinhos",hedgefoot:"Pé-de-Sebe"};
+  for(const [id,name] of Object.entries(auditedNames)) assert.equal(translate("pt-BR",`ui.mountAbilities.${id}.name`),name);
+  assert.match(translate("pt-BR","ui.armorshellProvidesArmor32OnlyTheHigher"),/^Blindagem /);
+  assert.equal(translate("pt-BR","ui.hedgefootMode"),"Modo de Pé-de-Sebe");
+  const { CompanionPage } = await vite.ssrLoadModule("/game-lines/changeling/companion-page.tsx");
+  const character={merits:[{name:"Fae Mount",dots:1,configuration:{name:"My mount",abilities:["chatterbox"]}}]};
+  const before=JSON.stringify(character);
+  const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,updateSheet:()=>{}})));
+  assert.match(markup,/Chatterbox/);
+  assert.doesNotMatch(markup,/missing translation/);
+  assert.equal(JSON.stringify(character),before);
+});
+
 test("Merit configuration labels and canonical option presentations resolve in both locales", async () => {
   const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const catalogs = [

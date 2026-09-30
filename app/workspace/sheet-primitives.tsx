@@ -5,7 +5,7 @@ import { systemTerm } from "@/lib/system-terms";
 import { normalizeDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
 import { RuleSelect } from "./rule-select";
 
-function damageLabel(value:DamageLevel|undefined){return value==="bashing"?"contusivo":value==="lethal"?"letal":value==="aggravated"?"agravado":"vazio";}
+const damageMessageKeys = { bashing: "ui.damageBashing", lethal: "ui.damageLethal", aggravated: "ui.damageAggravated" } as const;
 
 export function pretty(value:string){return value.replace(/([A-Z])/g," $1").replace(/_/g," ").trim();}
 export function stringList(value:unknown){return Array.isArray(value)?value.map(String):[];}
@@ -183,7 +183,7 @@ export function HealthTrack({
               key={index}
               className={`health-box ${level ?? "empty"}`}
               onClick={() => cycle(index)}
-              aria-label={t("ui.healthBoxChange", { index: index + 1, state: level ? damageLabel(level) : t("ui.damageEmpty") })}
+              aria-label={t("ui.healthBoxChange", { index: index + 1, state: level ? t(damageMessageKeys[level]) : t("ui.damageEmpty") })}
             >
               <span aria-hidden="true" />
             </button>

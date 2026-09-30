@@ -224,7 +224,7 @@ export function MageCharacterPaper({
       name: locale === "en-US" ? spell.originalName : spell.name,
       category: Object.keys(spell.requirements).join(" + "),
       description: spell.summary ?? spell.description ?? "",
-      meta: `${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page || "—"}`,
+      meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
     }));
   const addGrantedPraxis = (id: string) => {
     if (praxes.length >= gnosis) return;
@@ -249,7 +249,7 @@ export function MageCharacterPaper({
       name: locale === "en-US" ? spell.originalName : spell.name,
       category: Object.keys(spell.requirements).join(" + "),
       description: spell.summary ?? spell.description ?? "",
-      meta: `${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page || "—"}`,
+      meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
     }));
   const setInuredSpells = (items: Array<Record<string, unknown>>) => {
     const next = structuredClone(character);

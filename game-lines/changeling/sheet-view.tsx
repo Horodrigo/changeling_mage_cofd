@@ -703,7 +703,7 @@ function KithLore({ data, reference }: {
     const page = Number(definition?.page ?? data.kith_page ?? 0);
     const choice = String(data.kith_choice ?? "").trim();
     const choiceDefinition = kithCreationChoice(definition?.id);
-    const choiceLabel = choiceDefinition ? (locale === "pt-BR" ? choiceDefinition.labelPt : choiceDefinition.labelEn) : "";
+    const choiceLabel = choiceDefinition ? t(choiceDefinition.labelKey) : "";
     const choiceParts = choice.split(": ");
     const displayedChoice = choiceDefinition?.kind === "skill" ? systemTerm(choice, locale) : choiceDefinition?.kind === "specialty" && choiceParts.length > 1 ? `${systemTerm(choiceParts[0], locale)}: ${choiceParts.slice(1).join(": ")}` : choice;
     if (!name)

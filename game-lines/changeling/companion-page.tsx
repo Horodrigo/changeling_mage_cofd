@@ -13,16 +13,7 @@ import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
 import type { DamageLevel } from "@/lib/resource-rules";
 
-const FAE_MOUNT_ABILITIES = [
-  ["manyleague", "Manyleague", "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado.", "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner."],
-  ["chatterbox", "Chatterbox", "Fala e entende claramente o dono e transmite mensagens simples no idioma dele.", "Speaks with and clearly understands its owner and conveys simple messages in the owner's language."],
-  ["actormask", "Actormask", "Pode deixar a Sebe; por 1 Glamour por cena mantém uma Mascarilha no mundo mundano.", "May leave the Hedge; for 1 Glamour per scene it maintains a Mask in the mundane world."],
-  ["armorshell", "Armorshell", "Armadura 3/2 e ocultação parcial para o cavaleiro.", "Gain Armor 3/2 and provide partial concealment to the rider."],
-  ["burdenback", "Burdenback", "Carrega pessoas adicionais iguais aos pontos do Mérito e recebe +2 Vigor.", "Carry additional people equal to Merit dots and gain +2 Stamina."],
-  ["dreamspun", "Dreamspun", "Ressurge após uma noite completa de sono do dono e recebe Furtividade igual aos pontos do Mérito.", "Return after the owner completes a full night's sleep and gain Stealth equal to Merit dots."],
-  ["thornbeast", "Thornbeast", "+2 dados nos ataques e modificador de arma +2.", "Gain +2 attack dice and +2 weapon damage."],
-  ["hedgefoot", "Hedgefoot", "Escolha correr sobre água, escalar ou voar.", "Choose to run across water, climb, or fly."],
-] as const;
+const FAE_MOUNT_ABILITIES = ["manyleague", "chatterbox", "actormask", "armorshell", "burdenback", "dreamspun", "thornbeast", "hedgefoot"] as const;
 
 export function CompanionPage({ character, updateSheet }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void }) {
   const { t } = useLanguage();
@@ -98,9 +89,9 @@ function FaeCompanionCard({ merit, meritIndex, character, updateSheet }: {
     <div className="mount-combat-block"><CompactValues values={{ "Força de Vontade": 5, Iniciativa: 5 + (many ? merit.dots : 0), Defesa: 7, Deslocamento: many ? 38 : 19, Tamanho: 7, "Armadura geral": Math.max(ownGeneral, armorshell ? 3 : 0), "Armadura balística": Math.max(ownBallistic, armorshell ? 2 : 0) }}/><div className="mount-armor-editors"><ArmorDotPicker label={t("ui.generalArmor")} value={ownGeneral} onChange={value => save({ armor_general: String(value) })}/><ArmorDotPicker label={t("ui.ballisticArmor")} value={ownBallistic} onChange={value => save({ armor_ballistic: String(value) })}/></div>{armorshell && <small>{t("ui.armorshellProvidesArmor32OnlyTheHigher")}</small>}<strong>{t("ui.health")}</strong><HealthTrack health={health} damage={mountDamage} onChange={value => save({ health_damage: value })}/></div>
     <p><b>{t("ui.attacks")}:</b> {t("ui.bite")} {thorn ? "+2L" : "+0L"} ({5 + (thorn ? 2 : 0)} {t("ui.dice")}); {t("ui.kickOrClaw")} {thorn ? "+4L" : "+2L"} ({6 + (thorn ? 2 : 0)} {t("ui.dice")}, {t("ui.knockedDown")}).</p>
     <p><b>{t("ui.special")}:</b> {special}</p>
-    <div className="companion-options">{alphabetical(FAE_MOUNT_ABILITIES, item => item[1]).filter(([id]) => abilities.length < merit.dots || abilities.includes(id)).map(([id, label, description, descriptionEn]) => {
+    <div className="companion-options">{alphabetical(FAE_MOUNT_ABILITIES.map(id => ({ id, label: t(`ui.mountAbilities.${id}.name`), description: t(`ui.mountAbilities.${id}.description`) })), item => item.label).filter(({id}) => abilities.length < merit.dots || abilities.includes(id)).map(({id, label, description}) => {
       const active = abilities.includes(id);
-      return <label key={id} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && abilities.length >= merit.dots} onChange={() => save({ abilities: active ? abilities.filter(value => value !== id) : [...abilities, id] })}/><span><strong>{label}</strong><small>{locale === "en-US" ? descriptionEn : description}</small></span></label>;
+      return <label key={id} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && abilities.length >= merit.dots} onChange={() => save({ abilities: active ? abilities.filter(value => value !== id) : [...abilities, id] })}/><span><strong>{label}</strong><small>{description}</small></span></label>;
     })}</div>
     {abilities.includes("hedgefoot") && <label className="companion-field">{t("ui.hedgefootMode")}<RuleSelect value={hedgefoot} onChange={value => save({ hedgefoot: value })} options={[{ value: "water", label: t("ui.runAcrossWaterAtNormalSpeed") }, { value: "climb", label: t("ui.climbAtThreeTimesSpeed") }, { value: "fly", label: t("ui.flyOncePerScene") }]}/></label>}
   </article>;

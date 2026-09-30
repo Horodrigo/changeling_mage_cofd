@@ -617,7 +617,7 @@ export function MageExperiencePanel({
                         category: systemTerm(mainArcanum,locale),
                         secondaryCategory: `${t("ui.level")} ${level}`,
                         description: spell.description ?? "",
-                        meta: `${formatSpellRequirements(spell.requirements)} · ${spell.source} · p. ${spell.page || "—"}`,
+                        meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
                       };
                     })}
                     selectedId={selectedSpell?.id ?? ""}

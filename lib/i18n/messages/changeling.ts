@@ -1,6 +1,20 @@
 export const changelingMessages = {
   "pt-BR": {
     "ui": {
+      "mountAbilities": {
+        "manyleague": { "name": "Muitas Léguas", "description": "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado." },
+        "chatterbox": { "name": "Tagarela", "description": "Fala e entende claramente o dono e transmite mensagens simples no idioma dele." },
+        "actormask": { "name": "Mascarilhado", "description": "Pode deixar a Sebe; por 1 Glamour por cena mantém uma Mascarilha no mundo mundano." },
+        "armorshell": { "name": "Blindagem", "description": "Armadura 3/2 e ocultação parcial para o cavaleiro." },
+        "burdenback": { "name": "Carregador", "description": "Carrega pessoas adicionais iguais aos pontos do Mérito e recebe +2 Vigor." },
+        "dreamspun": { "name": "Onírico", "description": "Ressurge após uma noite completa de sono do dono e recebe Furtividade igual aos pontos do Mérito." },
+        "thornbeast": { "name": "Fera dos Espinhos", "description": "+2 dados nos ataques e modificador de arma +2." },
+        "hedgefoot": { "name": "Pé-de-Sebe", "description": "Escolha correr sobre água, escalar ou voar." },
+      },
+      "kithChoiceSkill": "Perícia da Bênção",
+      "kithChoiceSpecialty": "Especialização da Bênção",
+      "kithChoiceSwarmForm": "Forma do enxame",
+      "kithChoiceSwarmPlaceholder": "Animais, objetos ou fenômeno de Tamanho 0–1",
       "meritOptions": {
         "hollow": {
           "hobAlarm": {
@@ -277,7 +291,7 @@ export const changelingMessages = {
       "allocatedDots": "Pontos distribuídos",
       "alwaysAStolenTokenActivationCosts1Glamour": "Sempre é um Penhor roubado. Ativar custa 1 Glamour, salvo quando o Gatilho é cumprido.",
       "alwaysActiveHasNoGlamourCostOrCatch": "Sempre ativo; não possui custo de Glamour nem Gatilho.",
-      "armorshellProvidesArmor32OnlyTheHigher": "Armorshell fornece Armadura 3/2; somente o maior valor entre ela e a armadura própria é aplicado.",
+      "armorshellProvidesArmor32OnlyTheHigher": "Blindagem fornece Armadura 3/2; somente o maior valor entre ela e a armadura própria é aplicado.",
       "asDescribed": "Conforme descrição",
       "athletics4Brawl1KickingSurvival2": "Atletismo 4, Briga 1 (Coice), Sobrevivência 2",
       "attribute": "Atributo",
@@ -426,7 +440,7 @@ export const changelingMessages = {
       "goblinDebt": "Débito Goblin",
       "goblinDebtOf10": "Débito Goblin: {p1} de 10",
       "groupedByRegaliaCourtOrIndependentAccessWith": "Separados por Regalia, Corte ou Independente, com efeito, brecha, parada de dados e o benefício da Feição atual. Contratos Goblin ocupam vagas de Contrato Comum e geram Débito Goblin quando invocados com sucesso. Contratos Reais respeitam suas Regalias favorecidas; Contratos de Corte respeitam a Corte selecionada.",
-      "hedgefootMode": "Modo de Hedgefoot",
+      "hedgefootMode": "Modo de Pé-de-Sebe",
       "independent": "Independente",
       "instant": "Instantânea",
       "itemName": "Nome do item",
@@ -542,6 +556,20 @@ export const changelingMessages = {
   },
   "en-US": {
     "ui": {
+      "mountAbilities": {
+        "manyleague": { "name": "Manyleague", "description": "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner." },
+        "chatterbox": { "name": "Chatterbox", "description": "Speaks with and clearly understands its owner and conveys simple messages in the owner's language." },
+        "actormask": { "name": "Actormask", "description": "May leave the Hedge; for 1 Glamour per scene it maintains a Mask in the mundane world." },
+        "armorshell": { "name": "Armorshell", "description": "Gain Armor 3/2 and provide partial concealment to the rider." },
+        "burdenback": { "name": "Burdenback", "description": "Carry additional people equal to Merit dots and gain +2 Stamina." },
+        "dreamspun": { "name": "Dreamspun", "description": "Return after the owner completes a full night's sleep and gain Stealth equal to Merit dots." },
+        "thornbeast": { "name": "Thornbeast", "description": "Gain +2 attack dice and +2 weapon damage." },
+        "hedgefoot": { "name": "Hedgefoot", "description": "Choose to run across water, climb, or fly." },
+      },
+      "kithChoiceSkill": "Blessing Skill",
+      "kithChoiceSpecialty": "Blessing Specialty",
+      "kithChoiceSwarmForm": "Swarm form",
+      "kithChoiceSwarmPlaceholder": "Size 0–1 creatures, objects, or phenomenon",
       "meritOptions": {
         "hollow": {
           "hobAlarm": {

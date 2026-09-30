@@ -1,6 +1,6 @@
 # Auditoria editorial do dicionário pt-BR
 
-As decisões já auditadas foram incorporadas à interface e aos Títulos. As novas propostas para revisão estão na seção final; nomes de Méritos permanecem registrados para a tradução de seus catálogos.
+As decisões auditadas foram incorporadas à interface e aos Títulos. Em 30/09/2026, o usuário confirmou que as sugestões não alteradas também estão aprovadas. Este arquivo registra as decisões editoriais aceitas; nomes de Méritos permanecem como referência para a tradução de seus catálogos, e as pendências de Condições são explicitadas abaixo.
 
 ## Termos gerais
 
@@ -120,7 +120,7 @@ Os nomes de Condições citados nesses blocos (`Swooning`, `Drained` e outros) d
 
 Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Vampire usam chaves semânticas. A regra `no-untranslated-ui-text` rejeita o padrão local `h(português, inglês)` e os testes protegem essa restrição.
 
-## Novas propostas para auditoria
+## Decisões complementares aprovadas
 
 | Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
@@ -154,3 +154,7 @@ Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Va
 | Illusory Armory / Permanent Armory | Arsenal Ilusório / Arsenal Permanente | Melhorias de Bastião Compartilhado. |
 | Raised Defenses / Subtle Speech | Defesas Reforçadas / Fala Sutil | Melhorias de Bastião Compartilhado. |
 | Prop | Adereço | Objeto da cena de sonho; há distinção entre importante e não importante. |
+| Manyleague | Muitas Léguas | Habilidade de Montaria Feérica. |
+| Chatterbox / Actormask | Tagarela / Mascarilhado | Habilidades de Montaria Feérica. |
+| Armorshell / Burdenback | Blindagem / Carregador | Habilidades de Montaria Feérica. |
+| Dreamspun / Thornbeast / Hedgefoot | Onírico / Fera dos Espinhos / Pé-de-Sebe | Habilidades de Montaria Feérica. |
