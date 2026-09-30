@@ -30,7 +30,34 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Ainda faltam 168 registros Core e 145 Changeling. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 34/202 registros Core e 40/154 Changeling. Todos os 40 Méritos do livro básico de Changeling estão traduzidos, incluindo as cinco manobras de Guerreiro Elemental, três de Apresentação Encantadora e onze de Duelista da Sebe. Ainda faltam 168 registros Core e 114 Changeling. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+
+## Novas escolhas para auditoria — livro básico Changeling
+
+As escolhas abaixo ainda não fazem parte da aprovação do lote inicial. Nomes de manobras e benefícios já existentes na interface foram reaproveitados quando disponíveis; não foram criados pares de gênero.
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Dreamweaver | Tecelão de Sonhos | Derivado de Tecelagem de Sonhos. |
+| Dull Beacon | Farol Apagado | A atração causada pela revelação do Semblante Feérico é reduzida, não eliminada. |
+| Fair Harvest | Colheita Seletiva | Privilegia a seleção de um sabor emocional de Glamour. |
+| Firebrand | Incendiário | Incitador de confrontos, não necessariamente alguém que provoca incêndios. |
+| Gentrified Bearing | Porte Aristocrático | Aparência de pertencer aos Feés Verdadeiros. |
+| Goblin Bounty | Abundância Goblin | Reserva recorrente de Frutas Goblin e objetos peculiares. |
+| oddments | objetos goblin peculiares | Distinguidos das Frutas Goblin e dos Penhores. |
+| Grounded | Centrado | Proteção da Lucidez, não imobilização física. |
+| Manymask | Múltiplas Mascarilhas | Mudanças sucessivas da Mascarilha. |
+| Noblesse Oblige | Nobreza Obriga | Preserva o sentido de obrigação decorrente da liderança. |
+| Limerick | Limerique | Forma poética; não equivale a qualquer poema de cinco versos. |
+| Antaean Endurance | Resistência de Anteu | Mantém a referência mitológica. |
+| Stable Trod | trod Estável | Mantém trod em minúsculas conforme o léxico. |
+
+Fontes deste lote inspecionadas visualmente: Changeling the Lost pp. 113–120 e 225. As seis manobras alternativas de primeiro ponto de Duelista da Sebe reaproveitam as traduções já auditadas na interface.
+
+Observações mecânicas adicionais, sem correção incidental:
+
+- `Glamour Fasting` e `Market Sense`: os resumos canônicos usam “session”, enquanto as passagens do livro usam “chapter”. As traduções mantêm “sessão”, para não alterar a periodicidade cadastrada.
+- `Hedgespun Item`: o registro canônico resume os benefícios e não contém as desvantagens descritas no livro. A tradução mantém o registro atual; não reconstrói conteúdo mecânico ausente.
 
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 

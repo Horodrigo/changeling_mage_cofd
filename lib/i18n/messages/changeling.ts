@@ -132,7 +132,7 @@ export const changelingMessages = {
       "hedgespunDurabilityDetail": "+1 de Durabilidade",
       "courtGoodwillCourt": "Corte: {court}.",
       "courtGoodwillAllies": "Aliados: funciona como Aliados {dots} dentro dessa Corte.",
-      "courtGoodwillMantle": "Equivalência de Manto: {mantle}; Benevolência da Corte só pode satisfazer pré-requisitos de Manto entre 1 e 3.",
+      "courtGoodwillMantle": "Equivalência de Manto: {mantle}; Boa Vontade da Corte só pode satisfazer pré-requisitos de Manto entre 1 e 3.",
       "courtGoodwillMentor": "Mentor: funciona como Mentor 1 por meio do contato na Corte.",
       "meritConfig": {
         "firstDotManeuver": "Manobra do primeiro ponto",

@@ -39,5 +39,244 @@
     "name": "Guerreiro Onírico",
     "prerequisites": "Fado ••, um Atributo Social •••, uma Especialização em Briga ou Armas Brancas",
     "description": "Ao distribuir os sucessos de um ataque de Briga ou Armas Brancas coberto pela Especialização do personagem para uma alteração oniromântica sutil, recebe um sucesso adicional que deve afetar diretamente o combate. Uma Especialização em ambas as Perícias concede o benefício aos dois tipos de ataque."
+  },
+  "ctl-2ed:dreamweaver": {
+    "name": "Tecelão de Sonhos",
+    "prerequisites": "Fado •••",
+    "description": "Uma vez por cena, gasta Força de Vontade para obter um sucesso excepcional em Tecelagem de Sonhos com três sucessos, em vez de cinco."
+  },
+  "ctl-2ed:dull-beacon": {
+    "name": "Farol Apagado",
+    "description": "Ao revelar o Semblante Feérico, abre a Sebe como se o Fado estivesse reduzido pelos pontos neste Mérito, até um mínimo de 0."
+  },
+  "ctl-2ed:fae-mount": {
+    "name": "Montaria Fae",
+    "description": "O personagem fez amizade com um habitante leal da Sebe, treinou-o e pode chamá-lo à vontade enquanto estiver lá. Cada ponto neste Mérito concede à montaria um dos dons disponíveis, como armadura natural ou a capacidade de sair da Sebe sob uma Mascarilha."
+  },
+  "ctl-2ed:faerie-favor": {
+    "name": "Favor Feérico",
+    "description": "Uma bugiganga, canção ou frase chama um Feé Verdadeiro para cumprir um favor devido ao personagem. Após cobrar o favor, recebe um valor equivalente em Méritos apropriados ao poder do Feé Verdadeiro, conforme a Santidade dos Méritos, e adquire Notoriedade entre os Perdidos."
+  },
+  "ctl-2ed:fair-harvest": {
+    "name": "Colheita Seletiva",
+    "description": "Prefere um sabor emocional de Glamour aos demais. Recebe 8-novamente, ou a qualidade de rotina com dois pontos, ao colhê-lo. Ao colher outros sabores, perde 10-novamente e, com dois pontos, também subtrai um sucesso."
+  },
+  "ctl-2ed:firebrand": {
+    "name": "Incendiário",
+    "prerequisites": "Manto da Corte do Verão •••",
+    "description": "Uma vez por cena, recupera Força de Vontade ao incitar uma briga."
+  },
+  "ctl-2ed:gentrified-bearing": {
+    "name": "Porte Aristocrático",
+    "prerequisites": "Fado ••",
+    "description": "Hobgoblins podem confundir o personagem com um Feé Verdadeiro. Adiciona o Fado, até um máximo de +5 dados, aos testes de Intimidação contra hobgoblins; mesmo um engano bem-sucedido dificilmente ilude o mesmo hobgoblin duas vezes."
+  },
+  "ctl-2ed:glamour-fasting": {
+    "name": "Jejum de Glamour",
+    "description": "A privação de Glamour não começa por uma sessão inteira, a menos que o personagem esgote sua Força de Vontade."
+  },
+  "ctl-2ed:goblin-bounty": {
+    "name": "Abundância Goblin",
+    "description": "A cada capítulo, o personagem tem acesso a três Frutas Goblin comuns ou objetos goblin peculiares por ponto neste Mérito. O Fado ainda limita quantos pode carregar de uma vez; o restante fica guardado em segurança e não exige uma cena especial para ser recuperado."
+  },
+  "ctl-2ed:grounded": {
+    "name": "Centrado",
+    "prerequisites": "Manto da Corte da Primavera •••",
+    "description": "Aplica um ponto de Armadura contra dano leve de Lucidez."
+  },
+  "ctl-2ed:hedge-brawler": {
+    "name": "Brigão da Sebe",
+    "prerequisites": "Briga, Armas de Fogo ou Armas Brancas ••",
+    "description": "Aceita uma penalidade de −1 a −3 em uma ação violenta destinada a Tecer a Sebe. Se a ação for bem-sucedida, recebe o mesmo número de sucessos adicionais, utilizáveis apenas para moldar detalhes da Sebe; eles não podem transformar um sucesso normal em um sucesso excepcional."
+  },
+  "ctl-2ed:hedge-sense": {
+    "name": "Sentido da Sebe",
+    "description": "Recebe +2 em todos os testes para navegar pela Sebe e encontrar Ícones, alimento, abrigo ou Frutas Goblin nela."
+  },
+  "ctl-2ed:hob-kin": {
+    "name": "Parentesco Hob",
+    "description": "Melhora em um nível a impressão inicial de hobgoblins não hostis em manobras sociais. Se o personagem possuir um Vão, ele pode receber o aprimoramento Alarme Hob."
+  },
+  "ctl-2ed:lethal-mien": {
+    "name": "Semblante Feérico Letal",
+    "description": "Causa dano letal com ataques desarmados. Se outro poder já permitir ataques desarmados letais, aumenta o modificador de arma deles em +1. O personagem pode ativar ou suprimir esse benefício à vontade."
+  },
+  "ctl-2ed:mantle": {
+    "name": "Manto",
+    "description": "O Semblante Feérico está sintonizado com uma Corte local. Aplica o Manto como bônus Social entre amigos da Corte. Recebe uma fonte de Glamour, os benefícios do Manto e acesso a Contratos conforme sua Corte."
+  },
+  "ctl-2ed:manymask": {
+    "name": "Múltiplas Mascarilhas",
+    "prerequisites": "Fado ••, Manipulação •••",
+    "description": "Gasta 1 Glamour para mudar permanentemente a Mascarilha. A cada capítulo, faz até um número de alterações individuais igual ao Fado na cor dos olhos, cor do cabelo, estrutura facial, tom de pele, cicatrizes, marcas de nascença ou características semelhantes. Com Fado 5 ou mais, cria uma Mascarilha inteiramente nova uma vez por capítulo, inclusive com mudança de sexo, mas a altura e a compleição permanecem fixas."
+  },
+  "ctl-2ed:market-sense": {
+    "name": "Senso de Mercado",
+    "description": "Uma vez por sessão, quita gratuitamente um Débito Goblin por meio de uma negociação astuta."
+  },
+  "ctl-2ed:noblesse-oblige": {
+    "name": "Nobreza Obriga",
+    "prerequisites": "Manto",
+    "description": "Ao liderar um grupo que compartilhe a Corte do personagem por meio de Manto ou Boa Vontade da Corte, gasta 1 Força de Vontade para conceder aos aliados um bônus igual aos pontos neste Mérito durante a cena: Primavera aumenta a Iniciativa, Verão beneficia testes baseados em Perseverança, Outono beneficia testes de Contratos e Inverno beneficia testes baseados em Compostura. Os seguidores recebem +2 em testes Sociais contra o líder."
+  },
+  "ctl-2ed:pandemoniacal": {
+    "name": "Pandemoníaco",
+    "prerequisites": "Fado ••••••",
+    "description": "Aplica os pontos neste Mérito como dados de bônus para incitar Desvario."
+  },
+  "ctl-2ed:parallel-lives": {
+    "name": "Vidas Paralelas",
+    "description": "O changeling e o Duplo percebem mudanças intensas nas emoções um do outro e recebem +2 em Empatia ou magia usada para ler as intenções um do outro ou entrar no Bastião um do outro. Gasta 1 Força de Vontade para compartilhar os sentidos do outro por um número de minutos igual ao Fado, perdendo a Defesa e a percepção do entorno imediato, ou para enviar uma mensagem simples por impressões e imagens. Recebe um Ato quando o Duplo usa o vínculo para tornar a vida do changeling mais perigosa ou inconveniente."
+  },
+  "ctl-2ed:rigid-mask": {
+    "name": "Mascarilha Rígida",
+    "prerequisites": "Subterfúgio ••",
+    "description": "Humanos e dispositivos mundanos não conseguem desvendar os enganos do personagem, enquanto seres sobrenaturais precisam provocar uma Disputa de Vontades para fazê-lo. Revelar o Semblante Feérico causa dano letal ao personagem."
+  },
+  "ctl-2ed:token": {
+    "name": "Penhor",
+    "description": "O personagem ou Retalho possui um ou mais Penhores cuja pontuação total equivale aos pontos neste Mérito; o Mérito pode ultrapassar cinco pontos, mas nenhum Penhor individual pode ter pontuação superior a cinco. Um Penhor forjado por Juramento custa um ponto efetivo adicional e, portanto, não pode ser comprado com pontuação cinco, enquanto um Penhor roubado custa um ponto efetivo a menos."
+  },
+  "ctl-2ed:hedgespun-item": {
+    "name": "Item Fiado na Sebe",
+    "description": "Um objeto fiado na Sebe permanentemente ativo, cuja pontuação é distribuída entre Equipamento Extraordinário, Alacridade Aprimorada e Durabilidade Aumentada. Cada benefício pode ser escolhido até três vezes."
+  },
+  "ctl-2ed:touchstone": {
+    "name": "Touchstone",
+    "description": "Cada ponto concede um Touchstone adicional, atribuído à próxima caixa de Lucidez à direita do Touchstone atualmente mais à direita; o Mérito não pode ser comprado se a última caixa já possuir um. Perder o vínculo com Touchstones acelera a perda de Lucidez, e perder o último intensifica as lembranças e os pesadelos do Cativeiro."
+  },
+  "ctl-2ed:warded-dreams": {
+    "name": "Sonhos Protegidos",
+    "prerequisites": "≤ Perseverança",
+    "description": "Aplica os pontos neste Mérito como bônus à Fortificação do Bastião."
+  },
+  "ctl-2ed:elemental-warrior": {
+    "name": "Guerreiro Elemental",
+    "prerequisites": "Destreza ou Raciocínio •••; Briga, Armas de Fogo ou Armas Brancas ••; Arma Elemental, Glória Primordial ou Feição Elemental",
+    "description": "Escolhe um elemento físico; cada manobra se aplica apenas ao comandar esse elemento ou atacar com ele.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "O Vento Corta até os Ossos",
+        "description": "Testes de dano puramente elemental obtêm sucesso excepcional com três sucessos, exceto ao Tecer a Sebe ou realizar Tecelagem de Sonhos; uma arma feita exclusivamente do elemento se qualifica."
+      },
+      {
+        "rating": 2,
+        "name": "Turbilhão Defensivo",
+        "description": "Após dobrar a Defesa para Esquivar, adiciona metade do Fado, arredondada para baixo, à parada e permite Esquivar contra Armas de Fogo."
+      },
+      {
+        "rating": 3,
+        "name": "Chamas Famintas e Saltitantes",
+        "description": "Gasta 1 Glamour para realizar ataques corpo a corpo a 10 jardas ou metros de distância durante a cena e adicionar 10 a cada faixa de alcance dos ataques à distância; o elemento também pode perturbar o cenário."
+      },
+      {
+        "rating": 4,
+        "name": "Resistência de Anteu",
+        "description": "Enquanto estiver em contato significativo com o elemento, recebe um número de caixas de Vitalidade igual à metade do Fado e o mesmo bônus para resistir a fadiga, toxinas ou inconsciência."
+      },
+      {
+        "rating": 5,
+        "name": "Ira dos Titãs",
+        "description": "Gasta 1 Glamour para que ataques bem-sucedidos imponham Cego, Surdo ou Caído durante a cena; ataques repetidos podem afetar ambos os olhos ou ouvidos."
+      }
+    ]
+  },
+  "ctl-2ed:enchanting-performance": {
+    "name": "Apresentação Encantadora",
+    "prerequisites": "Presença •••, Expressão •••",
+    "description": "Um Estilo de apresentação que canaliza o fascínio feérico.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Limerique",
+        "description": "Testa Presença + Expressão, resistido por Compostura, para impor os sucessos obtidos como penalidade, até um máximo de −5, aos testes Sociais do alvo contra os observadores durante a cena."
+      },
+      {
+        "rating": 2,
+        "name": "Poema",
+        "description": "Após abrir uma Porta por meio de uma apresentação de Expressão, gasta 1 Glamour para abrir outra Porta imediatamente."
+      },
+      {
+        "rating": 3,
+        "name": "Soneto",
+        "description": "Gasta 1 Glamour para conceder a qualidade de rotina ao próximo teste mundano de Expressão relacionado a uma apresentação; um sucesso concede Inspirado a um membro da plateia, enquanto um sucesso excepcional concede a Condição a todos os espectadores."
+      }
+    ]
+  },
+  "ctl-2ed:hollow": {
+    "name": "Vão",
+    "description": "Um refúgio privado dentro da Sebe. Sua pontuação penaliza tentativas de descobrir informações pessoais de um proprietário ou rastreá-lo no interior, limita entradas forçadas e permite adquirir um valor equivalente em aprimoramentos do Vão. Pode ser comprado como um Mérito de Retalho."
+  },
+  "ctl-2ed:stable-trod": {
+    "name": "trod Estável",
+    "description": "O Povoado mantém um trod com pontuação igual à deste Mérito. Um número de Vãos ao longo dele igual aos pontos de trod Estável recebe o mesmo aprimoramento adicional de um ponto, mesmo acima de seu orçamento normal. Uma vez por história, testa trod Estável; cada sucesso produz uma Fruta Goblin genérica adicional contendo 1 Glamour."
+  },
+  "ctl-2ed:workshop": {
+    "name": "Oficina",
+    "prerequisites": "Vão",
+    "description": "O personagem mantém ferramentas especializadas dentro de seu Vão. Cada ponto fornece equipamento para uma Especialização de Ofícios. Construir Equipamento ou realizar outro teste de Ofícios com uma dessas Especializações recebe um bônus igual aos pontos em Oficina."
+  },
+  "ctl-2ed:hedge-duelist": {
+    "name": "Duelista da Sebe",
+    "prerequisites": "Presença ou Manipulação ••, Briga ou Armas Brancas ••, qualquer Perícia Social ••",
+    "description": "Um Estilo de duelo feérico cujas manobras funcionam apenas na Sebe. Escolhe Mil Folhas Caindo ou uma das seis manobras alternativas de primeiro ponto associadas às Feições. Variantes adicionais de primeiro ponto podem ser compradas como instâncias separadas por um Ponto de Experiência cada.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Mil Folhas Caindo (qualquer Feição)",
+        "description": "Antes de um ataque, imponha −1 à Defesa do oponente; se o ataque for bem-sucedido, cause apenas metade do dano normal."
+      },
+      {
+        "rating": 1,
+        "name": "Gato Escaldado (Fera)",
+        "description": "Após causar dano a um oponente com um ataque neste turno, reduza a Iniciativa dele no próximo turno pelos pontos de Duelista da Sebe do personagem."
+      },
+      {
+        "rating": 1,
+        "name": "Jogo de Sombras (Trevoso)",
+        "description": "Ganhe +2 de Defesa enquanto estiver na escuridão ou em sombras profundas."
+      },
+      {
+        "rating": 1,
+        "name": "Solo Traiçoeiro (Elemental)",
+        "description": "Reduza o Deslocamento do oponente pelos pontos de Duelista da Sebe enquanto ele estiver em contato com o chão."
+      },
+      {
+        "rating": 1,
+        "name": "Compostura Imaculada (Belíssimo)",
+        "description": "Enquanto não houver dano marcado na Vitalidade do personagem, adicione os pontos de Duelista da Sebe à Iniciativa."
+      },
+      {
+        "rating": 1,
+        "name": "A Queda do Carvalho (Ogro)",
+        "description": "Ganhe +3 em um Ataque Total, em vez de +2."
+      },
+      {
+        "rating": 1,
+        "name": "Despeito é Força (Mirrado)",
+        "description": "Ganhe +1 nas paradas de ataque neste turno se o oponente tiver causado dano ao personagem no turno anterior."
+      },
+      {
+        "rating": 2,
+        "name": "Escudo Esmeralda",
+        "description": "Recebe Armadura 2/0 na Sebe. Ela se acumula com armadura vestida, mas não com armadura concedida por Tecer a Sebe ou por Contratos."
+      },
+      {
+        "rating": 3,
+        "name": "Mordida como Espinhos",
+        "description": "Adiciona aos ataques um número de dados igual à penalidade por ferimentos atualmente sofrida pelo oponente."
+      },
+      {
+        "rating": 4,
+        "name": "Sussurros Além do Caminho",
+        "description": "Em vez de um ataque físico, testa Presença + Intimidação ou Manipulação + Subterfúgio, disputado por Perseverança + Compostura. Em um sucesso, testa a diferença entre os sucessos e causa essa quantidade de dano leve de Lucidez; o personagem também sofre um ponto de dano leve de Lucidez."
+      },
+      {
+        "rating": 5,
+        "name": "Sinfonia de Espinhos",
+        "description": "Durante um Duelo da Sebe, testes de ataque não sofrem penalidade para gerar sucessos de moldagem ao Tecer a Sebe."
+      }
+    ]
   }
 }

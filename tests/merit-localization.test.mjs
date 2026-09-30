@@ -17,7 +17,10 @@ const changelingPt = await json("public/data/changeling/merits-pt.json");
 
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
   assert.equal(Object.keys(corePt).length, 34);
-  assert.equal(Object.keys(changelingPt).length, 9);
+  assert.equal(Object.keys(changelingPt).length, 40);
+  for (const item of changeling.filter((item) => item.sourceId === "ctl-2ed")) {
+    assert.ok(changelingPt[item.id], item.id);
+  }
   for (const [catalog, portuguese] of [[core, corePt], [changeling, changelingPt]]) {
     for (const [id, presented] of Object.entries(portuguese)) {
       const canonical = catalog.find((item) => item.id === id);
