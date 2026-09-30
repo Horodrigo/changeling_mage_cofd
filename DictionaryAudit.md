@@ -78,3 +78,44 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | The Tolltaker Knight | O Cavaleiro Cobrador | **Tolltaker** foi adaptado para a função de cobrar o preço prometido. |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.
+
+## Textos dinâmicos fora dos dicionários
+
+Estes textos já foram localizados no código, mas não devem ser consolidados no dicionário sem a revisão editorial indicada abaixo.
+
+### Configuração de Méritos
+
+Os rótulos de configuração ainda são definidos em inglês junto às regras dos Méritos em `app/builder/common-merit-configurations.ts`, `game-lines/changeling/builder-merit-configurations.ts`, `game-lines/mage/merit-configurations.ts` e `game-lines/vampire/merit-configurations.ts`. Eles devem ser migrados para chaves de i18n durante a tradução dos Méritos, preservando `key`, valores e opções canônicas armazenadas.
+
+| Grupo | Rótulos que exigem decisão editorial |
+| --- | --- |
+| Comum | `Staff`, `Retainer`, `Safe Place`, `Striking Looks`, `Area of Expertise`, `Defensive Combat`, `Fighting Finesse`, `Quick Draw`, `Unseen Sense` e `Professional Training`. |
+| Changeling | `Hedge Duelist`, `Blood and Bone`, `Eerie Eyes`, `Know-It-All`, `Material Affinity`, `Mover and Shaker`, `Running with the Wolves`, `Still Waters Run Deep`, `Elemental Warrior`, `Fae Pet`, `A Taste of Honey`, `Rageaholic`, `Acquired Taste`, `Favored Phobia`, `Grief Connoisseur` e `Strange Favor`. |
+| Mage | `Artifact`, `Astral Adept`, `Awakened Status`, `Broad Dedication`, `Cabal Theme`, `Daimonomikon`, `Demesne`, `Destiny`, `Enhanced Item`, `Enriched Item`, `Familiar`, `Grimoire`, `Hallow`, `Imbued Ally`, `Imbued Item`, `Infamous Mentor`, `Inheritance`, `Mana Battery`, `Masque`, `Order Archive`, `Perfected Item`, `Prelacy`, `Profane Tool`, `Shadow Name`, `Shadow Self`, `Sanctum`, `Soul Stone`, `Supernal Watcher` e `Techné`. |
+| Vampire | `Kindred Status`, `Haven`, `Herd`, `Retainer (Ghoul)`, `Practiced Puppeteer`, `Friends in Low Places`, `Hiding Place`, `Contract with the Uncanny` e `The Three Heads of Kerberos`. |
+
+### Regras vampíricas exibidas dinamicamente
+
+`game-lines/vampire/sheet-view.tsx` ainda contém blocos mecânicos bilíngues embutidos. A interface portuguesa funciona, mas mistura termos canônicos ingleses. Formas propostas para a revisão:
+
+| Inglês ainda exibido | Forma proposta | Observação |
+| --- | --- | --- |
+| Strength / Dexterity / Stamina | Força / Destreza / Vigor | Atributos. |
+| Blood Potency | Potência do Sangue | |
+| Willpower | Força de Vontade | |
+| Health | Vitalidade | Nome usado atualmente pela ficha. |
+| Daysleep / Embrace | Sono Diurno / Abraço | |
+| Lashing Out | Investida Predatória | Nome da ação; requer confirmação. |
+| Fight / Flight | Lutar / Fugir | Opções de reação à Aura Predatória. |
+| Power Attribute | Atributo de Poder | |
+| Brawl / grapple / Feed | Briga / agarrão / Alimentar-se | |
+| Feeding Grounds | Território de Caça | |
+| Starting Vitae | Vitae Inicial | |
+| Coil | Espiral | |
+| Kindred senses | Sentidos Vampíricos | Evita a forma pouco natural **Sentidos dos Membros**. |
+
+Os nomes de Condições citados nesses blocos (`Swooning`, `Drained` e outros) devem acompanhar o catálogo de Condições que está sendo traduzido, sem uma segunda tabela paralela.
+
+### Dívida técnica de i18n
+
+Os editores de Homebrew ainda usam uma função local `h(português, inglês)` em vez de chaves semânticas do dicionário. Os textos estão apresentados nos dois idiomas, mas essa forma contorna a proteção do ESLint. A migração deve abranger os editores e inventários de Homebrew de Core, Changeling, Mage e Vampire; depois disso, a regra `no-untranslated-ui-text` deve rejeitar também esse padrão local.
