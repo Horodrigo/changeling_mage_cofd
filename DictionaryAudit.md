@@ -50,5 +50,7 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
 | Baron of the Lesser Ones | Barão dos Seres Menores | Primeiro Título do lote; o sentido de *Lesser Ones* pode admitir uma forma mais idiomática. |
+| Dauphines of Wayward Children | Delfinas das Crianças Desgarradas | |
+| Sophomore / Chaperone / Dowager | Segundo-anista / Acompanhante / Dama Viúva | Papéis internos das Delfinas; **Segundo-anista** e **Dama Viúva** merecem revisão de fluidez. |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.

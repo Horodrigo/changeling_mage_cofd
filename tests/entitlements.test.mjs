@@ -39,6 +39,12 @@ test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()
   assert.deepEqual(translated.blessings.map((item)=>item.id),source.blessings.map((item)=>item.id));
   assert.match(translated.beat,/Retalho/);
   assert.equal(entitlementPresentation(source,"en-US",ENTITLEMENTS_PT),source);
+  for(const [id,presentation] of Object.entries(ENTITLEMENTS_PT)){
+    const canonical=ENTITLEMENTS.find((item)=>item.id===id);
+    assert.ok(canonical,id);
+    assert.deepEqual(presentation.blessings.map((item)=>item.id),canonical.blessings.map((item)=>item.id),id);
+    assert.deepEqual((presentation.roles??[]).map((item)=>item.id),(canonical.roles??[]).map((item)=>item.id),id);
+  }
 });
 
 test("reduzir Fado remove a alocação mais nova",()=>{

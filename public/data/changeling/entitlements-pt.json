@@ -55,5 +55,93 @@
       "Um Barão Queima-Pontes travou guerra contra habitantes da Sebe até que um sucessor assumiu o Título e reparou os danos.",
       "Um Barão herdou um juramento de vingança contra o próprio marido e se sacrificou para cumpri-lo."
     ]
+  },
+  "dauphines-wayward-children": {
+    "name": "Delfinas das Crianças Desgarradas",
+    "meritName": "Dádiva da Delfina",
+    "prerequisites": "Fado 3; o papel selecionado exige dois pontos no Atributo e na Perícia correspondentes.",
+    "purpose": "Reunir, orientar e proteger crianças mortais ou Perdidas desgarradas que aceitem ajuda, até encontrarem um lar ou atingirem a idade adulta.",
+    "privileges": "O Título de legião impõe o respeito e os recursos do Povoado. Cada papel possui reputação e autoridade próprias sobre seus pupilos.",
+    "duties": "Nunca tomar como pupilo alguém que não queira; ajudar as outras Delfinas a proteger seus pupilos; cumprir o método de cuidado específico do papel selecionado.",
+    "maskAndMien": "O Segundo-anista torna-se jovem e fantástico; o Acompanhante, misterioso e reconfortante; e a Dama Viúva, severa e protetora. Cada um assume a aparência associada ao papel.",
+    "heraldry": "Um lírio estilizado: amarelo para o Segundo-anista, azul para o Acompanhante ou violeta para a Dama Viúva.",
+    "token": {
+      "name": "Lírio da Delfina",
+      "description": "Um broche de flor morta na Mascarilha e um lírio vivo e vibrante no Semblante Feérico, com a cor do papel.",
+      "effect": "Nomeie pupilos atuais em quantidade máxima igual à graduação para saber a distância e direção de cada um durante a cena, ou localize a criança desgarrada não reclamada mais próxima. Some a graduação às ações pertinentes ao papel. Gaste 1 Glamour para permitir que um pupilo enxergue através de Mascarilhas Fae durante a cena, até um número de vezes por cena igual à graduação.",
+      "catch": "Conte a alguém um segredo precioso ou perturbador da infância que essa pessoa ainda não conheça.",
+      "drawback": "O usuário recebe Lascivo (Segundo-anista), Assombrado (Acompanhante) ou Estoico (Dama Viúva)."
+    },
+    "roles": [
+      {
+        "id": "sophomore",
+        "name": "Segundo-anista",
+        "prerequisites": "Presença 2, Persuasão 2",
+        "privilege": "Um trapaceiro e dissidente celebrado, que conquista corações jovens com liberdade e maravilhas.",
+        "duties": "Oferecer uma vida despreocupada e maravilhosa e ensinar os pupilos a buscar o que desejam, sem obedecer a comando algum além do próprio coração.",
+        "heraldryColor": "Amarelo",
+        "tokenBonus": "Some a graduação do Penhor às rolagens de Tecer a Sebe para maravilhar um pupilo ou conceder o desejo de seu coração.",
+        "tokenDrawback": "Lascivo"
+      },
+      {
+        "id": "chaperone",
+        "name": "Acompanhante",
+        "prerequisites": "Manipulação 2, Empatia 2",
+        "privilege": "Um cuidador confiável e milagroso, a quem os outros confiam seus dependentes e segredos mais preciosos.",
+        "duties": "Prover aos pupilos e ensinar lições por meio de testes estranhos, enigmas mágicos, caças ao tesouro e outras maravilhas indiretas.",
+        "heraldryColor": "Azul",
+        "tokenBonus": "Some a graduação do Penhor às rolagens de Contrato que conduzam um pupilo por enigmas e aventuras para aprender algo novo.",
+        "tokenDrawback": "Assombrado"
+      },
+      {
+        "id": "dowager",
+        "name": "Dama Viúva",
+        "prerequisites": "Compostura 2, Intimidação 2",
+        "privilege": "Uma protetora formidável cujos pupilos recebem abrigo, recursos e rotas de fuga de outros Perdidos.",
+        "duties": "Disciplinar, guardar, treinar e preparar os pupilos para sobreviver; punir tanto os pupilos que coloquem outros em perigo quanto os responsáveis por feri-los.",
+        "heraldryColor": "Violeta",
+        "tokenBonus": "Some a graduação do Penhor às rolagens mundanas para proteger ou vingar um pupilo.",
+        "tokenDrawback": "Estoico"
+      }
+    ],
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "inherited-token",
+        "name": "Penhor de Dádiva Herdado",
+        "description": "Receba um Penhor herdado separado, com graduação igual à metade do Fado, arredondada para cima. Crie-o usando as regras normais de Penhores.",
+        "choiceLabel": "Detalhes do Penhor herdado"
+      },
+      {
+        "id": "warded-dreams",
+        "name": "Sonhos Protegidos",
+        "description": "Pupilos que não sejam changelings recebem Sonhador Lúcido e tratam seus Bastiões como Fortitude 1. Ações mundanas bem-sucedidas no Bastião de um pupilo recebem um sucesso adicional, que só pode ser usado para mudanças de Tecelagem de Sonhos.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "Um dos pupilos mortais da Delfina. Esta Touchstone é Condicional.",
+    "curse": "Ataques de Lucidez sofridos porque um pupilo se perdeu por qualquer motivo adicionam uma quantidade de dados de dano igual aos pontos investidos neste Mérito.",
+    "beat": "Abandonar uma responsabilidade importante ou fazer a Delfina ou o Retalho sofrer dano enquanto persegue e acolhe um novo pupilo.",
+    "legends": [
+      "Um Segundo-anista e seus pupilos trocaram as próprias memórias para permanecerem crianças para sempre.",
+      "Um Acompanhante organizou uma caça aos ovos para escolher em segredo o herdeiro do Lírio Azul.",
+      "O assassino mortal de uma Dama Viúva guardou o Lírio Violeta, à espera do changeling que viria buscá-lo."
+    ]
   }
 }
