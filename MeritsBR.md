@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 202/202 registros Core e 92/154 Changeling. Todos os Méritos Core, todos os 53 Méritos de fontes oficiais de Changeling e os 39 de Book of Courts estão traduzidos. As manobras e os benefícios por nível cadastrados nos lotes concluídos foram incluídos. Ainda faltam 62 Changeling do suplemento homebrew Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 202/202 registros Core e 154/154 Changeling. Todos os Méritos Core, todos os 53 Méritos de fontes oficiais de Changeling, os 39 de Book of Courts e os 62 de Book of Seemings estão traduzidos. Todas as manobras e os benefícios por nível cadastrados foram incluídos. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -210,3 +210,31 @@ Observações mecânicas para uma auditoria separada:
 - `Get the Manager`, `Can't Spook a Spooker`, `GTFO`, `Shivers` e `Snow Cover` repetem um requisito de Manto depois da alternativa de Boa Vontade da Corte. A tradução preserva a redação cadastrada, sem presumir que Boa Vontade dispensa esse segundo requisito.
 - As alternativas de acesso a estes Méritos homebrew não foram substituídas pelos limiares de acesso a Contratos de Corte; são requisitos de itens diferentes.
 - `Acquired Taste` mantém a aquisição separada por tipo sobrenatural no texto. A tradução não altera o modelo de instâncias nem acrescenta configuração mecânica.
+
+## Novas escolhas para auditoria — Book of Seemings (homebrew)
+
+Foram traduzidos os 62 registros, seus requisitos alternativos e as cinco manobras de Meat Shield a partir do texto inglês cadastrado. O conteúdo homebrew continua distinto das regras oficiais e do texto criado pelo jogador.
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Debaucher / Total Abandon | Devasso / Entrega Total | Entrega aos vícios e abandono de cautela, respectivamente. |
+| Green Grocer | Quitandeiro | Frutas Goblin conservadas fora da Sebe. |
+| Mirror Me | Meu Reflexo | O reflexo age por conta própria. |
+| Puzzler / Riddle Me This | Decifrador / Decifre Esta | Mantém distintos o Mérito de resolver enigmas e o de confundir por jogos de palavras. |
+| Resting Birch Face | Cara Fechada de Bétula | Adaptação do trocadilho com uma expressão facial intimidadora e a árvore. |
+| Confessional Countenance | Rosto Confessional | A aparência convida outras pessoas a revelarem informações. |
+| Multimask | Mascarilhas Ampliadas | Nome distinto de Manymask/Múltiplas Mascarilhas, que este Mérito aprimora. |
+| Tickets to the Gun Show | Ingresso para o Show de Músculos | Gun refere-se metaforicamente aos músculos, não a armas de fogo. |
+| Gnarled | Nodoso | Mantém a imagem de madeira retorcida e idade avançada. |
+| Iron Toes | Dedos de Ferro | Dedos dos pés; o nome não concede contato inofensivo com ferro. |
+| Token Crucible | Cadinho de Penhores | Instalação de criação no Vão. |
+| Scour the Mask | Desgastar a Mascarilha | Processo citado no resumo de Mascote Fae; termo para uniformização futura. |
+| Dread Power | Poder Temível | Forma já presente no dicionário Changeling; há um rótulo antigo do mascote que usa Poder Sobrenatural, a uniformizar na apresentação. |
+| Paranoid / Confused | Paranoico / Confuso | Condições citadas; Confuso já aparece nas Frátrias, e Paranoico requer uniformização quando tiver apresentação própria. |
+
+Observações mecânicas para uma auditoria separada:
+
+- `Hidden Life` apresenta Manto e Boa Vontade da Corte junto de Status no seu efeito de custo; a tradução preserva essa comparação do homebrew, sem unificar mecanicamente esses Méritos.
+- `Meat Shield: Remember Me?` não explicita a parada de resistência do atacante no resumo cadastrado. Ela não foi inventada na tradução.
+- `Material Affinity` mantém Ação Avançada, termo já usado nas Frátrias e nos Contratos; não foi substituído por qualidade de rotina.
+- Os requisitos alternativos de Feição foram traduzidos nos dois campos existentes. Não houve mudança no cálculo de elegibilidade nem na quantidade de instâncias.

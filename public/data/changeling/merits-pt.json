@@ -547,5 +547,329 @@
     "name": "Cobertura de Neve",
     "prerequisites": "Manto do Inverno •• ou Boa Vontade da Corte do Inverno ••••; Manto do Inverno ••",
     "description": "Gasta Força de Vontade para estender a um número de aliados igual ao Manto do Inverno, ao alcance do braço, a penalidade que os inimigos sofrem para perceber o personagem enquanto ele espiona. Se um membro for percebido, todo o grupo é descoberto."
+  },
+  "h-seemings:blood-and-bone": {
+    "name": "Sangue e Osso",
+    "prerequisites": "Fera",
+    "description": "Escolhe duas Perícias, sendo pelo menos uma Física; ambas recebem 9-novamente. Recebe +2 para sentir empatia ou se relacionar com o animal refletido pelo Semblante Feérico. Fortalecer a Mascarilha custa um ponto de Força de Vontade na primeira vez de cada capítulo."
+  },
+  "h-seemings:debaucher": {
+    "name": "Devasso",
+    "prerequisites": "Fera",
+    "description": "Recebe um Vício e o satisfaz como um mortal. Após recuperar Força de Vontade dessa maneira uma vez em um capítulo, cada nova satisfação causa um dado de dano leve de Lucidez."
+  },
+  "h-seemings:fae-pet": {
+    "name": "Mascote Fae",
+    "prerequisites": "Fera ou Trato com Animais •••; Lacaio ••",
+    "alternativePrerequisites": "Trato com Animais •••; Lacaio ••",
+    "description": "Um Lacaio animal recebe um Poder Temível, Passagem alimentada por Força de Vontade, uma Mascarilha e um Semblante Feérico. Pode desgastar sua Mascarilha, mas não fortalecê-la, e não pode ser morto por razões de enredo sem permissão."
+  },
+  "h-seemings:green-grocer": {
+    "name": "Quitandeiro",
+    "prerequisites": "Fera, Sobrevivência ••",
+    "description": "Mantém duas Frutas Goblin adicionais fora da Sebe por ponto neste Mérito."
+  },
+  "h-seemings:hot-pursuit": {
+    "name": "Perseguição Implacável",
+    "prerequisites": "Fera, Pés Ligeiros •",
+    "description": "Uma vez por cena, enquanto estiver a uma distância em metros da presa igual ou inferior ao Deslocamento, gasta um ponto de Glamour para se mover até ficar ao alcance do braço e receber a Vantagem em uma perseguição."
+  },
+  "h-seemings:just-try-me": {
+    "name": "Tente a Sorte Comigo",
+    "prerequisites": "Fera, Intimidação ••",
+    "description": "Uma vez por cena, após uma agressão verbal ou insulto, gasta reflexivamente um ponto de Glamour para infligir Abalado; isso não pode neutralizar poderes sobrenaturais. Perde 10-novamente em Socialização com pessoas que conheçam o personagem apenas pela reputação."
+  },
+  "h-seemings:mad-bad-and-dangerous": {
+    "name": "Louco, Mau e Perigoso",
+    "prerequisites": "Fera, Aparência Marcante •",
+    "description": "Quando Aparência Marcante beneficia uma primeira impressão, três sucessos contam como excepcionais."
+  },
+  "h-seemings:malignant-mien": {
+    "name": "Semblante Feérico Maligno",
+    "prerequisites": "Fera ou Semblante Feérico Letal",
+    "alternativePrerequisites": "Semblante Feérico Letal",
+    "description": "Uma vez por cena, gasta um ponto de Glamour para que o próximo ataque bem-sucedido com armas naturais da bênção de Fera ou de Semblante Feérico Letal cause dano agravado. Testes relacionados de dano de Lucidez recebem 9-novamente."
+  },
+  "h-seemings:running-with-the-wolves": {
+    "name": "Correndo com os Lobos",
+    "prerequisites": "Fera, Trato com Animais •••",
+    "description": "Recebe um grupo específico de animais como Aliados •••. Gasta um ponto de Glamour para enviar a eles uma mensagem telepática curta a até Fado × 2 quilômetros; pode ser necessário um teste de Raciocínio + Trato com Animais para compreender respostas complexas."
+  },
+  "h-seemings:screw-it": {
+    "name": "Que se Dane",
+    "prerequisites": "Fera; Compostura ou Perseverança •••",
+    "description": "Uma vez por manobra Social, recupera um ponto de Força de Vontade após um teste fracassado, mas não uma falha dramática."
+  },
+  "h-seemings:total-abandon": {
+    "name": "Entrega Total",
+    "prerequisites": "Fera, Atletismo ••, Briga ••",
+    "description": "Ao realizar um Ataque Total com Briga, gasta um ponto de Glamour para adicionar os pontos neste Mérito como dano da arma; a Defesa sofre −2 adicionais no turno seguinte."
+  },
+  "h-seemings:from-the-shadows": {
+    "name": "Das Sombras",
+    "prerequisites": "Trevoso, Atletismo ••, Furtividade ••",
+    "description": "Após realizar o teste de um ataque surpresa, gasta um ponto de Glamour para conceder 8-novamente à ação."
+  },
+  "h-seemings:hidden-life": {
+    "name": "Vida Oculta",
+    "prerequisites": "Trevoso, Subterfúgio ••, Anonimato •",
+    "description": "Os pontos em Anonimato penalizam tentativas sobrenaturais de localizar o personagem, e ações para se ocultar recebem 9-novamente. O quinto ponto de qualquer Status, incluindo Manto e Boa Vontade da Corte, custa um ponto adicional de Experiência."
+  },
+  "h-seemings:look-over-there": {
+    "name": "Olhe Ali!",
+    "prerequisites": "Trevoso",
+    "description": "Gasta um ponto adicional de Glamour ao realizar Passagem para criar uma distração e receber um turno para fugir sem ser percebido, desde que o personagem apenas corra e não invada o espaço imediato de outra pessoa."
+  },
+  "h-seemings:lucidity-in-lunacy": {
+    "name": "Lucidez na Loucura",
+    "prerequisites": "Trevoso",
+    "description": "Quando mais da metade das caixas de Lucidez estiverem danificadas, realiza um teste de Fado + dano atual de Lucidez. Em caso de sucesso, o Narrador revela uma verdade oculta de maneira estranha e indireta."
+  },
+  "h-seemings:mirror-me": {
+    "name": "Meu Reflexo",
+    "prerequisites": "Trevoso",
+    "description": "Uma vez por capítulo, a critério do Narrador, um reflexo que não esteja sendo observado pode se mover ou furtar um objeto refletido de Tamanho 1 ou menor e colocá-lo junto ao personagem. O reflexo pode agir de maneira egoísta."
+  },
+  "h-seemings:perfect-stillness": {
+    "name": "Imobilidade Perfeita",
+    "prerequisites": "Trevoso ou Raciocínio •••; Furtividade ••",
+    "alternativePrerequisites": "Raciocínio •••; Furtividade ••",
+    "description": "Enquanto o personagem permanecer perfeitamente imóvel, tentativas de encontrá-lo sofrem −3, aumentado para −5 para quem estiver associado ao antigo Carcereiro."
+  },
+  "h-seemings:poor-little-paranoid": {
+    "name": "Pobre Paranoico",
+    "prerequisites": "Trevoso, Sentido de Perigo",
+    "description": "Acompanha todas as pessoas e objetos não ocultos que já tenha percebido sem realizar uma ação e nota qualquer mudança na cena. Sentido de Perigo passa a conceder +3. Sofre −2 em Socialização e Expressão com humanos desconhecidos, a menos que Força de Vontade suprima este Mérito durante a cena."
+  },
+  "h-seemings:puzzler": {
+    "name": "Decifrador",
+    "prerequisites": "Trevoso; Inteligência ou Raciocínio •••",
+    "description": "Recebe 8-novamente em ações instantâneas ou prolongadas de Erudição ou Investigação para resolver um enigma criado intencionalmente."
+  },
+  "h-seemings:riddle-me-this": {
+    "name": "Decifre Esta",
+    "prerequisites": "Trevoso, Expressão ••, Subterfúgio ••",
+    "description": "Um sucesso excepcional de Expressão ou Subterfúgio usado para confundir alguém com jogos de palavras inflige Confuso."
+  },
+  "h-seemings:secret-seer": {
+    "name": "Vidente de Segredos",
+    "prerequisites": "Trevoso",
+    "description": "Uma vez por dia, ao conhecer alguém pela primeira vez, realiza um teste de Raciocínio + Fado; um sucesso revela duas verdades e uma mentira. Um fracasso inflige Paranoico, e cada pessoa pode provocar essa tentativa apenas uma vez."
+  },
+  "h-seemings:wrapped-in-an-enigma": {
+    "name": "Envolto em um Enigma",
+    "prerequisites": "Trevoso, Subterfúgio •••",
+    "description": "Uma vez por capítulo, adiciona metade do Fado, arredondada para cima, como dados ou sucessos de bônus em Subterfúgio a respeito de fatos sobre o personagem."
+  },
+  "h-seemings:conjuror-s-call": {
+    "name": "Chamado do Conjurador",
+    "prerequisites": "Elemental",
+    "description": "Gasta um ponto de Força de Vontade para criar do nada uma pequena quantidade do elemento associado ao personagem, suficiente para a tarefa."
+  },
+  "h-seemings:foiled-forensics": {
+    "name": "Perícia Forense Frustrada",
+    "prerequisites": "Elemental",
+    "description": "Vestígios biológicos deixados para trás revertem ao elemento associado após metade de (10 − Fado) horas, arredondada para cima; roupas e evidências de dano permanecem."
+  },
+  "h-seemings:resting-birch-face": {
+    "name": "Cara Fechada de Bétula",
+    "prerequisites": "Elemental, Intimidação ••",
+    "description": "Antes de o personagem falar em uma cena, a primeira ação Social de outra pessoa contra ele sofre uma penalidade igual à Presença dele. Abordagens amigáveis ou gentis sofrem −1, a menos que sejam aprimoradas com Força de Vontade."
+  },
+  "h-seemings:smelling-like-a-rose": {
+    "name": "Cheirando a Rosas",
+    "prerequisites": "Elemental",
+    "description": "Testes Sociais beneficiados pelo aroma agradável do elemento associado obtêm sucesso excepcional com três sucessos, mas o aroma pode tornar o personagem memorável."
+  },
+  "h-seemings:stomach-of-steel": {
+    "name": "Estômago de Aço",
+    "prerequisites": "Elemental ou Vigor •••",
+    "alternativePrerequisites": "Vigor •••",
+    "description": "O personagem pode digerir qualquer substância que consiga engolir com segurança e nunca sofre fome ou sede enquanto puder encher o estômago."
+  },
+  "h-seemings:unbroken-branches": {
+    "name": "Ramos Inteiros",
+    "prerequisites": "Elemental, Fado •••",
+    "description": "Um membro ou parte do corpo decepado que seja recuperado pode ser reimplantado sem perda de função e se cura normalmente."
+  },
+  "h-seemings:stone-hearted": {
+    "name": "Coração de Pedra",
+    "prerequisites": "Elemental; Compostura ou Perseverança •••",
+    "description": "Força de Vontade gasta para resistir a influência Mental ou Social adiciona +3, em vez de +2, e o personagem possui uma Porta adicional em manobras Sociais."
+  },
+  "h-seemings:eerie-eyes": {
+    "name": "Olhos Inquietantes",
+    "prerequisites": "Elemental",
+    "description": "Define um órgão sensorial incomum; a menos que esse órgão seja coberto ou atacado, obstruções físicas não podem cegar o personagem."
+  },
+  "h-seemings:still-waters-run-deep": {
+    "name": "Águas Calmas São Profundas",
+    "prerequisites": "Elemental",
+    "description": "Escolhe um Atributo. Cercado pelo elemento associado, trata esse Atributo como se tivesse um ponto a mais, recebe 9-novamente nos testes dele e ignora a Complicação Ambiental do elemento. Mais de um dia sem contato inflige Privado até que o personagem fique imerso durante uma hora."
+  },
+  "h-seemings:fire-forged-friends": {
+    "name": "Amigos Forjados no Fogo",
+    "prerequisites": "Elemental ou Ocultismo •••; Empatia ••; Contrato Glória Primordial",
+    "alternativePrerequisites": "Ocultismo •••; Empatia ••; Contrato Glória Primordial",
+    "description": "Glória Primordial pode ser concedida a até Fado aliados por cena, mediante toque e uma ação instantânea para cada um; gastar um ponto de Glamour também compartilha as bênçãos específicas de Feição às quais o personagem tem acesso."
+  },
+  "h-seemings:confessional-countenance": {
+    "name": "Rosto Confessional",
+    "prerequisites": "Belíssimo, Empatia •••",
+    "description": "Recebe +2 em testes Sociais com alguém que esteja revelando informações delicadas, ou +3 se essa pessoa tiver Segredo Constrangedor; desconhecidos podem oferecer informações úteis espontaneamente, sem teste."
+  },
+  "h-seemings:just-your-type": {
+    "name": "Exatamente o Seu Tipo",
+    "prerequisites": "Belíssimo, Habitué",
+    "description": "Enquanto usa Habitué, conta como se tivesse Aparência Marcante ••; se já possuir esse Mérito, dobra seus bônus."
+  },
+  "h-seemings:mover-and-shaker": {
+    "name": "Pessoa Influente",
+    "prerequisites": "Belíssimo",
+    "description": "Escolhe uma subcultura mortal. Gasta um ponto de Glamour para adicionar os pontos neste Mérito a ações Sociais com seus membros e obter sucesso excepcional com três sucessos; uma vez por história, também usa esses pontos como Aliados."
+  },
+  "h-seemings:multimask": {
+    "name": "Mascarilhas Ampliadas",
+    "prerequisites": "Belíssimo ou Subterfúgio •••; Múltiplas Mascarilhas",
+    "alternativePrerequisites": "Subterfúgio •••; Múltiplas Mascarilhas",
+    "description": "Múltiplas Mascarilhas altera duas características por ponto de Glamour e pode alterar toda a aparência com Fado 3, em vez de 5."
+  },
+  "h-seemings:not-just-a-pretty-face": {
+    "name": "Não Apenas um Rosto Bonito",
+    "prerequisites": "Belíssimo, Aparência Marcante •",
+    "description": "Recebe +2 em testes Sociais ao explorar um estereótipo atraente para ser subestimado; perde 10-novamente ao tentar parecer competente para quem ainda não tenha testemunhado essa competência."
+  },
+  "h-seemings:power-behind-the-throne": {
+    "name": "Poder por Trás do Trono",
+    "prerequisites": "Belíssimo, Manipulação •••",
+    "description": "Durante uma cena, concede a um aliado pontos temporários em uma das Perícias Sociais do personagem, até o limite da pontuação deste Mérito e da pontuação que o personagem possui na Perícia. O personagem sofre uma penalidade igual se usar essa Perícia na mesma cena."
+  },
+  "h-seemings:sanguine-sacrifice": {
+    "name": "Sacrifício de Sangue",
+    "prerequisites": "Belíssimo",
+    "description": "Inflige dano letal em si mesmo e unge outro changeling com o sangue para restaurar dois pontos de Glamour por ponto de dano. Medidas de mitigação não podem reduzir o sacrifício, e curá-lo na mesma cena remove o Glamour."
+  },
+  "h-seemings:soothing-presence": {
+    "name": "Presença Reconfortante",
+    "prerequisites": "Belíssimo, Presença •••",
+    "description": "Enquanto estiver presente, reduz em um dado um ataque de Lucidez contra um companheiro de Juramento do Retalho; depois disso, ataques de Lucidez contra o personagem recebem +1 durante a cena."
+  },
+  "h-seemings:cast-iron-stomach": {
+    "name": "Estômago de Ferro Fundido",
+    "prerequisites": "Ogro, Vigor ••",
+    "description": "Consome alimentos estragados, crus ou de outro modo impróprios sem sofrer dano e adiciona o Fado para resistir a toxinas e doenças ingeridas."
+  },
+  "h-seemings:i-smell-the-blood-of-an-englishman": {
+    "name": "Sinto o Cheiro do Sangue de um Inglês",
+    "prerequisites": "Ogro",
+    "description": "Detecta automaticamente sangue a até Fado × 10 metros. Após provar o sangue de uma criatura, adiciona o Fado para rastreá-la e detectar pessoas ou detalhes ocultos por meio de vestígios de sangue."
+  },
+  "h-seemings:large-and-in-charge": {
+    "name": "Grande e no Comando",
+    "prerequisites": "Ogro, Tamanho 6+",
+    "description": "Uma vez por cena, em uma ação Social para chamar a atenção ou dirigir outras pessoas, substitui Presença por Tamanho; se Presença não for menor, recebe a qualidade de rotina em vez disso."
+  },
+  "h-seemings:living-large": {
+    "name": "Vivendo à Grande",
+    "prerequisites": "Ogro, Recursos •, Tamanho 6+",
+    "description": "Uma vez por capítulo, adquire bens por meio de intimidação ou pequenos crimes, em vez de Recursos, até uma Disponibilidade igual à metade do Tamanho, arredondada para cima; as consequências ainda se aplicam."
+  },
+  "h-seemings:looming-large": {
+    "name": "Grande e Ameaçador",
+    "prerequisites": "Ogro, Tamanho 6+",
+    "description": "Recebe +2 em testes baseados em Intimidação contra personagens menores."
+  },
+  "h-seemings:meat-shield": {
+    "name": "Escudo de Carne",
+    "prerequisites": "Ogro, Vigor •••, Intimidação •••",
+    "description": "Um Estilo progressivo de proteção.",
+    "levels": [
+      { "rating": 1, "name": "Pense Duas Vezes", "description": "Adiciona Intimidação à Iniciativa no primeiro turno de um confronto violento." },
+      { "rating": 2, "name": "Fique Atrás de Mim", "description": "Oferece ocultação substancial contra ataques à distância aos personagens atrás de você, ou ocultação total se forem menores." },
+      { "rating": 3, "name": "Lembra de Mim?", "description": "Uma vez por turno, disputa Presença + Intimidação contra um atacante que esteja mirando um aliado próximo; em caso de sucesso, ele ataca você em vez do aliado, contra metade da Defesa." },
+      { "rating": 4, "name": "Eu Aguento", "description": "Gasta um ponto de Força de Vontade quando Lembra de Mim? redirecionar um ataque bem-sucedido para reduzir seu dano pela metade, arredondado para baixo, com mínimo de um." },
+      { "rating": 5, "name": "Ganhar Tempo", "description": "Quando uma das três últimas caixas de Vitalidade estiver preenchida e um aliado for ameaçado, gasta um ponto de Força de Vontade e uma ação instantânea para receber Armadura igual ao Vigor até o próximo turno." }
+    ]
+  },
+  "h-seemings:thick-headed": {
+    "name": "Cabeça Dura",
+    "prerequisites": "Ogro; Vigor ou Força •••",
+    "description": "Ataques físicos bem-sucedidos contra a cabeça causam um ponto de dano a menos; ataques bem-sucedidos realizados com a cabeça causam +1 de dano."
+  },
+  "h-seemings:thick-skinned": {
+    "name": "Pele Grossa",
+    "prerequisites": "Ogro, Vigor •••",
+    "description": "Ignora um ataque físico ou perigo que causaria exatamente um ponto de dano contundente."
+  },
+  "h-seemings:tickets-to-the-gun-show": {
+    "name": "Ingresso para o Show de Músculos",
+    "prerequisites": "Ogro ou Força •••; Atletismo ••",
+    "alternativePrerequisites": "Força •••; Atletismo ••",
+    "description": "Ao exibir visivelmente seu vigor físico para distrair ou atrair, ações Sociais recebem 8-novamente. Cada uso após o primeiro na mesma cena sofre −1 cumulativo."
+  },
+  "h-seemings:too-simple-to-fool": {
+    "name": "Simples Demais para Ser Enganado",
+    "prerequisites": "Ogro, Inteligência • no máximo",
+    "description": "Recebe +2 para resistir a artimanhas verbais. Se Inteligência aumentar permanentemente acima de 1, perde o Mérito conforme a Santidade dos Méritos."
+  },
+  "h-seemings:gnarled": {
+    "name": "Nodoso",
+    "prerequisites": "Mirrado, Fado ••",
+    "description": "O personagem não possui um limite natural de vida. Usar um intervalo adicional em uma ação prolongada concede 9-novamente, mantendo o limite imposto pela parada de dados; o envelhecimento físico continua até uma aparência de quase setenta anos."
+  },
+  "h-seemings:iron-toes": {
+    "name": "Dedos de Ferro",
+    "prerequisites": "Mirrado",
+    "description": "Recebe Armadura 1 contra dano físico autoinfligido causado por erros ou acidentes."
+  },
+  "h-seemings:know-it-all": {
+    "name": "Sabe-Tudo",
+    "prerequisites": "Mirrado, Inteligência •••, Perícia escolhida ••",
+    "description": "Escolhe Erudição, Ocultismo, Política ou Ciência. Testes com essa Perícia recebem 9-novamente, e Força de Vontade adiciona +4, em vez de +3."
+  },
+  "h-seemings:material-affinity": {
+    "name": "Afinidade com Materiais",
+    "prerequisites": "Mirrado; Ofícios ou Expressão ••",
+    "description": "Escolhe um material específico com um ponto ou uma categoria ampla com três. Ações que envolvam substancialmente esse material e não sejam de Ofícios obtêm sucesso excepcional com três sucessos; Ofícios e Expressão trabalhando diretamente o material recebem Ação Avançada. Ferro é proibido, e um aumento de pontuação deve manter a mesma categoria."
+  },
+  "h-seemings:percussive-maintenance": {
+    "name": "Manutenção Percussiva",
+    "prerequisites": "Mirrado",
+    "description": "Em vez de um teste de Ofícios para um reparo simples, causa um ponto de dano de Estrutura como ação instantânea para fazer o dispositivo funcionar durante a cena. Cada uso adiciona um sucesso exigido para um reparo permanente."
+  },
+  "h-seemings:perfectionist": {
+    "name": "Perfeccionista",
+    "prerequisites": "Mirrado; Raciocínio ••; Ofícios, Expressão ou Ocultismo •••",
+    "description": "Após uma ação bem-sucedida de Construir Equipamento, gasta um ponto de Glamour e até três de Força de Vontade; cada ponto de Força de Vontade adiciona um à Durabilidade, à Estrutura ou ao bônus de Equipamento, cada um no máximo uma vez e nunca acima de +5. Trabalho em equipe exige que todos os participantes possuam este Mérito."
+  },
+  "h-seemings:pinchpenny": {
+    "name": "Pão-Duro",
+    "prerequisites": "Mirrado, Raciocínio •••",
+    "description": "Recebe a qualidade de rotina em testes para negociar preços ou trocas de serviços."
+  },
+  "h-seemings:razor-tongue": {
+    "name": "Língua Afiada",
+    "prerequisites": "Mirrado, Expressão ••",
+    "description": "Um sucesso Social excepcional para menosprezar, zombar ou humilhar faz o alvo perder um ponto de Força de Vontade."
+  },
+  "h-seemings:spiteful-competence": {
+    "name": "Competência por Despeito",
+    "prerequisites": "Mirrado",
+    "description": "Uma vez por cena, Força de Vontade adiciona +5, em vez de +3, ao tentar novamente uma ação em que o personagem tenha fracassado publicamente diante de testemunhas."
+  },
+  "h-seemings:tinkerer": {
+    "name": "Engenhoqueiro",
+    "prerequisites": "Mirrado, Ofícios ••",
+    "description": "Ignora penalidades em Ofícios por ferramentas improvisadas."
+  },
+  "h-seemings:token-crucible": {
+    "name": "Cadinho de Penhores",
+    "prerequisites": "Oficina •, Especialização de Oficina (Criação de Penhores)",
+    "description": "Uma instalação dedicada no Vão reduz em um capítulo a criação de Penhores forjados na Sebe, com mínimo de um, e permanece protegida pelo Vão. Consome uma nova carga de combustível exótico a cada capítulo de operação."
+  },
+  "h-seemings:told-you-so": {
+    "name": "Eu Avisei",
+    "prerequisites": "Mirrado",
+    "description": "Uma vez por cena, recupera um ponto de Força de Vontade quando o personagem ou um aliado presente sofrer uma falha dramática em uma ação cujas chances o personagem tenha menosprezado anteriormente."
   }
 }
