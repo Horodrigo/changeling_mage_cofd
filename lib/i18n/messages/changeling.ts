@@ -26,7 +26,7 @@ export const changelingMessages = {
       "addBlessing": "Adicionar Bênção",
       "addRole": "Adicionar papel",
       "conditionalBenefit": "Benefício condicional",
-      "createHomebrewEntitlement": "Criar novo Entitlement",
+      "createHomebrewEntitlement": "Criar novo Título",
       "editHomebrewEntitlement": "Editar Entitlement",
       "entitlementHomebrewRequiredFields": "Preencha os campos obrigatórios e ao menos uma Bênção completa.",
       "entitlementRolesDescription": "Use papéis quando membros do mesmo Entitlement tiverem requisitos, privilégios ou deveres diferentes.",

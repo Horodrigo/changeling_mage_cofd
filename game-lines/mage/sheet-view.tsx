@@ -1433,7 +1433,7 @@ function NamelessMysteryCultLevels({
   configuration: Record<string, string | string[]>;
   locale: Locale;
 }) {
-  const english = locale === "en-US";
+  const { t } = useLanguage();
   const roteSkills = Array.isArray(configuration.level_2_rote_skills)
     ? configuration.level_2_rote_skills
         .filter(Boolean)
@@ -1446,48 +1446,37 @@ function NamelessMysteryCultLevels({
     locale,
   );
   const configuredDescription = (level: number) => {
-    const prefix = `${english ? "Dot" : "Nível"} ${level}:`;
+    const prefix = t("ui.namelessCultLevelPrefix", { level });
     const line = configured.find((entry) => entry.startsWith(prefix));
-    return (
-      line?.slice(prefix.length).trim() ||
-      (english
-        ? "Configure this benefit below."
-        : "Configure este benefício abaixo.")
-    );
+    return line?.slice(prefix.length).trim() || t("ui.configureThisBenefitBelow");
   };
   const levels = [
     {
       rating: 1,
-      name: english ? "Initiate" : "Iniciado",
-      description: english
-        ? "The Awakened receives the High Speech merit."
-        : "O Desperto recebe o mérito High Speech.",
+      name: t("ui.namelessInitiate"),
+      description: t("ui.namelessInitiateEffect"),
     },
     {
       rating: 2,
-      name: english ? "Attendee" : "Frequentador",
+      name: t("ui.namelessAttendee"),
       description:
         roteSkills.length === 3
-          ? `${english ? "Grants the Rote Skills" : "Concede as Perícias de Rota"}: ${roteSkills.join(", ")}`
-          : english
-            ? "Choose three Rote Skills below."
-            : "Escolha três Perícias de Rota abaixo.",
+          ? t("ui.grantsRoteSkills", { skills: roteSkills.join(", ") })
+          : t("ui.chooseThreeRoteSkillsBelow"),
     },
     {
       rating: 3,
-      name: english ? "Disciple" : "Discípulo",
-      description: english
-        ? "Bestows knowledge, gifting +1 in the Occult Skill."
-        : "Concede conhecimento, fornecendo +1 na Perícia Ocultismo.",
+      name: t("ui.namelessDisciple"),
+      description: t("ui.namelessDiscipleEffect"),
     },
     {
       rating: 4,
-      name: english ? "Configurable benefit" : "Benefício configurável",
+      name: t("ui.configurableBenefit"),
       description: configuredDescription(4),
     },
     {
       rating: 5,
-      name: english ? "Configurable benefit" : "Benefício configurável",
+      name: t("ui.configurableBenefit"),
       description: configuredDescription(5),
     },
   ];
