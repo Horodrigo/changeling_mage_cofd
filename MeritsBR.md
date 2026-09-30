@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 121/202 registros Core e 53/154 Changeling. Todos os 105 registros Core atribuídos ao livro básico e todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos. As manobras e os benefícios por nível cadastrados foram incluídos. Ainda faltam 81 registros Core dos suplementos e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 179/202 registros Core e 53/154 Changeling. Todos os registros Core sem benefícios por nível e todos os registros Core de fontes diferentes de Hurt Locker estão traduzidos, assim como todos os 53 Méritos de fontes oficiais de Changeling. As manobras e os benefícios por nível cadastrados nos lotes concluídos foram incluídos. Ainda faltam 23 registros Core de Hurt Locker com níveis e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -128,6 +128,37 @@ Observações mecânicas adicionais, sem correção incidental:
 - `Resources`, `Mentor` e `Status`: os resumos usam “session”, enquanto os trechos correspondentes do livro usam “chapter”. A apresentação mantém “sessão”.
 - `Professional Training`: o resumo de Continuing Education coloca a escolha das duas Perícias de Ativo no segundo nível; no livro p. 46, elas são escolhidas ao adquirir o Mérito. A tradução mantém a estrutura cadastrada.
 - Os estilos de combate mantêm os resumos existentes, inclusive seus limites de detalhamento. Por exemplo, `Like a Book` não explicita no resumo que metade de Briga é arredondada para baixo, e `Breaking Point` não explicita a proporção de Estrutura sacrificada. Esses detalhes não foram acrescentados incidentalmente.
+
+## Novas escolhas para auditoria — suplementos Core
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Disabling Tactics | Táticas Incapacitantes | Captura e incapacitação; não se limita a causar dano. |
+| Animal Ken | Trato com Animais | Reutiliza a forma extensa já presente nas Condições traduzidas. |
+| Apportation | Aportação | Teleporte de objetos e, com cinco pontos, seres vivos; revisar o termo pouco usual. |
+| Assertive Implement | Instrumento Assertivo | Arma com objetivos e vontade próprios. |
+| Boot Party | Festival de Chutes | Ataques contra alguém caído. |
+| Camera Obscura | Câmara Escura | Nome traduzido; o efeito pode usar câmeras modernas. |
+| Doppelganger | Sósia | Diferenciado de Fetch/Duplo. |
+| Hardened Exorcist | Exorcista Experiente | Resistência adquirida contra ameaças de entidades efêmeras. |
+| Loaded for Bear | Armado até os Dentes | Expressão idiomática associada a munição de reserva. |
+| Object Fetishism | Fetichismo por Objetos | Obsessão por uma posse, não criação de um objeto mágico. |
+| Punch Drunk | Grogue | Mantém a metáfora de resistir apesar dos golpes; não concede Atordoado. |
+| Scarred | Marcado por Cicatrizes | Marca persistente de um trauma. |
+| Sojourner | Peregrino | Viagem por Aportação, sem pressupor religião. |
+| Claimed / Possessed / Urged / Open / Controlled | Reivindicado / Possuído / Instigado / Aberto / Controlado | Condições relacionadas a entidades efêmeras; uniformizar na futura tradução integral desse grupo. |
+| God-Machine / Twilight | Deus-Máquina / Crepúsculo | Terminologia geral sobrenatural adotada neste lote. |
+
+Fontes inspecionadas visualmente: Dark Eras pp. 247–248; Dark Eras 2 p. 377; Changeling the Lost p. 123; Hurt Locker pp. 41–43, 53–55, 72–78 e 143. Pistoleiro mantém os níveis descontínuos 1, 3 e 5. Sonhador Lúcido mantém o requisito de não ser changeling.
+
+Observações mecânicas adicionais, sem correção incidental:
+
+- `Bless Amulet`, Hurt Locker pp. 72–73: o livro descreve um dia por sucesso, uma semana com dois pontos e proteção permanente com três. O resumo canônico usa um dia com dois pontos e uma semana com três; a tradução preserva o resumo.
+- `Ground Fighter`, Hurt Locker p. 54: o livro exige Brawl •••; o catálogo exige Brawl ••. A tradução mantém Briga ••.
+- `Punch Drunk`, Hurt Locker p. 43: o livro exige Willpower •••••• ou mais; o resumo canônico tem somente seis pontos, sem o sinal de mínimo. A tradução preserva o requisito cadastrado.
+- `Object Fetishism`: o resumo usa “session”, enquanto o livro p. 42 usa “chapter”. A tradução mantém “sessão”.
+- `Curse Effigy`: o catálogo apresenta a parada letal como Intelligence + Medicine − Stamina + Supernatural Tolerance, sem agrupar a resistência. A tradução mantém essa forma; o agrupamento e a elegibilidade requerem auditoria mecânica separada.
+- Os resumos gerais e sobrenaturais de Hurt Locker omitem vários limiares, durações, limites e desvantagens presentes no livro. Foi traduzido todo o conteúdo cadastrado, sem reconstruir campos mecânicos ausentes.
 
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 

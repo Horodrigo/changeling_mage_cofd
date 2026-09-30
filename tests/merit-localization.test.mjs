@@ -16,8 +16,8 @@ const corePt = await json("public/data/core/merits/pt-BR/core.json");
 const changelingPt = await json("public/data/changeling/merits-pt.json");
 
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
-  assert.equal(Object.keys(corePt).length, 121);
-  for (const item of core.filter((item) => item.sourceId === "core-2ed")) {
+  assert.equal(Object.keys(corePt).length, 179);
+  for (const item of core.filter((item) => item.sourceId !== "hurt-locker" || !item.levels)) {
     assert.ok(corePt[item.id], item.id);
   }
   assert.equal(Object.keys(changelingPt).length, 53);
@@ -38,6 +38,7 @@ test("pt-BR Merit records reference canonical IDs and cover every translated fie
     }
   }
   assert.doesNotMatch(JSON.stringify(changelingPt), /\b(?:Wyrd|Clarity|Hedge|Kith|Huntsman|Huntsmen|Motley|Autocontrole)\b/);
+  assert.doesNotMatch(JSON.stringify(corePt), /\b(?:Willpower|Resolve|Composure|Stamina|Wits|Weaponry|Brawl|Streetwise|Firearms|Wyrd|Clarity|Huntsman|Huntsmen)\b/);
   assert.match(changelingPt["ctl-2ed:brownie-s-boon"].description, /um oitavo/);
   assert.match(changelingPt["ctl-2ed:court-goodwill"].description, /ambas diminuem em um ponto/);
 });

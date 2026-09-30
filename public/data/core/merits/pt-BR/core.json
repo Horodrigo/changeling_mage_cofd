@@ -940,5 +940,327 @@
         "description": "Declara esta manobra no início de um turno em que Esquivar. Pode impor Caído aos atacantes ao superar o ataque deles."
       }
     ]
+  },
+  "dark-eras:animal-speech": {
+    "name": "Fala Animal",
+    "prerequisites": "Somente mortais",
+    "description": "Compreende a comunicação de um tipo de animal e recebe +3 nos testes pertinentes de Trato com Animais. Com dois pontos, esses animais também compreendem a fala clara do personagem."
+  },
+  "dark-eras:disabling-tactics": {
+    "name": "Táticas Incapacitantes",
+    "prerequisites": "Força •••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Abrir a Brecha",
+        "description": "Reduz em 2 as penalidades para atingir braços, mãos ou pernas."
+      },
+      {
+        "rating": 2,
+        "name": "Lançar como Areia",
+        "description": "Ao causar dano com sua arma, gasta Força de Vontade para impor Caído."
+      },
+      {
+        "rating": 3,
+        "name": "Golpear o Cão que se Levanta",
+        "description": "Quando um oponente tentar se levantar do chão, gasta Força de Vontade para realizar um ataque reflexivo de Armas Brancas contra ele. Um golpe bem-sucedido impede que se levante."
+      }
+    ]
+  },
+  "de2:gunslinger": {
+    "name": "Pistoleiro",
+    "prerequisites": "Raciocínio •••, Armas de Fogo •••, Especialização em Armas de Fogo (Revólveres)",
+    "description": "Com um ponto, pode realizar rajadas curtas com revólveres. Com três pontos, pode realizar uma rajada média com revólveres, mas não recebe bônus de ataque. Com cinco pontos, usando um revólver na mão inábil, uma rajada média pode atingir alvos que não estejam próximos uns dos outros, com uma penalidade adicional de −2.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Rajada Curta",
+        "description": "O personagem pode realizar rajadas curtas com revólveres."
+      },
+      {
+        "rating": 3,
+        "name": "Rajada Média",
+        "description": "O personagem pode realizar uma rajada média com revólveres, mas não recebe bônus de ataque por fazê-lo."
+      },
+      {
+        "rating": 5,
+        "name": "Fogo Dividido",
+        "description": "Ao empunhar um revólver na mão inábil, uma rajada média pode atacar alvos que não estejam próximos uns dos outros com uma penalidade adicional de −2."
+      }
+    ]
+  },
+  "ctl-2ed:lucid-dreamer": {
+    "name": "Sonhador Lúcido",
+    "prerequisites": "Não changeling, Perseverança •••",
+    "description": "Pode testar Perseverança + Compostura enquanto dorme para sonhar lucidamente e pode despertar à vontade."
+  },
+  "dark-eras:subduing-strikes": {
+    "name": "Golpes de Contenção",
+    "prerequisites": "Armas Brancas ••",
+    "description": "Pode moderar golpes com uma arma para causar dano contundente sem gastar Força de Vontade."
+  },
+  "hurt-locker:air-of-menace": {
+    "name": "Aura Ameaçadora",
+    "prerequisites": "Intimidação ••",
+    "description": "Carrega à vista um histórico de violência. Recebe +2 para ameaçar outras pessoas, e personagens menos embrutecidos precisam gastar Força de Vontade para provocar uma briga, mas Manobras Sociais são mais difíceis."
+  },
+  "hurt-locker:animal-possession": {
+    "name": "Possessão Animal",
+    "prerequisites": "Somente mortais; Trato com Animais •••",
+    "description": "Gasta Força de Vontade e testa Perseverança + Trato com Animais para possuir durante uma cena um animal com a Condição Vinculado, compartilhando seus sentidos e seu corpo. A versão de quatro pontos pode possuir qualquer animal."
+  },
+  "hurt-locker:apportation": {
+    "name": "Aportação",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Perseverança + Ocultismo para teleportar um objeto por um número de jardas por sucesso. Com três pontos, move objetos inanimados de Tamanho 2 ou menor; com cinco, move seres vivos e objetos de até Tamanho 5, gerando calor, dano de Estrutura e esforço que causa dano contundente."
+  },
+  "hurt-locker:armed-restraint": {
+    "name": "Contenção Armada",
+    "prerequisites": "Combate com Bastão •••",
+    "description": "Usa uma haste com gancho em um agarrão para realizar Segurar imediatamente e impor ao oponente uma penalidade igual à pontuação da arma."
+  },
+  "hurt-locker:assertive-implement": {
+    "name": "Instrumento Assertivo",
+    "prerequisites": "Somente mortais; Manipulação •••, Ocultismo •••, Armas Brancas ou Armas de Fogo ••",
+    "description": "Possui uma arma viva ou possuída com objetivos próprios. Sua pontuação pode ser adicionada aos ataques ou ao dano da arma; ela regenera Estrutura e pode impor penalidades ou agir independentemente quando seus desejos são frustrados."
+  },
+  "hurt-locker:biomimicry": {
+    "name": "Biomimetismo",
+    "prerequisites": "Somente mortais; Biocinese •",
+    "description": "Gasta Força de Vontade e sofre dano letal por ponto escolhido para manifestar, durante uma cena, armas naturais, veneno, Armadura 2/1 com uma penalidade de Iniciativa ou camuflagem com 8-novamente em Furtividade."
+  },
+  "hurt-locker:bless-amulet": {
+    "name": "Abençoar Amuleto",
+    "prerequisites": "Somente mortais; Ocultismo •••",
+    "description": "Gasta Força de Vontade e testa Perseverança + Compostura com modificadores de abjuração para criar um amuleto que impeça Reivindicado ou Possuído por um dia com dois pontos ou por uma semana com três pontos."
+  },
+  "hurt-locker:body-as-weapon": {
+    "name": "Corpo como Arma",
+    "prerequisites": "Vigor •••, Briga ••",
+    "description": "Golpes desarmados adicionam um ponto de dano contundente ao acertar."
+  },
+  "hurt-locker:boot-party": {
+    "name": "Festival de Chutes",
+    "prerequisites": "Briga ••",
+    "description": "Ataca um alvo caído com −3 para causar dano letal sem armas."
+  },
+  "hurt-locker:camera-obscura": {
+    "name": "Câmara Escura",
+    "prerequisites": "Somente mortais; Sentido do Invisível •• (Fantasma ou Espírito)",
+    "description": "Gasta Força de Vontade para perceber entidades efêmeras por uma câmera e testa Raciocínio + Expressão − Defesa a cada turno para causar dano contundente. Ativá-lo impõe imediatamente Aberto à área ao redor durante a cena."
+  },
+  "hurt-locker:clinch-strike": {
+    "name": "Golpe no Clinche",
+    "prerequisites": "Briga ••",
+    "description": "Usa imediatamente a manobra Causar Dano em um agarrão."
+  },
+  "hurt-locker:cohesive-unit": {
+    "name": "Unidade Coesa",
+    "prerequisites": "Presença •••",
+    "description": "Concede +2 ao trabalho em equipe. Com dois pontos, concede dados de bônus a cada cena. Com três pontos, concede novas rolagens."
+  },
+  "hurt-locker:consecrate-weapon": {
+    "name": "Consagrar Arma",
+    "prerequisites": "Somente mortais; Perseverança •••, Ocultismo ••••",
+    "description": "Gasta Força de Vontade e testa Perseverança + Compostura − pontuação da arma, com modificadores de abjuração, para abençoar uma arma. Cada sucesso concede um turno em que ela pode detectar e causar dano letal a entidades efêmeras Manifestadas ou no Crepúsculo."
+  },
+  "hurt-locker:covert-operative": {
+    "name": "Agente Clandestino",
+    "prerequisites": "Raciocínio •••, Destreza •••, Furtividade ••",
+    "description": "Ao iniciar uma emboscada, nega 10-novamente aos testes para percebê-la e recebe +3 de Iniciativa no primeiro turno."
+  },
+  "hurt-locker:curse-effigy": {
+    "name": "Amaldiçoar Efígie",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e uma noite confeccionando uma efígie, então testa Raciocínio + Ocultismo − Perseverança. Gasta sucessos para impor Complicações Pessoais, distrair a vítima e reduzir sua próxima ação Social ou realizar ataques letais com Inteligência + Medicina − Vigor + Tolerância Sobrenatural."
+  },
+  "hurt-locker:dark-passenger": {
+    "name": "Passageiro Sombrio",
+    "prerequisites": "Somente mortais",
+    "description": "Uma segunda boca responde verdadeiramente a duas de três perguntas em lugares novos e avisa sobre emboscadas, mas precisa ser alimentada a cada hora ou impõe uma penalidade severa à concentração."
+  },
+  "hurt-locker:defender": {
+    "name": "Defensor",
+    "description": "Recebe Força de Vontade adicional para gastar na proteção de entes queridos, mas perdê-los causa uma crise de luto ou retaliação."
+  },
+  "hurt-locker:doppelganger": {
+    "name": "Sósia",
+    "prerequisites": "Somente mortais; Biocinese •, Subterfúgio •••",
+    "description": "Gasta Força de Vontade e testa Manipulação + Subterfúgio para duplicar a aparência e a personalidade de um alvo por uma cena por sucesso, aplicando os pontos em Biocinese como penalidade às tentativas mundanas de distinguir o sósia."
+  },
+  "hurt-locker:empath": {
+    "name": "Empata",
+    "prerequisites": "Empatia ••",
+    "description": "Disputa Raciocínio + Empatia contra Manipulação + Subterfúgio para compreender o estado mental de um personagem, podendo abrir Portas ou facilitar Pontos de Ruptura."
+  },
+  "hurt-locker:evil-eye": {
+    "name": "Mau-Olhado",
+    "prerequisites": "Somente mortais",
+    "description": "Sacrifica a Defesa e disputa Raciocínio + Ocultismo contra Perseverança + Compostura para impor Insensível por um número de turnos igual aos sucessos; amuletos protetores concedem um bônus ao alvo."
+  },
+  "hurt-locker:ground-and-pound": {
+    "name": "Golpes no Chão",
+    "prerequisites": "Briga ••",
+    "description": "Recebe a qualidade de rotina ao atingir um alvo caído com Briga, ficando também caído."
+  },
+  "hurt-locker:ground-fighter": {
+    "name": "Lutador de Solo",
+    "prerequisites": "Raciocínio •••, Destreza •••, Briga ••",
+    "description": "Nega os bônus de combate corpo a corpo decorrentes de estar caído e recebe a manobra de agarrão Levantar."
+  },
+  "hurt-locker:hardened-exorcist": {
+    "name": "Exorcista Experiente",
+    "prerequisites": "Somente mortais",
+    "description": "Adiciona Ocultismo à Integridade efetiva ao determinar bônus de abjuração e usa o Vício do exorcista sem a penalidade habitual de abjuração."
+  },
+  "hurt-locker:headbutt": {
+    "name": "Cabeçada",
+    "prerequisites": "Briga ••",
+    "description": "Recebe a manobra de agarrão Cabeçada: impõe Atordoado."
+  },
+  "hurt-locker:hidden-variable": {
+    "name": "Variável Oculta",
+    "prerequisites": "Somente mortais; Sentido do Invisível •• (Deus-Máquina)",
+    "description": "Perto de Infraestrutura do Deus-Máquina, recebe +1 nos ataques e ignora dois pontos de Durabilidade ou Armadura; ataques contra Infraestrutura mortal ignoram dois pontos de Armadura geral em vez disso."
+  },
+  "hurt-locker:incite-ecosystem": {
+    "name": "Incitar Ecossistema",
+    "prerequisites": "Somente mortais; Trato com Animais •••",
+    "description": "Gasta Força de Vontade e testa Presença + Trato com Animais para orientar um animal ou enxame por sucesso a tratar um alvo como ameaça durante uma cena. Criaturas maiores que a pontuação do Mérito impõem penalidade ao teste."
+  },
+  "hurt-locker:invoke-spirit": {
+    "name": "Invocar Espírito",
+    "prerequisites": "Somente mortais; Perseverança •••, Médium •••",
+    "description": "Um espírito de Posto 1 nascido de um trauma acompanha o personagem, pode ser chamado telepaticamente para protegê-lo e impõe a Condição Instigado, que o leva a repetir o trauma."
+  },
+  "hurt-locker:iron-chin": {
+    "name": "Queixo de Ferro",
+    "prerequisites": "Perseverança •••, Vigor •••",
+    "description": "Não sofre Derrotado por dano contundente. Com quatro pontos, nunca sofre Derrotado."
+  },
+  "hurt-locker:loaded-for-bear": {
+    "name": "Armado até os Dentes",
+    "prerequisites": "Atletismo •, Sobrevivência •",
+    "description": "Recebe recargas adicionais para armas, inclusive armas de tiro único."
+  },
+  "hurt-locker:mind-control": {
+    "name": "Controle Mental",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Manipulação + Persuasão − Perseverança para impor uma ordem simples de uma frase e a Condição Fixado."
+  },
+  "hurt-locker:object-fetishism": {
+    "name": "Fetichismo por Objetos",
+    "description": "É obcecado por uma posse específica relacionada a uma Especialização escolhida. Recupera Força de Vontade a cada sessão por sua obsessão, e gastar Força de Vontade em testes dessa Especialização intensifica tanto a falha quanto o sucesso."
+  },
+  "hurt-locker:peacemaker": {
+    "name": "Pacificador",
+    "prerequisites": "Raciocínio •••, Empatia •••",
+    "description": "Pode gastar Força de Vontade para tentar negociar um fim não violento das hostilidades por meio de Manobras Sociais. Com três pontos, pode tentar acalmar até fúrias sobrenaturais."
+  },
+  "hurt-locker:phalanx-fighter": {
+    "name": "Combatente de Falange",
+    "prerequisites": "Arma e Escudo ••, Lança e Baioneta •",
+    "description": "Empunha uma lança com um escudo, usando-a nas manobras de Arma e Escudo."
+  },
+  "hurt-locker:phantasmagoria": {
+    "name": "Fantasmagoria",
+    "prerequisites": "Somente mortais; Telepatia •••••, Expressão ••",
+    "description": "Gasta Força de Vontade e testa Manipulação + Ocultismo para prender uma vítima em uma ilusão convincente. Contradições significativas permitem testar Perseverança + Compostura para escapar; violência encerra a ilusão e pode impor Assombrado."
+  },
+  "hurt-locker:psychic-concealment": {
+    "name": "Ocultação Psíquica",
+    "prerequisites": "Somente mortais; Controle Mental •••, Furtividade •••",
+    "description": "Gasta Força de Vontade e testa Raciocínio + Furtividade − Compostura para impedir que testemunhas registrem a presença do personagem, impondo Alheio aos alvos afetados, mas deixando intactas as evidências físicas e as gravações."
+  },
+  "hurt-locker:psychic-onslaught": {
+    "name": "Investida Psíquica",
+    "prerequisites": "Somente mortais; Telecinese • ou Psicocinese •",
+    "description": "Gasta Força de Vontade para criar uma explosão psíquica com raio igual à Perseverança, que cause três pontos de dano contundente com Força 3; dano superior ao Vigor também impõe Caído. Na primeira vez em que as últimas caixas de Vitalidade forem preenchidas, o efeito se ativa reflexivamente sem custo."
+  },
+  "hurt-locker:psychic-poltergeist": {
+    "name": "Poltergeist Psíquico",
+    "prerequisites": "Somente mortais; Telecinese •",
+    "description": "Ativa Telecinese para criar um enxame de objetos de Tamanho 0 ou 1, afetando um número de vítimas até os pontos em Telecinese e impondo Distraído e dano ambiental. Mantê-lo custa Força de Vontade a cada turno e exige concentração total."
+  },
+  "hurt-locker:psychokinetic-resistance": {
+    "name": "Resistência Psicocinética",
+    "prerequisites": "Somente mortais; Psicocinese •",
+    "description": "Usa os pontos em Psicocinese como Armadura geral contra dano proveniente da fonte de energia escolhida."
+  },
+  "hurt-locker:punch-drunk": {
+    "name": "Grogue",
+    "prerequisites": "Força de Vontade ••••••",
+    "description": "Gasta Força de Vontade para preservar o último ponto de Vitalidade, agravando dano preexistente em vez disso."
+  },
+  "hurt-locker:retain-weapon": {
+    "name": "Manter a Arma",
+    "prerequisites": "Raciocínio ••, Briga ••",
+    "description": "Reduz por sua pontuação em Briga os sucessos de uma manobra Controlar Arma ou Desarmar contra o personagem."
+  },
+  "hurt-locker:roadkill": {
+    "name": "Atropelamento",
+    "prerequisites": "Direção Agressiva ••",
+    "description": "Ao tentar atropelar alguém, impõe Caído mesmo se errar e dobra o bônus de velocidade."
+  },
+  "hurt-locker:sacrificial-offering": {
+    "name": "Oferenda Sacrificial",
+    "prerequisites": "Somente mortais; Ocultismo •••, Iniciação em Culto de Mistério •••••",
+    "description": "Realiza um ritual prolongado de Raciocínio + Ocultismo para sacrificar a alma de uma vítima. Limiares de sucessos concedem Méritos bloqueados, Méritos Sobrenaturais ou intervenção direta de um ser efêmero por um dia por ponto neste Mérito; usos repetidos elevam o limiar e causam Pontos de Ruptura."
+  },
+  "hurt-locker:scarred": {
+    "name": "Marcado por Cicatrizes",
+    "prerequisites": "Integridade ≤ 5",
+    "description": "Sofre uma Condição Persistente que impede a recuperação de Integridade, mas o torna insensível a um Ponto de Ruptura específico."
+  },
+  "hurt-locker:sojourner": {
+    "name": "Peregrino",
+    "prerequisites": "Somente mortais; Aportação •••",
+    "description": "Usa Aportação como ação prolongada para mover uma pessoa ou objeto até um ponto fixo, a uma distância em milhas ou quilômetros igual ao número-alvo de sucessos."
+  },
+  "hurt-locker:supernatural-resistance": {
+    "name": "Resistência Sobrenatural",
+    "prerequisites": "Somente mortais; ao menos um Mérito Sobrenatural",
+    "description": "Usa esta pontuação como Tolerância Sobrenatural ao resistir a poderes sobrenaturais."
+  },
+  "hurt-locker:support-network": {
+    "name": "Rede de Apoio",
+    "prerequisites": "Mérito Social apropriado",
+    "description": "Escolhe um Mérito Social para representar vínculos de apoio. Pode gastar Força de Vontade para recorrer a esses vínculos e enfrentar um Ponto de Ruptura, usando os pontos neste Mérito como dados de bônus."
+  },
+  "hurt-locker:survivalist": {
+    "name": "Sobrevivencialista",
+    "prerequisites": "Sobrevivência •••, Vigor de Ferro •••",
+    "description": "Pode resistir a Frio Extremo e Calor Extremo por um número de horas igual ao Vigor."
+  },
+  "hurt-locker:technopathy": {
+    "name": "Tecnopatia",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Inteligência + Ocultismo para ler um dispositivo tocado ou, com três pontos, um sinal sem fio, fazendo uma pergunta por sucesso. Usos repetidos danificam o equipamento ou corrompem transmissões sem fio."
+  },
+  "hurt-locker:telekinetic-evasion": {
+    "name": "Evasão Telecinética",
+    "prerequisites": "Somente mortais; Telecinese •",
+    "description": "Enquanto Telecinese estiver ativa, gasta Força de Vontade ao Esquivar para adicionar os pontos em Telecinese como sucessos automáticos."
+  },
+  "hurt-locker:transfer-maneuver": {
+    "name": "Transferência de Manobra",
+    "prerequisites": "Inteligência ••, Raciocínio •••, Briga ••, Armas Brancas ••",
+    "description": "Aplica uma manobra de Briga a um Estilo de Armas Brancas ou vice-versa."
+  },
+  "hurt-locker:trigger-discipline": {
+    "name": "Disciplina de Gatilho",
+    "prerequisites": "Raciocínio ••, Armas de Fogo ••",
+    "description": "Aumenta a capacidade efetiva de uma arma de fogo ou permite uma rajada longa adicional em armas de alta capacidade."
+  },
+  "hurt-locker:trunk-squeeze": {
+    "name": "Compressão do Tronco",
+    "prerequisites": "Briga ••",
+    "description": "Recebe a manobra de agarrão Compressão do Tronco: causa dano contundente e impõe penalidades cumulativas aos testes disputados do oponente."
+  },
+  "hurt-locker:vengeful-soul": {
+    "name": "Alma Vingativa",
+    "prerequisites": "Somente mortais",
+    "description": "Após testemunhar ou descobrir rapidamente a morte de um ente querido, recebe 8-novamente a cada capítulo em um número de ações até a Integridade da vítima para encontrar ou punir os responsáveis, até que a vingança seja satisfeita."
   }
 }
