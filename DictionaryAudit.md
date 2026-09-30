@@ -61,5 +61,7 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Adjudicator of the Wheel | Adjudicador da Roda | |
 | The Blackbird Bishop | Bispo Melro | |
 | Diviners of Worms | Adivinhos dos Vermes | |
+| Duchess of Truth and Loss | Duquesa da Verdade e da Perda | |
+| Guildmaster of Goldspinners | Mestre da Guilda dos Fiandeiros de Ouro | **Goldspinners** foi interpretado literalmente como fiandeiros de ouro. |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.

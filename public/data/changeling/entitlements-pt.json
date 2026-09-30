@@ -518,5 +518,107 @@
     "curse": "Ataques de Lucidez sofridos quando alguém rejeita a profecia do Adivinho adicionam uma quantidade de dados igual aos pontos investidos.",
     "beat": "Oferecer uma profecia útil que coloque o Adivinho em sério perigo ou lhe cause grande transtorno.",
     "legends": []
+  },
+  "duchess-truth-loss": {
+    "name": "Duquesa da Verdade e da Perda",
+    "meritName": "Caçar a Verdade e Ocultar a Perda",
+    "prerequisites": "Raciocínio 3, Investigação 2 e ter matado um Duplo.",
+    "purpose": "Caçar pessoas ocultas e revelar a verdade de vidas roubadas.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Caçar a Verdade e Ocultar a Perda.",
+    "duties": "O portador do Título deve caçar pessoas ocultas, revelar a verdade de vidas roubadas e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada à Duquesa da Verdade e da Perda.",
+    "token": {
+      "name": "Falsa Face da Verdade",
+      "description": "O Penhor heráldico hereditário da Duquesa da Verdade e da Perda; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Alimente a boca do Penhor com cabelo ou sangue de um alvo para identificá-lo infalivelmente como Duplo, humano ou changeling, ignorando ocultação sem um Confronto; ele permanece em silêncio diante de outros seres. Quando usado, imponha a graduação do Penhor como penalidade a qualquer tentativa mundana ou mística de um Duplo localizar o usuário. Um Duplo jamais pode usá-lo.",
+      "catch": "Perfure a si mesmo com o alfinete e deixe-o cravado na carne durante a cena, sofrendo −1 nas ações.",
+      "drawback": "Você não pode mentir conscientemente durante a cena seguinte; problemas graves causados por isso concedem um Ato."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "relentless-quarry",
+        "name": "Caça Implacável",
+        "description": "Some metade do Fado, arredondada para cima, às rolagens de Investigação, Sobrevivência e Percepção para localizar alguém que esteja se escondendo ativamente da Duquesa.",
+        "conditional": true
+      },
+      {
+        "id": "preserve-fetch",
+        "name": "Preservar Duplo",
+        "description": "Toque um Duplo morto ou moribundo e gaste 1 Glamour para impedir sua dissolução durante um mês lunar; apresentá-lo ao changeling correspondente cura um dano leve de Lucidez e restaura sua Força de Vontade."
+      }
+    ],
+    "touchstone": "Um objeto que foi decisivo para a morte do primeiro Duplo que a Duquesa matou.",
+    "curse": "Ataques de Lucidez causados por outras pessoas defenderem a presa da Duquesa adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Perseguir uma verdade oculta apesar de graves consequências pessoais.",
+    "legends": []
+  },
+  "goldspinner-guildmaster": {
+    "name": "Mestre da Guilda dos Fiandeiros de Ouro",
+    "meritName": "Privilégio do Plutomante",
+    "prerequisites": "Erudição com Especialização em Finanças ou Negócios, Recursos 3.",
+    "purpose": "Manipular riqueza, dívida e desespero por meio da economia Fae.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Privilégio do Plutomante.",
+    "duties": "O portador do Título deve manipular riqueza, dívida e desespero por meio da economia Fae e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Mestre da Guilda dos Fiandeiros de Ouro.",
+    "token": {
+      "name": "Garra da Roca",
+      "description": "O Penhor heráldico hereditário do Mestre da Guilda dos Fiandeiros de Ouro; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Após uma Barganha verbal entre o usuário e um suplicante, fie qualquer forma de riqueza durante uma hora, produzindo um ponto de Recursos por hora. O usuário jamais pode gastá-la; tentar fazê-lo destrói o fio. Barganhas e negociações realizadas na presença da Garra, inclusive Contratos sobrenaturais, alcançam sucesso excepcional com três sucessos.",
+      "catch": "Queime o equivalente a um ponto de Recursos diante da Roca.",
+      "drawback": "Quando a fiação termina, o usuário fura um dedo e recebe Letárgico até dormir e se recuperar."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "plutomancer-merits",
+        "name": "Especialidade Acumulada",
+        "description": "Receba uma quantidade de pontos de Méritos Mentais igual à metade do Fado, arredondada para cima, distribuída como desejar.",
+        "choiceLabel": "Méritos Mentais"
+      },
+      {
+        "id": "sense-desperation",
+        "name": "Sentir o Desespero",
+        "description": "Gaste 1 Glamour para identificar quem nas proximidades está mais desesperado por dinheiro."
+      }
+    ],
+    "touchstone": "Um objeto estimado, possuído desde antes de assumir o Título, que não tenha valor monetário significativo.",
+    "curse": "Ataques de Lucidez relacionados a valorizar riqueza acima das pessoas adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sofrer uma perda relevante ao colocar as necessidades financeiras de outra pessoa em primeiro lugar.",
+    "legends": []
   }
 }
