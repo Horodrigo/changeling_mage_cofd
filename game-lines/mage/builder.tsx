@@ -1,4 +1,5 @@
 "use client";
+import { meritProblemMessage } from "@/lib/merit-ui";
 
 import { useEffect, useState } from "react";
 import {
@@ -214,7 +215,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
-      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${t(message.key,message.params)}`);
+      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale)}`);
     }
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [

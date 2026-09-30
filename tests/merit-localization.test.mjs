@@ -17,6 +17,29 @@ const changeling = await json("public/data/core/merits/changeling.json");
 const corePt = await json("public/data/core/merits/pt-BR/core.json");
 const changelingPt = await json("public/data/changeling/merits-pt.json");
 
+test("mortal-only Merits are blocked in supernatural builders and experience, independently of locale", async () => {
+  const { meritSelectionProblems, meritContextForSheet } = await vite.ssrLoadModule("/lib/merits.ts");
+  const { meritProblemMessage } = await vite.ssrLoadModule("/lib/merit-ui.ts");
+  const catalog = withMeritPresentation(core, corePt);
+  const restricted = catalog.filter((item) => item.mortalOnly);
+  assert.equal(restricted.length, 48);
+  for (const definition of restricted) {
+    assert.match(meritPresentation(definition, "pt-BR").prerequisites, /^Somente mortais\b/);
+    for (const gameLine of ["CtL", "MtA", "VtR"]) {
+      const context = meritContextForSheet({ game_line: gameLine, attributes: {}, skills: {}, merits: [], line_data: {} }, catalog);
+      assert.equal(meritPrerequisitesMet(definition, context), false, definition.id);
+      assert.ok(meritSelectionProblems(definition, { dots: definition.ratings[0] }, context).length, definition.id);
+    }
+  }
+  const automaticWriting = catalog.find((item) => item.id === "core-2ed:automatic-writing");
+  assert.equal(meritPrerequisitesMet(automaticWriting, { gameLine: "CofD" }), true);
+  assert.equal(meritPrerequisitesMet({ ...automaticWriting, descriptivePrerequisites: true }, { gameLine: "CtL" }), false);
+  const [problem] = meritSelectionProblems(automaticWriting, { dots: 2 }, { gameLine: "CtL" });
+  assert.equal(meritProblemMessage(problem, automaticWriting, "pt-BR"), "Pré-requisitos não atendidos: Somente mortais");
+  assert.equal(meritProblemMessage(problem, automaticWriting, "en-US"), "Prerequisites not met: Mortal only");
+  assert.equal(meritPrerequisitesMet(catalog.find((item) => item.id === "core-2ed:esoteric-armory"), { gameLine: "CtL" }), true);
+});
+
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
   assert.equal(Object.keys(corePt).length, 202);
   assert.deepEqual(Object.keys(corePt).sort(), core.map((item) => item.id).sort());

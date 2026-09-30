@@ -138,6 +138,7 @@ Core may own generic Merit storage, ratings, rendering, configuration plumbing, 
 
 - Use stable Merit and configuration IDs. Never dispatch special behavior from translated or display names.
 - Catalog membership and purchase eligibility are separate. Keep valid definitions visible even when the current character cannot buy them, and explain unmet prerequisites.
+- Core enforces the catalog's `mortalOnly` flag before descriptive prerequisites. A line-owned rule may explicitly supply `mortalMeritsAllowed` (for example Vampire's Coil of Zirnitra); Core does not identify or calculate that exception. Validation messages use the same localized Merit presentation as catalog rows.
 - Preserve discontinuous ratings exactly. Do not infer an interval from the lowest and highest dots.
 - Store only choices required by the rule. A single free-text value should normally be edited inline; complex rules may use structured configuration.
 - Do not infer repeatability merely because a Merit names a subject. A repeatable Merit needs a stable instance ID, independent configuration and rating, exact upgrade targeting, and exact refund behavior.

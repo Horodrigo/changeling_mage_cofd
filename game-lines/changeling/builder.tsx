@@ -1,4 +1,5 @@
 "use client";
+import { meritProblemMessage } from "@/lib/merit-ui";
 
 import { useEffect, useState } from "react";
 import {
@@ -174,7 +175,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add(3, "merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${t(message.key,message.params)}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add(3, "merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale)}`);
     }
     if (meritSpent > meritBudget) add(3, "merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [

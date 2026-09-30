@@ -1,4 +1,5 @@
 "use client";
+import { meritProblemMessage } from "@/lib/merit-ui";
 
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
@@ -257,6 +258,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
 
   const meritContext: MeritPrerequisiteContext = {
     gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: common.attributes,
+    mortalMeritsAllowed: zirnitraRating > 0,
     skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits), meritCatalog,
     powers: Object.entries(disciplines).filter(([, value]) => value > 0).map(([name]) => name),
   };
@@ -284,7 +286,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", t("ui.coilOfZirnitra"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${t(message.key,message.params)}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${meritProblemMessage(message, definition, locale)}`);
       if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     if (clanId === "hollow-mekhet") {

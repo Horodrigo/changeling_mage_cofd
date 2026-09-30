@@ -75,6 +75,8 @@ export type MeritPrerequisiteContext = RequirementContext & {
   selectedDots?: number;
   configuration?: Record<string,string|string[]>;
   meritCatalog?: readonly MeritDefinition[];
+  /** A line-owned rule may explicitly grant access to mortal-only Merits. */
+  mortalMeritsAllowed?: boolean;
 };
 
 const courtKey=(value:unknown)=>String(value??"").toLowerCase().replace(/^court[- ]/,"").replace(/[- ]court$/,"").replace(/[^a-z]/g,"");
@@ -84,6 +86,7 @@ export function meritPrerequisitesMet(
   context: MeritPrerequisiteContext,
 ) {
   if(merit.line&&merit.line!=="Core"&&merit.line!==context.gameLine) return false;
+  if(merit.mortalOnly && context.gameLine !== "CofD" && !context.mortalMeritsAllowed) return false;
   if(merit.kith&&!requirementMet({kith:merit.kith},context)) return false;
   if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
   const owned=context.merits??[];
