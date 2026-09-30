@@ -199,7 +199,7 @@ export const commonMessages = {
       "entitlementTouchstone": "Pedra de Toque do Título",
       "blessings": "Bênçãos",
       "drawback": "Desvantagem",
-      "catch": "Brecha",
+      "catch": "Condição de Ativação",
       "beat": "Ato",
       "legends": "Lendas",
       "legacy": "Legado",
