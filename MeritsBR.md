@@ -2,7 +2,9 @@
 
 Lote inicial: 18 Méritos de Chronicles of Darkness, nove de Changeling the Lost, Biblioteca Avançada de Mage the Awakening e 15 Méritos compartilhados dos suplementos homebrew Agony & Ecstasy e Fire & Revolution. Os títulos dos livros, IDs, pontuações, requisitos canônicos e regras não foram alterados. As traduções apresentam o texto existente no catálogo; não são uma reconstrução dos livros.
 
-## Propostas editoriais para revisão
+## Decisões editoriais aprovadas
+
+O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Advogado de Regras**. As observações mecânicas abaixo permanecem registradas para trabalho separado; a aprovação editorial não altera as regras.
 
 | Termo | Tradução adotada | Observação |
 | --- | --- | --- |
@@ -17,7 +19,7 @@ Lote inicial: 18 Méritos de Chronicles of Darkness, nove de Changeling the Lost
 | Turnabout | Virada de Mesa | Reversão de vantagem retórica. |
 | Ratfucker | Sabotador Político | Preserva o sentido político; não reproduz a vulgaridade do nome inglês. |
 | You'll Be First Against the Wall | Você Será o Primeiro no Paredão | Mantém a ameaça revolucionária. Não usa pares de gênero na interface. |
-| Rules Lawyer | Advogado das Regras | Exploração da redação literal e de procedimentos. |
+| Rules Lawyer | Advogado de Regras | Exploração da redação literal e de procedimentos. |
 
 ## Observações do catálogo, sem mudança mecânica neste lote
 

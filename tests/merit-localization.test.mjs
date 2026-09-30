@@ -79,6 +79,7 @@ test("Changeling-accessible Mage and Vampire merits are translated as shared Cor
     assert.ok(corePt[item.id], item.id);
   }
   assert.equal(corePt["mta-2ed:advanced-library"].name, "Biblioteca Avançada");
+  assert.equal(corePt["h-vtr-fire-revolution:rules-lawyer"].name, "Advogado de Regras");
   assert.match(corePt["mta-2ed:advanced-library"].description, /Condição Informado/);
 });
 
