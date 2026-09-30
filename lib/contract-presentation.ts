@@ -1,5 +1,6 @@
 import type { ContractDefinition } from "./catalog/contract-catalog";
 import type { Locale } from "./i18n";
+import { commonMessages } from "./i18n/messages/common";
 
 export type ContractPresentation = Pick<ContractDefinition, "name" | "description"> & Partial<Pick<ContractDefinition,
   "summary" | "effect" | "dicePool" | "loophole" | "seemingBenefits" | "courtClauses" |
@@ -50,14 +51,16 @@ export function contractWithSupplementalBenefits(contract:ContractDefinition,act
 }
 
 export function contractOutcomeSections(contract: ContractMechanics & {id?:string},locale:Locale="en-US") {
+  const labels = commonMessages[locale].ui;
   const main = contract.effect?.trim() || contract.success?.trim() || contract.description.trim();
   if (contractHasInvocationRoll(contract) !== true) {
-    return main ? [{ label: locale==="en-US"?"Effect":"Efeito", text: main }] : [];
+    return main ? [{ label: labels.effect, text: main }] : [];
   }
-  return [
-    { label: locale==="en-US"?"Success":"Sucesso", text: main },
-    { label: locale==="en-US"?"Exceptional Success":"Sucesso Excepcional", text: contract.exceptionalSuccess?.trim() },
-    { label: locale==="en-US"?"Failure":"Falha", text: contract.failure?.trim() },
-    { label: locale==="en-US"?"Dramatic Failure":"Falha Dramática", text: contract.dramaticFailure?.trim() },
-  ].filter((section): section is { label: string; text: string } => Boolean(section.text));
+  const sections: { label: string; text: string | undefined }[] = [
+    { label: labels.success, text: main },
+    { label: labels.exceptionalSuccess, text: contract.exceptionalSuccess?.trim() },
+    { label: labels.failure, text: contract.failure?.trim() },
+    { label: labels.dramaticFailure, text: contract.dramaticFailure?.trim() },
+  ];
+  return sections.filter((section): section is { label: string; text: string } => Boolean(section.text));
 }

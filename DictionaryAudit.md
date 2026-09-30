@@ -1,6 +1,6 @@
 # Auditoria editorial do dicionário pt-BR
 
-As decisões auditadas foram incorporadas à interface e aos Títulos. Em 30/09/2026, o usuário confirmou que as sugestões não alteradas também estão aprovadas. Este arquivo registra as decisões editoriais aceitas; nomes de Méritos permanecem como referência para a tradução de seus catálogos, e as pendências de Condições são explicitadas abaixo.
+As decisões auditadas foram incorporadas à interface e aos Títulos. Em 30/09/2026, o usuário confirmou que as sugestões então existentes e não alteradas também estão aprovadas. Este arquivo registra as decisões editoriais aceitas; novas propostas posteriores à confirmação ficam separadas na seção final. Nomes de Méritos permanecem como referência para a tradução de seus catálogos, e as pendências de Condições são explicitadas abaixo.
 
 ## Termos gerais
 
@@ -17,6 +17,7 @@ As decisões auditadas foram incorporadas à interface e aos Títulos. Em 30/09/
 | --- | --- | --- |
 | Hubris | Húbris | |
 | Attainment | Aperfeiçoamento | |
+| Numina | Numina | Mantido também em português por decisão explícita do usuário. |
 | Inured spell | Feitiço Habituado | |
 | Enlightened / Understanding / Falling | Iluminado / Consciente / Caído | Patamares do teste de Húbris. |
 | Nameless Order | Ordem sem Nome | |
@@ -36,7 +37,7 @@ As decisões auditadas foram incorporadas à interface e aos Títulos. Em 30/09/
 | Predatory Aspect / Unnatural Aspect | Aspecto Predatório / Aspecto Sobrenatural | |
 | Simplified Hollow | Vazio Simplificado | Regra alternativa de *Strange Shades*. |
 
-**Pendente de outro catálogo:** `Bestial`, `Jaded`, `Addiction` e `Deprived` foram mantidos onde nomeiam Condições; devem ser uniformizados com a tradução integral desse catálogo.
+**Pendente de outro catálogo:** `Bestial`, `Jaded` e `Addiction` foram mantidos onde nomeiam Condições; devem ser uniformizados com a tradução integral desse catálogo. `Deprived` usa **Privado**, conforme a apresentação existente no catálogo Core.
 
 ## Changeling
 
@@ -158,3 +159,28 @@ Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Va
 | Chatterbox / Actormask | Tagarela / Mascarilhado | Habilidades de Montaria Feérica. |
 | Armorshell / Burdenback | Blindagem / Carregador | Habilidades de Montaria Feérica. |
 | Dreamspun / Thornbeast / Hedgefoot | Onírico / Fera dos Espinhos / Pé-de-Sebe | Habilidades de Montaria Feérica. |
+
+## Novas propostas posteriores à auditoria — Numina do Familiar
+
+Os nomes abaixo localizam os seletores da interface de Mage. As escolhas armazenadas continuam em inglês e os efeitos não foram alterados. São propostas novas, não abrangidas pela confirmação anterior.
+
+| Inglês | Proposta aplicada | Observação |
+| --- | --- | --- |
+| Awe | Fascínio | Evoca fascínio e reverência; nome de um Numen, não uma nova tradução de Disciplina. |
+| Blast | Rajada |  |
+| Dement | Enlouquecer |  |
+| Drain | Drenar |  |
+| Emotional Aura | Aura Emocional |  |
+| Entropic Decay | Decadência Entrópica |  |
+| Firestarter | Incendiário |  |
+| Hallucination | Alucinação |  |
+| Implant Mission | Implantar Missão |  |
+| Left-Handed Spanner | Chave Canhota | Proposta literal para o nome; pode ser revista editorialmente. |
+| Mortal Mask | Mascarilha Mortal | Segue Mask → Mascarilha do léxico. |
+| Pathfinder | Desbravador |  |
+| Regenerate | Regenerar |  |
+| Seek | Buscar |  |
+| Speed | Velocidade | Nome de um Numen; distingue-se do traço Speed → Deslocamento. |
+| Sign | Sinal |  |
+| Stalwart | Inabalável |  |
+| Telekinesis | Telecinese |  |

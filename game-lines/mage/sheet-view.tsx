@@ -61,7 +61,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import {
   mageGnosisSummary,
   MTA_ORDER_DESCRIPTIONS,
-  MTA_ORDER_LABELS,
+  mageOrderLabel,
   MTA_PATHS,
 } from "./creation-rules";
 import {
@@ -222,7 +222,7 @@ export function MageCharacterPaper({
     .map((spell) => ({
       id: spell.id,
       name: locale === "en-US" ? spell.originalName : spell.name,
-      category: Object.keys(spell.requirements).join(" + "),
+      category: Object.keys(spell.requirements).map(name => systemTerm(name, locale)).join(" + "),
       description: spell.summary ?? spell.description ?? "",
       meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
     }));
@@ -247,7 +247,7 @@ export function MageCharacterPaper({
     .map((spell) => ({
       id: spell.id,
       name: locale === "en-US" ? spell.originalName : spell.name,
-      category: Object.keys(spell.requirements).join(" + "),
+      category: Object.keys(spell.requirements).map(name => systemTerm(name, locale)).join(" + "),
       description: spell.summary ?? spell.description ?? "",
       meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
     }));
@@ -527,13 +527,7 @@ export function MageCharacterPaper({
       ["Caminho", data.path],
       [
         "Ordem",
-        !data.order || data.order === "Orderless"
-          ? t("ui.orderless")
-          : data.order === "Nameless"
-            ? "Nameless"
-            : locale === "en-US"
-              ? data.order
-              : (MTA_ORDER_LABELS[String(data.order)] ?? data.order),
+        mageOrderLabel(String(data.order || "Orderless"), locale),
       ],
     ];
     const paradoxConditions = conditionCatalog.filter((condition) =>
@@ -917,14 +911,7 @@ export function MageCharacterPaper({
                     <CommonSheetField
                       label={t("ui.order")}
                       value={
-                        !data.order || data.order === "Orderless"
-                          ? t("ui.orderless")
-                          : data.order === "Nameless"
-                            ? "Nameless"
-                            : locale === "en-US"
-                              ? data.order
-                              : (MTA_ORDER_LABELS[String(data.order)] ??
-                                data.order)
+                        mageOrderLabel(String(data.order || "Orderless"), locale)
                       }
                     />
                     <CommonSheetField
@@ -1952,18 +1939,6 @@ function NimbusEditor({
     </div>
   );
 }
-const ARCANA_PT: Record<string, string> = {
-  Death: "Morte",
-  Fate: "Destino",
-  Forces: "Forças",
-  Life: "Vida",
-  Matter: "Matéria",
-  Mind: "Mente",
-  Prime: "Primórdio",
-  Space: "Espaço",
-  Spirit: "Espírito",
-  Time: "Tempo",
-};
 const LESSER_ATTAINMENTS: Record<string, [string, string, string, string]> = {
   Death: [
     "Olhos dos Mortos",
@@ -2093,11 +2068,7 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
   const owned = (minimum: number) =>
     Object.entries(arcana)
       .filter(([, dots]) => Number(dots) >= minimum)
-      .map(([name]) =>
-        locale === "en-US"
-          ? systemTerm(name, locale)
-          : (ARCANA_PT[name] ?? name),
-      );
+      .map(([name]) => systemTerm(name, locale));
   const rows: Array<{
     name: string;
     arcana: string[];
@@ -2117,11 +2088,7 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
     if (Number(dots) >= 2 && LESSER_ATTAINMENTS[name])
       rows.push({
         name: LESSER_ATTAINMENTS[name][locale === "en-US" ? 2 : 0],
-        arcana: [
-          locale === "en-US"
-            ? systemTerm(name, locale)
-            : (ARCANA_PT[name] ?? name),
-        ],
+        arcana: [systemTerm(name, locale)],
         description: LESSER_ATTAINMENTS[name][locale === "en-US" ? 3 : 1],
       });
   }
@@ -2143,11 +2110,7 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
     if (Number(dots) >= 4 && GREATER_ATTAINMENTS[name])
       rows.push({
         name: GREATER_ATTAINMENTS[name][locale === "en-US" ? 2 : 0],
-        arcana: [
-          locale === "en-US"
-            ? systemTerm(name, locale)
-            : (ARCANA_PT[name] ?? name),
-        ],
+        arcana: [systemTerm(name, locale)],
         description: GREATER_ATTAINMENTS[name][locale === "en-US" ? 3 : 1],
       });
   }
@@ -2354,9 +2317,7 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
       ? t("ui.orderless")
       : String(
           custom?.name ||
-            (locale === "en-US"
-              ? orderKey
-              : (MTA_ORDER_LABELS[orderKey] ?? orderKey)),
+            mageOrderLabel(orderKey, locale),
         );
   const description =
     orderKey === "Nameless"

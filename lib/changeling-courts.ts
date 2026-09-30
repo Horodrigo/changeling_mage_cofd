@@ -1,4 +1,5 @@
 import type { Locale } from "./i18n";
+import { changelingMessages } from "./i18n/messages/changeling";
 
 export type CourtDefinition = {
   id: string;
@@ -50,7 +51,7 @@ export function courtPresentation(value: unknown, locale: Locale = "en-US") {
 export function courtDisplayName(value: unknown, locale: Locale = "en-US") {
   const raw=String(value ?? "");
   if (["sem corte","courtless"].includes(raw.trim().toLocaleLowerCase()))
-    return locale === "en-US" ? "Courtless" : "Sem Corte";
+    return changelingMessages[locale].ui.courtless;
   return courtPresentation(value, locale)?.name ?? raw;
 }
 

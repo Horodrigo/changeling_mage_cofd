@@ -53,7 +53,7 @@ function OrderSelector(props: OrderSelectorProps) {
   };
   const select = (name: string) => {
     const custom = name === "Nameless"
-      ? (props.order === "Nameless" ? props.customOrder : null) ?? { name: "", description: "An Order without a recognized name among the great societies of the Awakened.", roteSkills: ["", "", ""], initiation: {} }
+      ? (props.order === "Nameless" ? props.customOrder : null) ?? { name: "", description: "", roteSkills: ["", "", ""], initiation: {} }
       : saved.find((item) => item.name === name) ?? null;
     props.setOrder(name);
     if(name!=="Seers of the Throne")props.setAffiliationId("");
@@ -64,10 +64,10 @@ function OrderSelector(props: OrderSelectorProps) {
       <span>{t("ui.order")}</span>
       <div className="kith-current order-current">
         <strong>
-          {(props.order === "Orderless" ? t("ui.orderless") : props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : props.order === "Nameless" ? "Nameless" : mageOrderLabel(props.order, locale)) ||
+          {(props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : mageOrderLabel(props.order, locale)) ||
             t("ui.noneSelected")}
         </strong>
-        <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || t("ui.chooseAnOrderToReviewItsDescription")}</p>
+        <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || t(props.order === "Nameless" ? "ui.anOrderWithoutARecognizedNameAmongThe" : "ui.chooseAnOrderToReviewItsDescription")}</p>
         {hasStandardCreationOrderBenefits(props.order) ? <small>
           <strong>{t("ui.roteSkills")}:</strong>{" "}
           {(MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => builderText(locale, skill)).join(", ")}
@@ -102,7 +102,7 @@ function OrderSelector(props: OrderSelectorProps) {
             optionLabels={{
               __none: t("ui.selectAnOrder"),
               ...Object.fromEntries(Object.keys(MTA_ORDER_LABELS).map((order) => [order, mageOrderLabel(order, locale)])),
-              Nameless: "Nameless",
+              Nameless: mageOrderLabel("Nameless", locale),
               Orderless: t("ui.orderless"),
             }}
           />

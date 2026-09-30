@@ -275,7 +275,7 @@ export const vampireMessages = {
       "bloodSympathyStage3": "dois graus · +2 · mesmo continente",
       "voivodeResistanceSuffix": "bônus aplicado para resistir Vinculum e aura predatória",
       "tasteOfFealty": "Gosto da Fidelidade",
-      "tasteOfFealtyAutomation": "cada Vitae conta como {count} para Addiction; Deprived só é resolvida com Vitae de alguém que possua esta Espiral.",
+      "tasteOfFealtyAutomation": "cada Vitae conta como {count} para Addiction; Privado só é resolvida com Vitae de alguém que possua esta Espiral.",
       "callToServe": "Chamado para Servir",
       "callToServeAutomation": "3 Vitae em uma alimentação definem Stage 2; 5 Vitae definem Stage 3, ignorando o limite de Vitae por turno.",
       "voivodeUndisputed": "Voivoda Indiscutível",

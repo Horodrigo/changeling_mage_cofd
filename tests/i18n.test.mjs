@@ -34,6 +34,7 @@ test("language preference is global and translation lookup is deterministic", as
   assert.equal(translate("en-US", "sheet.clna"), "[missing translation: sheet.clna]");
   assert.equal(translate("pt-BR", "ui.catch"), "Gatilho");
   assert.equal(translate("pt-BR", "ui.loophole"), "Brecha");
+  assert.equal(translate("pt-BR", "ui.numina"), "Numina");
 });
 
 test("all locales expose exactly the same message keys", async () => {
@@ -70,6 +71,28 @@ test("Mage Order labels follow the active locale", async () => {
 
   assert.equal(mageOrderLabel("Adamantine Arrow", "en-US"), "Adamantine Arrow");
   assert.equal(mageOrderLabel("Adamantine Arrow", "pt-BR"), "Seta Adamantina");
+  assert.equal(mageOrderLabel("Nameless", "pt-BR"), "Ordem sem Nome");
+  assert.equal(mageOrderLabel("Nameless", "en-US"), "Nameless Order");
+  assert.equal(mageOrderLabel("Orderless", "pt-BR"), "Sem Ordem");
+  assert.equal(mageOrderLabel("Orderless", "en-US"), "Orderless");
+  assert.equal(mageOrderLabel("My authored order", "pt-BR"), "My authored order");
+});
+
+test("Contract outcomes and Courtless use dictionary labels without changing mechanics", async () => {
+  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { contractOutcomeSections } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+  const { courtDisplayName } = await vite.ssrLoadModule("/lib/changeling-courts.ts");
+  const contract={description:"Description",dicePool:"Wits + Wyrd",success:"Success text",exceptionalSuccess:"Exceptional text",failure:"Failure text",dramaticFailure:"Dramatic text"};
+  const before=JSON.stringify(contract);
+  for(const locale of ["pt-BR","en-US"]){
+    assert.deepEqual(contractOutcomeSections(contract,locale),["success","exceptionalSuccess","failure","dramaticFailure"].map((field)=>({label:translate(locale,`ui.${field}`),text:contract[field]})));
+    assert.deepEqual(contractOutcomeSections({...contract,hasRoll:false},locale),[{label:translate(locale,"ui.effect"),text:contract.success}]);
+    for(const value of ["Courtless","Sem Corte"]) assert.equal(courtDisplayName(value,locale),translate(locale,"ui.courtless"));
+    assert.equal(courtDisplayName("My custom court",locale),"My custom court");
+  }
+  assert.equal(JSON.stringify(contract),before);
+  const corePresentation=JSON.parse(readFileSync(new URL("../public/data/core/conditions-pt.json",import.meta.url),"utf8"));
+  assert.match(translate("pt-BR","ui.tasteOfFealtyAutomation",{count:2}),new RegExp(corePresentation.deprived.name));
 });
 
 test("Vampire purchase labels use audited dictionary terms in both locales", async () => {
@@ -128,6 +151,22 @@ test("Fae Mount ability labels and descriptions resolve for every canonical choi
   const before=JSON.stringify(character);
   const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,updateSheet:()=>{}})));
   assert.match(markup,/Chatterbox/);
+  assert.doesNotMatch(markup,/missing translation/);
+  assert.equal(JSON.stringify(character),before);
+});
+
+test("Familiar Numina localize labels while preserving canonical selections and authored names", async () => {
+  const { translate, messages, LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const expected=["Awe","Blast","Dement","Drain","Emotional Aura","Entropic Decay","Firestarter","Hallucination","Implant Mission","Left-Handed Spanner","Mortal Mask","Pathfinder","Regenerate","Seek","Speed","Sign","Stalwart","Telekinesis"];
+  assert.deepEqual(Object.values(messages["en-US"].ui.familiarNumina),expected);
+  for(const key of Object.keys(messages["en-US"].ui.familiarNumina)) assert.doesNotMatch(translate("pt-BR",`ui.familiarNumina.${key}`),/missing translation/);
+  assert.equal(translate("pt-BR","ui.familiarNumina.mortalMask"),"Mascarilha Mortal");
+  const { CompanionPage } = await vite.ssrLoadModule("/game-lines/mage/companion-page.tsx");
+  const character={merits:[{name:"Familiar",dots:2,configuration:{name:"My familiar",entity:"Ghost",numina:["Awe"]}}]};
+  const before=JSON.stringify(character);
+  const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,updateSheet:()=>{}})));
+  assert.match(markup,/My familiar/);
+  assert.match(markup,/Awe/);
   assert.doesNotMatch(markup,/missing translation/);
   assert.equal(JSON.stringify(character),before);
 });
