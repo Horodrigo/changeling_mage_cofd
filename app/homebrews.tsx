@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getGameLineRegistration } from "@/game-lines/registry/game-line-registry";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
-import { localized, useLanguage } from "@/lib/i18n";
+import { useLanguage } from "@/lib/i18n";
 import { CatalogBoundary } from "./catalog-boundary";
 import { GameLineHomebrew } from "./game-line-homebrew";
 
@@ -17,12 +17,12 @@ const SPLATS: Array<{ id: Splat; label: string }> = [
 ];
 
 export default function Homebrews() {
-  const { locale } = useLanguage(), h = (pt: string, en: string) => localized(locale, pt, en);
+  const { t } = useLanguage();
   const [splat, setSplat] = useState<Splat>("Core");
   const registration = splat === "Core" ? null : getGameLineRegistration(splat);
   return <section className="homebrew-page">
-    <div className="homebrew-hero"><div><Badge>{h("HOMEBREW", "HOMEBREW")}</Badge><h2>{h("Biblioteca Homebrew", "Homebrew Library")}</h2><p>{h("Consulte o conteúdo implementado e controle fontes ou itens individualmente.", "Browse implemented content and control entire sources or individual items.")}</p></div><Sparkles aria-hidden="true"/></div>
+    <div className="homebrew-hero"><div><Badge>{t("workspace.homebrewBadge")}</Badge><h2>{t("workspace.homebrewLibrary")}</h2><p>{t("workspace.homebrewLibraryDescription")}</p></div><Sparkles aria-hidden="true"/></div>
     <Tabs value={splat} onValueChange={(value) => setSplat(value as Splat)}><TabsList className="homebrew-tabs-list">{SPLATS.map((item) => <TabsTrigger key={item.id} value={item.id}>{item.label}</TabsTrigger>)}</TabsList></Tabs>
-    {splat === "Core" ? <CatalogBoundary groups={["core-merits"]}><Suspense fallback={<div className="loading-card">{h("Carregando", "Loading")}</div>}><CoreHomebrew/></Suspense></CatalogBoundary> : registration?.loadHomebrew ? <CatalogBoundary groups={registration.catalogGroups.homebrew ?? []}><GameLineHomebrew key={registration.id} gameLine={registration.id}/></CatalogBoundary> : <section className="panel empty-state"><Sparkles/><h3>{h("Nenhum Homebrew implementado", "No implemented Homebrew")}</h3><p>{h("Esta linha ainda não possui conteúdo Homebrew gerenciável.", "This line does not yet have manageable Homebrew content.")}</p></section>}
+    {splat === "Core" ? <CatalogBoundary groups={["core-merits"]}><Suspense fallback={<div className="loading-card">{t("workspace.loading")}</div>}><CoreHomebrew/></Suspense></CatalogBoundary> : registration?.loadHomebrew ? <CatalogBoundary groups={registration.catalogGroups.homebrew ?? []}><GameLineHomebrew key={registration.id} gameLine={registration.id}/></CatalogBoundary> : <section className="panel empty-state"><Sparkles/><h3>{t("workspace.noImplementedHomebrew")}</h3><p>{t("workspace.noImplementedHomebrewDescription")}</p></section>}
   </section>;
 }
