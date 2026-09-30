@@ -20,6 +20,7 @@ test("detector rejeita textos de UI e os padrões legados", () => {
     ["<button aria-label=\"Close\" />", "attributeText"],
     ["<input placeholder=\"Enter name\" />", "attributeText"],
     ["tr(\"Clã\", \"Clan\")", "legacyTr"],
+    ["h(\"Clã\", \"Clan\")", "legacyLocalized"],
     ["locale === \"pt-BR\" ? \"Clã\" : \"Clan\"", "localeConditional"],
     ["locale === \"en-US\" ? `You need ${required} points` : `Você precisa de ${required} pontos`", "localeConditional"],
     ['const groups = [{group:"core", purchases:["Atributo"]}];', "purchaseValue"],
