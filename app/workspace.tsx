@@ -232,7 +232,8 @@ export function Workspace({
         setNotice(message);
         return { ok: false, message };
       }
-      const message = error instanceof Error ? error.message : t("workspace.invalidJson");
+      console.error(error);
+      const message = t("workspace.characterImportFailed");
       setNotice(message);
       return { ok: false, message };
     }

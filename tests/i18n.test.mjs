@@ -66,6 +66,15 @@ test("English is the server/default locale and catalog fallback is explicit", as
   assert.match(catalogs, /fallback: CatalogFallback = "empty"/);
 });
 
+test("unexpected character import failures show a localized notice instead of raw diagnostic text", async () => {
+  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const workspace=readFileSync(new URL("../app/workspace.tsx",import.meta.url),"utf8");
+  assert.match(workspace,/const message = t\("workspace\.characterImportFailed"\)/);
+  assert.doesNotMatch(workspace,/const message = error instanceof Error \? error\.message/);
+  assert.match(translate("pt-BR","workspace.characterImportFailed"),/Não foi possível importar/);
+  assert.match(translate("en-US","workspace.characterImportFailed"),/could not be imported/);
+});
+
 test("Mage Order labels follow the active locale", async () => {
   const { mageOrderLabel } = await vite.ssrLoadModule("/game-lines/mage/creation-rules.ts");
 

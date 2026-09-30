@@ -115,13 +115,15 @@ Os blocos mecânicos de `game-lines/vampire/sheet-view.tsx` foram migrados para 
 | Coil | Espiral | |
 | Kindred senses | Sentidos Vampíricos | Evita a forma pouco natural **Sentidos dos Membros**. |
 
-Os nomes de Condições citados nesses blocos (`Swooning`, `Drained` e outros) devem acompanhar o catálogo de Condições que está sendo traduzido, sem uma segunda tabela paralela.
+Os nomes de Condições citados nesses blocos (`Swooning`, `Drained` e outros) devem acompanhar a tradução futura do catálogo de Condições, sem uma segunda tabela paralela.
 
 ### Dívida técnica de i18n
 
 Resolvida: os editores e inventários de Homebrew de Core, Changeling, Mage e Vampire usam chaves semânticas. A regra `no-untranslated-ui-text` rejeita o padrão local `h(português, inglês)` e os testes protegem essa restrição.
 
 Os avisos de validação de Méritos também retornam chaves e parâmetros, apresentados pela interface com `t()`. Regras, escolhas e pré-requisitos canônicos não dependem do idioma; textos de pré-requisitos do catálogo seguem o fallback inglês enquanto sua tradução estiver adiada.
+
+As traduções integrais de Méritos e de conteúdo específico de outras linhas ficam para uma etapa posterior, conforme o escopo confirmado pelo usuário. `Numina` permanece `Numina` também em português.
 
 ## Decisões complementares aprovadas
 
