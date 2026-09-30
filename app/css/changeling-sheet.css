@@ -1731,6 +1731,32 @@ body:has(.line-theme-ctl)
   font-family: "Changeling Sheet", Georgia, serif;
 }
 
+.ctl-sheet .configured-token-list {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.ctl-sheet .configured-token-card .contract-power-summary {
+  position: relative;
+  padding-right: 32px;
+}
+.ctl-sheet .configured-token-card .contract-power-summary::after {
+  content: "▸";
+  position: absolute;
+  right: 12px;
+  top: 13px;
+}
+.ctl-sheet .configured-token-card[open] .contract-power-summary::after {
+  transform: rotate(90deg);
+}
+.ctl-sheet .configured-token-card dl {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.ctl-sheet .configured-token-allocation {
+  grid-column: 1/-1;
+  margin: 0;
+}
+
 .ctl-sheet .notes-area textarea {
   background-color: rgba(255, 254, 249, 0.48);
   background-image: repeating-linear-gradient(

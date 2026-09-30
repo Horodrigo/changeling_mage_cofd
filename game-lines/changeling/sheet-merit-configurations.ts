@@ -7,9 +7,11 @@ import { translate, type Locale } from "@/lib/i18n";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import meritOptions from "./catalog-data/merit-options.json";
+import type { TokenDefinition } from "./catalogs/tokens";
+import { configuredTokenPresentation, type TokenConfigurationItem } from "./token-presentation";
 
 export type TokenKind = "token" | "trifle" | "bauble";
-export type TokenConfigurationItem = { id: string; kind: TokenKind; name: string; rating: number; cost: string; effect: string; description: string; crux: string; catch: string; drawback: string };
+export type { TokenConfigurationItem } from "./token-presentation";
 type HedgespunBenefit = "extraordinary" | "alacrity" | "durability";
 
 export const CHANGELING_SHEET_MERIT_CONFIGURATIONS = [
@@ -55,12 +57,13 @@ function decodeHedgespunConfiguration(configuration: MeritConfiguration) {
   };
 }
 
-export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = []) {
+export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = [], tokenCatalog: readonly TokenDefinition[] = []) {
   const configuration = normalizeMeritConfiguration(value);
   if (name === "Token") {
     const items = decodeConfiguredRows<TokenConfigurationItem>(configuration.items);
     const lines: string[] = [];
-    for (const [index, item] of items.entries()) {
+    for (const [index, stored] of items.entries()) {
+      const item = configuredTokenPresentation(stored, tokenCatalog, locale);
       const kind = item.kind ?? "token";
       const kindLabel = kind === "trifle" ? translate(locale, "ui.trifleBatch") : kind === "bauble" ? translate(locale, "ui.bauble") : translate(locale, "ui.token");
       const title = item.name.trim() || `${kindLabel} ${index + 1}`;

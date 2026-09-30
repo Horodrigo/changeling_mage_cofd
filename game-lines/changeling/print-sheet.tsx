@@ -31,6 +31,8 @@ import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
+import type { TokenDefinition } from "./catalogs/tokens";
+import { withTokenPresentation } from "./token-presentation";
 
 type PrintBlock = PrintFlowItem & { node: ReactNode };
 
@@ -166,11 +168,11 @@ function ContractCard({ data, rows, continued = false, detailed }: { data: Contr
   </PrintCard>;
 }
 
-function ExpandedMeritCard({ merit, catalog, courts, detailed }: { merit: CharacterSheet["merits"][number]; catalog: readonly MeritDefinition[]; courts: readonly CourtDefinition[]; detailed: boolean }) {
+function ExpandedMeritCard({ merit, catalog, courts, tokens, detailed }: { merit: CharacterSheet["merits"][number]; catalog: readonly MeritDefinition[]; courts: readonly CourtDefinition[]; tokens: readonly TokenDefinition[]; detailed: boolean }) {
   const { locale, t } = useLanguage();
   const definition = catalog.find((item) => item.name === merit.name);
   const presented = definition && meritPresentation(definition, locale);
-  const configured = expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, courts);
+  const configured = expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, courts, tokens);
   const configuredTitle = meritConfigurationTitle(merit.configuration, locale, courts);
   const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
   const title = configuredTitle ? `${name}: ${configuredTitle}` : name;
@@ -244,6 +246,8 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const customCatalog = useChangelingCatalogHomebrews();
   const reference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
+  const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
+  const tokenCatalog = useMemo(() => withTokenPresentation(tokens, reference.tokenPresentation), [tokens, reference.tokenPresentation]);
   const seemingCatalog = mergeChangelingSeemings(customCatalog);
   const conditions = useMemo(() => [...coreReference.conditions, ...reference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id], ...reference.presentation[condition.id] } : condition), [coreReference, locale, reference]);
   const data = character.line_data;
@@ -301,7 +305,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
       const chunks = Array.from({ length: Math.max(1, Math.ceil(card.rows.length / 4)) }, (_, index) => card.rows.slice(index * 4, index * 4 + 4));
       chunks.forEach((rows, chunkIndex) => add("contracts", t("ui.contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed/>));
     });
-    if (options.expandedMeritDetails) expanded.forEach((merit, index) => add("expanded-merits", t("ui.expandedMerits"), `merit-${merit.instanceId ?? merit.name}-${index}`, <ExpandedMeritCard merit={merit} catalog={meritCatalog} courts={reference.courts} detailed/>));
+    if (options.expandedMeritDetails) expanded.forEach((merit, index) => add("expanded-merits", t("ui.expandedMerits"), `merit-${merit.instanceId ?? merit.name}-${index}`, <ExpandedMeritCard merit={merit} catalog={meritCatalog} courts={reference.courts} tokens={tokenCatalog} detailed/>));
     if (armor) add("equipment", t("ui.equipment"), "armor", <PrintCard title={armor.name} meta={`${t("ui.armor")} ${armor.general}/${armor.ballistic} · ${t("ui.defense")} ${signed(armor.defense)} · ${t("ui.speed")} ${signed(armor.speed)}`}><p>{armor.coverage}</p></PrintCard>);
     weapons.forEach((weapon, index) => add("equipment", t("ui.equipment"), `weapon-${weapon.id}-${index}`, <PrintCard title={weapon.name} meta={`${weapon.kind} · ${t("ui.damage")} ${weapon.damage} · ${t("ui.initiative")} ${signed(weapon.initiative)} · ${t("ui.strength")} ${weapon.strength} · ${t("ui.size")} ${weapon.size}`}>{weapon.ranges && <p>{t("ui.range")}: {weapon.ranges} · {t("ui.capacity")}: {weapon.clip}</p>}{weapon.special && <p>{weapon.special}</p>}</PrintCard>));
     equipment.forEach((item, index) => add("equipment", t("ui.equipment"), `equipment-${item.id}-${index}`, <PrintCard title={item.name} meta={`${item.category} · ${t("ui.bonus")} ${item.bonus} · ${t("ui.durability")} ${item.durability} · ${t("ui.size")} ${item.size}`}><p>{item.effect}</p></PrintCard>));
@@ -329,7 +333,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     const notes = String(character.current_state?.notes ?? "").trim();
     if (notes) add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}><p className="ctl-print-preserve-lines">{notes}</p></PrintCard>);
     return blocks;
-  }, [armor, character, contracts, data, equipment, expanded, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, vehicles, weapons]);
+  }, [armor, character, contracts, data, equipment, expanded, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, tokenCatalog, vehicles, weapons]);
 
   const [flowPageCount, setFlowPageCount] = useState(0);
   const total = 2 + flowPageCount;
@@ -389,7 +393,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section>
           <SheetHeading>{t("ui.oaths")}</SheetHeading><PrintTextList values={cleanList(data.oaths)} minimum={6}/>
           <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
-          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, reference.courts)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
+          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, reference.courts, tokenCatalog)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
           <SheetHeading>{t("ui.combat")}</SheetHeading>
           <div className="ctl-print-combat-table"><header><span>{t("combat.weapons")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span/><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div>
           <SheetHeading>{t("ui.equipment")}</SheetHeading>

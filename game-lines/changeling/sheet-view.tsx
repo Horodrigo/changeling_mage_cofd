@@ -39,6 +39,8 @@ import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import type { TokenDefinition } from "./catalogs/tokens";
+import { withTokenPresentation } from "./token-presentation";
+import { ConfiguredTokenList } from "./token-cards";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { RuleSelect } from "@/app/workspace/rule-select";
@@ -102,7 +104,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const lineReference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
     const seemingCatalog = mergeChangelingSeemings(customCatalog);
     const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
-    const tokenCatalog = locale === "pt-BR" ? tokens.map((item) => ({ ...item, ...lineReference.tokenPresentation.find((text) => text.id === item.id) })) : tokens;
+    const tokenCatalog = withTokenPresentation(tokens, lineReference.tokenPresentation);
     const customEntitlements = useEntitlementHomebrews();
     const officialEntitlements = entitlementCatalogPresentation(lineReference.entitlements, locale, lineReference.entitlementPresentation);
     const entitlementCatalog = [...officialEntitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
@@ -242,10 +244,9 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             </>,
                 poderes: <>
               <PowerResource name={t("ui.wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>
-              <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data)}/>
+              <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))}/>
               <SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/>
               <SheetHeading>{t("ui.goblinDebt")}</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/>
-              <SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/>
               <SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/><KithLore data={data} reference={lineReference}/>
             </>,
                 entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={entitlementCatalog}/>,
@@ -255,7 +256,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <CombatPage character={character} derived={derived} updateSheet={updateSheet}/>
             </>,
                 companheiros: <div className="companions-page"><CompanionPage character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>,
-                anotacoes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+                anotacoes: <><SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
             }}
         </SwipeableSheetTabs>
       </CharacterPaperShell>);
@@ -294,7 +295,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                   ))}
                 </>
               }
-              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data)}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
+              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
               merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
@@ -387,10 +388,9 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                   {meritPresentation(definition, locale).prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {meritPresentation(definition, locale).prerequisites}</p>}
                   <p>{meritPresentation(definition, locale).description}</p>
                 </>}
-                {configured.length ? (configured.map((line, index) => (<section key={`${item.name}-configured-${index}`}>
+                {item.name === "Token" ? <ConfiguredTokenList items={tokenItems} catalog={tokenCatalog} dots={item.dots} locale={locale} renderTrifleUses={(token, index) => <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`, value)}/>} /> : configured.length ? (configured.map((line, index) => (<section key={`${item.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
-                      {tokenItems[index]?.kind === "trifle" && <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${tokenItems[index].id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${tokenItems[index].id || index}`, value)}/>}
                     </section>))) : !definition && (<p>
                     {t("ui.seeThisMeritSDescriptionToAssignOr")}
                   </p>)}

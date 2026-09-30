@@ -36,6 +36,7 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
 import { ExperiencePanel } from "./experience-panel";
 import type { TokenDefinition } from "./catalogs/tokens";
+import { withTokenPresentation } from "./token-presentation";
 import { mergeContractHomebrews } from "./contract-homebrews";
 import { useContractHomebrews } from "./use-contract-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
@@ -96,7 +97,7 @@ function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveD
   const reference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
   const seemingCatalog = mergeChangelingSeemings(customCatalog);
   const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
-  const tokenCatalog = locale === "pt-BR" ? tokens.map((item) => ({ ...item, ...reference.tokenPresentation.find((text) => text.id === item.id) })) : tokens;
+  const tokenCatalog = withTokenPresentation(tokens, reference.tokenPresentation);
   const entitlementCatalog = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
   const customContracts = useContractHomebrews();
   const customMerits = useMeritHomebrews("CtL", true);
