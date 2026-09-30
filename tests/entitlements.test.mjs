@@ -37,13 +37,24 @@ test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()
   const translated=entitlementPresentation(source,"pt-BR",ENTITLEMENTS_PT);
   assert.equal(translated.id,source.id);
   assert.equal(translated.source,source.source);
-  assert.equal(translated.name,"Barão dos Seres Menores");
+  assert.equal(translated.name,"Barão dos Subalternos");
   assert.deepEqual(translated.blessings.map((item)=>item.id),source.blessings.map((item)=>item.id));
   assert.match(translated.beat,/Retalho/);
   assert.equal(entitlementPresentation(source,"en-US",ENTITLEMENTS_PT),source);
   const dauphines=entitlementPresentation(ENTITLEMENTS.find((item)=>item.id==="dauphines-wayward-children"),"pt-BR",ENTITLEMENTS_PT);
   assert.equal(dauphines.name,"Delfinas das Crianças Perdidas");
   assert.deepEqual(dauphines.roles.map((item)=>item.name),["Noviça","Preceptora","Matriarca"]);
+  assert.deepEqual(
+    Object.fromEntries(["spiderborn-rider","adjudicator-wheel","blackbird-bishop","companion-resigned","knights-knowledge-tongue","legate-black-apple"].map((id)=>[id,ENTITLEMENTS_PT[id].name])),
+    {
+      "spiderborn-rider":"Cavaleiro da Aranha",
+      "adjudicator-wheel":"Árbitros da Roda",
+      "blackbird-bishop":"Bispo Negro",
+      "companion-resigned":"Companheiro dos Resignados",
+      "knights-knowledge-tongue":"Cavaleiros do Conhecimento do Paladar",
+      "legate-black-apple":"O Legado da Maçã Negra",
+    },
+  );
   for(const [id,presentation] of Object.entries(ENTITLEMENTS_PT)){
     const canonical=ENTITLEMENTS.find((item)=>item.id===id);
     assert.ok(canonical,id);

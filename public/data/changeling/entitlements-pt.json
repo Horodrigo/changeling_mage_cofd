@@ -1,6 +1,6 @@
 {
   "baron-lesser-ones": {
-    "name": "Barão dos Seres Menores",
+    "name": "Barão dos Subalternos",
     "meritName": "Vínculo do Barão",
     "prerequisites": "Empatia 2; Intimidação ou Persuasão 2; Porte Aristocrático, Parentesco Hob ou Especialização Interdisciplinar (Goblins).",
     "purpose": "Atuar como contato, mediador, mensageiro e, quando necessário, defensor entre os Perdidos e os nativos da Sebe.",
@@ -311,7 +311,7 @@
     ]
   },
   "spiderborn-rider": {
-    "name": "Cavaleiro Nascido da Aranha",
+    "name": "Cavaleiro da Aranha",
     "meritName": "Quebrador de Correntes",
     "prerequisites": "Perseverança 3.",
     "purpose": "Percorrer livremente os trods, opor-se à escravidão e à coerção e manter a Sebe segura para changelings que recusam mestres.",
@@ -321,7 +321,7 @@
     "heraldry": "Uma teia azul rasgada por um raio.",
     "token": {
       "name": "As Cores",
-      "description": "Emblemas ou insígnias em um colete sem mangas que identificam um Cavaleiro Nascido da Aranha.",
+      "description": "Emblemas ou insígnias em um colete sem mangas que identificam um Cavaleiro da Aranha.",
       "effect": "Gaste 1 Glamour após trocar um olhar e um aperto de mãos, até um número de vezes por capítulo igual à graduação, para descobrir todos os juramentos, compromissos e vínculos formais que uma pessoa possui. Some a graduação às rolagens de Intimidação contra servos dos Fae.",
       "catch": "Durante o restante do capítulo, não gaste Força de Vontade para melhorar suas próprias paradas de dados, a menos que fazê-lo beneficie outras pessoas explicitamente.",
       "drawback": "Receba Abalado quando o medo do Cativeiro e de uma nova captura dominar o Cavaleiro."
@@ -366,17 +366,17 @@
     ]
   },
   "adjudicator-wheel": {
-    "name": "Adjudicador da Roda",
+    "name": "Árbitros da Roda",
     "meritName": "Zelo do Juiz",
     "prerequisites": "Perseverança 3, Investigação 2, Observador Treinado 1.",
     "purpose": "Corrigir injustiças e impor justiça mesmo quando a lei falhar.",
     "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Zelo do Juiz.",
     "duties": "O portador do Título deve corrigir injustiças, impor justiça mesmo quando a lei falhar e sustentar as tradições do Título.",
     "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
-    "heraldry": "A heráldica associada ao Adjudicador da Roda.",
+    "heraldry": "A heráldica associada aos Árbitros da Roda.",
     "token": {
       "name": "Roda da Fortuna",
-      "description": "O Penhor heráldico hereditário do Adjudicador da Roda; sua graduação é igual aos pontos alocados em Heráldica.",
+      "description": "O Penhor heráldico hereditário dos Árbitros da Roda; sua graduação é igual aos pontos alocados em Heráldica.",
       "effect": "Receba novamente 9 em ações de Investigação relacionadas à missão. A graduação pode alterar uma história em andamento na presença do Juiz e, uma vez por capítulo, conceder ação de rotina a uma rolagem que promova a justiça indiretamente.",
       "catch": "Coloque sobre a Roda um fio da roupa do alvo atual e corte-o ao meio.",
       "drawback": "Receba Obsessão relacionada à investigação ou punição."
@@ -408,26 +408,26 @@
       {
         "id": "vicarious-hostile-oath",
         "name": "Juramento Hostil Vicário",
-        "description": "Faça um juramento hostil em nome de outra pessoa, vinculando o Adjudicador e uma terceira pessoa aos efeitos dele."
+        "description": "Faça um juramento hostil em nome de outra pessoa, vinculando o Árbitro e uma terceira pessoa aos efeitos dele."
       }
     ],
-    "touchstone": "Um mortal que o Adjudicador não conseguiu proteger de uma injustiça no passado.",
+    "touchstone": "Um mortal que o Árbitro não conseguiu proteger de uma injustiça no passado.",
     "curse": "Ataques de Lucidez causados por permitir conscientemente uma injustiça adicionam uma quantidade de dados igual aos pontos investidos.",
-    "beat": "Corrigir uma injustiça com custo pessoal significativo para o Adjudicador ou o Retalho.",
+    "beat": "Corrigir uma injustiça com custo pessoal significativo para o Árbitro ou o Retalho.",
     "legends": []
   },
   "blackbird-bishop": {
-    "name": "Bispo Melro",
+    "name": "Bispo Negro",
     "meritName": "Benevolência do Bispo",
     "prerequisites": "Empatia 2, Raciocínio 3, Compostura 3.",
     "purpose": "Aliviar a angústia, ouvir confissões e conduzir os que sofrem à reparação.",
     "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Benevolência do Bispo.",
     "duties": "O portador do Título deve aliviar a angústia, ouvir confissões, conduzir os que sofrem à reparação e sustentar as tradições do Título.",
     "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
-    "heraldry": "A heráldica associada ao Bispo Melro.",
+    "heraldry": "A heráldica associada ao Bispo Negro.",
     "token": {
       "name": "Aspersório Argênteo",
-      "description": "O Penhor heráldico hereditário do Bispo Melro; sua graduação é igual aos pontos alocados em Heráldica.",
+      "description": "O Penhor heráldico hereditário do Bispo Negro; sua graduação é igual aos pontos alocados em Heráldica.",
       "effect": "Transfira para o Bispo dano de Lucidez e Condições mentais de outras pessoas; afete até o dobro da graduação em alvos por capítulo; some a graduação à Percepção; e armazene temporariamente as Condições de Lucidez do próprio Bispo.",
       "catch": "Encha-o com água natural misturada às lágrimas do Bispo.",
       "drawback": "Receba Confuso, Culpado ou Retraído, à escolha do Narrador."
@@ -775,17 +775,17 @@
     "legends": []
   },
   "companion-resigned": {
-    "name": "Companheiro do Resignado",
+    "name": "Companheiro dos Resignados",
     "meritName": "Melhor Amigo para Sempre",
     "prerequisites": "Empatia 3, Expressão 2, Furtividade 2.",
     "purpose": "Tornar-se o companheiro inabalável de alguém que perdeu a esperança.",
     "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Melhor Amigo para Sempre.",
     "duties": "O portador do Título deve tornar-se o companheiro inabalável de alguém que perdeu a esperança e sustentar as tradições do Título.",
     "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
-    "heraldry": "A heráldica associada ao Companheiro do Resignado.",
+    "heraldry": "A heráldica associada ao Companheiro dos Resignados.",
     "token": {
       "name": "Livro Pop-up Infinito",
-      "description": "O Penhor heráldico hereditário do Companheiro do Resignado; sua graduação é igual aos pontos alocados em Heráldica.",
+      "description": "O Penhor heráldico hereditário do Companheiro dos Resignados; sua graduação é igual aos pontos alocados em Heráldica.",
       "effect": "Mostre o livro a uma pessoa para receber novamente 8 em ações de Empatia, Expressão e Dissimulação com ela durante 24 horas. Sem ser observado, esconda entre as páginas um objeto de Tamanho 2 ou menor. Uma vez por capítulo, sussurre o nome de uma pessoa próxima em apuros para descobrir sua localização e circunstâncias aproximadas, sujeito a Confronto de Vontades contra ocultação mágica.",
       "catch": "Conte ao livro uma anedota curta sobre um amigo que ele jamais tenha ouvido.",
       "drawback": "Enquanto extrai poder do livro, perca três dados para detectar mentiras ou resistir à manipulação emocional de estranhos e inimigos."
@@ -982,17 +982,17 @@
     "legends": []
   },
   "knights-knowledge-tongue": {
-    "name": "Cavaleiros do Saber da Língua",
+    "name": "Cavaleiros do Conhecimento do Paladar",
     "meritName": "Sinfonia para os Sentidos",
     "prerequisites": "Vigor 3, Ofícios 2 com Especialização em Culinária.",
     "purpose": "Criar uma culinária transformadora com ingredientes raros e compartilhar maravilhas sensoriais.",
     "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Sinfonia para os Sentidos.",
     "duties": "O portador do Título deve criar uma culinária transformadora com ingredientes raros, compartilhar maravilhas sensoriais e sustentar as tradições do Título.",
     "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
-    "heraldry": "A heráldica associada aos Cavaleiros do Saber da Língua.",
+    "heraldry": "A heráldica associada aos Cavaleiros do Conhecimento do Paladar.",
     "token": {
       "name": "Colheres Medidoras Mágicas",
-      "description": "O Penhor heráldico hereditário dos Cavaleiros do Saber da Língua; sua graduação é igual aos pontos alocados em Heráldica.",
+      "description": "O Penhor heráldico hereditário dos Cavaleiros do Conhecimento do Paladar; sua graduação é igual aos pontos alocados em Heráldica.",
       "effect": "As colheres sempre medem com perfeição e concedem ação de rotina ao cozinhar. Gaste 1 Glamour enquanto cozinha para conceder a cada comensal Inspirado para uma Perícia escolhida ou um ponto de um Mérito de Changeling que não seja Manto até o fim do dia, ignorando pré-requisitos. Some a graduação do Penhor à Percepção baseada em olfato ou paladar.",
       "catch": "Coma três bocados de um alimento que o usuário deteste.",
       "drawback": "Quando exposto a sensações intensas ou desagradáveis, faça uma rolagem de Perseverança + Vigor; uma falha impõe Distraído pela cena."
@@ -1034,7 +1034,7 @@
     "legends": []
   },
   "legate-black-apple": {
-    "name": "Legado da Maçã Negra",
+    "name": "O Legado da Maçã Negra",
     "meritName": "Bênção do Pomar",
     "prerequisites": "Duas Perícias Sociais em 4+, Perseverança e Autocontrole combinados 7+, Fado 3+.",
     "purpose": "Atuar como diplomata e protetor entre os Perdidos e as perigosas sociedades feéricas.",
