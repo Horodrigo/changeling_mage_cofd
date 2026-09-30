@@ -27,7 +27,7 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.doesNotMatch(mageSummary, /expandedMerits|ui\.conditions/);
   assert.match(mageDetails, /expandedMerits/);
   assert.match(mageDetails, /ui\.conditions/);
-  assert.match(mage, /characterId: character\.id, value: "resumo"/);
+  assert.match(mage, /characterId:\s*character\.id,\s*value:\s*"resumo"/);
   assert.match(mage, /legacyState\?\.joined \? setSheetTab\("legacy"\) : setLegacyJoinOpen\(true\)/);
   assert.match(mage, /<Dialog open=\{legacyJoinOpen\}[^]*<LegacyPage[^]*onJoined=/);
   assert.doesNotMatch(mage, /joinCreate|Join\/Create/);
@@ -63,7 +63,7 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   }
   assert.doesNotMatch(mortalBuilder, /meritSpent\s*!==\s*7|threeCompleteSpecialties|threeAspirations|answerFiveBreakingPointQuestions/);
   assert.match(mortalBuilder, /meritSpent\s*>\s*7/);
-  assert.match(globals, /mobile-character-sheet \.power-resource \.resource-track::before \{ grid-column:1\/-1; \}/);
+  assert.match(globals, /mobile-character-sheet\s+\.power-resource\s+\.resource-track::before\s*\{\s*grid-column:\s*1\/-1;\s*\}/);
   assert.match(mageCss, /8px center,[\s\S]*12px center/);
   assert.match(mageCss, /--mta-frame-center-clearance:\d+px/);
   assert.match(mageCss, /left var\(--mta-frame-rail-edge\) top 25px,[\s\S]*right var\(--mta-frame-rail-edge\) top 25px/);
@@ -72,8 +72,8 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mortalCss, /button\[data-state="active"\]::before[^}]*selected-tab-texture\.webp/);
   assert.ok((await stat(new URL("../public/mage/style/selected-tab-texture.webp", import.meta.url))).size > 0);
   assert.match(changeling, /clarity-breaking-point-dialog ctl-dialog/);
-  assert.match(changelingCss, /\.clarity-breaking-point-dialog \{[^}]*grid-template-rows:auto minmax\(0,1fr\) auto/);
-  assert.match(changelingCss, /\.clarity-breaking-point-modifiers label \{[^}]*font-size:15px/);
+  assert.match(changelingCss, /\.clarity-breaking-point-dialog\s*\{[^}]*grid-template-rows:\s*auto\s+minmax\(0,\s*1fr\)\s+auto/);
+  assert.match(changelingCss, /\.clarity-breaking-point-modifiers\s+label\s*\{[^}]*font-size:\s*15px/);
   assert.doesNotMatch(mageCss, /visual corrections v3/);
   assert.match(mageCss, /\.legacy-sheet-field button \{[^}]*padding:0 0 0 2px/);
   assert.match(mageCss, /\.mage-legacy-join-dialog \.entitlement-select \[data-slot="select-trigger"\]/);

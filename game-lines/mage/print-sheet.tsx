@@ -14,7 +14,7 @@ import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
 import { findMageAffiliation } from "@/game-lines/mage/orders";
 import type { MeritDefinition } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
-import { MTA_ORDER_LABELS } from "./creation-rules";
+import { mageOrderLabel } from "./creation-rules";
 import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
@@ -70,7 +70,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   const legacyState = normalizeLegacyState(data.legacy_state);
   const legacy = legacyState.joined ? findLegacy(legacyState.definitionId, customLegacies) : undefined;
   const affiliation=findMageAffiliation(data.affiliation_id);
-  const orderBase = !data.order ? "" : data.order === "Orderless" ? t("ui.orderless") : data.order === "Nameless" ? "Nameless" : locale === "en-US" ? String(data.order) : MTA_ORDER_LABELS[String(data.order)] ?? String(data.order);
+  const orderBase = !data.order ? "" : mageOrderLabel(String(data.order), locale);
   const order=affiliation?`${orderBase} · ${affiliation.name}`:orderBase;
   const identity = [
     [t("ui.shadowName"), data.shadow_name], [t("ui.concept"), character.character.concept], [t("ui.path"), data.path],

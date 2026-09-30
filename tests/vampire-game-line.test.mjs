@@ -530,7 +530,7 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   const shared = await readFile(`${root}/app/workspace/experience-shared.tsx`, "utf8");
   assert.match(shared, /categoryOptions \?\? items\.flatMap/);
   const sheet = await readFile(`${root}/game-lines/vampire/sheet-view.tsx`, "utf8");
-  assert.match(sheet, /return <details className="contract-power-card vampire-discipline-card" key=\{item\.id\}>/);
+  assert.match(sheet, /return\s*\(?\s*<details\s+className="contract-power-card vampire-discipline-card"\s+key=\{item\.id\}\s*>/);
   const css = await readFile(`${root}/app/css/globals.css`, "utf8");
   assert.match(css, /\.experience-merit-catalog article > div > strong/);
   assert.doesNotMatch(css, /\.experience-merit-catalog strong,/);
@@ -647,9 +647,9 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.match(homebrew, /item\.id === "lithopedia" \? bloodSorcery : disciplines/);
   for (const collection of ["cruacRites", "thebanMiracles", "detournements"])
     assert.match(homebrew, new RegExp(`powers\\.${collection}\\.forEach\\(\\(item\\) => add\\(item, bloodSorcery`));
-  assert.match(homebrew, /const categoryOrder = \[h\("Méritos", "Merits"\), "Clans", "Covenants", "Bloodlines", disciplines, bloodSorcery, h\("Devoções", "Devotions"\), h\("Condições", "Conditions"\), "Errata"\]/);
+  assert.match(homebrew, /const categoryOrder = \[t\("ui\.merits"\), t\("ui\.clans"\), t\("ui\.covenants"\), t\("ui\.bloodlines"\), disciplines, bloodSorcery, t\("ui\.devotions"\), t\("ui\.conditions"\), "Errata"\]/);
   assert.match(homebrew, /reference\.clans\.forEach/);
-  assert.match(homebrew, /kind: "Errata", name: "Simplified Hollow"/);
+  assert.match(homebrew, /kind: "Errata", name: t\("ui\.simplifiedHollow"\)/);
   assert.match(homebrew, /kinds = \[\.\.\.new Set\([^;]+\.sort\(\(left, right\) => categoryOrder\.indexOf\(left\) - categoryOrder\.indexOf\(right\)\)/);
   assert.match(homebrew, /homebrew-subitem-list/);
 });

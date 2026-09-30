@@ -113,7 +113,7 @@ test("published Orders and unbounded Mage ratings are represented",()=>{
 test("Prelacy follows the selected Ministry patron",()=>{
  const context={...base,order:"Seers of the Throne",merits:[{name:"Awakened Status",dots:3,configuration:{domain:"Seers of the Throne"}}]};
  assert.deepEqual(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"Eye"}},context,factions,"panopticon"),[]);
- assert.ok(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"General"}},context,factions,"panopticon").some(message=>message.includes("Panopticon")));
+ assert.ok(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"General"}},context,factions,"panopticon").some(message=>message.key==="ui.meritPrelacyPatron"&&message.params?.affiliation==="Panopticon"));
  assert.deepEqual(mageMerits.mageMeritSelectionProblems(merit("Prelacy"),{dots:3,configuration:{exarch:"Ruin"}},context,factions,"kyrian"),[]);
 });
 test("Tome factions are complete and Faction Member validates Order-specific choices",()=>{

@@ -78,7 +78,7 @@ export function activeMeritCatalog(catalog: readonly MeritDefinition[], custom: 
     .filter((item) => !item.catalogOnly && !item.errataFor && (owned.has(item.name) || homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)))
     .map((item) => {
       const replacement = errata.get(item.id);
-      return replacement ? { ...item, ...replacement, id: item.id, name: item.name, translatedName: item.translatedName, category: replacement.replacementCategory ?? item.category } : item;
+      return replacement ? { ...item, ...replacement, id: item.id, name: item.name, translatedName: item.translatedName, presentationPt: replacement.presentationPt, category: replacement.replacementCategory ?? item.category } : item;
     });
   const existing = new Set(normal.map((item) => item.id));
   return [...normal, ...[...errata.entries()].flatMap(([id, item]) => existing.has(id) ? [] : [{ ...item, id, name: item.errataForName ?? item.name, translatedName: item.errataForName ?? item.translatedName, category: item.replacementCategory ?? item.category }])];

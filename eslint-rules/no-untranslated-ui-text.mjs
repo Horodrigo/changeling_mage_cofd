@@ -36,6 +36,7 @@ const noUntranslatedUiText = {
       jsxText: "UI text must use t(\"semantic.key\") instead of a JSX literal.",
       attributeText: "{{attribute}} must use t(\"semantic.key\") instead of a literal.",
       legacyTr: "The legacy tr(portuguese, english) API is not allowed; use t(\"semantic.key\").",
+      legacyLocalized: "Inline bilingual UI text is not allowed; use t(\"semantic.key\").",
       localeConditional: "Do not select UI copy with a locale conditional; use t(\"semantic.key\", params?).",
       purchaseValue: "Purchase values must use stable lowercase IDs; localize their labels with t(\"semantic.key\").",
     },
@@ -58,6 +59,8 @@ const noUntranslatedUiText = {
       CallExpression(node) {
         if (node.callee.type === "Identifier" && node.callee.name === "tr") {
           context.report({ node, messageId: "legacyTr" });
+        } else if (node.callee.type === "Identifier" && node.callee.name === "h" && node.arguments.length >= 2 && isTextLiteral(node.arguments[0]) && isTextLiteral(node.arguments[1])) {
+          context.report({ node, messageId: "legacyLocalized" });
         }
       },
       ConditionalExpression(node) {

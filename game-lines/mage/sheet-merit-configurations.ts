@@ -1,7 +1,7 @@
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
 import { commonExpandedConfigurationLines, configuredDefinitionLines } from "@/app/workspace/merit-configuration-presentation";
 import { meritConfigurationTitle, normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
-import type { Locale } from "@/lib/i18n";
+import { translate, type Locale } from "@/lib/i18n";
 import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 
@@ -22,13 +22,14 @@ export const isInlineMeritConfiguration = (name: string) =>
 export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US") {
   const mageDefinition = MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === name);
   if (mageDefinition) {
-    const lines = configuredDefinitionLines(mageDefinition, dots, value);
-    if (name === "Artifact") lines.push(`Mana capacity: ${dots * 2}`, `Effective Gnosis: ${Math.ceil(dots / 2)}`);
-    if (name === "Mana Battery") lines.push(`Mana capacity: ${dots * 2}`);
-    if (name === "Familiar" || name === "Supernal Watcher") lines.push(`Rank: ${dots / 2}`);
+    const lines = configuredDefinitionLines(mageDefinition, dots, value, locale);
+    if (name === "Artifact" || name === "Mana Battery") lines.push(translate(locale, "ui.meritConfig.manaCapacitySummary", { capacity: dots * 2 }));
+    if (name === "Artifact") lines.push(translate(locale, "ui.meritConfig.effectiveGnosisSummary", { gnosis: Math.ceil(dots / 2) }));
+    if (name === "Familiar" || name === "Supernal Watcher") lines.push(translate(locale, "ui.meritConfig.rankSummary", { rank: dots / 2 }));
     return lines;
   }
-  return commonExpandedConfigurationLines(name, dots, value, locale) ?? [];
+  return commonExpandedConfigurationLines(name, dots, value, locale)
+    ?? configuredDefinitionLines(findMeritConfiguration(name), dots, value, locale);
 }
 
 export { meritConfigurationTitle, normalizeMeritConfiguration };

@@ -13,7 +13,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage, type Locale, type MessageKey } from "@/lib/i18n";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { meritContextForSheet, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
@@ -31,11 +31,11 @@ const PURCHASE_GROUPS = [
   { group: "integrity", purchases: ["integrity"] },
 ] as const satisfies readonly ExperiencePurchaseGroup<PurchaseType>[];
 
-function purchaseLabel(type: PurchaseType, locale: string) {
-  const labels: Record<PurchaseType, [string, string]> = {
-    attribute: ["Atributo", "Attribute"], skill: ["Perícia", "Skill"], specialty: ["Especialização", "Specialty"], merit: ["Mérito", "Merit"], integrity: ["Integridade", "Integrity"],
+function purchaseLabel(type: PurchaseType, locale: Locale) {
+  const labels: Record<PurchaseType, MessageKey> = {
+    attribute: "ui.attribute", skill: "ui.skill", specialty: "ui.specialty", merit: "ui.merit", integrity: "ui.integrity",
   };
-  return labels[type][locale === "pt-BR" ? 0 : 1];
+  return translate(locale, labels[type]);
 }
 
 export function MortalExperiencePanel({ character, updateSheet, catalogs, builderMode = false }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalogs: CatalogSnapshot; builderMode?: boolean }) {

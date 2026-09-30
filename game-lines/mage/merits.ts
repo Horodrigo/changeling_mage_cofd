@@ -19,17 +19,17 @@ export function mageMeritSelectionProblems(
   const configuration = selection.configuration ?? {};
   if (merit.name === "Faction Member") {
     const faction = findMageFaction(factions, configuration.factionId);
-    if (awakenedStatus(context, String(context.order ?? "")) < 2) problems.push("Order Status 2 is required.");
-    if (!faction) problems.push("Select a published faction.");
-    else if (!mageFactionAvailable(faction, context.order)) problems.push("The faction is not available to this Order.");
-    else if (selection.dots >= 3 && !faction.roteSkills.includes(String(configuration.roteSkill ?? ""))) problems.push("Select the faction's Rote Skill.");
+    if (awakenedStatus(context, String(context.order ?? "")) < 2) problems.push({key:"ui.meritOrderStatusRequired"});
+    if (!faction) problems.push({key:"ui.meritSelectFaction"});
+    else if (!mageFactionAvailable(faction, context.order)) problems.push({key:"ui.meritFactionUnavailable"});
+    else if (selection.dots >= 3 && !faction.roteSkills.includes(String(configuration.roteSkill ?? ""))) problems.push({key:"ui.meritSelectFactionRoteSkill"});
   }
   if (merit.name === "Prelacy") {
     const exarch=String(configuration.exarch??""),affiliation=findMageAffiliation(affiliationId);
-    if(!EXARCHS.has(exarch))problems.push("Select a patron Exarch.");
-    else if(affiliation&&![affiliation.patronExarch,...(affiliation.additionalPatronExarchs??[])].includes(exarch))problems.push(`Prelacy must serve ${affiliation.name}'s patron Exarch.`);
+    if(!EXARCHS.has(exarch))problems.push({key:"ui.meritSelectPatronExarch"});
+    else if(affiliation&&![affiliation.patronExarch,...(affiliation.additionalPatronExarchs??[])].includes(exarch))problems.push({key:"ui.meritPrelacyPatron",params:{affiliation:affiliation.name}});
   }
-  if (merit.name === "Profane Tool" && !PROFANE_FORMS.has(String(configuration.form ?? ""))) problems.push("Select a Profane Form.");
-  if (merit.name === "Svikiro" && !SVIKIRO_TRADITIONS.has(String(configuration.tradition ?? ""))) problems.push("Select wamasikati or wedzinza.");
+  if (merit.name === "Profane Tool" && !PROFANE_FORMS.has(String(configuration.form ?? ""))) problems.push({key:"ui.meritSelectProfaneForm"});
+  if (merit.name === "Svikiro" && !SVIKIRO_TRADITIONS.has(String(configuration.tradition ?? ""))) problems.push({key:"ui.meritSelectSvikiroTradition"});
   return problems;
 }

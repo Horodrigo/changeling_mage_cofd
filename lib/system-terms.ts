@@ -114,6 +114,8 @@ const ENGLISH_TERMS: Record<string,string> = {
   };
 
 const PORTUGUESE_TERMS: Record<string,string> = {
+  Death:"Morte", Fate:"Destino", Forces:"Forças", Life:"Vida", Matter:"Matéria", Mind:"Mente", Prime:"Primórdio", Space:"Espaço", Spirit:"Espírito", Time:"Tempo",
+  Beast:"Fera", Darkling:"Trevoso", Elemental:"Elemental", Fairest:"Belíssimo", Ogre:"Ogro", Wizened:"Mirrado",
   Mental:"Mental", Physical:"Físico", Social:"Social",
   Intelligence:"Inteligência", Wits:"Raciocínio", Resolve:"Perseverança", Strength:"Força", Dexterity:"Destreza", Stamina:"Vigor", Presence:"Presença", Manipulation:"Manipulação", Composure:"Compostura",
   Academics:"Erudição", Computer:"Computação", Crafts:"Ofícios", Investigation:"Investigação", Medicine:"Medicina", Occult:"Ocultismo", Politics:"Política", Science:"Ciência", Athletics:"Atletismo", Brawl:"Briga", Drive:"Condução", Firearms:"Armas de Fogo", Larceny:"Furto", Weaponry:"Armas Brancas", Stealth:"Furtividade", Survival:"Sobrevivência", "Animal Ken":"Emp. c/ Animais", Empathy:"Empatia", Expression:"Expressão", Intimidation:"Intimidação", Persuasion:"Persuasão", Socialize:"Socialização", Streetwise:"Manha", Subterfuge:"Subterfúgio",
@@ -124,11 +126,11 @@ const PORTUGUESE_TERMS: Record<string,string> = {
   "Wild Hunt":"Caçada Selvagem", Huntsman:"Monteiro", Huntsmen:"Monteiros", Keeper:"Carcereiro", Keepers:"Carcereiros",
   Contract:"Contrato", Contracts:"Contratos", "Goblin Contract":"Contrato Goblin", Court:"Corte", "Spring Court":"Corte da Primavera", "Summer Court":"Corte do Verão", "Autumn Court":"Corte do Outono", "Winter Court":"Corte do Inverno",
   Privateer:"Corsário", "Goblin Debt":"Débito Goblin", Bedlam:"Desvario", Fetch:"Duplo", Echoes:"Ecos", Thorns:"Espinhos", "Dream Roads":"Estradas dos Sonhos", Wyrd:"Fado",
-  "Hedge Ghosts":"Fantasmas da Sebe", Fae:"Fae", "True Fae":"Feé Verdadeiro", Faerie:"Feéria", Seeming:"Semblante", Freehold:"Povoado", Frailty:"Fragilidade", Kith:"Frátria",
+  "Hedge Ghosts":"Fantasmas da Sebe", Fae:"Fae", "True Fae":"Feé Verdadeiro", Faerie:"Feéria", Seeming:"Feição", Freehold:"Povoado", Frailty:"Fragilidade", Kith:"Frátria",
   "Goblin Fruit":"Fruta Goblin", Glamour:"Glamour", Goblin:"Goblin", Hobgoblin:"Hobgoblin", Icon:"Ícone", Oath:"Juramento", Loyalist:"Legalista", "True Loyalist":"Legalista Verdadeiro", Lord:"Lorde",
   Clarity:"Lucidez", Mantle:"Manto", Mask:"Mascarilha", "Goblin Market":"Mercado Goblin", "Hedge Shaping":"Tecer a Sebe", Hedgespinning:"Tecer a Sebe", Oneiromancy:"Oniromancia", Oneiropomp:"Onirompo",
   Others:"Outros", Token:"Penhor", Lost:"Perdido", Portaling:"Passagem", Promise:"Promessa", Oathbreaker:"Quebrador de Juramento", "Bridge-Burner":"Queima-Pontes", "Goblin Queen":"Rainha dos Goblins", "Goblin King":"Rei dos Goblins",
-  Regalia:"Regalia", Renegade:"Renunciado", Hedge:"Sebe", Sealing:"Selagem", Mien:"Semblante Fae", Dreamweaving:"Tecelagem de Sonhos", Kenning:"Tino", Title:"Título", "Fae-Touched":"Tocado por Fae", Touchstone:"Touchstone", trod:"trod", Hollow:"Vão",
+  Regalia:"Regalia", Renegade:"Renunciado", Hedge:"Sebe", Sealing:"Selagem", Mien:"Semblante Feérico", Dreamweaving:"Tecelagem de Sonhos", Kenning:"Tino", Title:"Título", "Fae-Touched":"Tocado por Fae", Touchstone:"Touchstone", trod:"trod", Hollow:"Vão",
   "Chess Master":"Mestre de Xadrez", Commander:"Comandante", Composer:"Compositor", Counselor:"Conselheiro", Daredevil:"Audacioso", Dynamo:"Dínamo", Protector:"Protetor", Provider:"Provedor", Scholar:"Erudito", Storyteller:"Contador de Histórias", Teacher:"Professor", Traditionalist:"Tradicionalista", Visionary:"Visionário",
   Discipline:"Disciplina", Devotion:"Devoção",
   Acceptance:"Aceitação", Anger:"Raiva", Family:"Família", Friendship:"Amizade", Hate:"Ódio", Honor:"Honra", Joy:"Alegria", Love:"Amor", Memory:"Memória", Revenge:"Vingança", "Cold Iron":"Ferro Frio",

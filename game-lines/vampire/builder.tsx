@@ -23,7 +23,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
-import { localized, translate, useLanguage, type Locale } from "@/lib/i18n";
+import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
@@ -280,24 +280,24 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (covenantId === "ordo-dracul" && !ORDO_MYSTERIES.includes(mysteryId as (typeof ORDO_MYSTERIES)[number])) add("mystery", t("ui.ordoDraculMystery"));
     if (creationCovenantPowerId && (!hasCreationCovenantPower || covenantStatus < 1)) add("covenantPower", t("ui.covenantPowerRequiresKindredStatus1InThe"));
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
-    if (affiliationDots > 5) add("merits", localized(locale, "Status de Covenants e Iniciações de Shadow Cult excedem cinco pontos", "Covenant Status and Shadow Cult Initiation exceed five total dots"));
-    if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", "Coil of Zirnitra");
+    if (affiliationDots > 5) add("merits", t("ui.vampireAffiliationDotsExceeded"));
+    if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", t("ui.coilOfZirnitra"));
     for (const merit of common.merits) {
       const definition = meritCatalog.find((item) => item.name === merit.name);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${message}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${t(message.key,message.params)}`);
       if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     if (clanId === "hollow-mekhet") {
       const addKa = (key: string, label: string) => result.push({ step: 4, key, label });
-      if (!kaName.trim()) addKa("kaName", localized(locale, "Nome do Ka", "Ka name"));
-      if (!kaConcept.trim()) addKa("kaConcept", localized(locale, "Conceito do Ka", "Ka concept"));
+      if (!kaName.trim()) addKa("kaName", t("ui.kaName"));
+      if (!kaConcept.trim()) addKa("kaConcept", t("ui.kaConcept"));
       if (!simplifiedHollow) {
-        if (kaAttributeTotal < kaLimits.attributeMinimum || kaAttributeTotal > kaLimits.attributeMaximum) addKa("kaAttributes", localized(locale, "Atributos do Ka", "Ka Attributes"));
-        if (!kaBane.trim()) addKa("kaBane", localized(locale, "Bane do Ka", "Ka Bane"));
-        if (!kaAnchors.some((value) => value.trim())) addKa("kaAnchors", localized(locale, "Âncora do Ka", "Ka Anchor"));
-        if (kaInfluences.filter((value) => value.trim()).length < kaRank) addKa("kaInfluences", localized(locale, "Influências do Ka", "Ka Influences"));
-        if (kaManifestations.filter((value) => value.trim()).length < kaRank) addKa("kaManifestations", localized(locale, "Manifestações do Ka", "Ka Manifestations"));
-        if (kaNumina.filter((value) => value.trim()).length < kaLimits.numinaMinimum) addKa("kaNumina", localized(locale, "Numina do Ka", "Ka Numina"));
+        if (kaAttributeTotal < kaLimits.attributeMinimum || kaAttributeTotal > kaLimits.attributeMaximum) addKa("kaAttributes", t("ui.kaAttributes"));
+        if (!kaBane.trim()) addKa("kaBane", t("ui.kaBane"));
+        if (!kaAnchors.some((value) => value.trim())) addKa("kaAnchors", t("ui.kaAnchor"));
+        if (kaInfluences.filter((value) => value.trim()).length < kaRank) addKa("kaInfluences", t("ui.kaInfluences"));
+        if (kaManifestations.filter((value) => value.trim()).length < kaRank) addKa("kaManifestations", t("ui.kaManifestations"));
+        if (kaNumina.filter((value) => value.trim()).length < kaLimits.numinaMinimum) addKa("kaNumina", t("ui.kaNumina"));
       }
     }
     return result;
@@ -495,12 +495,12 @@ function CovenantSelector({ items, values, primary, onToggle, onPrimary, locale,
     <Dialog>
       <DialogTrigger asChild><Button type="button" variant="outline"><Search /> {t("ui.selectCovenant")}</Button></DialogTrigger>
       <DialogContent className="merit-dialog vtr-dialog">
-        <DialogHeader><DialogTitle>{t("ui.selectCovenant")}</DialogTitle><DialogDescription>{localized(locale, "Escolha uma ou mais Covenants e marque qual concede o benefício inicial.", "Choose one or more Covenants and mark which grants the starting benefit.")}</DialogDescription></DialogHeader>
+        <DialogHeader><DialogTitle>{t("ui.selectCovenant")}</DialogTitle><DialogDescription>{t("ui.selectCovenantsDescription")}</DialogDescription></DialogHeader>
         <div className="vampire-covenant-options">{(["core", "historical", "uncommon", "shadow-cult"] as const).map((group) => {
           const groupItems = items.filter((item) => item.group === group);
           if (!groupItems.length) return null;
           const groupLabel = group === "core" ? t("ui.coreOptions") : group === "historical" ? t("ui.historicalOptions") : group === "uncommon" ? t("ui.uncommonOptions") : t("ui.shadowCults");
-          return <section key={group}><h3>{groupLabel}</h3>{groupItems.map((item) => <article key={item.id} className={values.includes(item.id) ? "selected" : ""}><div><strong>{displayName(item, locale)}</strong><small>{item.advantage}</small></div><Button type="button" size="sm" variant={values.includes(item.id) ? "default" : "outline"} onClick={() => onToggle(item.id)}>{values.includes(item.id) ? localized(locale, "Remover", "Remove") : localized(locale, "Participar", "Join")}</Button>{values.includes(item.id) && item.id !== "covenantless" && <Button type="button" size="sm" variant={primary === item.id ? "default" : "ghost"} onClick={() => onPrimary(item.id)}>{primary === item.id ? localized(locale, "Principal", "Primary") : localized(locale, "Tornar principal", "Make primary")}</Button>}</article>)}</section>;
+          return <section key={group}><h3>{groupLabel}</h3>{groupItems.map((item) => <article key={item.id} className={values.includes(item.id) ? "selected" : ""}><div><strong>{displayName(item, locale)}</strong><small>{item.advantage}</small></div><Button type="button" size="sm" variant={values.includes(item.id) ? "default" : "outline"} onClick={() => onToggle(item.id)}>{t(values.includes(item.id) ? "ui.removeAction" : "ui.join")}</Button>{values.includes(item.id) && item.id !== "covenantless" && <Button type="button" size="sm" variant={primary === item.id ? "default" : "ghost"} onClick={() => onPrimary(item.id)}>{t(primary === item.id ? "ui.primary" : "ui.makePrimary")}</Button>}</article>)}</section>;
         })}</div>
         {selected && <div className="vampire-selector-detail"><strong>{displayName(selected, locale)}</strong><p>{selected.description}</p>{selected.advantage && <small><strong>{t("ui.advantage")}:</strong> {selected.advantage}</small>}</div>}
         <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>

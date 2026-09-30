@@ -25,6 +25,7 @@ export function purchasePreview(input: {
   nextMeritRating?: number;
   ownedMerit?: CharacterSheet["merits"][number];
   selectedContract?: ContractDefinition;
+  selectedContractName?: string;
   specialtySkill: string;
   specialtyName: string;
   benefitKey?: string;
@@ -46,7 +47,7 @@ export function purchasePreview(input: {
     cost: 1,
   };
   if (purchaseType === "contract") return {
-    label: (locale === "en-US" ? input.selectedContract?.originalName : input.selectedContract?.name) ?? translate(locale, "ui.noContractAvailable"),
+    label: input.selectedContractName ?? input.selectedContract?.name ?? translate(locale, "ui.noContractAvailable"),
     cost: input.selectedContract ? contractExperienceCost(input.selectedContract, character) : 0,
   };
   if (purchaseType === "contract-benefit") return {
@@ -89,13 +90,21 @@ export function derivedWithPermanentMerits(character: CharacterSheet) {
 
 /** Changeling-only beat sources and advancement costs. */
 export function ExperienceRules() {
-  const { locale, t } = useLanguage();
-  const beatRowsPt = ["Cumprir uma Aspiração", "Resolver uma Condição", "Aceitar uma falha dramática", "Render-se em combate", "Sofrer dano nas caixas finais de Vitalidade", "Encerrar uma sessão", "Sofrer dano de Lucidez", "Liberar Desvario involuntariamente"];
-  const beatRowsEn = ["Fulfill an Aspiration", "Resolve a Condition", "Accept a dramatic failure", "Surrender in combat", "Take damage in the final Health boxes", "End a session", "Take Clarity damage", "Release Bedlam involuntarily"];
-  const costRowsPt = [["Atributo", "4 por ponto"], ["Perícia", "2 por ponto"], ["Mérito", "1 por ponto"], ["Especialização", "1"], ["Contrato favorecido", "Comum 2 · Real 3"], ["Contrato não favorecido", "Comum 3 · Real 4"], ["Contrato Goblin", "2"], ["Benefício de outra Feição", "1"], ["Fado", "5 por ponto"], ["Ponto perdido de Força de Vontade", "1"]];
-  const costRowsEn = [["Attribute", "4 per dot"], ["Skill", "2 per dot"], ["Merit", "1 per dot"], ["Specialty", "1"], ["Favored Contract", "Common 2 · Royal 3"], ["Non-favored Contract", "Common 3 · Royal 4"], ["Goblin Contract", "2"], ["Benefit of another Seeming", "1"], ["Wyrd", "5 per dot"], ["Lost Willpower dot", "1"]];
-  const beatRows = locale === "en-US" ? beatRowsEn : beatRowsPt;
-  const costRows = locale === "en-US" ? costRowsEn : costRowsPt;
+  const { t } = useLanguage();
+  const beatKeys = ["ui.beatAspiration", "ui.beatCondition", "ui.beatDramaticFailure", "ui.beatSurrender", "ui.beatHealthDamage", "ui.beatEndSession", "ui.beatClarityDamage", "ui.beatInvoluntaryBedlam"] as const;
+  const beatRows = beatKeys.map((key) => t(key));
+  const costRows = [
+    [t("ui.attribute"), t("ui.experiencePerDot", { cost: 4 })],
+    [t("ui.skill"), t("ui.experiencePerDot", { cost: 2 })],
+    [t("ui.merit"), t("ui.experiencePerDot", { cost: 1 })],
+    [t("ui.specialty"), "1"],
+    [t("ui.favoredContract"), t("ui.favoredContractCost")],
+    [t("ui.nonFavoredContract"), t("ui.nonFavoredContractCost")],
+    [t("ui.goblinContract"), "2"],
+    [t("ui.anotherSeemingBenefit"), "1"],
+    [t("ui.wyrd"), t("ui.experiencePerDot", { cost: 5 })],
+    [t("ui.lostWillpowerDot"), "1"],
+  ];
   return (
     <div className="experience-rule-menus">
       <details className="experience-rules"><summary>{t("ui.waysToEarnBeats")}</summary><table><tbody>{beatRows.map((label) => <tr key={label}><td>{label}</td><td>{t("ui.oneBeat")}</td></tr>)}</tbody></table></details>

@@ -119,8 +119,11 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
     }
   }
   assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Wyrd|Huntsm(?:an|en)|Berserk|Swooned|Spooked|Gentry|Darklings|Beasts|Ogres|Wizened|Elementals|Fairest|trifles?)\b/i);
+  assert.doesNotMatch(JSON.stringify(presentation), /\bBeats?\b/);
+  assert.doesNotMatch(JSON.stringify(presentation), /\bAutocontrole\b|Semblante Fae/);
   assert.equal(presentation.find((item) => item.id === "ctl-2ed:golden-hairnettle")?.name, "Erva de Cachinhos Dourados");
   assert.equal(presentation.find((item) => item.id === "ctl-2ed:iou")?.name, "Nota Promissória");
+  assert.equal(presentation.find((item) => item.id === "ctl-oak-ash-thorn:seeming-song")?.name, "Canção da Feição");
 });
 
 test("apresentações pt-BR de Changeling respeitam o léxico definido", async () => {
@@ -136,7 +139,7 @@ test("apresentações pt-BR de Changeling respeitam o léxico definido", async (
   const text = JSON.stringify([...(await Promise.all(files.map((file) => json(new URL(file, import.meta.url))))), ...contracts, localizedCourts]);
 
   assert.doesNotMatch(text, /\b(?:Wyrd|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt)\b/);
-  assert.doesNotMatch(text, /\b(?:Clareza|Feição|Fratria|Máscara|Recanto)\b|Dívida Goblin|Feudos? Livres?/);
+  assert.doesNotMatch(text, /\b(?:Clareza|Fratria|Recanto)\b|Dívida Goblin|Feudos? Livres?|Semblante Fae/);
   assert.deepEqual(courts.slice(0,4).map((court) => court.translatedName), ["Corte da Primavera","Corte do Verão","Corte do Outono","Corte do Inverno"]);
 });
 

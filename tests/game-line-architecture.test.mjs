@@ -64,7 +64,7 @@ test("portaled dialogs and confirmation actions inherit the active game-line the
     assert.match(css, /data-slot="dialog-content"/);
     assert.match(css, /data-slot="alert-dialog-content"/);
   }
-  assert.match(await source("app/css/globals.css"), /:is\(\[data-slot="dialog-footer"\], \[data-slot="alert-dialog-footer"\]\) button[^}]*height:32px/);
+  assert.match(await source("app/css/globals.css"), /:is\(\[data-slot="dialog-footer"\],\s*\[data-slot="alert-dialog-footer"\]\)\s+button[^}]*height:\s*32px/);
 });
 
 test("catalog groups stay lazy and line-scoped", async () => {
@@ -223,12 +223,12 @@ test("Changeling Homebrew uses category tabs and compact disclosure rows", async
   assert.match(homebrew, /presented\.resolution/);
   assert.match(homebrew, /item\.token\.effect/);
   assert.match(homebrew, /item\.singleWillpower/);
-  assert.match(homebrew, /const categoryOrder = \[h\("Méritos", "Merits"\), "Seemings", h\("Cortes", "Courts"\), h\("Frátrias", "Kiths"\), "Entitlements", h\("Contratos", "Contracts"\), "Needles", "Threads", h\("Condições", "Conditions"\), "Errata"\]/);
+  assert.match(homebrew, /const categoryOrder = \[t\("ui\.merits"\), t\("ui\.seemings"\), t\("ui\.courts"\), t\("ui\.kiths"\), t\("ui\.entitlements"\), t\("ui\.contracts"\), t\("ui\.needles"\), t\("ui\.threads"\), t\("ui\.conditions"\), "Errata"\]/);
   assert.match(homebrew, /categoryRank\(left\) - categoryRank\(right\)/);
   assert.match(sheet, /item\.name !== "Entitlement" && isExpanded/);
-  assert.match(css, /\.panel\.homebrew-source \{ padding:0; \}/);
-  assert.match(css, /\.homebrew-list-item-body p>strong:first-child \{ color:/);
-  assert.match(css, /\.contract-power-list dt \{ display:inline;/);
+  assert.match(css, /\.panel\.homebrew-source\s*\{\s*padding:\s*0;\s*\}/);
+  assert.match(css, /\.homebrew-list-item-body p\s*>\s*strong:first-child\s*\{\s*color:/);
+  assert.match(css, /\.contract-power-list dt\s*\{\s*display:\s*inline;/);
   assert.doesNotMatch(homebrew, /className="homebrew-card"/);
 });
 

@@ -13,7 +13,7 @@ import type { EntitlementDefinition } from "@/lib/entitlements";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, type MessageKey } from "@/lib/i18n";
 import { createRandomId } from "@/lib/random-id";
 import type { TokenDefinition, TokenKind } from "./catalogs/tokens";
 import meritOptions from "./catalog-data/merit-options.json";
@@ -98,9 +98,9 @@ function TokenMeritEditor({merit,configuration,onChange,compact,catalog}:{merit:
   </details>;
 }
 
-const HEDGESPUN_BENEFITS=meritOptions.hedgespunBenefits as Array<{value:HedgespunBenefit;label:string;labelPt:string;effect:string}>;
+const HEDGESPUN_BENEFITS=meritOptions.hedgespunBenefits as Array<{value:HedgespunBenefit;labelKey:MessageKey;effectKey:MessageKey}>;
 function HedgespunItemEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}){
-  const { locale, t }=useLanguage();const item=decodeHedgespunConfiguration(configuration);
+  const { t }=useLanguage();const item=decodeHedgespunConfiguration(configuration);
   const set=(patch:Partial<typeof item>)=>onChange({...configuration,name:patch.name??item.name,description:patch.description??item.description,extraordinary_detail:patch.extraordinaryDetail??item.extraordinaryDetail,benefits:patch.benefits??item.benefits});
   const choose=(index:number,next:HedgespunBenefit)=>{const benefits=Array.from({length:merit.dots},(_,itemIndex)=>item.benefits[itemIndex]??"");benefits[index]=next;set({benefits});};
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
@@ -108,7 +108,7 @@ function HedgespunItemEditor({merit,configuration,onChange,compact}:{merit:Merit
       <label>{t("ui.itemName")}<Input value={item.name} onChange={(event)=>set({name:event.target.value})}/></label>
       <label>{t("ui.maskAndMiena79a27")}<textarea value={item.description} onChange={(event)=>set({description:event.target.value})}/></label>
       <fieldset><legend>{t("ui.benefits")} · {item.benefits.filter(Boolean).length}/{merit.dots}</legend>
-        {Array.from({length:merit.dots},(_,index)=>{const current=item.benefits[index]??"";return <label key={index}>{t("ui.dot75ec98")} {index+1}<Select value={current||undefined} onValueChange={(next)=>choose(index,next as HedgespunBenefit)}><SelectTrigger><SelectValue placeholder={t("ui.selectABenefit")}/></SelectTrigger><SelectContent>{HEDGESPUN_BENEFITS.filter((benefit)=>benefit.value===current||item.benefits.filter((entry)=>entry===benefit.value).length<3).map((benefit)=><SelectItem key={benefit.value} value={benefit.value}>{locale==="en-US"?benefit.label:benefit.labelPt} · {benefit.effect}</SelectItem>)}</SelectContent></Select></label>;})}
+        {Array.from({length:merit.dots},(_,index)=>{const current=item.benefits[index]??"";return <label key={index}>{t("ui.dot75ec98")} {index+1}<Select value={current||undefined} onValueChange={(next)=>choose(index,next as HedgespunBenefit)}><SelectTrigger><SelectValue placeholder={t("ui.selectABenefit")}/></SelectTrigger><SelectContent>{HEDGESPUN_BENEFITS.filter((benefit)=>benefit.value===current||item.benefits.filter((entry)=>entry===benefit.value).length<3).map((benefit)=><SelectItem key={benefit.value} value={benefit.value}>{t(benefit.labelKey)} · {t(benefit.effectKey)}</SelectItem>)}</SelectContent></Select></label>;})}
       </fieldset>
       {item.benefits.includes("extraordinary")&&<label>{t("ui.chosenBonusArmorOrDamage")}<Input value={item.extraordinaryDetail} onChange={(event)=>set({extraordinaryDetail:event.target.value})} placeholder={t("ui.eG2GeneralArmor")}/></label>}
       <p className="structured-rule">{t("ui.alwaysActiveHasNoGlamourCostOrCatch")}</p>
@@ -173,7 +173,7 @@ function HollowEditor({
               },0):0;
               return option.cost<=merit.dots-used+replacedCost;
             }).map((option) => {
-              const {name, cost, description}=option;
+              const {name, cost}=option;
               const key = `${name}|${cost}`,
                 active = selected.includes(key);
               const alternatives="group" in option?HOLLOW_OPTIONS.filter((item)=>"group" in item&&item.group===option.group).map((item)=>`${item.name}|${item.cost}`):[];
@@ -194,11 +194,11 @@ function HollowEditor({
                     }
                   />
                   <span>
-                    <strong>{name}</strong>
+                    <strong>{t(option.nameKey as MessageKey)}</strong>
                     <small>
                       {cost} {cost === 1 ? t("ui.dot160503") : t("ui.dots33098e")}
                     </small>
-                    <small>{description}</small>
+                    <small>{t(option.descriptionKey as MessageKey)}</small>
                   </span>
                 </label>
               );
@@ -226,7 +226,7 @@ function SharedBastionEditor({merit,configuration,onChange,compact}:{merit:Merit
       <label>{t("ui.name")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
       <label>{t("ui.locationAndAppearance")}<textarea value={String(configuration.location??"")} onChange={(event)=>set("location",event.target.value)}/></label>
       <fieldset><legend>{t("ui.features")} ({used}/{merit.dots} {t("ui.dots33098e")})</legend><div className="structured-option-grid">
-        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=merit.dots-used).map(({name,cost,description})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{name}</strong><small>{cost} {cost===1?t("ui.dot160503"):t("ui.dots33098e")}</small><small>{description}</small></span></label>;})}
+        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=merit.dots-used).map(({name,cost,nameKey,descriptionKey})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{t(nameKey as MessageKey)}</strong><small>{cost} {cost===1?t("ui.dot160503"):t("ui.dots33098e")}</small><small>{t(descriptionKey as MessageKey)}</small></span></label>;})}
       </div></fieldset>
     </div>
   </details>;
@@ -239,7 +239,7 @@ function StableTrodEditor({configuration,onChange,compact}:{configuration:MeritC
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
     <summary>{t("ui.configureStableTrod")}</summary><div>
       <label>{t("ui.trodNameOrDescription")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
-      <Choice label={t("ui.sharedHollowEnhancement")} value={String(configuration.enhancement??"")} setValue={(value)=>set("enhancement",value)} options={oneDotOptions}/>
+      <Choice label={t("ui.sharedHollowEnhancement")} value={String(configuration.enhancement??"")} setValue={(value)=>set("enhancement",value)} options={oneDotOptions} optionLabels={Object.fromEntries(HOLLOW_OPTIONS.map((option)=>[option.name,t(option.nameKey as MessageKey)]))}/>
     </div>
   </details>;
 }

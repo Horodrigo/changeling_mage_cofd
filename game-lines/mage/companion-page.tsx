@@ -10,7 +10,26 @@ import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configur
 import { useLanguage } from "@/lib/i18n";
 import { alphabetical } from "@/lib/option-order";
 
-const FAMILIAR_NUMINA = ["Awe", "Blast", "Dement", "Drain", "Emotional Aura", "Entropic Decay", "Firestarter", "Hallucination", "Implant Mission", "Left-Handed Spanner", "Mortal Mask", "Pathfinder", "Regenerate", "Seek", "Speed", "Sign", "Stalwart", "Telekinesis"];
+const FAMILIAR_NUMINA = {
+  "Awe": "ui.familiarNumina.awe",
+  "Blast": "ui.familiarNumina.blast",
+  "Dement": "ui.familiarNumina.dement",
+  "Drain": "ui.familiarNumina.drain",
+  "Emotional Aura": "ui.familiarNumina.emotionalAura",
+  "Entropic Decay": "ui.familiarNumina.entropicDecay",
+  "Firestarter": "ui.familiarNumina.firestarter",
+  "Hallucination": "ui.familiarNumina.hallucination",
+  "Implant Mission": "ui.familiarNumina.implantMission",
+  "Left-Handed Spanner": "ui.familiarNumina.leftHandedSpanner",
+  "Mortal Mask": "ui.familiarNumina.mortalMask",
+  "Pathfinder": "ui.familiarNumina.pathfinder",
+  "Regenerate": "ui.familiarNumina.regenerate",
+  "Seek": "ui.familiarNumina.seek",
+  "Speed": "ui.familiarNumina.speed",
+  "Sign": "ui.familiarNumina.sign",
+  "Stalwart": "ui.familiarNumina.stalwart",
+  "Telekinesis": "ui.familiarNumina.telekinesis",
+} as const;
 
 export function CompanionPage({ character, updateSheet }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void }) {
   const { t } = useLanguage();
@@ -48,7 +67,7 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
     <div className="companion-form-grid">
       <label>{t("ui.name")}<Input value={name} onChange={event => save({ name: event.target.value })}/></label>
       <label>{t("ui.form")}<RuleSelect value={form} onChange={value => save({ form: value })} options={[{ value: "animal", label: t("ui.animal") }, { value: "object", label: t("ui.object") }]}/></label>
-      <label>{t("ui.entityType")}<RuleSelect value={entity} onChange={value => save({ entity: value })} options={["Ghost", "Spirit", "Goetia"].map(value => ({ value, label: value }))}/></label>
+      <label>{t("ui.entityType")}<RuleSelect value={entity} onChange={value => save({ entity: value })} options={[{ value: "Ghost", label: t("ui.meritConfig.ghost") }, { value: "Spirit", label: t("ui.spirit") }, { value: "Goetia", label: t("ui.meritConfig.goetia") }]}/></label>
       {form === "animal" ? <label>{t("ui.animal")}<RuleSelect value={animalId} onChange={value => save({ animalId: value })} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label> : <label>{t("ui.object")}<Input value={String(configuration.object ?? "")} onChange={event => save({ object: event.target.value })} placeholder={t("ui.fetishDescription")}/></label>}
       <label>{t("ui.power")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.power ?? rank + 2)} onChange={event => save({ power: event.target.value })}/></label>
       <label>{t("ui.finesse")}<Input type="number" min={1} max={rank === 1 ? 5 : 7} value={String(configuration.finesse ?? rank + 2)} onChange={event => save({ finesse: event.target.value })}/></label>
@@ -59,9 +78,9 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
     </div>
     {form === "animal" && presentedAnimal && <AnimalCard animal={presentedAnimal} name={name} onRemove={() => save({ form: "object", animalId: "" })}/>} 
     <strong>{t("ui.numina")} ({numina.length}/{numinaLimit})</strong>
-    <div className="companion-options numina-options">{alphabetical(FAMILIAR_NUMINA, item => item).filter(item => numina.length < numinaLimit || numina.includes(item)).map(item => {
-      const active = numina.includes(item);
-      return <label key={item} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && numina.length >= numinaLimit} onChange={() => save({ numina: active ? numina.filter(value => value !== item) : [...numina, item] })}/><span><strong>{item}</strong></span></label>;
+    <div className="companion-options numina-options">{alphabetical(Object.entries(FAMILIAR_NUMINA).map(([value, key]) => ({ value, label: t(key) })), item => item.label).filter(item => numina.length < numinaLimit || numina.includes(item.value)).map(item => {
+      const active = numina.includes(item.value);
+      return <label key={item.value} className={active ? "selected" : ""}><input type="checkbox" checked={active} disabled={!active && numina.length >= numinaLimit} onChange={() => save({ numina: active ? numina.filter(value => value !== item.value) : [...numina, item.value] })}/><span><strong>{item.label}</strong></span></label>;
     })}</div>
     <p className="combat-note">{t("ui.rankMaximumAttributeInfluenceAndUpToNumina", { p1: rank, p2: rank === 1 ? 5 : 7, p3: rank, p4: numinaLimit })}</p>
   </article>;

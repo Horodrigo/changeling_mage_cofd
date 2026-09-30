@@ -8,9 +8,10 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import type { MeritSelection } from "@/lib/core/character/character-types";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, type MessageKey } from "@/lib/i18n";
 import { meritConfigurationTitle, normalizeMeritConfiguration, type MeritConfigDefinition, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
+import { systemTerm } from "@/lib/system-terms";
 import { Choice } from "./common-controls";
 
 export type StructuredMeritEditorProps = {
@@ -50,13 +51,15 @@ export function MeritConfigurationEditor({
   renderCustomField?: (kind: string, props: CustomMeritFieldProps) => ReactNode;
   definitions: readonly MeritConfigDefinition[];
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
   const definition = definitions.find((item) => item.name === merit.name);
   if (!definition) return null;
   const configuration = normalizeMeritConfiguration(merit.configuration);
   const effectiveDots = configurationDots ?? merit.dots;
   const visible = definition.fields.filter((field) => (field.minDots ?? 0) <= effectiveDots);
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
+  const label = (value: string) => value.startsWith("ui.") ? t(value as MessageKey) : systemTerm(value, locale);
+  const meritLabel = (name: string) => locale === "pt-BR" ? catalog.find((item) => item.name === name)?.translatedName || name : name;
   const structuredProps = { merit, configuration, onChange, compact };
   const injected = renderStructured?.(structuredProps);
   if (injected != null) return injected;
@@ -70,21 +73,21 @@ export function MeritConfigurationEditor({
     const value = configuration[field.key];
     if (field.kind === "merit") {
       const choices = ownedMerits.filter((item) => item.instanceId && field.meritNames?.includes(item.name) && item.dots >= (merit.name === "Infamous Mentor" ? merit.dots : 1));
-      return <label key={field.key}>{field.label}<select value={String(value ?? "")} onChange={(event) => set(field.key, event.target.value)}><option value="">{t("ui.selectAnInstance")}</option>{choices.map((item) => <option key={item.instanceId} value={item.instanceId}>{item.name}: {meritConfigurationTitle(item.configuration) || item.instanceId} ({item.dots})</option>)}</select></label>;
+      return <label key={field.key}>{label(field.label)}<select value={String(value ?? "")} onChange={(event) => set(field.key, event.target.value)}><option value="">{t("ui.selectAnInstance")}</option>{choices.map((item) => <option key={item.instanceId} value={item.instanceId}>{meritLabel(item.name)}: {meritConfigurationTitle(item.configuration) || item.instanceId} ({item.dots})</option>)}</select></label>;
     }
     if (field.kind === "court") {
       return <div key={field.key}>{renderCustomField?.(field.kind, { keyName: field.key, value: Array.isArray(value) ? "" : String(value ?? ""), onChange: (next) => set(field.key, next) })}</div>;
     }
     if (field.kind === "list") {
       const rowCount = field.fixedRows ?? effectiveDots * (field.rowsPerDot ?? 1);
-      const label = merit.name === "Contacts" ? t("ui.groupsOrganizationsOrContactName") : merit.name === "Multilingual" ? t("ui.additionalLanguages") : field.label;
+      const fieldLabel = label(field.label);
       const values = Array.isArray(value) ? value : [String(value ?? "")];
       const count = merit.name === "Multilingual" ? merit.dots * 2 : rowCount;
-      return <fieldset key={field.key}><legend>{label}</legend><div className="merit-config-list">{Array.from({ length: count }, (_, index) => <Input key={index} value={values[index] ?? ""} placeholder={`${field.placeholder ?? label} ${index + 1}`} onChange={(event) => { const next = Array.from({ length: count }, (_, item) => values[item] ?? ""); next[index] = event.target.value; set(field.key, next); }} />)}</div></fieldset>;
+      return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({ length: count }, (_, index) => <Input key={index} value={values[index] ?? ""} placeholder={`${field.placeholder ? label(field.placeholder) : fieldLabel} ${index + 1}`} onChange={(event) => { const next = Array.from({ length: count }, (_, item) => values[item] ?? ""); next[index] = event.target.value; set(field.key, next); }} />)}</div></fieldset>;
     }
-    if (field.kind === "select") return <label key={field.key}>{field.label}<Select value={String(value ?? "")} onValueChange={(next) => set(field.key, next)}><SelectTrigger><SelectValue placeholder={field.placeholder ?? t("ui.selectAnOption")} /></SelectTrigger><SelectContent>{(field.options ?? []).map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent></Select></label>;
-    if (field.kind === "textarea") return <label key={field.key}>{field.label}<textarea value={Array.isArray(value) ? value.join("\n") : String(value ?? "")} placeholder={field.placeholder} onChange={(event) => set(field.key, event.target.value)} /></label>;
-    return <label key={field.key}>{field.label}<Input value={Array.isArray(value) ? value.join(", ") : String(value ?? "")} placeholder={field.placeholder} onChange={(event) => set(field.key, event.target.value)} /></label>;
+    if (field.kind === "select") return <label key={field.key}>{label(field.label)}<Select value={String(value ?? "")} onValueChange={(next) => set(field.key, next)}><SelectTrigger><SelectValue placeholder={field.placeholder ? label(field.placeholder) : t("ui.selectAnOption")} /></SelectTrigger><SelectContent>{(field.options ?? []).map((option) => <SelectItem key={option.value} value={option.value}>{label(option.label)}</SelectItem>)}</SelectContent></Select></label>;
+    if (field.kind === "textarea") return <label key={field.key}>{label(field.label)}<textarea value={Array.isArray(value) ? value.join("\n") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onChange={(event) => set(field.key, event.target.value)} /></label>;
+    return <label key={field.key}>{label(field.label)}<Input value={Array.isArray(value) ? value.join(", ") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onChange={(event) => set(field.key, event.target.value)} /></label>;
   })}</div>;
   return inline
     ? <div className={`merit-configuration inline${compact ? " compact" : ""}`}>{fields}</div>
@@ -125,7 +128,7 @@ function CultLevelEditor({ level, configuration, set, catalog }: { level: number
   const type = value("type");
   const options = level <= 2 ? ["__none", "specialty", "merit", "custom"] : level === 3 ? ["__none", "merits", "skill", "custom"] : ["__none", "merits", "merit_skill", "custom"];
   const max = level <= 2 ? 1 : level === 3 ? 2 : type === "merit_skill" ? 1 : 3;
-  return <fieldset><legend>{t("ui.dot")} {level}</legend><Choice label={t("ui.benefitType")} value={type || "__none"} setValue={(next) => set(`${prefix}_type`, next === "__none" ? "" : next)} options={options} />
+  return <fieldset><legend>{t("ui.dot")} {level}</legend><Choice label={t("ui.benefitType")} value={type || "__none"} setValue={(next) => set(`${prefix}_type`, next === "__none" ? "" : next)} options={options} optionLabels={{ __none: t("ui.selectAnOption"), specialty: t("ui.specialty"), merit: t("ui.merit"), merits: t("ui.merits"), skill: t("ui.skill"), merit_skill: t("ui.meritConfig.meritAndSkill"), custom: t("ui.customBenefit") }} />
     {type === "specialty" && <div className="structured-choice-row"><SkillChoice label={t("ui.skill")} value={value("specialty_skill")} setValue={(next) => set(`${prefix}_specialty_skill`, next)} /><label>{t("ui.specialty")}<Input value={value("specialty_name")} onChange={(event) => set(`${prefix}_specialty_name`, event.target.value)} /></label></div>}
     {(type === "merit" || type === "merits" || type === "merit_skill") && <MeritGrantPicker value={Array.isArray(configuration[`${prefix}_merits`]) ? configuration[`${prefix}_merits`] as string[] : []} max={max} catalog={catalog} onChange={(next) => set(`${prefix}_merits`, next)} />}
     {(type === "skill" || type === "merit_skill") && <SkillChoice label={t("ui.skillReceiving1")} value={value("skill")} setValue={(next) => set(`${prefix}_skill`, next)} />}
@@ -137,8 +140,8 @@ const CONFIG_SKILLS = Object.values(SKILLS).flat();
 const STRUCTURED_MERITS = new Set(["Professional Training", "Mystery Cult Initiation", "Mystery Cult Influence"]);
 
 function SkillChoice({ label, value, setValue, options = CONFIG_SKILLS }: { label: string; value: string; setValue: (value: string) => void; options?: string[] }) {
-  const { t } = useLanguage();
-  return <Choice label={label} value={value || "__none"} setValue={(next) => setValue(next === "__none" ? "" : next)} options={["__none", ...options]} optionLabels={{ __none: t("ui.selectASkill") }} />;
+  const { locale, t } = useLanguage();
+  return <Choice label={label} value={value || "__none"} setValue={(next) => setValue(next === "__none" ? "" : next)} options={["__none", ...options]} optionLabels={{ __none: t("ui.selectASkill"), ...Object.fromEntries(options.map((skill) => [skill, systemTerm(skill, locale)])) }} />;
 }
 
 function MeritGrantPicker({ value, max, catalog, onChange }: { value: string[]; max: number; catalog: MeritDefinition[]; onChange: (value: string[]) => void }) {

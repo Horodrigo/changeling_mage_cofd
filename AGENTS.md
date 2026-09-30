@@ -208,6 +208,8 @@ Keep the localization runtime in `lib/i18n.tsx`, shared UI messages in `lib/i18n
 - Missing Portuguese content falls back explicitly to English; never invent a translation.
 - Book titles remain in their original language, and user-authored content is not translated automatically.
 - Dynamic messages must handle grammar and ordering in each locale rather than concatenate translated fragments.
+- Merit selection validators return semantic message keys and parameters; the consuming UI resolves them with `t()`. Do not parse English error sentences to select a translation.
+- Merit catalog groups attach ID-keyed Portuguese presentation from static JSON without replacing canonical prerequisites or level identities. UI consumers use `meritPresentation()` for descriptions, requirements, and level text; rule checks always receive the canonical definition.
 - Search and sort use displayed text unless a rules-defined order applies.
 
 For source reconstruction, use the offline Codex of Darkness material as an index for candidate identity and citations, not as final authority for mechanics. Source PDFs are authoritative for effects, prerequisites, choices, exceptions, and long-form rule details. Review two-column extraction carefully; never import raw extracted text without checking headers, footers, sidebars, page breaks, and neighboring columns.

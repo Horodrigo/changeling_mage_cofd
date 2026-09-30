@@ -1,8 +1,17 @@
 import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
+import type { MessageKey, TranslationParams } from "./i18n";
 
 export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
+export type MeritPresentation = {
+  name: string;
+  description: string;
+  prerequisites?: string;
+  alternativePrerequisites?: string;
+  levels?: MeritLevel[];
+};
+export type MeritPresentationCatalog = Readonly<Record<string, MeritPresentation>>;
 export type MeritDefinition = {
   id: string;
   name: string;
@@ -15,6 +24,7 @@ export type MeritDefinition = {
   translatedName: string;
   description: string;
   descriptionEn: string;
+  presentationPt?: MeritPresentation;
   prerequisites?: string;
   page: number;
   levels?: MeritLevel[];
@@ -195,12 +205,14 @@ export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Recor
     powers:[...(Array.isArray(data.contracts)?data.contracts:[]),...(Array.isArray(data.learned_contracts)?data.learned_contracts:[])].map(item=>String(item.originalName??item.name??""))};
 }
 
-export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext):string[]{
-  const config=selection.configuration??{}, problems:string[]=[];
-  if(!meritPrerequisitesMet(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push(`Prerequisites not met: ${merit.prerequisites??merit.name}`);
+export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams };
+
+export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext):MeritSelectionProblem[]{
+  const config=selection.configuration??{}, problems:MeritSelectionProblem[]=[];
+  if(!meritPrerequisitesMet(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
   const linked=(key:string,names:string[],minimum=1)=>{
     const id=String(config[key]??"");
-    if(!(context.merits??[]).some(item=>item.instanceId===id&&names.includes(item.name)&&item.dots>=minimum)) problems.push(`Select ${names.join(" or ")} (${minimum}+ dots).`);
+    if(!(context.merits??[]).some(item=>item.instanceId===id&&names.includes(item.name)&&item.dots>=minimum)) problems.push({key:"ui.meritSelectLinked",params:{merits:names.join(", "),minimum}});
   };
   if(merit.name==="Infamous Mentor")linked("mentorId",["Mentor"],selection.dots);
   if(merit.name==="Sanctum")linked("safePlaceId",["Safe Place"],selection.dots);
@@ -209,10 +221,10 @@ export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:num
   if(merit.name==="Order Archive")linked("statusId",["Awakened Status","Consilium/Order Status"]);
   if(merit.name==="Awakened Status"){
     const domain=String(config.domain??"");
-    if(!domain)problems.push("Select a Status domain.");
-    if(domain&&domain!=="Consilium"&&domain!==context.order&&selection.dots>1)problems.push("Status outside your own Order cannot exceed one dot.");
+    if(!domain)problems.push({key:"ui.meritSelectStatusDomain"});
+    if(domain&&domain!=="Consilium"&&domain!==context.order&&selection.dots>1)problems.push({key:"ui.meritStatusOutsideOrder"});
   }
-  if(merit.name==="Adamant Hand"&&!requirementMet({trait:String(config.skill??""),minimum:3},context))problems.push("Choose Athletics, Brawl or Weaponry at three dots or higher.");
-  if(merit.name==="Cabal Theme"&&(!String(config.name??"").trim()||!String(config.description??"").trim()))problems.push("Enter the cabal theme name and description.");
+  if(merit.name==="Adamant Hand"&&!requirementMet({trait:String(config.skill??""),minimum:3},context))problems.push({key:"ui.meritAdamantHandSkill"});
+  if(merit.name==="Cabal Theme"&&(!String(config.name??"").trim()||!String(config.description??"").trim()))problems.push({key:"ui.meritCabalThemeRequired"});
   return problems;
 }

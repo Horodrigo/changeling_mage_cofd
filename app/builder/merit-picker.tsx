@@ -24,6 +24,7 @@ import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle
 import { createRandomId } from "@/lib/random-id";
 import { experienceMeritDots } from "@/lib/merit-progression";
 import { homebrewCategoryKeys } from "@/lib/homebrew";
+import { meritPresentation } from "@/lib/merit-presentation";
 
 export type MeritConfigurationRenderProps = {
   merit: MeritSelection;
@@ -76,7 +77,7 @@ export function MeritPicker({
     (showAllMerits || isEligible(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => owned.name === item.name) || merits.some((owned) => owned.name === item.name)) &&
     (category === "all" || categoryKeys(item).includes(category)) &&
-    (!normalizedSearch || `${item.translatedName} ${item.name} ${item.source} ${item.prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase("pt-BR").includes(normalizedSearch))
+    (!normalizedSearch || `${meritName(item)} ${item.name} ${item.source} ${meritPresentation(item, locale).prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase(locale).includes(normalizedSearch))
   );
   const addMerit = (definition: MeritDefinition) => {
     if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => item.name === definition.name))) return;
@@ -126,7 +127,8 @@ export function MeritPicker({
           const selected = merits.some((merit) => merit.name === definition.name);
           const repeatable = isRepeatableDefinition(definition);
           const prerequisitesMet = isEligible(definition, context);
-          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : formatRatings(meritRatingsFor(definition))}</small>{definition.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {definition.prerequisites}</p>}<p>{definition.description}</p></div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
+          const presented = meritPresentation(definition, locale);
+          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : formatRatings(meritRatingsFor(definition))}</small>{presented.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}<p>{presented.description}</p>{presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}</div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
         })}</div></section>;
       })}{!visibleCatalog.length && <em>{t("ui.noMeritsMatchTheFilters")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
     </DialogContent></Dialog>
@@ -138,7 +140,8 @@ function isRepeatableDefinition(definition: MeritDefinition) {
 }
 
 function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {
-  return definition.prerequisites ? `${translate(locale, "ui.prerequisites")}: ${definition.prerequisites}\n${definition.description}` : definition.description;
+  const presented = meritPresentation(definition, locale);
+  return presented.prerequisites ? `${translate(locale, "ui.prerequisites")}: ${presented.prerequisites}\n${presented.description}` : presented.description;
 }
 
 function meritCategoryLabel(category: string) {

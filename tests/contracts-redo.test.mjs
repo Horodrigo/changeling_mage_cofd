@@ -21,6 +21,10 @@ const CONTRACT_NAME_ALIASES = Object.fromEntries(
 const { contractPresentation, contractSummary, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
 
+test("tradução pt-BR cobre os 260 Contratos canônicos", () => {
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).sort(), CONTRACTS.map((contract) => contract.id).sort());
+});
+
 test("catálogo contém os 180 Contratos oficiais auditados", () => {
   const official = CONTRACTS.filter((contract) => !contract.sourceId.startsWith("h-"));
   assert.equal(official.length, 180);
@@ -95,6 +99,21 @@ test("família Traders conclui os 80 Contratos de Book of Courts", () => {
   assert.equal(items.length, 10);
   assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 4));
   assert.equal(CONTRACTS.filter((contract) => contract.sourceId === "h-courts").length, 80);
+});
+
+test("tradução pt-BR de Book of Courts cobre os 80 Contratos e preserva sua estrutura", () => {
+  const items = CONTRACTS.filter((contract) => contract.sourceId === "h-courts");
+  assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).filter((id) => id.startsWith("h-courts:")).sort(), items.map((item) => item.id).sort());
+  for (const item of items) {
+    const text = CONTRACT_PRESENTATION_PT[item.id];
+    for (const field of ["name", "description", "dicePool", "cost", "action", "duration", "loophole"]) assert.ok(text[field]?.trim(), `${item.id}.${field}`);
+    for (const field of item.hasRoll ? ["success", "exceptionalSuccess", "failure", "dramaticFailure"] : ["effect"]) assert.ok(text[field]?.trim(), `${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.courtClauses ?? {}).sort(), Object.keys(item.courtClauses ?? {}).sort());
+    assert.equal(text.options?.length, item.options?.length);
+  }
+  const localized = JSON.stringify(items.map((item) => CONTRACT_PRESENTATION_PT[item.id]));
+  assert.doesNotMatch(localized, /\b(?:Wyrd|Willpower|Bedlam|Clarity|Goblin Debt|freehold|motley|fetch|Thread|Needle|Hollow|Hedgespinning|Token)\b/i);
+  assert.doesNotMatch(localized, /\b(?:Autocontrole|Lábia)\b/);
 });
 
 test("catálogo de Tilts contém o Core, fontes oficiais aprovadas e extensões de Book of Courts", async () => {
@@ -202,7 +221,7 @@ test("tradução pt-BR do bloco Crown é completa e preserva a identidade canôn
   assert.match(JSON.stringify(tumult),/Frenético/);
   assert.match(JSON.stringify(tumult),/Fatigado/);
   assert.doesNotMatch(JSON.stringify(tumult),/\b(?:Cowed|Berserk|Fatigued)\b/);
-  assert.doesNotMatch(JSON.stringify(Object.values(CONTRACT_PRESENTATION_PT)),/\b(?:Wyrd|Willpower|Huntsm(?:an|en)|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt)\b/i);
+  assert.doesNotMatch(JSON.stringify(Object.values(CONTRACT_PRESENTATION_PT)),/\b(?:Wyrd|Willpower|Huntsm(?:an|en)|Bedlam|Kenning|Hedgespinning|Token|Clarity|Mask|Seeming|Kith|Faerie|Goblin Debt|Beats?|Batidas?|FdV)\b/i);
 });
 
 test("traduções pt-BR das fontes suplementares menores estão completas", () => {
@@ -388,11 +407,35 @@ test("bloco Steed está completo e preserva a exceção de Flickering Hours", ()
   assert.equal(items.find((item)=>item.originalName==="Talon and Wing")?.options?.length,3);
 });
 
+test("tradução pt-BR do bloco Steed está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Steed");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
+});
+
 test("bloco Sword do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Sword");
   assert.equal(items.length,10);
   assert.deepEqual(items.map((item)=>item.page),[147,148,148,148,148,149,149,149,150,150]);
   assert.equal(items.find((item)=>item.originalName==="Elemental Weapon")?.options?.length,3);
+});
+
+test("tradução pt-BR do bloco Sword está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Sword");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
+    assert.deepEqual(Object.keys(text.supplementalSeemingBenefits?.["h-seemings"]??{}).sort(),Object.keys(item.supplementalSeemingBenefits?.["h-seemings"]??{}).sort());
+    assert.equal(text.options?.length,item.options?.length);
+  }
 });
 
 test("bloco Spring do livro básico está completo como Contratos de Corte", () => {
@@ -402,6 +445,15 @@ test("bloco Spring do livro básico está completo como Contratos de Corte", () 
   assert.deepEqual(items.map((item)=>item.page),[151,151,151,151,152,152,152,152,153,153]);
 });
 
+test("tradução pt-BR do bloco Spring está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Spring");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+  }
+});
+
 test("bloco Summer do livro básico está completo como Contratos de Corte", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Summer");
   assert.equal(items.length,10);
@@ -409,11 +461,29 @@ test("bloco Summer do livro básico está completo como Contratos de Corte", () 
   assert.deepEqual(items.map((item)=>item.page),[153,154,154,155,155,155,155,155,156,156]);
 });
 
+test("tradução pt-BR do bloco Summer está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Summer");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+  }
+});
+
 test("bloco Autumn do livro básico está completo como Contratos de Corte", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Autumn");
   assert.equal(items.length,10);
   assert.ok(items.every((item)=>item.categoryKind==="Corte"));
   assert.deepEqual(items.map((item)=>item.page),[156,156,157,157,157,157,158,158,158,158]);
+});
+
+test("tradução pt-BR do bloco Autumn está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Autumn");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+  }
 });
 
 test("bloco Winter do livro básico está completo como Contratos de Corte", () => {
@@ -424,6 +494,15 @@ test("bloco Winter do livro básico está completo como Contratos de Corte", () 
   assert.equal(items.filter((item)=>item.hasRoll).length,6);
 });
 
+test("tradução pt-BR do bloco Winter está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Winter");
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+  }
+});
+
 test("bloco Goblin do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.goblin);
   assert.equal(items.length,10);
@@ -431,6 +510,16 @@ test("bloco Goblin do livro básico está completo", () => {
   assert.deepEqual(items.map((item)=>item.page),[162,162,163,163,163,163,164,164,164,164]);
   assert.equal(items.filter((item)=>item.hasRoll).length,2);
   assert.equal(items.find((item)=>item.originalName==="Goblin's Eye")?.options?.length,7);
+});
+
+test("tradução pt-BR do bloco Goblin está completa", () => {
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.goblin);
+  for(const item of items){
+    const text=CONTRACT_PRESENTATION_PT[item.id];
+    for(const field of ["name","description","dicePool","action","duration","loophole","goblinDebt"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
+    assert.equal(text.options?.length,item.options?.length);
+  }
 });
 
 test("lote Chalice preserva metadados canônicos do índice offline", () => {

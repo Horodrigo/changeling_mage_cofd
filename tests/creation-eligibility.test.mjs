@@ -19,6 +19,7 @@ after(async () => {
 });
 
 const rules = await vite.ssrLoadModule("/lib/creation-eligibility.ts");
+const changelingRules = await vite.ssrLoadModule("/game-lines/changeling/builder-eligibility.ts");
 const regaliaRules = await vite.ssrLoadModule("/lib/changeling-regalia.ts");
 const courtCatalog = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 courtCatalog.replaceCourtCatalog(
@@ -38,7 +39,7 @@ test("Shadowsoul grants Mirror for creation and Experience without spending the 
   const data = {kith:"Shadowsoul", primary_regalia:"Crown", second_regalia:"Sword"};
   const favored = regaliaRules.changelingFavoredRegalia(data);
   assert.deepEqual(favored, ["Crown", "Sword", "Mirror"]);
-  assert.equal(rules.canSelectInitialContract({type:"Real",regalia:"Mirror"},favored,""),true);
+  assert.equal(changelingRules.canSelectContract({type:"Real",regalia:"Mirror"},favored,"",courtCatalog.CTL_COURT_DEFINITIONS),true);
   assert.equal(regaliaRules.changelingContractExperienceCost({type:"Comum",regalia:"Mirror"},data),2);
   assert.equal(regaliaRules.changelingContractExperienceCost({type:"Real",regalia:"Mirror"},data),3);
   assert.equal(regaliaRules.changelingContractExperienceCost({type:"Real",regalia:"Jewels"},data),4);
@@ -61,7 +62,7 @@ test("Changing Kith removes only its affinity; custom names grant no official bl
   for(const updated of [{...data,kith:"Snowskin"},{...data,kith_custom:true}]) {
     const favored=regaliaRules.changelingFavoredRegalia(updated);
     assert.deepEqual(favored,["Crown","Sword"]);
-    assert.equal(rules.canSelectInitialContract({type:"Real",regalia:"Mirror"},favored,""),false);
+    assert.equal(changelingRules.canSelectContract({type:"Real",regalia:"Mirror"},favored,"",courtCatalog.CTL_COURT_DEFINITIONS),false);
     assert.equal(regaliaRules.changelingContractExperienceCost({type:"Comum",regalia:"Mirror"},updated),3);
     assert.equal(regaliaRules.changelingContractExperienceCost({type:"Real",regalia:"Mirror"},updated),4);
     assert.equal(regaliaRules.changelingContractExperienceCost({type:"Comum",regalia:"Mirror",goblin:true},updated),2);
@@ -127,42 +128,58 @@ test("aceita feitiços apenas quando todos os requisitos de Arcana são atendido
 test("limita Contratos Reais às Regalias favorecidas e Contratos de Corte à Corte", () => {
   const favored = ["Coroa", "Espelho"];
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Real", regalia: "Coroa" },
       favored,
       "Inverno",
+      courtCatalog.CTL_COURT_DEFINITIONS,
     ),
     true,
   );
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Real", regalia: "Espada" },
       favored,
       "Inverno",
+      courtCatalog.CTL_COURT_DEFINITIONS,
     ),
     false,
   );
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Comum", regalia: "Verão" },
       favored,
       "Inverno",
+      courtCatalog.CTL_COURT_DEFINITIONS,
     ),
     false,
   );
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Real", regalia: "Inverno" },
       favored,
       "Inverno",
+      courtCatalog.CTL_COURT_DEFINITIONS,
+      [{ name: "Mantle", dots: 3, configuration: { court: "Winter" } }],
     ),
     true,
   );
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Comum", regalia: "Cálice" },
       favored,
       "Inverno",
+      courtCatalog.CTL_COURT_DEFINITIONS,
+    ),
+    true,
+  );
+  assert.equal(
+    changelingRules.canSelectContract(
+      { type: "Comum", categoryKind: "Corte", regalia: "Autumn" },
+      favored,
+      "autumn",
+      courtCatalog.CTL_COURT_DEFINITIONS,
+      [{ name: "Mantle", dots: 1, configuration: { court: "Autumn Court" } }],
     ),
     true,
   );
@@ -170,18 +187,21 @@ test("limita Contratos Reais às Regalias favorecidas e Contratos de Corte à Co
 
 test("Contrato Court (All) pode ser escolhido por membro de qualquer Corte", () => {
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Real", categoryKind: "Corte", regalia: "All" },
       [],
       "Crystal Web",
+      courtCatalog.CTL_COURT_DEFINITIONS,
+      [{ name: "Mantle", dots: 3, configuration: { court: "Crystal Web" } }],
     ),
     true,
   );
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Real", categoryKind: "Corte", regalia: "All" },
       [],
-      "",
+      "Sem Corte",
+      courtCatalog.CTL_COURT_DEFINITIONS,
     ),
     false,
   );
@@ -189,10 +209,11 @@ test("Contrato Court (All) pode ser escolhido por membro de qualquer Corte", () 
 
 test("Contratos Independent não dependem de Regalia favorecida nem de Corte", () => {
   assert.equal(
-    rules.canSelectInitialContract(
+    changelingRules.canSelectContract(
       { type: "Real", categoryKind: "Regalia", regalia: "Independent" },
       [],
       "",
+      courtCatalog.CTL_COURT_DEFINITIONS,
     ),
     true,
   );
@@ -200,6 +221,28 @@ test("Contratos Independent não dependem de Regalia favorecida nem de Corte", (
 
 test("Contrato compartilhado de Corte usa a Clause da Corte canônica", () => {
   const contract = { type: "Comum", categoryKind: "Corte", regalia: "Circadian", courtClauses: { sun: "A", moon: "B" } };
-  assert.equal(rules.canSelectInitialContract(contract, [], "Corte do Sol"), true);
-  assert.equal(rules.canSelectInitialContract(contract, [], "winter"), false);
+  assert.equal(changelingRules.canSelectContract(contract, [], "Corte do Sol", courtCatalog.CTL_COURT_DEFINITIONS, [{ name: "Mantle", dots: 1, configuration: { court: "sun" } }]), true);
+  assert.equal(changelingRules.canSelectContract(contract, [], "winter", courtCatalog.CTL_COURT_DEFINITIONS), false);
+});
+
+test("Contratos de Corte exigem Manto 1/3 ou Benevolência da Corte 2/5 na Corte correspondente", () => {
+  const common = { type: "Comum", categoryKind: "Corte", regalia: "Autumn" };
+  const royal = { type: "Real", categoryKind: "Corte", regalia: "Autumn" };
+  const canSelect = (contract, merits) => changelingRules.canSelectContract(contract, [], "autumn", courtCatalog.CTL_COURT_DEFINITIONS, merits);
+  const merit = (name, dots, court) => [{ name, dots, configuration: { court } }];
+  assert.equal(canSelect(common, merit("Mantle", 1, "Autumn Court")), true);
+  assert.equal(canSelect(common, merit("Court Goodwill", 1, "Autumn")), false);
+  assert.equal(canSelect(common, merit("Court Goodwill", 2, "Autumn")), true);
+  assert.equal(canSelect(royal, merit("Mantle", 2, "Autumn")), false);
+  assert.equal(canSelect(royal, merit("Mantle", 3, "Autumn")), true);
+  assert.equal(canSelect(royal, merit("Court Goodwill", 4, "Autumn")), false);
+  assert.equal(canSelect(royal, merit("Court Goodwill", 5, "Autumn")), true);
+  assert.equal(canSelect(royal, merit("Mantle", 5, "Summer")), false);
+});
+
+test("criação, edição e experiência compartilham as categorias de Contrato", () => {
+  assert.equal(changelingRules.contractCategoryKey({ type: "Comum", regalia: "Goblin", goblin: true }), "goblin");
+  assert.equal(changelingRules.contractCategoryKey({ type: "Comum", regalia: "All", categoryKind: "Corte" }), "court");
+  assert.equal(changelingRules.contractCategoryKey({ type: "Comum", regalia: "Independent", categoryKind: "Independente" }), "independent");
+  assert.equal(changelingRules.contractCategoryKey({ type: "Real", regalia: "Sword" }), "Sword");
 });

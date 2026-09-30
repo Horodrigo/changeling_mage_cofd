@@ -9,7 +9,8 @@ const vite=await createServer({appType:"custom",configFile:false,root,resolve:{a
 after(async()=>vite.close());
 const entitlementModule=await vite.ssrLoadModule("/lib/entitlements.ts");
 const ENTITLEMENTS=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json",import.meta.url),"utf8"));
-const {normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
+const ENTITLEMENTS_PT=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements-pt.json",import.meta.url),"utf8"));
+const {entitlementPresentation,normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
 const {synchronizeChangelingBuilderMeritGrants}=await vite.ssrLoadModule("/game-lines/changeling/builder-merit-grants.ts");
 const synchronizeMeritGrants=(character)=>synchronizeChangelingBuilderMeritGrants(character,ENTITLEMENTS);
 const {refundMeritDots}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
@@ -27,6 +28,53 @@ test("catálogo contém seis Entitlements oficiais, oito de Courts e treze de Se
   const merit=CHANGELING_MERITS.find((item)=>item.name==="Entitlement");
   assert.deepEqual(merit?.ratings,[4]);assert.equal(merit?.source,"Oak, Ash, and Thorn");assert.equal(Boolean(merit?.repeatable),false);
   assert.ok(ENTITLEMENTS.every((item)=>item.blessings.length===5&&item.token.catch&&item.token.drawback&&item.touchstone&&item.curse&&item.beat));
+});
+
+test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()=>{
+  assert.equal(Object.keys(ENTITLEMENTS_PT).length,27);
+  assert.deepEqual(Object.keys(ENTITLEMENTS_PT).sort(),ENTITLEMENTS.map((item)=>item.id).sort());
+  const source=ENTITLEMENTS.find((item)=>item.id==="baron-lesser-ones");
+  const translated=entitlementPresentation(source,"pt-BR",ENTITLEMENTS_PT);
+  assert.equal(translated.id,source.id);
+  assert.equal(translated.source,source.source);
+  assert.equal(translated.name,"Barão dos Subalternos");
+  assert.deepEqual(translated.blessings.map((item)=>item.id),source.blessings.map((item)=>item.id));
+  assert.match(translated.beat,/Retalho/);
+  assert.equal(entitlementPresentation(source,"en-US",ENTITLEMENTS_PT),source);
+  const dauphines=entitlementPresentation(ENTITLEMENTS.find((item)=>item.id==="dauphines-wayward-children"),"pt-BR",ENTITLEMENTS_PT);
+  assert.equal(dauphines.name,"Delfinas das Crianças Perdidas");
+  assert.deepEqual(dauphines.roles.map((item)=>item.name),["Noviça","Preceptora","Matriarca"]);
+  assert.deepEqual(
+    Object.fromEntries(["spiderborn-rider","adjudicator-wheel","blackbird-bishop","companion-resigned","knights-knowledge-tongue","legate-black-apple"].map((id)=>[id,ENTITLEMENTS_PT[id].name])),
+    {
+      "spiderborn-rider":"Cavaleiro da Aranha",
+      "adjudicator-wheel":"Árbitros da Roda",
+      "blackbird-bishop":"Bispo Negro",
+      "companion-resigned":"Companheiro dos Resignados",
+      "knights-knowledge-tongue":"Cavaleiros do Conhecimento do Paladar",
+      "legate-black-apple":"O Legado da Maçã Negra",
+    },
+  );
+  for(const [id,presentation] of Object.entries(ENTITLEMENTS_PT)){
+    const canonical=ENTITLEMENTS.find((item)=>item.id===id);
+    assert.ok(canonical,id);
+    assert.deepEqual(presentation.blessings.map((item)=>item.id),canonical.blessings.map((item)=>item.id),id);
+    assert.deepEqual((presentation.roles??[]).map((item)=>item.id),(canonical.roles??[]).map((item)=>item.id),id);
+    for(const field of ["name","meritName","prerequisites","purpose","privileges","duties","maskAndMien","heraldry","touchstone","curse","beat"]){
+      assert.ok(presentation[field]?.trim(), `${id}: ${field}`);
+    }
+    assert.equal(presentation.legends.length,canonical.legends.length,id);
+    assert.ok(presentation.legends.every((legend)=>legend.trim()),id);
+    for(const field of ["name","description","effect","catch","drawback"]) assert.ok(presentation.token[field]?.trim(), `${id}: token.${field}`);
+    for(const blessing of canonical.blessings){
+      const translatedBlessing=presentation.blessings.find((item)=>item.id===blessing.id);
+      for(const field of ["name","description","choiceLabel"]) if(blessing[field]) assert.ok(translatedBlessing[field]?.trim(), `${id}: ${blessing.id}.${field}`);
+    }
+    for(const role of canonical.roles??[]){
+      const translatedRole=presentation.roles.find((item)=>item.id===role.id);
+      for(const field of ["name","prerequisites","privilege","duties","heraldryColor","tokenBonus","tokenDrawback"]) if(role[field]) assert.ok(translatedRole[field]?.trim(), `${id}: ${role.id}.${field}`);
+    }
+  }
 });
 
 test("reduzir Fado remove a alocação mais nova",()=>{

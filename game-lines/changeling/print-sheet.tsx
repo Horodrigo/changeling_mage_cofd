@@ -16,10 +16,11 @@ import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSecti
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { normalizeEntitlementState } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, normalizeEntitlementState } from "@/lib/entitlements";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { normalizeClarityDamage, type ClarityDamageLevel } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { changelingAnchorDisplayName, normalizeChangelingFrailties, seemingDisplayName } from "./creation-rules";
@@ -142,19 +143,19 @@ function contractPrintData(baseDefinition: ContractDefinition, character: Charac
   rows.push([t("ui.loophole"), definition.loophole ?? "-"]);
   benefits.forEach((benefit) => rows.push([`${t("ui.benefitFor")} ${seemingDisplayName(benefit.key, locale)}`, benefit.text]));
   if (courtBenefit) rows.push([t("ui.courtBenefit"), courtBenefit]);
-  clauses.forEach((clause) => rows.push([`Clause · ${courtName(courts, clause.courtId, locale)}`, clause.text]));
+  clauses.forEach((clause) => rows.push([`${t("ui.clause")} · ${courtName(courts, clause.courtId, locale)}`, clause.text]));
   definition.detailTables?.forEach((table) => rows.push([table.title, <table className="ctl-print-detail-table" key={table.title}><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row, rowIndex) => <tr key={`${table.title}-${rowIndex}`}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table>]));
   if (definition.goblinDebt) rows.push([t("ui.goblinDebt"), definition.goblinDebt]);
   const name = locale === "en-US" ? definition.originalName ?? definition.name : definition.name;
   const kind = definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal");
   const courtNames = definition.courtIds?.map((courtId) => courtName(courts, courtId, locale)).filter(Boolean).join(", ");
   const access = definition.categoryKind === "Corte" ? definition.courtFamily || courtNames || systemTerm(definition.regalia, locale) : systemTerm(definition.regalia, locale);
-  const roll = contractHasInvocationRoll(definition) === true && definition.dicePool?.trim() ? definition.dicePool : "None";
+  const roll = contractHasInvocationRoll(definition) === true && definition.dicePool?.trim() ? definition.dicePool : t("ui.none");
   const facts: Array<[string, ReactNode]> = [
-    [`${t("ui.cost")}:`, definition.cost?.trim() || "None"],
+    [`${t("ui.cost")}:`, definition.cost?.trim() || t("ui.none")],
     [`${t("ui.roll")}:`, roll],
   ];
-  return { title: name, access: access || "None", kind, facts, rows: rows.filter(([, value]) => Boolean(value)) };
+  return { title: name, access: access || t("ui.none"), kind, facts, rows: rows.filter(([, value]) => Boolean(value)) };
 }
 
 function ContractCard({ data, rows, continued = false, detailed }: { data: ContractPrintData; rows: Array<[string, ReactNode]>; continued?: boolean; detailed: boolean }) {
@@ -168,16 +169,17 @@ function ContractCard({ data, rows, continued = false, detailed }: { data: Contr
 function ExpandedMeritCard({ merit, catalog, courts, detailed }: { merit: CharacterSheet["merits"][number]; catalog: readonly MeritDefinition[]; courts: readonly CourtDefinition[]; detailed: boolean }) {
   const { locale, t } = useLanguage();
   const definition = catalog.find((item) => item.name === merit.name);
+  const presented = definition && meritPresentation(definition, locale);
   const configured = expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, courts);
   const configuredTitle = meritConfigurationTitle(merit.configuration, locale, courts);
   const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
   const title = configuredTitle ? `${name}: ${configuredTitle}` : name;
-  const levels = definition?.levels?.filter((level) => level.rating <= merit.dots) ?? [];
+  const levels = presented?.levels?.filter((level) => level.rating <= merit.dots) ?? [];
   return <PrintCard title={`${title} ${"•".repeat(merit.dots)}`} meta={definition ? `${definition.source} · p. ${definition.page || "-"}` : merit.source} className={detailed ? "detailed" : "compact"}>
     {!!configured.length && <div className="ctl-print-configured">{configured.map((line, index) => <p key={index}>{line}</p>)}</div>}
-    {detailed && definition && <div className="ctl-print-merit-details">
-      {definition.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {definition.prerequisites}</p>}
-      {levels.length ? levels.map((level) => <p key={level.rating}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>) : <p>{locale === "en-US" ? definition.descriptionEn : definition.description}</p>}
+    {detailed && presented && <div className="ctl-print-merit-details">
+      {presented.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {presented.prerequisites}</p>}
+      {levels.length ? levels.map((level, index) => <p key={`${level.rating}-${index}`}><b>{"•".repeat(level.rating)} {level.name}:</b> {level.description}</p>) : <p>{presented.description}</p>}
     </div>}
   </PrintCard>;
 }
@@ -291,6 +293,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     : derivedTraitsWithArmor(derived, data.combat_armor);
   const flowBlocks = useMemo(() => {
     const blocks: PrintBlock[] = [];
+    const entitlementCatalog = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
     if (options.powerDetails) contracts.forEach((contract, contractIndex) => {
       const card = contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t);
@@ -303,8 +306,8 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     equipment.forEach((item, index) => add("equipment", t("ui.equipment"), `equipment-${item.id}-${index}`, <PrintCard title={item.name} meta={`${item.category} · ${t("ui.bonus")} ${item.bonus} · ${t("ui.durability")} ${item.durability} · ${t("ui.size")} ${item.size}`}><p>{item.effect}</p></PrintCard>));
     vehicles.forEach((vehicle, index) => add("equipment", t("ui.equipment"), `vehicle-${vehicle.id}-${index}`, <PrintCard title={vehicle.name} meta={`${t("ui.modifier")} ${signed(vehicle.diceModifier)} · ${t("ui.size")} ${vehicle.size} · ${t("ui.durability")} ${vehicle.durability} · ${t("ui.structure")} ${vehicle.structure} · ${t("ui.speed")} ${vehicle.speed}`}/>));
     selectedConditions.forEach((condition, index) => add("conditions", t("ui.conditions"), `condition-${condition.id}-${index}`, <PrintCard title={condition.name} meta={`${condition.sourceCode} · p. ${condition.page}`}>{condition.penalty && <p><b>{t("ui.penalty")}:</b> {condition.penalty}</p>}</PrintCard>));
-    const entitlementState = normalizeEntitlementState(data.entitlement, powerRating, reference.entitlements);
-    const entitlement = reference.entitlements.find((item) => item.id === entitlementState.definitionId);
+    const entitlementState = normalizeEntitlementState(data.entitlement, powerRating, entitlementCatalog);
+    const entitlement = entitlementCatalog.find((item) => item.id === entitlementState.definitionId);
     if (entitlement && entitlementState.accepted) {
       const activeBlessings = entitlementState.allocations.filter((item) => item.target === "blessing").map((item) => entitlement.blessings.find((blessing) => blessing.id === item.blessingId)).filter((item): item is NonNullable<typeof item> => Boolean(item));
       add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>{t("ui.entitlementTouchstone")}:</b> {entitlementState.touchstone.name}</p><p><b>{t("ui.privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>{t("ui.curse")}:</b> {entitlement.curse}</p></PrintCard>);

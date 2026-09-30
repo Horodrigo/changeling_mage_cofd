@@ -14,7 +14,7 @@ import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
 import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "@/lib/contract-presentation";
 import { availableForeignClauseCourtIds } from "@/lib/contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
-import type { EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/lib/entitlements";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
 import { refundChangelingPowerRating, withChangelingPowerRating } from "@/game-lines/changeling/builder-power-progression";
@@ -33,6 +33,8 @@ import { useContractHomebrews } from "./use-contract-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
+import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
+import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
@@ -93,18 +95,19 @@ export function ExperiencePanel({
   character,
   updateSheet,
   catalogs,
+  reference,
   builderMode = false,
 }: {
   character: CharacterSheet;
   updateSheet: (sheet: CharacterSheet) => void;
   catalogs: CatalogSnapshot;
+  reference: ChangelingReference;
   builderMode?: boolean;
 }) {
   const { locale, t }=useLanguage();
   const homebrewPreferences=useHomebrewPreferences(),customEntitlements=useEntitlementHomebrews(),customContracts=useContractHomebrews(),customMerits=useMeritHomebrews("CtL",true);
   const contractCatalog = mergeContractHomebrews(catalogs.get<ContractDefinition[]>("changeling-contracts"), customContracts);
-  const reference = catalogs.get<ChangelingReference>("changeling-reference");
-  const staticEntitlements: readonly EntitlementDefinition[] = reference.entitlements;
+  const staticEntitlements: readonly EntitlementDefinition[] = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
   const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
@@ -161,8 +164,12 @@ export function ExperiencePanel({
   const ownedContractIds = new Set(
     ownedContracts.map((item) => String(item.id ?? "")),
   );
+  const favoredRegalia = changelingFavoredRegalia(character.line_data);
   const contractOptions = contractsCatalog.filter(
-    (item) => !ownedContractIds.has(item.id) && homebrewContentActive(homebrewPreferences,item.id,item.sourceId),
+    (item) =>
+      !ownedContractIds.has(item.id) &&
+      homebrewContentActive(homebrewPreferences,item.id,item.sourceId) &&
+      canSelectContract(item, favoredRegalia, String(character.line_data.court ?? ""), reference.courts, character.merits),
   );
   const extraBenefits = objectList(character.line_data.extra_contract_benefits);
   const extraKeys = new Set(
@@ -189,7 +196,7 @@ export function ExperiencePanel({
             label: `${presented.name} · ${seemingDisplayName(seeming,locale)}`,
           }));
     const clauseOptions = availableForeignClauseCourtIds(definition, currentCourtId, goodwill, extraClauseKeys)
-      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${presented.name} · Clause: ${courtDisplayName(courtId, locale)}` }));
+      .map((courtId) => ({ value: `clause::${definition.id}::${courtId}`, label: `${presented.name} · ${t("ui.clause")}: ${courtDisplayName(courtId, locale)}` }));
     return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
@@ -210,8 +217,10 @@ export function ExperiencePanel({
   const nextMeritRating = availableMeritRatings.includes(meritDots)
     ? meritDots
     : availableMeritRatings[0];
-  const selectedContract =
-    contractsCatalog.find((item) => item.id === contractId) ?? contractOptions[0];
+  const selectedContract = contractOptions.find((item) => item.id === contractId) ?? contractOptions[0];
+  const selectedContractName = selectedContract
+    ? contractPresentation(selectedContract, locale, reference.contractPresentation).name
+    : undefined;
   const wyrd = Math.max(1, Number(character.line_data.wyrd ?? 1));
   const traitMaximum = Math.max(5, wyrd);
   const lostWillpower = boundedNumber(
@@ -546,7 +555,7 @@ export function ExperiencePanel({
       const cost = contractExperienceCost(selectedContract, character);
       spend(
         cost,
-        `${t("ui.contract")} ${selectedContract.name}`,
+        `${t("ui.contract")} ${selectedContractName ?? selectedContract.name}`,
         { kind: "contract", id: selectedContract.id },
         (next) => {
           const learned = objectList(next.line_data.learned_contracts);
@@ -564,10 +573,13 @@ export function ExperiencePanel({
         return setFeedback(t("ui.noAdditionalBenefitOrClauseIsAvailable"));
       const [kind, chosenContract, choice] = value.split("::");
       const definition = findContractInCatalog(chosenContract);
+      const definitionName = definition
+        ? contractPresentation(definition, locale, reference.contractPresentation).name
+        : t("ui.contract");
       const isClause = kind === "clause";
       spend(
         1,
-        isClause ? `${t("ui.clauseFor")} ${courtDisplayName(choice, locale)} · ${definition?.name ?? t("ui.contract")}` : `${t("ui.benefitFor")} ${seemingDisplayName(choice,locale)} · ${definition?.name ?? t("ui.contract")}`,
+        isClause ? `${t("ui.clauseFor")} ${courtDisplayName(choice, locale)} · ${definitionName}` : `${t("ui.benefitFor")} ${seemingDisplayName(choice,locale)} · ${definitionName}`,
         isClause ? { kind: "clause", contractId: chosenContract, courtId: choice } : { kind: "benefit", contractId: chosenContract, seeming: choice },
         (next) => {
           next.line_data = {
@@ -613,6 +625,7 @@ export function ExperiencePanel({
     nextMeritRating,
     ownedMerit,
     selectedContract,
+    selectedContractName,
     specialtySkill,
     specialtyName,
     benefitKey: benefitKey || benefitOptions[0]?.value,
@@ -786,11 +799,12 @@ export function ExperiencePanel({
                     line="CtL"
                     items={contractOptions.map((item) => {
                       const presented=contractPresentation(item,locale,reference.contractPresentation);
+                      const categoryKey=contractCategoryKey(item), category=categoryKey==="court"?t("ui.court"):categoryKey==="independent"?t("ui.independent"):categoryKey==="goblin"?t("ui.goblin"):systemTerm(categoryKey,locale);
                       return {
                         id: item.id,
                         name: presented.name,
-                        category: systemTerm(item.regalia,locale),
-                        categories: homebrewCategoryKeys(systemTerm(item.regalia,locale), item.sourceId),
+                        category,
+                        categories: homebrewCategoryKeys(category, item.sourceId),
                         secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
                         sortPriority: Number(item.type === "Real"),
                         description: contractOutcomeSections(presented,locale).map(section=>section.text).join(" "),
@@ -810,7 +824,7 @@ export function ExperiencePanel({
                     line="CtL"
                     items={benefitOptions.map((option)=>{
                       const [kind,contractId,choice]=option.value.split("::"), contract=findContractInCatalog(contractId), isClause=kind==="clause", presented=contract?contractPresentation(contract,locale,reference.contractPresentation):undefined;
-                      return {id:option.value,name:option.label,category:isClause?"Clause":t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?presented?.courtClauses?.[choice]??"":presented?.seemingBenefits?.[choice as keyof typeof presented.seemingBenefits]??"",meta:`${presented?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
+                      return {id:option.value,name:option.label,category:isClause?t("ui.clause"):t("ui.seemingBenefit"),secondaryCategory:isClause?courtDisplayName(choice,locale):seemingDisplayName(choice,locale),description:isClause?presented?.courtClauses?.[choice]??"":presented?.seemingBenefits?.[choice as keyof typeof presented.seemingBenefits]??"",meta:`${presented?.name??t("ui.contract")} · ${contract?.source??""} · p. ${contract?.page||"—"}`};
                     })}
                     selectedId={benefitKey || benefitOptions[0]?.value || ""}
                     onSelect={setBenefitKey}

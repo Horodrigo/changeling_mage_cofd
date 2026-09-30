@@ -91,19 +91,3 @@ export function LanguageProvider({children}:{children:ReactNode}) {
 export function useLanguage(){const context=useContext(LanguageContext);if(!context)throw new Error("useLanguage must be used inside LanguageProvider");return context}
 export const localeFlag=(locale:Locale)=>locale==="pt-BR"?"🇧🇷":"🇺🇸";
 export const languageStorageKey=STORAGE_KEY;
-export const localized = (locale: Locale, portuguese: string, english: string) =>
-  locale === "pt-BR" ? portuguese : english;
-
-export function localizedCount(
-  locale: Locale,
-  count: number,
-  portugueseSingular: string,
-  portuguesePlural: string,
-  englishSingular: string,
-  englishPlural: string,
-) {
-  const label = locale === "pt-BR"
-    ? count === 1 ? portugueseSingular : portuguesePlural
-    : count === 1 ? englishSingular : englishPlural;
-  return `${count} ${label}`;
-}

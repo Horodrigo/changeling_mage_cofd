@@ -18,7 +18,7 @@ import {
   changelingAnchorDisplayName, changelingAnchorRecovery, seemingDisplayName,
 } from "./creation-rules";
 import { SKILLS } from "@/lib/core/character/creation-rules";
-import { canSelectInitialContract } from "./builder-eligibility";
+import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { courtPageCitation, type CourtDefinition } from "@/lib/changeling-courts";
 import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
@@ -83,13 +83,6 @@ function courtDisplayName(catalog: readonly BuilderCourtDefinition[], value: unk
     return translate(locale as "pt-BR" | "en-US", "ui.courtless");
   const definition = findCourt(catalog, value);
   return definition ? courtName(definition, locale) : raw;
-}
-
-function contractCategoryKey(contract: ContractDefinition) {
-  if (contract.goblin || contract.regalia === "Goblin") return "goblin";
-  if (contract.categoryKind === "Corte" || contract.regalia === "All" || contract.courtIds?.length || contract.courtClauses) return "court";
-  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
-  return contract.regalia;
 }
 
 const contractCategoryKeys = (contract: ContractDefinition) => homebrewCategoryKeys(contractCategoryKey(contract), contract.sourceId);
@@ -183,6 +176,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           customKith={props.customKith}
           court={props.court}
           courtCatalog={props.courtCatalog}
+          merits={props.merits}
           catalog={props.contractCatalog}
           presentation={props.contractPresentation}
         />
@@ -379,8 +373,8 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
         <div className="kith-choice-row">
           <strong>{(selected ? kithName(selected) : props.kith) || t("ui.noneSelected")}</strong>
           {creationChoice&&(creationChoice.kind==="text"?
-            <Input className="kith-choice-inline" aria-label={locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn} value={props.kithChoice} onChange={event=>props.setKithChoice(event.target.value)} placeholder={locale==="pt-BR"?creationChoice.placeholderPt:creationChoice.placeholderEn}/>
-            : <Select value={props.kithChoice} onValueChange={props.setKithChoice} disabled={!creationChoiceOptions.length}><SelectTrigger className={`kith-choice-inline${props.kithChoice?"":" missing-choice"}`} size="sm" aria-label={locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn}><SelectValue placeholder={creationChoice.kind==="specialty"&&!creationChoiceOptions.length?t("ui.chooseASpecialty"):(locale==="pt-BR"?creationChoice.labelPt:creationChoice.labelEn)}/></SelectTrigger><SelectContent>{creationChoiceOptions.map(option=>{const [skill,...detail]=option.split(": ");return <SelectItem key={option} value={option}>{detail.length?`${systemTerm(skill,locale)}: ${detail.join(": ")}`:systemTerm(option,locale)}</SelectItem>;})}</SelectContent></Select>
+            <Input className="kith-choice-inline" aria-label={t(creationChoice.labelKey)} value={props.kithChoice} onChange={event=>props.setKithChoice(event.target.value)} placeholder={creationChoice.placeholderKey ? t(creationChoice.placeholderKey) : undefined}/>
+            : <Select value={props.kithChoice} onValueChange={props.setKithChoice} disabled={!creationChoiceOptions.length}><SelectTrigger className={`kith-choice-inline${props.kithChoice?"":" missing-choice"}`} size="sm" aria-label={t(creationChoice.labelKey)}><SelectValue placeholder={creationChoice.kind==="specialty"&&!creationChoiceOptions.length?t("ui.chooseASpecialty"):t(creationChoice.labelKey)}/></SelectTrigger><SelectContent>{creationChoiceOptions.map(option=>{const [skill,...detail]=option.split(": ");return <SelectItem key={option} value={option}>{detail.length?`${systemTerm(skill,locale)}: ${detail.join(": ")}`:systemTerm(option,locale)}</SelectItem>;})}</SelectContent></Select>
           )}
         </div>
         <small>{selected?`${kithText(selected).skill} · ${selected.source} · p. ${selected.page}`:t("ui.openTheCatalogToChoose")}</small>
@@ -473,6 +467,7 @@ function ContractSelector({
   customKith,
   court,
   courtCatalog,
+  merits,
   catalog,
   presentation,
 }: {
@@ -485,6 +480,7 @@ function ContractSelector({
   customKith: boolean;
   court: string;
   courtCatalog: CourtDefinition[];
+  merits: MeritSelection[];
   catalog: ContractDefinition[];
   presentation: ContractPresentationCatalog;
 }) {
@@ -509,11 +505,12 @@ function ContractSelector({
   const availableContracts = alphabetical(catalog, contractName,locale)
     .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
     .filter((contract) =>
-      canSelectInitialContract(
+      canSelectContract(
         contract,
         changelingFavoredRegalia({primary_regalia:primaryRegalia, second_regalia:secondRegalia, kith, kith_custom:customKith}),
         court,
         courtCatalog,
+        merits,
       ) &&
       (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&
       (categoryFilter === "all" || contractCategoryKeys(contract).includes(categoryFilter)) &&

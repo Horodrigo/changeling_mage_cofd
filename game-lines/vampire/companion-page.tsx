@@ -49,7 +49,6 @@ export function VampireCompanionPage({
   bloodPotency: number;
 }) {
   const { locale, t } = useLanguage();
-  const pt = locale === "pt-BR";
   const hasUndyingFamiliar = Array.isArray(character.line_data.devotion_ids) && character.line_data.devotion_ids.includes("devotion-undying-familiar");
   const companions = objectList(character.line_data.undead_companions).map((item): UndeadCompanion => ({
     id: String(item.id ?? createRandomId()),
@@ -113,9 +112,9 @@ export function VampireCompanionPage({
             onNameChange={(nextName) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, name: nextName } : item))}
           >
             <div className="vampire-familiar-state">
-              <p><strong>{pt ? "Duração" : "Lifespan"}:</strong> {lifespan} {saved.undying ? (pt ? "semanas por Vitae" : "weeks per Vitae") : (pt ? "noites por Vitae" : "nights per Vitae")}</p>
-              {hasUndyingFamiliar && <label><span>{pt ? "Familiar Imortal" : "Undying Familiar"}</span><Switch size="sm" checked={saved.undying} onCheckedChange={(checked) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, undying: checked } : item))} /></label>}
-              {saved.undying && <small>{pt ? "Erguido quando o animal ghoul vivo morre." : "Raised when the living ghouled animal dies."}</small>}
+              <p><strong>{t("ui.lifespan")}:</strong> {lifespan} {t(saved.undying ? "ui.weeksPerVitae" : "ui.nightsPerVitae")}</p>
+              {hasUndyingFamiliar && <label><span>{t("ui.undyingFamiliar")}</span><Switch size="sm" checked={saved.undying} onCheckedChange={(checked) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, undying: checked } : item))} /></label>}
+              {saved.undying && <small>{t("ui.undyingFamiliarRaised")}</small>}
               <strong>{t("ui.health")}</strong>
               <HealthTrack health={animal.health} damage={saved.health_damage} onChange={(health_damage) => persist(companions.map((item, itemIndex) => itemIndex === index ? { ...item, health_damage } : item))} />
             </div>

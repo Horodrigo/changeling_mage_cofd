@@ -1,4 +1,5 @@
 import type { MessageKey, Translator } from "@/lib/i18n";
+import { mageMessages } from "@/lib/i18n/messages/mage";
 import { freezeCatalogData } from "@/lib/catalog/catalog-service";
 import pathCatalog from "./catalog-data/paths.json";
 import { MAGE_ORDERS } from "./orders";
@@ -10,7 +11,9 @@ export const MTA_ORDERS=Object.fromEntries(MAGE_ORDERS.map((order)=>[order.name,
 export const MTA_ORDER_LABELS=Object.fromEntries(MAGE_ORDERS.map((order)=>[order.name,order.translatedName??order.name])) as Record<string,string>;
 
 export const mageOrderLabel = (order: string, locale: "pt-BR" | "en-US") =>
-  locale === "pt-BR" ? MTA_ORDER_LABELS[order] ?? order : order;
+  order === "Nameless" ? mageMessages[locale].ui.namelessOrder
+    : order === "Orderless" ? mageMessages[locale].ui.orderless
+      : locale === "pt-BR" ? MTA_ORDER_LABELS[order] ?? order : order;
 
 const GNOSIS_CASTING = [
   [0, 1, 1], [0, 1, 1],

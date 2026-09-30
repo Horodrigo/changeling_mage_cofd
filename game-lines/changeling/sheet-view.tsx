@@ -28,11 +28,12 @@ import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSection
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
-import { entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation,entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
@@ -103,7 +104,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
     const tokenCatalog = locale === "pt-BR" ? tokens.map((item) => ({ ...item, ...lineReference.tokenPresentation.find((text) => text.id === item.id) })) : tokens;
     const customEntitlements = useEntitlementHomebrews();
-    const entitlementCatalog = [...lineReference.entitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
+    const officialEntitlements = entitlementCatalogPresentation(lineReference.entitlements, locale, lineReference.entitlementPresentation);
+    const entitlementCatalog = [...officialEntitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
     const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
     const conditionCatalog = [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
     const isMobile = useIsMobile();
@@ -200,14 +202,14 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     if (isMobile) {
         const identity = [
             ["Nome", character.character.name], ["Jogador", character.character.player],
-            ["Crônica", character.character.chronicle], ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Linha", changelingAnchorDisplayName("thread", data.thread, locale)],
+            ["Agulha", changelingAnchorDisplayName("needle", data.needle, locale)], ["Linha", changelingAnchorDisplayName("thread", data.thread, locale)],
             ["Conceito", character.character.concept],
             ["Feição", seemingName(seemingCatalog, data.seeming, locale)],
             [t("ui.kith6a78ff"), presentKith(lineReference, data.kith, locale, Boolean(data.kith_custom)).name], [t("ui.court"), displayCourt(lineReference.courts, data.court, locale)],
         ];
         return (<CharacterPaperShell line="CtL" mobile title={t("ui.changelingTitle")} subtitle={t("ui.theLOST")}>
         <SwipeableSheetTabs value={sheetTab} onValueChange={setSheetTab} tabs={[
-                { value: "resumo", label: t("ui.summary") }, { value: "stats", label: "Stats" },
+                { value: "resumo", label: t("ui.summary") }, { value: "stats", label: t("ui.stats") },
                 { value: "detalhes", label: t("ui.details") },
                 { value: "poderes", label: t("ui.powers") },
                 ...(entitlementMerit ? [{ value: "entitlement", label: "Entitlement" }] : []),
@@ -220,7 +222,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <section className="sheet-identity-grid">{identity.map(([label, value]) => <SheetField key={String(label)} label={String(label)} value={value}/>)}{false}</section>
               <SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>
               <SheetHeading>{t("ui.experience")}</SheetHeading>
-              {<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>}
+              {<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/>}
               {false}
               {false}
             </>,
@@ -297,7 +299,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={claritySection} derived={derived} armorId={data.combat_armor} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>} />
+              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={claritySection} derived={derived} armorId={data.combat_armor} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/>} />
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetHeading>{t("ui.contracts")}</SheetHeading>
@@ -391,6 +393,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 {configurationEditor}
               </div>
             </details>);
+            const presented = meritPresentation(style, locale);
             return (<details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
             <summary>
               <div>
@@ -400,7 +403,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 </h4>
                 <small>
                   {style.source} · p. {style.page}
-                  <> · {t("ui.prerequisites")}: {style.prerequisites || t("ui.none")}</>
+                  <> · {t("ui.prerequisites")}: {presented.prerequisites || t("ui.none")}</>
                 </small>
               </div>
               <DotValue value={item.dots}/>
@@ -410,8 +413,8 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                     ? <>{configured.map((line, index) => (<section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
-                    </section>))}{item.name === "Hedge Duelist" && (style.levels ?? []).filter((level) => level.rating > 1 && level.rating <= item.dots).map((level, index) => <section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
-                    : (style.levels ?? [])
+                    </section>))}{item.name === "Hedge Duelist" && (presented.levels ?? []).filter((level) => level.rating > 1 && level.rating <= item.dots).map((level, index) => <section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
+                    : (presented.levels ?? [])
                         .filter((level) => level.rating <= item.dots)
                         .map((level, index) => (<section key={`${style.name}-${level.rating}-${index}`}>
                         <strong>
@@ -540,8 +543,9 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
     return (<div className="sheet-merits single-column">
       {visible.length ? (visible.map((item, index) => {
             const definition = availableCatalog.find((entry) => entry.name === item.name);
-            const tooltip = definition
-                ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}`
+            const presented = definition && meritPresentation(definition, locale);
+            const tooltip = presented
+                ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`
                 : item.source;
             return (<div className="sheet-merit-row" key={`${item.name}-${index}`} title={tooltip}>
               <div className="sheet-merit-main">
@@ -702,7 +706,7 @@ function KithLore({ data, reference }: {
     const page = Number(definition?.page ?? data.kith_page ?? 0);
     const choice = String(data.kith_choice ?? "").trim();
     const choiceDefinition = kithCreationChoice(definition?.id);
-    const choiceLabel = choiceDefinition ? (locale === "pt-BR" ? choiceDefinition.labelPt : choiceDefinition.labelEn) : "";
+    const choiceLabel = choiceDefinition ? t(choiceDefinition.labelKey) : "";
     const choiceParts = choice.split(": ");
     const displayedChoice = choiceDefinition?.kind === "skill" ? systemTerm(choice, locale) : choiceDefinition?.kind === "specialty" && choiceParts.length > 1 ? `${systemTerm(choiceParts[0], locale)}: ${choiceParts.slice(1).join(": ")}` : choice;
     if (!name)

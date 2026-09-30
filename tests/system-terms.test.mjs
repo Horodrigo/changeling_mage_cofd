@@ -24,7 +24,15 @@ test("léxico pt-BR de Changeling é aplicado aos termos canônicos",()=>{
     Lord:"Lorde",Clarity:"Lucidez",Mantle:"Manto",Mask:"Mascarilha","Goblin Market":"Mercado Goblin","Hedge Shaping":"Tecer a Sebe",Hedgespinning:"Tecer a Sebe",
     Oneiromancy:"Oniromancia",Oneiropomp:"Onirompo",Others:"Outros",Token:"Penhor",Lost:"Perdido",Portaling:"Passagem",Promise:"Promessa",Oathbreaker:"Quebrador de Juramento",
     "Bridge-Burner":"Queima-Pontes","Goblin Queen":"Rainha dos Goblins","Goblin King":"Rei dos Goblins",Regalia:"Regalia",Renegade:"Renunciado",Hedge:"Sebe",Sealing:"Selagem",
-    Mien:"Semblante Fae",Dreamweaving:"Tecelagem de Sonhos",Kenning:"Tino",Title:"Título","Fae-Touched":"Tocado por Fae",Touchstone:"Touchstone",trod:"trod",Hollow:"Vão",
+    Mien:"Semblante Feérico",Dreamweaving:"Tecelagem de Sonhos",Kenning:"Tino",Title:"Título","Fae-Touched":"Tocado por Fae",Touchstone:"Touchstone",trod:"trod",Hollow:"Vão",
   };
   for(const [en,pt] of Object.entries(glossary)) assert.equal(systemTerm(en,"pt-BR"),pt,en);
+});
+
+test("Arcanos e Feições canônicos têm apresentação portuguesa e preservam os nomes ingleses",()=>{
+  const terms={Death:"Morte",Fate:"Destino",Forces:"Forças",Life:"Vida",Matter:"Matéria",Mind:"Mente",Prime:"Primórdio",Space:"Espaço",Spirit:"Espírito",Time:"Tempo",Beast:"Fera",Darkling:"Trevoso",Elemental:"Elemental",Fairest:"Belíssimo",Ogre:"Ogro",Wizened:"Mirrado"};
+  for(const [en,pt] of Object.entries(terms)){
+    assert.equal(systemTerm(en,"pt-BR"),pt);
+    assert.equal(systemTerm(en,"en-US"),en);
+  }
 });

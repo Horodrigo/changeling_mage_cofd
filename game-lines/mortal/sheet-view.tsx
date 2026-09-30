@@ -19,6 +19,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import { boundedIntegrity, mortalBreakingPointPool, mortalDerived, mortalIntegrityModifier } from "./creation-rules";
@@ -214,7 +215,8 @@ function MeritList({ character, catalog }: { character: CharacterSheet; catalog:
     const definition = catalog.find((item) => item.name === merit.name);
     const name = locale === "pt-BR" ? definition?.translatedName ?? merit.name : definition?.name ?? merit.name;
     const configured = meritConfigurationTitle(merit.configuration);
-    const tooltip = definition ? `${definition.prerequisites ? `${t("ui.prerequisites")}: ${definition.prerequisites}\n` : ""}${definition.description}` : merit.source;
+    const presented = definition && meritPresentation(definition, locale);
+    const tooltip = presented ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}` : merit.source;
     return <div className="sheet-merit-row" key={`${merit.instanceId ?? merit.name}-${index}`} title={tooltip}>
       <div className="sheet-merit-main"><span>{name}{configured ? `: ${configured}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)} /></div>
     </div>;

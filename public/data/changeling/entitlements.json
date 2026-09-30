@@ -1059,18 +1059,18 @@
     "sourceId": "h-seemings",
     "page": 50,
     "prerequisites": "Manipulation 3, Empathy or Socialize 2, Wyrd 2+.",
-    "purpose": "Push chosen chrysalids beyond convention toward radical personal change.",
+    "purpose": "Push chosen Chrysalids beyond convention toward radical personal change.",
     "tokenName": "Lepidopteran Locket",
-    "tokenEffect": "Know the current chrysalid's location and activity, add rating to rolls encouraging change, and spend 1 Glamour to grant a chrysalid rote action on one growth-related action per scene.",
+    "tokenEffect": "Know the current Chrysalid's location and activity, add rating to rolls encouraging change, and spend 1 Glamour to grant a chrysalid rote action on one growth-related action per scene.",
     "tokenCatch": "Make a noticeable, difficult-to-reverse change to the surroundings.",
     "tokenDrawback": "After succeeding with a dice pool, repeating that pool in the scene suffers a cumulative -1.",
     "specialBlessings": [
       {
         "id": "former-chrysalids",
         "name": "Former Chrysalids",
-        "description": "Gain Allies equal to Wyrd/2, rounded up, representing grateful former chrysalids.",
+        "description": "Gain Allies equal to Wyrd/2, rounded up, representing grateful former Chrysalids.",
         "conditional": true,
-        "choiceLabel": "Allied chrysalids"
+        "choiceLabel": "Allied Chrysalids"
       },
       {
         "id": "desire-sense",
@@ -1078,19 +1078,19 @@
         "description": "Always know when someone lies about what they desire; unconscious desires produce a fainter impression."
       }
     ],
-    "touchstone": "A former chrysalid whose life was completely transformed by the Castellan.",
-    "curse": "Clarity attacks when a chrysalid suffers negative consequences from the Castellan's attention add dice equal to invested ranks.",
-    "beat": "Be confronted by someone from a chrysalid's life.",
+    "touchstone": "A former Chrysalid whose life was completely transformed by the Castellan.",
+    "curse": "Clarity attacks when a Chrysalid suffers negative consequences from the Castellan's attention add dice equal to invested ranks.",
+    "beat": "Be confronted by someone from a Chrysalid's life.",
     "source": "Book of Seemings",
     "sourceCode": "BoS",
     "privileges": "The title grants the authority, reputation, and supernatural advantages described by Spark of Metamorphosis.",
-    "duties": "The titleholder must pursue push chosen chrysalids beyond convention toward radical personal change. and uphold the title's traditions.",
+    "duties": "The titleholder must pursue push chosen Chrysalids beyond convention toward radical personal change. and uphold the title's traditions.",
     "maskAndMien": "The title reshapes the changeling's mien and marks her with its heraldic imagery.",
     "heraldry": "The heraldry associated with Castellan of the Broken Cage.",
     "token": {
       "name": "Lepidopteran Locket",
       "description": "The hereditary heraldry token of Castellan of the Broken Cage; its rating equals the ranks allocated to Heraldry.",
-      "effect": "Know the current chrysalid's location and activity, add rating to rolls encouraging change, and spend 1 Glamour to grant a chrysalid rote action on one growth-related action per scene.",
+      "effect": "Know the current Chrysalid's location and activity, add rating to rolls encouraging change, and spend 1 Glamour to grant a Chrysalid rote action on one growth-related action per scene.",
       "catch": "Make a noticeable, difficult-to-reverse change to the surroundings.",
       "drawback": "After succeeding with a dice pool, repeating that pool in the scene suffers a cumulative -1."
     },
@@ -1115,9 +1115,9 @@
       {
         "id": "former-chrysalids",
         "name": "Former Chrysalids",
-        "description": "Gain Allies equal to Wyrd/2, rounded up, representing grateful former chrysalids.",
+        "description": "Gain Allies equal to Wyrd/2, rounded up, representing grateful former Chrysalids.",
         "conditional": true,
-        "choiceLabel": "Allied chrysalids"
+        "choiceLabel": "Allied Chrysalids"
       },
       {
         "id": "desire-sense",

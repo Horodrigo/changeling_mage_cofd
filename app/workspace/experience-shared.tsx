@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
-import { useLanguage } from "@/lib/i18n";
+import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
@@ -15,6 +15,7 @@ import { MeritCatalogVisibilityToggle } from "../merit-catalog-visibility-toggle
 import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
+import { meritPresentation } from "@/lib/merit-presentation";
 
 export type ExperiencePurchaseGroup<T extends string> = {
   group: "core" | "supernatural" | "integrity" | "acquired";
@@ -22,15 +23,14 @@ export type ExperiencePurchaseGroup<T extends string> = {
 };
 
 const EXPERIENCE_GROUP_LABELS = {
-  core: ["Core", "Core"],
-  supernatural: ["Sobrenatural", "Supernatural"],
-  integrity: ["Integridade e Recuperação", "Integrity & Recovery"],
-  acquired: ["Poderes Adquiridos", "Acquired Powers"],
+  core: "ui.experienceGroupCore",
+  supernatural: "ui.experienceGroupSupernatural",
+  integrity: "ui.experienceGroupIntegrity",
+  acquired: "ui.experienceGroupAcquired",
 } as const;
 
-export function groupedPurchaseOptions<T extends string>(groups: readonly ExperiencePurchaseGroup<T>[], label: (value: T) => string, locale: string) {
-  const language = locale === "pt-BR" ? 0 : 1;
-  return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: EXPERIENCE_GROUP_LABELS[group][language] })));
+export function groupedPurchaseOptions<T extends string>(groups: readonly ExperiencePurchaseGroup<T>[], label: (value: T) => string, locale: Locale) {
+  return groups.flatMap(({ group, purchases }) => purchases.map((value) => ({ value, label: label(value), group: translate(locale, EXPERIENCE_GROUP_LABELS[group]) })));
 }
 
 export function experiencePurchaseBalances(available: number, spent: number, total: number, cost: number, builderMode = false) {
@@ -315,11 +315,12 @@ export function ExperienceMeritPicker({
               (item) =>
                 (showAllMerits || isEligible(item, context)) &&
                 (category === "Todas" || categoryKeys(item).includes(category)) &&
-                `${item.translatedName} ${item.name} ${item.description} ${item.prerequisites ?? ""} ${item.source} ${categoryKeys(item).join(" ")}`
-                  .toLocaleLowerCase("pt-BR")
+                `${meritName(item)} ${item.name} ${meritPresentation(item, locale).description} ${meritPresentation(item, locale).prerequisites ?? ""} ${item.source} ${categoryKeys(item).join(" ")}`
+                  .toLocaleLowerCase(locale)
                   .includes(normalized),
             )
             .map((item) => {
+              const presented = meritPresentation(item, locale);
               const instances = character.merits
                   .map((owned, index) => ({ owned, index }))
                   .filter(
@@ -362,12 +363,13 @@ export function ExperienceMeritPicker({
                       {item.source} · p. {item.page || "—"}
                       {repeatable ? t("ui.mayBePurchasedMultipleTimes") : ""}
                     </small>
-                    {item.prerequisites && (
+                    {presented.prerequisites && (
                       <p className={prerequisitesMet ? "" : "merit-prerequisites-missing"}>
-                        <b>{t("ui.prerequisites")}:</b> {item.prerequisites}
+                        <b>{t("ui.prerequisites")}:</b> {presented.prerequisites}
                       </p>
                     )}
-                    <p>{item.description}</p>
+                    <p>{presented.description}</p>
+                    {presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}
                   </div>
                   <div className="experience-merit-choice">
                     {repeatable && item.name !== "Mantle" && <label className="merit-instance-toggle"><input type="checkbox" checked={buyingNew} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:event.target.checked,instanceIndex:event.target.checked?-1:(instances[0]?.index??-1),dots:event.target.checked?(ratings[0]??1):(instances[0]?.owned.dots??1)}}))}/><span>{t("ui.newInstance431cdc")}</span></label>}

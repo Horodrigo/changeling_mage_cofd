@@ -175,7 +175,15 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
     height:32px;
     background-size:100% auto;
   }
-  .cofd-sheet .sheet-identity-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cofd-sheet .sheet-identity-grid {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+
+  gap: 6px 10px;
+  padding: 0px 0px 0px;
+ }
   .cofd-sheet .mobile-attribute-grid { gap:4px; }
   .cofd-sheet .mobile-attribute-grid .official-trait-block { padding:7px 3px; }
   .cofd-sheet .mobile-attribute-grid .official-trait-name { font-size:10px; }
