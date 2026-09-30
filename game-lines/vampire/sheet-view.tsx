@@ -1434,7 +1434,6 @@ export function VampireCharacterPaper({
       <PurchasedPowers character={character} powers={powers} locale={locale} />
       <TricksOfTheDamned
         character={character}
-        locale={locale}
         bloodPotency={bloodPotency}
         effectiveSenseBloodPotency={frenzySenseBloodPotency}
         effectiveAuraBloodPotency={predatoryAuraBloodPotency}
@@ -1506,7 +1505,6 @@ export function VampireCharacterPaper({
       />
       <FrenzyPanel
         setState={setState}
-        locale={locale}
         bloodPotency={bloodPotency}
         frenzyActive={frenzyActive}
         frenzyResistancePool={frenzyResistancePool}
@@ -2541,7 +2539,6 @@ function TrickCard({
 
 function TricksOfTheDamned({
   character,
-  locale,
   bloodPotency,
   effectiveSenseBloodPotency,
   effectiveAuraBloodPotency,
@@ -2556,7 +2553,6 @@ function TricksOfTheDamned({
   resilience,
 }: {
   character: CharacterSheet;
-  locale: string;
   bloodPotency: number;
   effectiveSenseBloodPotency: number;
   effectiveAuraBloodPotency: number;
@@ -2571,7 +2567,6 @@ function TricksOfTheDamned({
   resilience: number;
 }) {
   const { t } = useLanguage();
-  const pt = locale === "pt-BR";
   const auspex = Math.max(
     0,
     Number(
@@ -2601,211 +2596,127 @@ function TricksOfTheDamned({
       <div className="vampire-tricks-list">
         <TrickCard
           title={t("ui.blushOfLife")}
-          summary={
-            pt
-              ? `1 Vitae · duração ${blushDuration}`
-              : `1 Vitae · duration ${blushDuration}`
-          }
+          summary={t("ui.blushOfLifeSummary", { duration: blushDuration })}
         >
-          <p>
-            {pt
-              ? "Por 1 Vitae, o vampiro simula vida: aquece o corpo, apresenta pulso, fluidos naturais, funções sexuais e pode manter comida e bebida durante a duração."
-              : "For 1 Vitae, the vampire mimics life: body warmth, pulse, natural fluids, sexual function, and the ability to keep food and drink down for the duration."}
-          </p>
+          <p>{t("ui.blushOfLifeEffect")}</p>
           {(ignoresDaysleepWithBlush || ignoresLethargicWithBlush) && (
             <p>
               <strong>{t("ui.surmountingTheDaysleep")}:</strong>{" "}
-              {pt
-                ? `${ignoresDaysleepWithBlush ? "com Blush ativo, não é preciso rolar para resistir ao sono diurno" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "permanecer ativo de dia não causa Lethargic" : ""}.`
-                : `${ignoresDaysleepWithBlush ? "with Blush active, no roll is required to resist daysleep" : ""}${ignoresDaysleepWithBlush && ignoresLethargicWithBlush ? "; " : ""}${ignoresLethargicWithBlush ? "remaining active during the day does not inflict Lethargic" : ""}.`}
+              {[
+                ignoresDaysleepWithBlush && t("ui.blushIgnoresDaysleep"),
+                ignoresLethargicWithBlush && t("ui.blushIgnoresLethargic"),
+              ]
+                .filter(Boolean)
+                .join("; ")}
+              .
             </p>
           )}
           {fireDowngraded && (
             <p>
               <strong>{t("ui.peaceWithTheFlame")}:</strong>{" "}
-              {pt
-                ? `com Blush ativo, fogo causa dano letal; Resilience ${resilience} pode converter um ponto de letal em contusão por ponto.`
-                : `with Blush active, fire deals lethal damage; Resilience ${resilience} can downgrade one lethal point to bashing per dot.`}
+              {t("ui.peaceWithTheFlameEffect", { resilience })}
             </p>
           )}
           {canReduceSunlightInterval && (
             <p>
               <strong>{t("ui.sunsForgottenKiss")}:</strong>{" "}
-              {pt
-                ? "cada Vitae adicional gasto ao ativar Blush reduz em 1 a Blood Potency usada somente para o intervalo de dano solar, até o mínimo de 1."
-                : "each additional Vitae spent when activating Blush reduces Blood Potency by 1 for sunlight-damage interval only, to a minimum of 1."}
+              {t("ui.sunsForgottenKissEffect")}
             </p>
           )}
         </TrickCard>
 
         <TrickCard
           title={t("ui.kindredSenses")}
-          summary={
-            pt
-              ? `Blood Potency efetiva ${effectiveSenseBloodPotency}`
-              : `Effective Blood Potency ${effectiveSenseBloodPotency}`
-          }
+          summary={t("ui.effectiveBloodPotency", {
+            rating: effectiveSenseBloodPotency,
+          })}
         >
           <p>
-            {pt
-              ? `Escuridão total impõe apenas −2 em rolagens que exigem visão. Batimentos podem ser ouvidos a ${heartbeatRange} m; sangue pode ser percebido pelo cheiro a aproximadamente ${bloodScentRange} m${auspex > 0 ? ` com Auspex ${auspex}` : ""}.`
-              : `Full darkness imposes only −2 on rolls requiring vision. Heartbeats can be heard at ${heartbeatRange} m; blood can be smelled at roughly ${bloodScentRange} m${auspex > 0 ? ` with Auspex ${auspex}` : ""}.`}
+            {t("ui.kindredSensesRanges", {
+              heartbeatRange,
+              bloodScentRange,
+              auspex: auspex > 0 ? t("ui.withAuspex", { rating: auspex }) : "",
+            })}
           </p>
-          <p>
-            {pt
-              ? `Quando os sentidos Kindred se aplicam, +${effectiveSenseBloodPotency} dados para detectar pessoas ou detalhes ocultos por traços de sangue. Após provar o sangue de um humano, o mesmo bônus se aplica para rastreá-lo pelo cheiro.`
-              : `When Kindred senses apply, add +${effectiveSenseBloodPotency} dice to detect hidden people or details through traces of blood. After tasting a human's blood, the same bonus applies to tracking that person by scent.`}
-          </p>
+          <p>{t("ui.kindredSensesBloodTracking", { rating: effectiveSenseBloodPotency })}</p>
         </TrickCard>
 
         <TrickCard
           title={t("ui.tasteOfBlood")}
-          summary={`${pt ? "Parada" : "Pool"}: Wits + Composure = ${tasteBloodPool}`}
+          summary={t("ui.tasteOfBloodPool", { pool: tasteBloodPool })}
         >
+          <p>{t("ui.tasteOfBloodEffect")}</p>
           <p>
-            {pt
-              ? "Provar sangue revela informações sobre sua origem e condição. Um sucesso identifica detalhes básicos; sucesso excepcional revela detalhes mais específicos."
-              : "Tasting blood reveals information about its origin and condition. A success identifies basic details; an exceptional success reveals finer details."}
-          </p>
-          <p>
-            <strong>{pt ? "Modificadores" : "Modifiers"}:</strong>
-            {t("ui.auspex")}
-            {pt ? "ativo" : "active"}
-            {t("ui.auspexBonus")}
-            {pt ? "faminto" : "hungry"} +2;{" "}
-            {pt ? "sangue com 1 hora" : "hour-old blood"} −1;{" "}
-            {pt ? "1 dia" : "day-old"} −3;{" "}
-            {pt ? "1 semana ou mais" : "week or older"} −5.
+            <strong>{t("ui.modifiers")}:</strong> {t("ui.tasteOfBloodModifiers")}
           </p>
         </TrickCard>
 
         <TrickCard
           title={t("ui.physicalIntensity")}
-          summary={
-            pt
-              ? "1 Vitae · +2 dados por um turno"
-              : "1 Vitae · +2 dice for one turn"
-          }
+          summary={t("ui.physicalIntensitySummary")}
         >
-          <p>
-            {pt
-              ? "Escolha Strength, Dexterity ou Stamina. Adicione +2 dados às rolagens que usam esse Atributo durante o turno. Isso aumenta resistências relevantes, mas não altera características derivadas."
-              : "Choose Strength, Dexterity, or Stamina. Add +2 dice to rolls using that Attribute for the turn. Relevant resistances improve, but derived traits do not."}
-          </p>
+          <p>{t("ui.physicalIntensityEffect")}</p>
         </TrickCard>
 
         <TrickCard
           title={t("ui.healing")}
-          summary={
-            pt
-              ? "Vitae reconstrói o corpo morto"
-              : "Vitae reconstructs the dead body"
-          }
+          summary={t("ui.healingSummary")}
         >
-          <p>
-            {pt
-              ? "1 Vitae cura 2 de contusão ou 1 letal. Um ferimento agravado exige 5 Vitae e um dia completo de sono."
-              : "1 Vitae heals 2 bashing or 1 lethal. One aggravated wound requires 5 Vitae and a full day's sleep."}
-          </p>
+          <p>{t("ui.healingEffect")}</p>
         </TrickCard>
 
         <TrickCard
           title={t("ui.theCleansing")}
-          summary={
-            pt
-              ? "O daysleep restaura o corpo ao estado do Embrace"
-              : "Daysleep restores the body toward its Embrace state"
-          }
+          summary={t("ui.theCleansingSummary")}
         >
-          <p>
-            {pt
-              ? "Alterações menores que não equivalem a níveis de Health desaparecem durante o sono. Ferimentos que exigem Vitae são curados automaticamente, consumindo Vitae; gastar 1 Willpower por ferimento permite preservá-lo. Marcas como cicatrizes, tatuagens ou piercings também podem ser mantidas dessa forma."
-              : "Changes smaller than Health-level damage disappear during sleep. Wounds that require Vitae heal automatically and spend Vitae; 1 Willpower per wound can preserve it. Scars, tattoos, piercings, and similar changes can be preserved the same way."}
-          </p>
+          <p>{t("ui.theCleansingEffect")}</p>
         </TrickCard>
 
         <TrickCard
           title={t("ui.predatoryAura")}
-          summary={
-            pt
-              ? `Blood Potency efetiva ${effectiveAuraBloodPotency}`
-              : `Effective Blood Potency ${effectiveAuraBloodPotency}`
-          }
+          summary={t("ui.effectiveBloodPotency", {
+            rating: effectiveAuraBloodPotency,
+          })}
         >
-          <p>
-            {pt
-              ? "Lashing Out é uma ação instantânea. Contra Kindred custa 1 Willpower; contra mortais é gratuito. Disciplines não acrescentam dados a menos que digam explicitamente o contrário."
-              : "Lashing Out is an instant action. Against Kindred it costs 1 Willpower; against mortals it is free. Disciplines do not add dice unless they explicitly say otherwise."}
-          </p>
+          <p>{t("ui.predatoryAuraEffect")}</p>
           <p>
             <strong>{t("ui.bestialTriad")}:</strong>
             {t("ui.bestialTriadConditions")}
           </p>
           <p>
-            <strong>{pt ? "Lashing Out" : "Lashing Out"}:</strong>
-            {t("ui.monstrousPoolPrefix")}
-            {monstrousPool}
-            {t("ui.seductivePoolPrefix")}
-            {seductivePool}
-            {t("ui.competitivePoolPrefix")}
-            {competitivePool}).
+            <strong>{t("ui.lashingOut")}:</strong>{" "}
+            {t("ui.lashingOutPools", {
+              monstrous: monstrousPool,
+              seductive: seductivePool,
+              competitive: competitivePool,
+            })}
           </p>
           <p>
-            <strong>{pt ? "Modificadores" : "Modifiers"}:</strong>{" "}
-            {pt ? "em seu território" : "on your territory"}
-            {t("ui.feedingGroundsPrefix")}
-            {feedingGrounds}); {pt ? "faminto" : "hungry"} +1;{" "}
-            {pt ? "starving" : "starving"} +2;{" "}
-            {pt
-              ? "alvo já afetado pela aura nesta cena"
-              : "target already affected by the aura this scene"}{" "}
-            −1 {pt ? "cumulativo" : "cumulative"}.
+            <strong>{t("ui.modifiers")}:</strong>{" "}
+            {t("ui.predatoryAuraModifiers", { feedingGrounds })}
           </p>
-          <p>
-            {pt
-              ? "O alvo escolhe Fight ou Flight. Fight contesta com um Power Attribute + Blood Potency; Flight concede uma saída razoável e aplica a Condition associada ao aspecto do agressor."
-              : "The target chooses Fight or Flight. Fight contests with a Power Attribute + Blood Potency; Flight grants a reasonable exit and applies the Condition associated with the aggressor's aspect."}
-          </p>
+          <p>{t("ui.fightOrFlightEffect")}</p>
         </TrickCard>
 
         <TrickCard
           title={t("ui.feeding")}
-          summary={`${pt ? "Pode alimentar-se de" : "Can feed from"}: ${feedingTier}`}
+          summary={t("ui.feedingSummary", { tier: feedingTier })}
         >
           <p>
             <strong>
               {t("ui.bloodPotency")}
               {bloodPotency}:
             </strong>{" "}
-            {pt
-              ? `máximo ${vitaeMaximum} Vitae; até ${vitaePerTurn} Vitae por turno.`
-              : `maximum ${vitaeMaximum} Vitae; up to ${vitaePerTurn} Vitae per turn.`}
+            {t("ui.vitaeCapacity", {
+              maximum: vitaeMaximum,
+              perTurn: vitaePerTurn,
+            })}
           </p>
-          <p>
-            {pt
-              ? "Ao alimentar-se de uma fonte abaixo da restrição da Blood Potency, gaste 1 Willpower para cada Vitae obtido."
-              : "Feeding from a source below the Blood Potency restriction costs 1 Willpower for each Vitae gained."}
-          </p>
-          <p>
-            {pt
-              ? "Mordida violenta: presas funcionam como arma 0L com Brawl; após uma mordida em grapple, Feed rouba 1 Vitae por sucesso, limitado pela Blood Potency. Contra mortais, cada Vitae causa 1 letal adicional."
-              : "Violent bite: fangs act as a 0L Brawl weapon; after biting in a grapple, Feed steals 1 Vitae per success, capped by Blood Potency. Against mortals, each Vitae causes 1 additional lethal damage."}
-          </p>
-          <p>
-            {pt
-              ? "Mordida sutil: até 1 Vitae por turno; um mortal recebe Swooning e a ferida pode ser fechada sem deixar traço ao ser lambida."
-              : "Subtle bite: up to 1 Vitae per turn; a mortal gains Swooning and the wound can be licked closed without leaving a trace."}
-          </p>
-          <p>
-            {pt
-              ? "De humanos vivos, cada Vitae retirado causa 1 letal; retirar mais Vitae que a Stamina da vítima causa Drained. Sangue frio exige 2 × Blood Potency pints por Vitae."
-              : "From living humans, each Vitae taken causes 1 lethal; taking more Vitae than the victim's Stamina inflicts Drained. Cold blood requires 2 × Blood Potency pints per Vitae."}
-          </p>
-          <p>
-            {pt
-              ? `Starting Vitae: role 1d10 e some Feeding Grounds (${feedingGrounds}).`
-              : `Starting Vitae: roll 1d10 and add Feeding Grounds (${feedingGrounds}).`}
-          </p>
+          <p>{t("ui.restrictedFeeding")}</p>
+          <p>{t("ui.violentBite")}</p>
+          <p>{t("ui.subtleBite")}</p>
+          <p>{t("ui.livingHumanFeeding")}</p>
+          <p>{t("ui.startingVitae", { feedingGrounds })}</p>
         </TrickCard>
       </div>
     </>
@@ -2814,7 +2725,6 @@ function TricksOfTheDamned({
 
 function FrenzyPanel({
   setState,
-  locale,
   bloodPotency,
   frenzyActive,
   frenzyResistancePool,
@@ -2833,7 +2743,6 @@ function FrenzyPanel({
   lethalTrackFilled,
 }: {
   setState: (key: string, value: unknown) => void;
-  locale: string;
   bloodPotency: number;
   frenzyActive: boolean;
   frenzyResistancePool: number;
@@ -2852,19 +2761,14 @@ function FrenzyPanel({
   lethalTrackFilled: boolean;
 }) {
   const { t } = useLanguage();
-  const pt = locale === "pt-BR";
   const resistanceLabel =
     frenzyResistancePool <= 0
-      ? pt
-        ? "Dado de chance"
-        : "Chance die"
-      : `${frenzyResistancePool} ${pt ? "dados" : "dice"}`;
+      ? t("ui.chanceDie")
+      : t("ui.diceCount", { p1: frenzyResistancePool });
   const rideLabel =
     rideWavePool <= 0
-      ? pt
-        ? "Dado de chance"
-        : "Chance die"
-      : `${rideWavePool} ${pt ? "dados" : "dice"}`;
+      ? t("ui.chanceDie")
+      : t("ui.diceCount", { p1: rideWavePool });
   return (
     <>
       <SheetHeading>{t("ui.frenzy")}</SheetHeading>
@@ -2891,42 +2795,38 @@ function FrenzyPanel({
         {(ignoresFireFrenzy || ignoresSunlightFrenzy) && (
           <p className="wide">
             <strong>{t("ui.conquerTheRedFear")}:</strong>{" "}
-            {pt
-              ? `não provoca Frenzy por ${[ignoresFireFrenzy && "fogo", ignoresSunlightFrenzy && "luz solar"].filter(Boolean).join(" ou ")}.`
-              : `no Frenzy provocation from ${[ignoresFireFrenzy && "fire", ignoresSunlightFrenzy && "sunlight"].filter(Boolean).join(" or ")}.`}
+            {t("ui.frenzyTriggerImmunity", {
+              sources: [
+                ignoresFireFrenzy && t("ui.fire"),
+                ignoresSunlightFrenzy && t("ui.sunlight"),
+              ]
+                .filter(Boolean)
+                .join(t("ui.frenzyTriggerSeparator")),
+            })}
           </p>
         )}
         <p className="wide">
-          <strong>{t("ui.resistFrenzy")}:</strong> {resistanceLabel} (
-          {frenzyBasePool} {pt ? "base" : "base"}{" "}
-          {frenzyAutomaticModifier >= 0 ? "+" : ""}
-          {frenzyAutomaticModifier} {pt ? "automático" : "automatic"}).{" "}
-          {pt
-            ? "Outros modificadores situacionais são aplicados manualmente pelo jogador."
-            : "Other situational modifiers are applied manually by the player."}
+          <strong>{t("ui.resistFrenzy")}:</strong> {resistanceLabel}{" "}
+          {t("ui.frenzyResistanceBreakdown", {
+            base: frenzyBasePool,
+            modifier: `${frenzyAutomaticModifier >= 0 ? "+" : ""}${frenzyAutomaticModifier}`,
+          })}
         </p>
         <p className="wide">
           <strong>{t("ui.ridingTheWave")}:</strong> {rideLabel};{" "}
-          {pt ? "custo" : "cost"}{" "}
-          <strong>
-            {rideWaveWillpowerCost}
-            {t("ui.willpowerAbbreviation")}
-          </strong>
-          ; {pt ? "alvo" : "target"}{" "}
-          <strong>
-            {rideWaveTarget} {pt ? "sucessos" : "successes"}
-          </strong>
+          {t("ui.ridingTheWaveDetails", {
+            cost: `${rideWaveWillpowerCost}${t("ui.willpowerAbbreviation")}`,
+            target: rideWaveTarget,
+          })}
           {rideWaveBonus
-            ? `; ${pt ? "bônus da Coil" : "Coil bonus"} +${rideWaveBonus}`
+            ? `; ${t("ui.coilBonus", { bonus: rideWaveBonus })}`
             : ""}
           .
         </p>
         {frenzyActive && (
           <p className="wide">
-            <strong>{t("ui.activeFrenzy")}:</strong> +{bloodPotency}{" "}
-            {pt
-              ? "em rolagens/resistências de Strength, Dexterity e Stamina; penalidades de ferimento são ignoradas."
-              : "to Strength, Dexterity, and Stamina rolls/resistances; wound penalties are ignored."}
+            <strong>{t("ui.activeFrenzy")}:</strong>{" "}
+            {t("ui.activeFrenzyEffect", { bloodPotency })}
           </p>
         )}
         {beastPowerActive && (
@@ -2951,9 +2851,7 @@ function FrenzyPanel({
         )}
         <p className="wide">
           <strong>{t("ui.touchstone")}:</strong>{" "}
-          {pt
-            ? `requer ${bloodPotency * 3} sucessos em uma ação Social prolongada para encerrar Frenzy.`
-            : `requires ${bloodPotency * 3} successes on an extended Social action to talk the vampire down.`}
+          {t("ui.touchstoneEndsFrenzy", { successes: bloodPotency * 3 })}
         </p>
       </div>
     </>
