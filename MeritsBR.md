@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 59/202 registros Core e 53/154 Changeling. Todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos, incluindo as cinco manobras de Guerreiro Elemental, três de Apresentação Encantadora e onze de Duelista da Sebe. Ainda faltam 143 registros Core e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 121/202 registros Core e 53/154 Changeling. Todos os 105 registros Core atribuídos ao livro básico e todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos. As manobras e os benefícios por nível cadastrados foram incluídos. Ainda faltam 81 registros Core dos suplementos e 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -96,6 +96,38 @@ Observações mecânicas adicionais, sem correção incidental:
 - `Cheap Shot`, p. 61: o resumo não contém a penalidade cumulativa de −2 para novos usos na mesma cena. Não foi acrescentada na tradução.
 - `Choke Hold`, p. 61: o resumo omite o limiar de sucessos maior que o dobro do Vigor e a duração de (6 − Vigor) minutos. Não foram acrescentados na tradução.
 - `Fighting Finesse` e `Interdisciplinary Specialty`: os livros exigem Especializações apropriadas; os requisitos canônicos resumidos não as incluem. A tradução mantém os requisitos existentes.
+
+## Novas escolhas para auditoria — conclusão do livro básico Core
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Investigative Aide | Talento Investigativo | Aptidão própria do personagem, não um ajudante externo. |
+| Mind of a Madman | Mente de um Louco | Mantém o nome do livro; diz respeito a adotar a perspectiva de um criminoso. |
+| Pusher / soft leverage | Tentador / influência branda | Tentação e suborno usados em Manobras Sociais. |
+| Seizing the Edge / Edge | Tomando a Dianteira / Vantagem | Vantagem mecânica em perseguições. |
+| Shiv | Estoque | Arma pequena e ocultável, não estoque de mercadorias. |
+| Spin Doctor | Manipulador de Narrativas | Reinterpretação de evidências e histórias. |
+| Tainted Clues / Incomplete Clues | Pistas Corrompidas / Pistas Incompletas | Categorias mecânicas de pistas. |
+| Sympathetic | Empático | Facilita criar vínculos, não apenas ser agradável. |
+| Table Turner | Virando o Jogo | Distingue-se de Virada de Mesa, de Fire & Revolution. |
+| Takes One to Know One | Um Reconhece o Outro | Reconhecimento de um Vício compartilhado. |
+| Taste | Gosto Refinado | Apreciação de obras; não se restringe ao paladar. |
+| Close Quarters Combat | Combate em Espaços Restritos | Usa o ambiente e a curta distância. |
+| Fast-Talking | Lábia | Persuasão enganosa por conversa. |
+| Mystery Cult Influence / Initiation | Influência em Culto de Mistério / Iniciação em Culto de Mistério | Mantém registros separados e seus respectivos benefícios. |
+| Mastermind | Mentor Intelectual | Nome do quinto nível dos registros de culto; não concede o Mérito Mentor por si só. |
+| Traceur | Traceur | Termo específico do praticante de Parkour mantido em Traceur Experiente. |
+| Stunt Driver | Motorista de Manobras | Distingue-se de Motorista Exímio. |
+
+Fontes inspecionadas visualmente neste lote: Chronicles of Darkness pp. 46, 49–50, 52–55, 58–60 e 62–66. As pp. 45, 48, 51, 56–57 e 61 já haviam sido inspecionadas nos lotes anteriores. A apresentação de Treinamento Profissional reutiliza **Perícia de Ativo**, já adotado na interface.
+
+Observações mecânicas adicionais, sem correção incidental:
+
+- `Mystery Cult Influence`: o catálogo atribui o registro ao Core p. 51, mas as pp. 51–53 inspecionadas apresentam `Mystery Cult Initiation`, não um Mérito separado com esse nome. A origem exata do registro requer auditoria; sua identidade, referência e benefícios existentes não foram alterados.
+- `Iron Will`: o requisito canônico é Resolve ••••; o livro p. 51 apresenta Resolve •••. A tradução mantém Perseverança ••••.
+- `Resources`, `Mentor` e `Status`: os resumos usam “session”, enquanto os trechos correspondentes do livro usam “chapter”. A apresentação mantém “sessão”.
+- `Professional Training`: o resumo de Continuing Education coloca a escolha das duas Perícias de Ativo no segundo nível; no livro p. 46, elas são escolhidas ao adquirir o Mérito. A tradução mantém a estrutura cadastrada.
+- Os estilos de combate mantêm os resumos existentes, inclusive seus limites de detalhamento. Por exemplo, `Like a Book` não explicita no resumo que metade de Briga é arredondada para baixo, e `Breaking Point` não explicita a proporção de Estrutura sacrificada. Esses detalhes não foram acrescentados incidentalmente.
 
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 

@@ -16,7 +16,10 @@ const corePt = await json("public/data/core/merits/pt-BR/core.json");
 const changelingPt = await json("public/data/changeling/merits-pt.json");
 
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
-  assert.equal(Object.keys(corePt).length, 59);
+  assert.equal(Object.keys(corePt).length, 121);
+  for (const item of core.filter((item) => item.sourceId === "core-2ed")) {
+    assert.ok(corePt[item.id], item.id);
+  }
   assert.equal(Object.keys(changelingPt).length, 53);
   for (const item of changeling.filter((item) => !item.sourceId.startsWith("h-"))) {
     assert.ok(changelingPt[item.id], item.id);
@@ -49,10 +52,13 @@ test("switching Merit locale changes presentation, never eligibility or canonica
   assert.equal(acute.prerequisites, "Wits or Composure •••");
   assert.equal(meritPrerequisitesMet(acute, { gameLine: "CtL", attributes: { Wits: 3 } }), true);
   assert.equal(meritPrerequisitesMet(acute, { gameLine: "CtL", attributes: { Wits: 2, Composure: 2 } }), false);
-  for (let index = 0; index < catalog.length; index++) {
-    const canonical = Object.fromEntries(Object.entries(catalog[index]).filter(([key]) => !["presentationPt", "translatedName"].includes(key)));
-    const original = Object.fromEntries(Object.entries(before[index]).filter(([key]) => key !== "translatedName"));
-    assert.deepEqual(canonical, original);
+  for (const [definitions, portuguese] of [[core, corePt], [changeling, changelingPt]]) {
+    const localized = withMeritPresentation(definitions, portuguese);
+    for (let index = 0; index < localized.length; index++) {
+      const canonical = Object.fromEntries(Object.entries(localized[index]).filter(([key]) => !["presentationPt", "translatedName"].includes(key)));
+      const original = Object.fromEntries(Object.entries(definitions[index]).filter(([key]) => key !== "translatedName"));
+      assert.deepEqual(canonical, original);
+    }
   }
   assert.deepEqual(changeling, before);
   const defense = withMeritPresentation(core, corePt).find((item) => item.id === "core-2ed:armed-defense");

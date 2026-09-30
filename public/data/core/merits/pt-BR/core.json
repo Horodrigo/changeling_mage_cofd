@@ -283,5 +283,662 @@
     "name": "Especialização Interdisciplinar",
     "prerequisites": "Qualquer Perícia •••",
     "description": "Escolhe uma Especialização na Perícia correspondente. Aplica o dado de bônus da Especialização aos testes pertinentes de qualquer Perícia, exceto aos testes sem treinamento."
+  },
+  "core-2ed:investigative-aide": {
+    "name": "Talento Investigativo",
+    "prerequisites": "Qualquer Perícia •••",
+    "description": "Ao testar a Perícia escolhida para descobrir pistas, obtém sucesso excepcional com apenas três sucessos. Adiciona um elemento de bônus a qualquer pista descoberta com essa Perícia."
+  },
+  "core-2ed:investigative-prodigy": {
+    "name": "Prodígio Investigativo",
+    "prerequisites": "Raciocínio •••, Investigação •••",
+    "description": "Ao testar para descobrir pistas, descobre uma pista por sucesso, até o limite dos pontos em Prodígio Investigativo. Pistas obtidas por sucessos adicionais nunca têm mais de um elemento cada."
+  },
+  "core-2ed:iron-skin": {
+    "name": "Pele de Ferro",
+    "prerequisites": "Artes Marciais ou Luta de Rua ••, Vigor •••",
+    "description": "Concede metade dos pontos em Pele de Ferro como pontos de Armadura geral contra ataques contundentes. Ao sofrer dano, pode gastar Força de Vontade para converter em contundente uma quantidade de dano letal igual à metade dos pontos em Pele de Ferro."
+  },
+  "core-2ed:iron-stamina": {
+    "name": "Vigor de Ferro",
+    "prerequisites": "Vigor ou Perseverança •••",
+    "description": "Ignora penalidades de fadiga ou ferimentos até a pontuação em Vigor de Ferro."
+  },
+  "core-2ed:iron-will": {
+    "name": "Vontade de Ferro",
+    "prerequisites": "Perseverança ••••",
+    "description": "Ao gastar Força de Vontade para disputar ou resistir a influência Social, substitui o bônus habitual de Força de Vontade pela pontuação em Perseverança. Se o teste for disputado, recebe 8-novamente."
+  },
+  "core-2ed:language": {
+    "name": "Idioma",
+    "description": "Pode falar, ler e escrever em um idioma escolhido."
+  },
+  "core-2ed:laying-on-hands": {
+    "name": "Imposição de Mãos",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Presença + Empatia para curar ferimentos ou doenças pelo toque, sofrendo parte do dano curado."
+  },
+  "core-2ed:library": {
+    "name": "Biblioteca",
+    "description": "Possui um acervo de informações relacionado a uma Perícia específica. Adiciona os pontos em Biblioteca aos testes prolongados pertinentes."
+  },
+  "core-2ed:meditative-mind": {
+    "name": "Mente Meditativa",
+    "description": "Ignora penalidades ambientais e por ferimentos em testes de meditação. Com dois pontos, meditar concede +3 aos testes de Perseverança + Compostura pelo restante do dia. Com quatro pontos, testes de meditação precisam acumular apenas um sucesso."
+  },
+  "core-2ed:medium": {
+    "name": "Médium",
+    "prerequisites": "Somente mortais; Empatia ••",
+    "description": "Ouve seres efêmeros e interage verbalmente com eles. Um ritual de comunhão preparado e um teste de Raciocínio + Ocultismo podem avançar uma Condição de Influência em um passo rumo a Controlado, mas os mortos podem impor Abalado ou Assombrado."
+  },
+  "core-2ed:mentor": {
+    "name": "Mentor",
+    "description": "Possui um guia que espera algo do personagem proporcional à sua influência, medida pelos pontos em Mentor. Escolhe três características entre as Perícias e o Mérito Recursos. Uma vez por sessão, o Mentor pode fornecer ajuda que se enquadre em uma dessas características, obtendo um sucesso automático."
+  },
+  "core-2ed:mind-of-a-madman": {
+    "name": "Mente de um Louco",
+    "prerequisites": "Somente mortais; Empatia •••",
+    "description": "Adota a mentalidade de um criminoso durante uma investigação para receber 8-novamente nos testes pertinentes, ao custo de pesadelos, riscos de degeneração ao negligenciar a busca e penalidades para resistir à degeneração decorrente de imitar o culpado."
+  },
+  "core-2ed:multilingual": {
+    "name": "Multilíngue",
+    "description": "Para cada ponto, escolhe dois idiomas em que pode conversar. Testa Inteligência + Erudição para compreender textos escritos."
+  },
+  "core-2ed:numbing-touch": {
+    "name": "Toque Entorpecente",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e toca um alvo para suprimir suas penalidades por ferimentos, entorpecendo suas ações manuais e sensoriais, ou usa o efeito como uma arma psíquica."
+  },
+  "core-2ed:omen-sensitivity": {
+    "name": "Sensibilidade a Presságios",
+    "prerequisites": "Somente mortais",
+    "description": "Uma vez por sessão, testa Raciocínio + Ocultismo para interpretar sinais fortuitos e receber respostas verdadeiras sobre a situação ou o mundo em geral; depois recebe Obsessão ou Assombrado."
+  },
+  "core-2ed:patient": {
+    "name": "Paciente",
+    "description": "Adiciona +2 ao número máximo de testes permitidos em ações prolongadas."
+  },
+  "core-2ed:psychokinesis": {
+    "name": "Psicocinese",
+    "prerequisites": "Somente mortais",
+    "description": "Escolhe um elemento ou força. Gasta Força de Vontade e testa Perseverança + Ocultismo para remodelá-lo, movê-lo, atacar com ele ou usá-lo de forma criativa; a versão de cinco pontos pode manifestá-lo do nada. Esgotar a Força de Vontade traz o risco de manifestações descontroladas."
+  },
+  "core-2ed:psychometry": {
+    "name": "Psicometria",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Raciocínio + Ocultismo para ler impressões emocionais de um objeto ou lugar e fazer uma pergunta por sucesso sobre sua história. Locais ou itens importantes podem desencadear visões involuntárias e Condições."
+  },
+  "core-2ed:pusher": {
+    "name": "Tentador",
+    "prerequisites": "Persuasão ••",
+    "description": "Ao usar influência branda, melhora a impressão causada como se também tivesse satisfeito o Vício do alvo."
+  },
+  "core-2ed:quick-draw": {
+    "name": "Saque Rápido",
+    "prerequisites": "Raciocínio •••",
+    "description": "Sempre que a Defesa estiver disponível, pode sacar como ação reflexiva uma arma coberta por uma Especialização escolhida de Armas Brancas ou Armas de Fogo."
+  },
+  "core-2ed:relentless": {
+    "name": "Incansável",
+    "prerequisites": "Atletismo ••, Vigor •••",
+    "description": "Adiciona 2 ao número de sucessos necessários contra o personagem em uma perseguição."
+  },
+  "core-2ed:resources": {
+    "name": "Recursos",
+    "description": "Possui renda disponível proporcional aos pontos neste Mérito. Uma vez por sessão, pode adquirir com segurança um item ou serviço cuja Disponibilidade não ultrapasse a pontuação em Recursos, incluindo qualquer quantidade razoável de itens ou serviços cuja Disponibilidade esteja dois pontos abaixo de seus Recursos. Pode adquirir um item ou serviço com Disponibilidade um ponto acima da pontuação em Recursos ao custo de reduzir seus Recursos efetivos em um ponto por um mês."
+  },
+  "core-2ed:retainer": {
+    "name": "Lacaio",
+    "description": "Possui um subordinado. A parada de dados dele equivale ao dobro de sua pontuação em Lacaio para ações dentro de sua área de atuação, ou à própria pontuação em Lacaio para ações fora dela."
+  },
+  "core-2ed:safe-place": {
+    "name": "Local Seguro",
+    "description": "Protegeu um local contra intrusões. Enquanto estiver nele, adiciona a pontuação em Local Seguro à Iniciativa. Aplica Local Seguro como penalidade aos testes para invadi-lo. Se possuir pontos em Ofícios, pode instalar armadilhas, forçando intrusos a testar Destreza + Furto − Local Seguro para evitar dano letal até a pontuação em Local Seguro. Vários personagens podem contribuir com pontos para um Local Seguro e compartilhar a pontuação total resultante."
+  },
+  "core-2ed:seizing-the-edge": {
+    "name": "Tomando a Dianteira",
+    "prerequisites": "Raciocínio •••, Compostura •••",
+    "description": "Recebe a Vantagem no primeiro turno de uma perseguição. Se o oponente falhar em um teste como se estivesse sendo emboscado, pode calcular os sucessos necessários sem considerar o Deslocamento ou a Iniciativa dele."
+  },
+  "core-2ed:shiv": {
+    "name": "Estoque",
+    "prerequisites": "Luta de Rua ••, Armas Brancas •",
+    "description": "Pode ocultar junto ao corpo uma arma de Briga que cause 0 de dano letal com um ponto, ou 1 de dano letal com dois. Aplica sua pontuação em Armas Brancas como penalidade aos testes para detectá-la."
+  },
+  "core-2ed:sleight-of-hand": {
+    "name": "Prestidigitação",
+    "prerequisites": "Furto •••",
+    "description": "Pode realizar reflexivamente uma ação instantânea de Furto uma vez por turno. Vítimas de seu Furto não podem perceber as tentativas se não estiverem procurando especificamente por elas."
+  },
+  "core-2ed:small-unit-tactics": {
+    "name": "Táticas de Pequenas Unidades",
+    "prerequisites": "Presença •••",
+    "description": "Uma vez por cena, ao coordenar aliados, pode gastar Força de Vontade como ação instantânea para conceder o bônus de dados a um número de aliados até sua pontuação em Presença."
+  },
+  "core-2ed:small-framed": {
+    "name": "Pequeno Porte",
+    "description": "−1 de Tamanho. Recebe +2 para se esconder, passar despercebido ou se beneficiar de outra forma de seu tamanho. Disponível apenas na criação do personagem."
+  },
+  "core-2ed:spin-doctor": {
+    "name": "Manipulador de Narrativas",
+    "prerequisites": "Manipulação •••, Subterfúgio ••",
+    "description": "Usar Pistas Corrompidas impõe uma penalidade adicional de −1 em vez de consumir sucessos."
+  },
+  "core-2ed:staff": {
+    "name": "Funcionários",
+    "description": "Possui funcionários que correspondem a uma Perícia por ponto em Funcionários. Eles podem obter um único sucesso automático em ações pertinentes usando uma dessas Perícias."
+  },
+  "core-2ed:status": {
+    "name": "Status",
+    "description": "Possui influência como integrante de um grupo escolhido. Pode recorrer às instalações e aos recursos do grupo, bloquear uma vez por sessão o uso de um Mérito Social pertinente com pontuação inferior à sua pontuação em Status e aplicar Status como bônus de dados aos testes Sociais que recorram à sua influência."
+  },
+  "core-2ed:striking-looks": {
+    "name": "Aparência Marcante",
+    "description": "Sua aparência é notável e memorável. Adiciona os pontos em Aparência Marcante como bônus de dados aos testes Sociais que se beneficiem da aparência e aos testes de outros personagens para notar ou lembrar do personagem."
+  },
+  "core-2ed:sympathetic": {
+    "name": "Empático",
+    "description": "Ao realizar Manobras Sociais, pode aceitar uma Condição como Coagido ou Enamorado para abrir duas Portas imediatamente."
+  },
+  "core-2ed:table-turner": {
+    "name": "Virando o Jogo",
+    "prerequisites": "Compostura •••, Manipulação •••, Raciocínio •••",
+    "description": "Ao ser alvo de Manobras Sociais, pode gastar Força de Vontade para responder antecipadamente com uma ação Social própria."
+  },
+  "core-2ed:takes-one-to-know-one": {
+    "name": "Um Reconhece o Outro",
+    "prerequisites": "Vício",
+    "description": "Ao investigar um incidente que ressoe com seu Vício, em vez de sofrer a penalidade normal de −2, seu teste recebe +2 dados e 9-novamente. Ter sucesso no teste satisfaz seu Vício."
+  },
+  "core-2ed:taste": {
+    "name": "Gosto Refinado",
+    "prerequisites": "Ofícios ••",
+    "description": "Escolhe uma Especialização em Ofícios ou Expressão. Pode testar Raciocínio + a Perícia em questão para obter informações sobre a natureza de uma obra coberta pela Especialização escolhida."
+  },
+  "core-2ed:telekinesis": {
+    "name": "Telecinese",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade para manifestar Telecinese durante uma cena, usando seus pontos como Força efetiva. Ataques custam Força de Vontade e usam Telecinese + Ocultismo − Vigor; ferimentos ou estímulos intensos podem desencadear uma manifestação descontrolada."
+  },
+  "core-2ed:telepathy": {
+    "name": "Telepatia",
+    "prerequisites": "Somente mortais",
+    "description": "Gasta Força de Vontade e testa Raciocínio + Empatia − Perseverança para ler pensamentos superficiais e fazer uma pergunta por sucesso. A versão de cinco pontos pode projetar mensagens curtas; pensamentos intrusivos podem impor Abalado ou Assombrado."
+  },
+  "core-2ed:thief-of-fate": {
+    "name": "Ladrão de Destino",
+    "prerequisites": "Somente mortais",
+    "description": "Tocar alguém rouba sua sorte pelo resto do dia: Força de Vontade concede +4 dados em vez de +3, enquanto as falhas da vítima se tornam falhas dramáticas. A vítima reconhece o ladrão após sofrer uma delas."
+  },
+  "core-2ed:tolerance-for-biology": {
+    "name": "Tolerância à Biologia",
+    "prerequisites": "Perseverança •••",
+    "description": "Ignora testes de resistência provocados por presenciar manifestações biológicas grotescas."
+  },
+  "core-2ed:trained-observer": {
+    "name": "Observador Treinado",
+    "prerequisites": "Raciocínio ou Compostura •••",
+    "description": "Recebe 9-novamente, ou 8-novamente com três pontos, em testes de Percepção."
+  },
+  "core-2ed:true-friend": {
+    "name": "Amigo Verdadeiro",
+    "description": "Possui um vínculo inquebrável de amizade com um personagem escolhido. Testes para influenciar esse amigo em prejuízo do personagem sofrem −5. Uma vez por história, pode recuperar um ponto de Força de Vontade por meio de uma interação significativa com o amigo."
+  },
+  "core-2ed:unseen-sense": {
+    "name": "Sentido do Invisível",
+    "prerequisites": "Somente mortais",
+    "description": "Escolhe um fenômeno sobrenatural e um sinal sensorial. Uma vez por capítulo, aceita Assombrado para localizar a fonte próxima, a menos que magia apropriada a oculte."
+  },
+  "core-2ed:untouchable": {
+    "name": "Intocável",
+    "prerequisites": "Manipulação •••, Subterfúgio ••",
+    "description": "É um criminoso habilidoso. Testes para investigar seus atos precisam obter um sucesso excepcional; caso contrário, revelam Pistas Incompletas."
+  },
+  "core-2ed:vice-ridden": {
+    "name": "Dominado pelos Vícios",
+    "prerequisites": "Vício",
+    "description": "Recebe um segundo Vício."
+  },
+  "core-2ed:virtuous": {
+    "name": "Virtuoso",
+    "prerequisites": "Virtude",
+    "description": "Recebe uma segunda Virtude."
+  },
+  "core-2ed:close-quarters-combat": {
+    "name": "Combate em Espaços Restritos",
+    "prerequisites": "Raciocínio •••, Atletismo ••, Briga •••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Linhas de Tiro",
+        "description": "Pode responder a um ataque à distância buscando cobertura a até o dobro do Deslocamento."
+      },
+      {
+        "rating": 2,
+        "name": "Superfícies Duras",
+        "description": "Pode realizar a manobra Causar Dano de um agarrão contra uma superfície dura, causando dano letal e encerrando o agarrão."
+      },
+      {
+        "rating": 3,
+        "name": "Caixão Blindado",
+        "description": "Ao agarrar um oponente que vista armadura, adiciona a Armadura geral dele como dados de bônus ao teste e ignora a armadura ao usar o agarrão para Causar Dano. Incompatível com Superfícies Duras."
+      },
+      {
+        "rating": 4,
+        "name": "Trabalho Preparatório",
+        "description": "Recebe a qualidade de rotina nos testes de Furtividade para iniciar emboscadas de combate corpo a corpo."
+      },
+      {
+        "rating": 5,
+        "name": "Reviravolta",
+        "description": "Ao testar para desarmar, trata uma falha como sucesso, um sucesso como sucesso excepcional e um sucesso excepcional como tal, além de causar dois pontos de dano contundente ao oponente."
+      }
+    ]
+  },
+  "core-2ed:fast-talking": {
+    "name": "Lábia",
+    "prerequisites": "Manipulação •••, Subterfúgio ••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Fechar o Negócio",
+        "description": "Ignora um ponto da Perseverança ou Compostura do alvo em testes disputados ou resistidos."
+      },
+      {
+        "rating": 2,
+        "name": "Jargão",
+        "description": "Aplica uma Especialização de outra Perícia a um teste Social específico."
+      },
+      {
+        "rating": 3,
+        "name": "Advogado do Diabo",
+        "description": "Uma vez por cena, repete um teste fracassado de Subterfúgio."
+      },
+      {
+        "rating": 4,
+        "name": "Preparar o Terreno",
+        "description": "Ao abrir uma Porta por meio de conversa, pode gastar Força de Vontade para abrir outra."
+      },
+      {
+        "rating": 5,
+        "name": "Golpe Nigeriano",
+        "description": "Testa Manipulação + Subterfúgio para aproveitar o momento em que um alvo presente satisfaz seu Vício e abrir uma Porta."
+      }
+    ]
+  },
+  "core-2ed:firefight": {
+    "name": "Tiroteio",
+    "prerequisites": "Compostura •••, Destreza •••, Atletismo ••, Armas de Fogo ••",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Atirar Primeiro",
+        "description": "Sacar uma arma de fogo adiciona Armas de Fogo como bônus à Iniciativa."
+      },
+      {
+        "rating": 2,
+        "name": "Fogo Supressivo",
+        "description": "Pode realizar Fogo de Cobertura com uma arma semiautomática. Ao realizar Fogo de Cobertura, aplica a Defesa contra ataques de Armas de Fogo e nega bônus de Mirar."
+      },
+      {
+        "rating": 3,
+        "name": "Alvo Secundário",
+        "description": "Pode atacar um alvo com objetos arremessados pelo impacto de um tiro, causando dano contundente sem aplicar a pontuação da arma, mas ignorando cobertura."
+      }
+    ]
+  },
+  "core-2ed:heavy-weapons": {
+    "name": "Armas Pesadas",
+    "prerequisites": "Vigor •••, Força •••, Atletismo ••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Golpe Certeiro",
+        "description": "Sacrifica três dados para adicionar um ponto à pontuação da arma."
+      },
+      {
+        "rating": 2,
+        "name": "Alcance Ameaçador",
+        "description": "Causa um ponto de dano letal e uma penalidade temporária de Defesa a oponentes que entrem no alcance quando o personagem não estiver se movendo nem Esquivando."
+      },
+      {
+        "rating": 3,
+        "name": "Infligir Dor",
+        "description": "Sacrifica a Defesa para realizar um ataque que também imponha uma penalidade temporária de dados igual ao dano causado."
+      },
+      {
+        "rating": 4,
+        "name": "Postura Protetora",
+        "description": "Gasta Força de Vontade reflexivamente para aplicar a pontuação da arma como Armadura contra combate corpo a corpo."
+      },
+      {
+        "rating": 5,
+        "name": "Dilacerar",
+        "description": "Gasta Força de Vontade para realizar um ataque que cause um ponto adicional de dano agravado."
+      }
+    ]
+  },
+  "core-2ed:improvised-weaponry": {
+    "name": "Armas Improvisadas",
+    "prerequisites": "Raciocínio •••, Armas Brancas •",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Sempre Armado",
+        "description": "Testa Raciocínio + Armas Brancas reflexivamente para obter uma arma improvisada simples que não sofra a penalidade de improvisação."
+      },
+      {
+        "rating": 2,
+        "name": "Na Linha de Fogo",
+        "description": "Uma vez por turno, aplica a Estrutura de uma arma obtida com Sempre Armado como Armadura contra combate corpo a corpo, potencialmente danificando a arma."
+      },
+      {
+        "rating": 3,
+        "name": "Ponto de Ruptura",
+        "description": "Ao realizar um Ataque Total com uma arma obtida com Sempre Armado, sacrifica a Estrutura dela para aumentar temporariamente sua pontuação de arma."
+      }
+    ]
+  },
+  "core-2ed:light-weapons": {
+    "name": "Armas Leves",
+    "prerequisites": "Raciocínio ••• ou Refinamento de Combate, Destreza •••, Atletismo ••, Armas Brancas ••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Rapidez",
+        "description": "Sacrifica a pontuação da arma para adicionar Armas Brancas como bônus à Iniciativa."
+      },
+      {
+        "rating": 2,
+        "name": "Estocada",
+        "description": "Sacrifica pontos de Defesa para receber dados de bônus no ataque."
+      },
+      {
+        "rating": 3,
+        "name": "Finta",
+        "description": "Realiza um ataque de finta. Em vez de causar dano, seus sucessos se aplicam a um ataque no próximo turno como bônus de dano; os sucessos somados à pontuação da arma se aplicam como redução de Defesa."
+      },
+      {
+        "rating": 4,
+        "name": "Sequência",
+        "description": "Causa um ponto de dano letal por turno a oponentes no alcance enquanto a Defesa estiver disponível."
+      },
+      {
+        "rating": 5,
+        "name": "Golpe Vital",
+        "description": "Sacrifica a Defesa para realizar um ataque que cause um ponto adicional de dano agravado."
+      }
+    ]
+  },
+  "core-2ed:marksmanship": {
+    "name": "Pontaria",
+    "prerequisites": "Compostura •••, Perseverança •••, Armas de Fogo ••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Pela Mira",
+        "description": "Eleva o bônus máximo de Mirar para Compostura + Armas de Fogo."
+      },
+      {
+        "rating": 2,
+        "name": "Tiro Preciso",
+        "description": "Troca pontos da pontuação da arma por pontos de redução da penalidade de um disparo contra uma parte específica do alvo."
+      },
+      {
+        "rating": 3,
+        "name": "Um Disparo Ecoa",
+        "description": "Ignora penalidades para atingir um alvo cercado. Disparos que errem nunca atingem alvos não pretendidos."
+      },
+      {
+        "rating": 4,
+        "name": "Fantasma",
+        "description": "Aplica sua pontuação em Armas de Fogo como penalidade aos testes para notar seu ponto de observação ou investigar evidências de sua presença nele."
+      }
+    ]
+  },
+  "core-2ed:mystery-cult-influence": {
+    "name": "Influência em Culto de Mistério",
+    "description": "Dirige ou exerce influência decisiva sobre um culto de mistério. Recebe os benefícios correspondentes de Iniciação em Culto de Mistério sem as responsabilidades de um membro comum.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Recruta",
+        "description": "Uma Especialização ou um Mérito de um ponto."
+      },
+      {
+        "rating": 2,
+        "name": "Devoto",
+        "description": "Um Mérito de um ponto."
+      },
+      {
+        "rating": 3,
+        "name": "Organizador",
+        "description": "Um ponto de Perícia ou um Mérito de dois pontos, frequentemente sobrenatural."
+      },
+      {
+        "rating": 4,
+        "name": "Líder",
+        "description": "Um Mérito de três pontos, frequentemente sobrenatural."
+      },
+      {
+        "rating": 5,
+        "name": "Mentor Intelectual",
+        "description": "Um Mérito de três pontos ou uma grande vantagem além das mecânicas comuns do jogo."
+      }
+    ]
+  },
+  "core-2ed:mystery-cult-initiation": {
+    "name": "Iniciação em Culto de Mistério",
+    "description": "Uma progressão com cinco níveis de benefícios.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Recruta",
+        "description": "Uma Especialização ou um Mérito de um ponto."
+      },
+      {
+        "rating": 2,
+        "name": "Devoto",
+        "description": "Um Mérito de um ponto."
+      },
+      {
+        "rating": 3,
+        "name": "Organizador",
+        "description": "Um ponto de Perícia ou um Mérito de dois pontos, frequentemente sobrenatural."
+      },
+      {
+        "rating": 4,
+        "name": "Líder",
+        "description": "Um Mérito de três pontos, frequentemente sobrenatural."
+      },
+      {
+        "rating": 5,
+        "name": "Mentor Intelectual",
+        "description": "Um Mérito de três pontos ou uma grande vantagem além das mecânicas do jogo."
+      }
+    ]
+  },
+  "core-2ed:parkour": {
+    "name": "Parkour",
+    "prerequisites": "Destreza •••, Atletismo ••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Fluidez",
+        "description": "Subtrai os pontos em Parkour dos sucessos necessários para perseguir ou escapar em uma perseguição a pé. Reduz penalidades ambientais de Atletismo pela pontuação em Parkour."
+      },
+      {
+        "rating": 2,
+        "name": "Salto de Gato",
+        "description": "Adiciona um sucesso automático ao testar Destreza + Atletismo para aterrissar ileso após uma queda e adiciona Parkour ao máximo de dano que pode ser mitigado."
+      },
+      {
+        "rating": 3,
+        "name": "Corrida na Parede",
+        "description": "A altura inicial de uma escalada com impulso de corrida aumenta em cinco vezes a pontuação em Atletismo, em pés."
+      },
+      {
+        "rating": 4,
+        "name": "Traceur Experiente",
+        "description": "Gasta um ponto de Força de Vontade e sacrifica a Defesa para realizar um teste de Atletismo para correr, saltar ou escalar com a qualidade de rotina."
+      },
+      {
+        "rating": 5,
+        "name": "Fluxo Livre",
+        "description": "Após meditar, pode realizar uma ação de Atletismo reflexivamente uma vez por turno; Força de Vontade gasta em uma perseguição a pé concede sucessos em vez de dados."
+      }
+    ]
+  },
+  "core-2ed:police-tactics": {
+    "name": "Táticas Policiais",
+    "prerequisites": "Briga ••, Armas Brancas •",
+    "description": "Um Estilo progressivo com três manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Chave de Contenção",
+        "description": "+2 para Desarmar ou Imobilizar em um agarrão."
+      },
+      {
+        "rating": 2,
+        "name": "Retenção de Arma",
+        "description": "Tentativas de desarmar o personagem ou voltar sua arma contra ele precisam obter mais sucessos que sua pontuação em Armas Brancas."
+      },
+      {
+        "rating": 3,
+        "name": "Algemar Rapidamente",
+        "description": "Pode prender um oponente imobilizado com amarras reflexivamente."
+      }
+    ]
+  },
+  "core-2ed:professional-training": {
+    "name": "Treinamento Profissional",
+    "description": "Uma progressão com cinco níveis de benefícios.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Rede de Contatos",
+        "description": "Contatos •• relacionados à profissão."
+      },
+      {
+        "rating": 2,
+        "name": "Educação Continuada",
+        "description": "Escolhe duas Perícias de Ativo relacionadas à profissão. Recebe 9-novamente nos testes de Perícias de Ativo."
+      },
+      {
+        "rating": 3,
+        "name": "Amplitude de Conhecimento",
+        "description": "Escolhe uma terceira Perícia de Ativo. Distribui duas novas Especializações entre suas Perícias de Ativo."
+      },
+      {
+        "rating": 4,
+        "name": "Treinamento em Serviço",
+        "description": "Aumenta uma Perícia de Ativo em um ponto. Recebe um Ato ao comprar pontos em Perícias de Ativo."
+      },
+      {
+        "rating": 5,
+        "name": "A Rotina",
+        "description": "Gasta um ponto de Força de Vontade para aplicar a qualidade de rotina a um teste de Perícia de Ativo."
+      }
+    ]
+  },
+  "core-2ed:street-fighting": {
+    "name": "Luta de Rua",
+    "prerequisites": "Vigor •••, Compostura •••, Briga ••, Manha ••",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Esquivar e Gingar",
+        "description": "Aceita uma penalidade de um dado neste turno para calcular a Defesa com o maior valor entre Destreza e Raciocínio, em vez do menor."
+      },
+      {
+        "rating": 2,
+        "name": "Tirar o Fôlego",
+        "description": "Ataques desarmados impõem uma penalidade temporária de −1."
+      },
+      {
+        "rating": 3,
+        "name": "Chutar Quem Está no Chão",
+        "description": "Causa dois pontos de dano contundente a oponentes no alcance que tentem se levantar. Impõe Caído quando os sucessos de ataque superam o Vigor do alvo."
+      },
+      {
+        "rating": 4,
+        "name": "Combinação de Dois Socos",
+        "description": "Gasta Força de Vontade para causar dois pontos adicionais de dano contundente ao acertar."
+      },
+      {
+        "rating": 5,
+        "name": "Último Recurso",
+        "description": "Quando estiver sofrendo penalidades por ferimentos e prestes a ser atacado ou dominado, gasta Força de Vontade e sacrifica a Defesa para interromper com um ataque antecipado."
+      }
+    ]
+  },
+  "core-2ed:stunt-driver": {
+    "name": "Motorista de Manobras",
+    "prerequisites": "Destreza •••, Condução •••, Raciocínio •••",
+    "description": "Um Estilo progressivo com quatro manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Direção Defensiva",
+        "description": "Aplica os pontos em Condução como penalidade às tentativas de atingir seu veículo em movimento."
+      },
+      {
+        "rating": 2,
+        "name": "Demônio da Velocidade",
+        "description": "Ao testar para acelerar, cada sucesso aumenta a velocidade em 10, em vez de 5."
+      },
+      {
+        "rating": 3,
+        "name": "Derrapagem Controlada",
+        "description": "Pode fazer curvas em alta velocidade com segurança sem um teste."
+      },
+      {
+        "rating": 4,
+        "name": "Colisão de Raspão",
+        "description": "Ao abalroar, reduz o dano ao próprio veículo por sua pontuação em Raciocínio."
+      }
+    ]
+  },
+  "core-2ed:unarmed-defense": {
+    "name": "Defesa Desarmada",
+    "prerequisites": "Destreza •••, Briga ••, Combate Defensivo (Briga)",
+    "description": "Um Estilo progressivo com cinco manobras.",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Como um Livro Aberto",
+        "description": "Adiciona metade de Briga como bônus à Defesa quando não estiver Esquivando."
+      },
+      {
+        "rating": 2,
+        "name": "Estilo Estudado",
+        "description": "Concentra-se em um oponente. Os ataques dele não reduzem a Defesa do personagem. Após superar um dos ataques dele com a Defesa, ele deixa de repetir resultados 10 contra o personagem."
+      },
+      {
+        "rating": 3,
+        "name": "Redirecionar",
+        "description": "Uma vez por turno, ao superar um ataque Esquivando, pode forçar o atacante a repetir o ataque contra outro oponente no alcance."
+      },
+      {
+        "rating": 4,
+        "name": "Golpe na Articulação",
+        "description": "Gasta Força de Vontade e testa Força + Briga em vez de Defesa contra um ataque. Se vencer a disputa, causa dano contundente e Braço Lesionado ou Perna Lesionada."
+      },
+      {
+        "rating": 5,
+        "name": "Como a Brisa",
+        "description": "Declara esta manobra no início de um turno em que Esquivar. Pode impor Caído aos atacantes ao superar o ataque deles."
+      }
+    ]
   }
 }
