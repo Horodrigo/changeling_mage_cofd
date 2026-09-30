@@ -30,7 +30,7 @@ test("language preference is global and translation lookup is deterministic", as
     "Allocate 5 points.",
   );
   assert.equal(translate("en-US", "sheet.clna"), "[missing translation: sheet.clna]");
-  assert.equal(translate("pt-BR", "ui.catch"), "Condição de Ativação");
+  assert.equal(translate("pt-BR", "ui.catch"), "Gatilho");
   assert.equal(translate("pt-BR", "ui.loophole"), "Brecha");
 });
 

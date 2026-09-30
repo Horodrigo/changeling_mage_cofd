@@ -481,7 +481,7 @@
       "name": "Instrumento do Adivinho",
       "description": "O Penhor heráldico hereditário dos Adivinhos dos Vermes; sua graduação é igual aos pontos alocados em Heráldica.",
       "effect": "Use Adivinho sem entrar em um sonho: cada pergunta leva dois turnos; faça até um número de perguntas igual à graduação do Instrumento, além de uma pergunta complementar para cada uma, sem consumir perguntas baseadas em sonhos. Uma vez por capítulo, realize uma ação prolongada de Inteligência + Ocultismo para Pesquisa (dez minutos por rolagem), somando a graduação como pontos de Biblioteca, para receber Informado; a rolagem que gastar Informado recebe o mesmo bônus. Uma vez por capítulo, gaste 1 Glamour antes de persuadir outras pessoas sobre uma profecia para alcançar sucesso excepcional com três sucessos.",
-      "catch": "Sofra 1 de dano letal de uma vítima indefesa e espalhe o sangue sobre o Instrumento; ferir a si mesmo não satisfaz esta Condição de Ativação.",
+      "catch": "Sofra 1 de dano letal de uma vítima indefesa e espalhe o sangue sobre o Instrumento; ferir a si mesmo não satisfaz este Gatilho.",
       "drawback": "Receba Distraído, pois tudo parece ser um presságio; isso não penaliza o uso do Penhor nem rolagens beneficiadas por ele."
     },
     "blessings": [
@@ -1303,7 +1303,7 @@
       "name": "Anéis Arcanos",
       "description": "O Penhor heráldico hereditário dos Nobres Sábios dos Confins Desconhecidos; sua graduação é igual aos pontos alocados em Heráldica.",
       "effect": "Enquanto examina um sujeito em pessoa, nomeie um tipo de ser sobrenatural para receber uma identificação infalível de sim ou não.",
-      "catch": "Recite um conhecimento sobre o ser nomeado que este usuário nunca tenha usado antes para a Condição de Ativação.",
+      "catch": "Recite um conhecimento sobre o ser nomeado que este usuário nunca tenha usado antes para o Gatilho.",
       "drawback": "Receba Obsessão voltada a aprender algo novo sobre o ser nomeado."
     },
     "blessings": [
