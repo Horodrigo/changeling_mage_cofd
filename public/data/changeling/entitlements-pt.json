@@ -57,27 +57,27 @@
     ]
   },
   "dauphines-wayward-children": {
-    "name": "Delfinas das Crianças Desgarradas",
+    "name": "Delfinas das Crianças Perdidas",
     "meritName": "Dádiva da Delfina",
     "prerequisites": "Fado 3; o papel selecionado exige dois pontos no Atributo e na Perícia correspondentes.",
     "purpose": "Reunir, orientar e proteger crianças mortais ou Perdidas desgarradas que aceitem ajuda, até encontrarem um lar ou atingirem a idade adulta.",
     "privileges": "O Título de legião impõe o respeito e os recursos do Povoado. Cada papel possui reputação e autoridade próprias sobre seus pupilos.",
     "duties": "Nunca tomar como pupilo alguém que não queira; ajudar as outras Delfinas a proteger seus pupilos; cumprir o método de cuidado específico do papel selecionado.",
-    "maskAndMien": "O Segundo-anista torna-se jovem e fantástico; o Acompanhante, misterioso e reconfortante; e a Dama Viúva, severa e protetora. Cada um assume a aparência associada ao papel.",
-    "heraldry": "Um lírio estilizado: amarelo para o Segundo-anista, azul para o Acompanhante ou violeta para a Dama Viúva.",
+    "maskAndMien": "A Noviça torna-se jovem e fantástica; a Preceptora, misteriosa e reconfortante; e a Matriarca, severa e protetora. Cada uma assume a aparência associada ao papel.",
+    "heraldry": "Um lírio estilizado: amarelo para a Noviça, azul para a Preceptora ou violeta para a Matriarca.",
     "token": {
       "name": "Lírio da Delfina",
       "description": "Um broche de flor morta na Mascarilha e um lírio vivo e vibrante no Semblante Feérico, com a cor do papel.",
-      "effect": "Nomeie pupilos atuais em quantidade máxima igual à graduação para saber a distância e direção de cada um durante a cena, ou localize a criança desgarrada não reclamada mais próxima. Some a graduação às ações pertinentes ao papel. Gaste 1 Glamour para permitir que um pupilo enxergue através de Mascarilhas Fae durante a cena, até um número de vezes por cena igual à graduação.",
+      "effect": "Nomeie pupilos atuais em quantidade máxima igual à graduação para saber a distância e direção de cada um durante a cena, ou localize a criança perdida não reclamada mais próxima. Some a graduação às ações pertinentes ao papel. Gaste 1 Glamour para permitir que um pupilo enxergue através de Mascarilhas Fae durante a cena, até um número de vezes por cena igual à graduação.",
       "catch": "Conte a alguém um segredo precioso ou perturbador da infância que essa pessoa ainda não conheça.",
-      "drawback": "O usuário recebe Lascivo (Segundo-anista), Assombrado (Acompanhante) ou Estoico (Dama Viúva)."
+      "drawback": "O usuário recebe Lascivo (Noviça), Assombrado (Preceptora) ou Estoico (Matriarca)."
     },
     "roles": [
       {
         "id": "sophomore",
-        "name": "Segundo-anista",
+        "name": "Noviça",
         "prerequisites": "Presença 2, Persuasão 2",
-        "privilege": "Um trapaceiro e dissidente celebrado, que conquista corações jovens com liberdade e maravilhas.",
+        "privilege": "Uma trapaceira e dissidente celebrada, que conquista corações jovens com liberdade e maravilhas.",
         "duties": "Oferecer uma vida despreocupada e maravilhosa e ensinar os pupilos a buscar o que desejam, sem obedecer a comando algum além do próprio coração.",
         "heraldryColor": "Amarelo",
         "tokenBonus": "Some a graduação do Penhor às rolagens de Tecer a Sebe para maravilhar um pupilo ou conceder o desejo de seu coração.",
@@ -85,9 +85,9 @@
       },
       {
         "id": "chaperone",
-        "name": "Acompanhante",
+        "name": "Preceptora",
         "prerequisites": "Manipulação 2, Empatia 2",
-        "privilege": "Um cuidador confiável e milagroso, a quem os outros confiam seus dependentes e segredos mais preciosos.",
+        "privilege": "Uma cuidadora confiável e milagrosa, a quem os outros confiam seus dependentes e segredos mais preciosos.",
         "duties": "Prover aos pupilos e ensinar lições por meio de testes estranhos, enigmas mágicos, caças ao tesouro e outras maravilhas indiretas.",
         "heraldryColor": "Azul",
         "tokenBonus": "Some a graduação do Penhor às rolagens de Contrato que conduzam um pupilo por enigmas e aventuras para aprender algo novo.",
@@ -95,7 +95,7 @@
       },
       {
         "id": "dowager",
-        "name": "Dama Viúva",
+        "name": "Matriarca",
         "prerequisites": "Compostura 2, Intimidação 2",
         "privilege": "Uma protetora formidável cujos pupilos recebem abrigo, recursos e rotas de fuga de outros Perdidos.",
         "duties": "Disciplinar, guardar, treinar e preparar os pupilos para sobreviver; punir tanto os pupilos que coloquem outros em perigo quanto os responsáveis por feri-los.",
@@ -139,9 +139,9 @@
     "curse": "Ataques de Lucidez sofridos porque um pupilo se perdeu por qualquer motivo adicionam uma quantidade de dados de dano igual aos pontos investidos neste Mérito.",
     "beat": "Abandonar uma responsabilidade importante ou fazer a Delfina ou o Retalho sofrer dano enquanto persegue e acolhe um novo pupilo.",
     "legends": [
-      "Um Segundo-anista e seus pupilos trocaram as próprias memórias para permanecerem crianças para sempre.",
-      "Um Acompanhante organizou uma caça aos ovos para escolher em segredo o herdeiro do Lírio Azul.",
-      "O assassino mortal de uma Dama Viúva guardou o Lírio Violeta, à espera do changeling que viria buscá-lo."
+      "Uma Noviça e seus pupilos trocaram as próprias memórias para permanecerem crianças para sempre.",
+      "Uma Preceptora organizou uma caça aos ovos para escolher em segredo o herdeiro do Lírio Azul.",
+      "O assassino mortal de uma Matriarca guardou o Lírio Violeta, à espera do changeling que viria buscá-lo."
     ]
   },
   "master-of-keys": {
@@ -619,6 +619,159 @@
     "touchstone": "Um objeto estimado, possuído desde antes de assumir o Título, que não tenha valor monetário significativo.",
     "curse": "Ataques de Lucidez relacionados a valorizar riqueza acima das pessoas adicionam uma quantidade de dados igual aos pontos investidos.",
     "beat": "Sofrer uma perda relevante ao colocar as necessidades financeiras de outra pessoa em primeiro lugar.",
+    "legends": []
+  },
+  "paragon-story-heroes": {
+    "name": "Paragão dos Heróis das Histórias",
+    "meritName": "Remendador de Linhas",
+    "prerequisites": "Raciocínio 3, Erudição 2, Persuasão ou Dissimulação 2.",
+    "purpose": "Reparar histórias, resgatar pessoas de narrativas desastrosas e personificar reviravoltas heroicas.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Remendador de Linhas.",
+    "duties": "O portador do Título deve reparar histórias, resgatar pessoas de narrativas desastrosas, personificar reviravoltas heroicas e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Paragão dos Heróis das Histórias.",
+    "token": {
+      "name": "Pergaminho das Linhas Cambiantes",
+      "description": "O Penhor heráldico hereditário do Paragão dos Heróis das Histórias; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Pergunte sobre as narrativas que afetam uma pessoa ou situação para descobrir suas Condições, Tilts e poderes sobrenaturais, mas não suas origens. Gaste 1 Glamour para receber novamente 9 em ações Sociais e Mentais que envolvam alguém lido nesta cena. Peça orientações para receber Senso de Direção até chegar ao destino ou a cena terminar. Uma vez por capítulo, gaste 1 Força de Vontade para conceder qualidade de rotina a três ações que sirvam a um objetivo declarado.",
+      "catch": "Conte de memória uma história completa durante ao menos dez minutos.",
+      "drawback": "A próxima entrada na Sebe provoca um ataque de Lucidez de três dados; sucesso excepcional concede um Ato. Sem Lucidez, sofra dano letal no lugar."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "rescued-allies",
+        "name": "Aliados Resgatados",
+        "description": "Receba Aliados iguais à metade do Fado, arredondada para cima, representando pessoas salvas pelo Paragão atual ou por seus predecessores.",
+        "conditional": true,
+        "choiceLabel": "Grupo aliado"
+      },
+      {
+        "id": "pivotal-speech",
+        "name": "Discurso Decisivo",
+        "description": "Gaste 1 Glamour em um momento decisivo para proferir um discurso curto e impossível de interromper, que conduz a cena a uma reviravolta heroica apropriada."
+      }
+    ],
+    "touchstone": "Um mortal cuja vida o Paragão salvou de uma reviravolta desastrosa.",
+    "curse": "Ataques de Lucidez causados por permitir que uma história termine de maneira desastrosa adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Aceitar dificuldades para dar um final melhor à história de outra pessoa.",
+    "legends": []
+  },
+  "sacred-band-golden-standard": {
+    "name": "Bando Sagrado do Estandarte Dourado",
+    "meritName": "O Melhor de Todos",
+    "prerequisites": "Presença 3, Fado 2, uma Perícia escolhida em 3+ com uma Especialização apropriada.",
+    "purpose": "Realizar feitos lendários e inspirar testemunhas por meio de uma maestria sem igual.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em O Melhor de Todos.",
+    "duties": "O portador do Título deve realizar feitos lendários, inspirar testemunhas por meio de uma maestria sem igual e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Bando Sagrado do Estandarte Dourado.",
+    "token": {
+      "name": "Faixas Douradas",
+      "description": "O Penhor heráldico hereditário do Bando Sagrado do Estandarte Dourado; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Ao ativar, some a graduação das Faixas às paradas baseadas em Presença. O usuário não precisa resistir à inconsciência nem ao sangramento quando a última caixa de Vitalidade contiver dano contundente ou letal. Uma vez por semana, gaste 1 Força de Vontade enquanto busca glória contra probabilidades impossíveis para evitar a morte um número de vezes igual à graduação durante a cena.",
+      "catch": "Sofra uma falha dramática em uma ação diante de testemunhas.",
+      "drawback": "Receba Competitivo quando o Penhor for ativado."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "golden-standard-points",
+        "name": "Estandarte Dourado",
+        "description": "A cada capítulo, receba uma quantidade de pontos igual à metade do Fado, arredondada para cima; gaste um para transformar três sucessos em sucesso excepcional ou negar novamente 10 a uma rolagem adversária em uma disputa pertinente."
+      },
+      {
+        "id": "inspiring-mastery",
+        "name": "Maestria Inspiradora",
+        "description": "Uma vez por capítulo, um sucesso com a Perícia escolhida pode conceder Inspirado a todos que o testemunharam pessoalmente."
+      }
+    ],
+    "touchstone": "Um fã mortal ou pequeno fã-clube conquistado ao testemunhar um feito aparentemente impossível.",
+    "curse": "Falha ou falha dramática com a Perícia escolhida funciona como um ataque de Lucidez com dados iguais aos pontos investidos.",
+    "beat": "Desafiar as expectativas ao vencer um desafio incrível.",
+    "legends": []
+  },
+  "squire-broken-bough": {
+    "name": "Escudeiro do Ramo Partido",
+    "meritName": "Voto do Escudeiro",
+    "prerequisites": "Compostura 3, Perseverança 3, Armamento 2.",
+    "purpose": "Defender a causa de uma vítima até que a justiça ou a vingança esteja concluída.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Voto do Escudeiro.",
+    "duties": "O portador do Título deve defender a causa de uma vítima até que a justiça ou a vingança esteja concluída e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Escudeiro do Ramo Partido.",
+    "token": {
+      "name": "Lâmina Partida",
+      "description": "O Penhor heráldico hereditário do Escudeiro do Ramo Partido; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Funciona como a arma cortante que representa atualmente e recebe passivamente Durabilidade igual à graduação. Quando ativada, se o Escudeiro morrer, a Lâmina e o corpo se dissolvem e retornam, ao próximo nascer ou pôr do sol, no lado dos Espinhos do portal da Sebe mais próximo e no estado em que estavam na ativação, removendo todos os ferimentos e Condições, exceto Condições de Lucidez.",
+      "catch": "Destrua com a Lâmina algo pessoalmente importante.",
+      "drawback": "A ressurreição marca a caixa de Lucidez mais à esquerda com dano leve permanente e concede um Ato; personagens sem Lucidez perdem permanentemente um ponto de Força de Vontade."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "squires-reserve",
+        "name": "Reserva do Escudeiro",
+        "description": "Após jurar-se à causa de uma vítima, receba Força de Vontade adicional igual à metade do Fado, arredondada para cima, até gastá-la ou assumir uma nova causa."
+      },
+      {
+        "id": "deathly-reputation",
+        "name": "Reputação Mortal",
+        "description": "Uma vez por cena, gaste 1 Força de Vontade para infligir Amedrontado a alguém que tenha testemunhado a morte do Escudeiro anteriormente.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "O cliente atual do Escudeiro.",
+    "curse": "Ataques de Lucidez sofridos quando alguém quebra um juramento ou compromisso formal com o Escudeiro adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Sofrer grande dificuldade ou ferimento grave ao defender a causa de outra pessoa.",
     "legends": []
   }
 }

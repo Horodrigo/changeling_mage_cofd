@@ -50,8 +50,6 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Inglês | Forma aplicada | Observação |
 | --- | --- | --- |
 | Baron of the Lesser Ones | Barão dos Seres Menores | Primeiro Título do lote; o sentido de *Lesser Ones* pode admitir uma forma mais idiomática. |
-| Dauphines of Wayward Children | Delfinas das Crianças Desgarradas | |
-| Sophomore / Chaperone / Dowager | Segundo-anista / Acompanhante / Dama Viúva | Papéis internos das Delfinas; **Segundo-anista** e **Dama Viúva** merecem revisão de fluidez. |
 | Master of Keys | Mestre das Chaves | |
 | Thorn Dancer | Dançarino dos Espinhos | Foi adotado o masculino fixo, sem exibir pares de gênero. |
 | Sibylline Fisher | Pescador Sibilino | |
@@ -63,5 +61,9 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Diviners of Worms | Adivinhos dos Vermes | |
 | Duchess of Truth and Loss | Duquesa da Verdade e da Perda | |
 | Guildmaster of Goldspinners | Mestre da Guilda dos Fiandeiros de Ouro | **Goldspinners** foi interpretado literalmente como fiandeiros de ouro. |
+| Paragon of Story Heroes | Paragão dos Heróis das Histórias | **Paragão** existe em português, mas é pouco corrente. |
+| Sacred Band of the Golden Standard | Bando Sagrado do Estandarte Dourado | |
+| Golden Bands | Faixas Douradas | Pode se referir tanto a faixas quanto a braçadeiras; o texto mecânico não especifica a forma. |
+| Squire of the Broken Bough | Escudeiro do Ramo Partido | |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.

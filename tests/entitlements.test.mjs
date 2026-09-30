@@ -39,6 +39,9 @@ test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()
   assert.deepEqual(translated.blessings.map((item)=>item.id),source.blessings.map((item)=>item.id));
   assert.match(translated.beat,/Retalho/);
   assert.equal(entitlementPresentation(source,"en-US",ENTITLEMENTS_PT),source);
+  const dauphines=entitlementPresentation(ENTITLEMENTS.find((item)=>item.id==="dauphines-wayward-children"),"pt-BR",ENTITLEMENTS_PT);
+  assert.equal(dauphines.name,"Delfinas das Crianças Perdidas");
+  assert.deepEqual(dauphines.roles.map((item)=>item.name),["Noviça","Preceptora","Matriarca"]);
   for(const [id,presentation] of Object.entries(ENTITLEMENTS_PT)){
     const canonical=ENTITLEMENTS.find((item)=>item.id===id);
     assert.ok(canonical,id);
