@@ -364,5 +364,159 @@
       "Um Cavaleiro morreu lutando contra o próprio Retalho para impedi-los de libertar hobgoblins devotados a uma Rainha dos Goblins.",
       "Um Cavaleiro paranoico exilou-se na Sebe para destruir a própria mente, em vez de correr o risco de servir ao seu Carcereiro."
     ]
+  },
+  "adjudicator-wheel": {
+    "name": "Adjudicador da Roda",
+    "meritName": "Zelo do Juiz",
+    "prerequisites": "Perseverança 3, Investigação 2, Observador Treinado 1.",
+    "purpose": "Corrigir injustiças e impor justiça mesmo quando a lei falhar.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Zelo do Juiz.",
+    "duties": "O portador do Título deve corrigir injustiças, impor justiça mesmo quando a lei falhar e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Adjudicador da Roda.",
+    "token": {
+      "name": "Roda da Fortuna",
+      "description": "O Penhor heráldico hereditário do Adjudicador da Roda; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Receba novamente 9 em ações de Investigação relacionadas à missão. A graduação pode alterar uma história em andamento na presença do Juiz e, uma vez por capítulo, conceder ação de rotina a uma rolagem que promova a justiça indiretamente.",
+      "catch": "Coloque sobre a Roda um fio da roupa do alvo atual e corte-o ao meio.",
+      "drawback": "Receba Obsessão relacionada à investigação ou punição."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "judges-kenning",
+        "name": "Tino do Juiz",
+        "description": "Ao usar Tino, gaste 1 Glamour para ver o futuro mais provável de um alvo observado, até um número de dias à frente igual à metade do Fado.",
+        "conditional": true
+      },
+      {
+        "id": "vicarious-hostile-oath",
+        "name": "Juramento Hostil Vicário",
+        "description": "Faça um juramento hostil em nome de outra pessoa, vinculando o Adjudicador e uma terceira pessoa aos efeitos dele."
+      }
+    ],
+    "touchstone": "Um mortal que o Adjudicador não conseguiu proteger de uma injustiça no passado.",
+    "curse": "Ataques de Lucidez causados por permitir conscientemente uma injustiça adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Corrigir uma injustiça com custo pessoal significativo para o Adjudicador ou o Retalho.",
+    "legends": []
+  },
+  "blackbird-bishop": {
+    "name": "Bispo Melro",
+    "meritName": "Benevolência do Bispo",
+    "prerequisites": "Empatia 2, Raciocínio 3, Compostura 3.",
+    "purpose": "Aliviar a angústia, ouvir confissões e conduzir os que sofrem à reparação.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Benevolência do Bispo.",
+    "duties": "O portador do Título deve aliviar a angústia, ouvir confissões, conduzir os que sofrem à reparação e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada ao Bispo Melro.",
+    "token": {
+      "name": "Aspersório Argênteo",
+      "description": "O Penhor heráldico hereditário do Bispo Melro; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Transfira para o Bispo dano de Lucidez e Condições mentais de outras pessoas; afete até o dobro da graduação em alvos por capítulo; some a graduação à Percepção; e armazene temporariamente as Condições de Lucidez do próprio Bispo.",
+      "catch": "Encha-o com água natural misturada às lágrimas do Bispo.",
+      "drawback": "Receba Confuso, Culpado ou Retraído, à escolha do Narrador."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "blackbird-flock",
+        "name": "Bando de Melros",
+        "description": "Receba um Lacaio de pontos iguais à metade do Fado, arredondada para cima, formado por pássaros de penas escuras que reconhecem Condições mentais.",
+        "conditional": true
+      },
+      {
+        "id": "sealed-amends",
+        "name": "Reparação Selada",
+        "description": "Sele gratuitamente uma confissão sincera e um plano de reparação; cumpri-lo restaura dano de Lucidez ou Integridade perdida pela transgressão e restaura 1 Força de Vontade do Bispo.",
+        "conditional": true
+      }
+    ],
+    "touchstone": "Um mortal cuja angústia mental o Bispo aliviou.",
+    "curse": "Ataques de Lucidez causados por infligir dano de Lucidez ou Pontos de Ruptura a outras pessoas adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Entrar em perigo físico para preservar a Lucidez ou a Integridade de outra pessoa.",
+    "legends": []
+  },
+  "diviners-worms": {
+    "name": "Adivinhos dos Vermes",
+    "meritName": "Previdência do Adivinho",
+    "prerequisites": "Ocultismo 2, Adivinho 3, Observador Treinado 1.",
+    "purpose": "Ler presságios e alertar os outros sobre perigos inscritos no Destino.",
+    "privileges": "O Título concede a autoridade, a reputação e as vantagens sobrenaturais descritas em Previdência do Adivinho.",
+    "duties": "O portador do Título deve ler presságios, alertar os outros sobre perigos inscritos no Destino e sustentar as tradições do Título.",
+    "maskAndMien": "O Título remodela o Semblante Feérico do changeling e o marca com sua iconografia heráldica.",
+    "heraldry": "A heráldica associada aos Adivinhos dos Vermes.",
+    "token": {
+      "name": "Instrumento do Adivinho",
+      "description": "O Penhor heráldico hereditário dos Adivinhos dos Vermes; sua graduação é igual aos pontos alocados em Heráldica.",
+      "effect": "Use Adivinho sem entrar em um sonho: cada pergunta leva dois turnos; faça até um número de perguntas igual à graduação do Instrumento, além de uma pergunta complementar para cada uma, sem consumir perguntas baseadas em sonhos. Uma vez por capítulo, realize uma ação prolongada de Inteligência + Ocultismo para Pesquisa (dez minutos por rolagem), somando a graduação como pontos de Biblioteca, para receber Informado; a rolagem que gastar Informado recebe o mesmo bônus. Uma vez por capítulo, gaste 1 Glamour antes de persuadir outras pessoas sobre uma profecia para alcançar sucesso excepcional com três sucessos.",
+      "catch": "Sofra 1 de dano letal de uma vítima indefesa e espalhe o sangue sobre o Instrumento; ferir a si mesmo não satisfaz esta Brecha.",
+      "drawback": "Receba Distraído, pois tudo parece ser um presságio; isso não penaliza o uso do Penhor nem rolagens beneficiadas por ele."
+    },
+    "blessings": [
+      {
+        "id": "glamour-gain",
+        "name": "Ganho de Glamour",
+        "description": "Quando o nobre recupera Força de Vontade por meio de sua Agulha enquanto busca diretamente cumprir o papel do Título, também recupera 1 Glamour. Pode gastá-lo imediatamente ou armazená-lo no Penhor heráldico, até o limite de seu Fado. O Glamour armazenado se esvazia no fim da história."
+      },
+      {
+        "id": "inherited-expertise",
+        "name": "Especialidade Herdada",
+        "description": "Receba uma nova Especialização pertinente ao dever do Título. Rolagens que a utilizem alcançam sucesso excepcional com três sucessos.",
+        "choiceLabel": "Perícia e Especialização"
+      },
+      {
+        "id": "predecessors-thread",
+        "name": "Linha do Predecessor",
+        "description": "Uma vez por capítulo, aceite Abalado para recordar uma experiência traumática de um predecessor e receber a Linha dele, além da própria Linha do personagem, durante o capítulo.",
+        "choiceLabel": "Linha do predecessor"
+      },
+      {
+        "id": "omens-common-sense",
+        "name": "Presságios do Destino",
+        "description": "Use Bom Senso por meio de presságios observados, com um bônus igual à metade do Fado, arredondada para cima.",
+        "conditional": true
+      },
+      {
+        "id": "prophetic-danger-sense",
+        "name": "Sentido de Perigo Profético",
+        "description": "Receba Sentido de Perigo aprimorado contra toda ameaça imediata, inclusive perigos ambientais; dobre seu bônus se o Instrumento tiver sido ativado nesta cena."
+      }
+    ],
+    "touchstone": "Um mortal que as profecias do Adivinho protegeram no passado.",
+    "curse": "Ataques de Lucidez sofridos quando alguém rejeita a profecia do Adivinho adicionam uma quantidade de dados igual aos pontos investidos.",
+    "beat": "Oferecer uma profecia útil que coloque o Adivinho em sério perigo ou lhe cause grande transtorno.",
+    "legends": []
   }
 }

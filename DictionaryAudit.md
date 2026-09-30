@@ -58,5 +58,8 @@ As formas abaixo foram aplicadas provisoriamente à interface. Revise-as e subst
 | Spiderborn Rider | Cavaleiro Nascido da Aranha | |
 | BriarNet | BriarNet | Mantido como nome próprio; a opção **Rede de Silvados** não foi aplicada. |
 | Cracking Software | Software de Invasão | Nome mecânico citado pelo Programa Pítia; deve acompanhar a futura auditoria dos Méritos. |
+| Adjudicator of the Wheel | Adjudicador da Roda | |
+| The Blackbird Bishop | Bispo Melro | |
+| Diviners of Worms | Adivinhos dos Vermes | |
 
 Títulos de livros permanecem no idioma original conforme a política do projeto.
