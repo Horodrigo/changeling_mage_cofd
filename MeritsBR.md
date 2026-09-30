@@ -30,7 +30,7 @@ O usuário aprovou os demais itens deste lote e corrigiu Rules Lawyer para **Adv
 
 ## Continuação
 
-Cobertura atual: 202/202 registros Core e 53/154 Changeling. Todos os Méritos Core e todos os 53 Méritos de fontes oficiais de Changeling estão traduzidos. As manobras e os benefícios por nível cadastrados nos lotes concluídos foram incluídos. Ainda faltam 101 Changeling dos suplementos homebrew Book of Courts e Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
+Cobertura atual: 202/202 registros Core e 92/154 Changeling. Todos os Méritos Core, todos os 53 Méritos de fontes oficiais de Changeling e os 39 de Book of Courts estão traduzidos. As manobras e os benefícios por nível cadastrados nos lotes concluídos foram incluídos. Ainda faltam 62 Changeling do suplemento homebrew Book of Seemings. Os 16 registros de origem Mage/Vampire classificados como compartilhados no catálogo atual já possuem apresentação pt-BR. Méritos exclusivos de Mage ou Vampire não receberam acesso a Changelings por causa da tradução.
 
 ## Novas escolhas para auditoria — livro básico Changeling
 
@@ -187,3 +187,26 @@ Observações mecânicas adicionais, sem correção incidental:
 O recorte considera o acesso padrão do catálogo, sem autorizações especiais do Narrador: Mage the Awakening p. 99 exige Desperto por padrão e permite exceções específicas por decisão do Narrador; Vampire the Requiem p. 109 apresenta os Méritos de Membros separadamente dos Méritos para mortais e carniçais. Essas exceções não foram presumidas nem transformadas em elegibilidade geral.
 
 Fontes oficiais inspecionadas visualmente neste lote: Chronicles of Darkness pp. 44, 47, 49–50 e 60–61; Changeling the Lost pp. 111–112; Mage the Awakening pp. 99 e 105; Vampire the Requiem p. 109. Para os suplementos homebrew, foi preservado o catálogo aprovado do projeto.
+
+## Novas escolhas para auditoria — Book of Courts (homebrew)
+
+Foram traduzidos os 39 registros e as nove manobras cadastradas, a partir do texto inglês existente no projeto. Este lote não reconstrói regras de PDFs nem apresenta o suplemento como fonte oficial.
+
+| Termo | Tradução adotada | Observação |
+| --- | --- | --- |
+| Bedside Manner | Cuidado com o Paciente | Acolhimento e cuidado que aceleram a recuperação. |
+| Friends in Low Places | Amigos da Baixa Sociedade | Mantém a referência a grupos de má reputação. |
+| Spring-Loaded | Primavera a Todo Vapor | Adaptação do trocadilho entre primavera e mola; o efeito diz respeito à intoxicação. |
+| Host with the Most | Anfitrião de Primeira | Expressão idiomática para um anfitrião excepcional. |
+| Seen Some Shit | Já Vi de Tudo | Adapta a experiência com cenas horríveis, sem reproduzir o palavrão. |
+| Can't Spook a Spooker | Não se Assusta Quem Assusta | Mantém a inversão de quem provoca medo. |
+| GTFO | Dê o Fora | Adapta a ordem de fugir, sem reproduzir o palavrão do acrônimo. |
+| Grief Connoisseur | Conhecedor do Luto | Especialista em uma forma de tristeza, sem restringir o efeito a mortes. |
+| Misery Loves Company | A Desgraça Quer Companhia | Mantém o sentido proverbial. |
+| Frightened | Amedrontado | Condição citada sem apresentação portuguesa própria no catálogo atual; uniformizar quando esse grupo for traduzido. |
+
+Observações mecânicas para uma auditoria separada:
+
+- `Get the Manager`, `Can't Spook a Spooker`, `GTFO`, `Shivers` e `Snow Cover` repetem um requisito de Manto depois da alternativa de Boa Vontade da Corte. A tradução preserva a redação cadastrada, sem presumir que Boa Vontade dispensa esse segundo requisito.
+- As alternativas de acesso a estes Méritos homebrew não foram substituídas pelos limiares de acesso a Contratos de Corte; são requisitos de itens diferentes.
+- `Acquired Taste` mantém a aquisição separada por tipo sobrenatural no texto. A tradução não altera o modelo de instâncias nem acrescenta configuração mecânica.
