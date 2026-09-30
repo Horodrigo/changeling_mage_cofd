@@ -3,6 +3,7 @@ export const commonMessages = {
     "common": {
       "close": "Fechar",
       "cancel": "Cancelar",
+      "remove": "Remover",
       "save": "Salvar"
     },
     "workspace": {
@@ -584,6 +585,7 @@ export const commonMessages = {
     "common": {
       "close": "Close",
       "cancel": "Cancel",
+      "remove": "Remove",
       "save": "Save"
     },
     "workspace": {
