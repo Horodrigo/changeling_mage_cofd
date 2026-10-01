@@ -45,3 +45,11 @@ test("catalog URLs follow data ownership rather than the line that can buy an it
   assert.equal(manifest.catalogs["merits-mage"].url, "/game-lines/mage/data/merits.json");
   assert.equal(manifest.catalogs["merits-core-pt"].url, "/shared/data/merits-pt.json");
 });
+
+test("Werewolf skull displays black before lazy surfaces load, preserving its original asset and proportions", async () => {
+  assert.match(await read("app/layout.tsx"), /import "\.\.\/game-lines\/werewolf\/styles\/icon\.css"/);
+  const css = await read("game-lines/werewolf/styles/icon.css");
+  assert.match(css, /img\[src="\/game-lines\/werewolf\/images\/icon\.webp"\]\s*\{\s*filter:\s*brightness\(0\);\s*\}/);
+  assert.doesNotMatch(css, /\b(?:width|height|scale|transform|object-fit)\s*:/);
+  assert.match(await read("game-lines/werewolf/registration.ts"), /iconSrc: "\/game-lines\/werewolf\/images\/icon\.webp"/);
+});

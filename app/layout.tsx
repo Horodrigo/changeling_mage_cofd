@@ -6,6 +6,7 @@ import "../game-lines/changeling/styles/sheet.css";
 import "../game-lines/mage/styles/sheet.css";
 import "../game-lines/vampire/styles/sheet.css";
 import "../game-lines/vampire/styles/interactions.css";
+import "../game-lines/werewolf/styles/icon.css";
 import { PwaManager } from "./pwa-manager";
 import { LanguageProvider } from "@/lib/i18n";
 

@@ -1,0 +1,2 @@
+/* Keep the original skull's alpha and proportions; only its displayed color changes. */
+img[src="/game-lines/werewolf/images/icon.webp"] { filter: brightness(0); }
