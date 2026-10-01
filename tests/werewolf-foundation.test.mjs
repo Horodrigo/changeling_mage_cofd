@@ -18,6 +18,8 @@ const wolfGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf.
 const wolfPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json");
 const shadowGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow.json");
 const shadowPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json");
+const ritesCore = readJson("public/game-lines/werewolf/data/rites/wtf-core.json");
+const riteCatalog = { ...ritesCore, presentation: readJson("public/game-lines/werewolf/data/rites/wtf-core-pt.json") };
 const giftCatalog = { gifts: [...moonGifts, ...wolfGifts, ...shadowGifts], presentation: { ...moonPresentation, ...wolfPresentation, ...shadowPresentation } };
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
@@ -147,8 +149,8 @@ test("WtF 2e p. 83 initial Facets follow Auspice Renown and two distinct favored
 });
 
 test("Werewolf creation template validates canonical selections and exact conversion budgets", async () => {
-  const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [] };
-  const validate = (value, skills = { Brawl: 2 }) => rules.creationTemplateProblems(value, reference, skills, giftCatalog.gifts);
+  const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [], rites: ["wtf-core:sacred-hunt"] };
+  const validate = (value, skills = { Brawl: 2 }) => rules.creationTemplateProblems(value, reference, skills, giftCatalog.gifts, riteCatalog.rites);
   assert.deepEqual(validate(choices), []);
   assert.deepEqual(validate({ ...choices, auspice_id: "unknown" }), ["auspice"]);
   assert.deepEqual(validate({ ...choices, primal_urge: 3, extra_rite_dots: 1 }), ["creationBudget"]);
@@ -157,7 +159,7 @@ test("Werewolf creation template validates canonical selections and exact conver
   assert.deepEqual(validate({ ...choices, shadow_facets: [] }), ["shadowFacets"]);
   const { WerewolfCreationTemplate } = await vite.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
-  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: giftCatalog })));
+  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: giftCatalog, rites: riteCatalog })));
   assert.match(markup, /Remaining Merit dots: 10/);
   assert.match(markup, /Available Rite dots: 2/);
   assert.match(markup, /Starting Facets: 2/);
@@ -252,15 +254,21 @@ test("Werewolf creation renders Portuguese catalog text and explicit English fal
   try {
     const { LanguageProvider } = await portuguese.ssrLoadModule("/lib/i18n.tsx");
     const { WerewolfCreationTemplate } = await portuguese.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
-    const value = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "Minha família", spiritual_touchstone: "A montanha", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [] };
+    const value = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "Minha família", spiritual_touchstone: "A montanha", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [], rites: ["wtf-core:sacred-hunt"] };
     const before = structuredClone(value);
     const missingField = structuredClone(giftCatalog);
     delete missingField.presentation["gift-inspiration:fearless-hunter"].effect;
-    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: missingField })));
+    const missingRiteField = structuredClone(riteCatalog);
+    delete missingRiteField.presentation.rites["wtf-core:sacred-hunt"].sampleRite;
+    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: missingField, rites: missingRiteField })));
     assert.match(markup, /Facetas selecionadas: 2 \/ 2/);
     assert.match(markup, /Caçador Destemido/);
     assert.match(markup, /<strong>Parada de dados:<\/strong>/);
     assert.match(markup, /<strong>Efeito:<\/strong> Add Glory Renown/);
+    assert.match(markup, /Caçada Sagrada · 2/);
+    assert.match(markup, /Pontos de Ritos distribuídos: 2 \/ 2/);
+    assert.match(markup, /<strong>Exemplo de Rito:<\/strong> Blood Talon/);
+    assert.doesNotMatch(markup, /<summary>Sacred Hunt/);
     assert.doesNotMatch(markup, /missing translation|Select Fearless Hunter|<summary>Fearless Hunter/);
     assert.deepEqual(value, before);
   } finally { await portuguese.close(); }
@@ -754,4 +762,130 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
   assert.ok(Object.isFrozen(snapshot.presentation["gift-inspiration:still-small-voice"]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-rage:raging-lunacy"]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-weather:hunt-of-fire-and-ice"]));
+});
+
+test("WtF 2e pp. 139–146 has all 23 Core Rites with separate symbols, examples, outcomes and complete Portuguese presentation", () => {
+  assert.equal(riteCatalog.rites.length, 23);
+  assert.equal(riteCatalog.rites.filter(rite => rite.kind === "wolf").length, 11);
+  assert.equal(riteCatalog.rites.filter(rite => rite.kind === "pack").length, 12);
+  assert.equal(new Set(riteCatalog.rites.map(rite => rite.id)).size, 23);
+  assert.deepEqual(new Set(Object.keys(riteCatalog.presentation.rites)), new Set(riteCatalog.rites.map(rite => rite.id)));
+  for (const rite of riteCatalog.rites) {
+    assert.equal(rite.sourceId, "wtf-2ed");
+    assert.ok(rite.page >= 139 && rite.page <= 146);
+    assert.ok(Number.isInteger(rite.dots) && rite.dots >= 1 && rite.dots <= 5);
+    for (const field of ["name", "description", "symbols", "sampleRite", "sampleDicePool", "action", "success", "cost", "duration", "prerequisites"]) {
+      if (!Object.hasOwn(rite, field)) { assert.equal(riteCatalog.presentation.rites[rite.id][field], undefined); continue; }
+      assert.ok(rite[field].trim().length > 0, `${rite.id}.${field}`);
+      assert.ok(riteCatalog.presentation.rites[rite.id][field]?.trim().length > 0, `${rite.id}.${field} PT`);
+    }
+    assert.equal(rite.dicePool, undefined, "Sample Rite pools must not be promoted to fixed activation pools");
+    assert.equal(rite.exceptionalSuccess, undefined, "Use the general Rite outcome rather than invent an item-specific outcome");
+  }
+  const sourceFields = ["sourceId", "source", "page"];
+  for (const field of Object.keys(riteCatalog.rules).filter(field => !sourceFields.includes(field)))
+    assert.ok(riteCatalog.presentation.rules[field]?.length > 3, `rules.${field} PT`);
+  assert.match(riteCatalog.rules.dicePool, /Attribute \+ Skill.*example, not a fixed requirement/);
+  assert.match(riteCatalog.rules.learning, /1 Experience per dot.*recording/);
+  assert.match(riteCatalog.rules.participants, /different packs.*same pack.*no teamwork bonus/);
+  assert.match(riteCatalog.rules.symbolism, /every listed symbol.*dramatic failure/);
+  assert.match(riteCatalog.rules.interruption, /injuring a participant.*dramatic failure/);
+  assert.match(riteCatalog.rules.dramaticFailure, /Shadowlash/);
+  assert.match(riteCatalog.rules.failure, /Stumbled/);
+  assert.match(riteCatalog.rules.exceptionalSuccess, /Symbolic Focus/);
+});
+
+test("WtF 2e Core Rites preserve exclusive teaching, conditional resistance, source omissions and effects without Pack persistence", () => {
+  const rite = id => riteCatalog.rites.find(item => item.id === `wtf-core:${id}`);
+  assert.deepEqual(riteCatalog.rites.filter(item => item.tribeId).map(item => [item.id, item.tribeId]), [
+    ["wtf-core:bottle-spirit", "bone-shadows"], ["wtf-core:kindle-fury", "blood-talons"], ["wtf-core:veil", "iron-masters"],
+    ["wtf-core:raiment-of-the-storm", "storm-lords"], ["wtf-core:hidden-path", "hunters-in-darkness"],
+  ]);
+  assert.match(rite("chain-rage").success, /not necessarily consecutive.*does not specify.*Wasu-Im/);
+  assert.match(rite("bottle-spirit").action, /five successes per maximum spirit Rank/);
+  assert.match(rite("bottle-spirit").success, /one turn per Rank.*full day.*one bottle/);
+  assert.match(rite("sacred-hunt").success, /no Essence.*breaking point toward Spirit/);
+  assert.match(rite("shadowbind").success, /Numina.*at least two.*one hour/);
+  assert.equal(rite("fetish").cost, "One Essence per dot of the desired fetish");
+  assert.match(rite("twilight-purge").success, /100 yards.*even without.*one hour/);
+  assert.match(rite("forge-alliance").success, /not Rites or Totem advantages/);
+  assert.match(rite("urfarahs-bane").success, /aggravated.*other werewolves.*one aggravated damage.*Guilty/);
+  assert.match(rite("veil").success, /30 minutes.*last lunar month.*memories are unaffected/);
+  assert.match(rite("banish").action, /other creatures cannot resist/);
+  assert.match(rite("harness-the-cycle").success, /half their maximum.*whole Essence pool/);
+  assert.match(rite("totemic-empowerment").success, /Ban and Bane.*five extra Essence capacity.*one Essence per hour/);
+  assert.match(rite("hunting-ground").success, /hunt each month/);
+  assert.match(rite("moons-mad-love").success, /only at night.*Resolve \+ Composure.*Madness/);
+  assert.equal(rite("wellspring").tribeId, undefined, "An Ivory Claws Sample Rite does not restrict who may learn this Rite");
+  assert.match(rite("wellspring").success, /whichever is larger.*Presence \+ Wits.*year and a day/);
+  assert.match(rite("raiment-of-the-storm").success, /outside in the rain.*two general armor/);
+  assert.match(rite("shadowcall").success, /as soon as the rite begins.*opposite side.*free on arrival/);
+  assert.match(rite("supplication").success, /at least half.*persistent Ban/);
+  assert.match(rite("hidden-path").success, /one tenth.*major bodies of water.*any participant/);
+  assert.equal(rite("expel").sampleDicePool, "Presence + Intimidation");
+  assert.match(rite("expel").success, /before the spirit.*one hour.*cannot affect the Claimed/);
+  assert.match(rite("great-hunt").success, /Primal Urge 1.*not Wolf-Blooded/);
+  assert.match(riteCatalog.presentation.rites["wtf-core:totemic-empowerment"].success, /Proibição e Fraqueza.*Numina/);
+  for (const item of riteCatalog.rites.filter(item => item.tribeId)) {
+    const tribe = reference.tribes.find(tribe => tribe.id === item.tribeId);
+    assert.ok(riteCatalog.presentation.rites[item.id].prerequisites.includes(presentation[tribe.id].name));
+  }
+});
+
+test("WtF 2e p. 83 creation allocates Rite ratings exactly, shares the ten-dot Merit budget and retains invalid selections", () => {
+  const choices = { tribe_id: "blood-talons", primal_urge: 1, extra_rite_dots: 0, rites: ["wtf-core:sacred-hunt"] };
+  const before = structuredClone(choices);
+  const select = value => rules.creationRiteSelection(value, riteCatalog.rites);
+  assert.deepEqual(select(choices), { budget: 2, spent: 2, problems: [] });
+  assert.deepEqual(select({ ...choices, rites: ["wtf-core:chain-rage", "wtf-core:messenger"] }).problems, []);
+  assert.deepEqual(select({ ...choices, rites: ["wtf-core:chain-rage"] }).problems, ["riteDots"]);
+  assert.deepEqual(select({ ...choices, rites: ["wtf-core:kindle-fury"] }).problems, ["riteDots"]);
+  assert.deepEqual(select({ ...choices, extra_rite_dots: 1, rites: ["wtf-core:kindle-fury"] }).problems, []);
+  assert.equal(rules.creationMeritBudget(1, 1), 9);
+  const seven = { ...choices, tribe_id: "iron-masters", extra_rite_dots: 5, rites: ["wtf-core:veil", "wtf-core:sacred-hunt"] };
+  assert.deepEqual(select(seven), { budget: 7, spent: 7, problems: [] });
+  assert.equal(rules.creationMeritBudget(2, 5), 0);
+  assert.equal(select({ ...seven, primal_urge: 3 }).budget, null, "Primal Urge and Rite conversions share the same Merit dots");
+  assert.equal(select({ ...choices, extra_rite_dots: 6 }).budget, null);
+  assert.deepEqual(select({ ...choices, rites: ["wtf-core:bottle-spirit"] }).problems, ["riteTribe"]);
+  assert.deepEqual(select({ ...seven, tribe_id: "ghost-wolves" }).problems, ["riteTribe"]);
+  assert.ok(select({ ...choices, rites: ["wtf-core:messenger", "wtf-core:messenger"] }).problems.includes("invalidRite"));
+  assert.ok(select({ ...choices, rites: ["missing:rite"] }).problems.includes("invalidRite"));
+  assert.deepEqual(choices, before);
+});
+
+test("Werewolf Rite cards render complete separate rules, removable invalid choices, and an isolated immutable catalog", async () => {
+  const { CreationRites, RiteRules } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
+  const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
+  const choices = { tribe_id: "blood-talons", primal_urge: 1, extra_rite_dots: 0, rites: ["wtf-core:bottle-spirit", "missing:rite"] };
+  const before = structuredClone(choices);
+  const markup = render(createElement(CreationRites, { value: choices, onChange: () => {}, catalog: riteCatalog }));
+  assert.match(markup, /Allocated Rite dots: 2 \/ 2/);
+  assert.match(markup, /taught only to another Tribe/);
+  assert.match(markup, /selected Rite is absent from this catalog: missing:rite/);
+  const invalidControl = markup.match(/<button[^>]*aria-label="Select Bottle Spirit"[^>]*>/)?.[0] ?? "";
+  assert.match(invalidControl, /data-state="checked"/);
+  assert.match(invalidControl, /aria-describedby=/);
+  assert.doesNotMatch(invalidControl, /disabled=/);
+  assert.match(markup.match(/<button[^>]*aria-label="Select Sacred Hunt"[^>]*>/)?.[0] ?? "", /disabled=/);
+  assert.doesNotMatch(markup, /<details[^>]* open|missing translation/);
+  assert.deepEqual(choices, before);
+  const detail = render(createElement(RiteRules, { rite: riteCatalog.rites.find(item => item.id === "wtf-core:fetish"), catalog: riteCatalog }));
+  for (const label of ["Cost", "Dice Pool", "Action", "Symbols", "Sample Rite", "Sample Rite Dice Pool", "Dramatic Failure", "Failure", "Success", "Exceptional Success"])
+    assert.ok(detail.includes(`<strong>${label}:</strong>`), label);
+  assert.doesNotMatch(detail, /<strong>Duration:/, "Do not invent a duration when the source omits it");
+  const { werewolfRitesCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/rites.ts");
+  const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
+  const calls = [];
+  const loaded = freezeCatalogData(await werewolfRitesCatalogGroup.load({ getCatalog: async id => {
+    calls.push(id);
+    assert.ok(["werewolf-rites-core", "werewolf-rites-core-pt"].includes(id));
+    return structuredClone(id === "werewolf-rites-core" ? ritesCore : riteCatalog.presentation);
+  } }));
+  assert.deepEqual(calls, ["werewolf-rites-core", "werewolf-rites-core-pt"]);
+  assert.ok(Object.isFrozen(loaded.rites[0]));
+  assert.ok(Object.isFrozen(loaded.rules));
+  assert.ok(Object.isFrozen(loaded.presentation.rites["wtf-core:sacred-hunt"]));
+  assert.throws(() => { loaded.rites[0].dots = 5; }, TypeError);
 });

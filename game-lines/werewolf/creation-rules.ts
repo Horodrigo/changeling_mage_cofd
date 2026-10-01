@@ -1,6 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { AuspiceDefinition, FormDefinition, PrimalUrgeLevel, RenownId, TribeDefinition, WerewolfReference } from "./catalogs/reference";
 import type { GiftDefinition } from "./catalogs/gifts";
+import type { RiteDefinition } from "./catalogs/rites";
 
 const finite = (value: unknown, fallback = 0) => {
   if (typeof value !== "number" && (typeof value !== "string" || !value.trim())) return fallback;
@@ -89,8 +90,29 @@ export type WerewolfCreationChoices = {
   auspice_id: string; tribe_id: string; auspice_skill: string; renown_choice: RenownId | "";
   primal_urge: number; extra_rite_dots: number; blood: string; bone: string;
   physical_touchstone: string; spiritual_touchstone: string;
-  shadow_facets: string[]; wolf_facets: string[];
+  shadow_facets: string[]; wolf_facets: string[]; rites: string[];
 };
+
+/** WTF2 pp. 83, 139: Rite ratings consume dots, not a number of selections. */
+export function creationRiteSelection(
+  choices: Pick<WerewolfCreationChoices, "tribe_id" | "primal_urge" | "extra_rite_dots" | "rites">,
+  rites: readonly RiteDefinition[],
+) {
+  const problems = new Set<"invalidRite" | "riteTribe" | "riteDots">();
+  let budget: number | null = null;
+  try { creationMeritBudget(choices.primal_urge, choices.extra_rite_dots); budget = 2 + choices.extra_rite_dots; }
+  catch { /* The template reports the shared conversion error as creationBudget. */ }
+  if (new Set(choices.rites).size !== choices.rites.length) problems.add("invalidRite");
+  let spent = 0;
+  for (const id of choices.rites) {
+    const rite = rites.find(item => item.id === id);
+    if (!rite) { problems.add("invalidRite"); continue; }
+    spent += rite.dots;
+    if (rite.tribeId && rite.tribeId !== choices.tribe_id) problems.add("riteTribe");
+  }
+  if (budget !== null && spent !== budget) problems.add("riteDots");
+  return { budget, spent, problems: [...problems] };
+}
 
 /** WTF2 p. 83: selections are canonical IDs; Moon Facets are derived grants, not purchases. */
 export function creationGiftSelection(
@@ -133,8 +155,9 @@ export function creationTemplateProblems(
   reference: Pick<WerewolfReference, "auspices" | "tribes">,
   skills: Record<string, number>,
   gifts: readonly GiftDefinition[],
+  rites: readonly RiteDefinition[],
 ) {
-  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | ReturnType<typeof creationGiftSelection>["problems"][number]> = [];
+  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | ReturnType<typeof creationGiftSelection>["problems"][number] | ReturnType<typeof creationRiteSelection>["problems"][number]> = [];
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id);
   const tribe = reference.tribes.find(item => item.id === choices.tribe_id);
   if (!auspice) problems.push("auspice");
@@ -154,5 +177,6 @@ export function creationTemplateProblems(
     try { creationMeritBudget(choices.primal_urge, choices.extra_rite_dots); }
     catch { problems.push("creationBudget"); }
   }
+  problems.push(...creationRiteSelection(choices, rites).problems);
   return problems;
 }

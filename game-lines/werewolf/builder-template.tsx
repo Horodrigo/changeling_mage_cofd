@@ -6,22 +6,25 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import type { WerewolfReferenceCatalog, RenownId } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
+import type { WerewolfRiteCatalog } from "./catalogs/rites";
 import { creationGiftAllowance, creationMeritBudget, creationTemplateProblems, type WerewolfCreationChoices } from "./creation-rules";
 import { AnchorField } from "./anchors";
 import { CreationGifts } from "./creation-gifts";
+import { CreationRites } from "./creation-rites";
 import "./styles/builder.css";
 
 /** Forsaken template choices stay line-owned; Core trait allocations remain untouched. */
-export function WerewolfCreationTemplate({ value, onChange, skills, reference, gifts }: {
+export function WerewolfCreationTemplate({ value, onChange, skills, reference, gifts, rites }: {
   value: WerewolfCreationChoices; onChange: (value: WerewolfCreationChoices) => void;
   skills: Record<string, number>; reference: WerewolfReferenceCatalog;
   gifts: WerewolfGiftCatalog;
+  rites: WerewolfRiteCatalog;
 }) {
   const { locale, t } = useLanguage();
   const update = <K extends keyof WerewolfCreationChoices>(key: K, next: WerewolfCreationChoices[K]) => onChange({ ...value, [key]: next });
   const auspice = reference.auspices.find(item => item.id === value.auspice_id);
   const tribe = reference.tribes.find(item => item.id === value.tribe_id);
-  const problems = creationTemplateProblems(value, reference, skills, gifts.gifts);
+  const problems = creationTemplateProblems(value, reference, skills, gifts.gifts, rites.rites);
   const validRenown = auspice && tribe && !problems.includes("renownChoice");
   const grants = validRenown ? creationGiftAllowance(auspice, tribe, value.renown_choice as RenownId) : null;
   const budget = problems.includes("creationBudget") ? null : creationMeritBudget(value.primal_urge, value.extra_rite_dots);
@@ -57,6 +60,7 @@ export function WerewolfCreationTemplate({ value, onChange, skills, reference, g
       <p>{t("werewolf.creationGiftGrants", { moon: grants.moonFacetCount, shadow: grants.shadowFacetCount, wolf: grants.wolfFacetCount })}</p>
       <CreationGifts value={value} onChange={onChange} auspice={auspice} tribe={tribe} gifts={gifts}/>
     </>}
+    <CreationRites value={value} onChange={onChange} catalog={rites}/>
     {problems.length > 0 && <ul>{problems.map(problem => <li key={problem}>{t(`werewolf.creationProblem.${problem}`)}</li>)}</ul>}
   </div>;
 }

@@ -1,0 +1,224 @@
+{
+  "rules": {
+    "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 139,
+    "dicePool": "Attribute + Skill, agreed by the Storyteller and players according to the ritual performance. A Sample Rite's pool is an example, not a fixed requirement.",
+    "participants": "Any Uratha who knows a rite can lead it. Others who know it can assist through teamwork. Wolf Rites can involve Uratha from different packs. Pack Rites require all participants to belong to the same pack; members who do not know the rite may participate and benefit but contribute no teamwork bonus.",
+    "symbolism": "The performance must incorporate every listed symbol in a way meaningful to the ritemaster. Omitting any symbol causes dramatic failure. Ritual practice can vary between regions, tribes, packs and teachers.",
+    "interruption": "Most rites are extended actions. Breaking the performance, such as by attacking and injuring a participant, causes dramatic failure.",
+    "learning": "Find a source of the rite's knowledge, then spend 1 Experience per dot. An Uratha or spirit teacher is usual, but a recording or rediscovered spiritual knowledge can also provide it. A werewolf cannot simply invent a rite. Only werewolves can learn Wolf Rites; werewolves and Wolf-Blooded can learn Pack Rites.",
+    "modifiers": "+1: the ritemaster's auspice moon is in the sky; +1: the tribe is symbolically represented; +1: all participants are in Dalu; +1: all participants display symbols of their shared purpose; +1: the pack totem is symbolically involved. −1: distracting environment; −1: between dawn and dusk; −1: another pack's territory; −2: very distracting environment, such as combat.",
+    "dramaticFailure": "The rite fails and ends immediately. The ritemaster gains Shadowlash.",
+    "failure": "No successes accumulate. The ritemaster gains Stumbled.",
+    "success": "Accumulate successes; reaching the target activates the rite's own Success effect.",
+    "exceptionalSuccess": "The ritemaster gains Symbolic Focus."
+  },
+  "rites": [
+    {
+      "id": "wtf-core:chain-rage", "kind": "wolf", "dots": 1,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 139, "additionalPages": [140],
+      "name": "Chain Rage", "description": "A pact with spirits of rage restrains fury temporarily, but eventually releases the chained beast.",
+      "symbols": "Rage, calm, binding, dawn",
+      "sampleRite": "Scandinavian packs rage under the dawn sun, scream into etched jars and rend their flesh until exhausted, then plunge into freezing water.",
+      "sampleDicePool": "Stamina + Survival", "action": "Extended: 10 successes; one roll per minute", "duration": "One month",
+      "success": "Each participating Uratha binds a container or focus, such as a bottle or chain. While carrying it, achieving turns of lucidity during Wasu-Im, not necessarily consecutive, immediately ends the rage. The source does not specify how many turns are required. At the end of the month, or if the focus is broken or taken, the Uratha immediately enters Wasu-Im."
+    },
+    {
+      "id": "wtf-core:messenger", "kind": "wolf", "dots": 1,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 140,
+      "name": "Messenger", "description": "Luna's gift carries messages between the Tribes of the Moon; the Pure shun it.",
+      "symbols": "Moon, wind or breath, music, connections",
+      "sampleRite": "Participants climb a mountain or building beneath the night sky, connected by bell-hung chains. They struggle like howling winds until the ritemaster forces them to their knees and sings to the sky.",
+      "sampleDicePool": "Strength + Brawl", "action": "Extended: 10 successes; one roll per five minutes",
+      "success": "Send a message taking up to five breaths to speak to a werewolf named during the rite. Lunes deliver it as a gentle melodic First Tongue recitation in the recipient's ear, without the original emphasis or accent. It reaches any werewolf anywhere in the world almost instantly and with perfect precision, and cannot be detected or intercepted."
+    },
+    {
+      "id": "wtf-core:bottle-spirit", "kind": "wolf", "dots": 2, "tribeId": "bone-shadows",
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 140,
+      "name": "Bottle Spirit", "description": "A secret of Death Wolf's followers exploits the spiritual laws of binding.", "prerequisites": "Only taught to Bone Shadows.",
+      "symbols": "Bottles, stasis, air, death",
+      "sampleRite": "Chant over an etched bottle among bone chimes and fumes of burning amber, preferably containing trapped insects; some ritemasters use ice instead.",
+      "sampleDicePool": "Intelligence + Occult", "action": "Extended: five successes per maximum spirit Rank the bottle can contain; one roll per ten minutes",
+      "success": "Opening the empowered bottle draws in the nearest spirit, up to the Rank permitted by the rite's potency. The spirit cannot resist but has one turn per Rank to escape the area, kill the holder or destroy the bottle before being bound. It remains aware and can communicate with the holder. Opening or breaking the bottle frees it; after a full day its bindings loosen and it may escape. In the material world it need not spend Essence hourly while bottled. The ritemaster can empower only one bottle at a time; making another cracks the old one."
+    },
+    {
+      "id": "wtf-core:sacred-hunt", "kind": "wolf", "dots": 2,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 140,
+      "name": "Sacred Hunt", "description": "Siskur-Dah is the holiest rite, binding hunters and prey through the laws of the hunt.",
+      "symbols": "Hunt, prey, claws or weapons, blood",
+      "sampleRite": "Blood Talons dance in a circle with claws marked in blood or ash. Wearing the prey's mask, the ritemaster tries to escape the mock hunt.",
+      "sampleDicePool": "Dexterity + Athletics", "action": "Extended: 10 successes; one roll per minute",
+      "success": "All werewolves present become hunters and gain Siskur-Dah. Identify the intended individual or group as prey without needing precise names or details. If hunters bring down spirit-prey, divide its remaining Essence as desired. Draining all Essence discorporates it, usually a breaking point toward Spirit and disrespectful without good reason. Hunters who chase down a spirit with knowledge of a Rite or Gift may pay the required Experiences to learn the Rite or be marked with the Gift. If they do, subsequently bringing it down grants no Essence and is a breaking point toward Spirit."
+    },
+    {
+      "id": "wtf-core:kindle-fury", "kind": "wolf", "dots": 3, "tribeId": "blood-talons",
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 140,
+      "name": "Kindle Fury", "description": "The ancient pact with Fenris-Ur grants the Suthar Anzuth their patron's fury.", "prerequisites": "Only taught to Blood Talons.",
+      "symbols": "Rage, blood, fire or ignition, consumption",
+      "sampleRite": "Bristol Blood Talons drink, brawl and tell tales of unsatisfied rage in a decaying basement. The ritemaster mixes blood and alcohol, then pours it into the fire.",
+      "sampleDicePool": "Presence + Expression", "action": "Extended: 10 successes; one roll per ten minutes", "duration": "One month",
+      "success": "All Uratha present gain the Destroyer Blood archetype in addition to their usual Blood. Those already possessing Destroyer double the Willpower recovered by indulging it."
+    },
+    {
+      "id": "wtf-core:shadowbind", "kind": "wolf", "dots": 3,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 141,
+      "name": "Shadowbind", "description": "Cage a spirit through the ancient laws of binding.",
+      "symbols": "Cage, binding, key, the spirit's type",
+      "sampleRite": "Iron Masters surround a spirit with wire circles, keys and radios tuned to occult frequencies.",
+      "sampleDicePool": "Intelligence + Science", "action": "Extended: 10 successes; one roll per minute; potentially contested by the spirit's Resistance",
+      "success": "Target a present spirit on the same side of the Gauntlet, occupying a defined binding space. Reaching the target before the spirit binds it there: it cannot leave, cross the Gauntlet or use Numina against targets outside. It is released when the ritemaster says so, an outsider breaks the boundary, or an outsider fulfills a specific release condition established by the ritemaster. Tell at least two others that condition within one hour or the binding fades."
+    },
+    {
+      "id": "wtf-core:fetish", "kind": "wolf", "dots": 4,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 141,
+      "name": "Fetish", "description": "Bind a spirit into a physical receptacle to create a fetish; item construction is detailed on p. 146.",
+      "symbols": "Craft, purpose, chains, blood, the spirit's type",
+      "sampleRite": "Forge a chain-bound item over fire, hammering and working the metal with blood to bind the spirit.",
+      "sampleDicePool": "Strength + Crafts", "cost": "One Essence per dot of the desired fetish", "action": "Extended: 20 successes; one roll per minute",
+      "success": "Bind the spirit into its receptacle and create a fetish, using the fetish creation rules on p. 146."
+    },
+    {
+      "id": "wtf-core:twilight-purge", "kind": "wolf", "dots": 4,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 141, "additionalPages": [142],
+      "name": "Twilight Purge", "description": "Force hidden Twilight beings into the material world.",
+      "symbols": "Sight, mirrors, corrosion or acid, sun",
+      "sampleRite": "The ritemaster sits cross-legged with painted eyes, catches sunlight in a mirror, stirs a pot of acids, paints sigils on the mirror with the mixture, and breaks it.",
+      "sampleDicePool": "Wits + Science", "cost": "Three Essence", "action": "Extended: five successes; one roll per minute",
+      "success": "Affect all Twilight creatures within up to 100 yards of the ritemaster, choosing a smaller area if desired, or target one perceived Twilight creature. They materialize for free even without the Materialize Manifestation, gain Stunned, and cannot return to Twilight for one hour."
+    },
+    {
+      "id": "wtf-core:forge-alliance", "kind": "wolf", "dots": 5,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 142,
+      "name": "Forge Alliance", "description": "Bind packs together for a shared purpose.",
+      "symbols": "Packs, alliance, shared purpose, blood",
+      "sampleRite": "Publicly invoke the Firstborn, mingle blood and exchange gifts to demonstrate sincerity and common purpose.",
+      "sampleDicePool": "Presence + Persuasion", "cost": "One Essence per pack joining", "action": "Extended: 10 successes; one roll per minute", "duration": "One month",
+      "success": "Each joining pack must have at least one member present. Treat the alliance as one pack for Gifts, Death Rage triggers and other supernatural effects, but not Rites or Totem advantages. Alternatively, form it against specific prey: every member gains an additional Aspiration to hunt it, and the alliance ends when the prey is defeated."
+    },
+    {
+      "id": "wtf-core:urfarahs-bane", "kind": "wolf", "dots": 5,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 142,
+      "name": "Urfarah's Bane", "description": "Echo Father Wolf's betrayal to turn claws and teeth against the People.",
+      "symbols": "Betrayal, Father Wolf's death, shattering, echoes",
+      "sampleRite": "A champion stands apart while the ritemaster paints tears on her cheeks for Father Wolf's death. Ritualists invoke loss and broken bonds, drawing on her grief as her pack and totem ties slip away.",
+      "sampleDicePool": "Wits + Empathy", "cost": "Five Essence", "action": "Extended: 15 successes; one roll per ten minutes", "duration": "Until sunrise",
+      "success": "A single Uratha present inflicts aggravated damage on other werewolves with claws and bites. During the effect, she is cut off from pack ties and receives no pack benefits from Gifts, Rites or Totem. When it ends, she suffers one aggravated damage and gains Guilty."
+    },
+    {
+      "id": "wtf-core:veil", "kind": "wolf", "dots": 5, "tribeId": "iron-masters",
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 142,
+      "name": "Veil", "description": "Erase recorded evidence of a supernatural event.", "prerequisites": "Only taught to Iron Masters.",
+      "symbols": "Blinding, deletion, technology, shadow or veils",
+      "sampleRite": "An Iraqi Iron Master Ithaeur dances frenetically in dark veils and claws at her blinded eyes. Apprentices collect the blood, chant code and data, and mark photographs and computer screens with it.",
+      "sampleDicePool": "Presence + Occult", "cost": "Five Essence", "action": "Extended: 20 successes; one roll per ten minutes",
+      "success": "Choose one recorded supernatural event lasting no more than 30 minutes that occurred in the last lunar month. Spirits remove every recording, including handwritten accounts, photographs, videos and phone records. Human memories are unaffected."
+    },
+    {
+      "id": "wtf-core:banish", "kind": "pack", "dots": 1,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 142, "additionalPages": [143],
+      "name": "Banish", "description": "Expel a being to its proper world.",
+      "symbols": "Warning, two worlds, Father Wolf's last howl, bitterness",
+      "sampleRite": "North American packs issue paradoxical demands, chew bitter berries, mark warning sigils and howl mockingly.",
+      "sampleDicePool": "Manipulation + Subterfuge", "action": "Extended: five successes; one roll per minute; spirits may resist with Resistance, other creatures cannot resist",
+      "success": "Send a spirit in the physical world into the Shadow, or a non-spirit, non-werewolf in the Shadow into the physical world, at the corresponding location. Reports suggest that performing this rite in a Wound also expels Wound-tainted servants of the Maeljin out of the Shadow to an unknown place."
+    },
+    {
+      "id": "wtf-core:harness-the-cycle", "kind": "pack", "dots": 1,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 143,
+      "name": "Harness the Cycle", "description": "Draw a tithe of Essence from spirits at the turning of the seasons.",
+      "symbols": "Season, consumption, blood, earth or sky",
+      "sampleRite": "At the autumn equinox, feast on fresh meat, mark yourselves with fertile earth and blood, howl at the sky and feed fires into the night.",
+      "sampleDicePool": "Presence + Socialize", "action": "Extended: 10 successes; one roll per half hour",
+      "success": "In temperate regions perform only at equinoxes and solstices: participating Uratha regain Essence equal to half their maximum pool. Humans and Wolf-Blooded recover all Willpower and heal twice as fast for a month. In tropical regions perform on the two days marking the wet/dry season transitions: Uratha refill their whole Essence pool; humans and Wolf-Blooded receive the same benefits and one dot of Allies, Contacts or Resources for a month."
+    },
+    {
+      "id": "wtf-core:totemic-empowerment", "kind": "pack", "dots": 1,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 143,
+      "name": "Totemic Empowerment", "description": "The pack bond makes a willing member a temporary vessel for its totem.",
+      "symbols": "Totem, pack, blood, strength",
+      "sampleRite": "The Blood Foxes pierce a subject with long spines and paint the flowing blood into snarling foxes, enduring the pain while the totem shares the sensation.",
+      "sampleDicePool": "Stamina + Medicine", "action": "Extended: 10 successes; one roll per minute", "duration": "Until the next sunrise",
+      "success": "The totem must be present on the same side of the Gauntlet. It voluntarily and temporarily Claims the subject until the rite ends. The member gains its Ban and Bane, +1 Strength, Dexterity and Stamina, +2 Perception, sight of Twilight spirits, its Influences and Numina, and five extra Essence capacity. A subject normally without an Essence pool receives five Essence from the totem. A human becomes immune to Lunacy. If an Uratha falls into Basu-Im, the totem takes control, spending one Essence per hour and acting freely; the Uratha remembers nothing afterward. This is a breaking point toward Spirit for Uratha, or an Integrity breaking point for humans and Wolf-Blooded."
+    },
+    {
+      "id": "wtf-core:hunting-ground", "kind": "pack", "dots": 2,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 143, "additionalPages": [144],
+      "name": "Hunting Ground", "description": "Invoke Father Wolf's territorial rights to sanctify a hunting ground.",
+      "symbols": "Territory, pack totem, pack, boundaries",
+      "sampleRite": "British packs walk their borders on foot, striking markers with staves inscribed with pack and totem symbols and gouging cornerstones and trees.",
+      "sampleDicePool": "Strength + Occult", "action": "Extended: 10 successes; one roll per half hour", "duration": "One season",
+      "success": "Sanctify the area as pack territory. Members gain +2 to foot chases and tracking there, whether pursuing or escaping, and +2 to Animal Ken, Empathy and Politics rolls on its inhabitants, human, spirit or otherwise. Failing to complete at least one hunt each month, ordinary or Siskur-Dah, immediately ends the rite."
+    },
+    {
+      "id": "wtf-core:moons-mad-love", "kind": "pack", "dots": 2,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 144,
+      "name": "Moon's Mad Love", "description": "A dangerous pact with Luna invests some of her presence in human souls; the Pure mostly shun it.",
+      "symbols": "Silver, auspices, love, change",
+      "sampleRite": "Maghreb Bone Shadows hold a moonlit masquerade at an honored Uratha's grave. Wearing auspice masks, they debate love and change with human supplicants, awarding silver tokens for understanding.",
+      "sampleDicePool": "Presence + Academics", "action": "Extended: 15 successes; one roll per minute", "duration": "One month",
+      "success": "Perform only at night. Humans present at its completion suffer no Lunacy from werewolf packmates and remember events even when suffering Lunacy from other sources. Their first sight of the full moon during the effect grants Inspired. At the end of the month each must succeed on Resolve + Composure or gain Madness."
+    },
+    {
+      "id": "wtf-core:wellspring", "kind": "pack", "dots": 2,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 144, "additionalPages": [145],
+      "name": "Wellspring", "description": "A pact with the locus' spirit umia amplifies its Resonance throughout the territory.",
+      "symbols": "Fountains or ignition, cleansing, energy, the Resonance type",
+      "sampleRite": "Canadian Ivory Claws dance clothed in tangled plants and thorns, mixing blood with sap, then wash in the collected mixture to flood urban areas with natural Resonance.",
+      "sampleDicePool": "Dexterity + Occult", "action": "Extended: 20 successes; one roll per ten minutes", "duration": "One month",
+      "success": "Perform at a locus. Spirits and Uratha within 100 yards per locus dot or the whole territory, whichever is larger, add its rating to matching Influence rolls. Any pack member within the locus' own area can use matching Influence at its rating, spending the locus' Essence if lacking their own; use Presence + Wits instead of Power + Finesse. The pervasive Resonance applies Resonant and has long-term effects in Shadow and the material world. The entire pack gains a persistent Ban reflecting that Resonance: pain might require one lethal damage each dawn; death might require carrying a close relative's bones. Any violation ends the rite immediately and prevents Wellspring on the locus for a year and a day. The Condition lifts when the rite ends."
+    },
+    {
+      "id": "wtf-core:raiment-of-the-storm", "kind": "pack", "dots": 3, "tribeId": "storm-lords",
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 145,
+      "name": "Raiment of the Storm", "description": "Storm and rain spirits empower those who walk in their embrace.", "prerequisites": "Only taught to Storm Lords.",
+      "symbols": "Rain, lightning, blood, sky",
+      "sampleRite": "The pack gathers uncovered in the rain beneath flickering lamps. A lightning-serpent totem dances as participants pool blood from slashed hands; its reflected storm wrath empowers the ritemaster.",
+      "sampleDicePool": "Wits + Occult", "action": "Extended: 15 successes; one roll per minute", "duration": "Until the storm ceases",
+      "success": "Perform only during a storm that has produced thunder or lightning. While outside in the rain, participants gain +2 to contest supernatural attacks and effects, two general armor, and immunity to electricity and lightning damage. They gain Ban: no sleeping, resting or relaxing until the storm passes."
+    },
+    {
+      "id": "wtf-core:shadowcall", "kind": "pack", "dots": 3,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 145,
+      "name": "Shadowcall", "description": "Ancient laws summon a spirit to heed the ritual call.",
+      "symbols": "Circles, a call, lights, the spirit's type",
+      "sampleRite": "An anonymous Internet manual describes circuitry, light pulses and occult code for a gateway server that calls technology spirits. The Farsil Luhal fear an unwitting Wolf-Blooded might use it.",
+      "sampleDicePool": "Intelligence + Computer", "action": "Extended: 20 successes; one roll per minute; potentially contested by the spirit's Resistance",
+      "success": "Call one known spirit by name or the nearest of a chosen type. It notices as soon as the rite begins and may resist or respond voluntarily. On success it appears immediately in a defined summoning space containing appropriate gathra. Unlike most rites, local Gauntlet strength affects the pool if the spirit starts on the opposite side. In the material world the space gains Open and the spirit arrives in Twilight; if it has Materialize, it may use that Manifestation free on arrival."
+    },
+    {
+      "id": "wtf-core:supplication", "kind": "pack", "dots": 3,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 145,
+      "name": "Supplication", "description": "Offer respect to the Shadow's spirits in exchange for favor.",
+      "symbols": "Territory, smoke, balance, the spirits' type",
+      "sampleRite": "A Hunter in Darkness makes straw-and-bone trinkets marked with blood, walks her territory with incense, and hangs them under eaves while howling to announce each offering.",
+      "sampleDicePool": "Presence + Crafts", "action": "Extended: 10 successes; one roll per half hour", "duration": "One season",
+      "success": "Distribute physical anchors reflecting a chosen spirit type throughout pack territory. All spirits of that type improve their impression of pack members by one level. If at least half the anchors are damaged or removed, the rite immediately ends. The ritemaster gains a persistent Ban suited to those spirits, resolving when the duration ends."
+    },
+    {
+      "id": "wtf-core:hidden-path", "kind": "pack", "dots": 4, "tribeId": "hunters-in-darkness",
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 145, "additionalPages": [146],
+      "name": "Hidden Path", "description": "Spirits of wolves and places provide a swift hidden path to prey or safety.", "prerequisites": "Only taught to Hunters in Darkness.",
+      "symbols": "Paths, shadow, doorways, destination",
+      "sampleRite": "European Meninna perform a mock hunt through an abandoned building while the ritemaster paints destination symbols around the doorway they will leave through.",
+      "sampleDicePool": "Wits + Survival", "action": "Extended: 15 successes; one roll per ten minutes",
+      "success": "Name a destination reachable entirely over land. Participants follow a path between Flesh and Shadow, evading mundane barriers and interception and taking one tenth the ordinary travel time on foot. It cannot cross seas or major bodies of water. If any participant leaves the path, the rite ends."
+    },
+    {
+      "id": "wtf-core:expel", "kind": "pack", "dots": 4,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 146,
+      "name": "Expel", "description": "Assert the pack's spiritual claim to force a possessing spirit out.",
+      "symbols": "Ownership, dominance, shattering, scourging",
+      "sampleRite": "An Iminir ritemaster strikes the possessed host, binds him in chains with her pack, marks him with blood and ownership sigils, then tears the chains away to break the spirit's hold.",
+      "sampleDicePool": "Presence + Intimidation", "action": "Extended: 10 successes; one roll per minute; contested by the spirit's Resistance",
+      "success": "Target a spirit possessing a human or object. Reach ten successes before the spirit to break its Fetter or Possession. A living former host counts as a pack member for one hour. This cannot affect the Claimed, whose spiritual fusion is too deep."
+    },
+    {
+      "id": "wtf-core:great-hunt", "kind": "pack", "dots": 5,
+      "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 146,
+      "name": "Great Hunt", "description": "The Firstborn empower lesser pack hunters to match the Uratha.",
+      "symbols": "Blood, transformation, wolves, silver",
+      "sampleRite": "A rumored Pacific Meninna pack leads human skinchangers in wolf skins and shamanic drugs, stalking among them and distributing bites and silver coins.",
+      "sampleDicePool": "Presence + Occult", "action": "Extended: 20 successes; one roll per minute", "duration": "Until the next sunrise",
+      "success": "Human and Wolf-Blooded pack members immediately become Urhan, receiving all its form bonuses, werewolf senses and regeneration as at Primal Urge 1. They gain Ban until sunrise, compelled to hunt the pack's prey. Participation is an Integrity breaking point for humans but not Wolf-Blooded."
+    }
+  ]
+}

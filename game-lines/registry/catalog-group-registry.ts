@@ -7,6 +7,7 @@ const groupLoaders: Readonly<Record<CatalogGroupId, CatalogGroupLoader>> = {
   "core-reference": () => import("../core/catalogs/reference").then(({ coreReferenceCatalogGroup }) => coreReferenceCatalogGroup),
   "werewolf-reference": () => import("../werewolf/catalogs/reference").then(({ werewolfReferenceCatalogGroup }) => werewolfReferenceCatalogGroup),
   "werewolf-gifts": () => import("../werewolf/catalogs/gifts").then(({ werewolfGiftsCatalogGroup }) => werewolfGiftsCatalogGroup),
+  "werewolf-rites": () => import("../werewolf/catalogs/rites").then(({ werewolfRitesCatalogGroup }) => werewolfRitesCatalogGroup),
   "mage-merits": () => import("../mage/catalogs/merits").then(({ mageMeritsCatalogGroup }) => mageMeritsCatalogGroup),
   "mage-spells": () => import("../mage/catalogs/spells").then(({ mageSpellsCatalogGroup }) => mageSpellsCatalogGroup),
   "mage-factions": () => import("../mage/catalogs/factions").then(({ mageFactionsCatalogGroup }) => mageFactionsCatalogGroup),
