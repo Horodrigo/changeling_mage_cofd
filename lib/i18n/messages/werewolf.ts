@@ -1,6 +1,15 @@
 export const werewolfMessages = {
   "en-US": {
     werewolf: {
+      forsakenTemplate: "Forsaken Template", auspiceSkill: "Free Auspice Skill dot", renownChoice: "Additional Renown dot", extraRiteDots: "Extra Rite dots from Merits",
+      renownNames: { Cunning: "Cunning", Glory: "Glory", Honor: "Honor", Purity: "Purity", Wisdom: "Wisdom" },
+      creationConversions: "Primal Urge starts at 1. Each additional dot costs five of the ten starting Merit dots. Exchange up to five Merit dots for extra Rite dots, one for one.",
+      creationBudget: "Remaining Merit dots: {merits}. Available Rite dots: {rites}.",
+      creationGiftGrants: "Starting Facets: {moon} from your Auspice's Moon Gift, {shadow} from two different favored Shadow Gifts, and {wolf} from a Wolf Gift. Each requires a dot in its Renown.",
+      creationProblem: {
+        auspice: "Choose an Auspice.", tribe: "Choose a Tribe or Ghost Wolves.", auspiceSkill: "Choose an Auspice Skill below five dots for the free dot.",
+        renownChoice: "Choose the additional Renown dot without exceeding two in one category.", creationBudget: "Primal Urge and extra Rites must fit the ten-dot Merit budget.",
+      },
       forms: "Forms", passives: "Werewolf passives", perception: "Wolf-sense Perception bonus",
       firearmsDefense: "Defense against Firearms", primalUrge: "Primal Urge", essence: "Essence",
       harmony: "Harmony", renown: "Renown", auspice: "Auspice", tribe: "Tribe",
@@ -20,6 +29,15 @@ export const werewolfMessages = {
   },
   "pt-BR": {
     werewolf: {
+      forsakenTemplate: "Modelo de Destituído", auspiceSkill: "Ponto gratuito de Perícia do Auspício", renownChoice: "Ponto adicional de Renome", extraRiteDots: "Pontos extras de Ritos convertidos de Méritos",
+      renownNames: { Cunning: "Astúcia", Glory: "Glória", Honor: "Honra", Purity: "Pureza", Wisdom: "Sabedoria" },
+      creationConversions: "Instinto Primitivo começa em 1. Cada ponto adicional custa cinco dos dez pontos iniciais de Méritos. Converta até cinco pontos de Méritos em pontos extras de Ritos, na proporção de um por um.",
+      creationBudget: "Pontos restantes de Méritos: {merits}. Pontos disponíveis de Ritos: {rites}.",
+      creationGiftGrants: "Facetas iniciais: {moon} do Dom da Lua do seu Auspício, {shadow} de dois Dons da Sombra favorecidos distintos e {wolf} de um Dom do Lobo. Cada Faceta exige um ponto no Renome correspondente.",
+      creationProblem: {
+        auspice: "Escolha um Auspício.", tribe: "Escolha uma Tribo ou os Lobos Fantasmas.", auspiceSkill: "Escolha uma Perícia do Auspício com menos de cinco pontos para receber o ponto gratuito.",
+        renownChoice: "Escolha o ponto adicional de Renome sem ultrapassar dois na mesma categoria.", creationBudget: "Instinto Primitivo e Ritos extras devem caber nos dez pontos iniciais de Méritos.",
+      },
       forms: "Formas", passives: "Passivas de Lobisomem", perception: "Bônus de percepção lupina",
       firearmsDefense: "Defesa contra Armas de Fogo", primalUrge: "Instinto Primitivo", essence: "Essência",
       harmony: "Harmonia", renown: "Renome", auspice: "Auspício", tribe: "Tribo",

@@ -1,0 +1,292 @@
+{
+  "gift-crescent-moon": {
+    "name": "Dom da Lua Crescente"
+  },
+  "gift-crescent-moon:shadow-gaze": {
+    "name": "Olhar da Sombra",
+    "description": "O olhar do Ithaeur revela a verdade simbólica oculta em um espírito.",
+    "cost": "1 Essência",
+    "duration": "1 cena",
+    "dicePool": "Raciocínio + Ocultismo + Sabedoria vs Resistência",
+    "action": "Instantânea, pode ser disputada",
+    "effect": "Acrescente Renome de Sabedoria aos testes de Empatia ao interagir com espíritos e Possuídos. O Ithaeur também pode examinar um espírito que consiga perceber; a segunda leitura e as seguintes na mesma cena custam mais um ponto de Essência cada.",
+    "dramaticFailure": "O espírito não pode ser lido e percebe a tentativa.",
+    "failure": "O espírito não pode ser lido.",
+    "success": "Descobre a Proibição ou a Fraqueza do espírito.",
+    "exceptionalSuccess": "Descobre tanto a Proibição quanto a Fraqueza do espírito."
+  },
+  "gift-crescent-moon:spirit-whispers": {
+    "name": "Sussurros Espirituais",
+    "description": "Uma pergunta sussurrada desperta os segredos de um espírito adormecido.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Persuasão + Sabedoria",
+    "action": "Instantânea",
+    "effect": "Dirija-se a um objeto percebido ou a um espírito adormecido que consiga ouvir o Ithaeur. Faça uma pergunta simples, de no máximo uma frase, sobre seu ambiente imediato ou sua esfera de influência.",
+    "dramaticFailure": "O espírito fornece uma resposta falsa ou enganosa.",
+    "failure": "O espírito permanece adormecido e não responde.",
+    "success": "O espírito sussurra uma resposta de uma frase, baseada apenas no ambiente imediato ou em sua influência. Por exemplo, uma porta pode conhecer um código de entrada ou seus visitantes recentes. Responder que não sabe é válido.",
+    "exceptionalSuccess": "A resposta pode ter mais de uma frase."
+  },
+  "gift-crescent-moon:shadow-hunter": {
+    "name": "Caçador da Sombra",
+    "description": "O Ithaeur conduz a Caçada Sagrada pela Sombra.",
+    "activationRequirement": "Só pode ser ativada ao receber a Condição Siskur-Dah.",
+    "cost": "1 Essência",
+    "dicePool": "Este poder não exige teste.",
+    "action": "Instantânea",
+    "duration": "Toda a duração de Siskur-Dah",
+    "effect": "Enquanto estiver na Sombra perseguindo a presa de Siskur-Dah, acrescente Renome de Sabedoria aos testes de Percepção, aos testes para resistir a Numina e Poderes Terríveis de espíritos e aos testes de viagem ou perseguição pela Sombra."
+  },
+  "gift-crescent-moon:shadow-masquerade": {
+    "name": "Disfarce da Sombra",
+    "description": "O Ithaeur veste a Essência de um espírito para se disfarçar entre os habitantes da Sombra.",
+    "cost": "2 Essência",
+    "dicePool": "Manipulação + Ocultismo + Sabedoria vs Resistência",
+    "action": "Instantânea",
+    "duration": "1 hora por sucesso",
+    "effect": "Escolha um espírito que o Ithaeur consiga perceber.",
+    "dramaticFailure": "O disfarce falha. Recebe a Condição Proibição correspondente à Proibição do espírito alvo.",
+    "failure": "O disfarce falha.",
+    "success": "Copia uma quantidade de pontos de Influência igual aos sucessos e assume a Proibição ou a Fraqueza do espírito. Usa a parada de Disfarce da Sombra para as Influências copiadas. Outros espíritos percebem o Ithaeur como um espírito do tipo do alvo enquanto ele agir apropriadamente. Um comportamento suspeito permite um teste de Refinamento + Resistência − Grau do espírito copiado para desvendar o disfarce; um sucesso encerra a Faceta imediatamente.",
+    "exceptionalSuccess": "Tentativas de espíritos de desvendar o disfarce também subtraem o Renome de Sabedoria do Ithaeur."
+  },
+  "gift-crescent-moon:panopticon": {
+    "name": "Panóptico",
+    "description": "O Ithaeur vincula espíritos próximos a uma rede de sentidos emprestados.",
+    "cost": "Essência igual ao Grau máximo dos espíritos afetados",
+    "dicePool": "Inteligência + Ocultismo + Sabedoria",
+    "action": "Prolongada (10 sucessos; 1 minuto por teste)",
+    "duration": "1 cena; prolongue por mais 1 Essência por cena",
+    "dramaticFailure": "Os sentidos ficam sobrecarregados; recebe Confuso.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, percebe todos os espíritos até o Grau escolhido a uma distância de Renome de Sabedoria × 100 jardas e sofre −3 na própria Percepção pela duração. Obtém uma noção geral do que eles percebem e de estarem feridos ou lutando. Uma ação instantânea permite concentrar-se inteiramente nos sentidos de um espírito ou retirar-se deles; concentrar-se bloqueia os sentidos do próprio Ithaeur e a percepção dos outros espíritos, mas transmite as percepções do espírito escolhido com clareza perfeita. Gaste um ponto de Essência para impor uma penalidade igual ao Renome de Sabedoria a todos os testes individuais de Percepção daquele espírito por uma cena.",
+    "exceptionalSuccess": "A Faceta não impõe penalidade à Percepção do Ithaeur."
+  },
+  "gift-full-moon": {
+    "name": "Dom da Lua Cheia"
+  },
+  "gift-full-moon:killer-instinct": {
+    "name": "Instinto Assassino",
+    "description": "O Rahu traz seus instintos assassinos à tona.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "duration": "1 cena",
+    "effect": "Aplique 8-novamente às paradas de Briga e Armas Brancas pela cena."
+  },
+  "gift-full-moon:warriors-hide": {
+    "name": "Couro do Guerreiro",
+    "description": "O corpo do Rahu suporta o castigo da batalha.",
+    "duration": "Permanente",
+    "effect": "Acrescente permanentemente Renome de Pureza à Vitalidade. Cada ponto adicional de Pureza aumenta esse bônus em um."
+  },
+  "gift-full-moon:bloody-handed-hunter": {
+    "name": "Caçador de Mãos Ensanguentadas",
+    "description": "O Rahu remove qualquer obstáculo à Caçada Sagrada.",
+    "activationRequirement": "Só pode ser ativada ao receber a Condição Siskur-Dah.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Toda a duração de Siskur-Dah",
+    "effect": "Acrescente Renome de Pureza aos testes de ataque contra qualquer pessoa que obstrua a perseguição à presa de Siskur-Dah, incluindo aliados hostis ou um burocrata humano. Esse bônus não se aplica contra a própria presa da Caçada."
+  },
+  "gift-full-moon:butchery": {
+    "name": "Carnificina",
+    "description": "O Rahu transforma uma luta contra vários oponentes em uma oportunidade de massacre.",
+    "cost": "2 Essência",
+    "dicePool": "Raciocínio + Briga + Pureza",
+    "action": "Reflexiva",
+    "duration": "1 turno por sucesso",
+    "dramaticFailure": "A Defesa se torna 0 por um turno. Durante esse turno, o Rahu não pode realizar uma ação que exija abrir mão da Defesa.",
+    "failure": "A Faceta não tem efeito.",
+    "success": "Enquanto lutar contra mais de um inimigo, sempre que o Rahu atingir um adversário desarmado (incluindo dentes e garras) ou for atingido por um adversário, pode impor uma das Complicações listadas àquele adversário, mesmo sem causar dano. Matar ou incapacitar um inimigo prolonga a duração em um turno.",
+    "options": "Braço Lesionado; Cego; Surdo; Derrubado; Perna Lesionada.",
+    "exceptionalSuccess": "Impõe três das Complicações listadas ao primeiro inimigo que atingir o Rahu ou for atingido por ele após a ativação."
+  },
+  "gift-full-moon:crimson-spasm": {
+    "name": "Espasmo Carmesim",
+    "description": "A fúria lunar bruta retorce o corpo do Rahu em uma máquina primitiva de destruição.",
+    "cost": "1 Essência por turno",
+    "dicePool": "Vigor + Sobrevivência + Pureza",
+    "action": "Instantânea",
+    "dramaticFailure": "Sofre um ponto de ruptura em direção ao Espírito e muda involuntariamente para outra forma.",
+    "failure": "A Faceta falha.",
+    "success": "Cada sucesso concede uma escolha entre os benefícios listados, que se somam aos de outras Facetas e formas. Mantenha o Espasmo gastando um ponto de Essência por turno. Em Hishu ou Urhan, causa Lunagem como se estivesse em Dalu.",
+    "options": "Por sucesso: acrescentar dois pontos de Força; acrescentar dois pontos de Vigor; acrescentar um ponto de armadura geral; ou acrescentar +1 de dano letal às armas naturais.",
+    "exceptionalSuccess": "Também regenera gratuitamente um ponto de dano letal a cada turno em que o Espasmo for mantido."
+  },
+  "gift-gibbous-moon": {
+    "name": "Dom da Lua Gibosa"
+  },
+  "gift-gibbous-moon:war-howl": {
+    "name": "Uivo de Guerra",
+    "description": "O uivo do Cahalith leva sua alcateia a uma fúria assassina.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Expressão + Glória",
+    "action": "Instantânea",
+    "duration": "1 turno por sucesso",
+    "dramaticFailure": "Um inimigo que ouvir o uivo recupera um ponto gasto de Força de Vontade.",
+    "failure": "O uivo não inspira a alcateia.",
+    "success": "Todos os membros da alcateia ao alcance da voz recebem +1L nos ataques de Briga e Armas Brancas pela duração. Esse dano adicional é letal mesmo quando o ataque causa dano contundente.",
+    "exceptionalSuccess": "O Cahalith recebe Inspirado."
+  },
+  "gift-gibbous-moon:voice-of-glory": {
+    "name": "Voz de Glória",
+    "description": "A voz do Cahalith cativa aliados e presas incautas.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "1 cena",
+    "effect": "Acrescente Renome de Glória às paradas de Expressão e Persuasão. Ao conhecer alguém pela primeira vez, melhore a primeira impressão em um passo. Melhore-a em mais um passo ao inspirar ou incitar agressividade ou violência."
+  },
+  "gift-gibbous-moon:dream-hunter": {
+    "name": "Caçador de Sonhos",
+    "description": "O Cahalith persegue sua presa até o abrigo dos sonhos.",
+    "activationRequirement": "Só pode ser ativada ao receber a Condição Siskur-Dah.",
+    "cost": "1 Essência",
+    "dicePool": "Manipulação + Empatia + Glória contra Autocontrole + Instinto Primitivo (para invadir os sonhos da presa)",
+    "action": "Disputada",
+    "duration": "Toda a duração de Siskur-Dah",
+    "effect": "Percebe imediatamente quando a presa da Caçada entra em sono profundo com sonhos. Adormeça naturalmente, medite para dormir ou gaste mais um ponto de Essência para adormecer imediatamente; então tente entrar nos sonhos da presa.",
+    "dramaticFailure": "Perde-se em sonhos alienígenas e recebe Exausto ao despertar.",
+    "failure": "Não encontra os sonhos da presa e desperta. Só pode tentar novamente depois que a presa despertar e voltar a dormir.",
+    "success": "Entra no subconsciente da presa como um lobo aterrador, do qual ela se lembrará ao despertar. Escolha um dos efeitos listados.",
+    "options": "Acordar a presa com pesadelos: ela não recupera Força de Vontade pelo descanso e recebe Exausto. Ou impor Paranoico ao despertar. Ou conceder Aberto, tornando-a acessível a espíritos. Ou descobrir um detalhe: localização física aproximada; Sangue e Osso (ou Virtude e Vício ou âncoras equivalentes); precauções contra a Caçada; ou uma impressão dos arredores imediatos.",
+    "exceptionalSuccess": "O Cahalith recupera um ponto gasto de Força de Vontade ao despertar."
+  },
+  "gift-gibbous-moon:thousand-throat-howl": {
+    "name": "Uivo de Mil Gargantas",
+    "description": "Mil vozes acompanham o uivo do Cahalith e abalam a determinação de suas presas.",
+    "cost": "2 Essência",
+    "dicePool": "Presença + Intimidação + Glória contra Perseverança + Instinto Primitivo",
+    "action": "Disputada",
+    "dramaticFailure": "O Cahalith recebe Desmoralizado.",
+    "failure": "O uivo não tem efeito.",
+    "success": "As presas que ouvirem o uivo e obtiverem menos sucessos que o Cahalith recebem Desmoralizado.",
+    "exceptionalSuccess": "Todas as presas afetadas por Desmoralizado também perdem um ponto de Força de Vontade."
+  },
+  "gift-gibbous-moon:end-of-story": {
+    "name": "Fim da História",
+    "description": "O Cahalith narra o fim brutal que aguarda sua presa.",
+    "cost": "3 Essência",
+    "dicePool": "Presença + Persuasão + Glória contra Autocontrole + Instinto Primitivo",
+    "action": "Disputada",
+    "duration": "1 dia",
+    "activationRequirement": "Nomeie a presa ao relatar seu destino iminente aos membros da alcateia.",
+    "dramaticFailure": "Por um dia, o Cahalith subtrai Renome de Glória de sua Defesa contra a presa.",
+    "failure": "A Faceta falha.",
+    "success": "Ao fugir ou se esconder do Cahalith ou de sua alcateia, a presa subtrai Renome de Glória do Deslocamento, dos testes de perseguição e de Furtividade. Em combate com o Cahalith, subtrai a mesma quantidade da Iniciativa e da Defesa contra os ataques dele. Na primeira vez em cada cena que causar dano ao Cahalith ou a um membro da alcateia, esse dano também é reduzido em Renome de Glória.",
+    "exceptionalSuccess": "O Cahalith recebe Inspirado."
+  },
+  "gift-half-moon": {
+    "name": "Dom da Meia-Lua"
+  },
+  "gift-half-moon:scent-beneath-the-surface": {
+    "name": "Faro sob a Superfície",
+    "description": "Os sentidos do Elodoth separam a verdade do engano.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Empatia + Honra contra Autocontrole + Instinto Primitivo",
+    "action": "Disputada",
+    "duration": "1 cena",
+    "activationRequirement": "Observe o alvo ou converse com ele por pelo menos um turno.",
+    "dramaticFailure": "O Elodoth acredita em tudo que a presa disser.",
+    "failure": "A Faceta falha.",
+    "success": "Discernir se as palavras e ações da presa são verdadeiras ou enganosas, incluindo mentiras diretas, omissões e tentativas de induzir ao erro ou dissimular.",
+    "exceptionalSuccess": "Acrescente Renome de Honra a todas as paradas baseadas em Manipulação contra a presa pelo restante da cena."
+  },
+  "gift-half-moon:binding-oath": {
+    "name": "Juramento Vinculante",
+    "description": "O Elodoth prende um acordo à rede de obrigações do mundo.",
+    "cost": "1 Essência",
+    "dicePool": "Perseverança + Persuasão + Honra contra Perseverança + Instinto Primitivo",
+    "action": "Disputada",
+    "duration": "1 mês",
+    "effect": "Vincule um acordo entre duas partes como participante ou supervisor. As partes o selam com um ato simbólico, como uma assinatura ou um aperto de mãos com sangue. O acordo costuma ser voluntário; uma parte enganada resiste subconscientemente.",
+    "dramaticFailure": "O juramento não vincula; a primeira parte a quebrá-lo recupera dois pontos gastos de Força de Vontade.",
+    "failure": "Nenhuma das partes fica vinculada pela Faceta.",
+    "success": "Ações que quebrariam o juramento, mesmo sem conhecimento disso, sofrem uma penalidade igual a Renome de Honra, pois as circunstâncias conspiram contra quem o quebraria.",
+    "exceptionalSuccess": "O Elodoth percebe imediatamente quando o juramento é quebrado e qual parte o quebrou."
+  },
+  "gift-half-moon:sly-hunter": {
+    "name": "Caçador Ardiloso",
+    "description": "O Elodoth captura presas em uma teia de favores e relações.",
+    "activationRequirement": "Só pode ser ativada ao receber a Condição Siskur-Dah.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Toda a duração de Siskur-Dah",
+    "effect": "Enquanto perseguir a presa da Caçada, acrescente Renome de Honra às ações que usam os Aliados ou Contatos do Elodoth para localizar ou obstruir a presa, e aos testes Sociais para atacar ou prejudicar os Méritos Aliados, Identidade Alternativa, Contatos, Recursos ou Status da presa."
+  },
+  "gift-half-moon:ties-of-word-and-promise": {
+    "name": "Laços de Palavra e Promessa",
+    "description": "Promessas e garantias estabelecem brevemente vínculos úteis com uma organização.",
+    "cost": "1 Essência por ponto do Mérito desejado",
+    "dicePool": "Manipulação + Persuasão + Honra",
+    "action": "Prolongada (10 sucessos; 1 minuto por teste)",
+    "duration": "1 dia",
+    "activationRequirement": "O Elodoth ou seus Aliados e Contatos existentes devem ter uma relação amistosa com o grupo. Entre em contato com pelo menos um membro desse grupo. Um grupo explicitamente hostil impõe −3 ao teste.",
+    "options": "Aliados; Identidade Alternativa; Contatos; Recursos; Status.",
+    "dramaticFailure": "O grupo rejeita o Elodoth e tenta obstruir um Mérito Aliados ou Contatos existente.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, recebe o Mérito desejado na graduação adquirida por um dia.",
+    "exceptionalSuccess": "O Mérito dura uma semana."
+  },
+  "gift-half-moon:ties-of-blood-and-bone": {
+    "name": "Laços de Sangue e Osso",
+    "description": "O Elodoth recorre aos laços de carne e osso para trocar de lugar com um membro da alcateia.",
+    "cost": "3 Essência",
+    "dicePool": "Vigor + Empatia + Honra contra Vigor + Instinto Primitivo",
+    "action": "Instantânea, pode ser Disputada",
+    "activationRequirement": "Escolha um membro da alcateia a até Renome de Honra em milhas. Se estiver fora desse alcance, a Faceta falha; um alvo que não queira a troca pode resistir com Vigor + Instinto Primitivo.",
+    "dramaticFailure": "A Faceta falha e o Elodoth sofre Braço Lesionado ou Perna Lesionada.",
+    "failure": "A Faceta falha.",
+    "success": "O Elodoth e o membro da alcateia trocam de localização física, cada um mantendo suas roupas e equipamentos carregados. A Faceta não revela a condição nem os arredores do membro da alcateia antes da troca.",
+    "exceptionalSuccess": "Ambos também curam dois pontos de dano letal ou contundente durante a troca."
+  },
+  "gift-new-moon": {
+    "name": "Dom da Lua Nova"
+  },
+  "gift-new-moon:eviscerate": {
+    "name": "Eviscerar",
+    "description": "O Irraka transforma um primeiro golpe inesperado em um ataque devastador.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "effect": "Ative como parte de um ataque de Briga ou Armas Brancas contra um oponente desatento ou surpreso. Trate esse ataque como uma Ação Avançada."
+  },
+  "gift-new-moon:slip-away": {
+    "name": "Escapulir",
+    "description": "O Irraka embaralha as lembranças de quem testemunha sua passagem.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "1 cena",
+    "effect": "As testemunhas descartam lembranças do Irraka quando ele não faz nada memorável com elas. Se lutar, fizer perguntas estranhas, agir de modo suspeito ou alguém incentivar uma testemunha a examinar suas lembranças, subtraia Renome de Astúcia dos testes para se lembrar dele, mesmo com uma memória que seria perfeita. Isso obscurece os detalhes do Irraka, não o fato de que um acontecimento memorável ocorreu."
+  },
+  "gift-new-moon:relentless-hunter": {
+    "name": "Caçador Implacável",
+    "description": "O Irraka encontra uma passagem por qualquer defesa que proteja sua presa.",
+    "activationRequirement": "Só pode ser ativada ao receber a Condição Siskur-Dah.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Toda a duração de Siskur-Dah",
+    "effect": "Enquanto perseguir a presa da Caçada, acrescente Renome de Astúcia à Furtividade contra ela, aos testes para superar suas medidas de segurança ou obstáculos e aos testes para identificar entradas, rotas alternativas ou outras maneiras de alcançar seu esconderijo."
+  },
+  "gift-new-moon:divide-and-conquer": {
+    "name": "Dividir e Conquistar",
+    "description": "Uma distração sutil afasta a presa do Irraka da segurança de seu grupo.",
+    "cost": "1 Essência",
+    "dicePool": "Manipulação + Subterfúgio + Astúcia contra Autocontrole + Instinto Primitivo",
+    "action": "Disputada",
+    "activationRequirement": "Escolha um indivíduo visível em um grupo e forneça uma distração sonora ou de movimento. Ela pode ser mínima e percebida inicialmente apenas pelo alvo.",
+    "dramaticFailure": "A presa recebe Assombrado e se agarra desesperadamente ao grupo.",
+    "failure": "A Faceta falha.",
+    "success": "A presa recebe Atraído e se afasta voluntariamente da presença imediata do grupo para investigar, apesar de seu bom senso.",
+    "exceptionalSuccess": "Também impõe Atraído a outros membros do grupo em quantidade igual a Renome de Astúcia, dispersando-os atrás de distrações ilusórias."
+  },
+  "gift-new-moon:breach": {
+    "name": "Brecha",
+    "description": "O Irraka atravessa a Película entre a Carne e a Sombra.",
+    "cost": "3 Essência",
+    "dicePool": "Raciocínio + Furtividade + Astúcia",
+    "action": "Instantânea",
+    "dramaticFailure": "O jogador escolhe Braço Lesionado, Perna Lesionada ou Atordoado para o Irraka.",
+    "failure": "O Irraka não consegue atravessar a Película.",
+    "success": "Atravesse imediatamente para a localização correspondente na Carne ou na Sombra, sem precisar de um locus.",
+    "exceptionalSuccess": "O próximo uso de Brecha nesta cena não custa Essência."
+  }
+}

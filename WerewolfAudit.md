@@ -2,6 +2,8 @@
 
 Status: decisões e P01–P03 aprovados em 2026-09-30; meta retomada pelo usuário. Implementação em andamento. Este documento substitui as propostas anteriores da auditoria e registra o entendimento atual, com dúvidas remanescentes ao final. `AGENTS.md` e o código atual continuam sendo a referência arquitetural; remover ou arquivar esta auditoria quando as decisões forem incorporadas.
 
+Prioridade atual definida pelo usuário: disponibilizar primeiro a criação/edição de Uratha. Implementar as escolhas, concessões e validações das pp. 81–83 e os catálogos necessários a esse fluxo antes de completar as demais superfícies. Isso não reduz o escopo da meta. O painel compartilhado de criação deve acompanhar a altura do conteúdo, sem o espaço artificial após Concept/Chronicle.
+
 ## Convenção de comunicação e fontes
 
 Nas sugestões, dúvidas e explicações escritas ao usuário, usar os termos originais em inglês. Isso não elimina a localização pt-BR do aplicativo: a apresentação continua bilíngue, com as traduções aprovadas. Termos da língua Uratha permanecem originais em todos os idiomas.
@@ -357,6 +359,13 @@ WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF f�
 **Decisão: Stamina + Primal Urge, pelo critério físico/mental fornecido pelo usuário.** WTF2 p. 120 imprime `Stamina + Primal Urge` na oposição do Dice Pool, mas `Resolve + Primal Urge` no parágrafo sobre o packmate resistir. O usuário determinou verificar o efeito: resistência física usa Stamina; resistência mental usa Resolve. A Facet troca os dois personagens por metamorfose de carne e osso, com seus equipamentos, sem controlar pensamentos ou emoções. Portanto, adotar Stamina + Primal Urge neste caso. Preservar a divergência em nota editorial, sem apresentá-la como errata oficial nem executar testes automaticamente.
 
 ## Continuação autorizável
+
+### Notas editoriais do catálogo Moon Gifts — WTF2 pp. 115–121
+
+- `Thousand-Throat Howl`: o livro escreve `Intimidate` no Dice Pool; o catálogo usa a identidade canônica da Skill `Intimidation`, sem interpretar nomes traduzidos em tempo de execução.
+- `Ties of Word and Promise`: o cabeçalho do custo cita apenas Allies/Contacts, mas o texto inclui Alternate Identity, Resources e Status e determina 1 Essence por dot do Merit escolhido. O catálogo preserva todas as opções e usa o custo descrito no corpo da regra.
+- `Ties of Blood and Bone`: resistência física adotada em M08, sem apresentar a divergência como errata oficial.
+- Novos nomes localizados de Conditions para uniformizar ao importar seu catálogo: Exhausted → Exausto; Paranoid → Paranoico; Open → Aberto; Demoralized → Desmoralizado; Stumbled → Tropeço; Lured → Atraído. Inspired → Inspirado e Spooked → Assombrado seguem o catálogo compartilhado existente. Esses nomes não alteram as identidades ou os efeitos das Conditions.
 
 O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo acima.
 

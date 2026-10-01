@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 24,
+  "catalogVersion": 25,
   "catalogs": {
+    "werewolf-gifts-core-moon": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon.json" },
+    "werewolf-gifts-core-moon-pt": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json" },
     "werewolf-reference": { "version": 1, "url": "/game-lines/werewolf/data/reference.json" },
     "werewolf-reference-pt": { "version": 1, "url": "/game-lines/werewolf/data/reference-pt.json" },
     "werewolf-traits": { "version": 1, "url": "/game-lines/werewolf/data/traits.json" },

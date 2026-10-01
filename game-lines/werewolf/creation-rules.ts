@@ -54,10 +54,65 @@ export function primalUrgeLevel(reference: WerewolfReference, rating: unknown): 
 }
 
 export function creationMeritBudget(primalUrge: unknown, extraRiteDots = 0) {
-  const rating = boundedPrimalUrge(primalUrge);
-  if (rating > 3 || !Number.isInteger(extraRiteDots) || extraRiteDots < 0 || extraRiteDots > 5)
+  const rating = finite(primalUrge);
+  if (!Number.isInteger(rating) || rating < 1 || rating > 3 || !Number.isInteger(extraRiteDots) || extraRiteDots < 0 || extraRiteDots > 5)
     throw new Error("Invalid Primal Urge or Rite conversion for character creation.");
   const remaining = 10 - (rating - 1) * 5 - extraRiteDots;
   if (remaining < 0) throw new Error("Primal Urge and Rites exceed the ten-dot Merit budget.");
   return remaining;
+}
+
+/** WTF2 p. 82: the Auspice dot is separate from the 11/7/4 purchased Skill allocation. */
+export function creationAuspiceSkill(skills: Record<string, number>, auspice: AuspiceDefinition, skill: string) {
+  const base = finite(skills[skill], 0);
+  if (!auspice.skills.includes(skill) || !Number.isInteger(base) || base < 0 || base >= 5)
+    throw new Error("Choose an Auspice Skill with fewer than five dots.");
+  return { ...skills, [skill]: base + 1 };
+}
+
+/** WTF2 p. 83 creation grants, not the separate rules for gaining Renown during play. */
+export function creationGiftAllowance(auspice: AuspiceDefinition, tribe: TribeDefinition, choice: RenownId) {
+  const renown = creationRenown(auspice, tribe, choice);
+  const moonFacetCount = renown[auspice.renown];
+  return {
+    renown,
+    moonGiftId: auspice.moonGiftId,
+    moonFacetCount,
+    shadowGiftIds: [...new Set([...auspice.giftIds, ...tribe.giftIds])],
+    shadowFacetCount: 2,
+    wolfFacetCount: moonFacetCount === 1 ? 1 : 0,
+  };
+}
+
+export type WerewolfCreationChoices = {
+  auspice_id: string; tribe_id: string; auspice_skill: string; renown_choice: RenownId | "";
+  primal_urge: number; extra_rite_dots: number; blood: string; bone: string;
+  physical_touchstone: string; spiritual_touchstone: string;
+};
+
+/** Returns semantic problems for the line-owned creation UI; never parses English errors. */
+export function creationTemplateProblems(
+  choices: WerewolfCreationChoices,
+  reference: Pick<WerewolfReference, "auspices" | "tribes">,
+  skills: Record<string, number>,
+) {
+  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget"> = [];
+  const auspice = reference.auspices.find(item => item.id === choices.auspice_id);
+  const tribe = reference.tribes.find(item => item.id === choices.tribe_id);
+  if (!auspice) problems.push("auspice");
+  if (!tribe) problems.push("tribe");
+  if (auspice) {
+    try { creationAuspiceSkill(skills, auspice, choices.auspice_skill); }
+    catch { problems.push("auspiceSkill"); }
+  }
+  if (auspice && tribe) {
+    try { creationRenown(auspice, tribe, choices.renown_choice as RenownId); }
+    catch { problems.push("renownChoice"); }
+  }
+  if (![1, 2, 3].includes(choices.primal_urge)) problems.push("creationBudget");
+  else {
+    try { creationMeritBudget(choices.primal_urge, choices.extra_rite_dots); }
+    catch { problems.push("creationBudget"); }
+  }
+  return problems;
 }

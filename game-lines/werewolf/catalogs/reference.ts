@@ -3,7 +3,7 @@ import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-group
 export type FormId = "hishu" | "dalu" | "gauru" | "urshul" | "urhan";
 export type RenownId = "Cunning" | "Glory" | "Honor" | "Purity" | "Wisdom";
 
-type Source = { sourceId: string; source: string; page: number; additionalPages?: number[] };
+export type Source = { sourceId: string; source: string; page: number; additionalPages?: number[] };
 export type FormDefinition = Source & {
   id: FormId; name: string; description: string;
   attributes: Partial<Record<string, number>>; size: number; speciesFactor: number;

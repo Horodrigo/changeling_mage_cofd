@@ -1,0 +1,6 @@
+.wtf-creation-renown { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .5rem; }
+.wtf-creation-renown > div { text-align: center; }
+.wtf-creation-renown dd { margin: .25rem 0; }
+@media (max-width: 640px) {
+  .wtf-creation-renown { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

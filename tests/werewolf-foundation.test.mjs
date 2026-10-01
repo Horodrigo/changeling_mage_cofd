@@ -12,6 +12,8 @@ const reference = readJson("public/game-lines/werewolf/data/reference.json");
 const presentation = readJson("public/game-lines/werewolf/data/reference-pt.json");
 const traits = readJson("public/game-lines/werewolf/data/traits.json");
 const traitsPresentation = readJson("public/game-lines/werewolf/data/traits-pt.json");
+const moonGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-moon.json");
+const moonPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json");
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },
@@ -95,8 +97,57 @@ test("WtF 2e Primal Urge limits are informational and creation conversions have 
   assert.equal(rules.creationMeritBudget(2, 5), 0);
   assert.equal(rules.creationMeritBudget(3, 0), 0);
   assert.throws(() => rules.creationMeritBudget(4), /Invalid/);
+  for (const rating of [0, -1, 1.5, Infinity, undefined])
+    assert.throws(() => rules.creationMeritBudget(rating), /Invalid/);
   assert.throws(() => rules.creationMeritBudget(3, 1), /exceed/);
   assert.throws(() => rules.creationMeritBudget(1, 6), /Invalid/);
+});
+
+test("WtF 2e p. 82 adds the free Auspice Skill dot separately, without exceeding five", () => {
+  const rahu = reference.auspices.find(item => item.id === "rahu");
+  const base = { Brawl: 4, Survival: 0, Intimidation: 1, Medicine: 2 };
+  const before = structuredClone(base);
+  assert.deepEqual(rules.creationAuspiceSkill(base, rahu, "Brawl"), { ...base, Brawl: 5 });
+  assert.equal(rules.creationAuspiceSkill(base, rahu, "Survival").Survival, 1);
+  assert.throws(() => rules.creationAuspiceSkill({ ...base, Brawl: 5 }, rahu, "Brawl"));
+  assert.throws(() => rules.creationAuspiceSkill(base, rahu, "Medicine"));
+  assert.deepEqual(base, before);
+});
+
+test("WtF 2e p. 83 initial Facets follow Auspice Renown and two distinct favored Shadow Gifts", () => {
+  const rahu = reference.auspices.find(item => item.id === "rahu");
+  const bloodTalons = reference.tribes.find(item => item.id === "blood-talons");
+  const ghostWolves = reference.tribes.find(item => item.id === "ghost-wolves");
+  const moon = rules.creationGiftAllowance(rahu, bloodTalons, "Purity");
+  assert.equal(moon.moonGiftId, "gift-full-moon");
+  assert.equal(moon.moonFacetCount, 2);
+  assert.equal(moon.wolfFacetCount, 0);
+  assert.equal(moon.shadowFacetCount, 2);
+  assert.deepEqual(new Set(moon.shadowGiftIds), new Set([...rahu.giftIds, ...bloodTalons.giftIds]));
+  const wolf = rules.creationGiftAllowance(rahu, ghostWolves, "Cunning");
+  assert.equal(wolf.moonFacetCount, 1);
+  assert.equal(wolf.wolfFacetCount, 1);
+  assert.deepEqual(wolf.shadowGiftIds, rahu.giftIds);
+  assert.equal(Object.values(wolf.renown).reduce((sum, value) => sum + value), 2);
+});
+
+test("Werewolf creation template validates canonical selections and exact conversion budgets", async () => {
+  const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain" };
+  assert.deepEqual(rules.creationTemplateProblems(choices, reference, { Brawl: 2 }), []);
+  assert.deepEqual(rules.creationTemplateProblems({ ...choices, auspice_id: "unknown" }, reference, { Brawl: 2 }), ["auspice"]);
+  assert.deepEqual(rules.creationTemplateProblems({ ...choices, primal_urge: 3, extra_rite_dots: 1 }, reference, { Brawl: 2 }), ["creationBudget"]);
+  assert.deepEqual(rules.creationTemplateProblems({ ...choices, primal_urge: 1.5 }, reference, { Brawl: 2 }), ["creationBudget"]);
+  assert.deepEqual(rules.creationTemplateProblems({ ...choices, auspice_skill: "Brawl" }, reference, { Brawl: 5 }), ["auspiceSkill"]);
+  const { WerewolfCreationTemplate } = await vite.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog })));
+  assert.match(markup, /Remaining Merit dots: 10/);
+  assert.match(markup, /Available Rite dots: 2/);
+  assert.match(markup, /Starting Facets: 2/);
+  assert.match(markup, /value="My family"/);
+  assert.doesNotMatch(markup, /missing translation/);
+  assert.equal(translate("pt-BR", "werewolf.renownNames.Purity"), "Pureza");
+  assert.equal(translate("pt-BR", "werewolf.creationProblem.creationBudget"), "Instinto Primitivo e Ritos extras devem caber nos dez pontos iniciais de Méritos.");
 });
 
 test("Werewolf reference group loads only its four catalogs and is deeply immutable", async () => {
@@ -210,4 +261,51 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   assert.equal(translate("pt-BR", "werewolf.bans"), "Proibições");
   assert.equal(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 6 }), "6 de dano contundente por turno");
   assert.equal(traitsPresentation["flesh-oath"].description, "Violar o Juramento da Lua (apenas Destituídos).");
+});
+
+test("WtF 2e pp. 115–121 preserves all twenty-five Moon Facets with complete EN/PT mechanics", () => {
+  assert.equal(moonGifts.length, 5);
+  assert.equal(moonGifts.flatMap(gift => gift.facets).length, 25);
+  for (const id of reference.auspices.map(auspice => auspice.moonGiftId)) {
+    const gift = moonGifts.find(item => item.id === id);
+    assert.ok(gift, id);
+    assert.equal(gift.kind, "moon");
+    assert.deepEqual(gift.facets.map(facet => facet.level), [1, 2, 3, 4, 5]);
+    assert.equal(reference.auspices.find(item => item.id === gift.auspiceId).moonGiftId, id);
+    for (const facet of gift.facets) {
+      assert.equal(facet.renown, gift.renown);
+      assert.equal(facet.sourceId, "wtf-2ed");
+      for (const [field, text] of Object.entries(facet).filter(([key, value]) => typeof value === "string" && !["id", "renown", "source", "sourceId"].includes(key))) {
+        assert.ok(text.length, `${facet.id}: ${field}`);
+        assert.ok(moonPresentation[facet.id][field]?.length, `${facet.id}: pt-BR ${field}`);
+      }
+      for (const field of ["dramaticFailure", "failure", "success", "exceptionalSuccess"])
+        assert.equal(Boolean(facet[field]), facet.hasRoll, `${facet.id}: ${field}`);
+    }
+  }
+  assert.equal(new Set(moonGifts.flatMap(gift => gift.facets.map(facet => facet.id))).size, moonGifts.flatMap(gift => gift.facets).length);
+  const full = moonGifts.find(item => item.id === "gift-full-moon");
+  const hunter = full.facets.find(item => item.level === 3);
+  assert.match(hunter.activationRequirement, /Siskur-Dah/);
+  assert.match(hunter.effect, /Do not apply this bonus against the Hunt's prey itself/);
+  assert.equal(full.facets[1].cost, undefined, "Warrior's Hide must not invent a cost");
+  assert.match(moonPresentation[full.facets[0].id].effect, /8-novamente/);
+  const half = moonGifts.find(item => item.id === "gift-half-moon");
+  assert.equal(half.facets[4].dicePool, "Stamina + Empathy + Honor vs Stamina + Primal Urge");
+  assert.match(half.facets[4].activationRequirement, /resist with Stamina \+ Primal Urge/);
+  assert.equal(half.facets[3].options, "Allies; Alternate Identity; Contacts; Resources; Status.");
+  assert.equal(moonPresentation["gift-new-moon:divide-and-conquer"].dramaticFailure.includes(readJson("public/shared/data/conditions-pt.json").spooked.name), true);
+});
+
+test("Werewolf Gifts load only their canonical and Portuguese shards into an immutable snapshot", async () => {
+  const { werewolfGiftsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/gifts.ts");
+  const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
+  const calls = [];
+  const snapshot = freezeCatalogData(await werewolfGiftsCatalogGroup.load({ getCatalog: async id => {
+    calls.push(id);
+    return structuredClone(id.endsWith("-pt") ? moonPresentation : moonGifts);
+  } }));
+  assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt"]);
+  assert.ok(Object.isFrozen(snapshot.gifts[0].facets[0]));
+  assert.ok(Object.isFrozen(snapshot.presentation[snapshot.gifts[0].facets[0].id]));
 });
