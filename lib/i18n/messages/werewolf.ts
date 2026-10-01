@@ -13,6 +13,9 @@ export const werewolfMessages = {
       firstTongueGrant: "First Tongue is a fixed creation grant; choose another Language instance to learn another language.",
       experienceDescription: "Individual costs: Werewolf: The Forsaken, p. 84; Specialties: Chronicles of Darkness, p. 77. Creation dots remain separate from Experience purchases. Harmony is adjusted manually, not purchased.",
       purchaseRecorded: "Purchase recorded and character updated.",
+      rite: "Rite", learnRite: "Learn Rite", selectRitePrompt: "Select a Rite", searchRites: "Search Rites by name, description or source", noMatchingRites: "No matching Rites.", allRites: "All Rites",
+      riteLearningSource: "Source of learning", riteLearningSourcePlaceholder: "Teacher, ritual record or rediscovered knowledge",
+      riteLearningNote: "Learning costs 1 Experience per dot and requires an actual source of knowledge, not necessarily a teacher. Describe that source to confirm it. Pack requirements apply when performing the Rite; no linked character or Pack record is needed here.",
       experienceProblem: {
         invalidPurchase: "Choose a valid increase in rating.", traitMaximum: "The intended rating exceeds the trait maximum allowed by Primal Urge.",
         specialty: "Choose a named Specialty in a trained Skill; an identical Specialty cannot be purchased twice.",
@@ -21,6 +24,8 @@ export const werewolfMessages = {
         grant: "This fixed creation grant cannot be upgraded with Experience.", insufficientExperience: "There is not enough available Experience for this purchase.",
         refundMissing: "This purchase cannot be matched to its current allocation; no Experience was refunded.",
         refundDependent: "Refund dependent purchases first. This refund would invalidate a Merit, Specialty, or Primal Urge trait limit.",
+        missingRite: "Select a Rite available in this catalog.", riteKnown: "This Rite is already known; creation and Experience cannot purchase it twice.",
+        riteTribe: "This Rite is taught only to another Tribe.", riteSource: "Describe the source of knowledge used to learn this Rite (up to 240 characters).",
       },
       meritChoice: {
         form: "Chosen form", touchstone: "Favored Touchstone", anchor: "Blood or Bone", virtue: "Virtue reflecting the code",
@@ -108,6 +113,9 @@ export const werewolfMessages = {
       firstTongueGrant: "First Tongue é uma concessão fixa de criação; escolha outra instância de Idioma para aprender outra língua.",
       experienceDescription: "Custos individuais: Werewolf: The Forsaken, p. 84; Especializações: Chronicles of Darkness, p. 77. Pontos de criação permanecem separados das compras com Experiência. Harmonia é ajustada manualmente, não comprada.",
       purchaseRecorded: "Compra registrada e ficha atualizada.",
+      rite: "Rito", learnRite: "Aprender Rito", selectRitePrompt: "Selecionar um Rito", searchRites: "Buscar Ritos por nome, descrição ou fonte", noMatchingRites: "Nenhum Rito corresponde à busca.", allRites: "Todos os Ritos",
+      riteLearningSource: "Fonte de aprendizado", riteLearningSourcePlaceholder: "Professor, registro ritual ou conhecimento redescoberto",
+      riteLearningNote: "Aprender custa 1 ponto de Experiência por ponto do Rito e exige uma fonte real de conhecimento, não necessariamente um professor. Descreva essa fonte para confirmá-la. Requisitos de alcateia se aplicam à execução do Rito; não é necessário vincular fichas nem cadastrar uma alcateia aqui.",
       experienceProblem: {
         invalidPurchase: "Escolha um aumento válido de graduação.", traitMaximum: "A graduação pretendida excede o limite de características permitido pelo Instinto Primitivo.",
         specialty: "Escolha uma Especialização nomeada em uma Perícia treinada; uma Especialização idêntica não pode ser comprada duas vezes.",
@@ -116,6 +124,8 @@ export const werewolfMessages = {
         grant: "Esta concessão fixa de criação não pode ser aprimorada com Experiência.", insufficientExperience: "Não há Experiência disponível suficiente para esta compra.",
         refundMissing: "Não foi possível identificar a alocação atual desta compra; nenhuma Experiência foi reembolsada.",
         refundDependent: "Reembolse primeiro as compras dependentes. Este reembolso invalidaria um Mérito, uma Especialização ou um limite de características do Instinto Primitivo.",
+        missingRite: "Selecione um Rito disponível neste catálogo.", riteKnown: "Este Rito já é conhecido; criação e Experiência não podem comprá-lo duas vezes.",
+        riteTribe: "Este Rito é ensinado somente a outra Tribo.", riteSource: "Descreva a fonte de conhecimento usada para aprender este Rito (até 240 caracteres).",
       },
       meritChoice: {
         form: "Forma escolhida", touchstone: "Touchstone favorecida", anchor: "Sangue ou Osso", virtue: "Virtude que reflete o código",

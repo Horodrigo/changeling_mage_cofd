@@ -35,8 +35,9 @@ export function RiteRules({ rite, catalog }: { rite: RiteDefinition; catalog: We
   </>;
 }
 
-export function CreationRites({ value, onChange, catalog }: {
+export function CreationRites({ value, onChange, catalog, learnedRiteIds = [] }: {
   value: WerewolfCreationChoices; onChange: (value: WerewolfCreationChoices) => void; catalog: WerewolfRiteCatalog;
+  learnedRiteIds?: readonly string[];
 }) {
   const { locale, t } = useLanguage();
   const controlId = useId();
@@ -56,7 +57,8 @@ export function CreationRites({ value, onChange, catalog }: {
       <h4>{t(kind === "wolf" ? "werewolf.wolfRites" : "werewolf.packRites")}</h4>
       {[...catalog.rites].filter(rite => rite.kind === kind).sort((a, b) => name(a).localeCompare(name(b), locale)).map(rite => {
         const checked = value.rites.includes(rite.id);
-        const reason = rite.tribeId && rite.tribeId !== value.tribe_id ? t("werewolf.riteOtherTribe")
+        const reason = learnedRiteIds.includes(rite.id) ? t("werewolf.experienceProblem.riteKnown")
+          : rite.tribeId && rite.tribeId !== value.tribe_id ? t("werewolf.riteOtherTribe")
           : budget === null ? t("werewolf.creationProblem.creationBudget")
           : spent + (checked ? 0 : rite.dots) > budget ? t("werewolf.riteDotLimit") : "";
         return <div className="wtf-rite-choice" key={rite.id}>

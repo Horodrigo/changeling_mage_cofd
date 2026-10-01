@@ -25,9 +25,11 @@ try {
 } finally { globalThis.fetch = originalFetch; }
 const reference = catalogs.get("werewolf-reference"), gifts = catalogs.get("werewolf-gifts"), rites = catalogs.get("werewolf-rites");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
-const advancementCatalogs = { reference, gifts, merits: meritCatalog };
+const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
 const { WerewolfExperiencePanel, werewolfPurchaseLabel } = await vite.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
+const { RiteExperienceCatalog } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rites.tsx");
+const { CreationRites } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
 const { buildWerewolfCharacter, werewolfBuilder, werewolfExperienceSpecialties } = await vite.ssrLoadModule("/game-lines/werewolf/builder.tsx");
 const { werewolfRules, werewolfFormTraits, recordedAuspiceSkillGrant } = await vite.ssrLoadModule("/game-lines/werewolf/rules.ts");
 const { withoutAuspiceSkillGrant, WEREWOLF_CREATION_GRANT_SOURCES } = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
@@ -331,9 +333,93 @@ test("XP purchases round-trip through lifecycle and creation drafts without recl
   const panel = render(createElement(WerewolfExperiencePanel, { character: source, catalogs, updateSheet: () => {}, builderMode: true }));
   assert.doesNotMatch(panel, /aria-label="Available Experience"/);
   const entry = history(source).find(item => item.purchase.kind === "trait");
-  assert.equal(werewolfPurchaseLabel(entry.purchase, meritCatalog, "pt-BR"), "Força 4");
-  assert.equal(werewolfPurchaseLabel(entry.purchase, meritCatalog, "en-US"), "Strength 4");
+  assert.equal(werewolfPurchaseLabel(entry.purchase, advancementCatalogs, "pt-BR"), "Força 4");
+  assert.equal(werewolfPurchaseLabel(entry.purchase, advancementCatalogs, "en-US"), "Strength 4");
   assert.equal(entry.purchase.name, "Strength");
+});
+
+test("WtF 2e p. 139 Rite purchases charge one XP per dot and require knowledge, exact identity and allowed Tribe", () => {
+  const purchase = id => ({ kind: "rite", definitionId: id, learningSource: "Spiritual record recovered during the Hunt" });
+  const base = funded(), before = structuredClone(base);
+  const ratings = new Set();
+  for (const rite of rites.rites) {
+    const candidate = structuredClone(base); candidate.line_data.tribe_id = rite.tribeId ?? base.line_data.tribe_id;
+    if (candidate.line_data.creation_rites.includes(rite.id)) { assert.throws(() => quote(candidate, purchase(rite.id), advancementCatalogs), failsWith("riteKnown")); continue; }
+    assert.equal(quote(candidate, purchase(rite.id), advancementCatalogs), rite.dots);
+    const learned = buy(candidate, purchase(rite.id), advancementCatalogs);
+    assert.ok(learned.line_data.learned_rites.includes(rite.id)); assert.deepEqual(learned.line_data.creation_rites, candidate.line_data.creation_rites);
+    assert.equal(history(learned)[0].cost, rite.dots); ratings.add(rite.dots);
+    assert.throws(() => buy(learned, purchase(rite.id), advancementCatalogs), failsWith("riteKnown"));
+    if (rite.tribeId) {
+      const wrong = structuredClone(base); wrong.line_data.tribe_id = "ghost-wolves";
+      assert.throws(() => quote(wrong, purchase(rite.id), advancementCatalogs), failsWith("riteTribe"));
+    }
+  }
+  assert.deepEqual([...ratings].sort(), [1, 2, 3, 4, 5]);
+  for (const learningSource of ["", "   ", null, 4, "x".repeat(241)]) assert.throws(() => quote(base, { ...purchase("wtf-core:chain-rage"), learningSource }, advancementCatalogs), failsWith("riteSource"));
+  assert.throws(() => quote(base, purchase("Chain Rage"), advancementCatalogs), failsWith("missingRite"));
+  assert.throws(() => quote(base, purchase("Fúria Acorrentada"), advancementCatalogs), failsWith("missingRite"));
+  assert.deepEqual(base, before);
+});
+
+test("Rite refunds undo only their learned ID and actual cost, preserving creation Rites, later learning and opaque history", () => {
+  const source = funded(); source.current_state.werewolf_experience_history = [null, { authored: "opaque" }];
+  const first = { kind: "rite", definitionId: "wtf-core:chain-rage", learningSource: "An elder's written ceremony" };
+  let learned = buy(source, first, advancementCatalogs), firstId = history(learned)[0].id;
+  learned = buy(learned, { kind: "rite", definitionId: "wtf-core:great-hunt", learningSource: "Spirit teaching" }, advancementCatalogs);
+  const lastId = history(learned).at(-1).id;
+  learned = refund(learned, firstId, advancementCatalogs);
+  assert.deepEqual(learned.line_data.learned_rites, ["wtf-core:great-hunt"]);
+  assert.deepEqual(learned.line_data.creation_rites, source.line_data.creation_rites);
+  assert.equal(learned.current_state.experience_spent, 5); assert.equal(learned.current_state.experience_available, 95);
+  assert.deepEqual(learned.current_state.werewolf_experience_history.slice(0, 2), source.current_state.werewolf_experience_history);
+  assert.throws(() => refund(learned, firstId, advancementCatalogs), failsWith("refundMissing"));
+  const missing = structuredClone(learned); missing.line_data.learned_rites = [];
+  assert.throws(() => refund(missing, lastId, advancementCatalogs), failsWith("refundMissing"));
+  const overlap = structuredClone(learned); overlap.line_data.creation_rites.push("wtf-core:great-hunt");
+  assert.throws(() => refund(overlap, lastId, advancementCatalogs), failsWith("refundMissing"));
+  const duplicate = structuredClone(learned); duplicate.line_data.learned_rites.push("wtf-core:great-hunt");
+  assert.throws(() => refund(duplicate, lastId, advancementCatalogs), failsWith("refundMissing"));
+  const corrupted = structuredClone(learned); corrupted.current_state.werewolf_experience_history.at(-1).cost = 20;
+  assert.throws(() => refund(corrupted, lastId, advancementCatalogs), failsWith("refundMissing"));
+  learned = refund(learned, lastId, advancementCatalogs);
+  assert.equal(learned.current_state.experience_available, 100); assert.equal(learned.current_state.experience_spent, 0);
+});
+
+test("Rite learning persists through current-schema import and Builder editing without requiring Pack records or reclassifying origin", async () => {
+  const { importCharacterFile } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
+  const authored = "Registro da minha alcateia, sem vincular outras fichas";
+  const learned = buy(create(), { kind: "rite", definitionId: "wtf-core:great-hunt", learningSource: authored }, advancementCatalogs, true);
+  assert.equal(learned.current_state.experience_available, 0); assert.equal(learned.current_state.experience_total, 5);
+  assert.ok(!Object.hasOwn(learned.line_data, "pack"));
+  const imported = await importCharacterFile({ text: async () => JSON.stringify(learned) });
+  const saved = create({ source: imported });
+  assert.deepEqual(saved.line_data.learned_rites, ["wtf-core:great-hunt"]);
+  assert.deepEqual(saved.line_data.creation_rites, parameters.choices.rites);
+  assert.equal(history(saved)[0].purchase.learningSource, authored);
+  assert.equal(werewolfPurchaseLabel(history(saved)[0].purchase, advancementCatalogs, "pt-BR"), rites.presentation.rites["wtf-core:great-hunt"].name);
+  assert.equal(werewolfPurchaseLabel(history(saved)[0].purchase, advancementCatalogs, "en-US"), "Great Hunt");
+  const overlapped = { ...choices, rites: ["wtf-core:great-hunt"], extra_rite_dots: 3 };
+  assert.throws(() => create({ source: saved, choices: overlapped }), /overlap Experience/);
+  const reverted = refund(saved, history(saved)[0].id, advancementCatalogs, true);
+  assert.equal(reverted.current_state.experience_available, 0); assert.equal(reverted.current_state.experience_spent, 0);
+});
+
+test("Rite XP chooser shows complete rules and disabled reasons; creation blocks already purchased Rites but permits removal", () => {
+  const knownIds = ["wtf-core:chain-rage", ...choices.rites];
+  const markup = render(createElement(RiteExperienceCatalog, { catalog: rites, tribeId: choices.tribe_id, knownIds, selectedId: "", onSelect: () => assert.fail("render selected a Rite") }));
+  assert.equal((markup.match(/class="wtf-rite-experience-row"/g) ?? []).length, 23);
+  assert.match(markup, /This Rite is already known/); assert.match(markup, /taught only to another Tribe/);
+  assert.match(markup, /Sample Rite/); assert.match(markup, /Dramatic Failure/); assert.match(markup, /Exceptional Success/);
+  assert.doesNotMatch(markup, /missing translation/);
+  assert.ok((markup.match(/disabled=""/g) ?? []).length >= 6);
+  const creation = render(createElement(CreationRites, { value: choices, onChange: () => {}, catalog: rites, learnedRiteIds: ["wtf-core:chain-rage"] }));
+  const blocked = creation.slice(creation.indexOf('aria-label="Select Chain Rage"') - 30, creation.indexOf('aria-label="Select Chain Rage"') + 150);
+  assert.match(blocked, /disabled=""/);
+  assert.match(creation, /This Rite is already known/);
+  const removable = render(createElement(CreationRites, { value: { ...choices, rites: ["wtf-core:chain-rage"] }, onChange: () => {}, catalog: rites, learnedRiteIds: ["wtf-core:chain-rage"] }));
+  const selected = removable.slice(removable.indexOf('aria-label="Select Chain Rage"') - 30, removable.indexOf('aria-label="Select Chain Rage"') + 150);
+  assert.doesNotMatch(selected, /disabled=""/);
 });
 
 test("Builder and mobile Details render Portuguese catalog presentation without translating stored identities", async () => {
@@ -349,6 +435,7 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const { WerewolfCharacterPaper: PtSheet } = await portuguese.ssrLoadModule("/game-lines/werewolf/sheet.tsx");
     const { werewolfBuilder: ptBuilder } = await portuguese.ssrLoadModule("/game-lines/werewolf/builder.tsx");
     const { WerewolfExperiencePanel: PtExperience } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
+    const { RiteExperienceCatalog: PtRites } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-rites.tsx");
     const character = create({ draft: true, step: 3 });
     const before = structuredClone(character);
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
@@ -363,5 +450,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const purchased = buy(funded(), { kind: "trait", group: "attributes", name: "Strength", target: 4 }, advancementCatalogs);
     const experienceMarkup = ptRender(createElement(PtExperience, { character: purchased, catalogs, updateSheet: () => assert.fail("render mutated structure") }));
     assert.match(experienceMarkup, /Força 4/); assert.match(experienceMarkup, /Gastar Experiência/); assert.doesNotMatch(experienceMarkup, /missing translation|Strength 4/);
+    const riteMarkup = ptRender(createElement(PtRites, { catalog: rites, tribeId: choices.tribe_id, knownIds: choices.rites, selectedId: "", onSelect: () => {} }));
+    assert.match(riteMarkup, /Todos os Ritos/); assert.match(riteMarkup, /Este Rito já é conhecido/); assert.match(riteMarkup, /Sucesso Excepcional/);
+    assert.doesNotMatch(riteMarkup, /missing translation/);
   } finally { await portuguese.close(); }
 });

@@ -14,11 +14,12 @@ import { CreationRites } from "./creation-rites";
 import "./styles/builder.css";
 
 /** Forsaken template choices stay line-owned; Core trait allocations remain untouched. */
-export function WerewolfCreationTemplate({ value, onChange, skills, reference, gifts, rites }: {
+export function WerewolfCreationTemplate({ value, onChange, skills, reference, gifts, rites, learnedRiteIds = [] }: {
   value: WerewolfCreationChoices; onChange: (value: WerewolfCreationChoices) => void;
   skills: Record<string, number>; reference: WerewolfReferenceCatalog;
   gifts: WerewolfGiftCatalog;
   rites: WerewolfRiteCatalog;
+  learnedRiteIds?: readonly string[];
 }) {
   const { locale, t } = useLanguage();
   const update = <K extends keyof WerewolfCreationChoices>(key: K, next: WerewolfCreationChoices[K]) => onChange({ ...value, [key]: next });
@@ -60,7 +61,7 @@ export function WerewolfCreationTemplate({ value, onChange, skills, reference, g
       <p>{t("werewolf.creationGiftGrants", { moon: grants.moonFacetCount, shadow: grants.shadowFacetCount, wolf: grants.wolfFacetCount })}</p>
       <CreationGifts value={value} onChange={onChange} auspice={auspice} tribe={tribe} gifts={gifts}/>
     </>}
-    <CreationRites value={value} onChange={onChange} catalog={rites}/>
+    <CreationRites value={value} onChange={onChange} catalog={rites} learnedRiteIds={learnedRiteIds}/>
     {problems.length > 0 && <ul>{problems.map(problem => <li key={problem}>{t(`werewolf.creationProblem.${problem}`)}</li>)}</ul>}
   </div>;
 }

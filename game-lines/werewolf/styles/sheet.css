@@ -6,6 +6,10 @@
 .wtf-sheet .wtf-health-heading { align-items: center; }
 .wtf-sheet .wtf-health-heading select, .wtf-sheet .wtf-health-heading [data-slot="select-trigger"] { width: 105px; }
 .wtf-renown { display: grid; gap: .4rem; }
+.wtf-rite-experience-catalog { overflow-y: auto; min-height: 0; max-height: 55vh; }
+.wtf-rite-experience-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+.wtf-rite-experience-row > .wtf-rite-reason { grid-column: 1 / -1; margin: 0; }
+.wtf-rite-experience-row summary { cursor: pointer; }
 body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="select-content"]) { --primary: #713c31; }
 @media (max-width: 767px) {
   .wtf-sheet .sheet-identity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

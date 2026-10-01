@@ -53,6 +53,7 @@ export function buildWerewolfCharacter({ source, identity, attributes, skills, s
   if (source && source.game_line !== "WtF") throw new Error("Werewolf builder received another game line.");
   const problems = creationTemplateProblems(choices, reference, skills, gifts.gifts, rites.rites);
   if (!draft && problems.length) throw new Error(`Invalid Werewolf creation choices: ${problems.join(", ")}.`);
+  if (!draft && choices.rites.some(id => werewolfIds(source?.line_data.learned_rites).includes(id))) throw new Error("Creation Rites overlap Experience purchases.");
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id);
   const tribe = reference.tribes.find(item => item.id === choices.tribe_id);
   const skillGranted = Boolean(auspice && !problems.includes("auspiceSkill"));
@@ -108,6 +109,8 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
       if (typeof initial.line_data[key] === "string") value[key] = initial.line_data[key];
     return value;
   });
+  // The shell owns the advancement sheet; this line-owned selection context prevents duplicate creation allocations after returning from its XP step.
+  const [learnedRiteIds, setLearnedRiteIds] = useState(() => werewolfIds(initial?.line_data.learned_rites));
   const templateProblems = creationTemplateProblems(choices, reference, common.skills, gifts.gifts, rites.rites);
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id), tribe = reference.tribes.find(item => item.id === choices.tribe_id);
   const finalSkills = purchasedTraits(auspice && !templateProblems.includes("auspiceSkill") ? creationAuspiceSkill(common.skills, auspice, choices.auspice_skill) : common.skills, initial, "skills");
@@ -129,6 +132,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const add = (step: number, key: string, label: string) => issues.push({ step, key, label });
   if (!common.name.trim()) add(1, "name", t("ui.characterName"));
   for (const problem of templateProblems) add(3, problem, t(`werewolf.creationProblem.${problem}`));
+  if (choices.rites.some(id => learnedRiteIds.includes(id))) add(3, "riteExperienceOverlap", t("werewolf.experienceProblem.riteKnown"));
   if (ownContext.primalUrge > 10 || Object.values(renown).some(dots => dots > 5)) add(3, "progressionMaximum", t("werewolf.progressionMaximum"));
   for (const [group, names, values, minimum] of [["attributes", Object.values(ATTRIBUTES).flat(), common.attributes, 1], ["skills", Object.values(SKILLS).flat(), common.skills, 0]] as const)
     if (names.some(name => !Number.isInteger(values[name]) || values[name] < minimum || values[name] > 5)) add(2, group, t("werewolf.creationTraitRange"));
@@ -154,10 +158,10 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   };
   return <CharacterBuilderShell line="WtF" state={common} templateLabel={t("werewolf.forsakenTemplate")} issues={issues} draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
     prepareAdvancement={previous => buildCharacter(previous ?? initial, false)}
-    renderAdvancement={(sheet, updateSheet) => <WerewolfExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode/>}
+    renderAdvancement={(sheet, updateSheet) => <WerewolfExperiencePanel character={sheet} updateSheet={next => { setLearnedRiteIds(werewolfIds(next.line_data.learned_rites)); updateSheet(next); }} catalogs={catalogs} builderMode/>}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing}/>}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing}/>}
-    lineTemplate={<><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites}/>
+    lineTemplate={<><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites} learnedRiteIds={learnedRiteIds}/>
       <div className="builder-section"><Aspirations values={common.aspirations} setValues={common.setAspirations}/><p>{t("werewolf.freeCreationMerits")}</p>
         <MeritPicker merits={merits} setMerits={common.setMerits} catalog={meritCatalog} context={context} spent={spent} budget={budget} isEligible={eligible} isInlineConfiguration={isCommonInlineMeritConfiguration}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => {

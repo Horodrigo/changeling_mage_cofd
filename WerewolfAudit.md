@@ -432,7 +432,7 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `Wellspring` tem um Sample Rite de Ivory Claws, mas não restringe ensino a essa Tribe; permanece disponível. Efeitos de Pack Rites são referências individuais, sem Pack persistence, fichas de humanos/Parentes vinculadas, timers ou concessão automática de recursos/Conditions.
 - **M10 — Chain Rage (p. 140): pendente.** O texto imprime “achieving turns of lucidity” e explica que não precisam ser consecutivos, mas omite quantos turnos encerram Wasu-Im. EN/PT mantêm aviso expresso da omissão; não atribuir um número sem decisão do usuário ou fonte oficial. A lacuna não bloqueia a seleção, pois o aplicativo não executa esse efeito.
 - `Expel` normaliza a Skill impressa `Intimidate` para a identidade canônica `Intimidation`. Shadowlash → Chicote da Sombra, Symbolic Focus → Foco Simbólico e Resonant → Ressonante são propostas editoriais para uniformização ao importar Conditions; Stumbled → Tropeço, Inspired → Inspirado, Madness → Loucura e Guilty → Culpado seguem a apresentação existente. Ban/Bane → Proibição/Fraqueza em Totemic Empowerment segue L01/P03.
-- Este lote conclui somente Core Rites e seu seletor isolado. Rites dos suplementos, Merits, registro completo, persistência e conclusão do Builder continuam pendentes.
+- O catálogo Core Rites está integrado à criação, Sheet, persistência e compras/refunds individuais de XP. Rites dos suplementos continuam pendentes; a conclusão deste catálogo não conclui a meta inteira.
 
 ### Core Werewolf Merits — WTF2 pp. 105–110
 
@@ -451,7 +451,7 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - Editor nativo EN/PT para Anchored, Blood or Bone Affinity, Code of Honor, Dedicated Locus, Embodiment of the Firstborn, Favored Form, Fortified Form, Living Weapon e Moon-Kissed. Dedicated Locus vincula uma instância exata de Safe Place; isso não liga fichas ou cria entidades de Pack. Benefícios condicionais não ativam poderes nem concedem recursos.
 - Favored Form preserva uma penalidade de Mental/Physical Attribute por dot, distribuível entre outras forms, incluindo Hishu. Apenas níveis desbloqueados afetam a prévia; reduzir dots ou alterar identidade não apaga configurações silenciosamente. A escolha de Skill pertinente continua julgamento da mesa. O exemplo explícito de p. 106 proíbe favorecer Manipulation em Gauru, sem inventar uma penalidade numérica ausente de p. 97.
 - Embodiment of the Firstborn, Favored Form e Instinctive Defense recalculam os valores da tabela de forms sem regravar Attributes comprados ou dano. Fortified Form segue M04 corrigida, sem Armor inata em Gauru. Living Weapon informa somente os bônus do ataque natural escolhido, sem conceder ataques que a form não possui. A tabela mostra os nove Attributes, pois as penalidades de Favored Form também podem afetar Attributes mentais.
-- As três definições expressamente repetíveis recusam a mesma escolha em outra instância; Living Weapon distingue form e ataque conforme M12. Esses controles estão compostos no Builder registrado e na persistência. Compras/refundos de XP ainda estão pendentes.
+- As três definições expressamente repetíveis recusam a mesma escolha em outra instância; Living Weapon distingue form e ataque conforme M12. Esses controles estão compostos no Builder registrado, na persistência e nas compras/refunds individuais de XP.
 
 ### Concessões e origem das alocações de criação — WTF2 pp. 82–83
 
@@ -459,7 +459,7 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `creation-grants.ts` compõe seleções de criação e reutiliza a progressão compartilhada por instância exata para preservar creationDots/experienceDots. Testes cobrem reedição, Totem com alocação mista, Living Weapon bite/claws comprados com XP na mesma form e ausência de duplicação das concessões. Não há interpretação de descrições traduzidas ou alteração de saldos/histórico.
 - O resultado validado de criação mantém escolhas e IDs de Renown/Facets/Rites separados do Skill dot gratuito. A retirada deste dot para reedição exige o registro explícito da concessão; não tenta adivinhar bônus ou remover um dot comprado. Os Attributes e as seleções de entrada não são alterados.
 - Blood/Bone devem apontar para o tipo correto de arquétipo; as duas Touchstones precisam ser descritas para concluir a criação. O template mostra mensagens EN/PT para estas escolhas ausentes ou inválidas. Rascunhos continuam sujeitos ao salvamento separado permitido pelo shell compartilhado.
-- A composição destas concessões foi integrada ao Builder registrado, normalização e ficha em tela. Experiência e os demais sistemas aprovados permanecem pendentes; o esquema externo continua na versão 2.
+- A composição destas concessões foi integrada ao Builder registrado, normalização e ficha em tela. XP de Attributes, Skills, Specialties, Merits, Primal Urge e Core Rites está integrado; Renown/Gifts e os demais sistemas aprovados permanecem pendentes. O esquema externo continua na versão 2.
 
 Sequência de implementação autorizada:
 
@@ -479,7 +479,7 @@ Nenhuma exclusão será revertida apenas porque o sistema consta nos três livro
 - Reedição preserva XP-only Merits e instâncias bite/claws independentes na mesma form, compras de traits, alocações mistas de Totem, recursos, histórico e escolhas autorais. Corrigida no shell compartilhado a subtração duplicada de experienceDots de grants com creationDots explícitos.
 - A ficha normal/mobile usa MainSheet compartilhado, cinco colunas de forms em Details, passivas e poderes expansíveis, Harmony manual e duas Touchstones. O seletor discreto de Health recalcula caixas sem truncar dano; Heal é manual e remove também o excesso preservado. Modificadores permanentes de Merits são aplicados às forms sem alterar os Attributes comprados.
 - Catálogos solicitados continuam limitados a Core e Werewolf; inglês é canônico e português é apresentação por ID. CSS normal/mobile e fallback de impressão não geram novas imagens; PDF/blank dedicados ainda não são anunciados.
-- **Ainda pendentes:** compras/refundos de Renown/Gifts/Rites e grants de progressão; conteúdo elegível de The Pack/Shunned by the Moon; Conditions/Tilts Werewolf; Fetishes/Talens; editor individual de Totem e Pack Tactics; sistemas adicionais das forms permitidas; referências completas das Auspice abilities/Hunter's Aspects/Tribal benefits; PDF/blank dedicados e reconciliação final de Ban/Bane nas entidades efêmeras. Esses itens continuam na meta, sem Pure, Wolf-Blooded, Lodges ou Pack persistence.
+- **Ainda pendentes:** compras/refundos de Renown/Gifts e grants de progressão; conteúdo elegível de The Pack/Shunned by the Moon, incluindo Rites dos suplementos; Conditions/Tilts Werewolf; Fetishes/Talens; editor individual de Totem e Pack Tactics; sistemas adicionais das forms permitidas; referências completas das Auspice abilities/Hunter's Aspects/Tribal benefits; PDF/blank dedicados e reconciliação final de Ban/Bane nas entidades efêmeras. Esses itens continuam na meta, sem Pure, Wolf-Blooded, Lodges ou Pack persistence.
 
 ### Experiência individual — primeiro lote integrado (2026-10-01)
 
@@ -487,4 +487,12 @@ Nenhuma exclusão será revertida apenas porque o sistema consta nos três livro
 - Histórico semântico mantém valores canônicos, IDs e instâncias; os rótulos são apresentados em EN/PT sem reescrever compras. Merits de XP preservam experienceDots separados de creationDots, inclusive upgrades de Totem, reedição e rascunhos de avanço.
 - Refund verifica custo e instância, impede duplicação de reembolso e protege pré-requisitos de Merits, Skills com Specialties e limites de traits por Primal Urge. Não cura, não altera Essence/Willpower/Harmony e não gera Beats automaticamente. Na criação, desfazer custo planejado não cria saldo fictício.
 - Moon/Shadow/Wolf Gifts, concessões/créditos de Renown e Rites exigem fluxos próprios conforme W08/W09; não foram reduzidos a compras genéricas neste lote.
+
+### Aprendizado de Rites por XP — 2026-10-01
+
+- Implementada a compra/refund dos 23 Core Rites pelo histórico individual, em criação avançada e Sheet. Cada compra usa o ID canônico do Rite e custa 1 XP/dot; fonte conferida visualmente em WTF2 pp. 84 e 139.
+- O jogador descreve a fonte de conhecimento efetivamente encontrada (teacher, spirit, record ou redescoberta); o campo não é traduzido automaticamente e permanece consultável no histórico. A aplicação não pressupõe que ler o catálogo conceda conhecimento nem exige um teacher cadastrado.
+- Wolf/Pack Rites compartilham o catálogo individual. Requisitos coletivos são informativos na execução, sem Pack persistence, outras fichas, controle de cerimônia, testes ou geração de Beats. Restrições explícitas de ensino por Tribe são enforçadas na compra.
+- Origem de criação e XP permanece separada. Não é possível recomprar um Rite conhecido ou contá-lo na criação após comprá-lo com XP; o Builder mantém opções inválidas removíveis. Refund retira somente o ID aprendido e devolve o custo registrado, sem restaurar snapshots de outros aprendizados.
+- O seletor expõe todos os textos mecânicos em EN/PT, busca e filtro Wolf/Pack, além dos motivos de bloqueio; nomes localizados não se tornam identidade persistida. Rites dos suplementos continuam pendentes junto de seus catálogos.
 - **Entrega final solicitada em 2026-10-01:** depois de concluir a meta e verificar os gates, fazer merge local da branch `werewolf` com `main` e excluir `werewolf`. Não realizar esse merge enquanto a implementação aprovada estiver incompleta; nenhum push foi solicitado.
