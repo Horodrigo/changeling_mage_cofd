@@ -2,8 +2,9 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { normalizeDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
+import { cycleHealthDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
 import { RuleSelect } from "./rule-select";
+import { Button } from "@/components/ui/button";
 
 const damageMessageKeys = { bashing: "ui.damageBashing", lethal: "ui.damageLethal", aggravated: "ui.damageAggravated" } as const;
 
@@ -153,20 +154,7 @@ export function HealthTrack({
   const { t }=useLanguage();
   const penalty = woundPenalty(damage, health);
   const cycle = (index: number) => {
-    const slots: Array<DamageLevel | undefined> = Array.from(
-      { length: health },
-      (_, slot) => damage[slot],
-    );
-    const current = slots[index];
-    slots[index] =
-      current === "bashing"
-        ? "lethal"
-        : current === "lethal"
-          ? "aggravated"
-          : current === "aggravated"
-            ? undefined
-            : "bashing";
-    onChange(normalizeDamage(slots, health));
+    onChange(cycleHealthDamage(damage, health, index));
   };
   return (
     <div className="tracker-block">
@@ -191,6 +179,9 @@ export function HealthTrack({
         })}
       </div>
       <div className="tracker-meta">
+        <Button type="button" variant="ghost" size="sm" onClick={() => onChange([])} disabled={damage.length === 0}>
+          {t("ui.heal")}
+        </Button>
         <span>
           {damage.length}/{health} {t("ui.marked")}
         </span>

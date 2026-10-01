@@ -1,6 +1,6 @@
 # Werewolf — decisões da auditoria
 
-Status: decisões recebidas em 2026-09-30; implementação não retomada neste pedido. A meta permanece pausada. Este documento substitui as propostas anteriores da auditoria e registra o entendimento atual, com dúvidas remanescentes ao final. `AGENTS.md` e o código atual continuam sendo a referência arquitetural; remover ou arquivar esta auditoria quando as decisões forem incorporadas.
+Status: decisões e P01–P03 aprovados em 2026-09-30; meta retomada pelo usuário. Implementação em andamento. Este documento substitui as propostas anteriores da auditoria e registra o entendimento atual, com dúvidas remanescentes ao final. `AGENTS.md` e o código atual continuam sendo a referência arquitetural; remover ou arquivar esta auditoria quando as decisões forem incorporadas.
 
 ## Convenção de comunicação e fontes
 
@@ -198,7 +198,7 @@ Preservar exemplos e configuração estruturada de novas Pack Tactics: rating, t
 
 A regra de PACK p. 61 cobra 2 XP por dot para desenvolver, podendo usar Pack Experiences ou contribuições individuais; todos os membros conhecem a tactic. Ingresso posterior custa 1 XP por dois dots, arredondado para cima. Esses são eventos diferentes, não uma compra individual indistinta.
 
-**Proposta ainda a confirmar (P01):** manter na ficha somente referências/configurações locais das Pack Tactics conhecidas, com requisitos coletivos informativos e sem registro de Pack. Para eventual contribuição individual, registrar apenas o valor informado pelo jogador, sem distribuir custos nem conceder conhecimento a outras fichas. A aprovação do editor não autoriza inventar uma regra alternativa de custo.
+**Decisão P01 aprovada:** manter na ficha somente referências/configurações locais das Pack Tactics conhecidas, com requisitos coletivos informativos e sem registro de Pack. Para eventual contribuição individual, registrar apenas o valor informado pelo jogador, sem distribuir custos nem conceder conhecimento a outras fichas. A aprovação do editor não autoriza inventar uma regra alternativa de custo.
 
 Fontes: PACK pp. 58–63.
 
@@ -282,7 +282,7 @@ Aplicar modificadores próprios das forms/benefícios quando pertinentes. Diverg
 
 **Decisão de apresentação:** incluir cálculo e valores de Speed na comparação das cinco forms.
 
-Isso não determina explicitamente qual das fórmulas em conflito deve ser adotada. **P02 permanece aberto:** confirmar Strength + Dexterity + species factor, com fator humano básico 5 e modificadores das forms, sem somar novamente variação de Size. Essa era a proposta original; não será considerada aprovada por inferência.
+Isso não determina explicitamente qual das fórmulas em conflito deve ser adotada. **Decisão P02 aprovada:** Strength + Dexterity + species factor, com fator humano básico 5 e modificadores das forms, sem somar novamente variação de Size.
 
 Fontes em conflito: resumos WTF2 pp. 83–84/NHSM p. 203 usam Size; WTF2 p. 158 descreve species factor e a ficha oficial usa +5.
 
@@ -315,7 +315,7 @@ Decisões expressas do usuário:
 | Primal Urge | Instinto Primitivo | Aplicativo, catálogo e mensagens Werewolf |
 | Lunacy | Lunagem | Aplicativo e textos localizados |
 | Wolf-Blooded | Parente | Léxico registrado; modelo jogável adiado |
-| Ban | Poribição | Grafia literal recebida; confirmar P03 antes de aplicar |
+| Ban | Proibição | P03 confirmado; todas as entidades efêmeras de todas as linhas |
 | Bane | Fraqueza | Todas as entidades efêmeras de todas as linhas |
 
 Ban/Bane: renomear a **apresentação** em todas as entidades efêmeras de todas as linhas, não IDs, campos canônicos ou regras. A mudança não renomeia automaticamente Vampire Clan/Bloodline Bane nem outros conceitos não efêmeros.
@@ -343,18 +343,18 @@ A comunicação de sugestões utiliza os termos da coluna original, não essas t
 
 ## Dúvidas remanescentes
 
-- **P01 — Pack Tactics:** confirmar referências/configurações na ficha individual, sem Pack persistence/Hunting Nature. Caso queira registrar contribuições de XP, confirmar registro somente da contribuição individual informada; não alterar o custo coletivo oficial nem distribuir recursos.
-- **P02 — Speed:** confirmar Strength + Dexterity + species factor, com base 5 e modificadores de form, ou outra resolução para o conflito de fonte. Mostrar cinco forms não resolve sozinho a fórmula-base.
-- **P03 — Ban:** confirmar se a grafia pretendida é “Proibição”, em vez do literal “Poribição”. Bane → Fraqueza já está definido.
+- **P01 aprovado:** Pack Tactics como referências/configurações individuais; contribuições de XP registradas somente pelo valor informado, sem Pack persistence, Hunting Nature ou distribuição coletiva.
+- **P02 aprovado:** Speed = Strength + Dexterity + species factor, base humana 5 e modificadores de form.
+- **P03 aprovado:** Ban → Proibição; Bane → Fraqueza.
 - Novas dúvidas de acesso/derivação das forms especiais de W03 serão mostradas ao usuário quando surgirem, não resolvidas silenciosamente.
 
 ## Continuação autorizável
 
-Este pedido autoriza atualizar a auditoria, não retomar a meta ou implementar todos esses itens imediatamente.
+O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo acima.
 
-Quando houver autorização de continuação:
+Sequência de implementação autorizada:
 
-1. Incorporar as decisões e resolver P01–P03 antes de implementar os pontos afetados.
+1. Incorporar as decisões aprovadas, inclusive P01–P03, preservando as exclusões.
 2. Registro lazy, esquema e normalização Werewolf, preservando schema externo 2 e fronteiras de propriedade.
 3. Catálogos EN/PT elegíveis para a ficha individual e Totem, incluindo Merits/Conditions/Tilts; sem Lodges, modelos ou catálogos rejeitados.
 4. Builder, edição, experiência individual, concessões, Gifts/Facets, Rites e Fetishes conforme decisões acima.
