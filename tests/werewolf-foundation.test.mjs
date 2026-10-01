@@ -29,6 +29,7 @@ const vite = await createServer({ appType: "custom", configFile: false, root,
   optimizeDeps: { noDiscovery: true, include: [] } });
 after(() => vite.close());
 const rules = await vite.ssrLoadModule("/game-lines/werewolf/creation-rules.ts");
+const meritRules = await vite.ssrLoadModule("/game-lines/werewolf/merit-rules.ts");
 
 test("WtF 2e reference preserves five forms, five Auspices and five Tribes plus Ghost Wolves", () => {
   assert.deepEqual(reference.forms.map(form => form.name), ["Hishu", "Dalu", "Gauru", "Urshul", "Urhan"]);
@@ -80,7 +81,7 @@ test("WtF 2e pp. 96–98 and audited choices derive all five forms without rewri
   assert.deepEqual(results.map(item => item.perception), [1, 2, 3, 3, 4]);
   assert.deepEqual(results.map(item => item.attributes.Manipulation), [2, 1, 2, 1, 1]);
   assert.deepEqual(results.map(item => item.firearmsDefense), [false, true, true, true, false]);
-  assert.deepEqual([results[2].armorGeneral, results[2].armorBallistic], [1, 1]);
+  assert.deepEqual([results[2].armorGeneral, results[2].armorBallistic], [0, 0], "Gauru grants no innate Armor in 2e; the sheet's 1/1 is not authoritative");
   assert.equal(results[2].willpower, 5);
   assert.equal(JSON.stringify(character), before);
   for (const form of reference.forms) {
@@ -273,6 +274,19 @@ test("Werewolf creation renders Portuguese catalog text and explicit English fal
     assert.doesNotMatch(markup, /<summary>Sacred Hunt/);
     assert.doesNotMatch(markup, /missing translation|Select Fearless Hunter|<summary>Fearless Hunter/);
     assert.deepEqual(value, before);
+    const { WerewolfMeritConfigurationEditor } = await portuguese.ssrLoadModule("/game-lines/werewolf/merit-configuration-editor.tsx");
+    const { FormsTable } = await portuguese.ssrLoadModule("/game-lines/werewolf/forms-table.tsx");
+    const selected = meritChoice("favored-form", 4, { form: "gauru", physicalSkill: "Brawl", attribute: "Stamina", secondAttribute: "Dexterity", giftId: "gift-rage", penalties: ["hishu:Resolve", "hishu:Wits", "dalu:Stamina", "urhan:Dexterity", "urshul:Intelligence"] });
+    const selectedBefore = structuredClone(selected);
+    const configMarkup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfMeritConfigurationEditor, { merit: selected, context: meritContext(), giftPresentation: giftCatalog.presentation, onChange: () => {} })));
+    for (const label of ["Configurar escolhas", "Forma escolhida", "Perícia Física", "Atributo que recebe +1", "Dom", "Atributo diferente", "Ponto 5 de desvantagem", "Forma penalizada", "Atributo penalizado", "Remover linha"])
+      assert.ok(configMarkup.includes(label), label);
+    assert.doesNotMatch(configMarkup, /missing translation|\{p1\}|Chosen form|Drawback dot/);
+    const formsMarkup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(FormsTable, { character, reference: catalog, merits: [selected, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] })));
+    for (const label of ["Inteligência", "Perseverança", "Mordida — bônus de Méritos", "ignora armaduras não mágicas", "não concede Armadura inata"])
+      assert.ok(formsMarkup.includes(label), label);
+    assert.doesNotMatch(formsMarkup, /missing translation|Bite — Merit bonuses/);
+    assert.deepEqual(selected, selectedBefore);
   } finally { await portuguese.close(); }
 });
 
@@ -995,4 +1009,186 @@ test("Werewolf Merit localization changes presentation without replacing prerequ
   assert.equal(meritCategoryLabel("Werewolf Fighting", "pt-BR"), "Combate de Lobisomem");
   assert.equal(meritCategoryLabel("Werewolf Fighting", "en-US"), "Werewolf Fighting");
   assert.deepEqual(werewolfMerits, before);
+});
+
+const meritDefinition = slug => werewolfMerits.find(item => item.id === `wtf-2ed:${slug}`);
+const meritChoice = (slug, dots, configuration = {}, instanceId = slug) => ({ id: `wtf-2ed:${slug}`, dots, configuration, instanceId });
+const meritContext = () => ({
+  attributes: Object.fromEntries(["Intelligence", "Wits", "Resolve", "Strength", "Dexterity", "Stamina", "Presence", "Manipulation", "Composure"].map(name => [name, 5])),
+  skills: Object.fromEntries(["Crafts", "Expression", "Persuasion", "Survival", "Stealth", "Brawl", "Athletics", "Intimidation", "Medicine", "Occult"].map(name => [name, 5])),
+  harmony: 8, primalUrge: 10, renown: { Cunning: 5, Glory: 5, Honor: 5, Purity: 5, Wisdom: 5 },
+  tribeId: "blood-talons", auspice: reference.auspices.find(item => item.id === "cahalith"),
+  forms: reference.forms, gifts: giftCatalog.gifts,
+  merits: [{ id: "core-2ed:safe-place", instanceId: "safe-1", dots: 5, configuration: { place: "My home" } }],
+});
+
+test("WtF 2e pp. 105–110 Merit eligibility enforces Harmony, Renown, Primal Urge, Tribe and Hishu thresholds without parsing translations", () => {
+  const tribeFor = { "hearing-whispers": "bone-shadows", "nowhere-to-run": "hunters-in-darkness", "sounds-of-the-city": "iron-masters", "strings-of-the-heart": "storm-lords", "weakest-link": "blood-talons" };
+  const context = meritContext(), before = structuredClone(context);
+  for (const definition of werewolfMerits) {
+    const slug = definition.id.split(":")[1];
+    const state = { ...context, tribeId: tribeFor[slug] ?? "blood-talons" };
+    const choice = meritChoice(slug, definition.ratings[0]);
+    const eligible = (changed = {}, config = {}) => meritRules.werewolfMeritPrerequisitesMet(definition, { ...choice, configuration: config }, { ...state, ...changed });
+    assert.equal(eligible(), true, definition.id);
+    assert.equal(meritRules.werewolfMeritPrerequisitesMet({ ...definition, name: "Localized display name", translatedName: "Nome traduzido" }, choice, state), true);
+    if (tribeFor[slug]) assert.equal(eligible({ tribeId: "ghost-wolves" }), false, definition.id);
+    for (const match of (definition.prerequisites ?? "").matchAll(/(Resolve|Composure|Stamina|Strength|Dexterity|Wits|Presence|Athletics|Survival|Brawl|Medicine|Stealth|Intimidation|Occult|Expression)\s+(•+)/g)) {
+      const field = Object.hasOwn(state.attributes, match[1]) ? "attributes" : "skills";
+      assert.equal(eligible({ [field]: { ...state[field], [match[1]]: match[2].length - 1 } }), false, `${definition.id}: ${match[1]}`);
+    }
+    for (const match of (definition.prerequisites ?? "").matchAll(/(Cunning|Glory|Honor|Purity|Wisdom)\s+(•+)/g))
+      assert.equal(eligible({ renown: { ...state.renown, [match[1]]: match[2].length - 1 } }), false, `${definition.id}: ${match[1]}`);
+  }
+  const eligible = (slug, dots, changes = {}, config = {}) => meritRules.werewolfMeritPrerequisitesMet(meritDefinition(slug), meritChoice(slug, dots, config), { ...context, ...changes });
+  for (const harmony of [0, 2, 9, 10, NaN]) assert.equal(eligible("blood-or-bone-affinity", 2, { harmony }), false);
+  for (const harmony of [3, 5, 8]) assert.equal(eligible("blood-or-bone-affinity", 5, { harmony }), true);
+  assert.equal(eligible("code-of-honor", 2, { harmony: 7 }), false);
+  assert.equal(eligible("code-of-honor", 2, { harmony: 10 }), true);
+  for (const harmony of [0, 10]) assert.equal(eligible("anchored", 1, { harmony }), true, "No invented Harmony threshold");
+  assert.equal(eligible("embodiment-of-the-firstborn", 5, { tribeId: "ghost-wolves" }), false);
+  assert.equal(eligible("embodiment-of-the-firstborn", 5, { tribeId: "" }), false);
+  for (let dots = 1; dots <= 5; dots++) {
+    assert.equal(eligible("favored-form", dots, { primalUrge: dots }), false);
+    assert.equal(eligible("favored-form", dots, { primalUrge: dots + 1 }), true);
+  }
+  assert.equal(eligible("instinctive-defense", 2, { primalUrge: 1 }), false);
+  assert.equal(eligible("dedicated-locus", 5, { merits: [{ id: "core-2ed:safe-place", dots: 4 }] }), false);
+  assert.equal(eligible("moon-kissed", 1, {}, { skill: "Brawl" }), false);
+  assert.equal(eligible("moon-kissed", 1, {}, { skill: "Crafts" }), true);
+  assert.equal(eligible("moon-kissed", 1, { skills: { Crafts: 1 } }), false);
+  // Changing form is not an input to eligibility. Hishu Strength 2 cannot qualify in Gauru.
+  assert.equal(eligible("efficient-killer", 2, { attributes: { ...context.attributes, Strength: 2 } }), false);
+  assert.deepEqual(context, before);
+});
+
+test("WtF 2e configured Merits preserve exact ratings, per-dot drawbacks and stable linked instance choices", () => {
+  const context = meritContext();
+  const favored = { form: "gauru", physicalSkill: "Brawl", attribute: "Stamina", giftId: "gift-rage", secondAttribute: "Dexterity", advancedSkill: "Brawl", penalties: ["hishu:Resolve", "hishu:Wits", "dalu:Stamina", "urhan:Dexterity", "urshul:Intelligence"] };
+  const valid = [
+    meritChoice("anchored", 2, { touchstone: "physical" }), meritChoice("blood-or-bone-affinity", 2, { anchor: "blood" }),
+    meritChoice("code-of-honor", 2, { virtue: "My code" }), meritChoice("dedicated-locus", 5, { safePlaceId: "safe-1" }),
+    meritChoice("embodiment-of-the-firstborn", 5, { attribute: "Strength" }), meritChoice("favored-form", 5, favored),
+    meritChoice("fortified-form", 3, { form: "gauru" }), meritChoice("living-weapon", 4, { form: "urshul", attack: "bite" }),
+    meritChoice("moon-kissed", 1, { skill: "Crafts", penaltySkill: "Brawl" }),
+  ];
+  const problems = choice => meritRules.werewolfMeritSelectionProblems(meritDefinition(choice.id.split(":")[1]), choice, context).map(item => item.key);
+  const before = structuredClone(valid);
+  for (const choice of valid) assert.deepEqual(problems(choice), [], choice.id);
+  assert.deepEqual(problems(meritChoice("blood-or-bone-affinity", 5)), [], "Both anchors need no invented extra choice");
+  assert.ok(problems(meritChoice("blood-or-bone-affinity", 3, { anchor: "bone" })).includes("werewolf.meritProblem.rating"));
+  assert.ok(problems(meritChoice("fortified-form", 2, { form: "gauru" })).includes("werewolf.meritProblem.rating"));
+  assert.ok(problems(meritChoice("fortified-form", 3, { form: "hishu" })).includes("werewolf.meritProblem.form"));
+  assert.ok(problems(meritChoice("dedicated-locus", 5, { safePlaceId: "safe-2" })).includes("werewolf.meritProblem.safePlace"));
+  const reduced = { ...context, merits: [{ ...context.merits[0], dots: 4 }] };
+  assert.ok(meritRules.werewolfMeritSelectionProblems(meritDefinition("dedicated-locus"), valid[3], reduced).some(item => item.key === "werewolf.meritProblem.safePlace"));
+  for (const change of [
+    { attribute: "Manipulation" }, { secondAttribute: "Stamina" }, { physicalSkill: "Occult" }, { giftId: "unknown" },
+    { penalties: ["gauru:Resolve", ...favored.penalties.slice(1)] }, { penalties: ["hishu:Presence", ...favored.penalties.slice(1)] },
+    { penalties: favored.penalties.slice(1) }, { penalties: ["unknown:Intelligence", ...favored.penalties.slice(1)] },
+  ]) assert.ok(problems(meritChoice("favored-form", 5, { ...favored, ...change })).length, JSON.stringify(change));
+  assert.ok(problems(meritChoice("moon-kissed", 1, { skill: "Crafts", penaltySkill: "Expression" })).includes("werewolf.meritProblem.penaltySkill"));
+  assert.ok(problems(meritChoice("moon-kissed", 1, { skill: "Brawl", penaltySkill: "Survival" })).includes("werewolf.meritProblem.moonSkill"));
+  assert.deepEqual(valid, before);
+});
+
+test("WtF 2e repeatable Merits target exact instances and reject duplicate choices without conflating different forms or Skills", () => {
+  const context = meritContext();
+  const duplicate = (slug, first, second) => {
+    const owned = meritChoice(slug, meritDefinition(slug).ratings[0], first, "instance-1");
+    const selected = meritChoice(slug, meritDefinition(slug).ratings[0], second, "instance-2");
+    const state = { ...context, merits: [owned, selected] };
+    assert.equal(meritRules.werewolfMeritSelectionProblems(meritDefinition(slug), selected, state).some(item => item.key === "werewolf.meritProblem.duplicate"), JSON.stringify(first) === JSON.stringify(second));
+    assert.equal(meritRules.werewolfMeritSelectionProblems(meritDefinition(slug), { ...selected }, state).some(item => item.key === "werewolf.meritProblem.duplicate"), JSON.stringify(first) === JSON.stringify(second), "An edit excludes only its own exact instance");
+  };
+  duplicate("fortified-form", { form: "gauru" }, { form: "gauru" });
+  duplicate("fortified-form", { form: "gauru" }, { form: "urshul" });
+  duplicate("living-weapon", { form: "gauru", attack: "bite" }, { form: "gauru", attack: "bite" });
+  duplicate("living-weapon", { form: "gauru", attack: "bite" }, { form: "urshul", attack: "bite" });
+  duplicate("living-weapon", { form: "gauru", attack: "bite" }, { form: "gauru", attack: "claws" });
+  duplicate("moon-kissed", { skill: "Crafts", penaltySkill: "Brawl" }, { skill: "Crafts", penaltySkill: "Brawl" });
+  duplicate("moon-kissed", { skill: "Crafts", penaltySkill: "Brawl" }, { skill: "Expression", penaltySkill: "Brawl" });
+  const once = meritChoice("favored-form", 1, { form: "gauru", physicalSkill: "Brawl", penalties: ["hishu:Resolve"] }, "once-1");
+  const twice = { ...once, instanceId: "once-2", configuration: { ...once.configuration, form: "urshul" } };
+  assert.ok(meritRules.werewolfMeritSelectionProblems(meritDefinition("favored-form"), twice, { ...context, merits: [once] }).some(item => item.key === "werewolf.meritProblem.duplicate"));
+});
+
+test("WtF 2e permanent Merit form effects recalculate derived traits without overwriting purchased Attributes or preserved damage", () => {
+  const base = { ...character, attributes: { ...character.attributes, Intelligence: 3, Presence: 2 }, current_state: structuredClone(character.current_state) };
+  const merits = [
+    meritChoice("embodiment-of-the-firstborn", 5, { attribute: "Strength" }),
+    meritChoice("favored-form", 4, { form: "gauru", physicalSkill: "Brawl", attribute: "Stamina", giftId: "gift-rage", secondAttribute: "Dexterity", penalties: ["hishu:Resolve", "hishu:Wits", "dalu:Stamina", "urhan:Dexterity"] }),
+    meritChoice("instinctive-defense", 2),
+  ];
+  const before = structuredClone({ base, merits });
+  const results = reference.forms.map(form => rules.formTraits(base, form, 5, merits));
+  assert.deepEqual(results.map(item => item.attributes.Strength), [3, 4, 6, 5, 3]);
+  assert.deepEqual(results.map(item => item.health), [7, 8, 12, 10, 7]);
+  assert.deepEqual(results.map(item => item.defense), [5, 5, 6, 7, 6]);
+  assert.equal(results[0].willpower, 4);
+  assert.equal(results[2].initiative, 8);
+  assert.equal(results[2].speed, 16);
+  const low = { ...merits[1], dots: 1 };
+  const lowGauru = rules.formTraits(base, reference.forms[2], 5, [low]);
+  assert.equal(lowGauru.health, 11, "Locked level-2 Attribute bonus does not apply");
+  assert.equal(lowGauru.attributes.Dexterity, 4, "Locked level-4 Attribute bonus does not apply");
+  const lowHishu = rules.formTraits(base, reference.forms[0], 5, [low]);
+  assert.equal(lowHishu.attributes.Resolve, 1);
+  assert.equal(lowHishu.attributes.Wits, 4, "Hidden drawback rows do not apply beyond the current rating");
+  assert.deepEqual({ base, merits }, before);
+  const duplicate = rules.formTraits(base, reference.forms[2], 5, [...merits, { ...merits[0], instanceId: "invalid-embodiment" }, { ...merits[1], instanceId: "invalid-favored" }]);
+  assert.deepEqual(duplicate, results[2], "Invalid duplicates never multiply permanent bonuses");
+});
+
+test("WtF 2e Gauru has no innate Armor; Fortified Form and Living Weapon use exact permanent rating benefits", () => {
+  const gauru = reference.forms.find(item => item.id === "gauru");
+  assert.match(gauru.description, /no innate Armor/);
+  assert.match(presentation.gauru.description, /não concede Armadura inata/);
+  assert.doesNotMatch(gauru.description + presentation.gauru.description, /Armor is 1\/1|Armadura 1\/1/);
+  assert.deepEqual([gauru.armorGeneral, gauru.armorBallistic], [0, 0]);
+  for (const [dots, general, ballistic] of [[3,1,0], [4,1,1], [5,2,2]]) {
+    const armor = meritChoice("fortified-form", dots, { form: "gauru" });
+    const traits = rules.formTraits(character, gauru, 5, [armor, { ...armor, instanceId: "invalid-duplicate" }]);
+    assert.deepEqual([traits.armorGeneral, traits.armorBallistic], [general, ballistic]);
+    const weapon = rules.formTraits(character, gauru, 5, [meritChoice("living-weapon", dots, { form: "gauru", attack: "bite" })]).weaponBonuses;
+    assert.deepEqual(weapon.bite, { damage: dots >= 4 ? 1 : 0, armorPiercing: 2, ignoresNonMagicalArmor: dots === 5 });
+    assert.deepEqual(weapon.claws, { damage: 0, armorPiercing: 0, ignoresNonMagicalArmor: false });
+  }
+  const inactive = rules.formTraits(character, gauru, 5, [meritChoice("fortified-form", 5, { form: "urhan" }), meritChoice("relentless-assault", 4)]);
+  assert.deepEqual([inactive.armorGeneral, inactive.armorBallistic], [0, 0], "Conditional maneuver armor is not permanently granted");
+  for (const dots of [0, 2, 3.5, NaN, Infinity]) {
+    const invalid = rules.formTraits(character, gauru, 5, [meritChoice("fortified-form", dots, { form: "gauru" })]);
+    assert.deepEqual([invalid.armorGeneral, invalid.armorBallistic], [0, 0]);
+  }
+});
+
+test("Werewolf Merit configuration controls and form comparisons keep canonical IDs, native disclosures, full Attribute effects and localized messages", async () => {
+  const { WerewolfMeritConfigurationEditor } = await vite.ssrLoadModule("/game-lines/werewolf/merit-configuration-editor.tsx");
+  const { FormsTable } = await vite.ssrLoadModule("/game-lines/werewolf/forms-table.tsx");
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
+  const context = meritContext();
+  const favored = meritChoice("favored-form", 4, { form: "gauru", attribute: "Stamina", secondAttribute: "Dexterity", physicalSkill: "Brawl", giftId: "gift-rage", penalties: ["hishu:Resolve", "hishu:Wits", "dalu:Stamina", "urhan:Dexterity", "urshul:Intelligence"] });
+  const before = structuredClone(favored);
+  const markup = render(createElement(WerewolfMeritConfigurationEditor, { merit: favored, context, giftPresentation: giftCatalog.presentation, onChange: () => {} }));
+  for (const label of ["Chosen form", "Physical Skill", "Attribute receiving +1", "Gift", "Different Attribute", "Drawback dot 5", "Penalized form", "Penalized Attribute"])
+    assert.ok(markup.includes(label), label);
+  assert.match(markup, />Remove row<\/button>/, "Reducing dots leaves excess rows available for explicit removal");
+  assert.doesNotMatch(markup, /Relevant Skill|<details[^>]* open|missing translation/);
+  const table = render(createElement(FormsTable, { character, reference: catalog, merits: [favored, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] }));
+  for (const attribute of ["Intelligence", "Wits", "Resolve", "Strength", "Dexterity", "Stamina", "Presence", "Manipulation", "Composure"])
+    assert.ok(table.includes(`<th scope="row">${attribute}</th>`), attribute);
+  assert.match(table, /Bite — Merit bonuses/);
+  assert.match(table, /ignores non-magical armor/);
+  assert.match(table, /do not grant a new attack/);
+  for (const locale of ["en-US", "pt-BR"])
+    for (const key of ["rating", "form", "attribute", "touchstone", "anchor", "virtue", "safePlace", "physicalSkill", "gift", "advancedSkill", "penalties", "attack", "moonSkill", "penaltySkill", "duplicate"])
+      assert.doesNotMatch(translate(locale, `werewolf.meritProblem.${key}`), /missing translation/);
+  assert.deepEqual(favored, before);
+  const unknown = render(createElement(WerewolfMeritConfigurationEditor, { merit: meritChoice("not-a-configured-merit", 2), context, onChange: () => {} }));
+  assert.equal(unknown, "");
+  const styles = readFileSync(new URL("../game-lines/werewolf/styles/merits.css", import.meta.url), "utf8");
+  assert.match(styles, /@media \(max-width: 640px\)/);
+  assert.match(styles, /grid-template-columns: minmax\(0, 1fr\)/);
+  assert.match(styles, /min-height: 44px/);
 });

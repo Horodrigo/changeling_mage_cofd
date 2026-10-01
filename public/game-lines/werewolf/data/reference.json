@@ -50,12 +50,12 @@
       "speciesFactor": 0,
       "perception": 3,
       "firearmsDefense": true,
-      "armorGeneral": 1,
-      "armorBallistic": 1,
+      "armorGeneral": 0,
+      "armorBallistic": 0,
       "sourceId": "wtf-2ed",
       "source": "Werewolf: The Forsaken Second Edition",
       "page": 97,
-      "description": "Gauru adds Strength +3, Dexterity +1, Stamina +2 and Size +2; Armor is 1/1 by the project's audited choice. Once per scene, remain in Gauru for Hishu Stamina + Primal Urge turns. Afterwards shift to Dalu or Urshul, or risk Kuruth: a reflexive Resolve + Composure success allows one more turn, then a shift to Dalu or Urshul and Wasu-Im; failure causes immediate Basu-Im. Regenerate all bashing and lethal damage each turn. Teeth and claws deal +2 lethal damage without needing a grapple and can also establish one; Initiative gains +3 when using them. Apply Defense against Firearms. Wolf-sense Perception gains +3 dice; sight of Gauru inflicts full Lunacy. Rage demands an attack each turn; if none is in reach, move toward an opponent or throw something, and if none exists attack whatever is available. Other actions require Resolve + Composure or Kuruth. Automatically fail Social rolls not based on Intimidation and Mental rolls not based on Perception or Resistance. Primal Fear forces lesser enemies into Down and Dirty combat unless protected by stronger opponents; in normal combat, foes use Dexterity or Wits for Defense without the usual Skill.",
+      "description": "Gauru adds Strength +3, Dexterity +1, Stamina +2 and Size +2. The form grants no innate Armor. Once per scene, remain in Gauru for Hishu Stamina + Primal Urge turns. Afterwards shift to Dalu or Urshul, or risk Kuruth: a reflexive Resolve + Composure success allows one more turn, then a shift to Dalu or Urshul and Wasu-Im; failure causes immediate Basu-Im. Regenerate all bashing and lethal damage each turn. Teeth and claws deal +2 lethal damage without needing a grapple and can also establish one; Initiative gains +3 when using them. Apply Defense against Firearms. Wolf-sense Perception gains +3 dice; sight of Gauru inflicts full Lunacy. Rage demands an attack each turn; if none is in reach, move toward an opponent or throw something, and if none exists attack whatever is available. Other actions require Resolve + Composure or Kuruth. Automatically fail Social rolls not based on Intimidation and Mental rolls not based on Perception or Resistance. Primal Fear forces lesser enemies into Down and Dirty combat unless protected by stronger opponents; in normal combat, foes use Dexterity or Wits for Defense without the usual Skill.",
       "additionalPages": []
     },
     {

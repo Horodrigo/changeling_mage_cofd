@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { AuspiceDefinition, FormDefinition, PrimalUrgeLevel, RenownId, TribeDefinition, WerewolfReference } from "./catalogs/reference";
 import type { GiftDefinition } from "./catalogs/gifts";
 import type { RiteDefinition } from "./catalogs/rites";
+import { werewolfFormMeritEffects, type WerewolfMeritChoice } from "./merit-rules";
 
 const finite = (value: unknown, fallback = 0) => {
   if (typeof value !== "number" && (typeof value !== "string" || !value.trim())) return fallback;
@@ -18,22 +19,26 @@ export function boundedPrimalUrge(value: unknown) {
 }
 
 /** WTF2 pp. 96–98; M02/M03/M04/M07 resolve the audited sheet/text conflicts. */
-export function formTraits(character: Pick<CharacterSheet, "attributes" | "skills">, form: FormDefinition, baseSize = 5) {
+export function formTraits(character: Pick<CharacterSheet, "attributes" | "skills">, form: FormDefinition, baseSize = 5, merits: readonly WerewolfMeritChoice[] = []) {
+  const bonuses = werewolfFormMeritEffects(merits, form);
   const attributes = Object.fromEntries(Object.entries(character.attributes).map(([key, value]) => [key, Math.max(0, finite(value))]));
-  for (const [key, delta] of Object.entries(form.attributes)) attributes[key] = Math.max(0, finite(attributes[key]) + finite(delta));
+  for (const [key, delta] of Object.entries(form.attributes)) attributes[key] = finite(attributes[key]) + finite(delta);
+  for (const [key, delta] of Object.entries(bonuses.attributes)) attributes[key] = finite(attributes[key]) + delta;
+  for (const key of Object.keys(attributes)) attributes[key] = Math.max(0, attributes[key]);
   const size = Math.max(1, finite(baseSize, 5) + form.size);
   return {
     attributes,
     size,
     health: Math.max(1, size + finite(attributes.Stamina)),
-    defense: Math.min(finite(attributes.Dexterity), finite(attributes.Wits)) + finite(character.skills.Athletics),
+    defense: (bonuses.instinctiveDefense ? Math.max : Math.min)(finite(attributes.Dexterity), finite(attributes.Wits)) + finite(character.skills.Athletics),
     initiative: finite(attributes.Dexterity) + finite(attributes.Composure),
     speed: finite(attributes.Strength) + finite(attributes.Dexterity) + 5 + form.speciesFactor,
     willpower: finite(attributes.Resolve) + finite(attributes.Composure),
     perception: form.perception,
-    armorGeneral: form.armorGeneral,
-    armorBallistic: form.armorBallistic,
+    armorGeneral: form.armorGeneral + bonuses.armorGeneral,
+    armorBallistic: form.armorBallistic + bonuses.armorBallistic,
     firearmsDefense: form.firearmsDefense,
+    weaponBonuses: bonuses.weaponBonuses,
   };
 }
 

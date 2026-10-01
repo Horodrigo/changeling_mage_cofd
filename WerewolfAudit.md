@@ -290,9 +290,9 @@ Fontes em conflito: resumos WTF2 pp. 83–84/NHSM p. 203 usam Size; WTF2 p. 158 
 
 ### M04 — Gauru Armor
 
-**Decisão: 1/1 em Gauru.**
+**Decisão atual em 2026-10-01: Gauru não concede Armor inata em Second Edition.**
 
-Adotar o valor da ficha oficial, PDF físico 318. Outras fontes de Armor seguem suas regras, sem somar automaticamente bônus incompatíveis.
+A confirmação trazida pelo usuário dos desenvolvedores substitui a escolha anterior de 1/1 da ficha: esse valor pertencia à First Edition e foi mantido na ficha Second Edition por erro de digitação. Conferência visual de WTF2 p. 97: não há concessão de Armor entre as regras de Gauru. Usar 0/0 na forma básica e preservar EN/PT coerentes. Fortified Form pode fornecer Armor a Gauru ou outras forms elegíveis (p. 106); não importar regras First Edition. Outras fontes de Armor seguem suas próprias regras, sem acumular bônus incompatíveis por inferência.
 
 ### M05 — Additional Moon Gift
 
@@ -357,6 +357,14 @@ WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF f�
 ### M08 — Ties of Blood and Bone resistance
 
 **Decisão: Stamina + Primal Urge, pelo critério físico/mental fornecido pelo usuário.** WTF2 p. 120 imprime `Stamina + Primal Urge` na oposição do Dice Pool, mas `Resolve + Primal Urge` no parágrafo sobre o packmate resistir. O usuário determinou verificar o efeito: resistência física usa Stamina; resistência mental usa Resolve. A Facet troca os dois personagens por metamorfose de carne e osso, com seus equipamentos, sem controlar pensamentos ou emoções. Portanto, adotar Stamina + Primal Urge neste caso. Preservar a divergência em nota editorial, sem apresentá-la como errata oficial nem executar testes automaticamente.
+
+### M11 — Fortified Form e Gauru Armor
+
+**Superada pela correção de M04 no mesmo dia.** A resposta inicial de somar os valores partia da Armor 1/1 da ficha, agora corrigida para 0/0 após a explicação dos desenvolvedores fornecida pelo usuário. Os valores atuais de Gauru com Fortified Form são: 3 → 1/0; 4 → 1/1; 5 → 2/2. Instâncias do mesmo Merit com a mesma form são inválidas; duplicatas não multiplicam o bônus na prévia. Não há autorização geral para acumular qualquer outra fonte de Armor.
+
+### M12 — Living Weapon na mesma form
+
+**Decisão do usuário em 2026-10-01: permitir bite e claws na mesma form.** A expressão de WTF2 p. 107 “different enhancements in different forms” não impede duas instâncias independentes, uma por ataque, na mesma form. O par form/attack identifica a escolha; duplicar esse par é inválido. Uma compra não concede um ataque inexistente na form nem substitui os requisitos de Stamina/Survival.
 
 ## Continuação autorizável
 
@@ -434,8 +442,16 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `Code of Honor` inclui a referência de Virtue em p. 158 (toda Willpower até duas vezes por chapter). `Song in Your Heart` inclui a parada e os modificadores do efeito subjacente de Inspiring em p. 111, sem depender somente de um “see p.”. Essas são referências do próprio livro, não concessões automáticas.
 - `Dedicated Locus`, `Residential Area`, `Pack Dynamics` e `Totem` permanecem Merits individuais com os textos de cooperação preservados, sem criar Pack persistence, vínculos entre fichas, territórios ou reservas coletivas. A apresentação não aplica Beats, Willpower, Essence, Conditions ou maneuvers automaticamente.
 - `Instinctive Defense`, `Embodiment of the Firstborn`, `Favored Form`, `Fortified Form` e `Living Weapon` exigem integração mecânica/configuração própria de Werewolf antes de disponibilizar compras; não mover seus cálculos para Core ou alterar Attributes básicos por simples troca de form. Bônus temporários de maneuvers continuam informativos.
-- O catálogo usa o futuro ID de linha `WtF`, mas este lote **não habilita** esse ID na persistência nem registra a linha parcialmente. Integração do catálogo, elegibilidade por IDs, configurações e concessões na criação continuam pendentes para o próximo lote do Builder. Nenhuma outra linha passa a solicitar estes JSON.
+- O catálogo usa o futuro ID de linha `WtF`, mas **não habilita** esse ID na persistência nem registra a linha parcialmente. As regras por IDs e os editores de configuração do lote seguinte estão descritos abaixo; composição no Builder, carregamento do catálogo e concessões na criação ainda estão pendentes. Nenhuma outra linha passa a solicitar estes JSON.
 - Shaken → Abalado segue o catálogo compartilhado existente. Nomes locais novos dos Merits e maneuvers permanecem propostas editoriais auditáveis no JSON PT. Termos Uratha, incluindo Kuruth/Wasu-Im/Basu-Im, não foram traduzidos.
+
+### Integração dos Core Merits com escolhas e forms
+
+- Validação Werewolf por ID de Harmony, Primal Urge, Renown e Tribe, além dos thresholds canônicos de Attribute/Skill. O contexto usa traits efetivos de Hishu; a form de combate não altera elegibilidade. Core continuará responsável por acesso de linha, mortalOnly e exclusões genéricas quando o Builder for registrado.
+- Editor nativo EN/PT para Anchored, Blood or Bone Affinity, Code of Honor, Dedicated Locus, Embodiment of the Firstborn, Favored Form, Fortified Form, Living Weapon e Moon-Kissed. Dedicated Locus vincula uma instância exata de Safe Place; isso não liga fichas ou cria entidades de Pack. Benefícios condicionais não ativam poderes nem concedem recursos.
+- Favored Form preserva uma penalidade de Mental/Physical Attribute por dot, distribuível entre outras forms, incluindo Hishu. Apenas níveis desbloqueados afetam a prévia; reduzir dots ou alterar identidade não apaga configurações silenciosamente. A escolha de Skill pertinente continua julgamento da mesa. O exemplo explícito de p. 106 proíbe favorecer Manipulation em Gauru, sem inventar uma penalidade numérica ausente de p. 97.
+- Embodiment of the Firstborn, Favored Form e Instinctive Defense recalculam os valores da tabela de forms sem regravar Attributes comprados ou dano. Fortified Form segue M04 corrigida, sem Armor inata em Gauru. Living Weapon informa somente os bônus do ataque natural escolhido, sem conceder ataques que a form não possui. A tabela mostra os nove Attributes, pois as penalidades de Favored Form também podem afetar Attributes mentais.
+- As três definições expressamente repetíveis recusam a mesma escolha em outra instância; Living Weapon distingue form e ataque conforme M12. Esses controles e regras ainda aguardam composição no Builder completo, registro/persistência Werewolf e compras/refundos de XP. Nenhum fluxo parcial foi disponibilizado no registro.
 
 Sequência de implementação autorizada:
 
