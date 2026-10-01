@@ -388,6 +388,16 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - Nomes localizados de Conditions a uniformizar no catálogo: Awestruck → Deslumbrado; Essence Overload → Sobrecarga de Essência. Cowed → Acovardado segue a decisão já aprovada para Changeling; Ban → Proibição e Stumbled → Tropeço seguem os lotes anteriores.
 - Revisão lexical incorporada na base: Composure → Compostura, Athletics → Atletismo e Bashing → contusivo, seguindo a apresentação compartilhada. Arm Wrack/Leg Wrack na descrição de Urshul usam Braço Lesionado/Perna Lesionada, como no catálogo Moon Gifts. As versões individuais dos catálogos PT foram incrementadas, sem alterar os valores canônicos.
 
+### Notas editoriais do catálogo Shadow Gifts — segundo lote, WTF2 pp. 123–127
+
+- `Gift of Evasion`, `Gift of Insight` e `Gift of Inspiration`: quinze Facets completas em EN/PT, incluindo as continuações de `Feet of Mist`, `Exit Strategy`, `Echo Dream` e `One Step Ahead`. Este lote não conclui as demais famílias necessárias ao Builder.
+- `Fog of War` não imprime Exceptional Success. Preservar os três resultados existentes, a resistência de quem entrega/atira e o gasto adicional para escolher um destinatário plausível, sem inventar o quarto resultado.
+- `Hit and Run` permite movimento antes do teste condicional; Failure significa nenhum efeito **adicional**, não cancelar esse movimento. `Exit Strategy` tem um efeito automático e quatro opções de teste distintas. Nenhuma dessas regras move tokens, executa perseguições ou aplica Conditions automaticamente.
+- `Read the World's Loom`: sete temas, desconto de Cost no território e alcance de Glory em milhas. Manter o contexto como informação, sem criar o editor de territory excluído em W19.
+- `Lunatic Inspiration` resiste somente com Composure, sem Primal Urge; o alvo é human/Wolf-Blooded, sem exigir cadastro desses modelos. `Still Small Voice` usa Resolve + Primal Urge e seus alvos não podem dispensar a resistência. Exceptional Success alcança todos os Uratha presentes que ouçam o interlocutor, não somente os alvos escolhidos.
+- `Fearless Hunter`, `Pack Triumphs Together` e `Unity` continuam como poderes individuais consultáveis, sem Pack persistence, Initiative automática ou controle de cenas.
+- Loucura/Inspirado/Enamorado seguem os nomes localizados existentes para Madness/Inspired/Swooning. Shadow Paranoia → Paranoia da Sombra será uniformizado ao importar o catálogo correspondente. Ridden → Possuídos, Hosts → Hospedeiros e Claimed → Tomados são propostas editoriais de apresentação, não implementação dos antagonistas excluídos em W17.
+
 Sequência de implementação autorizada:
 
 1. Incorporar as decisões aprovadas, inclusive P01–P03, preservando as exclusões.

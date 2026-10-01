@@ -358,11 +358,11 @@ test("WtF 2e pp. 136–138 preserves all fifteen Wolf Facets and their EN/PT exc
   assert.match(facet("gift-pack:down-the-prey").options, /Defense against the attack was 0/);
 });
 
-test("WtF 2e pp. 121–123 preserves the Death, Dominance and Elemental Facets with complete EN/PT text", () => {
-  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental"]);
+test("WtF 2e pp. 121–127 preserves the first six Shadow Gifts with complete EN/PT text", () => {
+  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental", "gift-evasion", "gift-insight", "gift-inspiration"]);
   const records = shadowGifts.flatMap(gift => [gift, ...gift.facets]);
-  assert.equal(records.length, 18);
-  assert.equal(new Set(records.map(item => item.id)).size, 18);
+  assert.equal(records.length, 36);
+  assert.equal(new Set(records.map(item => item.id)).size, 36);
   assert.deepEqual(new Set(Object.keys(shadowPresentation)), new Set(records.map(item => item.id)));
   for (const gift of shadowGifts) {
     assert.equal(gift.kind, "shadow");
@@ -374,7 +374,9 @@ test("WtF 2e pp. 121–123 preserves the Death, Dominance and Elemental Facets w
       assert.equal(facet.level, undefined, "Shadow Facets are chosen by Renown, not ordered Moon levels");
       assert.equal(Boolean(facet.dicePool), facet.hasRoll);
       const results = ["dramaticFailure", "failure", "success", "exceptionalSuccess"].filter(key => facet[key]);
-      assert.ok(results.length === 0 || results.length === 4);
+      if (facet.id === "gift-evasion:fog-of-war") {
+        assert.deepEqual(results, ["dramaticFailure", "failure", "success"]);
+      } else assert.ok(results.length === 0 || results.length === 4);
       if (!facet.hasRoll) assert.equal(results.length, 0);
       if (results.length === 0) assert.ok(facet.effect);
     }
@@ -382,8 +384,8 @@ test("WtF 2e pp. 121–123 preserves the Death, Dominance and Elemental Facets w
   for (const item of records) {
     assert.equal(item.sourceId, "wtf-2ed");
     assert.equal(item.source, "Werewolf: The Forsaken Second Edition");
-    assert.ok(item.page >= 121 && item.page <= 123);
-    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 123);
+    assert.ok(item.page >= 121 && item.page <= 127);
+    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 127);
     const fields = Object.entries(item).filter(([key, value]) => typeof value === "string" && !["id", "renown", "kind", "source", "sourceId"].includes(key));
     assert.deepEqual(new Set(Object.keys(shadowPresentation[item.id])), new Set(fields.map(([key]) => key)));
     for (const [field, text] of fields) assert.ok(text.length && shadowPresentation[item.id][field]?.length, `${item.id}.${field}`);
@@ -416,6 +418,51 @@ test("WtF 2e pp. 121–123 preserves the Death, Dominance and Elemental Facets w
   assert.match(facet("gift-elemental:catastrophe").exceptionalSuccess, /Further uses of Catastrophe still cost Essence/);
 });
 
+test("WtF 2e pp. 123–127 retains Evasion, Insight and Inspiration's conditional effects and exact resistance", () => {
+  const facet = id => shadowGifts.flatMap(gift => gift.facets).find(item => item.id === id);
+  const feet = facet("gift-evasion:feet-of-mist");
+  assert.match(feet.effect, /rote quality/);
+  assert.match(feet.effect, /not make her invisible/);
+  const fog = facet("gift-evasion:fog-of-war");
+  assert.equal(fog.exceptionalSuccess, undefined, "No exceptional result is printed for Fog of War");
+  assert.match(fog.activationRequirement, /deliverer|delivers|delivering/i);
+  assert.match(fog.success, /1 additional Essence/);
+  const hit = facet("gift-evasion:hit-and-run");
+  assert.match(hit.effect, /immediately disengage/i);
+  assert.match(hit.effect, /highest Composure/);
+  assert.equal(hit.failure, "No further effect occurs.");
+  const exit = facet("gift-evasion:exit-strategy");
+  assert.match(exit.effect, /immediately reveals all usable escape routes/);
+  assert.match(exit.effect, /Alternatively/);
+  assert.equal(exit.options.split("\n").length, 4);
+  assert.match(exit.exceptionalSuccess, /except attack rolls/);
+  const loom = facet("gift-insight:read-the-worlds-loom");
+  assert.equal(loom.cost, "5 Essence; 3 Essence in the pack's territory");
+  assert.equal(loom.options.split("\n").length, 7);
+  assert.match(loom.success, /beyond 24 hours/);
+  assert.match(facet("gift-insight:echo-dream").exceptionalSuccess, /characters perceived in the vision/);
+  const scent = facet("gift-insight:scent-the-unnatural");
+  assert.match(scent.effect, /10 yards per Purity/);
+  assert.match(scent.effect, /excludes Uratha and Gifts/);
+  assert.match(scent.success, /neither the type of Host nor the claiming spirit/);
+  const lunatic = facet("gift-inspiration:lunatic-inspiration");
+  assert.equal(lunatic.dicePool, "Manipulation + Empathy + Cunning vs Composure");
+  assert.match(lunatic.activationRequirement, /human or Wolf-Blooded/);
+  assert.match(lunatic.success, /After the prey next sleeps/);
+  assert.match(lunatic.success, /completing it resolves Madness/);
+  assert.match(shadowPresentation[lunatic.id].exceptionalSuccess, /Enamorado/);
+  assert.match(facet("gift-inspiration:fearless-hunter").effect, /can see the Uratha.*same effect/);
+  const triumph = facet("gift-inspiration:pack-triumphs-together");
+  assert.match(triumph.cost, /minimum 1 Essence/);
+  assert.match(triumph.effect, /After every Initiative roll/);
+  assert.match(triumph.effect, /8-again on teamwork rolls/);
+  assert.match(facet("gift-inspiration:unity").effect, /only once against that particular maneuver/);
+  const voice = facet("gift-inspiration:still-small-voice");
+  assert.equal(voice.dicePool, "Presence + Persuasion + Wisdom vs Resolve + Primal Urge");
+  assert.match(voice.activationRequirement, /cannot choose not to resist/);
+  assert.match(voice.exceptionalSuccess, /All Uratha present who can hear/);
+});
+
 test("Werewolf Gifts load only their canonical and Portuguese shards into an immutable snapshot", async () => {
   const { werewolfGiftsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/gifts.ts");
   const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
@@ -429,14 +476,16 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
     return structuredClone(fixtures[id]);
   } }));
   assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt", "werewolf-gifts-core-wolf", "werewolf-gifts-core-wolf-pt", "werewolf-gifts-core-shadow", "werewolf-gifts-core-shadow-pt"]);
-  assert.equal(snapshot.gifts.length, 11);
-  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 55);
+  assert.equal(snapshot.gifts.length, 14);
+  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 70);
   assert.deepEqual(snapshot.gifts.map(gift => gift.id), [...moonGifts, ...wolfGifts, ...shadowGifts].map(gift => gift.id));
-  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 66);
+  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 84);
   assert.ok(Object.isFrozen(snapshot.gifts[0].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation[snapshot.gifts[0].facets[0].id]));
   assert.ok(Object.isFrozen(snapshot.gifts[5].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-pack:totems-wrath"]));
   assert.ok(Object.isFrozen(snapshot.gifts[8].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-elemental:catastrophe"]));
+  assert.ok(Object.isFrozen(snapshot.gifts.at(-1).facets[0]));
+  assert.ok(Object.isFrozen(snapshot.presentation["gift-inspiration:still-small-voice"]));
 });

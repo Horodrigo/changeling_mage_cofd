@@ -147,5 +147,170 @@
     "cost": "Variável",
     "dicePool": "Manipulação + Ocultismo + Sabedoria",
     "effect": "Recebe Influência (Água) igual ao Renome de Sabedoria. Usa-a como um espírito usa Influências, com a parada desta Faceta nos testes de Influência (Água)."
+  },
+  "gift-evasion": {
+    "name": "Dom da Evasão"
+  },
+  "gift-evasion:feet-of-mist": {
+    "name": "Pés de Névoa",
+    "description": "Quando o caçador torna-se a presa, todo vestígio de sua passagem desaparece.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "1 hora",
+    "effect": "Tentativas de rastrear ou localizar o Uratha falham: ele não deixa rastros, dispositivos não revelam sua localização e rastreamentos ou adivinhações sobrenaturais vacilam. Quando isso causa um Confronto de Vontades contra outro poder sobrenatural de rastreamento ou localização, aplique a qualidade de Ação Avançada à parada do Uratha nesse confronto. Isso não o torna invisível; quem o encontrar pode percebê-lo normalmente."
+  },
+  "gift-evasion:fog-of-war": {
+    "name": "Névoa de Guerra",
+    "description": "A confusão desvia uma bala, mensagem, presente ou entrega para o destinatário errado.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Subterfúgio + Glória vs Compostura + Instinto Primitivo",
+    "action": "Reflexiva e disputada",
+    "activationRequirement": "Deve haver atividade ou confusão suficiente para o engano parecer plausível. Quem entrega o objeto, como o atacante ou remetente, resiste à Faceta.",
+    "dramaticFailure": "Recebe Proibição: o Uratha não pode entregar voluntariamente qualquer pertence a outra pessoa enquanto a Condição durar.",
+    "failure": "A Faceta falha.",
+    "success": "Um ataque à distância muda para outro alvo a até Renome de Glória em jardas do original. O atacante testa a parada de ataque com os modificadores apropriados ao novo alvo. Uma entrega menos letal chega à pessoa errada por uma coincidência infeliz. Gaste mais um ponto de Essência para escolher o novo destinatário, desde que ele seja plausível para o meio de entrega."
+  },
+  "gift-evasion:deny-everything": {
+    "name": "Negar Tudo",
+    "description": "Faz da evasividade uma defesa contra influência e interrogatórios.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "effect": "Acrescente Renome de Honra a um teste para resistir a uma Manobra Social ou a uma ação baseada em Manipulação."
+  },
+  "gift-evasion:hit-and-run": {
+    "name": "Atacar e Fugir",
+    "description": "Afasta-se do combate e deixa a presa sem saber onde está o caçador.",
+    "cost": "1 Essência",
+    "dicePool": "Destreza + Furtividade + Pureza vs Compostura + Instinto Primitivo",
+    "action": "Reflexiva",
+    "effect": "Interrompe um ataque voltado ao Uratha antes de sua execução. Desvincula-se imediatamente e move-se até seu Deslocamento completo para longe; isso pode impedir o ataque por si só. Se o movimento romper a linha de visão de todas as presas, teste contra a maior Compostura entre aquelas que podiam vê-lo antes. Só pode interromper uma ação por turno dessa maneira.",
+    "dramaticFailure": "As presas sabem exatamente para onde o Uratha fugiu e recebem +2 para resistir a novos usos desta Faceta ou a outras tentativas de enganá-las pelo restante da cena.",
+    "failure": "Não ocorre nenhum efeito adicional.",
+    "success": "As presas perdem o rastro da posição atual do Uratha. Inimigos cuja Compostura não supere os sucessos obtidos recebem Paranoia da Sombra por uma quantidade de turnos igual ao Renome de Pureza.",
+    "exceptionalSuccess": "Também se move imediatamente até seu Deslocamento outra vez."
+  },
+  "gift-evasion:exit-strategy": {
+    "name": "Estratégia de Saída",
+    "description": "Encontra instintivamente uma rota de fuga ou um esconderijo.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Manha + Sabedoria",
+    "action": "Instantânea",
+    "effect": "Pagar o custo revela imediatamente todas as rotas de fuga utilizáveis nos arredores, incluindo quais rotas aparentes estão bloqueadas ou não levam a lugar algum. Alternativamente, concentre-se em uma característica desejada de um esconderijo e teste a parada da Faceta.",
+    "dramaticFailure": "A Faceta leva a um lugar inútil ou perigoso, como um beco sem saída ou uma armadilha.",
+    "failure": "A Faceta falha.",
+    "success": "Descobre instintivamente uma das opções listadas. O Uratha não consegue explicar os detalhes desse conhecimento a outras pessoas, mas a Faceta o conduz ao que procura.",
+    "options": "O esconderijo seguro e desabitado mais próximo, a até Renome de Sabedoria em milhas.\nUma rota de fuga oculta ou repleta de obstáculos que impõe uma penalidade igual ao Renome de Sabedoria aos testes de perseguição a pé dos perseguidores.\nUma rota até um veículo ou um equipamento útil específico com graduação não superior ao Renome de Sabedoria, como um carro com as chaves ou um pé de cabra.\nO meio mais próximo de transpor um obstáculo específico a até Renome de Sabedoria em milhas, como uma passagem subterrânea ou um tronco sobre um rio.",
+    "exceptionalSuccess": "Também acrescenta Renome de Sabedoria às paradas Físicas para escapar do ambiente atual, exceto testes de ataque."
+  },
+  "gift-insight": {
+    "name": "Dom da Perspicácia"
+  },
+  "gift-insight:prey-on-weakness": {
+    "name": "Explorar a Fraqueza",
+    "description": "Expõe as vulnerabilidades ocultas sob a fachada da presa.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Empatia + Astúcia vs Compostura + Instinto Primitivo",
+    "action": "Instantânea",
+    "activationRequirement": "Observe um indivíduo por pelo menos um turno.",
+    "dramaticFailure": "A presa permanece indecifrável e recebe +3 nos testes de Subterfúgio contra o Uratha pelo restante da cena.",
+    "failure": "A Faceta falha.",
+    "success": "Descobre Sangue e Osso da presa ou características equivalentes, dano atual, fragilidades incluindo Condições e Complicações Físicas e Mentais, doenças, venenos ou drogas e se emoções fortes como raiva ou luto a dominam no momento. Recebe +3 nos testes Sociais ou paradas de Manobras Sociais que usem essas informações contra a presa nesta cena.",
+    "exceptionalSuccess": "Usar as informações em uma Manobra Social também abre automaticamente uma Porta, além dos outros resultados da ação."
+  },
+  "gift-insight:read-the-worlds-loom": {
+    "name": "Ler o Tear do Mundo",
+    "description": "Lê padrões significativos em detalhes aparentemente triviais do ambiente.",
+    "cost": "5 Essências; 3 Essências no território da alcateia",
+    "dicePool": "Raciocínio + Manha + Glória",
+    "action": "Instantânea",
+    "dramaticFailure": "Lê uma mensagem falsa no ambiente, como perceber uma alcateia hostil se aproximando onde não há ameaça.",
+    "failure": "A Faceta falha.",
+    "success": "Descobre um evento, ameaça ou circunstância relevante a até Renome de Glória em milhas, por sinais nos arredores. A informação refere-se ao presente ou ao futuro próximo; além de 24 horas, provavelmente será muito vaga. Escolha um dos temas listados. Se não houver resposta significativa, escolha outro tema.",
+    "options": "Ameaças: uma operação policial planejada, lobisomens buscando confronto, um edifício instável ou um espírito que retornou.\nO sobrenatural: uma criatura caçando moradores, algo habitando um prédio alto ou um poder entorpecendo mentes.\nA Película: rasgos, espessura sufocante ou espíritos atravessando-a.\nA Sombra: ressonância cultivada, umia em guerra ou intrusos.\nViolência: um tumulto iminente, padrões em assassinatos ou uma caçada.\nConflitos: disputas de gangues, ataques financeiros ou uma eleição acirrada.\nClima: uma tempestade chegando, calor duradouro ou chuva ocultando assassinatos.",
+    "exceptionalSuccess": "Escolhe dois temas para obter informações."
+  },
+  "gift-insight:echo-dream": {
+    "name": "Sonho dos Ecos",
+    "description": "Lê os ecos espirituais que o passado imprimiu em um objeto ou lugar.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Investigação + Honra",
+    "action": "Instantânea",
+    "activationRequirement": "Segure ou toque um objeto ou local que não seja maior que um cômodo médio.",
+    "dramaticFailure": "Perde um ponto de Força de Vontade, pois as visões desconexas deixam o Uratha aturdido.",
+    "failure": "A Faceta falha.",
+    "success": "Recebe uma visão clara, mas frequentemente muito simbólica, de um evento espiritualmente significativo no passado do objeto ou lugar, como um assassinato ou uma intensa explosão emocional. Ecos normalmente duram apenas alguns anos, mas impressões especialmente fortes podem persistir por muito mais tempo.",
+    "exceptionalSuccess": "A visão torna-se mais literal e menos simbólica. O Uratha pode usar Explorar a Fraqueza ou Farejar o Sobrenatural em quaisquer personagens percebidos na visão."
+  },
+  "gift-insight:scent-the-unnatural": {
+    "name": "Farejar o Sobrenatural",
+    "description": "Fareja criaturas e poderes que desafiam a ordem natural da Carne e da Sombra.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Ocultismo + Pureza",
+    "action": "Instantânea",
+    "effect": "Detecta criaturas e efeitos sobrenaturais a até 10 jardas por ponto de Renome de Pureza. Exclui Uratha e Dons, além de espíritos e seus poderes quando estiverem na Sombra. Pode detectar Possuídos, Hospedeiros, vampiros, carniçais, magos, outras criaturas sobrenaturais e seus feitiços, itens, encantamentos ou poderes ativos.",
+    "dramaticFailure": "Recebe Proibição: carregue um objeto perfumado ou aromático e inale seu cheiro pelo menos uma vez por cena.",
+    "failure": "A Faceta falha.",
+    "success": "Cada sucesso revela um ser ou efeito sobrenatural dentro do alcance, sua localização e a área abrangida por um efeito. Não revela outra informação sobre sua natureza, exceto que Hospedeiros e Tomados são imediatamente reconhecidos como tais; não identifica o tipo de Hospedeiro nem o espírito que tomou a vítima.",
+    "exceptionalSuccess": "Aprende o cheiro específico dos indivíduos ou efeitos sobrenaturais próximos e os reconhece facilmente em encontros posteriores, sem usar esta Faceta novamente."
+  },
+  "gift-insight:one-step-ahead": {
+    "name": "Um Passo à Frente",
+    "description": "Antecipa para onde a presa irá se mover ou fugir.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "activationRequirement": "Perceba a presa, o prédio ou local em que ela está ou um mapa que marque sua localização atual.",
+    "effect": "Descobre os próximos passos prováveis da presa na escala observada. Pessoalmente, identifica uma saída provável ou rota de patrulha; observando um prédio ou esconderijo, identifica a saída usada se a presa for alarmada, expulsa ou atraída para fora; em um mapa, percebe o destino provável de fuga ou viagem. Isso depende dos eventos atuais e pode ficar desatualizado se as circunstâncias mudarem drasticamente."
+  },
+  "gift-inspiration": {
+    "name": "Dom da Inspiração"
+  },
+  "gift-inspiration:lunatic-inspiration": {
+    "name": "Inspiração Lunática",
+    "description": "Torna-se uma musa enlouquecedora com um toque e palavras de incentivo sussurradas.",
+    "cost": "1 Essência",
+    "dicePool": "Manipulação + Empatia + Astúcia vs Compostura",
+    "action": "Instantânea",
+    "duration": "Até a próxima lua cheia",
+    "activationRequirement": "Toque um humano ou Parente.",
+    "dramaticFailure": "Recebe Proibição: pinte o corpo com padrões surpreendentes de tinta, cor ou pigmento e procure alterá-los a cada cena.",
+    "failure": "A Faceta falha.",
+    "success": "Depois que a presa dormir novamente, ela recebe Inspirado e Loucura. Sonhos noturnos delirantes estimulam a criatividade e as revelações, renovando Inspirado a cada dia durante o efeito. A presa é impelida a concluir uma obra de arte que reflita as visões dos sonhos até o fim da Faceta; concluí-la resolve Loucura. A obra pode conter uma mensagem, pista ou indicação de Luna ou dos umia lunares, reconhecível por quem saiba o que procurar.",
+    "exceptionalSuccess": "O humano inspirado também recebe Enamorado em relação ao Uratha."
+  },
+  "gift-inspiration:fearless-hunter": {
+    "name": "Caçador Destemido",
+    "description": "Mantém-se firme diante de presas aterrorizantes e lidera pelo exemplo.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Acrescente Renome de Glória a todas as paradas que disputem poderes de influência mental e medo, e à Compostura e à Perseverança ao resistir a esses efeitos. Ao vencer um desses testes disputados, todos os demais membros da alcateia que possam ver o Uratha e estejam sujeitos ao mesmo efeito também resistem automaticamente."
+  },
+  "gift-inspiration:pack-triumphs-together": {
+    "name": "A Alcateia Triunfa Unida",
+    "description": "Coordena a alcateia como uma eficiente máquina de caça.",
+    "cost": "1 Essência por membro da alcateia afetado, mínimo de 1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Ative ao testar Iniciativa no começo de um combate. Depois de todos os testes de Iniciativa, o Uratha e os membros da alcateia escolhidos podem aumentar sua Iniciativa até o maior resultado obtido por qualquer membro. Alternativamente, ative fora de combate durante uma ação de trabalho em equipe para conceder 8-novamente a todos os membros escolhidos nos testes de trabalho em equipe para concluir essa ação pelo restante da cena."
+  },
+  "gift-inspiration:unity": {
+    "name": "União",
+    "description": "Fortalece os laços que mantêm a alcateia unida.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "activationRequirement": "Durante uma Manobra Social contra um membro da alcateia, ofereça apoio ou repreenda quem a estiver tentando.",
+    "effect": "O membro da alcateia acrescenta Renome de Pureza do Uratha à quantidade de Portas que a manobra precisa abrir para ter sucesso. União só pode ser usada uma vez contra aquela manobra específica."
+  },
+  "gift-inspiration:still-small-voice": {
+    "name": "Voz Mansa e Suave",
+    "description": "Palavras tranquilas atravessam as chamas de Kuruth.",
+    "cost": "1 Essência por Uratha escolhido",
+    "dicePool": "Presença + Persuasão + Sabedoria vs Perseverança + Instinto Primitivo",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha qualquer quantidade de Uratha em Wasu-Im que possam ouvir o interlocutor. Eles não podem optar por deixar de resistir, mesmo que desejem entregar-se à fúria iminente.",
+    "dramaticFailure": "A natureza contagiosa de Kuruth leva o interlocutor a entrar em Wasu-Im.",
+    "failure": "A Faceta falha.",
+    "success": "As palavras tranquilizadoras retiram os alvos de Wasu-Im e os fazem voltar ao normal.",
+    "exceptionalSuccess": "Todos os Uratha presentes que possam ouvir o interlocutor acrescentam seu Renome de Sabedoria às paradas para resistir à Fúria Assassina pelo restante da cena."
   }
 }
