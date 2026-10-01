@@ -10,8 +10,11 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const readJson = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
 const reference = readJson("public/data/werewolf/reference.json");
 const presentation = readJson("public/data/werewolf/reference-pt.json");
+const traits = readJson("public/data/werewolf/traits.json");
+const traitsPresentation = readJson("public/data/werewolf/traits-pt.json");
+const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
-  resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false },
+  resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },
   optimizeDeps: { noDiscovery: true, include: [] } });
 after(() => vite.close());
 const rules = await vite.ssrLoadModule("/game-lines/werewolf/creation-rules.ts");
@@ -71,6 +74,7 @@ test("WtF 2e p. 83 gives Ghost Wolves two Renown dots and other tribes three, ca
   const tribe = reference.tribes.find(item => item.id === "iron-masters");
   assert.deepEqual(rules.creationRenown(auspice, tribe, "Glory"), { Cunning: 2, Glory: 1, Honor: 0, Purity: 0, Wisdom: 0 });
   assert.throws(() => rules.creationRenown(auspice, tribe, "Cunning"), /cannot exceed two/);
+  assert.throws(() => rules.creationRenown(auspice, tribe, "Lucidez"), /Invalid creation Renown/);
   const ghost = reference.tribes.find(item => item.id === "ghost-wolves");
   assert.deepEqual(rules.creationRenown(auspice, ghost, "Cunning"), { Cunning: 2, Glory: 0, Honor: 0, Purity: 0, Wisdom: 0 });
 });
@@ -83,6 +87,10 @@ test("WtF 2e Primal Urge limits are informational and creation conversions have 
   assert.equal(rules.primalUrgeLevel(reference, 99).rating, 10);
   assert.equal(rules.boundedHarmony(0), 0);
   assert.equal(rules.boundedHarmony(Number.NaN), 7);
+  for (const invalid of [null, undefined, "", " ", false, [], {}, Number.POSITIVE_INFINITY]) {
+    assert.equal(rules.boundedHarmony(invalid), 7);
+    assert.equal(rules.boundedPrimalUrge(invalid), 1);
+  }
   assert.equal(rules.creationMeritBudget(1, 0), 10);
   assert.equal(rules.creationMeritBudget(2, 5), 0);
   assert.equal(rules.creationMeritBudget(3, 0), 0);
@@ -91,16 +99,22 @@ test("WtF 2e Primal Urge limits are informational and creation conversions have 
   assert.throws(() => rules.creationMeritBudget(1, 6), /Invalid/);
 });
 
-test("Werewolf reference group loads only its two catalogs and is deeply immutable", async () => {
+test("Werewolf reference group loads only its four catalogs and is deeply immutable", async () => {
   const { werewolfReferenceCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/reference.ts");
   const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
   const calls = [];
   const snapshot = freezeCatalogData(await werewolfReferenceCatalogGroup.load({
-    async getCatalog(id) { calls.push(id); return structuredClone(id.endsWith("-pt") ? presentation : reference); },
+    async getCatalog(id) {
+      calls.push(id);
+      return structuredClone({ "werewolf-reference": reference, "werewolf-reference-pt": presentation,
+        "werewolf-traits": traits, "werewolf-traits-pt": traitsPresentation }[id]);
+    },
   }));
-  assert.deepEqual(calls, ["werewolf-reference", "werewolf-reference-pt"]);
+  assert.deepEqual(calls, ["werewolf-reference", "werewolf-reference-pt", "werewolf-traits", "werewolf-traits-pt"]);
   assert.ok(Object.isFrozen(snapshot.forms[3].attributes));
   assert.ok(Object.isFrozen(snapshot.presentation.urshul));
+  assert.ok(Object.isFrozen(snapshot.passives[0].fields[0]));
+  assert.ok(Object.isFrozen(snapshot.presentation.regeneration.fields));
   assert.throws(() => { snapshot.forms[3].attributes.Manipulation = -3; }, TypeError);
 });
 
@@ -108,7 +122,7 @@ test("Werewolf forms render five comparison columns with native disclosures and 
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const { FormsTable } = await vite.ssrLoadModule("/game-lines/werewolf/forms-table.tsx");
   const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(FormsTable, {
-    character, reference: { ...reference, presentation },
+    character, reference: catalog,
   })));
   for (const form of reference.forms) assert.match(markup, new RegExp(`<th scope="col">${form.name}</th>`));
   assert.equal((markup.match(/<details/g) ?? []).length, 5);
@@ -116,4 +130,84 @@ test("Werewolf forms render five comparison columns with native disclosures and 
   assert.match(markup, /Manipulation/);
   assert.equal(translate("pt-BR", "werewolf.primalUrge"), "Instinto Primitivo");
   assert.equal(translate("pt-BR", "werewolf.harmony"), "Harmonia");
+});
+
+test("WtF 2e pp. 85–105 keeps twelve anchors, eleven Harmony rows and twenty directional breaking points complete in EN/PT", () => {
+  assert.equal(traits.anchors.length, 12);
+  assert.equal(traits.anchors.filter(anchor => anchor.kind === "blood").length, 6);
+  assert.equal(traits.anchors.filter(anchor => anchor.kind === "bone").length, 6);
+  assert.deepEqual(traits.harmony.map(level => level.rating), [10,9,8,7,6,5,4,3,2,1,0]);
+  assert.deepEqual(traits.harmony.map(level => level.bans), [0,0,0,0,0,0,1,1,2,3,4]);
+  assert.deepEqual(traits.harmony.map(level => level.trigger), ["passive","common","common","specific","specific",null,"specific","specific","common","common","passive"]);
+  assert.equal(traits.breakingPoints.filter(point => point.direction === "flesh").length, 10);
+  assert.equal(traits.breakingPoints.filter(point => point.direction === "spirit").length, 10);
+  assert.equal(traits.breakingPoints.filter(point => point.maxHarmony === 3).length, 4);
+  assert.equal(traits.breakingPoints.filter(point => point.minHarmony === 8).length, 4);
+  const records = [...traits.anchors, ...traits.harmony, ...traits.breakingPoints, ...traits.passives];
+  assert.equal(new Set(records.map(item => item.id)).size, records.length);
+  assert.deepEqual(new Set(records.map(item => item.id)), new Set(Object.keys(traitsPresentation)));
+  for (const item of records) {
+    assert.equal(item.sourceId, "wtf-2ed");
+    assert.ok(Number.isInteger(item.page) && item.page >= 85 && item.page <= 105);
+  }
+  for (const anchor of traits.anchors) {
+    for (const key of ["name", "description", "recoverOne", "recoverAll"]) {
+      assert.ok(anchor[key]?.length, `${anchor.id}.${key}`);
+      assert.ok(traitsPresentation[anchor.id][key]?.length, `${anchor.id}.${key}.pt-BR`);
+    }
+  }
+  for (const passive of traits.passives) {
+    const translated = traitsPresentation[passive.id];
+    assert.ok(translated.name);
+    assert.equal(new Set(passive.fields.map(field => field.id)).size, passive.fields.length);
+    assert.deepEqual(new Set(passive.fields.map(field => field.id)), new Set(Object.keys(translated.fields)));
+    for (const field of passive.fields) {
+      assert.ok(field.label && field.text);
+      assert.ok(translated.fields[field.id].label && translated.fields[field.id].text);
+    }
+  }
+});
+
+test("Werewolf Harmony renders descending manual selections including zero and preserves Touchstone notes", async () => {
+  const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { HarmonyTrack, BreakingPointReference } = await vite.ssrLoadModule("/game-lines/werewolf/harmony.tsx");
+  const touchstones = { physical: "My family", spiritual: "The mountain" };
+  const before = JSON.stringify(catalog);
+  const render = component => renderToStaticMarkup(createElement(LanguageProvider, null, component));
+  const markup = render(createElement(HarmonyTrack, { value: 0, onChange: () => assert.fail("Rendering must not move Harmony"),
+    onTouchstoneChange: () => assert.fail("Rendering must not edit notes"), touchstones, reference: catalog }));
+  const ratings = [...markup.matchAll(/aria-pressed="(?:true|false)" aria-label="Harmony (\d+)"/g)].map(match => Number(match[1]));
+  assert.deepEqual(ratings, [10,9,8,7,6,5,4,3,2,1,0]);
+  assert.equal((markup.match(/aria-pressed="true"/g) ?? []).length, 1);
+  assert.match(markup, /aria-pressed="true" aria-label="Harmony 0"/);
+  assert.match(markup, /value="My family"/);
+  assert.match(markup, /value="The mountain"/);
+  assert.match(markup, /Unavailable at the current Harmony/);
+  const points = render(createElement(BreakingPointReference, { harmony: 7, reference: catalog }));
+  assert.match(points, /Toward Flesh — increases Harmony/);
+  assert.match(points, /Toward Spirit — decreases Harmony/);
+  assert.equal((points.match(/<li[ >]/g) ?? []).length, 20);
+  assert.equal((points.match(/class="wtf-inactive-rule"/g) ?? []).length, 8);
+  assert.equal(JSON.stringify(catalog), before);
+});
+
+test("Werewolf passives and anchor recovery are native disclosures with distinct labeled fields, not automatic actions", async () => {
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { WerewolfPassives, PrimalUrgeLimits } = await vite.ssrLoadModule("/game-lines/werewolf/passives.tsx");
+  const { AnchorDetails } = await vite.ssrLoadModule("/game-lines/werewolf/anchors.tsx");
+  const render = component => renderToStaticMarkup(createElement(LanguageProvider, null, component));
+  const markup = render(createElement(WerewolfPassives, { reference: catalog }));
+  assert.equal((markup.match(/<details/g) ?? []).length, 16);
+  assert.doesNotMatch(markup, /<button|<input|missing translation/);
+  assert.match(markup, /<strong>Aggravated damage:<\/strong>/);
+  const anchor = render(createElement(AnchorDetails, { anchor: traits.anchors[0], reference: catalog }));
+  assert.match(anchor, /Recover one spent Willpower/);
+  assert.match(anchor, /Recover all spent Willpower/);
+  assert.doesNotMatch(anchor, /<button/);
+  const limits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 10 }));
+  assert.match(limits, /6 bashing per turn/);
+  assert.match(limits, /12 hours/);
+  assert.equal(translate("pt-BR", "werewolf.bans"), "Proibições");
+  assert.equal(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 6 }), "6 de dano contundente por turno");
+  assert.equal(traitsPresentation["flesh-oath"].description, "Violar o Juramento da Lua (apenas Destituídos).");
 });

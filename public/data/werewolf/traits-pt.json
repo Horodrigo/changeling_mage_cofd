@@ -1,0 +1,527 @@
+{
+  "blood-alpha": {
+    "name": "O Alfa",
+    "description": "Precisa de hierarquia e controle; o lobo impõe a ordem que o personagem exige.",
+    "recoverOne": "Colocar a ordem acima do raciocínio independente.",
+    "recoverAll": "Usar a força do lobo para colocar subordinados na linha."
+  },
+  "blood-challenger": {
+    "name": "O Desafiante",
+    "description": "Recusa o segundo lugar e recorre à força avassaladora para demonstrar superioridade.",
+    "recoverOne": "Ignorar a segurança e a razão para parecer superior.",
+    "recoverAll": "Usar Kuruth ou a caçada para dominar um rival."
+  },
+  "blood-destroyer": {
+    "name": "O Destruidor",
+    "description": "Busca seus objetivos pela devastação, deixando destruição no rastro de cada conquista.",
+    "recoverOne": "Causar danos significativos e duradouros na busca pelo sucesso.",
+    "recoverAll": "Entregar-se a Kuruth sem considerar outras alternativas."
+  },
+  "blood-fox": {
+    "name": "A Raposa",
+    "description": "Sobrevive pela astúcia, pela retirada e pela paciência, mesmo quando a alcateia espera uma luta.",
+    "recoverOne": "Largar tudo e fugir da cena.",
+    "recoverAll": "Entrar em Kuruth ao tentar escapar de uma situação violenta."
+  },
+  "blood-monster": {
+    "name": "O Monstro",
+    "description": "Abala a presa psicologicamente pelo terror e pelo choque antes do golpe fatal.",
+    "recoverOne": "Assustar ou causar repulsa em alguém para obter sua submissão.",
+    "recoverAll": "Usar a caçada ou Kuruth como instrumento de terror."
+  },
+  "blood-soldier": {
+    "name": "O Soldado",
+    "description": "Segue as ordens do alfa como arma da alcateia, colocando o plano acima da própria segurança.",
+    "recoverOne": "Ignorar a própria segurança para cumprir a ordem de um líder.",
+    "recoverAll": "Participar de uma caçada ou entrar em Kuruth para obedecer ao alfa, contrariando o próprio bom senso."
+  },
+  "bone-community-organizer": {
+    "name": "Articulador Comunitário",
+    "description": "Age por meio de relações, grupos e instituições, em vez de depender da força de uma única pessoa.",
+    "recoverOne": "Convencer um grupo a resolver seus problemas internos antes dos externos.",
+    "recoverAll": "Convencer a alcateia a abrir mão de uma caçada em favor de uma solução social ou política."
+  },
+  "bone-cub": {
+    "name": "Filhote",
+    "description": "Depende da orientação e do apoio de outras pessoas, em vez de assumir toda a responsabilidade por cada decisão.",
+    "recoverOne": "Seguir o conselho de outra pessoa, em vez dos próprios impulsos.",
+    "recoverAll": "Confiar inteiramente a própria vida à outra pessoa quando o poder do lobo poderia alcançar o objetivo."
+  },
+  "bone-guru": {
+    "name": "Guru",
+    "description": "Compartilha sabedoria prática e orienta outras pessoas a encontrar soluções viáveis.",
+    "recoverOne": "Alguém alcançar o sucesso ao seguir o conselho do personagem.",
+    "recoverAll": "Um conselho prático levar a alcateia a uma solução diferente da caçada."
+  },
+  "bone-hedonist": {
+    "name": "Hedonista",
+    "description": "Busca respostas no prazer imediato e na satisfação pessoal.",
+    "recoverOne": "Escolher a indulgência pessoal em vez de um sucesso maior.",
+    "recoverAll": "Abandonar a caçada para buscar interesses pessoais."
+  },
+  "bone-lone-wolf": {
+    "name": "Lobo Solitário",
+    "description": "Prefere enfrentar um problema sozinho quando a ação individual parece a melhor solução.",
+    "recoverOne": "Agir independentemente da alcateia para resolver um problema dela.",
+    "recoverAll": "Contrariar os planos da alcateia e resolver o problema sozinho enquanto ela está caçando."
+  },
+  "bone-wallflower": {
+    "name": "Discreto",
+    "description": "Evita os holofotes e resolve problemas pela sutileza, pela ponderação e pela ação discreta.",
+    "recoverOne": "Agir nas sombras, fora da atenção atraída pela alcateia.",
+    "recoverAll": "Agir independentemente para complementar a alcateia enquanto ela está caçando."
+  },
+  "harmony-10": {
+    "control": "3 segundos"
+  },
+  "harmony-9": {
+    "control": "10 segundos"
+  },
+  "harmony-8": {
+    "control": "30 segundos"
+  },
+  "harmony-7": {
+    "control": "1 minuto"
+  },
+  "harmony-6": {
+    "control": "5 minutos"
+  },
+  "harmony-5": {
+    "control": "15 minutos"
+  },
+  "harmony-4": {
+    "control": "5 minutos"
+  },
+  "harmony-3": {
+    "control": "1 minuto"
+  },
+  "harmony-2": {
+    "control": "30 segundos"
+  },
+  "harmony-1": {
+    "control": "10 segundos"
+  },
+  "harmony-0": {
+    "control": "3 segundos"
+  },
+  "flesh-defile-locus": {
+    "description": "Profanar um locus."
+  },
+  "flesh-refuse-hunt": {
+    "description": "Recusar-se a participar de Siskur-Dah."
+  },
+  "flesh-week-outside": {
+    "description": "Permanecer fora do Hisil por uma semana."
+  },
+  "flesh-silver": {
+    "description": "Usar uma arma de prata contra outro lobisomem."
+  },
+  "flesh-oath": {
+    "description": "Violar o Juramento da Lua (apenas Destituídos)."
+  },
+  "flesh-month-outside": {
+    "description": "Permanecer fora do Hisil por um mês."
+  },
+  "flesh-spirit-passage": {
+    "description": "Permitir a passagem segura de um espírito para o mundo físico."
+  },
+  "flesh-processed-food": {
+    "description": "Comer alimentos processados."
+  },
+  "flesh-human-mating": {
+    "description": "Acasalar com um humano."
+  },
+  "flesh-day-outside": {
+    "description": "Permanecer fora do Hisil por um dia."
+  },
+  "spirit-kill-human-wolf": {
+    "description": "Matar um humano ou um lobo."
+  },
+  "spirit-week-inside": {
+    "description": "Permanecer no Hisil por uma semana."
+  },
+  "spirit-hunt-human-wolf": {
+    "description": "Caçar humanos ou lobos para se alimentar."
+  },
+  "spirit-kill-packmate": {
+    "description": "Matar um companheiro de alcateia."
+  },
+  "spirit-eat-flesh": {
+    "description": "Comer carne humana ou de lobo para obter Essência."
+  },
+  "spirit-month-inside": {
+    "description": "Permanecer no Hisil por um mês."
+  },
+  "spirit-loved-one-lunacy": {
+    "description": "Causar Lunagem em uma pessoa amada."
+  },
+  "spirit-lead-hunt": {
+    "description": "Liderar Siskur-Dah."
+  },
+  "spirit-away-pack": {
+    "description": "Passar mais de dois dias longe da alcateia."
+  },
+  "spirit-day-inside": {
+    "description": "Permanecer no Hisil por um dia inteiro."
+  },
+  "anchor-recovery": {
+    "name": "Sangue e Osso",
+    "fields": {
+      "blood": {
+        "label": "Sangue",
+        "text": "Fazer uma escolha claramente ruim no calor do momento, de acordo com Sangue, recupera um ponto gasto de Força de Vontade. Entregar-se a Kuruth ou declarar uma caçada por impulso, de acordo com Sangue, recupera todos os pontos gastos de Força de Vontade."
+      },
+      "bone": {
+        "label": "Osso",
+        "text": "Conter a fúria e agir conforme uma convicção fundamental, de acordo com Osso, recupera um ponto gasto de Força de Vontade. Manter-se firme e deixar que a razão interfira na caçada ou cause conflito dentro da alcateia recupera todos os pontos gastos de Força de Vontade."
+      },
+      "custom": {
+        "label": "Âncoras autorais",
+        "text": "Os seis exemplos de cada tipo não são uma lista exaustiva. Sangue e Osso autorais precisam de situações acordadas para recuperar um ponto e para recuperar todos os pontos gastos de Força de Vontade."
+      }
+    }
+  },
+  "touchstones": {
+    "name": "Touchstones",
+    "fields": {
+      "physical": {
+        "label": "Touchstone física",
+        "text": "Uma pessoa, um lugar, um objeto ou um ideal que ancora o lobisomem à carne e à humanidade. Enquanto acessível, concede +2 dados para resistir a um ponto de ruptura em direção ao Espírito. Não pode ser acessada com Harmonia 2 ou menor."
+      },
+      "spiritual": {
+        "label": "Touchstone espiritual",
+        "text": "Um espírito, um totem, um locus ou uma filosofia que aproxima o lobisomem do Hisil. Enquanto acessível, concede +2 dados para resistir a um ponto de ruptura em direção à Carne. Não pode ser acessada com Harmonia 8 ou maior."
+      },
+      "loss": {
+        "label": "Perda e substituição",
+        "text": "Perder uma Touchstone física move Harmonia um ponto em direção ao Espírito; perder uma Touchstone espiritual move Harmonia um ponto em direção à Carne. Estabelecer uma substituta provoca um ponto de ruptura na direção oposta."
+      },
+      "recovery": {
+        "label": "Força de Vontade",
+        "text": "Uma interação significativa que reforça o vínculo recupera um ponto gasto de Força de Vontade. Arriscar a vida do personagem ou a alcateia para defender a relação pode recuperar todos os pontos gastos de Força de Vontade."
+      }
+    }
+  },
+  "regeneration": {
+    "name": "Regeneração",
+    "fields": {
+      "bashing": {
+        "label": "Dano contundente",
+        "text": "Regenera dano contundente a cada turno, na quantidade indicada por Instinto Primitivo. Essa quantidade é de pelo menos um ponto por turno."
+      },
+      "lethal": {
+        "label": "Dano letal",
+        "text": "Regenera um ponto de dano letal a cada 15 minutos. Gastar um ponto de Essência como ação reflexiva muda a regeneração daquele turno de contundente para letal."
+      },
+      "aggravated": {
+        "label": "Dano agravado",
+        "text": "Regenera um ponto de dano agravado a cada quatro dias. Apenas prata e poderes sobrenaturais causam dano agravado diretamente; ferimentos mundanos que seriam agravados para um humano são letais para um Uratha. Dano letal ainda pode transbordar e tornar-se agravado."
+      },
+      "gauru": {
+        "label": "Gauru",
+        "text": "Cura todo o dano contundente e letal no início de cada turno em Gauru."
+      },
+      "tilts": {
+        "label": "Complicações",
+        "text": "Uma Complicação causada por um ferimento agravado, como a perda de um braço ou de um olho, desaparece quando o ferimento correspondente é curado."
+      },
+      "toxins": {
+        "label": "Toxinas",
+        "text": "Subtraia Instinto Primitivo da Toxicidade de um veneno ou de uma doença."
+      },
+      "witnesses": {
+        "label": "Testemunhas",
+        "text": "Testemunhar a regeneração de dano letal provoca Lunagem como se o lobisomem estivesse em Dalu, independentemente da forma atual."
+      }
+    }
+  },
+  "senses": {
+    "name": "Sentidos",
+    "fields": {
+      "human": {
+        "label": "Sentidos humanos",
+        "text": "A Primeira Transformação corrige deficiências sensoriais, inclusive cegueira ou surdez congênitas, e regenera órgãos sensoriais perdidos em alguns dias. Sentidos humanos são o padrão em Hishu e Dalu. Escolher outros sentidos é uma ação reflexiva, sem teste."
+      },
+      "wolf": {
+        "label": "Sentidos lupinos",
+        "text": "São o padrão em Urshul e Urhan. Aplique o bônus de percepção lupina da forma. Outros sentidos compensam a privação sensorial, anulando suas penalidades."
+      },
+      "smell": {
+        "label": "Olfato",
+        "text": "Instinto Primitivo pode identificar um personagem conhecido sem teste, mesmo oculto ou disfarçado. Raciocínio + Instinto Primitivo associa outro Uratha a uma cena cujo cheiro já foi examinado; um cheiro deixado deliberadamente não exige teste. Identificar Uratha ou Parentes pelo cheiro exige Raciocínio + Instinto Primitivo, uma ação instantânea e proximidade pessoal."
+      },
+      "hearing": {
+        "label": "Audição",
+        "text": "O alcance é de uma milha (aproximadamente dois quilômetros) por ponto de Instinto Primitivo. Ignore penalidades por sons baixos ou pelo alcance da audição e ouça frequências inacessíveis a ouvidos humanos. O ruído urbano normalmente limita os sons distinguíveis às imediações."
+      },
+      "vision": {
+        "label": "Visão",
+        "text": "Reduza as penalidades por escuridão à metade, arredondando para baixo, e ignore penalidades visuais por movimento rápido. A visão lupina distingue menos cores do que a humana."
+      },
+      "blood": {
+        "label": "Rastro de sangue",
+        "text": "Provar o sangue de uma criatura viva revela sua direção exata a qualquer distância, não uma rota segura nem a distância em si. Apenas uma vítima pode ser seguida. O vínculo termina após um mês lunar ou ao provar o sangue de outra criatura."
+      },
+      "spirit": {
+        "label": "Sentidos espirituais",
+        "text": "Projete os sentidos padrão da forma atual através da Película, em qualquer direção, com uma ação instantânea, ou reflexivamente por um ponto de Essência. Sem um Dom, cada sentido funciona em apenas um dos lados. Dividir os sentidos entre os mundos impõe −2 a ações que envolvem Percepção ou concentração e remove a compensação de penalidades sensoriais. Aplique o modificador da Película à Percepção. Espíritos no Crepúsculo são percebidos sem concentração, a menos que se escondam deliberadamente."
+      }
+    }
+  },
+  "shapeshifting": {
+    "name": "Transformação",
+    "fields": {
+      "high": {
+        "label": "Harmonia 9–10",
+        "text": "Mudar de forma custa um ponto de Essência e uma ação instantânea. Roupas e pertences não se transformam com o lobisomem."
+      },
+      "near-high": {
+        "label": "Harmonia 7–8",
+        "text": "Mude de forma reflexivamente por um ponto de Essência, ou com uma ação instantânea sem custo."
+      },
+      "balanced": {
+        "label": "Harmonia 4–6",
+        "text": "Mude de forma reflexivamente, sem Essência nem teste."
+      },
+      "near-low": {
+        "label": "Harmonia 2–3",
+        "text": "Evite uma mudança reflexivamente por um ponto de Essência, ou com uma ação instantânea sem custo."
+      },
+      "low": {
+        "label": "Harmonia 0–1",
+        "text": "Evite uma mudança com um ponto de Essência e uma ação instantânea."
+      },
+      "stress": {
+        "label": "Harmonia baixa",
+        "text": "É necessário mudar ao menos uma vez por cena; Essência só pode evitar a mudança quando não há estresse. Em combate, em uma perseguição ou em outra situação ameaçadora, avance uma forma por turno em direção à forma apropriada: Urhan para fugir, Hishu para se esconder ou Gauru para lutar. O estresse impede resistir a esse movimento."
+      },
+      "belongings": {
+        "label": "Pertences",
+        "text": "Abaixo de Harmonia 9, roupas e pertences imediatos se transformam com o personagem, ajustando-se a Dalu ou fundindo-se ao corpo em Gauru, Urshul e Urhan, conforme apropriado à cena."
+      }
+    }
+  },
+  "predators-jaws": {
+    "name": "As Mandíbulas do Predador",
+    "fields": {
+      "bites": {
+        "label": "Mordidas",
+        "text": "Mordidas em todas as formas contam como fontes místicas de dano contra criaturas vulneráveis a essas fontes. Até uma mordida em Hishu causa dano letal a vampiros."
+      }
+    }
+  },
+  "hunters-aspect": {
+    "name": "Aspecto do Caçador",
+    "fields": {
+      "roll": {
+        "label": "Parada de Dados",
+        "text": "Atributo de Poder + Perícia apropriada + Renome do Auspício, disputada por Autocontrole + Instinto Primitivo da presa; ação instantânea. Use Força em uma perseguição física, Presença em um confronto de olhares ou Inteligência para enganar a presa. A Perícia depende da interação, não de uma única parada obrigatória."
+      },
+      "effect": {
+        "label": "Sucesso",
+        "text": "Impõe a Condição do Aspecto do Caçador do Auspício pela cena; um sucesso excepcional dura um dia por ponto de Instinto Primitivo. A mera expiração não concede Ato. Um personagem só pode sofrer uma Condição de Aspecto do Caçador por vez; novas tentativas falham enquanto ela persistir."
+      },
+      "auspices": {
+        "label": "Auspícios",
+        "text": "Cahalith: Resignado (Monstruoso). Elodoth: Isolado (Isolador). Irraka: Desavisado (Plácido). Ithaeur: Mistificado (Místico). Rahu: Submisso (Dominante). O aspecto pode afetar humanos, espíritos, Uratha e outras criaturas sobrenaturais."
+      }
+    }
+  },
+  "renown": {
+    "name": "Renome",
+    "fields": {
+      "advancement": {
+        "label": "Progressão",
+        "text": "Uma realização digna de Renome permite a compra por três pontos de Experiência por ponto; as categorias são Astúcia, Glória, Honra, Pureza e Sabedoria, limitadas a cinco cada. Aumentar o Renome do Auspício concede a próxima Faceta do próprio Dom da Lua. Aumentar outra categoria concede uma Faceta apropriada de um Dom da Sombra desbloqueado ou de um Dom do Lobo."
+      },
+      "rank": {
+        "label": "Grau espiritual efetivo",
+        "text": "Renome total 0–3: Grau 1; 4–7: Grau 2; 8–12: Grau 3; 13–18: Grau 4; 19 ou mais: Grau 5."
+      },
+      "brands": {
+        "label": "Marcas espirituais",
+        "text": "Uma vez por história, gaste um ponto de Essência para intensificar as marcas espirituais, tornando-as tenuemente visíveis no mundo físico. Espíritos, Uratha, Parentes e outros seres ligados ao mundo espiritual reconhecem intuitivamente o Renome e suas realizações. Escolha uma categoria para receber sua Condição de Renome naquela graduação: Astuto, Glorioso, Honrado, Puro ou Sábio. Exibir as marcas convida a desafios."
+      }
+    }
+  },
+  "essence": {
+    "name": "Essência",
+    "fields": {
+      "limits": {
+        "label": "Limites",
+        "text": "Instinto Primitivo determina a reserva máxima e o gasto por turno. Quando um efeito custa mais que o limite por turno, gaste a Essência exigida ao longo de vários turnos; o efeito é ativado após o pagamento completo."
+      },
+      "locus": {
+        "label": "Loci",
+        "text": "Absorva Essência no coração de um locus no Hisil; no mundo físico, consuma a carne ou a vegetação incomuns que surgem nas proximidades."
+      },
+      "hunt": {
+        "label": "Siskur-Dah",
+        "text": "O rito da Caçada Sagrada permite caçar e devorar espíritos no Hisil para obter sua Essência."
+      },
+      "flesh": {
+        "label": "Carne humana ou de lobo",
+        "text": "Escolha consumir carne para obter um ponto de Essência por ponto de dano causado por uma mordida. Devorar carne para obter Essência causa ferimentos agravados, viola o Juramento da Lua e sempre provoca um ponto de ruptura em direção ao Espírito."
+      },
+      "other": {
+        "label": "Outras fontes",
+        "text": "Destruir um fetiche libera sua Essência armazenada para o lobisomem. Ver pela primeira vez a lua do Auspício do personagem a cada noite concede um ponto de Essência."
+      },
+      "uses": {
+        "label": "Usos",
+        "text": "Essência alimenta Dons e fetiches, muda a regeneração para letal, acelera a Travessia e paga os custos de transformação quando Harmonia os exige."
+      }
+    }
+  },
+  "primal-urge-restrictions": {
+    "name": "Restrições de Instinto Primitivo",
+    "fields": {
+      "feeding": {
+        "label": "Alimentação",
+        "text": "A tabela de Instinto Primitivo determina os alimentos necessários à nutrição. Outros alimentos podem ser ingeridos, mas não nutrem o lobisomem. Cada dia sem o alimento exigido provoca a perda de um ponto de Essência. Nos níveis mais altos, a nutrição exige matéria espiritual ou carne humana ou de lobo."
+      },
+      "hunt": {
+        "label": "Intervalo de caçada",
+        "text": "Ultrapassar o intervalo da tabela sem participar de Siskur-Dah provoca a perda de um ponto de Essência por dia e um ponto de ruptura em direção à Carne."
+      }
+    }
+  },
+  "reaching": {
+    "name": "Travessia",
+    "fields": {
+      "roll": {
+        "label": "Parada de Dados",
+        "text": "Para entrar no Espírito, teste 10 − Harmonia; para entrar na Carne, teste Harmonia. Aplique o modificador da Película. Normalmente é necessário um locus. Harmonia 3 ou menor dispensa um locus para entrar no Espírito; Harmonia 8 ou maior dispensa um locus para entrar na Carne. Harmonia 10 não pode entrar no Espírito; Harmonia 0 não pode entrar na Carne."
+      },
+      "time": {
+        "label": "Transição",
+        "text": "A travessia leva dois turnos por nível de força da Película. O personagem desaparece no início e surge do outro lado ao final. Um sucesso excepcional ou o gasto de um ponto de Essência torna a travessia imediata."
+      },
+      "modifiers": {
+        "label": "Modificadores sugeridos",
+        "text": "Olhar para uma superfície refletora +1; entrar na Sombra durante o dia −2; entrar na Carne durante o dia +2."
+      },
+      "gauntlet": {
+        "label": "Película",
+        "text": "Áreas urbanas densas: força 5, modificador −3. Subúrbios ou cidades: 4/−2. Cidades pequenas ou vilas: 3/−1. Regiões selvagens ou rurais: 2/0. Locus: 1/+2. Verge: 0, modificador não aplicável. São diretrizes; as condições locais podem variar."
+      }
+    }
+  },
+  "silver": {
+    "name": "Prata",
+    "fields": {
+      "damage": {
+        "label": "Dano",
+        "text": "Armas de prata sempre causam dano agravado. Contato sem ferimento causa dor intensa e cicatrizes duradouras, semelhantes às de ferimentos agravados, mas não causa dano."
+      },
+      "material": {
+        "label": "Material",
+        "text": "Use prata metálica verdadeira, não compostos como nitrato de prata. Ligas e misturas devem conter pelo menos 80% de prata. Um revestimento de prata funciona por um único golpe que cause dano. A menos que seja forjada em prata, a arma é improvisada."
+      }
+    }
+  },
+  "lunacy": {
+    "name": "Lunagem",
+    "fields": {
+      "trigger": {
+        "label": "Testemunhas",
+        "text": "Quem presencia de perto Dalu, Gauru ou Urshul, uma transformação ou uma regeneração sofre um ponto de ruptura em um momento apropriado. Parentes e criaturas sem Integridade, incluindo Uratha, vampiros e espíritos, são imunes."
+      },
+      "modifiers": {
+        "label": "Modificadores",
+        "text": "Aplique a penalidade de Lunagem de Instinto Primitivo. Dalu concede +2 à testemunha; Gauru impõe −2; Urshul não acrescenta modificador de forma. Uma testemunha que sofreu dano letal do lobisomem recebe +1 e soma as penalidades de ferimento, em vez de subtraí-las. Testemunhas trabalhando juntas recebem +1 em dupla, +2 em um grupo pequeno (cerca de cinco ou menos), +3 em um grupo de até dez ou +4 em uma multidão maior."
+      },
+      "success": {
+        "label": "Sucesso",
+        "text": "Recebe Culpado, Abalado ou Assustado e sofre −2 em todas as ações pela cena; os acontecimentos provavelmente serão racionalizados. Um sucesso excepcional não concede Condição nem penalidade às ações, recupera todos os pontos gastos de Força de Vontade e preserva uma lembrança precisa."
+      },
+      "failure": {
+        "label": "Falha",
+        "text": "Perde um ponto de Integridade e recebe Atavismo, Delírio ou Receptividade, conforme apropriado; foge ou entra em pânico e depois racionaliza a lembrança. Se não for resolvida, a Condição de Lunagem expira sem Ato após um número de dias igual ao Instinto Primitivo do lobisomem. Uma falha dramática inicia a transformação em Parente durante uma fase da lua no próximo mês lunar, tendendo ao Auspício do lobisomem testemunhado."
+      }
+    }
+  },
+  "kuruth": {
+    "name": "Fúria Assassina: Kuruth",
+    "fields": {
+      "entry": {
+        "label": "Entrada",
+        "text": "Um gatilho de Kuruth normalmente inicia Wasu-Im. Assumir Gauru durante esse estado, ou sofrer um gatilho já em Gauru, inicia Basu-Im imediatamente."
+      },
+      "wasu-im": {
+        "label": "Wasu-Im",
+        "text": "Assuma imediatamente Dalu ou Urshul e permaneça nessa forma. Como na Fúria de Gauru, resistir à necessidade de atacar exige Perseverança + Autocontrole; uma falha inicia Basu-Im. Em vez de atacar, uma ação instantânea de Perseverança + Autocontrole concede um turno de lucidez por sucesso. Um sucesso excepcional encerra Wasu-Im. Harmonia determina o tempo até Basu-Im; é possível entrar voluntariamente a qualquer momento."
+      },
+      "basu-im": {
+        "label": "Basu-Im",
+        "text": "Assuma imediatamente Gauru pela duração mínima da tabela de Instinto Primitivo, mesmo se Gauru já foi usada na cena; ignore a duração normal da forma e as penalidades de ferimento. Tentativas de influenciar, intimidar ou desviar o lobisomem por qualquer meio sofrem −2 × Instinto Primitivo, além da tolerância sobrenatural. A Fúria de Gauru se aplica contra todos, exceto outros lobisomens em Basu-Im. Sem presas, destrói propriedades até encontrar novas presas."
+      },
+      "pack": {
+        "label": "Contágio na alcateia",
+        "text": "Lobisomens da mesma alcateia a até 10 jardas que veem ou sentem o cheiro do personagem em fúria entram em Basu-Im após um turno. Perseverança + Autocontrole pode resistir, exigindo um sucesso por personagem atualmente em Kuruth na cena; teste novamente sempre que outro companheiro entrar em Basu-Im."
+      },
+      "end": {
+        "label": "Depois",
+        "text": "Após o tempo mínimo de Basu-Im, cai em Hishu sem lembrar dos acontecimentos. Descobrir o que ocorreu pode provocar um ponto de ruptura em direção ao Espírito."
+      }
+    }
+  },
+  "kuruth-triggers": {
+    "name": "Gatilhos de Kuruth",
+    "fields": {
+      "categories": {
+        "label": "Categorias",
+        "text": "Cada personagem possui gatilhos passivos, comuns e específicos. Gatilhos passivos ocorrem sem necessidade de percepção; gatilhos comuns exigem presenciar ou perceber a circunstância; gatilhos específicos são acontecimentos mais raros. Harmonia seleciona a categoria aplicável; com Harmonia 5 nenhum gatilho pessoal se aplica."
+      },
+      "blood": {
+        "label": "Sangue (passivo / comum / específico)",
+        "text": "Sentir o cheiro de sangue humano / provar sangue humano / engolir sangue humano."
+      },
+      "moon": {
+        "label": "Lua (passivo / comum / específico)",
+        "text": "A lua do Auspício está no céu / vê-la no céu / ouvir um lobo ou lobisomem uivar enquanto ela está no céu."
+      },
+      "other": {
+        "label": "O Outro (passivo / comum / específico)",
+        "text": "Uma criatura sobrenatural está a até 10 jardas / presenciá-la fazer algo claramente inumano / tornar-se alvo de um poder sobrenatural."
+      },
+      "pack": {
+        "label": "Alcateia (passivo / comum / específico)",
+        "text": "Um companheiro sofre dano letal / ver alguém atacar um companheiro / causar dano letal a um companheiro."
+      },
+      "territory": {
+        "label": "Território (passivo / comum / específico)",
+        "text": "Um lobisomem desconhecido entra no território sem permissão / ver um lobisomem desconhecido ali / um lobisomem desconhecido desafia a capacidade da alcateia de cumprir seu dever."
+      },
+      "wounds": {
+        "label": "Feridas (passivo / comum / específico)",
+        "text": "Estar na área de uma Ferida / interagir com um espírito nascido de uma Ferida / ser atacado por um espírito nascido de uma Ferida."
+      },
+      "general": {
+        "label": "Gatilhos gerais",
+        "text": "Todos os Uratha também arriscam Kuruth ao permanecer em Gauru por tempo demais, assumir Gauru fora de combate, sofrer dano de prata ou ser forçado a Kuruth por um Elodoth. Escolher gatilhos pessoais não permite ignorar esses gatilhos gerais."
+      }
+    }
+  },
+  "harmony-breaking-points": {
+    "name": "Pontos de ruptura de Harmonia",
+    "fields": {
+      "balance": {
+        "label": "Equilíbrio",
+        "text": "Harmonia varia de 0 (Espírito) a 10 (Carne), com equilíbrio em 5 e graduação inicial de 7. Experiência não pode aumentá-la nem reduzi-la."
+      },
+      "roll": {
+        "label": "Parada de Dados",
+        "text": "Perseverança + Autocontrole; Força de Vontade não pode modificar essa parada. Aplique o modificador do ponto de ruptura específico. Em direção ao Espírito, subtraia um dado por ponto de Harmonia abaixo de 5; uma falha reduz Harmonia em um. Em direção à Carne, subtraia um dado por ponto de Harmonia acima de 5; uma falha aumenta Harmonia em um. Uma Touchstone apropriada e acessível normalmente acrescenta +2."
+      },
+      "bans": {
+        "label": "Proibições",
+        "text": "Harmonia 4 ou menor impõe Condições Persistentes de Proibição: uma em 4–3, duas em 2, três em 1 e quatro em 0. Aumentar Harmonia o suficiente resolve as proibições excedentes; o jogador escolhe quais abandonar."
+      },
+      "personal": {
+        "label": "Pontos de ruptura pessoais",
+        "text": "Os acontecimentos listados são um ponto de partida, não uma lista exaustiva. Jogador e Narrador devem definir um ou dois pontos de ruptura pessoais em cada direção, de acordo com Auspício, Tribo e Touchstones."
+      }
+    }
+  }
+}

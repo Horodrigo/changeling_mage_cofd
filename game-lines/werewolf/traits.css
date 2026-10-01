@@ -1,0 +1,27 @@
+.wtf-rule-disclosure { border-bottom: 1px solid var(--sheet-line, #c7beb0); padding: .35rem 0; }
+.wtf-rule-disclosure > summary { cursor: pointer; min-height: 44px; display: list-item; align-content: center; font-weight: 600; }
+.wtf-rule-field { margin: .4rem 0; line-height: 1.45; white-space: pre-line; }
+.wtf-rule-disclosure > small { display: block; margin-bottom: .4rem; opacity: .75; }
+.wtf-anchor-field [data-slot="select-trigger"] { width: 100%; }
+.wtf-harmony table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.wtf-harmony th, .wtf-harmony td { padding: .15rem .3rem; text-align: left; border-bottom: 1px solid var(--sheet-line, #c7beb0); }
+.wtf-harmony tbody th { width: 44px; }
+.wtf-harmony tbody button { width: 44px; min-height: 44px; }
+.wtf-harmony-selected { background: var(--sheet-active, #ddd5c8); }
+.wtf-harmony tfoot th { width: 25%; }
+.wtf-harmony small, .wtf-breaking-points li small { display: block; font-size: .75rem; }
+.wtf-harmony-dialog { max-height: 90dvh; overflow-y: auto; }
+.wtf-breaking-points h4 { margin: 1rem 0 .4rem; font-weight: 600; }
+.wtf-breaking-points ul { padding-left: 1.25rem; list-style: disc; }
+.wtf-breaking-points li { margin: .35rem 0; line-height: 1.45; }
+.wtf-inactive-rule { opacity: .65; }
+@media (max-width: 640px) {
+  .wtf-harmony th, .wtf-harmony td { padding: .15rem; }
+  .wtf-harmony { min-width: 0; }
+}
+@media print {
+  .wtf-harmony table { font-size: 8pt; }
+  .wtf-harmony tbody button { min-height: 0; height: auto; padding: 0; }
+  .wtf-rule-disclosure > summary { min-height: 0; }
+  .wtf-rule-field { break-inside: avoid; }
+}

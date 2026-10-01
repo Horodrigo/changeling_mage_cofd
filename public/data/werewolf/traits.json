@@ -1,0 +1,961 @@
+{
+  "anchors": [
+    {
+      "id": "blood-alpha",
+      "kind": "blood",
+      "name": "The Alpha",
+      "description": "Needs hierarchy and control; the wolf enforces the order the character demands.",
+      "recoverOne": "Put order ahead of independent reasoning.",
+      "recoverAll": "Use the force of the wolf to bring subordinates into line.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "blood-challenger",
+      "kind": "blood",
+      "name": "The Challenger",
+      "description": "Refuses second place and turns to overwhelming force to establish superiority.",
+      "recoverOne": "Disregard safety and reason to appear superior.",
+      "recoverAll": "Use Kuruth or the hunt to dominate a rival.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "blood-destroyer",
+      "kind": "blood",
+      "name": "The Destroyer",
+      "description": "Pursues goals through devastation, leaving destruction in the wake of every achievement.",
+      "recoverOne": "Inflict substantial, lasting damage while pursuing success.",
+      "recoverAll": "Surrender to Kuruth without considering other approaches.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "blood-fox",
+      "kind": "blood",
+      "name": "The Fox",
+      "description": "Survives through cunning, retreat and patience, even when the pack expects a fight.",
+      "recoverOne": "Abandon everything and flee the scene.",
+      "recoverAll": "Enter Kuruth while escaping a violent situation.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "blood-monster",
+      "kind": "blood",
+      "name": "The Monster",
+      "description": "Breaks prey psychologically through terror and shock before making the killing strike.",
+      "recoverOne": "Frighten or disgust someone into submission.",
+      "recoverAll": "Use the hunt or Kuruth as a means of terror.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "blood-soldier",
+      "kind": "blood",
+      "name": "The Soldier",
+      "description": "Follows the alpha's orders as a weapon of the pack, placing the plan ahead of personal safety.",
+      "recoverOne": "Disregard personal safety to carry out a leader's order.",
+      "recoverAll": "Undertake a hunt or enter Kuruth to obey the alpha against personal good judgment.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "bone-community-organizer",
+      "kind": "bone",
+      "name": "Community Organizer",
+      "description": "Works through relationships, groups and institutions rather than relying on one person's force.",
+      "recoverOne": "Persuade a group to address its internal problems before outside ones.",
+      "recoverAll": "Persuade the pack to forgo a hunt in favor of a social or political solution.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "bone-cub",
+      "kind": "bone",
+      "name": "Cub",
+      "description": "Relies on others' guidance and support rather than taking full responsibility for every decision.",
+      "recoverOne": "Follow another person's advice instead of personal impulses.",
+      "recoverAll": "Entrust life and limb completely to someone else when the wolf's power could accomplish the goal.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "bone-guru",
+      "kind": "bone",
+      "name": "Guru",
+      "description": "Shares practical wisdom and guides others toward workable answers.",
+      "recoverOne": "Someone succeeds by following the character's advice.",
+      "recoverAll": "Practical advice leads the pack to a solution other than the hunt.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "bone-hedonist",
+      "kind": "bone",
+      "name": "Hedonist",
+      "description": "Seeks answers in immediate pleasure and personal gratification.",
+      "recoverOne": "Choose personal indulgence instead of greater success.",
+      "recoverAll": "Abandon the hunt for personal pursuits.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 86
+    },
+    {
+      "id": "bone-lone-wolf",
+      "kind": "bone",
+      "name": "Lone Wolf",
+      "description": "Prefers to handle a problem alone when individual action seems the best solution.",
+      "recoverOne": "Act independently of the pack to solve a pack problem.",
+      "recoverAll": "Undermine the pack's plans and solve the problem alone while the pack is hunting.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 87
+    },
+    {
+      "id": "bone-wallflower",
+      "kind": "bone",
+      "name": "Wallflower",
+      "description": "Avoids the spotlight, solving problems through subtlety, restraint and quiet action.",
+      "recoverOne": "Work from the shadows, outside the attention attracted by the pack.",
+      "recoverAll": "Operate independently to complement the pack while it is hunting.",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 87
+    }
+  ],
+  "harmony": [
+    {
+      "id": "harmony-10",
+      "rating": 10,
+      "bans": 0,
+      "trigger": "passive",
+      "control": "3 seconds",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-9",
+      "rating": 9,
+      "bans": 0,
+      "trigger": "common",
+      "control": "10 seconds",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-8",
+      "rating": 8,
+      "bans": 0,
+      "trigger": "common",
+      "control": "30 seconds",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-7",
+      "rating": 7,
+      "bans": 0,
+      "trigger": "specific",
+      "control": "1 minute",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-6",
+      "rating": 6,
+      "bans": 0,
+      "trigger": "specific",
+      "control": "5 minutes",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-5",
+      "rating": 5,
+      "bans": 0,
+      "trigger": null,
+      "control": "15 minutes",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-4",
+      "rating": 4,
+      "bans": 1,
+      "trigger": "specific",
+      "control": "5 minutes",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-3",
+      "rating": 3,
+      "bans": 1,
+      "trigger": "specific",
+      "control": "1 minute",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-2",
+      "rating": 2,
+      "bans": 2,
+      "trigger": "common",
+      "control": "30 seconds",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-1",
+      "rating": 1,
+      "bans": 3,
+      "trigger": "common",
+      "control": "10 seconds",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    },
+    {
+      "id": "harmony-0",
+      "rating": 0,
+      "bans": 4,
+      "trigger": "passive",
+      "control": "3 seconds",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 105
+    }
+  ],
+  "breakingPoints": [
+    {
+      "id": "flesh-defile-locus",
+      "direction": "flesh",
+      "description": "Defiling a locus.",
+      "modifier": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-refuse-hunt",
+      "direction": "flesh",
+      "description": "Refusing to participate in Siskur-Dah.",
+      "modifier": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-week-outside",
+      "direction": "flesh",
+      "description": "Remaining outside the Hisil for a week.",
+      "modifier": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-silver",
+      "direction": "flesh",
+      "description": "Using a silver weapon against another werewolf.",
+      "modifier": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-oath",
+      "direction": "flesh",
+      "description": "Violating the Oath of the Moon (Forsaken only).",
+      "modifier": -2,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-month-outside",
+      "direction": "flesh",
+      "description": "Remaining outside the Hisil for a month.",
+      "modifier": -3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-spirit-passage",
+      "direction": "flesh",
+      "description": "Allowing a spirit safe passage into the physical world.",
+      "modifier": 0,
+      "maxHarmony": 3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-processed-food",
+      "direction": "flesh",
+      "description": "Eating processed food.",
+      "modifier": 0,
+      "maxHarmony": 3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-human-mating",
+      "direction": "flesh",
+      "description": "Mating with a human.",
+      "modifier": 0,
+      "maxHarmony": 3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "flesh-day-outside",
+      "direction": "flesh",
+      "description": "Remaining outside the Hisil for a day.",
+      "modifier": 0,
+      "maxHarmony": 3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-kill-human-wolf",
+      "direction": "spirit",
+      "description": "Killing a human or wolf.",
+      "modifier": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-week-inside",
+      "direction": "spirit",
+      "description": "Remaining in the Hisil for a week.",
+      "modifier": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-hunt-human-wolf",
+      "direction": "spirit",
+      "description": "Hunting humans or wolves for food.",
+      "modifier": -2,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-kill-packmate",
+      "direction": "spirit",
+      "description": "Killing a packmate.",
+      "modifier": -2,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-eat-flesh",
+      "direction": "spirit",
+      "description": "Eating human or wolf flesh for Essence.",
+      "modifier": -3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-month-inside",
+      "direction": "spirit",
+      "description": "Remaining in the Hisil for a month.",
+      "modifier": -3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-loved-one-lunacy",
+      "direction": "spirit",
+      "description": "Inflicting Lunacy on a loved one.",
+      "modifier": 0,
+      "minHarmony": 8,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-lead-hunt",
+      "direction": "spirit",
+      "description": "Leading the Siskur-Dah.",
+      "modifier": 0,
+      "minHarmony": 8,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-away-pack",
+      "direction": "spirit",
+      "description": "Spending more than two days away from the pack.",
+      "modifier": 0,
+      "minHarmony": 8,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    },
+    {
+      "id": "spirit-day-inside",
+      "direction": "spirit",
+      "description": "Remaining in the Hisil for a full day.",
+      "modifier": 0,
+      "minHarmony": 8,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 104
+    }
+  ],
+  "passives": [
+    {
+      "id": "anchor-recovery",
+      "name": "Blood and Bone",
+      "page": 85,
+      "additionalPages": [
+        86
+      ],
+      "fields": [
+        {
+          "id": "blood",
+          "label": "Blood",
+          "text": "Making a clearly bad choice in the heat of the moment that expresses Blood restores one spent Willpower. Giving in to Kuruth or declaring a hunt on impulse in accordance with Blood restores all spent Willpower."
+        },
+        {
+          "id": "bone",
+          "label": "Bone",
+          "text": "Suppressing rage and acting according to a fundamental belief that expresses Bone restores one spent Willpower. Standing firm and letting reason interfere with the hunt or cause conflict within the pack restores all spent Willpower."
+        },
+        {
+          "id": "custom",
+          "label": "Custom anchors",
+          "text": "The six examples of each kind are not exhaustive. Custom Blood and Bone need agreed situations for restoring one point and for restoring all spent Willpower."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "touchstones",
+      "name": "Touchstones",
+      "page": 87,
+      "fields": [
+        {
+          "id": "physical",
+          "label": "Physical Touchstone",
+          "text": "A person, place, object or ideal that anchors the werewolf to flesh and humanity. While accessible, it grants +2 dice to resist a breaking point toward Spirit. It cannot be accessed at Harmony 2 or lower."
+        },
+        {
+          "id": "spiritual",
+          "label": "Spiritual Touchstone",
+          "text": "A spirit, totem, locus or philosophy that draws the werewolf to the Hisil. While accessible, it grants +2 dice to resist a breaking point toward Flesh. It cannot be accessed at Harmony 8 or higher."
+        },
+        {
+          "id": "loss",
+          "label": "Loss and replacement",
+          "text": "Losing a physical Touchstone moves Harmony one step toward Spirit; losing a spiritual Touchstone moves it one step toward Flesh. Establishing a replacement is a breaking point in the opposite direction."
+        },
+        {
+          "id": "recovery",
+          "label": "Willpower",
+          "text": "A meaningful interaction that reinforces the bond restores one spent Willpower. Risking the character's life or pack to defend the relationship can restore all spent Willpower."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "regeneration",
+      "name": "Regeneration",
+      "page": 93,
+      "additionalPages": [
+        95
+      ],
+      "fields": [
+        {
+          "id": "bashing",
+          "label": "Bashing damage",
+          "text": "Regenerate bashing damage each turn at the rate shown by Primal Urge. This is at least one point per turn."
+        },
+        {
+          "id": "lethal",
+          "label": "Lethal damage",
+          "text": "Regenerate one lethal damage every 15 minutes. Spending one Essence reflexively changes that turn's regeneration from bashing to lethal."
+        },
+        {
+          "id": "aggravated",
+          "label": "Aggravated damage",
+          "text": "Regenerate one aggravated damage every four days. Only silver and supernatural powers cause aggravated damage directly; mundane harm that would be aggravated to a human is lethal to an Uratha. Lethal damage can still roll over into aggravated damage."
+        },
+        {
+          "id": "gauru",
+          "label": "Gauru",
+          "text": "Heal all bashing and lethal damage at the start of every turn in Gauru."
+        },
+        {
+          "id": "tilts",
+          "label": "Tilts",
+          "text": "A Tilt caused by an aggravated wound, such as a lost arm or eye, heals when the associated wound heals."
+        },
+        {
+          "id": "toxins",
+          "label": "Toxins",
+          "text": "Subtract Primal Urge from the Toxicity of a poison or disease."
+        },
+        {
+          "id": "witnesses",
+          "label": "Witnesses",
+          "text": "Witnessing lethal regeneration causes Lunacy as if the werewolf were in Dalu, regardless of the actual form."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "senses",
+      "name": "Senses",
+      "page": 94,
+      "additionalPages": [
+        95
+      ],
+      "fields": [
+        {
+          "id": "human",
+          "label": "Human senses",
+          "text": "The First Change corrects existing sensory impairments, including congenital blindness or deafness, and regenerates lost sense organs within days. Human senses are the default in Hishu and Dalu. Choosing other senses is a reflexive action without a roll."
+        },
+        {
+          "id": "wolf",
+          "label": "Wolf senses",
+          "text": "Default in Urshul and Urhan. Apply the form's wolf-sense Perception bonus. Other senses compensate for sensory deprivation, negating its penalties."
+        },
+        {
+          "id": "smell",
+          "label": "Smell",
+          "text": "Primal Urge can identify a remembered character without a roll even through concealment or disguise. Wits + Primal Urge links another Uratha to a previously smelled scene; deliberately left scent needs no roll. Identifying Uratha or Wolf-Blooded by smell requires Wits + Primal Urge, an instant action and close personal proximity."
+        },
+        {
+          "id": "hearing",
+          "label": "Hearing",
+          "text": "Range is one mile (about two kilometers) per Primal Urge dot. Ignore penalties for quiet sounds or hearing range and hear frequencies unavailable to human ears. Urban noise usually limits distinguishable sounds to the immediate surroundings."
+        },
+        {
+          "id": "vision",
+          "label": "Vision",
+          "text": "Halve darkness penalties, rounded down, and ignore vision penalties for rapid movement. Wolf vision distinguishes fewer colors than human vision."
+        },
+        {
+          "id": "blood",
+          "label": "Blood trail",
+          "text": "Tasting a living creature's blood reveals its exact direction at any distance, not a safe route or the distance itself. Only one victim can be followed. The link ends after a lunar month or when another creature's blood is tasted."
+        },
+        {
+          "id": "spirit",
+          "label": "Spirit senses",
+          "text": "Send the current form's default senses across the Gauntlet in either direction with an instant action, or reflexively for one Essence. Without a Gift, each sense works on one side only. Splitting senses between worlds gives −2 to actions involving Perception or concentration and removes compensation for sensory penalties. Apply the Gauntlet's dice modifier to Perception. Spirits in Twilight are sensed without focusing unless they intentionally hide."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "shapeshifting",
+      "name": "Shapeshifting",
+      "page": 96,
+      "fields": [
+        {
+          "id": "high",
+          "label": "Harmony 9–10",
+          "text": "Changing form costs one Essence and an instant action. Clothes and belongings do not transform with the werewolf."
+        },
+        {
+          "id": "near-high",
+          "label": "Harmony 7–8",
+          "text": "Change form reflexively for one Essence, or as an instant action at no cost."
+        },
+        {
+          "id": "balanced",
+          "label": "Harmony 4–6",
+          "text": "Change form reflexively without Essence or a roll."
+        },
+        {
+          "id": "near-low",
+          "label": "Harmony 2–3",
+          "text": "Prevent a change reflexively for one Essence, or as an instant action at no cost."
+        },
+        {
+          "id": "low",
+          "label": "Harmony 0–1",
+          "text": "Prevent a change with one Essence and an instant action."
+        },
+        {
+          "id": "stress",
+          "label": "Low Harmony",
+          "text": "Must change at least once each scene; Essence may prevent it only when not stressed. In combat, a chase or another threatening situation, shift one form each turn toward the appropriate form: Urhan to flee, Hishu to hide or Gauru to fight. Stress prevents resisting this movement."
+        },
+        {
+          "id": "belongings",
+          "label": "Belongings",
+          "text": "Below Harmony 9, clothing and immediate possessions transform with the character, stretching for Dalu or merging into the body in Gauru, Urshul and Urhan as appropriate to the scene."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "predators-jaws",
+      "name": "The Predator's Jaws",
+      "page": 98,
+      "fields": [
+        {
+          "id": "bites",
+          "label": "Bites",
+          "text": "Bites in every form count as mystical damage sources against creatures vulnerable to such sources. Even a Hishu bite deals lethal damage to vampires."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "hunters-aspect",
+      "name": "Hunter's Aspect",
+      "page": 98,
+      "fields": [
+        {
+          "id": "roll",
+          "label": "Dice Pool",
+          "text": "Power Attribute + appropriate Skill + Auspice Renown, contested by the prey's Composure + Primal Urge; instant action. Use Strength for physical pursuit, Presence for a staredown or Intelligence to outwit the prey. The Skill follows the interaction, not a single mandatory pool."
+        },
+        {
+          "id": "effect",
+          "label": "Success",
+          "text": "Inflict the Auspice's Hunter's Aspect Condition for the scene; exceptional success lasts one day per Primal Urge dot. Expiration alone gives no Beat. Only one Hunter's Aspect Condition can affect a character at once; further attempts fail while it remains."
+        },
+        {
+          "id": "auspices",
+          "label": "Auspices",
+          "text": "Cahalith: Resigned (Monstrous). Elodoth: Isolated (Isolating). Irraka: Unaware (Blissful). Ithaeur: Mystified (Mystic). Rahu: Submissive (Dominant). The aspect can affect humans, spirits, Uratha and other supernatural creatures."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "renown",
+      "name": "Renown",
+      "page": 98,
+      "additionalPages": [
+        99,
+        100
+      ],
+      "fields": [
+        {
+          "id": "advancement",
+          "label": "Advancement",
+          "text": "A deed worthy of Renown permits a purchase for three Experiences per dot; categories are Cunning, Glory, Honor, Purity and Wisdom, capped at five each. Raising Auspice Renown grants the next Facet of the own Moon Gift. Raising another category grants an appropriate Facet of an unlocked Shadow Gift or a Wolf Gift."
+        },
+        {
+          "id": "rank",
+          "label": "Effective Spirit Rank",
+          "text": "Total Renown 0–3: Rank 1; 4–7: Rank 2; 8–12: Rank 3; 13–18: Rank 4; 19 or more: Rank 5."
+        },
+        {
+          "id": "brands",
+          "label": "Spirit brands",
+          "text": "Once per story, spend one Essence to intensify the spirit brands, making them faintly visible in the physical world. Spirits, Uratha, Wolf-Blooded and others attuned to the spirit world intuitively recognize the Renown and its deeds. Choose a category to receive its Renown Condition at that rating: Cunning, Glorious, Honorable, Pure or Wise. Displaying the brands invites challenges."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "essence",
+      "name": "Essence",
+      "page": 100,
+      "fields": [
+        {
+          "id": "limits",
+          "label": "Limits",
+          "text": "Primal Urge sets the maximum reserve and expenditure per turn. When an effect costs more than the per-turn limit, spend the required Essence across multiple turns; the effect activates after the full cost is paid."
+        },
+        {
+          "id": "locus",
+          "label": "Loci",
+          "text": "Absorb Essence at the heart of a locus in the Hisil; in the physical world, consume the unusual meat or vegetation that appears nearby."
+        },
+        {
+          "id": "hunt",
+          "label": "Siskur-Dah",
+          "text": "The Sacred Hunt rite permits hunting and devouring spirits in the Hisil to take their Essence."
+        },
+        {
+          "id": "flesh",
+          "label": "Human or wolf flesh",
+          "text": "Choose to consume flesh for one Essence per point of damage dealt by a bite. Devouring flesh for Essence causes aggravated wounds, violates the Oath of the Moon and always causes a breaking point toward Spirit."
+        },
+        {
+          "id": "other",
+          "label": "Other sources",
+          "text": "Destroying a fetish releases its stored Essence to the werewolf. The first sight of the character's Auspice moon each night grants one Essence."
+        },
+        {
+          "id": "uses",
+          "label": "Uses",
+          "text": "Essence fuels Gifts and fetishes, changes regeneration to lethal, speeds Reaching and pays shapeshifting costs when Harmony requires them."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "primal-urge-restrictions",
+      "name": "Primal Urge restrictions",
+      "page": 93,
+      "fields": [
+        {
+          "id": "feeding",
+          "label": "Feeding",
+          "text": "The Primal Urge table sets the food required for nourishment. Other food can be swallowed but does not nourish the werewolf. Each day without the required food loses one Essence. At the highest levels, nourishment requires spirit ephemera or human or wolf flesh."
+        },
+        {
+          "id": "hunt",
+          "label": "Hunt interval",
+          "text": "Exceeding the table's interval without Siskur-Dah loses one Essence each day and causes a breaking point toward Flesh."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "reaching",
+      "name": "Reaching",
+      "page": 100,
+      "additionalPages": [
+        101,
+        104
+      ],
+      "fields": [
+        {
+          "id": "roll",
+          "label": "Dice Pool",
+          "text": "To enter Spirit, roll 10 − Harmony; to enter Flesh, roll Harmony. Apply the Gauntlet's dice modifier. A locus is normally required. Harmony 3 or lower needs no locus to enter Spirit; Harmony 8 or higher needs no locus to enter Flesh. Harmony 10 cannot enter Spirit; Harmony 0 cannot enter Flesh."
+        },
+        {
+          "id": "time",
+          "label": "Transition",
+          "text": "Crossing takes two turns per level of Gauntlet strength. The character vanishes at the start and appears on the other side at the end. Exceptional success or spending one Essence makes the crossing immediate."
+        },
+        {
+          "id": "modifiers",
+          "label": "Suggested modifiers",
+          "text": "Looking into a reflective surface +1; entering Shadow by day −2; entering Flesh by day +2."
+        },
+        {
+          "id": "gauntlet",
+          "label": "Gauntlet",
+          "text": "Dense urban areas: strength 5, modifier −3. Suburbs or towns: 4/−2. Small towns or villages: 3/−1. Wilderness or countryside: 2/0. Locus: 1/+2. Verge: 0, modifier not applicable. These are guidelines; local conditions can vary."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "silver",
+      "name": "Silver",
+      "page": 101,
+      "fields": [
+        {
+          "id": "damage",
+          "label": "Damage",
+          "text": "Silver weapons always inflict aggravated damage. Non-damaging contact causes intense pain and lasting scars like aggravated wounds, but no damage."
+        },
+        {
+          "id": "material",
+          "label": "Material",
+          "text": "Use real metallic silver, not compounds such as silver nitrate. Alloys and mixtures must contain at least 80% silver. A silver coating works for one damaging hit. Unless forged from silver, the weapon is improvised."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "lunacy",
+      "name": "Lunacy",
+      "page": 101,
+      "additionalPages": [
+        102,
+        103
+      ],
+      "fields": [
+        {
+          "id": "trigger",
+          "label": "Witnesses",
+          "text": "Close witnesses of Dalu, Gauru or Urshul, of shapeshifting or of regeneration suffer a breaking point at an appropriate moment. Wolf-Blooded and creatures without Integrity, including Uratha, vampires and spirits, are immune."
+        },
+        {
+          "id": "modifiers",
+          "label": "Modifiers",
+          "text": "Apply the Primal Urge Lunacy penalty. Dalu gives the witness +2; Gauru gives −2; Urshul has no additional form modifier. A witness dealt lethal damage by the werewolf gains +1 and adds, rather than subtracts, wound penalties. Witnesses working together gain +1 for two, +2 for a small group (about five or fewer), +3 for up to ten, or +4 for a larger crowd."
+        },
+        {
+          "id": "success",
+          "label": "Success",
+          "text": "Gain Guilty, Shaken or Spooked and suffer −2 to all actions for the scene; events are likely rationalized. Exceptional success gives no Condition or action penalty, restores all spent Willpower and preserves an accurate memory."
+        },
+        {
+          "id": "failure",
+          "label": "Failure",
+          "text": "Lose one Integrity and gain Atavism, Delusion or Reception as appropriate; flee or panic, then rationalize the memory. The Lunacy Condition expires without a Beat after days equal to the werewolf's Primal Urge if unresolved. Dramatic failure starts becoming Wolf-Blooded at a moon phase during the next lunar month, tending toward the witnessed werewolf's Auspice."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "kuruth",
+      "name": "Death Rage: Kuruth",
+      "page": 102,
+      "additionalPages": [
+        103
+      ],
+      "fields": [
+        {
+          "id": "entry",
+          "label": "Entry",
+          "text": "A Kuruth trigger normally begins Wasu-Im. Taking Gauru during it, or being triggered while already in Gauru, immediately begins Basu-Im."
+        },
+        {
+          "id": "wasu-im",
+          "label": "Wasu-Im",
+          "text": "Immediately take Dalu or Urshul and remain there. As with Gauru's Rage, resisting the urge to attack requires Resolve + Composure; failure starts Basu-Im. Instead of attacking, an instant Resolve + Composure action grants one lucid turn per success. Exceptional success ends Wasu-Im. Harmony sets the time before Basu-Im; voluntary entry is possible at any time."
+        },
+        {
+          "id": "basu-im",
+          "label": "Basu-Im",
+          "text": "Immediately take Gauru for the Primal Urge table's minimum duration, even if Gauru was already used that scene; ignore the usual form duration and wound penalties. Attempts to influence, intimidate or divert the werewolf by any means take −2 × Primal Urge, in addition to supernatural tolerance. Gauru's Rage applies against everyone except other werewolves in Basu-Im. Without prey, destroy property until fresh prey is found."
+        },
+        {
+          "id": "pack",
+          "label": "Contagion within the pack",
+          "text": "Werewolf packmates within 10 yards who see or smell the raging character enter Basu-Im after one turn. Resolve + Composure can resist, requiring one success per character currently in Kuruth in the scene; roll again whenever another packmate enters Basu-Im."
+        },
+        {
+          "id": "end",
+          "label": "Afterward",
+          "text": "After the minimum Basu-Im time, collapse into Hishu with no memory of the events. Learning what happened may cause a breaking point toward Spirit."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "kuruth-triggers",
+      "name": "Kuruth triggers",
+      "page": 103,
+      "fields": [
+        {
+          "id": "categories",
+          "label": "Categories",
+          "text": "Each character has passive, common and specific triggers. Passive triggers occur without awareness; common triggers require witnessing or sensing the circumstance; specific triggers are rarer events. Harmony selects the applicable category; at Harmony 5 no personal trigger applies."
+        },
+        {
+          "id": "blood",
+          "label": "Blood (passive / common / specific)",
+          "text": "Smelling human blood / tasting human blood / swallowing human blood."
+        },
+        {
+          "id": "moon",
+          "label": "Moon (passive / common / specific)",
+          "text": "The Auspice moon is in the sky / see it in the sky / hear a wolf or werewolf howl while it is in the sky."
+        },
+        {
+          "id": "other",
+          "label": "The Other (passive / common / specific)",
+          "text": "A supernatural creature comes within 10 yards / witness one do something obviously inhuman / become the target of a supernatural power."
+        },
+        {
+          "id": "pack",
+          "label": "Pack (passive / common / specific)",
+          "text": "A packmate suffers lethal damage / see someone attack a packmate / cause lethal damage to a packmate."
+        },
+        {
+          "id": "territory",
+          "label": "Territory (passive / common / specific)",
+          "text": "An unfamiliar werewolf enters the territory without permission / see an unfamiliar werewolf there / an unfamiliar werewolf challenges the pack's ability to do its duty."
+        },
+        {
+          "id": "wounds",
+          "label": "Wounds (passive / common / specific)",
+          "text": "Be in a Wound's area / interact with a Wound-born spirit / be attacked by a Wound-born spirit."
+        },
+        {
+          "id": "general",
+          "label": "General triggers",
+          "text": "All Uratha also risk Kuruth from staying in Gauru too long, taking Gauru outside combat, suffering silver damage or being forced into Kuruth by an Elodoth. These general triggers cannot be opted out of by choosing personal triggers."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    },
+    {
+      "id": "harmony-breaking-points",
+      "name": "Harmony breaking points",
+      "page": 104,
+      "additionalPages": [
+        105
+      ],
+      "fields": [
+        {
+          "id": "balance",
+          "label": "Balance",
+          "text": "Harmony ranges from 0 (Spirit) to 10 (Flesh), with balance at 5 and a starting rating of 7. Experiences cannot raise or lower it."
+        },
+        {
+          "id": "roll",
+          "label": "Dice Pool",
+          "text": "Resolve + Composure; Willpower cannot modify this pool. Apply the specific breaking point's modifier. Toward Spirit, subtract one die per Harmony below 5; failure reduces Harmony by one. Toward Flesh, subtract one die per Harmony above 5; failure increases Harmony by one. An accessible appropriate Touchstone normally adds +2."
+        },
+        {
+          "id": "bans",
+          "label": "Bans",
+          "text": "Harmony 4 or lower imposes persistent Ban Conditions: one at 4–3, two at 2, three at 1, four at 0. Raising Harmony enough resolves the excess bans; the player chooses which to discard."
+        },
+        {
+          "id": "personal",
+          "label": "Personal breaking points",
+          "text": "The listed events are a starting point, not an exhaustive list. Player and Storyteller should define one or two personal breaking points in each direction based on Auspice, Tribe and Touchstones."
+        }
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition"
+    }
+  ]
+}

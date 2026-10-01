@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { AuspiceDefinition, FormDefinition, PrimalUrgeLevel, RenownId, TribeDefinition, WerewolfReference } from "./catalogs/reference";
 
 const finite = (value: unknown, fallback = 0) => {
+  if (typeof value !== "number" && (typeof value !== "string" || !value.trim())) return fallback;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
 };
@@ -37,6 +38,7 @@ export function formTraits(character: Pick<CharacterSheet, "attributes" | "skill
 /** WTF2 p. 83: Auspice + Tribe + one choice; Ghost Wolves receive no Tribe dot. */
 export function creationRenown(auspice: AuspiceDefinition, tribe: TribeDefinition, choice: RenownId) {
   const renown: Record<RenownId, number> = { Cunning: 0, Glory: 0, Honor: 0, Purity: 0, Wisdom: 0 };
+  if (!Object.hasOwn(renown, choice)) throw new Error("Invalid creation Renown category.");
   renown[auspice.renown] += 1;
   if (tribe.renown) renown[tribe.renown] += 1;
   renown[choice] += 1;
