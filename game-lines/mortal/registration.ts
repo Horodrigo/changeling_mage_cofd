@@ -5,7 +5,7 @@ export const mortalRegistration: GameLineRegistration = {
   id: "CofD",
   slug: "mortal",
   label: "Chronicles of Darkness",
-  iconSrc: "/mortal-skull.webp",
+  iconSrc: "/game-lines/mortal/images/icon.webp",
   cardClass: "cofd-card",
   summaryClass: "cofd-summary",
   catalogGroups: {

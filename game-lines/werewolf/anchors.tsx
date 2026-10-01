@@ -3,7 +3,7 @@
 import { useLanguage } from "@/lib/i18n";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { AnchorDefinition, WerewolfReferenceCatalog } from "./catalogs/reference";
-import "./traits.css";
+import "./styles/traits.css";
 
 export function AnchorDetails({ anchor, reference }: { anchor: AnchorDefinition; reference: WerewolfReferenceCatalog }) {
   const { locale, t } = useLanguage();

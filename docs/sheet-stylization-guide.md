@@ -26,7 +26,7 @@ serviu de base para a branch:
 
 ### 2.1 Isolamento por linha
 
-As regras específicas foram concentradas em `app/css/changeling-sheet.css` e todas
+As regras específicas foram concentradas em `game-lines/changeling/styles/sheet.css` e todas
 partem de `.ctl-sheet`. O arquivo é importado por `app/layout.tsx` depois de
 `css/globals.css`, permitindo que a linha especialize as primitivas comuns sem alterar intencionalmente outras linhas.
 
@@ -50,7 +50,7 @@ Changeling passou a usar:
 - sombra externa suave e sombra interna esverdeada.
 
 Os tokens estão no primeiro bloco `.ctl-sheet` de
-`app/css/changeling-sheet.css`. Esse é o lugar correto para calibrar cor, opacidade,
+`game-lines/changeling/styles/sheet.css`. Esse é o lugar correto para calibrar cor, opacidade,
 padding e geometria da moldura.
 
 O contêiner comum `.cod-sheet`, em `app/css/globals.css`, foi ajustado para a
@@ -72,7 +72,7 @@ Foram criadas três faces WOFF2 exclusivas da ficha de Changeling:
 
 As fontes são builds levemente condensadas de EB Garamond 12. Os TTF-fonte e a
 SIL Open Font License ficam em `assets/fonts/changeling/`; somente WOFF2 é
-servido por `public/fonts/changeling/`. O script
+servido por `public/game-lines/changeling/fonts/`. O script
 `scripts/build-changeling-fonts.py` renomeia os metadados, condensa os contornos
 e gera as três faces de modo reproduzível.
 
@@ -257,26 +257,26 @@ específicas da moldura dinâmica de Skill de Kith.
 
 | Grupo | Asset público | Dimensão | Canal | Propósito |
 | --- | --- | ---: | --- | --- |
-| Papel | `public/changeling/style/paper-texture.webp` | 1254 × 1254 | RGB | Textura repetível do fundo da folha. |
-| Moldura | `public/changeling/style/frame-corner.webp` | 1254 × 1254 | RGBA | Um canto botânico reutilizado nas quatro quinas por transformação CSS. |
-| Moldura | `public/changeling/style/frame-center.webp` | 232 × 314 | RGBA | Estrela central superior; rotacionada para a inferior. |
-| Moldura | `public/changeling/style/frame-side.webp` | 120 × 103 | RGBA | Um ornamento lateral reutilizado ao redor das duas estrelas e nos cantos de painéis. |
-| Cabeçalho | `public/changeling/style/title.webp` | 998 × 190 | RGBA | Lettering ilustrado da marca Changeling. |
-| Abas | `public/changeling/style/tab-texture.webp` | 1280 × 320 | RGB | Tinta orgânica da aba ativa; aplicada com `background-size: cover`. |
-| Attributes | `public/changeling/style/attributes-divider.webp` | 2172 × 724 | RGBA | Medalhão/trecho intermediário do divisor. |
-| Attributes | `public/changeling/style/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
-| Seções | `public/changeling/style/section-divider.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
-| Grid | `public/changeling/style/column-divider.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
-| Marca-d'água | `public/changeling/style/background-changeling.webp` | 1145 × 1374 | RGBA | Ilustração central translúcida da ficha. |
-| Ícone | `public/changeling/style/icon.webp` | 534 × 500 | RGBA | Símbolo da linha usado no registro e na impressão. |
-| Experiência | `public/changeling/style/experience-purchase-icon.webp` | 657 × 685 | RGBA | Ornamento do seletor de compra de trait. |
-| Skill de Kith | `public/changeling/style/skill-highlight-left.webp` | 760 × 552 | RGBA | Início da moldura adaptável. |
-| Skill de Kith | `public/changeling/style/skill-highlight-middle-1.webp` | 260 × 552 | RGBA | Primeiro segmento repetível. |
-| Skill de Kith | `public/changeling/style/skill-highlight-middle-2.webp` | 260 × 552 | RGBA | Segundo segmento repetível, alternado com o primeiro. |
-| Skill de Kith | `public/changeling/style/skill-highlight-right.webp` | 471 × 552 | RGBA | Fechamento da moldura adaptável. |
+| Papel | `public/game-lines/changeling/images/paper-texture.webp` | 1254 × 1254 | RGB | Textura repetível do fundo da folha. |
+| Moldura | `public/game-lines/changeling/images/frame-corner.webp` | 1254 × 1254 | RGBA | Um canto botânico reutilizado nas quatro quinas por transformação CSS. |
+| Moldura | `public/game-lines/changeling/images/frame-center.webp` | 232 × 314 | RGBA | Estrela central superior; rotacionada para a inferior. |
+| Moldura | `public/game-lines/changeling/images/frame-side.webp` | 120 × 103 | RGBA | Um ornamento lateral reutilizado ao redor das duas estrelas e nos cantos de painéis. |
+| Cabeçalho | `public/game-lines/changeling/images/title.webp` | 998 × 190 | RGBA | Lettering ilustrado da marca Changeling. |
+| Abas | `public/game-lines/changeling/images/tab-texture.webp` | 1280 × 320 | RGB | Tinta orgânica da aba ativa; aplicada com `background-size: cover`. |
+| Attributes | `public/game-lines/changeling/images/attributes-divider.webp` | 2172 × 724 | RGBA | Medalhão/trecho intermediário do divisor. |
+| Attributes | `public/game-lines/changeling/images/attributes-divider-leaf.webp` | 1570 × 579 | RGBA | Ramo adjacente ao texto Attributes. |
+| Seções | `public/game-lines/changeling/images/section-divider.webp` | 514 × 403 | RGBA | Terminal único para divisores de cabeçalho e seções; o lado oposto é espelhado. |
+| Grid | `public/game-lines/changeling/images/column-divider.webp` | 13 × 880 | RGBA | Traço de tinta irregular repetido verticalmente. |
+| Marca-d'água | `public/game-lines/changeling/images/background-changeling.webp` | 1145 × 1374 | RGBA | Ilustração central translúcida da ficha. |
+| Ícone | `public/game-lines/changeling/images/icon.webp` | 534 × 500 | RGBA | Símbolo da linha usado no registro e na impressão. |
+| Experiência | `public/game-lines/changeling/images/experience-purchase-icon.webp` | 657 × 685 | RGBA | Ornamento do seletor de compra de trait. |
+| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-left.webp` | 760 × 552 | RGBA | Início da moldura adaptável. |
+| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-middle-1.webp` | 260 × 552 | RGBA | Primeiro segmento repetível. |
+| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-middle-2.webp` | 260 × 552 | RGBA | Segundo segmento repetível, alternado com o primeiro. |
+| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-right.webp` | 471 × 552 | RGBA | Fechamento da moldura adaptável. |
 
 Há ainda **3 fontes WOFF2**, que não entram na contagem de imagens, em
-`public/fonts/changeling/`.
+`public/game-lines/changeling/fonts/`.
 
 ### 3.2 Quantidade recomendada para uma nova linha
 
@@ -319,7 +319,7 @@ ornamento de experiência não fazem parte desse pacote-fonte.
 - Use WebP com qualidade alta para papel e textura de aba, que são opacos e
   fotográficos.
 - Preserve um master não destrutivo em `assets/<linha>-style/source/` e gere a
-  cópia otimizada em `public/<linha>/style/`.
+  cópia otimizada em `public/game-lines/<linha>/images/`.
 - Não sirva os masters pesados ao navegador.
 
 ### 4.2 Recorte e margens transparentes
@@ -429,7 +429,7 @@ raster restaurado.
 
 ### Etapa 3 — Criar a camada da linha
 
-1. Crie `app/css/mage-sheet.css` ou o equivalente da nova linha.
+1. Crie `game-lines/mage/styles/sheet.css` ou o equivalente da nova linha.
 2. Escopo obrigatório: `.mta-sheet` para Mage.
 3. Importe a folha depois de `css/globals.css`.
 4. Defina tokens de tinta, papel, regras, opacidades e geometria.
@@ -523,7 +523,7 @@ ou quebrar a instalação offline.
 
 | Resultado visual | Arquivo e seletor/parâmetro |
 | --- | --- |
-| Cor, textura, padding e sombra da folha | `app/css/changeling-sheet.css`: `.ctl-sheet` |
+| Cor, textura, padding e sombra da folha | `game-lines/changeling/styles/sheet.css`: `.ctl-sheet` |
 | Encontro das linhas externas | variáveis `--ctl-frame-rail-*`, `--ctl-frame-side-x`, `--ctl-frame-corner-depth` |
 | Escala da estrela por viewport | `--ctl-frame-star-*` nos blocos base, 980 px e 720 px |
 | Distância dos enfeites da estrela | `--ctl-frame-star-side-*` |

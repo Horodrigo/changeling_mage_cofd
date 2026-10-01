@@ -120,7 +120,7 @@ test("Contract outcomes and Courtless use dictionary labels without changing mec
     assert.equal(courtDisplayName("My custom court",locale),"My custom court");
   }
   assert.equal(JSON.stringify(contract),before);
-  const corePresentation=JSON.parse(readFileSync(new URL("../public/data/core/conditions-pt.json",import.meta.url),"utf8"));
+  const corePresentation=JSON.parse(readFileSync(new URL("../public/shared/data/conditions-pt.json",import.meta.url),"utf8"));
   assert.match(translate("pt-BR","ui.tasteOfFealtyAutomation",{count:2}),new RegExp(corePresentation.deprived.name));
 });
 

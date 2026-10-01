@@ -4,7 +4,7 @@ import { useLanguage } from "@/lib/i18n";
 import { SheetHeading } from "@/app/workspace/sheet-primitives";
 import type { PassiveDefinition, WerewolfReferenceCatalog } from "./catalogs/reference";
 import { primalUrgeLevel } from "./creation-rules";
-import "./traits.css";
+import "./styles/traits.css";
 
 export function PassiveRules({ rule, reference }: { rule: PassiveDefinition; reference: WerewolfReferenceCatalog }) {
   const { locale, t } = useLanguage();

@@ -10,8 +10,8 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false }, optimizeDeps: { noDiscovery: true, include: [] } });
 after(async () => vite.close());
-const canonical = JSON.parse(await read("public/data/changeling/tokens.json"));
-const portuguese = JSON.parse(await read("public/data/changeling/tokens-pt.json"));
+const canonical = JSON.parse(await read("public/game-lines/changeling/data/tokens.json"));
+const portuguese = JSON.parse(await read("public/game-lines/changeling/data/tokens-pt.json"));
 const { withTokenPresentation, tokenPresentation, configuredTokenPresentation } = await vite.ssrLoadModule("/game-lines/changeling/token-presentation.ts");
 const catalog = withTokenPresentation(canonical, portuguese);
 const fields = ["name", "effect", "description", "crux", "catch", "drawback"];
@@ -105,7 +105,7 @@ test("Token cards are collapsed by default and separate named fields in both loc
     assert.match(markup, /configured-token-allocation/);
     assert.doesNotMatch(markup, /missing translation|undefined/);
   }
-  const css = await read("app/css/changeling-sheet.css");
+  const css = await read("game-lines/changeling/styles/sheet.css");
   assert.match(css, /\.configured-token-list\s*\{\s*grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(css, /\.configured-token-card dl\s*\{\s*line-height: 1\.45/);
 });

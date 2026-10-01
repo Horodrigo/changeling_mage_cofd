@@ -8,10 +8,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const readJson = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
-const reference = readJson("public/data/werewolf/reference.json");
-const presentation = readJson("public/data/werewolf/reference-pt.json");
-const traits = readJson("public/data/werewolf/traits.json");
-const traitsPresentation = readJson("public/data/werewolf/traits-pt.json");
+const reference = readJson("public/game-lines/werewolf/data/reference.json");
+const presentation = readJson("public/game-lines/werewolf/data/reference-pt.json");
+const traits = readJson("public/game-lines/werewolf/data/traits.json");
+const traitsPresentation = readJson("public/game-lines/werewolf/data/traits-pt.json");
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },

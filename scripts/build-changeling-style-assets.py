@@ -14,7 +14,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "assets" / "changeling-style" / "source"
-OUTPUT = ROOT / "public" / "changeling" / "style"
+OUTPUT = ROOT / "public" / "game-lines" / "changeling" / "images"
 INK = (23, 56, 35)
 
 

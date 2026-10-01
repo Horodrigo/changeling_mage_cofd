@@ -5,7 +5,7 @@ export const mageRegistration: GameLineRegistration = {
   id: "MtA",
   slug: "mage",
   label: "Mage: The Awakening",
-  iconSrc: "/mage-skull.webp",
+  iconSrc: "/game-lines/mage/images/icon.webp",
   cardClass: "mta-card",
   summaryClass: "mta-summary",
   catalogGroups: {

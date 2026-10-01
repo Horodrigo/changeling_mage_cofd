@@ -26,7 +26,9 @@ The application currently supports the persisted game-line IDs `CofD`, `CtL`, `M
 - `app/data-transfer-panel.tsx`: shared, local import/export UI for characters and player-created Homebrews; character imports still delegate to the canonical lifecycle, while Homebrew bundles validate every line-owned collection before replacing local data.
 - `app/homebrews.tsx` plus line-owned Homebrew surfaces: shared source/item activation shell and game-line-specific editors.
 - `lib/character-persistence.ts` and `lib/stored-character.ts`: line-neutral structural normalization, current-schema validation exports, and safe treatment of stored values.
-- `public/data/`: static catalog data, separated by Core and game line.
+- `public/shared/`: shared static Core catalogs and application images.
+- `public/game-lines/<line>/`: line-owned static catalogs, images, and fonts, separated into `data/`, `images/`, and `fonts/` when those categories exist.
+- `game-lines/<line>/styles/`: line-owned CSS, including responsive and print rules. Shared CSS remains in `app/css/`; public image folders do not contain application CSS.
 
 ## Ownership Rules
 
@@ -67,7 +69,7 @@ An indirect chain such as `Mage -> shared helper -> Changeling` is still forbidd
 A new line should be primarily additive. A Werewolf implementation should normally add:
 
 - `game-lines/werewolf/**`;
-- `public/data/werewolf/**`;
+- `public/game-lines/werewolf/data/**`;
 - focused tests;
 - one explicit lightweight registry entry;
 - one persisted game-line ID entry if the product supports saving that line.
@@ -111,7 +113,9 @@ The registry may eagerly import lightweight registration objects. Registration m
 
 ## Catalog Architecture
 
-Static RPG content should remain data under `public/data/**` where practical. Catalog infrastructure is generic and group-driven; each game-line registration declares the groups required by its Builder and Sheet surfaces.
+Static RPG content should remain data under `public/shared/data/**` for common/Core catalogs and `public/game-lines/<line>/data/**` for line-owned catalogs. Catalog infrastructure is generic and group-driven; each game-line registration declares the groups required by its Builder and Sheet surfaces. The versioned resource manifest lives at `public/shared/data/catalog-manifest.json`. Canonical line Merits belong to their own public line folder even when other lines can purchase them; the shared Merit discovery index does not transfer ownership.
+
+`game-lines/<line>/` contains bundled executable source; `public/game-lines/<line>/` contains static files served unchanged. Keep public images and fonts with their owning line instead of creating global line-specific folders. Only application/PWA entry points, installation icons, and generated runtime metadata belong directly in `public/`. Asset/catalog generators, CSS URLs, registrations, tests, and the service-worker template must follow the layout documented in `README.md`; do not leave duplicate legacy public paths. Moving unchanged catalogs must preserve resource IDs and content versions so IndexedDB cache entries and persisted character choices remain valid.
 
 Required invariants:
 
@@ -290,7 +294,7 @@ The project must remain compatible with the existing Vinext/Vite Cloudflare depl
 - no runtime filesystem assumptions;
 - no Worker APIs that are unavailable on Cloudflare;
 - no opaque dynamic imports that Vite cannot analyze;
-- `public/data/**` remains statically deployable;
+- `public/shared/**` and `public/game-lines/**` remain statically deployable;
 - Worker code remains independent from browser UI and game-line surfaces.
 
 Do not change Cloudflare bindings or configuration merely to silence local ambient TypeScript errors. Understand deployment impact first.

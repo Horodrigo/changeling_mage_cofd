@@ -253,13 +253,13 @@ const covenants = [
 ];
 
 const files = {
-  core: "public/data/core/merits/core.json",
-  index: "public/data/core/merits/index.json",
-  merits: "public/data/vampire/merits.json",
-  powers: "public/data/vampire/powers.json",
-  conditions: "public/data/vampire/conditions.json",
-  covenants: "public/data/vampire/covenants.json",
-  manifest: "public/data/manifest.json",
+  core: "public/shared/data/merits.json",
+  index: "public/shared/data/merits-index.json",
+  merits: "public/game-lines/vampire/data/merits.json",
+  powers: "public/game-lines/vampire/data/powers.json",
+  conditions: "public/game-lines/vampire/data/conditions.json",
+  covenants: "public/game-lines/vampire/data/covenants.json",
+  manifest: "public/shared/data/catalog-manifest.json",
 };
 
 writeCompact(files.core, upsert(read(files.core), coreMerits));

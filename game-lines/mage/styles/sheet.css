@@ -199,7 +199,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 .line-choice button.mage-line-choice.selected { border-color:#397895; background:linear-gradient(145deg,#eaf5fa,#d9ebf4); box-shadow:inset 0 0 0 1px #397895,0 10px 28px #285f7b20; }
 
 .cod-sheet.mta-sheet::after {
-  background-image: url("/mage/style/background-mage.webp");
+  background-image: url("/game-lines/mage/images/background-mage.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50% auto;
@@ -440,7 +440,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 /* ========================================================================== 
    Mage: The Awakening — visual sheet layer
    --------------------------------------------------------------------------
-   Expected assets in /public/mage/style/:
+   Expected assets in /public/game-lines/mage/images/:
    - vertical-rule.webp
    - background-mage.webp
    - attributes-divider.webp
@@ -502,7 +502,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     radial-gradient(circle at 18% 22%, rgba(255,255,255,.32), transparent 30%),
     radial-gradient(circle at 79% 72%, rgba(62,108,137,.035), transparent 34%),
     linear-gradient(90deg, rgba(54,105,137,.035), transparent 9%, transparent 91%, rgba(54,105,137,.035)),
-    url("/mage/style/mage-paper-texture.webp");
+    url("/game-lines/mage/images/mage-paper-texture.webp");
   background-repeat:
     no-repeat,no-repeat,no-repeat,no-repeat,
     no-repeat,no-repeat,no-repeat,no-repeat,
@@ -577,7 +577,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:42px;
   height:84px;
   pointer-events:none;
-  background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat;
+  background:url("/game-lines/mage/images/frame-prism-center.webp") center/contain no-repeat;
   transform:translateX(-50%);
 }
 
@@ -597,7 +597,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:42px;
   height:84px;
   pointer-events:none;
-  background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat;
+  background:url("/game-lines/mage/images/frame-prism-center.webp") center/contain no-repeat;
   transform:translateX(-50%) scaleY(-1);
 }
 
@@ -612,7 +612,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:150px;
   height:150px;
   pointer-events:none;
-  background:url("/mage/style/prism-corner.webp") center/contain no-repeat;
+  background:url("/game-lines/mage/images/prism-corner.webp") center/contain no-repeat;
 }
 
 .mta-sheet .cod-sheet-title::before {
@@ -661,7 +661,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   height:114px;
   overflow:hidden;
   color:transparent;
-  background:url("/mage/style/mage-title.webp") left center/contain no-repeat;
+  background:url("/game-lines/mage/images/mage-title.webp") left center/contain no-repeat;
   font-size:0;
   line-height:0;
   text-shadow:none;
@@ -737,7 +737,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   position:absolute;
   z-index:-1;
   inset:3px;
-  background:#295d7b url("/mage/style/selected-tab-texture.webp") center/cover no-repeat;
+  background:#295d7b url("/game-lines/mage/images/selected-tab-texture.webp") center/cover no-repeat;
   box-shadow:0 0 0 1px rgba(32,78,105,.42);
 }
 
@@ -747,7 +747,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:url("/mage/style/prism-circular.webp") center 49%/36px auto no-repeat;
+  background:url("/game-lines/mage/images/prism-circular.webp") center 49%/36px auto no-repeat;
   opacity:.18;
 }
 
@@ -875,7 +875,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:auto;
   height:32px;
   min-width:25px;
-  background-image:url("/mage/style/attributes-divider.webp");
+  background-image:url("/game-lines/mage/images/attributes-divider.webp");
   background-position:right center;
   background-repeat:no-repeat;
   background-size:auto 111px;
@@ -902,7 +902,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet .official-trait-grid > .official-trait-block + .official-trait-block {
   border-left:0;
-  background:url("/mage/style/vertical-rule.webp") left center/15px 100% no-repeat;
+  background:url("/game-lines/mage/images/vertical-rule.webp") left center/15px 100% no-repeat;
 }
 
 .mta-sheet .official-trait-block h4 {
@@ -985,7 +985,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet .official-sheet-body > section + section {
   border-left:0;
-  background:url("/mage/style/vertical-rule.webp") left top/15px 100% no-repeat;
+  background:url("/game-lines/mage/images/vertical-rule.webp") left top/15px 100% no-repeat;
 }
 
 /* --------------------------------------------------------------------------
@@ -1026,7 +1026,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   border:0;
   border-radius:0;
   background-color:var(--mta-panel);
-  background-image:url("/mage/style/box-closed.webp");
+  background-image:url("/game-lines/mage/images/box-closed.webp");
   background-position:center;
   background-repeat:no-repeat;
   background-size:100% 100%;
@@ -1052,7 +1052,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   z-index:-1;
   inset:-40px -14px -40px;
   pointer-events:none;
-  background:url("/mage/style/box-closed.webp") center/100% 100% no-repeat;
+  background:url("/game-lines/mage/images/box-closed.webp") center/100% 100% no-repeat;
 }
 
 .mta-sheet .experience-title span,
@@ -1122,7 +1122,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:138px;
   aspect-ratio:1;
   pointer-events:none;
-  background:url("/mage/style/celtic-prism.webp") center/contain no-repeat;
+  background:url("/game-lines/mage/images/celtic-prism.webp") center/contain no-repeat;
   opacity:.025;
   transform:translate(-50%,-50%);
 }
@@ -1135,7 +1135,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   left:50%;
   width:14px;
   pointer-events:none;
-  background:url("/mage/style/vertical-rule.webp") center/14px 100% no-repeat;
+  background:url("/game-lines/mage/images/vertical-rule.webp") center/14px 100% no-repeat;
   transform:translateX(-50%);
   opacity:.67;
 }
@@ -1162,7 +1162,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:92px;
   aspect-ratio:1;
   pointer-events:none;
-  background:url("/mage/style/moon-prism.webp") center/contain no-repeat;
+  background:url("/game-lines/mage/images/moon-prism.webp") center/contain no-repeat;
   opacity:.045;
 }
 
@@ -1176,7 +1176,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   width:132px;
   height:132px;
   pointer-events:none;
-  background:url("/mage/style/prism-circular.webp") center/66px auto no-repeat;
+  background:url("/game-lines/mage/images/prism-circular.webp") center/66px auto no-repeat;
   opacity:.032;
 }
 
@@ -1208,7 +1208,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     linear-gradient(to bottom,transparent,rgba(42,91,124,.38) 5%,rgba(42,91,124,.38) 95%,transparent),
     linear-gradient(to bottom,transparent,rgba(30,77,108,.68) 5%,rgba(30,77,108,.68) 95%,transparent),
     linear-gradient(to bottom,transparent,rgba(42,91,124,.38) 5%,rgba(42,91,124,.38) 95%,transparent),
-    url("/mage/style/mage-paper-texture.webp");
+    url("/game-lines/mage/images/mage-paper-texture.webp");
   background-position:
     left var(--mta-print-frame-rail-edge) top 4.5mm,
     left var(--mta-print-frame-rail-edge) top 5.5mm,
@@ -1242,18 +1242,18 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   print-color-adjust:exact;
   -webkit-print-color-adjust:exact;
 }
-.mta-print-page::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; background:url("/mage/style/background-mage.webp") center 48%/108mm auto no-repeat; mix-blend-mode:multiply; opacity:.07; }
+.mta-print-page::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; background:url("/game-lines/mage/images/background-mage.webp") center 48%/108mm auto no-repeat; mix-blend-mode:multiply; opacity:.07; }
 .mta-print-frame { position:absolute; z-index:2; inset:0; pointer-events:none; }
-.mta-print-frame i { position:absolute; width:28mm; height:28mm; background:url("/mage/style/prism-corner.webp") center/contain no-repeat; }
+.mta-print-frame i { position:absolute; width:28mm; height:28mm; background:url("/game-lines/mage/images/prism-corner.webp") center/contain no-repeat; }
 .mta-print-frame i:nth-child(1) { top:0; left:0; }
 .mta-print-frame i:nth-child(2) { top:0; right:0; transform:scaleX(-1); }
 .mta-print-frame i:nth-child(3) { bottom:0; left:0; transform:scaleY(-1); }
 .mta-print-frame i:nth-child(4) { right:0; bottom:0; transform:scale(-1); }
-.mta-print-frame span { position:absolute; left:50%; width:8mm; height:16mm; background:url("/mage/style/frame-prism-center.webp") center/contain no-repeat; transform:translateX(-50%); }
+.mta-print-frame span { position:absolute; left:50%; width:8mm; height:16mm; background:url("/game-lines/mage/images/frame-prism-center.webp") center/contain no-repeat; transform:translateX(-50%); }
 .mta-print-frame span:nth-of-type(1) { top:-3mm; }
 .mta-print-frame span:nth-of-type(2) { bottom:-3mm; transform:translateX(-50%) scaleY(-1); }
 .mta-print-page > header { position:relative; z-index:1; display:flex; min-height:25mm; align-items:center; justify-content:space-between; padding:0 1mm; text-transform:uppercase; }
-.mta-print-page > header > div { width:94mm; height:22mm; background:url("/mage/style/mage-title.webp") left center/contain no-repeat; }
+.mta-print-page > header > div { width:94mm; height:22mm; background:url("/game-lines/mage/images/mage-title.webp") left center/contain no-repeat; }
 .mta-print-page > header span,.mta-print-page > header strong { visibility:hidden; }
 .mta-print-page > header p { margin:0; color:#50728a; font-size:6pt; letter-spacing:.22em; }
 .mta-print-page > footer { position:absolute; right:14mm; bottom:3mm; font:6pt Inter,Arial,sans-serif; }
@@ -1262,7 +1262,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 .mta-print-heading { display:flex; align-items:center; gap:2mm; min-height:7.5mm; margin:1.2mm 0; color:#24617e; font:400 15pt/1 Georgia,serif; text-align:center; text-transform:uppercase; }
 .mta-print-heading::before,.mta-print-heading::after { content:""; height:.3mm; flex:1; background:#24617e; }
 .mta-print-heading:has(+ .mta-print-attributes)::before,
-.mta-print-heading:has(+ .mta-print-attributes)::after { height:8mm; background:transparent url("/mage/style/attributes-divider.webp") right center/auto 28mm no-repeat; opacity:.72; }
+.mta-print-heading:has(+ .mta-print-attributes)::after { height:8mm; background:transparent url("/game-lines/mage/images/attributes-divider.webp") right center/auto 28mm no-repeat; opacity:.72; }
 .mta-print-heading:has(+ .mta-print-attributes)::after { transform:scaleX(-1); }
 .mta-print-attributes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5mm; }
 .mta-print-main-grid { display:grid; grid-template-columns:.92fr 1.05fr .95fr; gap:4mm; align-items:start; }
@@ -1289,7 +1289,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 .mta-print-page .cod-print-integrity > div { border-color:#5b7786; }
 .mta-print-page .cod-print-integrity i.filled { box-shadow:inset 0 0 0 .45mm #edf5f8; }
 .mta-print-page .cod-print-experience { position:relative; isolation:isolate; padding:2mm 2.5mm; background:rgba(250,252,252,.72); }
-.mta-print-page .cod-print-experience::before { content:""; position:absolute; z-index:-1; inset:-10mm -3.5mm; pointer-events:none; background:url("/mage/style/box-closed.webp") center/100% 100% no-repeat; }
+.mta-print-page .cod-print-experience::before { content:""; position:absolute; z-index:-1; inset:-10mm -3.5mm; pointer-events:none; background:url("/game-lines/mage/images/box-closed.webp") center/100% 100% no-repeat; }
 .mta-print-derived { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 4mm; margin:0; font:8pt/1.4 Inter,Arial,sans-serif; }
 .mta-print-derived div { display:grid; grid-template-columns:minmax(0,1fr) auto; min-height:4.8mm; align-items:end; gap:2mm; border-bottom:.2mm solid #66818e; }
 .mta-print-derived dt { font-weight:700; }
@@ -1325,7 +1325,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 .mta-sheet .sheet-bottom-grid.mage-bottom-grid > section:last-child { padding-right:0; }
 
 .mta-sheet .sheet-bottom-grid.mage-bottom-grid > section + section {
-  background:url("/mage/style/vertical-rule.webp") left top/15px 100% no-repeat;
+  background:url("/game-lines/mage/images/vertical-rule.webp") left top/15px 100% no-repeat;
 }
 
 /* --------------------------------------------------------------------------
@@ -1336,7 +1336,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 
 .mta-sheet .mage-page-355-grid > section + section {
   padding-left:28px;
-  background:url("/mage/style/vertical-rule.webp") left top/15px 100% no-repeat;
+  background:url("/game-lines/mage/images/vertical-rule.webp") left top/15px 100% no-repeat;
 }
 
 .mta-sheet .contract-power-summary,

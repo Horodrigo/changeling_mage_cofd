@@ -23,7 +23,7 @@ const changelingRules = await vite.ssrLoadModule("/game-lines/changeling/builder
 const regaliaRules = await vite.ssrLoadModule("/lib/changeling-regalia.ts");
 const courtCatalog = await vite.ssrLoadModule("/lib/changeling-courts.ts");
 courtCatalog.replaceCourtCatalog(
-  JSON.parse(readFileSync(new URL("../public/data/changeling/courts.json", import.meta.url), "utf8")),
+  JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/courts.json", import.meta.url), "utf8")),
 );
 const creationRules = await vite.ssrLoadModule("/game-lines/changeling/creation-rules.ts");
 

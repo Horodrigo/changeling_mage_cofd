@@ -6,7 +6,7 @@ const root = new URL("../", import.meta.url);
 const readJson = async (path) => JSON.parse(await readFile(new URL(path, root), "utf8"));
 
 test("catalog manifest resolves every independently versioned static resource", async () => {
-  const manifest = await readJson("public/data/manifest.json");
+  const manifest = await readJson("public/shared/data/catalog-manifest.json");
   assert.equal(manifest.schemaVersion, 1);
   assert.ok(manifest.catalogVersion > 0);
   for (const [key, entry] of Object.entries(manifest.catalogs)) {
@@ -18,36 +18,37 @@ test("catalog manifest resolves every independently versioned static resource", 
 });
 
 test("spell index and Arcana shards preserve the same unique IDs", async () => {
-  const index = await readJson("public/data/mage/spells/index.json");
+  const index = await readJson("public/game-lines/mage/data/spells/index.json");
   const shards = [...new Set(index.map((item) => item.shard))];
-  const records = (await Promise.all(shards.map((name) => readJson(`public/data/mage/spells/${name}.json`)))).flat();
+  const records = (await Promise.all(shards.map((name) => readJson(`public/game-lines/mage/data/spells/${name}.json`)))).flat();
   assert.equal(index.length, 360);
   assert.deepEqual(new Set(records.map((item) => item.id)), new Set(index.map((item) => item.id)));
 });
 
 test("contract source shards preserve unique IDs", async () => {
   const shards = ["h-courts", "ctl-oak-ash-thorn", "ctl-the-hedge", "ctl-dark-eras", "ctl-kith-and-kin", "ctl-core"];
-  const records = (await Promise.all(shards.map((name) => readJson(`public/data/changeling/contracts/${name}.json`)))).flat();
+  const records = (await Promise.all(shards.map((name) => readJson(`public/game-lines/changeling/data/contracts/${name}.json`)))).flat();
   assert.equal(records.filter((item) => !item.sourceId.startsWith("h-")).length, 180);
   assert.equal(new Set(records.map((item) => item.id)).size, records.length);
 });
 
 test("merit index and game-line shards preserve all catalog rows", async () => {
-  const index = await readJson("public/data/core/merits/index.json");
-  const records = (await Promise.all(["core", "changeling", "mage"].map((name) => readJson(`public/data/core/merits/${name}.json`)))).flat();
+  const index = await readJson("public/shared/data/merits-index.json");
+  const paths = ["shared/data/merits.json", "game-lines/changeling/data/merits.json", "game-lines/mage/data/merits.json"];
+  const records = (await Promise.all(paths.map(path => readJson(`public/${path}`)))).flat();
   assert.equal(records.length, 417);
   assert.deepEqual(new Set(records.map((item) => item.id)), new Set(index.map((item) => item.id)));
 });
 
 test("Changeling reference catalogs preserve audited record counts", async () => {
   const [coreConditions, corePresentation, conditions, conditionPresentation, courts, entitlements, kiths] = await Promise.all([
-    readJson("public/data/core/conditions.json"),
-    readJson("public/data/core/conditions-pt.json"),
-    readJson("public/data/changeling/conditions.json"),
-    readJson("public/data/changeling/conditions-pt.json"),
-    readJson("public/data/changeling/courts.json"),
-    readJson("public/data/changeling/entitlements.json"),
-    readJson("public/data/changeling/kiths.json"),
+    readJson("public/shared/data/conditions.json"),
+    readJson("public/shared/data/conditions-pt.json"),
+    readJson("public/game-lines/changeling/data/conditions.json"),
+    readJson("public/game-lines/changeling/data/conditions-pt.json"),
+    readJson("public/game-lines/changeling/data/courts.json"),
+    readJson("public/game-lines/changeling/data/entitlements.json"),
+    readJson("public/game-lines/changeling/data/kiths.json"),
   ]);
   assert.equal(coreConditions.length, 34);
   assert.equal(conditions.length, 32);

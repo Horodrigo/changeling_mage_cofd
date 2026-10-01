@@ -183,7 +183,7 @@ body:has(.line-theme-vtr) {
    Mirrors the Changeling sheet's hierarchy and ornamental treatment while
    retaining Vampire's burgundy palette and Vampire-specific layouts.
 
-   Vampire assets live in /public/vampire/style:
+   Vampire assets live in /public/game-lines/vampire/images:
    - attributes-divider.webp
    - attributes-divider-thorns.webp
    - divider-terminal.webp
@@ -323,7 +323,7 @@ body:has(.line-theme-vtr) {
     + 6px
   );
 
-  background-image: url("/vampire/style/frame-blood-center-top.webp");
+  background-image: url("/game-lines/vampire/images/frame-blood-center-top.webp");
 }
 
 .vtr-frame-center-bottom {
@@ -333,13 +333,13 @@ body:has(.line-theme-vtr) {
     + 6px
   );
 
-  background-image: url("/vampire/style/frame-blood-center-bottom.webp");
+  background-image: url("/game-lines/vampire/images/frame-blood-center-bottom.webp");
 }
 
 .vtr-frame-side {
   width: var(--vtr-frame-side-width);
   height: var(--vtr-frame-side-height);
-  background-image: url("/vampire/style/divider-terminal.webp");
+  background-image: url("/game-lines/vampire/images/divider-terminal.webp");
   background-position: center;
   background-size: contain;
 }
@@ -372,7 +372,7 @@ body:has(.line-theme-vtr) {
 .vtr-frame-corner {
   width: 190px;
   height: 178px;
-  background-image: url("/vampire/style/thorns-corner.webp");
+  background-image: url("/game-lines/vampire/images/thorns-corner.webp");
   background-position: left top;
   background-size: contain;
 }
@@ -391,7 +391,7 @@ body:has(.line-theme-vtr) {
 
 /* Keep the existing Vampire watermark, but move it behind the real content. */
 .cod-sheet.vtr-sheet::after {
-  background-image: url("/vampire/style/background-vampire.webp");
+  background-image: url("/game-lines/vampire/images/background-vampire.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50% auto;
@@ -426,7 +426,7 @@ body:has(.line-theme-vtr) {
   height: 17px;
   pointer-events: none;
   background-image:
-    url("/vampire/style/divider-terminal.webp"),
+    url("/game-lines/vampire/images/divider-terminal.webp"),
     linear-gradient(
       transparent 43%,
       var(--vtr-ink-soft) 43%,
@@ -472,7 +472,7 @@ body:has(.line-theme-vtr) {
   overflow: hidden;
   color: transparent;
 
-  background-image: url("/vampire/style/vampire-title.webp");
+  background-image: url("/game-lines/vampire/images/vampire-title.webp");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -555,7 +555,7 @@ body:has(.line-theme-vtr) {
   inset: 3px;
 
   background-color: var(--vtr-ink);
-  background-image: url("/vampire/style/selected-tab-texture.webp");
+  background-image: url("/game-lines/vampire/images/selected-tab-texture.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -669,7 +669,7 @@ body:has(.line-theme-vtr) {
   height: 16px;
   background-color: transparent;
   background-image:
-    url("/vampire/style/divider-terminal.webp"),
+    url("/game-lines/vampire/images/divider-terminal.webp"),
     linear-gradient(var(--vtr-rule), var(--vtr-rule)),
     linear-gradient(var(--vtr-rule), var(--vtr-rule));
   background-position:
@@ -701,7 +701,7 @@ body:has(.line-theme-vtr) {
 .vtr-sheet .official-heading.main-sheet-conditions-heading::before,
 .vtr-sheet .official-heading.main-sheet-conditions-heading::after {
   background-image:
-    url("/vampire/style/divider-terminal.webp"),
+    url("/game-lines/vampire/images/divider-terminal.webp"),
     linear-gradient(var(--vtr-rule), var(--vtr-rule));
   background-position:
     left center,
@@ -731,8 +731,8 @@ body:has(.line-theme-vtr) {
   height: 54px;
   min-width: 0;
   background-image:
-    url("/vampire/style/attributes-divider-thorns.webp"),
-    url("/vampire/style/attributes-divider.webp");
+    url("/game-lines/vampire/images/attributes-divider-thorns.webp"),
+    url("/game-lines/vampire/images/attributes-divider.webp");
   background-position: 100% center, left center;
   background-repeat: no-repeat;
   background-size: auto 26px, calc(100% - 55px) auto;
@@ -1409,7 +1409,7 @@ body:has(.line-theme-vtr) {
   .vtr-sheet .official-heading:has(+ :is(.official-trait-grid, .mobile-attribute-grid))::after {
     width: calc(50% - 58px);
     height: 42px;
-    background-image: url("/vampire/style/attributes-divider-thorns.webp");
+    background-image: url("/game-lines/vampire/images/attributes-divider-thorns.webp");
     background-position: right center;
     background-size: auto 22px;
   }
@@ -1532,7 +1532,7 @@ body:has(.line-theme-vtr) {
   -webkit-print-color-adjust: exact;
 }
 
-.vtr-print-page::after { position:absolute; inset:0; z-index:0; background:url("/vampire/style/background-vampire.webp") center/50% auto no-repeat; content:""; opacity:.2; pointer-events:none; }
+.vtr-print-page::after { position:absolute; inset:0; z-index:0; background:url("/game-lines/vampire/images/background-vampire.webp") center/50% auto no-repeat; content:""; opacity:.2; pointer-events:none; }
 .vtr-print-page > * { position: relative; z-index: 1; }
 
 .vtr-print-frame {
@@ -1563,10 +1563,10 @@ body:has(.line-theme-vtr) {
 }
 
 .vtr-print-page > header::before,
-.vtr-print-page > header::after { position:absolute; bottom:0; width:50%; height:4.5mm; background-image:url("/vampire/style/divider-terminal.webp"),linear-gradient(transparent 43%,var(--vtr-ink-soft) 43%,var(--vtr-ink-soft) 48%,transparent 48%,transparent 57%,var(--vtr-rule) 57%,var(--vtr-rule) 62%,transparent 62%); background-position:left center,2mm center; background-repeat:no-repeat,no-repeat; background-size:auto 4.5mm,calc(100% - 2mm) 100%; content:""; }
+.vtr-print-page > header::after { position:absolute; bottom:0; width:50%; height:4.5mm; background-image:url("/game-lines/vampire/images/divider-terminal.webp"),linear-gradient(transparent 43%,var(--vtr-ink-soft) 43%,var(--vtr-ink-soft) 48%,transparent 48%,transparent 57%,var(--vtr-rule) 57%,var(--vtr-rule) 62%,transparent 62%); background-position:left center,2mm center; background-repeat:no-repeat,no-repeat; background-size:auto 4.5mm,calc(100% - 2mm) 100%; content:""; }
 .vtr-print-page > header::before { left:0; }
 .vtr-print-page > header::after { right:0; transform:scaleX(-1); }
-.vtr-print-page > header > div { width:94mm; height:22mm; background:url("/vampire/style/vampire-title.webp") left center/contain no-repeat; }
+.vtr-print-page > header > div { width:94mm; height:22mm; background:url("/game-lines/vampire/images/vampire-title.webp") left center/contain no-repeat; }
 .vtr-print-page > header span,
 .vtr-print-page > header strong { visibility: hidden; }
 .vtr-print-page > header p { margin:0; color:var(--vtr-ink-soft); font-size:6pt; letter-spacing:.22em; }

@@ -69,10 +69,10 @@ test("Vampire normalization owns its line_data, clamps ratings, and drops retire
 });
 
 test("Vampire catalogs group core, historical, and uncommon Clans", async () => {
-  const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
-  const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const clans = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/clans.json`, "utf8"));
+  const covenants = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/covenants.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   assert.deepEqual(Object.fromEntries(["core", "historical", "uncommon"].map((group) => [group, clans.filter((item) => item.group === group).length])), { core: 5, historical: 5, uncommon: 6 });
   assert.ok(clans.some((item) => item.id === "jiang-shi" && item.group === "uncommon"));
   assert.ok(clans.some((item) => item.id === "twice-cursed" && item.favoredAttributeMode === "both"));
@@ -97,7 +97,7 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
 });
 
 test("audited Vampire sourcebooks include their published rules text", async () => {
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const entries = [
     ...powers.disciplines.flatMap((item) => item.levels.map((level) => ({ ...level, source: item.source }))),
     ...Object.entries(powers)
@@ -114,7 +114,7 @@ test("audited Vampire sourcebooks include their published rules text", async () 
 });
 
 test("Vampire Devotions keep published roll results out of Effect", async () => {
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const embeddedResult = /Roll Results|(?:^|\s)(?:Success|Exceptional Success|Failure|Dramatic Failure):/;
   assert.deepEqual(powers.devotions.filter((item) => embeddedResult.test(item.effect ?? "")).map((item) => item.name), []);
   assert.equal(powers.devotions.find((item) => item.name === "It's Who You Know").rollResults.success.startsWith("For each success"), true);
@@ -124,8 +124,8 @@ test("Vampire Devotions keep published roll results out of Effect", async () => 
 });
 
 test("Vampire core p. 101 exposes Retainer(Ghoul) without changing Core Retainer", async () => {
-  const vampireMerits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const coreMerits = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const vampireMerits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const coreMerits = JSON.parse(await readFile(`${root}/public/shared/data/merits.json`, "utf8"));
   const { VAMPIRE_MERIT_CONFIGURATIONS } = await vite.ssrLoadModule("/game-lines/vampire/merit-configurations.ts");
   const merit = vampireMerits.find((item) => item.id === "vtr-retainer-ghoul");
   const configuration = VAMPIRE_MERIT_CONFIGURATIONS.find((item) => item.name === "Retainer(Ghoul)");
@@ -139,8 +139,8 @@ test("Vampire core p. 101 exposes Retainer(Ghoul) without changing Core Retainer
 });
 
 test("supplement catalogs expose the audited Bloodlines and gate Dead Signal to Jharana", async () => {
-  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const { vampireRules } = await vite.ssrLoadModule("/game-lines/vampire/rules.ts");
   assert.equal(bloodlines.length, 56);
   assert.deepEqual(
@@ -162,8 +162,8 @@ test("supplement catalogs expose the audited Bloodlines and gate Dead Signal to 
 });
 
 test("supplement catalogs exclude Lingua Bellum, chronicle, coterie, Ghoul, Dhampyr, Strix, and Revenant options", async () => {
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const forbidden = ["Lingua Bellum", "Group Touchstone", "Common Enmity", "Goal", "History", "Risen Beast", "Dialog", "Society of Accord"];
   assert.deepEqual(forbidden.filter((name) => merits.some((item) => item.name === name)), []);
   assert.deepEqual(["Whip-Sharp Tongue", "Cybernetic Mimic", "Parliament's Apostle", "Codependency"].filter((name) => [...powers.devotions, ...powers.scales, ...powers.detournements].some((item) => item.name === name)), []);
@@ -186,9 +186,9 @@ test("new Clan and Covenant Disciplines are available only to their owning ident
 
 test("Vampire Bloodlines filter by stable Clan and Covenant Status identities", async () => {
   const { vampireBloodlineAvailable } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
-  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
-  const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
-  const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const clans = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/clans.json`, "utf8"));
+  const covenants = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/covenants.json`, "utf8"));
   const reference = { clans, covenants };
   for (const bloodline of bloodlines) {
     const expected = clans.filter((clan) => bloodline.parentClan.split(/\s+or\s+/i).includes(clan.name)).map((clan) => clan.id);
@@ -206,9 +206,9 @@ test("Vampire Bloodlines filter by stable Clan and Covenant Status identities", 
 test("joining a Vampire Bloodline replaces and later restores the creation Attribute bonus", async () => {
   const { joinVampireBloodline, removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
   const { vampireEditableCreationAttributes } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
-  const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const clans = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/clans.json`, "utf8"));
   const creation = { Intelligence: 3, Wits: 3, Resolve: 2, Strength: 3, Dexterity: 3, Stamina: 1, Presence: 2, Manipulation: 3, Composure: 1 };
   const character = { attributes: { ...creation, Dexterity: 4 }, line_data: { clan_id: "daeva", favored_attribute: "Dexterity", favored_attributes: ["Dexterity"], disciplines: {}, devotion_ids: [] }, current_state: {}, derived: { LimiteDeCaracteristica: 5 } };
   const definition = bloodlines.find((item) => item.id === "jharana");
@@ -238,8 +238,8 @@ test("Vampire Devotion prerequisites support alternatives and automatic Bloodlin
 
 test("Khaibit and Kerberos automatic Devotions are removed with their Bloodline", async () => {
   const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
   const character = { line_data: { bloodline_id: "khaibit", devotion_ids: ["devotion-udjat", "devotion-ba"], disciplines: {} }, current_state: {} };
   const removed = removeVampireBloodline(character, bloodlines.find((item) => item.id === "khaibit"), powers);
   assert.deepEqual(removed.line_data.devotion_ids, ["devotion-ba"]);
@@ -247,8 +247,8 @@ test("Khaibit and Kerberos automatic Devotions are removed with their Bloodline"
 
 test("removing a Bloodline clears and refunds its exclusive Discipline", async () => {
   const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
   const character = {
     id: "refund", schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR", ruleset: { id: "vtr-2ed-embedded", version: 1 },
     character: { name: "Signal", concept: "", player: "", chronicle: "" }, attributes: {}, skills: {}, specializations: [], merits: [], derived: {}, created_at: "", updated_at: "",
@@ -264,8 +264,8 @@ test("removing a Bloodline clears and refunds its exclusive Discipline", async (
 });
 
 test("Secrets of the Covenants exposes every printed Merit, Law, Oath, and Wyrm's Nest Merit", async () => {
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const core = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const core = JSON.parse(await readFile(`${root}/public/shared/data/merits.json`, "utf8"));
   const supplement = merits.filter((item) => item.sourceId === "vtr-sotc");
   const count = (category) => supplement.filter((item) => item.category === category).length;
 
@@ -287,8 +287,8 @@ test("Secrets of the Covenants exposes every printed Merit, Law, Oath, and Wyrm'
 test("Vampire Merit filters group affiliations and style variants without changing catalog categories", async () => {
   const { vampireMeritFilterCategory } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
   const merits = [
-    ...JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8")),
-    ...JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8")),
+    ...JSON.parse(await readFile(`${root}/public/shared/data/merits.json`, "utf8")),
+    ...JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8")),
   ];
   const categories = [...new Set(merits.map(vampireMeritFilterCategory))].sort();
 
@@ -304,7 +304,7 @@ test("Vampire Merit filters group affiliations and style variants without changi
 });
 
 test("Secrets of the Covenants exposes every Crúac rite, Theban miracle, Coil level, and Scale", async () => {
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const fromSupplement = (items) => items.filter((item) => item.source === "Secrets of the Covenants");
   const coils = fromSupplement(powers.coils);
 
@@ -318,7 +318,7 @@ test("Secrets of the Covenants exposes every Crúac rite, Theban miracle, Coil l
 
 test("Coil of Zirnitra unlocks one mortal Supernatural Merit per dot and removes the limit at five", async () => {
   const { vampireMeritEligible, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
-  const catalog = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
+  const catalog = JSON.parse(await readFile(`${root}/public/shared/data/merits.json`, "utf8"));
   const automaticWriting = catalog.find((item) => item.id === "core-2ed:automatic-writing");
   const layingOnHands = catalog.find((item) => item.id === "core-2ed:laying-on-hands");
   const numbingTouch = catalog.find((item) => item.id === "core-2ed:numbing-touch");
@@ -355,7 +355,7 @@ test("Coil of Zirnitra unlocks one mortal Supernatural Merit per dot and removes
 });
 
 test("Secrets of the Covenants exposes its two printed Conditions", async () => {
-  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
   assert.deepEqual(
     conditions.filter((item) => item.source === "Secrets of the Covenants").map((item) => item.name).sort(),
     ["Oathbreaker", "Primeval Truths"],
@@ -363,9 +363,9 @@ test("Secrets of the Covenants exposes its two printed Conditions", async () => 
 });
 
 test("Vampire exposes every line-owned core-book Condition and reuses Core Swooned", async () => {
-  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
-  const core = JSON.parse(await readFile(`${root}/public/data/core/conditions.json`, "utf8"));
-  const mage = JSON.parse(await readFile(`${root}/public/data/mage/conditions.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
+  const core = JSON.parse(await readFile(`${root}/public/shared/data/conditions.json`, "utf8"));
+  const mage = JSON.parse(await readFile(`${root}/public/game-lines/mage/data/conditions.json`, "utf8"));
   const coreBook = conditions.filter((item) => item.source === "Vampire: The Requiem Second Edition");
   const added = [
     "Addicted", "Charmed", "Confused", "Delusional", "Distracted", "Dominated", "Drained", "Ecstatic", "Enervated", "Enslaved",
@@ -387,7 +387,7 @@ test("Vampire exposes every line-owned core-book Condition and reuses Core Swoon
 });
 
 test("known Vampire power and Bloodline Condition references resolve", async () => {
-  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
   const available = new Set(conditions.map((item) => item.id));
   for (const id of ["charmed", "dominated", "ecstatic", "enslaved", "false-memories", "humbled", "mesmerized", "raptured", "sated", "subservient", "tainted"]) {
     assert.ok(available.has(id), id);
@@ -395,7 +395,7 @@ test("known Vampire power and Bloodline Condition references resolve", async () 
 });
 
 test("excluded Ghoul, Dhampyr, and Revenant Conditions are absent", async () => {
-  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
   const halfDamned = conditions.filter((item) => item.sourceCode === "HD");
   const elders = conditions.filter((item) => item.sourceCode === "TY");
 
@@ -407,10 +407,10 @@ test("excluded Ghoul, Dhampyr, and Revenant Conditions are absent", async () => 
 });
 
 test("Secrets of the Covenants catalog totals the 107 audited primary mechanics", async () => {
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const core = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const core = JSON.parse(await readFile(`${root}/public/shared/data/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
   const source = (items) => items.filter((item) => item.source === "Secrets of the Covenants");
   const records = [
     ...source(merits),
@@ -428,7 +428,7 @@ test("Secrets of the Covenants catalog totals the 107 audited primary mechanics"
 test("Vampire Discipline presentation never applies Attribute translations", async () => {
   const { vampireDisciplineDisplayName } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const { ruleSelectOptionLabel } = await vite.ssrLoadModule("/app/workspace/rule-select.tsx");
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   assert.equal(vampireDisciplineDisplayName("Vigor", powers.disciplines, "en-US"), "Vigor");
   assert.equal(vampireDisciplineDisplayName("Vigor", powers.disciplines, "pt-BR"), "Ímpeto");
   assert.equal(ruleSelectOptionLabel({ value: "Vigor", label: "Vigor", localized: true }, "en-US"), "Vigor");
@@ -439,7 +439,7 @@ test("Vampire Discipline presentation never applies Attribute translations", asy
 
 test("Vampire sheet presents owned Coils and keeps all rituals under their Discipline", async () => {
   const { ownedVampireCoils, ownedVampireRituals } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const [coil] = powers.coils;
   const [rite] = powers.cruacRites;
   const [miracle] = powers.thebanMiracles;
@@ -460,8 +460,8 @@ test("Vampire sheet presents owned Coils and keeps all rituals under their Disci
 });
 
 test("Adrestoi Blood Tether exposes Lashes and grants Gangrel-only Pack Alpha through Pack creation", async () => {
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
   const { BLOOD_TETHER_PACK_GRANT, createBloodTetherPack, leaveBloodTetherPack, synchronizeBloodTetherPack, vampireBloodTetherLashes } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const { vampireMeritEligible } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
   const packAlpha = merits.find((item) => item.id === "vtr-pack-alpha");
@@ -489,7 +489,7 @@ test("Adrestoi Blood Tether exposes Lashes and grants Gangrel-only Pack Alpha th
 
 test("Vampire creation and editing persist the selected Covenant Discipline without losing XP advances", async () => {
   const { reconcileCreationCovenantPower } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const [rite] = powers.cruacRites;
   const [miracle] = powers.thebanMiracles;
   const [coil] = powers.coils;
@@ -560,9 +560,9 @@ test("Vampire Status and English trait prerequisites resolve against neutral sto
 });
 
 test("Hollow Mekhet keeps the official Clan and offers only the Simplified Hollow homebrew toggle", async () => {
-  const clans = JSON.parse(await readFile(`${root}/public/data/vampire/clans.json`, "utf8"));
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const clans = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/clans.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const { hollowKaLimits, hollowKaRank, simplifiedHollowKaPool } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   assert.equal(clans.find((item) => item.id === "hollow-mekhet")?.source, "Thousand Years of Night");
   assert.equal(merits.some((item) => item.category === "Hollow Mekhet"), false);
@@ -573,13 +573,13 @@ test("Hollow Mekhet keeps the official Clan and offers only the Simplified Hollo
 });
 
 test("every published Vampire homebrew item is inventoried and can be disabled by source or item", async () => {
-  const manifest = JSON.parse(await readFile(`${root}/public/data/manifest.json`, "utf8"));
-  const bloodlines = JSON.parse(await readFile(`${root}/public/data/vampire/bloodlines.json`, "utf8"));
-  const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
-  const conditions = JSON.parse(await readFile(`${root}/public/data/vampire/conditions.json`, "utf8"));
-  const coreMerits = JSON.parse(await readFile(`${root}/public/data/core/merits/core.json`, "utf8"));
-  const merits = JSON.parse(await readFile(`${root}/public/data/vampire/merits.json`, "utf8"));
-  const powers = JSON.parse(await readFile(`${root}/public/data/vampire/powers.json`, "utf8"));
+  const manifest = JSON.parse(await readFile(`${root}/public/shared/data/catalog-manifest.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const covenants = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/covenants.json`, "utf8"));
+  const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
+  const coreMerits = JSON.parse(await readFile(`${root}/public/shared/data/merits.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
   const { activeVampireItems, activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
   const items = [
@@ -655,7 +655,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
 });
 
 test("Vampire supports multiple Covenants and grants Shadow Cult Initiation instead of Kindred Status", async () => {
-  const covenants = JSON.parse(await readFile(`${root}/public/data/vampire/covenants.json`, "utf8"));
+  const covenants = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/covenants.json`, "utf8"));
   const { synchronizeVampireBuilderMeritGrants } = await vite.ssrLoadModule("/game-lines/vampire/builder-merit-grants.ts");
   const { vampireCovenantAffiliationDots } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const sheet = {

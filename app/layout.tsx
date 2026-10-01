@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import "./css/globals.css";
-import "./css/mortal-sheet.css";
-import "./css/changeling-sheet.css";
-import "./css/mage-sheet.css";
-import "./css/vampire-sheet.css";
-import "./css/vampire-interactions.css";
+import "../game-lines/mortal/styles/sheet.css";
+import "../game-lines/changeling/styles/sheet.css";
+import "../game-lines/mage/styles/sheet.css";
+import "../game-lines/vampire/styles/sheet.css";
+import "../game-lines/vampire/styles/interactions.css";
 import { PwaManager } from "./pwa-manager";
 import { LanguageProvider } from "@/lib/i18n";
 

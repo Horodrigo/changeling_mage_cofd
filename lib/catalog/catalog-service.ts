@@ -6,7 +6,7 @@ import type {
 } from "@/lib/game-line-contracts/catalog-groups";
 import type { CatalogManifest } from "./catalog-types";
 
-const MANIFEST_URL = "/data/manifest.json";
+const MANIFEST_URL = "/shared/data/catalog-manifest.json";
 const MANIFEST_CACHE_KEY = "catalog-manifest";
 const memory = new Map<string, Promise<unknown>>();
 

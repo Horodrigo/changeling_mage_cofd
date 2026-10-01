@@ -10,10 +10,10 @@ after(async () => vite.close());
 
 const contractShards = ["h-courts","ctl-oak-ash-thorn","ctl-the-hedge","ctl-dark-eras","ctl-kith-and-kin","ctl-core"];
 const CONTRACTS = contractShards.flatMap((name) =>
-  JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}.json`, import.meta.url), "utf8")),
+  JSON.parse(readFileSync(new URL(`../public/game-lines/changeling/data/contracts/${name}.json`, import.meta.url), "utf8")),
 );
 const CONTRACT_PRESENTATION_PT = Object.assign({}, ...contractShards.map((name) =>
-  JSON.parse(readFileSync(new URL(`../public/data/changeling/contracts/${name}-pt.json`, import.meta.url), "utf8")),
+  JSON.parse(readFileSync(new URL(`../public/game-lines/changeling/data/contracts/${name}-pt.json`, import.meta.url), "utf8")),
 ));
 const CONTRACT_NAME_ALIASES = Object.fromEntries(
   CONTRACTS.flatMap((contract) => [[contract.name, contract.id], [contract.originalName, contract.id]]),
@@ -68,7 +68,7 @@ test("família Zodiac inclui dez Contratos, quatro Clauses, Contemptuous e a tab
   assert.equal(items.length, 10);
   assert.ok(items.every((contract) => Object.keys(contract.courtClauses ?? {}).length === 4));
   assert.equal(items.find((contract) => contract.originalName === "Assuming the Stellar Mantle")?.detailTables?.[0]?.rows.length, 12);
-  const CHANGELING_CONDITIONS = JSON.parse(readFileSync(new URL("../public/data/changeling/conditions.json", import.meta.url), "utf8"));
+  const CHANGELING_CONDITIONS = JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/conditions.json", import.meta.url), "utf8"));
   assert.ok(CHANGELING_CONDITIONS.some((condition) => condition.originalName === "Contemptuous" && condition.source === "Book of Courts"));
 });
 
@@ -295,7 +295,7 @@ test("tradução pt-BR do bloco Thorn de Kith and Kin está completa", () => {
     if(item.hasRoll) for(const field of ["success","exceptionalSuccess","failure","dramaticFailure"]) assert.ok(text[field]?.trim(),`${item.id}.${field}`);
     assert.deepEqual(Object.keys(text.seemingBenefits??{}).sort(),Object.keys(item.seemingBenefits??{}).sort());
   }
-  assert.equal(JSON.parse(readFileSync(new URL("../public/data/changeling/conditions-pt.json",import.meta.url),"utf8")).comatose.name,"Comatoso");
+  assert.equal(JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/conditions-pt.json",import.meta.url),"utf8")).comatose.name,"Comatoso");
 });
 
 test("tradução pt-BR do bloco Independent conclui Kith and Kin", () => {

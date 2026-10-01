@@ -8,14 +8,14 @@ const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(async()=>vite.close());
 const entitlementModule=await vite.ssrLoadModule("/lib/entitlements.ts");
-const ENTITLEMENTS=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements.json",import.meta.url),"utf8"));
-const ENTITLEMENTS_PT=JSON.parse(readFileSync(new URL("../public/data/changeling/entitlements-pt.json",import.meta.url),"utf8"));
+const ENTITLEMENTS=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/entitlements.json",import.meta.url),"utf8"));
+const ENTITLEMENTS_PT=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/entitlements-pt.json",import.meta.url),"utf8"));
 const {entitlementPresentation,normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;
 const {synchronizeChangelingBuilderMeritGrants}=await vite.ssrLoadModule("/game-lines/changeling/builder-merit-grants.ts");
 const synchronizeMeritGrants=(character)=>synchronizeChangelingBuilderMeritGrants(character,ENTITLEMENTS);
 const {refundMeritDots}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const {refundPowerRating}=await vite.ssrLoadModule("/lib/power-progression.ts");
-const CHANGELING_MERITS=JSON.parse(readFileSync(new URL("../public/data/core/merits/changeling.json",import.meta.url),"utf8"));
+const CHANGELING_MERITS=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/merits.json",import.meta.url),"utf8"));
 
 const allocation=(sequence,target,blessingId)=>({id:`a${sequence}`,sequence,target,...(blessingId?{blessingId}:{})});
 function sheet(){return {game_line:"CtL",attributes:{Presence:2,Manipulation:2,Composure:2},skills:{Empathy:2,Intimidation:2,Persuasion:2,Investigation:2},specializations:[],merits:[{instanceId:"entitlement",name:"Entitlement",dots:4,configuration:{definitionId:"baron-lesser-ones"}},{name:"Hob Kin",dots:1}],line_data:{wyrd:5,entitlement:{definitionId:"baron-lesser-ones",accepted:true,touchstone:{name:"Ana",status:"active"},allocations:[allocation(0,"token"),allocation(1,"blessing","inherited-expertise"),allocation(2,"blessing","hobgoblin-allies"),allocation(3,"token"),allocation(4,"blessing","hostile-oath")],choices:{"inherited-expertise-skill":"Empathy","inherited-expertise-name":"Diplomacy","hobgoblin-allies":"Briarwolves"}}}};}

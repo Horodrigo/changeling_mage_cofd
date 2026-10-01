@@ -20,7 +20,7 @@ from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / "assets" / "fonts" / "changeling" / "source"
-DEFAULT_OUTPUT = ROOT / "public" / "fonts" / "changeling"
+DEFAULT_OUTPUT = ROOT / "public" / "game-lines" / "changeling" / "fonts"
 
 
 @dataclass(frozen=True)

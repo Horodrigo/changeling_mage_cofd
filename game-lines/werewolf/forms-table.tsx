@@ -5,7 +5,7 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import { formTraits } from "./creation-rules";
-import "./forms.css";
+import "./styles/forms.css";
 
 /** The five columns remain a comparison, including on mobile and in print. */
 export function FormsTable({ character, reference, baseSize = 5 }: {

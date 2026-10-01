@@ -9,7 +9,7 @@ import { SheetHeading } from "@/app/workspace/sheet-primitives";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import { boundedHarmony } from "./creation-rules";
 import { PassiveRules } from "./passives";
-import "./traits.css";
+import "./styles/traits.css";
 
 export function BreakingPointReference({ reference, harmony }: { reference: WerewolfReferenceCatalog; harmony: number }) {
   const { locale, t } = useLanguage();

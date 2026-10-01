@@ -267,7 +267,7 @@ export function Workspace({
       <section className="content">
         <header className="topbar">
           <button className="top-brand" onClick={() => navigate("inicio")}>
-            <Image src="/cod-emblem-256.webp" alt="" aria-hidden="true" width={52} height={52} unoptimized />
+            <Image src="/shared/images/cod-emblem-256.webp" alt="" aria-hidden="true" width={52} height={52} unoptimized />
           <div>
             <strong>{t("workspace.charactersOfTheDarkness")}</strong>
             <span>{t("workspace.chroniclesOfDarkness")}</span>
@@ -439,7 +439,7 @@ function Dashboard({
           </div>
         </div>
         <div className="sigil" aria-hidden="true">
-          <Image src="/cod-emblem-256.webp" alt="" width={152} height={152} unoptimized />
+          <Image src="/shared/images/cod-emblem-256.webp" alt="" width={152} height={152} unoptimized />
         </div>
       </section>
       {lineCounts.some(({ count }) => count > 0) && (

@@ -38,12 +38,12 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   --sheet-accent:#315e7a;
   --sheet-ink:#253b47;
   background-color:#e8edf0;
-  background-image:url("/mortal/style/paper-texture.webp");
+  background-image:url("/game-lines/mortal/images/paper-texture.webp");
   background-repeat:repeat;
   background-size:1024px 1024px;
 }
 .cofd-sheet::after {
-  background-image:url("/mortal/style/background-mortal.webp");
+  background-image:url("/game-lines/mortal/images/background-mortal.webp");
   background-position:center 46%;
   background-size:min(54%,600px) auto;
   opacity:.20;
@@ -59,7 +59,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   display:block;
   width:220px;
   height:220px;
-  background:url("/mortal/style/frame-corner.webp") left top/contain no-repeat;
+  background:url("/game-lines/mortal/images/frame-corner.webp") left top/contain no-repeat;
 }
 .cofd-frame-corner-top-left { top:0; left:0; }
 .cofd-frame-corner-top-right { top:0; right:0; transform:scaleX(-1); }
@@ -71,7 +71,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   display:block;
   width:52px;
   height:96px;
-  background:url("/mortal/style/frame-center.webp") center/contain no-repeat;
+  background:url("/game-lines/mortal/images/frame-center.webp") center/contain no-repeat;
   transform:translateX(-50%);
 }
 .cofd-frame-center-top { top:-8px; }
@@ -79,14 +79,14 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .cofd-sheet .official-heading::before,
 .cofd-sheet .official-heading::after {
   height:14px;
-  background:transparent url("/mortal/style/section-divider.webp") center/100% 14px no-repeat;
+  background:transparent url("/game-lines/mortal/images/section-divider.webp") center/100% 14px no-repeat;
   opacity:.82;
 }
 .cofd-sheet .official-heading::after { transform:scaleX(-1); }
 .cofd-sheet .cod-main-columns { gap:16px; }
 .cofd-sheet .cod-main-columns > section + section {
   padding-left:14px;
-  background:url("/mortal/style/column-divider.webp") left top/10px 100% no-repeat;
+  background:url("/game-lines/mortal/images/column-divider.webp") left top/10px 100% no-repeat;
 }
 .cofd-sheet .official-heading.cofd-attributes-heading {
   position:relative;
@@ -102,7 +102,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   top:50%;
   width:calc(50% - 76px);
   height:48px;
-  background:transparent url("/mortal/style/attributes-divider.webp") right center/100% auto no-repeat;
+  background:transparent url("/game-lines/mortal/images/attributes-divider.webp") right center/100% auto no-repeat;
   opacity:.9;
 }
 .cofd-sheet .official-heading.cofd-attributes-heading::before { left:0; transform:translateY(-50%); }
@@ -119,7 +119,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .cofd-sheet .official-trait-line small { color:#17384c; font-weight:600; text-shadow:0 1px 0 #fff9; }
 .cofd-sheet :is(small,em,.combat-note,.combat-source,.cod-main-derived-grid span,.tracker-meta span,.tracker-help) { color:#17384c; text-shadow:0 1px 0 #fff9; }
 .cofd-sheet .ctl-sheet-tab-list button[data-state="active"] { position:relative; isolation:isolate; background:transparent; box-shadow:none; }
-.cofd-sheet .ctl-sheet-tab-list button[data-state="active"]::before { content:""; position:absolute; z-index:-1; inset:3px; background:#315e7a url("/mortal/style/selected-tab-texture.webp") center/cover no-repeat; box-shadow:0 0 0 1px rgba(23,56,76,.38); }
+.cofd-sheet .ctl-sheet-tab-list button[data-state="active"]::before { content:""; position:absolute; z-index:-1; inset:3px; background:#315e7a url("/game-lines/mortal/images/selected-tab-texture.webp") center/cover no-repeat; box-shadow:0 0 0 1px rgba(23,56,76,.38); }
 .cofd-sheet .resource-track { grid-template-columns:repeat(10,minmax(0,1fr)); }
 .cofd-sheet .mortal-skill-stack { display:grid; gap:12px; }
 .cofd-sheet .integrity-sheet-section { display:grid; gap:7px; margin-top:12px; }
@@ -222,21 +222,21 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   overflow:hidden;
   padding:9mm 12mm 8mm;
   background-color:#e8edf0;
-  background-image:linear-gradient(rgba(245,248,249,.86),rgba(245,248,249,.86)),url("/mortal/style/paper-texture.webp");
+  background-image:linear-gradient(rgba(245,248,249,.86),rgba(245,248,249,.86)),url("/game-lines/mortal/images/paper-texture.webp");
   background-size:auto,128mm 128mm;
   box-shadow:0 8px 26px #1c2d3740;
   print-color-adjust:exact;
   -webkit-print-color-adjust:exact;
 }
-.cofd-print-page::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:url("/mortal/style/background-mortal.webp") center 48%/112mm auto no-repeat; opacity:.055; }
+.cofd-print-page::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:url("/game-lines/mortal/images/background-mortal.webp") center 48%/112mm auto no-repeat; opacity:.055; }
 .cofd-print-page > :not(.cofd-print-frame) { position:relative; z-index:1; }
 .cofd-print-frame { position:absolute; z-index:2; inset:0; pointer-events:none; }
-.cofd-print-frame i { position:absolute; width:34mm; height:34mm; background:url("/mortal/style/frame-corner.webp") left top/contain no-repeat; opacity:.85; }
+.cofd-print-frame i { position:absolute; width:34mm; height:34mm; background:url("/game-lines/mortal/images/frame-corner.webp") left top/contain no-repeat; opacity:.85; }
 .cofd-print-frame i:nth-child(1) { top:0; left:0; }
 .cofd-print-frame i:nth-child(2) { top:0; right:0; transform:scaleX(-1); }
 .cofd-print-frame i:nth-child(3) { bottom:0; left:0; transform:scaleY(-1); }
 .cofd-print-frame i:nth-child(4) { right:0; bottom:0; transform:scale(-1); }
-.cofd-print-frame span { position:absolute; left:50%; width:9mm; height:17mm; background:url("/mortal/style/frame-center.webp") center/contain no-repeat; transform:translateX(-50%); }
+.cofd-print-frame span { position:absolute; left:50%; width:9mm; height:17mm; background:url("/game-lines/mortal/images/frame-center.webp") center/contain no-repeat; transform:translateX(-50%); }
 .cofd-print-frame span:nth-of-type(1) { top:-2mm; }
 .cofd-print-frame span:nth-of-type(2) { bottom:-2mm; transform:translateX(-50%) rotate(180deg); }
 .cofd-print-page > header { display:grid; min-height:17mm; place-items:center; border-bottom:.35mm solid #315e7a; text-align:center; text-transform:uppercase; }
@@ -249,7 +249,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .cofd-print-page > footer { position:absolute; right:12mm; bottom:3mm; color:#526b78; font:6pt Inter,Arial,sans-serif; }
 .cofd-print-identity { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.2mm 6mm; margin:3mm 0 1mm; }
 .cofd-print-heading { display:flex; min-height:7mm; align-items:center; gap:2mm; margin:1.2mm 0; color:#315e7a; font:400 13pt/1 Georgia,serif; text-align:center; text-transform:uppercase; }
-.cofd-print-heading::before,.cofd-print-heading::after { content:""; height:3.8mm; flex:1; background:transparent url("/mortal/style/section-divider.webp") right center/calc(100% - 1mm) 3.8mm no-repeat; opacity:.86; }
+.cofd-print-heading::before,.cofd-print-heading::after { content:""; height:3.8mm; flex:1; background:transparent url("/game-lines/mortal/images/section-divider.webp") right center/calc(100% - 1mm) 3.8mm no-repeat; opacity:.86; }
 .cofd-print-heading::after { transform:scaleX(-1); }
 .cofd-print-attributes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5mm; }
 .cofd-print-main-grid { display:grid; grid-template-columns:1.05fr .98fr .92fr; gap:4.5mm; align-items:start; }

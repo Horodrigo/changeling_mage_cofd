@@ -12,10 +12,10 @@ const vite = await createServer({ appType: "custom", configFile: false, root, re
 after(async () => vite.close());
 const { meritPresentation, withMeritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
 const { meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
-const core = await json("public/data/core/merits/core.json");
-const changeling = await json("public/data/core/merits/changeling.json");
-const corePt = await json("public/data/core/merits/pt-BR/core.json");
-const changelingPt = await json("public/data/changeling/merits-pt.json");
+const core = await json("public/shared/data/merits.json");
+const changeling = await json("public/game-lines/changeling/data/merits.json");
+const corePt = await json("public/shared/data/merits-pt.json");
+const changelingPt = await json("public/game-lines/changeling/data/merits-pt.json");
 
 test("mortal-only Merits are blocked in supernatural builders and experience, independently of locale", async () => {
   const { meritSelectionProblems, meritContextForSheet } = await vite.ssrLoadModule("/lib/merits.ts");
@@ -115,7 +115,7 @@ test("Changeling-accessible Mage and Vampire merits are translated as shared Cor
 });
 
 test("Merit groups load only their own canonical and presentation catalogs into frozen snapshots", async () => {
-  const manifest = await json("public/data/manifest.json");
+  const manifest = await json("public/shared/data/catalog-manifest.json");
   const requests = [];
   const reader = { getCatalog: async (id) => { requests.push(id); return json(`public${manifest.catalogs[id].url}`); } };
   const { coreMeritsCatalogGroup } = await vite.ssrLoadModule("/game-lines/core/catalogs/merits.ts");

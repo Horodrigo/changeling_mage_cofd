@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Changeling Sheet";
-  src: url("/fonts/changeling/changeling-regular.woff2") format("woff2");
+  src: url("/game-lines/changeling/fonts/changeling-regular.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: "Changeling Sheet";
-  src: url("/fonts/changeling/changeling-italic.woff2") format("woff2");
+  src: url("/game-lines/changeling/fonts/changeling-italic.woff2") format("woff2");
   font-style: italic;
   font-weight: 400;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: "Changeling Sheet Small Caps";
-  src: url("/fonts/changeling/changeling-small-caps.woff2") format("woff2");
+  src: url("/game-lines/changeling/fonts/changeling-small-caps.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -132,7 +132,7 @@ body:has(.line-theme-ctl) {
       rgba(255, 254, 249, 0) 93%,
       rgba(239, 245, 233, 0.94) 100%
     ),
-    url("/changeling/style/paper-texture.webp");
+    url("/game-lines/changeling/images/paper-texture.webp");
   background-repeat: no-repeat, repeat;
   background-size:
     auto,
@@ -433,7 +433,7 @@ body:has(.line-theme-ctl)
   border-radius: 0;
 
   background-color: var(--ctl-paper);
-  background-image: url("/changeling/style/paper-texture.webp");
+  background-image: url("/game-lines/changeling/images/paper-texture.webp");
   background-repeat: repeat;
   background-size: 1024px 1024px;
 
@@ -448,7 +448,7 @@ body:has(.line-theme-ctl)
 }
 
 .ctl-sheet::after {
-  background-image: url("/changeling/style/background-changeling.webp");
+  background-image: url("/game-lines/changeling/images/background-changeling.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50% auto;
@@ -540,7 +540,7 @@ body:has(.line-theme-ctl)
   left: 50%;
   width: var(--ctl-frame-star-width);
   height: var(--ctl-frame-star-height);
-  background-image: url("/changeling/style/frame-center.webp");
+  background-image: url("/game-lines/changeling/images/frame-center.webp");
   background-position: center;
   background-size: 50%;
   background-repeat: no-repeat;
@@ -574,12 +574,12 @@ body:has(.line-theme-ctl)
 }
 
 .ctl-frame-star-side-top-left {
-  background-image: url("/changeling/style/frame-side.webp");
+  background-image: url("/game-lines/changeling/images/frame-side.webp");
   transform: translateX(-50%);
 }
 
 .ctl-frame-star-side-top-right {
-  background-image: url("/changeling/style/frame-side.webp");
+  background-image: url("/game-lines/changeling/images/frame-side.webp");
   transform: translateX(-50%) scaleX(-1);
 }
 
@@ -592,7 +592,7 @@ body:has(.line-theme-ctl)
   bottom: calc(
     var(--ctl-frame-rail-y) - var(--ctl-frame-star-side-half-height)
   );
-  background-image: url("/changeling/style/frame-side.webp");
+  background-image: url("/game-lines/changeling/images/frame-side.webp");
   transform: translateX(-50%) scaleX(-1) rotate(180deg);
 }
 
@@ -600,14 +600,14 @@ body:has(.line-theme-ctl)
   bottom: calc(
     var(--ctl-frame-rail-y) - var(--ctl-frame-star-side-half-height)
   );
-  background-image: url("/changeling/style/frame-side.webp");
+  background-image: url("/game-lines/changeling/images/frame-side.webp");
   transform: translateX(-50%) rotate(180deg);
 }
 
 .ctl-frame-corner {
   width: 190px;
   height: 178px;
-  background-image: url("/changeling/style/frame-corner.webp");
+  background-image: url("/game-lines/changeling/images/frame-corner.webp");
   background-position: left top;
   background-size: contain;
 }
@@ -666,7 +666,7 @@ body:has(.line-theme-ctl)
 .ctl-sheet .cod-sheet-title::before {
   left: 0;
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(
       transparent 43%,
       var(--ctl-ink-soft) 43%,
@@ -686,7 +686,7 @@ body:has(.line-theme-ctl)
   right: 0;
   transform: scaleX(-1);
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(
       transparent 43%,
       var(--ctl-ink-soft) 43%,
@@ -716,7 +716,7 @@ body:has(.line-theme-ctl)
   aspect-ratio: 998 / 190;
   overflow: hidden;
   color: transparent;
-  background-image: url("/changeling/style/title.webp");
+  background-image: url("/game-lines/changeling/images/title.webp");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -827,7 +827,7 @@ body:has(.line-theme-ctl)
   inset: 4px;
   border-radius: 2px;
   background-color: var(--ctl-ink);
-  background-image: url("/changeling/style/tab-texture.webp");
+  background-image: url("/game-lines/changeling/images/tab-texture.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -901,7 +901,7 @@ body:has(.line-theme-ctl)
   background-color: transparent;
 
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(var(--ctl-rule), var(--ctl-rule)),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
 
@@ -930,7 +930,7 @@ body:has(.line-theme-ctl)
 .ctl-sheet .official-heading.main-sheet-conditions-heading::before,
 .ctl-sheet .official-heading.main-sheet-conditions-heading::after {
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
 
   background-position:
@@ -973,8 +973,8 @@ body:has(.line-theme-ctl)
   min-width: 0;
 
   background-image:
-    url("/changeling/style/attributes-divider-leaf.webp"),
-    url("/changeling/style/attributes-divider.webp");
+    url("/game-lines/changeling/images/attributes-divider-leaf.webp"),
+    url("/game-lines/changeling/images/attributes-divider.webp");
 
   background-position:
     100% center,
@@ -1019,7 +1019,7 @@ body:has(.line-theme-ctl)
   > .official-trait-block
   + .official-trait-block {
   border-left: 0;
-  background-image: url("/changeling/style/column-divider.webp");
+  background-image: url("/game-lines/changeling/images/column-divider.webp");
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -1096,7 +1096,7 @@ body:has(.line-theme-ctl)
 
 .ctl-sheet .kith-skill-left {
   width: calc(38px * 760 / 552);
-  background-image: url("/changeling/style/skill-highlight-left.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-left.webp");
 }
 
 .ctl-sheet .kith-skill-middle-1,
@@ -1105,15 +1105,15 @@ body:has(.line-theme-ctl)
 }
 
 .ctl-sheet .kith-skill-middle-1 {
-  background-image: url("/changeling/style/skill-highlight-middle-1.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-middle-1.webp");
 }
 .ctl-sheet .kith-skill-middle-2 {
-  background-image: url("/changeling/style/skill-highlight-middle-2.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-middle-2.webp");
 }
 
 .ctl-sheet .kith-skill-right {
   width: calc(38px * 471 / 552);
-  background-image: url("/changeling/style/skill-highlight-right.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-right.webp");
 }
 
 .ctl-sheet .court-summary-card .court-benefit-locked {
@@ -1687,7 +1687,7 @@ body:has(.line-theme-ctl)
   height: 21px;
   flex: 0 0 21px;
 
-  background: url("/changeling/style/experience-purchase-icon.webp") center /
+  background: url("/game-lines/changeling/images/experience-purchase-icon.webp") center /
     contain no-repeat;
 }
 
@@ -1789,7 +1789,7 @@ body:has(.line-theme-ctl)
 }
 .ctl-sheet .sheet-bottom-grid > section + section {
   border-left: 0;
-  background-image: url("/changeling/style/column-divider.webp");
+  background-image: url("/game-lines/changeling/images/column-divider.webp");
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -2034,7 +2034,7 @@ body:has(.line-theme-ctl)
     width: calc(50% - 60px);
     height: 38px;
 
-    background-image: url("/changeling/style/attributes-divider-leaf.webp");
+    background-image: url("/game-lines/changeling/images/attributes-divider-leaf.webp");
 
     background-position: right center;
 
@@ -2166,7 +2166,7 @@ body:has(.line-theme-ctl)
 @media print {
   .ctl-sheet {
     box-shadow: none;
-    background-image: url("/changeling/style/paper-texture.webp");
+    background-image: url("/game-lines/changeling/images/paper-texture.webp");
   }
 
   .ctl-sheet .cod-sheet-title span,
@@ -2277,7 +2277,7 @@ body:has(.line-theme-ctl)
       rgba(255, 254, 249, 0) 93%,
       rgba(202, 219, 190, 0.42) 100%
     ),
-    url("/changeling/style/paper-texture.webp");
+    url("/game-lines/changeling/images/paper-texture.webp");
   background-repeat: no-repeat, repeat;
   background-size:
     auto,
@@ -2329,7 +2329,7 @@ body:has(.line-theme-ctl)
   width: 50%;
   height: 4.5mm;
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(
       transparent 43%,
       var(--ctl-ink-soft) 43%,
@@ -2367,7 +2367,7 @@ body:has(.line-theme-ctl)
   aspect-ratio: 998/190;
   overflow: hidden;
   color: transparent;
-  background: url("/changeling/style/title.webp") left center/contain no-repeat;
+  background: url("/game-lines/changeling/images/title.webp") left center/contain no-repeat;
   font-size: 0;
   line-height: 0;
 }
@@ -2459,7 +2459,7 @@ body:has(.line-theme-ctl)
   height: 4.2mm;
   background-color: transparent;
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
   background-position:
     left center,
@@ -2490,8 +2490,8 @@ body:has(.line-theme-ctl)
   min-width: 0;
 
   background-image:
-    url("/changeling/style/attributes-divider-leaf.webp"),
-    url("/changeling/style/attributes-divider.webp");
+    url("/game-lines/changeling/images/attributes-divider-leaf.webp"),
+    url("/game-lines/changeling/images/attributes-divider.webp");
 
   background-position:
     100% center,
@@ -2528,7 +2528,7 @@ body:has(.line-theme-ctl)
   align-items: start;
 }
 .ctl-print-main-grid > section + section {
-  background-image: url("/changeling/style/column-divider.webp");
+  background-image: url("/game-lines/changeling/images/column-divider.webp");
   background-position: left top;
   background-repeat: repeat-y;
   background-size: 1.2mm auto;
@@ -2593,21 +2593,21 @@ body:has(.line-theme-ctl)
 }
 .ctl-print-page .kith-skill-left {
   width: calc(7.5mm * 760 / 552);
-  background-image: url("/changeling/style/skill-highlight-left.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-left.webp");
 }
 .ctl-print-page .kith-skill-middle-1,
 .ctl-print-page .kith-skill-middle-2 {
   width: calc(7.5mm * 260 / 552);
 }
 .ctl-print-page .kith-skill-middle-1 {
-  background-image: url("/changeling/style/skill-highlight-middle-1.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-middle-1.webp");
 }
 .ctl-print-page .kith-skill-middle-2 {
-  background-image: url("/changeling/style/skill-highlight-middle-2.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-middle-2.webp");
 }
 .ctl-print-page .kith-skill-right {
   width: calc(7.5mm * 471 / 552);
-  background-image: url("/changeling/style/skill-highlight-right.webp");
+  background-image: url("/game-lines/changeling/images/skill-highlight-right.webp");
 }
 .ctl-print-merits {
   display: grid;
@@ -2873,7 +2873,7 @@ body:has(.line-theme-ctl)
   align-items: start;
 }
 .ctl-print-second-grid > section + section {
-  background-image: url("/changeling/style/column-divider.webp");
+  background-image: url("/game-lines/changeling/images/column-divider.webp");
   background-position: left top;
   background-repeat: repeat-y;
   background-size: 1.2mm auto;
@@ -3010,7 +3010,7 @@ body:has(.line-theme-ctl)
   flex: 1 1 0;
   height: 4.2mm;
   background-image:
-    url("/changeling/style/section-divider.webp"),
+    url("/game-lines/changeling/images/section-divider.webp"),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
   background-position:
     left center,
