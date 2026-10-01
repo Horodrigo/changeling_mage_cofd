@@ -313,7 +313,7 @@ export function CharacterBuilderShell({
   </section>;
 }
 
-export function BuilderExitDialog({ open, onOpenChange, draft, onDiscard, onSave }: { open: boolean; onOpenChange: (open: boolean) => void; draft: boolean; onDiscard: () => void; onSave?: () => void }) {
+export function BuilderExitDialog({ open, onOpenChange, draft, onDiscard, onSave }: { open: boolean; onOpenChange: (open: boolean) => void; draft: boolean; onDiscard: () => void; onSave: () => void }) {
   const { t } = useLanguage();
-  return <AlertDialog open={open} onOpenChange={onOpenChange}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{t("ui.leaveCreation")}</AlertDialogTitle><AlertDialogDescription>{onSave ? t("ui.leaveCreationDescription") : t("ui.leaveCreationWithoutLineDescription")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter className="sm:flex-wrap"><AlertDialogCancel>{t("ui.continueEditing")}</AlertDialogCancel><Button type="button" variant="destructive" onClick={onDiscard}>{t("ui.discardAndExit")}</Button>{onSave && <Button type="button" onClick={onSave}>{draft ? t("ui.saveDraftAndExit") : t("ui.saveChangesAndExit")}</Button>}</AlertDialogFooter></AlertDialogContent></AlertDialog>;
+  return <AlertDialog open={open} onOpenChange={onOpenChange}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>{t("ui.leaveCreation")}</AlertDialogTitle><AlertDialogDescription>{t("ui.leaveCreationDescription")}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter className="sm:flex-wrap"><AlertDialogCancel>{t("ui.continueEditing")}</AlertDialogCancel><Button type="button" variant="destructive" onClick={onDiscard}>{t("ui.discardAndExit")}</Button><Button type="button" onClick={onSave}>{draft ? t("ui.saveDraftAndExit") : t("ui.saveChangesAndExit")}</Button></AlertDialogFooter></AlertDialogContent></AlertDialog>;
 }
