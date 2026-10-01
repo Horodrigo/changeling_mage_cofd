@@ -45,6 +45,8 @@ export const werewolfMessages = {
       ritePrerequisites: "Prerequisites", riteOtherTribe: "This Rite is taught only to another Tribe.",
       riteDotLimit: "This Rite exceeds the available starting Rite dots.", missingSelectedRite: "The selected Rite is absent from this catalog: {id}.",
       creationProblem: {
+        blood: "Choose a Blood archetype.", bone: "Choose a Bone archetype.",
+        physicalTouchstone: "Describe the physical Touchstone.", spiritualTouchstone: "Describe the spiritual Touchstone.",
         auspice: "Choose an Auspice.", tribe: "Choose a Tribe or Ghost Wolves.", auspiceSkill: "Choose an Auspice Skill below five dots for the free dot.",
         renownChoice: "Choose the additional Renown dot without exceeding two in one category.", creationBudget: "Primal Urge and extra Rites must fit the ten-dot Merit budget.",
         moonGiftMissing: "The catalog is missing a Moon Facet required by your Auspice and Renown.",
@@ -118,6 +120,8 @@ export const werewolfMessages = {
       ritePrerequisites: "Pré-requisitos", riteOtherTribe: "Este Rito é ensinado somente a outra Tribo.",
       riteDotLimit: "Este Rito excede os pontos iniciais de Ritos disponíveis.", missingSelectedRite: "O Rito selecionado não consta neste catálogo: {id}.",
       creationProblem: {
+        blood: "Escolha um arquétipo de Sangue.", bone: "Escolha um arquétipo de Osso.",
+        physicalTouchstone: "Descreva a Touchstone física.", spiritualTouchstone: "Descreva a Touchstone espiritual.",
         auspice: "Escolha um Auspício.", tribe: "Escolha uma Tribo ou os Lobos Fantasmas.", auspiceSkill: "Escolha uma Perícia do Auspício com menos de cinco pontos para receber o ponto gratuito.",
         renownChoice: "Escolha o ponto adicional de Renome sem ultrapassar dois na mesma categoria.", creationBudget: "Instinto Primitivo e Ritos extras devem caber nos dez pontos iniciais de Méritos.",
         moonGiftMissing: "Falta no catálogo uma Faceta da Lua exigida pelo Auspício e pelo Renome.",

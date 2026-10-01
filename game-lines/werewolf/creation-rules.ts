@@ -1,5 +1,5 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import type { AuspiceDefinition, FormDefinition, PrimalUrgeLevel, RenownId, TribeDefinition, WerewolfReference } from "./catalogs/reference";
+import type { AuspiceDefinition, FormDefinition, PrimalUrgeLevel, RenownId, TribeDefinition, WerewolfReference, WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { GiftDefinition } from "./catalogs/gifts";
 import type { RiteDefinition } from "./catalogs/rites";
 import { werewolfFormMeritEffects, type WerewolfMeritChoice } from "./merit-rules";
@@ -157,12 +157,12 @@ export function creationGiftSelection(
 /** Returns semantic problems for the line-owned creation UI; never parses English errors. */
 export function creationTemplateProblems(
   choices: WerewolfCreationChoices,
-  reference: Pick<WerewolfReference, "auspices" | "tribes">,
+  reference: Pick<WerewolfReferenceCatalog, "auspices" | "tribes" | "anchors">,
   skills: Record<string, number>,
   gifts: readonly GiftDefinition[],
   rites: readonly RiteDefinition[],
 ) {
-  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | ReturnType<typeof creationGiftSelection>["problems"][number] | ReturnType<typeof creationRiteSelection>["problems"][number]> = [];
+  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | "blood" | "bone" | "physicalTouchstone" | "spiritualTouchstone" | ReturnType<typeof creationGiftSelection>["problems"][number] | ReturnType<typeof creationRiteSelection>["problems"][number]> = [];
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id);
   const tribe = reference.tribes.find(item => item.id === choices.tribe_id);
   if (!auspice) problems.push("auspice");
@@ -183,5 +183,9 @@ export function creationTemplateProblems(
     catch { problems.push("creationBudget"); }
   }
   problems.push(...creationRiteSelection(choices, rites).problems);
+  for (const kind of ["blood", "bone"] as const)
+    if (!reference.anchors.some(anchor => anchor.kind === kind && anchor.id === choices[kind])) problems.push(kind);
+  if (!choices.physical_touchstone.trim()) problems.push("physicalTouchstone");
+  if (!choices.spiritual_touchstone.trim()) problems.push("spiritualTouchstone");
   return problems;
 }

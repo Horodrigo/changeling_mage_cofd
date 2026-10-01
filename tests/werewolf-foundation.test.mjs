@@ -153,13 +153,14 @@ test("WtF 2e p. 83 initial Facets follow Auspice Renown and two distinct favored
 
 test("Werewolf creation template validates canonical selections and exact conversion budgets", async () => {
   const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [], rites: ["wtf-core:sacred-hunt"] };
-  const validate = (value, skills = { Brawl: 2 }) => rules.creationTemplateProblems(value, reference, skills, giftCatalog.gifts, riteCatalog.rites);
+  const validate = (value, skills = { Brawl: 2 }) => rules.creationTemplateProblems(value, catalog, skills, giftCatalog.gifts, riteCatalog.rites);
   assert.deepEqual(validate(choices), []);
   assert.deepEqual(validate({ ...choices, auspice_id: "unknown" }), ["auspice"]);
   assert.deepEqual(validate({ ...choices, primal_urge: 3, extra_rite_dots: 1 }), ["creationBudget"]);
   assert.deepEqual(validate({ ...choices, primal_urge: 1.5 }), ["creationBudget"]);
   assert.deepEqual(validate({ ...choices, auspice_skill: "Brawl" }, { Brawl: 5 }), ["auspiceSkill"]);
   assert.deepEqual(validate({ ...choices, shadow_facets: [] }), ["shadowFacets"]);
+  assert.deepEqual(validate({ ...choices, blood: "Soldado", bone: "blood-alpha", physical_touchstone: " ", spiritual_touchstone: "" }), ["blood", "bone", "physicalTouchstone", "spiritualTouchstone"]);
   const { WerewolfCreationTemplate } = await vite.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: giftCatalog, rites: riteCatalog })));
@@ -172,6 +173,120 @@ test("Werewolf creation template validates canonical selections and exact conver
   assert.doesNotMatch(markup, /missing translation/);
   assert.equal(translate("pt-BR", "werewolf.renownNames.Purity"), "Pureza");
   assert.equal(translate("pt-BR", "werewolf.creationProblem.creationBudget"), "Instinto Primitivo e Ritos extras devem caber nos dez pontos iniciais de Méritos.");
+  for (const locale of ["en-US", "pt-BR"])
+    for (const key of ["blood", "bone", "physicalTouchstone", "spiritualTouchstone"])
+      assert.doesNotMatch(translate(locale, `werewolf.creationProblem.${key}`), /missing translation/);
+});
+
+test("WtF 2e p. 83 grants Totem 1 and Language (First Tongue) outside the ten-dot budget, without duplicate instances or XP reassignment", async () => {
+  const grants = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
+  const core = readJson("public/shared/data/merits.json");
+  const definitions = [...core, ...werewolfMerits];
+  const select = (id, instanceId, dots, extra = {}) => {
+    const definition = definitions.find(item => item.id === id);
+    return { name: definition.name, sourceId: definition.sourceId, source: definition.source, instanceId, dots, ...extra };
+  };
+  const existing = [
+    select("wtf-2ed:totem", "totem-instance", 4, { creationDots: 2, experienceDots: 2, grantedBy: "werewolf:creation-totem" }),
+    select("core-2ed:language", "first-tongue-instance", 1, { creationDots: 1, experienceDots: 0, grantedBy: "werewolf:first-tongue", configuration: { language: "First Tongue" } }),
+    select("wtf-2ed:living-weapon", "xp-bite", 3, { creationDots: 0, experienceDots: 3, configuration: { form: "gauru", attack: "bite" } }),
+    select("wtf-2ed:living-weapon", "xp-claws", 4, { creationDots: 0, experienceDots: 4, configuration: { form: "gauru", attack: "claws" } }),
+  ];
+  const selected = [select("wtf-2ed:totem", "totem-instance", 2), select("core-2ed:language", "portuguese-instance", 1, { configuration: { language: "Português" } })];
+  const before = structuredClone({ existing, selected, definitions });
+  const creation = grants.withWerewolfCreationGrants(selected, existing, definitions);
+  assert.equal(creation.length, 3);
+  assert.equal(grants.werewolfCreationMeritCost(creation, definitions), 2);
+  const saved = grants.mergeWerewolfCreationMerits(existing, creation, definitions);
+  assert.deepEqual(saved.find(item => item.instanceId === "totem-instance"), { ...existing[0], creationDots: 2, experienceDots: 2, dots: 4, configuration: {} });
+  assert.deepEqual(saved.find(item => item.instanceId === "xp-bite"), existing[2]);
+  assert.deepEqual(saved.find(item => item.instanceId === "xp-claws"), existing[3]);
+  assert.equal(saved.filter(item => item.configuration?.language === "First Tongue").length, 1);
+  assert.equal(saved.find(item => item.instanceId === "portuguese-instance").configuration.language, "Português");
+  assert.deepEqual(grants.mergeWerewolfCreationMerits(saved, creation, definitions), saved);
+  assert.deepEqual({ existing, selected, definitions }, before);
+  const free = grants.withWerewolfCreationGrants([], [], definitions);
+  assert.equal(free.length, 2);
+  assert.equal(grants.werewolfCreationMeritCost(free, definitions), 0);
+  assert.ok(free.every(item => item.instanceId && item.dots === 1));
+  assert.equal(grants.werewolfCreationMeritCost([...free, { ...free[0], instanceId: "duplicate" }], definitions), 1, "Duplicate grants do not exempt another dot");
+  const restored = grants.mergeWerewolfCreationMerits(existing, [], definitions);
+  assert.equal(restored.find(item => item.instanceId === "totem-instance").creationDots, 1);
+  assert.equal(restored.find(item => item.instanceId === "totem-instance").experienceDots, 2);
+  assert.equal(restored.find(item => item.instanceId === "totem-instance").dots, 3);
+  const wrongLanguage = grants.withWerewolfCreationGrants([{ ...free[1], configuration: { language: "Português" } }], [], definitions);
+  assert.equal(wrongLanguage.find(item => item.grantedBy === "werewolf:first-tongue").configuration.language, "First Tongue");
+  assert.throws(() => grants.withWerewolfCreationGrants([], [], core), /wtf-2ed:totem/);
+  assert.throws(() => grants.withWerewolfCreationGrants([], [], werewolfMerits), /core-2ed:language/);
+  const replacedId = grants.mergeWerewolfCreationMerits(existing, [{ ...selected[0], instanceId: "replacement-id" }], definitions);
+  assert.equal(replacedId.find(item => item.name === "Totem").instanceId, "totem-instance", "Rebuilding a free aggregate grant preserves its original instance and XP");
+  assert.equal(replacedId.find(item => item.name === "Totem").experienceDots, 2);
+  for (const dots of [Number.NaN, Infinity, -1, 1.5])
+    assert.throws(() => grants.werewolfCreationMeritCost([{ ...free[0], dots }], definitions), /Invalid creation Merit dots/);
+});
+
+test("Werewolf Merit identity resolves only unambiguous canonical name/source pairs, not localized names or instance indices", async () => {
+  const grants = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
+  const definitions = [...readJson("public/shared/data/merits.json"), ...werewolfMerits];
+  const selection = { name: "Living Weapon", sourceId: "wtf-2ed", instanceId: "claws-instance", dots: 4, configuration: { form: "gauru", attack: "claws" } };
+  assert.deepEqual(grants.resolveWerewolfMerits([selection], definitions), [{ id: "wtf-2ed:living-weapon", instanceId: selection.instanceId, dots: 4, configuration: selection.configuration }]);
+  assert.equal(grants.werewolfMeritDefinition({ ...selection, sourceId: "another-source" }, definitions), undefined);
+  assert.equal(grants.werewolfMeritDefinition({ ...selection, name: werewolfMeritsPt["wtf-2ed:living-weapon"].name }, definitions), undefined);
+  const clone = { ...definitions.find(item => item.id === "wtf-2ed:living-weapon"), id: "other:living-weapon", sourceId: "other" };
+  assert.equal(grants.werewolfMeritDefinition({ ...selection, sourceId: undefined }, [...definitions, clone]), undefined);
+  assert.equal(grants.werewolfMeritDefinition(selection, [...definitions, clone]).id, "wtf-2ed:living-weapon");
+});
+
+test("WtF 2e pp. 82–83 creation allocations retain exact canonical grants and undo only the recorded free Skill dot on editing", async () => {
+  const grants = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
+  const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [], rites: ["wtf-core:sacred-hunt"] };
+  const skills = { Brawl: 4, Survival: 0, Intimidation: 1 };
+  const before = structuredClone({ choices, skills, catalog, giftCatalog, riteCatalog });
+  const allocate = (value, purchasedSkills = skills) => grants.werewolfCreationAllocation(value, purchasedSkills, catalog, giftCatalog.gifts, riteCatalog.rites);
+  const allocation = allocate(choices);
+  assert.deepEqual(allocation.skills, { ...skills, Brawl: 5 });
+  assert.deepEqual(allocation.auspiceSkillGrant, { skill: "Brawl", dots: 1 });
+  assert.deepEqual(allocation.renown, { Cunning: 0, Glory: 1, Honor: 0, Purity: 2, Wisdom: 0 });
+  const moon = moonGifts.find(item => item.id === "gift-full-moon");
+  assert.deepEqual(allocation.facetIds, [...moon.facets.slice(0, 2).map(item => item.id), ...choices.shadow_facets]);
+  assert.deepEqual(allocation.riteIds, choices.rites);
+  const purchased = grants.withoutAuspiceSkillGrant(allocation.skills, allocation.auspiceSkillGrant);
+  assert.deepEqual(purchased, skills);
+  assert.deepEqual(allocate(choices, purchased), allocation);
+  assert.deepEqual(allocate({ ...choices, auspice_skill: "Survival" }, purchased).skills, { ...skills, Survival: 1 });
+  assert.deepEqual(grants.withoutAuspiceSkillGrant(skills, null), skills);
+  assert.throws(() => grants.withoutAuspiceSkillGrant({ ...skills, Brawl: 0 }, allocation.auspiceSkillGrant), /Invalid recorded/);
+  assert.throws(() => grants.withoutAuspiceSkillGrant(skills, { skill: "Briga", dots: 1 }), /Invalid recorded/);
+  assert.throws(() => grants.withoutAuspiceSkillGrant(skills, { skill: "Brawl", dots: 2 }), /Invalid recorded/);
+  assert.throws(() => allocate({ ...choices, blood: "bone-lone-wolf" }), /blood/);
+  assert.throws(() => allocate(choices, { Brawl: 5 }), /auspiceSkill/);
+  assert.deepEqual({ choices, skills, catalog, giftCatalog, riteCatalog }, before);
+  allocation.choices.shadow_facets.push("authored-change");
+  allocation.riteIds.push("authored-change");
+  assert.deepEqual({ choices, skills, catalog, giftCatalog, riteCatalog }, before);
+});
+
+test("Werewolf Merits load only their EN/PT catalogs, preserve canonical rules and expose deeply frozen localized presentation", async () => {
+  const { werewolfMeritsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/merits.ts");
+  const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
+  const { meritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
+  const calls = [];
+  const loaded = freezeCatalogData(await werewolfMeritsCatalogGroup.load({ getCatalog: async id => {
+    calls.push(id);
+    assert.ok(["merits-werewolf", "merits-werewolf-pt"].includes(id));
+    return structuredClone(id === "merits-werewolf" ? werewolfMerits : werewolfMeritsPt);
+  } }));
+  assert.deepEqual(calls, ["merits-werewolf", "merits-werewolf-pt"]);
+  for (const merit of loaded) {
+    const canonical = werewolfMerits.find(item => item.id === merit.id);
+    assert.equal(merit.name, canonical.name);
+    assert.equal(merit.prerequisites, canonical.prerequisites);
+    assert.deepEqual(merit.ratings, canonical.ratings);
+    assert.equal(meritPresentation(merit, "en-US").description, canonical.descriptionEn);
+    assert.equal(meritPresentation(merit, "pt-BR").name, werewolfMeritsPt[merit.id].name);
+  }
+  assert.ok(Object.isFrozen(loaded[0].presentationPt));
+  assert.throws(() => { loaded[0].ratings.push(9); }, TypeError);
 });
 
 test("WtF 2e p. 83 grants ordered Moon Facets and validates starting Shadow/Wolf selections without mutating choices", () => {
