@@ -1,0 +1,694 @@
+[
+  {
+    "id": "wtf-2ed:anchored",
+    "name": "Anchored",
+    "ratings": [
+      1,
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Anchored",
+    "description": "Choose one Touchstone. Invoking it to resist a breaking point grants +3 dice at one dot or +4 at two dots. Drawback: the opposite Touchstone grants only +1 die at one dot; at two dots it grants no bonus, only potential drawbacks.",
+    "descriptionEn": "Choose one Touchstone. Invoking it to resist a breaking point grants +3 dice at one dot or +4 at two dots. Drawback: the opposite Touchstone grants only +1 die at one dot; at two dots it grants no bonus, only potential drawbacks.",
+    "page": 105,
+    "prerequisites": "Harmony"
+  },
+  {
+    "id": "wtf-2ed:blood-or-bone-affinity",
+    "name": "Blood or Bone Affinity",
+    "ratings": [
+      2,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Blood or Bone Affinity",
+    "description": "Choose Blood or Bone at two dots; five dots covers both. Once per chapter, apply rote quality to a roll for an action that would restore all Willpower through the chosen trait. Drawback: whenever able to fulfill the chosen trait, spend one Willpower to decline.",
+    "descriptionEn": "Choose Blood or Bone at two dots; five dots covers both. Once per chapter, apply rote quality to a roll for an action that would restore all Willpower through the chosen trait. Drawback: whenever able to fulfill the chosen trait, spend one Willpower to decline.",
+    "page": 105,
+    "prerequisites": "Harmony between 3 and 8"
+  },
+  {
+    "id": "wtf-2ed:code-of-honor",
+    "name": "Code of Honor",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Code of Honor",
+    "description": "Choose a Virtue reflecting the code. Meaningful actions in accordance with it restore all spent Willpower, up to twice per chapter (p. 158). Gain +3 to Stamina, Resolve or Composure rolls to uphold the code. Drawback: when challenged or offered a chance to betray it, spend one Willpower or uphold or defend it at any cost. The Merit grants no benefit or Willpower recovery until the character demonstrably defends her beliefs against significant adversity.",
+    "descriptionEn": "Choose a Virtue reflecting the code. Meaningful actions in accordance with it restore all spent Willpower, up to twice per chapter (p. 158). Gain +3 to Stamina, Resolve or Composure rolls to uphold the code. Drawback: when challenged or offered a chance to betray it, spend one Willpower or uphold or defend it at any cost. The Merit grants no benefit or Willpower recovery until the character demonstrably defends her beliefs against significant adversity.",
+    "page": 105,
+    "prerequisites": "Harmony 8+",
+    "additionalSources": [
+      {
+        "sourceId": "wtf-2ed",
+        "source": "Werewolf: The Forsaken Second Edition",
+        "page": 158
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:controlled-burn",
+    "name": "Controlled Burn",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Controlled Burn",
+    "description": "In Wasu-Im, shift only to Hishu or Urhan rather than Dalu or Urshul. After gaining a turn of lucidity, spend one Willpower to end the rage entirely. Drawback: only those two forms are available during Wasu-Im, potentially causing complications that push the character toward Basu-Im.",
+    "descriptionEn": "In Wasu-Im, shift only to Hishu or Urhan rather than Dalu or Urshul. After gaining a turn of lucidity, spend one Willpower to end the rage entirely. Drawback: only those two forms are available during Wasu-Im, potentially causing complications that push the character toward Basu-Im.",
+    "page": 105,
+    "prerequisites": "Resolve •••, Composure •••"
+  },
+  {
+    "id": "wtf-2ed:creative-tactician",
+    "name": "Creative Tactician",
+    "ratings": [
+      3
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Creative Tactician",
+    "description": "When organizing or acting as tactician in teamwork, participants ignore circumstantial penalties up to the character's Purity. Once per chapter the primary actor may gain a Beat for following her strategic guidance; she need not be the primary actor.",
+    "descriptionEn": "When organizing or acting as tactician in teamwork, participants ignore circumstantial penalties up to the character's Purity. Once per chapter the primary actor may gain a Beat for following her strategic guidance; she need not be the primary actor.",
+    "page": 105,
+    "prerequisites": "Purity ••",
+    "additionalSources": [
+      {
+        "sourceId": "wtf-2ed",
+        "source": "Werewolf: The Forsaken Second Edition",
+        "page": 106
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:dedicated-locus",
+    "name": "Dedicated Locus",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Dedicated Locus",
+    "description": "The pack has a locus attuned to its totem's Resonance, with rating equal to this Merit. Contributing members may collectively spend additional Essence up to the Merit's cost each day, exceeding normal per-turn limits. For example, a Primal Urge 1 member can spend four Essence in one turn from a three-dot Dedicated Locus, exhausting the extra allowance for the entire pack that day. Members may split the cost; only contributors benefit. The locus must be anchored to a Safe Place of at least the same rating. Drawback: it attracts excessive attention from hungry local spirits.",
+    "descriptionEn": "The pack has a locus attuned to its totem's Resonance, with rating equal to this Merit. Contributing members may collectively spend additional Essence up to the Merit's cost each day, exceeding normal per-turn limits. For example, a Primal Urge 1 member can spend four Essence in one turn from a three-dot Dedicated Locus, exhausting the extra allowance for the entire pack that day. Members may split the cost; only contributors benefit. The locus must be anchored to a Safe Place of at least the same rating. Drawback: it attracts excessive attention from hungry local spirits.",
+    "page": 106,
+    "prerequisites": "Safe Place •; the locus must be anchored to a Safe Place of at least the locus rating"
+  },
+  {
+    "id": "wtf-2ed:embodiment-of-the-firstborn",
+    "name": "Embodiment of the Firstborn",
+    "ratings": [
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Embodiment of the Firstborn",
+    "description": "Choose an Attribute reflecting the character's likeness to a Firstborn. Gain one dot; that Attribute may exceed the normal maximum by one, normally reaching six unless Primal Urge raises the limit. When spending one Willpower, anyone attempting to attack the character that turn gains Shaken. Drawback: wrathful spirits with old memories try to settle their grudges against the Firstborn through her.",
+    "descriptionEn": "Choose an Attribute reflecting the character's likeness to a Firstborn. Gain one dot; that Attribute may exceed the normal maximum by one, normally reaching six unless Primal Urge raises the limit. When spending one Willpower, anyone attempting to attack the character that turn gains Shaken. Drawback: wrathful spirits with old memories try to settle their grudges against the Firstborn through her.",
+    "page": 106,
+    "prerequisites": "Cannot be a Ghost Wolf"
+  },
+  {
+    "id": "wtf-2ed:fading",
+    "name": "Fading",
+    "ratings": [
+      3
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Fading",
+    "description": "Each time someone fails to notice the character during a scene, all subsequent attempts to notice her in that scene suffer a cumulative −1. Once per scene, add Cunning to a roll to act unnoticed or unobtrusively.",
+    "descriptionEn": "Each time someone fails to notice the character during a scene, all subsequent attempts to notice her in that scene suffer a cumulative −1. Once per scene, add Cunning to a roll to act unnoticed or unobtrusively.",
+    "page": 106,
+    "prerequisites": "Cunning ••"
+  },
+  {
+    "id": "wtf-2ed:favored-form",
+    "name": "Favored Form",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Favored Form",
+    "description": "Choose one form other than Hishu; this Merit may favor only one form. Benefits are cumulative and Attribute increases affect derived traits. Drawback: for every Merit dot, choose a Mental or Physical Attribute in a different form and reduce it by one in that form, including derived traits. Distribute these penalties among other forms as desired.",
+    "descriptionEn": "Choose one form other than Hishu; this Merit may favor only one form. Benefits are cumulative and Attribute increases affect derived traits. Drawback: for every Merit dot, choose a Mental or Physical Attribute in a different form and reduce it by one in that form, including derived traits. Distribute these penalties among other forms as desired.",
+    "page": 106,
+    "prerequisites": "Primal Urge at least the Merit rating + 1",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Physical Skill",
+        "description": "Choose a Physical Skill. In the favored form it achieves exceptional success on three successes instead of five."
+      },
+      {
+        "rating": 2,
+        "name": "Attribute",
+        "description": "Choose an Attribute not normally penalized in that form; it gains +1 dot in the favored form."
+      },
+      {
+        "rating": 3,
+        "name": "Gift",
+        "description": "Choose a Gift. Its rolls in the favored form achieve exceptional success on three successes instead of five."
+      },
+      {
+        "rating": 4,
+        "name": "Different Attribute",
+        "description": "Choose a different Attribute not normally penalized in that form; it gains +1 dot in the favored form."
+      },
+      {
+        "rating": 5,
+        "name": "Advanced Skill",
+        "description": "Choose a relevant Skill; its uses in the favored form gain Advanced Action quality."
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:fortified-form",
+    "name": "Fortified Form",
+    "ratings": [
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Fortified Form",
+    "description": "Choose one form other than Hishu. It gains armor 1/0 at three dots, 1/1 at four dots, or 2/2 at five dots. Purchase multiple instances for different forms.",
+    "descriptionEn": "Choose one form other than Hishu. It gains armor 1/0 at three dots, 1/1 at four dots, or 2/2 at five dots. Purchase multiple instances for different forms.",
+    "page": 106,
+    "prerequisites": "Stamina •••, Survival ••",
+    "repeatable": true
+  },
+  {
+    "id": "wtf-2ed:hearing-whispers",
+    "name": "Hearing Whispers",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Hearing Whispers",
+    "description": "After one turn scrutinizing someone, identify their Persistent Conditions. When there is reason to suspect another weakness, roll Wits + a Skill chosen by the Storyteller; each weakness needs a separate roll and at least one turn of scrutiny. Having no dots in a Skill can count as a weakness, as can other weaknesses the Storyteller approves. This cannot identify a spirit's Ban. Drawback: except for Persistent Conditions, a weakness must already be suspected, usually requiring investigation.",
+    "descriptionEn": "After one turn scrutinizing someone, identify their Persistent Conditions. When there is reason to suspect another weakness, roll Wits + a Skill chosen by the Storyteller; each weakness needs a separate roll and at least one turn of scrutiny. Having no dots in a Skill can count as a weakness, as can other weaknesses the Storyteller approves. This cannot identify a spirit's Ban. Drawback: except for Persistent Conditions, a weakness must already be suspected, usually requiring investigation.",
+    "page": 106,
+    "prerequisites": "Bone Shadow"
+  },
+  {
+    "id": "wtf-2ed:impartial-mediator",
+    "name": "Impartial Mediator",
+    "ratings": [
+      3
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Impartial Mediator",
+    "description": "Listen to both sides of an argument or debate, then roll Presence + Persuasion + Honor against the highest Resolve + Honor on each side. A side whose contested roll has fewer successes accepts the character's interpretation, even if she favors the other side, without doubting her impartiality.",
+    "descriptionEn": "Listen to both sides of an argument or debate, then roll Presence + Persuasion + Honor against the highest Resolve + Honor on each side. A side whose contested roll has fewer successes accepts the character's interpretation, even if she favors the other side, without doubting her impartiality.",
+    "page": 106,
+    "prerequisites": "Honor ••",
+    "additionalSources": [
+      {
+        "sourceId": "wtf-2ed",
+        "source": "Werewolf: The Forsaken Second Edition",
+        "page": 107
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:living-weapon",
+    "name": "Living Weapon",
+    "ratings": [
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Living Weapon",
+    "description": "Choose Dalu, Gauru, Urshul or Urhan and either bite or claws. At three dots that attack gains armor piercing 2; four dots adds +1 weapon damage; five dots ignores any non-magical armor. Purchase multiple instances for different enhancements in different forms.",
+    "descriptionEn": "Choose Dalu, Gauru, Urshul or Urhan and either bite or claws. At three dots that attack gains armor piercing 2; four dots adds +1 weapon damage; five dots ignores any non-magical armor. Purchase multiple instances for different enhancements in different forms.",
+    "page": 107,
+    "prerequisites": "Stamina •••, Survival ••",
+    "repeatable": true
+  },
+  {
+    "id": "wtf-2ed:moon-kissed",
+    "name": "Moon-Kissed",
+    "ratings": [
+      1
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Moon-Kissed",
+    "description": "Choose an Auspice Skill: it gains 9-again, or 8-again if it already has 9-again. While the auspice moon is visible, spending Willpower on that Skill grants +4 dice instead of +3. Purchase multiple instances for different Auspice Skills. Drawback: choose a non-Auspice Skill with at least one dot; its rolls lose 10-again.",
+    "descriptionEn": "Choose an Auspice Skill: it gains 9-again, or 8-again if it already has 9-again. While the auspice moon is visible, spending Willpower on that Skill grants +4 dice instead of +3. Purchase multiple instances for different Auspice Skills. Drawback: choose a non-Auspice Skill with at least one dot; its rolls lose 10-again.",
+    "page": 107,
+    "prerequisites": "The chosen Auspice Skill •• or higher",
+    "repeatable": true
+  },
+  {
+    "id": "wtf-2ed:nowhere-to-run",
+    "name": "Nowhere to Run",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Nowhere to Run",
+    "description": "After one turn inspecting subtle clues left by prey, immediately learn basic details and the approximate location of any Safe Place it has. Roll Wits + Investigation to identify other dedicated sites, boltholes or hiding places, one per success. Drawback: when visiting such a location, leave a mark the prey could notice on returning; even a scent suffices.",
+    "descriptionEn": "After one turn inspecting subtle clues left by prey, immediately learn basic details and the approximate location of any Safe Place it has. Roll Wits + Investigation to identify other dedicated sites, boltholes or hiding places, one per success. Drawback: when visiting such a location, leave a mark the prey could notice on returning; even a scent suffices.",
+    "page": 107,
+    "prerequisites": "Hunter in Darkness"
+  },
+  {
+    "id": "wtf-2ed:pack-dynamics",
+    "name": "Pack Dynamics",
+    "ratings": [
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Pack Dynamics",
+    "description": "Gain +1, +2 or +3 to teamwork rolls at three, four or five dots respectively. Apply the same bonus to Resistance Attribute rolls (Resolve, Stamina and Composure) when defending the pack. Drawback: while a pack member's whereabouts are unknown, apply the bonus as a penalty to all rolls.",
+    "descriptionEn": "Gain +1, +2 or +3 to teamwork rolls at three, four or five dots respectively. Apply the same bonus to Resistance Attribute rolls (Resolve, Stamina and Composure) when defending the pack. Drawback: while a pack member's whereabouts are unknown, apply the bonus as a penalty to all rolls.",
+    "page": 107
+  },
+  {
+    "id": "wtf-2ed:residential-area",
+    "name": "Residential Area",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Residential Area",
+    "description": "Once per session, access temporary Merit dots equal to this rating, split freely among Allies, Contacts and Retainer appropriate to the residential territory. Drawback: the people represented by those Merits demand small favors for their help.",
+    "descriptionEn": "Once per session, access temporary Merit dots equal to this rating, split freely among Allies, Contacts and Retainer appropriate to the residential territory. Drawback: the people represented by those Merits demand small favors for their help.",
+    "page": 107
+  },
+  {
+    "id": "wtf-2ed:resonance-shaper",
+    "name": "Resonance Shaper",
+    "ratings": [
+      3
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Resonance Shaper",
+    "description": "Roll Manipulation + Occult as an extended action: one roll per hour for a small wellspring of Essence, or per day for a locus. Five successes change one point of Essence's Resonance; ten successes per locus level change that locus' Resonance. The symbolic shaping method depends on the character's relationship with the Hisil.",
+    "descriptionEn": "Roll Manipulation + Occult as an extended action: one roll per hour for a small wellspring of Essence, or per day for a locus. Five successes change one point of Essence's Resonance; ten successes per locus level change that locus' Resonance. The symbolic shaping method depends on the character's relationship with the Hisil.",
+    "page": 107,
+    "prerequisites": "Wisdom ••"
+  },
+  {
+    "id": "wtf-2ed:self-control",
+    "name": "Self-Control",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Self-Control",
+    "description": "When low Harmony compels shifting in a stressful situation, spend one Willpower to remain in the current form for the scene. This is a breaking point toward Flesh.",
+    "descriptionEn": "When low Harmony compels shifting in a stressful situation, spend one Willpower to remain in the current form for the scene. This is a breaking point toward Flesh.",
+    "page": 107,
+    "prerequisites": "Resolve ••••"
+  },
+  {
+    "id": "wtf-2ed:song-in-your-heart",
+    "name": "Song in Your Heart",
+    "ratings": [
+      3
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Song in Your Heart",
+    "description": "Use Inspiring without its prerequisites, but only through singing, howling or storytelling. Roll Presence + Expression, with −1 for a small clique, −2 for a small crowd or −3 for a large crowd. Listeners gain Inspired; the character cannot inspire herself. Listeners may take Inspired as a Persistent Condition, gaining a Beat whenever they take a significant action inspired by the tale.",
+    "descriptionEn": "Use Inspiring without its prerequisites, but only through singing, howling or storytelling. Roll Presence + Expression, with −1 for a small clique, −2 for a small crowd or −3 for a large crowd. Listeners gain Inspired; the character cannot inspire herself. Listeners may take Inspired as a Persistent Condition, gaining a Beat whenever they take a significant action inspired by the tale.",
+    "page": 107,
+    "prerequisites": "Glory ••",
+    "additionalSources": [
+      {
+        "sourceId": "wtf-2ed",
+        "source": "Werewolf: The Forsaken Second Edition",
+        "page": 111
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:sounds-of-the-city",
+    "name": "Sounds of the City",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Sounds of the City",
+    "description": "Spend a turn scrutinizing prey and succeed on Wits + Politics to identify one Social Merit chosen by the Storyteller. With a scene of effort, shut down human Social Merit dots up to Cunning, such as Allies, Contacts, Fame, Resources or Status, for as long as desired. Only that many dots can be suppressed at once; release previous targets to choose new ones. Drawback: while suppressing others' Merits, treat the character's own human Social Merits as one dot lower, including defense against attacks and scrutiny.",
+    "descriptionEn": "Spend a turn scrutinizing prey and succeed on Wits + Politics to identify one Social Merit chosen by the Storyteller. With a scene of effort, shut down human Social Merit dots up to Cunning, such as Allies, Contacts, Fame, Resources or Status, for as long as desired. Only that many dots can be suppressed at once; release previous targets to choose new ones. Drawback: while suppressing others' Merits, treat the character's own human Social Merits as one dot lower, including defense against attacks and scrutiny.",
+    "page": 107,
+    "prerequisites": "Iron Master",
+    "additionalSources": [
+      {
+        "sourceId": "wtf-2ed",
+        "source": "Werewolf: The Forsaken Second Edition",
+        "page": 108
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:strings-of-the-heart",
+    "name": "Strings of the Heart",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Strings of the Heart",
+    "description": "After scrutinizing prey for one turn, ask its player what the character most wants; know the answer instinctively, even without context. When leveraging it, improve the impression by one stage and ignore one Door in Social maneuvering. The prey must spend one Willpower to defy such threats, offers or temptations. Drawback: this lasting sympathy gives the Storm Lord one fewer Door when that prey initiates a Social maneuver against her.",
+    "descriptionEn": "After scrutinizing prey for one turn, ask its player what the character most wants; know the answer instinctively, even without context. When leveraging it, improve the impression by one stage and ignore one Door in Social maneuvering. The prey must spend one Willpower to defy such threats, offers or temptations. Drawback: this lasting sympathy gives the Storm Lord one fewer Door when that prey initiates a Social maneuver against her.",
+    "page": 108,
+    "prerequisites": "Storm Lord"
+  },
+  {
+    "id": "wtf-2ed:totem",
+    "name": "Totem",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Totem",
+    "description": "Each dot contributes one point to create a personal or pack totem (p. 91), with at most five dots per individual. Add the Merit's dots to Social actions with that spirit. Other members' contributions can make a pack totem much larger. Drawback: angering the totem makes invested points fade and may require renegotiation. Reparation can restore the relationship, but the points must be purchased again.",
+    "descriptionEn": "Each dot contributes one point to create a personal or pack totem (p. 91), with at most five dots per individual. Add the Merit's dots to Social actions with that spirit. Other members' contributions can make a pack totem much larger. Drawback: angering the totem makes invested points fade and may require renegotiation. Reparation can restore the relationship, but the points must be purchased again.",
+    "page": 108
+  },
+  {
+    "id": "wtf-2ed:weakest-link",
+    "name": "Weakest Link",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf",
+    "priority": 2,
+    "translatedName": "Weakest Link",
+    "description": "Scrutinize two or more associated characters for a turn to identify the weakest by criteria the Storyteller considers relevant, without a roll. Skills, Merits, Gifts, Renown or Primal Urge may determine this. Drawback: the Storyteller chooses the situational criteria and need not name them.",
+    "descriptionEn": "Scrutinize two or more associated characters for a turn to identify the weakest by criteria the Storyteller considers relevant, without a roll. Skills, Merits, Gifts, Renown or Primal Urge may determine this. Drawback: the Storyteller chooses the situational criteria and need not name them.",
+    "page": 108,
+    "prerequisites": "Blood Talon"
+  },
+  {
+    "id": "wtf-2ed:call-out",
+    "name": "Call Out",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Call Out",
+    "description": "Use an instant action to challenge an opponent. It suffers the character's Honor as a penalty when attacking anyone else; if it does so, add Honor to the character's attacks against it. Drawback: if another person attacks the challenged opponent, the challenge breaks and the opponent gains Honor as a bonus against the character for the rest of the scene.",
+    "descriptionEn": "Use an instant action to challenge an opponent. It suffers the character's Honor as a penalty when attacking anyone else; if it does so, add Honor to the character's attacks against it. Drawback: if another person attacks the challenged opponent, the challenge breaks and the opponent gains Honor as a bonus against the character for the rest of the scene.",
+    "page": 108,
+    "prerequisites": "Honor ••, Intimidation ••, Composure •••"
+  },
+  {
+    "id": "wtf-2ed:efficient-killer",
+    "name": "Efficient Killer",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Efficient Killer",
+    "description": "Against an opponent wholly denied Defense, sacrifice Defense for the turn to deliver a Killing Blow (p. 168). Drawback: the target must be alive with discernible weak points, and the character immediately enters Wasu-Im.",
+    "descriptionEn": "Against an opponent wholly denied Defense, sacrifice Defense for the turn to deliver a Killing Blow (p. 168). Drawback: the target must be alive with discernible weak points, and the character immediately enters Wasu-Im.",
+    "page": 108,
+    "prerequisites": "Purity ••, Brawl •••, Medicine ••, Strength •••; usable only in Gauru"
+  },
+  {
+    "id": "wtf-2ed:flanking",
+    "name": "Flanking",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Flanking",
+    "description": "On a successful attack, choose to apply its successes as a penalty to the victim's Initiative and Defense for the turn instead of causing damage, setting up a packmate's strike.",
+    "descriptionEn": "On a successful attack, choose to apply its successes as a penalty to the victim's Initiative and Defense for the turn instead of causing damage, setting up a packmate's strike.",
+    "page": 108,
+    "prerequisites": "Cunning ••, Wits •••, Stealth ••, Brawl ••"
+  },
+  {
+    "id": "wtf-2ed:instinctive-defense",
+    "name": "Instinctive Defense",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Instinctive Defense",
+    "description": "In Urhan and Urshul, calculate Defense using the higher of Wits and Dexterity rather than the lower.",
+    "descriptionEn": "In Urhan and Urshul, calculate Defense using the higher of Wits and Dexterity rather than the lower.",
+    "page": 109,
+    "prerequisites": "Primal Urge ••, Athletics ••"
+  },
+  {
+    "id": "wtf-2ed:relentless-assault",
+    "name": "Relentless Assault",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Relentless Assault",
+    "description": "This Style works in any form, applies only to Brawl attacks and may be used during Kuruth.",
+    "descriptionEn": "This Style works in any form, applies only to Brawl attacks and may be used during Kuruth.",
+    "page": 109,
+    "prerequisites": "Strength •••, Stamina •••, Brawl ••",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Drop of a Hat",
+        "description": "Gain +3 Initiative in the first turn of combat if making an all-out attack; the bonus ends after that turn."
+      },
+      {
+        "rating": 2,
+        "name": "Eye of the Tiger",
+        "description": "Choose one target. When making an all-out attack against it, retain Defense against that target."
+      },
+      {
+        "rating": 3,
+        "name": "Dig Deep",
+        "description": "Remove one die before rolling an attack to increase the claws or teeth weapon modifier by +1."
+      },
+      {
+        "rating": 4,
+        "name": "Grin and Bear It",
+        "description": "When making an all-out attack, gain 1/1 armor against all attacks for the turn, stacking with other armor."
+      },
+      {
+        "rating": 5,
+        "name": "The Warpath",
+        "description": "On filling an opponent's last Health box with lethal or aggravated damage, immediately attack any other character in reach. If this second attack inflicts damage, enter Basu-Im without resistance."
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:spiritual-blockage",
+    "name": "Spiritual Blockage",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Spiritual Blockage",
+    "description": "On a Brawl or Weaponry attack against an Essence user, take −2 to the attack. If it deals damage, the victim spends one Essence, or two on exceptional success. This counts against the victim's per-turn spending limit; it is spent, not merely lost.",
+    "descriptionEn": "On a Brawl or Weaponry attack against an Essence user, take −2 to the attack. If it deals damage, the victim spends one Essence, or two on exceptional success. This counts against the victim's per-turn spending limit; it is spent, not merely lost.",
+    "page": 109,
+    "prerequisites": "Wisdom ••, Brawl •, Occult •••, Wits •••"
+  },
+  {
+    "id": "wtf-2ed:tactical-shifting",
+    "name": "Tactical Shifting",
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Tactical Shifting",
+    "description": "Shift up to a larger Size or down to a smaller Size to use these maneuvers. Multiple maneuvers can apply to one shift if its direction permits, such as Springloading and Fluid Movement. Drawback: every maneuver requires reflexive shifting; if that is unavailable, none can be used.",
+    "descriptionEn": "Shift up to a larger Size or down to a smaller Size to use these maneuvers. Multiple maneuvers can apply to one shift if its direction permits, such as Springloading and Fluid Movement. Drawback: every maneuver requires reflexive shifting; if that is unavailable, none can be used.",
+    "page": 110,
+    "prerequisites": "Wits •••, Dexterity •••, Athletics ••",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Springloading",
+        "description": "Shift down at the start of the round for +2 Initiative and +5 Speed for the turn."
+      },
+      {
+        "rating": 2,
+        "name": "Broaden",
+        "description": "When shifting up, everyone in close-combat range who does not Dodge takes bashing damage equal to the Size increase. Anyone damaged must succeed on Dexterity + Athletics or gain Knocked Down."
+      },
+      {
+        "rating": 3,
+        "name": "Fluid Movement",
+        "description": "Shift down when attacked; opponents suffer −1 to hit for each point of Size lost."
+      },
+      {
+        "rating": 4,
+        "name": "Suck it Up",
+        "description": "Shift up when attacked to ignore one bashing or lethal damage."
+      },
+      {
+        "rating": 5,
+        "name": "Crush",
+        "description": "While grappling an opponent, shift up reflexively to inflict automatic lethal damage equal to the Size increase."
+      }
+    ]
+  },
+  {
+    "id": "wtf-2ed:warcry",
+    "name": "Warcry",
+    "ratings": [
+      2
+    ],
+    "line": "WtF",
+    "sourceId": "wtf-2ed",
+    "source": "Werewolf: The Forsaken Second Edition",
+    "category": "Werewolf Fighting",
+    "priority": 2,
+    "translatedName": "Warcry",
+    "description": "Roll Presence + Expression as an instant action, choosing listeners up to the successes rolled. They suffer −1 to Defense and attacks and −2 Initiative for the scene; a character can be affected only once per scene. Drawback: the howl alerts the Hisil, drawing curious and possibly hostile spirits within three turns.",
+    "descriptionEn": "Roll Presence + Expression as an instant action, choosing listeners up to the successes rolled. They suffer −1 to Defense and attacks and −2 Initiative for the scene; a character can be affected only once per scene. Drawback: the howl alerts the Hisil, drawing curious and possibly hostile spirits within three turns.",
+    "page": 110,
+    "prerequisites": "Glory ••, Presence •••, Expression ••, Intimidation ••; usable only in Gauru, Urshul or Urhan"
+  }
+]

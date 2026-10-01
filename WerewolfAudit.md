@@ -426,6 +426,17 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `Expel` normaliza a Skill impressa `Intimidate` para a identidade canônica `Intimidation`. Shadowlash → Chicote da Sombra, Symbolic Focus → Foco Simbólico e Resonant → Ressonante são propostas editoriais para uniformização ao importar Conditions; Stumbled → Tropeço, Inspired → Inspirado, Madness → Loucura e Guilty → Culpado seguem a apresentação existente. Ban/Bane → Proibição/Fraqueza em Totemic Empowerment segue L01/P03.
 - Este lote conclui somente Core Rites e seu seletor isolado. Rites dos suplementos, Merits, registro completo, persistência e conclusão do Builder continuam pendentes.
 
+### Core Werewolf Merits — WTF2 pp. 105–110
+
+- Os 32 Merits específicos destas páginas (24 General Werewolf Merits e 8 Werewolf Fighting Merits) foram conferidos visualmente e catalogados em EN/PT em `public/game-lines/werewolf/data/merits.json` e `merits-pt.json`. Ratings descontínuos, prerequisites, drawbacks e os níveis reais dos três Merits progressivos foram preservados. Isso não inclui ainda Merits dos suplementos nem substitui o catálogo compartilhado dos Human Merits.
+- `Blood or Bone Affinity` permite somente 2 ou 5 dots. `Favored Form` tem cinco benefícios cumulativos, mas só pode favorecer uma form; `Fortified Form`, `Living Weapon` e `Moon-Kissed` são repeatable expressos e precisarão de instâncias/configurações independentes. Nenhum outro Merit recebeu repeatability por inferência.
+- `Anchored` imprime apenas Harmony como prerequisite, sem threshold; não inventar um. `Blood or Bone Affinity` exige Harmony entre 3 e 8 e `Code of Honor` exige 8+. `Favored Form` exige Primal Urge pelo menos um acima do rating. Requisitos das Fighting Merits são calculados em Hishu, sem os bônus de outras forms, conforme p. 108.
+- `Code of Honor` inclui a referência de Virtue em p. 158 (toda Willpower até duas vezes por chapter). `Song in Your Heart` inclui a parada e os modificadores do efeito subjacente de Inspiring em p. 111, sem depender somente de um “see p.”. Essas são referências do próprio livro, não concessões automáticas.
+- `Dedicated Locus`, `Residential Area`, `Pack Dynamics` e `Totem` permanecem Merits individuais com os textos de cooperação preservados, sem criar Pack persistence, vínculos entre fichas, territórios ou reservas coletivas. A apresentação não aplica Beats, Willpower, Essence, Conditions ou maneuvers automaticamente.
+- `Instinctive Defense`, `Embodiment of the Firstborn`, `Favored Form`, `Fortified Form` e `Living Weapon` exigem integração mecânica/configuração própria de Werewolf antes de disponibilizar compras; não mover seus cálculos para Core ou alterar Attributes básicos por simples troca de form. Bônus temporários de maneuvers continuam informativos.
+- O catálogo usa o futuro ID de linha `WtF`, mas este lote **não habilita** esse ID na persistência nem registra a linha parcialmente. Integração do catálogo, elegibilidade por IDs, configurações e concessões na criação continuam pendentes para o próximo lote do Builder. Nenhuma outra linha passa a solicitar estes JSON.
+- Shaken → Abalado segue o catálogo compartilhado existente. Nomes locais novos dos Merits e maneuvers permanecem propostas editoriais auditáveis no JSON PT. Termos Uratha, incluindo Kuruth/Wasu-Im/Basu-Im, não foram traduzidos.
+
 Sequência de implementação autorizada:
 
 1. Incorporar as decisões aprovadas, inclusive P01–P03, preservando as exclusões.

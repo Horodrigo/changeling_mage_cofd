@@ -20,6 +20,8 @@ const shadowGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-sha
 const shadowPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json");
 const ritesCore = readJson("public/game-lines/werewolf/data/rites/wtf-core.json");
 const riteCatalog = { ...ritesCore, presentation: readJson("public/game-lines/werewolf/data/rites/wtf-core-pt.json") };
+const werewolfMerits = readJson("public/game-lines/werewolf/data/merits.json");
+const werewolfMeritsPt = readJson("public/game-lines/werewolf/data/merits-pt.json");
 const giftCatalog = { gifts: [...moonGifts, ...wolfGifts, ...shadowGifts], presentation: { ...moonPresentation, ...wolfPresentation, ...shadowPresentation } };
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
@@ -888,4 +890,109 @@ test("Werewolf Rite cards render complete separate rules, removable invalid choi
   assert.ok(Object.isFrozen(loaded.rules));
   assert.ok(Object.isFrozen(loaded.presentation.rites["wtf-core:sacred-hunt"]));
   assert.throws(() => { loaded.rites[0].dots = 5; }, TypeError);
+});
+
+test("WtF 2e pp. 105–110 catalogs all 32 Werewolf Merits in English and Portuguese with exact ratings and levels", () => {
+  assert.equal(werewolfMerits.length, 32);
+  assert.equal(werewolfMerits.filter(item => item.category === "Werewolf").length, 24);
+  assert.equal(werewolfMerits.filter(item => item.category === "Werewolf Fighting").length, 8);
+  assert.equal(new Set(werewolfMerits.map(item => item.id)).size, 32);
+  assert.deepEqual(Object.keys(werewolfMeritsPt).sort(), werewolfMerits.map(item => item.id).sort());
+  for (const item of werewolfMerits) {
+    assert.equal(item.line, "WtF");
+    assert.equal(item.sourceId, "wtf-2ed");
+    assert.equal(item.source, "Werewolf: The Forsaken Second Edition");
+    assert.ok(item.page >= 105 && item.page <= 110);
+    assert.equal(item.description, item.descriptionEn);
+    assert.equal(item.translatedName, item.name, "Static English-first data contains no localized identity");
+    assert.ok(item.ratings.every(dot => Number.isInteger(dot) && dot >= 1 && dot <= 5));
+    const translated = werewolfMeritsPt[item.id];
+    assert.ok(translated.name.trim() && translated.description.trim(), item.id);
+    assert.equal(Boolean(item.prerequisites), Boolean(translated.prerequisites), item.id);
+    assert.deepEqual(translated.levels?.map(level => level.rating), item.levels?.map(level => level.rating));
+    for (const level of item.levels ?? []) {
+      assert.ok(item.ratings.includes(level.rating));
+      assert.ok(level.name.trim() && level.description.trim());
+      const localized = translated.levels.find(item => item.rating === level.rating);
+      assert.ok(localized.name.trim() && localized.description.trim());
+    }
+    for (const source of item.additionalSources ?? []) assert.equal(source.sourceId, "wtf-2ed");
+  }
+  assert.deepEqual(werewolfMerits.find(item => item.id === "wtf-2ed:blood-or-bone-affinity").ratings, [2, 5]);
+  assert.deepEqual(werewolfMerits.filter(item => item.repeatable).map(item => item.id), [
+    "wtf-2ed:fortified-form", "wtf-2ed:living-weapon", "wtf-2ed:moon-kissed",
+  ]);
+  for (const id of ["favored-form", "relentless-assault", "tactical-shifting"])
+    assert.deepEqual(werewolfMerits.find(item => item.id === `wtf-2ed:${id}`).levels.map(level => level.rating), [1, 2, 3, 4, 5]);
+  assert.doesNotMatch(JSON.stringify(werewolfMeritsPt), /\b(?:Willpower|Resolve|Composure|Stamina|Wits|Brawl|Weaponry|Primal Urge|Harmony|Cunning|Glory|Honor|Purity|Wisdom)\b/);
+});
+
+test("WtF 2e Werewolf Merit descriptions preserve drawbacks, form restrictions and exact cumulative Style maneuvers", () => {
+  const merit = id => werewolfMerits.find(item => item.id === `wtf-2ed:${id}`);
+  assert.match(merit("anchored").description, /\+3.*\+4.*opposite Touchstone.*no bonus/);
+  assert.match(merit("code-of-honor").description, /twice per chapter.*no benefit/);
+  assert.match(merit("controlled-burn").description, /Hishu or Urhan.*rather than Dalu or Urshul.*one Willpower/);
+  assert.match(merit("dedicated-locus").description, /collectively.*each day.*exceeding.*only contributors.*Safe Place/);
+  assert.match(merit("embodiment-of-the-firstborn").description, /exceed the normal maximum by one.*Shaken/);
+  assert.equal(merit("embodiment-of-the-firstborn").prerequisites, "Cannot be a Ghost Wolf");
+  const favored = merit("favored-form");
+  assert.equal(favored.prerequisites, "Primal Urge at least the Merit rating + 1");
+  assert.match(favored.description, /only one form.*derived traits.*for every Merit dot.*different form/);
+  assert.match(favored.levels[3].description, /different Attribute.*not normally penalized/);
+  assert.match(merit("fortified-form").description, /1\/0.*1\/1.*2\/2/);
+  assert.match(merit("living-weapon").description, /either bite or claws.*piercing 2.*\+1 weapon.*non-magical armor/);
+  assert.match(merit("moon-kissed").description, /9-again.*8-again.*\+4.*\+3.*non-Auspice.*lose 10-again/);
+  assert.match(merit("pack-dynamics").description, /Resistance Attribute.*whereabouts are unknown.*penalty to all rolls/);
+  assert.match(merit("resonance-shaper").description, /per hour.*per day.*Five successes.*ten successes per locus/);
+  assert.match(merit("song-in-your-heart").description, /Presence \+ Expression.*−1.*−2.*−3.*cannot inspire herself.*Persistent Condition/);
+  assert.match(merit("sounds-of-the-city").description, /Only that many dots.*one dot lower/);
+  assert.match(merit("strings-of-the-heart").description, /one Door.*one Willpower.*one fewer Door/);
+  assert.match(merit("totem").description, /five dots per individual.*Social actions.*purchased again/);
+  assert.match(merit("efficient-killer").prerequisites, /only in Gauru/);
+  assert.match(merit("efficient-killer").description, /wholly denied Defense.*alive.*Wasu-Im/);
+  assert.match(merit("instinctive-defense").description, /Urhan and Urshul.*higher.*rather than the lower/);
+  const assault = merit("relentless-assault");
+  assert.match(assault.description, /any form.*only to Brawl.*Kuruth/);
+  assert.match(assault.levels[0].description, /first turn.*all-out/);
+  assert.match(assault.levels[1].description, /retain Defense against that target/);
+  assert.match(assault.levels[3].description, /1\/1.*stacking/);
+  assert.match(assault.levels[4].description, /last Health box.*second attack.*Basu-Im without resistance/);
+  assert.match(merit("spiritual-blockage").description, /−2.*one Essence.*two.*per-turn spending.*not merely lost/);
+  const tactical = merit("tactical-shifting");
+  assert.match(tactical.description, /larger Size.*smaller Size.*reflexive shifting/);
+  assert.match(tactical.levels[1].description, /does not Dodge.*Size increase.*Dexterity \+ Athletics/);
+  assert.match(tactical.levels[4].description, /grappling.*automatic lethal damage.*Size increase/);
+  assert.match(merit("warcry").prerequisites, /Gauru, Urshul or Urhan/);
+  assert.match(merit("warcry").description, /−1.*−2 Initiative.*only once.*three turns/);
+});
+
+test("Werewolf Merit localization changes presentation without replacing prerequisites, ratings, IDs or level identities", async () => {
+  const { withMeritPresentation, meritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
+  const { meritCategoryLabel } = await vite.ssrLoadModule("/lib/merit-ui.ts");
+  const { meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
+  const before = structuredClone(werewolfMerits);
+  const presented = withMeritPresentation(werewolfMerits, werewolfMeritsPt);
+  for (let index = 0; index < werewolfMerits.length; index++) {
+    const item = presented[index], original = werewolfMerits[index];
+    const en = meritPresentation(item, "en-US"), pt = meritPresentation(item, "pt-BR");
+    assert.equal(en.name, original.name);
+    assert.equal(en.description, original.description);
+    assert.equal(pt.name, werewolfMeritsPt[item.id].name);
+    assert.equal(pt.description, werewolfMeritsPt[item.id].description);
+    assert.equal(item.prerequisites, original.prerequisites);
+    assert.deepEqual(item.ratings, original.ratings);
+    assert.deepEqual(item.levels, original.levels);
+    assert.deepEqual(pt.levels?.map(level => level.rating), en.levels?.map(level => level.rating));
+    for (const gameLine of ["CofD", "CtL", "MtA", "VtR"])
+      assert.equal(meritPrerequisitesMet(item, { gameLine }), false, "Uratha-specific Merits do not leak into another line");
+  }
+  const partial = structuredClone(werewolfMeritsPt);
+  delete partial["wtf-2ed:anchored"];
+  const fallback = withMeritPresentation(werewolfMerits, partial)[0];
+  assert.equal(meritPresentation(fallback, "pt-BR").name, "Anchored");
+  assert.equal(meritPresentation(fallback, "pt-BR").description, fallback.description);
+  assert.equal(meritCategoryLabel("Werewolf", "pt-BR"), "Lobisomem");
+  assert.equal(meritCategoryLabel("Werewolf Fighting", "pt-BR"), "Combate de Lobisomem");
+  assert.equal(meritCategoryLabel("Werewolf Fighting", "en-US"), "Werewolf Fighting");
+  assert.deepEqual(werewolfMerits, before);
 });

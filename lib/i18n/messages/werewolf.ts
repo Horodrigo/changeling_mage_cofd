@@ -1,5 +1,6 @@
 export const werewolfMessages = {
   "en-US": {
+    meritCategories: { Werewolf: "Werewolf", "Werewolf Fighting": "Werewolf Fighting" },
     werewolf: {
       forsakenTemplate: "Forsaken Template", auspiceSkill: "Free Auspice Skill dot", renownChoice: "Additional Renown dot", extraRiteDots: "Extra Rite dots from Merits",
       renownNames: { Cunning: "Cunning", Glory: "Glory", Honor: "Honor", Purity: "Purity", Wisdom: "Wisdom" },
@@ -47,6 +48,7 @@ export const werewolfMessages = {
     },
   },
   "pt-BR": {
+    meritCategories: { Werewolf: "Lobisomem", "Werewolf Fighting": "Combate de Lobisomem" },
     werewolf: {
       forsakenTemplate: "Modelo de Destituído", auspiceSkill: "Ponto gratuito de Perícia do Auspício", renownChoice: "Ponto adicional de Renome", extraRiteDots: "Pontos extras de Ritos convertidos de Méritos",
       renownNames: { Cunning: "Astúcia", Glory: "Glória", Honor: "Honra", Purity: "Pureza", Wisdom: "Sabedoria" },

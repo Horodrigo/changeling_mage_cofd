@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 32,
+  "catalogVersion": 33,
   "catalogs": {
+    "merits-werewolf": { "version": 1, "url": "/game-lines/werewolf/data/merits.json" },
+    "merits-werewolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/merits-pt.json" },
     "werewolf-rites-core": { "version": 1, "url": "/game-lines/werewolf/data/rites/wtf-core.json" },
     "werewolf-rites-core-pt": { "version": 1, "url": "/game-lines/werewolf/data/rites/wtf-core-pt.json" },
     "werewolf-gifts-core-shadow": { "version": 4, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow.json" },
