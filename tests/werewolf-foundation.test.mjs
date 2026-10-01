@@ -55,6 +55,16 @@ const character = {
   skills: { Athletics: 2 }, current_state: { health_damage: Array(10).fill("lethal") },
 };
 
+test("Werewolf Portuguese reference uses the same trait and damage terminology as the shared presentation", async () => {
+  const { systemTerm } = await vite.ssrLoadModule("/lib/system-terms.ts");
+  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  assert.ok(presentation.dalu.description.includes(`${systemTerm("Composure", "pt-BR")} + ${translate("pt-BR", "werewolf.primalUrge")}`));
+  assert.ok(presentation.urhan.description.includes(`${systemTerm("Strength", "pt-BR")} + ${systemTerm("Athletics", "pt-BR")}`));
+  assert.match(traitsPresentation.regeneration.fields.bashing.label, /contusivo/);
+  assert.match(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 1 }), /contusivo/);
+  assert.doesNotMatch(JSON.stringify({ presentation, traitsPresentation }), /Autocontrole|contundente|Esportes|Braço Arruinado|Perna Arruinada/);
+});
+
 test("WtF 2e pp. 96–98 and audited choices derive all five forms without rewriting the base or damage", () => {
   const before = JSON.stringify(character);
   const results = reference.forms.map(form => rules.formTraits(character, form));
@@ -263,7 +273,7 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   assert.match(limits, /6 bashing per turn/);
   assert.match(limits, /12 hours/);
   assert.equal(translate("pt-BR", "werewolf.bans"), "Proibições");
-  assert.equal(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 6 }), "6 de dano contundente por turno");
+  assert.equal(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 6 }), "6 de dano contusivo por turno");
   assert.equal(traitsPresentation["flesh-oath"].description, "Violar o Juramento da Lua (apenas Destituídos).");
 });
 

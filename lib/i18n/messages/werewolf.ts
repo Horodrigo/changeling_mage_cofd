@@ -51,7 +51,7 @@ export const werewolfMessages = {
       noPersonalTrigger: "Sem gatilho pessoal", physicalTouchstone: "Touchstone física", spiritualTouchstone: "Touchstone espiritual",
       touchstoneUnavailable: "Indisponível com a Harmonia atual", regainOne: "Recuperar um ponto gasto de Força de Vontade", regainAll: "Recuperar todos os pontos gastos de Força de Vontade",
       essenceMaximum: "Essência máxima", essencePerTurn: "Essência por turno", regeneration: "Regeneração",
-      bashingPerTurn: "{amount} de dano contundente por turno", basuImTime: "Duração mínima de Basu-Im", feeding: "Restrição alimentar",
+      bashingPerTurn: "{amount} de dano contusivo por turno", basuImTime: "Duração mínima de Basu-Im", feeding: "Restrição alimentar",
       huntInterval: "Intervalo máximo sem Siskur-Dah", lunacyPenalty: "Penalidade de Lunagem", trackingBonus: "Bônus de rastreamento", traitMaximum: "Máximo de Atributos / Perícias",
     },
   },

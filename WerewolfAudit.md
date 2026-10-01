@@ -386,7 +386,7 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `Lay Low the Challenger`: normalizar o `Intimidate` impresso para a Skill canônica `Intimidation`, como no lote Moon Gifts.
 - `Lead the Lesser Pack` e `Memento Mori`: manter elegíveis na ficha individual e informar os efeitos sem criar Pack persistence, alterar fichas externas ou transferir dano automaticamente.
 - Nomes localizados de Conditions a uniformizar no catálogo: Awestruck → Deslumbrado; Essence Overload → Sobrecarga de Essência. Cowed → Acovardado segue a decisão já aprovada para Changeling; Ban → Proibição e Stumbled → Tropeço seguem os lotes anteriores.
-- Revisão lexical pendente na base anterior: `reference-pt.json` e `traits-pt.json` ainda usam Autocontrole em alguns trechos de Composure, enquanto `systemTerm()` apresenta Compostura. A mesma base usa contundente para Bashing em alguns textos, enquanto a apresentação compartilhada usa contusivo. Uniformizar as apresentações, com atualização das versões individuais dos catálogos, sem alterar os valores canônicos.
+- Revisão lexical incorporada na base: Composure → Compostura, Athletics → Atletismo e Bashing → contusivo, seguindo a apresentação compartilhada. Arm Wrack/Leg Wrack na descrição de Urshul usam Braço Lesionado/Perna Lesionada, como no catálogo Moon Gifts. As versões individuais dos catálogos PT foram incrementadas, sem alterar os valores canônicos.
 
 Sequência de implementação autorizada:
 

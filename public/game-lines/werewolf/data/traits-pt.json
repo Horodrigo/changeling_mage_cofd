@@ -206,12 +206,12 @@
     "name": "Regeneração",
     "fields": {
       "bashing": {
-        "label": "Dano contundente",
-        "text": "Regenera dano contundente a cada turno, na quantidade indicada por Instinto Primitivo. Essa quantidade é de pelo menos um ponto por turno."
+        "label": "Dano contusivo",
+        "text": "Regenera dano contusivo a cada turno, na quantidade indicada por Instinto Primitivo. Essa quantidade é de pelo menos um ponto por turno."
       },
       "lethal": {
         "label": "Dano letal",
-        "text": "Regenera um ponto de dano letal a cada 15 minutos. Gastar um ponto de Essência como ação reflexiva muda a regeneração daquele turno de contundente para letal."
+        "text": "Regenera um ponto de dano letal a cada 15 minutos. Gastar um ponto de Essência como ação reflexiva muda a regeneração daquele turno de contusivo para letal."
       },
       "aggravated": {
         "label": "Dano agravado",
@@ -219,7 +219,7 @@
       },
       "gauru": {
         "label": "Gauru",
-        "text": "Cura todo o dano contundente e letal no início de cada turno em Gauru."
+        "text": "Cura todo o dano contusivo e letal no início de cada turno em Gauru."
       },
       "tilts": {
         "label": "Complicações",
@@ -315,7 +315,7 @@
     "fields": {
       "roll": {
         "label": "Parada de Dados",
-        "text": "Atributo de Poder + Perícia apropriada + Renome do Auspício, disputada por Autocontrole + Instinto Primitivo da presa; ação instantânea. Use Força em uma perseguição física, Presença em um confronto de olhares ou Inteligência para enganar a presa. A Perícia depende da interação, não de uma única parada obrigatória."
+        "text": "Atributo de Poder + Perícia apropriada + Renome do Auspício, disputada por Compostura + Instinto Primitivo da presa; ação instantânea. Use Força em uma perseguição física, Presença em um confronto de olhares ou Inteligência para enganar a presa. A Perícia depende da interação, não de uma única parada obrigatória."
       },
       "effect": {
         "label": "Sucesso",
@@ -450,7 +450,7 @@
       },
       "wasu-im": {
         "label": "Wasu-Im",
-        "text": "Assuma imediatamente Dalu ou Urshul e permaneça nessa forma. Como na Fúria de Gauru, resistir à necessidade de atacar exige Perseverança + Autocontrole; uma falha inicia Basu-Im. Em vez de atacar, uma ação instantânea de Perseverança + Autocontrole concede um turno de lucidez por sucesso. Um sucesso excepcional encerra Wasu-Im. Harmonia determina o tempo até Basu-Im; é possível entrar voluntariamente a qualquer momento."
+        "text": "Assuma imediatamente Dalu ou Urshul e permaneça nessa forma. Como na Fúria de Gauru, resistir à necessidade de atacar exige Perseverança + Compostura; uma falha inicia Basu-Im. Em vez de atacar, uma ação instantânea de Perseverança + Compostura concede um turno de lucidez por sucesso. Um sucesso excepcional encerra Wasu-Im. Harmonia determina o tempo até Basu-Im; é possível entrar voluntariamente a qualquer momento."
       },
       "basu-im": {
         "label": "Basu-Im",
@@ -458,7 +458,7 @@
       },
       "pack": {
         "label": "Contágio na alcateia",
-        "text": "Lobisomens da mesma alcateia a até 10 jardas que veem ou sentem o cheiro do personagem em fúria entram em Basu-Im após um turno. Perseverança + Autocontrole pode resistir, exigindo um sucesso por personagem atualmente em Kuruth na cena; teste novamente sempre que outro companheiro entrar em Basu-Im."
+        "text": "Lobisomens da mesma alcateia a até 10 jardas que veem ou sentem o cheiro do personagem em fúria entram em Basu-Im após um turno. Perseverança + Compostura pode resistir, exigindo um sucesso por personagem atualmente em Kuruth na cena; teste novamente sempre que outro companheiro entrar em Basu-Im."
       },
       "end": {
         "label": "Depois",
@@ -512,7 +512,7 @@
       },
       "roll": {
         "label": "Parada de Dados",
-        "text": "Perseverança + Autocontrole; Força de Vontade não pode modificar essa parada. Aplique o modificador do ponto de ruptura específico. Em direção ao Espírito, subtraia um dado por ponto de Harmonia abaixo de 5; uma falha reduz Harmonia em um. Em direção à Carne, subtraia um dado por ponto de Harmonia acima de 5; uma falha aumenta Harmonia em um. Uma Touchstone apropriada e acessível normalmente acrescenta +2."
+        "text": "Perseverança + Compostura; Força de Vontade não pode modificar essa parada. Aplique o modificador do ponto de ruptura específico. Em direção ao Espírito, subtraia um dado por ponto de Harmonia abaixo de 5; uma falha reduz Harmonia em um. Em direção à Carne, subtraia um dado por ponto de Harmonia acima de 5; uma falha aumenta Harmonia em um. Uma Touchstone apropriada e acessível normalmente acrescenta +2."
       },
       "bans": {
         "label": "Proibições",
