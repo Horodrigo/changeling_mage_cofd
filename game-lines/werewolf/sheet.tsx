@@ -34,6 +34,7 @@ import { RiteRules } from "./creation-rites";
 import { RENOWN_IDS } from "./mechanics";
 import { favoredFormPenalties, WEREWOLF_MERIT_CONFIGURATION_IDS } from "./merit-rules";
 import { WerewolfExperiencePanel } from "./experience-panel";
+import { knownWerewolfFacets } from "./gift-progression";
 import "./styles/sheet.css";
 
 export function WerewolfCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
@@ -116,7 +117,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     {reference.anchors.filter(anchor => anchor.id === data.blood || anchor.id === data.bone).map(anchor => <AnchorDetails key={anchor.id} anchor={anchor} reference={reference}/>)}
     <WerewolfPassives reference={reference}/>
     <SheetHeading>{t("werewolf.gifts")}</SheetHeading>
-    {[...new Set([...werewolfIds(data.creation_facets), ...werewolfIds(data.learned_facets)])].map(id => {
+    {[...new Set(knownWerewolfFacets(character))].map(id => {
       const parent = gifts.gifts.find(gift => gift.facets.some(facet => facet.id === id)), facet = parent?.facets.find(item => item.id === id);
       return facet ? <details className="wtf-rule-disclosure" key={id}><summary>{locale === "pt-BR" ? gifts.presentation[id]?.name ?? facet.name : facet.name} · {t(`werewolf.renownNames.${facet.renown}`)}</summary><FacetRules facet={facet} gifts={gifts}/></details> : <p key={id}>{t("werewolf.missingSelectedFacet", { id })}</p>;
     })}

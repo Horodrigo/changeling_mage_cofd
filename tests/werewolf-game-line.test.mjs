@@ -52,6 +52,11 @@ const create = overrides => buildWerewolfCharacter({ ...parameters, ...overrides
 const funded = () => { const character = create(); character.current_state.experience_available = 100; character.current_state.experience_spent = 0; character.current_state.experience_total = 100; return character; };
 const failsWith = problem => error => error instanceof WerewolfAdvancementError && error.problem === problem;
 const purchaseMerit = (definitionId, target, configuration = {}, instanceId) => ({ kind: "merit", definitionId, target, configuration, instanceId });
+const purchaseFacet = (definitionId, authorization = "", learningSource = "") => ({ kind: "facet", definitionId, authorization, learningSource });
+const purchaseRenown = (name, target) => ({ kind: "renown", name, target, deed: "A worthy deed accepted by the Storyteller" });
+const { knownWerewolfFacets: knownFacets, renownGrants, giftProgressionProblems } = await vite.ssrLoadModule("/game-lines/werewolf/gift-progression.ts");
+const { allocateWerewolfRenownGrant: allocateGrant } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
+const { FacetExperienceCatalog, RenownGrantsPanel } = await vite.ssrLoadModule("/game-lines/werewolf/experience-gifts.tsx");
 const merit = (name, dots, instanceId, configuration, creationDots = dots, experienceDots = 0) => {
   const definition = meritCatalog.find(item => item.name === name);
   return { name, dots, sourceId: definition.sourceId, source: definition.source, instanceId, configuration, creationDots, experienceDots };
@@ -69,6 +74,147 @@ test("Werewolf registration loads only immutable Core and Werewolf resources wit
   assert.ok(Object.isFrozen(gifts.gifts[0].facets));
   assert.throws(() => gifts.gifts[0].facets.push({}), TypeError);
   assert.throws(() => catalogs.get("changeling-contracts"), /absent/);
+});
+
+test("WTF2 pp. 99 and 114–115 Renown costs three XP per deed and grants ordered Auspice Moon Facets without charging twice", () => {
+  const original = funded(), before = structuredClone(original);
+  const next = buy(original, purchaseRenown("Purity", 3), advancementCatalogs);
+  assert.equal(next.line_data.renown.Purity, 3); assert.equal(next.line_data.experience_renown.Purity, 1);
+  assert.equal(next.current_state.experience_available, 97); assert.equal(next.current_state.experience_spent, 3);
+  const fullMoon = gifts.gifts.find(gift => gift.id === "gift-full-moon"), third = fullMoon.facets.find(facet => facet.level === 3);
+  assert.deepEqual(next.line_data.renown_facets, [third.id]); assert.ok(knownFacets(next).includes(third.id));
+  assert.equal(renownGrants(next).length, 0); assert.equal(history(next).length, 1);
+  assert.throws(() => quote(next, purchaseFacet(third.id), advancementCatalogs), failsWith("facetKnown"));
+  assert.throws(() => quote(original, { ...purchaseRenown("Cunning", 1), deed: " " }, advancementCatalogs), failsWith("renownDeed"));
+  assert.throws(() => quote(original, purchaseRenown("Purity", 4), advancementCatalogs), failsWith("invalidPurchase"));
+  let maximum = next;
+  for (const rating of [4, 5]) maximum = buy(maximum, purchaseRenown("Purity", rating), advancementCatalogs);
+  assert.throws(() => quote(maximum, purchaseRenown("Purity", 6), advancementCatalogs), failsWith("invalidPurchase"));
+  const returned = refund(next, history(next)[0].id, advancementCatalogs);
+  assert.equal(returned.line_data.renown.Purity, 2); assert.deepEqual(returned.line_data.renown_facets, []);
+  assert.deepEqual(returned.line_data.creation_facets, original.line_data.creation_facets);
+  assert.deepEqual(original, before);
+});
+
+test("Shadow unlock includes one Facet at affinity cost; subsequent Facets cost two and Wolf Facets require no unlock", () => {
+  const original = funded(), favored = gifts.gifts.find(gift => gift.id === "gift-rage"), other = gifts.gifts.find(gift => gift.id === "gift-weather");
+  const first = favored.facets.find(facet => facet.renown === "Purity"), second = favored.facets.find(facet => facet.renown === "Glory"), nonAffinity = other.facets.find(facet => facet.renown === "Glory");
+  assert.equal(quote(original, purchaseFacet(first.id, "", "A spirit from the Sacred Hunt"), advancementCatalogs), 3);
+  assert.equal(quote(original, purchaseFacet(nonAffinity.id, "", "A storm spirit"), advancementCatalogs), 5);
+  assert.throws(() => quote(original, purchaseFacet(first.id), advancementCatalogs), failsWith("giftSource"));
+  const unlocked = buy(original, purchaseFacet(first.id, "", "A spirit from the Sacred Hunt"), advancementCatalogs);
+  assert.equal(quote(unlocked, purchaseFacet(second.id), advancementCatalogs), 2);
+  const advanced = buy(unlocked, purchaseFacet(second.id), advancementCatalogs), unlockId = history(advanced)[0].id;
+  assert.equal(advanced.current_state.experience_spent, 5); assert.equal(advanced.line_data.gift_unlocks.length, 1);
+  assert.throws(() => refund(advanced, unlockId, advancementCatalogs), failsWith("refundDependent"));
+  const revertedFacet = refund(advanced, history(advanced)[1].id, advancementCatalogs);
+  const revertedUnlock = refund(revertedFacet, unlockId, advancementCatalogs);
+  assert.deepEqual(revertedUnlock.line_data.gift_unlocks, []); assert.deepEqual(revertedUnlock.line_data.learned_facets, []);
+  assert.equal(revertedUnlock.current_state.experience_available, 100);
+  const wolf = purchaseFacet("gift-change:the-fathers-form");
+  assert.equal(quote(original, wolf, advancementCatalogs), 1);
+  const learned = buy(original, wolf, advancementCatalogs);
+  assert.equal(learned.line_data.gift_unlocks, undefined);
+  assert.throws(() => quote(learned, wolf, advancementCatalogs), failsWith("facetKnown"));
+  assert.throws(() => quote(original, purchaseFacet("gift-change:skin-thief"), advancementCatalogs), failsWith("facetRenown"));
+});
+
+test("Free Renown credits require the matching category and cannot unlock a Shadow Gift or mint XP on release", () => {
+  let next = buy(funded(), purchaseRenown("Cunning", 1), advancementCatalogs);
+  const entryId = history(next)[0].id, credit = renownGrants(next)[0];
+  assert.equal(credit.id, entryId); assert.equal(credit.facetId, null);
+  assert.throws(() => allocateGrant(next, entryId, "gift-death:cold-embrace", advancementCatalogs), failsWith("giftAllocation"));
+  assert.throws(() => allocateGrant(next, entryId, "gift-change:the-fathers-form", advancementCatalogs), failsWith("facetRenown"));
+  const states = structuredClone(next.current_state);
+  next = allocateGrant(next, entryId, "gift-change:skin-thief", advancementCatalogs);
+  assert.deepEqual(next.current_state, states); assert.ok(knownFacets(next).includes("gift-change:skin-thief"));
+  assert.deepEqual(next.line_data.learned_facets, []);
+  assert.throws(() => allocateGrant(next, entryId, "gift-hunting:honed-senses", advancementCatalogs), failsWith("giftAllocation"));
+  assert.throws(() => refund(next, entryId, advancementCatalogs), failsWith("refundDependent"));
+  next = allocateGrant(next, entryId, null, advancementCatalogs);
+  assert.deepEqual(next.current_state, states); assert.ok(!knownFacets(next).includes("gift-change:skin-thief"));
+  // Purchasing an appropriate family later makes a saved credit usable, without giving a free family unlock.
+  next = buy(next, purchaseFacet("gift-death:barghest", "", "Spirit of a graveyard"), advancementCatalogs);
+  const unlockId = history(next).at(-1).id;
+  next = allocateGrant(next, entryId, "gift-death:cold-embrace", advancementCatalogs);
+  assert.throws(() => refund(next, unlockId, advancementCatalogs), failsWith("refundDependent"));
+  next = allocateGrant(next, entryId, null, advancementCatalogs);
+  next = refund(next, unlockId, advancementCatalogs); next = refund(next, entryId, advancementCatalogs);
+  assert.equal(next.current_state.experience_available, 100); assert.deepEqual(renownGrants(next), []);
+});
+
+test("Authorized additional Moon Gifts cost five then two and retain ascending-order, Renown and exact refund dependencies", () => {
+  let next = buy(funded(), purchaseRenown("Wisdom", 1), advancementCatalogs);
+  next = buy(next, purchaseRenown("Wisdom", 2), advancementCatalogs);
+  const gift = gifts.gifts.find(item => item.id === "gift-crescent-moon"), first = gift.facets[0], second = gift.facets[1], third = gift.facets[2];
+  assert.throws(() => quote(next, purchaseFacet(first.id), advancementCatalogs), failsWith("moonAuthorization"));
+  assert.throws(() => quote(next, purchaseFacet(second.id, "ST approved exception"), advancementCatalogs), failsWith("moonOrder"));
+  assert.throws(() => quote(next, purchaseFacet(third.id, "ST approved exception"), advancementCatalogs), failsWith("facetRenown"));
+  assert.equal(quote(next, purchaseFacet(first.id, "ST approved exception"), advancementCatalogs), 5);
+  next = buy(next, purchaseFacet(first.id, "ST approved exception"), advancementCatalogs);
+  const unlockId = history(next).at(-1).id;
+  assert.equal(quote(next, purchaseFacet(second.id, "ST approved exception"), advancementCatalogs), 2);
+  next = buy(next, purchaseFacet(second.id, "ST approved exception"), advancementCatalogs);
+  assert.throws(() => refund(next, unlockId, advancementCatalogs), failsWith("refundDependent"));
+  assert.throws(() => refund(next, history(next)[1].id, advancementCatalogs), failsWith("refundDependent"));
+  next = refund(next, history(next).at(-1).id, advancementCatalogs); next = refund(next, unlockId, advancementCatalogs);
+  assert.deepEqual(next.line_data.learned_facets, []);
+});
+
+test("Gift grants and purchases round-trip through lifecycle and creation editing without changing origins or balances", async () => {
+  const { prepareCharacterForSave, importCharacterFile } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
+  let source = buy(funded(), purchaseRenown("Purity", 3), advancementCatalogs);
+  source = buy(source, purchaseRenown("Cunning", 1), advancementCatalogs);
+  source = allocateGrant(source, history(source).at(-1).id, "gift-change:skin-thief", advancementCatalogs);
+  source = buy(source, purchaseFacet("gift-hunting:cow-the-prey"), advancementCatalogs);
+  const saved = await prepareCharacterForSave(source), imported = await importCharacterFile({ text: async () => JSON.stringify(saved) });
+  assert.deepEqual(imported.line_data, source.line_data); assert.deepEqual(imported.current_state, source.current_state);
+  const edited = create({ source: imported }), draft = create({ source: imported, draft: true, step: 4, allowAdvancement: true });
+  for (const character of [edited, draft]) {
+    assert.deepEqual(knownFacets(character), knownFacets(source)); assert.deepEqual(history(character), history(source));
+    assert.deepEqual(character.line_data.creation_facets, source.line_data.creation_facets);
+    assert.deepEqual(giftProgressionProblems(character, reference, gifts), []);
+  }
+  const differentAuspice = { ...choices, auspice_id: "cahalith", auspice_skill: "Expression", shadow_facets: ["gift-inspiration:fearless-hunter", gifts.gifts.find(gift => gift.id === "gift-rage").facets.find(facet => facet.renown === "Glory").id] };
+  assert.throws(() => create({ source, choices: differentAuspice }), /Gift progression|changing Auspice/);
+});
+
+test("Gift transactions preserve damage and resources, reject corrupted origins and protect dependencies per Facet rather than per error category", () => {
+  let source = funded();
+  source.current_state.health_damage = Array(14).fill("lethal"); source.current_state.essence_current = 2; source.current_state.willpower_current = 1;
+  source.current_state.experience_available = 0; source.current_state.experience_total = 0;
+  const planned = buy(source, purchaseRenown("Cunning", 1), advancementCatalogs, true);
+  const creditId = history(planned)[0].id;
+  assert.equal(planned.current_state.experience_available, 0); assert.equal(planned.current_state.experience_total, 3);
+  assert.deepEqual(planned.current_state.health_damage, source.current_state.health_damage);
+  assert.equal(planned.current_state.essence_current, 2); assert.equal(planned.current_state.willpower_current, 1);
+  const returned = refund(planned, creditId, advancementCatalogs, true);
+  assert.equal(returned.current_state.experience_available, 0); assert.equal(returned.current_state.experience_total, 0);
+  const corrupt = structuredClone(planned); corrupt.line_data.renown_grants.push({ unknown: "opaque data" });
+  const before = structuredClone(corrupt);
+  assert.throws(() => allocateGrant(corrupt, creditId, "gift-change:skin-thief", advancementCatalogs), failsWith("giftAllocation"));
+  assert.throws(() => refund(corrupt, creditId, advancementCatalogs, true), failsWith("giftAllocation"));
+  assert.deepEqual(corrupt, before);
+  // A pre-existing unrelated invalid Renown must not hide a NEW invalid dependency after this refund.
+  source = buy(funded(), purchaseRenown("Cunning", 1), advancementCatalogs);
+  const id = history(source)[0].id;
+  source = buy(source, purchaseFacet("gift-change:skin-thief"), advancementCatalogs);
+  source.line_data.learned_facets.push("gift-change:quicksilver-flesh");
+  assert.throws(() => refund(source, id, advancementCatalogs), failsWith("refundDependent"));
+  const missing = structuredClone(source); missing.line_data.experience_renown.Cunning = 0;
+  assert.throws(() => refund(missing, id, advancementCatalogs), failsWith("refundMissing"));
+});
+
+test("Gift chooser exposes every canonical Facet with complete mechanics and disabled reasons, while credits remain visibly separate", () => {
+  const character = buy(funded(), purchaseRenown("Cunning", 1), advancementCatalogs);
+  const html = render(createElement(FacetExperienceCatalog, { character, catalogs: advancementCatalogs, selectedId: "", onSelect() {} }));
+  assert.equal((html.match(/class="wtf-rite-experience-row"/g) ?? []).length, 115);
+  assert.match(html, /Skin Thief/); assert.match(html, /Dice Pool/); assert.match(html, /Exceptional Success/); assert.match(html, /disabled=""/);
+  assert.match(html, /Unlock includes the first Facet/);
+  const credits = render(createElement(RenownGrantsPanel, { character, catalogs: advancementCatalogs, updateSheet() {} }));
+  assert.match(credits, /1 pending/); assert.match(credits, /Free Renown Facets/);
+  const facet = purchaseFacet("gift-change:skin-thief");
+  assert.notEqual(werewolfPurchaseLabel(facet, advancementCatalogs, "pt-BR"), werewolfPurchaseLabel(facet, advancementCatalogs, "en-US"));
 });
 
 test("Pure Werewolf mechanical constants reconcile all forms and canonical Merit identities with static catalogs", async () => {
@@ -121,7 +267,7 @@ test("Reediting grants, XP-only instances, trait purchases and authored choices 
   source.specializations.push({ skill: "Brawl", name: "Fangs" });
   source.line_data.experience_primal_urge = 1; source.line_data.primal_urge = 2;
   source.line_data.experience_renown = { Glory: 1 }; source.line_data.renown.Glory += 1;
-  source.line_data.learned_facets = ["gift-change:skin-thief"];
+  source.line_data.learned_facets = [gifts.gifts.find(gift => gift.kind === "wolf").facets.find(facet => facet.renown === "Purity").id];
   source.line_data.learned_rites = ["wtf-core:bottle-spirit"];
   source.current_state = { health_damage: Array(13).fill("lethal"), form: "gauru", notes: "Player notes", experience_available: 2, experience_spent: 15, experience_total: 17,
     werewolf_experience_history: [ { undo: { kind: "trait", group: "skills", name: "Brawl", amount: 1 } },
@@ -436,6 +582,7 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const { werewolfBuilder: ptBuilder } = await portuguese.ssrLoadModule("/game-lines/werewolf/builder.tsx");
     const { WerewolfExperiencePanel: PtExperience } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
     const { RiteExperienceCatalog: PtRites } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-rites.tsx");
+    const { FacetExperienceCatalog: PtFacets, RenownGrantsPanel: PtGrants } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-gifts.tsx");
     const character = create({ draft: true, step: 3 });
     const before = structuredClone(character);
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
@@ -453,5 +600,10 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const riteMarkup = ptRender(createElement(PtRites, { catalog: rites, tribeId: choices.tribe_id, knownIds: choices.rites, selectedId: "", onSelect: () => {} }));
     assert.match(riteMarkup, /Todos os Ritos/); assert.match(riteMarkup, /Este Rito já é conhecido/); assert.match(riteMarkup, /Sucesso Excepcional/);
     assert.doesNotMatch(riteMarkup, /missing translation/);
+    const advanced = buy(funded(), purchaseRenown("Cunning", 1), advancementCatalogs);
+    const giftMarkup = ptRender(createElement(PtFacets, { character: advanced, catalogs: advancementCatalogs, selectedId: "", onSelect() {} }));
+    assert.match(giftMarkup, /Todas as afinidades/); assert.match(giftMarkup, /Sucesso Excepcional/); assert.doesNotMatch(giftMarkup, /missing translation/);
+    const grantsMarkup = ptRender(createElement(PtGrants, { character: advanced, catalogs: advancementCatalogs, updateSheet() {} }));
+    assert.match(grantsMarkup, /1 pendentes/); assert.match(grantsMarkup, /Facetas gratuitas de Renome/);
   } finally { await portuguese.close(); }
 });

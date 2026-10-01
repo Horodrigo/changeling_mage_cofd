@@ -459,7 +459,7 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `creation-grants.ts` compõe seleções de criação e reutiliza a progressão compartilhada por instância exata para preservar creationDots/experienceDots. Testes cobrem reedição, Totem com alocação mista, Living Weapon bite/claws comprados com XP na mesma form e ausência de duplicação das concessões. Não há interpretação de descrições traduzidas ou alteração de saldos/histórico.
 - O resultado validado de criação mantém escolhas e IDs de Renown/Facets/Rites separados do Skill dot gratuito. A retirada deste dot para reedição exige o registro explícito da concessão; não tenta adivinhar bônus ou remover um dot comprado. Os Attributes e as seleções de entrada não são alterados.
 - Blood/Bone devem apontar para o tipo correto de arquétipo; as duas Touchstones precisam ser descritas para concluir a criação. O template mostra mensagens EN/PT para estas escolhas ausentes ou inválidas. Rascunhos continuam sujeitos ao salvamento separado permitido pelo shell compartilhado.
-- A composição destas concessões foi integrada ao Builder registrado, normalização e ficha em tela. XP de Attributes, Skills, Specialties, Merits, Primal Urge e Core Rites está integrado; Renown/Gifts e os demais sistemas aprovados permanecem pendentes. O esquema externo continua na versão 2.
+- A composição destas concessões foi integrada ao Builder registrado, normalização e ficha em tela. XP de Attributes, Skills, Specialties, Merits, Primal Urge, Renown, Gifts/Facets e Core Rites está integrado; os demais sistemas aprovados permanecem pendentes. O esquema externo continua na versão 2.
 
 Sequência de implementação autorizada:
 
@@ -479,14 +479,14 @@ Nenhuma exclusão será revertida apenas porque o sistema consta nos três livro
 - Reedição preserva XP-only Merits e instâncias bite/claws independentes na mesma form, compras de traits, alocações mistas de Totem, recursos, histórico e escolhas autorais. Corrigida no shell compartilhado a subtração duplicada de experienceDots de grants com creationDots explícitos.
 - A ficha normal/mobile usa MainSheet compartilhado, cinco colunas de forms em Details, passivas e poderes expansíveis, Harmony manual e duas Touchstones. O seletor discreto de Health recalcula caixas sem truncar dano; Heal é manual e remove também o excesso preservado. Modificadores permanentes de Merits são aplicados às forms sem alterar os Attributes comprados.
 - Catálogos solicitados continuam limitados a Core e Werewolf; inglês é canônico e português é apresentação por ID. CSS normal/mobile e fallback de impressão não geram novas imagens; PDF/blank dedicados ainda não são anunciados.
-- **Ainda pendentes:** compras/refundos de Renown/Gifts e grants de progressão; conteúdo elegível de The Pack/Shunned by the Moon, incluindo Rites dos suplementos; Conditions/Tilts Werewolf; Fetishes/Talens; editor individual de Totem e Pack Tactics; sistemas adicionais das forms permitidas; referências completas das Auspice abilities/Hunter's Aspects/Tribal benefits; PDF/blank dedicados e reconciliação final de Ban/Bane nas entidades efêmeras. Esses itens continuam na meta, sem Pure, Wolf-Blooded, Lodges ou Pack persistence.
+- **Ainda pendentes:** conteúdo elegível de The Pack/Shunned by the Moon, incluindo Rites dos suplementos; Conditions/Tilts Werewolf; Fetishes/Talens; editor individual de Totem e Pack Tactics; sistemas adicionais das forms permitidas; referências completas das Auspice abilities/Hunter's Aspects/Tribal benefits; PDF/blank dedicados e reconciliação final de Ban/Bane nas entidades efêmeras. Esses itens continuam na meta, sem Pure, Wolf-Blooded, Lodges ou Pack persistence.
 
 ### Experiência individual — primeiro lote integrado (2026-10-01)
 
 - Sheet e etapa opcional de criação usam as mesmas transações de Attributes (4 XP/dot), Skills (2), Specialties (1), Merits (1/dot) e Primal Urge (5/dot). Custos conferidos em WTF2 p. 84 e CofD p. 77; Harmony permanece manual e não comprável.
 - Histórico semântico mantém valores canônicos, IDs e instâncias; os rótulos são apresentados em EN/PT sem reescrever compras. Merits de XP preservam experienceDots separados de creationDots, inclusive upgrades de Totem, reedição e rascunhos de avanço.
 - Refund verifica custo e instância, impede duplicação de reembolso e protege pré-requisitos de Merits, Skills com Specialties e limites de traits por Primal Urge. Não cura, não altera Essence/Willpower/Harmony e não gera Beats automaticamente. Na criação, desfazer custo planejado não cria saldo fictício.
-- Moon/Shadow/Wolf Gifts, concessões/créditos de Renown e Rites exigem fluxos próprios conforme W08/W09; não foram reduzidos a compras genéricas neste lote.
+- Moon/Shadow/Wolf Gifts, concessões/créditos de Renown e Rites receberam fluxos próprios nos lotes seguintes conforme W08/W09; não foram reduzidos a compras genéricas.
 
 ### Aprendizado de Rites por XP — 2026-10-01
 
@@ -496,3 +496,12 @@ Nenhuma exclusão será revertida apenas porque o sistema consta nos três livro
 - Origem de criação e XP permanece separada. Não é possível recomprar um Rite conhecido ou contá-lo na criação após comprá-lo com XP; o Builder mantém opções inválidas removíveis. Refund retira somente o ID aprendido e devolve o custo registrado, sem restaurar snapshots de outros aprendizados.
 - O seletor expõe todos os textos mecânicos em EN/PT, busca e filtro Wolf/Pack, além dos motivos de bloqueio; nomes localizados não se tornam identidade persistida. Rites dos suplementos continuam pendentes junto de seus catálogos.
 - **Entrega final solicitada em 2026-10-01:** depois de concluir a meta e verificar os gates, fazer merge local da branch `werewolf` com `main` e excluir `werewolf`. Não realizar esse merge enquanto a implementação aprovada estiver incompleta; nenhum push foi solicitado.
+
+### Progressão de Renown e Gifts — 2026-10-01
+
+- Regras conferidas visualmente em WTF2 pp. 84, 99 e 114–115. Cada compra de Renown custa 3 XP por dot e registra um feito digno confirmado pelo jogador, sem empréstimos de XP ou Beats automáticos. Auspice Renown concede as Moon Facets ordenadas gratuitamente, separadas dos IDs de criação e dos poderes pagos.
+- Non-Auspice Renown gera um crédito da categoria correspondente. WTF2 p. 99 permite Shadow ou Wolf Facet; a regra específica de Shadow em p. 115 exige um Gift já possuído e permite guardar o crédito. Portanto, a seleção gratuita nunca desbloqueia uma família Shadow. O crédito persiste até uso posterior e pode voltar a pendente sem devolver ou cobrar XP.
+- Desbloquear Shadow Gift inclui a primeira Facet por 3 XP se favorecido ou 5 caso contrário, registrando o spirit que concede o Gift. Facets adicionais custam 2 XP. Wolf Facets custam 1 XP e não exigem desbloqueio de família. Cada escolha exige pelo menos um dot no Renown correspondente.
+- M05 mantém autorização explícita para outro Moon Gift. Custo de 5 XP pela primeira Facet e 2 por adicional, em ordem crescente, limitadas pelo Renown correspondente. Não libera os modelos Pure/Wolf-Blooded nem transforma leitura de catálogo em concessão de poder.
+- Histórico e ledger guardam origens e IDs canônicos distintos para compras, desbloqueios e créditos gratuitos. Refund não remove criação ou outros poderes, exige devolver créditos usados e bloqueia perda de desbloqueio, ordem ou Renown necessário. Builder/rascunhos preservam essas origens; mudança de Auspice exige desfazer primeiro as compras de Renown existentes.
+- Seletores EN/PT expõem as 115 Core Facets, textos mecânicos completos, busca, filtros por família/affinity e motivos de bloqueio. Catálogos dos suplementos e os demais itens pendentes acima continuam no escopo da meta.

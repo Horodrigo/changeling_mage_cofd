@@ -6,6 +6,7 @@
 .wtf-sheet .wtf-health-heading { align-items: center; }
 .wtf-sheet .wtf-health-heading select, .wtf-sheet .wtf-health-heading [data-slot="select-trigger"] { width: 105px; }
 .wtf-renown { display: grid; gap: .4rem; }
+.wtf-renown-grant { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
 .wtf-rite-experience-catalog { overflow-y: auto; min-height: 0; max-height: 55vh; }
 .wtf-rite-experience-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
 .wtf-rite-experience-row > .wtf-rite-reason { grid-column: 1 / -1; margin: 0; }

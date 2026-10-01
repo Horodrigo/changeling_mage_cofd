@@ -7,6 +7,9 @@ import { createRandomId } from "@/lib/random-id";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
 import type { WerewolfRiteCatalog } from "./catalogs/rites";
+import type { RenownId } from "./catalogs/reference";
+import { RENOWN_IDS } from "./mechanics";
+import { facetDefinition, facetPurchaseTerms, giftProgressionIssues, giftUnlocks, renownGrants, renownGrantProblem, synchronizeRenownFacets, type FacetCost, type GiftProblem } from "./gift-progression";
 import { boundedPrimalUrge, primalUrgeLevel } from "./creation-rules";
 import { resolveWerewolfMerits, werewolfMeritDefinition } from "./creation-grants";
 import { werewolfMeritPrerequisitesMet, werewolfMeritSelectionProblems, type WerewolfMeritContext } from "./merit-rules";
@@ -17,16 +20,20 @@ export type WerewolfPurchase =
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "merit"; definitionId: string; target: number; instanceId?: string; configuration: MeritConfiguration }
   | { kind: "primalUrge"; target: number }
-  | { kind: "rite"; definitionId: string; learningSource: string };
+  | { kind: "rite"; definitionId: string; learningSource: string }
+  | { kind: "renown"; name: RenownId; target: number; deed: string }
+  | { kind: "facet"; definitionId: string; authorization: string; learningSource: string };
 export type WerewolfAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount: number }
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "merit"; definitionId: string; name: string; instanceId: string; dots: number; previousConfiguration?: MeritConfiguration; purchasedConfiguration: MeritConfiguration }
   | { kind: "primalUrge"; amount: number }
-  | { kind: "rite"; definitionId: string; dots: number };
+  | { kind: "rite"; definitionId: string; dots: number }
+  | { kind: "renown"; name: RenownId; auspiceId: string }
+  | { kind: "facet"; definitionId: string; giftId: string; unlock: boolean; costKey: FacetCost };
 export type WerewolfExperienceEntry = { id: string; cost: number; createdAt: string; purchase: WerewolfPurchase; undo: WerewolfAdvancementUndo };
 export type WerewolfAdvancementCatalogs = { reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; merits: readonly MeritDefinition[] };
-type Problem = "invalidPurchase" | "traitMaximum" | "specialty" | "missingMerit" | "meritPrerequisites" | "meritChoices" | "meritInstance" | "grant" | "insufficientExperience" | "refundMissing" | "refundDependent" | "missingRite" | "riteKnown" | "riteTribe" | "riteSource";
+type Problem = GiftProblem | "invalidPurchase" | "traitMaximum" | "specialty" | "missingMerit" | "meritPrerequisites" | "meritChoices" | "meritInstance" | "grant" | "insufficientExperience" | "refundMissing" | "refundDependent" | "missingRite" | "riteKnown" | "riteTribe" | "riteSource";
 export class WerewolfAdvancementError extends Error {
   constructor(readonly problem: Problem) { super(problem); }
 }
@@ -35,6 +42,12 @@ const natural = (value: unknown) => typeof value === "number" && Number.isSafeIn
 export const werewolfExperienceValue = (value: unknown) => { const parsed = Number(value); return Number.isFinite(parsed) ? Math.max(0, Math.trunc(parsed)) : 0; };
 const balance = werewolfExperienceValue;
 export const WEREWOLF_HISTORY_KEY = "werewolf_experience_history";
+const validGiftLedgers = (character: CharacterSheet) => {
+  for (const [key, entries] of [["renown_grants", renownGrants(character)], ["gift_unlocks", giftUnlocks(character)]] as const) {
+    const raw = character.line_data[key];
+    if (raw !== undefined && (!Array.isArray(raw) || raw.length !== entries.length)) fail("giftAllocation");
+  }
+};
 
 /** Pure Hishu prerequisite contexts are shared by the XP chooser and its transaction guard. */
 export function werewolfAdvancementContexts(character: CharacterSheet, catalogs: WerewolfAdvancementCatalogs): { core: MeritPrerequisiteContext; own: WerewolfMeritContext } {
@@ -52,8 +65,9 @@ export const canAdvanceWerewolfGrant = (merit: CharacterSheet["merits"][number])
 /** WTF2 p. 84; Specialties use CofD p. 77. Locale and the combat form never alter a quote. */
 export function werewolfPurchaseQuote(character: CharacterSheet, purchase: WerewolfPurchase, catalogs: WerewolfAdvancementCatalogs) {
   if (character.game_line !== "WtF") fail("invalidPurchase");
-  if (!purchase || !["trait", "specialty", "primalUrge", "merit", "rite"].includes(purchase.kind)) fail("invalidPurchase");
+  if (!purchase || !["trait", "specialty", "primalUrge", "merit", "rite", "renown", "facet"].includes(purchase.kind)) fail("invalidPurchase");
   const costs = catalogs.reference.experienceCosts;
+  if (purchase.kind === "renown" || purchase.kind === "facet") validGiftLedgers(character);
   let cost: number;
   if (purchase.kind === "trait") {
     if (!["attributes", "skills"].includes(purchase.group)) fail("invalidPurchase");
@@ -72,6 +86,17 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     const current = boundedPrimalUrge(character.line_data.primal_urge);
     if (!natural(purchase.target) || purchase.target <= current || purchase.target > 10) fail("invalidPurchase");
     cost = (purchase.target - current) * costs.primalUrgeDot;
+  } else if (purchase.kind === "renown") {
+    if (!RENOWN_IDS.includes(purchase.name) || !catalogs.reference.auspices.some(item => item.id === character.line_data.auspice_id)) fail("invalidPurchase");
+    const current = renownRatings(character.line_data.renown)[purchase.name];
+    if (purchase.target !== current + 1 || purchase.target > 5) fail("invalidPurchase");
+    if (typeof purchase.deed !== "string" || !purchase.deed.trim() || purchase.deed.length > 240) fail("renownDeed");
+    cost = costs.renown;
+  } else if (purchase.kind === "facet") {
+    if (typeof purchase.authorization !== "string" || typeof purchase.learningSource !== "string" || purchase.authorization.length > 240 || purchase.learningSource.length > 240) fail("invalidPurchase");
+    const terms = facetPurchaseTerms(character, purchase.definitionId, catalogs.reference, catalogs.gifts, purchase.authorization, purchase.learningSource);
+    if (terms.problem) return fail(terms.problem);
+    cost = costs[terms.costKey!];
   } else if (purchase.kind === "rite") {
     const rite = catalogs.rites.rites.find(item => item.id === purchase.definitionId);
     if (!rite || !natural(rite.dots) || rite.dots < 1 || rite.dots > 5) return fail("missingRite");
@@ -103,6 +128,7 @@ export function purchaseWerewolfAdvancement(character: CharacterSheet, purchase:
   const available = balance(character.current_state.experience_available), spent = balance(character.current_state.experience_spent);
   if (!builderMode && available < cost) fail("insufficientExperience");
   const next = structuredClone(character);
+  const entryId = createRandomId();
   let undo: WerewolfAdvancementUndo;
   if (purchase.kind === "trait") {
     undo = { kind: "trait", group: purchase.group, name: purchase.name, amount: purchase.target - Number(next[purchase.group][purchase.name] ?? (purchase.group === "attributes" ? 1 : 0)) };
@@ -114,6 +140,20 @@ export function purchaseWerewolfAdvancement(character: CharacterSheet, purchase:
     undo = { kind: "primalUrge", amount: purchase.target - boundedPrimalUrge(next.line_data.primal_urge) };
     next.line_data.primal_urge = purchase.target;
     next.line_data.experience_primal_urge = balance(next.line_data.experience_primal_urge) + undo.amount;
+  } else if (purchase.kind === "renown") {
+    const auspice = catalogs.reference.auspices.find(item => item.id === next.line_data.auspice_id)!;
+    undo = { kind: "renown", name: purchase.name, auspiceId: auspice.id };
+    next.line_data.renown = { ...renownRatings(next.line_data.renown), [purchase.name]: purchase.target };
+    const experience = renownRatings(next.line_data.experience_renown);
+    next.line_data.experience_renown = { ...experience, [purchase.name]: experience[purchase.name] + 1 };
+    if (purchase.name !== auspice.renown) next.line_data.renown_grants = [...renownGrants(next), { id: entryId, renown: purchase.name, facetId: null }];
+    synchronizeRenownFacets(next, catalogs.reference, catalogs.gifts);
+  } else if (purchase.kind === "facet") {
+    const terms = facetPurchaseTerms(character, purchase.definitionId, catalogs.reference, catalogs.gifts, purchase.authorization, purchase.learningSource);
+    const { gift } = facetDefinition(purchase.definitionId, catalogs.gifts)!;
+    undo = { kind: "facet", definitionId: purchase.definitionId, giftId: gift.id, unlock: terms.unlock!, costKey: terms.costKey! };
+    next.line_data.learned_facets = [...werewolfIds(next.line_data.learned_facets), purchase.definitionId];
+    if (terms.unlock) next.line_data.gift_unlocks = [...giftUnlocks(next), { id: entryId, giftId: gift.id }];
   } else if (purchase.kind === "rite") {
     const rite = catalogs.rites.rites.find(item => item.id === purchase.definitionId)!;
     undo = { kind: "rite", definitionId: rite.id, dots: rite.dots };
@@ -131,7 +171,7 @@ export function purchaseWerewolfAdvancement(character: CharacterSheet, purchase:
     }
     undo = { kind: "merit", definitionId: definition.id, name: definition.name, instanceId: instance.instanceId!, dots: amount, previousConfiguration, purchasedConfiguration: normalizeMeritConfiguration(purchase.configuration) };
   }
-  const entry: WerewolfExperienceEntry = { id: createRandomId(), cost, createdAt: new Date().toISOString(), purchase: structuredClone(purchase), undo };
+  const entry: WerewolfExperienceEntry = { id: entryId, cost, createdAt: new Date().toISOString(), purchase: structuredClone(purchase), undo };
   next.current_state = { ...next.current_state, experience_available: builderMode ? available : available - cost, experience_spent: spent + cost,
     experience_total: Math.max(balance(next.current_state.experience_total), available + spent) + (builderMode ? cost : 0),
     [WEREWOLF_HISTORY_KEY]: [...(Array.isArray(next.current_state[WEREWOLF_HISTORY_KEY]) ? next.current_state[WEREWOLF_HISTORY_KEY] : []), entry] };
@@ -147,6 +187,11 @@ export function werewolfExperienceHistory(character: CharacterSheet): WerewolfEx
       || typeof item.purchase !== "object" || typeof item.undo !== "object" || item.purchase.kind !== item.undo.kind) return false;
     const purchase = item.purchase, undo = item.undo;
     const text = (value: unknown) => typeof value === "string" && Boolean(value.trim());
+    if (undo.kind === "facet") return text(undo.definitionId) && purchase.definitionId === undo.definitionId && text(undo.giftId) && typeof undo.unlock === "boolean"
+      && ["affinityGift", "nonAffinityGift", "shadowFacet", "wolfFacet", "additionalMoonGift", "additionalMoonFacet"].includes(undo.costKey)
+      && typeof purchase.authorization === "string" && purchase.authorization.length <= 240 && typeof purchase.learningSource === "string" && purchase.learningSource.length <= 240;
+    if (undo.kind === "renown") return RENOWN_IDS.includes(undo.name) && purchase.name === undo.name && text(undo.auspiceId)
+      && natural(purchase.target) && purchase.target >= 1 && purchase.target <= 5 && text(purchase.deed) && purchase.deed.length <= 240;
     if (undo.kind === "rite") return text(undo.definitionId) && purchase.definitionId === undo.definitionId && text(purchase.learningSource)
       && purchase.learningSource.length <= 240 && natural(undo.dots) && undo.dots >= 1 && undo.dots <= 5;
     if (undo.kind === "specialty") return text(undo.skill) && text(undo.name) && purchase.skill === undo.skill && typeof purchase.name === "string" && purchase.name.trim() === undo.name;
@@ -183,6 +228,8 @@ function hasNewDependencies(before: CharacterSheet, after: CharacterSheet, catal
   const cap = primalUrgeLevel(catalogs.reference, after.line_data.primal_urge).traitMaximum;
   const oldCap = primalUrgeLevel(catalogs.reference, before.line_data.primal_urge).traitMaximum;
   if (cap < oldCap && [...Object.values(after.attributes), ...Object.values(after.skills)].some(dots => dots > cap)) return true;
+  const oldGiftProblems = giftProgressionIssues(before, catalogs.reference, catalogs.gifts);
+  if ([...giftProgressionIssues(after, catalogs.reference, catalogs.gifts).keys()].some(problem => !oldGiftProblems.has(problem))) return true;
   return after.specializations.some(item => !(after.skills[item.skill] >= 1) && before.skills[item.skill] >= 1);
 }
 
@@ -192,9 +239,11 @@ export function refundWerewolfAdvancement(character: CharacterSheet, id: string,
   const raw = character.current_state[WEREWOLF_HISTORY_KEY];
   if (matches.length !== 1 || !Array.isArray(raw) || raw.filter(item => item && typeof item === "object" && item.id === id).length !== 1) return fail("refundMissing");
   const entry = matches[0], next = structuredClone(character), undo = entry.undo;
+  if (undo.kind === "renown" || undo.kind === "facet") validGiftLedgers(character);
   const costs = catalogs.reference.experienceCosts;
   const expected = undo.kind === "trait" ? undo.amount * costs[undo.group === "attributes" ? "attribute" : "skill"]
-    : undo.kind === "specialty" ? 1 : undo.kind === "primalUrge" ? undo.amount * costs.primalUrgeDot : undo.dots * costs[undo.kind === "rite" ? "riteDot" : "merit"];
+    : undo.kind === "specialty" ? 1 : undo.kind === "primalUrge" ? undo.amount * costs.primalUrgeDot : undo.kind === "renown" ? costs.renown
+      : undo.kind === "facet" ? costs[undo.costKey] : undo.dots * costs[undo.kind === "rite" ? "riteDot" : "merit"];
   if (entry.cost !== expected || balance(next.current_state.experience_spent) < entry.cost) fail("refundMissing");
   if (undo.kind === "trait") {
     if (!["attributes", "skills"].includes(undo.group)) fail("refundMissing");
@@ -211,6 +260,28 @@ export function refundWerewolfAdvancement(character: CharacterSheet, id: string,
     if (!natural(undo.amount) || undo.amount < 1 || balance(next.line_data.experience_primal_urge) < undo.amount || boundedPrimalUrge(next.line_data.primal_urge) <= undo.amount) fail("refundMissing");
     next.line_data.primal_urge = boundedPrimalUrge(next.line_data.primal_urge) - undo.amount;
     next.line_data.experience_primal_urge = balance(next.line_data.experience_primal_urge) - undo.amount;
+  } else if (undo.kind === "renown") {
+    const renown = renownRatings(next.line_data.renown), experience = renownRatings(next.line_data.experience_renown);
+    const purchased = werewolfExperienceHistory(character).filter(item => item.undo.kind === "renown" && item.undo.name === undo.name).length;
+    if (undo.auspiceId !== next.line_data.auspice_id || experience[undo.name] < purchased || renown[undo.name] < experience[undo.name]) fail("refundMissing");
+    const auspice = catalogs.reference.auspices.find(item => item.id === undo.auspiceId);
+    const grants = renownGrants(next).filter(grant => grant.id === id);
+    if (!auspice || (undo.name !== auspice.renown && (grants.length !== 1 || grants[0].renown !== undo.name))) fail("refundMissing");
+    if (grants.some(grant => grant.facetId)) fail("refundDependent");
+    next.line_data.renown = { ...renown, [undo.name]: renown[undo.name] - 1 };
+    next.line_data.experience_renown = { ...experience, [undo.name]: experience[undo.name] - 1 };
+    next.line_data.renown_grants = renownGrants(next).filter(grant => grant.id !== id);
+    synchronizeRenownFacets(next, catalogs.reference, catalogs.gifts);
+  } else if (undo.kind === "facet") {
+    const selected = facetDefinition(undo.definitionId, catalogs.gifts), learned = werewolfIds(next.line_data.learned_facets);
+    const validKeys = selected?.gift.kind === "wolf" ? ["wolfFacet"] : selected?.gift.kind === "shadow"
+      ? undo.unlock ? ["affinityGift", "nonAffinityGift"] : ["shadowFacet"] : undo.unlock ? ["additionalMoonGift"] : ["additionalMoonFacet"];
+    if (!selected || selected.gift.id !== undo.giftId || !validKeys.includes(undo.costKey) || learned.filter(id => id === undo.definitionId).length !== 1
+      || werewolfIds(next.line_data.creation_facets).includes(undo.definitionId)
+      || werewolfExperienceHistory(character).filter(item => item.undo.kind === "facet" && item.undo.definitionId === undo.definitionId).length !== 1
+      || (undo.unlock && giftUnlocks(next).filter(unlock => unlock.id === id && unlock.giftId === undo.giftId).length !== 1)) fail("refundMissing");
+    next.line_data.learned_facets = learned.filter(id => id !== undo.definitionId);
+    if (undo.unlock) next.line_data.gift_unlocks = giftUnlocks(next).filter(unlock => unlock.id !== id);
   } else if (undo.kind === "rite") {
     const learned = werewolfIds(next.line_data.learned_rites);
     if (learned.filter(id => id === undo.definitionId).length !== 1 || werewolfIds(next.line_data.creation_rites).includes(undo.definitionId)
@@ -234,5 +305,23 @@ export function refundWerewolfAdvancement(character: CharacterSheet, id: string,
     ...(builderMode ? { experience_total: Math.max(balance(next.current_state.experience_available) + balance(next.current_state.experience_spent), balance(next.current_state.experience_total)) - entry.cost } : {}),
     [WEREWOLF_HISTORY_KEY]: (next.current_state[WEREWOLF_HISTORY_KEY] as unknown[]).filter(item => !item || typeof item !== "object" || !("id" in item) || item.id !== id) };
   next.derived = werewolfDerived(next);
+  return next;
+}
+
+/** Free allocations have their own origin ledger; they never debit XP or rewrite purchase history. */
+export function allocateWerewolfRenownGrant(character: CharacterSheet, id: string, facetId: string | null, catalogs: WerewolfAdvancementCatalogs) {
+  if (character.game_line !== "WtF") fail("invalidPurchase");
+  validGiftLedgers(character);
+  const grants = renownGrants(character), matches = grants.filter(grant => grant.id === id);
+  const entries = werewolfExperienceHistory(character).filter(entry => entry.id === id && entry.undo.kind === "renown");
+  const raw = character.current_state[WEREWOLF_HISTORY_KEY];
+  if (!Array.isArray(raw) || raw.filter(item => item && typeof item === "object" && item.id === id).length !== 1) fail("giftAllocation");
+  if (matches.length !== 1 || entries.length !== 1 || entries[0].undo.kind !== "renown" || entries[0].undo.name !== matches[0].renown) fail("giftAllocation");
+  const grant = matches[0];
+  if (facetId && grant.facetId) fail("giftAllocation");
+  if (facetId) { const problem = renownGrantProblem(character, grant, facetId, catalogs.gifts); if (problem) fail(problem); }
+  const next = structuredClone(character);
+  next.line_data.renown_grants = grants.map(item => item.id === id ? { ...item, facetId } : item);
+  if (hasNewDependencies(character, next, catalogs)) fail("refundDependent");
   return next;
 }
