@@ -1,386 +1,364 @@
-# Werewolf — auditoria para decisão antes da implementação
+# Werewolf — decisões da auditoria
 
-Status: aguardando revisão do usuário. Este documento registra decisões pendentes, não regras já implementadas. `AGENTS.md` e o código atual continuam sendo a referência arquitetural. Remover ou arquivar este documento quando as decisões tiverem sido incorporadas.
+Status: decisões recebidas em 2026-09-30; implementação não retomada neste pedido. A meta permanece pausada. Este documento substitui as propostas anteriores da auditoria e registra o entendimento atual, com dúvidas remanescentes ao final. `AGENTS.md` e o código atual continuam sendo a referência arquitetural; remover ou arquivar esta auditoria quando as decisões forem incorporadas.
 
-## Como revisar
+## Convenção de comunicação e fontes
 
-Preencha os campos `Decisão` ou responda pelos identificadores abaixo. Pode aprovar as propostas de apresentação em conjunto e apontar exceções. As propostas **não** são traduções oficiais nem erratas: divergências mecânicas precisam de escolha expressa.
+Nas sugestões, dúvidas e explicações escritas ao usuário, usar os termos originais em inglês. Isso não elimina a localização pt-BR do aplicativo: a apresentação continua bilíngue, com as traduções aprovadas. Termos da língua Uratha permanecem originais em todos os idiomas.
 
-O levantamento abrange os sistemas dos três livros, inclusive os extras de alcateia, humanos, modelos especiais e antagonistas. Não representa uma transcrição/revisão concluída de cada entrada dos futuros catálogos. Essa revisão editorial será feita em lotes durante a implementação, com inglês canônico e português desde o início.
+| Sigla | Fonte local |
+| --- | --- |
+| WTF2 | `pdfSources/Werewolf/2ed - Werewolf the Forsaken.pdf` — Werewolf: The Forsaken Second Edition |
+| PACK | `pdfSources/Werewolf/2ed - WtF - The Pack.pdf` — The Pack |
+| NHSM | `pdfSources/Werewolf/2ed - WtF - Shunned by the Moon.pdf` — Night Horrors: Shunned by the Moon |
 
-## Fontes e limites já definidos
+Referências numéricas usam páginas impressas. Nos trechos consultados, a página física do PDF é a impressa + 1. A ficha oficial não possui número impresso: primeira página física 317, segunda página física 318. A segunda contém a comparação das cinco forms; a primeira contém Harmony. Isso corresponde às referências do usuário à page 317/316 conforme a contagem sem a capa. Nenhuma diferença de numeração altera a apresentação solicitada.
 
-| Sigla | Livro local | Páginas físicas do PDF |
-| --- | --- | --- |
-| WTF2 | `pdfSources/Werewolf/2ed - Werewolf the Forsaken.pdf` — Werewolf: The Forsaken Second Edition | 319 |
-| PACK | `pdfSources/Werewolf/2ed - WtF - The Pack.pdf` — The Pack | 107 |
-| NHSM | `pdfSources/Werewolf/2ed - WtF - Shunned by the Moon.pdf` — Night Horrors: Shunned by the Moon | 205 |
+A auditoria cobre o inventário de sistemas dos três livros, mas não representa revisão editorial concluída de cada entrada de catálogo. O conteúdo incluído será verificado em lotes, com inglês canônico e português desde o início. A skill `cofd-pdf-review` orienta a conferência visual de regras e tabelas; `cofd-rules` mantém a separação entre regra oficial, decisão de produto e escolha da mesa.
 
-As referências abaixo usam a numeração impressa. Nos trechos numerados consultados, a página física do PDF corresponde à impressa + 1. A ficha oficial de WTF2 não tem número impresso; suas duas páginas são as páginas físicas 317 e 318. Texto extraído foi usado para localizar assuntos; tabelas e trechos mecânicos críticos foram conferidos visualmente, conforme a skill `cofd-pdf-review`.
+## Escopo consolidado
 
-Requisitos já determinados pelo usuário, sem necessidade de nova aprovação:
+Incluído:
 
-- Organização modular como Changeling: `game-lines/werewolf/**`, dados estáticos em `public/data/werewolf/**`, registro leve e carregamento independente de regras, Builder, Sheet, impressão e catálogos.
-- Inglês é a identidade canônica; português é apresentação. IDs, regras, compras e histórico não mudam com o idioma. Sem pares de gênero na interface; Numina e Touchstone permanecem esses termos, conforme orientações anteriores.
-- CSS normal, mobile, PDF e blank. Nenhuma arte WebP adicional nesta etapa: apenas a skull fornecida, já convertida sem perda em `public/werewolf-skull.webp`, 340 × 589, com transparência preservada.
-- Lodges ficam fora desta primeira implementação. A exclusão inclui filiação, benefícios e conteúdo exclusivo dessas organizações, não apenas o menu. WTF2 pp. 51–53 e PACK pp. 73–91 contêm esse material.
-- Nada de regras de Werewolf: The Apocalypse, primeira edição isolada ou importações mecânicas de Mage/Changeling/Vampire para implementar Werewolf.
-- A correção anterior de `mortalOnly` continua valendo: Uratha não recebem Merits exclusivos de mortais. Exceções precisam estar explicitamente autorizadas pela regra do modelo correto.
+- Werewolf/Forsaken: cinco Auspices, cinco Tribes e Ghost Wolves, criação/edição, progressão, experiência individual, Merits elegíveis, Gifts/Facets, Rites, Fetishes/Talens, Totem e ficha.
+- Cinco forms em cinco colunas na seção Details/Powers do mobile, com valores derivados automaticamente. Health usa um seletor discreto da form acessível.
+- Passivas expansíveis/colapsáveis, similares a Tricks of the Blood de Vampire, com regras e limites informativos.
+- Harmony manual e clicável de 10 a 0; Breaking Point informativo; Blood/Bone e Touchstones com apresentação definida em W06/W07.
+- Todas as Conditions dos três livros, incluindo as ligadas a sistemas fora do escopo, como conteúdo de catálogo. Tilts seguem a proposta aprovada de W22. Nenhum Beat automático.
+- CSS normal, mobile, PDF e blank; apenas a skull já fornecida como nova imagem.
+- Botão discreto Heal/Curar em Health para todas as linhas, removendo todo o dano quando acionado.
+- Renomear a apresentação de Ban/Bane nas entidades efêmeras de todas as linhas, conforme L01 e confirmação ortográfica P03.
 
-## Cobertura do levantamento
+Fora desta entrega:
 
-| Livro / seção | Sistemas identificados | Decisões relacionadas |
-| --- | --- | --- |
-| WTF2 pp. 15–50, 57–77 | Auspícios, tribos, Ghost Wolves, habilidades, juramentos, proibições, Hisil, território | W01, W07, W19, L01 |
-| WTF2 pp. 81–113 | Criação, Renome, experiência, âncoras, Impulso Primal, Essência, regeneração, sentidos, rastreamento, formas, Aspecto do Caçador, Lunacy, Kuruth, Harmonia, Merits | W01–W08, W22, M01–M04 |
-| WTF2 pp. 114–150 | Dons e Facetas, conflito sobrenatural, Clash of Wills, ritos, Fetiches e Talens | W08–W10, W22, M01, M05 |
-| WTF2 pp. 153–195 | Mecanismos Core reutilizáveis e entidades efêmeras: Grau, Atributos, Corpus, Essência, Influências, Manifestações, Numina, Interdição e Perdição | W16, W17 |
-| WTF2 pp. 197–246 | Pure, espíritos, Hosts, humanos, Ridden, Dread Powers e Idigam | W01, W17, W18 |
-| WTF2 pp. 249–276, 281–295 | Cenários, ferramentas de narrativa, forma de Father Wolf, primeira transformação, riscos e gravidez | W03, W19, W21 |
-| WTF2 pp. 296–313 | Wolf-Blooded, Tells, Merits, Conditions e Tilts | W01, W13, W22 |
-| PACK pp. 10–31 | Alcateia como personagem, membros, experiência, personagens secundários, Hunting Nature e Merits coletivos | W11–W14 |
-| PACK pp. 34–65 | Humanos, Wolf-Blooded, lobos, espíritos, Brood, outras criaturas, táticas, benefícios e evolução de totens | W13, W15–W17 |
-| PACK pp. 68–72, 94–105 | Protetorados, cenários e Conditions de alcateia | W19, W22 |
-| NHSM pp. 13–65, 203 | Pure, Dons, ritos, Merits, Bale Hounds, Tyrants, Devourers, Void Reivers, Mimics e Zi’ir | W01, W08, W18, W20, M06 |
-| NHSM pp. 67–105 | Espíritos e Ridden, Wounds, Maeltinet, Dark Numina, espíritos do Vazio e seus efeitos | W17, W19 |
-| NHSM pp. 107–139 | Hosts, Church of the Wolf, Merits e ritos humanos, Shadow Occultists e Taboos | W13, W17, W18 |
-| NHSM pp. 141–183 | Idigam, Essence Shaping, Dread Powers, Geryo, domínio, contágio e mutações | W17, W20 |
-| NHSM pp. 187–203 | Organização de crônicas, Conditions e referência de criação Pure | W19, W22, M06 |
+- Criação de Pure e Wolf-Blooded. Wolf-Blooded, Ghouls, Fae-Touched, Proximi e similares ficam para futura opção de Mortal.
+- Lodges e conteúdo exclusivo dessas organizações.
+- Registro de Pack, membros humanos/Wolf-Blooded, vínculos entre fichas, dados compartilhados, Pack Experiences e Hunting Nature.
+- Catálogo/editor de antagonistas, modelos avançados, ferramentas de território/crônica, infecção/mutações Geryo e módulos narrativos opcionais.
+- Controle de cena/turno/tempo, inclusive manual, para qualquer linha.
+- Regeneração, uso de poderes, testes, recuperação de Willpower, aplicação de Conditions, Beats e progressão narrativa automatizados.
 
-Lodges estão explicitamente excluídas da cobertura implementável. Material narrativo e fichas de antagonistas estão identificados, mas a forma de disponibilizá-los depende de W17/W19; não serão transformados silenciosamente em novos tipos de personagem jogável.
+A exclusão de um sistema não exclui um Gift, Rite ou Merit elegível para Forsaken apenas por mencionar esse sistema. Preservar a regra como informação, sem implementar o sistema dependente. Por exemplo, Gift of Pack e Pack Rites não exigem que o aplicativo mantenha um registro de Pack. Gifts de NHSM que não sejam exclusivos de Pure continuam disponíveis mediante seus requisitos.
 
-## Decisões de sistemas e apresentação
+## Decisões W01–W23
 
-### W01 — Tipos de personagem e criação
+### W01 — Character creation
 
-Fontes: WTF2 pp. 81–84, 197–200, 296–305; NHSM pp. 13–22 e 203.
+**Decisão: aprovada com redução de escopo.**
 
-**Proposta:** criação Forsaken com os cinco Auspícios, cinco tribos e Ghost Wolves; criação Pure como opção avançada, sem Auspício/Dom da Lua, com regras próprias de tribo, Aspecto, prata e concessões. Wolf-Blooded devem ter apresentação própria, não uma ficha Uratha com estatísticas zeradas. Membros humanos de alcateia não recebem automaticamente o modelo Uratha.
+Implementar Forsaken com cinco Auspices, cinco Tribes e Ghost Wolves. Adiar criação de Pure e Wolf-Blooded. Não criar fichas secundárias de humanos, Wolf-Blooded ou outros modelos vinculadas a Werewolf.
 
-As concessões e os limites de criação serão calculados na linha Werewolf. Não copiar para Pure a distribuição Forsaken sem conferir a referência específica; há uma lacuna de fonte em M06.
+Concessões, limites, elegibilidade e `line_data` permanecem propriedade de Werewolf. Merits exclusivos de mortais não ficam disponíveis para Uratha.
 
-Decisão: pendente — aprovar esses tipos jogáveis ou indicar quais devem ser somente referências/companheiros.
+Fontes: WTF2 pp. 81–84, 197–200 e 296–305; NHSM p. 203. A criação Pure não bloqueia esta entrega.
 
-### W02 — Cinco formas na ficha
+### W02 — Forms e passives
 
-Fontes: WTF2 pp. 96–98; ficha oficial, PDF físico 318.
+**Decisão: aprovada com apresentação definida pelo usuário.**
 
-**Proposta:** manter Hishu, Dalu, Gauru, Urshul e Urhan com esses nomes. Seletor da forma ativa na ficha; desktop com comparação compacta das cinco formas, mobile com valores da forma ativa e comparação expansível. Mostrar Força, Destreza, Vigor, Manipulação, Tamanho, Vitalidade, Defesa, Iniciativa, Deslocamento, percepção, ataques naturais e regras especiais quando aplicáveis.
+Preservar os nomes originais da língua Uratha em todos os idiomas, incluindo Hishu, Dalu, Gauru, Urshul, Urhan, Auspice names e demais termos dessa língua.
 
-Persistir os atributos básicos separadamente da forma ativa. Trocar de forma não reescreve os atributos comprados. A ficha impressa mostra as cinco formas, sem exigir novas imagens.
+Apresentar as cinco forms em cinco colunas, uma por form, seguindo a segunda página da ficha oficial. No mobile, essa tabela fica em Details/Powers; não substituir por uma única form com comparação opcional. Valores modificados são calculados e apresentados automaticamente, mantendo os atributos básicos comprados separados dos modificadores.
 
-Decisão: pendente.
+Mostrar os valores e regras próprios de cada form, incluindo Attributes, Size, Health, Defense, Initiative, Speed, Armor, perception e natural weapons conforme aplicável. Adaptar a tabela à tela estreita preservando as cinco colunas.
 
-### W03 — Vitalidade variável e formas alteradas
+Criar uma seção de Werewolf passives expansível/colapsável, similar a Tricks of the Blood de Vampire. Durações, custos, limites e restrições ficam como informação, não como um controlador de tempo.
 
-Fontes: WTF2 pp. 96–98, 136–138, 287–288; NHSM pp. 62 e 157–158.
+Fontes: WTF2 pp. 93–105; ficha oficial, PDF físico 318.
 
-**Proposta:** preservar o dano ao mudar de forma; quando a capacidade de Vitalidade diminuir, mostrar a consequência calculada e pedir confirmação para qualquer consequência destrutiva, seguindo a regra verificada na implementação. Não apagar dano nem curar ao reduzir caixas visíveis.
+### W03 — Health e acesso às forms
 
-Skin Thief, The Father's Form e Quicksilver Flesh devem ter escolhas/modificadores próprios. The Father's Form não é uma sexta forma liberada gratuitamente: depende da Faceta correspondente. Mimic e mutações Geryo precisam de camadas explícitas sobre as formas, sem adulterar os valores básicos nem permitir alterações arbitrárias sem origem.
+**Decisão: aprovada com seletor em Health.**
 
-Decisão: pendente — aprovar camadas configuráveis com origem e prévia das alterações.
+Seletor discreto junto a Health com as forms às quais o personagem tem acesso. Mudar a form recalcula automaticamente a quantidade de caixas, sem apagar dano ou curar ao reduzir a capacidade. Dano além da capacidade visível deve continuar preservado; sua representação será conferida na implementação, sem inventar conversão de dano.
 
-### W04 — Cena, turnos, Gauru e Kuruth
+Skin Thief, The Father's Form e Quicksilver Flesh mantêm escolhas/modificadores próprios, com origem e prévia, sem reescrever Attributes básicos. The Father's Form depende da Facet correspondente, não é uma form gratuita. Mimic e Geryo não são implementados, conforme W18/W20.
 
-Fontes: WTF2 pp. 97, 102–105.
+Se essas Facets criarem outra complicação de acesso, derivação ou apresentação, mostrar a dúvida ao usuário antes de decidir.
 
-**Proposta:** controles manuais de nova cena e avançar turno, com duração de Gauru, limite por cena e estados Wasu-Im/Basu-Im. Resultados de testes são informados pelo usuário; nenhum cronômetro em tempo real nem rolagem oculta. Os efeitos de Basu-Im não devem herdar indevidamente o limite normal de Gauru.
+Fontes: WTF2 pp. 96–98, 136–138 e 287–288.
 
-Mostrar gatilhos pessoais e gerais, tempo de controle e restrições de ação. Não interpretar uma frase livre como disparador automático de Kuruth.
+### W04 — Scene e turn controls
 
-Decisão: pendente.
+**Decisão: proposta de controles rejeitada.**
 
-### W05 — Essência, regeneração, prata e Impulso Primal
+Não criar controles de nova cena, avançar turno, contagem regressiva, Gauru duration ou Kuruth progression. A restrição vale para todas as linhas, não apenas Werewolf.
 
-Fontes: WTF2 pp. 93–98, 100–102; diferenças Pure p. 198.
+As regras de Gauru, Wasu-Im, Basu-Im, gatilhos e limites continuam disponíveis nas forms/passives. O jogador acompanha os tempos fora da aplicação.
 
-**Proposta:** mostrar reservas, teto e gasto por turno; ações explícitas para regeneração normal, gasto de Essência e regeneração de Gauru. Aplicar mudanças apenas em eventos confirmados, sem curar enquanto a página estiver fechada. Dano agravado/prata e exceções de Merits não entram na cura comum.
+Fontes: WTF2 pp. 97 e 102–105.
 
-Restrições de alimentação, necessidade de caça, resistência a venenos/doenças e sentidos aparecem como regras contextualizadas. Datas de caça/alimentação podem ser registradas manualmente, sem perda automática de atributos ou recursos por calendário.
+### W05 — Primal Urge, Essence e Heal
 
-Decisão: pendente — aprovar acompanhamento por eventos manuais.
+**Decisão: automação de recursos/regen rejeitada; ação compartilhada Heal aprovada.**
 
-### W06 — Harmonia bidirecional e passagem entre mundos
+Informar limites e efeitos de acordo com Primal Urge, como nas demais linhas. Não calcular por conta do jogador gastos, regeneração, alimentação, intervalos de caça, eventos de cena ou efeitos de prata. Não implementar agenda ou perdas por calendário.
 
-Fontes: WTF2 pp. 100–105.
+Adicionar botão discreto Heal/Curar em Health **para todas as linhas**. A ação remove todo o dano registrado, inclusive aggravated e eventual dano preservado além das caixas visíveis. Isso é uma edição manual da ficha solicitada pelo usuário, não uma declaração de que qualquer personagem pode regenerar instantaneamente todo dano pelas regras.
 
-**Proposta:** escala 0–10 com centro em 5, não uma barra de moralidade equivalente a Integridade. Separar violações relativas à Carne e ao Espírito, mostrar a parada/modificadores e confirmar o resultado antes de aumentar ou diminuir Harmonia. Não oferecer compra de Harmonia por experiência.
+O botão não gasta Essence/Willpower, não avança tempo e não altera Attributes ou Health maximum. Seu mecanismo é genuinamente compartilhado; passivas e limites de Werewolf continuam na linha.
 
-Registrar mundo atual, circunstâncias locais da Película e proibições adquiridas. Custos/ações de transformação e passagem serão derivados da Harmonia e das exceções pertinentes. Mudanças locais/temporárias não reescrevem permanentemente Harmonia.
+Fontes: WTF2 pp. 93–98 e 100–102. Heal é uma decisão de interface, não uma regra nova de regeneração.
 
-Decisão: pendente.
+### W06 — Harmony
 
-### W07 — Âncoras, Aspecto e juramentos
+**Decisão: aprovada com controle manual simplificado.**
+
+Tabela de Harmony de 10 a 0, com valor livremente alterável por clique, em apresentação similar a Humanity. Não oferecer compra por experiência, rolar testes, confirmar resultados de um simulador ou mover o valor automaticamente.
+
+Um botão de Breaking Point abre informações sobre os casos que aumentam ou diminuem Harmony, incluindo os modificadores relevantes. O jogador escolhe e altera o valor manualmente.
+
+Não implementar registro de realm, Gauntlet rating ou transgressões detectadas automaticamente. Esses assuntos aparecem apenas como regras relevantes nas passivas, forms e poderes.
+
+Fontes: WTF2 pp. 100–105; ficha oficial, PDF físico 317.
+
+### W07 — Anchors e Touchstones
+
+**Decisão: aprovada com informação, sem ações de recuperação.**
+
+Mostrar a lista de Blood/Bone e como recuperam Willpower, em padrão semelhante às demais anchors. Não recuperar Willpower automaticamente nem criar uma ação de recuperação associada à consulta.
+
+Touchstones física e espiritual são anotadas na tabela de Harmony, em apresentação similar à usada para Humanity. As capacidades ligadas a Auspice, Hunter's Aspect e Oath of the Moon permanecem informações da ficha, sem aplicação automática à presa ou detecção de violação.
 
 Fontes: WTF2 pp. 15–50, 68, 85–88 e 98–100.
 
-**Proposta:** escolhas de Sangue e Osso com descrições, Touchstone física e espiritual, além de entradas autorais. Recuperação de Força de Vontade mediante ação confirmada, respeitando limites aplicáveis. Aspecto do Caçador e suas Conditions de presa são apresentados junto do Auspício/modelo correto.
+### W08 — Gifts, Facets e Renown
 
-Juramento da Lua, proibições tribais e gatilhos pessoais ficam visíveis como regras/anotações estruturadas; não detectar transgressões por texto nem impor sanções automaticamente.
+**Decisão: aprovada; M01 e M05 são compatíveis com esta organização.**
 
-Decisão: pendente.
+Manter seleção por família, affinity, Renown e requisitos, com cartões expansíveis semelhantes a Contracts. Moon Gifts seguem a progressão ordenada; Shadow Gifts têm desbloqueio incluindo a primeira Facet; Wolf Gifts não precisam desse desbloqueio.
 
-### W08 — Dons, Facetas, Renome e concessões pendentes
+Registrar concessões gratuitas de Renown e créditos pendentes previstos pela regra, sem cobrar experiência por concessões. Compra e reembolso preservam custos exatos e dependências. Manter a proposta de prévia/bloqueio de remoção enquanto existirem compras dependentes.
 
-Fontes: WTF2 pp. 83–85, 98–100 e 114–138; NHSM pp. 15–20 e 203.
+M01 define Wolf Gift Facet em 1 XP. M05 permite outro Moon Gift mediante autorização explícita; não remove a ordem das Facets, limites de Renown ou demais requisitos. A autorização não transforma todos os Moon Gifts em escolhas livres por padrão.
 
-**Proposta:** seleção por família, afinidade, Renome e requisitos, com cartões expansíveis como Contratos. Dons da Lua têm progressão ordenada; Dons da Sombra precisam de desbloqueio e incluem a primeira Faceta; Dons do Lobo não exigem esse desbloqueio. Registrar concessões gratuitas por Renome, inclusive créditos guardados quando não houver Faceta elegível, em vez de descartá-los.
+Agony, Blood, Disease, Fervor e Hunger de NHSM não são exclusivos de Pure; importar conteúdo elegível para Forsaken. Não implementar aplicação automática dos efeitos ou consumo de recursos ao abrir descrições.
 
-Agony, Blood, Disease, Fervor e Hunger de NHSM não são exclusivos dos Pure: p. 15 permite acesso Forsaken. Afinidade e disponibilidade são critérios distintos. A compra deve separar custo do Dom e custo de Facetas posteriores.
+Fontes: WTF2 pp. 83–85, 98–100 e 114–138; NHSM pp. 15–20.
 
-Reembolso de Renome/Dom exige prévia das dependências: proposta de bloquear a remoção enquanto compras dependentes não forem removidas, preservando o custo exato de cada transação e os créditos gratuitos. Não cobrar experiência por uma concessão.
+### W09 — Rites
 
-Decisão: pendente — aprovar esse fluxo; custos/acesso em conflito estão em M01 e M05.
+**Decisão: aprovada desde que corresponda ao livro. Conferência: WTF2 p. 139.**
 
-### W09 — Ritos e aprendizagem contextual
+Separar Wolf Rites e Pack Rites; preservar rating, symbols, sample rite, effect, cost, action e procedimentos. Attribute + Skill depende da execução simbólica acordada com o Storyteller: a parada de sample rite não é a única parada obrigatória.
 
-Fontes: WTF2 pp. 138–146; NHSM pp. 20, 39 e 134–135.
+A regra exige uma fonte de conhecimento para aprender e custo de 1 XP por dot. Essa fonte pode ser um teacher ou outro meio descrito no livro; não restringir a compra exclusivamente a um professor presencial. Na criação, separar pontos iniciais de Rites e pontos de Merits convertidos, conforme os limites oficiais.
 
-**Proposta:** separar ritos do Lobo e de Alcateia, graduação, símbolos, efeito, custo e procedimentos. Paradas dependentes dos símbolos/circunstâncias precisam de escolha explícita: não transformar uma parada de exemplo em regra fixa.
+A ficha individual pode selecionar/conhecer Pack Rites sem cadastrar Pack ou participantes. Requisitos narrativos são informados/confirmados pelo jogador, não verificados por vínculos entre fichas. Excluir Rites exclusivos de modelos fora do escopo.
 
-Na criação, separar os pontos de ritos iniciais dos pontos de Merits convertidos. Na evolução, registrar professor/autorização narrativa, custo e graduação exata. Restrições de modelo seguem cada rito; não liberar ritos especializados apenas por terem sido incluídos no catálogo.
+Fontes: WTF2 pp. 138–146; suplementos apenas quando o conteúdo for elegível para o personagem.
 
-Decisão: pendente.
+### W10 — Fetishes e Talens
 
-### W10 — Fetiches e Talens
+**Decisão: aprovada com padrão visual/configurável similar a Token de Changeling.**
+
+Usar o padrão de seleção e configuração de Token, mantendo as peculiaridades de Fetish: graduação, aquisição pelo Merit, entidade/poder associado, activation e effects. Reusar mecanismos neutros de interface; não importar a implementação mecânica de Changeling.
+
+Entradas de catálogo mantêm IDs e apresentação EN/PT separados das escolhas autorais. Regras de graduação, configuração e aquisição serão verificadas na definição de Fetish, sem copiar custos ou limites de Token por semelhança visual. Talens mantêm distinção de consumível; nenhuma ativação/consumo ocorre automaticamente.
 
 Fontes: WTF2 pp. 106 e 146–150.
 
-**Proposta:** inventário com entradas independentes, graduação, espírito/poder associado, ativação e efeito completos. Talens consumíveis têm quantidade e consumo confirmado. Separar aquisição por Merit, item obtido em jogo e item autoral; não presumir que o modelo agregado de Penhores de Changeling se aplica às regras de Fetiche.
+### W11 — Pack persistence
 
-Ativação por teste ou Essência deve ser uma escolha explícita quando permitida. Não consumir automaticamente um Talen ao apenas expandir sua descrição.
+**Decisão: rejeitada.**
 
-Decisão: pendente.
+Sem registro de Pack, cadastro de membros, vínculos entre personagens, compartilhamento ou sincronização de fichas. Persistir somente a configuração de Totem necessária à ficha individual Werewolf.
 
-### W11 — Alcateia como entidade persistida
+Mesmo um vínculo local entre fichas não foi autorizado. Não adicionar a alternativa de Pack embutido em uma ficha. O personagem não recebe orçamento inicial de Pack Merits.
 
-Fontes: WTF2 pp. 89–92; PACK pp. 20–31.
+### W12 — Experiences
 
-**Proposta:** registro local próprio de alcateia, com identificação, três Aspirações, Touchstones, Complications, membros, território, Merits coletivos, Natureza da Caçada e totem. Fichas vinculam-se por ID, sem copiar todo o registro para cada personagem e criar versões divergentes.
+**Decisão: somente individual.**
 
-O modelo é propriedade de Werewolf. Core pode fornecer somente mecanismos neutros de armazenamento/controles. Sem servidor, colaboração online ou sincronização remota nesta etapa. Não confundir os cinco pontos iniciais de Merits da alcateia com o orçamento individual.
+Manter saldo e histórico de compras da ficha selecionada. Sem Pack Beats, Pack Experiences, divisão de recursos ou alteração de outras fichas.
 
-Decisão: pendente — registro separado recomendado; alternativa: alcateia anexada a uma ficha, sem sincronização entre fichas.
+Custos coletivos de Pack Tactics não serão convertidos silenciosamente em custos individuais; ver W15/P01.
 
-### W12 — Experiência individual e coletiva
+### W13 — Moon's Grace e modelos secundários
 
-Fontes: WTF2 p. 85; PACK p. 20 e pp. 60–64.
+**Decisão: sem cadastro de Wolf-Blooded/humans; Moon's Grace somente se elegível para Werewolf.**
 
-**Proposta:** experiências individuais por padrão, com opção explícita para o sistema de Atos coletivos acordado pela mesa. Registrar distribuição/beneficiários e sobras sem arredondar ou criar experiência. Custos exclusivos da alcateia não saem automaticamente do personagem selecionado.
+Conferência visual de PACK p. 31: Moon's Grace é um **Pack Merit**, reservado a Packs humanos/Wolf-Blooded **sem Uratha**. Portanto, a condição solicitada pelo usuário não é atendida: não habilitar seleção/compra em ficha Uratha.
 
-Confirmar qualquer operação que altere mais de uma ficha local. A experiência coletiva não substitui silenciosamente os históricos individuais já existentes.
+Isso não cria uma exceção nova nem demanda implementar modelos secundários. Preservar a separação entre catálogo e elegibilidade se uma definição inelegível for apresentada em inventário de referência; não colocar um Pack Merit no orçamento individual.
 
-Decisão: pendente.
+Tells, Primal Instincts, conversões de modelos e Merits exclusivos desses modelos ficam fora desta entrega.
 
-### W13 — Membros humanos, Wolf-Blooded e exceções
+### W14 — Hunting Nature e lunar cycle
 
-Fontes: WTF2 pp. 296–305; PACK pp. 23–25, 31, 37–55 e 59; NHSM pp. 134 e 138–139.
+**Decisão: não implementar.**
 
-**Proposta:** ficha completa para Wolf-Blooded jogável; membros secundários podem usar o bloco simplificado de PACK e ligação opcional para uma ficha existente. Tells e Merits respeitam requisitos do modelo. Primal Instincts não transforma o membro em Uratha nem concede todos os benefícios de Impulso Primal.
+Sem trilha de Hunting Nature, virada de ciclo, teste mensal, reserva coletiva ou atualização temporal. Rules text pode mencionar essas regras, mas a ficha não calcula nem persiste o sistema.
 
-Moon's Grace é restrito a alcateias humanas/Wolf-Blooded; suas exceções para táticas, ritos, Renome e Facetas só são ativadas pelas graduações corretas. Merits de Church of the Wolf e Shadow Occultists seguem suas restrições humanas específicas, que não equivalem a aceitar qualquer não-Uratha.
+### W15 — Pack Tactics
 
-Transformações como a de Apocalypsis fidei devem solicitar confirmação, mostrar Merits afetados e preservar os dados originais. Nenhuma conversão automática de linha/modelo após informar uma falha dramática.
+**Decisão: proposta aprovada, sujeita à compatibilização com W11/W12/W14.**
 
-Decisão: pendente.
+Preservar exemplos e configuração estruturada de novas Pack Tactics: rating, themes, dice pool, effects e roll results. Sem controlador de execução coletiva, cadastro de participantes, Hunting Nature persistida ou aplicação automática de Conditions.
 
-### W14 — Natureza da Caçada e ciclo lunar
+A regra de PACK p. 61 cobra 2 XP por dot para desenvolver, podendo usar Pack Experiences ou contribuições individuais; todos os membros conhecem a tactic. Ingresso posterior custa 1 XP por dois dots, arredondado para cima. Esses são eventos diferentes, não uma compra individual indistinta.
 
-Fontes: PACK pp. 28–29 e 104–105.
-
-**Proposta:** trilha da alcateia, separada da Harmonia pessoal; registrar atividades relevantes e teste manual na virada do ciclo. O livro usa ciclos de 28 dias a partir do marco escolhido pela alcateia, não necessariamente a lua real ou o mês civil.
-
-Botão de avançar ciclo com prévia de efeitos, Força de Vontade coletiva, Conditions e permissões de Táticas. Preservar exceções de duração/limites por resultado. Não realizar teste ao abrir a aplicação.
-
-Decisão: pendente.
-
-### W15 — Táticas de Alcateia
+**Proposta ainda a confirmar (P01):** manter na ficha somente referências/configurações locais das Pack Tactics conhecidas, com requisitos coletivos informativos e sem registro de Pack. Para eventual contribuição individual, registrar apenas o valor informado pelo jogador, sem distribuir custos nem conceder conhecimento a outras fichas. A aprovação do editor não autoriza inventar uma regra alternativa de custo.
 
 Fontes: PACK pp. 58–63.
 
-**Proposta:** importar os exemplos e oferecer configuração estruturada de táticas novas: graduação, tema, participantes, parada, execução, efeito e resultados. Decisões que dependem do Narrador ficam explícitas, sem um motor de interpretação de texto.
+### W16 — Totem
 
-Separar desenvolvimento/aprendizagem de ingresso em uma tática já conhecida; custos são distintos. Natureza da Caçada limita o uso e permite improvisação em casos específicos; improvisar não cria uma compra de experiência.
+**Decisão: aprovada dentro da ficha individual, sem W11.**
 
-Decisão: pendente — aprovar editor de táticas autorais com validações dos limites impressos.
+Persistir opções de Totem na ficha Werewolf. Editor de entidade efêmera com Rank, Power, Finesse, Resistance, Corpus, Essence, Willpower, Influences, Manifestations, Numina, Ban e Bane, além dos benefícios pertinentes.
 
-### W16 — Totem e benefícios compartilhados
+Mostrar contribuição do personagem via Totem Merit e escolhas relevantes; valores dependentes de outras contribuições precisam ser informados manualmente, sem ler ou vincular outras fichas. Benefícios e melhorias seguem WTF2/PACK, com origem e limites explícitos, sem sobrescrever Attributes básicos.
 
-Fontes: WTF2 pp. 91–92, 183–195; PACK pp. 63–65.
+Não transformar esse editor em catálogo/editor universal de entidades. Seguir a proibição de o Totem conceder Gifts à própria Pack; isso é informação de regra, não motivo para criar uma entidade Pack.
 
-**Proposta:** editor próprio para entidade efêmera: Grau, Poder, Refinamento, Resistência, Corpus, Essência, Força de Vontade, Influências, Manifestações, Numina, Interdição e Perdição. Não reutilizar mecanicamente um companheiro Mage nem exigir nove Atributos humanos.
+Fontes: WTF2 pp. 91–92 e 183–195; PACK pp. 63–65.
 
-Contribuições do Merit Totem, alocação de melhorias e benefícios da alcateia são registros distintos. Mostrar origem, destinatário e limites de cada benefício. Concessões não sobrescrevem os Atributos básicos dos membros. Incorporar as opções e limites ampliados de PACK, inclusive sua proibição de o totem conceder Dons à própria alcateia.
+### W17 — Antagonists
 
-Decisão: pendente.
+**Decisão: não implementar; apenas Werewolf e Totem.**
 
-### W17 — Catálogo de antagonistas versus criação jogável
+Sem catálogo/editor de spirits genéricos, Ridden, Hosts, Idigam, Geryo ou antagonistas humanos. As mecânicas necessárias ao Totem continuam incluídas. Conditions desses sistemas continuam no catálogo aprovado em W22.
 
-Fontes: WTF2 pp. 178–246; PACK pp. 45–55 e 64–65; NHSM pp. 13–183.
+### W18 — Advanced templates
 
-**Proposta:** importar em inglês/português os blocos mecânicos e referências utilizáveis, com pesquisa e cartões completos para espíritos, Ridden, Hosts/Shartha, Idigam, Geryo e antagonistas humanos. Exemplos nomeados ficam disponíveis como referências; não gerar automaticamente novos PCs a partir desses blocos.
+**Decisão: não implementar.**
 
-Os modelos são diferentes: Geryo não são espíritos, embora compartilhem parte da estrutura efêmera; Idigam precisam de Essence Shaping/Dread Powers; Hosts e Ridden mantêm suas regras próprias. Proposta inicial de edição local dos dados necessários a totem/companheiro, sem um construtor universal de todas as espécies de antagonista.
+Sem Bale Hounds, Tyrants, Devourers, Void Reivers, Mimics, Zi'ir ou Shadow Occultists, inclusive como templates avançados jogáveis. Não importar seus recursos específicos como opções genéricas de Werewolf.
 
-Decisão: pendente — catálogo completo de mecânicas/referências é a proposta; indicar se também exige criação e edição completas de cada tipo de NPC.
+### W19 — Territory e Storyteller tools
 
-### W18 — Modelos avançados e corrupção
+**Decisão: não implementar; apenas a ficha Werewolf.**
 
-Fontes: NHSM pp. 33–39, 51–65 e 138–139.
+Sem editor de territory, protectorate, cenário, Wounds, Void ou ambiente; sem catálogo geral de locais ou gerador de crônica. Regras contextuais necessárias a poderes/passivas continuam no texto, não em sistemas auxiliares.
 
-**Proposta:** dados completos para Bale Hounds, Tyrants, Devourers, Void Reivers, Mimics, Zi’ir e Shadow Occultists. Inicialmente mostrar os modelos de antagonista como referências aplicáveis somente mediante autorização expressa, não no seletor comum de tribo.
+### W20 — Infection e mutations
 
-Bale Hounds têm Maeljin, estágios de corrupção, poderes e ritos próprios; não classificá-los automaticamente como Lodge nem excluir seus sistemas por essa hipótese. Tyrants, Devourers, Void Reivers e Mimics têm substituições/recursos particulares; Zi’ir pode retirar capacidades fundamentais. Shadow Occultists possuem reserva própria e Taboos, não a tabela de Essência Uratha.
+**Decisão: não implementar.**
 
-Decisão: pendente — quais desses modelos devem ser plenamente jogáveis/editoráveis na primeira entrega?
+Sem acompanhamento de contágio, infecção Geryo, mutações, domínio de Geryo ou conversão em Zi'ir. Conditions relacionadas podem ser consultadas como conteúdo, sem automação dessas consequências.
 
-### W19 — Território, ambientes e ferramentas do Narrador
+### W21 — Optional narrative systems
 
-Fontes: WTF2 pp. 71–75 e 249–276; PACK pp. 68–72 e 94–103; NHSM pp. 83–93 e 187–199.
+**Decisão: não implementar.**
 
-**Proposta:** dados/referências para locais, protetorados, ressonância, Película, Loci, Wounds, Maeltinet, Dark Numina e Vazio; campos manuais para condições do local atual e efeitos temporários. Wounds têm estágios e efeitos cumulativos; o Vazio pode mudar valores efetivos sem alterar valores permanentes do personagem.
+Sem Tension Pool, Putting It on the Line, módulos de gravidez ou primeira transformação. W22 mantém o conteúdo de Conditions, mas não implementa os módulos de origem.
 
-Aplicar efeitos selecionados com origem visível e possibilidade de remoção. Não adicionar mapa, simulador de território, gerador de crônica ou integração astronômica sem requisito. Textos de ambientação/organização de histórias permanecem referências, não procedimentos automatizados.
+### W22 — Conditions, Tilts e Beats
 
-Decisão: pendente — aprovar referências e acompanhamento manual; indicar se exige ferramenta adicional de território/crônica.
+**Decisão: aprovada com proibição de conceder Beats automaticamente.**
 
-### W20 — Infecção, mutações e perda de capacidades
+Importar todas as Conditions dos três livros e os Tilts correspondentes à proposta aprovada, com fonte, regras, resolution e Beat text EN/PT. Condições de sistemas adiados não justificam criar tais sistemas.
 
-Fontes: NHSM pp. 63–65 e 155–158.
+Nenhuma resolução, falha, dano ou seleção de Condition gera Beats automaticamente. Ajustes de Beats/Experiences continuam manuais. Não aplicar Conditions a outras fichas, converter mortais ou executar poderes ao consultar seus textos.
 
-**Proposta:** acompanhamento explícito de exposição, estágio de infecção Geryo, testes e mutações, com histórico. Mostrar consequências antes de aceitar perda de formas, mudança de Atributos, regeneração, sentidos ou gatilhos de Kuruth. O teste de infecção usa os Atributos de Hishu/humanos quando o texto assim determina.
+Duplicatas só serão reconciliadas quando representarem a mesma regra. Preservar requisitos e ratings descontínuos dos Merits por IDs canônicos.
 
-Domínio de um Geryo e Monstrous Servant são relações/Conditions próprias, não aquisição comum de totem. Transformação em Zi’ir e mutações não serão disparadas automaticamente por um valor de Harmonia ou dano. O livro não oferece uma cura mecânica universal; não inventar um botão de cura.
+Fontes: WTF2 pp. 306–313; PACK pp. 104–105; NHSM pp. 200–202.
 
-Decisão: pendente — aprovar acompanhamento manual com confirmação das mudanças estruturais.
+### W23 — Sheet, PDF e blank
 
-### W21 — Sistemas opcionais de narrativa
+**Decisão: aprovada, retirando Pack conforme W11.**
 
-Fontes: WTF2 pp. 287–295.
+Primeira página com a geometria compartilhada existente; seções individuais de forms, Gifts, Rites, Fetishes e Totem. PDF A4 com paginação conforme conteúdo e blank com as mesmas seções sem valores preenchidos.
 
-**Proposta:** referência e controles manuais opcionais para Tension Pool da primeira transformação, Putting It on the Line e Conditions relacionadas à gravidez/filhos. Nenhuma gravidez ou transformação é imposta pela aplicação. Os módulos ficam desativados até escolha da mesa, com texto completo disponível.
+Mobile com abas, cinco colunas de forms em Details/Powers e passivas expansíveis conforme W02. Sem seções/registro de Pack ou Lodge. Usar CSS e a skull fornecida, sem novas artes.
 
-Decisão: pendente — aprovar módulos opcionais simples ou solicitar automação específica de algum deles.
+## Decisões M01–M06
 
-### W22 — Conditions, Tilts, testes e poderes contextuais
+### M01 — Wolf Gift Facet cost
 
-Fontes: WTF2 pp. 98, 101–102, 115, 186–195 e 306–313; PACK pp. 104–105; NHSM pp. 200–202.
+**Decisão: 1 XP.**
 
-**Proposta:** catálogos com nomes, regras, fontes, resolução e geração de Atos em ambos os idiomas, reconciliando duplicatas somente quando a regra for a mesma. Separar destinatário individual, alcateia, local e presa. Merits com graduações descontínuas e pré-requisitos permanecem validados por IDs, nunca por tradução.
+Divergência preservada como referência: WTF2 p. 84 e p. 115 indicam 1 XP, p. 85 indica 2 XP, NHSM p. 203 indica 1 XP. O produto seguirá a decisão do usuário, sem apresentá-la como errata oficial.
 
-Lunacy não altera automaticamente uma ficha mortal; Aspectos não aplicam Conditions à presa sem confirmação. Mostrar paradas, resistências e Clash of Wills com escolhas contextuais, sem instanciar regras/catálogos de linhas inativas nem criar um motor universal de combate. Custos e efeitos de uso são confirmados, não executados ao consultar texto.
+### M02 — Initiative
 
-Decisão: pendente.
+**Decisão: Dexterity + Composure.**
 
-### W23 — Ficha, impressão e blank
+Aplicar modificadores próprios das forms/benefícios quando pertinentes. Divergência original: WTF2 p. 83 usa Dexterity + Wits; ficha oficial, PDF físico 317, usa Dexterity + Composure.
 
-Fontes: composição atual de Changeling; ficha oficial WTF2, PDF físico 317–318.
+### M03 — Speed
 
-**Proposta:** primeira página com a geometria compartilhada existente; seções Werewolf para formas, Dons, ritos, Fetiches, totem e alcateia. PDF A4 com anexos paginados conforme conteúdo; blank com as mesmas seções e sem valores preenchidos. Mobile com navegação por abas e linhas expansíveis, evitando descrições permanentemente abertas.
+**Decisão de apresentação:** incluir cálculo e valores de Speed na comparação das cinco forms.
 
-Usar CSS e a skull já fornecida, sem copiar artes de Changeling. Campos de Lodge da ficha impressa oficial não serão reproduzidos. Dados de alcateia na impressão devem refletir o registro vinculado, não uma cópia desatualizada.
+Isso não determina explicitamente qual das fórmulas em conflito deve ser adotada. **P02 permanece aberto:** confirmar Strength + Dexterity + species factor, com fator humano básico 5 e modificadores das forms, sem somar novamente variação de Size. Essa era a proposta original; não será considerada aprovada por inferência.
 
-Decisão: pendente — aprovar organização proposta ou indicar abas/páginas específicas.
+Fontes em conflito: resumos WTF2 pp. 83–84/NHSM p. 203 usam Size; WTF2 p. 158 descreve species factor e a ficha oficial usa +5.
 
-## Divergências mecânicas e lacunas de fonte
+### M04 — Gauru Armor
 
-### M01 — Custo de Faceta de Dom do Lobo
+**Decisão: 1/1 em Gauru.**
 
-WTF2 p. 84 (tabela): 1 XP; p. 85 (prosa): 2 XP; p. 115 (regra detalhada): 1 XP; NHSM p. 203: 1 XP.
+Adotar o valor da ficha oficial, PDF físico 318. Outras fontes de Armor seguem suas regras, sem somar automaticamente bônus incompatíveis.
 
-**Proposta:** usar 1 XP, consistente com a regra detalhada e a referência posterior. Não apresentar a divergência como errata oficial confirmada.
+### M05 — Additional Moon Gift
 
-Decisão: pendente.
+**Decisão: permitir exceção autorizada.**
 
-### M02 — Iniciativa
+Outro Moon Gift requer autorização narrativa explícita. Manter custo, progressão ordenada e limites de Renown da WTF2 p. 85. O Moon Gift do próprio Auspice continua sendo concedido normalmente.
 
-WTF2 p. 83 usa Destreza + Raciocínio; a ficha oficial, PDF físico 317, usa Destreza + Autocontrole.
+Compatível com W08; não interpretar a autorização como concessão gratuita nem remoção de todos os requisitos.
 
-**Proposta:** Destreza + Autocontrole, como a ficha oficial e o mecanismo compartilhado atual. Modificadores de forma/ataque são adicionais, não uma troca silenciosa de fórmula.
+### M06 — Pure creation
 
-Decisão: pendente.
+**Decisão: adiada.**
 
-### M03 — Deslocamento e Tamanho
+Não implementar Pure nesta entrega. A lacuna da referência resumida de NHSM p. 203 não bloqueia Forsaken e não exige consultar/importar Dark Eras Companion agora.
 
-WTF2 pp. 83–84 e NHSM p. 203 resumem Deslocamento com Tamanho + Força + Destreza. WTF2 p. 158 descreve fator de espécie, e a ficha oficial, PDF físico 317, usa Força + Destreza + 5. As formas quadrúpedes possuem diferenças próprias (WTF2 pp. 97–98).
+## L01 — Localização e termos
 
-**Proposta:** fator humano básico 5 e os modificadores de forma pertinentes, sem somar novamente a variação de Tamanho e produzir dupla contagem. Conferir também Merits que mudam Tamanho.
+Decisões expressas do usuário:
 
-Decisão: pendente.
-
-### M04 — Armadura natural de Gauru
-
-WTF2 p. 97 não apresenta armadura básica na descrição da forma. A ficha oficial, PDF físico 318, já imprime `1/1` em Gauru.
-
-**Questão:** usar 1/1 da ficha oficial ou não conceder armadura básica sem outra origem? Esse valor não será decidido por inferência a partir de Merits que concedem armadura.
-
-Decisão: pendente — escolher explicitamente.
-
-### M05 — Aprender outro Dom da Lua
-
-WTF2 p. 85 prevê aquisição futura de outro Dom da Lua, com custo e progressão. As entradas de Dons da Lua trazem restrições ao Auspício; por exemplo, Crescent Moon's Gift p. 115 declara disponibilidade apenas para Ithaeur.
-
-**Proposta:** o Dom do próprio Auspício é concedido normalmente; outro Dom exige autorização narrativa explícita, mantendo os custos, ordem e limites descritos na p. 85. Não liberar todos para qualquer Auspício por padrão.
-
-Decisão: pendente — permitir essa exceção autorizada ou restringir ao Auspício sem exceção?
-
-### M06 — Criação Pure e referência externa
-
-NHSM p. 203 declara atualizar a criação Pure de Chronicles of Darkness: Dark Eras Companion. A tabela local informa tribos, Renomes, Perícias, Aspectos, Dons e custos, mas não explicita ali a distribuição inicial de pontos de Renome nem o orçamento inicial de ritos. WTF2 p. 198 acrescenta diferenças de Dons, Totem e prata.
-
-**Questão:** para Pure plenamente jogáveis, autorizar consulta complementar ao trecho citado de Dark Eras Companion, caso disponível, ou fornecer a convenção de criação da mesa? Não presumir que a lista de três Renomes da tabela seja uma concessão de um ponto em cada um, nem copiar automaticamente a concessão de Auspício Forsaken.
-
-Essa é uma lacuna da referência resumida disponível, não uma licença para importar integralmente um quarto livro. Enquanto não resolvida, é possível importar e consultar todas as regras Pure presentes nos três PDFs, mas não declarar um Builder Pure completo/verificado.
-
-Decisão: pendente.
-
-## L01 — Léxico português para aprovação
-
-Preservar Hishu, Dalu, Gauru, Urshul, Urhan, Uratha, Hisil, Kuruth, Wasu-Im, Basu-Im, Siskur-Dah e os nomes próprios dos Auspícios. Títulos dos livros ficam no idioma original. Traduções de nomes de Dons, ritos, Merits e tribos serão auditadas por lotes; os termos abaixo orientam todos esses lotes.
-
-| Inglês | Proposta pt-BR | Observação |
+| Termo original | pt-BR solicitado | Alcance |
 | --- | --- | --- |
-| Werewolf | Lobisomem | Linha continua identificada por ID estável, não por esse rótulo. |
-| Forsaken | Destituídos | Proposta editorial, não tradução oficial presumida. |
-| Pure | Puros | |
-| Ghost Wolves | Lobos Fantasmas | |
-| Auspice | Auspício | |
-| Tribe | Tribo | |
-| Renown | Renome | |
-| Cunning / Glory / Honor / Purity / Wisdom | Astúcia / Glória / Honra / Pureza / Sabedoria | |
-| Primal Urge | Impulso Primal | |
-| Essence / Harmony | Essência / Harmonia | |
-| Blood / Bone | Sangue / Osso | |
-| Hunter's Aspect | Aspecto do Caçador | Hunter não é Huntsman/Monteiro. |
-| Death Rage | Fúria Assassina | Kuruth continua Kuruth. |
-| Lunacy | Lunatismo | Distinguir do termo comum “loucura”. |
-| Moon Gift / Shadow Gift / Wolf Gift | Dom da Lua / Dom da Sombra / Dom do Lobo | |
-| Facet | Faceta | |
-| Rite / Wolf Rite / Pack Rite | Rito / Rito do Lobo / Rito de Alcateia | |
-| Pack | Alcateia | |
-| Pack Tactic | Tática de Alcateia | |
-| Hunting Nature | Natureza da Caçada | |
-| Complications (Pack) | Entraves da Alcateia | Proposta para não confundir com Tilts. |
-| Totem / Fetish / Talen | Totem / Fetiche / Talen | |
-| Wolf-Blooded | Sangue de Lobo | Precisará de construção gramatical contextual, não de pares de gênero. |
-| Tell | Sinal | Distinguir de marcas de Renome. |
-| First Tongue | Primeira Língua | |
-| Shadow / Gauntlet | Sombra / Película | |
-| Reaching | Travessia | Distinguir de Passagem de Changeling. |
-| Ban / Bane (entidades efêmeras) | Interdição / Perdição | Já usados na apresentação de entidades em Mage; não renomear Maldições de Vampire. |
-| Rank / Power / Finesse / Resistance | Grau / Poder / Refinamento / Resistência | Estatísticas efêmeras, não Atributos humanos. |
-| Numina / Touchstone | Numina / Touchstone | Mantidos conforme determinação do usuário. |
+| Primal Urge | Instinto Primitivo | Aplicativo, catálogo e mensagens Werewolf |
+| Lunacy | Lunagem | Aplicativo e textos localizados |
+| Wolf-Blooded | Parente | Léxico registrado; modelo jogável adiado |
+| Ban | Poribição | Grafia literal recebida; confirmar P03 antes de aplicar |
+| Bane | Fraqueza | Todas as entidades efêmeras de todas as linhas |
 
-Decisão: pendente — aprovar ou corrigir os termos antes da tradução em escala.
+Ban/Bane: renomear a **apresentação** em todas as entidades efêmeras de todas as linhas, não IDs, campos canônicos ou regras. A mudança não renomeia automaticamente Vampire Clan/Bloodline Bane nem outros conceitos não efêmeros.
 
-## Continuação após a revisão
+Primal Urge, Lunacy e Wolf-Blooded substituem as propostas anteriores. Nenhum termo Uratha é traduzido. Numina e Touchstone permanecem inalterados.
 
-1. Registrar as decisões e resolver os pontos de fonte necessários, sem inventar regras ausentes.
-2. Implementar registro lazy, esquema da linha, normalização e catálogo isolado; manter schema externo 2 e acrescentar o ID suportado somente na fronteira explícita.
-3. Importar/auditar os catálogos em lotes EN/PT, incluindo Merits, Conditions, Tilts e mecânicas suplementares aprovadas, sem Lodges.
-4. Implementar criação/edição, progressão e compras com concessões e reembolsos exatos; ficha e sistemas extras conforme as decisões acima.
-5. Implementar apresentação normal/mobile/PDF/blank, com os recursos visuais existentes e a skull fornecida.
-6. Verificar lint, build, TypeScript, testes, limites arquiteturais, isolamento dos catálogos, ida e volta da persistência e os dois idiomas. Verificação visual no navegador fica para o fluxo autorizado de revisão do projeto.
+Demais propostas do léxico original, mantidas como referência editorial, sem confundir proposta com decisão expressa:
 
-A meta deve permanecer pausada após a entrega deste documento até o usuário revisar e autorizar a continuação. Nenhuma escolha pendente acima será tratada como aprovada apenas pelo silêncio.
+| Termo original | Referência pt-BR |
+| --- | --- |
+| Werewolf / Forsaken / Pure / Ghost Wolves | Lobisomem / Destituídos / Puros / Lobos Fantasmas |
+| Auspice / Tribe / Renown | Auspício / Tribo / Renome |
+| Cunning / Glory / Honor / Purity / Wisdom | Astúcia / Glória / Honra / Pureza / Sabedoria |
+| Essence / Harmony / Blood / Bone | Essência / Harmonia / Sangue / Osso |
+| Hunter's Aspect / Death Rage | Aspecto do Caçador / Fúria Assassina |
+| Moon Gift / Shadow Gift / Wolf Gift / Facet | Dom da Lua / Dom da Sombra / Dom do Lobo / Faceta |
+| Rite / Wolf Rite / Pack Rite | Rito / Rito do Lobo / Rito de Alcateia |
+| Pack / Pack Tactic / Hunting Nature | Alcateia / Tática de Alcateia / Natureza da Caçada |
+| Complications (Pack) | Entraves da Alcateia |
+| Totem / Fetish / Talen / Tell | Totem / Fetiche / Talen / Sinal |
+| First Tongue / Shadow / Gauntlet / Reaching | Primeira Língua / Sombra / Película / Travessia |
+| Rank / Power / Finesse / Resistance | Grau / Poder / Refinamento / Resistência |
+
+A comunicação de sugestões utiliza os termos da coluna original, não essas traduções. O léxico pt-BR existe para a interface localizada. Hunter continua distinto de Huntsman/Monteiro.
+
+## Dúvidas remanescentes
+
+- **P01 — Pack Tactics:** confirmar referências/configurações na ficha individual, sem Pack persistence/Hunting Nature. Caso queira registrar contribuições de XP, confirmar registro somente da contribuição individual informada; não alterar o custo coletivo oficial nem distribuir recursos.
+- **P02 — Speed:** confirmar Strength + Dexterity + species factor, com base 5 e modificadores de form, ou outra resolução para o conflito de fonte. Mostrar cinco forms não resolve sozinho a fórmula-base.
+- **P03 — Ban:** confirmar se a grafia pretendida é “Proibição”, em vez do literal “Poribição”. Bane → Fraqueza já está definido.
+- Novas dúvidas de acesso/derivação das forms especiais de W03 serão mostradas ao usuário quando surgirem, não resolvidas silenciosamente.
+
+## Continuação autorizável
+
+Este pedido autoriza atualizar a auditoria, não retomar a meta ou implementar todos esses itens imediatamente.
+
+Quando houver autorização de continuação:
+
+1. Incorporar as decisões e resolver P01–P03 antes de implementar os pontos afetados.
+2. Registro lazy, esquema e normalização Werewolf, preservando schema externo 2 e fronteiras de propriedade.
+3. Catálogos EN/PT elegíveis para a ficha individual e Totem, incluindo Merits/Conditions/Tilts; sem Lodges, modelos ou catálogos rejeitados.
+4. Builder, edição, experiência individual, concessões, Gifts/Facets, Rites e Fetishes conforme decisões acima.
+5. Sheet normal/mobile/PDF/blank e apresentação de passivas/forms; botão compartilhado Heal; renomeação localizada de Ban/Bane nas entidades efêmeras.
+6. Gates automatizados pertinentes e verificação de isolamento de catálogos, persistência, arquitetura e ambos os idiomas. Browser smoke fica para a revisão autorizada do usuário.
+
+Nenhuma exclusão será revertida apenas porque o sistema consta nos três livros. A referência anterior a “implementação completa” significa completa **dentro deste escopo aprovado**, não implementação de todos os sistemas de Pack, NPCs ou modelos secundários.
