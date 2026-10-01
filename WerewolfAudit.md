@@ -352,6 +352,10 @@ A comunicação de sugestões utiliza os termos da coluna original, não essas t
 
 WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF físico 318) imprime −3. O usuário confirmou **−1, conforme o texto da regra**. Usar −1 nos cálculos e na apresentação, sem tratar a diferença como errata oficial.
 
+### M08 — Ties of Blood and Bone resistance
+
+**Decisão: Stamina + Primal Urge, pelo critério físico/mental fornecido pelo usuário.** WTF2 p. 120 imprime `Stamina + Primal Urge` na oposição do Dice Pool, mas `Resolve + Primal Urge` no parágrafo sobre o packmate resistir. O usuário determinou verificar o efeito: resistência física usa Stamina; resistência mental usa Resolve. A Facet troca os dois personagens por metamorfose de carne e osso, com seus equipamentos, sem controlar pensamentos ou emoções. Portanto, adotar Stamina + Primal Urge neste caso. Preservar a divergência em nota editorial, sem apresentá-la como errata oficial nem executar testes automaticamente.
+
 ## Continuação autorizável
 
 O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo acima.
