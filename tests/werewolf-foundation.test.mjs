@@ -460,11 +460,11 @@ test("WtF 2e pp. 136–138 preserves all fifteen Wolf Facets and their EN/PT exc
   assert.match(facet("gift-pack:down-the-prey").options, /Defense against the attack was 0/);
 });
 
-test("WtF 2e pp. 121–131 preserves the first nine Shadow Gifts with complete EN/PT text", () => {
-  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental", "gift-evasion", "gift-insight", "gift-inspiration", "gift-knowledge", "gift-nature", "gift-rage"]);
+test("WtF 2e pp. 121–136 preserves all fifteen Core Shadow Gifts with complete EN/PT text", () => {
+  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental", "gift-evasion", "gift-insight", "gift-inspiration", "gift-knowledge", "gift-nature", "gift-rage", "gift-shaping", "gift-stealth", "gift-strength", "gift-technology", "gift-warding", "gift-weather"]);
   const records = shadowGifts.flatMap(gift => [gift, ...gift.facets]);
-  assert.equal(records.length, 54);
-  assert.equal(new Set(records.map(item => item.id)).size, 54);
+  assert.equal(records.length, 90);
+  assert.equal(new Set(records.map(item => item.id)).size, 90);
   assert.deepEqual(new Set(Object.keys(shadowPresentation)), new Set(records.map(item => item.id)));
   for (const gift of shadowGifts) {
     assert.equal(gift.kind, "shadow");
@@ -486,8 +486,8 @@ test("WtF 2e pp. 121–131 preserves the first nine Shadow Gifts with complete E
   for (const item of records) {
     assert.equal(item.sourceId, "wtf-2ed");
     assert.equal(item.source, "Werewolf: The Forsaken Second Edition");
-    assert.ok(item.page >= 121 && item.page <= 131);
-    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 131);
+    assert.ok(item.page >= 121 && item.page <= 136);
+    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 136);
     const fields = Object.entries(item).filter(([key, value]) => typeof value === "string" && !["id", "renown", "kind", "source", "sourceId"].includes(key));
     assert.deepEqual(new Set(Object.keys(shadowPresentation[item.id])), new Set(fields.map(([key]) => key)));
     for (const [field, text] of fields) assert.ok(text.length && shadowPresentation[item.id][field]?.length, `${item.id}.${field}`);
@@ -630,6 +630,103 @@ test("WtF 2e pp. 127–131 retains Knowledge Nature and Rage exceptions and the 
   assert.deepEqual(grants.problems, [], "New Gift families are usable by creation's canonical validator");
 });
 
+test("WtF 2e pp. 131–136 preserves Shaping Stealth Strength Technology Warding and Weather exceptions", () => {
+  const facet = id => shadowGifts.flatMap(gift => gift.facets).find(item => item.id === id);
+  const mold = facet("gift-shaping:moldywarp");
+  assert.equal(mold.activationRequirement, "Use only in Dalu.");
+  assert.match(mold.effect, /Strength \+ Cunning Renown/);
+  assert.match(facet("gift-shaping:shield-breaker").activationRequirement, /Brawl or Weaponry/);
+  assert.match(facet("gift-shaping:entropys-toll").success, /two Structure damage per success.*all Durability/);
+  const tool = facet("gift-shaping:perfection-of-form");
+  assert.equal(tool.dicePool, "Wits + Crafts + Purity", "Printed Craft uses the canonical Crafts Skill identity");
+  assert.match(tool.success, /next use.*Structure equal/);
+  assert.match(tool.exceptionalSuccess, /9-again.*8-again/);
+  const sculpt = facet("gift-shaping:sculpt");
+  assert.match(sculpt.activationRequirement, /Size no greater than Wisdom Renown/);
+  assert.match(sculpt.success, /another 30 minutes, indefinitely/);
+  assert.match(sculpt.success, /unlikely to function/);
+  assert.match(facet("gift-stealth:shadow-pelt").effect, /number of Stealth rolls equal to Cunning Renown.*Rote Actions/);
+  assert.match(facet("gift-stealth:pack-stalks-the-prey").activationRequirement, /Uratha succeeds.*packmate fails/);
+  assert.match(facet("gift-stealth:the-hunter-waits").effect, /Perception and supernatural power rolls/);
+  const silent = facet("gift-stealth:running-silent");
+  assert.match(silent.effect, /falling damage.*terrain-imposed.*Wisdom Renown/);
+  assert.match(silent.effect, /full speed/);
+  const unchained = facet("gift-strength:unchained");
+  assert.match(unchained.effect, /rote quality on the Clash of Wills/);
+  assert.match(unchained.effect, /Cunning Renown to grappling/);
+  assert.match(unchained.effect, /Basu-Im.*without spending Essence/);
+  const pursuit = facet("gift-strength:predators-unmatched-pursuit");
+  assert.match(pursuit.effect, /1 \+ Glory Renown/);
+  assert.match(pursuit.effect, /Urhan and Urshul.*1 Essence.*any form for one turn/);
+  const blow = facet("gift-strength:crushing-blow");
+  assert.match(blow.activationRequirement, /even if it inflicts no damage/);
+  assert.match(blow.effect, /next attack.*packmate only.*Hishu.*lethal rather than bashing/);
+  assert.match(facet("gift-strength:primal-strength").effect, /Purity Renown to Strength.*Basu-Im/);
+  const claws = facet("gift-strength:rending-claws");
+  assert.equal(claws.duration, "Permanent");
+  assert.equal(claws.cost, undefined, "Do not invent a Cost for a permanent Facet");
+  assert.match(claws.activationRequirement, /Gauru or Urshul/);
+  assert.match(claws.effect, /Durability.*additional Structure/);
+  assert.equal(facet("gift-technology:garble").dicePool, "Intelligence + Science + Cunning − Composure");
+  const unmake = facet("gift-technology:unmake");
+  assert.match(unmake.dicePool, /contested only if the item is being used/);
+  assert.match(unmake.activationRequirement, /Glory Renown × 5.*unattended item does not/);
+  assert.match(unmake.exceptionalSuccess, /one month.*dramatic failure/);
+  assert.match(facet("gift-technology:command-artifice").success, /one-sentence.*Honor Renown hours/);
+  const shutdown = facet("gift-technology:shutdown");
+  assert.equal(shutdown.dicePool, "Presence + Intimidation + Purity", "Printed Intimidate uses the canonical Intimidation Skill identity");
+  assert.match(shutdown.success, /whichever is larger/);
+  assert.match(shutdown.exceptionalSuccess, /Siskur-Dah.*Shadow Paranoia/);
+  assert.match(facet("gift-technology:iron-slave").success, /breaking point towards Spirit.*may create a unique Claimed/);
+  assert.match(facet("gift-warding:maze-ward").effect, /other than a packmate.*failing|other than a packmate.*Failing/);
+  const den = facet("gift-warding:ward-the-wolfs-den");
+  assert.match(den.effect, /Cunning Renown × 10 yards/, "Keep the printed Cunning-based radius of this Glory Facet");
+  assert.match(den.effect, /Glory Renown.*1 Essence.*Clash of Wills.*Glory Renown hours/);
+  assert.match(facet("gift-warding:predators-claim").effect, /above five.*still does not.*six or greater/);
+  const boundary = facet("gift-warding:boundary-ward");
+  assert.match(boundary.effect, /pack's territory.*Wisdom Renown miles/);
+  assert.match(boundary.effect, /do not track them after entry/);
+  const mist = facet("gift-weather:cloak-of-mist-and-haze");
+  assert.equal(mist.action, "Extended (5 successes; 1 roll per minute)");
+  assert.match(mist.success, /auditory and visual Perception.*ranged attack.*Cunning Renown/);
+  assert.match(mist.exceptionalSuccess, /Wits \+ Survival − Cunning Renown/);
+  const heavens = facet("gift-weather:heavens-unleashed");
+  assert.equal(heavens.action, "Extended (10 successes; 1 roll per minute)");
+  assert.match(heavens.success, /Speed and Initiative penalties equal to Glory Renown/);
+  assert.match(heavens.exceptionalSuccess, /Allies, Contacts, Retainer, Staff, and Status/);
+  assert.match(heavens.exceptionalSuccess, /does not specify this penalty's value/, "Do not invent a value absent from the book and user replies");
+  for (const item of [mist, heavens]) {
+    assert.match(item.success, /does not specify the affected area's extent/);
+    assert.match(shadowPresentation[item.id].success, /não especifica a extensão/);
+  }
+  const ironSky = facet("gift-weather:hunt-under-iron-skies");
+  assert.match(ironSky.effect, /Honor Renown.*own Weather Facets.*1 Essence per packmate/);
+  const wind = facet("gift-weather:grasp-of-howling-winds");
+  assert.equal(wind.dicePool, "Manipulation + Survival + Purity − Stamina");
+  assert.match(wind.success, /all Physical pools.*escapes the Uratha's view/);
+  assert.match(wind.exceptionalSuccess, /twice Purity Renown in yards/);
+  assert.match(facet("gift-weather:hunt-of-fire-and-ice").success, /Extreme Cold or Extreme Heat.*Wisdom Renown miles/);
+});
+
+test("WtF 2e complete Core Gifts support every valid Auspice Tribe and creation Renown choice", async () => {
+  const { creationGiftAllowance, creationGiftSelection } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rules.ts");
+  const renowns = ["Cunning", "Glory", "Honor", "Purity", "Wisdom"];
+  for (const auspice of reference.auspices) for (const tribe of reference.tribes) {
+    assert.ok([...auspice.giftIds, ...tribe.giftIds].every(id => shadowGifts.some(gift => gift.id === id)));
+    for (const choice of renowns) {
+      if (auspice.renown === tribe.renown && choice === auspice.renown) continue; // Printed creation cap: never grant three dots.
+      const allowance = creationGiftAllowance(auspice, tribe, choice);
+      const parents = shadowGifts.filter(gift => allowance.shadowGiftIds.includes(gift.id) && gift.facets.some(facet => allowance.renown[facet.renown] > 0));
+      assert.ok(parents.length >= 2, `${auspice.id}/${tribe.id}/${choice} needs two distinct favored Shadow Gifts`);
+      const selections = {
+        shadow_facets: parents.slice(0, 2).map(gift => gift.facets.find(facet => allowance.renown[facet.renown] > 0).id),
+        wolf_facets: allowance.wolfFacetCount ? [wolfGifts.flatMap(gift => gift.facets).find(facet => allowance.renown[facet.renown] > 0).id] : [],
+      };
+      assert.deepEqual(creationGiftSelection(auspice, tribe, choice, giftCatalog.gifts, selections).problems, [], `${auspice.id}/${tribe.id}/${choice}`);
+    }
+  }
+});
+
 test("Werewolf Gifts load only their canonical and Portuguese shards into an immutable snapshot", async () => {
   const { werewolfGiftsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/gifts.ts");
   const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
@@ -643,10 +740,10 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
     return structuredClone(fixtures[id]);
   } }));
   assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt", "werewolf-gifts-core-wolf", "werewolf-gifts-core-wolf-pt", "werewolf-gifts-core-shadow", "werewolf-gifts-core-shadow-pt"]);
-  assert.equal(snapshot.gifts.length, 17);
-  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 85);
+  assert.equal(snapshot.gifts.length, 23);
+  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 115);
   assert.deepEqual(snapshot.gifts.map(gift => gift.id), [...moonGifts, ...wolfGifts, ...shadowGifts].map(gift => gift.id));
-  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 102);
+  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 138);
   assert.ok(Object.isFrozen(snapshot.gifts[0].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation[snapshot.gifts[0].facets[0].id]));
   assert.ok(Object.isFrozen(snapshot.gifts[5].facets[0]));
@@ -656,4 +753,5 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
   assert.ok(Object.isFrozen(snapshot.gifts.at(-1).facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-inspiration:still-small-voice"]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-rage:raging-lunacy"]));
+  assert.ok(Object.isFrozen(snapshot.presentation["gift-weather:hunt-of-fire-and-ice"]));
 });

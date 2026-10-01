@@ -407,6 +407,15 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `Black Earth, Red Hunger`, `Berserker's Might` e `Slaughterer` descrevem condições de regeneração, redução de dano e Cost; não curam, aplicam dano ou gastam Essence automaticamente. `Perfected Rage` informa turnos, sem contador, conforme W04.
 - Spooked → Assombrado, Stumbled → Tropeço e Lured → Atraído seguem a apresentação já utilizada. Berserk → Frenético segue a decisão anterior do usuário. Referências a Retainer/Staff e Beast Speaker reutilizam os nomes portugueses dos catálogos existentes.
 
+### Demais Core Shadow Gifts — Shaping, Stealth, Strength, Technology, Warding e Weather (WTF2 pp. 131–136)
+
+- Catálogo EN/PT com as trinta Facets restantes, conferidas visualmente. O Core agora contém 23 Gifts e 115 Facets: cinco Moon Gifts (25), quinze Shadow Gifts (75) e três Wolf Gifts (15). Todos os Gift IDs favorecidos por Auspice/Tribe estão disponíveis; isso não conclui os catálogos dos suplementos, Rites, Merits ou a integração do Builder com salvamento.
+- `Perfection of Form` imprime `Craft`; usar a identidade canônica `Crafts`. `Shutdown` imprime `Intimidate`; usar a identidade canônica `Intimidation`. São normalizações dos nomes das Skills do próprio Core, não alterações de Dice Pool.
+- `Ward the Wolf's Den` usa **Cunning Renown × 10 yards** para o raio e Glory Renown para penalidade/fechamento. Preservar essa regra como impressa, sem substituir Cunning por Glory. `Predator's Claim` não permite atacar fisicamente Rank 6+, mesmo ao elevar honorary Spirit Rank acima de 5.
+- `Rending Claws` tem Duration permanente, sem Cost ou Action impressos: não inventar campos. `Unchained`, `Predator's Unmatched Pursuit` e `Primal Strength` mantêm os benefícios condicionais de Basu-Im; os textos não ativam poderes, modificam fichas ou executam Clash of Wills automaticamente.
+- **Lacunas de Weather ainda sem decisão numérica:** `Cloak of Mist and Haze` e `Heavens Unleashed` não imprimem o alcance de área; `Heavens Unleashed` também não quantifica a penalidade de Exceptional Success aos Social Merits. O usuário respondeu em 2026-10-01 com os efeitos normais já impressos (Cunning para sight/hearing/ranged attacks e Glory para Speed/Initiative); essas respostas não definem as duas lacunas. Preservar avisos explícitos nos dois idiomas e não atribuir números ou alcance por inferência. Nenhuma automação depende dessas quantidades.
+- `Moldywarp` → Toupeira é tradução editorial do termo inglês arcaico para o animal, não alteração de First Tongue; nomes Uratha continuam inalterados. Outros nomes de Facets deste lote podem ser auditados diretamente na apresentação PT.
+
 Sequência de implementação autorizada:
 
 1. Incorporar as decisões aprovadas, inclusive P01–P03, preservando as exclusões.

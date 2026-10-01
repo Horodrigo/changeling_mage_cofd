@@ -485,5 +485,320 @@
     "duration": "Uma cena",
     "activationRequirement": "Ative ao entrar em uma forma que provoque Lunagem.",
     "effect": "Impõe Frenético às vítimas em vez de outra Condição de Lunagem."
+  },
+  "gift-shaping": {
+    "name": "Dom da Modelagem"
+  },
+  "gift-shaping:moldywarp": {
+    "name": "Toupeira",
+    "description": "Modela Dalu em um poderoso híbrido escavador.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "activationRequirement": "Use apenas em Dalu.",
+    "effect": "As mãos do Uratha tornam-se garras largas que escavam facilmente terra, rocha e concreto. Recebe Deslocamento de escavação igual a Força + Renome de Astúcia."
+  },
+  "gift-shaping:shield-breaker": {
+    "name": "Quebra-Escudos",
+    "description": "Estilhaça escudos e deforma armaduras com um golpe poderoso.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "activationRequirement": "Ative ao atingir um inimigo com um ataque de Briga ou Armas Brancas.",
+    "effect": "Concede àquele ataque perfuração de armadura igual ao Renome de Glória."
+  },
+  "gift-shaping:entropys-toll": {
+    "name": "Tributo da Entropia",
+    "description": "Libera entropia por meio de um uivo que destrói pedra, vidro e metal.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Expressão + Honra",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha um objeto ou estrutura que o Uratha possa ver. O uivo destrutivo é claramente audível para qualquer pessoa próxima.",
+    "dramaticFailure": "Sofre um ponto de dano agravado pela energia entrópica.",
+    "failure": "A Faceta falha.",
+    "success": "Causa dois pontos de dano à Estrutura por sucesso, ignorando toda a Durabilidade.",
+    "exceptionalSuccess": "Além do dano aumentado, os sucessos podem ser transferidos para outros objetos próximos."
+  },
+  "gift-shaping:perfection-of-form": {
+    "name": "Perfeição da Forma",
+    "description": "Aperfeiçoa uma ferramenta com um sussurro e um toque.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Ofícios + Pureza",
+    "action": "Instantânea",
+    "duration": "Um dia ou até ser usado",
+    "activationRequirement": "Escolha um item que esteja segurando e que conceda um bônus de equipamento.",
+    "dramaticFailure": "O item é destruído ou arruinado além de qualquer uso.",
+    "failure": "A Faceta falha.",
+    "success": "Aumenta o bônus de equipamento pelos sucessos obtidos. O bônus adicional só se aplica ao próximo uso do item, depois do qual é perdido. Se estiver danificado, o item também recupera Estrutura igual aos sucessos obtidos.",
+    "exceptionalSuccess": "O item também recebe 9-novamente por um teste, ou 8-novamente se já tiver 9-novamente."
+  },
+  "gift-shaping:sculpt": {
+    "name": "Esculpir",
+    "description": "Faz até substâncias rígidas cederem como argila.",
+    "cost": "1 Essência",
+    "dicePool": "Inteligência + Ofícios + Sabedoria",
+    "action": "Instantânea",
+    "duration": "30 minutos; renovável por 1 Essência a cada 30 minutos",
+    "activationRequirement": "Toque um objeto ou componente de uma estrutura maior cujo Tamanho não exceda o Renome de Sabedoria.",
+    "dramaticFailure": "A Faceta falha e Esculpir não pode afetar o objeto ou estrutura novamente por um dia.",
+    "failure": "A Faceta falha.",
+    "success": "O material afetado torna-se maleável como argila, independentemente de sua substância. Modele-o, faça esculturas ou afaste uma seção de parede para abrir uma passagem. Após 30 minutos, ele retoma sua solidez habitual; gastar outra Essência nesse momento mantém a maleabilidade por mais 30 minutos, indefinidamente enquanto houver Essência. Objetos mecânicos ou eletrônicos remodelados provavelmente deixarão de funcionar após solidificar.",
+    "exceptionalSuccess": "Acrescenta Renome de Sabedoria a todos os testes de Ofícios para modelar, esculpir e trabalhar o material amolecido."
+  },
+  "gift-stealth": {
+    "name": "Dom da Furtividade"
+  },
+  "gift-stealth:shadow-pelt": {
+    "name": "Pelagem Sombria",
+    "description": "Convoca as sombras para ocultar o caçador.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Trata uma quantidade de testes de Furtividade igual ao Renome de Astúcia como Ações Avançadas."
+  },
+  "gift-stealth:predators-shadow": {
+    "name": "Sombra do Predador",
+    "description": "Enche a presa de medo de um caçador oculto na escuridão.",
+    "cost": "1 Essência por presa",
+    "dicePool": "Presença + Intimidação + Glória vs Compostura + Instinto Primitivo",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha qualquer quantidade de presas que o Uratha possa perceber.",
+    "dramaticFailure": "A presa recebe Resoluto.",
+    "failure": "A Faceta falha.",
+    "success": "Cada presa que obtenha menos sucessos que o Uratha recebe Paranoia da Sombra.",
+    "exceptionalSuccess": "Acrescenta Renome de Glória aos testes de Furtividade contra a presa pelo restante da cena."
+  },
+  "gift-stealth:pack-stalks-the-prey": {
+    "name": "A Alcateia Espreita a Presa",
+    "description": "Guia os membros da alcateia nos passos de um espreitador habilidoso.",
+    "cost": "1 Essência por membro da alcateia",
+    "action": "Reflexiva",
+    "activationRequirement": "Use quando o Uratha tiver sucesso em um teste de Furtividade, mas um membro da alcateia falhar.",
+    "effect": "O membro da alcateia tem sucesso automaticamente em vez de usar o resultado de seu teste original."
+  },
+  "gift-stealth:the-hunter-waits": {
+    "name": "O Caçador Aguarda",
+    "description": "Deixa a paciência aperfeiçoar uma emboscada.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "activationRequirement": "Permaneça relativamente imóvel e evite chamar atenção.",
+    "effect": "Todos os testes de Percepção e de poderes sobrenaturais para detectar o Uratha sofrem uma penalidade igual ao Renome de Pureza. Após iniciar com sucesso um ataque surpresa, acrescente Renome de Pureza à Iniciativa."
+  },
+  "gift-stealth:running-silent": {
+    "name": "Corrida Silenciosa",
+    "description": "Combina velocidade e silêncio mesmo em terrenos traiçoeiros.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Reduz todo dano de queda e todas as penalidades de Atletismo e movimento impostas pelo terreno pelo Renome de Sabedoria. Pode testar Furtividade mesmo ao se deslocar à velocidade máxima."
+  },
+  "gift-strength": {
+    "name": "Dom da Força"
+  },
+  "gift-strength:unchained": {
+    "name": "Livre das Correntes",
+    "description": "Rompe amarras que prendam o Uratha, incluindo as sobrenaturais.",
+    "cost": "1 Essência; nenhum em Basu-Im",
+    "action": "Reflexiva",
+    "effect": "Estilhaça ou rompe qualquer amarra ou corrente, independentemente do material, incluindo restrições sobrenaturais ou mágicas. Quando isso causa um Confronto de Vontades contra um poder que o prenda, recebe a qualidade de Ação Avançada na parada desse confronto. Alternativamente, acrescenta Renome de Astúcia aos testes de agarrão. Em Basu-Im, usa esta Faceta instintivamente sem gastar Essência."
+  },
+  "gift-strength:predators-unmatched-pursuit": {
+    "name": "Perseguição Inigualável do Predador",
+    "description": "Canaliza força bruta para saltar e perseguir com velocidade sobrenatural.",
+    "cost": "1 Essência; ativação gratuita ao entrar em Basu-Im",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "effect": "Multiplica todas as distâncias de salto por 1 + Renome de Glória, acrescenta Renome de Glória ao Deslocamento básico em Urhan e Urshul e permite gastar reflexivamente um ponto de Essência para dobrar o Deslocamento em qualquer forma por um turno. Ao entrar em Basu-Im, ativa esta Faceta instintivamente sem custo."
+  },
+  "gift-strength:crushing-blow": {
+    "name": "Golpe Esmagador",
+    "description": "Deixa a presa cambaleando sob um golpe poderoso.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "activationRequirement": "Use quando um ataque de Briga acertar, mesmo sem causar dano.",
+    "effect": "Reduz a Defesa da presa pelo Renome de Honra apenas para o próximo ataque contra ela feito pelo Uratha ou por um membro da alcateia. Em Hishu, o ataque desarmado do Uratha causa dano letal em vez de contusivo."
+  },
+  "gift-strength:primal-strength": {
+    "name": "Força Primal",
+    "description": "Despeja força espiritual no sangue e nos ossos.",
+    "cost": "1 Essência; ativação gratuita ao entrar em Basu-Im",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "effect": "Acrescenta Renome de Pureza à Força pela duração. Ao entrar em Basu-Im, ativa esta Faceta instintivamente sem custo."
+  },
+  "gift-strength:rending-claws": {
+    "name": "Garras Dilacerantes",
+    "description": "Fortalece garras e mandíbulas para rasgar objetos e construções.",
+    "duration": "Permanente",
+    "activationRequirement": "Enquanto estiver em Gauru ou Urshul.",
+    "effect": "Ignora até Renome de Sabedoria pontos da Durabilidade de um objeto ou construção ao atingi-lo e causa dano adicional à Estrutura igual ao Renome de Sabedoria."
+  },
+  "gift-technology": {
+    "name": "Dom da Tecnologia"
+  },
+  "gift-technology:garble": {
+    "name": "Distorcer",
+    "description": "Volta a tecnologia moderna contra quem depende dela.",
+    "cost": "1 Essência",
+    "dicePool": "Inteligência + Ciência + Astúcia − Compostura",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "activationRequirement": "Escolha um personagem que o Uratha possa perceber.",
+    "dramaticFailure": "A presa recebe +1 de bônus de equipamento de todos os itens tecnológicos que usar pelo restante da cena.",
+    "failure": "A Faceta falha.",
+    "success": "A tecnologia volta-se contra a presa em benefício do Uratha. Elevadores a levam ao andar escolhido pelo Uratha, chamadas telefônicas se conectam a espíritos que a enganam e mensagens contêm conspirações enigmáticas ou vírus em vez do conteúdo pretendido. A presa não pode confiar que dispositivos tecnológicos obedeçam ou digam a verdade.",
+    "exceptionalSuccess": "Na primeira vez em que a presa usar um dispositivo tecnológico que deveria conceder um bônus de equipamento, sofre uma falha dramática."
+  },
+  "gift-technology:unmake": {
+    "name": "Desmontar",
+    "description": "Ordena que um dispositivo se desfaça.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Ofícios + Glória vs Perseverança + Instinto Primitivo; disputada apenas se o item estiver sendo usado",
+    "action": "Instantânea; pode ser Disputada",
+    "activationRequirement": "Escolha um item percebido que possua peças móveis e Tamanho de até Renome de Glória × 5. Um item sem usuário não realiza teste de resistência.",
+    "dramaticFailure": "Recebe Proibição: tenta obsessivamente reparar objetos e dispositivos danificados que cheguem às suas mãos, independentemente de sua capacidade real.",
+    "failure": "A Faceta falha.",
+    "success": "O objeto desmonta-se imediatamente em suas peças móveis, chegando a ejetar a munição na câmara de uma arma de fogo. Um veículo em movimento torna-se uma massa perigosa de componentes arremessados.",
+    "exceptionalSuccess": "O objeto não pode ser reparado ou remontado por um mês; tentativas resultam em falha dramática."
+  },
+  "gift-technology:command-artifice": {
+    "name": "Comandar Artifício",
+    "description": "Sussurra uma ordem imbuída de Essência e a tecnologia obedece.",
+    "cost": "1 Essência",
+    "dicePool": "Inteligência + Ciência + Honra",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha um dispositivo tecnológico que o Uratha possa perceber.",
+    "dramaticFailure": "O dispositivo quebra de forma irreparável e não pode ser alvo desta Faceta novamente.",
+    "failure": "A Faceta falha.",
+    "success": "Diga uma ordem em uma frase. O dispositivo obedece se for possível, mesmo com defeitos ou pequenos danos. Ordenar que durma torna-o completamente inerte por até Renome de Honra horas.",
+    "exceptionalSuccess": "Dê uma ordem mais complexa, incluindo condições ou gatilhos para a resposta do dispositivo."
+  },
+  "gift-technology:shutdown": {
+    "name": "Desligamento",
+    "description": "Nega à presa a proteção de luzes, comunicação e vigilância.",
+    "cost": "2 Essência",
+    "dicePool": "Presença + Intimidação + Pureza",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "dramaticFailure": "Recebe Proibição: sente-se compelido a desligar todo dispositivo tecnológico que encontrar, de luzes a motores de carros.",
+    "failure": "A Faceta falha.",
+    "success": "Afeta a estrutura ocupada pelo Uratha ou uma área de Renome de Pureza × 100 jardas, o que for maior. As luzes apagam, exceto por lampejos ocasionais e desorientadores; câmeras e dispositivos de gravação mostram estática; sistemas de segurança e detecção falham; e telefones desligam ou produzem ruído incompreensível. O Uratha pode reduzir a área a um andar, beco ou outro local menor.",
+    "exceptionalSuccess": "Se a presa de Siskur-Dah estiver na área afetada, recebe Paranoia da Sombra."
+  },
+  "gift-technology:iron-slave": {
+    "name": "Escravo de Ferro",
+    "description": "Habita os sentidos e mecanismos de uma máquina.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Ofícios + Sabedoria",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "activationRequirement": "Escolha um veículo mecânico visível ou uma obra de engenharia significativa, como um guindaste ou linha de produção.",
+    "dramaticFailure": "Recebe Proibição: venera máquinas do tipo escolhido, oferece presentes aos seus espíritos ou pinta glifos que as honrem.",
+    "failure": "A Faceta falha.",
+    "success": "Mergulha os sentidos do Uratha na máquina e percebe seus arredores, deixando-a operar normalmente ou controlando-a diretamente. Os sentidos do próprio corpo permanecem apenas vagamente perceptíveis, e ele parece atordoado ou adormecido. Retornar aos sentidos do corpo exige uma ação instantânea e encerra a Faceta. A destruição da máquina habitada devolve o Uratha ao corpo e é um Ponto de Ruptura em direção ao Espírito. Se o corpo morrer durante o uso, um fragmento espiritual é incorporado à máquina e pode criar um Tomado único.",
+    "exceptionalSuccess": "Mantém percepção plena dos arredores do próprio corpo."
+  },
+  "gift-warding": {
+    "name": "Dom da Proteção"
+  },
+  "gift-warding:maze-ward": {
+    "name": "Proteção Labiríntica",
+    "description": "Distorce a geometria de um local para impedir visitantes indesejados.",
+    "cost": "5 Essência",
+    "action": "Instantânea",
+    "duration": "Um mês",
+    "effect": "Protege toda uma estrutura ou parte dela, ou uma área com raio de até Renome de Astúcia × 100 jardas. Qualquer pessoa que não seja membro da alcateia é um intruso: tentativas de se orientar, perseguir a pé ou rastrear pela área sofrem uma penalidade igual ao Renome de Astúcia. Falhar em um desses testes devolve o intruso à borda da área protegida."
+  },
+  "gift-warding:ward-the-wolfs-den": {
+    "name": "Proteger a Toca do Lobo",
+    "description": "Sela a toca contra passagens e brechas sobrenaturais.",
+    "cost": "5 Essência",
+    "action": "Instantânea",
+    "duration": "Um mês",
+    "effect": "Protege toda uma estrutura ou parte dela, ou uma área com raio de até Renome de Astúcia × 10 jardas. Tentativas de atravessar a Película ou abrir passagens entre mundos, janelas de vidência, portais ou brechas sofrem uma penalidade igual ao Renome de Glória. Percebe imediatamente aberturas se formando na proteção e pode gastar reflexivamente um ponto de Essência para forçar um Confronto de Vontades para fechar uma delas. Usar a Faceta em um locus na área sela esse locus por Renome de Glória horas."
+  },
+  "gift-warding:all-doors-locked": {
+    "name": "Todas as Portas Trancadas",
+    "description": "Controla cada passagem em uma construção ou veículo.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "activationRequirement": "Toque a construção ou veículo, ou esteja dentro dele.",
+    "effect": "Sabe imediatamente onde estão todas as portas, janelas e entradas, e se estão abertas ou fechadas. Com um pensamento, abre ou sela qualquer uma delas, inclusive trancando-as firmemente se desejar."
+  },
+  "gift-warding:predators-claim": {
+    "name": "Domínio do Predador",
+    "description": "Marca uma área protegida com a dominância espiritual do Uratha.",
+    "cost": "5 Essência",
+    "action": "Instantânea",
+    "duration": "Um mês",
+    "effect": "Protege uma área com raio de até Renome de Pureza × 10 jardas. Aumenta em dois o Posto Espiritual honorário do Uratha para atacar espíritos dentro da área. Isso pode elevar o Posto honorário acima de cinco, mas ainda não permite desafiar fisicamente espíritos de Posto seis ou superior."
+  },
+  "gift-warding:boundary-ward": {
+    "name": "Proteção da Fronteira",
+    "description": "Percebe um tipo escolhido de ser atravessando a fronteira de uma proteção.",
+    "cost": "5 Essência",
+    "action": "Instantânea",
+    "duration": "Um mês",
+    "effect": "Protege toda uma estrutura ou parte dela, ou uma área com raio de até Renome de Sabedoria × 100 jardas. No território da alcateia, o raio pode chegar a Renome de Sabedoria milhas. Escolha um tipo de ser, como humanos, Uratha, Tomados, Hospedeiros, espíritos no Crepúsculo ou outros seres sobrenaturais. Percebe quando eles entram e aproximadamente onde atravessaram, mas não os rastreia após a entrada. Detectar humanos em uma cidade movimentada pode produzir um fluxo constante de avisos inúteis."
+  },
+  "gift-weather": {
+    "name": "Dom do Clima"
+  },
+  "gift-weather:cloak-of-mist-and-haze": {
+    "name": "Manto de Névoa e Bruma",
+    "description": "Uiva para convocar uma bruma que obscurece a visão e abafa os sons.",
+    "cost": "1 Essência",
+    "dicePool": "Destreza + Furtividade + Astúcia",
+    "action": "Prolongada (5 sucessos; 1 teste por minuto)",
+    "duration": "1 hora por sucesso",
+    "dramaticFailure": "Recebe Proibição: deseja silêncio e se recusa a falar.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, névoa, poeira ou uma tempestade de areia se abate sobre a área, conforme o clima local. Todos os testes de Percepção auditiva e visual e os testes de ataques à distância afetados pela bruma sofrem uma penalidade igual ao Renome de Astúcia. O livro não especifica a extensão da área afetada.",
+    "exceptionalSuccess": "A visibilidade mal passa do alcance dos braços. É necessário ter sucesso em Raciocínio + Sobrevivência − Renome de Astúcia para evitar se perder na área afetada."
+  },
+  "gift-weather:heavens-unleashed": {
+    "name": "Céus Desencadeados",
+    "description": "Convoca uma tempestade com chuva torrencial e relâmpagos estrondosos.",
+    "cost": "5 Essência",
+    "dicePool": "Presença + Sobrevivência + Glória",
+    "action": "Prolongada (10 sucessos; 1 teste por minuto)",
+    "duration": "1 hora por sucesso",
+    "dramaticFailure": "Recebe Proibição: sente-se compelido a falar alto e fazer ruído constantemente, rompendo qualquer silêncio que encontre.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, uma chuva violenta com relâmpagos cobre a área, mesmo que nuvens precisem se formar em um céu antes limpo. Personagens na tempestade sofrem penalidades de Deslocamento e Iniciativa iguais ao Renome de Glória. Manto de Névoa e Bruma usado durante a tempestade faz o aguaceiro sobrecarregar os sentidos. A chuva pode causar inundações, danos materiais e consequências graves com usos repetidos. O livro não especifica a extensão da área afetada.",
+    "exceptionalSuccess": "A tempestade também penaliza o uso de Aliados, Contatos, Lacaio, Funcionários e Status para obter auxílio pela duração. O livro não especifica o valor dessa penalidade."
+  },
+  "gift-weather:hunt-under-iron-skies": {
+    "name": "Caçar sob Céus de Ferro",
+    "description": "Enfrenta tempestades, geada e calor escaldante sem se intimidar.",
+    "cost": "Nenhum",
+    "duration": "Permanente",
+    "effect": "Reduz todas as penalidades do clima ou de condições ambientais, incluindo Tilts Ambientais, pelo Renome de Honra. Não sofre penalidades das próprias Facetas do Clima. Gaste um ponto de Essência por membro da alcateia para que ele também ignore essas Facetas do Clima por uma cena."
+  },
+  "gift-weather:grasp-of-howling-winds": {
+    "name": "Abraço dos Ventos Uivantes",
+    "description": "Transforma um uivo em uma rajada violenta de vento imbuído de Essência.",
+    "cost": "2 Essência",
+    "dicePool": "Manipulação + Sobrevivência + Pureza − Vigor",
+    "action": "Instantânea",
+    "duration": "1 turno por sucesso",
+    "activationRequirement": "Escolha uma presa que o Uratha possa perceber.",
+    "dramaticFailure": "Recebe Proibição: não pode ficar parado e deve continuar se movendo.",
+    "failure": "A Faceta falha.",
+    "success": "Ventos uivantes castigam a presa, impondo uma penalidade igual ao Renome de Pureza ao Deslocamento e a todas as paradas Físicas pela duração ou até a presa escapar da visão do Uratha.",
+    "exceptionalSuccess": "Quando a Faceta começa a fazer efeito, também afasta a presa diretamente do Uratha por até o dobro de Renome de Pureza em jardas."
+  },
+  "gift-weather:hunt-of-fire-and-ice": {
+    "name": "Caçada de Fogo e Gelo",
+    "description": "Esgota a força da presa com calor ou frio extremos.",
+    "cost": "5 Essência",
+    "dicePool": "Inteligência + Ocultismo + Sabedoria",
+    "action": "Prolongada (10 sucessos; 1 teste por minuto)",
+    "duration": "1 hora por sucesso",
+    "dramaticFailure": "Recebe Proibição: deve carregar uma fonte de calor ou frio extremos o tempo todo.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, impõe Frio Extremo ou Calor Extremo, conforme o clima habitual do local, sobre uma área com raio de até Renome de Sabedoria milhas.",
+    "exceptionalSuccess": "O calor ou frio também dificulta a vida da presa de outras formas, como congelar o motor de um carro de fuga ou estragar uma fonte de água necessária."
   }
 }
