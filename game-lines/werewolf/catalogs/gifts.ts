@@ -19,12 +19,14 @@ export type WerewolfGiftCatalog = { gifts: GiftDefinition[]; presentation: GiftP
 /** Gift data is imported in verified source-book batches; no text parser or global catalog. */
 export const werewolfGiftsCatalogGroup: CatalogGroupModule = {
   async load(reader): Promise<WerewolfGiftCatalog> {
-    const [moon, moonPresentation, wolf, wolfPresentation] = await Promise.all([
+    const [moon, moonPresentation, wolf, wolfPresentation, shadow, shadowPresentation] = await Promise.all([
       reader.getCatalog<GiftDefinition[]>("werewolf-gifts-core-moon"),
       reader.getCatalog<GiftPresentation>("werewolf-gifts-core-moon-pt"),
       reader.getCatalog<GiftDefinition[]>("werewolf-gifts-core-wolf"),
       reader.getCatalog<GiftPresentation>("werewolf-gifts-core-wolf-pt"),
+      reader.getCatalog<GiftDefinition[]>("werewolf-gifts-core-shadow"),
+      reader.getCatalog<GiftPresentation>("werewolf-gifts-core-shadow-pt"),
     ]);
-    return { gifts: [...moon, ...wolf], presentation: { ...moonPresentation, ...wolfPresentation } };
+    return { gifts: [...moon, ...wolf, ...shadow], presentation: { ...moonPresentation, ...wolfPresentation, ...shadowPresentation } };
   },
 };

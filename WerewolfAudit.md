@@ -378,6 +378,16 @@ WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF f�
 
 O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo acima.
 
+### Notas editoriais do catálogo Shadow Gifts — primeiro lote, WTF2 pp. 121–123
+
+- `Gift of Death`, `Gift of Dominance` e `Gift of the Elementals`: quinze Facets completas em EN/PT, conferidas visualmente. As demais famílias ainda não foram importadas; este lote não conclui o catálogo necessário ao Builder.
+- `Bone Gnaw`: quatro opções, mas só a busca de um segredo ou conhecimento importante específico exige Presence + Empathy + Purity, com oposição de Resistance se o ghost estiver presente. Não inventar Roll Results nem exigir teste para todas as opções.
+- `Breath of Air`, `Flesh of Earth`, `Tongue of Flame` e `Heart of Water`: preservar as paradas próprias de Influence e Cost variável, sem inventar Action, Duration ou Roll Results. As regras gerais de Influence pertencem à referência Werewolf/Totem; não executar poderes nem mover Attributes básicos.
+- `Lay Low the Challenger`: normalizar o `Intimidate` impresso para a Skill canônica `Intimidation`, como no lote Moon Gifts.
+- `Lead the Lesser Pack` e `Memento Mori`: manter elegíveis na ficha individual e informar os efeitos sem criar Pack persistence, alterar fichas externas ou transferir dano automaticamente.
+- Nomes localizados de Conditions a uniformizar no catálogo: Awestruck → Deslumbrado; Essence Overload → Sobrecarga de Essência. Cowed → Acovardado segue a decisão já aprovada para Changeling; Ban → Proibição e Stumbled → Tropeço seguem os lotes anteriores.
+- Revisão lexical pendente na base anterior: `reference-pt.json` e `traits-pt.json` ainda usam Autocontrole em alguns trechos de Composure, enquanto `systemTerm()` apresenta Compostura. A mesma base usa contundente para Bashing em alguns textos, enquanto a apresentação compartilhada usa contusivo. Uniformizar as apresentações, com atualização das versões individuais dos catálogos, sem alterar os valores canônicos.
+
 Sequência de implementação autorizada:
 
 1. Incorporar as decisões aprovadas, inclusive P01–P03, preservando as exclusões.

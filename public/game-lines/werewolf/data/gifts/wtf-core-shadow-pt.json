@@ -1,0 +1,151 @@
+{
+  "gift-death": {
+    "name": "Dom da Morte"
+  },
+  "gift-death:cold-embrace": {
+    "name": "Abraço Frio",
+    "description": "Suspende os batimentos cardíacos e os sinais vitais, assumindo a aparência fria de um cadáver.",
+    "cost": "1 Essência",
+    "dicePool": "Vigor + Medicina + Astúcia",
+    "action": "Instantânea",
+    "duration": "1 hora por sucesso",
+    "dramaticFailure": "Sofre um ponto de dano agravado por se aproximar demais da morte.",
+    "failure": "O Uratha não consegue suspender seus sinais vitais.",
+    "success": "Parece recém-morto, sem pulso nem respiração. Os ferimentos coagulam, o corpo apresenta sinais de um cadáver e a regeneração natural cessa pela duração. O Uratha ainda pode agir, mas sofre uma penalidade de (5 − Renome de Astúcia) em todas as ações. Seres capazes de detectar sinais vitais provavelmente confundirão um Uratha ativo sob esta Faceta com um morto-vivo.",
+    "exceptionalSuccess": "Também reduz em um ponto todo dano sofrido."
+  },
+  "gift-death:barghest": {
+    "name": "Barghest",
+    "description": "A morte não coloca a presa fora do alcance da caçada.",
+    "cost": "Nenhum",
+    "duration": "Permanente",
+    "effect": "Percebe fantasmas e outros mortos-vivos incorpóreos ou seres imbuídos de morte no Crepúsculo. Em Gauru, Urshul ou Urhan, gaste um ponto de Essência por cena para atacar e ferir esses seres no Crepúsculo. Acrescente Renome de Glória às paradas de Percepção e Empatia contra qualquer morto-vivo. Ao ferir um morto-vivo corpóreo nessas formas, gaste reflexivamente um ponto de Essência para drenar um de seus pontos de Força de Vontade; se ele não tiver nenhum restante, cause dois pontos adicionais de dano letal."
+  },
+  "gift-death:memento-mori": {
+    "name": "Memento Mori",
+    "description": "Assume os ferimentos daqueles ligados ao Uratha pela alcateia.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "duration": "1 cena",
+    "effect": "Sabe exatamente quanto dano os companheiros de alcateia sofreram. Como ação reflexiva a cada turno, transfere de companheiros percebidos para o Uratha um total de pontos de dano contusivo ou letal até seu Renome de Honra, ou um ponto de dano agravado. Os ferimentos abrem-se imediatamente no corpo do próprio Uratha; assumi-los pode matá-lo."
+  },
+  "gift-death:bone-gnaw": {
+    "name": "Roer Ossos",
+    "description": "Extrai conhecimento e poder da medula e dos fragmentos dos mortos.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Empatia + Pureza; pode ter oposição de Resistência",
+    "action": "Instantânea",
+    "activationRequirement": "Devore ou roa um osso humano ou de lobisomem relativamente intacto. Sua idade não impede o uso, e ele é consumido ou destruído. Um osso fresco viola o Juramento da Lua; um osso sem carne e com mais de seis meses perdeu seu sabor tentador.",
+    "effect": "Escolha um dos benefícios listados. Apenas buscar um segredo ou conhecimento importante específico exige o teste da Faceta. Se estiver presente, o fantasma do morto pode se opor ao teste com Resistência.",
+    "options": "Descobre informações básicas sobre o morto: nome, idade, sexo, doença, veneno ou drogas no momento da morte, traços gerais de sua vida e hora e data aproximadas da morte; ossos mais antigos fornecem uma data menos precisa.\nCom um sucesso em Presença + Empatia + Pureza, descobre um segredo ou conhecimento desejado que o morto considerava importante em vida.\nDe um osso humano, recebe um ponto na Perícia mais alta do morto por uma cena.\nDe um osso de lobisomem, recebe um ponto no Renome mais alto do morto por uma cena."
+  },
+  "gift-death:eyes-of-the-dead": {
+    "name": "Olhos dos Mortos",
+    "description": "Vê os últimos momentos refletidos nos olhos de um cadáver.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Ocultismo + Sabedoria",
+    "action": "Instantânea",
+    "activationRequirement": "Use em restos humanos ou de outro ser que ainda tenham olhos. Os olhos não precisam estar totalmente intactos; o estado do restante do cadáver não importa.",
+    "dramaticFailure": "Recebe Proibição: o Uratha não pode olhar diretamente nos olhos de outra pessoa enquanto a Condição durar.",
+    "failure": "A Faceta falha.",
+    "success": "Vê claramente a última coisa que a vítima enxergou antes de morrer e percebe o que ela sentia naquele momento. Para pessoas que apareçam na visão, descobre o que a vítima geralmente sentia por cada uma e seus nomes, se os conhecia.",
+    "exceptionalSuccess": "Também recebe as lembranças da vítima nos minutos anteriores à morte, por um período igual ao Renome de Sabedoria."
+  },
+  "gift-dominance": {
+    "name": "Dom da Dominância"
+  },
+  "gift-dominance:primal-allure": {
+    "name": "Fascínio Primal",
+    "description": "Enfeitiça a presa com a presença irresistível de um predador.",
+    "cost": "1 Essência",
+    "dicePool": "Manipulação + Subterfúgio + Astúcia vs Perseverança + Instinto Primitivo",
+    "action": "Disputada",
+    "duration": "1 cena",
+    "activationRequirement": "Interaja socialmente com a presa por pelo menos um turno, tempo suficiente para formar uma primeira impressão.",
+    "dramaticFailure": "A presa fica inquieta. Acrescente duas Portas às tentativas do Uratha de influenciá-la socialmente por uma semana.",
+    "failure": "A presa não é influenciada.",
+    "success": "Obtém uma impressão perfeita (p. 164) com a presa pela cena, mas apenas para objetivos sociais que exijam ação imediata, como sair da multidão ou assinar um contrato. Qualquer tentativa de Manobra Social que causaria um Ponto de Ruptura à presa encerra imediatamente a Faceta e faz a presa reavaliar a impressão.",
+    "exceptionalSuccess": "O Uratha pode induzir a presa a uma ação que cause um Ponto de Ruptura. A Faceta termina depois dessa ação, quando a presa recobra a razão e enfrenta as consequências."
+  },
+  "gift-dominance:glorious-lunacy": {
+    "name": "Lunagem Gloriosa",
+    "description": "Irradia o poder glorioso de Luna e desperta assombro naqueles que enfrentam o Uratha.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "duration": "1 cena",
+    "activationRequirement": "Ative ao assumir uma forma que cause Lunagem.",
+    "effect": "Inflige Deslumbrado a todas as presas em vez de outra Condição de Lunagem."
+  },
+  "gift-dominance:lay-low-the-challenger": {
+    "name": "Abater o Desafiante",
+    "description": "Estabelece dominância por meio de sangue e violência.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Intimidação + Honra vs Compostura + Instinto Primitivo",
+    "action": "Reflexiva e disputada",
+    "activationRequirement": "Use ao causar dano a um oponente com um ataque de Briga ou Armas Brancas.",
+    "dramaticFailure": "O oponente recupera um ponto gasto de Força de Vontade, pois o desdém do Uratha estimula sua resistência.",
+    "failure": "A Faceta falha.",
+    "success": "O oponente recebe Acovardado. Também acrescenta Renome de Honra à próxima parada baseada em Presença do Uratha nesta cena.",
+    "exceptionalSuccess": "O Uratha também recupera um ponto gasto de Força de Vontade."
+  },
+  "gift-dominance:snarl-of-the-predator": {
+    "name": "Rosnado do Predador",
+    "description": "Uma exigência rosnada faz o rebanho obedecer.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "effect": "Ao forçar Portas em uma Manobra Social, reduz a penalidade pela quantidade de Portas restantes em um valor igual ao Renome de Pureza."
+  },
+  "gift-dominance:lead-the-lesser-pack": {
+    "name": "Conduzir a Alcateia Menor",
+    "description": "Traz pessoas de fora para a caçada por meio de um vínculo temporário com a alcateia.",
+    "cost": "1 Essência por personagem",
+    "action": "Instantânea",
+    "duration": "1 dia",
+    "activationRequirement": "Informe ao alvo que ele está sendo incorporado à alcateia; ele deve aceitar verbalmente, mesmo que não compreenda completamente a oferta.",
+    "effect": "O alvo é um companheiro de alcateia para todos os benefícios e desvantagens, incluindo Dons, dádivas do totem e gatilhos de Fúria Assassina. Sente lealdade e pertencimento e acrescenta o Renome de Sabedoria do Uratha às paradas para resistir a coerção e Manobras Sociais externas à alcateia. Essa sensação de pertencimento pode atraí-lo de volta depois do fim do efeito. O Uratha pode ter, no máximo, uma quantidade de membros temporários igual ao Renome de Sabedoria ao mesmo tempo; tentativas de acrescentar mais falham."
+  },
+  "gift-elemental": {
+    "name": "Dom dos Elementais"
+  },
+  "gift-elemental:breath-of-air": {
+    "name": "Sopro de Ar",
+    "description": "Comanda o ar e os ventos dançantes.",
+    "cost": "Variável",
+    "dicePool": "Raciocínio + Atletismo + Astúcia",
+    "effect": "Recebe Influência (Ar) igual ao Renome de Astúcia. Usa-a como um espírito usa Influências, com a parada desta Faceta nos testes de Influência (Ar)."
+  },
+  "gift-elemental:catastrophe": {
+    "name": "Catástrofe",
+    "description": "Desencadeia destruição elemental em escala catastrófica.",
+    "cost": "5 Essências por nível de Influência usado",
+    "dicePool": "Presença + Sobrevivência + Glória",
+    "action": "Prolongada (15 sucessos; 1 hora por teste)",
+    "activationRequirement": "Use em conjunto com uma Influência concedida por outra Faceta Elemental.",
+    "effect": "Possuir esta Faceta também torna o Uratha imune às Influências de outros Uratha ampliadas por Catástrofe.",
+    "dramaticFailure": "Recebe Sobrecarga de Essência.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, libera a Influência sobre uma área com raio de duas vezes o Renome de Glória em milhas. Mesmo uma manifestação normalmente pequena pode causar enchentes, incêndios descontrolados ou destruição semelhante nessa escala.",
+    "exceptionalSuccess": "Pelo próximo dia, usa as Influências de quaisquer de suas Facetas Elementais sem gastar Essência. Usos adicionais de Catástrofe continuam custando Essência normalmente."
+  },
+  "gift-elemental:flesh-of-earth": {
+    "name": "Carne de Terra",
+    "description": "A terra e a pedra tornam-se extensões do corpo e da vontade do Uratha.",
+    "cost": "Variável",
+    "dicePool": "Força + Sobrevivência + Honra",
+    "effect": "Recebe Influência (Terra) igual ao Renome de Honra. Usa-a como um espírito usa Influências, com a parada desta Faceta nos testes de Influência (Terra)."
+  },
+  "gift-elemental:tongue-of-flame": {
+    "name": "Língua de Chama",
+    "description": "Domina o fogo e a fumaça enquanto as chamas obedecem ao Uratha.",
+    "cost": "Variável",
+    "dicePool": "Presença + Empatia + Pureza",
+    "effect": "Recebe Influência (Fogo) igual ao Renome de Pureza. Usa-a como um espírito usa Influências, com a parada desta Faceta nos testes de Influência (Fogo)."
+  },
+  "gift-elemental:heart-of-water": {
+    "name": "Coração de Água",
+    "description": "Convoca ondas e águas, chuvas e rios a subir ou recuar.",
+    "cost": "Variável",
+    "dicePool": "Manipulação + Ocultismo + Sabedoria",
+    "effect": "Recebe Influência (Água) igual ao Renome de Sabedoria. Usa-a como um espírito usa Influências, com a parada desta Faceta nos testes de Influência (Água)."
+  }
+}

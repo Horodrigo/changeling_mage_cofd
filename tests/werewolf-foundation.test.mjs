@@ -16,6 +16,8 @@ const moonGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-moon.
 const moonPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json");
 const wolfGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf.json");
 const wolfPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json");
+const shadowGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow.json");
+const shadowPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json");
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },
@@ -346,6 +348,64 @@ test("WtF 2e pp. 136–138 preserves all fifteen Wolf Facets and their EN/PT exc
   assert.match(facet("gift-pack:down-the-prey").options, /Defense against the attack was 0/);
 });
 
+test("WtF 2e pp. 121–123 preserves the Death, Dominance and Elemental Facets with complete EN/PT text", () => {
+  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental"]);
+  const records = shadowGifts.flatMap(gift => [gift, ...gift.facets]);
+  assert.equal(records.length, 18);
+  assert.equal(new Set(records.map(item => item.id)).size, 18);
+  assert.deepEqual(new Set(Object.keys(shadowPresentation)), new Set(records.map(item => item.id)));
+  for (const gift of shadowGifts) {
+    assert.equal(gift.kind, "shadow");
+    assert.ok(reference.auspices.some(item => item.giftIds.includes(gift.id)) || reference.tribes.some(item => item.giftIds.includes(gift.id)));
+    assert.equal(gift.facets.length, 5);
+    assert.deepEqual(new Set(gift.facets.map(facet => facet.renown)), new Set(["Cunning", "Glory", "Honor", "Purity", "Wisdom"]));
+    for (const facet of gift.facets) {
+      assert.ok(facet.id.startsWith(`${gift.id}:`));
+      assert.equal(facet.level, undefined, "Shadow Facets are chosen by Renown, not ordered Moon levels");
+      assert.equal(Boolean(facet.dicePool), facet.hasRoll);
+      const results = ["dramaticFailure", "failure", "success", "exceptionalSuccess"].filter(key => facet[key]);
+      assert.ok(results.length === 0 || results.length === 4);
+      if (!facet.hasRoll) assert.equal(results.length, 0);
+      if (results.length === 0) assert.ok(facet.effect);
+    }
+  }
+  for (const item of records) {
+    assert.equal(item.sourceId, "wtf-2ed");
+    assert.equal(item.source, "Werewolf: The Forsaken Second Edition");
+    assert.ok(item.page >= 121 && item.page <= 123);
+    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 123);
+    const fields = Object.entries(item).filter(([key, value]) => typeof value === "string" && !["id", "renown", "kind", "source", "sourceId"].includes(key));
+    assert.deepEqual(new Set(Object.keys(shadowPresentation[item.id])), new Set(fields.map(([key]) => key)));
+    for (const [field, text] of fields) assert.ok(text.length && shadowPresentation[item.id][field]?.length, `${item.id}.${field}`);
+  }
+  const facet = id => shadowGifts.flatMap(gift => gift.facets).find(item => item.id === id);
+  const cold = facet("gift-death:cold-embrace");
+  assert.match(cold.success, /natural regeneration stops/);
+  assert.match(cold.success, /5 − Cunning Renown/);
+  assert.match(cold.exceptionalSuccess, /all damage/);
+  const bone = facet("gift-death:bone-gnaw");
+  assert.equal(bone.options.split("\n").length, 4);
+  assert.match(bone.effect, /Only seeking a particular important secret/);
+  assert.match(bone.activationRequirement, /older than six months/);
+  assert.equal(bone.success, undefined, "Bone Gnaw does not print separate outcomes");
+  assert.match(facet("gift-death:barghest").effect, /Gauru, Urshul, or Urhan/);
+  assert.match(facet("gift-death:barghest").effect, /no Willpower remaining.*two additional lethal/);
+  assert.match(facet("gift-dominance:primal-allure").success, /only for social goals requiring immediate action/);
+  assert.match(facet("gift-dominance:primal-allure").success, /breaking point immediately ends/);
+  assert.match(facet("gift-dominance:primal-allure").exceptionalSuccess, /ends after that action/);
+  assert.equal(facet("gift-dominance:lay-low-the-challenger").dicePool, "Presence + Intimidation + Honor vs Composure + Primal Urge");
+  assert.match(facet("gift-dominance:lead-the-lesser-pack").effect, /at most Wisdom Renown temporary pack members/);
+  const elemental = shadowGifts.find(gift => gift.id === "gift-elemental");
+  for (const influence of elemental.facets.filter(facet => facet.cost === "Varies")) {
+    assert.equal(influence.action, undefined);
+    assert.equal(influence.duration, undefined);
+    assert.equal(influence.success, undefined);
+    assert.match(influence.effect, /Use it as a spirit uses Influence/);
+  }
+  assert.match(facet("gift-elemental:catastrophe").success, /radius of twice Glory Renown in miles/);
+  assert.match(facet("gift-elemental:catastrophe").exceptionalSuccess, /Further uses of Catastrophe still cost Essence/);
+});
+
 test("Werewolf Gifts load only their canonical and Portuguese shards into an immutable snapshot", async () => {
   const { werewolfGiftsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/gifts.ts");
   const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
@@ -353,16 +413,20 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
   const snapshot = freezeCatalogData(await werewolfGiftsCatalogGroup.load({ getCatalog: async id => {
     calls.push(id);
     const fixtures = { "werewolf-gifts-core-moon": moonGifts, "werewolf-gifts-core-moon-pt": moonPresentation,
-      "werewolf-gifts-core-wolf": wolfGifts, "werewolf-gifts-core-wolf-pt": wolfPresentation };
+      "werewolf-gifts-core-wolf": wolfGifts, "werewolf-gifts-core-wolf-pt": wolfPresentation,
+      "werewolf-gifts-core-shadow": shadowGifts, "werewolf-gifts-core-shadow-pt": shadowPresentation };
     assert.ok(Object.hasOwn(fixtures, id), `Unexpected catalog request: ${id}`);
     return structuredClone(fixtures[id]);
   } }));
-  assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt", "werewolf-gifts-core-wolf", "werewolf-gifts-core-wolf-pt"]);
-  assert.equal(snapshot.gifts.length, 8);
-  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 40);
-  assert.deepEqual(snapshot.gifts.map(gift => gift.id), [...moonGifts, ...wolfGifts].map(gift => gift.id));
+  assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt", "werewolf-gifts-core-wolf", "werewolf-gifts-core-wolf-pt", "werewolf-gifts-core-shadow", "werewolf-gifts-core-shadow-pt"]);
+  assert.equal(snapshot.gifts.length, 11);
+  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 55);
+  assert.deepEqual(snapshot.gifts.map(gift => gift.id), [...moonGifts, ...wolfGifts, ...shadowGifts].map(gift => gift.id));
+  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 66);
   assert.ok(Object.isFrozen(snapshot.gifts[0].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation[snapshot.gifts[0].facets[0].id]));
   assert.ok(Object.isFrozen(snapshot.gifts[5].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-pack:totems-wrath"]));
+  assert.ok(Object.isFrozen(snapshot.gifts[8].facets[0]));
+  assert.ok(Object.isFrozen(snapshot.presentation["gift-elemental:catastrophe"]));
 });
