@@ -190,6 +190,8 @@ Local storage may contain data that is not a current `CharacterSheet`. Keep unsu
 
 Current-schema export and import must round-trip without losing data.
 
+Changeling has a narrowly scoped schema-2 Merit allocation recovery for previously misclassified XP-only purchases. Its line normalization and Builder (including resumed drafts) verify a complete purchase chain using the canonical Merit name and exact instance ID before correcting creation/experience dots. It does not infer allocations from translated descriptions, indices, incomplete history, or spent-XP totals, and it never changes balances or history. Already valid XP allocations remain authoritative; this is not support for older character schemas. The production helper documents its deletion condition.
+
 ### Workspace lifecycle and repository
 
 `Workspace` is a UI orchestrator, not the persistence implementation.
