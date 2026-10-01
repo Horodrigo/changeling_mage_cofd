@@ -1,5 +1,6 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { AuspiceDefinition, FormDefinition, PrimalUrgeLevel, RenownId, TribeDefinition, WerewolfReference } from "./catalogs/reference";
+import type { GiftDefinition } from "./catalogs/gifts";
 
 const finite = (value: unknown, fallback = 0) => {
   if (typeof value !== "number" && (typeof value !== "string" || !value.trim())) return fallback;
@@ -88,15 +89,52 @@ export type WerewolfCreationChoices = {
   auspice_id: string; tribe_id: string; auspice_skill: string; renown_choice: RenownId | "";
   primal_urge: number; extra_rite_dots: number; blood: string; bone: string;
   physical_touchstone: string; spiritual_touchstone: string;
+  shadow_facets: string[]; wolf_facets: string[];
 };
+
+/** WTF2 p. 83: selections are canonical IDs; Moon Facets are derived grants, not purchases. */
+export function creationGiftSelection(
+  auspice: AuspiceDefinition, tribe: TribeDefinition, choice: RenownId,
+  gifts: readonly GiftDefinition[], selections: Pick<WerewolfCreationChoices, "shadow_facets" | "wolf_facets">,
+) {
+  const grants = creationGiftAllowance(auspice, tribe, choice);
+  const problems = new Set<"moonGiftMissing" | "shadowFacets" | "distinctShadowGifts" | "unfavoredShadowGift" | "facetRenown" | "wolfFacets" | "invalidFacet">();
+  const moon = gifts.find(gift => gift.id === grants.moonGiftId && gift.kind === "moon");
+  const moonFacetIds: string[] = [];
+  for (let level = 1; level <= grants.moonFacetCount; level++) {
+    const facet = moon?.facets.find(item => item.level === level && item.renown === auspice.renown);
+    if (facet) moonFacetIds.push(facet.id);
+    else problems.add("moonGiftMissing");
+  }
+  if (selections.shadow_facets.length !== grants.shadowFacetCount) problems.add("shadowFacets");
+  if (selections.wolf_facets.length !== grants.wolfFacetCount) problems.add("wolfFacets");
+  const selectedIds = [...selections.shadow_facets, ...selections.wolf_facets];
+  if (new Set(selectedIds).size !== selectedIds.length) problems.add("invalidFacet");
+  const shadowParents: string[] = [];
+  for (const kind of ["shadow", "wolf"] as const) {
+    for (const id of kind === "shadow" ? selections.shadow_facets : selections.wolf_facets) {
+      const gift = gifts.find(item => item.kind === kind && item.facets.some(facet => facet.id === id));
+      const facet = gift?.facets.find(item => item.id === id);
+      if (!gift || !facet) { problems.add("invalidFacet"); continue; }
+      if (grants.renown[facet.renown] < 1) problems.add("facetRenown");
+      if (kind === "shadow") {
+        shadowParents.push(gift.id);
+        if (!grants.shadowGiftIds.includes(gift.id)) problems.add("unfavoredShadowGift");
+      }
+    }
+  }
+  if (new Set(shadowParents).size !== shadowParents.length) problems.add("distinctShadowGifts");
+  return { ...grants, moonFacetIds, problems: [...problems] };
+}
 
 /** Returns semantic problems for the line-owned creation UI; never parses English errors. */
 export function creationTemplateProblems(
   choices: WerewolfCreationChoices,
   reference: Pick<WerewolfReference, "auspices" | "tribes">,
   skills: Record<string, number>,
+  gifts: readonly GiftDefinition[],
 ) {
-  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget"> = [];
+  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | ReturnType<typeof creationGiftSelection>["problems"][number]> = [];
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id);
   const tribe = reference.tribes.find(item => item.id === choices.tribe_id);
   if (!auspice) problems.push("auspice");
@@ -108,6 +146,8 @@ export function creationTemplateProblems(
   if (auspice && tribe) {
     try { creationRenown(auspice, tribe, choices.renown_choice as RenownId); }
     catch { problems.push("renownChoice"); }
+    if (!problems.includes("renownChoice"))
+      problems.push(...creationGiftSelection(auspice, tribe, choices.renown_choice as RenownId, gifts, choices).problems);
   }
   if (![1, 2, 3].includes(choices.primal_urge)) problems.push("creationBudget");
   else {

@@ -5,20 +5,23 @@ import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import type { WerewolfReferenceCatalog, RenownId } from "./catalogs/reference";
+import type { WerewolfGiftCatalog } from "./catalogs/gifts";
 import { creationGiftAllowance, creationMeritBudget, creationTemplateProblems, type WerewolfCreationChoices } from "./creation-rules";
 import { AnchorField } from "./anchors";
+import { CreationGifts } from "./creation-gifts";
 import "./styles/builder.css";
 
 /** Forsaken template choices stay line-owned; Core trait allocations remain untouched. */
-export function WerewolfCreationTemplate({ value, onChange, skills, reference }: {
+export function WerewolfCreationTemplate({ value, onChange, skills, reference, gifts }: {
   value: WerewolfCreationChoices; onChange: (value: WerewolfCreationChoices) => void;
   skills: Record<string, number>; reference: WerewolfReferenceCatalog;
+  gifts: WerewolfGiftCatalog;
 }) {
   const { locale, t } = useLanguage();
   const update = <K extends keyof WerewolfCreationChoices>(key: K, next: WerewolfCreationChoices[K]) => onChange({ ...value, [key]: next });
   const auspice = reference.auspices.find(item => item.id === value.auspice_id);
   const tribe = reference.tribes.find(item => item.id === value.tribe_id);
-  const problems = creationTemplateProblems(value, reference, skills);
+  const problems = creationTemplateProblems(value, reference, skills, gifts.gifts);
   const validRenown = auspice && tribe && !problems.includes("renownChoice");
   const grants = validRenown ? creationGiftAllowance(auspice, tribe, value.renown_choice as RenownId) : null;
   const budget = problems.includes("creationBudget") ? null : creationMeritBudget(value.primal_urge, value.extra_rite_dots);
@@ -48,10 +51,11 @@ export function WerewolfCreationTemplate({ value, onChange, skills, reference }:
       <label>{t("werewolf.physicalTouchstone")}<Input value={value.physical_touchstone} onChange={event => update("physical_touchstone", event.target.value)}/></label>
       <label>{t("werewolf.spiritualTouchstone")}<Input value={value.spiritual_touchstone} onChange={event => update("spiritual_touchstone", event.target.value)}/></label>
     </div>
-    {grants && <>
+    {grants && auspice && tribe && <>
       <h3>{t("werewolf.renown")}</h3>
       <dl className="wtf-creation-renown">{Object.entries(grants.renown).map(([name, dots]) => <div key={name}><dt>{renownNames[name]}</dt><dd>{dots}</dd></div>)}</dl>
       <p>{t("werewolf.creationGiftGrants", { moon: grants.moonFacetCount, shadow: grants.shadowFacetCount, wolf: grants.wolfFacetCount })}</p>
+      <CreationGifts value={value} onChange={onChange} auspice={auspice} tribe={tribe} gifts={gifts}/>
     </>}
     {problems.length > 0 && <ul>{problems.map(problem => <li key={problem}>{t(`werewolf.creationProblem.${problem}`)}</li>)}</ul>}
   </div>;

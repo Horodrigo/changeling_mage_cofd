@@ -408,3 +408,5 @@ Sequência de implementação autorizada:
 6. Gates automatizados pertinentes e verificação de isolamento de catálogos, persistência, arquitetura e ambos os idiomas. Browser smoke fica para a revisão autorizada do usuário.
 
 Nenhuma exclusão será revertida apenas porque o sistema consta nos três livros. A referência anterior a “implementação completa” significa completa **dentro deste escopo aprovado**, não implementação de todos os sistemas de Pack, NPCs ou modelos secundários.
+
+Progresso do Builder: o template de criação agora inclui seleção por IDs de duas Shadow Facets de Gifts favorecidos distintos e da Wolf Facet quando aplicável. As Moon Facets são concessões ordenadas derivadas do Auspice/Renown. Requisitos, limites e validação pertencem a Werewolf; mudanças de identidade não apagam escolhas silenciosamente. Escolhas inválidas ou ausentes do catálogo permanecem removíveis. Cartões nativos expansíveis separam todos os campos impressos, sem executar poderes. Isso ainda não disponibiliza a linha no registro nem conclui Rites, Merits, persistência ou a ficha completa.

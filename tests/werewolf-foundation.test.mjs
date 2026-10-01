@@ -18,6 +18,7 @@ const wolfGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf.
 const wolfPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json");
 const shadowGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow.json");
 const shadowPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json");
+const giftCatalog = { gifts: [...moonGifts, ...wolfGifts, ...shadowGifts], presentation: { ...moonPresentation, ...wolfPresentation, ...shadowPresentation } };
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },
@@ -146,22 +147,123 @@ test("WtF 2e p. 83 initial Facets follow Auspice Renown and two distinct favored
 });
 
 test("Werewolf creation template validates canonical selections and exact conversion budgets", async () => {
-  const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain" };
-  assert.deepEqual(rules.creationTemplateProblems(choices, reference, { Brawl: 2 }), []);
-  assert.deepEqual(rules.creationTemplateProblems({ ...choices, auspice_id: "unknown" }, reference, { Brawl: 2 }), ["auspice"]);
-  assert.deepEqual(rules.creationTemplateProblems({ ...choices, primal_urge: 3, extra_rite_dots: 1 }, reference, { Brawl: 2 }), ["creationBudget"]);
-  assert.deepEqual(rules.creationTemplateProblems({ ...choices, primal_urge: 1.5 }, reference, { Brawl: 2 }), ["creationBudget"]);
-  assert.deepEqual(rules.creationTemplateProblems({ ...choices, auspice_skill: "Brawl" }, reference, { Brawl: 5 }), ["auspiceSkill"]);
+  const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "My family", spiritual_touchstone: "The mountain", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [] };
+  const validate = (value, skills = { Brawl: 2 }) => rules.creationTemplateProblems(value, reference, skills, giftCatalog.gifts);
+  assert.deepEqual(validate(choices), []);
+  assert.deepEqual(validate({ ...choices, auspice_id: "unknown" }), ["auspice"]);
+  assert.deepEqual(validate({ ...choices, primal_urge: 3, extra_rite_dots: 1 }), ["creationBudget"]);
+  assert.deepEqual(validate({ ...choices, primal_urge: 1.5 }), ["creationBudget"]);
+  assert.deepEqual(validate({ ...choices, auspice_skill: "Brawl" }, { Brawl: 5 }), ["auspiceSkill"]);
+  assert.deepEqual(validate({ ...choices, shadow_facets: [] }), ["shadowFacets"]);
   const { WerewolfCreationTemplate } = await vite.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
-  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog })));
+  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: giftCatalog })));
   assert.match(markup, /Remaining Merit dots: 10/);
   assert.match(markup, /Available Rite dots: 2/);
   assert.match(markup, /Starting Facets: 2/);
   assert.match(markup, /value="My family"/);
+  assert.match(markup, /Moon Facets are granted automatically/);
+  assert.match(markup, /Selected Facets: 2 \/ 2/);
   assert.doesNotMatch(markup, /missing translation/);
   assert.equal(translate("pt-BR", "werewolf.renownNames.Purity"), "Pureza");
   assert.equal(translate("pt-BR", "werewolf.creationProblem.creationBudget"), "Instinto Primitivo e Ritos extras devem caber nos dez pontos iniciais de Méritos.");
+});
+
+test("WtF 2e p. 83 grants ordered Moon Facets and validates starting Shadow/Wolf selections without mutating choices", () => {
+  const rahu = reference.auspices.find(item => item.id === "rahu");
+  const bloodTalons = reference.tribes.find(item => item.id === "blood-talons");
+  const selections = { shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [] };
+  const before = structuredClone(selections);
+  const select = (renown, value, gifts = giftCatalog.gifts) => rules.creationGiftSelection(rahu, bloodTalons, renown, gifts, value);
+  const moon = select("Purity", selections);
+  const ownMoon = moonGifts.find(gift => gift.id === "gift-full-moon");
+  assert.deepEqual(moon.moonFacetIds, ownMoon.facets.slice(0, 2).map(facet => facet.id));
+  assert.deepEqual(moon.problems, []);
+  assert.deepEqual(select("Cunning", { ...selections, wolf_facets: ["gift-change:skin-thief"] }).problems, []);
+  assert.equal(select("Cunning", { ...selections, wolf_facets: ["gift-change:skin-thief"] }).moonFacetIds.length, 1);
+  assert.ok(select("Purity", { ...selections, wolf_facets: ["gift-change:skin-thief"] }).problems.includes("wolfFacets"));
+  assert.ok(select("Cunning", selections).problems.includes("wolfFacets"));
+  const incompleteMoon = giftCatalog.gifts.map(gift => gift.id === ownMoon.id ? { ...gift, facets: gift.facets.filter(facet => facet.level !== 2) } : gift);
+  assert.ok(select("Purity", selections, incompleteMoon).problems.includes("moonGiftMissing"));
+  assert.deepEqual(selections, before);
+});
+
+test("WtF 2e creation rejects unfavored, unearned, duplicate, unknown and misclassified Facets, including after changing identity", () => {
+  const rahu = reference.auspices.find(item => item.id === "rahu");
+  const bloodTalons = reference.tribes.find(item => item.id === "blood-talons");
+  const ghostWolves = reference.tribes.find(item => item.id === "ghost-wolves");
+  const valid = { shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [] };
+  const problems = value => rules.creationGiftSelection(rahu, bloodTalons, "Purity", giftCatalog.gifts, value).problems;
+  assert.ok(problems({ ...valid, shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-dominance:glorious-lunacy"] }).includes("distinctShadowGifts"));
+  assert.ok(problems({ ...valid, shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-dominance:snarl-of-the-predator"] }).includes("invalidFacet"));
+  assert.ok(problems({ ...valid, shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:lunatic-inspiration"] }).includes("facetRenown"));
+  assert.ok(problems({ ...valid, shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-insight:scent-the-unnatural"] }).includes("unfavoredShadowGift"));
+  assert.ok(problems({ ...valid, shadow_facets: ["gift-dominance:snarl-of-the-predator", "unknown-facet"] }).includes("invalidFacet"));
+  assert.ok(problems({ ...valid, shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-change:skin-thief"] }).includes("invalidFacet"));
+  const changed = rules.creationGiftSelection(rahu, ghostWolves, "Purity", giftCatalog.gifts, valid);
+  assert.ok(changed.problems.includes("unfavoredShadowGift"));
+  assert.ok(changed.problems.includes("facetRenown"), "Ghost Wolves do not retain a former Tribe's Renown");
+  assert.deepEqual(valid.shadow_facets, ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"]);
+});
+
+test("Werewolf creation Facet cards separate all printed rules, explain disabled choices and retain invalid selections for removal", async () => {
+  const { CreationGifts, FacetRules } = await vite.ssrLoadModule("/game-lines/werewolf/creation-gifts.tsx");
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const rahu = reference.auspices.find(item => item.id === "rahu");
+  const tribe = reference.tribes.find(item => item.id === "blood-talons");
+  const value = { renown_choice: "Purity", shadow_facets: ["gift-insight:scent-the-unnatural", "missing:facet"], wolf_facets: ["gift-change:skin-thief"] };
+  const before = structuredClone(value);
+  const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
+  const markup = render(createElement(CreationGifts, { value, onChange: () => {}, auspice: rahu, tribe, gifts: giftCatalog }));
+  assert.match(markup, /not favored by your current Auspice or Tribe/);
+  assert.match(markup, /Requires at least one dot of Cunning/);
+  assert.match(markup, /selected Facet is absent from this catalog: missing:facet/);
+  const scentControl = markup.match(/<button[^>]*aria-label="Select Scent the Unnatural"[^>]*>/)?.[0] ?? "";
+  assert.match(scentControl, /data-state="checked"/);
+  assert.match(scentControl, /aria-describedby=/);
+  assert.doesNotMatch(scentControl, /disabled=/, "An invalid selection must remain removable");
+  assert.match(markup, />Remove<\/button>/);
+  assert.doesNotMatch(markup, /<details[^>]* open|missing translation/);
+  const fog = shadowGifts.find(gift => gift.id === "gift-evasion").facets.find(facet => facet.id === "gift-evasion:fog-of-war");
+  const detail = render(createElement(FacetRules, { facet: fog, gifts: giftCatalog }));
+  for (const label of ["Cost", "Dice Pool", "Action", "Activation requirement", "Dramatic Failure", "Failure", "Success"])
+    assert.ok(detail.includes(`<strong>${label}:</strong>`), label);
+  assert.doesNotMatch(detail, /<strong>Exceptional Success:/);
+  for (const locale of ["en-US", "pt-BR"]) {
+    for (const problem of ["moonGiftMissing", "shadowFacets", "distinctShadowGifts", "unfavoredShadowGift", "facetRenown", "wolfFacets", "invalidFacet"])
+      assert.doesNotMatch(translate(locale, `werewolf.creationProblem.${problem}`), /missing translation/);
+    assert.doesNotMatch(translate(locale, "werewolf.needsRenown", { renown: translate(locale, "werewolf.renownNames.Purity") }), /missing translation|\{renown\}/);
+  }
+  assert.deepEqual(value, before);
+  const styles = readFileSync(new URL("../game-lines/werewolf/styles/builder.css", import.meta.url), "utf8");
+  assert.match(styles, /grid-template-columns: minmax\(0, 1fr\) 44px/);
+});
+
+test("Werewolf creation renders Portuguese catalog text and explicit English fallback without changing canonical selections", async () => {
+  // Test-only locale initialization for server rendering; production still defaults to English.
+  const portuguese = await createServer({ appType: "custom", configFile: false, root,
+    resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },
+    optimizeDeps: { noDiscovery: true, include: [] },
+    plugins: [{ name: "portuguese-server-snapshot", enforce: "pre", transform(code, id) {
+      if (id.replaceAll("\\", "/").endsWith("/lib/i18n.tsx"))
+        return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
+    } }],
+  });
+  try {
+    const { LanguageProvider } = await portuguese.ssrLoadModule("/lib/i18n.tsx");
+    const { WerewolfCreationTemplate } = await portuguese.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
+    const value = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "Brawl", renown_choice: "Purity", primal_urge: 1, extra_rite_dots: 0, blood: "blood-soldier", bone: "bone-lone-wolf", physical_touchstone: "Minha família", spiritual_touchstone: "A montanha", shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [] };
+    const before = structuredClone(value);
+    const missingField = structuredClone(giftCatalog);
+    delete missingField.presentation["gift-inspiration:fearless-hunter"].effect;
+    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: missingField })));
+    assert.match(markup, /Facetas selecionadas: 2 \/ 2/);
+    assert.match(markup, /Caçador Destemido/);
+    assert.match(markup, /<strong>Parada de dados:<\/strong>/);
+    assert.match(markup, /<strong>Efeito:<\/strong> Add Glory Renown/);
+    assert.doesNotMatch(markup, /missing translation|Select Fearless Hunter|<summary>Fearless Hunter/);
+    assert.deepEqual(value, before);
+  } finally { await portuguese.close(); }
 });
 
 test("Werewolf reference group loads only its four catalogs and is deeply immutable", async () => {

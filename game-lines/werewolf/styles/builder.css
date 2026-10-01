@@ -1,6 +1,15 @@
 .wtf-creation-renown { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .5rem; }
 .wtf-creation-renown > div { text-align: center; }
 .wtf-creation-renown dd { margin: .25rem 0; }
+.wtf-creation-gifts, .wtf-gift-choices { min-width: 0; }
+.wtf-creation-gifts h3 { margin: 1rem 0 .4rem; }
+.wtf-gift-choices h4 { margin: .75rem 0 .25rem; font-weight: 600; }
+.wtf-facet-choice { display: grid; grid-template-columns: minmax(0, 1fr) 44px; }
+.wtf-facet-choice > details { min-width: 0; }
+.wtf-facet-toggle { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+.wtf-facet-reason { grid-column: 1 / -1; padding: .25rem 0; }
+.wtf-missing-facet { display: flex; gap: .5rem; align-items: center; justify-content: space-between; }
+.wtf-missing-facet p { overflow-wrap: anywhere; }
 @media (max-width: 640px) {
   .wtf-creation-renown { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
