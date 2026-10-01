@@ -4,6 +4,14 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
+test("shared creation panels follow their content height instead of reserving empty space", async () => {
+  const globals = await read("../app/css/globals.css");
+  const panel = globals.match(/\.builder-body\s*\{([^}]+)\}/)?.[1];
+  assert.ok(panel, "missing shared builder panel styles");
+  assert.doesNotMatch(panel, /(?:min-)?height\s*:/);
+  assert.match(panel, /padding:\s*clamp\(/);
+});
+
 test("mobile sheets keep summaries, details, powers, and resource tracks separated", async () => {
   const [mortal, mortalBuilder, mage, changeling, vampire, bloodline, legacy, paperShell, globals, mortalCss, mageCss, changelingCss, vampireCss] = await Promise.all([
     read("../game-lines/mortal/sheet-view.tsx"),
