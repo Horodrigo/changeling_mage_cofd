@@ -1,0 +1,18 @@
+.wtf-forms-scroll { max-width: 100%; overflow-x: auto; }
+.wtf-forms table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .875rem; }
+.wtf-forms th, .wtf-forms td { padding: .4rem; border-bottom: 1px solid currentColor; }
+.wtf-forms thead th, .wtf-forms td { text-align: center; }
+.wtf-forms tbody th { text-align: left; font-weight: 500; }
+.wtf-forms td, .wtf-forms thead th:not(:first-child) { width: 14%; }
+.wtf-form-rules { border-bottom: 1px solid currentColor; }
+.wtf-form-rules summary { min-height: 44px; padding: .65rem .25rem; cursor: pointer; }
+.wtf-form-rules p { margin: .5rem 0; line-height: 1.45; }
+@media (max-width: 640px) {
+  .wtf-forms table { font-size: .8rem; }
+  .wtf-forms th, .wtf-forms td { padding: .35rem; }
+}
+@media print {
+  .wtf-forms-scroll { overflow: visible; }
+  .wtf-forms table { min-width: 0; font-size: 8pt; }
+  .wtf-forms tr { break-inside: avoid; }
+}

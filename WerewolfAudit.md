@@ -348,6 +348,10 @@ A comunicação de sugestões utiliza os termos da coluna original, não essas t
 - **P03 aprovado:** Ban → Proibição; Bane → Fraqueza.
 - Novas dúvidas de acesso/derivação das forms especiais de W03 serão mostradas ao usuário quando surgirem, não resolvidas silenciosamente.
 
+### M07 — Urshul Manipulation
+
+WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF físico 318) imprime −3. O usuário confirmou **−1, conforme o texto da regra**. Usar −1 nos cálculos e na apresentação, sem tratar a diferença como errata oficial.
+
 ## Continuação autorizável
 
 O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo acima.

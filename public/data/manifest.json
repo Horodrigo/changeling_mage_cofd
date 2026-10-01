@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 21,
+  "catalogVersion": 22,
   "catalogs": {
+    "werewolf-reference": { "version": 1, "url": "/data/werewolf/reference.json" },
+    "werewolf-reference-pt": { "version": 1, "url": "/data/werewolf/reference-pt.json" },
     "mage-spells-index": { "version": 1, "url": "/data/mage/spells/index.json" },
     "mage-spells-death": { "version": 1, "url": "/data/mage/spells/death.json" },
     "mage-spells-fate": { "version": 1, "url": "/data/mage/spells/fate.json" },

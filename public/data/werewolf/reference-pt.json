@@ -1,0 +1,105 @@
+{
+  "hishu": {
+    "name": "Hishu",
+    "description": "Hishu é a forma humana. Acrescente +1 dado a testes de percepção que usem sentidos lupinos. Disfarce de Ovelha: tentativas de localizar o Uratha em uma multidão ou persegui-lo em áreas povoadas sofrem seu Instinto Primitivo como penalidade."
+  },
+  "dalu": {
+    "name": "Dalu",
+    "description": "Dalu acrescenta Força +1, Vigor +1, Manipulação −1 e Tamanho +1. Ataques com garras causam dano letal a humanos; mordidas bem-sucedidas durante um agarrão causam dano letal. Aplique Defesa contra Armas de Fogo. Percepção com sentidos lupinos recebe +2 dados. Provoca Lunagem leve. Imposição Brutal: teste Presença + Instinto Primitivo contra Autocontrole + Instinto Primitivo da presa; em um sucesso, aqueles que a cercam ou protegem recuam ou a entregam."
+  },
+  "gauru": {
+    "name": "Gauru",
+    "description": "Gauru acrescenta Força +3, Destreza +1, Vigor +2 e Tamanho +2; Armadura 1/1 conforme a decisão auditada do projeto. Uma vez por cena, permaneça em Gauru por Vigor em Hishu + Instinto Primitivo turnos. Depois, mude para Dalu ou Urshul, ou arrisque Kuruth: um sucesso reflexivo em Perseverança + Autocontrole concede mais um turno, seguido de mudança para Dalu ou Urshul e Wasu-Im; uma falha causa Basu-Im imediatamente. Regenera todo dano contusivo e letal a cada turno. Dentes e garras causam +2 de dano letal sem exigir agarrão e podem também iniciar um; Iniciativa recebe +3 ao usá-los. Aplique Defesa contra Armas de Fogo. Percepção com sentidos lupinos recebe +3 dados; ver Gauru provoca Lunagem plena. A Fúria exige um ataque a cada turno; sem oponente ao alcance, aproxime-se dele ou arremesse algo, e, sem oponentes, ataque o que estiver disponível. Outras ações exigem Perseverança + Autocontrole ou Kuruth. Falhe automaticamente em testes Sociais que não usem Intimidação e Mentais que não sejam de Percepção ou Resistência. Medo Primal força inimigos inferiores a usar combate simplificado, exceto quando protegidos por oponentes mais fortes; no combate normal, os adversários usam Destreza ou Raciocínio para Defesa, sem a Perícia habitual."
+  },
+  "urshul": {
+    "name": "Urshul",
+    "description": "Urshul acrescenta Força +2, Destreza +2, Vigor +2, Manipulação −1, Tamanho +1 e +3 ao fator de espécie do Deslocamento. Não se comunica com humanos, mas fala a Primeira Língua com facilidade. Garras causam +1 de dano letal; mordidas causam +2 de dano letal sem exigir agarrão e podem iniciar um. Aplique Defesa contra Armas de Fogo. Percepção com sentidos lupinos recebe +3 dados; provoca Lunagem moderada. Enfraquecer a Presa: uma vez por cena, ao ferir a presa com dentes ou garras, pode provocar Braço Arruinado, Perna Arruinada ou Derrubado, sem ataque localizado."
+  },
+  "urhan": {
+    "name": "Urhan",
+    "description": "Urhan acrescenta Destreza +2, Vigor +1, Manipulação −1, Tamanho −1 e +3 ao fator de espécie do Deslocamento. Não se comunica com humanos e fala apenas algumas palavras simples da Primeira Língua. Mordidas causam +1 de dano letal sem agarrão e podem iniciar um. Percepção com sentidos lupinos recebe +4 dados. Alcançar a Presa: gaste 1 Essência para antecipar a ação de outro personagem com a sua, substituindo sua ação normal; antecipações concorrentes causam um Confronto de Vontades, e isso não pode ser usado depois de agir no turno. Em uma perseguição a pé, use Deslocamento em vez de Força + Esportes."
+  },
+  "blood-talons": {
+    "name": "Garras de Sangue"
+  },
+  "bone-shadows": {
+    "name": "Sombras dos Ossos"
+  },
+  "hunters-in-darkness": {
+    "name": "Caçadores na Escuridão"
+  },
+  "iron-masters": {
+    "name": "Mestres do Ferro"
+  },
+  "storm-lords": {
+    "name": "Senhores da Tempestade"
+  },
+  "ghost-wolves": {
+    "name": "Lobos Fantasmas"
+  },
+  "cahalith": {
+    "name": "Cahalith"
+  },
+  "elodoth": {
+    "name": "Elodoth"
+  },
+  "irraka": {
+    "name": "Irraka"
+  },
+  "ithaeur": {
+    "name": "Ithaeur"
+  },
+  "rahu": {
+    "name": "Rahu"
+  },
+  "primal-urge-1": {
+    "basuImTime": "10 minutos",
+    "feedingRestriction": "Nenhuma",
+    "huntTime": "3 meses"
+  },
+  "primal-urge-2": {
+    "basuImTime": "10 minutos",
+    "feedingRestriction": "Carne",
+    "huntTime": "3 meses"
+  },
+  "primal-urge-3": {
+    "basuImTime": "15 minutos",
+    "feedingRestriction": "Carne",
+    "huntTime": "1 mês"
+  },
+  "primal-urge-4": {
+    "basuImTime": "20 minutos",
+    "feedingRestriction": "Carne crua",
+    "huntTime": "1 mês"
+  },
+  "primal-urge-5": {
+    "basuImTime": "30 minutos",
+    "feedingRestriction": "Carne crua",
+    "huntTime": "3 semanas"
+  },
+  "primal-urge-6": {
+    "basuImTime": "1 hora",
+    "feedingRestriction": "Carnívoros",
+    "huntTime": "3 semanas"
+  },
+  "primal-urge-7": {
+    "basuImTime": "2 horas",
+    "feedingRestriction": "Carnívoros",
+    "huntTime": "1 semana"
+  },
+  "primal-urge-8": {
+    "basuImTime": "3 horas",
+    "feedingRestriction": "Essência",
+    "huntTime": "1 semana"
+  },
+  "primal-urge-9": {
+    "basuImTime": "6 horas",
+    "feedingRestriction": "Essência",
+    "huntTime": "3 dias"
+  },
+  "primal-urge-10": {
+    "basuImTime": "12 horas",
+    "feedingRestriction": "Essência",
+    "huntTime": "3 dias"
+  }
+}
