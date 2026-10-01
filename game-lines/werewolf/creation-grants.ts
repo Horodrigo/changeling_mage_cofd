@@ -10,12 +10,12 @@ import type { RiteDefinition } from "./catalogs/rites";
 import { creationAuspiceSkill, creationGiftSelection, creationTemplateProblems, type WerewolfCreationChoices } from "./creation-rules";
 
 /** Canonical schema-2 name/source resolution only; mechanics dispatch on the resulting ID. */
-export function werewolfMeritDefinition(selection: MeritSelection, catalog: readonly MeritDefinition[]) {
+export function werewolfMeritDefinition<T extends Pick<MeritDefinition, "id" | "name" | "sourceId">>(selection: MeritSelection, catalog: readonly T[]) {
   const matches = catalog.filter(item => item.name === selection.name && (!selection.sourceId || item.sourceId === selection.sourceId));
   return matches.length === 1 ? matches[0] : undefined;
 }
 
-export function resolveWerewolfMerits(selections: readonly MeritSelection[], catalog: readonly MeritDefinition[]): WerewolfMeritChoice[] {
+export function resolveWerewolfMerits(selections: readonly MeritSelection[], catalog: readonly Pick<MeritDefinition, "id" | "name" | "sourceId">[]): WerewolfMeritChoice[] {
   return selections.flatMap(selection => {
     const definition = werewolfMeritDefinition(selection, catalog);
     return definition ? [{ id: definition.id, instanceId: selection.instanceId, dots: selection.dots, configuration: selection.configuration }] : [];

@@ -2,6 +2,15 @@ export const werewolfMessages = {
   "en-US": {
     meritCategories: { Werewolf: "Werewolf", "Werewolf Fighting": "Werewolf Fighting" },
     werewolf: {
+      title: "Werewolf", forsaken: "The Forsaken", healthForm: "Current form for Health", hishuTraits: "Attributes shown in Hishu. Compare all forms under Details.",
+      preservedDamage: "{amount} damage marks beyond this form's Health remain stored; changing form does not heal them.",
+      naturalAndEquipmentArmor: "Natural {natural}; equipment {equipment}",
+      creationTraitRange: "Starting Attributes must be 1–5 and Skills 0–5 before the free Auspice dot.",
+      progressionMaximum: "Creation and Experience allocations cannot exceed Primal Urge 10 or Renown 5 in a category.",
+      creationSpecialties: "Choose three named Specialties in Skills with at least one dot.",
+      missingMerit: "The selected Merit is absent from this catalog: {name}.",
+      freeCreationMerits: "Totem 1 and Language (First Tongue) are granted in addition to the ten starting Merit dots.",
+      firstTongueGrant: "First Tongue is a fixed creation grant; choose another Language instance to learn another language.",
       meritChoice: {
         form: "Chosen form", touchstone: "Favored Touchstone", anchor: "Blood or Bone", virtue: "Virtue reflecting the code",
         safePlace: "Linked Safe Place", attribute: "Attribute receiving +1", secondAttribute: "Different Attribute receiving +1",
@@ -77,6 +86,15 @@ export const werewolfMessages = {
   "pt-BR": {
     meritCategories: { Werewolf: "Lobisomem", "Werewolf Fighting": "Combate de Lobisomem" },
     werewolf: {
+      title: "Lobisomem", forsaken: "Os Destituídos", healthForm: "Forma atual para Vitalidade", hishuTraits: "Atributos apresentados em Hishu. Compare todas as formas em Detalhes.",
+      preservedDamage: "{amount} marcas de dano além da Vitalidade desta forma permanecem armazenadas; trocar de forma não as cura.",
+      naturalAndEquipmentArmor: "Natural {natural}; equipamento {equipment}",
+      creationTraitRange: "Atributos iniciais devem estar entre 1 e 5 e Perícias entre 0 e 5 antes do ponto gratuito do Auspício.",
+      progressionMaximum: "As alocações de criação e experiência não podem exceder Instinto Primitivo 10 ou Renome 5 em uma categoria.",
+      creationSpecialties: "Escolha três Especializações com nome em Perícias com pelo menos um ponto.",
+      missingMerit: "O Mérito selecionado não consta neste catálogo: {name}.",
+      freeCreationMerits: "Totem 1 e Idioma (First Tongue) são concedidos além dos dez pontos iniciais de Méritos.",
+      firstTongueGrant: "First Tongue é uma concessão fixa de criação; escolha outra instância de Idioma para aprender outra língua.",
       meritChoice: {
         form: "Forma escolhida", touchstone: "Touchstone favorecida", anchor: "Sangue ou Osso", virtue: "Virtude que reflete o código",
         safePlace: "Local Seguro vinculado", attribute: "Atributo que recebe +1", secondAttribute: "Atributo diferente que recebe +1",

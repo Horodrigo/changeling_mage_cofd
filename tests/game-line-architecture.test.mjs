@@ -32,12 +32,12 @@ test("neutral game-line contracts do not know concrete game lines", async () => 
   ];
   const content = (await Promise.all(files.map(source))).join("\n");
 
-  assert.doesNotMatch(content, /game-lines\/(?:mortal|mage|changeling|vampire)/);
-  assert.doesNotMatch(content, /\b(?:CofD|MtA|CtL|VtR)\b/);
+  assert.doesNotMatch(content, /game-lines\/(?:mortal|mage|changeling|vampire|werewolf)/);
+  assert.doesNotMatch(content, /\b(?:CofD|MtA|CtL|VtR|WtF)\b/);
 });
 
 test("registrations are metadata plus lazy surface loaders", async () => {
-  for (const line of ["mortal", "mage", "changeling", "vampire"]) {
+  for (const line of ["mortal", "mage", "changeling", "vampire", "werewolf"]) {
     const registration = await source(`game-lines/${line}/registration.ts`);
 
     assert.match(registration, /loadRules\s*:\s*\(\)\s*=>\s*import\(/, `${line}: rules must be lazy`);
@@ -58,6 +58,7 @@ test("portaled dialogs and confirmation actions inherit the active game-line the
     ctl: await source("game-lines/changeling/styles/sheet.css"),
     mta: await source("game-lines/mage/styles/sheet.css"),
     vtr: `${await source("game-lines/vampire/styles/sheet.css")}\n${await source("game-lines/vampire/styles/interactions.css")}`,
+    wtf: await source("game-lines/werewolf/styles/sheet.css"),
   };
   for (const [line, css] of Object.entries(styles)) {
     assert.match(css, new RegExp(`body:has\\(\\.line-theme-${line}\\)`));
@@ -70,7 +71,7 @@ test("portaled dialogs and confirmation actions inherit the active game-line the
 test("catalog groups stay lazy and line-scoped", async () => {
   const registry = await source("game-lines/registry/catalog-group-registry.ts");
 
-  for (const line of ["mage", "changeling", "vampire"]) {
+  for (const line of ["mage", "changeling", "vampire", "werewolf"]) {
     assert.match(registry, new RegExp(`import\\("\\.\\./${line}/catalogs/`));
   }
   const mortal = await source("game-lines/mortal/registration.ts");
@@ -81,12 +82,12 @@ test("catalog groups stay lazy and line-scoped", async () => {
 
   assert.doesNotMatch(
     registry,
-    /import\s+(?!type\b)[^;]+\s+from\s+["']\.\.\/(?:mage|changeling|vampire)\/catalogs\//,
+    /import\s+(?!type\b)[^;]+\s+from\s+["']\.\.\/(?:mage|changeling|vampire|werewolf)\/catalogs\//,
   );
 });
 
 test("game-line registrations do not statically depend on another game line", async () => {
-  const lines = ["mortal", "mage", "changeling", "vampire"];
+  const lines = ["mortal", "mage", "changeling", "vampire", "werewolf"];
 
   for (const line of lines) {
     const content = await source(`game-lines/${line}/registration.ts`);
@@ -165,7 +166,7 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
 });
 
 test("current game-line source trees do not statically import one another", async () => {
-  const lines = ["mortal", "mage", "changeling", "vampire"];
+  const lines = ["mortal", "mage", "changeling", "vampire", "werewolf"];
 
   for (const line of lines) {
     const files = await sourceFiles(`game-lines/${line}`);
@@ -205,7 +206,7 @@ test("Homebrew shell dispatches line-owned editors lazily", async () => {
     source("lib/game-line-contracts/game-line-registration.ts"),
     source("game-lines/changeling/registration.ts"),
   ]);
-  assert.doesNotMatch(shell, /game-lines\/(?:mortal|mage|changeling|vampire)/);
+  assert.doesNotMatch(shell, /game-lines\/(?:mortal|mage|changeling|vampire|werewolf)/);
   assert.match(contract, /loadHomebrew\?/);
   assert.match(changeling, /loadHomebrew\s*:\s*\(\)\s*=>\s*import\(/);
 });
@@ -237,7 +238,7 @@ test("workspace routes builder and sheet surfaces through the registry shells", 
 
   assert.match(workspace, /import\("\.\/game-line-builder"\)/);
   assert.match(workspace, /import\("\.\/workspace\/game-line-sheet"\)/);
-  assert.doesNotMatch(workspace, /import\(["'][^"']*game-lines\/(?:mortal|mage|changeling|vampire)/);
+  assert.doesNotMatch(workspace, /import\(["'][^"']*game-lines\/(?:mortal|mage|changeling|vampire|werewolf)/);
 });
 
 test("workspace print capability is driven entirely by registration", async () => {
@@ -269,7 +270,7 @@ test("workspace print capability is driven entirely by registration", async () =
   );
   assert.doesNotMatch(
     workspace,
-    /(?:selected|character)\.game_line\s*===\s*["'](?:CofD|CtL|MtA|VtR)["']/,
+    /(?:selected|character)\.game_line\s*===\s*["'](?:CofD|CtL|MtA|VtR|WtF)["']/,
     "workspace must not hard-code a concrete line to decide print support",
   );
 });
@@ -341,11 +342,11 @@ test("production build manifest keeps builder, sheet, and print closures line-is
   };
 
   for (const surface of ["builder", "sheet"]) {
-    for (const line of ["mortal", "mage", "changeling", "vampire"]) {
+    for (const line of ["mortal", "mage", "changeling", "vampire", "werewolf"]) {
       const key = `game-lines/${line}/${surface}.tsx`;
       assert.ok(manifest[key], `missing manifest entry: ${key}`);
       const keys = closure(key);
-      const others = ["mortal", "mage", "changeling", "vampire"].filter((candidate) => candidate !== line);
+      const others = ["mortal", "mage", "changeling", "vampire", "werewolf"].filter((candidate) => candidate !== line);
       assert.ok(keys.length > 1, `${key} has no analyzable closure`);
       assert.ok(
         keys.every((entry) => others.every((other) => !entry.includes(`game-lines/${other}/`))),
@@ -357,7 +358,7 @@ test("production build manifest keeps builder, sheet, and print closures line-is
   for (const line of ["mortal", "mage", "changeling", "vampire"]) {
     const key = `game-lines/${line}/print.tsx`;
     assert.ok(manifest[key], `missing manifest entry: ${key}`);
-    const others = ["mortal", "mage", "changeling", "vampire"].filter((candidate) => candidate !== line);
+    const others = ["mortal", "mage", "changeling", "vampire", "werewolf"].filter((candidate) => candidate !== line);
     assert.ok(
       closure(key).every((entry) => others.every((other) => !entry.includes(`game-lines/${other}/`))),
       `${key} closure contains another game line`,

@@ -11,11 +11,11 @@ import "./styles/forms.css";
 
 /** The five columns remain a comparison, including on mobile and in print. */
 export function FormsTable({ character, reference, baseSize = 5, merits = [] }: {
-  character: Pick<CharacterSheet, "attributes" | "skills">; reference: WerewolfReferenceCatalog; baseSize?: number;
+  character: Pick<CharacterSheet, "attributes" | "skills"> & Partial<Pick<CharacterSheet, "merits">>; reference: WerewolfReferenceCatalog; baseSize?: number;
   merits?: readonly WerewolfMeritChoice[];
 }) {
   const { locale, t } = useLanguage();
-  const forms = reference.forms.map(form => ({ form, traits: formTraits(character, form, baseSize, merits) }));
+  const forms = reference.forms.map(form => ({ form, traits: formTraits(character, form, baseSize, merits, character.merits) }));
   const hasWeaponBonuses = forms.some(({ traits }) => Object.values(traits.weaponBonuses).some(weapon => weapon.armorPiercing > 0));
   const rows: Array<{ label: string; values: Array<number | string> }> = [
     ...Object.values(ATTRIBUTES).flat().map(name => ({

@@ -1,0 +1,21 @@
+.wtf-sheet { --sheet-accent: #713c31; color: #241c19; background: #faf7f0; }
+.wtf-sheet .cod-sheet-title { border-bottom: 2px solid var(--sheet-accent); }
+.wtf-sheet .official-heading { color: var(--sheet-accent); }
+.wtf-sheet .wtf-skill-stack { display: grid; gap: 1rem; }
+.wtf-sheet .wtf-rule-disclosure summary { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.wtf-sheet .wtf-health-heading { align-items: center; }
+.wtf-sheet .wtf-health-heading select, .wtf-sheet .wtf-health-heading [data-slot="select-trigger"] { width: 105px; }
+.wtf-experience-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.wtf-experience-summary dd { margin: .25rem 0; font-weight: 600; }
+.wtf-renown { display: grid; gap: .4rem; }
+body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="select-content"]) { --primary: #713c31; }
+@media (max-width: 767px) {
+  .wtf-sheet .sheet-identity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wtf-sheet .wtf-health-heading { display: flex; flex-direction: row; }
+  .wtf-sheet .wtf-health-heading > :last-child { width: 105px; }
+}
+@media print {
+  .wtf-sheet { color: #000; background: #fff; }
+  .wtf-sheet .wtf-forms-scroll { overflow: visible; }
+  .wtf-sheet .wtf-rule-disclosure { break-inside: avoid; }
+}

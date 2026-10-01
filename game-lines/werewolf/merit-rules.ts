@@ -3,7 +3,7 @@ import type { MeritSelection } from "@/lib/core/character/character-types";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { MeritDefinition, MeritSelectionProblem } from "@/lib/merits";
 import { textRequirementMet } from "@/lib/merit-requirements";
-import type { AuspiceDefinition, FormDefinition, RenownId } from "./catalogs/reference";
+import type { AuspiceDefinition, FormDefinition, FormMechanics, RenownId } from "./catalogs/reference";
 import type { GiftDefinition } from "./catalogs/gifts";
 
 /** Resolved catalog IDs, not a second persisted Merit model. The caller resolves each instance. */
@@ -64,7 +64,7 @@ export function werewolfMeritPrerequisitesMet(
 }
 
 /** p. 106 explicitly excludes Manipulation in Gauru even though p. 97 specifies no numeric penalty. */
-export function favoredFormAttributes(form: FormDefinition) {
+export function favoredFormAttributes(form: FormMechanics) {
   return attributes.filter(attribute => (form.attributes[attribute] ?? 0) >= 0 && !(form.id === "gauru" && attribute === "Manipulation"));
 }
 
@@ -123,7 +123,7 @@ export function werewolfMeritSelectionProblems(
 }
 
 /** Permanent, form-specific benefits only. No maneuver activation, rolls, timers or resource mutation. */
-export function werewolfFormMeritEffects(merits: readonly WerewolfMeritChoice[], form: FormDefinition) {
+export function werewolfFormMeritEffects(merits: readonly WerewolfMeritChoice[], form: FormMechanics) {
   const deltas: Record<string, number> = {};
   const add = (attribute: string, amount: number) => { if (attributes.includes(attribute)) deltas[attribute] = (deltas[attribute] ?? 0) + amount; };
   let armorGeneral = 0, armorBallistic = 0, instinctiveDefense = false;

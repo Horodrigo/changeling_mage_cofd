@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
-import { creationMerits } from "@/lib/merit-progression";
+import { creationMeritDots, creationMerits } from "@/lib/merit-progression";
 import { useLanguage } from "@/lib/i18n";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
@@ -181,7 +181,7 @@ export function useCommonBuilderState(
       .filter((merit) => (options.grantedMeritSources ?? []).includes(String(merit.grantedBy)))
       .map((merit) => ({
         ...merit,
-        dots: Math.max(1, Number(merit.creationDots ?? merit.dots) - Number(merit.experienceDots ?? 0)),
+        dots: Math.max(1, creationMeritDots(merit)),
       })),
   ]);
   return {

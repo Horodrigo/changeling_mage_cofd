@@ -8,7 +8,7 @@ The primary rule is:
 
 > Core supplies mechanisms. Game lines supply mechanics.
 
-The application currently supports the persisted game-line IDs `CofD`, `CtL`, `MtA`, and `VtR`. The main boundaries are:
+The application currently supports the persisted game-line IDs `CofD`, `CtL`, `MtA`, `VtR`, and `WtF`. Werewolf currently exposes Core Forsaken creation/editing and an in-app sheet; its remaining approved scope is tracked in `WerewolfAudit.md`. The main boundaries are:
 
 - `lib/core/character/`: neutral persisted character shape, current-schema validation, shared Chronicles traits, and structural normalization helpers.
 - `lib/game-line-contracts/`: neutral contracts for registrations, rule hooks, UI surfaces, and catalog snapshots.
@@ -19,6 +19,7 @@ The application currently supports the persisted game-line IDs `CofD`, `CtL`, `M
 - `game-lines/changeling/`: Changeling rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `game-lines/mage/`: Mage rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
 - `game-lines/vampire/`: Vampire rules, builder, sheet, experience flow, Merit behavior, and catalog transforms.
+- `game-lines/werewolf/`: Werewolf rules, creation/editing, sheet, Merit behavior, and isolated catalog transforms.
 - `app/character-builder-shell.tsx` and `app/builder/`: common creation shell and genuinely shared controls.
 - `app/workspace/character-paper-shell.tsx` and neutral workspace controls: common in-app sheet composition.
 - `app/workspace/character-lifecycle.ts`: import/open/save/update lifecycle and canonical routing through Core normalization plus the selected game-line rules.
@@ -44,7 +45,8 @@ Core must not accumulate line-specific mechanics. These remain line-owned:
 - Mage: Path, Order, Gnosis, Arcana, Rotes, Praxes, Legacies, Nimbus, and Mage-specific Merit behavior.
 - Changeling: Seeming, Kith, Court, Wyrd, Clarity, Contracts, Regalia, Entitlements, and Changeling-specific Merit behavior.
 - Vampire: Clan, Covenant, Blood Potency, Humanity, Touchstones, Disciplines, Devotions, Blood Sorcery, Coils, Scales, and Vampire-specific Merit behavior.
-- Future Werewolf or other concepts: the module for that game line.
+- Werewolf: Auspice, Tribe, forms, Primal Urge, Essence, Renown, Harmony, Blood, Bone, physical/spiritual Touchstones, Gifts, Facets, Rites, and Werewolf-specific Merit behavior.
+- Future concepts: the module for that game line.
 
 Shared visual structure does not transfer mechanical ownership to Core.
 
@@ -57,6 +59,7 @@ These constraints apply to direct and transitive imports:
 - Mage must not import Changeling implementation code.
 - Changeling must not import Mage implementation code.
 - Vampire must not import Mage or Changeling implementation code, and neither existing line may import Vampire implementation code.
+- Werewolf must not import another game-line implementation, and other lines must not import Werewolf implementation code.
 - Persistence must not import application UI.
 - Catalog infrastructure must not depend on React or concrete line catalogs.
 - The lightweight registry must not eagerly import heavy rules, Builder, Sheet, or catalog implementations.
@@ -119,7 +122,7 @@ Static RPG content should remain data under `public/shared/data/**` for common/C
 
 Required invariants:
 
-- Each runtime requests only Core and its selected game line's JSON; CofD, CtL, MtA, and VtR catalogs remain isolated from one another.
+- Each runtime requests only Core and its selected game line's JSON; CofD, CtL, MtA, VtR, and WtF catalogs remain isolated from one another.
 - Catalog snapshots are explicit, surface-scoped, deeply frozen, and consumed directly.
 - Switching lines never depends on replacing mutable global catalog state.
 - Large static datasets do not move back into application JavaScript merely for convenience.
@@ -156,6 +159,10 @@ Important line-owned examples:
 - Mage-specific status, magical items, grants, and prerequisites must not be modeled by copying Changeling-specific mechanics.
 
 A future line-specific Merit should be implementable without editing a central Mage/Changeling mechanics switch.
+
+Werewolf creation stores an explicit `creation_choices` snapshot, an `auspice_skill_grant`, creation Facet/Rite IDs, and separate Experience allocations in its own `line_data`. Reediting removes only the recorded free Skill dot and separately identified purchases before composing them again. Totem 1 and Language (First Tongue) have stable grant markers and instance IDs; only one dot of each is free. XP-only Merit instances never consume the creation budget. Living Weapon permits independent bite/claws instances in the same form, but not a duplicate form/attack pair.
+
+Werewolf persists derived traits in Hishu and calculates the selected Health form in its Sheet without rewriting base traits or damage. Excess damage survives a smaller form; only the explicit shared Heal action clears it. Gauru has no innate Armor. Permanent Core Merit modifiers are a pure shared mechanism in `lib/core/character/derived-traits.ts`; Werewolf applies size modifiers before the form delta. Its small numeric form constants and permanent Merit identity index are reconciled with the authoritative static catalogs in tests, never used as a second editorial catalog.
 
 ## Persisted Character Schema
 
@@ -280,7 +287,7 @@ npx tsc --noEmit
 git diff --check
 ```
 
-The normal npm lint/build scripts use Bash and GNU `timeout`. On an environment where those wrappers cannot run, execute the equivalent local tools only as an explicitly reported diagnostic; do not claim the normal script passed.
+The normal npm lint/build scripts use the cross-platform Node wrappers `scripts/sites-env.mjs` and `scripts/build-verified.mjs`; the latter enforces its build timeout in Node. Installation and the retained shell wrappers still require Bash. If a normal wrapper cannot run, execute equivalent local tools only as an explicitly reported diagnostic; do not claim the normal script passed.
 
 When relevant, also verify the production Vite manifest, recursive import closures, catalog request isolation, game-line switching, current-schema round-trip, and browser smoke behavior. Distinguish known environmental or baseline errors from new regressions.
 
@@ -303,7 +310,7 @@ Do not change Cloudflare bindings or configuration merely to silence local ambie
 
 ## Deferred Features
 
-Specialized server-side PDF generation remains deferred. Changeling supports a browser-owned A4 print/PDF surface loaded lazily from its game-line registration; Mage and Vampire printing remain deferred until their own line-owned surfaces are implemented.
+Specialized server-side PDF generation remains deferred. Mortal, Changeling, Mage, and Vampire support browser-owned print/PDF surfaces loaded lazily from their registrations. Werewolf does not yet advertise print support; its line-owned PDF/blank surface remains in the active Werewolf scope.
 
 Homebrew activation is browser-local and shared by source/item ID. The common Homebrew shell owns navigation, activation preferences, and lazy line dispatch; the shared data-transfer panel owns local import/export of player-created definitions and activation preferences. Each game line owns its Homebrew inventory, validation, and integration with its catalogs; generic Merit storage and editing remain a shared Core mechanism. Core and each line support player-created Merits. Mage also owns player-created Spells and Legacies; Vampire owns player-created Clans, Bloodlines, Covenants, Disciplines, Devotions, Blood Sorcery powers, Coils, and Scales; Changeling owns player-created Seemings, Kiths, Courts, Contracts, and Entitlements. Their definitions are stored separately from character sheets and merged into the relevant surfaces without mutating static catalog snapshots.
 

@@ -6,15 +6,18 @@ Characters of the Darkness is a local-first character builder and sheet manager 
 - Changeling: The Lost (`CtL`)
 - Mage: The Awakening (`MtA`)
 - Vampire: The Requiem (`VtR`)
+- Werewolf: The Forsaken (`WtF`) — Core Forsaken creation/editing and in-app sheet; full implementation in progress.
 
 The interface supports English (`en-US`) and Brazilian Portuguese (`pt-BR`).
+
+Werewolf currently includes five Auspices, five Tribes plus Ghost Wolves, Blood/Bone, two Touchstones, starting Renown/Gifts/Rites, Core Werewolf Merits, five automatically calculated forms, manual Harmony, and form-aware Health that preserves excess damage. Individual XP purchases, supplement catalogs, Totem/Fetish tools, and dedicated PDF/blank sheets are not yet complete. Pure, Wolf-Blooded, and Lodges are outside this first implementation.
 
 The runtime is built with React, Next/Vinext, Vite, and Cloudflare. Character persistence is browser-local through IndexedDB with localStorage crash-safe fallback/staging. Rules catalogs remain static under `public/shared/data/` and `public/game-lines/<line>/data/`, loaded lazily for the selected game line.
 
 ## Prerequisites
 
 - Node.js `>=22.13.0`
-- Bash with `flock`, `curl`, and GNU `timeout` for the repository's verified install/build wrappers
+- Bash with `flock`, `curl`, and GNU `timeout` for the verified installation and retained shell workflows; npm lint/build use cross-platform Node wrappers.
 
 ## Development
 
@@ -35,7 +38,7 @@ git diff --check
 
 `npm test` runs the verified build and then the full Node test suite.
 
-The verified wrappers use project-scoped runtime directories through `scripts/sites-env.sh`. `.sites-runtime/` and Wrangler runtime state are disposable and ignored by Git.
+The lint wrapper uses project-scoped runtime directories through `scripts/sites-env.mjs`; `scripts/build-verified.mjs` runs the bounded build and generates PWA version metadata. `.sites-runtime/` and Wrangler runtime state are disposable and ignored by Git.
 
 See [AGENTS.md](AGENTS.md) for the authoritative architecture, ownership boundaries, persistence lifecycle, catalog rules, quality gates, and contribution guidance.
 
@@ -54,6 +57,7 @@ The major boundaries are:
 - `game-lines/changeling/` — Changeling-owned rules, builder, sheet, experience flow, and catalogs.
 - `game-lines/mage/` — Mage-owned rules, builder, sheet, experience flow, and catalogs.
 - `game-lines/vampire/` — Vampire-owned rules, builder, sheet, experience flow, and catalogs.
+- `game-lines/werewolf/` — Werewolf-owned rules, creation/editing, sheet, Merit behavior, and catalogs.
 - `app/workspace/character-lifecycle.ts` — import/open/save/update lifecycle and canonical normalization routing.
 - `app/data-transfer-panel.tsx` — local character and Homebrew import/export with separate validation paths.
 - `app/workspace/character-repository.ts` — browser-local character storage and collection mutation.

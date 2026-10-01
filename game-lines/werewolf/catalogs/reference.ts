@@ -9,6 +9,7 @@ export type FormDefinition = Source & {
   attributes: Partial<Record<string, number>>; size: number; speciesFactor: number;
   perception: number; firearmsDefense: boolean; armorGeneral: number; armorBallistic: number;
 };
+export type FormMechanics = Pick<FormDefinition, "id" | "attributes" | "size" | "speciesFactor" | "perception" | "firearmsDefense" | "armorGeneral" | "armorBallistic">;
 export type AuspiceDefinition = Source & {
   id: string; name: string; skills: string[]; renown: RenownId; giftIds: string[]; moonGiftId: string;
 };

@@ -16,7 +16,7 @@ export function derivedTraitsWithArmor(derived:Record<string,unknown>,armorId:un
   Deslocamento:Number(derived.Deslocamento??0)+(armor?.speed??0),
   Defesa:Number(derived.Defesa??0)+(armor?.defense??0),
   Iniciativa:Number(derived.Iniciativa??0),
-  Armadura:`${armor?.general??0}/${armor?.ballistic??0}`,
+  Armadura:typeof derived.Armadura==="string"?derived.Armadura:`${armor?.general??0}/${armor?.ballistic??0}`,
  };
 }
 
