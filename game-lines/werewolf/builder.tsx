@@ -27,6 +27,7 @@ import { WEREWOLF_CREATION_GRANT_SOURCES, withWerewolfCreationGrants, werewolfCr
 import { WerewolfMeritConfigurationEditor } from "./merit-configuration-editor";
 import { werewolfMeritPrerequisitesMet, werewolfMeritSelectionProblems, WEREWOLF_MERIT_CONFIGURATION_IDS, type WerewolfMeritContext } from "./merit-rules";
 import { creationChoices, recordedAuspiceSkillGrant, renownRatings, werewolfDerived, werewolfIds } from "./rules";
+import { WerewolfExperiencePanel } from "./experience-panel";
 
 const HISTORY_KEY = "werewolf_experience_history";
 export function werewolfExperienceSpecialties(initial?: CharacterSheet | null): Specialty[] {
@@ -44,10 +45,10 @@ function purchasedTraits(values: Record<string, number>, source: CharacterSheet 
 }
 
 /** The owning Builder constructs its line_data; Core still owns only the outer schema. */
-export function buildWerewolfCharacter({ source, identity, attributes, skills, specialties, aspirations, merits, choices, reference, gifts, rites, meritCatalog, draft = false, step = 1 }: {
+export function buildWerewolfCharacter({ source, identity, attributes, skills, specialties, aspirations, merits, choices, reference, gifts, rites, meritCatalog, draft = false, step = 1, allowAdvancement = false }: {
   source?: CharacterSheet | null; identity: CharacterSheet["character"]; attributes: Record<string, number>; skills: Record<string, number>;
   specialties: Specialty[]; aspirations: string[]; merits: MeritSelection[]; choices: WerewolfCreationChoices;
-  reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; meritCatalog: readonly MeritDefinition[]; draft?: boolean; step?: number;
+  reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; meritCatalog: readonly MeritDefinition[]; draft?: boolean; step?: number; allowAdvancement?: boolean;
 }): CharacterSheet {
   if (source && source.game_line !== "WtF") throw new Error("Werewolf builder received another game line.");
   const problems = creationTemplateProblems(choices, reference, skills, gifts.gifts, rites.rites);
@@ -82,7 +83,7 @@ export function buildWerewolfCharacter({ source, identity, attributes, skills, s
       creation_facets: [...(grants?.moonFacetIds ?? []), ...choices.shadow_facets, ...choices.wolf_facets],
       learned_facets: werewolfIds(source?.line_data.learned_facets), creation_rites: [...choices.rites], learned_rites: werewolfIds(source?.line_data.learned_rites),
     },
-    derived: {}, current_state: builderCurrentState(source, draft, step), created_at: source?.created_at ?? now, updated_at: now,
+    derived: {}, current_state: builderCurrentState(source, draft, step, allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
   };
   completed.derived = werewolfDerived(completed);
   return completed;
@@ -143,14 +144,17 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
     for (const message of messages) add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
   }
   const missing = (key: string) => issues.some(issue => issue.key === key);
-  const finish = (draft: boolean) => {
+  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => buildWerewolfCharacter({ source, identity: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
+    attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, draft, step: common.step, allowAdvancement: common.allowAdvancement });
+  const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) { common.setError(`${t("ui.stillRequired")}: ${issues.map(issue => issue.label).join(", ")}.`); common.setStep(issues[0].step); return false; }
-    const sheet = buildWerewolfCharacter({ source: initial, identity: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
-      attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, draft, step: common.step });
+    const sheet = buildCharacter(advancement ?? initial, draft);
     (draft ? onSaveDraft : onSave)(sheet);
     return true;
   };
   return <CharacterBuilderShell line="WtF" state={common} templateLabel={t("werewolf.forsakenTemplate")} issues={issues} draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
+    prepareAdvancement={previous => buildCharacter(previous ?? initial, false)}
+    renderAdvancement={(sheet, updateSheet) => <WerewolfExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode/>}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing}/>}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing}/>}
     lineTemplate={<><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites}/>

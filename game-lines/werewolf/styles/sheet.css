@@ -5,8 +5,6 @@
 .wtf-sheet .wtf-rule-disclosure summary { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .wtf-sheet .wtf-health-heading { align-items: center; }
 .wtf-sheet .wtf-health-heading select, .wtf-sheet .wtf-health-heading [data-slot="select-trigger"] { width: 105px; }
-.wtf-experience-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
-.wtf-experience-summary dd { margin: .25rem 0; font-weight: 600; }
 .wtf-renown { display: grid; gap: .4rem; }
 body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="select-content"]) { --primary: #713c31; }
 @media (max-width: 767px) {

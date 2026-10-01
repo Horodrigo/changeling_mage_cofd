@@ -33,6 +33,7 @@ import { FacetRules } from "./creation-gifts";
 import { RiteRules } from "./creation-rites";
 import { RENOWN_IDS } from "./mechanics";
 import { favoredFormPenalties, WEREWOLF_MERIT_CONFIGURATION_IDS } from "./merit-rules";
+import { WerewolfExperiencePanel } from "./experience-panel";
 import "./styles/sheet.css";
 
 export function WerewolfCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
@@ -108,9 +109,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   })}</div>;
   const aspirationList = <EditableList values={werewolfIds(data.aspirations)} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={value => setLine("aspirations", value)}/>;
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={value => setState("conditions", value)}/>;
-  const experience = <><SheetHeading>{t("ui.experience")}</SheetHeading><dl className="wtf-experience-summary">{[
-    [t("ui.xpAvailable"), state.experience_available ?? 0], [t("ui.xpSpent"), state.experience_spent ?? 0], [t("ui.totalXP"), state.experience_total ?? 0],
-  ].map(([label, value]) => <div key={String(label)}><dt>{String(label)}</dt><dd>{String(value)}</dd></div>)}</dl></>;
+  const experience = <WerewolfExperiencePanel character={character} catalogs={catalogs} updateSheet={updateSheet} updateState={updateState}/>;
   const powers = <>
     <FormsTable character={character} reference={reference} merits={ownMerits}/>
     <PrimalUrgeLimits reference={reference} rating={primalUrge}/>

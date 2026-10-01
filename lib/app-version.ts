@@ -1,3 +1,3 @@
 // Generated automatically by scripts/build-verified.mjs.
 // Do not edit manually.
-export const APP_VERSION = "2026.10.01-ca9c554";
+export const APP_VERSION = "2026.10.01-d9465bd";

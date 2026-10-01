@@ -10,7 +10,7 @@ Characters of the Darkness is a local-first character builder and sheet manager 
 
 The interface supports English (`en-US`) and Brazilian Portuguese (`pt-BR`).
 
-Werewolf currently includes five Auspices, five Tribes plus Ghost Wolves, Blood/Bone, two Touchstones, starting Renown/Gifts/Rites, Core Werewolf Merits, five automatically calculated forms, manual Harmony, and form-aware Health that preserves excess damage. Individual XP purchases, supplement catalogs, Totem/Fetish tools, and dedicated PDF/blank sheets are not yet complete. Pure, Wolf-Blooded, and Lodges are outside this first implementation.
+Werewolf currently includes five Auspices, five Tribes plus Ghost Wolves, Blood/Bone, two Touchstones, starting Renown/Gifts/Rites, Core Werewolf Merits, five automatically calculated forms, manual Harmony, and form-aware Health that preserves excess damage. Creation advancement and individual XP purchases/refunds support Attributes, Skills, Specialties, Merits, and Primal Urge with separate creation allocations and exact Merit instances. Renown/Gift/Rite advancement, supplement catalogs, Totem/Fetish tools, and dedicated PDF/blank sheets are not yet complete. Pure, Wolf-Blooded, and Lodges are outside this first implementation.
 
 The runtime is built with React, Next/Vinext, Vite, and Cloudflare. Character persistence is browser-local through IndexedDB with localStorage crash-safe fallback/staging. Rules catalogs remain static under `public/shared/data/` and `public/game-lines/<line>/data/`, loaded lazily for the selected game line.
 

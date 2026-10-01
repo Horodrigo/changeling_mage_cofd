@@ -246,6 +246,7 @@ export function ExperienceMeritPicker({
   targetDots,
   onSelect,
   isEligible = meritPrerequisitesMet,
+  canAdvanceGrant,
   categoryFor = (definition) => definition.category,
 }: {
   line: PersistedGameLineId;
@@ -256,9 +257,11 @@ export function ExperienceMeritPicker({
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
+  canAdvanceGrant?: (merit: CharacterSheet["merits"][number]) => boolean;
   categoryFor?: (definition: MeritDefinition) => string;
 }) {
   const { locale, t }=useLanguage();
+  const canAdvance = canAdvanceGrant ?? ((merit: CharacterSheet["merits"][number]) => canAdvanceGrantedMerit(line, merit));
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
@@ -328,7 +331,7 @@ export function ExperienceMeritPicker({
                   .filter(
                     ({ owned }) =>
                       owned.name === item.name &&
-                      (!owned.grantedBy || canAdvanceGrantedMerit(line, owned)),
+                      (!owned.grantedBy || canAdvance(owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
                 ratings = UNBOUNDED_MERITS.has(item.name)
@@ -347,7 +350,7 @@ export function ExperienceMeritPicker({
                 intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
                 prerequisitesMet = isEligible(item,context);
               if (item.name === "Mantle" && !instances.length) return null;
-              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvanceGrantedMerit(line,owned)))return null;
+              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvance(owned)))return null;
               if (
                 !repeatable &&
                 instances.length &&

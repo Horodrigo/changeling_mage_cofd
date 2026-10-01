@@ -25,6 +25,9 @@ try {
 } finally { globalThis.fetch = originalFetch; }
 const reference = catalogs.get("werewolf-reference"), gifts = catalogs.get("werewolf-gifts"), rites = catalogs.get("werewolf-rites");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
+const advancementCatalogs = { reference, gifts, merits: meritCatalog };
+const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
+const { WerewolfExperiencePanel, werewolfPurchaseLabel } = await vite.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
 const { buildWerewolfCharacter, werewolfBuilder, werewolfExperienceSpecialties } = await vite.ssrLoadModule("/game-lines/werewolf/builder.tsx");
 const { werewolfRules, werewolfFormTraits, recordedAuspiceSkillGrant } = await vite.ssrLoadModule("/game-lines/werewolf/rules.ts");
 const { withoutAuspiceSkillGrant, WEREWOLF_CREATION_GRANT_SOURCES } = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
@@ -44,6 +47,9 @@ const parameters = { identity: { name: "Uratha", player: "Test", concept: "", ch
   specialties: [{ skill: "Brawl", name: "Claws" }, { skill: "Survival", name: "Tracking" }, { skill: "Occult", name: "Spirits" }],
   aspirations: ["", "", ""], merits: [], choices, reference, gifts, rites, meritCatalog };
 const create = overrides => buildWerewolfCharacter({ ...parameters, ...overrides });
+const funded = () => { const character = create(); character.current_state.experience_available = 100; character.current_state.experience_spent = 0; character.current_state.experience_total = 100; return character; };
+const failsWith = problem => error => error instanceof WerewolfAdvancementError && error.problem === problem;
+const purchaseMerit = (definitionId, target, configuration = {}, instanceId) => ({ kind: "merit", definitionId, target, configuration, instanceId });
 const merit = (name, dots, instanceId, configuration, creationDots = dots, experienceDots = 0) => {
   const definition = meritCatalog.find(item => item.name === name);
   return { name, dots, sourceId: definition.sourceId, source: definition.source, instanceId, configuration, creationDots, experienceDots };
@@ -164,12 +170,170 @@ test("Desktop sheet shows current-form Health, manual healing and preserved over
   const before = structuredClone(character);
   const markup = render(createElement(WerewolfCharacterPaper, { character, catalogs, updateState: () => assert.fail("render mutated state"), updateSheet: () => assert.fail("render mutated structure") }));
   assert.match(markup, /Current form for Health/); assert.match(markup, />Heal</);
+  assert.match(markup, /Spend Experience/);
   assert.match(markup, /6 damage marks beyond this form/);
   assert.equal((markup.match(/class="health-box lethal"/g) ?? []).length, 7);
   assert.doesNotMatch(markup, /missing translation/); assert.deepEqual(character, before);
   const expanded = render(createElement(WerewolfCharacterPaper, { character: { ...character, current_state: { ...character.current_state, form: "gauru" } }, catalogs, updateState: () => {}, updateSheet: () => {} }));
   assert.equal((expanded.match(/class="health-box lethal"/g) ?? []).length, 11);
   assert.deepEqual(character.current_state.health_damage, before.current_state.health_damage);
+});
+
+test("Werewolf XP costs and eligibility use canonical traits and Hishu, never combat forms or translated names", () => {
+  const character = funded();
+  assert.equal(quote(character, { kind: "trait", group: "attributes", name: "Strength", target: 5 }, advancementCatalogs), 8);
+  assert.equal(quote(character, { kind: "trait", group: "skills", name: "Survival", target: 5 }, advancementCatalogs), 4);
+  assert.equal(quote(character, { kind: "specialty", skill: "Survival", name: "Tracks" }, advancementCatalogs), 1);
+  assert.equal(quote(character, { kind: "primalUrge", target: 3 }, advancementCatalogs), 10);
+  assert.throws(() => quote(character, { kind: "trait", group: "attributes", name: "Força", target: 4 }, advancementCatalogs), failsWith("invalidPurchase"));
+  for (const target of [0, 3, 3.5, NaN, Infinity]) assert.throws(() => quote(character, { kind: "trait", group: "attributes", name: "Strength", target }, advancementCatalogs), failsWith("invalidPurchase"));
+  assert.throws(() => quote(character, { kind: "trait", group: "attributes", name: "Strength", target: 6 }, advancementCatalogs), failsWith("traitMaximum"));
+  assert.throws(() => quote(character, { kind: "specialty", skill: "Computer", name: "Hacking" }, advancementCatalogs), failsWith("specialty"));
+  assert.throws(() => quote(character, { kind: "specialty", skill: "Brawl", name: "Claws" }, advancementCatalogs), failsWith("specialty"));
+  const mortal = meritCatalog.find(item => item.mortalOnly);
+  assert.ok(mortal);
+  assert.throws(() => quote(character, purchaseMerit(mortal.id, mortal.ratings[0]), advancementCatalogs), failsWith("meritPrerequisites"));
+  character.current_state.form = "gauru";
+  assert.throws(() => quote(character, purchaseMerit("wtf-2ed:living-weapon", 3, { form: "gauru", attack: "bite" }), advancementCatalogs), failsWith("meritPrerequisites"));
+});
+
+test("Atomic purchases preserve state and balances; builder advancement records cost without inventing refundable cash", () => {
+  const character = funded();
+  Object.assign(character.current_state, { form: "gauru", health_damage: Array(13).fill("lethal"), essence_current: 3, willpower_current: 1 });
+  const before = structuredClone(character);
+  const purchase = { kind: "trait", group: "attributes", name: "Strength", target: 4 };
+  const next = buy(character, purchase, advancementCatalogs);
+  assert.deepEqual(character, before);
+  assert.equal(next.attributes.Strength, 4); assert.equal(next.current_state.experience_available, 96);
+  assert.equal(next.current_state.experience_spent, 4); assert.equal(next.current_state.experience_total, 100);
+  for (const key of ["form", "health_damage", "essence_current", "willpower_current"]) assert.deepEqual(next.current_state[key], before.current_state[key]);
+  assert.equal(next.line_data.harmony, before.line_data.harmony);
+  const restored = refund(next, history(next)[0].id, advancementCatalogs);
+  assert.equal(restored.attributes.Strength, 3); assert.equal(restored.current_state.experience_available, 100);
+  assert.equal(restored.current_state.experience_total, 100); assert.equal(history(restored).length, 0);
+  const empty = create();
+  assert.throws(() => buy(empty, purchase, advancementCatalogs), failsWith("insufficientExperience"));
+  const advanced = buy(empty, purchase, advancementCatalogs, true);
+  assert.equal(advanced.current_state.experience_available, 0); assert.equal(advanced.current_state.experience_spent, 4); assert.equal(advanced.current_state.experience_total, 4);
+  const reverted = refund(advanced, history(advanced)[0].id, advancementCatalogs, true);
+  assert.equal(reverted.current_state.experience_available, 0); assert.equal(reverted.current_state.experience_spent, 0); assert.equal(reverted.current_state.experience_total, 0);
+});
+
+test("Independent Living Weapon bite/claws instances and upgrades refund exact XP dots without removing creation grants", () => {
+  let character = funded(); character.attributes.Stamina = 3;
+  character = buy(character, purchaseMerit("wtf-2ed:living-weapon", 3, { form: "gauru", attack: "bite" }), advancementCatalogs);
+  const bite = character.merits.find(item => item.name === "Living Weapon");
+  character = buy(character, purchaseMerit("wtf-2ed:living-weapon", 4, { form: "gauru", attack: "claws" }), advancementCatalogs);
+  const claws = character.merits.find(item => item.configuration?.attack === "claws");
+  assert.notEqual(bite.instanceId, claws.instanceId);
+  assert.throws(() => buy(character, purchaseMerit("wtf-2ed:living-weapon", 3, { form: "gauru", attack: "bite" }), advancementCatalogs), failsWith("meritChoices"));
+  character = buy(character, purchaseMerit("wtf-2ed:living-weapon", 5, { form: "gauru", attack: "bite" }, bite.instanceId), advancementCatalogs);
+  assert.equal(character.merits.find(item => item.instanceId === bite.instanceId).experienceDots, 5);
+  character = refund(character, history(character).at(-1).id, advancementCatalogs);
+  assert.equal(character.merits.find(item => item.instanceId === bite.instanceId).dots, 3);
+  character = refund(character, history(character)[0].id, advancementCatalogs);
+  assert.ok(!character.merits.some(item => item.instanceId === bite.instanceId));
+  assert.equal(character.merits.find(item => item.instanceId === claws.instanceId).dots, 4);
+  assert.ok(character.merits.filter(item => item.grantedBy).every(item => item.creationDots === 1));
+});
+
+test("Totem upgrades retain free creation origin, First Tongue is fixed, and discontinuous Merit refunds restore choices", () => {
+  let character = funded();
+  const totem = character.merits.find(item => item.name === "Totem"), tongue = character.merits.find(item => item.grantedBy === "werewolf:first-tongue");
+  character = buy(character, purchaseMerit("wtf-2ed:totem", 3, {}, totem.instanceId), advancementCatalogs);
+  const selected = character.merits.find(item => item.instanceId === totem.instanceId);
+  assert.equal(selected.creationDots, 1); assert.equal(selected.experienceDots, 2); assert.equal(selected.grantedBy, "werewolf:creation-totem");
+  const tongueDefinition = meritCatalog.find(item => item.name === tongue.name);
+  assert.throws(() => buy(character, purchaseMerit(tongueDefinition.id, 2, {}, tongue.instanceId), advancementCatalogs), failsWith("grant"));
+  character = refund(character, history(character)[0].id, advancementCatalogs);
+  assert.equal(character.merits.find(item => item.instanceId === totem.instanceId).dots, 1);
+  assert.throws(() => buy(character, purchaseMerit("wtf-2ed:blood-or-bone-affinity", 3, { anchor: "blood" }), advancementCatalogs), failsWith("meritChoices"));
+  character = buy(character, purchaseMerit("wtf-2ed:blood-or-bone-affinity", 2, { anchor: "blood" }), advancementCatalogs);
+  const affinity = character.merits.find(item => item.name === "Blood or Bone Affinity");
+  character = buy(character, purchaseMerit("wtf-2ed:blood-or-bone-affinity", 5, {}, affinity.instanceId), advancementCatalogs);
+  character = refund(character, history(character).at(-1).id, advancementCatalogs);
+  assert.deepEqual(character.merits.find(item => item.instanceId === affinity.instanceId).configuration, { anchor: "blood" });
+});
+
+test("Refunds protect later Merit, Specialty and Primal Urge cap dependencies and preserve unrelated later changes", () => {
+  let character = buy(funded(), { kind: "primalUrge", target: 2 }, advancementCatalogs);
+  const urgeEntry = history(character)[0].id;
+  character = buy(character, purchaseMerit("wtf-2ed:instinctive-defense", 2), advancementCatalogs);
+  assert.throws(() => refund(character, urgeEntry, advancementCatalogs), failsWith("refundDependent"));
+  character = refund(character, history(character).at(-1).id, advancementCatalogs);
+  character = refund(character, urgeEntry, advancementCatalogs);
+  assert.equal(character.line_data.primal_urge, 1);
+  character = buy(character, { kind: "trait", group: "skills", name: "Computer", target: 1 }, advancementCatalogs);
+  const skillEntry = history(character).at(-1).id;
+  character = buy(character, { kind: "specialty", skill: "Computer", name: "Forensics" }, advancementCatalogs);
+  assert.throws(() => refund(character, skillEntry, advancementCatalogs), failsWith("refundDependent"));
+  character = refund(character, history(character).at(-1).id, advancementCatalogs);
+  character = refund(character, skillEntry, advancementCatalogs);
+  character = buy(character, { kind: "primalUrge", target: 6 }, advancementCatalogs);
+  const capEntry = history(character).at(-1).id;
+  character = buy(character, { kind: "trait", group: "attributes", name: "Strength", target: 6 }, advancementCatalogs);
+  assert.throws(() => refund(character, capEntry, advancementCatalogs), failsWith("refundDependent"));
+  character = refund(character, history(character).at(-1).id, advancementCatalogs);
+  character = refund(character, capEntry, advancementCatalogs);
+  assert.equal(character.attributes.Strength, 3);
+  character = buy(character, { kind: "trait", group: "skills", name: "Survival", target: 4 }, advancementCatalogs);
+  const first = history(character).at(-1).id;
+  character = buy(character, { kind: "trait", group: "skills", name: "Survival", target: 5 }, advancementCatalogs);
+  character = refund(character, first, advancementCatalogs);
+  assert.equal(character.skills.Survival, 4);
+});
+
+test("Corrupt or missing XP entries cannot mint experience and opaque history remains untouched", () => {
+  let character = funded();
+  character.current_state.werewolf_experience_history = [null, { custom: "opaque" }, { id: "broken", cost: 99, createdAt: new Date().toISOString(), purchase: { kind: "trait" }, undo: { kind: "trait" } }];
+  character = buy(character, { kind: "specialty", skill: "Survival", name: "Paths" }, advancementCatalogs);
+  assert.equal(history(character).length, 1);
+  const entry = history(character)[0], before = structuredClone(character);
+  for (const change of [value => { value.current_state.experience_spent = 0; }, value => { value.current_state.werewolf_experience_history.at(-1).cost = 20; }, value => { value.current_state.werewolf_experience_history.push(structuredClone(entry)); }, value => { value.current_state.werewolf_experience_history.push({ id: entry.id, custom: "opaque" }); }]) {
+    const corrupted = structuredClone(character); change(corrupted);
+    assert.throws(() => refund(corrupted, entry.id, advancementCatalogs), failsWith("refundMissing"));
+  }
+  const next = refund(character, entry.id, advancementCatalogs);
+  assert.deepEqual(next.current_state.werewolf_experience_history, before.current_state.werewolf_experience_history.slice(0, 3));
+  assert.throws(() => refund(next, entry.id, advancementCatalogs), failsWith("refundMissing"));
+  assert.deepEqual(character, before);
+});
+
+test("Merit refunds reject missing exact instances and preserve authored configuration and trait dependencies", () => {
+  let character = buy(funded(), { kind: "trait", group: "attributes", name: "Stamina", target: 3 }, advancementCatalogs);
+  const staminaEntry = history(character)[0].id;
+  character = buy(character, purchaseMerit("wtf-2ed:living-weapon", 3, { form: "gauru", attack: "bite" }), advancementCatalogs);
+  const weapon = character.merits.find(item => item.name === "Living Weapon"), weaponEntry = history(character).at(-1).id;
+  const missing = structuredClone(character); missing.merits = missing.merits.filter(item => item.instanceId !== weapon.instanceId);
+  assert.throws(() => refund(missing, weaponEntry, advancementCatalogs), failsWith("refundMissing"));
+  assert.throws(() => refund(character, staminaEntry, advancementCatalogs), failsWith("refundDependent"));
+  character = buy(character, purchaseMerit("wtf-2ed:living-weapon", 4, { form: "gauru", attack: "bite" }, weapon.instanceId), advancementCatalogs);
+  character.merits.find(item => item.instanceId === weapon.instanceId).configuration.notes = "Player's later note";
+  const reverted = refund(character, history(character).at(-1).id, advancementCatalogs);
+  assert.equal(reverted.merits.find(item => item.instanceId === weapon.instanceId).configuration.notes, "Player's later note");
+  assert.equal(reverted.merits.find(item => item.instanceId === weapon.instanceId).experienceDots, 3);
+});
+
+test("XP purchases round-trip through lifecycle and creation drafts without reclassifying Merit or trait origins", async () => {
+  const { importCharacterFile } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
+  let source = buy(funded(), { kind: "trait", group: "attributes", name: "Strength", target: 4 }, advancementCatalogs);
+  source = buy(source, { kind: "specialty", skill: "Survival", name: "Paths" }, advancementCatalogs);
+  source = buy(source, purchaseMerit("wtf-2ed:totem", 3, {}, source.merits.find(item => item.name === "Totem").instanceId), advancementCatalogs);
+  const imported = await importCharacterFile({ text: async () => JSON.stringify(source) });
+  assert.deepEqual(JSON.parse(JSON.stringify(imported.current_state)), source.current_state);
+  const resumed = create({ source: imported, draft: true, step: 4, allowAdvancement: true });
+  assert.equal(resumed.current_state.creation_advancement_enabled, true); assert.equal(resumed.current_state.creation_draft_step, 4);
+  assert.equal(resumed.attributes.Strength, 4); assert.equal(resumed.specializations.length, 4);
+  assert.equal(resumed.merits.find(item => item.name === "Totem").creationDots, 1);
+  assert.equal(resumed.merits.find(item => item.name === "Totem").experienceDots, 2);
+  const markup = render(createElement(werewolfBuilder.Component, { initial: resumed, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
+  assert.match(markup, /Creation advances/); assert.match(markup, /Spend Experience/); assert.doesNotMatch(markup, /missing translation/);
+  const panel = render(createElement(WerewolfExperiencePanel, { character: source, catalogs, updateSheet: () => {}, builderMode: true }));
+  assert.doesNotMatch(panel, /aria-label="Available Experience"/);
+  const entry = history(source).find(item => item.purchase.kind === "trait");
+  assert.equal(werewolfPurchaseLabel(entry.purchase, meritCatalog, "pt-BR"), "Força 4");
+  assert.equal(werewolfPurchaseLabel(entry.purchase, meritCatalog, "en-US"), "Strength 4");
+  assert.equal(entry.purchase.name, "Strength");
 });
 
 test("Builder and mobile Details render Portuguese catalog presentation without translating stored identities", async () => {
@@ -184,6 +348,7 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const { LanguageProvider: PtProvider } = await portuguese.ssrLoadModule("/lib/i18n.tsx");
     const { WerewolfCharacterPaper: PtSheet } = await portuguese.ssrLoadModule("/game-lines/werewolf/sheet.tsx");
     const { werewolfBuilder: ptBuilder } = await portuguese.ssrLoadModule("/game-lines/werewolf/builder.tsx");
+    const { WerewolfExperiencePanel: PtExperience } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
     const character = create({ draft: true, step: 3 });
     const before = structuredClone(character);
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
@@ -195,5 +360,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const builderMarkup = ptRender(createElement(ptBuilder.Component, { initial: character, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
     assert.match(builderMarkup, /Caçador Destemido/); assert.doesNotMatch(builderMarkup, /missing translation/);
     assert.deepEqual(character, before);
+    const purchased = buy(funded(), { kind: "trait", group: "attributes", name: "Strength", target: 4 }, advancementCatalogs);
+    const experienceMarkup = ptRender(createElement(PtExperience, { character: purchased, catalogs, updateSheet: () => assert.fail("render mutated structure") }));
+    assert.match(experienceMarkup, /Força 4/); assert.match(experienceMarkup, /Gastar Experiência/); assert.doesNotMatch(experienceMarkup, /missing translation|Strength 4/);
   } finally { await portuguese.close(); }
 });
