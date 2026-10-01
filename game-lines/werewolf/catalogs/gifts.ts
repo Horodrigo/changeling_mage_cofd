@@ -16,13 +16,15 @@ export type GiftDefinition = Source & {
 export type GiftPresentation = Record<string, Partial<FacetText>>;
 export type WerewolfGiftCatalog = { gifts: GiftDefinition[]; presentation: GiftPresentation };
 
-/** Moon Gift data is imported in verified source-book batches; no text parser or global catalog. */
+/** Gift data is imported in verified source-book batches; no text parser or global catalog. */
 export const werewolfGiftsCatalogGroup: CatalogGroupModule = {
   async load(reader): Promise<WerewolfGiftCatalog> {
-    const [gifts, presentation] = await Promise.all([
+    const [moon, moonPresentation, wolf, wolfPresentation] = await Promise.all([
       reader.getCatalog<GiftDefinition[]>("werewolf-gifts-core-moon"),
       reader.getCatalog<GiftPresentation>("werewolf-gifts-core-moon-pt"),
+      reader.getCatalog<GiftDefinition[]>("werewolf-gifts-core-wolf"),
+      reader.getCatalog<GiftPresentation>("werewolf-gifts-core-wolf-pt"),
     ]);
-    return { gifts, presentation };
+    return { gifts: [...moon, ...wolf], presentation: { ...moonPresentation, ...wolfPresentation } };
   },
 };

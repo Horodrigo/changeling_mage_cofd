@@ -14,6 +14,8 @@ const traits = readJson("public/game-lines/werewolf/data/traits.json");
 const traitsPresentation = readJson("public/game-lines/werewolf/data/traits-pt.json");
 const moonGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-moon.json");
 const moonPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json");
+const wolfGifts = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf.json");
+const wolfPresentation = readJson("public/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json");
 const catalog = { ...reference, ...traits, presentation: { ...presentation, ...traitsPresentation } };
 const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false },
@@ -297,15 +299,70 @@ test("WtF 2e pp. 115–121 preserves all twenty-five Moon Facets with complete E
   assert.equal(moonPresentation["gift-new-moon:divide-and-conquer"].dramaticFailure.includes(readJson("public/shared/data/conditions-pt.json").spooked.name), true);
 });
 
+test("WtF 2e pp. 136–138 preserves all fifteen Wolf Facets and their EN/PT exceptions without invented roll outcomes", () => {
+  assert.deepEqual(wolfGifts.map(gift => gift.id), ["gift-change", "gift-hunting", "gift-pack"]);
+  const records = wolfGifts.flatMap(gift => [gift, ...gift.facets]);
+  assert.equal(records.length, 18);
+  assert.equal(new Set(records.map(item => item.id)).size, 18);
+  assert.deepEqual(new Set(Object.keys(wolfPresentation)), new Set(records.map(item => item.id)));
+  for (const gift of wolfGifts) {
+    assert.equal(gift.kind, "wolf");
+    assert.equal(gift.facets.length, 5);
+    assert.deepEqual(new Set(gift.facets.map(facet => facet.renown)), new Set(["Cunning", "Glory", "Honor", "Purity", "Wisdom"]));
+    for (const facet of gift.facets) {
+      assert.ok(facet.id.startsWith(`${gift.id}:`));
+      assert.equal(facet.level, undefined, "Wolf Facets have no ordered Moon Gift levels");
+      assert.ok(facet.description && facet.effect);
+      assert.equal(Boolean(facet.dicePool), facet.hasRoll);
+      for (const field of ["dramaticFailure", "failure", "success", "exceptionalSuccess"])
+        assert.equal(facet[field], undefined, "These Wolf Facets print effects, not separate outcomes");
+    }
+  }
+  for (const item of records) {
+    assert.equal(item.sourceId, "wtf-2ed");
+    assert.equal(item.source, "Werewolf: The Forsaken Second Edition");
+    assert.ok(item.page >= 136 && item.page <= 138);
+    for (const page of item.additionalPages ?? []) assert.ok(page >= 136 && page <= 138);
+    const textFields = Object.entries(item).filter(([key, value]) => typeof value === "string" && !["id", "renown", "kind", "source", "sourceId"].includes(key));
+    assert.deepEqual(new Set(Object.keys(wolfPresentation[item.id])), new Set(textFields.map(([key]) => key)));
+    for (const [field, text] of textFields) {
+      assert.ok(text.length && wolfPresentation[item.id][field]?.length, `${item.id}.${field}`);
+    }
+  }
+  const facet = id => wolfGifts.flatMap(gift => gift.facets).find(item => item.id === id);
+  assert.match(facet("gift-change:skin-thief").effect, /without otherwise changing its traits/);
+  assert.match(facet("gift-change:skin-thief").effect, /Spend 1 Willpower/);
+  assert.match(facet("gift-change:the-fathers-form").effect, /more than Purity Renown/);
+  assert.match(facet("gift-change:the-fathers-form").effect, /breaking point toward Flesh/);
+  assert.equal(facet("gift-change:the-fathers-form").action, undefined);
+  assert.equal(facet("gift-change:quicksilver-flesh").options.split("\n").length, 5);
+  assert.match(facet("gift-change:quicksilver-flesh").options, /lose any bite attack \(Urshul, Urhan\)/);
+  assert.match(facet("gift-hunting:impossible-spoor").effect, /each successful Tracking roll .*but none to a failed roll/);
+  assert.match(facet("gift-hunting:tireless-hunter").effect, /only when the action advances the hunt/);
+  assert.equal(facet("gift-pack:totems-wrath").dicePool, "Presence + Occult + Honor vs Power + Finesse + Resistance");
+  assert.match(facet("gift-pack:totems-wrath").effect, /never attacks a packmate with the Totem Merit/);
+  assert.match(facet("gift-pack:totems-wrath").effect, /one day per turn/);
+  assert.equal(facet("gift-pack:down-the-prey").options.split("\n").length, 3);
+  assert.match(facet("gift-pack:down-the-prey").options, /Defense against the attack was 0/);
+});
+
 test("Werewolf Gifts load only their canonical and Portuguese shards into an immutable snapshot", async () => {
   const { werewolfGiftsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/gifts.ts");
   const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
   const calls = [];
   const snapshot = freezeCatalogData(await werewolfGiftsCatalogGroup.load({ getCatalog: async id => {
     calls.push(id);
-    return structuredClone(id.endsWith("-pt") ? moonPresentation : moonGifts);
+    const fixtures = { "werewolf-gifts-core-moon": moonGifts, "werewolf-gifts-core-moon-pt": moonPresentation,
+      "werewolf-gifts-core-wolf": wolfGifts, "werewolf-gifts-core-wolf-pt": wolfPresentation };
+    assert.ok(Object.hasOwn(fixtures, id), `Unexpected catalog request: ${id}`);
+    return structuredClone(fixtures[id]);
   } }));
-  assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt"]);
+  assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt", "werewolf-gifts-core-wolf", "werewolf-gifts-core-wolf-pt"]);
+  assert.equal(snapshot.gifts.length, 8);
+  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 40);
+  assert.deepEqual(snapshot.gifts.map(gift => gift.id), [...moonGifts, ...wolfGifts].map(gift => gift.id));
   assert.ok(Object.isFrozen(snapshot.gifts[0].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation[snapshot.gifts[0].facets[0].id]));
+  assert.ok(Object.isFrozen(snapshot.gifts[5].facets[0]));
+  assert.ok(Object.isFrozen(snapshot.presentation["gift-pack:totems-wrath"]));
 });

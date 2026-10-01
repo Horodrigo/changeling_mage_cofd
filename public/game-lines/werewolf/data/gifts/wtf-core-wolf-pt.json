@@ -1,0 +1,125 @@
+{
+  "gift-change": {
+    "name": "Dom da Mudança"
+  },
+  "gift-change:skin-thief": {
+    "name": "Ladrão de Peles",
+    "description": "O Uratha veste a pele de um humano ou predador morto como se fosse sua.",
+    "cost": "5 Essências",
+    "action": "Instantânea",
+    "activationRequirement": "Use apenas em Hishu. Esfole um humano ou um animal predador de tamanho próximo ao de um lobo, retirando pele suficiente para cobrir os ombros, e vista-a.",
+    "effect": "Copia a aparência, a estrutura óssea e a musculatura do morto. A cópia de um humano é fisicamente perfeita até o Uratha abandonar voluntariamente a pele roubada ou mudar de forma, rasgando-a ao sair. A cópia de um animal altera a aparência de Urhan para a daquele predador por um mês lunar, sem modificar suas características. Gaste um ponto de Força de Vontade para manter a aparência animal indefinidamente, até copiar outro animal com esta Faceta ou escolher devolver a Urhan a forma de lobo. Em ambos os casos, os olhos continuam sendo os do Uratha, não os da presa copiada."
+  },
+  "gift-change:the-fathers-form": {
+    "name": "A Forma do Pai",
+    "description": "Assume a forma do Pai Lobo enquanto suprime a loucura que normalmente impele Gauru.",
+    "cost": "Nenhum",
+    "effect": "Muda para Gauru fora de combate sem precisar atacar constantemente nem cair em Kuruth. Regenera como nas outras formas, em vez de receber a regeneração de Gauru, não recebe automaticamente os benefícios do combate simplificado e causa Lunagem como Urshul. Realizar qualquer ataque ou sofrer, durante a cena, mais dano letal que o Renome de Pureza encerra esta Faceta e restaura as regras normais de Gauru (p. 97). Mudar para outra forma para encerrar esta Faceta é um Ponto de Ruptura em direção à Carne."
+  },
+  "gift-change:gaze-of-the-moon": {
+    "name": "Olhar da Lua",
+    "description": "Olhos prateados canalizam a loucura da Lua para uma testemunha humana.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha um humano que consiga ver claramente os olhos do Uratha.",
+    "effect": "A presa sofre todos os efeitos de Lunagem como se o Uratha estivesse em Gauru. O Uratha escolhe qual das três Condições de Lunagem será infligida."
+  },
+  "gift-change:lunas-embrace": {
+    "name": "Abraço de Luna",
+    "description": "Muda de sexo com a mesma facilidade com que muda de forma.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "effect": "Altera o sexo do Uratha até usar esta Faceta novamente para voltar ao anterior. A mudança é biologicamente completa e funcional; a nova aparência lembra um irmão gêmeo ou uma irmã gêmea da aparência anterior."
+  },
+  "gift-change:quicksilver-flesh": {
+    "name": "Carne de Mercúrio",
+    "description": "Mistura características de formas diferentes ao remodelar parte do corpo do Uratha.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "1 cena",
+    "effect": "Escolha um benefício disponível à forma atual a cada uso desta Faceta. Outras mudanças exigem acordo entre o jogador e o Narrador. Mudanças obviamente antinaturais em Hishu ou Urhan causam Lunagem como Dalu.",
+    "options": "Sentidos Aguçados: +3 aos testes de Percepção (Hishu).\nMãos Preênseis: patas tornam-se mãos capazes de segurar e manipular (Urshul, Urhan).\nPassada Larga: +2 de Deslocamento (Hishu, Dalu, Gauru).\nGarras Afiadas: garras causam 1 de dano letal (Hishu, Dalu, Urhan).\nBoca Humana: fala idiomas humanos claramente, mas perde qualquer ataque de mordida (Urshul, Urhan)."
+  },
+  "gift-hunting": {
+    "name": "Dom da Caçada"
+  },
+  "gift-hunting:honed-senses": {
+    "name": "Sentidos Aguçados",
+    "description": "Percebe os pequenos detalhes que podem decidir o resultado de uma caçada.",
+    "cost": "Nenhum",
+    "duration": "Permanente",
+    "effect": "Testes de Percepção obtêm sucesso excepcional com três sucessos em vez de cinco."
+  },
+  "gift-hunting:cow-the-prey": {
+    "name": "Acovardar a Presa",
+    "description": "A presa sabe que nada pode deter este caçador.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "activationRequirement": "Gaste a Essência ao ativar o Aspecto do Caçador do Uratha.",
+    "effect": "A Condição associada torna-se Persistente. A presa recebe um Ato ao transformar um teste bem-sucedido contra o lobisomem em uma falha dramática."
+  },
+  "gift-hunting:beast-talker": {
+    "name": "Interlocutor das Feras",
+    "description": "O Uratha compreende as linguagens dos animais.",
+    "cost": "Nenhum",
+    "duration": "Permanente",
+    "effect": "Comunica-se com qualquer animal conhecido e o compreende. Os animais conservam sua compreensão limitada do mundo e provavelmente têm medo de um lobisomem. Esta Faceta permite realizar Manobras Sociais contra um animal."
+  },
+  "gift-hunting:tireless-hunter": {
+    "name": "Caçador Incansável",
+    "description": "Persevera na caçada sem ceder à exaustão ou à fome.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "duration": "1 dia",
+    "effect": "Enquanto esta Faceta estiver ativa e o Uratha tiver Siskur-Dah, ignora penalidades de cansaço, fadiga e desânimo até um total igual ao Renome de Pureza. Só ignora Condições que impeçam gastar Força de Vontade quando a ação aproximar a caçada de sua conclusão. O Uratha não precisa comer nem beber, mas não pode manter esse benefício por mais dias consecutivos que seu Renome de Pureza. Depois, deve comer e beber fartamente durante pelo menos um dia de descanso."
+  },
+  "gift-hunting:impossible-spoor": {
+    "name": "Rastro Impossível",
+    "description": "Segue vestígios sutis ou incomuns demais para os sentidos ordinários.",
+    "cost": "Nenhum ou 1 Essência",
+    "action": "Reflexiva",
+    "duration": "1 cena",
+    "effect": "Acrescente dois sucessos a cada teste de Rastreamento bem-sucedido (p. 94), mas nenhum a um teste que falhe. Gaste um ponto de Essência para remover todas as penalidades pela idade do rastro. Gaste Essência adicional para anular a penalidade a cada vez que as condições ambientais degradariam o rastro (p. 94). Mesmo um rastro antigo ou um clima hostil deixa algo que o Uratha consegue seguir."
+  },
+  "gift-pack": {
+    "name": "Dom da Alcateia"
+  },
+  "gift-pack:reflected-facets": {
+    "name": "Facetas Refletidas",
+    "description": "Companheiros de alcateia orientam os Dons do Uratha ou recebem seus benefícios pessoais.",
+    "cost": "+1 Essência",
+    "duration": "Especial",
+    "effect": "Use Dons contra uma presa que o próprio Uratha não consiga perceber se um companheiro de alcateia puder percebê-la, pagando um ponto de Essência além do custo normal da Faceta. Isso não informa quando o companheiro percebe a presa; coordene por outros Dons, sinais ou tecnologia. Alternativamente, ative uma Faceta que aprimore seu usuário em vez de visar uma presa e pague mais um ponto de Essência para transferir seus efeitos a um companheiro escolhido. O Uratha não pode reativar aquela Faceta enquanto ela estiver em uso, mas pode cancelar a transferência reflexivamente. Ambos os usos têm alcance de Renome de Astúcia em milhas."
+  },
+  "gift-pack:down-the-prey": {
+    "name": "Abater a Presa",
+    "description": "Explora uma abertura criada pelo ataque de um companheiro de alcateia.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "activationRequirement": "Use ao acertar um inimigo ferido por um companheiro de alcateia desde o último turno do Uratha.",
+    "effect": "Escolha um dos efeitos listados contra a presa.",
+    "options": "Impõe −2 à próxima parada de dados da presa.\nRecebe +2 de Defesa contra aquela presa por um turno.\nInflige Derrubado se a Defesa da presa contra o ataque era 0."
+  },
+  "gift-pack:totems-wrath": {
+    "name": "Ira do Totem",
+    "description": "Força o totem a assumir um corpo semelhante a Gauru, repleto de Fúria Assassina. Mesmo totens violentos costumam considerar isso uma violação da barganha; o uso pode prejudicar gravemente a relação com a alcateia.",
+    "cost": "5 Essências",
+    "dicePool": "Presença + Ocultismo + Honra vs Poder + Refinamento + Resistência",
+    "action": "Disputada",
+    "effect": "O totem recebe imediatamente Materializado e um invólucro de carne semelhante a Gauru: Poder +3, Refinamento +1, Resistência +2, Tamanho 7, com as alterações derivadas impressas de Corpus +2, Iniciativa +1 e Deslocamento +4. Aplica Defesa contra Armas de Fogo, causa Lunagem e usa Medo Primal como um lobisomem em Gauru. Segue as regras de Basu-Im, mas nunca ataca um companheiro de alcateia com o Mérito Totem; suas ações podem levar outros companheiros a Basu-Im. Perde um ponto de Essência por turno. Ao chegar a 0 Essência ou ser dispensado pelo Uratha que usou esta Faceta, o totem explode em efêmera. Depois de dispensado, afasta-se por um dia para cada turno em que esteve ativo. Nesse afastamento, a alcateia não pode usar os bônus do totem nem Dons e Ritos que dependam de sua presença, incluindo esta Faceta."
+  },
+  "gift-pack:maw-of-madness": {
+    "name": "Mandíbula da Loucura",
+    "description": "A mordida do Uratha carrega a mácula enlouquecedora da Lua.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "activationRequirement": "Use quando uma mordida causar dano a uma vítima viva que não seja Uratha.",
+    "effect": "A vítima recebe Mácula Lunar."
+  },
+  "gift-pack:pack-awareness": {
+    "name": "Percepção da Alcateia",
+    "description": "Os membros da alcateia permanecem ligados pelo espírito do Uratha.",
+    "cost": "Nenhum ou 1 Essência",
+    "effect": "Percebe permanentemente a localização geral de cada companheiro de alcateia em relação ao Uratha, seu estado e seu bem-estar até uma distância de Renome de Sabedoria em milhas. O Uratha não pode ser surpreendido por um inimigo que qualquer companheiro tenha percebido, tornando difícil emboscá-lo quando está com a alcateia. Gaste um ponto de Essência para falar de mente para mente com qualquer companheiro visível por uma cena."
+  }
+}

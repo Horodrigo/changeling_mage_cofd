@@ -367,6 +367,15 @@ WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF f�
 - `Ties of Blood and Bone`: resistência física adotada em M08, sem apresentar a divergência como errata oficial.
 - Novos nomes localizados de Conditions para uniformizar ao importar seu catálogo: Exhausted → Exausto; Paranoid → Paranoico; Open → Aberto; Demoralized → Desmoralizado; Stumbled → Tropeço; Lured → Atraído. Inspired → Inspirado e Spooked → Assombrado seguem o catálogo compartilhado existente. Esses nomes não alteram as identidades ou os efeitos das Conditions.
 
+### Notas editoriais do catálogo Wolf Gifts — WTF2 pp. 136–138
+
+- Os três Gifts e suas quinze Facets foram conferidos visualmente, incluindo as continuações de `The Father's Form` e `Impossible Spoor`. Não são Facets de progressão ordenada; cada Gift contém uma Facet por Renown.
+- `Totem's Wrath`: o livro imprime Dice Pool e Action, mas nenhum bloco de Roll Results. Preservar o Effect e os modificadores derivados impressos (Corpus +2, Initiative +1, Speed +4), sem inventar resultados ou aplicar mudanças automaticamente ao Totem. A retirada de um dia por turno ativo permanece informação, não controle temporal.
+- `Down the Prey`: o livro chama o Tilt de `Knockdown`; o catálogo usa a identidade de apresentação `Knocked Down`, correspondente ao Tilt, com requisito de Defense 0 preservado.
+- `Gift of Pack`: manter as regras consultáveis e a seleção individual, sem cadastrar Pack, ligar fichas ou conceder Beats automaticamente.
+- `Skin Thief`, `The Father's Form` e `Quicksilver Flesh`: os efeitos e restrições estão catalogados, mas sua configuração de forms ainda depende da implementação de W03. O catálogo não transforma essas descrições em acesso gratuito, aplicação automática ou alteração dos Attributes básicos.
+- Nomes localizados a uniformizar com o futuro catálogo de Conditions: Materialized → Materializado; Moon Taint → Mácula Lunar. Termos Uratha, incluindo Siskur-Dah, Kuruth e Basu-Im, permanecem inalterados.
+
 O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo acima.
 
 Sequência de implementação autorizada:
