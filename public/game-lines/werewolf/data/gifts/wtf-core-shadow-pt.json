@@ -312,5 +312,178 @@
     "failure": "A Faceta falha.",
     "success": "As palavras tranquilizadoras retiram os alvos de Wasu-Im e os fazem voltar ao normal.",
     "exceptionalSuccess": "Todos os Uratha presentes que possam ouvir o interlocutor acrescentam seu Renome de Sabedoria às paradas para resistir à Fúria Assassina pelo restante da cena."
+  },
+  "gift-knowledge": {
+    "name": "Dom do Conhecimento"
+  },
+  "gift-knowledge:needle": {
+    "name": "Agulha",
+    "description": "Oculta conhecimento da presa por meio de interferência espiritual e má sorte.",
+    "cost": "1 Essência",
+    "dicePool": "Manipulação + Subterfúgio + Astúcia vs Compostura + Instinto Primitivo",
+    "action": "Disputada",
+    "duration": "Um mês",
+    "activationRequirement": "Escolha uma informação enquanto estiver na presença de uma cópia e a presa de quem ela será escondida. Pode ser um fato, livro, mapa ou tabela de horários.",
+    "dramaticFailure": "Recebe Proibição: deve carregar uma cópia da informação escolhida e examiná-la atentamente ou ler um trecho em voz alta a cada cena.",
+    "failure": "A Faceta falha.",
+    "success": "A presa perde qualquer cópia que carregue consigo, por uma perda despercebida, um extravio ou arquivos corrompidos. Atividade espiritual e acontecimentos fortuitos dificultam buscas posteriores: todas as paradas para revelar ou descobrir esse conhecimento sofrem uma penalidade igual ao Renome de Astúcia, e os tempos de pesquisa são dobrados.",
+    "exceptionalSuccess": "Dobra a penalidade imposta."
+  },
+  "gift-knowledge:this-story-is-true": {
+    "name": "Esta História É Verdadeira",
+    "description": "Ensina uma lição útil por meio de uma história cujo significado simbólico importa mais que sua veracidade factual.",
+    "cost": "2 Essência",
+    "dicePool": "Presença + Erudição + Glória",
+    "action": "Instantânea",
+    "duration": "1 hora por sucesso",
+    "activationRequirement": "Conte uma história que transmita claramente uma lição pertinente a um problema ou desafio atual. Conceda-a ao próprio Uratha ou a um membro da alcateia que a ouça.",
+    "dramaticFailure": "Recebe Proibição: sente-se compelido a falar apenas por histórias e versos, mesmo ao responder perguntas simples.",
+    "failure": "A Faceta falha.",
+    "success": "Concede pontos iguais aos sucessos em uma Perícia na qual o alvo tenha dois pontos ou menos, sem elevá-la acima de cinco. Apenas um alvo pode se beneficiar por vez; usar a Faceta em outro remove imediatamente os pontos concedidos ao alvo anterior."
+  },
+  "gift-knowledge:know-thy-prey": {
+    "name": "Conheça Sua Presa",
+    "description": "Ouve o que o mundo ao redor sabe sobre a presa.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Socialização + Honra",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha qualquer personagem presente que o Uratha possa perceber. Anonimato penaliza a parada, mas o alvo não recebe outra resistência, pois as respostas vêm do mundo ao redor.",
+    "dramaticFailure": "Descobre os nomes da presa como em um sucesso, mas recebe Proibição: assume um desses nomes, responde por ele e tenta marcar seus pertences com ele.",
+    "failure": "A Faceta falha e não pode ser usada no mesmo alvo nesta cena.",
+    "success": "Descobre todos os nomes pelos quais alguém além da própria presa a conhece, bem como seus Méritos Identidade Alternativa e Fama. Também descobre todos os Méritos Aliados, Contatos, Lacaio, Recursos, Funcionários e Status cujos pontos não excedam os sucessos obtidos.",
+    "exceptionalSuccess": "Descobre um fato adicional que alguém, em algum lugar, conhece sobre a presa, provavelmente valioso ou relativamente secreto, como informação comprometedora ou um número de identificação pessoal."
+  },
+  "gift-knowledge:lore-of-the-land": {
+    "name": "Saber da Terra",
+    "description": "Recorre ao vínculo entre Uratha e território para revelar seus fenômenos sobrenaturais e ameaças.",
+    "cost": "2 Essência",
+    "dicePool": "Inteligência + Sobrevivência + Pureza",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "dramaticFailure": "Recebe Proibição: busca contato direto da pele com o chão, tira os calçados e prefere encontrar terra nua para apoiar os dedos dos pés.",
+    "failure": "A Faceta falha.",
+    "success": "Cada sucesso revela um rito, uma ressonância espiritual ou outro efeito sobrenatural amplo que afete o território atual. No território da alcateia, também detecta todas as criaturas fisicamente presentes em um raio de Renome de Pureza × 100 jardas, além de ameaças como incêndios, armadilhas, fossos e explosivos. Espíritos, fantasmas e outros seres no Crepúsculo não são detectados.",
+    "exceptionalSuccess": "Acrescenta Renome de Pureza a todos os testes para se orientar e se deslocar pelo território atual pelo restante da cena."
+  },
+  "gift-knowledge:sift-the-sands": {
+    "name": "Peneirar as Areias",
+    "description": "Convoca espíritos para localizar conhecimento oculto em um acervo de registros.",
+    "cost": "1 Essência",
+    "dicePool": "Inteligência + Erudição + Sabedoria",
+    "action": "Prolongada (10 sucessos; 1 teste por minuto)",
+    "activationRequirement": "Esteja na presença de um acervo de conhecimento, como biblioteca, cofres de depósito ou servidores, e escolha uma informação específica a buscar. Os espíritos que auxiliam produzem sinais visíveis ou audíveis, como livros em movimento ou servidores crepitantes.",
+    "dramaticFailure": "Recebe Proibição: não consegue ler nem compreender glifos e símbolos visuais, incluindo placas de trânsito. Ouvir alguém ler é perturbador e provoca vontade de fugir.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, descobre imediatamente se a informação está presente e a recebe caso esteja, contornando segurança, fechaduras, criptografia e outros obstáculos. Dados chegam diretamente à mente. Dentro de uma hora, toque um livro em branco ou dispositivo de armazenamento e gaste um ponto de Essência para transcrever imediatamente a informação nele.",
+    "exceptionalSuccess": "Por um mês, pesquisas nesse acervo ocorrem com o dobro da velocidade e acrescentam Renome de Sabedoria à parada."
+  },
+  "gift-nature": {
+    "name": "Dom da Natureza"
+  },
+  "gift-nature:natures-lure": {
+    "name": "Atração da Natureza",
+    "description": "Atrai presas incautas para áreas selvagens.",
+    "cost": "1 Essência",
+    "dicePool": "Manipulação + Sobrevivência + Astúcia vs Compostura + Instinto Primitivo",
+    "action": "Instantânea",
+    "duration": "Uma cena",
+    "activationRequirement": "Escolha uma pessoa isolada ou um pequeno grupo de até Renome de Astúcia pessoas à margem de uma área selvagem. Não afeta Uratha nem afasta pessoas de um grupo maior. Parques urbanos e terrenos abandonados contam tanto quanto bosques rurais.",
+    "dramaticFailure": "A presa recebe Assombrado, recusa a atração e percebe que algo a chamou.",
+    "failure": "A Faceta falha.",
+    "success": "A presa recebe Atraído e uma forte vontade de alcançar o coração da área selvagem pelo restante da cena, atraída por algo desejável, sons intrigantes ou vontade de explorar. Enquanto permanecer na área selvagem, sofre uma penalidade de Iniciativa igual ao Renome de Astúcia.",
+    "exceptionalSuccess": "Também impõe uma penalidade de Percepção igual ao Renome de Astúcia enquanto a presa permanecer na área selvagem."
+  },
+  "gift-nature:black-earth-red-hunger": {
+    "name": "Terra Negra, Fome Vermelha",
+    "description": "Alimenta a terra com sangue e Essência para convocar vegetação voraz.",
+    "cost": "1 Essência",
+    "action": "Instantânea",
+    "activationRequirement": "Respingue no chão algumas gotas do sangue do Uratha ou de outra pessoa.",
+    "effect": "Ao longo de um minuto, vegetação irrompe em uma área com raio de até Renome de Glória × 10 jardas. Direcione o crescimento como desejar, incluindo trepadeiras, matagais espinhosos, labirintos de arbustos ou árvores. Plantas, musgo e fungos consomem completamente os cadáveres presentes na ativação, sem deixar ossos. Até o próximo nascer do sol, percebe perfeitamente criaturas com batimentos cardíacos na vegetação e criaturas sem batimentos que estejam sangrando. Durante qualquer turno em que outra criatura seja ferida e derrame sangue entre as plantas, a regeneração do Uratha cura dano letal sem gastar Essência."
+  },
+  "gift-nature:knotted-paths": {
+    "name": "Caminhos Enredados",
+    "description": "Distorce todas as rotas de fuga para levá-las de volta ao caçador.",
+    "cost": "1 Essência por presa escolhida",
+    "dicePool": "Raciocínio + Sobrevivência + Honra vs Compostura + Instinto Primitivo",
+    "action": "Disputada",
+    "duration": "Um dia",
+    "activationRequirement": "Escolha presas que o Uratha possa perceber dentro de uma área selvagem.",
+    "dramaticFailure": "A presa pode sair sem impedimentos e recebe +3 de Iniciativa se o Uratha atacar antes de ela partir.",
+    "failure": "A Faceta falha.",
+    "success": "A presa não consegue escapar da área atual pela duração, independentemente de seus esforços. Trilhas em bosques, terrenos urbanos abandonados e estradas de vales remotos se voltam sobre si mesmos em vez de alcançar os limites da área.",
+    "exceptionalSuccess": "Presas em um grupo logo se separam e perdem umas às outras de vista. Presas sozinhas recebem Paranoia da Sombra."
+  },
+  "gift-nature:pack-kin": {
+    "name": "Parentes da Alcateia",
+    "description": "Vincula os instintos de caça de um animal predador à alcateia.",
+    "cost": "1 Essência",
+    "dicePool": "Presença + Empatia com Animais + Pureza",
+    "action": "Prolongada (5 sucessos; 1 teste a cada 30 minutos)",
+    "activationRequirement": "O animal predador deve ao menos tolerar a presença do Uratha e não ser hostil. Interlocutor das Feras, do Dom da Caça, pode ajudar.",
+    "dramaticFailure": "O animal fica assustado, irado e hostil ao Uratha, encerrando a Faceta.",
+    "failure": "Não acumula sucessos e recebe Tropeço.",
+    "success": "Acumula sucessos. Ao atingir a meta, o animal torna-se um membro pleno e permanente da alcateia. Compreende ordens de qualquer membro, obedece lealmente a ordens que não sejam claramente autodestrutivas e recebe +3 para resistir a poderes sobrenaturais e Condições que afetem a mente e venham de fora da alcateia. O Uratha pode vincular até Renome de Pureza predadores por vez; cada Uratha com esta Faceta pode contribuir com seu próprio grupo.",
+    "exceptionalSuccess": "Facetas que cobrem Essência por membro da alcateia escolhido podem incluir o animal gratuitamente. Ele também recebe Aberto, mas apenas para o espírito totem da alcateia."
+  },
+  "gift-nature:beast-ride": {
+    "name": "Cavalgar a Fera",
+    "description": "Envia o espírito do Uratha para habitar a mente e os sentidos de um animal.",
+    "cost": "1 Essência",
+    "dicePool": "Raciocínio + Empatia com Animais + Sabedoria − Perseverança do animal",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha um mamífero, peixe, ave ou réptil que o Uratha possa perceber.",
+    "dramaticFailure": "Recebe Proibição: adota alguns maneirismos daquele tipo de criatura e fica profundamente fascinado por criaturas assim.",
+    "failure": "A Faceta falha.",
+    "success": "Habita a mente do animal por quanto tempo desejar, deixando-o agir por conta própria ou controlando-o diretamente. O Uratha não percebe pelos próprios sentidos e parece profundamente adormecido. Retornar aos próprios sentidos exige uma ação instantânea e encerra a Faceta. Se o animal morrer, retorna ao corpo e sofre um Ponto de Ruptura em direção ao Espírito. Se o corpo do Uratha morrer, um fragmento de seu espírito é incorporado ao animal, criando um Tomado único.",
+    "exceptionalSuccess": "Mantém alguma percepção dos arredores do próprio corpo e recebe um aviso se ele for ferido."
+  },
+  "gift-rage": {
+    "name": "Dom da Fúria"
+  },
+  "gift-rage:incite-fury": {
+    "name": "Incitar Fúria",
+    "description": "Provoca fúria imprudente com um rosnado sobrenaturalmente mordaz.",
+    "cost": "2 Essência",
+    "dicePool": "Manipulação + Subterfúgio + Astúcia vs Compostura + Instinto Primitivo",
+    "action": "Instantânea",
+    "activationRequirement": "Escolha um personagem que o Uratha possa perceber e que possa ouvir seu rosnado zombeteiro ou desafiador.",
+    "dramaticFailure": "O Uratha entra em Wasu-Im.",
+    "failure": "A Faceta não tem efeito.",
+    "success": "Presas Uratha entram em Wasu-Im; humanos e outros seres sobrenaturais recebem Frenético. Um Uratha só pode ser alvo uma vez por cena, após a qual sua fúria resiste à influência externa.",
+    "exceptionalSuccess": "Acrescenta Renome de Astúcia à próxima parada do Uratha para resistir à Fúria Assassina nesta cena."
+  },
+  "gift-rage:berserkers-might": {
+    "name": "Força do Berserker",
+    "description": "Suporta ferimentos graves com o poder da fúria.",
+    "cost": "1 Essência; nenhum em Basu-Im",
+    "action": "Reflexiva",
+    "activationRequirement": "Use uma vez por turno em Dalu ou Gauru.",
+    "effect": "Reduz o dano de uma fonte pelo Renome de Glória ou cura imediatamente um Tilt de lesão física, como Braço Lesionado, Cego ou Perna Lesionada. Em Basu-Im, o Uratha usa esta Faceta instintivamente e não gasta Essência."
+  },
+  "gift-rage:perfected-rage": {
+    "name": "Fúria Aperfeiçoada",
+    "description": "Canaliza a fúria para manter Gauru por mais tempo.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "activationRequirement": "Ative ao entrar em Gauru.",
+    "effect": "Acrescenta Renome de Honra à quantidade de turnos pela qual Gauru pode ser mantida."
+  },
+  "gift-rage:slaughterer": {
+    "name": "Massacrador",
+    "description": "Recorre à fúria para causar ferimentos ainda maiores.",
+    "cost": "1 Essência; nenhum em Basu-Im",
+    "action": "Reflexiva",
+    "activationRequirement": "Use em Gauru quando um ataque de Briga acertar.",
+    "effect": "Acrescenta Renome de Pureza ao dano causado. Em Basu-Im, o Uratha usa esta Faceta instintivamente e não gasta Essência."
+  },
+  "gift-rage:raging-lunacy": {
+    "name": "Lunagem Furiosa",
+    "description": "Transforma a visão enlouquecedora de Luna em uma centelha de fúria incontrolável.",
+    "cost": "1 Essência",
+    "action": "Reflexiva",
+    "duration": "Uma cena",
+    "activationRequirement": "Ative ao entrar em uma forma que provoque Lunagem.",
+    "effect": "Impõe Frenético às vítimas em vez de outra Condição de Lunagem."
   }
 }

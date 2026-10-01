@@ -398,6 +398,15 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - `Fearless Hunter`, `Pack Triumphs Together` e `Unity` continuam como poderes individuais consultáveis, sem Pack persistence, Initiative automática ou controle de cenas.
 - Loucura/Inspirado/Enamorado seguem os nomes localizados existentes para Madness/Inspired/Swooning. Shadow Paranoia → Paranoia da Sombra será uniformizado ao importar o catálogo correspondente. Ridden → Possuídos, Hosts → Hospedeiros e Claimed → Tomados são propostas editoriais de apresentação, não implementação dos antagonistas excluídos em W17.
 
+### Knowledge, Nature e Rage — terceiro lote de Shadow Gifts (WTF2 pp. 127–131)
+
+- Catálogo EN/PT com as quinze Facets de `Gift of Knowledge`, `Nature's Gift` e `Gift of Rage`, conferidas visualmente. `This Story Is True` não imprime Exceptional Success separado; preservar os três resultados, sem inventar um quarto.
+- **M09 — Lore of the Land Dice Pool:** WTF2 p. 128 apresenta Roll Results, mas omite Dice Pool. Em 2026-10-01, o usuário definiu **Intelligence + Survival + Purity**. Aplicar essa parada em inglês e português; é uma decisão explícita do projeto que preenche a lacuna, não uma errata oficial. A detecção adicional de criaturas e ameaças exige estar no território da própria alcateia e não revela seres em Twilight.
+- `Know Thy Prey`: Anonymity penaliza a parada, mas não há outra resistência do alvo; Alternate Identity/Fame não dependem do limite de sucessos aplicado aos seis outros Social Merits. `Sift the Sands` exige 10 sucessos, um teste por minuto; transcrição custa mais 1 Essence e deve ocorrer dentro de uma hora.
+- `Pack Kin` é referência de um poder individual, sem editor de animais ou vinculação de fichas. `Beast Ride` mantém as consequências distintas da morte do animal e da morte do corpo do Uratha, sem criar um modelo de Claimed.
+- `Black Earth, Red Hunger`, `Berserker's Might` e `Slaughterer` descrevem condições de regeneração, redução de dano e Cost; não curam, aplicam dano ou gastam Essence automaticamente. `Perfected Rage` informa turnos, sem contador, conforme W04.
+- Spooked → Assombrado, Stumbled → Tropeço e Lured → Atraído seguem a apresentação já utilizada. Berserk → Frenético segue a decisão anterior do usuário. Referências a Retainer/Staff e Beast Speaker reutilizam os nomes portugueses dos catálogos existentes.
+
 Sequência de implementação autorizada:
 
 1. Incorporar as decisões aprovadas, inclusive P01–P03, preservando as exclusões.

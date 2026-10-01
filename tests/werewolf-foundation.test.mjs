@@ -460,11 +460,11 @@ test("WtF 2e pp. 136–138 preserves all fifteen Wolf Facets and their EN/PT exc
   assert.match(facet("gift-pack:down-the-prey").options, /Defense against the attack was 0/);
 });
 
-test("WtF 2e pp. 121–127 preserves the first six Shadow Gifts with complete EN/PT text", () => {
-  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental", "gift-evasion", "gift-insight", "gift-inspiration"]);
+test("WtF 2e pp. 121–131 preserves the first nine Shadow Gifts with complete EN/PT text", () => {
+  assert.deepEqual(shadowGifts.map(gift => gift.id), ["gift-death", "gift-dominance", "gift-elemental", "gift-evasion", "gift-insight", "gift-inspiration", "gift-knowledge", "gift-nature", "gift-rage"]);
   const records = shadowGifts.flatMap(gift => [gift, ...gift.facets]);
-  assert.equal(records.length, 36);
-  assert.equal(new Set(records.map(item => item.id)).size, 36);
+  assert.equal(records.length, 54);
+  assert.equal(new Set(records.map(item => item.id)).size, 54);
   assert.deepEqual(new Set(Object.keys(shadowPresentation)), new Set(records.map(item => item.id)));
   for (const gift of shadowGifts) {
     assert.equal(gift.kind, "shadow");
@@ -476,7 +476,7 @@ test("WtF 2e pp. 121–127 preserves the first six Shadow Gifts with complete EN
       assert.equal(facet.level, undefined, "Shadow Facets are chosen by Renown, not ordered Moon levels");
       assert.equal(Boolean(facet.dicePool), facet.hasRoll);
       const results = ["dramaticFailure", "failure", "success", "exceptionalSuccess"].filter(key => facet[key]);
-      if (facet.id === "gift-evasion:fog-of-war") {
+      if (["gift-evasion:fog-of-war", "gift-knowledge:this-story-is-true"].includes(facet.id)) {
         assert.deepEqual(results, ["dramaticFailure", "failure", "success"]);
       } else assert.ok(results.length === 0 || results.length === 4);
       if (!facet.hasRoll) assert.equal(results.length, 0);
@@ -486,8 +486,8 @@ test("WtF 2e pp. 121–127 preserves the first six Shadow Gifts with complete EN
   for (const item of records) {
     assert.equal(item.sourceId, "wtf-2ed");
     assert.equal(item.source, "Werewolf: The Forsaken Second Edition");
-    assert.ok(item.page >= 121 && item.page <= 127);
-    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 127);
+    assert.ok(item.page >= 121 && item.page <= 131);
+    for (const page of item.additionalPages ?? []) assert.ok(page >= 121 && page <= 131);
     const fields = Object.entries(item).filter(([key, value]) => typeof value === "string" && !["id", "renown", "kind", "source", "sourceId"].includes(key));
     assert.deepEqual(new Set(Object.keys(shadowPresentation[item.id])), new Set(fields.map(([key]) => key)));
     for (const [field, text] of fields) assert.ok(text.length && shadowPresentation[item.id][field]?.length, `${item.id}.${field}`);
@@ -565,6 +565,71 @@ test("WtF 2e pp. 123–127 retains Evasion, Insight and Inspiration's conditiona
   assert.match(voice.exceptionalSuccess, /All Uratha present who can hear/);
 });
 
+test("WtF 2e pp. 127–131 retains Knowledge Nature and Rage exceptions and the adopted Lore of the Land pool", async () => {
+  const facet = id => shadowGifts.flatMap(gift => gift.facets).find(item => item.id === id);
+  const needle = facet("gift-knowledge:needle");
+  assert.equal(needle.dicePool, "Manipulation + Subterfuge + Cunning vs Composure + Primal Urge");
+  assert.match(needle.success, /research times are doubled/);
+  assert.equal(shadowPresentation[needle.id].name, "Agulha");
+  const story = facet("gift-knowledge:this-story-is-true");
+  assert.match(story.success, /two or fewer.*above five/);
+  assert.match(story.success, /another immediately removes the previous/);
+  assert.equal(story.exceptionalSuccess, undefined, "The source has no separate exceptional outcome");
+  const know = facet("gift-knowledge:know-thy-prey");
+  assert.match(know.activationRequirement, /Anonymity penalizes.*otherwise has no resistance/);
+  assert.match(know.failure, /same target this scene/);
+  assert.match(know.success, /Alternate Identity or Fame/);
+  assert.match(know.success, /dots do not exceed successes/);
+  const lore = facet("gift-knowledge:lore-of-the-land");
+  assert.equal(lore.dicePool, "Intelligence + Survival + Purity", "Explicit user decision fills the source omission");
+  assert.equal(shadowPresentation[lore.id].dicePool, "Inteligência + Sobrevivência + Pureza");
+  assert.match(lore.success, /In the pack's territory/);
+  assert.match(lore.success, /Purity Renown × 100 yards/);
+  assert.match(lore.success, /Twilight are not detected/);
+  const sift = facet("gift-knowledge:sift-the-sands");
+  assert.equal(sift.action, "Extended (10 successes; 1 roll per minute)");
+  assert.match(sift.success, /Within one hour.*spend 1 Essence/);
+  assert.match(sift.exceptionalSuccess, /one month.*double speed/);
+  const lure = facet("gift-nature:natures-lure");
+  assert.match(lure.activationRequirement, /Cannot affect Uratha.*larger group/);
+  assert.match(lure.success, /Initiative penalty/);
+  assert.match(lure.exceptionalSuccess, /Perception penalty/);
+  assert.match(shadowPresentation[lure.id].dramaticFailure, /Assombrado/);
+  const earth = facet("gift-nature:black-earth-red-hunger");
+  assert.match(earth.effect, /Over one minute.*Glory Renown × 10 yards/);
+  assert.match(earth.effect, /dead bodies present at activation/);
+  assert.match(earth.effect, /next sunrise/);
+  assert.match(earth.effect, /another creature is injured.*without paying Essence/);
+  const paths = facet("gift-nature:knotted-paths");
+  assert.match(paths.exceptionalSuccess, /group.*separated.*Lone prey gain Shadow Paranoia/);
+  const kin = facet("gift-nature:pack-kin");
+  assert.equal(kin.action, "Extended (5 successes; 1 roll per 30 minutes)");
+  assert.match(kin.success, /not obviously self-destructive/);
+  assert.match(kin.success, /each Uratha.*their own group/);
+  assert.match(kin.exceptionalSuccess, /animal for free.*Open.*only for the pack's totem/);
+  assert.match(shadowPresentation[kin.id].activationRequirement, /Interlocutor das Feras/);
+  const ride = facet("gift-nature:beast-ride");
+  assert.equal(ride.dicePool, "Wits + Animal Ken + Wisdom − animal's Resolve");
+  assert.match(ride.success, /animal dies.*breaking point towards Spirit/);
+  assert.match(ride.success, /body dies.*unique Claimed/);
+  const fury = facet("gift-rage:incite-fury");
+  assert.match(fury.success, /Uratha prey enter Wasu-Im.*other supernatural beings gain Berserk/);
+  assert.match(fury.success, /only once per scene/);
+  const might = facet("gift-rage:berserkers-might");
+  assert.match(might.activationRequirement, /once per turn.*Dalu or Gauru/);
+  assert.match(might.effect, /one source.*one physical-injury Tilt/);
+  assert.match(might.effect, /Basu-Im.*instinctively.*no Essence/);
+  const slaughter = facet("gift-rage:slaughterer");
+  assert.match(slaughter.activationRequirement, /Gauru.*Brawl attack hits/);
+  assert.match(slaughter.effect, /Purity Renown.*Basu-Im/);
+  assert.match(facet("gift-rage:perfected-rage").effect, /Honor Renown.*turns/);
+  assert.match(facet("gift-rage:raging-lunacy").effect, /Berserk.*instead of another Lunacy Condition/);
+  const { creationGiftSelection } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rules.ts");
+  const grants = creationGiftSelection(reference.auspices.find(item => item.id === "rahu"), reference.tribes.find(item => item.id === "blood-talons"), "Purity", giftCatalog.gifts,
+    { shadow_facets: [slaughter.id, "gift-inspiration:fearless-hunter"], wolf_facets: [] });
+  assert.deepEqual(grants.problems, [], "New Gift families are usable by creation's canonical validator");
+});
+
 test("Werewolf Gifts load only their canonical and Portuguese shards into an immutable snapshot", async () => {
   const { werewolfGiftsCatalogGroup } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/gifts.ts");
   const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
@@ -578,10 +643,10 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
     return structuredClone(fixtures[id]);
   } }));
   assert.deepEqual(calls, ["werewolf-gifts-core-moon", "werewolf-gifts-core-moon-pt", "werewolf-gifts-core-wolf", "werewolf-gifts-core-wolf-pt", "werewolf-gifts-core-shadow", "werewolf-gifts-core-shadow-pt"]);
-  assert.equal(snapshot.gifts.length, 14);
-  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 70);
+  assert.equal(snapshot.gifts.length, 17);
+  assert.equal(snapshot.gifts.flatMap(gift => gift.facets).length, 85);
   assert.deepEqual(snapshot.gifts.map(gift => gift.id), [...moonGifts, ...wolfGifts, ...shadowGifts].map(gift => gift.id));
-  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 84);
+  assert.equal(new Set(snapshot.gifts.flatMap(gift => [gift.id, ...gift.facets.map(facet => facet.id)])).size, 102);
   assert.ok(Object.isFrozen(snapshot.gifts[0].facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation[snapshot.gifts[0].facets[0].id]));
   assert.ok(Object.isFrozen(snapshot.gifts[5].facets[0]));
@@ -590,4 +655,5 @@ test("Werewolf Gifts load only their canonical and Portuguese shards into an imm
   assert.ok(Object.isFrozen(snapshot.presentation["gift-elemental:catastrophe"]));
   assert.ok(Object.isFrozen(snapshot.gifts.at(-1).facets[0]));
   assert.ok(Object.isFrozen(snapshot.presentation["gift-inspiration:still-small-voice"]));
+  assert.ok(Object.isFrozen(snapshot.presentation["gift-rage:raging-lunacy"]));
 });

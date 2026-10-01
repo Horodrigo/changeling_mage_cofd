@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 29,
+  "catalogVersion": 30,
   "catalogs": {
-    "werewolf-gifts-core-shadow": { "version": 2, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow.json" },
-    "werewolf-gifts-core-shadow-pt": { "version": 2, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json" },
+    "werewolf-gifts-core-shadow": { "version": 3, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow.json" },
+    "werewolf-gifts-core-shadow-pt": { "version": 3, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json" },
     "werewolf-gifts-core-wolf": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf.json" },
     "werewolf-gifts-core-wolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json" },
     "werewolf-gifts-core-moon": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon.json" },
