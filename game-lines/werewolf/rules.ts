@@ -6,6 +6,7 @@ import { boundedHarmony, boundedPrimalUrge, formTraits, type WerewolfCreationCho
 import { resolveWerewolfMerits, type AuspiceSkillGrant } from "./creation-grants";
 import { FORM_MECHANICS, PERMANENT_MERIT_IDENTITIES, RENOWN_IDS } from "./mechanics";
 import { fetishSelections } from "./fetish-rules";
+import { totemSelection, totemState } from "./totem-rules";
 
 const text = (value: unknown) => typeof value === "string" ? value : "";
 export const werewolfIds = (value: unknown): string[] => Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : [];
@@ -54,6 +55,9 @@ export const werewolfRules: GameLineRulesModule = {
   normalizeCharacter(character) {
     if (character.game_line !== "WtF") throw new Error("Werewolf rules received another game line.");
     const data = character.line_data;
+    const totem = totemSelection(data.totem);
+    const state = character.current_state.werewolf_totem;
+    if (state != null) totemState(state, totem?.instanceId ?? "unassigned");
     return { ...character, line_data: {
       ...data, harmony: boundedHarmony(data.harmony), primal_urge: boundedPrimalUrge(data.primal_urge),
       renown: renownRatings(data.renown), experience_renown: renownRatings(data.experience_renown),
@@ -63,6 +67,7 @@ export const werewolfRules: GameLineRulesModule = {
       creation_facets: werewolfIds(data.creation_facets), learned_facets: werewolfIds(data.learned_facets),
       creation_rites: werewolfIds(data.creation_rites), learned_rites: werewolfIds(data.learned_rites),
       fetishes: fetishSelections(data.fetishes),
+      totem,
       blood: text(data.blood), bone: text(data.bone), auspice_id: text(data.auspice_id), tribe_id: text(data.tribe_id),
       physical_touchstone: text(data.physical_touchstone), spiritual_touchstone: text(data.spiritual_touchstone),
     } };

@@ -26,7 +26,8 @@ import type { WerewolfRiteCatalog } from "./catalogs/rites";
 import type { WerewolfFetishCatalog } from "./catalogs/fetishes";
 import { FetishInventory } from "./fetishes";
 import { fetishSelections } from "./fetish-rules";
-import { TotemReference } from "./totem-reference";
+import { TotemEditor } from "./totem";
+import { personalTotemPoints, totemSelection, totemState } from "./totem-rules";
 import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { boundedHarmony, boundedPrimalUrge, primalUrgeLevel } from "./creation-rules";
 import { resolveWerewolfMerits, werewolfMeritDefinition } from "./creation-grants";
@@ -59,6 +60,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const merits = [...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")];
   const core = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const data = character.line_data, state = character.current_state;
+  const selectedTotem = totemSelection(data.totem);
   const setState = (key: string, value: unknown) => updateState({ ...state, [key]: value });
   const setLine = (key: string, value: unknown) => updateSheet({ ...character, line_data: { ...data, [key]: value } });
   const setForm = (value: string) => updateState(changeWerewolfForm(character, value));
@@ -151,7 +153,8 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       return rite ? <details className="wtf-rule-disclosure" key={id}><summary>{locale === "pt-BR" ? rites.presentation.rites[id]?.name ?? rite.name : rite.name} · {rite.dots}</summary><RiteRules rite={rite} catalog={rites}/></details> : <p key={id}>{t("werewolf.missingSelectedRite", { id })}</p>;
     })}
     <FetishInventory value={fetishSelections(data.fetishes)} onChange={value => setLine("fetishes", value)} catalog={fetishes} gifts={gifts}/>
-    <TotemReference catalog={totem}/>
+    <TotemEditor value={selectedTotem} onChange={value => setLine("totem", value)} personalPoints={personalTotemPoints(character.merits, merits)} catalog={totem}
+      state={selectedTotem ? totemState(state.werewolf_totem, selectedTotem.instanceId) : undefined} onStateChange={value => setState("werewolf_totem", value)}/>
   </>;
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
   const activeTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";

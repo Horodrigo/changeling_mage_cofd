@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Input } from "@/components/ui/input";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { SheetHeading } from "@/app/workspace/sheet-primitives";
@@ -12,13 +12,14 @@ import "./styles/totem.css";
 const SAMPLE_FIELDS = ["concept", "aspiration", "points", "rank", "power", "finesse", "resistance", "willpower", "essence", "initiative", "defense", "speed", "size", "corpus", "influences", "manifestations", "numina", "ban", "bane", "advantage"] as const satisfies readonly (keyof TotemSample)[];
 
 /** Read-only references: no Pack entity, purchases, resource recovery or derived-state mutation. */
-export function TotemReference({ catalog }: { catalog: WerewolfTotemCatalog }) {
+export function TotemReference({ catalog, children }: { catalog: WerewolfTotemCatalog; children?: ReactNode }) {
   const { locale, t } = useLanguage();
   const [search, setSearch] = useState("");
   const query = search.trim().toLocaleLowerCase(locale);
   const samples = catalog.samples.map(sample => totemSamplePresentation(sample, catalog, locale)).filter(sample =>
     [sample.name, sample.epithet, sample.concept, sample.description, sample.source].join(" ").toLocaleLowerCase(locale).includes(query)).sort((a, b) => a.name.localeCompare(b.name, locale));
   return <section className="wtf-totem-reference"><SheetHeading>{t("werewolf.totem")}</SheetHeading>
+    {children}
     <details className="wtf-rule-disclosure"><summary>{t("werewolf.totemReference")}</summary>
       <p className="wtf-rule-field">{t("werewolf.totemReferenceNote")}</p>
       {catalog.rules.map(rule => <PassiveRules key={rule.id} rule={rule} reference={{ presentation: catalog.presentation.rules }}/>) }

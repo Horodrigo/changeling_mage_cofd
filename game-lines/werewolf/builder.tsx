@@ -23,7 +23,8 @@ import type { WerewolfRiteCatalog } from "./catalogs/rites";
 import type { WerewolfFetishCatalog } from "./catalogs/fetishes";
 import { FetishInventory } from "./fetishes";
 import { fetishSelections, type FetishSelection } from "./fetish-rules";
-import { TotemReference } from "./totem-reference";
+import { TotemEditor } from "./totem";
+import { personalTotemPoints, totemSelection, type TotemSelection } from "./totem-rules";
 import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { WerewolfCreationTemplate } from "./builder-template";
 import { creationAuspiceSkill, creationGiftSelection, creationMeritBudget, creationTemplateProblems, formTraits, type WerewolfCreationChoices } from "./creation-rules";
@@ -51,11 +52,12 @@ function purchasedTraits(values: Record<string, number>, source: CharacterSheet 
 }
 
 /** The owning Builder constructs its line_data; Core still owns only the outer schema. */
-export function buildWerewolfCharacter({ source, identity, attributes, skills, specialties, aspirations, merits, choices, reference, gifts, rites, meritCatalog, fetishes, draft = false, step = 1, allowAdvancement = false }: {
+export function buildWerewolfCharacter({ source, identity, attributes, skills, specialties, aspirations, merits, choices, reference, gifts, rites, meritCatalog, fetishes, totem, draft = false, step = 1, allowAdvancement = false }: {
   source?: CharacterSheet | null; identity: CharacterSheet["character"]; attributes: Record<string, number>; skills: Record<string, number>;
   specialties: Specialty[]; aspirations: string[]; merits: MeritSelection[]; choices: WerewolfCreationChoices;
   reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; meritCatalog: readonly MeritDefinition[]; draft?: boolean; step?: number; allowAdvancement?: boolean;
   fetishes?: readonly FetishSelection[];
+  totem?: TotemSelection | null;
 }): CharacterSheet {
   if (source && source.game_line !== "WtF") throw new Error("Werewolf builder received another game line.");
   const problems = creationTemplateProblems(choices, reference, skills, gifts.gifts, rites.rites);
@@ -91,6 +93,7 @@ export function buildWerewolfCharacter({ source, identity, attributes, skills, s
       creation_facets: [...(grants?.moonFacetIds ?? []), ...choices.shadow_facets, ...choices.wolf_facets],
       learned_facets: werewolfIds(source?.line_data.learned_facets), creation_rites: [...choices.rites], learned_rites: werewolfIds(source?.line_data.learned_rites),
       fetishes: fetishSelections(fetishes ?? source?.line_data.fetishes),
+      totem: totemSelection(totem === undefined ? source?.line_data.totem : totem),
     },
     derived: {}, current_state: builderCurrentState(source, draft, step, allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
   };
@@ -112,6 +115,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const fetishCatalog = catalogs.get<WerewolfFetishCatalog>("werewolf-fetishes");
   const totemCatalog = catalogs.get<WerewolfTotemCatalog>("werewolf-totem");
   const [fetishes, setFetishes] = useState(() => fetishSelections(initial?.line_data.fetishes));
+  const [totem, setTotem] = useState(() => totemSelection(initial?.line_data.totem));
   const preferences = useHomebrewPreferences();
   const meritCatalog = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, initial?.merits.map(item => item.name));
   const common = useCommonBuilderState(initial, player, { experienceHistoryKey: HISTORY_KEY, purchasedSpecialties: werewolfExperienceSpecialties(initial),
@@ -171,7 +175,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   }
   const missing = (key: string) => issues.some(issue => issue.key === key);
   const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => buildWerewolfCharacter({ source, identity: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
-    attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, fetishes, draft, step: common.step, allowAdvancement: common.allowAdvancement });
+    attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, fetishes, totem, draft, step: common.step, allowAdvancement: common.allowAdvancement });
   const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) { common.setError(`${t("ui.stillRequired")}: ${issues.map(issue => issue.label).join(", ")}.`); common.setStep(issues[0].step); return false; }
     const sheet = buildCharacter(advancement ?? initial, draft);
@@ -194,7 +198,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
               : <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={meritCatalog} ownedMerits={ownedMerits} inline={inline} definitions={COMMON_MERIT_CONFIGURATIONS}/>;
           }}/>
       </div><div className="builder-section"><FetishInventory value={fetishes} onChange={setFetishes} catalog={fetishCatalog} gifts={gifts}/></div>
-      <div className="builder-section"><TotemReference catalog={totemCatalog}/></div></>}/>;
+      <div className="builder-section"><TotemEditor value={totem} onChange={setTotem} personalPoints={personalTotemPoints(allMerits, meritCatalog)} catalog={totemCatalog}/></div></>}/>;
 }
 
 export const werewolfBuilder: GameLineBuilderModule = { Component: WerewolfCharacterBuilder };
