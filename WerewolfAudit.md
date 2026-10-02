@@ -415,6 +415,15 @@ WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF f�
 - **W16 permanece aberto:** melhorias com custos/origem registrados e alocações separadas dos benefícios de Advantage ainda não foram implementadas. O editor atual deixa essa limitação explícita; não representa a conclusão de W16 nem da meta.
 - Smoke autorizado em fixture sintética local: configuração em Details/Powers, Rank 1 com contribuição pessoal/manual, seleção de Numina e Manifestations, bloqueios de orçamento/prerequisites, Corpus excedente preservado, recursos independentes e escolhas mantidas ao voltar ao Builder. Desktop/mobile EN/PT sem overflow horizontal ou erros de console; Health do Uratha permaneceu em 7/11, sem cura. Textos longos usam a gravação ao sair do campo estabelecida nas Notes. Quality gates: lint, build, TypeScript e diff-check aprovados, 420/420 testes.
 
+### Melhorias individuais de Totem — 2026-10-02
+
+- The Pack pp. 63–64 e WTF2 p. 92 reconferidos visualmente. Registros separados em `line_data.totem.improvements` acrescentam um Attribute dot, Influence dot ou Numen, pelos custos impressos de 4/5/4. Cada registro retém ID próprio, alvo canônico/instance ID, origem autoral e data; novos Influence domains também têm identidade independente.
+- As alocações iniciais não são sobrescritas nem aumentadas silenciosamente. Characteristics/Rank/derived traits do Totem usam as melhorias registradas; Influence/Numina pagos não consomem suas concessões ou trocas iniciais. Limites normais de Rank e increased potential do vínculo são verificados, sem conceder automaticamente novos poderes ao aumentar Rank.
+- Conforme W11/W12, não há Pack Experiences, conta coletiva, membros vinculados ou gasto/refund automático do XP individual. A origem dos recursos é declarada após resolução na mesa. A correção de um registro retira só seu benefício e não devolve saldo a uma conta inexistente; dependências são verificadas por registro exato, inclusive quando há outra inconsistência pré-existente.
+- Não foi inventado um custo de compra para Manifestations: a tabela de melhorias de The Pack contém somente Attributes, Influence e Numina. As Manifestations/trocas iniciais continuam no editor já implementado. Recursos e damage, incluindo excedente de Corpus, permanecem inteiramente manuais e preservados.
+- **W16 continua aberto:** alocação dos benefícios de Totem Advantage e overlays individuais separados dos Attributes básicos ainda precisam ser integrados. O registro de melhorias não conclui W16 nem a meta.
+- Verificação: 422/422 testes gerais e 41/41 testes Werewolf, lint/build/TypeScript/diff-check aprovados. Smoke sintético desktop/mobile EN/PT registrou Attribute, novo Influence domain e Numen com custos 4/5/4, preservou campos iniciais e origem autoral e confirmou placeholder explícito, modal sem overflow e Health do Uratha inalterada (7/11).
+
 ### Notas editoriais do catálogo Moon Gifts — WTF2 pp. 115–121
 
 - `Thousand-Throat Howl`: o livro escreve `Intimidate` no Dice Pool; o catálogo usa a identidade canônica da Skill `Intimidation`, sem interpretar nomes traduzidos em tempo de execução.

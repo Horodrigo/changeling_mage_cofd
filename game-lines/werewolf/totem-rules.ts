@@ -13,7 +13,10 @@ export type TotemSelection = {
   externalPoints: number; attributes: Record<TotemAttribute, number>; size: number; speciesFactor: number;
   influences: Array<{ instanceId: string; domain: string; dots: number }>;
   numina: string[]; manifestations: string[];
+  improvements?: TotemImprovement[];
 };
+export type TotemImprovement = { id: string; kind: "attribute" | "influence" | "numen"; target: string; domain?: string; experience: number; origin: string; createdAt: string };
+export type TotemImprovementProblem = "initial" | "target" | "duplicate" | "attributeLimit" | "influenceLimit" | "numinaLimit" | "cost" | "origin";
 export type TotemState = { instanceId: string; essence: number; willpower: number; damage: DamageLevel[]; dormant: boolean };
 export type TotemProblem = "identity" | "rank" | "attributeBudget" | "attributeDistribution" | "traitMaximum" | "twilight" | "powerBudget" | "unallocatedPowers" | "influence" | "duplicateInfluence" | "missingPower" | "powerRank" | "powerPrerequisites";
 
@@ -39,6 +42,16 @@ export function totemSelection(value: unknown): TotemSelection | null {
       throw new Error("Invalid Werewolf Totem Influence.");
     ids.add(influence.instanceId as string);
   }
+  if (record.improvements != null) {
+    if (!Array.isArray(record.improvements)) throw new Error("Invalid Werewolf Totem improvements.");
+    const improvementIds = new Set<string>();
+    for (const item of record.improvements) {
+      const entry = asRecord(item);
+      if (!identity(entry.id) || improvementIds.has(entry.id as string) || typeof entry.kind !== "string" || !["attribute", "influence", "numen"].includes(entry.kind) || !identity(entry.target)
+        || !whole(entry.experience, 1000) || typeof entry.origin !== "string" || (entry.domain !== undefined && typeof entry.domain !== "string") || typeof entry.createdAt !== "string" || !Number.isFinite(Date.parse(entry.createdAt))) throw new Error("Invalid Werewolf Totem improvement.");
+      improvementIds.add(entry.id as string);
+    }
+  }
   return structuredClone(record) as TotemSelection;
 }
 
@@ -62,13 +75,35 @@ export function totemState(value: unknown, instanceId: string): TotemState {
   return { ...record, damage: normalizeDamage(record.damage, record.damage.length) } as TotemState;
 }
 
-export function totemTraits(value: TotemSelection, personalPoints: number, catalog: WerewolfTotemCatalog, dormant = false) {
+/** Purchased dots/powers are overlays, never reclassified as initial allocations. No resource or XP mutations. */
+export function effectiveTotem(value: TotemSelection): TotemSelection {
+  const result = structuredClone(value);
+  for (const entry of value.improvements ?? []) {
+    if (entry.kind === "attribute" && TOTEM_ATTRIBUTES.includes(entry.target as TotemAttribute)) result.attributes[entry.target as TotemAttribute] += 1;
+    if (entry.kind === "influence") {
+      let influence = result.influences.find(item => item.instanceId === entry.target);
+      if (!influence && entry.domain?.trim()) {
+        influence = { instanceId: entry.target, domain: entry.domain, dots: 0 };
+        result.influences.push(influence);
+      }
+      if (influence) influence.dots += 1;
+    }
+    if (entry.kind === "numen" && !result.numina.includes(entry.target)) result.numina.push(entry.target);
+  }
+  return result;
+}
+
+export function totemTraits(value: TotemSelection, personalPoints: number, catalog: WerewolfTotemCatalog, dormant = false, initial = false) {
+  const base = value;
+  if (!initial) value = effectiveTotem(value);
   const points = personalPoints + value.externalPoints, total = TOTEM_ATTRIBUTES.reduce((sum, key) => sum + value.attributes[key], 0);
   const rank = catalog.ranks.find(rank => total >= rank.attributeMinimum && total <= rank.attributeMaximum) ?? null;
   const { power, finesse, resistance } = value.attributes;
-  const manifestExchanges = Math.max(0, value.manifestations.filter(id => id !== "manifestation:twilight-form").length - (rank?.rank ?? 0));
+  const initialTotal = TOTEM_ATTRIBUTES.reduce((sum, key) => sum + base.attributes[key], 0);
+  const initialRank = catalog.ranks.find(rank => initialTotal >= rank.attributeMinimum && initialTotal <= rank.attributeMaximum);
+  const manifestExchanges = Math.max(0, base.manifestations.filter(id => id !== "manifestation:twilight-form").length - (initialRank?.rank ?? 0));
   const influenceDots = value.influences.reduce((sum, influence) => sum + influence.dots, 0);
-  const influenceExchanges = Math.max(0, influenceDots - (rank?.rank ?? 0));
+  const influenceExchanges = Math.max(0, base.influences.reduce((sum, influence) => sum + influence.dots, 0) - (initialRank?.rank ?? 0));
   const numinaBudget = Math.max(0, 1 + Math.floor(points / 4) - manifestExchanges - influenceExchanges);
   const advantage = catalog.advantageBands.find(band => points >= band.minimum && (band.maximum == null || points <= band.maximum))?.experience ?? 0;
   return { points, total, rank, influenceDots, influenceExchanges, manifestExchanges, numinaBudget, advantage,
@@ -87,7 +122,7 @@ export function totemPowerProblems(power: TotemPower, value: TotemSelection, ran
 
 /** Incomplete optional configurations remain editable. Invalid allocations never masquerade as approved creation. */
 export function totemCreationProblems(value: TotemSelection, personalPoints: number, catalog: WerewolfTotemCatalog) {
-  const traits = totemTraits(value, personalPoints, catalog), problems: TotemProblem[] = [];
+  const traits = totemTraits(value, personalPoints, catalog, false, true), problems: TotemProblem[] = [];
   if ([value.name, value.concept, value.aspiration, value.ban, value.bane].some(text => !text.trim())) problems.push("identity");
   if (!traits.rank) problems.push("rank");
   if (traits.total !== traits.points) problems.push("attributeBudget");
@@ -104,4 +139,52 @@ export function totemCreationProblems(value: TotemSelection, personalPoints: num
     else problems.push(...totemPowerProblems(power, value, traits.rank?.rank));
   }
   return [...new Set(problems)];
+}
+
+/** Replay exact entries to check dependencies and limits. Funding is resolved outside this individual sheet. */
+function totemImprovementIssues(value: TotemSelection, personalPoints: number, catalog: WerewolfTotemCatalog) {
+  // ponytail: O(n²) replay for small personal ledgers; use an incremental overlay if large histories become slow.
+  const issues: Array<{ id: string; problem: TotemImprovementProblem }> = [];
+  if (totemCreationProblems(value, personalPoints, catalog).length) issues.push({ id: "initial", problem: "initial" });
+  const replay = { ...value, improvements: [] as TotemImprovement[] };
+  for (const entry of value.improvements ?? []) {
+    const add = (problem: TotemImprovementProblem) => issues.push({ id: entry.id, problem });
+    if (!entry.origin.trim()) add("origin");
+    if (entry.experience !== catalog.improvementCosts[entry.kind]) add("cost");
+    const current = effectiveTotem(replay);
+    if (entry.kind === "attribute" && !TOTEM_ATTRIBUTES.includes(entry.target as TotemAttribute)) add("target");
+    if (entry.kind === "influence" && !current.influences.some(item => item.instanceId === entry.target && item.domain.trim()) && !entry.domain?.trim()) add("target");
+    if (entry.kind === "influence" && entry.domain && current.influences.some(item => item.instanceId !== entry.target && item.domain.trim().toLowerCase() === entry.domain!.trim().toLowerCase())) add("duplicate");
+    if (entry.kind === "numen") {
+      if (!catalog.powers.some(power => power.id === entry.target && power.kind === "numen")) add("target");
+      if (current.numina.includes(entry.target)) add("duplicate");
+    }
+    replay.improvements.push(entry);
+    const updated = effectiveTotem(replay), traits = totemTraits(replay, personalPoints, catalog);
+    if (!traits.rank || TOTEM_ATTRIBUTES.some(attribute => updated.attributes[attribute] > traits.rank!.traitMaximum)) add("attributeLimit");
+    if (traits.influenceDots > Math.max(traits.points, traits.rank?.rank ?? 0)) add("influenceLimit");
+    if (updated.numina.length > Math.max(traits.points, traits.rank?.numinaMaximum ?? 0)) add("numinaLimit");
+  }
+  return issues;
+}
+
+export function totemImprovementProblems(value: TotemSelection, personalPoints: number, catalog: WerewolfTotemCatalog): TotemImprovementProblem[] {
+  return [...new Set(totemImprovementIssues(value, personalPoints, catalog).map(issue => issue.problem))];
+}
+
+export function recordTotemImprovement(value: TotemSelection, kind: TotemImprovement["kind"], target: string, origin: string, personalPoints: number, catalog: WerewolfTotemCatalog, domain?: string): TotemSelection {
+  const candidate = { ...value, improvements: [...(value.improvements ?? []), { id: createRandomId(), kind, target, origin: origin.trim(), experience: catalog.improvementCosts[kind], createdAt: new Date().toISOString(), ...(domain == null ? {} : { domain: domain.trim() }) }] };
+  totemSelection(candidate);
+  const problems = totemImprovementProblems(candidate, personalPoints, catalog);
+  if (problems.length) throw new Error(`Invalid Totem improvement: ${problems.join(", ")}.`);
+  return candidate;
+}
+
+/** Removal is local ledger correction, not a refund to any Uratha/Pack account. Reject newly invalid dependencies. */
+export function removeTotemImprovement(value: TotemSelection, id: string, personalPoints: number, catalog: WerewolfTotemCatalog): TotemSelection {
+  if (!value.improvements?.some(entry => entry.id === id)) throw new Error("Unknown Totem improvement.");
+  const candidate = { ...value, improvements: value.improvements.filter(entry => entry.id !== id) };
+  const previous = new Set(totemImprovementIssues(value, personalPoints, catalog).map(issue => `${issue.id}:${issue.problem}`));
+  if (totemImprovementIssues(candidate, personalPoints, catalog).some(issue => !previous.has(`${issue.id}:${issue.problem}`))) throw new Error("Totem improvement has dependent allocations.");
+  return candidate;
 }

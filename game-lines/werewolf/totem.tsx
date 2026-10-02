@@ -12,15 +12,16 @@ import { createRandomId } from "@/lib/random-id";
 import { useLanguage } from "@/lib/i18n";
 import { PassiveRules } from "./passives";
 import { TotemReference } from "./totem-reference";
+import { TotemImprovements } from "./totem-improvements";
 import type { TotemPower, WerewolfTotemCatalog } from "./catalogs/totem";
-import { newTotem, TOTEM_ATTRIBUTES, totemCreationProblems, totemPowerProblems, totemTraits, type TotemSelection, type TotemState } from "./totem-rules";
+import { effectiveTotem, newTotem, TOTEM_ATTRIBUTES, totemCreationProblems, totemPowerProblems, totemTraits, type TotemSelection, type TotemState } from "./totem-rules";
 
 function TotemPowerPicker({ kind, value, onChange, personalPoints, catalog }: {
   kind: "numen" | "manifestation"; value: TotemSelection; onChange: (value: TotemSelection) => void; personalPoints: number; catalog: WerewolfTotemCatalog;
 }) {
   const { locale, t } = useLanguage(), [search, setSearch] = useState(""), [reaching, setReaching] = useState("all");
   const key = kind === "numen" ? "numina" : "manifestations";
-  const traits = totemTraits(value, personalPoints, catalog);
+  const traits = totemTraits(value, personalPoints, catalog, false, true);
   const powerName = (power: TotemPower) => locale === "pt-BR" ? catalog.presentation.powers[power.id]?.name ?? power.name : power.name;
   const powers = catalog.powers.filter(power => power.kind === kind && (reaching === "all" || Boolean(power.reaching) === (reaching === "yes")) &&
     [powerName(power), power.source, ...power.fields.map(field => locale === "pt-BR" ? catalog.presentation.powers[power.id]?.fields?.[field.id]?.text ?? field.text : field.text)].join(" ").toLocaleLowerCase(locale).includes(search.trim().toLocaleLowerCase(locale)))
@@ -30,7 +31,7 @@ function TotemPowerPicker({ kind, value, onChange, personalPoints, catalog }: {
       {kind === "numen" && <label>{t("werewolf.totemReaching")}<RuleSelect value={reaching} onChange={setReaching} options={[{ value: "all", label: t("ui.all"), localized: true }, { value: "yes", label: t("werewolf.totemReachingYes"), localized: true }, { value: "no", label: t("werewolf.totemReachingNo"), localized: true }]}/></label>}
     </div>
     {powers.map(power => {
-      const selected = value[key].includes(power.id), candidate = { ...value, [key]: [...value[key], power.id] };
+      const selected = effectiveTotem(value)[key].includes(power.id), candidate = { ...value, [key]: [...value[key], power.id] };
       const problems = [...totemPowerProblems(power, value, traits.rank?.rank), ...totemCreationProblems(candidate, personalPoints, catalog).filter(problem => problem === "powerBudget")];
       return <div className="wtf-totem-power-row" key={power.id}><PassiveRules rule={power} reference={{ presentation: catalog.presentation.powers }}>
         {problems.map(problem => <p className="wtf-rule-field" key={problem}>{t(problem === "unallocatedPowers" ? "werewolf.totemUnallocatedPowers" : `werewolf.totemProblem.${problem}`)}</p>)}
@@ -50,6 +51,7 @@ export function TotemEditor({ value, onChange, personalPoints, catalog, state, o
   const change = (patch: Partial<TotemSelection>) => onChange({ ...value, ...patch });
   const dormant = Boolean(state && (state.dormant || state.essence === 0));
   const traits = totemTraits(value, personalPoints, catalog, dormant), problems = totemCreationProblems(value, personalPoints, catalog);
+  const initialTraits = totemTraits(value, personalPoints, catalog, false, true);
   const numberChange = (raw: string, maximum: number, apply: (value: number) => void) => { const number = Number(raw); if (Number.isSafeInteger(number) && number >= 0 && number <= maximum) apply(number); };
   const name = (id: string) => { const power = catalog.powers.find(power => power.id === id); return power ? locale === "pt-BR" ? catalog.presentation.powers[id]?.name ?? power.name : power.name : id; };
   return <TotemReference catalog={catalog}>
@@ -64,7 +66,7 @@ export function TotemEditor({ value, onChange, personalPoints, catalog, state, o
       <p className="wtf-rule-field">{t("werewolf.totemPointsSummary", { personal: personalPoints, external: value.externalPoints, total: traits.points })}</p>
       <p className="wtf-rule-field"><strong>{t("werewolf.totemFields.rank")}:</strong>{" "}{traits.rank ? `${traits.rank.rank} · ${traits.rank.title}` : t("werewolf.totemUnallocatedRank")}</p>
       <div className="wtf-totem-attribute-grid">{TOTEM_ATTRIBUTES.map(attribute => <label key={attribute}>{t(`werewolf.totemFields.${attribute}`)}<Input type="number" min={0} max={15} step={1} value={value.attributes[attribute]} onChange={event => numberChange(event.target.value, 15, dots => change({ attributes: { ...value.attributes, [attribute]: dots } }))}/></label>)}</div>
-      <p className="wtf-rule-field">{t("werewolf.totemAttributesSummary", { spent: traits.total, budget: traits.points })}</p>
+      <p className="wtf-rule-field">{t("werewolf.totemAttributesSummary", { spent: initialTraits.total, budget: initialTraits.points })}</p>
       <div className="wtf-totem-editor-grid">
         <label>{t("werewolf.totemFields.size")}<Input type="number" min={0} max={1000} step={1} value={value.size} onChange={event => numberChange(event.target.value, 1000, size => change({ size }))}/></label>
         <label>{t("werewolf.totemSpeciesFactor")}<Input type="number" min={0} max={1000} step={1} value={value.speciesFactor} onChange={event => numberChange(event.target.value, 1000, speciesFactor => change({ speciesFactor }))}/></label>
@@ -75,7 +77,7 @@ export function TotemEditor({ value, onChange, personalPoints, catalog, state, o
       <p className="wtf-rule-field">{t("werewolf.totemAdvantagePending", { amount: traits.advantage })}</p>
       {problems.length > 0 && <div role="status" className="wtf-totem-problems"><strong>{t("werewolf.totemIncomplete")}:</strong>{problems.map(problem => <p key={problem}>{t(problem === "unallocatedPowers" ? "werewolf.totemUnallocatedPowers" : `werewolf.totemProblem.${problem}`)}</p>)}</div>}
       <details className="wtf-rule-disclosure"><summary>{t("werewolf.totemFields.influences")}</summary>
-        <p className="wtf-rule-field">{t("werewolf.totemInfluenceSummary", { spent: traits.influenceDots, budget: traits.rank?.rank ?? 0, exchanged: traits.influenceExchanges })}</p>
+        <p className="wtf-rule-field">{t("werewolf.totemInfluenceSummary", { spent: initialTraits.influenceDots, budget: initialTraits.rank?.rank ?? 0, exchanged: initialTraits.influenceExchanges })}</p>
         {value.influences.map(influence => <div className="wtf-totem-influence-row" key={influence.instanceId}>
           <label>{t("werewolf.totemDomain")}<Input value={influence.domain} onChange={event => change({ influences: value.influences.map(item => item.instanceId === influence.instanceId ? { ...item, domain: event.target.value } : item) })}/></label>
           <label>{t("werewolf.fetishDots")}<Input type="number" min={0} max={1000} step={1} value={influence.dots} onChange={event => numberChange(event.target.value, 1000, dots => change({ influences: value.influences.map(item => item.instanceId === influence.instanceId ? { ...item, dots } : item) }))}/></label>
@@ -86,7 +88,7 @@ export function TotemEditor({ value, onChange, personalPoints, catalog, state, o
       {(["numen", "manifestation"] as const).map(kind => {
         const key = kind === "numen" ? "numina" : "manifestations";
         return <details className="wtf-rule-disclosure" key={kind}><summary>{t(`werewolf.totemFields.${key}`)}</summary>
-          <p className="wtf-rule-field">{kind === "numen" ? t("werewolf.totemNuminaSummary", { spent: value.numina.length, budget: traits.numinaBudget }) : t("werewolf.totemManifestationSummary", { budget: traits.rank?.rank ?? 0, exchanged: traits.manifestExchanges })}</p>
+          <p className="wtf-rule-field">{kind === "numen" ? t("werewolf.totemNuminaSummary", { spent: value.numina.length, budget: initialTraits.numinaBudget }) : t("werewolf.totemManifestationSummary", { budget: initialTraits.rank?.rank ?? 0, exchanged: initialTraits.manifestExchanges })}</p>
           <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline">{t(kind === "numen" ? "werewolf.totemChooseNumina" : "werewolf.totemChooseManifestations")}</Button></DialogTrigger>
             <DialogContent className="wtf-catalog-dialog"><DialogHeader><DialogTitle>{t(`werewolf.totemFields.${key}`)}</DialogTitle><DialogDescription>{t("werewolf.totemPowerSelectionNote")}</DialogDescription></DialogHeader>
               <TotemPowerPicker kind={kind} value={value} onChange={onChange} personalPoints={personalPoints} catalog={catalog}/>
@@ -101,6 +103,7 @@ export function TotemEditor({ value, onChange, personalPoints, catalog, state, o
           })}
         </details>;
       })}
+      <TotemImprovements value={value} onChange={onChange} personalPoints={personalPoints} catalog={catalog}/>
       <label>{t("ui.notes")}<Textarea key={value.instanceId + value.notes} defaultValue={value.notes} onBlur={event => change({ notes: event.target.value })}/></label>
       {state && onStateChange && <details className="wtf-rule-disclosure"><summary>{t("werewolf.totemResources")}</summary>
         <p className="wtf-rule-field">{t("werewolf.totemResourcesNote")}</p>

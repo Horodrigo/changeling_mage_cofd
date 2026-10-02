@@ -29,7 +29,8 @@ const totemCatalog = catalogs.get("werewolf-totem");
 const { totemSamplePresentation } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/totem.ts");
 const { TotemReference, TotemPowerReference } = await vite.ssrLoadModule("/game-lines/werewolf/totem-reference.tsx");
 const { TotemEditor } = await vite.ssrLoadModule("/game-lines/werewolf/totem.tsx");
-const { newTotem, personalTotemPoints, totemSelection, totemState, totemTraits, totemCreationProblems, totemPowerProblems } = await vite.ssrLoadModule("/game-lines/werewolf/totem-rules.ts");
+const { newTotem, personalTotemPoints, totemSelection, totemState, totemTraits, totemCreationProblems, totemPowerProblems, effectiveTotem, recordTotemImprovement, removeTotemImprovement, totemImprovementProblems } = await vite.ssrLoadModule("/game-lines/werewolf/totem-rules.ts");
+const { TotemImprovements } = await vite.ssrLoadModule("/game-lines/werewolf/totem-improvements.tsx");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
 const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
@@ -157,6 +158,78 @@ test("Totem editor renders initial selections and separate manual Corpus without
   assert.equal((markup.match(/class="health-box lethal"/g) ?? []).length, 3);
   assert.doesNotMatch(markup, /missing translation|Wound penalty|Spend Experience/);
   assert.deepEqual(entity, before);
+});
+
+test("The Pack pp. 63–64 Totem improvements preserve initial allocations, exact costs/origins and bound potential without a Pack XP account", () => {
+  const entity = configuredTotem(), before = structuredClone(entity);
+  const record = (value, kind, target, domain) => recordTotemImprovement(value, kind, target, "Externally resolved Totem Merit investment", 1, totemCatalog, domain);
+  let improved = record(entity, "attribute", "resistance");
+  assert.equal(improved.improvements[0].experience, 4); assert.equal(effectiveTotem(improved).attributes.resistance, 3);
+  assert.deepEqual(improved.attributes, entity.attributes); assert.deepEqual(totemCreationProblems(improved, 1, totemCatalog), []);
+  assert.equal(totemTraits(improved, 1, totemCatalog).corpus, 4);
+  improved = record(improved, "influence", "new-rivers", "Rivers");
+  assert.equal(improved.improvements[1].experience, 5);
+  improved = record(improved, "influence", "new-rivers");
+  assert.equal(effectiveTotem(improved).influences.find(item => item.instanceId === "new-rivers").dots, 2);
+  assert.deepEqual(improved.influences, entity.influences);
+  assert.equal(totemTraits(improved, 1, totemCatalog).influenceExchanges, 0, "XP does not consume initial Numen exchanges");
+  improved = record(improved, "numen", "numen:stalwart");
+  assert.equal(improved.improvements[3].experience, 4); assert.equal(totemTraits(improved, 1, totemCatalog).defense, 3);
+  assert.deepEqual(improved.numina, entity.numina); assert.equal(effectiveTotem(improved).numina.length, 3);
+  assert.deepEqual(totemImprovementProblems(improved, 1, totemCatalog), []);
+  assert.throws(() => record(improved, "numen", "numen:stalwart"), /duplicate/);
+  assert.throws(() => record(improved, "influence", "other-rivers", " rivers "), /duplicate/);
+  assert.throws(() => record(improved, "influence", "missing"), /target/);
+  assert.throws(() => record(improved, "attribute", "Strength"), /target/);
+  assert.throws(() => record(improved, "numen", "manifestation:image"), /target/);
+  assert.throws(() => recordTotemImprovement(entity, "attribute", "power", "  ", 1, totemCatalog), /origin/);
+  assert.throws(() => record(newTotem(), "attribute", "power"), /initial/);
+  let numina = record(record(entity, "numen", "numen:stalwart"), "numen", "numen:awe");
+  numina = record(numina, "numen", "numen:seek"); assert.equal(effectiveTotem(numina).numina.length, 5);
+  assert.throws(() => record(numina, "numen", "numen:regenerate"), /numinaLimit/);
+  let influence = entity;
+  for (let index = 0; index < 4; index++) influence = record(influence, "influence", entity.influences[0].instanceId);
+  assert.equal(totemTraits(influence, 1, totemCatalog).influenceDots, 5);
+  assert.throws(() => record(influence, "influence", entity.influences[0].instanceId), /influenceLimit/);
+  let ranked = entity;
+  for (let index = 0; index < 5; index++) ranked = record(ranked, "attribute", "power");
+  assert.equal(totemTraits(ranked, 1, totemCatalog).rank.rank, 2); assert.equal(effectiveTotem(ranked).attributes.power, 6);
+  assert.deepEqual(totemCreationProblems(ranked, 1, totemCatalog), [], "Initial half-allocation restriction does not reclassify later improvements");
+  assert.ok(improved.improvements.every(entry => entry.id && entry.origin && Number.isFinite(Date.parse(entry.createdAt))));
+  assert.deepEqual(entity, before);
+});
+
+test("Totem ledger correction checks exact dependent entries and does not refund, heal or erase authored records", async () => {
+  const entity = configuredTotem();
+  const first = recordTotemImprovement(entity, "influence", "new-water", "Purchased externally", 1, totemCatalog, "Water");
+  const second = recordTotemImprovement(first, "influence", "new-water", "Another external source", 1, totemCatalog);
+  assert.throws(() => removeTotemImprovement(second, second.improvements[0].id, 1, totemCatalog), /dependent/);
+  const corrected = removeTotemImprovement(second, second.improvements[1].id, 1, totemCatalog);
+  assert.equal(effectiveTotem(corrected).influences.find(item => item.instanceId === "new-water").dots, 1);
+  assert.throws(() => removeTotemImprovement(corrected, "not-an-id", 1, totemCatalog), /Unknown/);
+  const importedIssue = { ...second, improvements: [...second.improvements, { ...second.improvements[1], id: "unrelated-bad-target", target: "unknown-influence" }] };
+  assert.throws(() => removeTotemImprovement(importedIssue, second.improvements[0].id, 1, totemCatalog), /dependent/, "Another pre-existing target error cannot conceal a newly invalid exact entry");
+  let ranked = entity;
+  for (const attribute of [...Array(6).fill("power"), ...Array(3).fill("finesse"), "power"])
+    ranked = recordTotemImprovement(ranked, "attribute", attribute, "External funding", 1, totemCatalog);
+  assert.equal(totemTraits(ranked, 1, totemCatalog).rank.rank, 3);
+  assert.throws(() => removeTotemImprovement(ranked, ranked.improvements[6].id, 1, totemCatalog), /dependent/, "A Rank-enabling Attribute improvement protects later trait caps");
+  const character = create({ totem: second });
+  character.current_state.werewolf_totem = { instanceId: second.instanceId, essence: 2, willpower: 1, damage: Array(9).fill("lethal"), dormant: false };
+  const before = structuredClone(character);
+  const { importCharacterFile } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
+  const imported = await importCharacterFile({ text: async () => JSON.stringify(character) });
+  const rebuilt = create({ source: imported, draft: true });
+  assert.deepEqual(rebuilt.line_data.totem, second); assert.deepEqual(rebuilt.current_state.werewolf_totem, imported.current_state.werewolf_totem);
+  assert.equal(rebuilt.current_state.creation_draft, true);
+  assert.deepEqual(character, before);
+  assert.ok(totemImprovementProblems({ ...second, improvements: second.improvements.map(entry => ({ ...entry, experience: 99 })) }, 1, totemCatalog).includes("cost"));
+  for (const patch of [{ kind: "skill" }, { kind: ["numen"] }, { experience: -1 }, { createdAt: "not-a-date" }, { origin: null }, { domain: 8 }, { domain: null }])
+    assert.throws(() => totemSelection({ ...entity, improvements: [{ ...first.improvements[0], ...patch }] }), /Invalid Werewolf Totem improvement/);
+  assert.throws(() => totemSelection({ ...entity, improvements: [first.improvements[0], first.improvements[0]] }), /Invalid Werewolf Totem improvement/);
+  const markup = render(createElement(TotemImprovements, { value: second, personalPoints: 1, catalog: totemCatalog, onChange: () => assert.fail("render mutated ledger") }));
+  for (const phrase of ["Totem improvements", "Record improvement", "Recorded improvement cost: 10", "no Pack account", "Water"]) assert.ok(markup.includes(phrase), phrase);
+  assert.doesNotMatch(markup, /missing translation|\{p1\}/);
 });
 
 test("WTF2 Totem reference preserves Rank limits, adopted source conflicts, improvement costs and all three Pack examples", () => {
@@ -902,6 +975,7 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const { FacetExperienceCatalog: PtFacets, RenownGrantsPanel: PtGrants } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-gifts.tsx");
     const authored = customFetishSelection(); authored.custom.name = "Player's untranslated item";
     const character = create({ draft: true, step: 3, fetishes: [catalogFetishSelection(fetishCatalog.items[0]), authored], totem: configuredTotem() });
+    character.line_data.totem = recordTotemImprovement(character.line_data.totem, "numen", "numen:stalwart", "Author's funding", 1, totemCatalog);
     character.current_state.werewolf_totem = { instanceId: character.line_data.totem.instanceId, essence: 0, willpower: 1, damage: ["bashing"], dormant: false };
     const before = structuredClone(character);
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
@@ -916,6 +990,7 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     for (const phrase of ["Poderes do Totem", "Poderes: 40", "Uso de Numina", "<summary>Buscar", "Parada de Dados", "Divergência na fonte"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /<summary>Seek|<summary>Using Numina/);
     for (const phrase of ["Outras contribuições (manual)", "Recursos do Totem", "Corpus não impõe penalidades", "Player&#x27;s Spirit", "Escolher Numina", "Escolher Manifestações"]) assert.ok(markup.includes(phrase), phrase);
+    for (const phrase of ["Melhorias do Totem", "Registrar melhoria", "Inabalável", "Author&#x27;s funding"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /\{p1\}|Other contributions|Choose Numina/);
     assert.match(markup, /Player&#x27;s untranslated item/); assert.doesNotMatch(markup, /<summary>Witch-Poppet/);
     const builderMarkup = ptRender(createElement(ptBuilder.Component, { initial: character, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
