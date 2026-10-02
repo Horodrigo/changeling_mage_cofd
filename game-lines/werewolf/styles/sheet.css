@@ -23,3 +23,4 @@ body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-di
   .wtf-sheet { color: #000; background: #fff; }
   .wtf-sheet .wtf-rule-disclosure { break-inside: avoid; }
 }
+.wtf-benefit-reference { grid-column: 1 / -1; }

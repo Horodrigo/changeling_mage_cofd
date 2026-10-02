@@ -13,7 +13,10 @@ import { facetDefinition, facetPurchaseTerms, giftProgressionIssues, giftUnlocks
 import { boundedPrimalUrge, primalUrgeLevel } from "./creation-rules";
 import { resolveWerewolfMerits, werewolfMeritDefinition } from "./creation-grants";
 import { werewolfMeritPrerequisitesMet, werewolfMeritSelectionProblems, type WerewolfMeritContext } from "./merit-rules";
-import { renownRatings, werewolfDerived, werewolfFormTraits, werewolfIds } from "./rules";
+import { renownRatings, werewolfDerived, werewolfFormTraits, werewolfIds, werewolfMemberTraits } from "./rules";
+import type { WerewolfTotemCatalog } from "./catalogs/totem";
+import { resolveTotemAdvantage } from "./totem-benefits";
+import { totemSelection } from "./totem-rules";
 
 export type WerewolfPurchase =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; target: number }
@@ -32,8 +35,8 @@ export type WerewolfAdvancementUndo =
   | { kind: "renown"; name: RenownId; auspiceId: string }
   | { kind: "facet"; definitionId: string; giftId: string; unlock: boolean; costKey: FacetCost };
 export type WerewolfExperienceEntry = { id: string; cost: number; createdAt: string; purchase: WerewolfPurchase; undo: WerewolfAdvancementUndo };
-export type WerewolfAdvancementCatalogs = { reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; merits: readonly MeritDefinition[] };
-type Problem = GiftProblem | "invalidPurchase" | "traitMaximum" | "specialty" | "missingMerit" | "meritPrerequisites" | "meritChoices" | "meritInstance" | "grant" | "insufficientExperience" | "refundMissing" | "refundDependent" | "missingRite" | "riteKnown" | "riteTribe" | "riteSource";
+export type WerewolfAdvancementCatalogs = { reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; merits: readonly MeritDefinition[]; totem: WerewolfTotemCatalog };
+type Problem = GiftProblem | "invalidPurchase" | "traitMaximum" | "specialty" | "missingMerit" | "meritPrerequisites" | "meritChoices" | "meritInstance" | "grant" | "insufficientExperience" | "refundMissing" | "refundDependent" | "purchaseDependent" | "missingRite" | "riteKnown" | "riteTribe" | "riteSource";
 export class WerewolfAdvancementError extends Error {
   constructor(readonly problem: Problem) { super(problem); }
 }
@@ -50,13 +53,13 @@ const validGiftLedgers = (character: CharacterSheet) => {
 };
 
 /** Pure Hishu prerequisite contexts are shared by the XP chooser and its transaction guard. */
-export function werewolfAdvancementContexts(character: CharacterSheet, catalogs: WerewolfAdvancementCatalogs): { core: MeritPrerequisiteContext; own: WerewolfMeritContext } {
-  const hishu = werewolfFormTraits(character);
+export function werewolfAdvancementContexts(character: CharacterSheet, catalogs: Pick<WerewolfAdvancementCatalogs, "reference" | "gifts" | "merits" | "totem">): { core: MeritPrerequisiteContext; own: WerewolfMeritContext } {
+  const hishu = werewolfFormTraits(character, "hishu", catalogs), member = werewolfMemberTraits(character, catalogs);
   return {
-    core: { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: character.skills, size: hishu.size, merits: character.merits, meritCatalog: catalogs.merits },
-    own: { attributes: hishu.attributes, skills: character.skills, harmony: Number(character.line_data.harmony ?? 7), primalUrge: boundedPrimalUrge(character.line_data.primal_urge),
+    core: { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: member.skills, size: hishu.size, merits: member.merits, meritCatalog: catalogs.merits },
+    own: { attributes: hishu.attributes, skills: member.skills, harmony: Number(character.line_data.harmony ?? 7), primalUrge: boundedPrimalUrge(character.line_data.primal_urge),
       renown: renownRatings(character.line_data.renown), tribeId: String(character.line_data.tribe_id ?? ""), auspice: catalogs.reference.auspices.find(item => item.id === character.line_data.auspice_id),
-      forms: catalogs.reference.forms, gifts: catalogs.gifts.gifts, merits: resolveWerewolfMerits(character.merits, catalogs.merits) },
+      forms: catalogs.reference.forms, gifts: catalogs.gifts.gifts, merits: resolveWerewolfMerits(member.merits, catalogs.merits) },
   };
 }
 
@@ -79,7 +82,7 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     if (purchase.target > maximum) fail("traitMaximum");
     cost = (purchase.target - current) * costs[purchase.group === "attributes" ? "attribute" : "skill"];
   } else if (purchase.kind === "specialty") {
-    if (!Object.values(SKILLS).flat().some(skill => skill === purchase.skill) || !(character.skills[purchase.skill] >= 1) || typeof purchase.name !== "string" || !purchase.name.trim()
+    if (!Object.values(SKILLS).flat().some(skill => skill === purchase.skill) || !(werewolfMemberTraits(character, catalogs).skills[purchase.skill] >= 1) || typeof purchase.name !== "string" || !purchase.name.trim()
       || character.specializations.some(item => item.skill === purchase.skill && item.name === purchase.name.trim())) fail("specialty");
     cost = 1;
   } else if (purchase.kind === "primalUrge") {
@@ -116,6 +119,15 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     const choice = { id: definition.id, instanceId: instance?.instanceId, dots: purchase.target, configuration: normalizeMeritConfiguration(purchase.configuration) };
     if (!meritPrerequisitesMet(definition, { ...core, selectedDots: choice.dots, configuration: choice.configuration }) || !werewolfMeritPrerequisitesMet(definition, choice, own)) fail("meritPrerequisites");
     if (meritSelectionProblems(definition, choice, core).length || (definition.line === "WtF" && werewolfMeritSelectionProblems(definition, choice, own).length)) fail("meritChoices");
+    const candidate = structuredClone(character);
+    const candidateInstance = instance && candidate.merits.find(item => item.instanceId === instance.instanceId);
+    if (candidateInstance) { candidateInstance.dots = purchase.target; candidateInstance.configuration = choice.configuration; }
+    else {
+      let instanceId = `werewolf:quote:${definition.id}`;
+      while (candidate.merits.some(item => item.instanceId === instanceId)) instanceId += ":";
+      candidate.merits.push({ instanceId, name: definition.name, sourceId: definition.sourceId, source: definition.source, dots: purchase.target, configuration: choice.configuration });
+    }
+    if (hasNewDependencies(character, candidate, catalogs)) fail("purchaseDependent");
     cost = (purchase.target - (instance?.dots ?? 0)) * costs.merit;
   }
   if (!natural(cost) || cost < 1) fail("invalidPurchase");
@@ -175,7 +187,8 @@ export function purchaseWerewolfAdvancement(character: CharacterSheet, purchase:
   next.current_state = { ...next.current_state, experience_available: builderMode ? available : available - cost, experience_spent: spent + cost,
     experience_total: Math.max(balance(next.current_state.experience_total), available + spent) + (builderMode ? cost : 0),
     [WEREWOLF_HISTORY_KEY]: [...(Array.isArray(next.current_state[WEREWOLF_HISTORY_KEY]) ? next.current_state[WEREWOLF_HISTORY_KEY] : []), entry] };
-  next.derived = werewolfDerived(next);
+  if (hasNewDependencies(character, next, catalogs)) fail("purchaseDependent");
+  next.derived = werewolfDerived(next, catalogs);
   return next;
 }
 
@@ -230,7 +243,9 @@ function hasNewDependencies(before: CharacterSheet, after: CharacterSheet, catal
   if (cap < oldCap && [...Object.values(after.attributes), ...Object.values(after.skills)].some(dots => dots > cap)) return true;
   const oldGiftProblems = giftProgressionIssues(before, catalogs.reference, catalogs.gifts);
   if ([...giftProgressionIssues(after, catalogs.reference, catalogs.gifts).keys()].some(problem => !oldGiftProblems.has(problem))) return true;
-  return after.specializations.some(item => !(after.skills[item.skill] >= 1) && before.skills[item.skill] >= 1);
+  const oldBenefits = resolveTotemAdvantage(before, totemSelection(before.line_data.totem), catalogs), nextBenefits = resolveTotemAdvantage(after, totemSelection(after.line_data.totem), catalogs);
+  if (nextBenefits.active && nextBenefits.issues.some(issue => !oldBenefits.issues.some(old => old.id === issue.id && old.problem === issue.problem))) return true;
+  return after.specializations.some(item => !(next.core.skills![item.skill] >= 1) && previous.core.skills![item.skill] >= 1);
 }
 
 export function refundWerewolfAdvancement(character: CharacterSheet, id: string, catalogs: WerewolfAdvancementCatalogs, builderMode = false) {
@@ -304,7 +319,7 @@ export function refundWerewolfAdvancement(character: CharacterSheet, id: string,
     experience_spent: balance(next.current_state.experience_spent) - entry.cost,
     ...(builderMode ? { experience_total: Math.max(balance(next.current_state.experience_available) + balance(next.current_state.experience_spent), balance(next.current_state.experience_total)) - entry.cost } : {}),
     [WEREWOLF_HISTORY_KEY]: (next.current_state[WEREWOLF_HISTORY_KEY] as unknown[]).filter(item => !item || typeof item !== "object" || !("id" in item) || item.id !== id) };
-  next.derived = werewolfDerived(next);
+  next.derived = werewolfDerived(next, catalogs);
   return next;
 }
 

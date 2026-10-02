@@ -7,6 +7,11 @@ import { resolveWerewolfMerits, type AuspiceSkillGrant } from "./creation-grants
 import { FORM_MECHANICS, PERMANENT_MERIT_IDENTITIES, RENOWN_IDS } from "./mechanics";
 import { fetishSelections } from "./fetish-rules";
 import { totemSelection, totemState } from "./totem-rules";
+import { resolveTotemAdvantage, type TotemBenefitCatalogs } from "./totem-benefits";
+import type { WerewolfReferenceCatalog } from "./catalogs/reference";
+import type { WerewolfGiftCatalog } from "./catalogs/gifts";
+import type { WerewolfTotemCatalog } from "./catalogs/totem";
+import type { MeritDefinition } from "@/lib/merits";
 
 const text = (value: unknown) => typeof value === "string" ? value : "";
 export const werewolfIds = (value: unknown): string[] => Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : [];
@@ -39,13 +44,22 @@ export function werewolfFormId(value: unknown): FormId {
   return typeof value === "string" && Object.hasOwn(FORM_MECHANICS, value) ? value as FormId : "hishu";
 }
 
-export function werewolfFormTraits(character: CharacterSheet, form: FormId = "hishu") {
-  return formTraits(character, FORM_MECHANICS[form], 5, resolveWerewolfMerits(character.merits, PERMANENT_MERIT_IDENTITIES), character.merits);
+/** Only the overlay is returned; purchased traits remain the authoritative persisted choices. */
+export function werewolfMemberTraits(character: CharacterSheet, catalogs?: TotemBenefitCatalogs) {
+  const totem = totemSelection(character.line_data.totem);
+  if (!totem?.advantage?.active || !totem.advantage.selections.length) return character;
+  if (!catalogs) throw new Error("Totem Advantage requires explicit Werewolf catalogs.");
+  return resolveTotemAdvantage(character, totem, catalogs).traits;
+}
+
+export function werewolfFormTraits(character: CharacterSheet, form: FormId = "hishu", catalogs?: TotemBenefitCatalogs) {
+  const traits = werewolfMemberTraits(character, catalogs);
+  return formTraits(traits, FORM_MECHANICS[form], 5, resolveWerewolfMerits(traits.merits, PERMANENT_MERIT_IDENTITIES), traits.merits);
 }
 
 /** Persisted derived values are the stable Hishu baseline; the Sheet computes the selected form live. */
-export function werewolfDerived(character: CharacterSheet) {
-  const traits = werewolfFormTraits(character);
+export function werewolfDerived(character: CharacterSheet, catalogs?: TotemBenefitCatalogs) {
+  const traits = werewolfFormTraits(character, "hishu", catalogs);
   return { Tamanho: traits.size, Vitalidade: traits.health, Deslocamento: traits.speed,
     ForçaDeVontade: traits.willpower, Iniciativa: traits.initiative, Defesa: traits.defense,
     ArmaduraGeral: traits.armorGeneral, ArmaduraBalistica: traits.armorBallistic };
@@ -74,3 +88,14 @@ export const werewolfRules: GameLineRulesModule = {
   },
   deriveCharacterState: werewolfDerived,
 };
+
+/** The lazy owning rules loader binds immutable catalogs; no mutable holder or UI/persistence dependency. */
+export async function loadWerewolfRules(): Promise<GameLineRulesModule> {
+  const { loadCatalogGroups } = await import("@/game-lines/registry/catalog-group-registry");
+  const snapshot = await loadCatalogGroups(["core-merits", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-totem"]);
+  const catalogs: TotemBenefitCatalogs = {
+    reference: snapshot.get<WerewolfReferenceCatalog>("werewolf-reference"), gifts: snapshot.get<WerewolfGiftCatalog>("werewolf-gifts"),
+    totem: snapshot.get<WerewolfTotemCatalog>("werewolf-totem"), merits: [...snapshot.get<MeritDefinition[]>("core-merits"), ...snapshot.get<MeritDefinition[]>("werewolf-merits")],
+  };
+  return { ...werewolfRules, deriveCharacterState: character => werewolfDerived(character, catalogs) };
+}

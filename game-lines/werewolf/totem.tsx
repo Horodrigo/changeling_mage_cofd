@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -42,9 +42,10 @@ function TotemPowerPicker({ kind, value, onChange, personalPoints, catalog }: {
 }
 
 /** Individual optional creation configuration. No Pack record or automatic character/resource mutation. */
-export function TotemEditor({ value, onChange, personalPoints, catalog, state, onStateChange }: {
+export function TotemEditor({ value, onChange, personalPoints, catalog, state, onStateChange, children }: {
   value: TotemSelection | null; onChange: (value: TotemSelection | null) => void; personalPoints: number; catalog: WerewolfTotemCatalog;
   state?: TotemState; onStateChange?: (value: TotemState) => void;
+  children?: ReactNode;
 }) {
   const { locale, t } = useLanguage();
   if (!value) return <TotemReference catalog={catalog}><Button type="button" size="sm" variant="outline" onClick={() => onChange(newTotem())}>{t("werewolf.totemConfigure")}</Button></TotemReference>;
@@ -74,7 +75,7 @@ export function TotemEditor({ value, onChange, personalPoints, catalog, state, o
         <label>{t("werewolf.totemFields.bane")}<Textarea key={value.instanceId + value.bane} defaultValue={value.bane} onBlur={event => change({ bane: event.target.value })}/></label>
       </div>
       <dl className="wtf-totem-sample">{(["corpus", "willpower", "initiative", "defense", "speed", "essenceMaximum"] as const).map(field => <div key={field}><dt>{t(field === "essenceMaximum" ? "werewolf.essenceMaximum" : `werewolf.totemFields.${field}`)}:</dt>{" "}<dd>{traits[field]}</dd></div>)}</dl>
-      <p className="wtf-rule-field">{t("werewolf.totemAdvantagePending", { amount: traits.advantage })}</p>
+      {children}
       {problems.length > 0 && <div role="status" className="wtf-totem-problems"><strong>{t("werewolf.totemIncomplete")}:</strong>{problems.map(problem => <p key={problem}>{t(problem === "unallocatedPowers" ? "werewolf.totemUnallocatedPowers" : `werewolf.totemProblem.${problem}`)}</p>)}</div>}
       <details className="wtf-rule-disclosure"><summary>{t("werewolf.totemFields.influences")}</summary>
         <p className="wtf-rule-field">{t("werewolf.totemInfluenceSummary", { spent: initialTraits.influenceDots, budget: initialTraits.rank?.rank ?? 0, exchanged: initialTraits.influenceExchanges })}</p>

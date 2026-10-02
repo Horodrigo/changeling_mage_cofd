@@ -33,20 +33,21 @@ const { newTotem, personalTotemPoints, totemSelection, totemState, totemTraits, 
 const { TotemImprovements } = await vite.ssrLoadModule("/game-lines/werewolf/totem-improvements.tsx");
 const { totemAdvantage } = await vite.ssrLoadModule("/game-lines/werewolf/totem-rules.ts");
 const { resolveTotemAdvantage, totemBenefitCost } = await vite.ssrLoadModule("/game-lines/werewolf/totem-benefits.ts");
+const { TotemAdvantageEditor, totemBenefitLabel } = await vite.ssrLoadModule("/game-lines/werewolf/totem-advantage.tsx");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
-const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
+const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog, totem: totemCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
 const { WerewolfExperiencePanel, werewolfPurchaseLabel } = await vite.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
 const { RiteExperienceCatalog } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rites.tsx");
 const { CreationRiteCatalog } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
 const { buildWerewolfCharacter, werewolfBuilder, werewolfExperienceSpecialties } = await vite.ssrLoadModule("/game-lines/werewolf/builder.tsx");
-const { werewolfRules, werewolfFormTraits, recordedAuspiceSkillGrant } = await vite.ssrLoadModule("/game-lines/werewolf/rules.ts");
+const { werewolfRules, werewolfFormTraits, werewolfMemberTraits, recordedAuspiceSkillGrant } = await vite.ssrLoadModule("/game-lines/werewolf/rules.ts");
 const { withoutAuspiceSkillGrant, WEREWOLF_CREATION_GRANT_SOURCES } = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
 const { useCommonBuilderState, experienceTraitDots } = await vite.ssrLoadModule("/app/character-builder-shell.tsx");
 const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const { ATTRIBUTES, SKILLS } = await vite.ssrLoadModule("/lib/core/character/creation-rules.ts");
 const { WerewolfCharacterPaper } = await vite.ssrLoadModule("/game-lines/werewolf/sheet.tsx");
-const { changeWerewolfForm, damageAfterHealthReduction } = await vite.ssrLoadModule("/game-lines/werewolf/form-state.ts");
+const { changeWerewolfForm, changeWerewolfTotem, damageAfterHealthReduction } = await vite.ssrLoadModule("/game-lines/werewolf/form-state.ts");
 const { fetishSelections, fetishPresentation, catalogFetishSelection, customFetishSelection } = await vite.ssrLoadModule("/game-lines/werewolf/fetish-rules.ts");
 const { FetishInventory, FetishCatalog, FetishItemRules } = await vite.ssrLoadModule("/game-lines/werewolf/fetishes.tsx");
 const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
@@ -59,7 +60,7 @@ const choices = { auspice_id: "rahu", tribe_id: "blood-talons", auspice_skill: "
   shadow_facets: ["gift-dominance:snarl-of-the-predator", "gift-inspiration:fearless-hunter"], wolf_facets: [], rites: ["wtf-core:sacred-hunt"] };
 const parameters = { identity: { name: "Uratha", player: "Test", concept: "", chronicle: "" }, attributes, skills,
   specialties: [{ skill: "Brawl", name: "Claws" }, { skill: "Survival", name: "Tracking" }, { skill: "Occult", name: "Spirits" }],
-  aspirations: ["", "", ""], merits: [], choices, reference, gifts, rites, meritCatalog };
+  aspirations: ["", "", ""], merits: [], choices, reference, gifts, rites, meritCatalog, totemCatalog };
 const create = overrides => buildWerewolfCharacter({ ...parameters, ...overrides });
 const funded = () => { const character = create(); character.current_state.experience_available = 100; character.current_state.experience_spent = 0; character.current_state.experience_total = 100; return character; };
 const failsWith = problem => error => error instanceof WerewolfAdvancementError && error.problem === problem;
@@ -316,6 +317,84 @@ test("Totem Advantage current-schema boundary retains unknown IDs and authored c
   assert.throws(() => resolveTotemAdvantage({ ...character, game_line: "CofD" }, entity, context), /another game line/);
 });
 
+test("Totem Advantage reaches every Werewolf form, the canonical rules loader and Hishu prerequisites without changing creation or XP origins", async () => {
+  const character = funded(), plain = structuredClone(character);
+  character.line_data.totem = { ...configuredTotem(), externalPoints: 19, advantage: { active: true, selections: [
+    { id: "stamina", choice: { kind: "attribute", target: "Stamina" } }, { id: "athletics", choice: { kind: "skill", target: "Athletics" } },
+    { id: "fleet", choice: { kind: "merit", definitionId: "core-2ed:fleet-of-foot", dots: 1, configuration: {} } },
+    { id: "cold", choice: { kind: "specialty", skill: "Survival", name: "Authored cold Specialty" } },
+  ] } };
+  const before = structuredClone(character), member = werewolfMemberTraits(character, advancementCatalogs);
+  assert.equal(member.skills.Athletics, character.skills.Athletics + 1); assert.equal(member.attributes.Stamina, character.attributes.Stamina + 1);
+  assert.throws(() => werewolfFormTraits(character), /explicit Werewolf catalogs/);
+  for (const form of reference.forms) {
+    const actual = werewolfFormTraits(character, form.id, advancementCatalogs), base = werewolfFormTraits(plain, form.id, advancementCatalogs);
+    assert.equal(actual.health, base.health + 1, form.id); assert.equal(actual.defense, base.defense + 1, form.id); assert.equal(actual.speed, base.speed + 1, form.id);
+    assert.equal(actual.attributes.Stamina, base.attributes.Stamina + 1, form.id);
+  }
+  const loaded = await registration.loadRules(), derived = loaded.deriveCharacterState(character);
+  assert.equal(derived.Vitalidade, plain.derived.Vitalidade + 1); assert.equal(derived.Deslocamento, plain.derived.Deslocamento + 1);
+  const { prepareCharacterForUpdate } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
+  const updated = await prepareCharacterForUpdate(character);
+  assert.deepEqual(updated.derived, derived); assert.deepEqual(updated.attributes, character.attributes); assert.deepEqual(updated.skills, character.skills); assert.deepEqual(updated.merits, character.merits);
+  const rebuilt = buildWerewolfCharacter({ ...parameters, source: updated, draft: true });
+  assert.deepEqual(rebuilt.derived, derived); assert.deepEqual(rebuilt.line_data.totem, updated.line_data.totem); assert.deepEqual(rebuilt.merits, character.merits);
+  assert.equal(rebuilt.current_state.experience_available, character.current_state.experience_available);
+  const { werewolfAdvancementContexts } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
+  const contexts = werewolfAdvancementContexts(character, advancementCatalogs);
+  assert.equal(contexts.core.skills.Athletics, member.skills.Athletics); assert.equal(contexts.own.attributes.Stamina, member.attributes.Stamina);
+  assert.deepEqual(character, before);
+  const markup = render(createElement(TotemAdvantageEditor, { character, value: character.line_data.totem, catalogs: advancementCatalogs, onChange: () => assert.fail("render mutated") }));
+  for (const phrase of ["Totem Advantage", "Allocated: 8/10", "Stamina +1", "Athletics +1", "Fleet of Foot", "Authored cold Specialty", "Patronage (manual)", "Benefits active", "Chronicles of Darkness"]) assert.ok(markup.includes(phrase), phrase);
+  assert.equal(totemBenefitLabel({ kind: "attribute", target: "Stamina" }, advancementCatalogs, "pt-BR"), "Vigor +1");
+});
+
+test("Manual Totem patronage and removal upgrade lost Health damage once, preserve entity resources and never heal or debit XP", () => {
+  const character = funded(); character.current_state.form = "gauru";
+  const entity = { ...configuredTotem(), externalPoints: 14, advantage: { active: true, selections: [{ id: "stamina", choice: { kind: "attribute", target: "Stamina" } }] } };
+  character.line_data.totem = entity;
+  const health = werewolfFormTraits(character, "gauru", advancementCatalogs).health;
+  character.current_state.health_damage = [...Array(5).fill("lethal"), ...Array(health - 5).fill("bashing")];
+  character.current_state.werewolf_totem = { instanceId: entity.instanceId, essence: 2, willpower: 1, damage: Array(9).fill("lethal"), dormant: false };
+  const before = structuredClone(character), inactive = { ...entity, advantage: { ...entity.advantage, active: false } };
+  const suspended = changeWerewolfTotem(character, inactive, advancementCatalogs);
+  assert.equal(werewolfFormTraits(suspended, "gauru", advancementCatalogs).health, health - 1);
+  assert.deepEqual(suspended.current_state.health_damage, damageAfterHealthReduction(before.current_state.health_damage, health - 1));
+  assert.equal(suspended.current_state.health_damage.filter(level => level === "lethal").length, 6);
+  for (const key of ["willpower_current", "essence_current", "experience_available", "experience_spent", "werewolf_totem"]) assert.deepEqual(suspended.current_state[key], before.current_state[key], key);
+  assert.deepEqual(changeWerewolfTotem(suspended, inactive, advancementCatalogs).current_state, suspended.current_state);
+  const restored = changeWerewolfTotem(suspended, entity, advancementCatalogs); assert.deepEqual(restored.current_state.health_damage, suspended.current_state.health_damage);
+  const reduced = changeWerewolfForm(restored, "hishu", advancementCatalogs); assert.deepEqual(reduced.health_damage, damageAfterHealthReduction(restored.current_state.health_damage, werewolfFormTraits(restored, "hishu", advancementCatalogs).health));
+  const removed = changeWerewolfTotem(character, null, advancementCatalogs); assert.deepEqual(removed.current_state.health_damage, suspended.current_state.health_damage);
+  assert.deepEqual(character, before);
+});
+
+test("Werewolf XP quotes use effective Totem Skill dots but refunds and purchases preserve exact benefits and dependencies", () => {
+  let character = funded(); character.skills.Athletics = 0;
+  character.line_data.totem = { ...configuredTotem(), externalPoints: 8, advantage: { active: true, selections: [{ id: "athletics", choice: { kind: "skill", target: "Athletics" } }] } };
+  assert.equal(quote(character, { kind: "specialty", skill: "Athletics", name: "Running" }, advancementCatalogs), 1);
+  character = buy(character, { kind: "specialty", skill: "Athletics", name: "Running" }, advancementCatalogs);
+  character = buy(character, { kind: "trait", group: "skills", name: "Athletics", target: 1 }, advancementCatalogs);
+  const skillId = history(character).at(-1).id;
+  character = buy(character, purchaseMerit("core-2ed:fleet-of-foot", 1), advancementCatalogs);
+  const meritId = history(character).at(-1).id;
+  assert.equal(character.skills.Athletics, 1); assert.equal(werewolfMemberTraits(character, advancementCatalogs).skills.Athletics, 2);
+  assert.throws(() => refund(character, skillId, advancementCatalogs), failsWith("refundDependent"));
+  character = refund(character, meritId, advancementCatalogs); character = refund(character, skillId, advancementCatalogs);
+  assert.equal(character.skills.Athletics, 0); assert.ok(character.specializations.some(item => item.name === "Running"));
+  const supplied = funded(); supplied.line_data.totem = { ...configuredTotem(), advantage: { active: true, selections: [{ id: "fleet", choice: { kind: "merit", definitionId: "core-2ed:fleet-of-foot", dots: 1, configuration: {} } }] } };
+  const before = structuredClone(supplied);
+  assert.throws(() => quote(supplied, purchaseMerit("core-2ed:fleet-of-foot", 1), advancementCatalogs), failsWith("purchaseDependent"));
+  assert.throws(() => buy(supplied, purchaseMerit("core-2ed:fleet-of-foot", 1), advancementCatalogs), failsWith("purchaseDependent"));
+  assert.deepEqual(supplied, before);
+  let totemOwner = funded(); const totemId = totemOwner.merits.find(item => item.name === "Totem").instanceId;
+  totemOwner = buy(totemOwner, purchaseMerit("wtf-2ed:totem", 3, {}, totemId), advancementCatalogs); const purchaseId = history(totemOwner).at(-1).id;
+  totemOwner.line_data.totem = { ...configuredTotem(), externalPoints: 7, advantage: { active: true, selections: [{ id: "athletics", choice: { kind: "skill", target: "Athletics" } }] } };
+  assert.throws(() => refund(totemOwner, purchaseId, advancementCatalogs), failsWith("refundDependent"));
+  totemOwner.line_data.totem.advantage.active = false;
+  assert.equal(refund(totemOwner, purchaseId, advancementCatalogs).merits.find(item => item.instanceId === totemId).dots, 1);
+});
+
 test("WTF2 Totem reference preserves Rank limits, adopted source conflicts, improvement costs and all three Pack examples", () => {
   assert.deepEqual(totemCatalog.ranks.map(item => [item.rank, item.title, item.traitMaximum, item.attributeMinimum, item.attributeMaximum, item.essenceMaximum, item.numinaMinimum, item.numinaMaximum]), [
     [1, "Hursih", 5, 5, 8, 10, 1, 3], [2, "Hursah", 7, 9, 14, 15, 3, 5], [3, "Ensih", 9, 15, 25, 20, 5, 7],
@@ -540,7 +619,9 @@ test("Werewolf registration loads only immutable Core and Werewolf resources wit
   assert.deepEqual(listGameLineRegistrations().map(item => item.id), ["CofD", "CtL", "MtA", "VtR", "WtF"]);
   assert.equal((await registration.loadBuilder()).Component, werewolfBuilder.Component);
   assert.equal((await registration.loadSheet()).Component, WerewolfCharacterPaper);
-  assert.equal(await registration.loadRules(), werewolfRules);
+  const loadedRules = await registration.loadRules();
+  assert.equal(loadedRules.normalizeCharacter, werewolfRules.normalizeCharacter);
+  assert.deepEqual(loadedRules.deriveCharacterState(create()), werewolfRules.deriveCharacterState(create()));
   assert.equal(registration.loadPrintSheet, undefined, "Print must not be advertised before its own implementation exists");
   assert.ok(requests.length > 10);
   for (const url of requests) assert.match(url, /^\/(?:shared\/data|game-lines\/werewolf\/data)\//);

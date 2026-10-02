@@ -22,6 +22,7 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
 import type { WerewolfRiteCatalog } from "./catalogs/rites";
+import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { RiteExperiencePicker } from "./experience-rites";
 import { RiteRules } from "./creation-rites";
 import { FacetRules } from "./creation-gifts";
@@ -64,7 +65,7 @@ export function WerewolfExperiencePanel({ character, updateSheet, updateState, c
   const reference = catalogs.get<WerewolfReferenceCatalog>("werewolf-reference"), gifts = catalogs.get<WerewolfGiftCatalog>("werewolf-gifts");
   const rites = catalogs.get<WerewolfRiteCatalog>("werewolf-rites");
   const merits = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, character.merits.map(item => item.name));
-  const context = { reference, gifts, rites, merits }, contexts = werewolfAdvancementContexts(character, context), state = character.current_state;
+  const context = { reference, gifts, rites, merits, totem: catalogs.get<WerewolfTotemCatalog>("werewolf-totem") }, contexts = werewolfAdvancementContexts(character, context), state = character.current_state;
   const available = werewolfExperienceValue(state.experience_available), spent = werewolfExperienceValue(state.experience_spent);
   const total = Math.max(available + spent, werewolfExperienceValue(state.experience_total)), beats = Math.min(5, werewolfExperienceValue(state.beats)), history = werewolfExperienceHistory(character);
   const [amountDraft, setAmountDraft] = useState<string | null>(null), [type, setType] = useState<PurchaseType>("attribute"), [target, setTarget] = useState("");
@@ -119,14 +120,14 @@ export function WerewolfExperiencePanel({ character, updateSheet, updateState, c
       <DialogHeader><DialogTitle>{t("ui.spendExperience")}</DialogTitle><DialogDescription>{t("werewolf.experienceDescription")}</DialogDescription></DialogHeader>
       <div className="experience-purchase-form"><label>{t("ui.type")}<RuleSelect value={type} onChange={changeType} options={groupedPurchaseOptions(GROUPS, labels, locale)}/></label>
         {type === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="WtF" archetypes={["werewolf"]} meritCatalog={merits} character={character} selectedId={definition?.id ?? ""} targetDots={rating} canAdvanceGrant={canAdvanceWerewolfGrant}
-          isEligible={(item, candidate) => meritPrerequisitesMet(item, { ...candidate, attributes: contexts.core.attributes, skills: contexts.core.skills, size: contexts.core.size }) && werewolfMeritPrerequisitesMet(item, { id: item.id, dots: candidate.selectedDots ?? item.ratings[0], configuration: candidate.configuration }, contexts.own)}
+          isEligible={(item, candidate) => meritPrerequisitesMet(item, { ...candidate, attributes: contexts.core.attributes, skills: contexts.core.skills, size: contexts.core.size, merits: contexts.core.merits }) && werewolfMeritPrerequisitesMet(item, { id: item.id, dots: candidate.selectedDots ?? item.ratings[0], configuration: candidate.configuration }, contexts.own)}
           onSelect={(id, dots, index) => { setTarget(id); setRating(dots); setMeritIndex(index); setConfiguration(normalizeMeritConfiguration(character.merits[index]?.configuration)); setFeedback(""); }}/></label>
           : type === "rite" ? <div><label>{t("werewolf.rite")}</label><RiteExperiencePicker catalog={rites} tribeId={String(character.line_data.tribe_id ?? "")} knownIds={[...werewolfIds(character.line_data.creation_rites), ...werewolfIds(character.line_data.learned_rites)]} selectedId={target} onSelect={id => { setTarget(id); setLearningSource(""); setFeedback(""); }}/></div>
             : type === "facet" ? <div><label>{t("werewolf.facets")}</label><FacetExperiencePicker character={character} catalogs={context} selectedId={target} onSelect={id => { setTarget(id); setLearningSource(""); setAuthorization(""); setFeedback(""); }}/></div>
             : type !== "primal-urge" && <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={value => { setTarget(value); setRating(0); setFeedback(""); }} options={options}/></label>}
         {type === "merit" && definition && rating > 0 && (WEREWOLF_MERIT_CONFIGURATION_IDS.has(definition.id)
           ? <WerewolfMeritConfigurationEditor merit={{ id: definition.id, instanceId: instance?.instanceId, dots: rating, configuration }} context={contexts.own} giftPresentation={gifts.presentation} onChange={setConfiguration}/>
-          : <MeritConfigurationEditor merit={{ name: definition.name, dots: rating, configuration }} catalog={merits} ownedMerits={character.merits} definitions={COMMON_MERIT_CONFIGURATIONS} onChange={setConfiguration}/>)}
+          : <MeritConfigurationEditor merit={{ name: definition.name, dots: rating, configuration }} catalog={merits} ownedMerits={contexts.core.merits} definitions={COMMON_MERIT_CONFIGURATIONS} onChange={setConfiguration}/>)}
         {type === "specialty" && <label>{t("ui.specialty")}<Input value={specialty} onChange={event => setSpecialty(event.target.value)} placeholder={t("ui.specialtyName")} maxLength={80}/></label>}
         {type === "rite" && <label>{t("werewolf.riteLearningSource")}<Input value={learningSource} onChange={event => { setLearningSource(event.target.value); setFeedback(""); }} placeholder={t("werewolf.riteLearningSourcePlaceholder")} maxLength={240}/><small>{t("werewolf.riteLearningNote")}</small></label>}
         {type === "renown" && <label>{t("werewolf.renownDeed")}<Input value={deed} onChange={event => { setDeed(event.target.value); setFeedback(""); }} maxLength={240}/><small>{t("werewolf.renownLearningNote")}</small></label>}

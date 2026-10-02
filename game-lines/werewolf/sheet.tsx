@@ -31,7 +31,7 @@ import { personalTotemPoints, totemSelection, totemState } from "./totem-rules";
 import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { boundedHarmony, boundedPrimalUrge, primalUrgeLevel } from "./creation-rules";
 import { resolveWerewolfMerits, werewolfMeritDefinition } from "./creation-grants";
-import { renownRatings, werewolfFormId, werewolfFormTraits, werewolfIds } from "./rules";
+import { renownRatings, werewolfFormId, werewolfFormTraits, werewolfIds, werewolfMemberTraits } from "./rules";
 import { FormsTable, FormSelector, MobileForm } from "./forms-table";
 import { HarmonyTrack } from "./harmony";
 import { AnchorDetails } from "./anchors";
@@ -42,7 +42,8 @@ import { RENOWN_IDS } from "./mechanics";
 import { favoredFormPenalties, WEREWOLF_MERIT_CONFIGURATION_IDS } from "./merit-rules";
 import { WerewolfExperiencePanel } from "./experience-panel";
 import { knownWerewolfFacets } from "./gift-progression";
-import { changeWerewolfForm } from "./form-state";
+import { changeWerewolfForm, changeWerewolfTotem } from "./form-state";
+import { TotemAdvantageEditor } from "./totem-advantage";
 import "./styles/sheet.css";
 
 export function WerewolfCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
@@ -63,16 +64,18 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const selectedTotem = totemSelection(data.totem);
   const setState = (key: string, value: unknown) => updateState({ ...state, [key]: value });
   const setLine = (key: string, value: unknown) => updateSheet({ ...character, line_data: { ...data, [key]: value } });
-  const setForm = (value: string) => updateState(changeWerewolfForm(character, value));
+  const benefitCatalogs = { reference, gifts, merits, totem };
+  const member = werewolfMemberTraits(character, benefitCatalogs);
+  const setForm = (value: string) => updateState(changeWerewolfForm(character, value, benefitCatalogs));
   const currentForm = werewolfFormId(state.form);
-  const hishu = werewolfFormTraits(character), activeForm = werewolfFormTraits(character, currentForm);
+  const hishu = werewolfFormTraits(character, "hishu", benefitCatalogs), activeForm = werewolfFormTraits(character, currentForm, benefitCatalogs);
   const damage = normalizeDamage(state.health_damage, Math.max(activeForm.health, Array.isArray(state.health_damage) ? state.health_damage.length : 0));
   const primalUrge = boundedPrimalUrge(data.primal_urge), limits = primalUrgeLevel(reference, primalUrge);
   const derived = { ...character.derived, Tamanho: activeForm.size, Vitalidade: activeForm.health, Defesa: activeForm.defense, Iniciativa: activeForm.initiative, Deslocamento: activeForm.speed };
   const armor = derivedTraitsWithArmor(derived, data.combat_armor).Armadura;
   const displayedDerived = { ...derived, Armadura: activeForm.armorGeneral || activeForm.armorBallistic
     ? t("werewolf.naturalAndEquipmentArmor", { natural: `${activeForm.armorGeneral}/${activeForm.armorBallistic}`, equipment: armor }) : armor };
-  const ownMerits = resolveWerewolfMerits(character.merits, merits);
+  const ownMerits = resolveWerewolfMerits(member.merits, merits);
   const conditions: SelectedCondition[] = Array.isArray(state.conditions) ? state.conditions.flatMap(item => item && typeof item === "object" && typeof item.id === "string"
     ? [{ ...item, id: item.id, persistent: Boolean(item.persistent), instanceId: typeof item.instanceId === "string" ? item.instanceId : undefined }] : []) : [];
   const conditionCatalog = core.conditions.map(item => locale === "pt-BR" ? { ...item, ...core.presentation[item.id] } : item);
@@ -86,7 +89,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     <SheetField label={t("werewolf.blood")} value={name(data.blood, reference.anchors)}/><SheetField label={t("werewolf.bone")} value={name(data.bone, reference.anchors)}/>
   </section>;
   const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><p>{t("werewolf.hishuTraits")}</p><div className={mobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={hishu.attributes} compactNames={mobile}/>)}</div></>;
-  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className="wtf-skill-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")}/>)}</div></>;
+  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className="wtf-skill-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={member.skills} specialties={member.specializations} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")}/>)}</div></>;
   const health = <><div className="panel-heading wtf-health-heading"><SheetHeading>{t("ui.health")}</SheetHeading><FormSelector value={currentForm} onChange={setForm} reference={reference}/></div>
     <HealthTrack health={activeForm.health} damage={damage} onChange={value => setState("health_damage", value)}/>
     {damage.length > activeForm.health && <p>{t("werewolf.preservedDamage", { amount: damage.length - activeForm.health })}</p>}</>;
@@ -97,9 +100,10 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const powerStat = <><MainPowerStat label={t("werewolf.primalUrge")} value={primalUrge}/><PrimalUrgeLimits reference={reference} rating={primalUrge}/></>;
   const renown = renownRatings(data.renown);
   const renownBlock = <div className="wtf-renown">{RENOWN_IDS.map(id => <div className="sheet-merit-main" key={id}><span>{t(`werewolf.renownNames.${id}`)}</span><DotValue value={renown[id]}/></div>)}</div>;
-  const meritList = <div className="sheet-merits single-column">{character.merits.map((selection, index) => {
+  const meritList = <div className="sheet-merits single-column">{member.merits.map((selection, index) => {
     const definition = werewolfMeritDefinition(selection, merits), text = definition ? meritPresentation(definition, locale) : null;
-    const configured = meritConfigurationTitle(selection.configuration);
+    const configured = selection.grantedBy === "werewolf:totem-advantage" && typeof selection.configuration?.skill === "string"
+      ? [systemTerm(selection.configuration.skill, locale), selection.configuration.specialty].filter(Boolean).join(": ") : meritConfigurationTitle(selection.configuration);
     const fieldLabels = { attribute: "attribute", secondAttribute: "secondAttribute", physicalSkill: "physicalSkill", advancedSkill: "advancedSkill", skill: "moonSkill", penaltySkill: "penaltySkill", virtue: "virtue", touchstone: "touchstone", anchor: "anchor", safePlaceId: "safePlace", giftId: "gift" } as const;
     const choiceText = (key: keyof typeof fieldLabels, value: string) => {
       if (key === "touchstone") return value === "physical" ? t("werewolf.physicalTouchstone") : value === "spiritual" ? t("werewolf.spiritualTouchstone") : value;
@@ -109,6 +113,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       return key === "virtue" ? value : systemTerm(value, locale);
     };
     return <details className="wtf-rule-disclosure" key={selection.instanceId ?? index}><summary><span>{text?.name ?? selection.name}{configured ? `: ${configured}` : ""}</span><DotValue value={selection.dots}/></summary>
+      {selection.grantedBy === "werewolf:totem-advantage" && <p className="wtf-rule-field"><strong>{t("ui.source")}:</strong>{" "}{t("werewolf.totemAdvantage")}</p>}
       {text?.prerequisites && <p className="wtf-rule-field"><strong>{t("ui.prerequisites")}:</strong>{" "}{text.prerequisites}</p>}
       {text && <p className="wtf-rule-field">{text.description}</p>}
       {text?.levels?.filter(level => level.rating <= selection.dots).map((level, levelIndex) => <p className="wtf-rule-field" key={levelIndex}><strong>{level.rating} · {level.name}:</strong>{" "}{level.description}</p>)}
@@ -126,7 +131,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={value => setState("conditions", value)}/>;
   const experience = <WerewolfExperiencePanel character={character} catalogs={catalogs} updateSheet={updateSheet} updateState={updateState}/>;
   const powers = <>
-    {!mobile && <FormsTable character={character} reference={reference} merits={ownMerits}/>}
+    {!mobile && <FormsTable character={{ ...member }} reference={reference} merits={ownMerits}/>}
     <SheetHeading>{t("werewolf.anchors")}</SheetHeading>
     {reference.anchors.filter(anchor => anchor.id === data.blood || anchor.id === data.bone).map(anchor => <AnchorDetails key={anchor.id} anchor={anchor} reference={reference}/>)}
     <WerewolfPassives reference={reference} harmony={boundedHarmony(data.harmony)}/>
@@ -153,8 +158,10 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       return rite ? <details className="wtf-rule-disclosure" key={id}><summary>{locale === "pt-BR" ? rites.presentation.rites[id]?.name ?? rite.name : rite.name} · {rite.dots}</summary><RiteRules rite={rite} catalog={rites}/></details> : <p key={id}>{t("werewolf.missingSelectedRite", { id })}</p>;
     })}
     <FetishInventory value={fetishSelections(data.fetishes)} onChange={value => setLine("fetishes", value)} catalog={fetishes} gifts={gifts}/>
-    <TotemEditor value={selectedTotem} onChange={value => setLine("totem", value)} personalPoints={personalTotemPoints(character.merits, merits)} catalog={totem}
-      state={selectedTotem ? totemState(state.werewolf_totem, selectedTotem.instanceId) : undefined} onStateChange={value => setState("werewolf_totem", value)}/>
+    <TotemEditor value={selectedTotem} onChange={value => updateSheet(changeWerewolfTotem(character, value, benefitCatalogs))} personalPoints={personalTotemPoints(character.merits, merits)} catalog={totem}
+      state={selectedTotem ? totemState(state.werewolf_totem, selectedTotem.instanceId) : undefined} onStateChange={value => setState("werewolf_totem", value)}>
+      {selectedTotem && <TotemAdvantageEditor character={character} value={selectedTotem} onChange={value => updateSheet(changeWerewolfTotem(character, value, benefitCatalogs))} catalogs={benefitCatalogs}/>}
+    </TotemEditor>
   </>;
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
   const activeTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";
@@ -163,7 +170,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     <SwipeableSheetTabs value={activeTab} onValueChange={setTab} tabs={[{ value: "summary", label: t("ui.summary") }, { value: "stats", label: t("ui.traits") }, { value: "details", label: t("ui.details") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("ui.notes") }]}>{{
       summary: <>{identity}{health}{willpower}{powerStat}{essence}{harmony}<SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}{experience}</>,
       stats: <>{attributes}{skills}<SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
-      details: powers, combat: <><MobileForm character={character} reference={reference} merits={ownMerits} value={currentForm} onChange={setForm}/><CombatPage character={character} derived={derived} updateSheet={updateSheet}/></>, notes,
+      details: powers, combat: <><MobileForm character={member} reference={reference} merits={ownMerits} value={currentForm} onChange={setForm}/><CombatPage character={character} derived={derived} updateSheet={updateSheet}/></>, notes,
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;
   return <CharacterPaperShell line="WtF" title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>

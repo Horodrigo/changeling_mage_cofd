@@ -32,7 +32,9 @@ import { mergeWerewolfCreationMerits } from "./creation-grants";
 import { WEREWOLF_CREATION_GRANT_SOURCES, withWerewolfCreationGrants, werewolfCreationMeritCost, werewolfMeritDefinition, resolveWerewolfMerits, withoutAuspiceSkillGrant } from "./creation-grants";
 import { WerewolfMeritConfigurationEditor } from "./merit-configuration-editor";
 import { werewolfMeritPrerequisitesMet, werewolfMeritSelectionProblems, WEREWOLF_MERIT_CONFIGURATION_IDS, type WerewolfMeritContext } from "./merit-rules";
-import { creationChoices, recordedAuspiceSkillGrant, renownRatings, werewolfDerived, werewolfIds } from "./rules";
+import { creationChoices, recordedAuspiceSkillGrant, renownRatings, werewolfDerived, werewolfIds, werewolfMemberTraits } from "./rules";
+import { changeWerewolfTotem } from "./form-state";
+import { TotemAdvantageEditor } from "./totem-advantage";
 import { WerewolfExperiencePanel } from "./experience-panel";
 import { giftProgressionProblems, synchronizeRenownFacets } from "./gift-progression";
 
@@ -52,12 +54,13 @@ function purchasedTraits(values: Record<string, number>, source: CharacterSheet 
 }
 
 /** The owning Builder constructs its line_data; Core still owns only the outer schema. */
-export function buildWerewolfCharacter({ source, identity, attributes, skills, specialties, aspirations, merits, choices, reference, gifts, rites, meritCatalog, fetishes, totem, draft = false, step = 1, allowAdvancement = false }: {
+export function buildWerewolfCharacter({ source, identity, attributes, skills, specialties, aspirations, merits, choices, reference, gifts, rites, meritCatalog, totemCatalog, fetishes, totem, draft = false, step = 1, allowAdvancement = false }: {
   source?: CharacterSheet | null; identity: CharacterSheet["character"]; attributes: Record<string, number>; skills: Record<string, number>;
   specialties: Specialty[]; aspirations: string[]; merits: MeritSelection[]; choices: WerewolfCreationChoices;
   reference: WerewolfReferenceCatalog; gifts: WerewolfGiftCatalog; rites: WerewolfRiteCatalog; meritCatalog: readonly MeritDefinition[]; draft?: boolean; step?: number; allowAdvancement?: boolean;
   fetishes?: readonly FetishSelection[];
   totem?: TotemSelection | null;
+  totemCatalog: WerewolfTotemCatalog;
 }): CharacterSheet {
   if (source && source.game_line !== "WtF") throw new Error("Werewolf builder received another game line.");
   const problems = creationTemplateProblems(choices, reference, skills, gifts.gifts, rites.rites);
@@ -101,7 +104,13 @@ export function buildWerewolfCharacter({ source, identity, attributes, skills, s
   if (!draft && giftProgressionProblems(completed, reference, gifts).length) throw new Error("Creation choices invalidate existing Gift progression.");
   if (!draft && source?.line_data.auspice_id !== choices.auspice_id && Object.values(experienceRenown).some(dots => dots > 0))
     throw new Error("Refund Renown purchases before changing Auspice.");
-  completed.derived = werewolfDerived(completed);
+  const benefitCatalogs = { reference, gifts, merits: meritCatalog, totem: totemCatalog };
+  if (source) {
+    const transition = changeWerewolfTotem(source, totemSelection(completed.line_data.totem), benefitCatalogs);
+    // Compare only Totem changes against the old traits; base creation edits have their own lifecycle.
+    if (transition.current_state !== source.current_state) completed.current_state.health_damage = transition.current_state.health_damage;
+  }
+  completed.derived = werewolfDerived(completed, benefitCatalogs);
   return completed;
 }
 
@@ -133,17 +142,18 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const learnedRiteIds = werewolfIds(advancementSource?.line_data.learned_rites);
   const templateProblems = creationTemplateProblems(choices, reference, common.skills, gifts.gifts, rites.rites);
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id), tribe = reference.tribes.find(item => item.id === choices.tribe_id);
-  const finalSkills = purchasedTraits(auspice && !templateProblems.includes("auspiceSkill") ? creationAuspiceSkill(common.skills, auspice, choices.auspice_skill) : common.skills, advancementSource, "skills");
-  const finalAttributes = purchasedTraits(common.attributes, advancementSource, "attributes");
   const allMerits = mergeWerewolfCreationMerits(advancementSource?.merits ?? [], merits, meritCatalog);
-  const resolved = resolveWerewolfMerits(allMerits, meritCatalog);
-  const hishu = formTraits({ attributes: finalAttributes, skills: finalSkills }, reference.forms.find(form => form.id === "hishu")!, 5, resolved, allMerits);
+  const benefitCatalogs = { reference, gifts, merits: meritCatalog, totem: totemCatalog };
+  const memberSource = buildWerewolfCharacter({ source: advancementSource, identity: { name: common.name, concept: common.concept, player: common.playerName, chronicle: common.chronicle },
+    attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, totemCatalog, fetishes, totem, draft: true });
+  const member = werewolfMemberTraits(memberSource, benefitCatalogs);
+  const hishu = formTraits(member, reference.forms.find(form => form.id === "hishu")!, 5, resolveWerewolfMerits(member.merits, meritCatalog), member.merits);
   const renown = auspice && tribe && !templateProblems.includes("renownChoice") ? creationGiftSelection(auspice, tribe, choices.renown_choice as RenownId, gifts.gifts, choices).renown : renownRatings(null);
   const experienceRenown = renownRatings(advancementSource?.line_data.experience_renown);
   for (const id of Object.keys(renown) as RenownId[]) renown[id] += experienceRenown[id];
-  const context: MeritPrerequisiteContext = { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: finalSkills, size: hishu.size, merits: allMerits, meritCatalog };
-  const ownContext: WerewolfMeritContext = { attributes: hishu.attributes, skills: finalSkills, harmony: Number(initial?.line_data.harmony ?? 7),
-    primalUrge: choices.primal_urge + Number(advancementSource?.line_data.experience_primal_urge ?? 0), renown, tribeId: choices.tribe_id, auspice, forms: reference.forms, gifts: gifts.gifts, merits: resolved };
+  const context: MeritPrerequisiteContext = { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: member.skills, size: hishu.size, merits: member.merits, meritCatalog };
+  const ownContext: WerewolfMeritContext = { attributes: hishu.attributes, skills: member.skills, harmony: Number(initial?.line_data.harmony ?? 7),
+    primalUrge: choices.primal_urge + Number(advancementSource?.line_data.experience_primal_urge ?? 0), renown, tribeId: choices.tribe_id, auspice, forms: reference.forms, gifts: gifts.gifts, merits: resolveWerewolfMerits(member.merits, meritCatalog) };
   const eligible = (definition: MeritDefinition, candidate: MeritPrerequisiteContext) => meritPrerequisitesMet(definition, candidate) &&
     werewolfMeritPrerequisitesMet(definition, { id: definition.id, dots: candidate.selectedDots ?? definition.ratings[0], configuration: candidate.configuration }, ownContext);
   const spent = werewolfCreationMeritCost(merits, meritCatalog);
@@ -155,14 +165,14 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   if (choices.rites.some(id => learnedRiteIds.includes(id))) add(3, "riteExperienceOverlap", t("werewolf.experienceProblem.riteKnown"));
   if (advancementSource && !templateProblems.length) {
     const preview = buildWerewolfCharacter({ source: advancementSource, identity: advancementSource.character, attributes: common.attributes, skills: common.skills, specialties: common.specialties,
-      aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, draft: true });
+      aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, totemCatalog, draft: true });
     for (const problem of giftProgressionProblems(preview, reference, gifts)) add(3, "giftProgression", t(`werewolf.experienceProblem.${problem}`));
     if (advancementSource.line_data.auspice_id !== choices.auspice_id && Object.values(experienceRenown).some(dots => dots > 0)) add(3, "giftProgression", t("werewolf.experienceProblem.giftDependency"));
   }
   if (ownContext.primalUrge > 10 || Object.values(renown).some(dots => dots > 5)) add(3, "progressionMaximum", t("werewolf.progressionMaximum"));
   for (const [group, names, values, minimum] of [["attributes", Object.values(ATTRIBUTES).flat(), common.attributes, 1], ["skills", Object.values(SKILLS).flat(), common.skills, 0]] as const)
     if (names.some(name => !Number.isInteger(values[name]) || values[name] < minimum || values[name] > 5)) add(2, group, t("werewolf.creationTraitRange"));
-  if (common.specialties.some(item => item.name.trim() && (!Object.values(SKILLS).flat().some(skill => skill === item.skill) || !(finalSkills[item.skill] >= 1))))
+  if (common.specialties.some(item => item.name.trim() && (!Object.values(SKILLS).flat().some(skill => skill === item.skill) || !(member.skills[item.skill] >= 1))))
     add(2, "specialties", t("werewolf.creationSpecialties"));
   if (spent > budget) add(3, "merits", t("ui.meritsExceedTheLimit"));
   for (const selection of merits) {
@@ -175,7 +185,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   }
   const missing = (key: string) => issues.some(issue => issue.key === key);
   const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => buildWerewolfCharacter({ source, identity: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
-    attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, fetishes, totem, draft, step: common.step, allowAdvancement: common.allowAdvancement });
+    attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, totemCatalog, fetishes, totem, draft, step: common.step, allowAdvancement: common.allowAdvancement });
   const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) { common.setError(`${t("ui.stillRequired")}: ${issues.map(issue => issue.label).join(", ")}.`); common.setStep(issues[0].step); return false; }
     const sheet = buildCharacter(advancement ?? initial, draft);
@@ -198,7 +208,9 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
               : <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={meritCatalog} ownedMerits={ownedMerits} inline={inline} definitions={COMMON_MERIT_CONFIGURATIONS}/>;
           }}/>
       </div><div className="builder-section"><FetishInventory value={fetishes} onChange={setFetishes} catalog={fetishCatalog} gifts={gifts}/></div>
-      <div className="builder-section"><TotemEditor value={totem} onChange={setTotem} personalPoints={personalTotemPoints(allMerits, meritCatalog)} catalog={totemCatalog}/></div></>}/>;
+      <div className="builder-section"><TotemEditor value={totem} onChange={setTotem} personalPoints={personalTotemPoints(allMerits, meritCatalog)} catalog={totemCatalog}>
+        {totem && <TotemAdvantageEditor character={memberSource} value={totem} onChange={setTotem} catalogs={benefitCatalogs}/>}
+      </TotemEditor></div></>}/>;
 }
 
 export const werewolfBuilder: GameLineBuilderModule = { Component: WerewolfCharacterBuilder };
