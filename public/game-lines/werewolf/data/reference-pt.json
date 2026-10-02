@@ -19,6 +19,54 @@
     "name": "Urhan",
     "description": "Urhan acrescenta Destreza +2, Vigor +1, Manipulação −1, Tamanho −1 e +3 ao fator de espécie do Deslocamento. Não se comunica com humanos e fala apenas algumas palavras simples da Primeira Língua. Mordidas causam +1 de dano letal sem agarrão e podem iniciar um. Percepção com sentidos lupinos recebe +4 dados. Alcançar a Presa: gaste 1 Essência para antecipar a ação de outro personagem com a sua, substituindo sua ação normal; antecipações concorrentes causam um Confronto de Vontades, e isso não pode ser usado depois de agir no turno. Em uma perseguição a pé, use Deslocamento em vez de Força + Atletismo."
   },
+  "hishu-sheeps-clothing": {
+    "name": "Disfarce de Ovelha",
+    "fields": {
+      "effect": { "label": "Efeito", "text": "Tentativas de localizar o lobisomem em uma multidão ou persegui-lo em áreas povoadas sofrem seu Instinto Primitivo como penalidade." }
+    }
+  },
+  "dalu-badass-motherfucker": {
+    "name": "Imposição Brutal",
+    "fields": {
+      "dicePool": { "label": "Parada de dados", "text": "Presença + Instinto Primitivo contra Compostura + Instinto Primitivo da presa" },
+      "effect": { "label": "Efeito", "text": "Em um sucesso, qualquer pessoa que cerque ou proteja a presa recua ou a entrega." }
+    }
+  },
+  "gauru-regeneration": {
+    "name": "Regeneração",
+    "fields": {
+      "effect": { "label": "Efeito", "text": "Regenera todo o dano contusivo e letal a cada turno. Não regenera dano agravado." }
+    }
+  },
+  "gauru-rage": {
+    "name": "Fúria",
+    "fields": {
+      "effect": { "label": "Efeito", "text": "Ataque um oponente ativo ao alcance a cada turno. Não é necessário continuar atacando um oponente incapacitado enquanto houver outro. Se os oponentes estiverem fora de alcance, aproxime-se deles ou arremesse algo contra eles. Sem oponentes, ataque qualquer coisa ao alcance. Outras ações exigem Perseverança + Compostura; uma falha provoca Kuruth." },
+      "restrictions": { "label": "Restrições", "text": "Falhe automaticamente em testes Sociais que não usem Intimidação e em testes Mentais que não sejam de Percepção ou Resistência. A comunicação serve apenas para ajudar a matar." },
+      "duration": { "label": "Duração", "text": "Entre em Gauru uma vez por cena, por Vigor em Hishu + Instinto Primitivo turnos. Depois, mude para Dalu ou Urshul, ou teste Perseverança + Compostura reflexivamente. Um sucesso concede mais um turno antes de mudar para Dalu ou Urshul e entrar em Wasu-Im; uma falha provoca Basu-Im imediatamente." }
+    }
+  },
+  "gauru-primal-fear": {
+    "name": "Medo Primal",
+    "fields": {
+      "effect": { "label": "Efeito", "text": "Inimigos inferiores, incluindo a maioria dos humanos, espíritos de Posto inferior e animais não sobrenaturais, devem usar combate simplificado. Resolva o combate normalmente se a presa se esconder entre inimigos mais fortes. No combate normal, os oponentes usam apenas Destreza ou Raciocínio para Defesa, sem acrescentar a Perícia habitual." }
+    }
+  },
+  "urshul-weaken-the-prey": {
+    "name": "Enfraquecer a Presa",
+    "fields": {
+      "frequency": { "label": "Frequência", "text": "Uma vez por cena." },
+      "effect": { "label": "Efeito", "text": "Ao ferir a presa com dentes ou garras, provoque Braço Lesionado, Perna Lesionada ou Derrubado sem exigir um ataque localizado." }
+    }
+  },
+  "urhan-chase-down": {
+    "name": "Alcançar a Presa",
+    "fields": {
+      "cost": { "label": "Custo", "text": "1 Essência para antecipar uma ação." },
+      "effect": { "label": "Efeito", "text": "Antecipe a ação de combate de outro personagem com a sua, normalmente um ataque. Isso substitui sua ação normal e não pode ser usado depois de já ter agido no turno. Habilidades concorrentes de antecipação provocam um Confronto de Vontades." },
+      "chase": { "label": "Perseguição a pé", "text": "Use Deslocamento em vez de Força + Atletismo." }
+    }
+  },
   "blood-talons": {
     "name": "Garras de Sangue"
   },

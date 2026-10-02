@@ -8,6 +8,7 @@ export type FormDefinition = Source & {
   id: FormId; name: string; description: string;
   attributes: Partial<Record<string, number>>; size: number; speciesFactor: number;
   perception: number; firearmsDefense: boolean; armorGeneral: number; armorBallistic: number;
+  passives: Array<Pick<PassiveDefinition, "id" | "name" | "fields">>;
 };
 export type FormMechanics = Pick<FormDefinition, "id" | "attributes" | "size" | "speciesFactor" | "perception" | "firearmsDefense" | "armorGeneral" | "armorBallistic">;
 export type AuspiceDefinition = Source & {

@@ -21,6 +21,5 @@ body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-di
 }
 @media print {
   .wtf-sheet { color: #000; background: #fff; }
-  .wtf-sheet .wtf-forms-scroll { overflow: visible; }
   .wtf-sheet .wtf-rule-disclosure { break-inside: avoid; }
 }

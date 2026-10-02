@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 34,
+  "catalogVersion": 35,
   "catalogs": {
     "merits-werewolf": { "version": 1, "url": "/game-lines/werewolf/data/merits.json" },
     "merits-werewolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/merits-pt.json" },
@@ -12,8 +12,8 @@
     "werewolf-gifts-core-wolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json" },
     "werewolf-gifts-core-moon": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon.json" },
     "werewolf-gifts-core-moon-pt": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json" },
-    "werewolf-reference": { "version": 2, "url": "/game-lines/werewolf/data/reference.json" },
-    "werewolf-reference-pt": { "version": 3, "url": "/game-lines/werewolf/data/reference-pt.json" },
+    "werewolf-reference": { "version": 3, "url": "/game-lines/werewolf/data/reference.json" },
+    "werewolf-reference-pt": { "version": 4, "url": "/game-lines/werewolf/data/reference-pt.json" },
     "werewolf-traits": { "version": 1, "url": "/game-lines/werewolf/data/traits.json" },
     "werewolf-traits-pt": { "version": 2, "url": "/game-lines/werewolf/data/traits-pt.json" },
     "mage-spells-index": { "version": 1, "url": "/game-lines/mage/data/spells/index.json" },

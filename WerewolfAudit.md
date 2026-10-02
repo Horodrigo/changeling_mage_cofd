@@ -23,11 +23,11 @@ A auditoria cobre o inventário de sistemas dos três livros, mas não represent
 Incluído:
 
 - Werewolf/Forsaken: cinco Auspices, cinco Tribes e Ghost Wolves, criação/edição, progressão, experiência individual, Merits elegíveis, Gifts/Facets, Rites, Fetishes/Talens, Totem e ficha.
-- Cinco forms em cinco colunas na seção Details/Powers do mobile, com valores derivados automaticamente. Health usa um seletor discreto da form acessível.
+- Cinco forms em cinco colunas no desktop/print, com valores derivados automaticamente; mobile Combat apresenta apenas a form ativa e compartilha o seletor de Health, sem estampa.
 - Passivas expansíveis/colapsáveis, similares a Tricks of the Blood de Vampire, com regras e limites informativos.
 - Harmony manual e clicável de 10 a 0; Breaking Point informativo; Blood/Bone e Touchstones com apresentação definida em W06/W07.
 - Todas as Conditions dos três livros, incluindo as ligadas a sistemas fora do escopo, como conteúdo de catálogo. Tilts seguem a proposta aprovada de W22. Nenhum Beat automático.
-- CSS normal, mobile, PDF e blank; apenas a skull já fornecida como nova imagem.
+- CSS normal, mobile, PDF e blank; skull e estampa das forms fornecidas pelo usuário. A estampa tem fundo transparente e formato WebP, conforme a solicitação posterior.
 - Botão discreto Heal/Curar em Health para todas as linhas, removendo todo o dano quando acionado.
 - Renomear a apresentação de Ban/Bane nas entidades efêmeras de todas as linhas, conforme L01 e confirmação ortográfica P03.
 
@@ -60,11 +60,11 @@ Fontes: WTF2 pp. 81–84, 197–200 e 296–305; NHSM p. 203. A criação Pure n
 
 Preservar os nomes originais da língua Uratha em todos os idiomas, incluindo Hishu, Dalu, Gauru, Urshul, Urhan, Auspice names e demais termos dessa língua.
 
-Apresentar as cinco forms em cinco colunas, uma por form, seguindo a segunda página da ficha oficial. No mobile, essa tabela fica em Details/Powers; não substituir por uma única form com comparação opcional. Valores modificados são calculados e apresentados automaticamente, mantendo os atributos básicos comprados separados dos modificadores.
+Apresentar as cinco forms em cinco colunas, uma por form, seguindo a segunda página da ficha oficial, no desktop/print. Conforme a revisão posterior do usuário, mobile Combat mostra apenas a form ativa, compartilhando o seletor de Health, sem imagem de fundo. Valores modificados são calculados automaticamente, sem reescrever os Attributes básicos comprados.
 
-Mostrar os valores e regras próprios de cada form, incluindo Attributes, Size, Health, Defense, Initiative, Speed, Armor, perception e natural weapons conforme aplicável. Adaptar a tabela à tela estreita preservando as cinco colunas.
+Mostrar somente os Attributes alterados com seus valores recalculados, sem rótulos +X ou uma segunda seção Attributes. Size, Health, Defense, Initiative, Speed, Armor e Perception ficam na comparação compacta, sem largura mínima que imponha rolagem horizontal. Details contém apenas as passivas específicas, em campos separados por nome, Dice Pool, Cost, Effect, restrições e Duration quando aplicáveis. A estampa fornecida foi reduzida, teve o fundo branco removido e foi convertida para WebP transparente.
 
-Criar uma seção de Werewolf passives expansível/colapsável, similar a Tricks of the Blood de Vampire. Durações, custos, limites e restrições ficam como informação, não como um controlador de tempo.
+Criar a seção Body of the Wolf expansível/colapsável, similar a Tricks of the Blood de Vampire. Durações, custos, limites e restrições ficam como informação, não como um controlador de tempo.
 
 Fontes: WTF2 pp. 93–105; ficha oficial, PDF físico 318.
 
@@ -72,7 +72,7 @@ Fontes: WTF2 pp. 93–105; ficha oficial, PDF físico 318.
 
 **Decisão: aprovada com seletor em Health.**
 
-Seletor discreto junto a Health com as forms às quais o personagem tem acesso. Mudar a form recalcula automaticamente a quantidade de caixas, sem apagar dano ou curar ao reduzir a capacidade. Dano além da capacidade visível deve continuar preservado; sua representação será conferida na implementação, sem inventar conversão de dano.
+Seletor discreto junto a Health com as forms às quais o personagem tem acesso, compartilhado com mobile Combat. Mudar a form recalcula automaticamente a quantidade de caixas, sem apagar dano ou curar. Conforme a revisão posterior do usuário e WTF2 p. 172, cada ferida excedente ao perder caixas agrava uma ferida menos severa restante. Excesso terminal permanece armazenado; aumentar Health não desfaz agravamentos, e somente Heal limpa todo o dano.
 
 Skin Thief, The Father's Form e Quicksilver Flesh mantêm escolhas/modificadores próprios, com origem e prévia, sem reescrever Attributes básicos. The Father's Form depende da Facet correspondente, não é uma form gratuita. Mimic e Geryo não são implementados, conforme W18/W20.
 
@@ -450,7 +450,7 @@ O usuário confirmou P01–P03 e autorizou retomar a meta e implementar o escopo
 - Validação Werewolf por ID de Harmony, Primal Urge, Renown e Tribe, além dos thresholds canônicos de Attribute/Skill. O contexto usa traits efetivos de Hishu; a form de combate não altera elegibilidade. Core é responsável por acesso de linha, mortalOnly e exclusões genéricas no Builder registrado.
 - Editor nativo EN/PT para Anchored, Blood or Bone Affinity, Code of Honor, Dedicated Locus, Embodiment of the Firstborn, Favored Form, Fortified Form, Living Weapon e Moon-Kissed. Dedicated Locus vincula uma instância exata de Safe Place; isso não liga fichas ou cria entidades de Pack. Benefícios condicionais não ativam poderes nem concedem recursos.
 - Favored Form preserva uma penalidade de Mental/Physical Attribute por dot, distribuível entre outras forms, incluindo Hishu. Apenas níveis desbloqueados afetam a prévia; reduzir dots ou alterar identidade não apaga configurações silenciosamente. A escolha de Skill pertinente continua julgamento da mesa. O exemplo explícito de p. 106 proíbe favorecer Manipulation em Gauru, sem inventar uma penalidade numérica ausente de p. 97.
-- Embodiment of the Firstborn, Favored Form e Instinctive Defense recalculam os valores da tabela de forms sem regravar Attributes comprados ou dano. Fortified Form segue M04 corrigida, sem Armor inata em Gauru. Living Weapon informa somente os bônus do ataque natural escolhido, sem conceder ataques que a form não possui. A tabela mostra os nove Attributes, pois as penalidades de Favored Form também podem afetar Attributes mentais.
+- Embodiment of the Firstborn, Favored Form e Instinctive Defense recalculam os valores da tabela de forms sem regravar Attributes comprados ou dano. Fortified Form segue M04 corrigida, sem Armor inata em Gauru. Living Weapon informa somente os bônus do ataque natural escolhido, sem conceder ataques que a form não possui. A tabela compacta mostra apenas os Attributes alterados, incluindo os mentais efetivamente modificados por Favored Form; benefícios de níveis ainda não comprados não são apresentados como ativos.
 - As três definições expressamente repetíveis recusam a mesma escolha em outra instância; Living Weapon distingue form e ataque conforme M12. Esses controles estão compostos no Builder registrado, na persistência e nas compras/refunds individuais de XP.
 
 ### Concessões e origem das alocações de criação — WTF2 pp. 82–83

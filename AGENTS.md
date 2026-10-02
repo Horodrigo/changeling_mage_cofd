@@ -251,6 +251,8 @@ Work in small verifiable batches. Reconcile IDs, counts, source, page, required 
 
 ## UI Organization and Conventions
 
+Werewolf form comparisons display only changed Attributes and their recalculated totals, including active Merit modifiers. Do not repeat modifier labels or add a second full Attributes disclosure. Five desktop columns use fluid widths; the supplied transparent WebP is decorative and absent from mobile. Form Details uses ID-keyed structured passive fields from the static reference catalogs, not a runtime parser of the full form description.
+
 - Share controls only when behavior is truly common. A shared visual pattern does not imply a shared mechanical abstraction.
 - Keep line-specific forms and interactions in the owning module.
 - Avoid giant switch components, universal section engines, and large optional-prop matrices.

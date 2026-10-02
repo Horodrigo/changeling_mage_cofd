@@ -12,6 +12,8 @@ The interface supports English (`en-US`) and Brazilian Portuguese (`pt-BR`).
 
 Werewolf currently includes five Auspices, five Tribes plus Ghost Wolves, consultable Blood/Bone recovery, optional Specialties/Touchstone notes, filtered creation Gifts/Rites, Core Werewolf Merits, five automatically calculated forms, and manual Harmony with Flesh/Spirit Touchstones at 10/0. Desktop compares five equal form columns over the supplied illustration; mobile Combat shows the active form without a background and shares Health's selector. Losing temporary Health upgrades remaining wounds for each excess wound (WTF2 p. 172); increasing Health never reverses those upgrades, and terminal excess remains stored. Kuruth/Wasu-Im reference sits beside Primal Urge; passive rules appear under Body of the Wolf. Creation advancement and individual XP purchases/refunds support Attributes, Skills, Specialties, Merits, Primal Urge, Renown, Gifts/Facets, and Core Rites with separate creation allocations and exact Merit instances. Renown records a worthy deed, grants ordered Auspice Moon Facets automatically, and tracks free matching Shadow/Wolf Facets or pending credits separately from paid powers. Shadow unlocks include their first Facet; additional Moon Gifts require explicit Storyteller authorization and retain ordered progression and Renown caps. Refunds protect dependent powers. Rite learning records its player-described source of knowledge and enforces Tribe restrictions without requiring Pack records. Supplement catalogs, Totem/Fetish tools, and dedicated PDF/blank sheets are not yet complete. Pure, Wolf-Blooded, and Lodges are outside this first implementation.
 
+Form comparisons display only changed Attributes and their recalculated values, including active Merit modifiers, without a duplicate Attributes disclosure. Details contains structured, localized form-specific passives rather than repeating the form summary. The supplied illustration is a smaller transparent WebP; five desktop columns fit the available width without horizontal scrolling.
+
 The runtime is built with React, Next/Vinext, Vite, and Cloudflare. Character persistence is browser-local through IndexedDB with localStorage crash-safe fallback/staging. Rules catalogs remain static under `public/shared/data/` and `public/game-lines/<line>/data/`, loaded lazily for the selected game line.
 
 ## Prerequisites
@@ -113,7 +115,7 @@ public/                           Static files; paths become browser URLs
       images/                     Vampire-only artwork and icon.webp
     werewolf/
       data/                       Werewolf catalogs in progress
-      images/                     Supplied skull (icon.webp) and form comparison illustration (forms.png)
+      images/                     Supplied skull (icon.webp) and transparent form comparison illustration (forms.webp)
   manifest.webmanifest            PWA entry point, intentionally at the root
   sw.template.js / sw.js          Service-worker template / generated worker
   version.json                    Generated application version

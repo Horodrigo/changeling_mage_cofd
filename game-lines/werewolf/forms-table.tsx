@@ -25,16 +25,17 @@ export function FormSelector({ value, onChange, reference }: { value: FormId; on
 function FormColumn({ character, reference, baseSize = 5, merits = [], form }: FormProps & { form: FormDefinition }) {
   const { locale, t } = useLanguage();
   const traits = formTraits(character, form, baseSize, merits, character.merits);
+  const changedAttributes = Object.values(ATTRIBUTES).flat().filter(attribute => attribute in form.attributes || (traits.attributes[attribute] ?? 0) !== Number(character.attributes[attribute] ?? 0));
   const rows = [
     [t("ui.size"), traits.size], [t("ui.health"), traits.health], [t("ui.defense"), traits.defense],
     [t("ui.initiative"), traits.initiative], [t("ui.speed"), traits.speed],
-    [t("ui.armor"), `${traits.armorGeneral}/${traits.armorBallistic}`], [t("werewolf.perception"), `+${traits.perception}`],
-    [t("werewolf.firearmsDefense"), traits.firearmsDefense ? t("ui.yes") : t("ui.no")],
+    [t("ui.armor"), `${traits.armorGeneral}/${traits.armorBallistic}`], [t("werewolf.formPerception"), `+${traits.perception}`],
+    [t("werewolf.formFirearmsDefense"), traits.firearmsDefense ? t("ui.yes") : t("ui.no")],
   ];
   return <section className="wtf-form-column" data-form={form.id}>
     <h4>{form.name}</h4>
-    <dl className="wtf-form-changes">{Object.entries(form.attributes).map(([attribute, delta]) => <div key={attribute}>
-      <dt>{systemTerm(attribute, locale)} ({Number(delta) > 0 ? "+" : ""}{delta})</dt><dd>{traits.attributes[attribute]}</dd>
+    <dl className="wtf-form-changes">{changedAttributes.map(attribute => <div key={attribute}>
+      <dt>{systemTerm(attribute, locale)}</dt><dd>{traits.attributes[attribute]}</dd>
     </div>)}</dl>
     <dl className="wtf-form-derived">{rows.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
     {(["bite", "claws"] as const).map(attack => {
@@ -43,9 +44,18 @@ function FormColumn({ character, reference, baseSize = 5, merits = [], form }: F
         {t(weapon.ignoresNonMagicalArmor ? "werewolf.weaponMeritIgnoresArmor" : "werewolf.weaponMeritBenefits", { damage: weapon.damage, piercing: weapon.armorPiercing })}
       </p>;
     })}
-    <details className="wtf-form-rules"><summary>{t("ui.attributes")}</summary><dl>{Object.values(ATTRIBUTES).flat().map(attribute => <div key={attribute}><dt>{systemTerm(attribute, locale)}</dt><dd>{traits.attributes[attribute]}</dd></div>)}</dl></details>
+    {Object.values(traits.weaponBonuses).some(weapon => weapon.armorPiercing > 0) && <p className="wtf-rule-field">{t("werewolf.weaponMeritNote")}</p>}
     <details className="wtf-form-rules"><summary>{t("ui.details")}</summary>
-      <p>{locale === "pt-BR" ? reference.presentation[form.id]?.description ?? form.description : form.description}</p>
+      {form.passives.map(passive => {
+        const presentation = locale === "pt-BR" ? reference.presentation[passive.id] : undefined;
+        return <article className="wtf-form-passive" key={passive.id}>
+          <h5>{presentation?.name ?? passive.name}</h5>
+          {passive.fields.map(field => {
+            const translated = presentation?.fields?.[field.id];
+            return <p className="wtf-rule-field" key={field.id}><strong>{translated?.label ?? field.label}:</strong>{" "}{translated?.text ?? field.text}</p>;
+          })}
+        </article>;
+      })}
       <small>{t("conditions.sourcePage", { source: form.source, page: form.additionalPages?.length ? `${form.page}–${form.additionalPages.at(-1)}` : form.page })}</small>
     </details>
   </section>;
@@ -55,10 +65,9 @@ function FormColumn({ character, reference, baseSize = 5, merits = [], form }: F
 export function FormsTable(props: FormProps) {
   const { t } = useLanguage();
   return <section className="wtf-forms"><h3>{t("werewolf.forms")}</h3>
-    <div className="wtf-forms-scroll" tabIndex={0} role="region" aria-label={t("werewolf.forms")}>
+    <div className="wtf-forms-comparison">
       <div className="wtf-form-columns">{props.reference.forms.map(form => <FormColumn {...props} key={form.id} form={form}/>)}</div>
     </div>
-    {props.merits?.length ? <p>{t("werewolf.weaponMeritNote")}</p> : null}
   </section>;
 }
 

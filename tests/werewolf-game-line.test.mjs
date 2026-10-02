@@ -104,8 +104,8 @@ test("Mobile form reference renders only the selected form and never includes th
   const markup = render(createElement(MobileForm, { character: create(), reference, value: "urshul", onChange: () => assert.fail("render changed form") }));
   assert.equal((markup.match(/data-form=/g) ?? []).length, 1);
   assert.match(markup, /data-form="urshul"/);
-  assert.match(markup, /Manipulation \(−?[-]?1\)/);
-  assert.doesNotMatch(markup, /wtf-form-columns|forms.png|<h4>Gauru/);
+  assert.match(markup, /<dt>Manipulation<\/dt><dd>1<\/dd>/);
+  assert.doesNotMatch(markup, /wtf-form-columns|forms.webp|<h4>Gauru|<summary>Attributes/);
 });
 
 test("Werewolf registration loads only immutable Core and Werewolf resources with independent surfaces", async () => {

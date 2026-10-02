@@ -3,6 +3,11 @@
     {
       "id": "hishu",
       "name": "Hishu",
+      "passives": [
+        { "id": "hishu-sheeps-clothing", "name": "Sheep's Clothing", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Attempts to pinpoint the werewolf in a crowd or pursue her through populated areas suffer her Primal Urge as a penalty." }
+        ] }
+      ],
       "attributes": {},
       "size": 0,
       "speciesFactor": 0,
@@ -19,6 +24,12 @@
     {
       "id": "dalu",
       "name": "Dalu",
+      "passives": [
+        { "id": "dalu-badass-motherfucker", "name": "Badass Motherfucker", "fields": [
+          { "id": "dicePool", "label": "Dice Pool", "text": "Presence + Primal Urge vs Composure + Primal Urge of the prey" },
+          { "id": "effect", "label": "Effect", "text": "On success, anyone surrounding or protecting the prey backs down or offers the prey up." }
+        ] }
+      ],
       "attributes": {
         "Strength": 1,
         "Stamina": 1,
@@ -41,6 +52,19 @@
     {
       "id": "gauru",
       "name": "Gauru",
+      "passives": [
+        { "id": "gauru-regeneration", "name": "Regeneration", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Regenerate all bashing and lethal damage each turn. This does not regenerate aggravated damage." }
+        ] },
+        { "id": "gauru-rage", "name": "Rage", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Attack an active opponent within striking range each turn. A crippled opponent need not be attacked while another opponent exists. If opponents are out of reach, move toward them or throw something at them. Without opponents, attack anything within reach. Other actions require Resolve + Composure; failure causes Kuruth." },
+          { "id": "restrictions", "label": "Restrictions", "text": "Automatically fail Social rolls not based on Intimidation and Mental rolls not based on Perception or Resistance. Communication serves only to help with the kill." },
+          { "id": "duration", "label": "Duration", "text": "Enter Gauru once per scene, for Hishu Stamina + Primal Urge turns. Then shift to Dalu or Urshul, or reflexively roll Resolve + Composure. Success allows one more turn before shifting to Dalu or Urshul and entering Wasu-Im; failure causes immediate Basu-Im." }
+        ] },
+        { "id": "gauru-primal-fear", "name": "Primal Fear", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Lesser enemies, including most humans, lower-Rank spirits and non-supernatural animals, must use Down and Dirty combat. Resolve combat normally if the prey hides among stronger enemies. In normal combat, opponents use only Dexterity or Wits for Defense, without adding the usual Skill." }
+        ] }
+      ],
       "attributes": {
         "Strength": 3,
         "Dexterity": 1,
@@ -61,6 +85,12 @@
     {
       "id": "urshul",
       "name": "Urshul",
+      "passives": [
+        { "id": "urshul-weaken-the-prey", "name": "Weaken the Prey", "fields": [
+          { "id": "frequency", "label": "Frequency", "text": "Once per scene." },
+          { "id": "effect", "label": "Effect", "text": "When teeth or claws damage the prey, inflict Arm Wrack, Leg Wrack or Knocked Down without requiring a targeted attack." }
+        ] }
+      ],
       "attributes": {
         "Strength": 2,
         "Dexterity": 2,
@@ -82,6 +112,13 @@
     {
       "id": "urhan",
       "name": "Urhan",
+      "passives": [
+        { "id": "urhan-chase-down", "name": "Chase Down", "fields": [
+          { "id": "cost", "label": "Cost", "text": "1 Essence to pre-empt an action." },
+          { "id": "effect", "label": "Effect", "text": "Pre-empt another character's combat action with your own, usually an attack. This replaces your normal action and cannot be used after you have already acted in the turn. Competing pre-emption abilities cause a Clash of Wills." },
+          { "id": "chase", "label": "Foot chase", "text": "Use Speed instead of Strength + Athletics." }
+        ] }
+      ],
       "attributes": {
         "Dexterity": 2,
         "Stamina": 1,

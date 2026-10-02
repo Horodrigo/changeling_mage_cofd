@@ -38,7 +38,18 @@ test("WtF 2e reference preserves five forms, five Auspices and five Tribes plus 
   assert.equal(reference.primalUrge.length, 10);
   const records = [...reference.forms, ...reference.auspices, ...reference.tribes, ...reference.primalUrge];
   assert.equal(new Set(records.map(item => item.id)).size, records.length);
-  assert.deepEqual(new Set(Object.keys(presentation)), new Set(records.map(item => item.id)));
+  const formPassives = reference.forms.flatMap(form => form.passives);
+  assert.equal(formPassives.length, 7);
+  assert.deepEqual(new Set(Object.keys(presentation)), new Set([...records, ...formPassives].map(item => item.id)));
+  for (const passive of formPassives) {
+    assert.ok(passive.name);
+    assert.ok(presentation[passive.id].name);
+    assert.deepEqual(Object.keys(presentation[passive.id].fields), passive.fields.map(field => field.id));
+    for (const field of passive.fields) {
+      assert.ok(field.label && field.text);
+      assert.ok(presentation[passive.id].fields[field.id].label && presentation[passive.id].fields[field.id].text);
+    }
+  }
   for (const item of records) {
     assert.equal(item.sourceId, "wtf-2ed");
     assert.ok(item.page > 0);
@@ -403,8 +414,8 @@ test("Werewolf creation renders Portuguese catalog text and explicit English fal
     for (const label of ["Configurar escolhas", "Forma escolhida", "Perícia Física", "Atributo que recebe +1", "Dom", "Atributo diferente", "Ponto 5 de desvantagem", "Forma penalizada", "Atributo penalizado", "Remover linha"])
       assert.ok(configMarkup.includes(label), label);
     assert.doesNotMatch(configMarkup, /missing translation|\{p1\}|Chosen form|Drawback dot/);
-    const formsMarkup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(FormsTable, { character, reference: catalog, merits: [selected, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] })));
-    for (const label of ["Inteligência", "Perseverança", "Mordida — bônus de Méritos", "ignora armaduras não mágicas", "não concede Armadura inata"])
+    const formsMarkup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(FormsTable, { character: { ...character, attributes: { ...character.attributes, Intelligence: 3 } }, reference: catalog, merits: [selected, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] })));
+    for (const label of ["Perseverança", "Mordida — bônus de Méritos", "ignora armaduras não mágicas", "Disfarce de Ovelha", "Parada de dados", "Percepção"])
       assert.ok(formsMarkup.includes(label), label);
     assert.doesNotMatch(formsMarkup, /missing translation|Bite — Merit bonuses/);
     assert.deepEqual(selected, selectedBefore);
@@ -437,12 +448,34 @@ test("Werewolf forms render five comparison columns with native disclosures and 
     character, reference: catalog,
   })));
   for (const form of reference.forms) assert.match(markup, new RegExp(`data-form="${form.id}"><h4>${form.name}</h4>`));
-  assert.equal((markup.match(/<details/g) ?? []).length, 10);
+  assert.equal((markup.match(/<details/g) ?? []).length, 5);
   assert.equal((markup.match(/class="wtf-form-column"/g) ?? []).length, 5);
+  assert.equal((markup.match(/class="wtf-form-passive"/g) ?? []).length, 7);
+  assert.doesNotMatch(markup, /<summary>Attributes|Strength \(\+|wtf-forms-scroll|Dalu adds Strength|Wolf-sense Perception bonus|do not grant a new attack/);
+  assert.match(markup, /<dt>Strength<\/dt><dd>3<\/dd>/);
+  assert.match(markup, /<h5>Sheep&#x27;s Clothing<\/h5>/);
+  assert.match(markup, /<strong>Dice Pool:<\/strong> Presence \+ Primal Urge vs Composure \+ Primal Urge of the prey/);
   assert.doesNotMatch(markup, /missing translation/);
   assert.match(markup, /Manipulation/);
   assert.equal(translate("pt-BR", "werewolf.primalUrge"), "Instinto Primitivo");
   assert.equal(translate("pt-BR", "werewolf.harmony"), "Harmonia");
+});
+
+test("Werewolf compact forms retain equal fluid columns and a smaller transparent WebP outside mobile", () => {
+  const css = readFileSync(new URL("../game-lines/werewolf/styles/forms.css", import.meta.url), "utf8");
+  assert.match(css, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(css, /overflow-x:\s*auto|min-width:\s*850px|forms\.png/);
+  assert.match(css, /inset: 3rem 5% \.5rem/);
+  assert.match(css, /forms\.webp.*contain no-repeat/);
+  assert.match(css, /max-width: 767px.*wtf-form-columns::before.*display: none/);
+  const image = readFileSync(new URL("../public/game-lines/werewolf/images/forms.webp", import.meta.url));
+  assert.equal(image.toString("ascii", 0, 4), "RIFF");
+  assert.equal(image.toString("ascii", 8, 16), "WEBPVP8X");
+  assert.ok(image[20] & 0x10, "The WebP must retain its alpha channel");
+  assert.deepEqual(reference.forms.map(form => form.passives.map(passive => passive.id)), [
+    ["hishu-sheeps-clothing"], ["dalu-badass-motherfucker"],
+    ["gauru-regeneration", "gauru-rage", "gauru-primal-fear"], ["urshul-weaken-the-prey"], ["urhan-chase-down"],
+  ]);
 });
 
 test("WtF 2e pp. 85–105 keeps twelve anchors, eleven Harmony rows and twenty directional breaking points complete in EN/PT", () => {
@@ -1311,7 +1344,7 @@ test("WtF 2e Gauru has no innate Armor; Fortified Form and Living Weapon use exa
   }
 });
 
-test("Werewolf Merit configuration controls and form comparisons keep canonical IDs, native disclosures, full Attribute effects and localized messages", async () => {
+test("Werewolf Merit configuration controls and compact form comparisons preserve changed Attribute effects and localized messages", async () => {
   const { WerewolfMeritConfigurationEditor } = await vite.ssrLoadModule("/game-lines/werewolf/merit-configuration-editor.tsx");
   const { FormsTable } = await vite.ssrLoadModule("/game-lines/werewolf/forms-table.tsx");
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
@@ -1324,9 +1357,10 @@ test("Werewolf Merit configuration controls and form comparisons keep canonical 
     assert.ok(markup.includes(label), label);
   assert.match(markup, />Remove row<\/button>/, "Reducing dots leaves excess rows available for explicit removal");
   assert.doesNotMatch(markup, /Relevant Skill|<details[^>]* open|missing translation/);
-  const table = render(createElement(FormsTable, { character, reference: catalog, merits: [favored, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] }));
-  for (const attribute of ["Intelligence", "Wits", "Resolve", "Strength", "Dexterity", "Stamina", "Presence", "Manipulation", "Composure"])
+  const table = render(createElement(FormsTable, { character: { ...character, attributes: { ...character.attributes, Intelligence: 3, Presence: 2 } }, reference: catalog, merits: [favored, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] }));
+  for (const attribute of ["Wits", "Resolve", "Strength", "Dexterity", "Stamina", "Manipulation"])
     assert.ok(table.includes(`<dt>${attribute}</dt>`), attribute);
+  assert.doesNotMatch(table, /<dt>Intelligence<\/dt>|<dt>Presence<\/dt>|<dt>Composure<\/dt>|<summary>Attributes/);
   assert.match(table, /Bite — Merit bonuses/);
   assert.match(table, /ignores non-magical armor/);
   assert.match(table, /do not grant a new attack/);
