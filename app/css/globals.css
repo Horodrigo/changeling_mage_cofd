@@ -3711,11 +3711,14 @@ button {
   font-weight: 400;
   line-height: 1.4;
 }
-.priority-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 15px;
+.allocation-status {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.allocation-status.invalid {
+  color: #a13d2d;
 }
 .dot-groups {
   display: grid;
@@ -6948,7 +6951,6 @@ body:has([class*="line-theme-"])
   .rule-cards,
   .line-choice,
   .dot-groups,
-  .priority-row,
   .three-inputs,
   .form-grid,
   .form-grid.thirds,

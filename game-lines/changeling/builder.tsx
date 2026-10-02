@@ -30,7 +30,6 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
-import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { entitlementCatalogPresentation } from "@/lib/entitlements";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -168,10 +167,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: t("ui.attributes"), skills: t("ui.skills"),
-      attributePriorities: t("ui.attributePriorities"),
-      skillPriorities: t("ui.skillPriorities"),
-      categoryLabel: (category) => systemTerm(category, locale),
+      attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"),
     });
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
@@ -265,7 +261,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
     renderAdvancement={(sheet, updateSheet) => <ExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} reference={reference} builderMode />}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
-    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
+    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<ChangelingBuilderView seeming={seeming} seemingCatalog={seemingCatalog} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contractPresentation={reference.contractPresentation} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}
   />;
 }

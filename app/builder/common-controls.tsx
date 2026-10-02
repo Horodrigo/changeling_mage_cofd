@@ -4,7 +4,7 @@ import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ATTRIBUTES, SKILLS, canIncreaseCreationDots } from "@/lib/core/character/creation-rules";
+import { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationCategoryDots, creationAllocationFits } from "@/lib/core/character/creation-rules";
 import type { Specialty } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
@@ -52,10 +52,6 @@ export function CommonIdentityStep({
 }
 
 export function TraitsStep({
-  attributePriority,
-  setAttributePriority,
-  skillPriority,
-  setSkillPriority,
   attributes,
   setAttributes,
   skills,
@@ -64,10 +60,6 @@ export function TraitsStep({
   setSpecialties,
   missing,
 }: {
-  attributePriority: string[];
-  setAttributePriority: Setter<string[]>;
-  skillPriority: string[];
-  setSkillPriority: Setter<string[]>;
   attributes: Record<string, number>;
   setAttributes: Setter<Record<string, number>>;
   skills: Record<string, number>;
@@ -77,20 +69,18 @@ export function TraitsStep({
   missing: MissingCheck;
 }) {
   const { t } = useLanguage();
-  const attributeCategories = Object.keys(ATTRIBUTES);
-  const skillCategories = Object.keys(SKILLS);
   return <div className="builder-section">
     <span className="kicker">{t("ui.step2")}</span>
     <h2>{t("ui.traits")}</h2>
-    <div className="priority-block">
-      <h3>{t("ui.attributePriorities")}</h3>
-      <PriorityRow labels={attributeCategories} values={attributePriority} setValues={setAttributePriority} budgets={[5, 4, 3]} invalid={missing("attribute-priority")} />
-      <DotGroups groups={ATTRIBUTES} values={attributes} setValues={setAttributes} base={1} maximum={5} priorities={attributePriority} budgets={[5, 4, 3]} missing={missing} prefix="attribute" />
+    <div className="allocation-block">
+      <h3>{t("ui.attributes")}</h3>
+      <p className={missing("attribute-allocation") ? "allocation-status invalid" : "allocation-status"} role={missing("attribute-allocation") ? "alert" : undefined}>{missing("attribute-allocation") && <strong>{t("ui.incompleteAllocation")} </strong>}{t("ui.attributeAllocation")}</p>
+      <DotGroups groups={ATTRIBUTES} values={attributes} setValues={setAttributes} base={1} maximum={5} budgets={ATTRIBUTE_BUDGETS} />
     </div>
-    <div className="priority-block">
-      <h3>{t("ui.skillPriorities")}</h3>
-      <PriorityRow labels={skillCategories} values={skillPriority} setValues={setSkillPriority} budgets={[11, 7, 4]} invalid={missing("skill-priority")} />
-      <DotGroups groups={SKILLS} values={skills} setValues={setSkills} base={0} maximum={5} priorities={skillPriority} budgets={[11, 7, 4]} missing={missing} prefix="skill" />
+    <div className="allocation-block">
+      <h3>{t("ui.skills")}</h3>
+      <p className={missing("skill-allocation") ? "allocation-status invalid" : "allocation-status"} role={missing("skill-allocation") ? "alert" : undefined}>{missing("skill-allocation") && <strong>{t("ui.incompleteAllocation")} </strong>}{t("ui.skillAllocation")}</p>
+      <DotGroups groups={SKILLS} values={skills} setValues={setSkills} base={0} maximum={5} budgets={SKILL_BUDGETS} />
     </div>
     <div className="specialties-block">
       <h3>{t("ui.specialties")}</h3>
@@ -106,82 +96,27 @@ export function TraitsStep({
   </div>;
 }
 
-function PriorityRow({
-  labels,
-  values,
-  setValues,
-  budgets,
-  invalid,
-}: {
-  labels: readonly string[];
-  values: string[];
-  setValues: Setter<string[]>;
-  budgets: number[];
-  invalid: boolean;
-}) {
-  const { locale, t } = useLanguage();
-
-  const setPriority = (index: number, next: string) => {
-    const updated = [...values];
-    const previous = updated[index];
-    const otherIndex = updated.indexOf(next);
-
-    if (otherIndex !== -1 && otherIndex !== index) {
-      updated[otherIndex] = previous;
-    }
-
-    updated[index] = next;
-    setValues(updated);
-  };
-
-  return (
-    <div className={invalid ? "priority-row missing-field" : "priority-row"}>
-      {values.map((value, index) => (
-        <Choice
-          key={index}
-          label={`${index === 0
-            ? t("ui.primary")
-            : index === 1
-              ? t("ui.secondary")
-              : t("ui.tertiary")
-          } · ${budgets[index]}`}
-          value={value}
-          setValue={(next) => setPriority(index, next)}
-          options={labels}
-          optionLabels={Object.fromEntries(
-            labels.map((label) => [label, builderText(locale, label)]),
-          )}
-        />
-      ))}
-    </div>
-  );
-}
-
-function DotGroups({ groups, values, setValues, base, maximum, priorities, budgets, missing, prefix }: {
+function DotGroups({ groups, values, setValues, base, maximum, budgets }: {
   groups: Record<string, readonly string[]>;
   values: Record<string, number>;
   setValues: Setter<Record<string, number>>;
   base: number;
   maximum: number;
-  priorities: string[];
-  budgets: number[];
-  missing: MissingCheck;
-  prefix: string;
+  budgets: readonly number[];
 }) {
-  const { locale } = useLanguage();
-  return <div className="dot-groups">{Object.entries(groups).map(([category, names]) => {
-    const priorityIndex = priorities.indexOf(category);
-    const budget = budgets[priorityIndex];
-    const used = names.reduce((total, name) => total + Number(values[name] ?? base) - base, 0);
-    return <section className={missing(`${prefix}-${category}`) ? "dot-group missing-field" : "dot-group"} key={category}>
-      <h4>{builderText(locale, category)} {budget !== undefined && <small>{used}/{budget}</small>}</h4>
+  const { locale, t } = useLanguage();
+  const spent = creationCategoryDots(values, groups, base, maximum);
+  return <div className="dot-groups">{Object.entries(groups).map(([category, names], index) => {
+    const next = spent.map((dots, candidate) => dots + (candidate === index ? 1 : 0));
+    return <section className="dot-group" key={category}>
+      <h4>{builderText(locale, category)} <small>{Number.isFinite(spent[index]) ? t("ui.dots638f6d", { p1: spent[index] }) : "—"}</small></h4>
       {names.map((name) => <DotRow
         key={name}
         name={builderText(locale, name)}
         value={values[name] ?? base}
         min={base}
         max={maximum}
-        canIncrease={budget !== undefined && canIncreaseCreationDots(values[name] ?? base, maximum, used, budget)}
+        canIncrease={creationAllocationFits(next, budgets)}
         setValue={(value) => setValues({ ...values, [name]: value })}
       />)}
     </section>;

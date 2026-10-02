@@ -27,7 +27,6 @@ import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteCon
 import { createRandomId } from "@/lib/random-id";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
-import { systemTerm } from "@/lib/system-terms";
 import { mortalDerived } from "./creation-rules";
 import { MortalExperiencePanel } from "./experience-panel";
 
@@ -89,11 +88,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
 
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: t("ui.attributes"),
-      skills: t("ui.skills"),
-      attributePriorities: t("ui.attributePriorities"),
-      skillPriorities: t("ui.skillPriorities"),
-      categoryLabel: (category) => systemTerm(category, locale),
+      attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"),
     });
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
@@ -197,7 +192,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         <label>{t("ui.groupName")}<Input value={groupName} onChange={(event) => setGroupName(event.target.value)} /></label>
       </div></div>
     </>}
-    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
+    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<div className="builder-section mortal-template-step">
       <span className="kicker">{t("ui.step3MORTAL")}</span>
       <h2>{t("ui.mortalTemplate")}</h2>

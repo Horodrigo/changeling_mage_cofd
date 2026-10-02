@@ -24,7 +24,6 @@ import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
-import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { MageExperiencePanel } from "./experience-panel";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -207,10 +206,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: t("ui.attributes"), skills: t("ui.skills"),
-      attributePriorities: t("ui.attributePriorities"),
-      skillPriorities: t("ui.skillPriorities"),
-      categoryLabel: (category) => systemTerm(category, locale),
+      attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"),
     });
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     for (const merit of common.merits) {
@@ -304,7 +300,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
     renderAdvancement={(sheet, updateSheet) => <MageExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<CommonIdentityStep name={shadowName} setName={setShadowName} nameLabel={t("ui.shadowName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
-    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
+    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
     lineTemplate={<MageBuilderView path={path} setPath={setPath} order={order} setOrder={setOrder} affiliationId={affiliationId} setAffiliationId={setAffiliationId} orderRoteSkills={orderRoteSkills} customOrder={customOrder} setCustomOrder={setCustomOrder} virtue={virtue} setVirtue={setVirtue} vice={vice} setVice={setVice} nimbus={nimbus} setNimbus={setNimbus} tool={tool} setTool={setTool} resistanceBonus={resistanceBonus} setResistanceBonus={setResistanceBonus} gnosis={gnosis} setGnosis={setGnosis} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={gnosisProgression.advancement} arcana={arcana} setArcana={setArcana} rotes={rotes} setRotes={setRotes} praxes={praxes} setPraxes={setPraxes} spellCatalog={[...spellCatalog]} factionCatalog={[...factionCatalog]} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} missing={missing} />}
   />;
 }

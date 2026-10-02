@@ -20,7 +20,6 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -143,23 +142,6 @@ function reconcileTouchstones(initial: CharacterSheet | null | undefined, merits
   return nextRows;
 }
 
-function reconcileTraitAllocation(values: Record<string, number>, groups: Record<string, readonly string[]>, priorities: string[], base: number, budgets: readonly number[]) {
-  const next = { ...values };
-  for (const [category, names] of Object.entries(groups)) {
-    const priorityIndex = priorities.indexOf(category);
-    if (priorityIndex < 0) continue;
-    const budget = budgets[priorityIndex] ?? 0;
-    let spent = names.reduce((sum, name) => sum + Math.max(0, Number(next[name] ?? base) - base), 0);
-    for (let index = names.length - 1; spent > budget && index >= 0; index -= 1) {
-      const name = names[index];
-      const current = Math.max(base, Number(next[name] ?? base));
-      const removable = Math.min(current - base, spent - budget);
-      if (removable > 0) { next[name] = current - removable; spent -= removable; }
-    }
-  }
-  return next;
-}
-
 function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
@@ -247,8 +229,6 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const meritSpent = common.merits.reduce((sum, merit) => sum + Math.max(0, Number(merit.dots ?? 0) - (["Vampire Template", "Vampire Shadow Cult", BLOOD_TETHER_PACK_GRANT].includes(String(merit.grantedBy ?? "")) ? 1 : 0)), 0);
   const meritBudget = Math.max(0, 10 - (bloodPotency - 1) * 5);
   const maxBloodPotency = Math.max(1, Math.min(3, 1 + Math.floor(Math.max(0, 10 - meritSpent) / 5)));
-  const setAttributePriority = (priorities: string[]) => { common.setAttributePriority(priorities); common.setAttributes((values) => reconcileTraitAllocation(values, ATTRIBUTES, priorities, 1, [5, 4, 3])); };
-  const setSkillPriority = (priorities: string[]) => { common.setSkillPriority(priorities); common.setSkills((values) => reconcileTraitAllocation(values, SKILLS, priorities, 0, [11, 7, 4])); };
   const kaHumanity = Number(initial?.line_data.humanity ?? 7);
   const kaRank = hollowKaRank(kaHumanity);
   const kaLimits = hollowKaLimits(kaRank);
@@ -264,7 +244,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
-      attributes: t("ui.attributes"), skills: t("ui.skills"), attributePriorities: t("ui.attributePriorities"), skillPriorities: t("ui.skillPriorities"), categoryLabel: (category) => systemTerm(category, locale),
+      attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"),
     });
     const add = (key: string, label: string, step = 3) => result.push({ step, key, label });
     if (!common.name.trim()) add("name", t("ui.name"), 1);
@@ -435,7 +415,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
       renderAdvancement={(sheet, updateSheet) => <VampireExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
       lineSteps={clanId === "hollow-mekhet" ? [{ label: "Ka", content: <HollowKaStep humanity={kaHumanity} name={kaName} setName={setKaName} concept={kaConcept} setConcept={setKaConcept} simplified={simplifiedHollow} setSimplified={setSimplifiedHollow} allowSimplified={simplifiedHollowAvailable} power={kaPower} setPower={setKaPower} finesse={kaFinesse} setFinesse={setKaFinesse} resistance={kaResistance} setResistance={setKaResistance} bane={kaBane} setBane={setKaBane} anchors={kaAnchors} setAnchors={setKaAnchors} influences={kaInfluences} setInfluences={setKaInfluences} manifestations={kaManifestations} setManifestations={setKaManifestations} numina={kaNumina} setNumina={setKaNumina} missing={missing} /> }] : []}
       identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.name")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
-      traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
+      traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
       lineTemplate={<div className="builder-section vampire-builder-template">
         <span className="kicker">{t("ui.step3VAMPIRE")}</span><h2>{t("ui.vampireTemplate")}</h2>
         <div className="vampire-template-grid vampire-template-standard">

@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
+import { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationCategoryDots, creationAllocationFits } from "@/lib/core/character/creation-rules";
 import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import { creationMeritDots, creationMerits } from "@/lib/merit-progression";
 import { useLanguage } from "@/lib/i18n";
@@ -100,20 +100,6 @@ function editableTraits(
   return adjust ? adjust(values) : values;
 }
 
-function spent(values: Record<string, number>, names: readonly string[], base: number) {
-  return names.reduce((total, name) => total + Number(values[name] ?? base) - base, 0);
-}
-
-function inferredPriority(
-  values: Record<string, number>,
-  groups: Record<string, readonly string[]>,
-  base: number,
-) {
-  return Object.keys(groups).sort(
-    (left, right) => spent(values, groups[right], base) - spent(values, groups[left], base),
-  );
-}
-
 function editableSpecialties(
   initial: CharacterSheet | null | undefined,
   purchasedSpecialties: readonly Specialty[],
@@ -163,12 +149,6 @@ export function useCommonBuilderState(
   const [chronicle, setChronicle] = useState(initial?.character.chronicle ?? "");
   const [attributes, setAttributes] = useState<Record<string, number>>(startingAttributes);
   const [skills, setSkills] = useState<Record<string, number>>(startingSkills);
-  const [attributePriority, setAttributePriority] = useState<string[]>(() =>
-    initial ? inferredPriority(startingAttributes, ATTRIBUTES, 1) : ["", "", ""],
-  );
-  const [skillPriority, setSkillPriority] = useState<string[]>(() =>
-    initial ? inferredPriority(startingSkills, SKILLS, 0) : ["", "", ""],
-  );
   const [specialties, setSpecialties] = useState<Specialty[]>(() =>
     editableSpecialties(initial, options.purchasedSpecialties ?? []),
   );
@@ -188,42 +168,22 @@ export function useCommonBuilderState(
     step, setStep, allowAdvancement, setAllowAdvancement, error, setError,
     name, setName, concept, setConcept, playerName, setPlayerName, chronicle, setChronicle,
     attributes, setAttributes, skills, setSkills,
-    attributePriority, setAttributePriority, skillPriority, setSkillPriority,
     specialties, setSpecialties, aspirations, setAspirations, merits, setMerits,
   };
 }
 
 export function commonCreationIssues(
-  state: ReturnType<typeof useCommonBuilderState>,
+  state: Pick<ReturnType<typeof useCommonBuilderState>, "attributes" | "skills">,
   labels: {
-    attributes: string;
-    skills: string;
-    attributePriorities: string;
-    skillPriorities: string;
-    categoryLabel?: (category: string) => string;
+    attributeAllocation: string;
+    skillAllocation: string;
   },
 ) {
   const issues: BuilderValidationIssue[] = [];
-  const prioritiesValid = (values: string[], categories: readonly string[]) =>
-    values.every(Boolean) && new Set(values).size === categories.length && categories.every((item) => values.includes(item));
-  const attributeCategories = Object.keys(ATTRIBUTES);
-  const skillCategories = Object.keys(SKILLS);
-  if (!prioritiesValid(state.attributePriority, attributeCategories))
-    issues.push({ step: 2, key: "attribute-priority", label: labels.attributePriorities });
-  if (!prioritiesValid(state.skillPriority, skillCategories))
-    issues.push({ step: 2, key: "skill-priority", label: labels.skillPriorities });
-  for (const [category, names] of Object.entries(ATTRIBUTES)) {
-    const index = state.attributePriority.indexOf(category);
-    const displayCategory = labels.categoryLabel?.(category) ?? category;
-    if (index < 0 || spent(state.attributes, names, 1) !== [5, 4, 3][index])
-      issues.push({ step: 2, key: `attribute-${category}`, label: `${labels.attributes} ${displayCategory}` });
-  }
-  for (const [category, names] of Object.entries(SKILLS)) {
-    const index = state.skillPriority.indexOf(category);
-    const displayCategory = labels.categoryLabel?.(category) ?? category;
-    if (index < 0 || spent(state.skills, names, 0) !== [11, 7, 4][index])
-      issues.push({ step: 2, key: `skill-${category}`, label: `${labels.skills} ${displayCategory}` });
-  }
+  if (!creationAllocationFits(creationCategoryDots(state.attributes, ATTRIBUTES, 1), ATTRIBUTE_BUDGETS, true))
+    issues.push({ step: 2, key: "attribute-allocation", label: labels.attributeAllocation });
+  if (!creationAllocationFits(creationCategoryDots(state.skills, SKILLS, 0), SKILL_BUDGETS, true))
+    issues.push({ step: 2, key: "skill-allocation", label: labels.skillAllocation });
   return issues;
 }
 

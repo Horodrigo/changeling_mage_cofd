@@ -16,7 +16,6 @@ import { meritPrerequisitesMet, meritSelectionProblems, type MeritDefinition, ty
 import { meritPresentation } from "@/lib/merit-presentation";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { createRandomId } from "@/lib/random-id";
-import { systemTerm } from "@/lib/system-terms";
 import type { WerewolfReferenceCatalog, RenownId } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
 import type { WerewolfRiteCatalog } from "./catalogs/rites";
@@ -158,7 +157,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
     werewolfMeritPrerequisitesMet(definition, { id: definition.id, dots: candidate.selectedDots ?? definition.ratings[0], configuration: candidate.configuration }, ownContext);
   const spent = werewolfCreationMeritCost(merits, meritCatalog);
   const budget = templateProblems.includes("creationBudget") ? 0 : creationMeritBudget(choices.primal_urge, choices.extra_rite_dots);
-  const issues = commonCreationIssues(common, { attributes: t("ui.attributes"), skills: t("ui.skills"), attributePriorities: t("ui.attributePriorities"), skillPriorities: t("ui.skillPriorities"), categoryLabel: category => systemTerm(category, locale) });
+  const issues = commonCreationIssues(common, { attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"), });
   const add = (step: number, key: string, label: string) => issues.push({ step, key, label });
   if (!common.name.trim()) add(1, "name", t("ui.characterName"));
   for (const problem of templateProblems) add(3, problem, t(`werewolf.creationProblem.${problem}`));
@@ -196,7 +195,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
     prepareAdvancement={previous => buildCharacter(previous ?? initial, false)}
     renderAdvancement={(sheet, updateSheet) => <WerewolfExperiencePanel character={sheet} updateSheet={next => { setAdvancementSource(next); updateSheet(next); }} catalogs={catalogs} builderMode/>}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing}/>}
-    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} attributePriority={common.attributePriority} setAttributePriority={common.setAttributePriority} skillPriority={common.skillPriority} setSkillPriority={common.setSkillPriority} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing}/>}
+    traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing}/>}
     lineTemplate={<><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites} learnedRiteIds={learnedRiteIds}/>
       <div className="builder-section"><Aspirations values={common.aspirations} setValues={common.setAspirations}/><p>{t("werewolf.freeCreationMerits")}</p>
         <MeritPicker merits={merits} setMerits={common.setMerits} catalog={meritCatalog} context={context} spent={spent} budget={budget} isEligible={eligible} isInlineConfiguration={isCommonInlineMeritConfiguration}

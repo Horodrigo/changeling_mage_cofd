@@ -97,6 +97,7 @@ common Sheet shell   -> selected line Sheet
 ```
 
 - The common Builder owns shared identity, trait allocation, navigation, and generic Merit UI plumbing.
+- Attribute and Skill creation priorities are inferred from editable category spending, never selected or persisted. Every increment must fit some permutation of the 5/4/3 or 11/7/4 budgets; incomplete distributions are errors and cannot advance. Line grants and Experience purchases are excluded before shared validation, and removing dots immediately reopens eligible categories.
 - Each line Builder owns all line state, eligibility, validation, grants, progression, and final `line_data` construction.
 - The common Sheet owns neutral paper layout and reusable controls.
 - The common Main Sheet owns the shared first-page skeleton: identity/header, Attributes, Skills, Other Traits, Core/Line Traits, Derived Stats, and Experience. Game lines provide the slot content, labels, values, limits, and interactions for their own mechanics; they do not recreate the page geometry.
