@@ -23,6 +23,9 @@ import { derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
 import type { WerewolfRiteCatalog } from "./catalogs/rites";
+import type { WerewolfFetishCatalog } from "./catalogs/fetishes";
+import { FetishInventory } from "./fetishes";
+import { fetishSelections } from "./fetish-rules";
 import { boundedHarmony, boundedPrimalUrge, primalUrgeLevel } from "./creation-rules";
 import { resolveWerewolfMerits, werewolfMeritDefinition } from "./creation-grants";
 import { renownRatings, werewolfFormId, werewolfFormTraits, werewolfIds } from "./rules";
@@ -49,6 +52,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const reference = catalogs.get<WerewolfReferenceCatalog>("werewolf-reference");
   const gifts = catalogs.get<WerewolfGiftCatalog>("werewolf-gifts");
   const rites = catalogs.get<WerewolfRiteCatalog>("werewolf-rites");
+  const fetishes = catalogs.get<WerewolfFetishCatalog>("werewolf-fetishes");
   const merits = [...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")];
   const core = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const data = character.line_data, state = character.current_state;
@@ -143,6 +147,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       if (rite && ((powerKind !== "all" && powerKind !== `${rite.kind}-rite`) || !`${riteName} ${rite.source}`.toLocaleLowerCase(locale).includes(powerSearch.trim().toLocaleLowerCase(locale)))) return null;
       return rite ? <details className="wtf-rule-disclosure" key={id}><summary>{locale === "pt-BR" ? rites.presentation.rites[id]?.name ?? rite.name : rite.name} · {rite.dots}</summary><RiteRules rite={rite} catalog={rites}/></details> : <p key={id}>{t("werewolf.missingSelectedRite", { id })}</p>;
     })}
+    <FetishInventory value={fetishSelections(data.fetishes)} onChange={value => setLine("fetishes", value)} catalog={fetishes} gifts={gifts}/>
   </>;
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
   const activeTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";

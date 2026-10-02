@@ -24,6 +24,7 @@ try {
   catalogs = await loadCatalogGroups(registration.catalogGroups.sheet);
 } finally { globalThis.fetch = originalFetch; }
 const reference = catalogs.get("werewolf-reference"), gifts = catalogs.get("werewolf-gifts"), rites = catalogs.get("werewolf-rites");
+const fetishCatalog = catalogs.get("werewolf-fetishes");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
 const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
@@ -38,6 +39,8 @@ const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const { ATTRIBUTES, SKILLS } = await vite.ssrLoadModule("/lib/core/character/creation-rules.ts");
 const { WerewolfCharacterPaper } = await vite.ssrLoadModule("/game-lines/werewolf/sheet.tsx");
 const { changeWerewolfForm, damageAfterHealthReduction } = await vite.ssrLoadModule("/game-lines/werewolf/form-state.ts");
+const { fetishSelections, fetishPresentation, catalogFetishSelection, customFetishSelection } = await vite.ssrLoadModule("/game-lines/werewolf/fetish-rules.ts");
+const { FetishInventory, FetishCatalog, FetishItemRules } = await vite.ssrLoadModule("/game-lines/werewolf/fetishes.tsx");
 const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
 const attributes = Object.fromEntries(Object.values(ATTRIBUTES).flat().map(name => [name, 1]));
 Object.assign(attributes, { Intelligence: 3, Wits: 3, Resolve: 2, Strength: 3, Dexterity: 2, Stamina: 2, Presence: 2, Manipulation: 2, Composure: 2 });
@@ -75,6 +78,89 @@ test("Creation accepts unfilled Specialties and Touchstones and preserves author
   const edited = create({ source: character, specialties: [], choices: { ...choices, physical_touchstone: "My authored friend", spiritual_touchstone: "" } });
   assert.equal(edited.line_data.physical_touchstone, "My authored friend");
   assert.equal(edited.line_data.spiritual_touchstone, "");
+});
+
+test("WTF2 pp. 146–149 Fetishes and Talens retain all 18 canonical samples, ratings, variants and full Portuguese presentation", () => {
+  assert.equal(fetishCatalog.items.length, 18);
+  assert.equal(fetishCatalog.items.filter(item => item.kind === "fetish").length, 13);
+  assert.equal(fetishCatalog.items.filter(item => item.kind === "talen").length, 5);
+  assert.equal(new Set(fetishCatalog.items.map(item => item.id)).size, 18);
+  assert.deepEqual(new Set(Object.keys(fetishCatalog.presentation.items)), new Set(fetishCatalog.items.map(item => item.id)));
+  assert.deepEqual(fetishCatalog.rules.ratings.map(level => level.dots), [1, 2, 3, 4, 5]);
+  assert.match(fetishCatalog.rules.fetishActivation, /Resolve \+ Composure.*dot rating.*1 Essence/);
+  assert.match(fetishCatalog.rules.talenActivation, /no roll.*one use/);
+  assert.match(fetishCatalog.rules.talenFacet, /rating for Renown.*permanent Facet.*one scene.*does not teach/);
+  assert.match(fetishCatalog.rules.talenInfluence, /Presence \+ Wits.*Power \+ Finesse/);
+  for (const field of ["identification", "creation", "fetishActivation", "talenCreation", "talenActivation", "talenFacet", "talenInfluence"])
+    assert.ok(fetishCatalog.presentation.rules[field]);
+  for (const item of fetishCatalog.items) {
+    assert.equal(item.sourceId, "wtf-2ed"); assert.ok(item.page >= 147 && item.page <= 149);
+    assert.ok(item.name && item.description && item.effect); assert.ok(item.dots >= 1 && item.dots <= 5);
+    const pt = fetishPresentation(item, fetishCatalog, "pt-BR");
+    assert.ok(pt.name && pt.description && pt.effect);
+    assert.deepEqual([pt.id, pt.kind, pt.dots, pt.source, pt.page, pt.facetId], [item.id, item.kind, item.dots, item.source, item.page, item.facetId]);
+    if (item.facetId) assert.ok(gifts.gifts.some(gift => gift.facets.some(facet => facet.id === item.facetId)));
+    for (const variant of item.variants ?? []) assert.ok(fetishCatalog.presentation.items[item.id].variants[variant.id].name && fetishCatalog.presentation.items[item.id].variants[variant.id].effect);
+  }
+  assert.deepEqual(fetishCatalog.items.find(item => item.id === "wtf-core:steel-wolf").variants.map(item => item.id), ["road-shadow", "ironhide"]);
+  assert.match(fetishCatalog.items.find(item => item.id === "wtf-core:rust-talon-bindings").effect, /1 lethal.*pool of 5.*Unchained Strength.*Structure.*ignoring Durability/);
+  assert.match(fetishCatalog.items.find(item => item.id === "wtf-core:crimson-falx").effect, /first enemy.*permanently.*Arm Wrack or Leg Wrack/);
+  assert.match(fetishCatalog.presentation.items["wtf-core:shadow-thunderhead-mask"].effect, /Numina/);
+  assert.ok(Object.isFrozen(fetishCatalog.items));
+  assert.ok(requests.includes("/game-lines/werewolf/data/fetishes/wtf-core.json"));
+  assert.ok(requests.includes("/game-lines/werewolf/data/fetishes/wtf-core-pt.json"));
+});
+
+test("Werewolf fetish inventory validates current-schema identities and ratings without guessing or dropping unavailable selections", () => {
+  assert.deepEqual(fetishSelections(undefined), []);
+  const item = fetishCatalog.items[0];
+  const first = catalogFetishSelection(item), second = catalogFetishSelection(item);
+  assert.notEqual(first.instanceId, second.instanceId); assert.equal(first.catalogId, item.id);
+  assert.equal(first.custom, undefined); assert.equal(first.quantity, 1);
+  const unknown = { instanceId: "future-item", catalogId: "future:unknown", variantId: "future-variant", quantity: 0, spirit: "Authored spirit", notes: "Do not translate" };
+  assert.deepEqual(fetishSelections([unknown]), [unknown]);
+  const custom = customFetishSelection(); custom.custom.name = "My item";
+  const before = structuredClone(custom); assert.deepEqual(fetishSelections([custom]), [custom]); assert.deepEqual(custom, before);
+  for (const invalid of ["not-an-array", [first, first], [{ ...first, quantity: -1 }], [{ ...first, quantity: 1.2 }], [{ ...first, quantity: "2" }], [{ ...first, notes: 9 }],
+    [{ ...first, catalogId: "" }], [{ ...custom, catalogId: item.id }], [{ ...custom, custom: { ...custom.custom, dots: 6 } }], [{ ...custom, custom: { ...custom.custom, dots: "1" } }],
+    [{ ...custom, custom: { ...custom.custom, kind: "token" } }]]) assert.throws(() => fetishSelections(invalid), /Werewolf fetish|custom Werewolf fetish/);
+});
+
+test("Werewolf inventory survives creation, draft resume, reediting and schema-2 round-trip without spending XP or granting powers", () => {
+  const selection = catalogFetishSelection(fetishCatalog.items.find(item => item.id === "wtf-core:cuneiform-cylinder"));
+  selection.quantity = 3; selection.spirit = "My original spirit"; selection.notes = "Player-authored description";
+  const custom = customFetishSelection(); custom.custom = { kind: "talen", dots: 4, name: "Authored item", description: "Never translate me", effect: "A table-approved effect" };
+  const fetishes = [selection, custom];
+  const baseline = funded(); const before = structuredClone(baseline);
+  const created = create({ source: baseline, fetishes });
+  assert.deepEqual(created.line_data.fetishes, fetishes);
+  assert.deepEqual(created.current_state, baseline.current_state);
+  assert.deepEqual(created.line_data.learned_facets, baseline.line_data.learned_facets);
+  assert.deepEqual(created.line_data.creation_facets, baseline.line_data.creation_facets);
+  const decoded = JSON.parse(JSON.stringify(created));
+  const normalized = werewolfRules.normalizeCharacter(decoded);
+  assert.deepEqual(normalized.line_data.fetishes, fetishes);
+  const draft = create({ source: normalized, draft: true, step: 3 });
+  const resumed = create({ source: draft });
+  assert.deepEqual(resumed.line_data.fetishes, fetishes);
+  assert.deepEqual(baseline, before);
+  const markup = render(createElement(FetishInventory, { value: fetishes, catalog: fetishCatalog, gifts, onChange: () => assert.fail("render changed inventory") }));
+  assert.match(markup, /Cuneiform Cylinder|Authored item/); assert.match(markup, /My original spirit|Never translate me|Remaining quantity/);
+  assert.doesNotMatch(markup, /missing translation|>Activate<|>Consume<|>Spend Experience</);
+});
+
+test("Fetish cards separate activation, effects, exact variants and linked Facet rules without changing character powers", () => {
+  const steel = fetishCatalog.items.find(item => item.id === "wtf-core:steel-wolf");
+  const markup = render(createElement(FetishItemRules, { item: steel, catalog: fetishCatalog, gifts, variantId: "ironhide" }));
+  assert.match(markup, /<strong>Activation:<\/strong>/); assert.match(markup, /<strong>Effect:<\/strong>/);
+  assert.match(markup, /Ironhide.*Durability increases by \+3/); assert.doesNotMatch(markup, /Road Shadow/);
+  const talen = render(createElement(FetishItemRules, { item: fetishCatalog.items[0], catalog: fetishCatalog, gifts }));
+  assert.match(talen, /Related Facet: Knotted Paths|Knotted Paths/); assert.match(talen, /substituting.*rating for Renown/);
+  const picker = render(createElement(FetishCatalog, { catalog: fetishCatalog, gifts, onAdd: () => assert.fail("render added an item") }));
+  assert.match(picker, /Search items by name, effect or source/); assert.equal((picker.match(/aria-label="Add /g) ?? []).length, 18);
+  const css = readFileSync(new URL("../game-lines/werewolf/styles/fetishes.css", import.meta.url), "utf8");
+  assert.match(css, /@media[\s\S]*\.wtf-fetish-inventory > \.panel-heading \{ flex-direction: column/);
+  assert.match(css, /\.wtf-fetish-inventory > \.panel-heading > button \{ width: 100%/);
 });
 
 test("WTF2 p. 172 loss of temporary Health upgrades least severe remaining wounds exactly once", () => {
@@ -629,7 +715,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const { WerewolfExperiencePanel: PtExperience } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
     const { RiteExperienceCatalog: PtRites } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-rites.tsx");
     const { FacetExperienceCatalog: PtFacets, RenownGrantsPanel: PtGrants } = await portuguese.ssrLoadModule("/game-lines/werewolf/experience-gifts.tsx");
-    const character = create({ draft: true, step: 3 });
+    const authored = customFetishSelection(); authored.custom.name = "Player's untranslated item";
+    const character = create({ draft: true, step: 3, fetishes: [catalogFetishSelection(fetishCatalog.items[0]), authored] });
     const before = structuredClone(character);
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
     const markup = ptRender(createElement(PtSheet, { character, catalogs, updateState: () => {}, updateSheet: () => {} }));
@@ -637,6 +724,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     assert.doesNotMatch(markup, /wtf-form-columns|wtf-mobile-form/);
     for (const phrase of ["Corpo do Lobo", "Caçador Destemido", "Caçada Sagrada"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /missing translation|<summary>Fearless Hunter/);
+    assert.match(markup, /Fetiches e Talens|Boneca de Bruxa/); assert.match(markup, /Quantidade restante/);
+    assert.match(markup, /Player&#x27;s untranslated item/); assert.doesNotMatch(markup, /<summary>Witch-Poppet/);
     const builderMarkup = ptRender(createElement(ptBuilder.Component, { initial: character, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
     assert.match(builderMarkup, /Caçador Destemido/); assert.doesNotMatch(builderMarkup, /missing translation/);
     assert.deepEqual(character, before);

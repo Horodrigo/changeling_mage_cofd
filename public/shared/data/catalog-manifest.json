@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 35,
+  "catalogVersion": 36,
   "catalogs": {
+    "werewolf-fetishes-core": { "version": 1, "url": "/game-lines/werewolf/data/fetishes/wtf-core.json" },
+    "werewolf-fetishes-core-pt": { "version": 1, "url": "/game-lines/werewolf/data/fetishes/wtf-core-pt.json" },
     "merits-werewolf": { "version": 1, "url": "/game-lines/werewolf/data/merits.json" },
     "merits-werewolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/merits-pt.json" },
     "werewolf-rites-core": { "version": 1, "url": "/game-lines/werewolf/data/rites/wtf-core.json" },

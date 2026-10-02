@@ -170,6 +170,8 @@ Werewolf persists derived traits in Hishu and calculates the selected Health for
 
 Specialties left unfilled and Touchstone notes are optional in creation. Werewolf exposes Blood/Bone recovery before selection and compact searchable creation catalogs. Its manual Harmony track places Flesh/Spirit Touchstones at 10/0 and fills only the current rating's circle. Kuruth, Wasu-Im and triggers belong to Body of the Wolf; Primal Urge displays compact informative summaries directly below its dots, omitting zero/None entries instead of adding another rating disclosure. Desktop/print compare five forms with the supplied background; mobile Combat displays one active form without that image and shares Health's selector. On a Health-reducing form transition, the line-owned transaction upgrades remaining wounds for each lost damaged box (WTF2 p. 172), rather than silently hiding them. Increasing Health does not reverse upgrades; terminal excess remains stored until explicitly cleared.
 
+Werewolf owns its optional `line_data.fetishes` inventory and lazy `werewolf-fetishes` catalog group. Canonical items retain catalog IDs; independent copies retain instance IDs, Steel Wolf variant IDs, manual Talen quantities, and authored spirit/notes. Character-specific custom items retain their authored text across locales. Schema-2 normalization validates structural fields without dropping unavailable catalog IDs. Builder and Sheet share only the Werewolf inventory surface; changes never spend XP/Essence, consume Talens automatically, teach linked Facets, or copy Changeling Token Merit budgets. Core WtF 2e has no Fetish Merit.
+
 ## Persisted Character Schema
 
 The only supported persisted character schema is intentionally `schema_version = 2`.

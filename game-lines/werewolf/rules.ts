@@ -5,6 +5,7 @@ import type { FormId } from "./catalogs/reference";
 import { boundedHarmony, boundedPrimalUrge, formTraits, type WerewolfCreationChoices } from "./creation-rules";
 import { resolveWerewolfMerits, type AuspiceSkillGrant } from "./creation-grants";
 import { FORM_MECHANICS, PERMANENT_MERIT_IDENTITIES, RENOWN_IDS } from "./mechanics";
+import { fetishSelections } from "./fetish-rules";
 
 const text = (value: unknown) => typeof value === "string" ? value : "";
 export const werewolfIds = (value: unknown): string[] => Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : [];
@@ -61,6 +62,7 @@ export const werewolfRules: GameLineRulesModule = {
       auspice_skill_grant: recordedAuspiceSkillGrant(data.auspice_skill_grant),
       creation_facets: werewolfIds(data.creation_facets), learned_facets: werewolfIds(data.learned_facets),
       creation_rites: werewolfIds(data.creation_rites), learned_rites: werewolfIds(data.learned_rites),
+      fetishes: fetishSelections(data.fetishes),
       blood: text(data.blood), bone: text(data.bone), auspice_id: text(data.auspice_id), tribe_id: text(data.tribe_id),
       physical_touchstone: text(data.physical_touchstone), spiritual_touchstone: text(data.spiritual_touchstone),
     } };

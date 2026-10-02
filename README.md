@@ -18,6 +18,8 @@ Browser smoke tests are authorized during the Werewolf goal. Its final scope inc
 
 The runtime is built with React, Next/Vinext, Vite, and Cloudflare. Character persistence is browser-local through IndexedDB with localStorage crash-safe fallback/staging. Rules catalogs remain static under `public/shared/data/` and `public/game-lines/<line>/data/`, loaded lazily for the selected game line.
 
+The optional Werewolf inventory includes all 18 Core Fetish/Talen samples and their EN/PT rules under `public/game-lines/werewolf/data/fetishes/`. Builder and Details/Powers preserve independent item instances, Steel Wolf variants, manual Talen quantities and authored spirit/notes. Custom item descriptions remain authored across locales. Acquiring or editing inventory never spends XP/Essence, consumes Talens automatically or teaches referenced Facets. Supplement inventory content and printable composition remain in progress.
+
 ## Prerequisites
 
 - Node.js `>=22.13.0`
@@ -116,7 +118,7 @@ public/                           Static files; paths become browser URLs
       data/                       Vampire catalogs
       images/                     Vampire-only artwork and icon.webp
     werewolf/
-      data/                       Werewolf catalogs in progress
+      data/                       Werewolf catalogs in progress; gifts/, rites/ and fetishes/ use source-book EN/PT shards
       images/                     Supplied skull (icon.webp) and transparent form comparison illustration (forms.webp)
   manifest.webmanifest            PWA entry point, intentionally at the root
   sw.template.js / sw.js          Service-worker template / generated worker

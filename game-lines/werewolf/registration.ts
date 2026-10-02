@@ -5,8 +5,8 @@ export const werewolfRegistration: GameLineRegistration = {
   id: "WtF", slug: "werewolf", label: "Werewolf: The Forsaken", iconSrc: "/game-lines/werewolf/images/icon.webp",
   cardClass: "wtf-card", summaryClass: "wtf-summary",
   catalogGroups: {
-    builder: ["core-merits", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites"],
-    sheet: ["core-merits", "core-reference", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites"],
+    builder: ["core-merits", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites", "werewolf-fetishes"],
+    sheet: ["core-merits", "core-reference", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites", "werewolf-fetishes"],
   },
   loadRules: () => import("./rules").then(({ werewolfRules }) => werewolfRules),
   loadBuilder: () => import("./builder").then(({ werewolfBuilder }) => werewolfBuilder),
