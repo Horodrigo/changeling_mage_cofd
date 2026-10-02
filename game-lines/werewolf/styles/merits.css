@@ -1,0 +1,9 @@
+.wtf-merit-configuration summary { min-height: 44px; display: flex; align-items: center; }
+.wtf-merit-configuration > div > p { grid-column: 1 / -1; }
+.wtf-merit-configuration fieldset { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; min-width: 0; padding: .5rem; border: 1px solid currentColor; }
+.wtf-merit-configuration legend { font-weight: 600; }
+.wtf-merit-configuration [role="combobox"] { width: 100%; min-width: 0; }
+.wtf-merit-configuration fieldset > button { grid-column: 1 / -1; justify-self: end; }
+@media (max-width: 640px) {
+  .wtf-merit-configuration > div, .wtf-merit-configuration fieldset { grid-template-columns: minmax(0, 1fr); }
+}

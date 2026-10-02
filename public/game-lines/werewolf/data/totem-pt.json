@@ -1,0 +1,101 @@
+{
+  "rules": {
+    "totem-creation": {
+      "name": "Criação do Totem",
+      "fields": {
+        "identity": { "label": "Nome e conceito", "text": "Crie um conceito e um epíteto curto. Um Totem é um espírito único, às vezes integrante de um ilthum de espíritos semelhantes. A alcateia sempre possui a Condição Ressonante para seu Totem." },
+        "aspiration": { "label": "Aspiração", "text": "Escolha uma Aspiração que reflita os objetivos do Totem e da alcateia. Ela funciona como uma quarta Aspiração para cada integrante, sem substituir as três Aspirações pessoais do personagem." },
+        "ban": { "label": "Proibição", "text": "Escolha uma Proibição apropriada ao Grau que os integrantes possam cumprir. Violá-la uma vez impõe a Condição Proibição; violá-la novamente faz perder todos os pontos do Mérito Totem. Resolva essas consequências na mesa, sem aplicação automática." },
+        "points": { "label": "Pontos de Totem", "text": "Some os pontos de Mérito Totem de todos os integrantes. Cada ponto concede um ponto de Atributo: pelo menos um em Poder, Refinamento e Resistência, sem destinar mais da metade do total a um único Atributo. O total de Atributos determina o Grau. Os pontos iniciais de Influência são iguais ao Grau." },
+        "essence": { "label": "Essência", "text": "A Essência máxima é o menor valor entre o total de pontos de Totem e a Essência máxima do Grau." },
+        "numina": { "label": "Numina", "text": "Comece com um Numen, mais um Numen adicional para cada quatro pontos de Totem." },
+        "manifestations": { "label": "Manifestações", "text": "Espíritos começam com Forma Crepuscular e uma quantidade de Efeitos de Manifestação adicionais igual ao Grau. Troque um Numen por um Efeito de Manifestação adicional ou por um ponto de Influência (WTF2 p. 186)." }
+      }
+    },
+    "totem-advantage": {
+      "name": "Benefício do Totem",
+      "fields": {
+        "budget": { "label": "Reserva de benefícios", "text": "Os pontos de Totem determinam uma reserva de Experiência usada para comprar Atributos, Perícias, Especializações ou Méritos. Essa reserva pertence ao benefício do Totem, não à Experiência disponível do personagem individual. Todos os integrantes recebem o benefício, mesmo sem o Mérito Totem." },
+        "traits": { "label": "Atributos e Perícias", "text": "Um benefício de Atributo ou Perícia acrescenta um ponto para cada integrante. Lobisomens e Parentes podem exceder seu limite normal em um ponto. Um humano que já tenha cinco pontos recebe, em vez disso, repetir o 8 nos testes que envolvam essa característica." },
+        "merits": { "label": "Méritos", "text": "Um integrante que já possua o Mérito concedido ou sua graduação máxima escolhe outra característica pertinente de valor equivalente. Por exemplo, um ponto de Aparência Marcante pode se tornar uma Especialização em Persuasão ou Magnetismo Animal quando Aparência Marcante já estiver em dois pontos." },
+        "specialties": { "label": "Especializações", "text": "Defina a Especialização ao criar o Totem. Um integrante que já possua essa Especialização recebe Área de Especialização para ela." },
+        "discrepancy": { "label": "Decisão adotada para divergência da fonte", "text": "A tabela impressa sobrepõe as faixas em exatamente 20 pontos. A auditoria do projeto adota 15–19 pontos para 5 de Experiência e 20+ para 10, conforme Ushugudh em The Pack p. 65. É uma decisão explícita do projeto, não uma alegação de errata oficial." }
+      }
+    },
+    "totem-traits": {
+      "name": "Características Espirituais",
+      "fields": {
+        "rank": { "label": "Grau", "text": "O Grau determina os limites permanentes das características, os pontos de Atributos, a Essência máxima e a quantidade normal de Numina. Impõe −1 por ponto nas tentativas de vincular o espírito à força e funciona como Tolerância Sobrenatural. Espíritos percebem o Grau relativo; um teste disputado de Refinamento pode disfarçar seu Grau como igual ao do observador. Grau 6 ou superior está fora destas mecânicas." },
+        "attributes": { "label": "Atributos", "text": "Poder substitui Força, Inteligência e Presença; Refinamento substitui Destreza, Raciocínio e Manipulação; Resistência substitui Vigor, Perseverança e Compostura. Espíritos não possuem Perícias e não sofrem penalidade por falta de treinamento em ações apropriadas à sua natureza. Teste Atributo + Grau para ações diretamente ligadas ao conceito, ou Atributo + Atributo para ações como surpresa e percepção." },
+        "corpus": { "label": "Corpus", "text": "Resistência + Tamanho. As caixas de Corpus registram dano como caixas de Vitalidade, mas não impõem penalidades por ferimentos." },
+        "willpower": { "label": "Força de Vontade", "text": "Refinamento + Resistência, limitada a 10 para Grau 1–5. Recupere um ponto por dia e um ponto para cada três pontos de Essência consumidos por alimentação ou roubo. A recuperação é resolvida manualmente." },
+        "initiative": { "label": "Iniciativa", "text": "Refinamento + Resistência." },
+        "defense": { "label": "Defesa", "text": "Use o menor valor entre Poder e Refinamento, ou o maior no Grau 1. Espíritos adormecidos não possuem Defesa. A Defesa se aplica contra Armas de Fogo. A auditoria do projeto adota Other Traits na p. 185 e Ushugudh em The Pack p. 65; o parágrafo conflitante em Combat cita Refinamento/Resistência. Essa decisão não é apresentada como errata oficial." },
+        "speed": { "label": "Deslocamento e Tamanho", "text": "Deslocamento = Poder + Refinamento + fator de espécie; espíritos de objetos inanimados normalmente possuem fator de espécie 0. Espíritos podem ter qualquer tamanho ou forma; em caso de dúvida, use o Grau como Tamanho." }
+      }
+    },
+    "totem-essence": {
+      "name": "Essência e Combate",
+      "fields": {
+        "activity": { "label": "Atividade e dormência", "text": "Gaste uma Essência por dia para permanecer ativo, inclusive no Hisil. Sem Essência, entre em dormência. Espíritos adormecidos no mundo físico retornam à Sombra em uma quantidade de horas igual à penalidade de dados da Película local. Despertar normalmente custa uma Essência." },
+        "boost": { "label": "Aumentos de características", "text": "Gaste uma Essência por ponto acrescentado durante uma cena. Uma única característica pode receber no máximo Grau + 2 pontos. O aumento exige um turno e apenas um Atributo pode ser aumentado nesse turno." },
+        "feed": { "label": "Encontrar e obter Essência", "text": "Perceba Essência adequada a até uma milha, inclusive através da Película sem penalidade. Recupere uma Essência por dia perto de uma Condição pertinente. Uma vez por dia, alimente-se perto de uma Condição adequada: Poder + Refinamento recupera Essência igual aos sucessos, com a penalidade da Película se ainda estiver no Hisil. Roube Essência com Poder + Refinamento disputado por Poder + Resistência; obtenha até o número de sucessos, limitado pela Essência restante da vítima." },
+        "bleed": { "label": "Perda de Essência", "text": "Um espírito sem proteção no mundo físico perde uma Essência por hora. Ao ficar sem Essência por essa perda, sofre um ferimento letal e entra em dormência. Um Totem vinculado está protegido dessa perda por The Pack p. 63." },
+        "attack": { "label": "Ataques", "text": "Teste Poder + Refinamento. Ataques normalmente causam dano contusivo, salvo quando a natureza do espírito os torna letais; armas efêmeras acrescentam seu dano após um ataque bem-sucedido. Espíritos no Crepúsculo interagem apenas com efêmeros do mesmo tipo, exceto por sua Fraqueza." },
+        "damage": { "label": "Dano e recuperação", "text": "Ataques físicos letais contra um espírito Manifestado ou no Hisil causam dano contusivo, salvo quando usam sua Fraqueza. Registre e cure ferimentos como em humanos; cada ferimento agravado também retira uma Essência. Perder todo o Corpus com ferimentos letais ou agravados dispersa o espírito. Ele só é destruído se também estiver sem Essência; caso contrário, reaparece adormecido em um local Ressonante seguro. Após recuperar Essência igual ao Corpus, pode gastar uma Essência para despertar. Nenhum dano, cura, tempo ou recurso é alterado automaticamente." }
+      }
+    },
+    "totem-ban-bane": {
+      "name": "Proibição e Fraqueza",
+      "fields": {
+        "ban": { "label": "Proibição", "text": "Uma compulsão mística que exige ou impede um comportamento. Proibições de Grau 1 são distrações leves; as de Grau 2–3 restringem seriamente as atividades; as de Grau 4–5 são complexas e podem interromper uma empreitada ou impor consequências mecânicas ou duradouras." },
+        "bane": { "label": "Fraqueza", "text": "Uma substância física ou energia que prejudica o Corpus do espírito. Fraquezas de Grau 1 são comuns; as de Grau 2–3 são naturais, mas mais difíceis de obter; as de Grau 4–5 são muito específicas e difíceis de adquirir. Fraquezas são sólidas para espíritos no Crepúsculo, mas não causam dano através da Película." },
+        "contact": { "label": "Contato voluntário", "text": "Gaste uma Força de Vontade e tenha sucesso em Perseverança + Compostura − Grau para tocar voluntariamente a Fraqueza. A substituição por Atributos espirituais se aplica: os dois Atributos citados usam Resistência." },
+        "hisil": { "label": "Hisil ou Materializado", "text": "O contato causa um dano agravado por turno e encerra a Condição de Manifestação pertinente, salvo com sucesso em um teste de Grau; repita enquanto o contato continuar." },
+        "fetter": { "label": "Acorrentado ou no Crepúsculo", "text": "O contato com o objeto ou pessoa vinculada a um espírito Acorrentado causa um dano letal por turno; use Desacorrentar para escapar. O contato com um espírito não Manifestado no Crepúsculo também causa um dano letal por turno." },
+        "weapon": { "label": "Ataques com a Fraqueza", "text": "Uma arma feita da Fraqueza causa dano agravado quando ambos estão no Hisil ou o espírito no mundo físico usa uma Manifestação, e dano letal contra um espírito no Crepúsculo. Um espírito do mesmo tipo com pelo menos dois Graus a mais conta como a Fraqueza do oponente ao atacar desarmado, com garras ou dentes." }
+      }
+    },
+    "totem-pack-bond": {
+      "name": "Vínculo com o Totem",
+      "fields": {
+        "social": { "label": "Afinidade / Nós contra o Mundo", "text": "Em manobras sociais contra um companheiro de alcateia, a primeira impressão é um nível melhor e o alvo possui uma Porta a menos. Para alguém de fora que faça manobras contra um integrante, a primeira impressão é um nível pior e o alvo possui uma Porta adicional." },
+        "senses": { "label": "Mundo Físico Intenso", "text": "O Totem vinculado percebe seus integrantes com clareza e vivacidade no Crepúsculo, identifica-os em uma multidão e ouve suas vozes claramente. Sente um formigamento quando tocam sua forma intangível, mas não consegue tocá-los de fato." },
+        "essence": { "label": "Proteção e fonte de Essência", "text": "Um Totem vinculado não sofre perda de Essência por estar no mundo físico. Ainda gasta uma Essência por dia para permanecer ativo, mas recebe uma Essência por dia enquanto estiver perto de sua alcateia." },
+        "limits": { "label": "Potencial ampliado", "text": "Numina e Influência podem superar os limites normais do Grau até o total de pontos de Totem contribuídos. Um Totem arrancado de sua alcateia ou que a abandone perde imediatamente esses poderes adicionais." },
+        "protection": { "label": "Proteção física", "text": "Uratha percebem que o espírito está vinculado a uma alcateia, mas não a qual. Não o atacam apenas por estar do lado deles da Película; outros motivos de hostilidade continuam válidos." }
+      }
+    },
+    "totem-improvements": {
+      "name": "Melhorias do Totem",
+      "fields": {
+        "experience": { "label": "Melhorias", "text": "O Totem pode melhorar com Experiência proveniente do investimento no Mérito Totem ou obtida em jogo. Pontos de Atributo custam 4 cada; pontos de Influência custam 5 cada; Numina custam 4 cada. São melhorias do Totem, não compras com o saldo de Experiência do personagem individual." },
+        "gifts": { "label": "Conceder Dons", "text": "Um Totem não pode conceder Dons à própria alcateia. Ao conceder um Dom a outro lobisomem, teste Poder + Resistência com penalidade igual à quantidade de vezes que já fez isso. A falha interrompe o vínculo por um ciclo lunar completo: os benefícios são perdidos enquanto o Totem dorme. A falha dramática rompe completamente o vínculo; os integrantes preservam seus pontos de Mérito pela Santidade dos Méritos, mas não podem usá-los para recuperar esse Totem ou criar um novo vínculo de Totem." },
+        "individual": { "label": "Escopo da ficha individual", "text": "Registre apenas o Totem do personagem individual e contribuições externas informadas manualmente. Não há registro de Alcateia, fichas vinculadas, conta compartilhada de Experiência ou controle automático de tempo." }
+      }
+    }
+  },
+  "samples": {
+    "wtf-pack:szigblal": {
+      "epithet": "O Ninho Vigilante", "concept": "Mãe da toca superprotetora", "aspiration": "O ninho deve crescer",
+      "description": "Um pequeno pássaro para uma alcateia pequena e recém-formada. Vigia a alcateia e trata tudo que pertence a ela, inclusive seus integrantes, como parte do ninho.",
+      "speed": "3 em terra / 7 em voo", "influences": "Moradias 1", "manifestations": "Forma Crepuscular, Imagem", "numina": "Inofensivo, Velocidade",
+      "ban": "Não abandone o ninho", "bane": "Szigblal não pode ficar longe de seu ninho por mais de 24 horas.", "advantage": "Especialização em Sobrevivência: Frio",
+      "editorialNote": "A Fraqueza impressa é uma restrição de ausência, não uma substância física ou energia nociva. Foi preservada como impressa, sem transformá-la silenciosamente em Proibição ou inventar uma nova Fraqueza."
+    },
+    "wtf-pack:glabna": {
+      "epithet": "Pedra Inabalável", "concept": "Força na estase", "aspiration": "Permanecer forte apesar de todos os desafios",
+      "description": "Protetor de uma alcateia estabelecida, aparece como uma grande rocha. Valoriza força e resistência, mas desencoraja mudanças até que a alcateia prove a necessidade. Outras criaturas precisam procurá-lo ou se comunicar por intermediários.",
+      "speed": "6", "influences": "Rocha 3", "manifestations": "Forma Crepuscular, Alcance, Acorrentado, Portal da Sombra", "numina": "Reverência, Explosão, Implantar Missão, Telecinese",
+      "ban": "Não mude sem necessidade", "bane": "Mudanças súbitas e extremas de temperatura: congelar água fervente em menos de um turno ou transformar gelo em vapor.", "advantage": "Vigor +1; Mérito Ancorado",
+      "editorialNote": "Resistência 9 ultrapassa a metade dos 15 pontos de Totem impressos. O texto descreve um Totem estabelecido; este exemplo não comprova que o limite inicial de distribuição de Atributos possa ser ignorado. Preserve as características impressas separadamente de uma nova distribuição de criação validada."
+    },
+    "wtf-pack:ushugudh": {
+      "epithet": "Espreitador da Morte", "concept": "Espectro onipresente", "aspiration": "Espalhar a morte entre os vivos",
+      "description": "Um Totem poderoso e macabro, próximo do limite superior do Grau 3. Não tolera ajuda aos vivos, nem mesmo aos integrantes da própria alcateia: até medicina e primeiros socorros são proibidos.",
+      "speed": "14", "influences": "Morte 2, Silêncio 1", "manifestations": "Forma Crepuscular, Imagem, Alcance", "numina": "Drenar, Aura Emocional, Decaimento Entrópico, Inofensivo, Buscar",
+      "ban": "Não impeça nenhuma morte, exceto a sua", "bane": "O toque de um animal com menos de uma semana de vida.", "advantage": "Perseverança +1; Compostura +1; Mérito Indomável",
+      "editorialNote": "Defesa 7 corresponde a Poder/Refinamento, não a Refinamento/Resistência. O benefício custa 10 de Experiência com 20 pontos de Totem. A auditoria do projeto adota explicitamente essas convenções; os trechos contraditórios do livro básico permanecem documentados."
+    }
+  }
+}

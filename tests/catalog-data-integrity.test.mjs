@@ -12,8 +12,8 @@ async function jsonFiles(directoryUrl) {
 }
 
 test("static Merit catalogs have stable IDs, valid ratings and known line ownership", async () => {
-  const directory = new URL("../public/data/core/merits/", import.meta.url);
-  const catalogs = (await jsonFiles(directory)).flat();
+  const paths = ["shared/data/merits.json", "game-lines/changeling/data/merits.json", "game-lines/mage/data/merits.json"];
+  const catalogs = (await Promise.all(paths.map(path => json(new URL(`../public/${path}`, import.meta.url))))).flat();
   const ids = catalogs.map((item) => item.id);
 
   assert.equal(new Set(ids).size, ids.length, "Merit IDs must be globally unique");
@@ -28,7 +28,7 @@ test("static Merit catalogs have stable IDs, valid ratings and known line owners
 });
 
 test("Changeling Merit descriptions retain the audited mechanical details", async () => {
-  const merits = await json(new URL("../public/data/core/merits/changeling.json", import.meta.url));
+  const merits = await json(new URL("../public/game-lines/changeling/data/merits.json", import.meta.url));
   const requiredDetails = {
     "ctl-2ed:acute-senses": /total darkness/,
     "ctl-2ed:arcadian-metabolism": /Aggravated damage healing is unchanged/,
@@ -71,9 +71,9 @@ test("Changeling Merit descriptions retain the audited mechanical details", asyn
 
 test("Changeling static identity catalogs use unique IDs and retain source metadata", async () => {
   const files = [
-    "../public/data/changeling/kiths.json",
-    "../public/data/changeling/courts.json",
-    "../public/data/changeling/entitlements.json",
+    "../public/game-lines/changeling/data/kiths.json",
+    "../public/game-lines/changeling/data/courts.json",
+    "../public/game-lines/changeling/data/entitlements.json",
   ];
 
   for (const file of files) {
@@ -90,8 +90,8 @@ test("Changeling static identity catalogs use unique IDs and retain source metad
 });
 
 test("Changeling Token catalog contains editable Token, Trifle, and Bauble text", async () => {
-  const items = await json(new URL("../public/data/changeling/tokens.json", import.meta.url));
-  const presentation = await json(new URL("../public/data/changeling/tokens-pt.json", import.meta.url));
+  const items = await json(new URL("../public/game-lines/changeling/data/tokens.json", import.meta.url));
+  const presentation = await json(new URL("../public/game-lines/changeling/data/tokens-pt.json", import.meta.url));
   const counts = Object.groupBy(items, (item) => item.kind);
 
   assert.deepEqual(
@@ -128,13 +128,13 @@ test("Changeling Token catalog contains editable Token, Trifle, and Bauble text"
 
 test("apresentações pt-BR de Changeling respeitam o léxico definido", async () => {
   const files = [
-    "../public/data/changeling/conditions-pt.json",
-    "../public/data/changeling/kiths-pt.json",
-    "../public/data/changeling/tokens-pt.json",
+    "../public/game-lines/changeling/data/conditions-pt.json",
+    "../public/game-lines/changeling/data/kiths-pt.json",
+    "../public/game-lines/changeling/data/tokens-pt.json",
   ];
-  const contracts = (await jsonFiles(new URL("../public/data/changeling/contracts/", import.meta.url)))
+  const contracts = (await jsonFiles(new URL("../public/game-lines/changeling/data/contracts/", import.meta.url)))
     .filter((catalog) => !Array.isArray(catalog));
-  const courts = await json(new URL("../public/data/changeling/courts.json", import.meta.url));
+  const courts = await json(new URL("../public/game-lines/changeling/data/courts.json", import.meta.url));
   const localizedCourts = courts.flatMap((court) => [court.translatedName, court.emotionPt, ...(court.mantleBenefitsPt ?? [])]);
   const text = JSON.stringify([...(await Promise.all(files.map((file) => json(new URL(file, import.meta.url))))), ...contracts, localizedCourts]);
 
@@ -144,7 +144,7 @@ test("apresentações pt-BR de Changeling respeitam o léxico definido", async (
 });
 
 test("Changeling contract shards have globally unique IDs and required structural fields", async () => {
-  const directory = new URL("../public/data/changeling/contracts/", import.meta.url);
+  const directory = new URL("../public/game-lines/changeling/data/contracts/", import.meta.url);
   const contracts = (await jsonFiles(directory)).filter(Array.isArray).flat();
   const ids = contracts.map((item) => item.id);
 
@@ -161,7 +161,7 @@ test("Changeling contract shards have globally unique IDs and required structura
 });
 
 test("Mage spell index entries are unique and point at a stable source shard", async () => {
-  const index = await json(new URL("../public/data/mage/spells/index.json", import.meta.url));
+  const index = await json(new URL("../public/game-lines/mage/data/spells/index.json", import.meta.url));
   const ids = index.map((item) => item.id);
 
   assert.equal(new Set(ids).size, ids.length, "Mage spell index IDs must be unique");

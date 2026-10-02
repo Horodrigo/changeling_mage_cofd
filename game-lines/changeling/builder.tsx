@@ -45,6 +45,7 @@ import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
+import { recoverChangelingMeritAllocations } from "./merit-allocation";
 
 const translateRegalia = (value: string) => value;
 
@@ -80,8 +81,9 @@ function findKith(catalog: readonly KithDefinition[], value: string) {
   return catalog.find((item) => item.id === value || item.name === value);
 }
 
-function ChangelingCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
+function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
+  const initial = storedInitial ? { ...storedInitial, merits: recoverChangelingMeritAllocations(storedInitial) } : storedInitial;
   if (initial && initial.game_line !== "CtL") throw new Error("Changeling builder received a non-Changeling character.");
   if (!catalogs) throw new Error("Changeling builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {

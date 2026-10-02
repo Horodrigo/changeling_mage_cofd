@@ -31,7 +31,7 @@ def pdf_text(path: Path) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--catalog", type=Path, default=Path("public/data/mage/spells"))
+    parser.add_argument("--catalog", type=Path, default=Path("public/game-lines/mage/data/spells"))
     parser.add_argument("--mage", type=Path, required=True)
     parser.add_argument("--signs", type=Path, required=True)
     parser.add_argument("--dark-eras-2", type=Path, required=True)

@@ -1,0 +1,177 @@
+{
+  "rules": {
+    "dicePool": "Atributo + Perícia, definidos pelo Narrador e pelos jogadores conforme a cerimônia. A parada do Exemplo de Rito é uma sugestão, não um requisito fixo.",
+    "participants": "Qualquer Uratha que conheça um Rito pode conduzi-lo. Outros que o conheçam podem auxiliar com trabalho em equipe. Ritos do Lobo permitem Uratha de alcateias distintas. Ritos de Alcateia exigem que todos os participantes pertençam à mesma alcateia; membros que não conheçam o Rito podem participar e receber seus benefícios, mas não concedem bônus de trabalho em equipe.",
+    "symbolism": "A cerimônia deve incorporar todos os símbolos indicados de maneira significativa para quem conduz o Rito. Omitir qualquer símbolo causa falha dramática. A prática pode variar entre regiões, tribos, alcateias e mestres.",
+    "interruption": "A maioria dos Ritos utiliza ações prolongadas. Interromper a cerimônia, por exemplo atacando e ferindo um participante, causa falha dramática.",
+    "learning": "Encontre uma fonte do conhecimento do Rito e gaste 1 Experiência por ponto. Um mestre Uratha ou espírito é comum, mas um registro ou a redescoberta de conhecimento espiritual também pode servir. Um lobisomem não pode simplesmente inventar um Rito. Somente lobisomens aprendem Ritos do Lobo; lobisomens e Parentes podem aprender Ritos de Alcateia.",
+    "modifiers": "+1: a lua do Auspício de quem conduz está no céu; +1: a Tribo é representada simbolicamente; +1: todos os participantes estão em Dalu; +1: todos exibem símbolos de seu propósito comum; +1: o Totem da alcateia participa de modo simbólico. −1: ambiente distrativo; −1: entre o amanhecer e o anoitecer; −1: território de outra alcateia; −2: ambiente muito distrativo, como combate.",
+    "dramaticFailure": "O Rito falha e termina imediatamente. Quem o conduz recebe Chicote da Sombra.",
+    "failure": "Nenhum sucesso é acumulado. Quem conduz o Rito recebe Tropeço.",
+    "success": "Acumule sucessos; alcançar o total necessário ativa o efeito de Sucesso do próprio Rito.",
+    "exceptionalSuccess": "Quem conduz o Rito recebe Foco Simbólico."
+  },
+  "rites": {
+    "wtf-core:chain-rage": {
+      "name": "Acorrentar a Fúria", "description": "Um pacto com espíritos da fúria a contém temporariamente, mas acaba libertando a fera acorrentada.",
+      "symbols": "Fúria, calma, aprisionamento, amanhecer",
+      "sampleRite": "Alcateias escandinavas enfurecem-se sob o sol nascente, gritam dentro de jarros gravados e dilaceram a própria carne até a exaustão, depois mergulham em águas geladas.",
+      "sampleDicePool": "Vigor + Sobrevivência", "action": "Prolongada: 10 sucessos; um teste por minuto", "duration": "Um mês",
+      "success": "Cada Uratha participante vincula um recipiente ou foco, como uma garrafa ou corrente. Enquanto o carrega, obter turnos de lucidez durante Wasu-Im, não necessariamente consecutivos, encerra a fúria imediatamente. A fonte não informa quantos turnos são necessários. Ao fim do mês, ou se o foco for quebrado ou tomado, o Uratha entra imediatamente em Wasu-Im."
+    },
+    "wtf-core:messenger": {
+      "name": "Mensageiro", "description": "O presente de Luna transmite mensagens entre as Tribos da Lua; os Puros evitam utilizá-lo.",
+      "symbols": "Lua, vento ou respiração, música, conexões",
+      "sampleRite": "Os participantes sobem uma montanha ou edifício sob o céu noturno, ligados por correntes com sinos. Debatem-se como ventos uivantes até que quem conduz o Rito os force a ajoelhar e cante para o céu.",
+      "sampleDicePool": "Força + Briga", "action": "Prolongada: 10 sucessos; um teste a cada cinco minutos",
+      "success": "Envie uma mensagem que exija até cinco respirações para ser dita a um lobisomem nomeado durante o Rito. Lunes a entregam como uma recitação suave e melodiosa na Primeira Língua ao ouvido do destinatário, sem a ênfase ou o sotaque original. Ela alcança qualquer lobisomem no mundo quase instantaneamente e com precisão perfeita, sem poder ser detectada ou interceptada."
+    },
+    "wtf-core:bottle-spirit": {
+      "name": "Engarrafar Espírito", "description": "Um segredo dos seguidores de Lobo da Morte explora as leis espirituais de aprisionamento.", "prerequisites": "Ensinado somente aos Sombras dos Ossos.",
+      "symbols": "Garrafas, estase, ar, morte",
+      "sampleRite": "Entoe cânticos sobre uma garrafa gravada entre sinos de ossos e vapores de âmbar queimado, preferencialmente com insetos aprisionados; alguns mestres usam gelo.",
+      "sampleDicePool": "Inteligência + Ocultismo", "action": "Prolongada: cinco sucessos por Grau máximo de espírito que a garrafa pode conter; um teste a cada dez minutos",
+      "success": "Abrir a garrafa encantada atrai o espírito mais próximo, até o Grau permitido pela potência do Rito. O espírito não pode resistir, mas dispõe de um turno por Grau para fugir da área, matar quem segura a garrafa ou destruí-la antes de ser aprisionado. Permanece consciente e pode comunicar-se com o portador. Abrir ou quebrar a garrafa o liberta; após um dia inteiro, os vínculos afrouxam e ele pode escapar. No mundo material, não precisa gastar Essência a cada hora enquanto estiver engarrafado. Quem conduz só pode manter uma garrafa encantada por vez; criar outra racha a anterior."
+    },
+    "wtf-core:sacred-hunt": {
+      "name": "Caçada Sagrada", "description": "Siskur-Dah é o mais sagrado dos Ritos, vinculando caçadores e presa pelas leis da caçada.",
+      "symbols": "Caçada, presa, garras ou armas, sangue",
+      "sampleRite": "Garras de Sangue dançam em círculo com garras marcadas por sangue ou cinzas. Quem conduz veste a máscara da presa e tenta escapar da caçada simulada.",
+      "sampleDicePool": "Destreza + Atletismo", "action": "Prolongada: 10 sucessos; um teste por minuto",
+      "success": "Todos os lobisomens presentes tornam-se caçadores e recebem Siskur-Dah. Indique a presa individual ou coletiva sem precisar de nomes ou detalhes exatos. Ao abater uma presa espiritual, os caçadores dividem sua Essência restante como desejarem. Drená-la por completo causa sua discorporação, normalmente um Ponto de Ruptura em direção ao Espírito e um desrespeito sem boa justificativa. Caçadores que alcancem um espírito com conhecimento de um Rito ou Dom podem pagar a Experiência necessária para aprender o Rito ou receber a marca do Dom. Nesse caso, abatê-lo depois não concede Essência e constitui um Ponto de Ruptura em direção ao Espírito."
+    },
+    "wtf-core:kindle-fury": {
+      "name": "Atiçar a Fúria", "description": "O antigo pacto com Fenris-Ur concede aos Suthar Anzuth a fúria de seu patrono.", "prerequisites": "Ensinado somente aos Garras de Sangue.",
+      "symbols": "Fúria, sangue, fogo ou ignição, consumo",
+      "sampleRite": "Garras de Sangue de Bristol bebem, brigam e contam histórias de fúria insatisfeita em um porão decadente. Quem conduz mistura sangue e álcool e os despeja no fogo.",
+      "sampleDicePool": "Presença + Expressão", "action": "Prolongada: 10 sucessos; um teste a cada dez minutos", "duration": "Um mês",
+      "success": "Todos os Uratha presentes recebem o arquétipo de Sangue Destruidor além do Sangue habitual. Quem já possui Destruidor dobra a Força de Vontade recuperada ao satisfazê-lo."
+    },
+    "wtf-core:shadowbind": {
+      "name": "Aprisionamento da Sombra", "description": "Aprisione um espírito pelas antigas leis de vinculação.",
+      "symbols": "Jaula, aprisionamento, chave, tipo do espírito",
+      "sampleRite": "Mestres do Ferro cercam um espírito com círculos de arame, chaves e rádios sintonizados em frequências ocultas.",
+      "sampleDicePool": "Inteligência + Ciência", "action": "Prolongada: 10 sucessos; um teste por minuto; potencialmente disputada pela Resistência do espírito",
+      "success": "Escolha um espírito presente no mesmo lado da Película, ocupando um espaço de aprisionamento definido. Alcançar o total antes dele o prende ali: não pode sair, atravessar a Película nem usar Numina contra alvos externos. É libertado quando quem conduz assim declara, alguém de fora rompe a fronteira ou satisfaz uma condição específica de libertação estabelecida por quem conduz. Informe essa condição a pelo menos duas outras pessoas dentro de uma hora ou o vínculo se desfaz."
+    },
+    "wtf-core:fetish": {
+      "name": "Fetiche", "description": "Prenda um espírito em um receptáculo físico para criar um Fetiche; a construção do item é detalhada na p. 146.",
+      "symbols": "Ofício, propósito, correntes, sangue, tipo do espírito",
+      "sampleRite": "Forje um item envolto em correntes sobre o fogo, martelando e trabalhando o metal com sangue para aprisionar o espírito.",
+      "sampleDicePool": "Força + Ofícios", "cost": "Uma Essência por ponto do Fetiche desejado", "action": "Prolongada: 20 sucessos; um teste por minuto",
+      "success": "Prenda o espírito no receptáculo e crie um Fetiche conforme as regras de criação de Fetiches da p. 146."
+    },
+    "wtf-core:twilight-purge": {
+      "name": "Expurgo do Crepúsculo", "description": "Force seres ocultos no Crepúsculo a entrar no mundo material.",
+      "symbols": "Visão, espelhos, corrosão ou ácido, sol",
+      "sampleRite": "Quem conduz senta-se de pernas cruzadas com olhos pintados, captura a luz solar em um espelho, mexe um recipiente de ácidos, pinta símbolos no espelho com a mistura e o quebra.",
+      "sampleDicePool": "Raciocínio + Ciência", "cost": "Três Essências", "action": "Prolongada: cinco sucessos; um teste por minuto",
+      "success": "Afete todas as criaturas do Crepúsculo a até 100 jardas de quem conduz, escolhendo uma área menor se desejar, ou uma única criatura do Crepúsculo percebida. Elas se materializam gratuitamente mesmo sem a Manifestação Materializar, recebem Atordoado e não podem retornar ao Crepúsculo por uma hora."
+    },
+    "wtf-core:forge-alliance": {
+      "name": "Forjar Aliança", "description": "Vincule alcateias por um propósito comum.",
+      "symbols": "Alcateias, aliança, propósito comum, sangue",
+      "sampleRite": "Invoque publicamente os Primogênitos, misture sangue e troque presentes para demonstrar sinceridade e propósito comum.",
+      "sampleDicePool": "Presença + Persuasão", "cost": "Uma Essência por alcateia participante", "action": "Prolongada: 10 sucessos; um teste por minuto", "duration": "Um mês",
+      "success": "Cada alcateia deve ter pelo menos um membro presente. Trate a aliança como uma única alcateia para Dons, gatilhos de Fúria Assassina e outros efeitos sobrenaturais, mas não para Ritos ou vantagens do Totem. Alternativamente, forme-a contra uma presa específica: todos os membros recebem uma Aspiração adicional de caçá-la, e a aliança termina quando a presa é derrotada."
+    },
+    "wtf-core:urfarahs-bane": {
+      "name": "Flagelo de Urfarah", "description": "Reproduza a traição a Pai Lobo para voltar garras e dentes contra o Povo.",
+      "symbols": "Traição, morte de Pai Lobo, destruição, ecos",
+      "sampleRite": "Um campeão afasta-se enquanto quem conduz pinta lágrimas em suas faces pela morte de Pai Lobo. Os ritualistas invocam perdas e vínculos rompidos, recorrendo ao pesar do campeão enquanto seus laços com a alcateia e o Totem se desfazem.",
+      "sampleDicePool": "Raciocínio + Empatia", "cost": "Cinco Essências", "action": "Prolongada: 15 sucessos; um teste a cada dez minutos", "duration": "Até o nascer do sol",
+      "success": "Um único Uratha presente causa dano agravado a outros lobisomens com garras e mordidas. Durante o efeito, fica afastado dos vínculos da alcateia e não recebe benefícios de alcateia de Dons, Ritos ou Totem. Quando termina, sofre um dano agravado e recebe Culpado."
+    },
+    "wtf-core:veil": {
+      "name": "Véu", "description": "Apague provas registradas de um evento sobrenatural.", "prerequisites": "Ensinado somente aos Mestres do Ferro.",
+      "symbols": "Cegueira, exclusão, tecnologia, sombra ou véus",
+      "sampleRite": "Um Ithaeur dos Mestres do Ferro do Iraque dança freneticamente entre véus escuros e arranha os próprios olhos cegos. Aprendizes recolhem o sangue, entoam código e dados e marcam fotografias e telas de computador com ele.",
+      "sampleDicePool": "Presença + Ocultismo", "cost": "Cinco Essências", "action": "Prolongada: 20 sucessos; um teste a cada dez minutos",
+      "success": "Escolha um único evento sobrenatural registrado, de até 30 minutos, ocorrido no último mês lunar. Espíritos removem todos os registros, incluindo relatos manuscritos, fotografias, vídeos e registros de telefone. As memórias humanas não são afetadas."
+    },
+    "wtf-core:banish": {
+      "name": "Banir", "description": "Expulse um ser para seu mundo apropriado.",
+      "symbols": "Advertência, dois mundos, último uivo de Pai Lobo, amargor",
+      "sampleRite": "Alcateias norte-americanas fazem exigências paradoxais, mastigam frutos amargos, traçam símbolos de advertência e uivam em escárnio.",
+      "sampleDicePool": "Manipulação + Subterfúgio", "action": "Prolongada: cinco sucessos; um teste por minuto; espíritos podem resistir com Resistência, outras criaturas não podem resistir",
+      "success": "Envie um espírito no mundo físico para a Sombra, ou um ser não espiritual e não lobisomem na Sombra para o mundo físico, na posição correspondente. Relatos sugerem que realizar este Rito em uma Ferida também expulsa da Sombra servos dos Maeljin contaminados pela Ferida, para um local desconhecido."
+    },
+    "wtf-core:harness-the-cycle": {
+      "name": "Canalizar o Ciclo", "description": "Receba um tributo de Essência dos espíritos na mudança das estações.",
+      "symbols": "Estação, consumo, sangue, terra ou céu",
+      "sampleRite": "No equinócio de outono, banqueteie-se com carne fresca, marque o corpo com terra fértil e sangue, uive para o céu e alimente fogueiras noite adentro.",
+      "sampleDicePool": "Presença + Socialização", "action": "Prolongada: 10 sucessos; um teste a cada meia hora",
+      "success": "Em regiões temperadas, realize somente nos equinócios e solstícios: Uratha participantes recuperam Essência igual à metade de sua reserva máxima. Humanos e Parentes recuperam toda a Força de Vontade e curam duas vezes mais rápido por um mês. Em regiões tropicais, realize nos dois dias de transição entre estações seca e chuvosa: Uratha recuperam toda a reserva de Essência; humanos e Parentes recebem os mesmos benefícios e um ponto em Aliados, Contatos ou Recursos por um mês."
+    },
+    "wtf-core:totemic-empowerment": {
+      "name": "Fortalecimento Totêmico", "description": "O vínculo da alcateia torna um membro voluntário um receptáculo temporário de seu Totem.",
+      "symbols": "Totem, alcateia, sangue, força",
+      "sampleRite": "Os Blood Foxes perfuram o alvo com longos espinhos e pintam o sangue que escorre em raposas rosnantes, suportando a dor enquanto o Totem compartilha a sensação.",
+      "sampleDicePool": "Vigor + Medicina", "action": "Prolongada: 10 sucessos; um teste por minuto", "duration": "Até o próximo nascer do sol",
+      "success": "O Totem deve estar presente no mesmo lado da Película. Ele Toma voluntária e temporariamente o alvo até o Rito terminar. O membro recebe sua Proibição e Fraqueza, +1 em Força, Destreza e Vigor, +2 em percepção, visão de espíritos no Crepúsculo, suas Influências e Numina, e cinco pontos extras de capacidade de Essência. Um alvo normalmente sem reserva recebe cinco Essências do Totem. Um humano torna-se imune à Lunagem. Se um Uratha cair em Basu-Im, o Totem assume o controle, gastando uma Essência por hora e agindo livremente; o Uratha não se lembra de nada depois. Isso constitui um Ponto de Ruptura em direção ao Espírito para Uratha, ou de Integridade para humanos e Parentes."
+    },
+    "wtf-core:hunting-ground": {
+      "name": "Terreno de Caça", "description": "Invoque os direitos territoriais de Pai Lobo para consagrar um terreno de caça.",
+      "symbols": "Território, Totem da alcateia, alcateia, fronteiras",
+      "sampleRite": "Alcateias britânicas percorrem suas fronteiras a pé, golpeando marcos com bastões inscritos com símbolos da alcateia e do Totem e entalhando pedras e árvores.",
+      "sampleDicePool": "Força + Ocultismo", "action": "Prolongada: 10 sucessos; um teste a cada meia hora", "duration": "Uma estação",
+      "success": "Consagre a área como território da alcateia. Os membros recebem +2 em perseguições a pé e rastreamento ali, tanto perseguindo quanto fugindo, e +2 em testes de Empatia com Animais, Empatia e Política sobre seus habitantes, humanos, espíritos ou outros. Não completar ao menos uma caçada por mês, comum ou Siskur-Dah, encerra o Rito imediatamente."
+    },
+    "wtf-core:moons-mad-love": {
+      "name": "Amor Insano da Lua", "description": "Um pacto perigoso com Luna investe parte de sua presença em almas humanas; os Puros geralmente o evitam.",
+      "symbols": "Prata, Auspícios, amor, mudança",
+      "sampleRite": "Sombras dos Ossos do Magrebe realizam uma mascarada ao luar no túmulo de um Uratha venerado. Com máscaras dos Auspícios, debatem amor e mudança com suplicantes humanos, concedendo peças de prata pela compreensão demonstrada.",
+      "sampleDicePool": "Presença + Erudição", "action": "Prolongada: 15 sucessos; um teste por minuto", "duration": "Um mês",
+      "success": "Realize somente à noite. Humanos presentes ao término não sofrem Lunagem de lobisomens de sua alcateia e lembram-se dos acontecimentos mesmo sob Lunagem de outras fontes. Ver a lua cheia pela primeira vez durante o efeito concede Inspirado. Ao fim do mês, cada um deve obter sucesso em Perseverança + Compostura ou receber Loucura."
+    },
+    "wtf-core:wellspring": {
+      "name": "Manancial", "description": "Um pacto com o umia espiritual do locus amplia sua Ressonância por todo o território.",
+      "symbols": "Fontes ou ignição, purificação, energia, tipo de Ressonância",
+      "sampleRite": "Garras de Marfim canadenses dançam vestidos de plantas emaranhadas e espinhos, misturando sangue e seiva, depois lavam-se na mistura recolhida para inundar áreas urbanas com Ressonância natural.",
+      "sampleDicePool": "Destreza + Ocultismo", "action": "Prolongada: 20 sucessos; um teste a cada dez minutos", "duration": "Um mês",
+      "success": "Realize em um locus. Espíritos e Uratha a até 100 jardas por ponto do locus ou em todo o território, o que for maior, somam seu valor a testes de Influências correspondentes. Qualquer membro da alcateia na própria área do locus pode usar a Influência correspondente com seu valor, gastando a Essência do locus se não tiver a própria; use Presença + Raciocínio em vez de Poder + Refinamento. A Ressonância disseminada aplica Ressonante e produz efeitos duradouros na Sombra e no mundo material. Toda a alcateia recebe uma Proibição persistente que reflete a Ressonância: dor pode exigir um dano letal a cada amanhecer; morte pode exigir carregar ossos de um parente próximo. Qualquer violação encerra o Rito imediatamente e impede Manancial no locus por um ano e um dia. A Condição termina quando o Rito acaba."
+    },
+    "wtf-core:raiment-of-the-storm": {
+      "name": "Manto da Tempestade", "description": "Espíritos de tempestade e chuva fortalecem quem caminha em seu abraço.", "prerequisites": "Ensinado somente aos Senhores da Tempestade.",
+      "symbols": "Chuva, relâmpago, sangue, céu",
+      "sampleRite": "A alcateia reúne-se descoberta sob a chuva e lâmpadas vacilantes. Um Totem serpente de relâmpagos dança enquanto os participantes juntam o sangue das mãos cortadas; a fúria da tempestade refletida nele fortalece quem conduz.",
+      "sampleDicePool": "Raciocínio + Ocultismo", "action": "Prolongada: 15 sucessos; um teste por minuto", "duration": "Até a tempestade cessar",
+      "success": "Realize somente durante uma tempestade que tenha produzido trovão ou relâmpago. Ao ar livre sob a chuva, os participantes recebem +2 para disputar ataques e efeitos sobrenaturais, dois pontos de armadura geral e imunidade a dano de eletricidade e relâmpagos. Recebem Proibição: não dormir, descansar ou relaxar até a tempestade passar."
+    },
+    "wtf-core:shadowcall": {
+      "name": "Chamado da Sombra", "description": "Leis antigas convocam um espírito para atender ao chamado ritual.",
+      "symbols": "Círculos, chamado, luzes, tipo do espírito",
+      "sampleRite": "Um manual anônimo na Internet descreve circuitos, pulsos luminosos e código oculto para um servidor-portal que convoca espíritos tecnológicos. Os Farsil Luhal temem que um Parente desavisado o utilize.",
+      "sampleDicePool": "Inteligência + Computação", "action": "Prolongada: 20 sucessos; um teste por minuto; potencialmente disputada pela Resistência do espírito",
+      "success": "Chame um espírito conhecido pelo nome ou o mais próximo de um tipo escolhido. Ele percebe o chamado assim que o Rito começa e pode resistir ou responder voluntariamente. No sucesso, aparece imediatamente em um espaço de invocação delimitado com gathra apropriado. Diferentemente da maioria dos Ritos, a força local da Película afeta a parada se o espírito começar no lado oposto. No mundo material, o espaço recebe Aberto e o espírito chega no Crepúsculo; se possuir Materializar, pode usar essa Manifestação gratuitamente ao chegar."
+    },
+    "wtf-core:supplication": {
+      "name": "Súplica", "description": "Ofereça respeito aos espíritos da Sombra em troca de favores.",
+      "symbols": "Território, fumaça, equilíbrio, tipo dos espíritos",
+      "sampleRite": "Um Caçador na Escuridão cria pequenos adornos de palha e ossos marcados com sangue, percorre o território com incenso e os pendura sob beirais, uivando para anunciar cada oferenda.",
+      "sampleDicePool": "Presença + Ofícios", "action": "Prolongada: 10 sucessos; um teste a cada meia hora", "duration": "Uma estação",
+      "success": "Distribua âncoras físicas que representem um tipo escolhido de espírito pelo território da alcateia. Todos os espíritos desse tipo melhoram sua impressão dos membros em um nível. Se pelo menos metade das âncoras for danificada ou removida, o Rito termina imediatamente. Quem conduz recebe uma Proibição persistente adequada a esses espíritos, resolvida ao fim da duração."
+    },
+    "wtf-core:hidden-path": {
+      "name": "Caminho Oculto", "description": "Espíritos de lobos e lugares oferecem um caminho oculto e veloz até a presa ou a segurança.", "prerequisites": "Ensinado somente aos Caçadores na Escuridão.",
+      "symbols": "Caminhos, sombra, passagens, destino",
+      "sampleRite": "Meninna europeus simulam uma caçada em um edifício abandonado enquanto quem conduz pinta símbolos do destino ao redor da passagem pela qual sairão.",
+      "sampleDicePool": "Raciocínio + Sobrevivência", "action": "Prolongada: 15 sucessos; um teste a cada dez minutos",
+      "success": "Indique um destino alcançável inteiramente por terra. Os participantes seguem um caminho entre Carne e Sombra, evitando barreiras e interceptações mundanas e gastando um décimo do tempo normal de viagem a pé. Ele não atravessa mares nem grandes corpos d'água. Se qualquer participante sair do caminho, o Rito termina."
+    },
+    "wtf-core:expel": {
+      "name": "Expulsar", "description": "Afirme a reivindicação espiritual da alcateia para expulsar um espírito possessor.",
+      "symbols": "Posse, domínio, destruição, flagelação",
+      "sampleRite": "Um mestre Iminir golpeia o hospedeiro possuído, prende-o em correntes com a alcateia, marca-o com sangue e símbolos de posse e arranca as correntes para romper o domínio do espírito.",
+      "sampleDicePool": "Presença + Intimidação", "action": "Prolongada: 10 sucessos; um teste por minuto; disputada pela Resistência do espírito",
+      "success": "Escolha um espírito que possua um humano ou objeto. Alcance dez sucessos antes dele para romper sua Ancoragem ou Possessão. Um antigo hospedeiro vivo conta como membro da alcateia por uma hora. Isso não afeta os Tomados, cuja fusão espiritual é profunda demais."
+    },
+    "wtf-core:great-hunt": {
+      "name": "Grande Caçada", "description": "Os Primogênitos fortalecem os caçadores menores da alcateia para igualar os Uratha.",
+      "symbols": "Sangue, transformação, lobos, prata",
+      "sampleRite": "Uma suposta alcateia Meninna do Pacífico conduz humanos metamorfos em peles de lobo e drogas xamânicas, espreitando entre eles e distribuindo mordidas e moedas de prata.",
+      "sampleDicePool": "Presença + Ocultismo", "action": "Prolongada: 20 sucessos; um teste por minuto", "duration": "Até o próximo nascer do sol",
+      "success": "Humanos e Parentes da alcateia tornam-se imediatamente Urhan, recebendo todos os bônus da forma, sentidos de lobisomem e regeneração como em Instinto Primitivo 1. Recebem Proibição até o nascer do sol, compelidos a caçar a presa da alcateia. Participar constitui um Ponto de Ruptura de Integridade para humanos, mas não para Parentes."
+    }
+  }
+}

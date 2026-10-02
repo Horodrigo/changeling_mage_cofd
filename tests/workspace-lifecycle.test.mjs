@@ -123,6 +123,15 @@ test("workspace contains no dead server-catalog presentation path", async () => 
   );
 });
 
+test("choosing a game line exits directly without guarding or offering to save an empty character", async () => {
+  const source = await readFile(new URL("../app/new-character-builder.tsx", import.meta.url), "utf8");
+  assert.match(source, /onClick=\{onCancel\}/);
+  assert.doesNotMatch(source, /BuilderExitDialog|useBuilderExitGuard|requestExit/);
+  const shell = await readFile(builderShellUrl, "utf8");
+  assert.match(shell, /useBuilderExitGuard\(true, requestExit\)/);
+  assert.match(shell, /<BuilderExitDialog/);
+});
+
 test("character creation drafts survive exit and resume through the Builder", async () => {
   const [workspace, shell, changeling, mage, vampire] = await Promise.all([
     readFile(workspaceUrl, "utf8"), readFile(builderShellUrl, "utf8"),

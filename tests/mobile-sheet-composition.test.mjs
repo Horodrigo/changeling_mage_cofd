@@ -4,6 +4,14 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
+test("shared creation panels follow their content height instead of reserving empty space", async () => {
+  const globals = await read("../app/css/globals.css");
+  const panel = globals.match(/\.builder-body\s*\{([^}]+)\}/)?.[1];
+  assert.ok(panel, "missing shared builder panel styles");
+  assert.doesNotMatch(panel, /(?:min-)?height\s*:/);
+  assert.match(panel, /padding:\s*clamp\(/);
+});
+
 test("mobile sheets keep summaries, details, powers, and resource tracks separated", async () => {
   const [mortal, mortalBuilder, mage, changeling, vampire, bloodline, legacy, paperShell, globals, mortalCss, mageCss, changelingCss, vampireCss] = await Promise.all([
     read("../game-lines/mortal/sheet-view.tsx"),
@@ -15,10 +23,10 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
     read("../app/workspace/legacy-page.tsx"),
     read("../app/workspace/character-paper-shell.tsx"),
     read("../app/css/globals.css"),
-    read("../app/css/mortal-sheet.css"),
-    read("../app/css/mage-sheet.css"),
-    read("../app/css/changeling-sheet.css"),
-    read("../app/css/vampire-sheet.css"),
+    read("../game-lines/mortal/styles/sheet.css"),
+    read("../game-lines/mage/styles/sheet.css"),
+    read("../game-lines/changeling/styles/sheet.css"),
+    read("../game-lines/vampire/styles/sheet.css"),
   ]);
   const mageMobile = mage.slice(mage.indexOf("if (isMobile)"), mage.indexOf('return (<CharacterPaperShell line="MtA" title='));
   const mageSummary = mageMobile.slice(mageMobile.indexOf("resumo:"), mageMobile.indexOf("stats:"));
@@ -58,8 +66,8 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mortal, /SheetHeading className="cofd-attributes-heading"/);
   assert.match(paperShell, /cofd-urban-frame[^]*cofd-frame-center-bottom/);
   for (const asset of ["paper-texture", "selected-tab-texture", "background-mortal", "frame-corner", "section-divider", "column-divider", "frame-center", "attributes-divider"]) {
-    assert.ok((await stat(new URL(`../public/mortal/style/${asset}.webp`, import.meta.url))).size > 0, `${asset}.webp is empty`);
-    assert.match(mortalCss, new RegExp(`/mortal/style/${asset}\\.webp`));
+    assert.ok((await stat(new URL(`../public/game-lines/mortal/images/${asset}.webp`, import.meta.url))).size > 0, `${asset}.webp is empty`);
+    assert.match(mortalCss, new RegExp(`/game-lines/mortal/images/${asset}\\.webp`));
   }
   assert.doesNotMatch(mortalBuilder, /meritSpent\s*!==\s*7|threeCompleteSpecialties|threeAspirations|answerFiveBreakingPointQuestions/);
   assert.match(mortalBuilder, /meritSpent\s*>\s*7/);
@@ -67,10 +75,10 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
   assert.match(mageCss, /8px center,[\s\S]*12px center/);
   assert.match(mageCss, /--mta-frame-center-clearance:\d+px/);
   assert.match(mageCss, /left var\(--mta-frame-rail-edge\) top 25px,[\s\S]*right var\(--mta-frame-rail-edge\) top 25px/);
-  assert.match(mageCss, /background-image:url\("\/mage\/style\/attributes-divider\.webp"\)/);
+  assert.match(mageCss, /background-image:url\("\/game-lines\/mage\/images\/attributes-divider\.webp"\)/);
   assert.match(mageCss, /button\[data-state="active"\]::before[^}]*selected-tab-texture\.webp/);
   assert.match(mortalCss, /button\[data-state="active"\]::before[^}]*selected-tab-texture\.webp/);
-  assert.ok((await stat(new URL("../public/mage/style/selected-tab-texture.webp", import.meta.url))).size > 0);
+  assert.ok((await stat(new URL("../public/game-lines/mage/images/selected-tab-texture.webp", import.meta.url))).size > 0);
   assert.match(changeling, /clarity-breaking-point-dialog ctl-dialog/);
   assert.match(changelingCss, /\.clarity-breaking-point-dialog\s*\{[^}]*grid-template-rows:\s*auto\s+minmax\(0,\s*1fr\)\s+auto/);
   assert.match(changelingCss, /\.clarity-breaking-point-modifiers\s+label\s*\{[^}]*font-size:\s*15px/);

@@ -6,6 +6,7 @@ import { mortalMessages } from "./i18n/messages/mortal";
 import { changelingMessages } from "./i18n/messages/changeling";
 import { mageMessages } from "./i18n/messages/mage";
 import { vampireMessages } from "./i18n/messages/vampire";
+import { werewolfMessages } from "./i18n/messages/werewolf";
 
 export type Locale = "pt-BR" | "en-US";
 const STORAGE_KEY = "arquivo-das-trevas:locale:v1";
@@ -26,8 +27,8 @@ function mergeMessageTrees(...parts: readonly MessageTree[]): MessageTree {
 }
 
 export const messages = {
-  "pt-BR": mergeMessageTrees(commonMessages["pt-BR"], mortalMessages["pt-BR"], changelingMessages["pt-BR"], mageMessages["pt-BR"], vampireMessages["pt-BR"]),
-  "en-US": mergeMessageTrees(commonMessages["en-US"], mortalMessages["en-US"], changelingMessages["en-US"], mageMessages["en-US"], vampireMessages["en-US"]),
+  "pt-BR": mergeMessageTrees(commonMessages["pt-BR"], mortalMessages["pt-BR"], changelingMessages["pt-BR"], mageMessages["pt-BR"], vampireMessages["pt-BR"], werewolfMessages["pt-BR"]),
+  "en-US": mergeMessageTrees(commonMessages["en-US"], mortalMessages["en-US"], changelingMessages["en-US"], mageMessages["en-US"], vampireMessages["en-US"], werewolfMessages["en-US"]),
 } as const;
 
 type MessageLeafPaths<Value, Prefix extends string = ""> = Value extends string
@@ -39,7 +40,8 @@ export type MessageKey =
   | MessageLeafPaths<typeof mortalMessages["pt-BR"]>
   | MessageLeafPaths<typeof changelingMessages["pt-BR"]>
   | MessageLeafPaths<typeof mageMessages["pt-BR"]>
-  | MessageLeafPaths<typeof vampireMessages["pt-BR"]>;
+  | MessageLeafPaths<typeof vampireMessages["pt-BR"]>
+  | MessageLeafPaths<typeof werewolfMessages["pt-BR"]>;
 
 export type TranslationParams = Readonly<Record<string, string | number>>;
 export type Translator = <Key extends MessageKey>(key: Key, params?: TranslationParams) => string;

@@ -1,0 +1,17 @@
+.wtf-fetish-filters, .wtf-fetish-custom { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.wtf-fetish-filters { margin: .5rem 0; align-items: end; }
+.wtf-fetish-custom > label:has(textarea) { grid-column: 1 / -1; }
+.wtf-fetish-catalog { overflow-y: auto; min-height: 0; max-height: 55vh; }
+.wtf-fetish-inventory > .panel-heading { align-items: flex-start; }
+.wtf-fetish-inventory > .panel-heading > div { flex: 1; min-width: 0; }
+.wtf-fetish-inventory > .panel-heading > button { flex-shrink: 0; }
+.wtf-fetish-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: .5rem; border-bottom: 1px solid var(--border); }
+.wtf-fetish-row > details { min-width: 0; }
+.wtf-fetish-row summary > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.wtf-fetish-row > button { margin-top: .35rem; }
+.wtf-fetish-inventory label { display: block; margin: .5rem 0; }
+@media (max-width: 767px) {
+  .wtf-fetish-filters, .wtf-fetish-custom { grid-template-columns: minmax(0, 1fr); }
+  .wtf-fetish-inventory > .panel-heading { flex-direction: column; gap: .5rem; }
+  .wtf-fetish-inventory > .panel-heading > button { width: 100%; }
+}

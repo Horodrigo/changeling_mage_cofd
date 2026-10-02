@@ -5,6 +5,12 @@ import { catalogService } from "@/lib/catalog/catalog-service";
 const groupLoaders: Readonly<Record<CatalogGroupId, CatalogGroupLoader>> = {
   "core-merits": () => import("../core/catalogs/merits").then(({ coreMeritsCatalogGroup }) => coreMeritsCatalogGroup),
   "core-reference": () => import("../core/catalogs/reference").then(({ coreReferenceCatalogGroup }) => coreReferenceCatalogGroup),
+  "werewolf-reference": () => import("../werewolf/catalogs/reference").then(({ werewolfReferenceCatalogGroup }) => werewolfReferenceCatalogGroup),
+  "werewolf-gifts": () => import("../werewolf/catalogs/gifts").then(({ werewolfGiftsCatalogGroup }) => werewolfGiftsCatalogGroup),
+  "werewolf-rites": () => import("../werewolf/catalogs/rites").then(({ werewolfRitesCatalogGroup }) => werewolfRitesCatalogGroup),
+  "werewolf-fetishes": () => import("../werewolf/catalogs/fetishes").then(({ werewolfFetishesCatalogGroup }) => werewolfFetishesCatalogGroup),
+  "werewolf-totem": () => import("../werewolf/catalogs/totem").then(({ werewolfTotemCatalogGroup }) => werewolfTotemCatalogGroup),
+  "werewolf-merits": () => import("../werewolf/catalogs/merits").then(({ werewolfMeritsCatalogGroup }) => werewolfMeritsCatalogGroup),
   "mage-merits": () => import("../mage/catalogs/merits").then(({ mageMeritsCatalogGroup }) => mageMeritsCatalogGroup),
   "mage-spells": () => import("../mage/catalogs/spells").then(({ mageSpellsCatalogGroup }) => mageSpellsCatalogGroup),
   "mage-factions": () => import("../mage/catalogs/factions").then(({ mageFactionsCatalogGroup }) => mageFactionsCatalogGroup),

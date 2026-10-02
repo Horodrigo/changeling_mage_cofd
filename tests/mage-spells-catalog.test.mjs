@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 const shardNames = ["death","fate","forces","life","matter","mind","prime","space","spirit","time"];
 const SPELLS = (await Promise.all(
   shardNames.map(async (name) =>
-    JSON.parse(await readFile(new URL(`../public/data/mage/spells/${name}.json`, import.meta.url), "utf8")),
+    JSON.parse(await readFile(new URL(`../public/game-lines/mage/data/spells/${name}.json`, import.meta.url), "utf8")),
   ),
 )).flat();
 

@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { normalizeChangelingFrailties } from "./creation-rules";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
+import { recoverChangelingMeritAllocations } from "./merit-allocation";
 
 const numberValue = (value: unknown) => {
   const parsed = Number(value);
@@ -31,6 +32,7 @@ export const changelingRules: GameLineRulesModule = {
     const wyrd = numberValue(character.line_data.wyrd) || 1;
     return {
       ...character,
+      merits: recoverChangelingMeritAllocations(character),
       line_data: {
         ...character.line_data,
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),

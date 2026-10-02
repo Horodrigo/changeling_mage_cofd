@@ -1,0 +1,26 @@
+.wtf-forms-comparison { width: 100%; min-width: 0; }
+.wtf-form-columns { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: repeat(5, auto); min-width: 0; position: relative; isolation: isolate; }
+.wtf-form-columns > .wtf-form-column { display: grid; grid-row: span 5; grid-template-rows: subgrid; }
+.wtf-form-columns::before { content: ""; position: absolute; inset: 3rem 5% .5rem; background: url("/game-lines/werewolf/images/forms.webp") center / contain no-repeat; opacity: .12; z-index: -1; pointer-events: none; }
+.wtf-form-column { padding: 0 .4rem; min-width: 0; font-size: .82rem; }
+.wtf-form-column + .wtf-form-column { border-left: 1px solid var(--sheet-accent, #713c31); }
+.wtf-form-column h4 { font-size: 1.2rem; text-align: center; padding: .5rem 0; border-bottom: 2px solid var(--sheet-accent, #713c31); }
+.wtf-form-changes { padding-top: .75rem; }
+.wtf-form-column dl > div { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: .25rem; border-bottom: 1px solid var(--sheet-line, #c7beb0); padding: .2rem 0; }
+.wtf-form-column dt { overflow-wrap: anywhere; }
+.wtf-form-column dd { font-weight: 600; margin: 0; text-align: right; }
+.wtf-form-rules { border-bottom: 1px solid var(--sheet-line, #c7beb0); }
+.wtf-form-rules summary { min-height: 44px; align-content: center; cursor: pointer; }
+.wtf-form-rules p { margin: .5rem 0; line-height: 1.45; }
+.wtf-form-passive { padding: .5rem 0; overflow-wrap: anywhere; }
+.wtf-form-passive + .wtf-form-passive { border-top: 1px solid var(--sheet-line, #c7beb0); }
+.wtf-form-passive h5 { margin: 0; font-size: inherit; font-weight: 700; }
+.wtf-form-passive .wtf-rule-field { font-size: inherit; }
+.wtf-mobile-form .wtf-form-column { padding: 0; }
+@media print {
+  .wtf-form-columns { min-width: 0; print-color-adjust: exact; }
+  .wtf-form-columns::before { display: block; }
+  .wtf-form-column { font-size: 8pt; padding: 0 .35rem; }
+  .wtf-form-column dl > div { break-inside: avoid; }
+}
+@media screen and (max-width: 767px) { .wtf-form-columns::before { display: none; } }

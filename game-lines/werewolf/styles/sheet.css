@@ -1,0 +1,92 @@
+.line-theme-wtf,
+body:has(.line-theme-wtf) {
+  --primary: #713c31;
+  --secondary: #e9ddd2;
+  --secondary-foreground: #513027;
+  --accent: #e5d5c5;
+  --accent-foreground: #513027;
+  --ring: #986551;
+  --line-accent: #713c31;
+  --line-strong: #39261f;
+  --line-soft: #f3ece2;
+  --line-border: #c4aa96;
+  --line-topbar-start: #241b17;
+  --line-topbar-middle: #493128;
+  --line-topbar-end: #713c31;
+  --line-topbar-muted: #dfcbbb;
+}
+.app-shell.line-theme-wtf { background: color-mix(in srgb, var(--line-accent) 5%, var(--background)); }
+.wtf-sheet { --sheet-accent: #713c31; --sheet-ink: #241c19; --sheet-line: #c7beb0; color: var(--sheet-ink); background: #faf7f0; box-shadow: 0 18px 50px #39261f26, inset 0 0 32px #713c3110; }
+.wtf-sheet .cod-sheet-title { justify-content: center; flex-wrap: wrap; gap: 8px; border-bottom: 2px solid var(--sheet-accent); text-align: center; }
+.wtf-sheet .cod-sheet-title > div { flex-wrap: wrap; justify-content: center; }
+.wtf-sheet .cod-sheet-title p { width: 100%; }
+.wtf-sheet .official-heading { color: var(--sheet-accent); }
+.wtf-sheet .wtf-skill-stack { display: grid; gap: 1rem; }
+.wtf-sheet .wtf-trait-note { margin: 0 0 .4rem; color: #67554a; font: 11px/1.4 Inter, Arial, sans-serif; text-align: center; }
+.wtf-sheet .wtf-rule-disclosure { min-width: 0; font-size: 14px; }
+.wtf-sheet .wtf-rule-disclosure > summary { display: flex; align-items: center; gap: .5rem; list-style: none; color: var(--sheet-accent); font-size: 15px; }
+.wtf-sheet .wtf-rule-disclosure > summary::-webkit-details-marker { display: none; }
+.wtf-sheet .wtf-rule-disclosure > summary::before { content: ""; flex: none; border-block: 4px solid transparent; border-left: 5px solid currentColor; }
+.wtf-sheet .wtf-rule-disclosure[open] > summary::before { transform: rotate(90deg); }
+.wtf-sheet .wtf-rule-disclosure > summary > span:first-of-type { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.wtf-sheet .wtf-rule-disclosure > summary > .official-dots { flex: none; }
+.wtf-sheet .wtf-rule-field { font-size: 14px; }
+.wtf-sheet .wtf-rule-field strong { color: var(--sheet-accent); }
+.wtf-sheet .wtf-rule-disclosure > small { color: #67554a; font-size: 11px; opacity: 1; }
+.wtf-sheet .sheet-merits .wtf-rule-disclosure > summary { min-height: 32px; font-size: 13px; }
+.wtf-sheet .wtf-rule-disclosure > .wtf-rule-disclosure { margin-left: .75rem; }
+.wtf-sheet .wtf-rule-disclosure > label,
+.wtf-sheet :is(.wtf-totem-editor-grid, .wtf-totem-attribute-grid, .wtf-totem-influence-row) > label { display: grid; gap: 4px; min-width: 0; margin-block: .5rem; font: 12px/1.4 Inter, Arial, sans-serif; }
+.wtf-sheet .wtf-rule-disclosure > label + button { margin-bottom: .5rem; }
+.wtf-sheet .wtf-health-heading { align-items: center; }
+.wtf-sheet .wtf-health-heading .official-heading { flex: 1; margin: 0; font-size: 19px; font-weight: 400; }
+.wtf-sheet .wtf-health-heading select, .wtf-sheet .wtf-health-heading [data-slot="select-trigger"] { width: 105px; }
+.wtf-renown { display: grid; gap: .15rem; font-size: 13px; }
+.wtf-power-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.wtf-power-filters > * { flex: 1 1 200px; }
+.wtf-sheet .wtf-power-filters { align-items: end; }
+.wtf-sheet .wtf-power-filters > label { display: grid; gap: 4px; font: 12px/1.4 Inter, Arial, sans-serif; }
+.wtf-sheet .wtf-fetish-inventory > .panel-heading h3 { font-size: 19px; font-weight: 400; }
+.wtf-sheet .wtf-fetish-inventory > .panel-heading p { color: #67554a; font-size: 12px; line-height: 1.45; }
+.wtf-sheet .wtf-experience-panel { display: grid; gap: 7px; }
+.wtf-sheet .wtf-experience-panel .beat-resource { justify-content: space-between; padding: 6px 8px; border: 1px solid var(--sheet-line); background: #fff8; }
+.wtf-sheet .wtf-experience-panel svg { width: 14px; }
+.wtf-renown-grant { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+.wtf-rite-experience-catalog { overflow-y: auto; min-height: 0; max-height: 55vh; }
+.wtf-rite-experience-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+.wtf-rite-experience-row > .wtf-rite-reason { grid-column: 1 / -1; margin: 0; }
+.wtf-rite-experience-row summary { cursor: pointer; }
+body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) { --sheet-accent: #713c31; --sheet-ink: #241c19; --sheet-line: #c7beb0; border-color: #c4aa96; background: #faf7f0; color: var(--sheet-ink); }
+body:has(.line-theme-wtf) :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"]) { color: #713c31; }
+body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
+@media (max-width: 767px) {
+  .wtf-sheet .cod-sheet-title { padding: 4px 0 14px; }
+  .wtf-sheet.mobile-character-sheet .cod-sheet-title { align-items: center; }
+  .wtf-sheet .cod-sheet-title > div { flex-direction: column; align-items: center; gap: 8px; }
+  .wtf-sheet .cod-sheet-title span { font-size: clamp(25px, 7.8vw, 36px); }
+  .wtf-sheet .cod-sheet-title strong { font-size: 11px; }
+  .wtf-sheet .sheet-identity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; padding-inline: 0; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(1) { order: 1; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(4) { order: 2; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(6) { order: 3; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(3) { order: 4; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(2) { order: 5; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(5) { order: 6; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(7) { order: 7; }
+  .wtf-sheet .sheet-identity-grid > :nth-child(8) { order: 8; }
+  .wtf-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list { position: sticky; top: 0; z-index: 25; max-width: 100%; overflow-x: auto; scrollbar-width: none; overscroll-behavior-inline: contain; }
+  .wtf-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button { min-width: max-content; min-height: 44px; padding-inline: 12px; }
+  .wtf-sheet .mobile-sheet-page { padding: 10px 2px 20px; }
+  .wtf-sheet .resource-track { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; }
+  .wtf-sheet .resource-track button { width: min(20px, 100%); aspect-ratio: 1; height: auto; justify-self: center; }
+  .wtf-sheet .wtf-experience-panel { margin-top: 12px; padding: 9px; }
+  .wtf-sheet .wtf-experience-panel .experience-totals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wtf-sheet .wtf-experience-panel .experience-input { grid-column: 1 / -1; }
+  .wtf-sheet .wtf-health-heading { display: flex; flex-direction: row; }
+  .wtf-sheet .wtf-health-heading > :last-child { width: 105px; }
+}
+@media print {
+  .wtf-sheet { color: #000; background: #fff; }
+  .wtf-sheet .wtf-rule-disclosure { break-inside: avoid; }
+}
+.wtf-benefit-reference { grid-column: 1 / -1; }

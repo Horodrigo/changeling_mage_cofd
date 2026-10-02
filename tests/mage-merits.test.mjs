@@ -10,10 +10,10 @@ after(async()=>vite.close());
 const merits=await vite.ssrLoadModule("/lib/merits.ts");
 const mageMerits=await vite.ssrLoadModule("/game-lines/mage/merits.ts");
 const orders=await vite.ssrLoadModule("/game-lines/mage/orders.ts");
-const factions=JSON.parse(readFileSync(new URL("../public/data/mage/factions.json",import.meta.url),"utf8"));
+const factions=JSON.parse(readFileSync(new URL("../public/game-lines/mage/data/factions.json",import.meta.url),"utf8"));
 const rawMageCatalog=[
- ...["core","mage"].flatMap((name)=>JSON.parse(readFileSync(new URL(`../public/data/core/merits/${name}.json`,import.meta.url),"utf8"))),
- ...JSON.parse(readFileSync(new URL("../public/data/mage/merits-supplements.json",import.meta.url),"utf8")),
+ ...["shared/data/merits.json","game-lines/mage/data/merits.json"].flatMap(path=>JSON.parse(readFileSync(new URL(`../public/${path}`,import.meta.url),"utf8"))),
+ ...JSON.parse(readFileSync(new URL("../public/game-lines/mage/data/merits-supplements.json",import.meta.url),"utf8")),
 ];
 const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=selected.get(item.name);if(!current||item.priority>current.priority)selected.set(item.name,item);return selected;},new Map()).values()];
 const merit=(name)=>mageCatalog.find(item=>item.name===name);

@@ -246,6 +246,7 @@ export function ExperienceMeritPicker({
   targetDots,
   onSelect,
   isEligible = meritPrerequisitesMet,
+  canAdvanceGrant,
   categoryFor = (definition) => definition.category,
 }: {
   line: PersistedGameLineId;
@@ -256,9 +257,11 @@ export function ExperienceMeritPicker({
   targetDots: number;
   onSelect: (id: string, dots: number, instanceIndex: number) => void;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
+  canAdvanceGrant?: (merit: CharacterSheet["merits"][number]) => boolean;
   categoryFor?: (definition: MeritDefinition) => string;
 }) {
   const { locale, t }=useLanguage();
+  const canAdvance = canAdvanceGrant ?? ((merit: CharacterSheet["merits"][number]) => canAdvanceGrantedMerit(line, merit));
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
@@ -328,7 +331,7 @@ export function ExperienceMeritPicker({
                   .filter(
                     ({ owned }) =>
                       owned.name === item.name &&
-                      (!owned.grantedBy || canAdvanceGrantedMerit(line, owned)),
+                      (!owned.grantedBy || canAdvance(owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
                 ratings = UNBOUNDED_MERITS.has(item.name)
@@ -347,7 +350,7 @@ export function ExperienceMeritPicker({
                 intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
                 prerequisitesMet = isEligible(item,context);
               if (item.name === "Mantle" && !instances.length) return null;
-              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvanceGrantedMerit(line,owned)))return null;
+              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvance(owned)))return null;
               if (
                 !repeatable &&
                 instances.length &&
@@ -416,36 +419,4 @@ export function recalculateCoreDerived(sheet: CharacterSheet) {
       Number(s.Athletics ?? 0),
   };
 }
-export function derivedWithPermanentMerits(character: CharacterSheet) {
-  const derived = { ...character.derived };
-  const grantedSkills = (
-    character.line_data.merit_granted_skill_bonuses &&
-    typeof character.line_data.merit_granted_skill_bonuses === "object"
-      ? character.line_data.merit_granted_skill_bonuses
-      : {}
-  ) as Record<string, number>;
-  derived.Defesa =
-    Number(derived.Defesa ?? 0) + (Number(grantedSkills.Athletics) || 0);
-  const merit = (name: string) =>
-    character.merits.find((item) => item.name === name);
-  const fastReflexes = merit("Fast Reflexes");
-  const fleetOfFoot = merit("Fleet of Foot");
-  if (fastReflexes)
-    derived.Iniciativa = Number(derived.Iniciativa ?? 0) + fastReflexes.dots;
-  if (fleetOfFoot)
-    derived.Deslocamento = Number(derived.Deslocamento ?? 0) + fleetOfFoot.dots;
-  const currentSize = Number(derived.Tamanho ?? 5);
-  const targetSize = merit("Giant")
-    ? 6
-    : merit("Small-Framed")
-      ? 4
-      : currentSize;
-  if (targetSize !== currentSize) {
-    derived.Tamanho = targetSize;
-    derived.Vitalidade = Math.max(
-      1,
-      Number(derived.Vitalidade ?? currentSize) + targetSize - currentSize,
-    );
-  }
-  return derived;
-}
+export { derivedWithPermanentMerits } from "@/lib/core/character/derived-traits";

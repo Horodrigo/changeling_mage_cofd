@@ -5,8 +5,9 @@ import { mortalRegistration } from "../mortal/registration";
 import { changelingRegistration } from "../changeling/registration";
 import { mageRegistration } from "../mage/registration";
 import { vampireRegistration } from "../vampire/registration";
+import { werewolfRegistration } from "../werewolf/registration";
 
-const registrations = [mortalRegistration, changelingRegistration, mageRegistration, vampireRegistration] as const;
+const registrations = [mortalRegistration, changelingRegistration, mageRegistration, vampireRegistration, werewolfRegistration] as const;
 const registrationsById = new Map<PersistedGameLineId, GameLineRegistration>(
   registrations.map((registration) => [registration.id, registration]),
 );

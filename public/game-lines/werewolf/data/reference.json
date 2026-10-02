@@ -1,0 +1,519 @@
+{
+  "forms": [
+    {
+      "id": "hishu",
+      "name": "Hishu",
+      "passives": [
+        { "id": "hishu-sheeps-clothing", "name": "Sheep's Clothing", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Attempts to pinpoint the werewolf in a crowd or pursue her through populated areas suffer her Primal Urge as a penalty." }
+        ] }
+      ],
+      "attributes": {},
+      "size": 0,
+      "speciesFactor": 0,
+      "perception": 1,
+      "firearmsDefense": false,
+      "armorGeneral": 0,
+      "armorBallistic": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 96,
+      "description": "Hishu is the human form. Add +1 die to Perception rolls using wolf senses. Sheep's Clothing: attempts to pinpoint the Uratha in a crowd or pursue her through populated areas suffer her Primal Urge as a penalty.",
+      "additionalPages": []
+    },
+    {
+      "id": "dalu",
+      "name": "Dalu",
+      "passives": [
+        { "id": "dalu-badass-motherfucker", "name": "Badass Motherfucker", "fields": [
+          { "id": "dicePool", "label": "Dice Pool", "text": "Presence + Primal Urge vs Composure + Primal Urge of the prey" },
+          { "id": "effect", "label": "Effect", "text": "On success, anyone surrounding or protecting the prey backs down or offers the prey up." }
+        ] }
+      ],
+      "attributes": {
+        "Strength": 1,
+        "Stamina": 1,
+        "Manipulation": -1
+      },
+      "size": 1,
+      "speciesFactor": 0,
+      "perception": 2,
+      "firearmsDefense": true,
+      "armorGeneral": 0,
+      "armorBallistic": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 96,
+      "description": "Dalu adds Strength +1, Stamina +1, Manipulation −1 and Size +1. Claw attacks deal lethal damage to humans; successful bites in a grapple deal lethal damage. Apply Defense against Firearms. Perception using wolf senses gains +2 dice. Inflicts mild Lunacy. Badass Motherfucker: roll Presence + Primal Urge against the prey's Composure + Primal Urge; on success, those surrounding or protecting the prey back down or offer the prey up.",
+      "additionalPages": [
+        97
+      ]
+    },
+    {
+      "id": "gauru",
+      "name": "Gauru",
+      "passives": [
+        { "id": "gauru-regeneration", "name": "Regeneration", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Regenerate all bashing and lethal damage each turn. This does not regenerate aggravated damage." }
+        ] },
+        { "id": "gauru-rage", "name": "Rage", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Attack an active opponent within striking range each turn. A crippled opponent need not be attacked while another opponent exists. If opponents are out of reach, move toward them or throw something at them. Without opponents, attack anything within reach. Other actions require Resolve + Composure; failure causes Kuruth." },
+          { "id": "restrictions", "label": "Restrictions", "text": "Automatically fail Social rolls not based on Intimidation and Mental rolls not based on Perception or Resistance. Communication serves only to help with the kill." },
+          { "id": "duration", "label": "Duration", "text": "Enter Gauru once per scene, for Hishu Stamina + Primal Urge turns. Then shift to Dalu or Urshul, or reflexively roll Resolve + Composure. Success allows one more turn before shifting to Dalu or Urshul and entering Wasu-Im; failure causes immediate Basu-Im." }
+        ] },
+        { "id": "gauru-primal-fear", "name": "Primal Fear", "fields": [
+          { "id": "effect", "label": "Effect", "text": "Lesser enemies, including most humans, lower-Rank spirits and non-supernatural animals, must use Down and Dirty combat. Resolve combat normally if the prey hides among stronger enemies. In normal combat, opponents use only Dexterity or Wits for Defense, without adding the usual Skill." }
+        ] }
+      ],
+      "attributes": {
+        "Strength": 3,
+        "Dexterity": 1,
+        "Stamina": 2
+      },
+      "size": 2,
+      "speciesFactor": 0,
+      "perception": 3,
+      "firearmsDefense": true,
+      "armorGeneral": 0,
+      "armorBallistic": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 97,
+      "description": "Gauru adds Strength +3, Dexterity +1, Stamina +2 and Size +2. The form grants no innate Armor. Once per scene, remain in Gauru for Hishu Stamina + Primal Urge turns. Afterwards shift to Dalu or Urshul, or risk Kuruth: a reflexive Resolve + Composure success allows one more turn, then a shift to Dalu or Urshul and Wasu-Im; failure causes immediate Basu-Im. Regenerate all bashing and lethal damage each turn. Teeth and claws deal +2 lethal damage without needing a grapple and can also establish one; Initiative gains +3 when using them. Apply Defense against Firearms. Wolf-sense Perception gains +3 dice; sight of Gauru inflicts full Lunacy. Rage demands an attack each turn; if none is in reach, move toward an opponent or throw something, and if none exists attack whatever is available. Other actions require Resolve + Composure or Kuruth. Automatically fail Social rolls not based on Intimidation and Mental rolls not based on Perception or Resistance. Primal Fear forces lesser enemies into Down and Dirty combat unless protected by stronger opponents; in normal combat, foes use Dexterity or Wits for Defense without the usual Skill.",
+      "additionalPages": []
+    },
+    {
+      "id": "urshul",
+      "name": "Urshul",
+      "passives": [
+        { "id": "urshul-weaken-the-prey", "name": "Weaken the Prey", "fields": [
+          { "id": "frequency", "label": "Frequency", "text": "Once per scene." },
+          { "id": "effect", "label": "Effect", "text": "When teeth or claws damage the prey, inflict Arm Wrack, Leg Wrack or Knocked Down without requiring a targeted attack." }
+        ] }
+      ],
+      "attributes": {
+        "Strength": 2,
+        "Dexterity": 2,
+        "Stamina": 2,
+        "Manipulation": -1
+      },
+      "size": 1,
+      "speciesFactor": 3,
+      "perception": 3,
+      "firearmsDefense": true,
+      "armorGeneral": 0,
+      "armorBallistic": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 97,
+      "description": "Urshul adds Strength +2, Dexterity +2, Stamina +2, Manipulation −1, Size +1 and species Speed factor +3. It cannot communicate with humans but speaks the First Tongue easily. Claws deal +1 lethal damage; bites deal +2 lethal damage without requiring a grapple and can establish one. Apply Defense against Firearms. Wolf-sense Perception gains +3 dice; inflicts moderate Lunacy. Weaken the Prey: once per scene, damaging prey with teeth or claws can inflict Arm Wrack, Leg Wrack or Knocked Down without a targeted attack.",
+      "additionalPages": []
+    },
+    {
+      "id": "urhan",
+      "name": "Urhan",
+      "passives": [
+        { "id": "urhan-chase-down", "name": "Chase Down", "fields": [
+          { "id": "cost", "label": "Cost", "text": "1 Essence to pre-empt an action." },
+          { "id": "effect", "label": "Effect", "text": "Pre-empt another character's combat action with your own, usually an attack. This replaces your normal action and cannot be used after you have already acted in the turn. Competing pre-emption abilities cause a Clash of Wills." },
+          { "id": "chase", "label": "Foot chase", "text": "Use Speed instead of Strength + Athletics." }
+        ] }
+      ],
+      "attributes": {
+        "Dexterity": 2,
+        "Stamina": 1,
+        "Manipulation": -1
+      },
+      "size": -1,
+      "speciesFactor": 3,
+      "perception": 4,
+      "firearmsDefense": false,
+      "armorGeneral": 0,
+      "armorBallistic": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 97,
+      "description": "Urhan adds Dexterity +2, Stamina +1, Manipulation −1, Size −1 and species Speed factor +3. It cannot communicate with humans and speaks only a few simple First Tongue words. Bites deal +1 lethal damage without a grapple and can establish one. Wolf-sense Perception gains +4 dice. Chase Down: spend 1 Essence to pre-empt another character's action with your own, replacing your normal action; competing pre-emption causes a Clash of Wills, and this cannot be used after acting in the turn. In a foot chase use Speed instead of Strength + Athletics.",
+      "additionalPages": [
+        98
+      ]
+    }
+  ],
+  "auspices": [
+    {
+      "id": "cahalith",
+      "name": "Cahalith",
+      "skills": [
+        "Crafts",
+        "Expression",
+        "Persuasion"
+      ],
+      "renown": "Glory",
+      "giftIds": [
+        "gift-inspiration",
+        "gift-knowledge"
+      ],
+      "moonGiftId": "gift-gibbous-moon",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 16,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "elodoth",
+      "name": "Elodoth",
+      "skills": [
+        "Empathy",
+        "Investigation",
+        "Politics"
+      ],
+      "renown": "Honor",
+      "giftIds": [
+        "gift-insight",
+        "gift-warding"
+      ],
+      "moonGiftId": "gift-half-moon",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 20,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "irraka",
+      "name": "Irraka",
+      "skills": [
+        "Larceny",
+        "Stealth",
+        "Subterfuge"
+      ],
+      "renown": "Cunning",
+      "giftIds": [
+        "gift-evasion",
+        "gift-stealth"
+      ],
+      "moonGiftId": "gift-new-moon",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 24,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "ithaeur",
+      "name": "Ithaeur",
+      "skills": [
+        "Animal Ken",
+        "Medicine",
+        "Occult"
+      ],
+      "renown": "Wisdom",
+      "giftIds": [
+        "gift-elemental",
+        "gift-shaping"
+      ],
+      "moonGiftId": "gift-crescent-moon",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 27,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "rahu",
+      "name": "Rahu",
+      "skills": [
+        "Brawl",
+        "Intimidation",
+        "Survival"
+      ],
+      "renown": "Purity",
+      "giftIds": [
+        "gift-dominance",
+        "gift-strength"
+      ],
+      "moonGiftId": "gift-full-moon",
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 30,
+      "additionalPages": [
+        84
+      ]
+    }
+  ],
+  "tribes": [
+    {
+      "id": "blood-talons",
+      "name": "Blood Talons",
+      "renown": "Glory",
+      "giftIds": [
+        "gift-inspiration",
+        "gift-rage",
+        "gift-strength"
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 34,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "bone-shadows",
+      "name": "Bone Shadows",
+      "renown": "Wisdom",
+      "giftIds": [
+        "gift-death",
+        "gift-elemental",
+        "gift-insight"
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 37,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "hunters-in-darkness",
+      "name": "Hunters in Darkness",
+      "renown": "Purity",
+      "giftIds": [
+        "gift-nature",
+        "gift-stealth",
+        "gift-warding"
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 40,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "iron-masters",
+      "name": "Iron Masters",
+      "renown": "Cunning",
+      "giftIds": [
+        "gift-knowledge",
+        "gift-shaping",
+        "gift-technology"
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 43,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "storm-lords",
+      "name": "Storm Lords",
+      "renown": "Honor",
+      "giftIds": [
+        "gift-evasion",
+        "gift-dominance",
+        "gift-weather"
+      ],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 46,
+      "additionalPages": [
+        84
+      ]
+    },
+    {
+      "id": "ghost-wolves",
+      "name": "Ghost Wolves",
+      "renown": null,
+      "giftIds": [],
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 49,
+      "additionalPages": [
+        84
+      ]
+    }
+  ],
+  "primalUrge": [
+    {
+      "id": "primal-urge-1",
+      "rating": 1,
+      "traitMaximum": 5,
+      "essenceMaximum": 10,
+      "essencePerTurn": 1,
+      "regenerationBashing": 1,
+      "basuImTime": "10 minutes",
+      "feedingRestriction": "None",
+      "huntTime": "3 months",
+      "lunacyPenalty": 0,
+      "trackingBonus": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-2",
+      "rating": 2,
+      "traitMaximum": 5,
+      "essenceMaximum": 11,
+      "essencePerTurn": 2,
+      "regenerationBashing": 1,
+      "basuImTime": "10 minutes",
+      "feedingRestriction": "Meat",
+      "huntTime": "3 months",
+      "lunacyPenalty": 0,
+      "trackingBonus": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-3",
+      "rating": 3,
+      "traitMaximum": 5,
+      "essenceMaximum": 12,
+      "essencePerTurn": 3,
+      "regenerationBashing": 1,
+      "basuImTime": "15 minutes",
+      "feedingRestriction": "Meat",
+      "huntTime": "1 month",
+      "lunacyPenalty": 0,
+      "trackingBonus": 0,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-4",
+      "rating": 4,
+      "traitMaximum": 5,
+      "essenceMaximum": 13,
+      "essencePerTurn": 4,
+      "regenerationBashing": 2,
+      "basuImTime": "20 minutes",
+      "feedingRestriction": "Raw meat",
+      "huntTime": "1 month",
+      "lunacyPenalty": -2,
+      "trackingBonus": 1,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-5",
+      "rating": 5,
+      "traitMaximum": 5,
+      "essenceMaximum": 15,
+      "essencePerTurn": 5,
+      "regenerationBashing": 2,
+      "basuImTime": "30 minutes",
+      "feedingRestriction": "Raw meat",
+      "huntTime": "3 weeks",
+      "lunacyPenalty": -2,
+      "trackingBonus": 1,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-6",
+      "rating": 6,
+      "traitMaximum": 6,
+      "essenceMaximum": 20,
+      "essencePerTurn": 6,
+      "regenerationBashing": 3,
+      "basuImTime": "1 hour",
+      "feedingRestriction": "Carnivore",
+      "huntTime": "3 weeks",
+      "lunacyPenalty": -2,
+      "trackingBonus": 2,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-7",
+      "rating": 7,
+      "traitMaximum": 7,
+      "essenceMaximum": 25,
+      "essencePerTurn": 7,
+      "regenerationBashing": 3,
+      "basuImTime": "2 hours",
+      "feedingRestriction": "Carnivore",
+      "huntTime": "1 week",
+      "lunacyPenalty": -2,
+      "trackingBonus": 2,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-8",
+      "rating": 8,
+      "traitMaximum": 8,
+      "essenceMaximum": 30,
+      "essencePerTurn": 8,
+      "regenerationBashing": 4,
+      "basuImTime": "3 hours",
+      "feedingRestriction": "Essence",
+      "huntTime": "1 week",
+      "lunacyPenalty": -3,
+      "trackingBonus": 3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-9",
+      "rating": 9,
+      "traitMaximum": 9,
+      "essenceMaximum": 50,
+      "essencePerTurn": 10,
+      "regenerationBashing": 5,
+      "basuImTime": "6 hours",
+      "feedingRestriction": "Essence",
+      "huntTime": "3 days",
+      "lunacyPenalty": -4,
+      "trackingBonus": 3,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    },
+    {
+      "id": "primal-urge-10",
+      "rating": 10,
+      "traitMaximum": 10,
+      "essenceMaximum": 75,
+      "essencePerTurn": 15,
+      "regenerationBashing": 6,
+      "basuImTime": "12 hours",
+      "feedingRestriction": "Essence",
+      "huntTime": "3 days",
+      "lunacyPenalty": -5,
+      "trackingBonus": 4,
+      "sourceId": "wtf-2ed",
+      "source": "Werewolf: The Forsaken Second Edition",
+      "page": 93
+    }
+  ],
+  "experienceCosts": {
+    "attribute": 4,
+    "skill": 2,
+    "merit": 1,
+    "affinityGift": 3,
+    "nonAffinityGift": 5,
+    "shadowFacet": 2,
+    "wolfFacet": 1,
+    "renown": 3,
+    "riteDot": 1,
+    "primalUrgeDot": 5,
+    "additionalMoonGift": 5,
+    "additionalMoonFacet": 2
+  }
+}

@@ -46,6 +46,26 @@ test("all locales expose exactly the same message keys", async () => {
   assert.deepEqual(keys(messages["pt-BR"]), keys(messages["en-US"]));
 });
 
+test("Health exposes localized manual Heal and retains overflow when editing boxes", async () => {
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { HealthTrack } = await vite.ssrLoadModule("/app/workspace/sheet-primitives.tsx");
+  const { cycleHealthDamage } = await vite.ssrLoadModule("/lib/resource-rules.ts");
+  const damage = ["aggravated", "lethal", "bashing", "bashing"];
+  const original = [...damage];
+  assert.deepEqual(cycleHealthDamage(damage, 2, 1), ["aggravated", "aggravated", "bashing", "bashing"]);
+  assert.deepEqual(cycleHealthDamage([], 2, 0), ["bashing"]);
+  assert.deepEqual(cycleHealthDamage(["aggravated"], 2, 0), []);
+  assert.deepEqual(cycleHealthDamage(damage, 2, 3), damage);
+  assert.deepEqual(damage, original);
+  const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(HealthTrack, { health: 2, damage, onChange: () => {} })));
+  assert.match(markup, />Heal<\/button>/);
+  assert.equal(translate("pt-BR", "ui.heal"), "Curar");
+  assert.equal(translate("en-US", "ui.heal"), "Heal");
+  assert.equal(translate("pt-BR", "ui.ban"), "Proibição");
+  assert.equal(translate("pt-BR", "ui.baneda2072"), "Fraqueza");
+  assert.equal(translate("en-US", "ui.baneda2072"), "Bane");
+});
+
 test("translations are split between common and game-line dictionaries", () => {
   const infrastructure = readFileSync(new URL("../lib/i18n.tsx", import.meta.url), "utf8");
   for (const line of ["mortal", "changeling", "mage", "vampire"]) {
@@ -100,7 +120,7 @@ test("Contract outcomes and Courtless use dictionary labels without changing mec
     assert.equal(courtDisplayName("My custom court",locale),"My custom court");
   }
   assert.equal(JSON.stringify(contract),before);
-  const corePresentation=JSON.parse(readFileSync(new URL("../public/data/core/conditions-pt.json",import.meta.url),"utf8"));
+  const corePresentation=JSON.parse(readFileSync(new URL("../public/shared/data/conditions-pt.json",import.meta.url),"utf8"));
   assert.match(translate("pt-BR","ui.tasteOfFealtyAutomation",{count:2}),new RegExp(corePresentation.deprived.name));
 });
 

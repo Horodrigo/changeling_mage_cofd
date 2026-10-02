@@ -1,0 +1,244 @@
+{
+  "powerRules": [
+    { "id": "spirit-influence", "name": "Using Influence", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 186, "additionalPages": [187], "fields": [
+      { "id": "rating", "label": "Rating", "text": "Initial Influence dots equal Rank and can be divided among domains appropriate to the spirit's nature. One Numen may be exchanged for one Influence dot. Normal Influence ratings cannot exceed Rank; bound Totems have the additional potential described in The Pack p. 63." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse. Influencing thoughts or emotions is contested by the higher of Resolve or Composure, plus Primal Urge." },
+      { "id": "allocation", "label": "Effect and duration", "text": "The dots assigned to effect strength plus duration cannot exceed the Influence's rating. Pay the effect's Essence cost plus any duration cost." },
+      { "id": "duration-0", "label": "Duration 0", "text": "One minute per success; no additional Essence." },
+      { "id": "duration-1", "label": "Duration 1", "text": "Ten minutes per success; no additional Essence." },
+      { "id": "duration-2", "label": "Duration 2", "text": "One hour per success; +1 Essence." },
+      { "id": "duration-3", "label": "Duration 3", "text": "One day per success; +2 Essence." },
+      { "id": "duration-4", "label": "Duration 4", "text": "Permanent; +2 Essence." },
+      { "id": "scent", "label": "Spiritual scent", "text": "A werewolf who smells the spirit's scent rolls Primal Urge − the spirit's Resistance to identify its highest Influence; exceptional success reveals all of its Influences." },
+      { "id": "discrepancy", "label": "Source discrepancy", "text": "The Influence Effects table on p. 187 explicitly uses Strengthen to change Resonant to Open. The Open prose on p. 189 instead names Control. The catalog preserves the table's mapping and flags the conflicting prose for audit; it does not silently treat them as identical." }
+    ] },
+    { "id": "spirit-manifestation", "name": "Using Manifestations", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 186, "additionalPages": [187, 188, 189, 190, 191], "fields": [
+      { "id": "allocation", "label": "Initial allocation", "text": "Spirits begin with Twilight Form and additional Manifestation Effects equal to Rank. Exchange one Numen for one additional Manifestation Effect. Claim requires both Fetter and Possess." },
+      { "id": "roll", "label": "Dice Pool", "text": "Activate a Manifestation Effect with Power + Finesse, paying its listed cost. Effects crossing the Gauntlet take its dice penalty. Possess, Fetter and Claim against a living target are contested by Resolve + Composure + Primal Urge." },
+      { "id": "conditions", "label": "Condition prerequisites", "text": "Conditions belong to a particular spirit. Advancing to a new Condition pauses its prerequisite's duration; it resumes when the advanced Condition ends. Removing a prerequisite also ends the Conditions that depend on it. These are rules references, not automatic state changes." },
+      { "id": "open", "label": "Open", "text": "Requires Resonant for that spirit. Repeated interaction prepares the subject to accept it: an extended action across a number of scenes equal to Rank, or the living subject's Resolve if higher. Open permits Fetter or Materialize. Removing Resonant ends Open; exorcism can reduce Open to Resonant. See the Influence table discrepancy above." },
+      { "id": "controlled", "label": "Controlled", "text": "Requires Open. Repeated Possess use conditions the subject for Claim: a number of separate possessions equal to the higher Willpower of spirit or subject. Ending Possessed early resets this progress. Removing Controlled or Claim forcibly returns the subject to Open." },
+      { "id": "reaching", "label": "Reaching", "text": "Opens a conduit through the Gauntlet for one scene. Influences and Numina marked Reaching may operate across it. A Twilight-aware observer can detect the conduit with Wits + Composure." }
+    ] },
+    { "id": "spirit-numina", "name": "Using Numina", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 191, "additionalPages": [192, 193], "fields": [
+      { "id": "roll", "label": "Dice Pool", "text": "Activation normally uses Power + Finesse, unless an individual Numen specifies otherwise. Its appearance reflects the spirit's nature. Passive abilities and explicitly roll-free effects are identified separately." },
+      { "id": "reaching", "label": "Reaching", "text": "Only Numina marked Reaching can operate across the Gauntlet through the Reaching Manifestation. This does not waive their own costs or resistance." },
+      { "id": "allocation", "label": "Totem allocation", "text": "A new Totem starts with one Numen plus one per four Totem points, before exchanges for Influence or Manifestations. The bound Totem's increased potential is a limit, not a free grant of that many powers." }
+    ] }
+  ],
+  "powers": [
+    { "id": "influence:strengthen", "kind": "influence", "influenceLevel": 1, "name": "Strengthen", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence, plus duration costs." },
+      { "id": "effect", "label": "Effect", "text": "Enhance something in the Influence's domain: improve Defense, intensify an emotion, make animals or plants healthier, or reinforce an object with Rank additional Health or Structure. A Resonant subject may become Open for the duration." }
+    ] },
+    { "id": "influence:manipulate", "kind": "influence", "influenceLevel": 2, "name": "Manipulate", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "2 Essence, plus duration costs." },
+      { "id": "effect", "label": "Effect", "text": "Make minor changes to the domain: alter an emotion's nature or target, an animal's actions, a plant's growth or an object's function." }
+    ] },
+    { "id": "influence:control", "kind": "influence", "influenceLevel": 3, "name": "Control", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "3 Essence, plus duration costs." },
+      { "id": "effect", "label": "Effect", "text": "Make dramatic changes: entirely twist an emotion or dictate animal behavior, plant growth or object function. An Open subject may become Controlled for the duration." }
+    ] },
+    { "id": "influence:create", "kind": "influence", "influenceLevel": 4, "name": "Create", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "4 Essence, plus duration costs." },
+      { "id": "effect", "label": "Effect", "text": "Create a new example of the domain: an emotion, sapling, young animal or object. This can create a temporary Anchor, Infrastructure or Resonant Condition for the chosen duration." }
+    ] },
+    { "id": "influence:mass-create", "kind": "influence", "influenceLevel": 5, "name": "Mass Create", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "5 Essence, plus duration costs for multiple temporary creations." },
+      { "id": "effect", "label": "Effect", "text": "Create Rank examples of the domain, or one permanent example, including a permanent Resonant Condition, without additional duration Essence. This never permanently alters a sapient mind." }
+    ] },
+    { "id": "manifestation:twilight-form", "kind": "manifestation", "name": "Twilight Form", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "None." },
+      { "id": "effect", "label": "Effect", "text": "Upon entering the physical world, the spirit appears in Twilight. Spirits begin with this Manifestation Effect for free. Twilight is not physical Materialization and does not allow contact with ordinary material objects." }
+    ] },
+    { "id": "manifestation:discorporate", "kind": "manifestation", "name": "Discorporate", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "cost", "label": "Cost", "text": "None." },
+      { "id": "effect", "label": "Effect", "text": "Voluntarily disperse as though all Corpus were lost to lethal damage. This painful escape can prevent permanent destruction; normal dormancy and reformation rules still apply." }
+    ] },
+    { "id": "manifestation:reaching", "kind": "manifestation", "name": "Reaching", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "additionalPages": [190], "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse − the Gauntlet penalty." },
+      { "id": "duration", "label": "Duration", "text": "One scene." },
+      { "id": "effect", "label": "Effect", "text": "Gain Reaching: open a conduit through the Gauntlet to use Influences and Reaching-marked Numina on its other side. A Twilight-aware observer may notice the conduit with Wits + Composure." }
+    ] },
+    { "id": "manifestation:gauntlet-breach", "kind": "manifestation", "requiredConditionId": "resonant", "name": "Gauntlet Breach", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Resonant." },
+      { "id": "cost", "label": "Cost", "text": "3 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse − the Gauntlet penalty." },
+      { "id": "effect", "label": "Effect", "text": "Cross the Gauntlet from the Shadow into the physical world in Twilight, or return to the Shadow." }
+    ] },
+    { "id": "manifestation:shadow-gateway", "kind": "manifestation", "minimumRank": 3, "requiredConditionId": "open", "name": "Shadow Gateway", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "additionalPages": [190], "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Rank 3+ and Open." },
+      { "id": "cost", "label": "Cost", "text": "Essence equal to Gauntlet Strength." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse − the Gauntlet penalty." },
+      { "id": "duration", "label": "Duration", "text": "One scene." },
+      { "id": "effect", "label": "Effect", "text": "Give the location Shadow Gate: a visible portal between the Shadow and material world, usable by anyone without special powers." }
+    ] },
+    { "id": "manifestation:image", "kind": "manifestation", "requiredConditionId": "resonant", "name": "Image", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Resonant." },
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "duration", "label": "Duration", "text": "One scene." },
+      { "id": "effect", "label": "Effect", "text": "Remain in Twilight but become visible to material observers; this does not grant a physical body." }
+    ] },
+    { "id": "manifestation:materialize", "kind": "manifestation", "requiredConditionId": "open", "name": "Materialize", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "additionalPages": [190], "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Open." },
+      { "id": "cost", "label": "Cost", "text": "3 Essence." },
+      { "id": "duration", "label": "Duration", "text": "One hour per success." },
+      { "id": "effect", "label": "Effect", "text": "Gain Materialized: a physical body within Rank yards of an Open object or person. Materialized spirits are protected from Essence bleed and follow Twilight spirit rules except intangibility. Removing the prerequisite ends Materialized; Bane contact can end it early." }
+    ] },
+    { "id": "manifestation:fetter", "kind": "manifestation", "requiredConditionId": "open", "name": "Fetter", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "additionalPages": [190], "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Open." },
+      { "id": "cost", "label": "Cost", "text": "2 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse; living targets contest with Resolve + Composure + Primal Urge." },
+      { "id": "effect", "label": "Effect", "text": "Gain Fettered: attach to a subject in Twilight, stay within five yards and avoid Essence bleed. Influences on the fetter cost one less Essence; neither Influences nor Numina may target anyone else while Fettered. Lasts until its prerequisite is removed or the subject dies or is destroyed, unless temporarily suppressed with Unfetter. A living subject also becomes Urged." },
+      { "id": "urged", "label": "Urged", "text": "Read surface thoughts with Power + Finesse contested by Resolve + Primal Urge; urge an action with Power + Finesse contested by Resolve + Composure. Following an urge rewards a Beat, resolved manually. Urged ends with Fettered." }
+    ] },
+    { "id": "manifestation:unfetter", "kind": "manifestation", "requiredConditionId": "fettered", "name": "Unfetter", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Fettered." },
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "duration", "label": "Duration", "text": "One scene." },
+      { "id": "effect", "label": "Effect", "text": "Temporarily suppress Fettered, allowing movement and other Manifestations. At scene's end these Manifestations also end. If not back within five yards of the fetter, immediately enter dormancy." }
+    ] },
+    { "id": "manifestation:possess", "kind": "manifestation", "requiredConditionId": "open", "name": "Possess", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "additionalPages": [190, 191], "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Open." },
+      { "id": "cost", "label": "Cost", "text": "3 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse; living targets contest with Resolve + Composure + Primal Urge." },
+      { "id": "duration", "label": "Duration", "text": "One scene, or until the spirit leaves or the host dies or is destroyed." },
+      { "id": "effect", "label": "Effect", "text": "Give a subject Possessed: control an object, corpse or living host. A living host becomes comatose, with missing time and possible flashbacks. The spirit is protected from Essence bleed but cannot use Numina or Influences while controlling the host. Spend one Essence per turn to heal one bashing/lethal wound or Structure damage; a corpse that died through damage begins incapacitated." },
+      { "id": "traits", "label": "Host traits", "text": "Objects retain their normal functions; use the spirit's Finesse for necessary rolls. A corpse or other articulated host uses its Physical Attributes and the spirit's Mental/Social Attributes; spend one Essence to use the spirit's Physical Attributes for one turn, causing one lethal wound or Structure damage. Living hosts always use their own Attributes. Read their minds at Finesse −4; use their Physical Skills at −3 and Mental/Social Skills at −4, reduced by one per day spent Fettered to that host." },
+      { "id": "end", "label": "Ending possession", "text": "The spirit overlays the host in Twilight. Bane contact or a Bane weapon damages its Corpus; abjuration, exorcism, its Ban or Bane can force it to leave." }
+    ] },
+    { "id": "manifestation:claim", "kind": "manifestation", "requiredConditionId": "controlled", "requiredManifestationIds": ["manifestation:fetter", "manifestation:possess"], "name": "Claim", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 187, "additionalPages": [191], "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Controlled; the spirit must also possess Fetter and Possess." },
+      { "id": "cost", "label": "Cost", "text": "5 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse; living targets contest with Resolve + Composure + Primal Urge." },
+      { "id": "effect", "label": "Effect", "text": "Give the host Claimed: permanently merge over several days. A living host stays conscious and Urged during fusion. From the first day, add one spirit Attribute dot per day to an appropriate host Attribute. Corpses have Mental/Social Attributes 0; objects have Dexterity, Mental and Social Attributes 0, with Structure/Durability replacing physical measures. Nonliving hosts are not Urged." },
+      { "id": "hybrid", "label": "Claimed hybrid", "text": "Use Influences, not Numina or Manifestation Effects. New Dread Powers may develop under the separate antagonist rules. The hybrid has the spirit's Essence, Ban and Bane, is protected from Essence bleed from the start, and may cross the Gauntlet at a locus with Intelligence + Presence." },
+      { "id": "leaving", "label": "Leaving a living host", "text": "Roll original Power + Finesse − Rank contested by the host's Resolve + Composure, including added dots. If successful, the body reverses its changes at the rate they developed; added Attributes fall by two dots per day. Essence and Dread Powers vanish immediately." },
+      { "id": "nonliving", "label": "Nonliving host", "text": "After full fusion, lose one Physical Attribute dot or object equivalent every three days. When any reaches zero, the host disintegrates and the spirit returns to Twilight." }
+    ] },
+    { "id": "numen:aggressive-meme", "kind": "numen", "name": "Aggressive Meme", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 191, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "The spirit must be in a Condition that allows it to speak to the victim." },
+      { "id": "cost", "label": "Cost", "text": "7 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse contested by Resolve + Composure + Primal Urge." },
+      { "id": "duration", "label": "Duration", "text": "Days equal to the victim's Willpower." },
+      { "id": "effect", "label": "Effect", "text": "Plant an idea that becomes an insistent earworm and spreads through retelling. Victims are not compelled to act on it." }
+    ] },
+    { "id": "numen:awe", "kind": "numen", "name": "Awe", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 191, "fields": [
+      { "id": "cost", "label": "Cost", "text": "3 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse; each observer contests with Presence + Composure + Primal Urge." },
+      { "id": "effect", "label": "Effect", "text": "Anyone who sees the spirit and rolls fewer successes cannot move or speak for one turn; an exceptional success extends this to three turns." }
+    ] },
+    { "id": "numen:blast", "kind": "numen", "name": "Blast", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 191, "fields": [
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse, as a firearm attack." },
+      { "id": "range", "label": "Range", "text": "Power × 10 yards, without range penalties." },
+      { "id": "effect", "label": "Effect", "text": "Project a lethal attack with weapon rating 0L. Spend two Essence per additional +1L, up to Rank in additional damage. No initial Essence cost is printed." }
+    ] },
+    { "id": "numen:dement", "kind": "numen", "reaching": true, "name": "Dement", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 191, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse contested by Intelligence + Primal Urge." },
+      { "id": "effect", "label": "Effect", "text": "Inflict Madness for the remainder of the scene." }
+    ] },
+    { "id": "numen:drain", "kind": "numen", "name": "Drain", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 191, "additionalPages": [192], "fields": [
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse contested by Stamina + Resolve + Primal Urge." },
+      { "id": "effect", "label": "Effect", "text": "Choose Essence or Willpower from a material target. Whichever party rolls more successes gains that many points of the chosen resource and the other loses them: the attack can backfire. No Essence cost is printed." }
+    ] },
+    { "id": "numen:emotional-aura", "kind": "numen", "reaching": true, "name": "Emotional Aura", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse, rolled once; entrants contest with Resolve + Composure + Primal Urge." },
+      { "id": "range", "label": "Range", "text": "Five-yard aura." },
+      { "id": "duration", "label": "Duration", "text": "One scene, or until the spirit uses another Numen." },
+      { "id": "effect", "label": "Effect", "text": "Radiate an emotion. If the spirit wins, the victim takes −2 on all actions while the aura remains. If the victim wins, they are immune until the spirit activates it again." }
+    ] },
+    { "id": "numen:entropic-decay", "kind": "numen", "reaching": true, "name": "Entropic Decay", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "3 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse, resisted by Stamina for living targets, Resistance for spirits or Durability for objects." },
+      { "id": "effect", "label": "Effect", "text": "Accelerate destruction, rot or corrosion. Each success inflicts one lethal damage." }
+    ] },
+    { "id": "numen:firestarter", "kind": "numen", "reaching": true, "name": "Firestarter", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "Start one small fire per success on flammable material within Power yards." }
+    ] },
+    { "id": "numen:ghost-eater", "kind": "numen", "name": "Ghost Eater", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "effect", "label": "Effect", "text": "Sense ghosts in Twilight and consume their Essence as though they were spirits. This rare ability usually belongs to spirits of death or grief. The entry gives no separate activation cost or roll; use normal Essence feeding and stealing rules." }
+    ] },
+    { "id": "numen:hallucination", "kind": "numen", "name": "Hallucination", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse contested by Wits + Composure + Primal Urge." },
+      { "id": "effect", "label": "Effect", "text": "Make one target experience an illusion of anything the spirit wishes, including conversation. The entry does not specify duration." }
+    ] },
+    { "id": "numen:host-jump", "kind": "numen", "name": "Host Jump", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Currently Possessing or Claiming a host; the host touches a new subject meeting all prerequisites for that Manifestation." },
+      { "id": "cost", "label": "Cost", "text": "3 Essence; do not pay the Manifestation's cost again." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "Immediately transfer Possessed or Claimed to the new subject. Claim fusion begins again; a vacated living host suffers the normal aftereffects." }
+    ] },
+    { "id": "numen:implant-mission", "kind": "numen", "reaching": true, "name": "Implant Mission", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "2 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "Give a mortal a vision of a task and the Obsessed Condition concerning it." }
+    ] },
+    { "id": "numen:innocuous", "kind": "numen", "name": "Innocuous", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "activation", "label": "Activation", "text": "No roll or Essence expenditure." },
+      { "id": "effect", "label": "Effect", "text": "Blend into the surroundings. Perception rolls to notice the spirit take −2." }
+    ] },
+    { "id": "numen:left-handed-spanner", "kind": "numen", "name": "Left-Handed Spanner", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "A human-made device with at least three moving parts. Touch it while Manifest, or overlap it in Twilight. In combat, gain control of it in a grapple; Twilight cannot do so unless the device is also in Twilight." },
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "The device malfunctions for turns equal to successes." }
+    ] },
+    { "id": "numen:mortal-mask", "kind": "numen", "name": "Mortal Mask", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "prerequisites", "label": "Prerequisites", "text": "Materialized; may activate alongside Materialize." },
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "duration", "label": "Duration", "text": "Hours equal to successes." },
+      { "id": "effect", "label": "Effect", "text": "Appear human. Observers may notice something wrong with Wits + Composure − Finesse; observers able to perceive the spirit in Twilight ignore this penalty." }
+    ] },
+    { "id": "numen:omen-trance", "kind": "numen", "name": "Omen Trance", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence for the spirit, or 3 to grant the vision to someone else." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse; usable once per 24 hours." },
+      { "id": "effect", "label": "Effect", "text": "Foresee an event within the next week. The vision tends toward danger." }
+    ] },
+    { "id": "numen:pathfinder", "kind": "numen", "reaching": true, "name": "Pathfinder", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse; a Safe Place contests with the lowest Resolve + Primal Urge among its owners." },
+      { "id": "duration", "label": "Duration", "text": "One scene; activate again if the trip takes longer." },
+      { "id": "effect", "label": "Effect", "text": "Reveal the fastest route to a destination, not necessarily the safest. It does not reveal dangers along the way." }
+    ] },
+    { "id": "numen:rapture", "kind": "numen", "reaching": true, "name": "Rapture", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "fields": [
+      { "id": "cost", "label": "Cost", "text": "2 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "Success inflicts Stunned. The victim then rolls Resolve + Primal Urge; failure causes a temporary derangement aligned with the spirit's wishes for Power days. Werewolves omit Primal Urge when resisting a Lune. The source says derangement, not a named Madness Condition." }
+    ] },
+    { "id": "numen:regenerate", "kind": "numen", "name": "Regenerate", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 192, "additionalPages": [193], "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "activation", "label": "Activation", "text": "No roll; reactivate each turn to heal further wounds." },
+      { "id": "effect", "label": "Effect", "text": "Heal one bashing or lethal Corpus wound, bashing first. This does not heal aggravated damage." }
+    ] },
+    { "id": "numen:seek", "kind": "numen", "reaching": true, "name": "Seek", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 193, "fields": [
+      { "id": "roll", "label": "Dice Pool", "text": "Finesse." },
+      { "id": "range", "label": "Range", "text": "Two miles per Rank; spend one Essence to multiply the range by ten." },
+      { "id": "effect", "label": "Effect", "text": "Find the direction and distance to the nearest suitable Resonant Condition." }
+    ] },
+    { "id": "numen:speed", "kind": "numen", "name": "Speed", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 193, "fields": [
+      { "id": "cost", "label": "Cost", "text": "2 Essence to double Speed, or 4 to triple it." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "duration", "label": "Duration", "text": "One scene." }
+    ] },
+    { "id": "numen:sign", "kind": "numen", "name": "Sign", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 193, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "Produce a single message or image in any medium, such as condensation, screens or phones." }
+    ] },
+    { "id": "numen:stalwart", "kind": "numen", "name": "Stalwart", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 193, "fields": [
+      { "id": "effect", "label": "Effect", "text": "Use Resistance as Defense instead of Power or Finesse. The spirit appears armored. The entry specifies no activation cost or roll; it does not grant an Armor rating." }
+    ] },
+    { "id": "numen:telekinesis", "kind": "numen", "reaching": true, "name": "Telekinesis", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 193, "fields": [
+      { "id": "cost", "label": "Cost", "text": "1 Essence." },
+      { "id": "roll", "label": "Dice Pool", "text": "Power + Finesse." },
+      { "id": "effect", "label": "Effect", "text": "Use successes as Strength to lift or throw objects without Materializing. This does not permit fine motor control." }
+    ] }
+  ]
+}

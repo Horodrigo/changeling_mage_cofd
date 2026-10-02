@@ -44,6 +44,15 @@ export function woundPenalty(damage: DamageLevel[], health: number) {
   return 0;
 }
 
+/** Editing a visible box must not discard damage beyond a smaller Health track. */
+export function cycleHealthDamage(damage: DamageLevel[], health: number, index: number): DamageLevel[] {
+  if (!Number.isInteger(index) || index < 0 || index >= health) return [...damage];
+  const slots: Array<DamageLevel | undefined> = Array.from({ length: Math.max(health, damage.length) }, (_, slot) => damage[slot]);
+  const next: Record<DamageLevel, DamageLevel | undefined> = { bashing: "lethal", lethal: "aggravated", aggravated: undefined };
+  slots[index] = slots[index] ? next[slots[index]] : "bashing";
+  return normalizeDamage(slots, slots.length);
+}
+
 export function normalizeClarityDamage(value: unknown, maximum: number): ClarityDamageLevel[] {
   if (!Array.isArray(value)) return [];
   const severity: Record<ClarityDamageLevel, number> = { severe: 0, mild: 1 };

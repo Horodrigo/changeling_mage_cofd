@@ -1,0 +1,240 @@
+{
+  "wtf-2ed:anchored": {
+    "name": "Ancorado",
+    "description": "Escolha uma Touchstone. Invocá-la para resistir a um Ponto de Ruptura concede +3 dados com um ponto ou +4 com dois. Desvantagem: a Touchstone oposta concede somente +1 dado com um ponto; com dois, não concede bônus, apenas possíveis desvantagens.",
+    "prerequisites": "Harmonia"
+  },
+  "wtf-2ed:blood-or-bone-affinity": {
+    "name": "Afinidade com Sangue ou Osso",
+    "description": "Escolha Sangue ou Osso com dois pontos; cinco pontos abrangem ambos. Uma vez por capítulo, aplique a qualidade de Ação Avançada ao teste de uma ação que restauraria toda a Força de Vontade pelo traço escolhido. Desvantagem: sempre que puder satisfazer o traço escolhido, gaste uma Força de Vontade para recusar.",
+    "prerequisites": "Harmonia entre 3 e 8"
+  },
+  "wtf-2ed:code-of-honor": {
+    "name": "Código de Honra",
+    "description": "Escolha uma Virtude que represente o código. Ações significativas que a satisfaçam restauram toda a Força de Vontade gasta, até duas vezes por capítulo (p. 158). Receba +3 em testes de Vigor, Perseverança ou Compostura para defender o código. Desvantagem: quando suas crenças forem desafiadas ou houver oportunidade de traí-las, gaste uma Força de Vontade ou as sustente ou defenda a qualquer custo. O Mérito não concede benefícios nem recuperação de Força de Vontade até demonstrar a defesa dessas crenças diante de adversidade significativa.",
+    "prerequisites": "Harmonia 8+"
+  },
+  "wtf-2ed:controlled-burn": {
+    "name": "Fúria Contida",
+    "description": "Em Wasu-Im, mude somente para Hishu ou Urhan em vez de Dalu ou Urshul. Após obter um turno de lucidez, gaste uma Força de Vontade para encerrar totalmente a fúria. Desvantagem: apenas essas duas formas estão disponíveis durante Wasu-Im, o que pode gerar complicações que levem a Basu-Im.",
+    "prerequisites": "Perseverança •••, Compostura •••"
+  },
+  "wtf-2ed:creative-tactician": {
+    "name": "Estrategista Criativo",
+    "description": "Ao organizar ou elaborar a estratégia de uma ação em equipe, os participantes ignoram penalidades circunstanciais até o valor de Pureza do personagem. Uma vez por capítulo, o participante principal pode receber um Ato por seguir sua orientação estratégica; o personagem não precisa ser o participante principal.",
+    "prerequisites": "Pureza ••"
+  },
+  "wtf-2ed:dedicated-locus": {
+    "name": "Locus Dedicado",
+    "description": "A alcateia possui um locus sintonizado com a Ressonância de seu Totem, com valor igual ao deste Mérito. Os membros que contribuem podem gastar coletivamente Essência adicional até o custo do Mérito por dia, ultrapassando os limites normais por turno. Por exemplo, um membro com Instinto Primitivo 1 pode gastar quatro Essências em um turno com um Locus Dedicado de três pontos, esgotando a reserva adicional de toda a alcateia naquele dia. Os membros podem dividir o custo; somente quem contribui recebe os benefícios. O locus deve estar ancorado em um Local Seguro de valor pelo menos igual ao seu. Desvantagem: atrai atenção excessiva de espíritos locais famintos.",
+    "prerequisites": "Local Seguro •; o locus deve estar ancorado em um Local Seguro de valor pelo menos igual ao seu"
+  },
+  "wtf-2ed:embodiment-of-the-firstborn": {
+    "name": "Encarnação do Primogênito",
+    "description": "Escolha um Atributo que represente a semelhança do personagem com um Primogênito. Receba um ponto; esse Atributo pode ultrapassar o máximo normal em um ponto, normalmente alcançando seis, salvo se Instinto Primitivo elevar o limite. Ao gastar uma Força de Vontade, qualquer um que tente atacar o personagem naquele turno recebe Abalado. Desvantagem: espíritos furiosos com antigas lembranças tentam acertar contas com o Primogênito por meio do personagem.",
+    "prerequisites": "Não pode ser um Lobo Fantasma"
+  },
+  "wtf-2ed:fading": {
+    "name": "Desvanecer",
+    "description": "Cada vez que alguém não perceber o personagem em uma cena, todas as tentativas posteriores de percebê-lo naquela cena sofrem uma penalidade cumulativa de −1. Uma vez por cena, some Astúcia a um teste para agir sem ser notado ou de modo discreto.",
+    "prerequisites": "Astúcia ••"
+  },
+  "wtf-2ed:favored-form": {
+    "name": "Forma Favorecida",
+    "description": "Escolha uma forma diferente de Hishu; este Mérito pode favorecer somente uma forma. Os benefícios são cumulativos e aumentos de Atributos afetam os traços derivados. Desvantagem: para cada ponto no Mérito, escolha um Atributo Mental ou Físico em uma forma diferente e o reduza em um nessa forma, incluindo os traços derivados. Distribua essas penalidades entre outras formas como desejar.",
+    "prerequisites": "Instinto Primitivo pelo menos igual ao valor do Mérito + 1",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Perícia Física",
+        "description": "Escolha uma Perícia Física. Na forma favorecida, obtém sucesso excepcional com três sucessos em vez de cinco."
+      },
+      {
+        "rating": 2,
+        "name": "Atributo",
+        "description": "Escolha um Atributo que normalmente não seja penalizado nessa forma; ele recebe +1 ponto na forma favorecida."
+      },
+      {
+        "rating": 3,
+        "name": "Dom",
+        "description": "Escolha um Dom. Seus testes na forma favorecida obtêm sucesso excepcional com três sucessos em vez de cinco."
+      },
+      {
+        "rating": 4,
+        "name": "Atributo Diferente",
+        "description": "Escolha um Atributo diferente que normalmente não seja penalizado nessa forma; ele recebe +1 ponto na forma favorecida."
+      },
+      {
+        "rating": 5,
+        "name": "Perícia Avançada",
+        "description": "Escolha uma Perícia relevante; seus usos na forma favorecida recebem a qualidade de Ação Avançada."
+      }
+    ]
+  },
+  "wtf-2ed:fortified-form": {
+    "name": "Forma Fortificada",
+    "description": "Escolha uma forma diferente de Hishu. Ela recebe armadura 1/0 com três pontos, 1/1 com quatro ou 2/2 com cinco. Compre instâncias distintas para formas diferentes.",
+    "prerequisites": "Vigor •••, Sobrevivência ••"
+  },
+  "wtf-2ed:hearing-whispers": {
+    "name": "Ouvir Sussurros",
+    "description": "Após um turno examinando alguém, identifique suas Condições Persistentes. Quando houver motivo para suspeitar de outra fraqueza, teste Raciocínio + uma Perícia escolhida pelo Narrador; cada fraqueza exige um teste próprio e pelo menos um turno de exame. Não ter pontos em uma Perícia pode contar como fraqueza, assim como outras aprovadas pelo Narrador. Isso não identifica a Proibição de um espírito. Desvantagem: exceto pelas Condições Persistentes, a fraqueza já deve ser suspeitada, normalmente exigindo investigação.",
+    "prerequisites": "Sombras dos Ossos"
+  },
+  "wtf-2ed:impartial-mediator": {
+    "name": "Mediador Imparcial",
+    "description": "Ouça ambos os lados de uma discussão ou debate e teste Presença + Persuasão + Honra contra a maior Perseverança + Honra de cada lado. Um lado que obtenha menos sucessos no teste disputado aceita a interpretação do personagem, mesmo que favoreça o outro lado, sem duvidar de sua imparcialidade.",
+    "prerequisites": "Honra ••"
+  },
+  "wtf-2ed:living-weapon": {
+    "name": "Arma Viva",
+    "description": "Escolha Dalu, Gauru, Urshul ou Urhan e mordida ou garras. Com três pontos, o ataque recebe penetração de armadura 2; quatro pontos acrescentam +1 ao dano da arma; cinco ignoram qualquer armadura não mágica. Compre instâncias distintas para aprimoramentos diferentes em formas diferentes.",
+    "prerequisites": "Vigor •••, Sobrevivência ••"
+  },
+  "wtf-2ed:moon-kissed": {
+    "name": "Beijado pela Lua",
+    "description": "Escolha uma Perícia do Auspício: ela recebe 9 de novo, ou 8 de novo se já tiver 9 de novo. Enquanto a lua do Auspício estiver visível, gastar Força de Vontade nessa Perícia concede +4 dados em vez de +3. Compre instâncias distintas para Perícias diferentes do Auspício. Desvantagem: escolha uma Perícia fora do Auspício com pelo menos um ponto; seus testes perdem 10 de novo.",
+    "prerequisites": "A Perícia escolhida do Auspício •• ou maior"
+  },
+  "wtf-2ed:nowhere-to-run": {
+    "name": "Sem Onde Fugir",
+    "description": "Após um turno examinando pistas sutis deixadas pela presa, descubra imediatamente detalhes básicos e a localização aproximada de qualquer Local Seguro que ela possua. Teste Raciocínio + Investigação para identificar outros locais dedicados, refúgios ou esconderijos, um por sucesso. Desvantagem: ao visitar um desses locais, deixe uma marca que a presa possa perceber ao retornar; até mesmo um cheiro basta.",
+    "prerequisites": "Caçadores na Escuridão"
+  },
+  "wtf-2ed:pack-dynamics": {
+    "name": "Dinâmica da Alcateia",
+    "description": "Receba +1, +2 ou +3 em testes de trabalho em equipe com três, quatro ou cinco pontos, respectivamente. Aplique o mesmo bônus a testes de Atributos de Resistência (Perseverança, Vigor e Compostura) ao defender a alcateia. Desvantagem: enquanto não souber onde está um membro da alcateia, aplique o bônus como penalidade em todos os testes."
+  },
+  "wtf-2ed:residential-area": {
+    "name": "Área Residencial",
+    "description": "Uma vez por sessão, acesse pontos temporários de Méritos iguais a este valor, divididos livremente entre Aliados, Contatos e Lacaio adequados ao território residencial. Desvantagem: as pessoas representadas por esses Méritos exigem pequenos favores em troca de ajuda."
+  },
+  "wtf-2ed:resonance-shaper": {
+    "name": "Moldador de Ressonância",
+    "description": "Teste Manipulação + Ocultismo como ação prolongada: um teste por hora para uma pequena fonte de Essência ou por dia para um locus. Cinco sucessos alteram a Ressonância de um ponto de Essência; dez sucessos por nível do locus alteram sua Ressonância. O método simbólico de transformação depende da relação do personagem com o Hisil.",
+    "prerequisites": "Sabedoria ••"
+  },
+  "wtf-2ed:self-control": {
+    "name": "Autocontrole",
+    "description": "Quando Harmonia baixa obrigar uma mudança de forma em uma situação estressante, gaste uma Força de Vontade para permanecer na forma atual pela cena. Isso constitui um Ponto de Ruptura em direção à Carne.",
+    "prerequisites": "Perseverança ••••"
+  },
+  "wtf-2ed:song-in-your-heart": {
+    "name": "Canção no Coração",
+    "description": "Use Inspirador sem seus pré-requisitos, mas somente cantando, uivando ou contando histórias. Teste Presença + Expressão, com −1 para um pequeno grupo íntimo, −2 para uma pequena multidão ou −3 para uma grande multidão. Os ouvintes recebem Inspirado; o personagem não pode inspirar a si próprio. Os ouvintes podem receber Inspirado como Condição Persistente, ganhando um Ato sempre que realizarem uma ação significativa inspirada pela história.",
+    "prerequisites": "Glória ••"
+  },
+  "wtf-2ed:sounds-of-the-city": {
+    "name": "Sons da Cidade",
+    "description": "Passe um turno examinando a presa e obtenha sucesso em Raciocínio + Política para identificar um Mérito Social escolhido pelo Narrador. Com uma cena de esforço, suspenda pontos de Méritos Sociais humanos até o valor de Astúcia, como Aliados, Contatos, Fama, Recursos ou Status, pelo tempo desejado. Somente essa quantidade de pontos pode ser suspensa por vez; libere alvos anteriores para escolher novos. Desvantagem: enquanto suspender os Méritos de outros, trate os próprios Méritos Sociais humanos como um ponto inferiores, inclusive para defesa contra ataques e exame.",
+    "prerequisites": "Mestres do Ferro"
+  },
+  "wtf-2ed:strings-of-the-heart": {
+    "name": "Cordas do Coração",
+    "description": "Após examinar a presa por um turno, pergunte a seu jogador o que o personagem mais deseja; saiba a resposta instintivamente, mesmo sem contexto. Ao utilizar essa informação, melhore a impressão em um estágio e ignore uma Porta em manobras Sociais. A presa deve gastar uma Força de Vontade para desafiar tais ameaças, ofertas ou tentações. Desvantagem: essa ligação duradoura concede ao Senhor da Tempestade uma Porta a menos quando a presa inicia uma manobra Social contra ele.",
+    "prerequisites": "Senhores da Tempestade"
+  },
+  "wtf-2ed:totem": {
+    "name": "Totem",
+    "description": "Cada ponto contribui com um ponto para criar um Totem pessoal ou da alcateia (p. 91), com no máximo cinco pontos por indivíduo. Some os pontos do Mérito a ações Sociais com esse espírito. Contribuições de outros membros podem tornar um Totem da alcateia muito maior. Desvantagem: enfurecer o Totem faz os pontos investidos desaparecerem e pode exigir renegociação. Reparações podem restaurar a relação, mas os pontos devem ser comprados novamente."
+  },
+  "wtf-2ed:weakest-link": {
+    "name": "Elo Mais Fraco",
+    "description": "Examine dois ou mais personagens associados por um turno para identificar o mais fraco pelos critérios que o Narrador considerar relevantes, sem teste. Perícias, Méritos, Dons, Renome ou Instinto Primitivo podem determinar isso. Desvantagem: o Narrador escolhe os critérios conforme a situação e não precisa nomeá-los.",
+    "prerequisites": "Garras de Sangue"
+  },
+  "wtf-2ed:call-out": {
+    "name": "Desafio",
+    "description": "Use uma ação instantânea para desafiar um oponente. Ele sofre a Honra do personagem como penalidade ao atacar qualquer outro; se o fizer, some Honra aos ataques do personagem contra ele. Desvantagem: se outra pessoa atacar o oponente desafiado, o desafio se rompe e o oponente recebe Honra como bônus contra o personagem pelo restante da cena.",
+    "prerequisites": "Honra ••, Intimidação ••, Compostura •••"
+  },
+  "wtf-2ed:efficient-killer": {
+    "name": "Assassino Eficiente",
+    "description": "Contra um oponente completamente privado de Defesa, sacrifique a Defesa pelo turno para executar um Golpe Mortal (p. 168). Desvantagem: o alvo deve estar vivo e possuir pontos fracos discerníveis; o personagem entra imediatamente em Wasu-Im.",
+    "prerequisites": "Pureza ••, Briga •••, Medicina ••, Força •••; utilizável somente em Gauru"
+  },
+  "wtf-2ed:flanking": {
+    "name": "Flanquear",
+    "description": "Em um ataque bem-sucedido, aplique os sucessos como penalidade à Iniciativa e à Defesa da vítima pelo turno em vez de causar dano, preparando o ataque de um membro da alcateia.",
+    "prerequisites": "Astúcia ••, Raciocínio •••, Furtividade ••, Briga ••"
+  },
+  "wtf-2ed:instinctive-defense": {
+    "name": "Defesa Instintiva",
+    "description": "Em Urhan e Urshul, calcule a Defesa usando o maior valor entre Raciocínio e Destreza em vez do menor.",
+    "prerequisites": "Instinto Primitivo ••, Atletismo ••"
+  },
+  "wtf-2ed:relentless-assault": {
+    "name": "Assalto Implacável",
+    "description": "Este Estilo funciona em qualquer forma, aplica-se somente a ataques de Briga e pode ser utilizado durante Kuruth.",
+    "prerequisites": "Força •••, Vigor •••, Briga ••",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Num Piscar de Olhos",
+        "description": "Receba +3 em Iniciativa no primeiro turno do combate se realizar um ataque total; o bônus termina depois desse turno."
+      },
+      {
+        "rating": 2,
+        "name": "Olho do Tigre",
+        "description": "Escolha um alvo. Ao realizar um ataque total contra ele, mantenha a Defesa contra esse alvo."
+      },
+      {
+        "rating": 3,
+        "name": "Golpe Profundo",
+        "description": "Remova um dado antes de testar um ataque para aumentar em +1 o modificador de arma das garras ou dos dentes."
+      },
+      {
+        "rating": 4,
+        "name": "Aguentar Firme",
+        "description": "Ao realizar um ataque total, receba armadura 1/1 contra todos os ataques pelo turno, cumulativa com outras armaduras."
+      },
+      {
+        "rating": 5,
+        "name": "Caminho de Guerra",
+        "description": "Ao preencher a última caixa de Vitalidade de um oponente com dano letal ou agravado, ataque imediatamente qualquer outro personagem ao alcance. Se esse segundo ataque causar dano, entre em Basu-Im sem resistência."
+      }
+    ]
+  },
+  "wtf-2ed:spiritual-blockage": {
+    "name": "Bloqueio Espiritual",
+    "description": "Em um ataque de Briga ou Armas Brancas contra um usuário de Essência, aplique −2 ao ataque. Se causar dano, a vítima gasta uma Essência, ou duas em um sucesso excepcional. Isso conta para o limite de gasto por turno da vítima; a Essência é gasta, não simplesmente perdida.",
+    "prerequisites": "Sabedoria ••, Briga •, Ocultismo •••, Raciocínio •••"
+  },
+  "wtf-2ed:tactical-shifting": {
+    "name": "Metamorfose Tática",
+    "description": "Mude para um Tamanho maior ou menor para usar estas manobras. Várias manobras podem se aplicar à mesma mudança quando a direção permitir, como Impulso e Movimento Fluido. Desvantagem: todas exigem uma mudança reflexiva de forma; se isso não for possível, nenhuma pode ser usada.",
+    "prerequisites": "Raciocínio •••, Destreza •••, Atletismo ••",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Impulso",
+        "description": "Mude para uma forma menor no início da rodada para receber +2 em Iniciativa e +5 em Deslocamento pelo turno."
+      },
+      {
+        "rating": 2,
+        "name": "Ampliar",
+        "description": "Ao mudar para uma forma maior, todos ao alcance do combate corpo a corpo que não Esquivarem recebem dano contusivo igual ao aumento de Tamanho. Quem sofrer dano deve obter sucesso em Destreza + Atletismo ou receber Derrubado."
+      },
+      {
+        "rating": 3,
+        "name": "Movimento Fluido",
+        "description": "Mude para uma forma menor ao ser atacado; os oponentes sofrem −1 para acertar por ponto de Tamanho perdido."
+      },
+      {
+        "rating": 4,
+        "name": "Suportar o Golpe",
+        "description": "Mude para uma forma maior ao ser atacado para ignorar um dano contusivo ou letal."
+      },
+      {
+        "rating": 5,
+        "name": "Esmagar",
+        "description": "Enquanto agarra um oponente, mude reflexivamente para uma forma maior e cause dano letal automático igual ao aumento de Tamanho."
+      }
+    ]
+  },
+  "wtf-2ed:warcry": {
+    "name": "Grito de Guerra",
+    "description": "Teste Presença + Expressão como ação instantânea, escolhendo ouvintes até a quantidade de sucessos. Eles sofrem −1 em Defesa e ataques e −2 em Iniciativa pela cena; um personagem só pode ser afetado uma vez por cena. Desvantagem: o uivo alerta o Hisil, atraindo espíritos curiosos e possivelmente hostis em até três turnos.",
+    "prerequisites": "Glória ••, Presença •••, Expressão ••, Intimidação ••; utilizável somente em Gauru, Urshul ou Urhan"
+  }
+}

@@ -13,9 +13,10 @@ export const MERIT_HOMEBREW_SOURCES: Record<MeritHomebrewLine, { id: string; nam
   CtL: { id: "homebrew:changeling-merits", name: "Player-created Changeling Merits" },
   MtA: { id: "homebrew:mage-merits", name: "Player-created Mage Merits" },
   VtR: { id: "homebrew:vampire-merits", name: "Player-created Vampire Merits" },
+  WtF: { id: "homebrew:werewolf-merits", name: "Player-created Werewolf Merits" },
 };
 
-const lines = new Set<MeritHomebrewLine>(["Core", "CofD", "CtL", "MtA", "VtR"]);
+const lines = new Set<MeritHomebrewLine>(["Core", "CofD", "CtL", "MtA", "VtR", "WtF"]);
 const record = (value: unknown): Record<string, unknown> => value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
 const text = (value: unknown) => String(value ?? "").trim();
 
