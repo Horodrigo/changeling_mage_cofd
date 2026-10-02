@@ -176,6 +176,8 @@ Werewolf's lazy `werewolf-totem` catalog group owns its EN/PT Totem reference, R
 
 ## Persisted Character Schema
 
+Werewolf's optional Totem `advantage` stores stable choices, an explicit manual active flag, and equal-value individual replacements with authored reasons. `totem-benefits.ts` resolves runtime-only member overlays against explicit immutable catalogs without altering purchased traits, initial allocations, XP balances/history, or resources. Its selection editor and Builder/Sheet/XP/derived consumers remain pending in `WerewolfAudit.md`; do not persist the resolver's returned traits as the canonical character or silently count its grants toward creation/Experience budgets.
+
 The only supported persisted character schema is intentionally `schema_version = 2`.
 
 Core owns the small outer record and its lifecycle. It contains identity, common Chronicles traits, Specialties, Merits, derived values, current state, metadata, and an open `line_data` record. Each game line owns the schema and semantics of its own `line_data`.

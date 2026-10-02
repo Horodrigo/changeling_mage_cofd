@@ -3,6 +3,7 @@ import type { MeritSelection } from "@/lib/core/character/character-types";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage, type DamageLevel } from "@/lib/resource-rules";
 import type { MeritDefinition } from "@/lib/merits";
+import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { werewolfMeritDefinition } from "./creation-grants";
 import type { WerewolfTotemCatalog, TotemPower } from "./catalogs/totem";
 
@@ -14,7 +15,15 @@ export type TotemSelection = {
   influences: Array<{ instanceId: string; domain: string; dots: number }>;
   numina: string[]; manifestations: string[];
   improvements?: TotemImprovement[];
+  advantage?: TotemAdvantage;
 };
+export type TotemBenefitChoice =
+  | { kind: "attribute"; target: string }
+  | { kind: "skill"; target: string }
+  | { kind: "specialty"; skill: string; name: string }
+  | { kind: "merit"; definitionId: string; dots: number; configuration: MeritConfiguration };
+export type TotemBenefit = { id: string; choice: TotemBenefitChoice; replacement?: { choice: TotemBenefitChoice; reason: string } };
+export type TotemAdvantage = { active: boolean; selections: TotemBenefit[] };
 export type TotemImprovement = { id: string; kind: "attribute" | "influence" | "numen"; target: string; domain?: string; experience: number; origin: string; createdAt: string };
 export type TotemImprovementProblem = "initial" | "target" | "duplicate" | "attributeLimit" | "influenceLimit" | "numinaLimit" | "cost" | "origin";
 export type TotemState = { instanceId: string; essence: number; willpower: number; damage: DamageLevel[]; dormant: boolean };
@@ -23,6 +32,30 @@ export type TotemProblem = "identity" | "rank" | "attributeBudget" | "attributeD
 // Technical bounds for imported numeric values, not additional printed creation limits.
 const whole = (value: unknown, maximum: number) => typeof value === "number" && Number.isSafeInteger(value) && value >= 0 && value <= maximum;
 const identity = (value: unknown) => typeof value === "string" && value.length > 0;
+
+/** Current-schema choices only. Unknown catalog IDs survive for an explicit unresolved presentation. */
+export function totemAdvantage(value: unknown): TotemAdvantage {
+  if (value == null) return { active: true, selections: [] };
+  const record = asRecord(value);
+  const choiceValid = (raw: unknown) => {
+    const choice = asRecord(raw);
+    if (choice.kind === "attribute" || choice.kind === "skill") return identity(choice.target);
+    if (choice.kind === "specialty") return identity(choice.skill) && typeof choice.name === "string";
+    if (choice.kind !== "merit" || !identity(choice.definitionId) || !whole(choice.dots, 1000) || choice.dots === 0) return false;
+    const configuration = choice.configuration;
+    return configuration != null && typeof configuration === "object" && !Array.isArray(configuration)
+      && Object.values(configuration).every(item => typeof item === "string" || (Array.isArray(item) && item.every(value => typeof value === "string")));
+  };
+  if (typeof record.active !== "boolean" || !Array.isArray(record.selections)) throw new Error("Invalid Werewolf Totem Advantage.");
+  const ids = new Set<string>();
+  for (const item of record.selections) {
+    const selection = asRecord(item), replacement = asRecord(selection.replacement);
+    if (!identity(selection.id) || ids.has(selection.id as string) || !choiceValid(selection.choice)
+      || (selection.replacement !== undefined && (!choiceValid(replacement.choice) || typeof replacement.reason !== "string"))) throw new Error("Invalid Werewolf Totem Advantage choice.");
+    ids.add(selection.id as string);
+  }
+  return structuredClone(record) as TotemAdvantage;
+}
 
 /** Optional current-schema entity, not a legacy adapter. Unknown power IDs and authored text survive import. */
 export function totemSelection(value: unknown): TotemSelection | null {
@@ -52,6 +85,7 @@ export function totemSelection(value: unknown): TotemSelection | null {
       improvementIds.add(entry.id as string);
     }
   }
+  if (record.advantage !== undefined) totemAdvantage(record.advantage);
   return structuredClone(record) as TotemSelection;
 }
 

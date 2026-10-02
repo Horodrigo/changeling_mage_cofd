@@ -31,6 +31,8 @@ const { TotemReference, TotemPowerReference } = await vite.ssrLoadModule("/game-
 const { TotemEditor } = await vite.ssrLoadModule("/game-lines/werewolf/totem.tsx");
 const { newTotem, personalTotemPoints, totemSelection, totemState, totemTraits, totemCreationProblems, totemPowerProblems, effectiveTotem, recordTotemImprovement, removeTotemImprovement, totemImprovementProblems } = await vite.ssrLoadModule("/game-lines/werewolf/totem-rules.ts");
 const { TotemImprovements } = await vite.ssrLoadModule("/game-lines/werewolf/totem-improvements.tsx");
+const { totemAdvantage } = await vite.ssrLoadModule("/game-lines/werewolf/totem-rules.ts");
+const { resolveTotemAdvantage, totemBenefitCost } = await vite.ssrLoadModule("/game-lines/werewolf/totem-benefits.ts");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
 const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
@@ -230,6 +232,88 @@ test("Totem ledger correction checks exact dependent entries and does not refund
   const markup = render(createElement(TotemImprovements, { value: second, personalPoints: 1, catalog: totemCatalog, onChange: () => assert.fail("render mutated ledger") }));
   for (const phrase of ["Totem improvements", "Record improvement", "Recorded improvement cost: 10", "no Pack account", "Water"]) assert.ok(markup.includes(phrase), phrase);
   assert.doesNotMatch(markup, /missing translation|\{p1\}/);
+});
+
+test("WTF2 p. 92 Totem Advantage resolves separate traits, exact ratings and equal-value individual replacements without purchased-trait or XP mutation", () => {
+  const character = funded(), before = structuredClone(character), entity = { ...configuredTotem(), externalPoints: 19 };
+  const context = { ...advancementCatalogs, totem: totemCatalog };
+  const benefit = (id, choice, replacement) => ({ id, choice, ...(replacement ? { replacement } : {}) });
+  const attribute = target => ({ kind: "attribute", target }), skill = target => ({ kind: "skill", target });
+  const special = (skill, name) => ({ kind: "specialty", skill, name });
+  const meritChoice = (definitionId, dots, configuration = {}) => ({ kind: "merit", definitionId, dots, configuration });
+  const resolve = (selections, source = character, active = true) => resolveTotemAdvantage(source, { ...entity, advantage: { active, selections } }, context);
+  const selections = [benefit("stamina", attribute("Stamina")), benefit("athletics", skill("Athletics")), benefit("fleet", meritChoice("core-2ed:fleet-of-foot", 1)),
+    benefit("cold", special("Survival", "Cold")), benefit("tracking", special("Survival", "Tracking")), benefit("looks", meritChoice("core-2ed:striking-looks", 1, { appearance: "Wary hunter" }))];
+  const result = resolve(selections);
+  assert.equal(result.budget, 10); assert.equal(result.spent, 10); assert.equal(result.remaining, 0); assert.deepEqual(result.issues, []);
+  assert.equal(result.traits.attributes.Stamina, character.attributes.Stamina + 1);
+  assert.equal(result.traits.skills.Athletics, character.skills.Athletics + 1);
+  assert.equal(result.traits.specializations.length, character.specializations.length + 1);
+  const expertise = result.traits.merits.find(item => item.name === "Area of Expertise");
+  assert.deepEqual(expertise.configuration, { skill: "Survival", specialty: "Tracking" });
+  assert.equal(expertise.grantedBy, "werewolf:totem-advantage"); assert.equal(expertise.creationDots, 0); assert.equal(expertise.experienceDots, 0);
+  assert.equal(expertise.instanceId, `totem:${entity.instanceId}:tracking`);
+  const lowResolve = structuredClone(character); lowResolve.attributes.Resolve = 1;
+  const explicitGrant = resolve([selections[4]], lowResolve);
+  assert.deepEqual(explicitGrant.issues, []); assert.ok(explicitGrant.traits.merits.some(item => item.name === "Area of Expertise"));
+  assert.deepEqual(character, before);
+  assert.deepEqual(resolve(selections, character, false).traits, { attributes: character.attributes, skills: character.skills, specializations: character.specializations, merits: character.merits });
+  assert.deepEqual(resolve([]).traits, resolveTotemAdvantage(character, null, context).traits);
+  assert.equal(resolveTotemAdvantage(character, null, context).budget, 0);
+  const atCap = structuredClone(character); atCap.attributes.Stamina = 5; atCap.skills.Athletics = 5;
+  const over = resolve(selections.slice(0, 2), atCap); assert.equal(over.traits.attributes.Stamina, 6); assert.equal(over.traits.skills.Athletics, 6);
+  const ownsLooks = structuredClone(character); ownsLooks.merits.push(merit("Striking Looks", 2, "owned-looks", { appearance: "Authored" }));
+  assert.ok(resolve([selections.at(-1)], ownsLooks).issues.some(item => item.problem === "replacementRequired"));
+  const replaced = benefit("looks", selections.at(-1).choice, { choice: special("Persuasion", "Shocking Good Looks"), reason: "Already has Striking Looks; agreed related alternative" });
+  const resolved = resolve([replaced], ownsLooks);
+  // A Specialty still requires an effective Skill dot; the source Merit is not silently overwritten.
+  assert.ok(resolved.issues.some(item => item.problem === "prerequisites"));
+  ownsLooks.skills.Persuasion = 1;
+  const valid = resolve([replaced], ownsLooks); assert.deepEqual(valid.issues, []); assert.equal(valid.spent, 1);
+  assert.equal(valid.traits.merits.find(item => item.instanceId === "owned-looks").dots, 2);
+  assert.ok(valid.traits.specializations.some(item => item.name === "Shocking Good Looks"));
+  assert.ok(resolve([benefit("bad", selections.at(-1).choice, { choice: attribute("Presence"), reason: "Related" })], ownsLooks).issues.some(item => item.problem === "replacementCost"));
+  assert.ok(resolve([benefit("bad", selections.at(-1).choice, { choice: special("Survival", "Snow"), reason: " " })], ownsLooks).issues.some(item => item.problem === "replacementReason"));
+  assert.ok(resolve([replaced]).issues.some(item => item.problem === "replacementForbidden"));
+  assert.ok(resolve([benefit("same", selections.at(-1).choice, { choice: selections.at(-1).choice, reason: "Same" })], ownsLooks).issues.some(item => item.problem === "duplicate"));
+  assert.equal(totemBenefitCost(attribute("Resolve"), reference), 4); assert.equal(totemBenefitCost(skill("Brawl"), reference), 2); assert.equal(totemBenefitCost(special("Brawl", "Claws"), reference), 1);
+  const saved = create({ totem: { ...entity, advantage: { active: true, selections } } });
+  const imported = werewolfRules.normalizeCharacter(JSON.parse(JSON.stringify(saved)));
+  const rebuilt = buildWerewolfCharacter({ ...parameters, source: imported, draft: true });
+  assert.deepEqual(rebuilt.line_data.totem.advantage, saved.line_data.totem.advantage);
+  assert.deepEqual(rebuilt.attributes, saved.attributes); assert.deepEqual(rebuilt.skills, saved.skills); assert.deepEqual(rebuilt.merits, saved.merits);
+  assert.deepEqual(rebuilt.current_state.experience_history, saved.current_state.experience_history);
+});
+
+test("Totem Advantage current-schema boundary retains unknown IDs and authored choices but rejects malformed values and invalid grants", () => {
+  const character = create(), entity = { ...configuredTotem(), externalPoints: 19 }, context = { ...advancementCatalogs, totem: totemCatalog };
+  const resolve = selections => resolveTotemAdvantage(character, { ...entity, advantage: { active: true, selections } }, context);
+  const benefit = (id, choice) => ({ id, choice });
+  const grant = (id, dots, configuration = {}) => ({ kind: "merit", definitionId: id, dots, configuration });
+  const duplicate = [benefit("first", { kind: "skill", target: "Brawl" }), benefit("second", { kind: "skill", target: "Brawl" })];
+  assert.deepEqual(resolve(duplicate).issues.map(item => item.problem), ["duplicate", "duplicate"]);
+  assert.equal(resolve(duplicate).traits.skills.Brawl, character.skills.Brawl);
+  assert.ok(resolve([benefit("unknown", grant("future:authored", 1))]).issues.some(item => item.problem === "target"));
+  const unreserved = resolve([benefit("budget", grant("future:authored", 1)), benefit("valid", { kind: "skill", target: "Brawl" })]);
+  assert.equal(unreserved.traits.skills.Brawl, character.skills.Brawl + 1, "Arbitrary choice IDs cannot collide with the global budget issue");
+  assert.ok(resolve([benefit("gap", grant("wtf-2ed:living-weapon", 2))]).issues.some(item => item.problem === "rating"));
+  assert.ok(resolve([benefit("form", grant("wtf-2ed:living-weapon", 3))]).issues.some(item => item.problem === "choices"));
+  const mortal = meritCatalog.find(item => item.mortalOnly && item.line === "Core");
+  assert.ok(resolve([benefit("mortal", grant(mortal.id, mortal.ratings[0]))]).issues.some(item => item.problem === "prerequisites"));
+  const budget = resolve([benefit("a", { kind: "attribute", target: "Stamina" }), benefit("b", { kind: "attribute", target: "Strength" }), benefit("c", { kind: "attribute", target: "Wits" })]);
+  assert.ok(budget.issues.some(item => item.problem === "budget")); assert.deepEqual(budget.traits.attributes, character.attributes);
+  const missingSkill = resolve([benefit("new", { kind: "specialty", skill: "Persuasion", name: "Authored" })]); assert.ok(missingSkill.issues.some(item => item.problem === "prerequisites"));
+  const withSkill = resolve([benefit("skill", { kind: "skill", target: "Persuasion" }), benefit("new", { kind: "specialty", skill: "Persuasion", name: "Authored" })]); assert.deepEqual(withSkill.issues, []);
+  const unavailable = structuredClone(context); unavailable.merits = [...context.merits, { ...context.merits.find(item => item.id === "core-2ed:fleet-of-foot"), id: "test:dependent", name: "Test Dependent", prerequisites: "Fleet of Foot •", ratings: [1] }];
+  const broken = resolveTotemAdvantage(character, { ...entity, advantage: { active: true, selections: [benefit("bad", grant("core-2ed:fleet-of-foot", 1)), benefit("dependent", grant("test:dependent", 1))] } }, { ...unavailable, merits: unavailable.merits.map(item => item.id === "core-2ed:fleet-of-foot" ? { ...item, prerequisites: "Athletics ••••••••••" } : item) });
+  assert.ok(broken.issues.some(item => item.id === "bad" && item.problem === "prerequisites")); assert.ok(broken.issues.some(item => item.id === "dependent" && item.problem === "prerequisites"));
+  assert.ok(!broken.traits.merits.some(item => item.name === "Fleet of Foot" || item.name === "Test Dependent"));
+  const authored = { active: false, selections: [benefit("future", grant("future:custom", 2, { author: "Não traduza", choices: ["One", "Dois"] }))] };
+  assert.deepEqual(totemAdvantage(authored), authored); assert.deepEqual(totemSelection({ ...entity, advantage: authored }).advantage, authored);
+  for (const bad of [{}, { active: 1, selections: [] }, { active: true, selections: [authored.selections[0], authored.selections[0]] },
+    { active: true, selections: [benefit("bad", grant("unknown", 1, { numeric: 1 }))] }, { active: true, selections: [benefit("bad", { kind: ["attribute"], target: "Stamina" })] },
+    { active: true, selections: [{ ...authored.selections[0], replacement: null }] }]) assert.throws(() => totemSelection({ ...entity, advantage: bad }), /Totem Advantage/);
+  assert.throws(() => resolveTotemAdvantage({ ...character, game_line: "CofD" }, entity, context), /another game line/);
 });
 
 test("WTF2 Totem reference preserves Rank limits, adopted source conflicts, improvement costs and all three Pack examples", () => {
