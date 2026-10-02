@@ -1,18 +1,23 @@
 .wtf-forms-scroll { max-width: 100%; overflow-x: auto; }
-.wtf-forms table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .875rem; }
-.wtf-forms th, .wtf-forms td { padding: .4rem; border-bottom: 1px solid currentColor; }
-.wtf-forms thead th, .wtf-forms td { text-align: center; }
-.wtf-forms tbody th { text-align: left; font-weight: 500; }
-.wtf-forms td, .wtf-forms thead th:not(:first-child) { width: 14%; }
-.wtf-form-rules { border-bottom: 1px solid currentColor; }
-.wtf-form-rules summary { min-height: 44px; padding: .65rem .25rem; cursor: pointer; }
+.wtf-form-columns { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); min-width: 850px; position: relative; isolation: isolate; }
+.wtf-form-columns::before { content: ""; position: absolute; inset: 3rem 0 0; background: url("/game-lines/werewolf/images/forms.png") center top / 100% auto no-repeat; opacity: .12; z-index: -1; pointer-events: none; }
+.wtf-form-column { padding: 0 .65rem; min-width: 0; font-size: .85rem; }
+.wtf-form-column + .wtf-form-column { border-left: 1px solid var(--sheet-accent, #713c31); }
+.wtf-form-column h4 { font-size: 1.2rem; text-align: center; padding: .5rem 0; border-bottom: 2px solid var(--sheet-accent, #713c31); }
+.wtf-form-changes { min-height: 8.5rem; padding-top: .75rem; }
+.wtf-form-column dl > div { display: flex; justify-content: space-between; gap: .25rem; border-bottom: 1px solid var(--sheet-line, #c7beb0); padding: .2rem 0; }
+.wtf-form-column dt { overflow-wrap: anywhere; }
+.wtf-form-column dd { font-weight: 600; flex-shrink: 0; margin: 0; }
+.wtf-form-rules { border-bottom: 1px solid var(--sheet-line, #c7beb0); }
+.wtf-form-rules summary { min-height: 44px; align-content: center; cursor: pointer; }
 .wtf-form-rules p { margin: .5rem 0; line-height: 1.45; }
-@media (max-width: 640px) {
-  .wtf-forms table { font-size: .8rem; }
-  .wtf-forms th, .wtf-forms td { padding: .35rem; }
-}
+.wtf-mobile-form .wtf-form-column { padding: 0; }
+.wtf-mobile-form .wtf-form-changes { min-height: 0; }
 @media print {
   .wtf-forms-scroll { overflow: visible; }
-  .wtf-forms table { min-width: 0; font-size: 8pt; }
-  .wtf-forms tr { break-inside: avoid; }
+  .wtf-form-columns { min-width: 0; print-color-adjust: exact; }
+  .wtf-form-columns::before { display: block; }
+  .wtf-form-column { font-size: 8pt; padding: 0 .35rem; }
+  .wtf-form-column dl > div { break-inside: avoid; }
 }
+@media screen and (max-width: 767px) { .wtf-form-columns::before { display: none; } }

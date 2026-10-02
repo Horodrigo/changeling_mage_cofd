@@ -164,7 +164,7 @@ export function creationTemplateProblems(
   gifts: readonly GiftDefinition[],
   rites: readonly RiteDefinition[],
 ) {
-  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | "blood" | "bone" | "physicalTouchstone" | "spiritualTouchstone" | ReturnType<typeof creationGiftSelection>["problems"][number] | ReturnType<typeof creationRiteSelection>["problems"][number]> = [];
+  const problems: Array<"auspice" | "tribe" | "auspiceSkill" | "renownChoice" | "creationBudget" | "blood" | "bone" | ReturnType<typeof creationGiftSelection>["problems"][number] | ReturnType<typeof creationRiteSelection>["problems"][number]> = [];
   const auspice = reference.auspices.find(item => item.id === choices.auspice_id);
   const tribe = reference.tribes.find(item => item.id === choices.tribe_id);
   if (!auspice) problems.push("auspice");
@@ -187,7 +187,5 @@ export function creationTemplateProblems(
   problems.push(...creationRiteSelection(choices, rites).problems);
   for (const kind of ["blood", "bone"] as const)
     if (!reference.anchors.some(anchor => anchor.kind === kind && anchor.id === choices[kind])) problems.push(kind);
-  if (!choices.physical_touchstone.trim()) problems.push("physicalTouchstone");
-  if (!choices.spiritual_touchstone.trim()) problems.push("spiritualTouchstone");
   return problems;
 }

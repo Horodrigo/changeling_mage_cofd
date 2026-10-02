@@ -148,7 +148,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   if (ownContext.primalUrge > 10 || Object.values(renown).some(dots => dots > 5)) add(3, "progressionMaximum", t("werewolf.progressionMaximum"));
   for (const [group, names, values, minimum] of [["attributes", Object.values(ATTRIBUTES).flat(), common.attributes, 1], ["skills", Object.values(SKILLS).flat(), common.skills, 0]] as const)
     if (names.some(name => !Number.isInteger(values[name]) || values[name] < minimum || values[name] > 5)) add(2, group, t("werewolf.creationTraitRange"));
-  if (common.specialties.length !== 3 || common.specialties.some(item => !item.name.trim() || !Object.values(SKILLS).flat().some(skill => skill === item.skill) || !(finalSkills[item.skill] >= 1)))
+  if (common.specialties.some(item => item.name.trim() && (!Object.values(SKILLS).flat().some(skill => skill === item.skill) || !(finalSkills[item.skill] >= 1))))
     add(2, "specialties", t("werewolf.creationSpecialties"));
   if (spent > budget) add(3, "merits", t("ui.meritsExceedTheLimit"));
   for (const selection of merits) {

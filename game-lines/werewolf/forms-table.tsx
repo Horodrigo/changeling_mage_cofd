@@ -4,51 +4,69 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES } from "@/lib/core/character/creation-rules";
-import type { WerewolfReferenceCatalog } from "./catalogs/reference";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { FormDefinition, FormId, WerewolfReferenceCatalog } from "./catalogs/reference";
 import { formTraits } from "./creation-rules";
 import type { WerewolfMeritChoice } from "./merit-rules";
 import "./styles/forms.css";
 
-/** The five columns remain a comparison, including on mobile and in print. */
-export function FormsTable({ character, reference, baseSize = 5, merits = [] }: {
-  character: Pick<CharacterSheet, "attributes" | "skills"> & Partial<Pick<CharacterSheet, "merits">>; reference: WerewolfReferenceCatalog; baseSize?: number;
-  merits?: readonly WerewolfMeritChoice[];
-}) {
+type FormProps = {
+  character: Pick<CharacterSheet, "attributes" | "skills"> & Partial<Pick<CharacterSheet, "merits">>;
+  reference: WerewolfReferenceCatalog; baseSize?: number; merits?: readonly WerewolfMeritChoice[];
+};
+
+export function FormSelector({ value, onChange, reference }: { value: FormId; onChange: (value: string) => void; reference: WerewolfReferenceCatalog }) {
+  const { t } = useLanguage();
+  return <Select value={value} onValueChange={onChange}><SelectTrigger aria-label={t("werewolf.healthForm")}><SelectValue/></SelectTrigger>
+    <SelectContent>{reference.forms.map(form => <SelectItem key={form.id} value={form.id}>{form.name}</SelectItem>)}</SelectContent>
+  </Select>;
+}
+
+function FormColumn({ character, reference, baseSize = 5, merits = [], form }: FormProps & { form: FormDefinition }) {
   const { locale, t } = useLanguage();
-  const forms = reference.forms.map(form => ({ form, traits: formTraits(character, form, baseSize, merits, character.merits) }));
-  const hasWeaponBonuses = forms.some(({ traits }) => Object.values(traits.weaponBonuses).some(weapon => weapon.armorPiercing > 0));
-  const rows: Array<{ label: string; values: Array<number | string> }> = [
-    ...Object.values(ATTRIBUTES).flat().map(name => ({
-      label: systemTerm(name, locale), values: forms.map(({ traits }) => traits.attributes[name] ?? 0),
-    })),
-    { label: t("ui.size"), values: forms.map(({ traits }) => traits.size) },
-    { label: t("ui.health"), values: forms.map(({ traits }) => traits.health) },
-    { label: t("ui.defense"), values: forms.map(({ traits }) => traits.defense) },
-    { label: t("ui.initiative"), values: forms.map(({ traits }) => traits.initiative) },
-    { label: t("ui.speed"), values: forms.map(({ traits }) => traits.speed) },
-    { label: t("ui.armor"), values: forms.map(({ traits }) => `${traits.armorGeneral}/${traits.armorBallistic}`) },
-    { label: t("werewolf.perception"), values: forms.map(({ traits }) => `+${traits.perception}`) },
-    { label: t("werewolf.firearmsDefense"), values: forms.map(({ traits }) => traits.firearmsDefense ? t("ui.yes") : t("ui.no")) },
-    ...(hasWeaponBonuses ? (["bite", "claws"] as const).map(attack => ({
-      label: t(attack === "bite" ? "werewolf.biteMeritBenefits" : "werewolf.clawsMeritBenefits"),
-      values: forms.map(({ traits }) => {
-        const weapon = traits.weaponBonuses[attack];
-        return weapon.armorPiercing ? t(weapon.ignoresNonMagicalArmor ? "werewolf.weaponMeritIgnoresArmor" : "werewolf.weaponMeritBenefits", { damage: weapon.damage, piercing: weapon.armorPiercing }) : "—";
-      }),
-    })) : []),
+  const traits = formTraits(character, form, baseSize, merits, character.merits);
+  const rows = [
+    [t("ui.size"), traits.size], [t("ui.health"), traits.health], [t("ui.defense"), traits.defense],
+    [t("ui.initiative"), traits.initiative], [t("ui.speed"), traits.speed],
+    [t("ui.armor"), `${traits.armorGeneral}/${traits.armorBallistic}`], [t("werewolf.perception"), `+${traits.perception}`],
+    [t("werewolf.firearmsDefense"), traits.firearmsDefense ? t("ui.yes") : t("ui.no")],
   ];
-  return <section className="wtf-forms">
-    <h3>{t("werewolf.forms")}</h3>
-    <div className="wtf-forms-scroll" tabIndex={0} role="region" aria-label={t("werewolf.forms")}>
-      <table><caption className="sr-only">{t("werewolf.forms")}</caption>
-        <thead><tr><th scope="col"/>{forms.map(({ form }) => <th scope="col" key={form.id}>{form.name}</th>)}</tr></thead>
-        <tbody>{rows.map(row => <tr key={row.label}><th scope="row">{row.label}</th>{row.values.map((value, index) => <td key={forms[index].form.id}>{value}</td>)}</tr>)}</tbody>
-      </table>
-    </div>
-    {hasWeaponBonuses && <p>{t("werewolf.weaponMeritNote")}</p>}
-    {forms.map(({ form }) => <details className="wtf-form-rules" key={form.id}><summary>{form.name}</summary>
+  return <section className="wtf-form-column" data-form={form.id}>
+    <h4>{form.name}</h4>
+    <dl className="wtf-form-changes">{Object.entries(form.attributes).map(([attribute, delta]) => <div key={attribute}>
+      <dt>{systemTerm(attribute, locale)} ({Number(delta) > 0 ? "+" : ""}{delta})</dt><dd>{traits.attributes[attribute]}</dd>
+    </div>)}</dl>
+    <dl className="wtf-form-derived">{rows.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+    {(["bite", "claws"] as const).map(attack => {
+      const weapon = traits.weaponBonuses[attack];
+      return weapon.armorPiercing > 0 && <p className="wtf-rule-field" key={attack}><strong>{t(attack === "bite" ? "werewolf.biteMeritBenefits" : "werewolf.clawsMeritBenefits")}:</strong>{" "}
+        {t(weapon.ignoresNonMagicalArmor ? "werewolf.weaponMeritIgnoresArmor" : "werewolf.weaponMeritBenefits", { damage: weapon.damage, piercing: weapon.armorPiercing })}
+      </p>;
+    })}
+    <details className="wtf-form-rules"><summary>{t("ui.attributes")}</summary><dl>{Object.values(ATTRIBUTES).flat().map(attribute => <div key={attribute}><dt>{systemTerm(attribute, locale)}</dt><dd>{traits.attributes[attribute]}</dd></div>)}</dl></details>
+    <details className="wtf-form-rules"><summary>{t("ui.details")}</summary>
       <p>{locale === "pt-BR" ? reference.presentation[form.id]?.description ?? form.description : form.description}</p>
       <small>{t("conditions.sourcePage", { source: form.source, page: form.additionalPages?.length ? `${form.page}–${form.additionalPages.at(-1)}` : form.page })}</small>
-    </details>)}
+    </details>
+  </section>;
+}
+
+/** Five equal columns on desktop/print; the supplied image is decorative, not a source of mechanics. */
+export function FormsTable(props: FormProps) {
+  const { t } = useLanguage();
+  return <section className="wtf-forms"><h3>{t("werewolf.forms")}</h3>
+    <div className="wtf-forms-scroll" tabIndex={0} role="region" aria-label={t("werewolf.forms")}>
+      <div className="wtf-form-columns">{props.reference.forms.map(form => <FormColumn {...props} key={form.id} form={form}/>)}</div>
+    </div>
+    {props.merits?.length ? <p>{t("werewolf.weaponMeritNote")}</p> : null}
+  </section>;
+}
+
+/** Mobile Combat shares Health's persisted form selection and never renders the background image. */
+export function MobileForm({ value, onChange, ...props }: FormProps & { value: FormId; onChange: (value: string) => void }) {
+  const { t } = useLanguage();
+  const form = props.reference.forms.find(form => form.id === value)!;
+  return <section className="wtf-mobile-form"><div className="panel-heading"><h3>{t("werewolf.forms")}</h3><FormSelector value={value} onChange={onChange} reference={props.reference}/></div>
+    <FormColumn {...props} form={form}/>
   </section>;
 }

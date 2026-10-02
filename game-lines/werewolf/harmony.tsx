@@ -37,27 +37,27 @@ export function HarmonyTrack({ value, onChange, touchstones, onTouchstoneChange,
   value: number; onChange: (value: number) => void; touchstones: { physical: string; spiritual: string };
   onTouchstoneChange: (kind: "physical" | "spiritual", value: string) => void; reference: WerewolfReferenceCatalog;
 }) {
-  const { locale, t } = useLanguage();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const selected = boundedHarmony(value);
   return <section className="wtf-harmony">
     <div className="panel-heading"><SheetHeading>{t("werewolf.harmony")}</SheetHeading>
       <Button variant="ghost" size="sm" onClick={() => setOpen(true)}>{t("werewolf.breakingPoints")}</Button>
     </div>
-    <table><caption className="sr-only">{t("werewolf.harmony")}</caption>
-      <thead><tr>{[t("werewolf.harmony"), t("werewolf.bans"), t("werewolf.trigger"), t("werewolf.control")].map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
-      <tbody>{reference.harmony.map(level => <tr key={level.id} className={level.rating === selected ? "wtf-harmony-selected" : undefined}>
-        <th scope="row"><Button type="button" size="sm" variant="ghost" aria-pressed={level.rating === selected} aria-label={`${t("werewolf.harmony")} ${level.rating}`} onClick={() => onChange(level.rating)}>{level.rating}</Button></th>
-        <td>{level.bans}</td><td>{level.trigger ? t(`werewolf.${level.trigger}`) : t("werewolf.noPersonalTrigger")}</td>
-        <td>{locale === "pt-BR" ? reference.presentation[level.id]?.control ?? level.control : level.control}</td>
-      </tr>)}</tbody>
-      <tfoot>{(["physical", "spiritual"] as const).map(kind => <tr key={kind}>
-        <th scope="row">{t(kind === "physical" ? "werewolf.physicalTouchstone" : "werewolf.spiritualTouchstone")}</th>
-        <td colSpan={3}><Input value={touchstones[kind]} aria-label={t(kind === "physical" ? "werewolf.physicalTouchstone" : "werewolf.spiritualTouchstone")} onChange={event => onTouchstoneChange(kind, event.target.value)}/>
+    <div className="wtf-harmony-track">{[...reference.harmony].sort((a, b) => b.rating - a.rating).map(level => {
+      const kind = level.rating === 10 ? "physical" : level.rating === 0 ? "spiritual" : null;
+      const label = kind === "physical" ? t("werewolf.physicalTouchstone") : t("werewolf.spiritualTouchstone");
+      return <div className="wtf-harmony-row" data-harmony-rating={level.rating} key={level.id}>
+        <strong>{level.rating}</strong>
+        <div className="wtf-harmony-line">{kind && <>
+          <Input value={touchstones[kind]} placeholder={label} aria-label={label} onChange={event => onTouchstoneChange(kind, event.target.value)}/>
           {(kind === "physical" ? selected <= 2 : selected >= 8) && <small>{t("werewolf.touchstoneUnavailable")}</small>}
-        </td>
-      </tr>)}</tfoot>
-    </table>
+        </>}</div>
+        <Button type="button" size="sm" variant="ghost" aria-pressed={level.rating === selected} aria-label={`${t("werewolf.harmony")} ${level.rating}`} onClick={() => onChange(level.rating)}>
+          <span className={level.rating <= selected ? "wtf-harmony-dot filled" : "wtf-harmony-dot"}/>
+        </Button>
+      </div>;
+    })}</div>
     <Dialog open={open} onOpenChange={setOpen}><DialogContent className="wtf-harmony-dialog" showCloseButton={false}>
       <DialogHeader><DialogTitle>{t("werewolf.breakingPoints")}</DialogTitle><DialogDescription>{t("werewolf.breakingPointsNote")}</DialogDescription></DialogHeader>
       <BreakingPointReference reference={reference} harmony={selected}/>

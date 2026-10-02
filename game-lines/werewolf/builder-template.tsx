@@ -50,10 +50,10 @@ export function WerewolfCreationTemplate({ value, onChange, skills, reference, g
     <p>{t("werewolf.creationConversions")}</p>
     {budget !== null && <p>{t("werewolf.creationBudget", { merits: budget, rites: 2 + value.extra_rite_dots })}</p>}
     <div className="form-grid">
-      <label>{t("werewolf.blood")}<AnchorField kind="blood" value={value.blood} onChange={id => update("blood", id)} reference={reference}/></label>
-      <label>{t("werewolf.bone")}<AnchorField kind="bone" value={value.bone} onChange={id => update("bone", id)} reference={reference}/></label>
-      <label>{t("werewolf.physicalTouchstone")}<Input value={value.physical_touchstone} onChange={event => update("physical_touchstone", event.target.value)}/></label>
-      <label>{t("werewolf.spiritualTouchstone")}<Input value={value.spiritual_touchstone} onChange={event => update("spiritual_touchstone", event.target.value)}/></label>
+      <section><h3>{t("werewolf.blood")}</h3><AnchorField kind="blood" value={value.blood} onChange={id => update("blood", id)} reference={reference}/></section>
+      <section><h3>{t("werewolf.bone")}</h3><AnchorField kind="bone" value={value.bone} onChange={id => update("bone", id)} reference={reference}/></section>
+      <label>{t("werewolf.physicalTouchstone")} · {t("ui.optional")}<Input value={value.physical_touchstone} onChange={event => update("physical_touchstone", event.target.value)}/></label>
+      <label>{t("werewolf.spiritualTouchstone")} · {t("ui.optional")}<Input value={value.spiritual_touchstone} onChange={event => update("spiritual_touchstone", event.target.value)}/></label>
     </div>
     {grants && auspice && tribe && <>
       <h3>{t("werewolf.renown")}</h3>

@@ -2,6 +2,9 @@
 .wtf-creation-renown > div { text-align: center; }
 .wtf-creation-renown dd { margin: .25rem 0; }
 .wtf-creation-gifts, .wtf-gift-choices, .wtf-creation-rites { min-width: 0; }
+.wtf-selected-power { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; align-items: start; }
+.wtf-selected-power > button { margin-top: .35rem; }
+.wtf-creation-template > .form-grid { margin: 1rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 .wtf-creation-gifts h3, .wtf-creation-rites h3 { margin: 1rem 0 .4rem; }
 .wtf-gift-choices h4, .wtf-creation-rites h4 { margin: .75rem 0 .25rem; font-weight: 600; }
 .wtf-facet-choice, .wtf-rite-choice { display: grid; grid-template-columns: minmax(0, 1fr) 44px; }

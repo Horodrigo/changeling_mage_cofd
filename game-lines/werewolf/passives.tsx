@@ -3,7 +3,7 @@
 import { useLanguage } from "@/lib/i18n";
 import { SheetHeading } from "@/app/workspace/sheet-primitives";
 import type { PassiveDefinition, WerewolfReferenceCatalog } from "./catalogs/reference";
-import { primalUrgeLevel } from "./creation-rules";
+import { boundedHarmony, primalUrgeLevel } from "./creation-rules";
 import "./styles/traits.css";
 
 export function PassiveRules({ rule, reference }: { rule: PassiveDefinition; reference: WerewolfReferenceCatalog }) {
@@ -22,9 +22,27 @@ export function PassiveRules({ rule, reference }: { rule: PassiveDefinition; ref
 /** Purely informative: expanding an entry never spends resources or changes the sheet. */
 export function WerewolfPassives({ reference }: { reference: WerewolfReferenceCatalog }) {
   const { t } = useLanguage();
-  return <section className="wtf-passives"><SheetHeading>{t("werewolf.passives")}</SheetHeading>
-    {reference.passives.map(rule => <PassiveRules key={rule.id} rule={rule} reference={reference}/>)}
+  return <section className="wtf-passives"><SheetHeading>{t("werewolf.bodyOfTheWolf")}</SheetHeading>
+    {reference.passives.filter(rule => !["kuruth", "kuruth-triggers", "harmony-breaking-points"].includes(rule.id)).map(rule => <PassiveRules key={rule.id} rule={rule} reference={reference}/>)}
   </section>;
+}
+
+/** Read-only limits and Kuruth reference belong next to Primal Urge, not in the Harmony track. */
+export function KuruthReference({ reference, rating, harmony }: { reference: WerewolfReferenceCatalog; rating: number; harmony: number }) {
+  const { locale, t } = useLanguage();
+  const level = reference.harmony.find(item => item.rating === boundedHarmony(harmony))!;
+  const urge = primalUrgeLevel(reference, rating);
+  const control = locale === "pt-BR" ? reference.presentation[level.id]?.control ?? level.control : level.control;
+  const duration = locale === "pt-BR" ? reference.presentation[urge.id]?.basuImTime ?? urge.basuImTime : urge.basuImTime;
+  return <div className="wtf-primal-urge-reference">
+    <p className="cod-main-power-summary">{t("werewolf.kuruthSummary", { control, duration })}</p>
+    <details className="wtf-rule-disclosure"><summary>{t("werewolf.kuruth")}</summary>
+      <p className="wtf-rule-field"><strong>{t("werewolf.bans")}:</strong>{" "}{level.bans}</p>
+      <p className="wtf-rule-field"><strong>{t("werewolf.trigger")}:</strong>{" "}{level.trigger ? t(`werewolf.${level.trigger}`) : t("werewolf.noPersonalTrigger")}</p>
+      {reference.passives.filter(rule => ["kuruth", "kuruth-triggers"].includes(rule.id)).map(rule => <PassiveRules key={rule.id} rule={rule} reference={reference}/>)}
+    </details>
+    <PrimalUrgeLimits reference={reference} rating={rating}/>
+  </div>;
 }
 
 export function PrimalUrgeLimits({ reference, rating }: { reference: WerewolfReferenceCatalog; rating: number }) {

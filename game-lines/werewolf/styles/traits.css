@@ -2,13 +2,19 @@
 .wtf-rule-disclosure > summary { cursor: pointer; min-height: 44px; display: list-item; align-content: center; font-weight: 600; }
 .wtf-rule-field { margin: .4rem 0; line-height: 1.45; white-space: pre-line; }
 .wtf-rule-disclosure > small { display: block; margin-bottom: .4rem; opacity: .75; }
-.wtf-anchor-field [data-slot="select-trigger"] { width: 100%; }
-.wtf-harmony table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-.wtf-harmony th, .wtf-harmony td { padding: .15rem .3rem; text-align: left; border-bottom: 1px solid var(--sheet-line, #c7beb0); }
-.wtf-harmony tbody th { width: 44px; }
-.wtf-harmony tbody button { width: 44px; min-height: 44px; }
-.wtf-harmony-selected { background: var(--sheet-active, #ddd5c8); }
-.wtf-harmony tfoot th { width: 25%; }
+.wtf-anchor-field { display: grid; gap: .5rem; }
+.wtf-harmony-row { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) 32px; align-items: center; gap: .35rem; min-height: 32px; }
+.wtf-harmony-line { min-width: 0; border-bottom: 1px solid var(--sheet-line, #c7beb0); }
+.wtf-harmony-line input { height: 32px; padding: 0 .25rem; border: 0; border-radius: 0; background: transparent; }
+.wtf-harmony-row button { width: 32px; padding: 0; }
+.wtf-harmony-dot { width: 11px; height: 11px; border: 1px solid currentColor; border-radius: 50%; }
+.wtf-harmony-dot.filled { background: currentColor; }
+.wtf-catalog-dialog { width: min(95vw, 850px); max-width: 850px; max-height: 90dvh; display: flex; flex-direction: column; }
+.wtf-selection-catalog { min-height: 0; overflow-y: auto; }
+.wtf-anchor-option { padding: .75rem 0; border-bottom: 1px solid var(--border); }
+.wtf-anchor-option h4 { font-weight: 600; }
+.wtf-selection-catalog .catalog-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
+.wtf-selection-catalog .catalog-filters > * { flex: 1 1 150px; }
 .wtf-harmony small, .wtf-breaking-points li small { display: block; font-size: .75rem; }
 .wtf-harmony-dialog { max-height: 90dvh; overflow-y: auto; }
 .wtf-breaking-points h4 { margin: 1rem 0 .4rem; font-weight: 600; }
@@ -16,12 +22,10 @@
 .wtf-breaking-points li { margin: .35rem 0; line-height: 1.45; }
 .wtf-inactive-rule { opacity: .65; }
 @media (max-width: 640px) {
-  .wtf-harmony th, .wtf-harmony td { padding: .15rem; }
   .wtf-harmony { min-width: 0; }
 }
 @media print {
-  .wtf-harmony table { font-size: 8pt; }
-  .wtf-harmony tbody button { min-height: 0; height: auto; padding: 0; }
+  .wtf-harmony-row { font-size: 8pt; min-height: 20px; }
   .wtf-rule-disclosure > summary { min-height: 0; }
   .wtf-rule-field { break-inside: avoid; }
 }

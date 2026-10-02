@@ -29,7 +29,7 @@ const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
 const { WerewolfExperiencePanel, werewolfPurchaseLabel } = await vite.ssrLoadModule("/game-lines/werewolf/experience-panel.tsx");
 const { RiteExperienceCatalog } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rites.tsx");
-const { CreationRites } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
+const { CreationRiteCatalog } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
 const { buildWerewolfCharacter, werewolfBuilder, werewolfExperienceSpecialties } = await vite.ssrLoadModule("/game-lines/werewolf/builder.tsx");
 const { werewolfRules, werewolfFormTraits, recordedAuspiceSkillGrant } = await vite.ssrLoadModule("/game-lines/werewolf/rules.ts");
 const { withoutAuspiceSkillGrant, WEREWOLF_CREATION_GRANT_SOURCES } = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
@@ -37,6 +37,7 @@ const { useCommonBuilderState, experienceTraitDots } = await vite.ssrLoadModule(
 const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const { ATTRIBUTES, SKILLS } = await vite.ssrLoadModule("/lib/core/character/creation-rules.ts");
 const { WerewolfCharacterPaper } = await vite.ssrLoadModule("/game-lines/werewolf/sheet.tsx");
+const { changeWerewolfForm, damageAfterHealthReduction } = await vite.ssrLoadModule("/game-lines/werewolf/form-state.ts");
 const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
 const attributes = Object.fromEntries(Object.values(ATTRIBUTES).flat().map(name => [name, 1]));
 Object.assign(attributes, { Intelligence: 3, Wits: 3, Resolve: 2, Strength: 3, Dexterity: 2, Stamina: 2, Presence: 2, Manipulation: 2, Composure: 2 });
@@ -61,6 +62,51 @@ const merit = (name, dots, instanceId, configuration, creationDots = dots, exper
   const definition = meritCatalog.find(item => item.name === name);
   return { name, dots, sourceId: definition.sourceId, source: definition.source, instanceId, configuration, creationDots, experienceDots };
 };
+
+test("Creation accepts unfilled Specialties and Touchstones and preserves authored notes on editing", () => {
+  const character = create({ specialties: [], choices: { ...choices, physical_touchstone: "", spiritual_touchstone: "" } });
+  assert.deepEqual(character.specializations, []);
+  assert.equal(character.line_data.physical_touchstone, "");
+  assert.equal(character.line_data.spiritual_touchstone, "");
+  const initial = create({ source: character, specialties: [], choices: character.line_data.creation_choices, draft: true, step: 3 });
+  const markup = render(createElement(werewolfBuilder.Component, { initial, player: "Test", catalogs, onCancel() {}, onSave() {}, onSaveDraft() {} }));
+  assert.doesNotMatch(markup, /Choose three named Specialties|Describe the physical Touchstone|Describe the spiritual Touchstone/);
+  assert.match(markup, /Flesh Touchstone.*Optional/);
+  const edited = create({ source: character, specialties: [], choices: { ...choices, physical_touchstone: "My authored friend", spiritual_touchstone: "" } });
+  assert.equal(edited.line_data.physical_touchstone, "My authored friend");
+  assert.equal(edited.line_data.spiritual_touchstone, "");
+});
+
+test("WTF2 p. 172 loss of temporary Health upgrades least severe remaining wounds exactly once", () => {
+  assert.deepEqual(damageAfterHealthReduction(Array(9).fill("lethal"), 8), ["aggravated", ...Array(7).fill("lethal")]);
+  assert.deepEqual(damageAfterHealthReduction(Array(10).fill("bashing"), 8), ["lethal", "lethal", ...Array(6).fill("bashing")]);
+  assert.deepEqual(damageAfterHealthReduction(["aggravated", "lethal", "lethal", "bashing", "bashing", "bashing"], 4), ["aggravated", "aggravated", "lethal", "lethal"]);
+  assert.deepEqual(damageAfterHealthReduction(Array(10).fill("aggravated"), 8), Array(10).fill("aggravated"));
+  assert.throws(() => damageAfterHealthReduction([], 0), /positive integer/);
+  const character = create();
+  character.current_state = { ...character.current_state, form: "gauru", health_damage: Array(10).fill("lethal"), notes: "Do not replace", essence_current: 2 };
+  const before = structuredClone(character);
+  const reduced = changeWerewolfForm(character, "hishu");
+  const health = werewolfFormTraits(character, "hishu").health;
+  assert.equal(reduced.health_damage.length, health);
+  assert.equal(reduced.health_damage.filter(wound => wound === "aggravated").length, 10 - health);
+  assert.equal(reduced.notes, "Do not replace"); assert.equal(reduced.essence_current, 2);
+  const small = { ...character, current_state: reduced };
+  assert.deepEqual(changeWerewolfForm(small, "hishu"), reduced);
+  const expanded = changeWerewolfForm(small, "gauru");
+  assert.deepEqual(expanded.health_damage, reduced.health_damage);
+  assert.deepEqual(changeWerewolfForm({ ...character, current_state: expanded }, "hishu").health_damage, reduced.health_damage);
+  assert.deepEqual(character, before);
+});
+
+test("Mobile form reference renders only the selected form and never includes the desktop background", async () => {
+  const { MobileForm } = await vite.ssrLoadModule("/game-lines/werewolf/forms-table.tsx");
+  const markup = render(createElement(MobileForm, { character: create(), reference, value: "urshul", onChange: () => assert.fail("render changed form") }));
+  assert.equal((markup.match(/data-form=/g) ?? []).length, 1);
+  assert.match(markup, /data-form="urshul"/);
+  assert.match(markup, /Manipulation \(−?[-]?1\)/);
+  assert.doesNotMatch(markup, /wtf-form-columns|forms.png|<h4>Gauru/);
+});
 
 test("Werewolf registration loads only immutable Core and Werewolf resources with independent surfaces", async () => {
   assert.deepEqual(listGameLineRegistrations().map(item => item.id), ["CofD", "CtL", "MtA", "VtR", "WtF"]);
@@ -559,11 +605,11 @@ test("Rite XP chooser shows complete rules and disabled reasons; creation blocks
   assert.match(markup, /Sample Rite/); assert.match(markup, /Dramatic Failure/); assert.match(markup, /Exceptional Success/);
   assert.doesNotMatch(markup, /missing translation/);
   assert.ok((markup.match(/disabled=""/g) ?? []).length >= 6);
-  const creation = render(createElement(CreationRites, { value: choices, onChange: () => {}, catalog: rites, learnedRiteIds: ["wtf-core:chain-rage"] }));
+  const creation = render(createElement(CreationRiteCatalog, { value: choices, onChange: () => {}, catalog: rites, learnedRiteIds: ["wtf-core:chain-rage"] }));
   const blocked = creation.slice(creation.indexOf('aria-label="Select Chain Rage"') - 30, creation.indexOf('aria-label="Select Chain Rage"') + 150);
   assert.match(blocked, /disabled=""/);
   assert.match(creation, /This Rite is already known/);
-  const removable = render(createElement(CreationRites, { value: { ...choices, rites: ["wtf-core:chain-rage"] }, onChange: () => {}, catalog: rites, learnedRiteIds: ["wtf-core:chain-rage"] }));
+  const removable = render(createElement(CreationRiteCatalog, { value: { ...choices, rites: ["wtf-core:chain-rage"] }, onChange: () => {}, catalog: rites, learnedRiteIds: ["wtf-core:chain-rage"] }));
   const selected = removable.slice(removable.indexOf('aria-label="Select Chain Rage"') - 30, removable.indexOf('aria-label="Select Chain Rage"') + 150);
   assert.doesNotMatch(selected, /disabled=""/);
 });
@@ -588,8 +634,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
     const markup = ptRender(createElement(PtSheet, { character, catalogs, updateState: () => {}, updateSheet: () => {} }));
     assert.match(markup, /mobile-character-sheet/);
-    for (const form of reference.forms) assert.ok(markup.includes(`<th scope="col">${form.name}</th>`));
-    for (const phrase of ["Instinto Primitivo", "Caçador Destemido", "Caçada Sagrada"]) assert.ok(markup.includes(phrase), phrase);
+    assert.doesNotMatch(markup, /wtf-form-columns|wtf-mobile-form/);
+    for (const phrase of ["Corpo do Lobo", "Caçador Destemido", "Caçada Sagrada"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /missing translation|<summary>Fearless Hunter/);
     const builderMarkup = ptRender(createElement(ptBuilder.Component, { initial: character, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
     assert.match(builderMarkup, /Caçador Destemido/); assert.doesNotMatch(builderMarkup, /missing translation/);

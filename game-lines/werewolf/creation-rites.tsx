@@ -1,8 +1,11 @@
 "use client";
 
-import { useId } from "react";
+import { useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { RuleSelect } from "@/app/workspace/rule-select";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useLanguage, type MessageKey } from "@/lib/i18n";
 import type { RiteDefinition, RiteRulesText, WerewolfRiteCatalog } from "./catalogs/rites";
 import { creationRiteSelection, type WerewolfCreationChoices } from "./creation-rules";
@@ -35,17 +38,42 @@ export function RiteRules({ rite, catalog }: { rite: RiteDefinition; catalog: We
   </>;
 }
 
-export function CreationRites({ value, onChange, catalog, learnedRiteIds = [] }: {
+type Props = {
   value: WerewolfCreationChoices; onChange: (value: WerewolfCreationChoices) => void; catalog: WerewolfRiteCatalog;
   learnedRiteIds?: readonly string[];
-}) {
+};
+
+export function CreationRites(props: Props) {
+  const { value, onChange, catalog } = props;
+  const { locale, t } = useLanguage();
+  const { budget, spent } = creationRiteSelection(value, catalog.rites);
+  const name = (rite: RiteDefinition) => locale === "pt-BR" ? catalog.presentation.rites[rite.id]?.name ?? rite.name : rite.name;
+  return <section className="wtf-creation-rites"><div className="panel-heading"><div><h3>{t("werewolf.rites")}</h3>
+    {budget !== null && <p>{t("werewolf.selectedRiteDots", { spent, budget })}</p>}</div>
+    <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline">{t("werewolf.selectRitePrompt")}</Button></DialogTrigger>
+      <DialogContent className="wtf-catalog-dialog"><DialogHeader><DialogTitle>{t("werewolf.rites")}</DialogTitle><DialogDescription>{t("werewolf.selectedRiteDots", { spent, budget: budget ?? 0 })}</DialogDescription></DialogHeader>
+        <CreationRiteCatalog {...props}/><DialogFooter><DialogClose asChild><Button type="button" size="sm" variant="outline">{t("common.close")}</Button></DialogClose></DialogFooter>
+      </DialogContent>
+    </Dialog></div>
+    {value.rites.map(id => {
+      const rite = catalog.rites.find(rite => rite.id === id);
+      return <div className="wtf-selected-power" key={id}>
+        {rite ? <details className="wtf-rule-disclosure"><summary>{name(rite)} · {rite.dots}</summary><RiteRules rite={rite} catalog={catalog}/></details> : <p>{t("werewolf.missingSelectedRite", { id })}</p>}
+        <Button type="button" size="sm" variant="outline" aria-label={t("common.remove") + ": " + (rite ? name(rite) : id)} onClick={() => onChange({ ...value, rites: value.rites.filter(item => item !== id) })}>{t("common.remove")}</Button>
+      </div>;
+    })}
+  </section>;
+}
+
+export function CreationRiteCatalog({ value, onChange, catalog, learnedRiteIds = [] }: Props) {
   const { locale, t } = useLanguage();
   const controlId = useId();
+  const [search, setSearch] = useState(""), [kindFilter, setKindFilter] = useState("all"), [rating, setRating] = useState("all");
   const { budget, spent } = creationRiteSelection(value, catalog.rites);
   const name = (rite: RiteDefinition) => locale === "pt-BR" ? catalog.presentation.rites[rite.id]?.name ?? rite.name : rite.name;
   const general = locale === "pt-BR" ? { ...catalog.rules, ...catalog.presentation.rules } : catalog.rules;
   const toggle = (id: string) => onChange({ ...value, rites: value.rites.includes(id) ? value.rites.filter(item => item !== id) : [...value.rites, id] });
-  return <section className="wtf-creation-rites">
+  return <section className="wtf-selection-catalog">
     <h3>{t("werewolf.rites")}</h3>
     {budget !== null && <p>{t("werewolf.selectedRiteDots", { spent, budget })}</p>}
     <details className="wtf-rule-disclosure"><summary>{t("werewolf.generalRiteRules")}</summary>
@@ -53,9 +81,14 @@ export function CreationRites({ value, onChange, catalog, learnedRiteIds = [] }:
       <p className="wtf-rule-field"><strong>{t("ui.success")}:</strong>{" "}{general.success}</p>
       <small>{t("conditions.sourcePage", { source: catalog.rules.source, page: catalog.rules.page })}</small>
     </details>
-    {(["wolf", "pack"] as const).map(kind => <section key={kind}>
+    <div className="catalog-filters"><Input value={search} onChange={event => setSearch(event.target.value)} placeholder={t("werewolf.searchRites")} aria-label={t("werewolf.searchRites")}/>
+      <label>{t("ui.type")}<RuleSelect value={kindFilter} onChange={setKindFilter} options={[{ value: "all", label: t("werewolf.allRites"), localized: true }, { value: "wolf", label: t("werewolf.wolfRites"), localized: true }, { value: "pack", label: t("werewolf.packRites"), localized: true }]}/></label>
+      <label>{t("ui.dots")}<RuleSelect value={rating} onChange={setRating} options={[{ value: "all", label: t("werewolf.allRatings"), localized: true }, ...[...new Set(catalog.rites.map(rite => rite.dots))].sort().map(dots => ({ value: String(dots), label: String(dots), localized: true }))]}/></label>
+    </div>
+    {(["wolf", "pack"] as const).filter(kind => kindFilter === "all" || kind === kindFilter).map(kind => <section key={kind}>
       <h4>{t(kind === "wolf" ? "werewolf.wolfRites" : "werewolf.packRites")}</h4>
-      {[...catalog.rites].filter(rite => rite.kind === kind).sort((a, b) => name(a).localeCompare(name(b), locale)).map(rite => {
+      {[...catalog.rites].filter(rite => rite.kind === kind && (rating === "all" || String(rite.dots) === rating)
+        && `${name(rite)} ${rite.source} ${locale === "pt-BR" ? catalog.presentation.rites[rite.id]?.description ?? rite.description : rite.description}`.toLocaleLowerCase(locale).includes(search.trim().toLocaleLowerCase(locale))).sort((a, b) => name(a).localeCompare(name(b), locale)).map(rite => {
         const checked = value.rites.includes(rite.id);
         const reason = learnedRiteIds.includes(rite.id) ? t("werewolf.experienceProblem.riteKnown")
           : rite.tribeId && rite.tribeId !== value.tribe_id ? t("werewolf.riteOtherTribe")

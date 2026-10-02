@@ -160,7 +160,8 @@ test("Werewolf creation template validates canonical selections and exact conver
   assert.deepEqual(validate({ ...choices, primal_urge: 1.5 }), ["creationBudget"]);
   assert.deepEqual(validate({ ...choices, auspice_skill: "Brawl" }, { Brawl: 5 }), ["auspiceSkill"]);
   assert.deepEqual(validate({ ...choices, shadow_facets: [] }), ["shadowFacets"]);
-  assert.deepEqual(validate({ ...choices, blood: "Soldado", bone: "blood-alpha", physical_touchstone: " ", spiritual_touchstone: "" }), ["blood", "bone", "physicalTouchstone", "spiritualTouchstone"]);
+  assert.deepEqual(validate({ ...choices, physical_touchstone: " ", spiritual_touchstone: "" }), []);
+  assert.deepEqual(validate({ ...choices, blood: "Soldado", bone: "blood-alpha", physical_touchstone: " ", spiritual_touchstone: "" }), ["blood", "bone"]);
   const { WerewolfCreationTemplate } = await vite.ssrLoadModule("/game-lines/werewolf/builder-template.tsx");
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(WerewolfCreationTemplate, { value: choices, onChange: () => {}, skills: { Brawl: 2 }, reference: catalog, gifts: giftCatalog, rites: riteCatalog })));
@@ -174,7 +175,7 @@ test("Werewolf creation template validates canonical selections and exact conver
   assert.equal(translate("pt-BR", "werewolf.renownNames.Purity"), "Pureza");
   assert.equal(translate("pt-BR", "werewolf.creationProblem.creationBudget"), "Instinto Primitivo e Ritos extras devem caber nos dez pontos iniciais de Méritos.");
   for (const locale of ["en-US", "pt-BR"])
-    for (const key of ["blood", "bone", "physicalTouchstone", "spiritualTouchstone"])
+    for (const key of ["blood", "bone"])
       assert.doesNotMatch(translate(locale, `werewolf.creationProblem.${key}`), /missing translation/);
 });
 
@@ -327,14 +328,19 @@ test("WtF 2e creation rejects unfavored, unearned, duplicate, unknown and miscla
 });
 
 test("Werewolf creation Facet cards separate all printed rules, explain disabled choices and retain invalid selections for removal", async () => {
-  const { CreationGifts, FacetRules } = await vite.ssrLoadModule("/game-lines/werewolf/creation-gifts.tsx");
+  const { CreationGifts, CreationFacetCatalog, FacetRules } = await vite.ssrLoadModule("/game-lines/werewolf/creation-gifts.tsx");
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const rahu = reference.auspices.find(item => item.id === "rahu");
   const tribe = reference.tribes.find(item => item.id === "blood-talons");
   const value = { renown_choice: "Purity", shadow_facets: ["gift-insight:scent-the-unnatural", "missing:facet"], wolf_facets: ["gift-change:skin-thief"] };
   const before = structuredClone(value);
   const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
-  const markup = render(createElement(CreationGifts, { value, onChange: () => {}, auspice: rahu, tribe, gifts: giftCatalog }));
+  const props = { value, onChange: () => {}, auspice: rahu, tribe, gifts: giftCatalog };
+  const selected = render(createElement(CreationGifts, props));
+  assert.doesNotMatch(selected, /role="checkbox"/);
+  const markup = selected + render(createElement(CreationFacetCatalog, { ...props, kind: "shadow" })) + render(createElement(CreationFacetCatalog, { ...props, kind: "wolf" }));
+  assert.match(markup, /Search Gifts and Facets/);
+  assert.match(markup, /All Renown/);
   assert.match(markup, /not favored by your current Auspice or Tribe/);
   assert.match(markup, /Requires at least one dot of Cunning/);
   assert.match(markup, /selected Facet is absent from this catalog: missing:facet/);
@@ -430,8 +436,9 @@ test("Werewolf forms render five comparison columns with native disclosures and 
   const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(FormsTable, {
     character, reference: catalog,
   })));
-  for (const form of reference.forms) assert.match(markup, new RegExp(`<th scope="col">${form.name}</th>`));
-  assert.equal((markup.match(/<details/g) ?? []).length, 5);
+  for (const form of reference.forms) assert.match(markup, new RegExp(`data-form="${form.id}"><h4>${form.name}</h4>`));
+  assert.equal((markup.match(/<details/g) ?? []).length, 10);
+  assert.equal((markup.match(/class="wtf-form-column"/g) ?? []).length, 5);
   assert.doesNotMatch(markup, /missing translation/);
   assert.match(markup, /Manipulation/);
   assert.equal(translate("pt-BR", "werewolf.primalUrge"), "Instinto Primitivo");
@@ -488,6 +495,9 @@ test("Werewolf Harmony renders descending manual selections including zero and p
   assert.match(markup, /aria-pressed="true" aria-label="Harmony 0"/);
   assert.match(markup, /value="My family"/);
   assert.match(markup, /value="The mountain"/);
+  assert.match(markup, /data-harmony-rating="10"[\s\S]*?aria-label="Flesh Touchstone"[\s\S]*?aria-label="Harmony 10"/);
+  assert.match(markup, /data-harmony-rating="0"[\s\S]*?aria-label="Spirit Touchstone"[\s\S]*?aria-label="Harmony 0"/);
+  assert.doesNotMatch(markup, /<table|Wasu-Im|Kuruth trigger/);
   assert.match(markup, /Unavailable at the current Harmony/);
   const points = render(createElement(BreakingPointReference, { harmony: 7, reference: catalog }));
   assert.match(points, /Toward Flesh — increases Harmony/);
@@ -503,7 +513,9 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   const { AnchorDetails } = await vite.ssrLoadModule("/game-lines/werewolf/anchors.tsx");
   const render = component => renderToStaticMarkup(createElement(LanguageProvider, null, component));
   const markup = render(createElement(WerewolfPassives, { reference: catalog }));
-  assert.equal((markup.match(/<details/g) ?? []).length, 16);
+  assert.equal((markup.match(/<details/g) ?? []).length, 13);
+  assert.match(markup, /Body of the Wolf/);
+  assert.doesNotMatch(markup, /Werewolf passives|Death Rage: Kuruth/);
   assert.doesNotMatch(markup, /<button|<input|missing translation/);
   assert.match(markup, /<strong>Aggravated damage:<\/strong>/);
   const anchor = render(createElement(AnchorDetails, { anchor: traits.anchors[0], reference: catalog }));
@@ -516,6 +528,24 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   assert.equal(translate("pt-BR", "werewolf.bans"), "Proibições");
   assert.equal(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 6 }), "6 de dano contusivo por turno");
   assert.equal(traitsPresentation["flesh-oath"].description, "Violar o Juramento da Lua (apenas Destituídos).");
+});
+
+test("Blood and Bone catalogs show recovery before selection; Kuruth reference remains outside Harmony", async () => {
+  const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { AnchorCatalog } = await vite.ssrLoadModule("/game-lines/werewolf/anchors.tsx");
+  const { KuruthReference } = await vite.ssrLoadModule("/game-lines/werewolf/passives.tsx");
+  const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
+  for (const kind of ["blood", "bone"]) {
+    const markup = render(createElement(AnchorCatalog, { kind, value: "", reference: catalog, onChange: () => assert.fail("render selected an anchor") }));
+    assert.equal((markup.match(/class="wtf-anchor-option"/g) ?? []).length, 6);
+    assert.equal((markup.match(/Recover one spent Willpower/g) ?? []).length, 6);
+    assert.equal((markup.match(/Recover all spent Willpower/g) ?? []).length, 6);
+    assert.doesNotMatch(markup, /<details|missing translation/);
+    assert.match(markup, /Search archetypes and Willpower recovery/);
+  }
+  const markup = render(createElement(KuruthReference, { reference: catalog, rating: 1, harmony: 7 }));
+  assert.match(markup, /Wasu-Im:/); assert.match(markup, /Basu-Im:/); assert.match(markup, /Death Rage: Kuruth/);
+  assert.match(markup, /Primal Urge 1/); assert.doesNotMatch(markup, /wtf-harmony-track|<input/);
 });
 
 test("WtF 2e pp. 115–121 preserves all twenty-five Moon Facets with complete EN/PT mechanics", () => {
@@ -986,12 +1016,16 @@ test("WtF 2e p. 83 creation allocates Rite ratings exactly, shares the ten-dot M
 });
 
 test("Werewolf Rite cards render complete separate rules, removable invalid choices, and an isolated immutable catalog", async () => {
-  const { CreationRites, RiteRules } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
+  const { CreationRites, CreationRiteCatalog, RiteRules } = await vite.ssrLoadModule("/game-lines/werewolf/creation-rites.tsx");
   const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
   const choices = { tribe_id: "blood-talons", primal_urge: 1, extra_rite_dots: 0, rites: ["wtf-core:bottle-spirit", "missing:rite"] };
   const before = structuredClone(choices);
-  const markup = render(createElement(CreationRites, { value: choices, onChange: () => {}, catalog: riteCatalog }));
+  const selected = render(createElement(CreationRites, { value: choices, onChange: () => {}, catalog: riteCatalog }));
+  assert.doesNotMatch(selected, /role="checkbox"/);
+  const markup = selected + render(createElement(CreationRiteCatalog, { value: choices, onChange: () => {}, catalog: riteCatalog }));
+  assert.match(markup, /Search Rites by name/);
+  assert.match(markup, /All ratings/);
   assert.match(markup, /Allocated Rite dots: 2 \/ 2/);
   assert.match(markup, /taught only to another Tribe/);
   assert.match(markup, /selected Rite is absent from this catalog: missing:rite/);
@@ -1292,7 +1326,7 @@ test("Werewolf Merit configuration controls and form comparisons keep canonical 
   assert.doesNotMatch(markup, /Relevant Skill|<details[^>]* open|missing translation/);
   const table = render(createElement(FormsTable, { character, reference: catalog, merits: [favored, meritChoice("living-weapon", 5, { form: "gauru", attack: "bite" })] }));
   for (const attribute of ["Intelligence", "Wits", "Resolve", "Strength", "Dexterity", "Stamina", "Presence", "Manipulation", "Composure"])
-    assert.ok(table.includes(`<th scope="row">${attribute}</th>`), attribute);
+    assert.ok(table.includes(`<dt>${attribute}</dt>`), attribute);
   assert.match(table, /Bite — Merit bonuses/);
   assert.match(table, /ignores non-magical armor/);
   assert.match(table, /do not grant a new attack/);
