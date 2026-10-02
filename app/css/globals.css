@@ -4197,6 +4197,8 @@ button {
   align-items: center;
   gap: 28px;
   color: #eef5f8;
+  flex-wrap: wrap;
+  row-gap: 8px;
   background: linear-gradient(
     112deg,
     var(--line-topbar-start) 0%,

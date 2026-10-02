@@ -29,7 +29,7 @@ import { renownRatings, werewolfFormId, werewolfFormTraits, werewolfIds } from "
 import { FormsTable, FormSelector, MobileForm } from "./forms-table";
 import { HarmonyTrack } from "./harmony";
 import { AnchorDetails } from "./anchors";
-import { KuruthReference, WerewolfPassives } from "./passives";
+import { PrimalUrgeLimits, WerewolfPassives } from "./passives";
 import { FacetRules } from "./creation-gifts";
 import { RiteRules } from "./creation-rites";
 import { RENOWN_IDS } from "./mechanics";
@@ -85,7 +85,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const essence = <><SheetHeading>{t("werewolf.essence")}</SheetHeading><ResourceTrack label={t("werewolf.essence")} maximum={limits.essenceMaximum} perTurn={limits.essencePerTurn} current={Math.max(0, Math.min(limits.essenceMaximum, Number(state.essence_current ?? 0)))} onChange={value => setState("essence_current", value)} displayMinimum={20}/></>;
   const harmony = <HarmonyTrack value={boundedHarmony(data.harmony)} onChange={value => setLine("harmony", value)} touchstones={{ physical: String(data.physical_touchstone ?? ""), spiritual: String(data.spiritual_touchstone ?? "") }}
     onTouchstoneChange={(kind, value) => setLine(kind === "physical" ? "physical_touchstone" : "spiritual_touchstone", value)} reference={reference}/>;
-  const powerStat = <><MainPowerStat label={t("werewolf.primalUrge")} value={primalUrge}/><KuruthReference reference={reference} rating={primalUrge} harmony={boundedHarmony(data.harmony)}/></>;
+  const powerStat = <><MainPowerStat label={t("werewolf.primalUrge")} value={primalUrge}/><PrimalUrgeLimits reference={reference} rating={primalUrge}/></>;
   const renown = renownRatings(data.renown);
   const renownBlock = <div className="wtf-renown">{RENOWN_IDS.map(id => <div className="sheet-merit-main" key={id}><span>{t(`werewolf.renownNames.${id}`)}</span><DotValue value={renown[id]}/></div>)}</div>;
   const meritList = <div className="sheet-merits single-column">{character.merits.map((selection, index) => {
@@ -120,7 +120,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     {!mobile && <FormsTable character={character} reference={reference} merits={ownMerits}/>}
     <SheetHeading>{t("werewolf.anchors")}</SheetHeading>
     {reference.anchors.filter(anchor => anchor.id === data.blood || anchor.id === data.bone).map(anchor => <AnchorDetails key={anchor.id} anchor={anchor} reference={reference}/>)}
-    <WerewolfPassives reference={reference}/>
+    <WerewolfPassives reference={reference} harmony={boundedHarmony(data.harmony)}/>
     <div className="catalog-filters wtf-power-filters"><Input value={powerSearch} onChange={event => setPowerSearch(event.target.value)} aria-label={t("werewolf.searchPowers")} placeholder={t("werewolf.searchPowers")}/>
       <label>{t("ui.type")}<RuleSelect value={powerKind} onChange={setPowerKind} options={[
         { value: "all", label: t("ui.all"), localized: true }, { value: "moon", label: t("werewolf.moonGift"), localized: true },

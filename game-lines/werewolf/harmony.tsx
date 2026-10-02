@@ -54,7 +54,7 @@ export function HarmonyTrack({ value, onChange, touchstones, onTouchstoneChange,
           {(kind === "physical" ? selected <= 2 : selected >= 8) && <small>{t("werewolf.touchstoneUnavailable")}</small>}
         </>}</div>
         <Button type="button" size="sm" variant="ghost" aria-pressed={level.rating === selected} aria-label={`${t("werewolf.harmony")} ${level.rating}`} onClick={() => onChange(level.rating)}>
-          <span className={level.rating <= selected ? "wtf-harmony-dot filled" : "wtf-harmony-dot"}/>
+          <span className={level.rating === selected ? "wtf-harmony-dot filled" : "wtf-harmony-dot"}/>
         </Button>
       </div>;
     })}</div>

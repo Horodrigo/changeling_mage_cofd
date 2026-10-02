@@ -168,7 +168,7 @@ Werewolf Gift progression remains line-owned in `gift-progression.ts`. `learned_
 
 Werewolf persists derived traits in Hishu and calculates the selected Health form without rewriting base traits. Form changes do not heal: wounds in lost Health boxes upgrade remaining wounds, while unrepresentable terminal excess remains stored. Only the explicit shared Heal action clears all damage. Gauru has no innate Armor. Permanent Core Merit modifiers are a pure shared mechanism in `lib/core/character/derived-traits.ts`; Werewolf applies size modifiers before the form delta. Its small numeric form constants and permanent Merit identity index are reconciled with the authoritative static catalogs in tests, never used as a second editorial catalog.
 
-Specialties left unfilled and Touchstone notes are optional in creation. Werewolf exposes Blood/Bone recovery before selection and compact searchable creation catalogs. Its manual Harmony track places Flesh/Spirit Touchstones at 10/0; Kuruth and Wasu-Im reference belongs beside Primal Urge. Desktop/print compare five forms with the supplied background; mobile Combat displays one active form without that image and shares Health's selector. On a Health-reducing form transition, the line-owned transaction upgrades remaining wounds for each lost damaged box (WTF2 p. 172), rather than silently hiding them. Increasing Health does not reverse upgrades; terminal excess remains stored until explicitly cleared.
+Specialties left unfilled and Touchstone notes are optional in creation. Werewolf exposes Blood/Bone recovery before selection and compact searchable creation catalogs. Its manual Harmony track places Flesh/Spirit Touchstones at 10/0 and fills only the current rating's circle. Kuruth, Wasu-Im and triggers belong to Body of the Wolf; Primal Urge displays compact informative summaries directly below its dots, omitting zero/None entries instead of adding another rating disclosure. Desktop/print compare five forms with the supplied background; mobile Combat displays one active form without that image and shares Health's selector. On a Health-reducing form transition, the line-owned transaction upgrades remaining wounds for each lost damaged box (WTF2 p. 172), rather than silently hiding them. Increasing Health does not reverse upgrades; terminal excess remains stored until explicitly cleared.
 
 ## Persisted Character Schema
 
@@ -269,6 +269,8 @@ Werewolf form comparisons display only changed Attributes and their recalculated
 - Verify responsive behavior and both supported locales for user-facing changes.
 
 ## Test Philosophy
+
+The user explicitly authorizes browser smoke tests during the active Werewolf goal. Use synthetic characters in a local test origin, preserve personal sheets, and verify both locales and responsive layouts. Before completing that goal, compare all Werewolf surfaces with the existing game lines and finish visual polish to comparable quality; functional gates alone do not establish completion. The approved scope and results remain tracked in `WerewolfAudit.md`.
 
 Tests protect current contracts and architectural boundaries, not removed compatibility promises. Cover:
 

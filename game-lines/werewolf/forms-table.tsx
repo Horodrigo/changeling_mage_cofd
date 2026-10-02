@@ -38,13 +38,13 @@ function FormColumn({ character, reference, baseSize = 5, merits = [], form }: F
       <dt>{systemTerm(attribute, locale)}</dt><dd>{traits.attributes[attribute]}</dd>
     </div>)}</dl>
     <dl className="wtf-form-derived">{rows.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-    {(["bite", "claws"] as const).map(attack => {
+    <div className="wtf-form-weapons">{(["bite", "claws"] as const).map(attack => {
       const weapon = traits.weaponBonuses[attack];
       return weapon.armorPiercing > 0 && <p className="wtf-rule-field" key={attack}><strong>{t(attack === "bite" ? "werewolf.biteMeritBenefits" : "werewolf.clawsMeritBenefits")}:</strong>{" "}
         {t(weapon.ignoresNonMagicalArmor ? "werewolf.weaponMeritIgnoresArmor" : "werewolf.weaponMeritBenefits", { damage: weapon.damage, piercing: weapon.armorPiercing })}
       </p>;
     })}
-    {Object.values(traits.weaponBonuses).some(weapon => weapon.armorPiercing > 0) && <p className="wtf-rule-field">{t("werewolf.weaponMeritNote")}</p>}
+    {Object.values(traits.weaponBonuses).some(weapon => weapon.armorPiercing > 0) && <p className="wtf-rule-field">{t("werewolf.weaponMeritNote")}</p>}</div>
     <details className="wtf-form-rules"><summary>{t("ui.details")}</summary>
       {form.passives.map(passive => {
         const presentation = locale === "pt-BR" ? reference.presentation[passive.id] : undefined;

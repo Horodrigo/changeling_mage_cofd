@@ -464,6 +464,7 @@ test("Werewolf forms render five comparison columns with native disclosures and 
 test("Werewolf compact forms retain equal fluid columns and a smaller transparent WebP outside mobile", () => {
   const css = readFileSync(new URL("../game-lines/werewolf/styles/forms.css", import.meta.url), "utf8");
   assert.match(css, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
+  assert.match(css, /grid-row: span 5; grid-template-rows: subgrid/);
   assert.doesNotMatch(css, /overflow-x:\s*auto|min-width:\s*850px|forms\.png/);
   assert.match(css, /inset: 3rem 5% \.5rem/);
   assert.match(css, /forms\.webp.*contain no-repeat/);
@@ -525,6 +526,11 @@ test("Werewolf Harmony renders descending manual selections including zero and p
   const ratings = [...markup.matchAll(/aria-pressed="(?:true|false)" aria-label="Harmony (\d+)"/g)].map(match => Number(match[1]));
   assert.deepEqual(ratings, [10,9,8,7,6,5,4,3,2,1,0]);
   assert.equal((markup.match(/aria-pressed="true"/g) ?? []).length, 1);
+  for (const rating of [0, 7, 10]) {
+    const track = render(createElement(HarmonyTrack, { value: rating, onChange: () => {}, onTouchstoneChange: () => {}, touchstones, reference: catalog }));
+    assert.equal((track.match(/wtf-harmony-dot filled/g) ?? []).length, 1);
+    assert.match(track, new RegExp(`aria-pressed="true" aria-label="Harmony ${rating}"[\\s\\S]*?<span class="wtf-harmony-dot filled"`));
+  }
   assert.match(markup, /aria-pressed="true" aria-label="Harmony 0"/);
   assert.match(markup, /value="My family"/);
   assert.match(markup, /value="The mountain"/);
@@ -545,10 +551,12 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   const { WerewolfPassives, PrimalUrgeLimits } = await vite.ssrLoadModule("/game-lines/werewolf/passives.tsx");
   const { AnchorDetails } = await vite.ssrLoadModule("/game-lines/werewolf/anchors.tsx");
   const render = component => renderToStaticMarkup(createElement(LanguageProvider, null, component));
-  const markup = render(createElement(WerewolfPassives, { reference: catalog }));
-  assert.equal((markup.match(/<details/g) ?? []).length, 13);
+  const markup = render(createElement(WerewolfPassives, { reference: catalog, harmony: 7 }));
+  assert.equal((markup.match(/<details/g) ?? []).length, 15);
   assert.match(markup, /Body of the Wolf/);
-  assert.doesNotMatch(markup, /Werewolf passives|Death Rage: Kuruth/);
+  assert.match(markup, /Death Rage: Kuruth/);
+  assert.match(markup, /Kuruth triggers/);
+  assert.doesNotMatch(markup, /Werewolf passives|<summary>Primal Urge \d/);
   assert.doesNotMatch(markup, /<button|<input|missing translation/);
   assert.match(markup, /<strong>Aggravated damage:<\/strong>/);
   const anchor = render(createElement(AnchorDetails, { anchor: traits.anchors[0], reference: catalog }));
@@ -558,6 +566,15 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   const limits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 10 }));
   assert.match(limits, /6 bashing per turn/);
   assert.match(limits, /12 hours/);
+  assert.match(limits, /Lunacy penalty/);
+  assert.match(limits, /Tracking bonus/);
+  assert.ok(limits.includes(translate("en-US", "werewolf.traitMaximum")));
+  assert.doesNotMatch(limits, /<details|<summary|Death Rage|Wasu-Im/);
+  const lowLimits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 1 }));
+  assert.match(lowLimits, /<strong>Regeneration:<\/strong> 1 bashing per turn/);
+  assert.match(lowLimits, /<strong>Basu-Im:<\/strong> 10 minutes/);
+  assert.match(lowLimits, /3 months/);
+  assert.doesNotMatch(lowLimits, /Feeding restriction|None|Lunacy penalty|Tracking bonus|Attribute \/ Skill maximum|<details|<summary/);
   assert.equal(translate("pt-BR", "werewolf.bans"), "Proibições");
   assert.equal(translate("pt-BR", "werewolf.bashingPerTurn", { amount: 6 }), "6 de dano contusivo por turno");
   assert.equal(traitsPresentation["flesh-oath"].description, "Violar o Juramento da Lua (apenas Destituídos).");
@@ -576,9 +593,9 @@ test("Blood and Bone catalogs show recovery before selection; Kuruth reference r
     assert.doesNotMatch(markup, /<details|missing translation/);
     assert.match(markup, /Search archetypes and Willpower recovery/);
   }
-  const markup = render(createElement(KuruthReference, { reference: catalog, rating: 1, harmony: 7 }));
+  const markup = render(createElement(KuruthReference, { reference: catalog, harmony: 7 }));
   assert.match(markup, /Wasu-Im:/); assert.match(markup, /Basu-Im:/); assert.match(markup, /Death Rage: Kuruth/);
-  assert.match(markup, /Primal Urge 1/); assert.doesNotMatch(markup, /wtf-harmony-track|<input/);
+  assert.match(markup, /Wasu-Im control/); assert.doesNotMatch(markup, /Primal Urge 1|wtf-harmony-track|<input|<strong>Bans:<\/strong> 0/);
 });
 
 test("WtF 2e pp. 115–121 preserves all twenty-five Moon Facets with complete EN/PT mechanics", () => {

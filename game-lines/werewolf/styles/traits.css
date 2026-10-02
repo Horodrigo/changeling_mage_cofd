@@ -1,6 +1,7 @@
 .wtf-rule-disclosure { border-bottom: 1px solid var(--sheet-line, #c7beb0); padding: .35rem 0; }
 .wtf-rule-disclosure > summary { cursor: pointer; min-height: 44px; display: list-item; align-content: center; font-weight: 600; }
 .wtf-rule-field { margin: .4rem 0; line-height: 1.45; white-space: pre-line; }
+.wtf-primal-urge-reference { display: flex; flex-wrap: wrap; column-gap: .35rem; row-gap: .1rem; font-size: .75rem; line-height: 1.4; }
 .wtf-rule-disclosure > small { display: block; margin-bottom: .4rem; opacity: .75; }
 .wtf-anchor-field { display: grid; gap: .5rem; }
 .wtf-harmony-row { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) 32px; align-items: center; gap: .35rem; min-height: 32px; }
