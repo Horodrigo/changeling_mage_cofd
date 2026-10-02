@@ -25,6 +25,9 @@ try {
 } finally { globalThis.fetch = originalFetch; }
 const reference = catalogs.get("werewolf-reference"), gifts = catalogs.get("werewolf-gifts"), rites = catalogs.get("werewolf-rites");
 const fetishCatalog = catalogs.get("werewolf-fetishes");
+const totemCatalog = catalogs.get("werewolf-totem");
+const { totemSamplePresentation } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/totem.ts");
+const { TotemReference } = await vite.ssrLoadModule("/game-lines/werewolf/totem-reference.tsx");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
 const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
@@ -65,6 +68,55 @@ const merit = (name, dots, instanceId, configuration, creationDots = dots, exper
   const definition = meritCatalog.find(item => item.name === name);
   return { name, dots, sourceId: definition.sourceId, source: definition.source, instanceId, configuration, creationDots, experienceDots };
 };
+
+test("WTF2 Totem reference preserves Rank limits, adopted source conflicts, improvement costs and all three Pack examples", () => {
+  assert.deepEqual(totemCatalog.ranks.map(item => [item.rank, item.title, item.traitMaximum, item.attributeMinimum, item.attributeMaximum, item.essenceMaximum, item.numinaMinimum, item.numinaMaximum]), [
+    [1, "Hursih", 5, 5, 8, 10, 1, 3], [2, "Hursah", 7, 9, 14, 15, 3, 5], [3, "Ensih", 9, 15, 25, 20, 5, 7],
+    [4, "Ensah", 12, 26, 35, 25, 7, 9], [5, "Dihir", 15, 36, 45, 50, 9, 11],
+  ]);
+  assert.deepEqual(totemCatalog.advantageBands.map(item => [item.minimum, item.maximum, item.experience]), [[1, 8, 1], [9, 14, 3], [15, 19, 5], [20, null, 10]]);
+  assert.deepEqual(totemCatalog.improvementCosts, { attribute: 4, influence: 5, numen: 4 });
+  const rules = Object.fromEntries(totemCatalog.rules.map(rule => [rule.id, Object.fromEntries(rule.fields.map(field => [field.id, field.text]))]));
+  assert.match(rules["totem-creation"].points, /at least one.*no more than half/);
+  assert.match(rules["totem-creation"].numina, /one Numen.*every four/);
+  assert.match(rules["totem-traits"].defense, /lower of Power and Finesse.*higher at Rank 1.*not a claimed official erratum/);
+  assert.match(rules["totem-traits"].corpus, /no wound penalties/);
+  assert.match(rules["totem-pack-bond"].limits, /exceed normal Rank limits.*total contributed Totem dots/);
+  assert.match(rules["totem-improvements"].gifts, /cannot grant Gifts to its own pack/);
+  for (const rule of totemCatalog.rules) {
+    assert.ok(rule.sourceId && rule.source && rule.page);
+    assert.equal(new Set(rule.fields.map(field => field.id)).size, rule.fields.length);
+    const presentation = totemCatalog.presentation.rules[rule.id];
+    assert.ok(presentation.name);
+    for (const field of rule.fields) assert.ok(presentation.fields[field.id]?.label && presentation.fields[field.id]?.text);
+  }
+  assert.deepEqual(totemCatalog.samples.map(sample => sample.name), ["Szigblal", "Glabna", "Ushugudh"]);
+  const glabna = totemCatalog.samples[1], ushugudh = totemCatalog.samples[2];
+  assert.equal(glabna.resistance, 9); assert.equal(glabna.points, 15); assert.match(glabna.editorialNote, /exceeds half/);
+  assert.equal(ushugudh.defense, 7); assert.equal(ushugudh.points, 20);
+  for (const sample of totemCatalog.samples) {
+    assert.ok(sample.editorialNote); assert.equal(sample.source, "The Pack");
+    for (const field of ["epithet", "concept", "aspiration", "description", "speed", "influences", "manifestations", "numina", "ban", "bane", "advantage", "editorialNote"]) assert.ok(totemCatalog.presentation.samples[sample.id][field]);
+    const pt = totemSamplePresentation(sample, totemCatalog, "pt-BR");
+    for (const field of ["id", "name", "points", "rank", "power", "finesse", "resistance", "defense", "source", "page"]) assert.equal(pt[field], sample[field]);
+  }
+  assert.ok(Object.isFrozen(totemCatalog) && Object.isFrozen(totemCatalog.samples[0]));
+  const invalidPresentation = structuredClone(totemCatalog);
+  Object.assign(invalidPresentation.presentation.samples[ushugudh.id], { id: "localized-id", name: "Translated Uratha", points: 1, rank: 1, defense: 1 });
+  const protectedSample = totemSamplePresentation(ushugudh, invalidPresentation, "pt-BR");
+  for (const field of ["id", "name", "points", "rank", "defense"]) assert.equal(protectedSample[field], ushugudh[field]);
+  assert.deepEqual(totemSamplePresentation(ushugudh, { ...totemCatalog, presentation: { ...totemCatalog.presentation, samples: {} } }, "pt-BR"), ushugudh);
+  assert.ok(requests.includes("/game-lines/werewolf/data/totem.json") && requests.includes("/game-lines/werewolf/data/totem-pt.json"));
+});
+
+test("Totem reference exposes complete, separately labeled rules and samples without purchases or character mutation", () => {
+  const before = structuredClone(totemCatalog);
+  const markup = render(createElement(TotemReference, { catalog: totemCatalog }));
+  for (const phrase of ["Totem rules and examples", "Corpus:", "Ban:", "Bane:", "Numina:", "Szigblal", "Glabna", "Ushugudh", "15–19", "20+", "Source audit", "Rank limits"]) assert.ok(markup.includes(phrase), phrase);
+  assert.match(markup, /<input[^>]*aria-label="Search Totems/);
+  assert.doesNotMatch(markup, /missing translation|type="checkbox"|Spend Experience|awaiting audit/);
+  assert.deepEqual(totemCatalog, before);
+});
 
 test("Creation accepts unfilled Specialties and Touchstones and preserves authored notes on editing", () => {
   const character = create({ specialties: [], choices: { ...choices, physical_touchstone: "", spiritual_touchstone: "" } });
@@ -725,6 +777,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     for (const phrase of ["Corpo do Lobo", "Caçador Destemido", "Caçada Sagrada"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /missing translation|<summary>Fearless Hunter/);
     assert.match(markup, /Fetiches e Talens|Boneca de Bruxa/); assert.match(markup, /Quantidade restante/);
+    for (const phrase of ["Regras e exemplos de Totem", "O Ninho Vigilante", "Pedra Inabalável", "Espreitador da Morte", "Proibição:", "Fraqueza:", "Numina:"]) assert.ok(markup.includes(phrase), phrase);
+    assert.doesNotMatch(markup, /The Wary Nest|<dt>Bane:|awaiting audit/);
     assert.match(markup, /Player&#x27;s untranslated item/); assert.doesNotMatch(markup, /<summary>Witch-Poppet/);
     const builderMarkup = ptRender(createElement(ptBuilder.Component, { initial: character, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
     assert.match(builderMarkup, /Caçador Destemido/); assert.doesNotMatch(builderMarkup, /missing translation/);

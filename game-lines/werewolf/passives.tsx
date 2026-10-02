@@ -7,7 +7,7 @@ import type { PassiveDefinition, WerewolfReferenceCatalog } from "./catalogs/ref
 import { boundedHarmony, primalUrgeLevel } from "./creation-rules";
 import "./styles/traits.css";
 
-export function PassiveRules({ rule, reference, children }: { rule: PassiveDefinition; reference: WerewolfReferenceCatalog; children?: ReactNode }) {
+export function PassiveRules({ rule, reference, children }: { rule: PassiveDefinition; reference: Pick<WerewolfReferenceCatalog, "presentation">; children?: ReactNode }) {
   const { locale, t } = useLanguage();
   const presentation = locale === "pt-BR" ? reference.presentation[rule.id] : undefined;
   return <details className="wtf-rule-disclosure">

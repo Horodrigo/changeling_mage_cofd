@@ -23,6 +23,8 @@ import type { WerewolfRiteCatalog } from "./catalogs/rites";
 import type { WerewolfFetishCatalog } from "./catalogs/fetishes";
 import { FetishInventory } from "./fetishes";
 import { fetishSelections, type FetishSelection } from "./fetish-rules";
+import { TotemReference } from "./totem-reference";
+import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { WerewolfCreationTemplate } from "./builder-template";
 import { creationAuspiceSkill, creationGiftSelection, creationMeritBudget, creationTemplateProblems, formTraits, type WerewolfCreationChoices } from "./creation-rules";
 import { mergeWerewolfCreationMerits } from "./creation-grants";
@@ -108,6 +110,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const gifts = catalogs.get<WerewolfGiftCatalog>("werewolf-gifts");
   const rites = catalogs.get<WerewolfRiteCatalog>("werewolf-rites");
   const fetishCatalog = catalogs.get<WerewolfFetishCatalog>("werewolf-fetishes");
+  const totemCatalog = catalogs.get<WerewolfTotemCatalog>("werewolf-totem");
   const [fetishes, setFetishes] = useState(() => fetishSelections(initial?.line_data.fetishes));
   const preferences = useHomebrewPreferences();
   const meritCatalog = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, initial?.merits.map(item => item.name));
@@ -190,7 +193,8 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
               ? <WerewolfMeritConfigurationEditor merit={{ ...merit, id: definition.id }} context={ownContext} onChange={onChange} giftPresentation={gifts.presentation}/>
               : <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={meritCatalog} ownedMerits={ownedMerits} inline={inline} definitions={COMMON_MERIT_CONFIGURATIONS}/>;
           }}/>
-      </div><div className="builder-section"><FetishInventory value={fetishes} onChange={setFetishes} catalog={fetishCatalog} gifts={gifts}/></div></>}/>;
+      </div><div className="builder-section"><FetishInventory value={fetishes} onChange={setFetishes} catalog={fetishCatalog} gifts={gifts}/></div>
+      <div className="builder-section"><TotemReference catalog={totemCatalog}/></div></>}/>;
 }
 
 export const werewolfBuilder: GameLineBuilderModule = { Component: WerewolfCharacterBuilder };

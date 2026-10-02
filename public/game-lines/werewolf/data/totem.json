@@ -1,0 +1,118 @@
+{
+  "rules": [
+    {
+      "id": "totem-creation", "name": "Creating the Totem", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 91, "additionalPages": [92],
+      "fields": [
+        { "id": "identity", "label": "Name and concept", "text": "Create a concept and a short epithet. A totem is a unique spirit, sometimes part of an ilthum of similar spirits. The pack always has the Resonant Condition for its totem." },
+        { "id": "aspiration", "label": "Aspiration", "text": "Choose an Aspiration reflecting the totem's and pack's goals. It acts as a fourth Aspiration for each member; it does not replace the character's three personal Aspirations." },
+        { "id": "ban", "label": "Ban", "text": "Choose a Ban appropriate to Rank that members can uphold. Breaking it once inflicts the Ban Condition; breaking it again loses all dots in the Totem Merit. Resolve these consequences at the table, not automatically." },
+        { "id": "points", "label": "Totem points", "text": "Add all members' Totem Merit dots. Each point grants one Attribute dot: at least one in Power, Finesse and Resistance, and no more than half of the total in one Attribute. Use the Attribute total to determine Rank. Initial Influence dots equal Rank." },
+        { "id": "essence", "label": "Essence", "text": "Maximum Essence is the lower of total Totem points and the Rank's Essence maximum." },
+        { "id": "numina", "label": "Numina", "text": "Start with one Numen, plus one additional Numen for every four Totem points." },
+        { "id": "manifestations", "label": "Manifestations", "text": "Spirits begin with Twilight Form and a number of additional Manifestation Effects equal to Rank. Exchange one Numen for one extra Manifestation Effect, or for one Influence dot (WTF2 p. 186)." }
+      ]
+    },
+    {
+      "id": "totem-advantage", "name": "Totem Advantage", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 92,
+      "fields": [
+        { "id": "budget", "label": "Advantage pool", "text": "Totem points determine a pool of Experiences used to purchase Attributes, Skills, Specialties or Merits. This is the totem's Advantage pool, not the individual character's available Experience. Each member receives the benefit, even without the Totem Merit." },
+        { "id": "traits", "label": "Attributes and Skills", "text": "An Attribute or Skill benefit adds one dot to each member. Werewolves and Wolf-Blooded can exceed their normal limit by one. A human already at five dots instead gains 8-again on rolls involving the trait." },
+        { "id": "merits", "label": "Merits", "text": "A member who already has the granted Merit, or its maximum allowed rating, chooses another relevant trait of equal value. For example, one dot of Striking Looks can become a Persuasion Specialty or Animal Magnetism when Striking Looks is already at two dots." },
+        { "id": "specialties", "label": "Specialties", "text": "Define the Specialty when creating the totem. A member who already has that Specialty instead gains Area of Expertise for it." },
+        { "id": "discrepancy", "label": "Adopted source-conflict decision", "text": "The printed table overlaps at exactly 20 points. The project audit adopts 15–19 points for 5 Experiences and 20+ for 10, consistent with Ushugudh in The Pack p. 65. This is an explicit project decision, not a claimed official erratum." }
+      ]
+    },
+    {
+      "id": "totem-traits", "name": "Spiritual Traits", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 183, "additionalPages": [184, 185],
+      "fields": [
+        { "id": "rank", "label": "Rank", "text": "Rank determines permanent trait limits, Attribute dots, maximum Essence and normal Numina. It imposes a −1 modifier per dot on attempts to forcibly bind the spirit and acts as Supernatural Tolerance. Spirits sense relative Rank; a contested Finesse roll can disguise their Rank as the observer's. Rank 6+ is outside these mechanics." },
+        { "id": "attributes", "label": "Attributes", "text": "Power substitutes for Strength, Intelligence and Presence; Finesse for Dexterity, Wits and Manipulation; Resistance for Stamina, Resolve and Composure. Spirits have no Skills and suffer no unskilled penalty for actions appropriate to their nature. Roll Attribute + Rank for actions directly tied to their concept, or Attribute + Attribute for actions such as surprise and perception." },
+        { "id": "corpus", "label": "Corpus", "text": "Resistance + Size. Corpus boxes record damage like Health boxes, but impose no wound penalties." },
+        { "id": "willpower", "label": "Willpower", "text": "Finesse + Resistance, capped at 10 for Rank 1–5. Recover one point per day and one point per three Essence consumed by gorging or stealing. Recovery is resolved manually." },
+        { "id": "initiative", "label": "Initiative", "text": "Finesse + Resistance." },
+        { "id": "defense", "label": "Defense", "text": "Use the lower of Power and Finesse, or the higher at Rank 1. Dormant spirits have no Defense. Defense applies against firearms. The project audit adopts Other Traits on p. 185 and Ushugudh in The Pack p. 65; the conflicting Combat paragraph names Finesse/Resistance. This decision is not a claimed official erratum." },
+        { "id": "speed", "label": "Speed and Size", "text": "Speed = Power + Finesse + species factor; inanimate-object spirits usually have a species factor of 0. Spirits can take any size or shape; if uncertain, use Rank as Size." }
+      ]
+    },
+    {
+      "id": "totem-essence", "name": "Essence and Combat", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 184, "additionalPages": [185, 186],
+      "fields": [
+        { "id": "activity", "label": "Activity and dormancy", "text": "Spend one Essence per day to remain active, including in the Hisil. At zero Essence, enter dormancy. Dormant spirits in the physical world drift back into the Shadow in a number of hours equal to the local Gauntlet dice penalty. Waking normally costs one Essence." },
+        { "id": "boost", "label": "Trait boosts", "text": "Spend one Essence per added dot for one scene. A single trait can gain no more than Rank + 2 dots. Boosting takes a turn and only one Attribute can be boosted in that turn." },
+        { "id": "feed", "label": "Finding and gaining Essence", "text": "Sense suitable Essence within one mile, including across the Gauntlet without penalty. Regain one Essence per day near a relevant Condition. Once daily, gorge near a suitable Condition: Power + Finesse restores successes in Essence, with the Gauntlet penalty if still in the Hisil. Steal Essence with Power + Finesse contested by Power + Resistance; take up to successes, limited by the victim's remaining Essence." },
+        { "id": "bleed", "label": "Essence bleed", "text": "An unprotected spirit in the physical world loses one Essence per hour. At zero from bleed, it suffers one lethal wound and enters dormancy. A bound Totem is protected from this bleed by The Pack p. 63." },
+        { "id": "attack", "label": "Attacks", "text": "Roll Power + Finesse. Attacks normally inflict bashing unless the spirit's nature makes them lethal; ephemeral weapons add their weapon damage after a successful attack. Twilight spirits interact only with matching ephemera, except for their Bane." },
+        { "id": "damage", "label": "Damage and recovery", "text": "Physical lethal attacks against a Manifest spirit or one in the Hisil instead inflict bashing unless using its Bane. Record and heal wounds as for humans; each aggravated wound also loses one Essence. Losing all Corpus to lethal/aggravated wounds disperses the spirit. It is destroyed only if it also has no Essence; otherwise it reforms dormant in a safe Resonant place. After recovering Essence equal to Corpus, it can spend one Essence to awaken. No damage, healing, timers or resource changes occur automatically." }
+      ]
+    },
+    {
+      "id": "totem-ban-bane", "name": "Ban and Bane", "sourceId": "wtf-2ed", "source": "Werewolf: The Forsaken Second Edition", "page": 185,
+      "fields": [
+        { "id": "ban", "label": "Ban", "text": "A mystical compulsion requiring or forbidding behavior. Rank 1 Bans are mild distractions; Rank 2–3 Bans seriously restrict activity; Rank 4–5 Bans are complex and can stop an undertaking or impose mechanical or long-term consequences." },
+        { "id": "bane", "label": "Bane", "text": "A physical substance or energy harmful to the spirit's Corpus. Rank 1 Banes are common; Rank 2–3 are harder to obtain but natural; Rank 4–5 are highly specific and difficult to acquire. Banes are solid to Twilight spirits but do not harm across the Gauntlet." },
+        { "id": "contact", "label": "Voluntary contact", "text": "Spend one Willpower and succeed on Resolve + Composure − Rank to touch the Bane voluntarily. Spiritual Attribute substitution applies: both named Attributes use Resistance." },
+        { "id": "hisil", "label": "Hisil or Materialized", "text": "Contact inflicts one aggravated damage per turn and ends the relevant Manifestation Condition unless a Rank roll succeeds; repeat while contact continues." },
+        { "id": "fetter", "label": "Fettered or Twilight", "text": "Contact with a Fettered spirit's linked item or person inflicts one lethal damage per turn; use Unfetter to escape. Contact with a non-Manifest spirit in Twilight also inflicts one lethal damage per turn." },
+        { "id": "weapon", "label": "Bane attacks", "text": "A Bane weapon inflicts aggravated damage when both are in the Hisil or the physical spirit is using a Manifestation, and lethal against a Twilight spirit. A same-type spirit at least two Ranks higher counts as the opponent's Bane with unarmed attacks, claws or teeth." }
+      ]
+    },
+    {
+      "id": "totem-pack-bond", "name": "Totem Bond", "sourceId": "wtf-the-pack", "source": "The Pack", "page": 63,
+      "fields": [
+        { "id": "social", "label": "Like-Minded / Us Against the World", "text": "For Social maneuvering against a packmate, the first impression is one step higher and the target has one fewer Door. For an outsider maneuvering against a pack member, the first impression is one step lower and the target has one additional Door." },
+        { "id": "senses", "label": "Intense Physical World", "text": "The bound Totem perceives its members clearly and vividly in Twilight, identifies them among a crowd and hears their voices clearly. It senses a tingle when they touch its intangible form, but cannot actually touch them." },
+        { "id": "essence", "label": "Protection and Essence source", "text": "A bound Totem does not suffer physical-world Essence bleed. It still spends one Essence per day to remain active, but gains one Essence per day while near its pack." },
+        { "id": "limits", "label": "Increased potential", "text": "Numina and Influence can exceed normal Rank limits up to the total contributed Totem dots. A Totem torn from or abandoning its pack immediately loses these additional powers." },
+        { "id": "protection", "label": "Physical protection", "text": "Uratha can sense that the spirit is bound to a pack, though not which pack. They do not attack it solely for being on their side of the Gauntlet; other reasons for hostility still apply." }
+      ]
+    },
+    {
+      "id": "totem-improvements", "name": "Improving the Totem", "sourceId": "wtf-the-pack", "source": "The Pack", "page": 63, "additionalPages": [64],
+      "fields": [
+        { "id": "experience", "label": "Improvements", "text": "The Totem can improve with Experiences from Totem Merit investment or earned in play. Attribute dots cost 4 each; Influence dots cost 5 each; Numina cost 4 each. These are the Totem's improvements, not purchases from the individual character's Experience balance." },
+        { "id": "gifts", "label": "Granting Gifts", "text": "A Totem cannot grant Gifts to its own pack. When granting a Gift to another werewolf, roll Power + Resistance with a penalty equal to the number of times it has already done this. Failure disrupts the bond for a full lunar cycle: benefits are lost while the Totem slumbers. Dramatic failure severs the bond entirely; members retain their Merit dots under Sanctity of Merits but cannot use them to regain this Totem or bond with a new one." },
+        { "id": "individual", "label": "Individual sheet scope", "text": "Record only the individual character's Totem and manually supplied external contributions. No Pack record, linked characters, shared Experience account or automated time tracking is created." }
+      ]
+    }
+  ],
+  "ranks": [
+    { "rank": 1, "title": "Hursih", "traitMaximum": 5, "attributeMinimum": 5, "attributeMaximum": 8, "essenceMaximum": 10, "numinaMinimum": 1, "numinaMaximum": 3 },
+    { "rank": 2, "title": "Hursah", "traitMaximum": 7, "attributeMinimum": 9, "attributeMaximum": 14, "essenceMaximum": 15, "numinaMinimum": 3, "numinaMaximum": 5 },
+    { "rank": 3, "title": "Ensih", "traitMaximum": 9, "attributeMinimum": 15, "attributeMaximum": 25, "essenceMaximum": 20, "numinaMinimum": 5, "numinaMaximum": 7 },
+    { "rank": 4, "title": "Ensah", "traitMaximum": 12, "attributeMinimum": 26, "attributeMaximum": 35, "essenceMaximum": 25, "numinaMinimum": 7, "numinaMaximum": 9 },
+    { "rank": 5, "title": "Dihir", "traitMaximum": 15, "attributeMinimum": 36, "attributeMaximum": 45, "essenceMaximum": 50, "numinaMinimum": 9, "numinaMaximum": 11 }
+  ],
+  "advantageBands": [
+    { "minimum": 1, "maximum": 8, "experience": 1 },
+    { "minimum": 9, "maximum": 14, "experience": 3 },
+    { "minimum": 15, "maximum": 19, "experience": 5 },
+    { "minimum": 20, "maximum": null, "experience": 10 }
+  ],
+  "improvementCosts": { "attribute": 4, "influence": 5, "numen": 4 },
+  "samples": [
+    {
+      "id": "wtf-pack:szigblal", "name": "Szigblal", "epithet": "The Wary Nest", "sourceId": "wtf-the-pack", "source": "The Pack", "page": 64,
+      "concept": "Over-protective den-mother", "aspiration": "The nest must grow",
+      "description": "A small bird for a small, newly established pack. It watches the pack and treats everything belonging to it, including the members, as part of its nest.",
+      "points": 5, "rank": 1, "power": 1, "finesse": 2, "resistance": 2, "willpower": 4, "essence": 5, "initiative": 4, "defense": 2, "speed": "3 ground / 7 flight", "size": 1, "corpus": 3,
+      "influences": "Dwellings 1", "manifestations": "Twilight Form, Image", "numina": "Innocuous, Speed", "ban": "Do not forsake the nest", "bane": "Szigblal cannot be away from its nest for more than 24 hours.", "advantage": "Survival Specialty: Cold",
+      "editorialNote": "The printed Bane is a restriction on absence, rather than a harmful physical substance or energy. Retained as printed; it is not silently replaced with a Ban or a newly invented Bane."
+    },
+    {
+      "id": "wtf-pack:glabna", "name": "Glabna", "epithet": "Unyielding Stone", "sourceId": "wtf-the-pack", "source": "The Pack", "page": 64, "additionalPages": [65],
+      "concept": "Strength in stasis", "aspiration": "To remain strong despite all challenges",
+      "description": "An established pack's protector, appearing as a large boulder. It values strength and endurance but discourages change unless the pack proves the need. Other creatures must come to it or communicate through proxies.",
+      "points": 15, "rank": 3, "power": 4, "finesse": 2, "resistance": 9, "willpower": 10, "essence": 15, "initiative": 11, "defense": 2, "speed": "6", "size": 8, "corpus": 17,
+      "influences": "Rock 3", "manifestations": "Twilight Form, Reaching, Fettered, Shadow Gateway", "numina": "Awe, Blast, Implant Mission, Telekinesis", "ban": "Do not change unless necessary", "bane": "Sudden, massive temperature changes: freezing boiling water in less than a turn, or turning ice into steam.", "advantage": "Stamina +1; Anchored Merit",
+      "editorialNote": "Resistance 9 exceeds half of the printed 15 Totem points. The text describes an established Totem; do not use this sample as proof that the initial Attribute allocation limit can be ignored. Preserve the printed traits separately from any newly validated creation allocation."
+    },
+    {
+      "id": "wtf-pack:ushugudh", "name": "Ushugudh", "epithet": "Death Stalker", "sourceId": "wtf-the-pack", "source": "The Pack", "page": 65,
+      "concept": "Ever-present specter", "aspiration": "Spread death to the living",
+      "description": "A powerful, macabre Totem near the upper limits of Rank 3. It brooks no help to the living, including members of its own pack: even medicine and first aid are forbidden.",
+      "points": 20, "rank": 3, "power": 7, "finesse": 7, "resistance": 6, "willpower": 10, "essence": 20, "initiative": 13, "defense": 7, "speed": "14", "size": 5, "corpus": 11,
+      "influences": "Death 2, Silence 1", "manifestations": "Twilight Form, Image, Reaching", "numina": "Drain, Emotional Aura, Entropic Decay, Innocuous, Seek", "ban": "Prevent no death except your own", "bane": "The touch of an animal less than one week old.", "advantage": "Resolve +1; Composure +1; Indomitable Merit",
+      "editorialNote": "Defense 7 follows Power/Finesse rather than Finesse/Resistance. Its Advantage costs 10 Experiences at 20 Totem points. The project audit adopts these conventions explicitly; the contradictory Core passages remain documented."
+    }
+  ]
+}

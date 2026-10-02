@@ -380,6 +380,22 @@ WTF2 p. 97 informa Manipulation −1; a segunda página da ficha oficial (PDF f�
 
 ## Continuação autorizável
 
+### M13 — Totem Advantage com 20 pontos
+
+**Decisão do usuário em 2026-10-02: 15–19 → 5 Experiences; 20+ → 10 Experiences.** WTF2 p. 92 imprime faixas sobrepostas de 15–20 e 20+. Ushugudh, em The Pack p. 65, possui 20 Totem points e Resolve +1, Composure +1 e Indomitable, totalizando 10 Experiences. Adotar a segunda faixa a partir de 20; registrar como decisão explícita do projeto, não errata oficial. O Advantage pool não é o saldo de XP disponível do personagem individual.
+
+### M14 — Totem Defense
+
+**Decisão do usuário em 2026-10-02: Power/Finesse conforme Other Traits e o exemplo de Ushugudh.** WTF2 p. 185 contém uma contradição: Other Traits usa Power/Finesse, enquanto Combat cita Finesse/Resistance. Usar o menor entre Power e Finesse, ou o maior no Rank 1. Dormant spirits não possuem Defense; a Defense se aplica a Firearms. Ushugudh (The Pack p. 65) imprime Power 7, Finesse 7, Resistance 6 e Defense 7. Não apresentar a decisão como errata oficial.
+
+### Referência inicial de Totem — 2026-10-02
+
+- WTF2 pp. 91–92 e 183–186, além de The Pack pp. 63–65, conferidos visualmente: criação, Aspiration/Ban, Totem points, Advantage, Rank, Attributes simplificados, Corpus, Essence, Willpower, Defense, melhorias, vínculo e restrição de conceder Gifts à própria pack.
+- Catálogo lazy EN/PT próprio com Rank 1–5, custos de melhoria (Attribute 4 / Influence 5 / Numen 4) e os três exemplos de The Pack. Builder e Details/Powers apresentam referência expansível e busca de exemplos, sem alterar ficha, Attributes, XP, recursos ou criar Pack records.
+- Szigblal: Bane impressa é ausência do ninho por mais de 24 horas, não uma substância física/energia. Preservada como referência com nota editorial; não inventar uma substituição. Glabna: Resistance 9 supera metade dos 15 Totem points impressos; a descrição de Totem estabelecido não autoriza ignorar o limite de distribuição na criação de um novo Totem. Manter o exemplo impresso separado da validação de novas alocações.
+- M13/M14 estão incorporadas à referência. **Editor individual, persistência das escolhas, Influences/Manifestations/Numina completos e aplicação separada dos benefícios ainda estão pendentes**; este lote não é a conclusão de W16 nem da meta.
+- Smoke autorizado em fixture sintética local: referência em desktop/mobile EN/PT, busca de exemplos com/sem resultados, cinco colunas de Rank alinhadas no desktop e cards sem overflow no mobile; criação/reedição PT consultada sem salvar mudanças. Fonte/campos completos e nomes Uratha preservados, sem erros no console. A comparação visual completa e o polish final de todas as superfícies permanecem pendentes conforme a meta.
+
 ### Notas editoriais do catálogo Moon Gifts — WTF2 pp. 115–121
 
 - `Thousand-Throat Howl`: o livro escreve `Intimidate` no Dice Pool; o catálogo usa a identidade canônica da Skill `Intimidation`, sem interpretar nomes traduzidos em tempo de execução.
