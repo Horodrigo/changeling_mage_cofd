@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 37,
+  "catalogVersion": 38,
   "catalogs": {
+    "werewolf-totem-powers": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers.json" },
+    "werewolf-totem-powers-pt": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers-pt.json" },
     "werewolf-totem": { "version": 1, "url": "/game-lines/werewolf/data/totem.json" },
     "werewolf-totem-pt": { "version": 1, "url": "/game-lines/werewolf/data/totem-pt.json" },
     "werewolf-fetishes-core": { "version": 1, "url": "/game-lines/werewolf/data/fetishes/wtf-core.json" },

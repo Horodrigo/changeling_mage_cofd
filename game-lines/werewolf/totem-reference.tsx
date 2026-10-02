@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { RuleSelect } from "@/app/workspace/rule-select";
 import { SheetHeading } from "@/app/workspace/sheet-primitives";
 import { useLanguage } from "@/lib/i18n";
 import { PassiveRules } from "./passives";
@@ -51,6 +52,34 @@ export function TotemReference({ catalog }: { catalog: WerewolfTotemCatalog }) {
         </details>)}
         {!samples.length && <p>{t("werewolf.totemNoMatches")}</p>}
       </details>
+      <TotemPowerReference catalog={catalog}/>
     </details>
   </section>;
+}
+
+/** Native disclosures and the existing selector; browsing never activates a power. */
+export function TotemPowerReference({ catalog }: { catalog: WerewolfTotemCatalog }) {
+  const { locale, t } = useLanguage();
+  const [search, setSearch] = useState(""), [kind, setKind] = useState("all"), [reaching, setReaching] = useState("all");
+  const presentation = catalog.presentation.powers;
+  const query = search.trim().toLocaleLowerCase(locale);
+  const powers = catalog.powers.filter(power => {
+    const text = locale === "pt-BR" ? presentation[power.id] : undefined;
+    return (kind === "all" || power.kind === kind) && (reaching === "all" || (power.kind === "numen" && Boolean(power.reaching) === (reaching === "yes")))
+      && [text?.name ?? power.name, power.source, ...power.fields.map(field => text?.fields?.[field.id]?.text ?? field.text)].join(" ").toLocaleLowerCase(locale).includes(query);
+  }).sort((a, b) => (locale === "pt-BR" ? presentation[a.id]?.name ?? a.name : a.name).localeCompare(locale === "pt-BR" ? presentation[b.id]?.name ?? b.name : b.name, locale));
+  return <details className="wtf-rule-disclosure"><summary>{t("werewolf.totemPowers")}</summary>
+    {catalog.powerRules.map(rule => <PassiveRules key={rule.id} rule={rule} reference={{ presentation }}/>) }
+    <div className="catalog-filters wtf-totem-power-filters">
+      <Input aria-label={t("werewolf.totemPowerSearch")} placeholder={t("werewolf.totemPowerSearch")} value={search} onChange={event => setSearch(event.target.value)}/>
+      <label>{t("ui.type")}<RuleSelect value={kind} onChange={setKind} options={[{ value: "all", label: t("ui.all"), localized: true }, ...(["numen", "manifestation", "influence"] as const).map(value => ({ value, label: t(`werewolf.totemPowerKinds.${value}`), localized: true }))]}/></label>
+      <label>{t("werewolf.totemReaching")}<RuleSelect value={reaching} onChange={setReaching} options={[{ value: "all", label: t("ui.all"), localized: true }, { value: "yes", label: t("werewolf.totemReachingYes"), localized: true }, { value: "no", label: t("werewolf.totemReachingNo"), localized: true }]}/></label>
+    </div>
+    <p className="wtf-rule-field">{t("werewolf.totemPowerCount", { count: powers.length })}</p>
+    {powers.map(power => <PassiveRules key={power.id} rule={power} reference={{ presentation }}>
+      <p className="wtf-rule-field"><strong>{t("ui.type")}:</strong>{" "}{t(`werewolf.totemPowerKinds.${power.kind}`)}{power.influenceLevel ? ` · ${power.influenceLevel}` : ""}</p>
+      {power.kind === "numen" && <p className="wtf-rule-field"><strong>{t("werewolf.totemReaching")}:</strong>{" "}{t(power.reaching ? "werewolf.totemReachingYes" : "werewolf.totemReachingNo")}</p>}
+    </PassiveRules>)}
+    {!powers.length && <p>{t("werewolf.totemPowerNoMatches")}</p>}
+  </details>;
 }

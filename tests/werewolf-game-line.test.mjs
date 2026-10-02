@@ -27,7 +27,7 @@ const reference = catalogs.get("werewolf-reference"), gifts = catalogs.get("were
 const fetishCatalog = catalogs.get("werewolf-fetishes");
 const totemCatalog = catalogs.get("werewolf-totem");
 const { totemSamplePresentation } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/totem.ts");
-const { TotemReference } = await vite.ssrLoadModule("/game-lines/werewolf/totem-reference.tsx");
+const { TotemReference, TotemPowerReference } = await vite.ssrLoadModule("/game-lines/werewolf/totem-reference.tsx");
 const meritCatalog = [...catalogs.get("core-merits"), ...catalogs.get("werewolf-merits")];
 const advancementCatalogs = { reference, gifts, rites, merits: meritCatalog };
 const { purchaseWerewolfAdvancement: buy, refundWerewolfAdvancement: refund, werewolfPurchaseQuote: quote, werewolfExperienceHistory: history, WerewolfAdvancementError } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
@@ -116,6 +116,49 @@ test("Totem reference exposes complete, separately labeled rules and samples wit
   assert.match(markup, /<input[^>]*aria-label="Search Totems/);
   assert.doesNotMatch(markup, /missing translation|type="checkbox"|Spend Experience|awaiting audit/);
   assert.deepEqual(totemCatalog, before);
+});
+
+test("WTF2 pp. 186–193 Totem powers preserve all 24 Numina, 11 Manifestations, five Influence levels and localized fields", () => {
+  assert.equal(totemCatalog.powers.length, 40);
+  const numina = totemCatalog.powers.filter(power => power.kind === "numen"), manifestations = totemCatalog.powers.filter(power => power.kind === "manifestation");
+  assert.equal(numina.length, 24); assert.equal(manifestations.length, 11);
+  assert.deepEqual(totemCatalog.powers.filter(power => power.kind === "influence").map(power => power.influenceLevel), [1, 2, 3, 4, 5]);
+  assert.deepEqual(numina.filter(power => power.reaching).map(power => power.id), ["numen:dement", "numen:emotional-aura", "numen:entropic-decay", "numen:firestarter", "numen:implant-mission", "numen:pathfinder", "numen:rapture", "numen:seek", "numen:telekinesis"]);
+  const entries = [...totemCatalog.powerRules, ...totemCatalog.powers];
+  assert.equal(new Set(entries.map(power => power.id)).size, 43);
+  assert.deepEqual(new Set(Object.keys(totemCatalog.presentation.powers)), new Set(entries.map(power => power.id)));
+  for (const power of entries) {
+    assert.equal(power.sourceId, "wtf-2ed"); assert.ok(power.page >= 186 && power.page <= 193);
+    assert.ok(Object.isFrozen(power)); assert.equal(new Set(power.fields.map(field => field.id)).size, power.fields.length);
+    const pt = totemCatalog.presentation.powers[power.id]; assert.ok(pt.name);
+    assert.deepEqual(new Set(Object.keys(pt.fields)), new Set(power.fields.map(field => field.id)));
+    for (const field of power.fields) assert.ok(pt.fields[field.id].label && pt.fields[field.id].text, `${power.id}:${field.id}`);
+  }
+  const power = id => totemCatalog.powers.find(power => power.id === id);
+  const field = (id, key) => power(id).fields.find(field => field.id === key)?.text;
+  assert.deepEqual(power("manifestation:claim").requiredManifestationIds, ["manifestation:fetter", "manifestation:possess"]);
+  assert.equal(power("manifestation:claim").requiredConditionId, "controlled"); assert.equal(power("manifestation:shadow-gateway").minimumRank, 3);
+  assert.equal(field("numen:seek", "roll"), "Finesse.");
+  assert.match(field("numen:awe", "roll"), /Presence \+ Composure/);
+  assert.match(field("numen:drain", "effect"), /Whichever party.*backfire/);
+  assert.match(field("numen:entropic-decay", "roll"), /resisted.*Stamina.*Resistance.*Durability/);
+  assert.match(field("numen:rapture", "effect"), /Werewolves omit Primal Urge.*Lune.*not a named Madness/);
+  assert.match(field("numen:regenerate", "activation"), /No roll/);
+  assert.match(field("numen:regenerate", "effect"), /bashing first.*does not heal aggravated/);
+  assert.match(field("numen:stalwart", "effect"), /Resistance as Defense.*does not grant an Armor/);
+  assert.match(field("manifestation:possess", "effect"), /cannot use Numina or Influences/);
+  assert.match(field("manifestation:fetter", "effect"), /neither Influences nor Numina may target anyone else/);
+  assert.match(field("manifestation:possess", "traits"), /Physical Skills at −3 and Mental\/Social Skills at −4/);
+  assert.match(field("manifestation:unfetter", "effect"), /five yards.*dormancy/);
+  assert.match(field("influence:strengthen", "effect"), /Resonant.*Open/);
+  assert.match(field("influence:control", "effect"), /Open.*Controlled/);
+  const durations = totemCatalog.powerRules.find(rule => rule.id === "spirit-influence").fields.filter(field => field.id.startsWith("duration-"));
+  assert.equal(durations.length, 5); assert.match(durations.at(-1).text, /Permanent.*2 Essence/);
+  const before = structuredClone(totemCatalog), markup = render(createElement(TotemPowerReference, { catalog: totemCatalog }));
+  for (const phrase of ["Totem powers", "Powers: 40", "Using Influence", "Using Manifestations", "Using Numina", "<summary>Seek", "<summary>Claim", "Source discrepancy"]) assert.ok(markup.includes(phrase), phrase);
+  assert.doesNotMatch(markup, /missing translation|type="checkbox"|Spend Experience/);
+  assert.deepEqual(totemCatalog, before);
+  for (const path of ["totem-powers.json", "totem-powers-pt.json"]) assert.ok(requests.includes(`/game-lines/werewolf/data/${path}`));
 });
 
 test("Creation accepts unfilled Specialties and Touchstones and preserves authored notes on editing", () => {
@@ -779,6 +822,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     assert.match(markup, /Fetiches e Talens|Boneca de Bruxa/); assert.match(markup, /Quantidade restante/);
     for (const phrase of ["Regras e exemplos de Totem", "O Ninho Vigilante", "Pedra Inabalável", "Espreitador da Morte", "Proibição:", "Fraqueza:", "Numina:"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /The Wary Nest|<dt>Bane:|awaiting audit/);
+    for (const phrase of ["Poderes do Totem", "Poderes: 40", "Uso de Numina", "<summary>Buscar", "Parada de Dados", "Divergência na fonte"]) assert.ok(markup.includes(phrase), phrase);
+    assert.doesNotMatch(markup, /<summary>Seek|<summary>Using Numina/);
     assert.match(markup, /Player&#x27;s untranslated item/); assert.doesNotMatch(markup, /<summary>Witch-Poppet/);
     const builderMarkup = ptRender(createElement(ptBuilder.Component, { initial: character, player: "Test", catalogs, onCancel: () => {}, onSave: () => {}, onSaveDraft: () => {} }));
     assert.match(builderMarkup, /Caçador Destemido/); assert.doesNotMatch(builderMarkup, /missing translation/);

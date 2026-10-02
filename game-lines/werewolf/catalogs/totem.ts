@@ -9,22 +9,29 @@ export type TotemSample = Source & {
   influences: string; manifestations: string; numina: string; ban: string; bane: string; advantage: string; editorialNote?: string;
 };
 export type TotemSampleText = Pick<TotemSample, "epithet" | "concept" | "aspiration" | "description" | "speed" | "influences" | "manifestations" | "numina" | "ban" | "bane" | "advantage" | "editorialNote">;
+export type TotemPower = PassiveDefinition & {
+  kind: "numen" | "manifestation" | "influence"; reaching?: boolean; minimumRank?: number;
+  requiredManifestationIds?: string[]; requiredConditionId?: string; influenceLevel?: number;
+};
 export type WerewolfTotemCatalog = {
   rules: PassiveDefinition[]; ranks: TotemRank[];
   advantageBands: Array<{ minimum: number; maximum: number | null; experience: number }>;
   improvementCosts: { attribute: number; influence: number; numen: number };
   samples: TotemSample[];
-  presentation: { rules: WerewolfReferencePresentation; samples: Record<string, Partial<TotemSampleText>> };
+  powers: TotemPower[]; powerRules: PassiveDefinition[];
+  presentation: { rules: WerewolfReferencePresentation; samples: Record<string, Partial<TotemSampleText>>; powers: WerewolfReferencePresentation };
 };
 
 /** Line-owned reference: adopted source-conflict decisions remain explicit in the audit. */
 export const werewolfTotemCatalogGroup: CatalogGroupModule = {
   async load(reader): Promise<WerewolfTotemCatalog> {
-    const [core, presentation] = await Promise.all([
-      reader.getCatalog<Omit<WerewolfTotemCatalog, "presentation">>("werewolf-totem"),
-      reader.getCatalog<WerewolfTotemCatalog["presentation"]>("werewolf-totem-pt"),
+    const [core, presentation, powers, powersPresentation] = await Promise.all([
+      reader.getCatalog<Omit<WerewolfTotemCatalog, "presentation" | "powers" | "powerRules">>("werewolf-totem"),
+      reader.getCatalog<Omit<WerewolfTotemCatalog["presentation"], "powers">>("werewolf-totem-pt"),
+      reader.getCatalog<Pick<WerewolfTotemCatalog, "powers" | "powerRules">>("werewolf-totem-powers"),
+      reader.getCatalog<WerewolfReferencePresentation>("werewolf-totem-powers-pt"),
     ]);
-    return { ...core, presentation };
+    return { ...core, ...powers, presentation: { ...presentation, powers: powersPresentation } };
   },
 };
 

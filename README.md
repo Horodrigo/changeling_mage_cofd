@@ -20,7 +20,7 @@ The runtime is built with React, Next/Vinext, Vite, and Cloudflare. Character pe
 
 The optional Werewolf inventory includes all 18 Core Fetish/Talen samples and their EN/PT rules under `public/game-lines/werewolf/data/fetishes/`. Builder and Details/Powers preserve independent item instances, Steel Wolf variants, manual Talen quantities and authored spirit/notes. Custom item descriptions remain authored across locales. Acquiring or editing inventory never spends XP/Essence, consumes Talens automatically or teaches referenced Facets. Supplement inventory content and printable composition remain in progress.
 
-The lazy Werewolf Totem reference lives in `public/game-lines/werewolf/data/totem.json` and `totem-pt.json`. Builder and Details/Powers expose collapsible rules, Rank limits and three searchable The Pack examples. Source conflicts and the project's adopted Advantage/Defense conventions remain documented in `WerewolfAudit.md`; reference browsing never changes character data. The individual Totem editor and its power catalogs remain in progress, without Pack records or linked sheets.
+The lazy Werewolf Totem reference lives in `public/game-lines/werewolf/data/totem.json` and `totem-pt.json`. Its `totem-powers.json` / `totem-powers-pt.json` include all 24 Core Numina, 11 Manifestations and five Influence effects. Builder and Details/Powers expose collapsible rules, Rank limits, three searchable The Pack examples and power search/type/Reaching filters. Source conflicts and the project's adopted Advantage/Defense conventions remain documented in `WerewolfAudit.md`; reference browsing never changes character data. The individual Totem editor remains in progress, without Pack records or linked sheets.
 
 ## Prerequisites
 

@@ -1,0 +1,240 @@
+{
+  "spirit-influence": { "name": "Uso de Influências", "fields": {
+    "rating": { "label": "Graduação", "text": "Os pontos iniciais de Influência equivalem ao Grau e podem ser divididos entre domínios adequados à natureza do espírito. Um Numen pode ser trocado por um ponto de Influência. Normalmente, a graduação de uma Influência não pode superar o Grau; Totens vinculados possuem o potencial adicional descrito em The Pack p. 63." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento. Influenciar pensamentos ou emoções é disputado pelo maior entre Perseverança e Compostura, somado ao Instinto Primitivo." },
+    "allocation": { "label": "Efeito e duração", "text": "Os pontos destinados à intensidade do efeito, somados aos de duração, não podem superar a graduação da Influência. Pague o custo de Essência do efeito mais o custo de duração." },
+    "duration-0": { "label": "Duração 0", "text": "Um minuto por sucesso; sem Essência adicional." },
+    "duration-1": { "label": "Duração 1", "text": "Dez minutos por sucesso; sem Essência adicional." },
+    "duration-2": { "label": "Duração 2", "text": "Uma hora por sucesso; +1 de Essência." },
+    "duration-3": { "label": "Duração 3", "text": "Um dia por sucesso; +2 de Essência." },
+    "duration-4": { "label": "Duração 4", "text": "Permanente; +2 de Essência." },
+    "scent": { "label": "Odor espiritual", "text": "Um lobisomem que sente o odor do espírito testa Instinto Primitivo − Resistência do espírito para identificar a Influência de maior graduação; um sucesso excepcional revela todas as Influências." },
+    "discrepancy": { "label": "Divergência na fonte", "text": "A tabela de efeitos de Influência na p. 187 usa explicitamente Fortalecer para transformar Ressonante em Aberto. O texto de Aberto na p. 189 menciona Controlar. O catálogo preserva a correspondência da tabela e sinaliza o texto conflitante para auditoria; não considera os dois equivalentes silenciosamente." }
+  } },
+  "spirit-manifestation": { "name": "Uso de Manifestações", "fields": {
+    "allocation": { "label": "Alocação inicial", "text": "Espíritos começam com Forma Crepuscular e efeitos adicionais de Manifestação em quantidade igual ao Grau. Troque um Numen por um efeito adicional de Manifestação. Reivindicar exige tanto Agrilhoar quanto Possuir." },
+    "roll": { "label": "Parada de Dados", "text": "Ative um efeito de Manifestação com Poder + Refinamento, pagando o custo indicado. Efeitos que atravessam a Película sofrem sua penalidade de dados. Possuir, Agrilhoar e Reivindicar contra um alvo vivo são disputados por Perseverança + Compostura + Instinto Primitivo." },
+    "conditions": { "label": "Condições exigidas", "text": "As Condições pertencem a um espírito específico. Avançar para uma nova Condição pausa a duração de seu pré-requisito; ela é retomada quando a Condição avançada termina. Remover um pré-requisito também encerra as Condições que dependem dele. Estas são referências de regras, não alterações automáticas de estado." },
+    "open": { "label": "Aberto", "text": "Exige Ressonante para esse espírito. Interações repetidas preparam o sujeito para aceitá-lo: uma ação prolongada ao longo de um número de cenas igual ao Grau, ou à Perseverança do sujeito vivo, se maior. Aberto permite Agrilhoar ou Materializar. Remover Ressonante encerra Aberto; um exorcismo pode reduzir Aberto a Ressonante. Consulte a divergência da tabela de Influência acima." },
+    "controlled": { "label": "Controlado", "text": "Exige Aberto. Usos repetidos de Possuir preparam o sujeito para Reivindicar: um número de possessões separadas igual à maior Força de Vontade entre espírito e sujeito. Encerrar Possuído antes do prazo reinicia esse progresso. Remover Controlado ou Reivindicado à força devolve o sujeito a Aberto." },
+    "reaching": { "label": "Alcance", "text": "Abre um canal através da Película por uma cena. Influências e Numina marcados com Alcance podem atuar através dele. Um observador capaz de perceber o Crepúsculo pode detectar o canal com Raciocínio + Compostura." }
+  } },
+  "spirit-numina": { "name": "Uso de Numina", "fields": {
+    "roll": { "label": "Parada de Dados", "text": "A ativação normalmente usa Poder + Refinamento, salvo indicação diferente do Numen. Sua aparência reflete a natureza do espírito. Habilidades passivas e efeitos explicitamente sem teste são identificados separadamente." },
+    "reaching": { "label": "Alcance", "text": "Somente Numina marcados com Alcance podem atuar através da Película usando a Manifestação Alcance. Isso não dispensa seus custos ou resistência." },
+    "allocation": { "label": "Alocação de Totem", "text": "Um novo Totem começa com um Numen mais um a cada quatro pontos de Totem, antes das trocas por Influências ou Manifestações. O potencial ampliado do Totem vinculado é um limite, não uma concessão gratuita dessa quantidade de poderes." }
+  } },
+  "influence:strengthen": { "name": "Fortalecer", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência, mais os custos de duração." },
+    "effect": { "label": "Efeito", "text": "Reforce algo no domínio da Influência: melhore a Defesa, intensifique uma emoção, torne animais ou plantas mais saudáveis, ou reforce um objeto com Vitalidade ou Estrutura adicional igual ao Grau. Um sujeito Ressonante pode se tornar Aberto pela duração." }
+  } },
+  "influence:manipulate": { "name": "Manipular", "fields": {
+    "cost": { "label": "Custo", "text": "2 de Essência, mais os custos de duração." },
+    "effect": { "label": "Efeito", "text": "Faça pequenas alterações no domínio: mude a natureza ou o alvo de uma emoção, as ações de um animal, o crescimento de uma planta ou o funcionamento de um objeto." }
+  } },
+  "influence:control": { "name": "Controlar", "fields": {
+    "cost": { "label": "Custo", "text": "3 de Essência, mais os custos de duração." },
+    "effect": { "label": "Efeito", "text": "Faça mudanças drásticas: transforme completamente uma emoção ou dite o comportamento de animais, o crescimento de plantas ou o funcionamento de objetos. Um sujeito Aberto pode se tornar Controlado pela duração." }
+  } },
+  "influence:create": { "name": "Criar", "fields": {
+    "cost": { "label": "Custo", "text": "4 de Essência, mais os custos de duração." },
+    "effect": { "label": "Efeito", "text": "Crie um novo exemplo do domínio: uma emoção, muda, animal jovem ou objeto. Isso pode criar uma Condição temporária de Âncora, Infraestrutura ou Ressonante pela duração escolhida." }
+  } },
+  "influence:mass-create": { "name": "Criação em Massa", "fields": {
+    "cost": { "label": "Custo", "text": "5 de Essência, mais os custos de duração para múltiplas criações temporárias." },
+    "effect": { "label": "Efeito", "text": "Crie uma quantidade de exemplos do domínio igual ao Grau, ou um único exemplo permanente, incluindo uma Condição Ressonante permanente, sem Essência adicional de duração. Isso nunca altera permanentemente a mente de um ser sapiente." }
+  } },
+  "manifestation:twilight-form": { "name": "Forma Crepuscular", "fields": {
+    "cost": { "label": "Custo", "text": "Nenhum." },
+    "effect": { "label": "Efeito", "text": "Ao entrar no mundo físico, o espírito aparece no Crepúsculo. Espíritos começam com este efeito de Manifestação gratuitamente. O Crepúsculo não é Materialização física e não permite contato com objetos materiais comuns." }
+  } },
+  "manifestation:discorporate": { "name": "Descorporificar", "fields": {
+    "cost": { "label": "Custo", "text": "Nenhum." },
+    "effect": { "label": "Efeito", "text": "Disperse-se voluntariamente como se todo o Corpus tivesse sido perdido para dano letal. Esta fuga dolorosa pode evitar a destruição permanente; as regras normais de dormência e reconstituição continuam válidas." }
+  } },
+  "manifestation:reaching": { "name": "Alcance", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento − penalidade da Película." },
+    "duration": { "label": "Duração", "text": "Uma cena." },
+    "effect": { "label": "Efeito", "text": "Ganhe Alcance: abra um canal através da Película para usar Influências e Numina marcados com Alcance do outro lado. Um observador capaz de perceber o Crepúsculo pode notar o canal com Raciocínio + Compostura." }
+  } },
+  "manifestation:gauntlet-breach": { "name": "Ruptura da Película", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Ressonante." },
+    "cost": { "label": "Custo", "text": "3 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento − penalidade da Película." },
+    "effect": { "label": "Efeito", "text": "Atravesse a Película da Sombra para o mundo físico no Crepúsculo, ou retorne à Sombra." }
+  } },
+  "manifestation:shadow-gateway": { "name": "Portal da Sombra", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Grau 3+ e Aberto." },
+    "cost": { "label": "Custo", "text": "Essência igual à Intensidade da Película." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento − penalidade da Película." },
+    "duration": { "label": "Duração", "text": "Uma cena." },
+    "effect": { "label": "Efeito", "text": "Conceda Portal da Sombra ao local: um portal visível entre a Sombra e o mundo material, utilizável por qualquer pessoa sem poderes especiais." }
+  } },
+  "manifestation:image": { "name": "Imagem", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Ressonante." },
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "duration": { "label": "Duração", "text": "Uma cena." },
+    "effect": { "label": "Efeito", "text": "Permaneça no Crepúsculo, mas torne-se visível para observadores materiais; isso não concede um corpo físico." }
+  } },
+  "manifestation:materialize": { "name": "Materializar", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Aberto." },
+    "cost": { "label": "Custo", "text": "3 de Essência." },
+    "duration": { "label": "Duração", "text": "Uma hora por sucesso." },
+    "effect": { "label": "Efeito", "text": "Ganhe Materializado: um corpo físico a uma distância máxima de Grau em jardas de um objeto ou pessoa com Aberto. Espíritos Materializados são protegidos da perda contínua de Essência e seguem as regras dos espíritos no Crepúsculo, exceto a intangibilidade. Remover o pré-requisito encerra Materializado; contato com a Fraqueza pode encerrá-lo antes do prazo." }
+  } },
+  "manifestation:fetter": { "name": "Agrilhoar", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Aberto." },
+    "cost": { "label": "Custo", "text": "2 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento; alvos vivos disputam com Perseverança + Compostura + Instinto Primitivo." },
+    "effect": { "label": "Efeito", "text": "Ganhe Agrilhoado: vincule-se a um sujeito no Crepúsculo, permaneça a até cinco jardas e evite a perda contínua de Essência. Influências sobre o vínculo custam um ponto de Essência a menos; nem Influências nem Numina podem afetar outros alvos enquanto Agrilhoado. Dura até a remoção do pré-requisito, a morte ou destruição do sujeito, salvo supressão temporária por Desagrilhoar. Um sujeito vivo também se torna Instigado." },
+    "urged": { "label": "Instigado", "text": "Leia pensamentos superficiais com Poder + Refinamento disputado por Perseverança + Instinto Primitivo; instigue uma ação com Poder + Refinamento disputado por Perseverança + Compostura. Seguir o impulso concede um Ato, resolvido manualmente. Instigado termina com Agrilhoado." }
+  } },
+  "manifestation:unfetter": { "name": "Desagrilhoar", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Agrilhoado." },
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "duration": { "label": "Duração", "text": "Uma cena." },
+    "effect": { "label": "Efeito", "text": "Suprima temporariamente Agrilhoado, permitindo movimento e outras Manifestações. Ao fim da cena, essas Manifestações também terminam. Se não estiver novamente a até cinco jardas do vínculo, entre imediatamente em dormência." }
+  } },
+  "manifestation:possess": { "name": "Possuir", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Aberto." },
+    "cost": { "label": "Custo", "text": "3 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento; alvos vivos disputam com Perseverança + Compostura + Instinto Primitivo." },
+    "duration": { "label": "Duração", "text": "Uma cena, ou até o espírito sair, o hospedeiro morrer ou ser destruído." },
+    "effect": { "label": "Efeito", "text": "Conceda Possuído a um sujeito: controle um objeto, cadáver ou hospedeiro vivo. Um hospedeiro vivo fica em coma, com lacunas de memória e possíveis lembranças súbitas. O espírito é protegido da perda contínua de Essência, mas não pode usar Numina ou Influências enquanto controla o hospedeiro. Gaste um ponto de Essência por turno para curar um ferimento contusivo ou letal, ou dano de Estrutura; um cadáver morto devido a dano começa incapacitado." },
+    "traits": { "label": "Características do hospedeiro", "text": "Objetos mantêm suas funções normais; use Refinamento do espírito quando forem necessários testes. Um cadáver ou outro hospedeiro articulado usa seus Atributos Físicos e os Atributos Mentais e Sociais do espírito; gaste um ponto de Essência para usar os Atributos Físicos do espírito por um turno, causando um ferimento letal ou dano de Estrutura. Hospedeiros vivos sempre usam seus próprios Atributos. Leia sua mente com Refinamento −4; use suas Perícias Físicas com −3 e Mentais ou Sociais com −4, reduzidos em um por dia Agrilhoado a esse hospedeiro." },
+    "end": { "label": "Fim da possessão", "text": "O espírito se sobrepõe ao hospedeiro no Crepúsculo. Contato com a Fraqueza ou uma arma feita dela causa dano ao Corpus; abjuração, exorcismo, Proibição ou Fraqueza podem forçá-lo a sair." }
+  } },
+  "manifestation:claim": { "name": "Reivindicar", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Controlado; o espírito também deve possuir Agrilhoar e Possuir." },
+    "cost": { "label": "Custo", "text": "5 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento; alvos vivos disputam com Perseverança + Compostura + Instinto Primitivo." },
+    "effect": { "label": "Efeito", "text": "Conceda Reivindicado ao hospedeiro: funda-se permanentemente a ele ao longo de vários dias. Um hospedeiro vivo permanece consciente e Instigado durante a fusão. Desde o primeiro dia, acrescente um ponto de Atributo do espírito por dia a um Atributo adequado do hospedeiro. Cadáveres têm Atributos Mentais e Sociais 0; objetos têm Destreza e Atributos Mentais e Sociais 0, com Estrutura e Durabilidade substituindo medidas físicas. Hospedeiros não vivos não ficam Instigados." },
+    "hybrid": { "label": "Híbrido Reivindicado", "text": "Use Influências, não Numina ou efeitos de Manifestação. Novos Poderes Terríveis podem surgir conforme as regras separadas de antagonistas. O híbrido tem a Essência, Proibição e Fraqueza do espírito, é protegido da perda contínua de Essência desde o início e pode atravessar a Película em um locus com Inteligência + Presença." },
+    "leaving": { "label": "Saída de um hospedeiro vivo", "text": "Teste Poder + Refinamento originais − Grau, disputado por Perseverança + Compostura do hospedeiro, incluindo os pontos acrescentados. Em caso de sucesso, o corpo reverte as mudanças no ritmo em que surgiram; os Atributos acrescentados diminuem em dois pontos por dia. Essência e Poderes Terríveis desaparecem imediatamente." },
+    "nonliving": { "label": "Hospedeiro não vivo", "text": "Após a fusão completa, perca um ponto de Atributo Físico ou equivalente do objeto a cada três dias. Quando qualquer um chegar a zero, o hospedeiro se desintegra e o espírito retorna ao Crepúsculo." }
+  } },
+  "numen:aggressive-meme": { "name": "Meme Agressivo", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "O espírito deve estar em uma Condição que lhe permita falar com a vítima." },
+    "cost": { "label": "Custo", "text": "7 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento disputado por Perseverança + Compostura + Instinto Primitivo." },
+    "duration": { "label": "Duração", "text": "Dias iguais à Força de Vontade da vítima." },
+    "effect": { "label": "Efeito", "text": "Plante uma ideia que se torna um pensamento insistente e se espalha ao ser contada. As vítimas não são obrigadas a agir conforme ela." }
+  } },
+  "numen:awe": { "name": "Assombro", "fields": {
+    "cost": { "label": "Custo", "text": "3 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento; cada observador disputa com Presença + Compostura + Instinto Primitivo." },
+    "effect": { "label": "Efeito", "text": "Quem vir o espírito e obtiver menos sucessos não pode se mover ou falar por um turno; um sucesso excepcional estende isso a três turnos." }
+  } },
+  "numen:blast": { "name": "Rajada", "fields": {
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento, como um ataque com arma de fogo." },
+    "range": { "label": "Alcance", "text": "Poder × 10 jardas, sem penalidades de alcance." },
+    "effect": { "label": "Efeito", "text": "Projete um ataque letal com dano de arma 0L. Gaste dois pontos de Essência por +1L adicional, até um bônus de dano igual ao Grau. Não há custo inicial de Essência impresso." }
+  } },
+  "numen:dement": { "name": "Enlouquecer", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento disputado por Inteligência + Instinto Primitivo." },
+    "effect": { "label": "Efeito", "text": "Cause Loucura pelo restante da cena." }
+  } },
+  "numen:drain": { "name": "Drenar", "fields": {
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento disputado por Vigor + Perseverança + Instinto Primitivo." },
+    "effect": { "label": "Efeito", "text": "Escolha Essência ou Força de Vontade de um alvo material. Quem obtiver mais sucessos ganha essa quantidade de pontos do recurso escolhido e o outro perde: o ataque pode se voltar contra o espírito. Não há custo de Essência impresso." }
+  } },
+  "numen:emotional-aura": { "name": "Aura Emocional", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento, testado uma vez; quem entrar disputa com Perseverança + Compostura + Instinto Primitivo." },
+    "range": { "label": "Alcance", "text": "Aura de cinco jardas." },
+    "duration": { "label": "Duração", "text": "Uma cena, ou até o espírito usar outro Numen." },
+    "effect": { "label": "Efeito", "text": "Irradie uma emoção. Se o espírito vencer, a vítima sofre −2 em todas as ações enquanto a aura persistir. Se a vítima vencer, fica imune até o espírito ativá-la novamente." }
+  } },
+  "numen:entropic-decay": { "name": "Deterioração Entrópica", "fields": {
+    "cost": { "label": "Custo", "text": "3 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento, resistido por Vigor para alvos vivos, Resistência para espíritos ou Durabilidade para objetos." },
+    "effect": { "label": "Efeito", "text": "Acelere a destruição, decomposição ou corrosão. Cada sucesso causa um ponto de dano letal." }
+  } },
+  "numen:firestarter": { "name": "Incendiário", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "Inicie um pequeno incêndio por sucesso em material inflamável a até Poder em jardas." }
+  } },
+  "numen:ghost-eater": { "name": "Devorador de Fantasmas", "fields": {
+    "effect": { "label": "Efeito", "text": "Perceba fantasmas no Crepúsculo e consuma sua Essência como se fossem espíritos. Esta habilidade rara costuma pertencer a espíritos de morte ou luto. O verbete não apresenta custo ou teste de ativação separado; use as regras normais de alimentação e roubo de Essência." }
+  } },
+  "numen:hallucination": { "name": "Alucinação", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento disputado por Raciocínio + Compostura + Instinto Primitivo." },
+    "effect": { "label": "Efeito", "text": "Faça um alvo experimentar uma ilusão de qualquer coisa desejada pelo espírito, incluindo uma conversa. O verbete não especifica a duração." }
+  } },
+  "numen:host-jump": { "name": "Salto de Hospedeiro", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Estar Possuindo ou Reivindicando um hospedeiro; ele deve tocar um novo sujeito que cumpra todos os pré-requisitos dessa Manifestação." },
+    "cost": { "label": "Custo", "text": "3 de Essência; não pague novamente o custo da Manifestação." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "Transfira imediatamente Possuído ou Reivindicado ao novo sujeito. A fusão de Reivindicar recomeça; um hospedeiro vivo abandonado sofre as consequências normais." }
+  } },
+  "numen:implant-mission": { "name": "Implantar Missão", "fields": {
+    "cost": { "label": "Custo", "text": "2 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "Conceda a um mortal a visão de uma tarefa e a Condição Obcecado a respeito dela." }
+  } },
+  "numen:innocuous": { "name": "Inócuo", "fields": {
+    "activation": { "label": "Ativação", "text": "Sem teste ou gasto de Essência." },
+    "effect": { "label": "Efeito", "text": "Misture-se ao ambiente. Testes de percepção para notar o espírito sofrem −2." }
+  } },
+  "numen:left-handed-spanner": { "name": "Chave Canhota", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Um dispositivo feito por humanos com ao menos três partes móveis. Toque-o quando Manifestado, ou sobreponha-se a ele no Crepúsculo. Em combate, controle-o em uma manobra de agarrar; isso não é possível no Crepúsculo, salvo se o dispositivo também estiver nele." },
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "O dispositivo deixa de funcionar por um número de turnos igual aos sucessos." }
+  } },
+  "numen:mortal-mask": { "name": "Máscara Mortal", "fields": {
+    "prerequisites": { "label": "Pré-requisitos", "text": "Materializado; pode ser ativado junto de Materializar." },
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "duration": { "label": "Duração", "text": "Horas iguais aos sucessos." },
+    "effect": { "label": "Efeito", "text": "Pareça humano. Observadores podem notar algo errado com Raciocínio + Compostura − Refinamento; observadores capazes de perceber o espírito no Crepúsculo ignoram essa penalidade." }
+  } },
+  "numen:omen-trance": { "name": "Transe de Presságios", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência para o espírito, ou 3 para conceder a visão a outra pessoa." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento; utilizável uma vez a cada 24 horas." },
+    "effect": { "label": "Efeito", "text": "Anteveja um evento da próxima semana. A visão tende a indicar perigo." }
+  } },
+  "numen:pathfinder": { "name": "Desbravador", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento; um Lugar Seguro disputa com a menor Perseverança + Instinto Primitivo entre seus proprietários." },
+    "duration": { "label": "Duração", "text": "Uma cena; ative novamente se a viagem levar mais tempo." },
+    "effect": { "label": "Efeito", "text": "Revele a rota mais rápida até um destino, não necessariamente a mais segura. Os perigos do caminho não são revelados." }
+  } },
+  "numen:rapture": { "name": "Êxtase", "fields": {
+    "cost": { "label": "Custo", "text": "2 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "O sucesso causa Atordoado. A vítima então testa Perseverança + Instinto Primitivo; uma falha causa uma perturbação temporária alinhada aos desejos do espírito por Poder em dias. Lobisomens omitem Instinto Primitivo ao resistir a uma Lune. A fonte menciona uma perturbação, não a Condição Loucura." }
+  } },
+  "numen:regenerate": { "name": "Regenerar", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "activation": { "label": "Ativação", "text": "Sem teste; reative a cada turno para curar outros ferimentos." },
+    "effect": { "label": "Efeito", "text": "Cure um ferimento contusivo ou letal de Corpus, começando pelos contusivos. Isso não cura dano agravado." }
+  } },
+  "numen:seek": { "name": "Buscar", "fields": {
+    "roll": { "label": "Parada de Dados", "text": "Refinamento." },
+    "range": { "label": "Alcance", "text": "Duas milhas por Grau; gaste um ponto de Essência para multiplicar o alcance por dez." },
+    "effect": { "label": "Efeito", "text": "Encontre a direção e a distância da Condição Ressonante adequada mais próxima." }
+  } },
+  "numen:speed": { "name": "Velocidade", "fields": {
+    "cost": { "label": "Custo", "text": "2 de Essência para dobrar o Deslocamento, ou 4 para triplicá-lo." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "duration": { "label": "Duração", "text": "Uma cena." }
+  } },
+  "numen:sign": { "name": "Sinal", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "Produza uma única mensagem ou imagem em qualquer meio, como condensação, telas ou telefones." }
+  } },
+  "numen:stalwart": { "name": "Inabalável", "fields": {
+    "effect": { "label": "Efeito", "text": "Use Resistência como Defesa, em vez de Poder ou Refinamento. O espírito parece blindado. O verbete não especifica custo ou teste de ativação; não concede uma graduação de Armadura." }
+  } },
+  "numen:telekinesis": { "name": "Telecinese", "fields": {
+    "cost": { "label": "Custo", "text": "1 de Essência." },
+    "roll": { "label": "Parada de Dados", "text": "Poder + Refinamento." },
+    "effect": { "label": "Efeito", "text": "Use os sucessos como Força para erguer ou arremessar objetos sem Materializar. Isso não permite controle motor fino." }
+  } }
+}
