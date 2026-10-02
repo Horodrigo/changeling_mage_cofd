@@ -264,8 +264,9 @@
   width: 110px;
 }
 .token-catalog-trigger {
-  min-width: 240px;
-  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 240px;
 }
 .token-add-button {
   flex: none;
@@ -300,7 +301,7 @@
 @media (max-width: 720px) {
   .merit-configuration.structured > div,
   .structured-choice-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .structured-choice-row > button {
     justify-self: end;
@@ -317,6 +318,7 @@
   gap: 8px;
 }
 .expanded-merit-card {
+  min-width: 0;
   border: 1px solid color-mix(in srgb, var(--sheet-accent) 32%, #d8d2c8);
   background: #fffefa;
   padding: 11px;
@@ -378,10 +380,20 @@
 }
 .entitlement-select {
   display: grid;
+  min-width: 0;
   max-width: 560px;
   gap: 5px;
   font-size: 16px;
   font-weight: 800;
+}
+.entitlement-select [data-slot="select-trigger"] {
+  min-width: 0;
+  width: 100%;
+}
+.entitlement-select [data-slot="select-value"] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .entitlement-prerequisites,
 .entitlement-inherent,
@@ -6777,6 +6789,53 @@ body:has([class*="line-theme-"])
 @media (max-width: 720px) {
   .content {
     padding: 0 13px 25px;
+  }
+  .builder-head {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .builder-head > div {
+    flex: 1;
+    min-width: 0;
+  }
+  .builder-head > button:last-child:not(:first-child) {
+    width: 100%;
+  }
+  .builder-actions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .builder-actions > span {
+    display: none;
+  }
+  .dot-groups section {
+    min-width: 0;
+  }
+  .dot-row > span {
+    display: block;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .dot-row > div {
+    flex: none;
+  }
+  .merit-row-main {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .merit-row-main > div:first-child {
+    grid-column: 1/-1;
+  }
+  .merit-option {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .merit-option strong,
+  .merit-option small {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .merit-option button {
+    align-self: flex-end;
   }
   .topbar h1 {
     font-size: 23px;

@@ -1972,6 +1972,11 @@ body:has(.line-theme-ctl)
     font-size: 21px;
   }
 
+  .ctl-sheet .official-heading span {
+    min-width: 0;
+    white-space: normal;
+  }
+
   .ctl-sheet .experience-actions button.ctl-purchase-trait-button {
     gap: 7px;
     min-height: 30px;
@@ -2160,6 +2165,20 @@ body:has(.line-theme-ctl)
 
   .ctl-sheet .notes-area textarea {
     font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  .ctl-sheet .mobile-attribute-grid .official-trait-line {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3px;
+    padding-block: 4px;
+  }
+}
+
+@media (max-width: 380px) {
+  .ctl-sheet .power-resource .resource-track {
+    grid-template-columns: repeat(5, 20px);
   }
 }
 
