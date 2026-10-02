@@ -8,7 +8,7 @@ The primary rule is:
 
 > Core supplies mechanisms. Game lines supply mechanics.
 
-The application currently supports the persisted game-line IDs `CofD`, `CtL`, `MtA`, `VtR`, and `WtF`. Werewolf currently exposes Core Forsaken creation/editing and an in-app sheet; its remaining approved scope is tracked in `WerewolfAudit.md`. The main boundaries are:
+The application currently supports the persisted game-line IDs `CofD`, `CtL`, `MtA`, `VtR`, and `WtF`. Werewolf exposes Core Forsaken creation/editing and a desktop/mobile in-app sheet. The user narrowed its current goal to existing-sheet visual polish on 2026-10-02; new systems, remaining supplement catalogs and print/PDF/blank surfaces are deferred in `WerewolfAudit.md`. The main boundaries are:
 
 - `lib/core/character/`: neutral persisted character shape, current-schema validation, shared Chronicles traits, and structural normalization helpers.
 - `lib/game-line-contracts/`: neutral contracts for registrations, rule hooks, UI surfaces, and catalog snapshots.
@@ -326,7 +326,7 @@ Do not change Cloudflare bindings or configuration merely to silence local ambie
 
 ## Deferred Features
 
-Specialized server-side PDF generation remains deferred. Mortal, Changeling, Mage, and Vampire support browser-owned print/PDF surfaces loaded lazily from their registrations. Werewolf does not yet advertise print support; its line-owned PDF/blank surface remains in the active Werewolf scope.
+Specialized server-side PDF generation remains deferred. Mortal, Changeling, Mage, and Vampire support browser-owned print/PDF surfaces loaded lazily from their registrations. Werewolf does not advertise print support; its line-owned print/PDF/blank surface is deferred to a future goal, per the user's 2026-10-02 scope revision.
 
 Homebrew activation is browser-local and shared by source/item ID. The common Homebrew shell owns navigation, activation preferences, and lazy line dispatch; the shared data-transfer panel owns local import/export of player-created definitions and activation preferences. Each game line owns its Homebrew inventory, validation, and integration with its catalogs; generic Merit storage and editing remain a shared Core mechanism. Core and each line support player-created Merits. Mage also owns player-created Spells and Legacies; Vampire owns player-created Clans, Bloodlines, Covenants, Disciplines, Devotions, Blood Sorcery powers, Coils, and Scales; Changeling owns player-created Seemings, Kiths, Courts, Contracts, and Entitlements. Their definitions are stored separately from character sheets and merged into the relevant surfaces without mutating static catalog snapshots.
 

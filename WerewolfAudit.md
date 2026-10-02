@@ -1,14 +1,30 @@
 # Werewolf — decisões da auditoria
 
-Status: decisões e P01–P03 aprovados em 2026-09-30; meta retomada pelo usuário. Implementação em andamento. Este documento substitui as propostas anteriores da auditoria e registra o entendimento atual, com dúvidas remanescentes ao final. `AGENTS.md` e o código atual continuam sendo a referência arquitetural; remover ou arquivar esta auditoria quando as decisões forem incorporadas.
+Status: decisões e P01–P03 aprovados em 2026-09-30; escopo reduzido pelo usuário em 2026-10-02 para finalizar o acabamento da ficha Desktop/Mobile existente. Impressão fica para o futuro. Este documento preserva as decisões e o inventário de trabalho adiado; as propostas históricas de implementação completa abaixo não ampliam o escopo atual. `AGENTS.md` e o código continuam sendo a referência arquitetural.
 
-Prioridade atual definida pelo usuário: disponibilizar primeiro a criação/edição de Uratha. Implementar as escolhas, concessões e validações das pp. 81–83 e os catálogos necessários a esse fluxo antes de completar as demais superfícies. Isso não reduz o escopo da meta. O painel compartilhado de criação deve acompanhar a altura do conteúdo, sem o espaço artificial após Concept/Chronicle.
+## Revisão de escopo — 2026-10-02
+
+Concluir apenas os ajustes visuais da ficha atual: tema, hierarquia, espaçamento, disclosures, controles e diálogos, em Desktop/Mobile e EN/PT; comparar com as fichas existentes, executar os quality gates e depois fazer merge local com main e remover werewolf. Não ampliar os catálogos ou implementar novos sistemas nesta etapa. Criação continua disponível como já implementada, sem uma nova reformulação neste lote.
+
+Adiados: catálogos elegíveis restantes de The Pack e Night Horrors: Shunned by the Moon; Conditions/Tilts dos três livros; configurações de Skin Thief, The Father's Form e Quicksilver Flesh; referências completas de Auspice Abilities, Hunter Aspects e Tribal Benefits; Pack Tactics individuais; revisão transversal restante de Ban/Bane; composição dedicada de impressão/PDF/blank. Dúvidas editoriais pendentes continuam registradas, inclusive Area of Expertise, Chain Rage e os trechos de Weather. Estes itens não bloqueiam a conclusão do escopo reduzido e não devem ser anunciados como concluídos.
+
+### Entrega visual do escopo reduzido
+
+- Tema próprio em tons terrosos na ficha, navegação e diálogos, seguindo as variáveis compartilhadas das outras linhas; sem gerar imagens ou incorporar as pastas de fonts ainda não rastreadas.
+- Cabeçalho centralizado, identidade mobile organizada em pares, nota de Hishu discreta, Renown/Merits compactos, indicadores de expansão visíveis e campos mecânicos com rótulos destacados. Controles de Totem e filtros têm alinhamento consistente; diálogos longos permitem rolagem vertical sem cortar as ações finais.
+- Desktop mantém as cinco colunas iguais sobre a estampa existente: 162px por coluna na largura de teste, 812px de conteúdo e 812px de scrollWidth. Mobile usa apenas a form ativa em Combat e não exibe a estampa. Foram conferidos Main/Summary, Traits, Details, Combat, Notes e diálogos de XP, Totem Advantage e Fetishes em EN/PT, incluindo 390×844 e o limite estreito de 320×740.
+- Comparação visual com fichas sintéticas de Mortal, Changeling, Vampire e Mage em desktop/mobile: mesma geometria compartilhada, hierarquia de títulos, escala dos controles e leitura das regras. Nenhuma ficha pessoal foi alterada. Werewolf apresentou clientWidth/scrollWidth iguais em 390 e 320px; não houve erro no console.
+- Harmony conservou exatamente um círculo preenchido; Touchstones permanecem em 10/0. A fixture manteve Gauru, 11/12 caixas ocupadas, recursos, XP e benefícios previamente configurados. Este lote altera apresentação, não mecânicas, catálogos ou compras.
+- Verificação: `npm run lint`, `npm run build`, `npx tsc --noEmit`, `git diff --check` e **427/427 testes** aprovados. Evidências ignoradas pelo Git em `.wrangler/werewolf-final-desktop-pt.jpg`, `werewolf-final-mobile-pt.jpg`, `werewolf-final-mobile-details-pt.jpg` e `werewolf-final-mobile-combat-pt.jpg`.
+- Impressão/PDF/blank não implementados nem testados neste lote, conforme a decisão posterior do usuário. O escopo visual reduzido está concluído; os itens adiados acima continuam registrados para uma futura meta.
+
+Prioridade histórica definida pelo usuário: disponibilizar primeiro a criação/edição de Uratha. Esse fluxo já está implementado. O painel compartilhado de criação acompanha a altura do conteúdo, sem o espaço artificial após Concept/Chronicle. A revisão de escopo acima substitui a exigência anterior de completar todas as superfícies nesta meta.
 
 ## Convenção de comunicação e fontes
 
 ### Critério final de qualidade visual e smoke tests
 
-O usuário autorizou smoke tests durante esta meta em 2026-10-02. Realizá-los no navegador, com fichas sintéticas e sem alterar fichas pessoais. A meta existente passa a incluir uma etapa de acabamento visual: após completar os sistemas aprovados, comparar criação, ficha, Details/Powers, Combat e experiência com Mortal, Changeling, Vampire e Mage, em desktop/mobile e EN/PT, além de conferir PDF/blank. Ajustar CSS, espaçamento, hierarquia, controles e apresentação até Werewolf ter qualidade visual comparável às demais linhas. A implementação funcional isolada não permite concluir a meta. Registrar resultados, limitações e correções; só depois executar o merge local com main e remover werewolf. Não ampliar o escopo mecânico nem criar outras imagens não autorizadas.
+O usuário autorizou smoke tests durante esta meta em 2026-10-02, com fichas sintéticas e sem alterar fichas pessoais. Conforme a redução posterior, comparar apenas a ficha Desktop/Mobile atual, incluindo Details, Combat e experiência, em EN/PT, com o padrão das demais linhas. Ajustar CSS, espaçamento, hierarquia, controles e apresentação. Registrar resultados; só depois executar o merge local com main e remover werewolf. Não ampliar o escopo mecânico, trabalhar em impressão ou criar outras imagens não autorizadas.
 
 Primal Urge mantém apenas resumos compactos e informativos abaixo dos dots, sem uma segunda seção Primal Urge X. Omitir valores 0/None; limites de Essence permanecem no controle de Essence, e o teto de traits acima de 5 aparece quando aplicável. Kuruth, Wasu-Im e os gatilhos pertencem a Body of the Wolf. Harmony representa uma posição, portanto somente o círculo do valor atual fica preenchido, inclusive nos extremos 0 e 10. A última orientação preserva o estilo compacto de Basu-Im para as demais informações, em vez de impor as abreviações sugeridas anteriormente.
 
@@ -26,7 +42,7 @@ Referências numéricas usam páginas impressas. Nos trechos consultados, a pág
 
 A auditoria cobre o inventário de sistemas dos três livros, mas não representa revisão editorial concluída de cada entrada de catálogo. O conteúdo incluído será verificado em lotes, com inglês canônico e português desde o início. A skill `cofd-pdf-review` orienta a conferência visual de regras e tabelas; `cofd-rules` mantém a separação entre regra oficial, decisão de produto e escolha da mesa.
 
-## Escopo consolidado
+## Escopo original consolidado — referência histórica
 
 Incluído:
 
