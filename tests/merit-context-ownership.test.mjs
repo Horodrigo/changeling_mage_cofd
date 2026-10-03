@@ -7,15 +7,44 @@ import { createServer } from "vite";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] } });
 after(() => vite.close());
-const { meritContextForSheet, meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
+const { meritContextForSheet, meritPrerequisitesMet, meritSelectionProblems } = await vite.ssrLoadModule("/lib/merits.ts");
 const { mageMeritContextForSheet, canAdvanceMageGrant } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
-const { changelingMeritContextForSheet, canAdvanceChangelingGrant, changelingExperienceMeritEligible } = await vite.ssrLoadModule("/game-lines/changeling/merit-context.ts");
+const { changelingMeritContextForSheet, canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/changeling/merit-context.ts");
 const { canAdvanceWerewolfGrant } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
 const { vampireMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
 const { mortalMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/mortal/rules.ts");
 const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
 const read = path => JSON.parse(readFileSync(new URL(`../public/${path}`, import.meta.url), "utf8"));
 const catalog = [...read("shared/data/merits.json"), ...read("game-lines/changeling/data/merits.json"), ...read("game-lines/mage/data/merits.json"), ...read("game-lines/werewolf/data/merits.json")];
+
+test("Changeling owns Seeming alternatives, Kith metadata and the Lucid Dreamer exception", () => {
+  const context = { gameLine: "CtL", archetypes: ["changeling"], seeming: "Beast", kith: "Artist", attributes: { Wits: 3 } };
+  const definition = { id: "homebrew:test", name: "My Merit", seeming: "Darkling", alternativePrerequisites: "Wits •••", prerequisites: "Darkling" };
+  assert.equal(changelingMeritPrerequisitesMet(definition, context), true);
+  assert.equal(changelingMeritPrerequisitesMet(definition, { ...context, attributes: { Wits: 2 } }), false);
+  assert.equal(changelingMeritPrerequisitesMet({ ...definition, alternativePrerequisites: undefined }, context), false);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Kith Merit", kith: "Artist" }, context), true);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Kith Merit", kith: "Artist" }, { ...context, kith: "Chatelaine" }), false);
+  const lucid = catalog.find(item => item.id === "ctl-2ed:lucid-dreamer");
+  assert.equal(changelingMeritPrerequisitesMet(lucid, context), false);
+  assert.equal(changelingMeritPrerequisitesMet({ ...lucid, id: "homebrew:lucid", prerequisites: undefined }, context), true);
+});
+
+test("Changeling Court access and printed remainder use the same owning predicate for selection and validation", () => {
+  const definition = { id: "homebrew:test", name: "Seasonal Merit", courtAccess: [{ court: "Autumn", mantle: 1, courtGoodwill: 3 }], prerequisites: "Autumn Mantle • or Autumn Court Goodwill •••; Wits •••" };
+  const context = { gameLine: "CtL", court: "Autumn Court", mantle: 1, attributes: { Wits: 3 }, meritCatalog: catalog, merits: [] };
+  const before = structuredClone(context);
+  assert.equal(changelingMeritPrerequisitesMet(definition, context), true);
+  assert.equal(changelingExperienceMeritEligible(definition, context), true);
+  assert.deepEqual(meritSelectionProblems(definition, { dots: 1 }, context, changelingMeritPrerequisitesMet), []);
+  for (const change of [{ mantle: 0 }, { court: "winter" }, { attributes: { Wits: 2 } }]) {
+    const candidate = { ...context, ...change };
+    assert.equal(changelingMeritPrerequisitesMet(definition, candidate), false);
+    assert.equal(changelingExperienceMeritEligible(definition, candidate), false);
+    assert.equal(meritSelectionProblems(definition, { dots: 1 }, candidate, changelingMeritPrerequisitesMet)[0].key, "ui.meritPrerequisitesNotMet");
+  }
+  assert.deepEqual(context, before);
+});
 
 test("each line owns canonical grant upgrade eligibility; translated, foreign, unavailable and Homebrew identities cannot impersonate a grant", () => {
   for (const [id, marker, eligible] of [

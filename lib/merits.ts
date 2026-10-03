@@ -76,12 +76,11 @@ export type MeritPrerequisiteContext = RequirementContext & {
 const courtKey=(value:unknown)=>String(value??"").toLowerCase().replace(/^court[- ]/,"").replace(/[- ]court$/,"").replace(/[^a-z]/g,"");
 
 export function meritPrerequisitesMet(
-  merit: Pick<MeritDefinition, "name" | "prerequisites" | "courtAccess" | "seeming" | "alternativePrerequisites"> & Partial<MeritDefinition>,
+  merit: Pick<MeritDefinition, "name" | "prerequisites"> & Partial<MeritDefinition>,
   context: MeritPrerequisiteContext,
 ) {
   if(merit.line&&merit.line!=="Core"&&merit.line!==context.gameLine) return false;
   if(merit.mortalOnly && context.gameLine !== "CofD" && !context.mortalMeritsAllowed) return false;
-  if(merit.kith&&!requirementMet({kith:merit.kith},context)) return false;
   if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
   const owned=context.merits??[];
   const forbidden=(definition:Partial<MeritDefinition>)=>definition.descriptivePrerequisites?[]:definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
@@ -95,37 +94,11 @@ export function meritPrerequisitesMet(
     const definition = resolveMeritDefinition(item, catalog);
     return item.dots>0 && definition && Boolean(merit.id) && forbiddenIds(definition).includes(merit.id!);
   }))return false;
-  if (merit.id === "ctl-2ed:lucid-dreamer" && context.archetypes?.includes("changeling")) return false;
-  let usedSeemingAlternative=false;
-  if(merit.seeming&&courtKey(context.seeming)!==courtKey(merit.seeming)){
-    if(!merit.alternativePrerequisites||!simplePrerequisitesMet(merit.alternativePrerequisites,context)) return false;
-    usedSeemingAlternative=true;
-  }
-  let printedPrerequisites=merit.prerequisites;
-  if(merit.courtAccess?.length){
-    const ownCourt=courtKey(context.court);
-    const distributed = catalog.filter(item=>!item.sourceId.startsWith("homebrew:"));
-    const mantleId = resolveMeritReference("Mantle", distributed)?.id;
-    const goodwillId = resolveMeritReference("Court Goodwill", distributed)?.id;
-    const mantle=Math.max(0,Number(context.mantle??(mantleId ? owned.find(item=>resolveMeritDefinition(item,catalog)?.id===mantleId)?.dots : 0)??0));
-    const goodwill=new Map(owned.filter(item=>goodwillId && resolveMeritDefinition(item,catalog)?.id===goodwillId).map(item=>[courtKey(item.configuration?.court),Number(item.dots??0)]));
-    if(!merit.courtAccess.some((access)=>
-      (ownCourt===courtKey(access.court)&&mantle>=access.mantle)||
-      (access.courtGoodwill!==undefined&&(goodwill.get(courtKey(access.court))??0)>=access.courtGoodwill)
-    )) return false;
-    // Seasonal records prefix their generated Mantle/Goodwill access summary;
-    // courtAccess above is authoritative, so only evaluate the printed remainder.
-    printedPrerequisites=printedPrerequisites?.includes(";")?printedPrerequisites.split(";").slice(1).join(";").trim():undefined;
-  }
-  if(!merit.descriptivePrerequisites&&!usedSeemingAlternative&&!catalogPrerequisitesMet(printedPrerequisites,context)) return false;
+  if(!merit.descriptivePrerequisites&&!meritTextPrerequisitesMet(merit.prerequisites,context)) return false;
   return true;
 }
 
 const dotsIn=(value:string)=>[...value].filter((character)=>character==="•").length;
-function simplePrerequisitesMet(value:string,context:MeritPrerequisiteContext){
-  return catalogPrerequisitesMet(value,context);
-}
-
 const ATTRIBUTE_NAMES=["Intelligence","Wits","Resolve","Strength","Dexterity","Stamina","Presence","Manipulation","Composure"];
 const SKILL_NAMES=["Academics","Computer","Crafts","Investigation","Medicine","Occult","Politics","Science","Athletics","Brawl","Drive","Firearms","Larceny","Stealth","Survival","Weaponry","Animal Ken","Empathy","Expression","Intimidation","Persuasion","Socialize","Streetwise","Subterfuge"];
 const SEEMING_NAMES=["Beast","Darkling","Elemental","Fairest","Ogre","Wizened"];
@@ -133,7 +106,7 @@ function traitValue(name:string,context:MeritPrerequisiteContext){
   const traits={...(context.attributes??{}),...(context.skills??{})};
   return Number(traits[name]??0);
 }
-function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext):boolean{
+export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext):boolean{
   if(!value) return true;
   // Parse ordinary comma-separated trait and Merit clauses independently.
   // Keep the legacy narrative/group helpers below for general-purpose special wording.
@@ -147,7 +120,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
     const currentSeeming=SEEMING_NAMES.find((name)=>courtKey(name)===courtKey(context.seeming));
     if(currentSeeming&&new RegExp(`\\b${currentSeeming}\\b`).test(group)&&!new RegExp(`\\bor\\b`,"i").test(group)){
       const rest=group.replace(new RegExp(`\\b${currentSeeming}\\b[,]?`,"i"),"").trim();
-      return rest?catalogPrerequisitesMet(rest,context):true;
+      return rest?meritTextPrerequisitesMet(rest,context):true;
     }
     if(/Cannot have/i.test(group)){
       const forbidden=group.replace(/Cannot have/i,"").trim();
@@ -203,8 +176,8 @@ export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Recor
 
 export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams; meritIds?: readonly string[] };
 
-export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext):MeritSelectionProblem[]{
+export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext,isEligible=meritPrerequisitesMet):MeritSelectionProblem[]{
   const config=selection.configuration??{}, problems:MeritSelectionProblem[]=[];
-  if(!meritPrerequisitesMet(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
+  if(!isEligible(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
   return problems;
 }

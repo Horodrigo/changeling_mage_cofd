@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Data: 2026-10-02. Estado: **auditoria respondida; meta ativa, começando pelas prioridades abaixo**.
+Data inicial: 2026-10-02. Atualização: 2026-10-03. Estado: **meta ativa; prioridade 0 em execução; etapas 1–4 pendentes**.
 
 ## Escopo e método
 
@@ -205,13 +205,13 @@ Os Lesser/Greater Utility Attainments já possuem textos bilíngues locais na fi
 
 ### X01 — Histórico de experiência
 
-Nas três linhas há transações cujo texto é montado no idioma da compra e depois exibido diretamente. Alternar EN/PT não relocaliza esse histórico:
+No levantamento inicial, as três linhas tinham transações cujo texto era montado no idioma da compra e depois exibido diretamente. Alternar EN/PT não relocalizava esse histórico:
 
 - Mortal: `game-lines/mortal/experience-panel.tsx`, campo `entry.label`.
 - Vampire: `game-lines/vampire/experience-panel.tsx`, campo `entry.label`.
 - Mage: `game-lines/mage/experience-panel.tsx`, campo `entry.description`.
 
-É dívida de apresentação dinâmica, não falta de uma frase no dicionário. Uma correção futura deve renderizar a identidade semântica da transação sem alterar XP, compras ou histórico persistido. Mage também tem tratamento de estorno que interpreta descrições antigas: traduzir ou sobrescrever o histórico indiscriminadamente pode afetá-lo.
+**Implementado e verificado nos lotes da prioridade 0:** novas compras registram identidade semântica/canônica; os painéis renderizam o histórico no idioma atual sem reescrever XP, compras ou registros. Merits usam definição/instância exata; Legacy usa definição/rank e deltas. Foram removidos a interpretação de descrições antigas no estorno Mage e o restauro de snapshots em Vampire. Entradas opacas permanecem visíveis/preservadas e não autorizam estorno por adivinhação. As referências de Merits nos requisitos de Legacy também foram migradas. A prioridade 0 completa continua aberta nos parsers especializados e demais vínculos remanescentes; não é uma pendência de novas frases do dicionário. Evidências e limites dos bridges schema-2 estão nos lotes abaixo.
 
 ### X02 — Catálogos e conteúdo do jogador
 
@@ -228,7 +228,7 @@ Inspeção motivada pelos exemplos do usuário em Core e `app/css/globals.css`:
 - `lib/core/` não contém mecânicas de Contracts. O ID suportado `CtL` em `game-line-ids.ts` é parte do roteamento neutro.
 - `lib/game-line-contracts/` define contratos de programação (interfaces de registro, regras, UI e catálogos), não poderes de Changeling; permanece compartilhado.
 - **Resolvido:** apresentação, Clauses e tipos de Contracts passaram para `game-lines/changeling/contract-presentation.ts`, `contract-clauses.ts` e `contract-types.ts`. Foram removidos os helpers antigos e `lib/catalog/contract-catalog.ts`; `lib/catalog/catalog-types.ts` não contém mais `ContractDefinition`/`SeemingKey`. Não foram mantidas reexportações nem adapters permanentes.
-- **Dívida real em mecanismo compartilhado:** `lib/merits.ts` lê `line_data.contracts`/`learned_contracts`, Court, Seeming, Wyrd e outros campos de linhas na montagem de contexto, e interpreta requisitos específicos de Contracts. A migração precisa preservar a elegibilidade por hooks/contexto da linha, não apenas deslocar ou renomear arquivos.
+- **Contexto e acesso migrados; parsers ainda pendentes:** o contexto compartilhado de `lib/merits.ts` não lê mais `line_data`; cada linha fornece seus próprios campos. O acesso de Merits por Court/Seeming/Kith passou para Changeling. Restam tipos/contextos especializados e a interpretação de texto/requirements de Contracts, Wyrd, Gnosis/Arcana e identidades de linhas nos helpers compartilhados. A migração precisa preservar a elegibilidade por composição da linha, não apenas deslocar ou renomear arquivos.
 - Os seletores exclusivos `.changeling-homebrew-source`, `.entitlement-homebrew-editor .homebrew-form` e `.contract-homebrew-editor .homebrew-form` foram movidos de `app/css/globals.css` para `game-lines/changeling/styles/sheet.css`, sem mudança de valores.
 - Classes visuais reutilizadas por Changeling/Mage/Vampire foram neutralizadas: `rule-power-*`, `creation-power-*`, `template-choice-*`, `custom-template-editor` e `affiliation-*`. O marcador compartilhado de recurso armazenado usa `stored-resource-dot`. Seletores exclusivos de Kith, Court, Regalia, Token, Entitlement, Clarity e Goblin Debt passaram para o CSS de Changeling, preservando declarações e media queries; regras sem consumidores foram removidas. Testes protegem os novos nomes e a localização. Não há transferência automática de ownership mecânico pela reutilização visual. A superfície de Entitlements agora é `game-lines/changeling/entitlement-page.tsx`, sem cópia em `app/workspace/`.
 - Homebrew não constitui uma exceção: o shell/controles realmente comuns são compartilhados; editores e mecânicas específicos pertencem à linha.
@@ -518,6 +518,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Fontes inspecionadas visualmente: Night Horrors: Nameless and Accursed pp. 29 e 35; Tome of the Pentacle p. 154. O catálogo de Nighthawks inclui Prime 2 no segundo Attainment, enquanto a lista impressa de pré-requisitos cita Larceny 3; o limiar cadastrado não foi alterado incidentalmente. Tyrian Archons menciona Profane Tool (Scepters), mas o requisito estruturado atual só verifica o Merit/ponto; essa restrição de configuração continua uma pendência mecânica separada, sem reconstrução neste lote.
 - A prioridade 0 permanece aberta nos parsers especializados compartilhados. Traduções das etapas 1–4 permanecem pendentes; a meta completa continua ativa.
 - Verificação: suíte completa **529/529**, lint, build, TypeScript e `git diff --check` aprovados. A fixture inicial omitia o catálogo suplementar de Mage; a reconciliação detectou essa omissão, que foi corrigida antes da suíte completa. Testes cobrem nomes alterados, IDs indisponíveis, homônimos Homebrew, ponte schema-2 inequívoca, domínios, ausência de soma entre instâncias, round-trip e passagem do catálogo nas três superfícies. Sem smoke de navegador.
+
+## Progresso — prioridade 0, acesso de Merits por Court/Seeming/Kith (2026-10-03)
+
+- `changelingMeritPrerequisitesMet` passou a possuir o acesso por Court, Feição, Frátria e a exceção do Lucid Dreamer canônico. O helper compartilhado conserva as verificações neutras de linha, mortalOnly, requisitos e exclusões; não calcula esse acesso nem identifica Mantle/Goodwill.
+- Criação/edição usa o predicado no picker e na validação; compra e dependências de estorno usam a mesma composição pela elegibilidade de XP existente. `meritSelectionProblems` recebe opcionalmente o predicado da linha e continua retornando mensagens semânticas, sem ler campos persistidos especializados.
+- Mantle/Goodwill no acesso sazonal resolvem os IDs canônicos no catálogo ativo, conservando a ponte de seleção schema-2 já documentada. A alternativa de Feição e o restante do pré-requisito após o prefixo sazonal mantêm o comportamento anterior. Nenhum custo, dot, efeito, ID, texto autoral ou histórico foi reescrito.
+- X01 e X03 acima foram atualizados para distinguir o levantamento inicial das correções já verificadas. Restam os parsers textuais/estruturados especializados compartilhados; este lote não declara a prioridade 0 nem as traduções 1–4 concluídas.
+- Verificação: **42.720 comparações** de elegibilidade Core/Changeling contra `caef583` preservaram o resultado em 120 contextos; suíte dirigida **51/51**, completa **532/532**, lint, build, TypeScript e `git diff --check` aprovados. O primeiro comparador temporário não transpiliava o módulo TypeScript virtual; foi corrigido para transpilar explicitamente e então concluiu a comparação. Testes protegem a composição nas superfícies e as fronteiras de ownership. Sem smoke de navegador.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

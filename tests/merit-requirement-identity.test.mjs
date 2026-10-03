@@ -8,6 +8,7 @@ const vite = await createServer({ appType: "custom", configFile: false, root, re
 after(() => vite.close());
 const { requirementMet, textRequirementMet, statusRating } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
 const { meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
+const { changelingMeritPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/changeling/merit-context.ts");
 const { MAGE_STATUS_REQUIREMENTS } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
 const official = { id: "core-2ed:mentor", name: "Mentor", sourceId: "core-2ed" };
 const fake = { ...official, id: "homebrew:merit:mentor", sourceId: "homebrew:core-merits" };
@@ -76,8 +77,8 @@ test("Court access resolves canonical catalog references and cannot use Homebrew
   const fakeMantle = { ...mantle, id: "homebrew:merit:mantle", sourceId: "homebrew:changeling-merits" };
   const required = { id: "h-courts:test", name: "Test", courtAccess: [{ court: "Autumn", mantle: 3, courtGoodwill: 5 }] };
   const ctx = { gameLine: "CtL", court: "autumn", meritCatalog: [mantle, goodwill, fakeGoodwill, fakeMantle] };
-  assert.equal(meritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: goodwill.id, name: "Rótulo traduzido", dots: 5, configuration: { court: "autumn" } }] }), true);
-  assert.equal(meritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: fakeGoodwill.id, name: goodwill.name, dots: 5, configuration: { court: "autumn" } }] }), false);
-  assert.equal(meritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: mantle.id, name: "Rótulo traduzido", dots: 3 }] }), true);
-  assert.equal(meritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: fakeMantle.id, name: mantle.name, dots: 5 }] }), false);
+  assert.equal(changelingMeritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: goodwill.id, name: "Rótulo traduzido", dots: 5, configuration: { court: "autumn" } }] }), true);
+  assert.equal(changelingMeritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: fakeGoodwill.id, name: goodwill.name, dots: 5, configuration: { court: "autumn" } }] }), false);
+  assert.equal(changelingMeritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: mantle.id, name: "Rótulo traduzido", dots: 3 }] }), true);
+  assert.equal(changelingMeritPrerequisitesMet(required, { ...ctx, merits: [{ definitionId: fakeMantle.id, name: mantle.name, dots: 5 }] }), false);
 });

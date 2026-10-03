@@ -9,6 +9,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Choice } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
+import { changelingMeritPrerequisitesMet } from "./merit-context";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
@@ -183,6 +184,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
       </div>
       <div className={props.missing("merits") ? "missing-field block" : ""}>
         <MeritPicker
+          isEligible={changelingMeritPrerequisitesMet}
           merits={props.merits}
           setMerits={props.setMerits}
           catalog={props.meritCatalog}

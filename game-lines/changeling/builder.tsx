@@ -28,6 +28,7 @@ import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
 import { contractWithSupplementalBenefits } from "./contract-presentation";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { changelingMeritPrerequisitesMet } from "./merit-context";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
@@ -169,7 +170,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
     for (const merit of common.merits) {
       const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext, changelingMeritPrerequisitesMet)) add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
     }
     if (meritSpent > meritBudget) add(3, "merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [

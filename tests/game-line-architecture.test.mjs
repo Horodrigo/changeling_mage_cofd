@@ -47,6 +47,15 @@ test("shared Merit context and XP picker do not interpret persisted line mechani
   }
 });
 
+test("Changeling owns Court/Seeming/Kith Merit access while shared validation accepts its predicate", async () => {
+  const merits = await source("lib/merits.ts");
+  const eligibility = merits.slice(merits.indexOf("export function meritPrerequisitesMet"), merits.indexOf("const dotsIn="));
+  assert.doesNotMatch(eligibility, /ctl-2ed|courtAccess|Mantle|Goodwill|\.seeming|\.kith|\.court|\.mantle/);
+  assert.match(await source("game-lines/changeling/builder-view.tsx"), /isEligible=\{changelingMeritPrerequisitesMet\}/);
+  assert.match(await source("game-lines/changeling/builder.tsx"), /meritSelectionProblems\(definition, merit, meritContext, changelingMeritPrerequisitesMet\)/);
+  assert.match(await source("game-lines/changeling/merit-context.ts"), /&& changelingMeritPrerequisitesMet\(definition, context\)/);
+});
+
 test("neutral game-line contracts do not know concrete game lines", async () => {
   const files = [
     "lib/game-line-contracts/game-line-registration.ts",
