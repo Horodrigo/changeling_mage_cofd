@@ -13,7 +13,7 @@ import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { translate, useLanguage, type Locale, type MessageKey } from "@/lib/i18n";
-import { meritContextForSheet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireMechanics, VampirePowers, VampireReference, VampirePurchasablePower } from "./catalog-types";
@@ -21,7 +21,7 @@ import { recordRatings, synchronizeAutomaticBloodlineDevotions, synchronizeBlood
 import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
-import { vampireMeritEligible, vampireMeritFilterCategory } from "./merit-eligibility";
+import { vampireMeritContextForSheet, vampireMeritEligible, vampireMeritFilterCategory } from "./merit-eligibility";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
@@ -116,7 +116,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" ? character.line_data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
   const zirnitraRating = Number(coilRatings["coil-zirnitra"] ?? 0);
-  const meritContext = meritContextForSheet(character, meritCatalog, ["vampire", String(character.line_data.clan_id ?? ""), bloodlineId, ...covenantIds]);
+  const meritContext = vampireMeritContextForSheet(character, meritCatalog, ["vampire", String(character.line_data.clan_id ?? ""), bloodlineId, ...covenantIds]);
   const knownDevotions = new Set(Array.isArray(character.line_data.devotion_ids) ? character.line_data.devotion_ids.map(String) : []);
   const synchronizedCharacter = synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(character, powers));
   useEffect(() => {
@@ -383,7 +383,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     // selection instead of leaving a stale purchase locked in the dialog.
     if (purchase === "merit" && selectedMerit && purchasedMeritIndex >= 0) {
       const purchasedMerit = next.merits[purchasedMeritIndex];
-      const nextMeritContext = meritContextForSheet(next, meritCatalog, ["vampire", String(next.line_data.clan_id ?? ""), ...vampireCovenantIds(next.line_data)]);
+      const nextMeritContext = vampireMeritContextForSheet(next, meritCatalog, ["vampire", String(next.line_data.clan_id ?? ""), ...vampireCovenantIds(next.line_data)]);
       const remainingRatings = meritRatingsFor(selectedMerit).filter((dot) =>
         dot > Number(purchasedMerit?.dots ?? 0) &&
         vampireMeritEligible(selectedMerit, {
@@ -468,7 +468,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
               { group: "core", purchases: ["attribute", "skill", "merit"] },
               { group: "supernatural", purchases: ["blood-potency", "discipline"] },
             ] : availablePurchaseGroups, (value) => purchaseLabel(value as PurchaseType, locale), locale)} /></label>
-            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" archetypes={["vampire", String(character.line_data.clan_id ?? ""), bloodlineId, ...covenantIds]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} categoryFor={vampireMeritFilterCategory} /></label> : purchase === "discipline" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Disciplina" line="VtR" items={disciplinePickerItems} selectedId={chosen} onSelect={(value) => { setTarget(value); setTargetRating(0); }} triggerLabel={t("ui.selectDiscipline")} dialogTitle={t("ui.purchaseDiscipline")} /></label> : purchase === "devotion" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Devoção" line="VtR" items={devotionPickerItems} categoryOptions={[t("ui.generalDevotions"), t("sheet.bloodline")]} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t("ui.selectDevotion")} dialogTitle={t("ui.purchaseDevotion")} dialogDescription={t("ui.devotionCatalogDescription")} /></label> : purchase === "lash" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Lash" line="VtR" items={lashPickerItems} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t("ui.selectBloodTetherLash")} dialogTitle={t("ui.lashesOfBloodTether")} /></label> : !ritualPurchase && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label> : null}
+            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" context={meritContext} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} categoryFor={vampireMeritFilterCategory} /></label> : purchase === "discipline" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Disciplina" line="VtR" items={disciplinePickerItems} selectedId={chosen} onSelect={(value) => { setTarget(value); setTargetRating(0); }} triggerLabel={t("ui.selectDiscipline")} dialogTitle={t("ui.purchaseDiscipline")} /></label> : purchase === "devotion" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Devoção" line="VtR" items={devotionPickerItems} categoryOptions={[t("ui.generalDevotions"), t("sheet.bloodline")]} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t("ui.selectDevotion")} dialogTitle={t("ui.purchaseDevotion")} dialogDescription={t("ui.devotionCatalogDescription")} /></label> : purchase === "lash" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Lash" line="VtR" items={lashPickerItems} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t("ui.selectBloodTetherLash")} dialogTitle={t("ui.lashesOfBloodTether")} /></label> : !ritualPurchase && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label> : null}
             {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <MeritConfigurationEditor merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
             {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
             {ratedMaximum > ratedCurrent && <ExperienceRatingPicker current={ratedCurrent} maximum={ratedMaximum} value={intendedRating} onChange={(value) => { setTargetRating(value); setFreePowerIds([]); }} />}

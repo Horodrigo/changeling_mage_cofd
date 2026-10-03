@@ -22,6 +22,20 @@ async function assertMissing(path) {
   await assert.rejects(access(join(root, path)));
 }
 
+test("shared Merit context and XP picker do not interpret persisted line mechanics", async () => {
+  const merits = await source("lib/merits.ts");
+  const context = merits.slice(merits.indexOf("export function meritContextForSheet"), merits.indexOf("export type MeritSelectionProblem"));
+  assert.doesNotMatch(context, /line_data|contracts|gnosis|arcana|seeming|kith|court|wyrd|mantle/);
+  const picker = (await source("app/workspace/experience-shared.tsx")).split("export function ExperienceMeritPicker")[1];
+  assert.doesNotMatch(picker, /meritContextForSheet|line_data/);
+  assert.match(picker, /context: MeritPrerequisiteContext/);
+  for (const line of ["mortal", "mage", "changeling", "vampire", "werewolf"]) {
+    const panel = await source(`game-lines/${line}/experience-panel.tsx`);
+    assert.match(panel, /context=\{/);
+    assert.doesNotMatch(panel, /archetypes=\{/);
+  }
+});
+
 test("neutral game-line contracts do not know concrete game lines", async () => {
   const files = [
     "lib/game-line-contracts/game-line-registration.ts",

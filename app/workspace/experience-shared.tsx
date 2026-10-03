@@ -7,7 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";
-import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical, compareOptionLabels } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { systemTerm } from "@/lib/system-terms";
@@ -240,7 +240,7 @@ export function canAdvanceGrantedMerit(
 
 export function ExperienceMeritPicker({
   line,
-  archetypes,
+  context,
   meritCatalog,
   character,
   selectedId,
@@ -251,7 +251,7 @@ export function ExperienceMeritPicker({
   categoryFor = (definition) => definition.category,
 }: {
   line: PersistedGameLineId;
-  archetypes: readonly string[];
+  context: MeritPrerequisiteContext;
   meritCatalog: readonly MeritDefinition[];
   character: CharacterSheet;
   selectedId: string;
@@ -270,7 +270,6 @@ export function ExperienceMeritPicker({
   const meritName=(item:MeritDefinition)=>meritPresentation(item,locale).name;
   const categoryName=(value:string)=>meritCategoryLabel(value,locale);
   const categoryKeys=(item:MeritDefinition)=>homebrewCategoryKeys(categoryFor(item),item.sourceId);
-  const context=meritContextForSheet(character, meritCatalog, archetypes);
   const catalog = alphabetical([...meritCatalog], meritName,locale),
     selected = catalog.find((item) => item.id === selectedId),
     normalized = search.toLocaleLowerCase(locale),

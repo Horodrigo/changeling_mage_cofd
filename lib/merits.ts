@@ -193,17 +193,12 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
   });
 }
 
-/** Shared current-sheet context for catalog eligibility and purchase-time validation. */
-export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;line_data:Record<string,unknown>;derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[], archetypes?: readonly string[]):MeritPrerequisiteContext {
-  const data=sheet.line_data;
-  const bonus=data.merit_granted_skill_bonuses as Record<string,number>|undefined;
+/** Neutral outer traits only. Each line supplies its effective Skill bonuses and its own mechanics. */
+export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[], archetypes?: readonly string[], skillBonuses?: Readonly<Record<string,number>>):MeritPrerequisiteContext {
   const skills={...sheet.skills};
-  for(const [name,value]of Object.entries(bonus??{})) skills[name]=(skills[name]??0)+value;
+  for(const [name,value]of Object.entries(skillBonuses??{})) skills[name]=(skills[name]??0)+value;
   return {gameLine:sheet.game_line,archetypes,attributes:sheet.attributes,skills,merits:sheet.merits,meritCatalog,
-    seeming:String(data.seeming??""),kith:String(data.kith??""),path:String(data.path??""),order:String(data.order??""),
-    gnosis:data.gnosis===undefined?undefined:Number(data.gnosis),arcana:(data.arcana??{}) as Record<string,number>,wyrd:data.wyrd===undefined?undefined:Number(data.wyrd),
-    court:String(data.court??""),mantle:sheet.merits.find(item=>item.name==="Mantle")?.dots,size:Number(sheet.derived?.Tamanho??5),
-    powers:[...(Array.isArray(data.contracts)?data.contracts:[]),...(Array.isArray(data.learned_contracts)?data.learned_contracts:[])].map(item=>String(item.originalName??item.name??""))};
+    size:Number(sheet.derived?.Tamanho??5)};
 }
 
 export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams; meritIds?: readonly string[] };

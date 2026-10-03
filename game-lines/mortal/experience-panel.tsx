@@ -15,7 +15,7 @@ import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { translate, useLanguage, type Locale, type MessageKey } from "@/lib/i18n";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
-import { meritContextForSheet, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
+import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
@@ -23,7 +23,7 @@ import { meritMatchesDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
-import { synchronizeMortalMeritGrants } from "./rules";
+import { mortalMeritContextForSheet, synchronizeMortalMeritGrants } from "./rules";
 import { refundMortalAdvancement, type MortalAdvancementUndo } from "./experience-rules";
 import { mortalExperienceLabel, type MortalExperienceEntry, type MortalExperiencePurchase } from "./experience-presentation";
 
@@ -80,7 +80,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       : purchase === "specialty" ? 1
         : purchase === "merit" ? Math.max(0, meritDots - Number(ownedMerit?.dots ?? 0))
           : amount * 2;
-  const meritContext = meritContextForSheet(character, meritCatalog, ["mortal"]);
+  const meritContext = mortalMeritContextForSheet(character, meritCatalog);
   const meritUnavailable = purchase === "merit" && (!selectedMerit || !meritDots ||
     (meritInstance >= 0 && (!ownedMerit || Boolean(ownedMerit.grantedBy))) ||
     (meritInstance < 0 && !isRepeatableDefinition(selectedMerit) && character.merits.some(item => meritMatchesDefinition(item, selectedMerit, meritCatalog))) ||
@@ -169,7 +169,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       <DialogHeader><DialogTitle>{t("ui.spendExperience")}</DialogTitle><DialogDescription>{t("ui.mortalExperienceDescription")}</DialogDescription></DialogHeader>
       <div className="experience-purchase-form">
         <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>
-        {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="CofD" archetypes={["mortal"]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={meritDots} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label>}
+        {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="CofD" context={meritContext} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={meritDots} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label>}
         {purchase === "merit" && selectedMerit && meritDots > 0 && <MeritConfigurationEditor merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: meritDots, configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={meritCatalog} ownedMerits={character.merits} definitions={COMMON_MERIT_CONFIGURATIONS} />}
         {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
         {maximum > current && <ExperienceRatingPicker current={current} maximum={maximum} value={intended} onChange={setTargetRating} />}

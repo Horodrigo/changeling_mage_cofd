@@ -1,4 +1,9 @@
-import { meritPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
+
+export function vampireMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[], archetypes: readonly string[]): MeritPrerequisiteContext {
+  return meritContextForSheet(sheet, catalog, archetypes, sheet.line_data.merit_granted_skill_bonuses as Record<string, number> | undefined);
+}
 
 const CLAN_MERIT_CATEGORIES = new Set(["Dukhan", "Gangrel", "Nosferatu"]);
 const BLOODLINE_MERIT_CATEGORIES = new Set([

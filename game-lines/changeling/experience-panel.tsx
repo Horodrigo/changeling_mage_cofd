@@ -9,7 +9,8 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/changeling/creation-rules";
-import { meritContextForSheet, meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import { meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import { changelingMeritContextForSheet } from "./merit-context";
 import type { ContractDefinition } from "./contract-types";
 import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "./contract-presentation";
 import { availableForeignClauseCourtIds } from "./contract-clauses";
@@ -157,6 +158,7 @@ export function ExperiencePanel({
     ...catalogs.get<MeritDefinition[]>("changeling-merits"),
   ],customMerits,homebrewPreferences,character.merits);
   const merits = meritCatalog;
+  const meritContext = changelingMeritContextForSheet(character, meritCatalog);
   const ownedContracts = [
     ...objectList(character.line_data.contracts),
     ...objectList(character.line_data.learned_contracts),
@@ -499,7 +501,7 @@ export function ExperiencePanel({
     if (purchaseType === "merit") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
-      if(!meritPrerequisitesMet(selectedMerit,{...meritContextForSheet(character, meritCatalog, ["changeling"]),selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
+      if(!meritPrerequisitesMet(selectedMerit,{...meritContext,selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? createRandomId();
@@ -758,7 +760,7 @@ export function ExperiencePanel({
                   {t("ui.merit")}
                   <ExperienceMeritPicker
                     line="CtL"
-                    archetypes={["changeling"]}
+                    context={meritContext}
                     meritCatalog={meritCatalog}
                     character={character}
                     selectedId={meritId}

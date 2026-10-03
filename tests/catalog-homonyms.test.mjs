@@ -97,7 +97,7 @@ test("Merit Builder, XP selections, purchase previews and semantic histories sho
         const name = meritPresentation(definition, locale).name;
         const elements = [
           createElement(MeritPicker, { merits: [selected], setMerits: () => { throw new Error("Render mutated Merit"); }, catalog, context: { gameLine: definition.line, merits: [selected] }, spent: 0, budget: 10, renderConfiguration: () => null, isInlineConfiguration: () => false }),
-          createElement(ExperienceMeritPicker, { line: definition.line, archetypes: [], meritCatalog: catalog, character, selectedId: definition.id, targetDots: 1, onSelect: () => { throw new Error("Render purchased Merit"); } }),
+          createElement(ExperienceMeritPicker, { line: definition.line, context: { gameLine: definition.line, attributes: character.attributes, skills: character.skills, merits: character.merits, meritCatalog: catalog }, meritCatalog: catalog, character, selectedId: definition.id, targetDots: 1, onSelect: () => { throw new Error("Render purchased Merit"); } }),
         ];
         for (const element of elements) {
           const html = renderToStaticMarkup(createElement(LanguageProvider, null, element));

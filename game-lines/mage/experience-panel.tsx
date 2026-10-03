@@ -11,7 +11,7 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { MTA_PATHS } from "@/game-lines/mage/creation-rules";
-import { meritContextForSheet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { meetsArcanaRequirements } from "@/game-lines/mage/builder-eligibility";
@@ -36,7 +36,7 @@ import { mageExperienceLabel, type MageExperienceEntry } from "./experience-pres
 import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
-import { mageMeritPrerequisitesMet, mageMeritSelectionProblems } from "./merits";
+import { mageMeritContextForSheet, mageMeritPrerequisitesMet, mageMeritSelectionProblems } from "./merits";
 import { useLegacyHomebrews } from "./use-legacy-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
@@ -121,7 +121,8 @@ export function MageExperiencePanel({
       ...catalogs.get<MeritDefinition[]>("core-merits"),
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
     ],customMerits,homebrewPreferences,character.merits),
-    merits = meritCatalog.filter(item=>mageMeritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog, ["awakened"]))),
+    meritContext = mageMeritContextForSheet(character, meritCatalog),
+    merits = meritCatalog.filter(item=>mageMeritPrerequisitesMet(item,meritContext)),
     spells = activeSpellCatalog(catalogs.get<SpellDefinition[]>("mage-spells"),customSpells,homebrewPreferences),
     factionCatalog = catalogs.get<MageFactionDefinition[]>("mage-factions");
   const arcana = (
@@ -262,7 +263,7 @@ export function MageExperiencePanel({
       if (mageMeritInstance >= 0 && (!ownedMerit || (ownedMerit.grantedBy && !canAdvanceGrantedMerit("MtA", ownedMerit)))) return setFeedback(t("ui.selectAnAvailableMerit"));
       if (mageMeritInstance < 0 && !isRepeatableDefinition(selectedMerit) && character.merits.some(item => meritMatchesDefinition(item, selectedMerit, meritCatalog))) return setFeedback(t("ui.selectAnAvailableMerit"));
       if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>meritMatchesDefinition(item,selectedMerit,meritCatalog)&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
-      const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]),factionCatalog,character.line_data.affiliation_id);
+      const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContext,factionCatalog,character.line_data.affiliation_id);
       if(problems.length)return setFeedback(problems.map(problem=>meritProblemMessage(problem,selectedMerit,locale,meritCatalog)).join(" "));
     }
     if(purchase==="specialty"&&!mageSpecialtyName.trim())return setFeedback(t("ui.enterTheSpecialtyName"));
@@ -530,7 +531,7 @@ export function MageExperiencePanel({
                 <ExperienceMeritPicker
                   line="MtA"
                   isEligible={mageMeritPrerequisitesMet}
-                  archetypes={["awakened"]}
+                  context={meritContext}
                   meritCatalog={meritCatalog}
                   character={character}
                   selectedId={selectedMerit?.id ?? ""}

@@ -153,7 +153,7 @@ test("Builder and Experience selected Merit names retain canonical identity and 
   const character = { ...blankPrintCharacter("CtL"), merits: [{ name: definition.name, dots: 2, sourceId: definition.sourceId, source: definition.source, configuration: {} }] };
   const before = structuredClone(character);
   const picker = createElement(MeritPicker, { merits: character.merits, setMerits: () => {}, catalog, context: { gameLine: "CtL", merits: [] }, spent: 2, budget: 10, renderConfiguration: () => null, isInlineConfiguration: () => false });
-  const experience = createElement(ExperienceMeritPicker, { line: "CtL", archetypes: [], meritCatalog: catalog, character, selectedId: definition.id, targetDots: 3, onSelect: () => {} });
+  const experience = createElement(ExperienceMeritPicker, { line: "CtL", context: { gameLine: "CtL", attributes: character.attributes, skills: character.skills, merits: character.merits, meritCatalog: catalog }, meritCatalog: catalog, character, selectedId: definition.id, targetDots: 3, onSelect: () => {} });
   for (const element of [picker, experience]) {
     const markup = renderToStaticMarkup(createElement(LanguageProvider, null, element));
     assert.match(markup, /Meat Shield/);

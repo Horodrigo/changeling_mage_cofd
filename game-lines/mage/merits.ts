@@ -1,4 +1,5 @@
-import { meritPrerequisitesMet, meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { requirementMet } from "@/lib/merit-requirements";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import type { MageFactionDefinition } from "./factions";
@@ -8,6 +9,16 @@ import { findMageAffiliation } from "./orders";
 const EXARCHS = new Set(["Eye", "Father", "General", "Unity", "Chancellor", "Raptor", "Prophet", "Nemesis", "Ruin"]);
 const PROFANE_FORMS = new Set(["Scepter", "Robe", "Crown", "Throne", "Ring"]);
 const SVIKIRO_TRADITIONS = new Set(["wamasikati", "wedzinza"]);
+
+export function mageMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[]): MeritPrerequisiteContext {
+  const data = sheet.line_data;
+  return {
+    ...meritContextForSheet(sheet, catalog, ["awakened"], data.merit_granted_skill_bonuses as Record<string, number> | undefined),
+    path: String(data.path ?? ""), order: String(data.order ?? ""),
+    gnosis: data.gnosis === undefined ? undefined : Number(data.gnosis),
+    arcana: (data.arcana ?? {}) as Record<string, number>,
+  };
+}
 
 function matchingMerits(context: MeritPrerequisiteContext, ids: readonly string[], minimum: number, instanceId?: string) {
   const owned = context.merits ?? [];

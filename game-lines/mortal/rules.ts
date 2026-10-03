@@ -2,6 +2,11 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { boundedIntegrity, mortalDerived } from "./creation-rules";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
+import { meritContextForSheet, type MeritDefinition } from "@/lib/merits";
+
+export function mortalMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[]) {
+  return meritContextForSheet(sheet, catalog, ["mortal"], sheet.line_data.merit_granted_skill_bonuses as Record<string, number> | undefined);
+}
 
 const strings = (value: unknown) => Array.isArray(value) ? value.map(String) : [];
 
