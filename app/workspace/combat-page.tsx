@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
+import { catalogDisplayName } from "@/lib/localized-catalog";
 import { alphabetical } from "@/lib/option-order";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { VEHICLES, vehiclePresentation } from "@/lib/companions";
@@ -183,8 +184,8 @@ export function CombatPage({
 function TiltManager({selected,onChange}:{selected:string[];onChange:(value:string[])=>void}) {
   const {locale,t}=useLanguage();
   const [search,setSearch]=useState(""), [category,setCategory]=useState("All");
-  const name=(tilt:(typeof TILTS)[number])=>locale==="en-US"?tilt.name:tilt.translatedName;
-  const filtered=alphabetical(TILTS,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
+  const name=(tilt:(typeof TILTS)[number])=>catalogDisplayName(tilt,locale);
+  const filtered=alphabetical(TILTS,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${name(tilt)} ${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
   const categoryLabel=(category:string)=>category === "Personal" ? t("combat.personal") : t("combat.environmental");
   const metadata=(tilt:(typeof TILTS)[number])=>t("combat.tiltMetadata", { category: categoryLabel(tilt.category), source: tilt.sourceCode, page: tilt.page });
   return <div className="tilt-manager">

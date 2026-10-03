@@ -1,4 +1,4 @@
-import type { CharacterSheet } from "./character-types";
+import type { CharacterSheet, MeritSelection } from "./character-types";
 import { decodeMeritGrantChoice, normalizeMeritConfiguration } from "./merit-configuration";
 import { commonMeritId } from "./merit-identities";
 import { experienceMeritDots } from "@/lib/merit-progression";
@@ -9,6 +9,7 @@ const GENERATED_PREFIX = "Merit:";
 export function synchronizeCommonMeritGrants(
   sheet: CharacterSheet,
   includeGrantedBy: (source: string) => boolean = () => false,
+  additionalCultIdentity: (merit: MeritSelection) => string | undefined = () => undefined,
 ) {
   sheet.merits = sheet.merits.flatMap((item) => {
     if (!item.grantedBy?.startsWith(GENERATED_PREFIX)) return [item];
@@ -31,7 +32,8 @@ export function synchronizeCommonMeritGrants(
     sheet.merits.push({ ...choice, instanceId: grantInstanceId(owner, index), configuration: {}, grantedBy: `${GENERATED_PREFIX}${owner}` });
   };
   for (const merit of sheet.merits.filter((item) => !item.grantedBy || includeGrantedBy(item.grantedBy))) {
-    const definitionId = commonMeritId(merit);
+    const additionalCultId = additionalCultIdentity(merit);
+    const definitionId = commonMeritId(merit) ?? additionalCultId;
     if (!definitionId) continue;
     const owner = `${definitionId}:${merit.instanceId ?? definitionId}`;
     const configuration = normalizeMeritConfiguration(merit.configuration);
@@ -46,7 +48,7 @@ export function synchronizeCommonMeritGrants(
       const boosted = String(configuration.boosted_skill ?? "");
       if (merit.dots >= 4 && boosted) skillBonuses[boosted] = (skillBonuses[boosted] ?? 0) + 1;
     }
-    if (definitionId === "core-2ed:mystery-cult-initiation" || definitionId === "core-2ed:mystery-cult-influence") {
+    if (definitionId === "core-2ed:mystery-cult-initiation" || definitionId === "core-2ed:mystery-cult-influence" || additionalCultId) {
       for (let level = 1; level <= Math.min(5, merit.dots); level += 1) {
         const prefix = `level_${level}`;
         const type = String(configuration[`${prefix}_type`] ?? "");

@@ -1,3 +1,5 @@
+import type { CatalogNameQualifier } from "@/lib/localized-catalog";
+
 export type VampireClanDefinition = {
   id: string;
   name: string;
@@ -215,6 +217,7 @@ export type VampireCondition = {
   id: string;
   name: string;
   originalName: string;
+  nameQualifier?: CatalogNameQualifier;
   category: string;
   description: string;
   penalty?: string;

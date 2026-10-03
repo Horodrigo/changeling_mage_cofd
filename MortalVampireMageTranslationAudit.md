@@ -372,6 +372,41 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: **478/478 testes** na suíte completa; lint, build, TypeScript e `git diff --check` aprovados. Os testes de identidade conciliam o índice Core com os catálogos e cobrem renomeação, homônimos Homebrew, fontes estrangeiras, IDs indisponíveis, hooks puros, instâncias pagas e sincronização idempotente. O manifesto de produção manteve os bundles das linhas isolados. Sem smoke de navegador neste lote.
 - **Prioridade 0 ainda aberta:** Faction Member/contexto/requisitos específicos, grupos e apresentação restante nas fichas, concessões e integração Core restantes de Changeling/Werewolf, qualificadores de homônimos e a parte mecânica de X03. As traduções de catálogos da meta continuam pendentes; a meta permanece ativa.
 
+## Progresso — prioridade 0, variante Mage de Mystery Cult Influence
+
+- Corrigida uma regressão da migração de despacho Core por ID: a definição `mta-2ed:mystery-cult-influence` não é a definição Core e deixara de gerar seus benefícios configurados. Mage agora identifica explicitamente sua variante num hook neutro de concessões de Cult; o Core continua sem IDs ou detecção de linha Mage. O funcionamento configurável existente foi preservado, sem deduzir uma nova regra nem decidir equivalência editorial entre as duas definições.
+- O teste cobre ID canônico com nome de exibição alterado, estabilidade de instâncias, escolhas sem ID com nome/fonte exatos, IDs Homebrew/indisponíveis, fontes estrangeiras, bônus de Skill, idempotência e preservação do Merit pago, saldo e histórico. A decisão de apresentação dos Merits homônimos Core/Mage continua pendente da comparação completa de requisitos, benefícios e exceções.
+
+## Progresso — prioridade 0, homônimos e apresentação
+
+- Identificados seis nomes de Conditions presentes em mais de uma linha. Seus 12 registros receberam metadados bilíngues de qualificação; nomes canônicos, IDs, origem e efeitos permanecem intactos. Catálogo, busca, ordenação, seleção e rótulos de remoção usam o qualificador na apresentação Desktop/Mobile. Rótulos existentes de Errata foram preservados. A versão dos três recursos de Conditions foi incrementada no manifesto para invalidar caches antigos.
+
+| Condition | Linhas e qualificadores EN / PT |
+| --- | --- |
+| Lethargic | Changeling: Lost / Perdido; Vampire: Kindred / Membro |
+| Oathbreaker | Changeling: Lost / Perdido; Vampire: Kindred / Membro |
+| Addicted | Mage: Awakened / Desperto; Vampire: Kindred / Membro |
+| Thrall | Mage: Awakened / Desperto; Vampire: Kindred / Membro |
+| Charmed | Mage: Awakened / Desperto; Vampire: Kindred / Membro |
+| Humbled | Mage: Awakened / Desperto; Vampire: Kindred / Membro |
+
+- O catálogo atual de 35 Tilts não contém homônimos. Não foram acrescentados sufixos a itens sem colisão. A apresentação já suporta o mesmo metadado quando uma colisão editorial futura for confirmada.
+- As Conditions exclusivas de Mage/Vampire ainda precisam de tradução de nomes e efeitos nas etapas 3/4. A qualificação está implementada, mas não significa que seus textos já estejam traduzidos.
+- Inventário de Merits homônimos para comparação completa de requisitos, benefícios, níveis, custos, limites e exceções antes de aplicar qualificadores:
+
+| Merit | Identidades preservadas | Situação |
+| --- | --- | --- |
+| Mystery Cult Influence | `core-2ed:mystery-cult-influence`; `mta-2ed:mystery-cult-influence` | O mecanismo configurado é compartilhado; não presumir diferença de efeitos apenas pela redação ou restrição de linha. |
+| Acute Senses | `ctl-2ed:acute-senses`; `vtr-acute-senses` | O resumo Vampire é insuficiente para concluir a comparação integral. |
+| Noblesse Oblige | `ctl-2ed:noblesse-oblige`; `vtr-sotc:noblesse-oblige` | Resumos indicam benefícios distintos; confirmar requisitos e efeitos completos. |
+| Touchstone | `ctl-2ed:touchstone`; `vtr-touchstone` | Comparar os benefícios e limites, não apenas os nomes Clarity/Humanity. |
+| Friends in Low Places | `h-courts:friends-in-low-places`; `vtr-gttn:friends-in-low-places` | Preservar a origem Homebrew de Book of Courts; comparar benefícios por graduação. |
+| Occultation | `mta-2ed:occultation`; `vtr-strange-shades:occultation` | Preservar a origem Homebrew de Strange Shades: Mekhet; resumos e ratings diferem, mas exigem comparação completa. |
+
+- Nenhum Merit foi fundido, renomeado ou qualificado com base somente na diferença de descrições. Nenhum catálogo de uma linha inativa foi carregado por essa apresentação.
+- Rechecagem de CSS: os seletores Homebrew específicos citados pelo usuário permanecem em Changeling. O seletor exclusivo `mage-creation-xp-totals` também passou do global para Mage, conservando quatro colunas no Desktop e duas até 767px; o teste de arquitetura protege essa fronteira.
+- Verificação: suíte completa **483/483**, além dos 37 testes direcionados de apresentação, arquitetura e concessões. A única falha inicial era a expectativa desatualizada da versão de `vampire-conditions` no teste de inventário Homebrew: atualizada de 6 para 7, acompanhando a invalidação intencional do cache; o teste foi reproduzido antes e depois da correção. Lint, build, TypeScript e `git diff --check` aprovados; sem smoke de navegador. Estilos Mage registrados no commit `1ef13a0`.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

@@ -214,6 +214,32 @@ test("all automatic Nameless Order and bundled Shadow Cult benefits reconcile ca
   }
 });
 
+test("Mage's ID-keyed Cult Influence preserves configured grants without Core learning a Mage identity", () => {
+  const merit = selection("mta-2ed:mystery-cult-influence", undefined, 3, { instanceId: "mage-cult", creationDots: 0, experienceDots: 3,
+    configuration: { level_1_type: "merit", level_1_merits: [encodeMeritGrantChoice(resources, 1)], level_3_type: "skill", level_3_skill: "Athletics" } });
+  const sheet = { merits: [{ ...merit, name: "Renamed" }], specializations: [], line_data: { order: "Orderless" }, current_state: { experience_available: 4, experience_spent: 3 } };
+  const state = JSON.stringify(sheet.current_state), owner = JSON.stringify(sheet.merits[0]);
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.equal(JSON.stringify(sheet.merits[0]), owner);
+  assert.equal(sheet.merits[1].definitionId, resources.id);
+  assert.match(sheet.merits[1].grantedBy, /^Merit:mta-2ed:mystery-cult-influence:mage-cult:/);
+  assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses, { Athletics: 1 });
+  const once = JSON.stringify(sheet);
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.equal(JSON.stringify(sheet), once);
+  assert.equal(JSON.stringify(sheet.current_state), state);
+  for (const override of [{ definitionId: "homebrew:influence" }, { definitionId: "unavailable:id" }, { definitionId: undefined, sourceId: "homebrew:test" }]) {
+    sheet.merits = [{ ...merit, ...override }];
+    mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+    assert.equal(sheet.merits.length, 1);
+    assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses, {});
+  }
+  const legacy = { ...merit }; delete legacy.definitionId;
+  sheet.merits = [legacy];
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.equal(sheet.merits[1].definitionId, resources.id);
+});
+
 test("Mage creation grants identify official choices by ID, preserve Homebrew namesakes and keep existing XP instances", () => {
   const fake = { ...selection("mta-2ed:awakened-status", undefined), definitionId: "homebrew:status", instanceId: "authored", configuration: { domain: "Authored", name: "Authored" } };
   const paid = selection("mta-2ed:awakened-status", "Ordem", 3, { instanceId: "order-status", creationDots: 1, experienceDots: 2, name: "Changed display", configuration: { domain: "Free Council" } });

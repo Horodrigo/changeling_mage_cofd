@@ -1,3 +1,5 @@
+import type { CatalogNameQualifier } from "@/lib/localized-catalog";
+
 export interface CatalogManifestEntry {
   version: number;
   url: string;
@@ -14,6 +16,7 @@ export interface ConditionDefinition {
   id: string;
   name: string;
   originalName: string;
+  nameQualifier?: CatalogNameQualifier;
   category: string;
   description: string;
   penalty?: string;

@@ -11,6 +11,7 @@ import { alphabetical } from "@/lib/option-order";
 import { createRandomId } from "@/lib/random-id";
 import { ConfirmAction } from "./confirm-action";
 import { RuleSelect } from "./rule-select";
+import { qualifyCatalogName, type CatalogNameQualifier } from "@/lib/localized-catalog";
 
 export type SelectedCondition = {
   id: string;
@@ -24,6 +25,7 @@ export type ConditionDefinition = {
   id: string;
   name: string;
   originalName: string;
+  nameQualifier?: CatalogNameQualifier;
   category: string;
   description: string;
   penalty?: string;
@@ -45,11 +47,12 @@ export function ConditionManager({ selected, catalog, onChange }: {
   const [category, setCategory] = useState("Todas");
   const [bondedAnimal, setBondedAnimal] = useState(ANIMALS[0]?.id ?? "");
   const chosen = new Map(selected.map(item => [item.id, item]));
+  const name = (condition: ConditionDefinition) => qualifyCatalogName(condition.name, condition, locale);
   const bonded = selected.filter(item => item.id === "bonded");
   const categories = ["Todas", ...Array.from(new Set(catalog.map(item => item.category)))];
-  const filtered = alphabetical(catalog, item => item.name, locale).filter(condition =>
+  const filtered = alphabetical(catalog, name, locale).filter(condition =>
     (category === "Todas" || condition.category === category) &&
-    `${condition.name} ${condition.originalName} ${condition.description} ${condition.penalty ?? ""} ${condition.sourceCode}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)),
+    `${name(condition)} ${condition.originalName} ${condition.description} ${condition.penalty ?? ""} ${condition.sourceCode}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)),
   );
   const find = (id: string) => catalog.find(item => item.id === id);
 
@@ -60,8 +63,8 @@ export function ConditionManager({ selected, catalog, onChange }: {
         if (!condition) return null;
         const animal = ANIMALS.find(item => item.id === saved.animalId) ?? ANIMALS[0];
         return <details key={saved.instanceId ?? `${condition.id}-${selected.indexOf(saved)}`} className="selected-condition">
-          <summary><span><strong>{condition.name}{saved.id === "bonded" && animal ? `: ${animalPresentation(animal, locale).name}` : ""}{saved.persistent ? " [P]" : ""}</strong><small>{t("conditions.sourcePage", { source: condition.sourceCode, page: condition.page })}</small></span>
-            {saved.id === "bonded" ? <ConfirmAction trigger={<Button type="button" size="icon" variant="ghost" aria-label={t("conditions.removeNamed", { name: condition.name })}><X /></Button>} title={t("conditions.removeBondedTitle")} description={t("conditions.removeBondedDescription")} action={t("conditions.removeBondedAction")} onConfirm={() => onChange(selected.filter(item => item !== saved))}/> : <Button type="button" size="icon" variant="ghost" onClick={event => { event.preventDefault(); event.stopPropagation(); onChange(selected.filter(item => item !== saved)); }} aria-label={t("conditions.removeNamed", { name: condition.name })}><X /></Button>}
+          <summary><span><strong>{name(condition)}{saved.id === "bonded" && animal ? `: ${animalPresentation(animal, locale).name}` : ""}{saved.persistent ? " [P]" : ""}</strong><small>{t("conditions.sourcePage", { source: condition.sourceCode, page: condition.page })}</small></span>
+            {saved.id === "bonded" ? <ConfirmAction trigger={<Button type="button" size="icon" variant="ghost" aria-label={t("conditions.removeNamed", { name: name(condition) })}><X /></Button>} title={t("conditions.removeBondedTitle")} description={t("conditions.removeBondedDescription")} action={t("conditions.removeBondedAction")} onConfirm={() => onChange(selected.filter(item => item !== saved))}/> : <Button type="button" size="icon" variant="ghost" onClick={event => { event.preventDefault(); event.stopPropagation(); onChange(selected.filter(item => item !== saved)); }} aria-label={t("conditions.removeNamed", { name: name(condition) })}><X /></Button>}
           </summary>
           <div className="selected-condition-body"><p>{condition.description}</p>{condition.penalty && <p className="condition-penalty"><b>{t("conditions.effectLabel")}</b> {condition.penalty}</p>}<p><b>{t("conditions.resolutionLabel")}</b> {condition.resolution ?? t("conditions.listedSourceResolution")}</p>{condition.beat && <p><b>{t("conditions.beatLabel")}</b> {condition.beat}</p>}</div>
         </details>;
@@ -77,7 +80,7 @@ export function ConditionManager({ selected, catalog, onChange }: {
           const saved = chosen.get(condition.id);
           const isBonded = condition.id === "bonded";
           return <article key={condition.id} className={saved ? "selected" : ""}>
-            <div><strong>{condition.name}{saved?.persistent ? " [P]" : ""}</strong><small>{condition.originalName !== condition.name ? t("conditions.originalSourcePage", { original: condition.originalName, source: condition.sourceCode, page: condition.page }) : t("conditions.sourcePage", { source: condition.sourceCode, page: condition.page })}</small></div>
+            <div><strong>{name(condition)}{saved?.persistent ? " [P]" : ""}</strong><small>{condition.originalName !== condition.name ? t("conditions.originalSourcePage", { original: condition.originalName, source: condition.sourceCode, page: condition.page }) : t("conditions.sourcePage", { source: condition.sourceCode, page: condition.page })}</small></div>
             <p>{condition.description}</p>{condition.penalty && <p className="condition-penalty"><b>{t("conditions.effectLabel")}</b> {condition.penalty}</p>}<p><b>{t("conditions.resolutionLabel")}</b> {condition.resolution ?? t("conditions.listedSourceResolution")}</p>{condition.beat && <p><b>{t("conditions.beatLabel")}</b> {condition.beat}</p>}
             {isBonded && <div className="companion-form-grid"><label>{t("conditions.bondedAnimal")}<RuleSelect value={bondedAnimal} onChange={setBondedAnimal} options={ANIMALS.map(item => animalPresentation(item, locale)).map(item => ({ value: item.id, label: item.name }))}/></label></div>}
             {!isBonded && <label className="persistent-toggle"><input type="checkbox" checked={saved?.persistent ?? condition.persistent ?? false} onChange={event => { const persistent = event.target.checked; onChange(saved ? selected.map(item => item.id === condition.id ? { ...item, persistent } : item) : [...selected, { id: condition.id, persistent }]); }}/> {t("conditions.persistent")} [P]</label>}

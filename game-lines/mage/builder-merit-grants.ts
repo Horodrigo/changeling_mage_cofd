@@ -84,7 +84,10 @@ export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
     const configuration = { ...existing, cult: String(custom.name ?? ""), level_1_type: "merit", level_1_merits: [NAMELESS_HIGH_SPEECH_BENEFIT], level_2_type: "rote_skills", level_2_rote_skills: Array.isArray(existing.level_2_rote_skills) ? existing.level_2_rote_skills : legacyRoteSkills, level_3_type: "skill", level_3_skill: "Occult" };
     sheet.merits.push({ ...initiation, definitionId: "core-2ed:mystery-cult-initiation", instanceId: initiation?.instanceId ?? "nameless-order-initiation", name: "Mystery Cult Initiation", dots: Math.max(1, Number(initiation?.dots ?? 1)), creationDots: Math.max(1, Number(initiation?.creationDots ?? (Number(initiation?.dots ?? 1) - Number(initiation?.experienceDots ?? 0)))), experienceDots: Math.max(0, Number(initiation?.experienceDots ?? 0)), sourceId: "core-2ed", source: "Chronicles of Darkness", configuration, grantedBy: "Nameless Order" });
   }
-  const skillBonuses = synchronizeCommonMeritGrants(sheet, (source) => source === "Nameless Order");
+  // Mage's variant reuses configured Cult grants; ownership and canonical identity stay in Mage.
+  // The shared resolver's documented schema-2 bridge handles only its canonical name/source.
+  const skillBonuses = synchronizeCommonMeritGrants(sheet, (source) => source === "Nameless Order", merit =>
+    resolveMeritDefinition(merit, [{ id: "mta-2ed:mystery-cult-influence", name: "Mystery Cult Influence", sourceId: "mta-2ed" }])?.id);
   const nameless = order === "Nameless" ? sheet.merits.find((item) => templateMeritId(item) === "core-2ed:mystery-cult-initiation" && item.grantedBy === "Nameless Order") : undefined;
   if (nameless) {
     const configuration = normalizeMeritConfiguration(nameless.configuration);

@@ -1,10 +1,13 @@
 export type AppLocale = "pt-BR" | "en-US";
+export type CatalogNameQualifier = Partial<Record<AppLocale, string>>;
 
 export type CatalogIdentity = {
   id: string;
   name: string;
   originalName?: string;
   translatedName?: string;
+  /** Editorial line qualifier for a homonym, never part of its canonical name or identity. */
+  nameQualifier?: CatalogNameQualifier;
 };
 
 export type EnglishCatalogEntry<Field extends string = string> =
@@ -49,14 +52,19 @@ function knownEnglishName(item: CatalogIdentity, entry?: EnglishCatalogEntry) {
   return undefined;
 }
 
+export function qualifyCatalogName(name: string, item: Pick<CatalogIdentity, "nameQualifier">, locale: AppLocale) {
+  const qualifier = item.nameQualifier?.[locale];
+  return name && qualifier ? `${name}(${qualifier})` : name;
+}
+
 export function catalogDisplayName(
   item: CatalogIdentity,
   locale: AppLocale,
   english?: EnglishCatalogEntry,
   fallback: CatalogFallback = "empty",
 ) {
-  if (locale === "pt-BR") return portugueseName(item);
-  return knownEnglishName(item, english) ?? (fallback === "pt-BR" ? portugueseName(item) : "");
+  const name = locale === "pt-BR" ? portugueseName(item) : knownEnglishName(item, english) ?? (fallback === "pt-BR" ? portugueseName(item) : "");
+  return qualifyCatalogName(name, item, locale);
 }
 
 /**
@@ -101,7 +109,7 @@ export function localizeCatalogItem<
     }
   }
 
-  return { id: item.id, name, fields, fallbackFields };
+  return { id: item.id, name: qualifyCatalogName(name, item, locale), fields, fallbackFields };
 }
 
 /** Both labels remain searchable after switching language. */
