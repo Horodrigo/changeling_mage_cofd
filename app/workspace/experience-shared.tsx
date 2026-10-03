@@ -17,6 +17,7 @@ import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { meritCategoryLabel } from "@/lib/merit-ui";
+import { meritMatchesDefinition } from "@/lib/merit-identity";
 
 export type ExperiencePurchaseGroup<T extends string> = {
   group: "core" | "supernatural" | "integrity" | "acquired";
@@ -330,7 +331,7 @@ export function ExperienceMeritPicker({
                   .map((owned, index) => ({ owned, index }))
                   .filter(
                     ({ owned }) =>
-                      owned.name === item.name &&
+                      meritMatchesDefinition(owned, item, meritCatalog) &&
                       (!owned.grantedBy || canAdvance(owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
@@ -350,7 +351,7 @@ export function ExperienceMeritPicker({
                 intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
                 prerequisitesMet = isEligible(item,context);
               if (item.name === "Mantle" && !instances.length) return null;
-              if(!repeatable&&character.merits.some(owned=>owned.name===item.name&&owned.grantedBy&&!canAdvance(owned)))return null;
+              if(!repeatable&&character.merits.some(owned=>meritMatchesDefinition(owned,item,meritCatalog)&&owned.grantedBy&&!canAdvance(owned)))return null;
               if (
                 !repeatable &&
                 instances.length &&

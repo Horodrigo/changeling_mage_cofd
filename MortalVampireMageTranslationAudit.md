@@ -264,6 +264,15 @@ As decisões mecânicas anteriores de Contracts — Waters of Lethe, Enveloping 
 
 Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abaixo o contexto e a decisão necessária quando uma dúvida surgir.
 
+## Progresso — prioridade 0, primeiro lote
+
+- O modelo compartilhado passou a preservar `merits[].definitionId`, separado de `instanceId`, na normalização estrutural schema-2. O picker de criação grava o ID; os pickers compartilhados resolvem instâncias pela definição, não pelo nome.
+- `lib/merit-identity.ts` mantém o ID explícito como autoridade. Para seleções schema-2 existentes sem ID, só resolve nome canônico/origem quando há uma única definição; não usa traduções nem escolhe arbitrariamente entre homônimos. Definições indisponíveis permanecem preservadas.
+- Mortal: criação/edição e ficha resolvem pela identidade; compras de XP gravam definition/instance ID e um descritor semântico. O histórico muda de idioma na exibição, sem reescrever transações antigas: entradas anteriores mostram o delta identificado pelo undo em vez de interpretar o rótulo localizado. Specialties autorais não são traduzidas.
+- Estornos novos de Merits em Mortal verificam a instância, a definição e os pontos de XP disponíveis; falhas não concedem XP nem removem histórico. O helper compartilhado recusa um histórico antigo sem identidade quando múltiplas instâncias homônimas impedem uma resolução segura.
+- **Prioridade 0 ainda não concluída:** migrar compras/histórico/estornos de Vampire e Mage, completar os consumidores por ID e a integração das concessões/configurações; implementar qualificadores dos homônimos após comparar sua mecânica. Nenhuma nova tradução de catálogo foi iniciada neste lote.
+- Verificação deste lote: `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados; suíte completa com **442/442 testes aprovados**. Sem smoke de navegador neste lote.
+
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

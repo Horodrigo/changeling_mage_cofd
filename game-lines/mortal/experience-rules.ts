@@ -4,7 +4,7 @@ import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
 export type MortalAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount: number }
   | { kind: "specialty"; skill: string; name: string }
-  | { kind: "merit"; name: string; dots: number; instanceId?: string; index?: number }
+  | { kind: "merit"; definitionId?: string; name: string; dots: number; instanceId?: string; index?: number }
   | { kind: "integrity"; amount: number };
 
 /** Undo only the selected purchase, preserving later character changes. */
@@ -15,8 +15,9 @@ export function refundMortalAdvancement(sheet: CharacterSheet, undo: MortalAdvan
     const index = sheet.specializations.findLastIndex((item) => item.skill === undo.skill && item.name === undo.name);
     if (index >= 0) sheet.specializations.splice(index, 1);
   } else if (undo.kind === "merit") {
-    refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index);
+    return refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index, undo.definitionId);
   } else {
     sheet.line_data.integrity = subtractDots(sheet.line_data.integrity, undo.amount);
   }
+  return true;
 }

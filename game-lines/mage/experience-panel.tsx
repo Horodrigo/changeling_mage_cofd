@@ -472,7 +472,7 @@ export function MageExperiencePanel({
     }
     if (!undo) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
     const next = structuredClone(character);
-    refundMageAdvancement(next, undo);
+    if (!refundMageAdvancement(next, undo)) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
     const legacyUndo = undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment" ? undo : undefined;
     const creditedArcane = legacyUndo?.creditedArcane ?? (undo.kind==="arcana"?undo.creditedArcane??0:0);
     const refundedRegular = Number(entry.regular) || 0;

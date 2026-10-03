@@ -6,6 +6,8 @@ export type Specialty = { skill: string; name: string; grantedBy?: string };
 
 /** A persisted Merit purchase or grant. */
 export type MeritSelection = {
+  /** Stable catalog identity; instanceId identifies a particular purchase/configuration. */
+  definitionId?: string;
   instanceId?: string;
   name: string;
   dots: number;

@@ -71,7 +71,7 @@ export type MeritPrerequisiteContext = RequirementContext & {
   powers?: string[];
   court?: string;
   mantle?: number;
-  merits?: Array<{ instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
+  merits?: Array<{ definitionId?: string; sourceId?: string; instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
   selectedDots?: number;
   configuration?: Record<string,string|string[]>;
   meritCatalog?: readonly MeritDefinition[];

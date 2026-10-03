@@ -386,7 +386,7 @@ export function ExperiencePanel({
     const undo = entry.undo;
     if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], undo.amount ?? 1, undo.group === "attributes" ? 1 : 0);
     else if (undo.kind === "merit") {
-      refundMeritDots(next, undo.name, Math.abs(entry.experience), undo.instanceId, undo.instanceIndex);
+      if (!refundMeritDots(next, undo.name, Math.abs(entry.experience), undo.instanceId, undo.instanceIndex)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
       if (undo.name === "Touchstone") {
         const maximum = 1 + next.merits
           .filter((merit) => merit.name === "Touchstone" && !merit.grantedBy)

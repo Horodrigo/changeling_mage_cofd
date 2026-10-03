@@ -26,6 +26,7 @@ import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
 import { MortalExperiencePanel } from "./experience-panel";
@@ -98,7 +99,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
       add(3, "anchors", t("ui.virtueAndViceMustDiffer"));
     if (meritSpent > 7) add(3, "merits", t("ui.meritsExceedTheLimit"));
     for (const merit of common.merits) {
-      const definition = meritCatalog.find((item) => item.name === merit.name);
+      const definition = resolveMeritDefinition(merit, meritCatalog);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext))
         add(3, "merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale)}`);
     }
@@ -136,11 +137,12 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         ...(source?.specializations ?? []).filter((specialty) => Boolean(specialty.grantedBy)),
       ],
       merits: mergeCreationMerits(source?.merits, common.merits.map((merit) => {
-        const definition = meritCatalog.find((item) => item.name === merit.name);
+        const definition = resolveMeritDefinition(merit, meritCatalog);
         return {
           ...merit,
-          sourceId: definition?.sourceId,
-          source: definition?.source,
+          definitionId: definition?.id ?? merit.definitionId,
+          sourceId: definition?.sourceId ?? merit.sourceId,
+          source: definition?.source ?? merit.source,
           configuration: normalizeMeritConfiguration(merit.configuration),
         };
       })),

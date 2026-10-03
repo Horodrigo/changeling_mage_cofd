@@ -431,7 +431,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       return;
     }
     const next = structuredClone(character);
-    refundVampireAdvancement(next, entry.undo);
+    if (!refundVampireAdvancement(next, entry.undo)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, disciplineNames, 10), Number(next.line_data.blood_potency ?? 1), reference);
     next.current_state = {
       ...next.current_state,

@@ -26,6 +26,7 @@ import { experienceMeritDots } from "@/lib/merit-progression";
 import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { meritCategoryLabel } from "@/lib/merit-ui";
+import { meritMatchesDefinition, resolveMeritDefinition } from "@/lib/merit-identity";
 
 export type MeritConfigurationRenderProps = {
   merit: MeritSelection;
@@ -76,14 +77,14 @@ export function MeritPicker({
   const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
   const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
     (showAllMerits || isEligible(item, context)) &&
-    (isRepeatableDefinition(item) || !context.merits?.some((owned) => owned.name === item.name) || merits.some((owned) => owned.name === item.name)) &&
+    (isRepeatableDefinition(item) || !context.merits?.some((owned) => meritMatchesDefinition(owned, item, catalog)) || merits.some((owned) => meritMatchesDefinition(owned, item, catalog))) &&
     (category === "all" || categoryKeys(item).includes(category)) &&
     (!normalizedSearch || `${meritName(item)} ${item.name} ${item.source} ${meritPresentation(item, locale).prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase(locale).includes(normalizedSearch))
   );
   const addMerit = (definition: MeritDefinition) => {
-    if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => item.name === definition.name))) return;
-    if (!isRepeatableDefinition(definition) && merits.some((merit) => merit.name === definition.name)) return;
-    setMerits([...merits, { instanceId: createRandomId(), name: definition.name, dots: meritRatingsFor(definition)[0], sourceId: definition.sourceId, source: definition.source, configuration: {} }]);
+    if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => meritMatchesDefinition(item, definition, catalog)))) return;
+    if (!isRepeatableDefinition(definition) && merits.some((merit) => meritMatchesDefinition(merit, definition, catalog))) return;
+    setMerits([...merits, { definitionId: definition.id, instanceId: createRandomId(), name: definition.name, dots: meritRatingsFor(definition)[0], sourceId: definition.sourceId, source: definition.source, configuration: {} }]);
   };
   return <>
     <div className="merit-heading"><div><h3>{t("ui.merits")}</h3><p>{t("ui.coreAndGameLineBooksGroupedByCategory")}</p></div>
@@ -96,7 +97,7 @@ export function MeritPicker({
       </div>
     </div>
     <div className="merit-picker">{merits.map((selection, index) => {
-      const definition = catalog.find((item) => item.name === selection.name);
+      const definition = resolveMeritDefinition(selection, catalog);
       const remove = () => setMerits(merits.filter((_, itemIndex) => itemIndex !== index));
       const needsConfirmation = ["Fae Mount", "Fae Pet", "Familiar", "Entitlement"].includes(selection.name);
       return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale) : undefined}>
@@ -113,7 +114,7 @@ export function MeritPicker({
     {experienceMerits.length > 0 && <>
       <div className="merit-heading"><div><h3>{t("ui.experience")}</h3><p>{t("ui.experienceMeritsPreservedDuringEditing")}</p></div></div>
       <div className="merit-picker">{experienceMerits.map((selection, index) => {
-        const definition = catalog.find((item) => item.name === selection.name);
+        const definition = resolveMeritDefinition(selection, catalog);
         return <div className="merit-row configurable" key={`experience-${selection.instanceId ?? index}-${selection.name}`}>
           <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong><small>{definition ? `${definition.source} · p. ${definition.page || "—"}` : t("ui.experience")}</small></div><Badge variant="outline">{selection.dots} {t("ui.dots")}</Badge><Badge variant="outline">{experienceMeritDots(selection)} {t("ui.xp")}</Badge></div>
         </div>;
@@ -125,7 +126,7 @@ export function MeritPicker({
         const items = visibleCatalog.filter((item) => categoryFor(item) === catalogCategory);
         if (!items.length) return null;
         return <section className="merit-category" key={catalogCategory}><h3>{categoryName(catalogCategory)} <Badge variant="outline">{items.length}</Badge></h3><div>{items.map((definition) => {
-          const selected = merits.some((merit) => merit.name === definition.name);
+          const selected = merits.some((merit) => meritMatchesDefinition(merit, definition, catalog));
           const repeatable = isRepeatableDefinition(definition);
           const prerequisitesMet = isEligible(definition, context);
           const presented = meritPresentation(definition, locale);

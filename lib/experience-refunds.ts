@@ -1,26 +1,30 @@
 import type { CharacterSheet } from "./core/character/character-types";
 import { refundPowerRating } from "./power-progression";
-import { removeExperienceMeritDots } from "./merit-progression";
+import { experienceMeritDots, removeExperienceMeritDots } from "./merit-progression";
 
 export function subtractDots(value: unknown, amount = 1, minimum = 0) {
   return Math.max(minimum, (Number(value) || 0) - amount);
 }
 
-export function refundMeritDots(sheet: CharacterSheet, name: string, amount: number, instanceId?: string, legacyIndex?: number) {
+export function refundMeritDots(sheet: CharacterSheet, name: string, amount: number, instanceId?: string, legacyIndex?: number, definitionId?: string) {
+  const candidates = sheet.merits.map((item, index) => ({ item, index })).filter(({ item }) => item.name === name && !item.grantedBy);
   const index = instanceId
     ? sheet.merits.findIndex(item => item.instanceId === instanceId)
     : legacyIndex !== undefined && sheet.merits[legacyIndex]?.name === name
       ? legacyIndex
-      : sheet.merits.findIndex(item => item.name === name && !item.grantedBy);
-  if (index < 0) return;
+      : candidates.length === 1 ? candidates[0].index : -1;
+  if (index < 0 || !Number.isInteger(amount) || amount <= 0) return false;
+  // New ID-keyed transactions cannot fall back to a namesake or creation dots.
+  if (definitionId && (!instanceId || sheet.merits[index].definitionId !== definitionId || experienceMeritDots(sheet.merits[index]) < amount)) return false;
   if (removeExperienceMeritDots(sheet.merits[index], amount) === 0) sheet.merits.splice(index, 1);
+  return true;
 }
 
 export type MageAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
   | { kind: "arcana"; name: string; amount?: number; creditedArcane?: number }
   | { kind: "gnosis" | "wisdom" | "wisdomLoss" | "willpower" | "willpowerLoss"; amount?: number }
-  | { kind: "merit"; name: string; dots: number; instanceId?: string; index?: number }
+  | { kind: "merit"; definitionId?: string; name: string; dots: number; instanceId?: string; index?: number }
   | { kind: "spell"; key: "learned_rotes" | "learned_praxes"; id: string }
   | { kind: "legacyInitiation"; previousState: unknown; removedPraxis?: {key:"praxes"|"learned_praxes";index:number;item:Record<string,unknown>}; creditedRegular:number; creditedArcane:number; creditedArcaneBeats:number }
   | { kind: "legacyAttainment"; rank:number; removedPraxis?: {key:"praxes"|"learned_praxes";index:number;item:Record<string,unknown>}; creditedRegular:number; creditedArcane:number; creditedArcaneBeats:number }
@@ -36,7 +40,7 @@ export function refundMageAdvancement(sheet: CharacterSheet, undo: MageAdvanceme
     const arcana = { ...(sheet.line_data.arcana as Record<string, number>) };
     arcana[undo.name] = subtractDots(arcana[undo.name], undo.amount ?? 1);
     sheet.line_data.arcana = arcana;
-  } else if (undo.kind === "merit") refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index);
+  } else if (undo.kind === "merit") return refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index, undo.definitionId);
   else if (undo.kind === "spell") {
     const spells = sheet.line_data[undo.key];
     if (Array.isArray(spells)) sheet.line_data[undo.key] = spells.filter(item => item.id !== undo.id);
@@ -55,4 +59,5 @@ export function refundMageAdvancement(sheet: CharacterSheet, undo: MageAdvanceme
     const index = sheet.specializations.findLastIndex(item => item.skill === undo.skill && item.name === undo.name);
     if (index >= 0) sheet.specializations.splice(index, 1);
   } else sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? undo.amount ?? 1 : -1));
+  return true;
 }

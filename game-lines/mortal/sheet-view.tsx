@@ -20,6 +20,7 @@ import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui"
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import { boundedIntegrity, mortalBreakingPointPool, mortalDerived, mortalIntegrityModifier } from "./creation-rules";
@@ -212,8 +213,8 @@ function MeritList({ character, catalog }: { character: CharacterSheet; catalog:
   const { locale, t } = useLanguage();
   if (!character.merits.length) return <em>{t("ui.noMeritSelected")}</em>;
   return <div className="sheet-merits single-column">{character.merits.map((merit, index) => {
-    const definition = catalog.find((item) => item.name === merit.name);
-    const name = locale === "pt-BR" ? definition?.translatedName ?? merit.name : definition?.name ?? merit.name;
+    const definition = resolveMeritDefinition(merit, catalog);
+    const name = definition ? meritPresentation(definition, locale).name : merit.name;
     const configured = meritConfigurationTitle(merit.configuration);
     const presented = definition && meritPresentation(definition, locale);
     const tooltip = presented ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}` : merit.source;

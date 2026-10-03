@@ -4,7 +4,7 @@ import { useState } from "react";
 import { History, RotateCcw, ShoppingBag } from "lucide-react";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -19,12 +19,15 @@ import { meritContextForSheet, meritSelectionProblems, type MeritDefinition } fr
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { meritMatchesDefinition } from "@/lib/merit-identity";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
 import { refundMortalAdvancement, type MortalAdvancementUndo } from "./experience-rules";
+import { mortalExperienceLabel, type MortalExperienceEntry, type MortalExperiencePurchase } from "./experience-presentation";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "integrity";
-type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; undo: MortalAdvancementUndo };
+type HistoryEntry = MortalExperienceEntry;
 
 const PURCHASE_GROUPS = [
   { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
@@ -64,7 +67,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       : [{ value: purchase, label: purchaseLabel(purchase, locale) }];
   const chosen = purchase === "merit" ? target : options.some((item) => item.value === target) ? target : options[0]?.value ?? "";
   const selectedMerit = meritCatalog.find((item) => item.id === chosen);
-  const ownedMerit = meritInstance >= 0 ? character.merits[meritInstance] : undefined;
+  const ownedMerit = meritInstance >= 0 && selectedMerit && character.merits[meritInstance] && meritMatchesDefinition(character.merits[meritInstance], selectedMerit, meritCatalog) ? character.merits[meritInstance] : undefined;
   const current = purchase === "attribute" ? Number(character.attributes[chosen] ?? 1)
     : purchase === "skill" ? Number(character.skills[chosen] ?? 0)
       : purchase === "integrity" ? Number(character.line_data.integrity ?? 7) : 0;
@@ -77,7 +80,10 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
         : purchase === "merit" ? Math.max(0, meritDots - Number(ownedMerit?.dots ?? 0))
           : amount * 2;
   const meritContext = meritContextForSheet(character, meritCatalog, ["mortal"]);
-  const meritUnavailable = purchase === "merit" && (!selectedMerit || !meritDots || meritSelectionProblems(selectedMerit, { dots: meritDots, configuration: meritConfiguration }, meritContext).length > 0);
+  const meritUnavailable = purchase === "merit" && (!selectedMerit || !meritDots ||
+    (meritInstance >= 0 && (!ownedMerit || Boolean(ownedMerit.grantedBy))) ||
+    (meritInstance < 0 && !isRepeatableDefinition(selectedMerit) && character.merits.some(item => meritMatchesDefinition(item, selectedMerit, meritCatalog))) ||
+    meritSelectionProblems(selectedMerit, { dots: meritDots, configuration: meritConfiguration }, meritContext).length > 0);
   const unavailable = !chosen || cost < 1 || meritUnavailable || (maximum > 0 && current >= maximum) || (purchase === "specialty" && !specialtyName.trim());
   const saveState = (patch: Record<string, unknown>) => {
     const next = structuredClone(character);
@@ -88,38 +94,40 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
   const buy = () => {
     if (unavailable || (!builderMode && available < cost)) return setFeedback(t("ui.mortalPurchaseUnavailable"));
     const next = structuredClone(character);
-    let label = options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale);
     let undo: MortalAdvancementUndo;
+    let semanticPurchase: MortalExperiencePurchase;
     if (purchase === "attribute" || purchase === "skill") {
       const group = purchase === "attribute" ? "attributes" : "skills";
       next[group][chosen] = intended;
-      label = `${systemTerm(chosen, locale)} ${intended}`;
       undo = { kind: "trait", group, name: chosen, amount };
+      semanticPurchase = { kind: "trait", group, name: chosen, rating: intended };
     } else if (purchase === "specialty") {
       const name = specialtyName.trim();
       next.specializations.push({ skill: chosen, name });
-      label = `${systemTerm(chosen, locale)}: ${name}`;
       undo = { kind: "specialty", skill: chosen, name };
+      semanticPurchase = { kind: "specialty", skill: chosen, name };
     } else if (purchase === "merit" && selectedMerit) {
       let index = meritInstance;
-      if (index >= 0 && next.merits[index]?.name === selectedMerit.name) {
+      if (index >= 0 && meritMatchesDefinition(next.merits[index], selectedMerit, meritCatalog)) {
         addExperienceMeritDots(next.merits[index], cost);
         next.merits[index].configuration = normalizeMeritConfiguration(meritConfiguration);
       } else {
-        next.merits.push({ instanceId: createRandomId(), name: selectedMerit.name, dots: meritDots, creationDots: 0, experienceDots: meritDots, sourceId: selectedMerit.sourceId, source: selectedMerit.source, configuration: normalizeMeritConfiguration(meritConfiguration) });
+        next.merits.push({ definitionId: selectedMerit.id, instanceId: createRandomId(), name: selectedMerit.name, dots: meritDots, creationDots: 0, experienceDots: meritDots, sourceId: selectedMerit.sourceId, source: selectedMerit.source, configuration: normalizeMeritConfiguration(meritConfiguration) });
         index = next.merits.length - 1;
       }
       const merit = next.merits[index];
-      label = `${locale === "pt-BR" ? selectedMerit.translatedName : selectedMerit.name} ${meritDots}`;
-      undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId: merit.instanceId, index };
+      merit.definitionId = selectedMerit.id;
+      merit.instanceId ??= createRandomId();
+      undo = { kind: "merit", definitionId: selectedMerit.id, name: selectedMerit.name, dots: cost, instanceId: merit.instanceId };
+      semanticPurchase = { kind: "merit", definitionId: selectedMerit.id, instanceId: merit.instanceId, name: selectedMerit.name, rating: meritDots };
     } else {
       next.line_data.integrity = intended;
-      label = `${purchaseLabel("integrity", locale)} ${intended}`;
       undo = { kind: "integrity", amount };
+      semanticPurchase = { kind: "integrity", rating: intended };
     }
     next.derived = mortalDerived(next);
     const balance = experiencePurchaseBalances(available, spent, total, cost, builderMode);
-    const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), undo };
+    const entry: HistoryEntry = { id: createRandomId(), purchase: semanticPurchase, cost, createdAt: new Date().toISOString(), undo };
     next.current_state = { ...next.current_state, experience_available: balance.available, experience_spent: balance.spent, experience_total: balance.total, mortal_experience_history: [...history, entry] };
     updateSheet(next);
     setFeedback(t("ui.mortalPurchaseRecorded"));
@@ -132,19 +140,20 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
   };
   const revert = (entry: HistoryEntry) => {
     if (!history.some((item) => item.id === entry.id)) return;
+    if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost <= 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots)) return setFeedback(t("ui.mortalRefundUnavailable"));
     const next = structuredClone(character);
-    refundMortalAdvancement(next, entry.undo);
+    if (!refundMortalAdvancement(next, entry.undo)) return setFeedback(t("ui.mortalRefundUnavailable"));
     next.derived = mortalDerived(next);
     next.current_state = { ...next.current_state, experience_available: available + entry.cost, experience_spent: Math.max(0, spent - entry.cost), experience_total: total, mortal_experience_history: history.filter((item) => item.id !== entry.id) };
     updateSheet(next);
-    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.label, p2: entry.cost }));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: mortalExperienceLabel(entry, character, meritCatalog, locale), p2: entry.cost }));
   };
   const commitAvailableExperience = () => {
     const nextAvailable = Math.max(0, Math.trunc(Number(amountDraft ?? available) || 0));
     setAmountDraft(null);
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
-  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
+  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{mortalExperienceLabel(entry, character, meritCatalog, locale)}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
 
   return <section className="experience-panel mortal-experience-panel">
     <div className="experience-title"><div><span>{builderMode ? t("ui.creationAdvancement") : t("ui.beatsAndExperience")}</span><small>{builderMode ? t("ui.creationAdvancementDescription") : t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
@@ -158,11 +167,11 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       <div className="experience-purchase-form">
         <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>
         {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="CofD" archetypes={["mortal"]} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={meritDots} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} /></label> : <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label>}
-        {purchase === "merit" && selectedMerit && meritDots > 0 && <MeritConfigurationEditor merit={{ name: selectedMerit.name, dots: meritDots, configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={meritCatalog} ownedMerits={character.merits} definitions={COMMON_MERIT_CONFIGURATIONS} />}
+        {purchase === "merit" && selectedMerit && meritDots > 0 && <MeritConfigurationEditor merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: meritDots, configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={meritCatalog} ownedMerits={character.merits} definitions={COMMON_MERIT_CONFIGURATIONS} />}
         {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}
         {maximum > current && <ExperienceRatingPicker current={current} maximum={maximum} value={intended} onChange={setTargetRating} />}
       </div>
-      <div className="purchase-preview"><strong>{purchase === "merit" ? selectedMerit ? (locale === "pt-BR" ? selectedMerit.translatedName : selectedMerit.name) : purchaseLabel(purchase, locale) : options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {t("ui.xp")}</span></div>
+      <div className="purchase-preview"><strong>{purchase === "merit" ? selectedMerit ? meritPresentation(selectedMerit, locale).name : purchaseLabel(purchase, locale) : options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)}</strong><span>{cost} {t("ui.xp")}</span></div>
       {feedback && <p className="experience-feedback">{feedback}</p>}{historyPanel}
       <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.close")}</Button></DialogClose><Button type="button" size="sm" className="catalog-selection-action" disabled={unavailable || (!builderMode && available < cost)} onClick={buy}>{t("ui.purchaseFor")} {cost} {t("ui.xp")}</Button></DialogFooter>
     </DialogContent></Dialog></div>

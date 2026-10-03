@@ -4,7 +4,7 @@ import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
 export type VampireAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
   | { kind: "specialty"; skill: string; name: string }
-  | { kind: "merit"; name: string; dots: number; instanceId?: string; index?: number }
+  | { kind: "merit"; definitionId?: string; name: string; dots: number; instanceId?: string; index?: number }
   | { kind: "discipline"; name: string; amount?: number }
   | { kind: "bloodPotency" | "humanity" | "humanityLoss" | "willpower"; amount?: number }
   | { kind: "devotion"; id: string }
@@ -28,7 +28,7 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
   else if (undo.kind === "specialty") {
     const index = sheet.specializations.findLastIndex((item) => item.skill === undo.skill && item.name === undo.name);
     if (index >= 0) sheet.specializations.splice(index, 1);
-  } else if (undo.kind === "merit") refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index);
+  } else if (undo.kind === "merit") return refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index, undo.definitionId);
   else if (undo.kind === "discipline") {
     const disciplines = { ...(sheet.line_data.disciplines as Record<string, number> | undefined) };
     disciplines[undo.name] = subtractDots(disciplines[undo.name], undo.amount ?? 1);
@@ -70,4 +70,5 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
     } else if (undo.kind === "scale") ordo.scale_ids = without(ordo.scale_ids, undo.id);
     sheet.line_data.ordo_dracul = ordo;
   }
+  return true;
 }
