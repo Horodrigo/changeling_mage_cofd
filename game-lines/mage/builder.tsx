@@ -34,7 +34,7 @@ import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
-import { mageMeritSelectionProblems } from "./merits";
+import { mageMeritSelectionProblems, MAGE_STATUS_REQUIREMENTS } from "./merits";
 import { NAMELESS_HIGH_SPEECH_BENEFIT, reconcileMageCreationMeritGrants } from "./builder-merit-grants";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
@@ -190,6 +190,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   }, [gnosis, maximumPowerFromMerits]);
 
   const meritContext: MeritPrerequisiteContext = {
+    ...MAGE_STATUS_REQUIREMENTS,
     gameLine: "MtA",
     archetypes: ["awakened"],
     attributes: common.attributes,

@@ -28,7 +28,7 @@ function normalizeRequirement(value: unknown): Requirement | undefined {
   if (Array.isArray(item.any)) { const any = item.any.map(normalizeRequirement).filter((entry): entry is Requirement => Boolean(entry)); return any.length ? { any } : undefined; }
   const trait = text(item.trait), merit = text(item.merit), minimum = Math.max(1, Math.min(10, Number(item.minimum) || 1));
   if (trait) return { trait, minimum };
-  if (merit) return { merit, minimum };
+  if (merit) return { merit, minimum, ...(text(item.name) ? { name: text(item.name) } : {}) };
   return undefined;
 }
 
@@ -37,7 +37,7 @@ function requirementText(requirement: Requirement | undefined): string {
   if ("all" in requirement) return requirement.all.map(requirementText).filter(Boolean).join("; ");
   if ("any" in requirement) return requirement.any.map(requirementText).filter(Boolean).join(" or ");
   if ("trait" in requirement) return `${requirement.trait} ${requirement.minimum}`;
-  if ("merit" in requirement) return `${requirement.merit} ${requirement.minimum ?? 1}`;
+  if ("merit" in requirement) return `${requirement.name ?? requirement.merit} ${requirement.minimum ?? 1}`;
   return "";
 }
 

@@ -4,7 +4,7 @@ import type { MeritDefinition, MeritSelectionProblem } from "./merits";
 
 /** Validation uses canonical rules; its prerequisite text uses the same catalog view as the UI. */
 export function meritProblemMessage(problem: MeritSelectionProblem, definition: MeritDefinition, locale: Locale, catalog: readonly MeritDefinition[] = []): string {
-  const presented = meritPresentation(definition, locale);
+  const presented = meritPresentation(definition, locale, catalog);
   const params = {...problem.params};
   if (params.prerequisites !== undefined) params.prerequisites = presented.prerequisites ?? presented.name;
   if (problem.meritIds) params.merits = problem.meritIds.map(id => {

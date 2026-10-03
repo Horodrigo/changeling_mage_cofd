@@ -79,7 +79,7 @@ export function MeritPicker({
     (showAllMerits || isEligible(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => meritMatchesDefinition(owned, item, catalog)) || merits.some((owned) => meritMatchesDefinition(owned, item, catalog))) &&
     (category === "all" || categoryKeys(item).includes(category)) &&
-    (!normalizedSearch || `${meritName(item)} ${item.name} ${item.source} ${meritPresentation(item, locale).prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase(locale).includes(normalizedSearch))
+    (!normalizedSearch || `${meritName(item)} ${item.name} ${item.source} ${meritPresentation(item, locale, catalog).prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase(locale).includes(normalizedSearch))
   );
   const addMerit = (definition: MeritDefinition) => {
     if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => meritMatchesDefinition(item, definition, catalog)))) return;
@@ -100,7 +100,7 @@ export function MeritPicker({
       const definition = resolveMeritDefinition(selection, catalog);
       const remove = () => setMerits(merits.filter((_, itemIndex) => itemIndex !== index));
       const needsConfirmation = confirmRemoval(definition);
-      return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale) : undefined}>
+      return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale, catalog) : undefined}>
         <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong>
           <small>{definition ? `${categoryName(categoryFor(definition))} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
           <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
@@ -129,7 +129,7 @@ export function MeritPicker({
           const selected = merits.some((merit) => meritMatchesDefinition(merit, definition, catalog));
           const repeatable = isRepeatableDefinition(definition);
           const prerequisitesMet = isEligible(definition, context);
-          const presented = meritPresentation(definition, locale);
+          const presented = meritPresentation(definition, locale, catalog);
           return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {definition.unbounded ? "1+" : meritRatingsFor(definition).map((rating) => "•".repeat(rating)).join(", ")}</small>{presented.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}<p>{presented.description}</p>{presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}</div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
         })}</div></section>;
       })}{!visibleCatalog.length && <em>{t("ui.noMeritsMatchTheFilters")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
@@ -141,7 +141,7 @@ function isRepeatableDefinition(definition: MeritDefinition) {
   return Boolean(definition.repeatable);
 }
 
-function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {
-  const presented = meritPresentation(definition, locale);
+function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US", catalog: readonly MeritDefinition[]) {
+  const presented = meritPresentation(definition, locale, catalog);
   return presented.prerequisites ? `${translate(locale, "ui.prerequisites")}: ${presented.prerequisites}\n${presented.description}` : presented.description;
 }

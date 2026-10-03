@@ -2,7 +2,12 @@ import type { MeritSelection } from "./core/character/character-types";
 import type { MeritDefinition } from "./merits";
 
 type MeritIdentity = Pick<MeritSelection, "name" | "definitionId" | "sourceId">;
-type DefinitionIdentity = Pick<MeritDefinition, "id" | "name" | "sourceId" | "additionalSources">;
+export type DefinitionIdentity = Pick<MeritDefinition, "id" | "name" | "sourceId" | "additionalSources">;
+
+/** New requirement references are IDs. Only unambiguous canonical names bridge old schema-2 Homebrews. */
+export function resolveMeritReference<T extends DefinitionIdentity>(reference: string, catalog: readonly T[]) {
+  return catalog.find(item => item.id === reference) ?? (reference.includes(":") ? undefined : resolveMeritDefinition({ name: reference }, catalog));
+}
 
 /**
  * IDs are authoritative, even when their definition is currently unavailable.

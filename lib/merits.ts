@@ -1,7 +1,8 @@
-import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
+import { requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import type { MessageKey, TranslationParams } from "./i18n";
 import type { CatalogNameQualifier } from "./localized-catalog";
+import { resolveMeritDefinition, resolveMeritReference } from "./merit-identity";
 
 export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
@@ -84,10 +85,17 @@ export function meritPrerequisitesMet(
   if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
   const owned=context.merits??[];
   const forbidden=(definition:Partial<MeritDefinition>)=>definition.descriptivePrerequisites?[]:definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
-  if(forbidden(merit).some(name=>owned.some(item=>item.dots>0&&canonicalTrait(item.name)===canonicalTrait(name))))return false;
   const catalog=context.meritCatalog??[];
-  if(owned.some(item=>item.dots>0&&catalog.some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
-  if (merit.name === "Lucid Dreamer" && context.archetypes?.includes("changeling")) return false;
+  const forbiddenIds=(definition:Partial<MeritDefinition>)=>forbidden(definition).flatMap(reference=>{
+    const resolved = resolveMeritReference(reference, definition.excludes ? catalog : catalog.filter(item=>!item.sourceId.startsWith("homebrew:")));
+    return resolved ? [resolved.id] : [];
+  });
+  if(forbiddenIds(merit).some(reference=>requirementMet({merit:reference},context)))return false;
+  if(owned.some(item=>{
+    const definition = resolveMeritDefinition(item, catalog);
+    return item.dots>0 && definition && Boolean(merit.id) && forbiddenIds(definition).includes(merit.id!);
+  }))return false;
+  if (merit.id === "ctl-2ed:lucid-dreamer" && context.archetypes?.includes("changeling")) return false;
   let usedSeemingAlternative=false;
   if(merit.seeming&&courtKey(context.seeming)!==courtKey(merit.seeming)){
     if(!merit.alternativePrerequisites||!simplePrerequisitesMet(merit.alternativePrerequisites,context)) return false;
@@ -96,8 +104,11 @@ export function meritPrerequisitesMet(
   let printedPrerequisites=merit.prerequisites;
   if(merit.courtAccess?.length){
     const ownCourt=courtKey(context.court);
-    const mantle=Math.max(0,Number(context.mantle??context.merits?.find((item)=>item.name==="Mantle")?.dots??0));
-    const goodwill=new Map((context.merits??[]).filter((item)=>item.name==="Court Goodwill").map((item)=>[courtKey(item.configuration?.court),Number(item.dots??0)]));
+    const distributed = catalog.filter(item=>!item.sourceId.startsWith("homebrew:"));
+    const mantleId = resolveMeritReference("Mantle", distributed)?.id;
+    const goodwillId = resolveMeritReference("Court Goodwill", distributed)?.id;
+    const mantle=Math.max(0,Number(context.mantle??(mantleId ? owned.find(item=>resolveMeritDefinition(item,catalog)?.id===mantleId)?.dots : 0)??0));
+    const goodwill=new Map(owned.filter(item=>goodwillId && resolveMeritDefinition(item,catalog)?.id===goodwillId).map(item=>[courtKey(item.configuration?.court),Number(item.dots??0)]));
     if(!merit.courtAccess.some((access)=>
       (ownCourt===courtKey(access.court)&&mantle>=access.mantle)||
       (access.courtGoodwill!==undefined&&(goodwill.get(courtKey(access.court))??0)>=access.courtGoodwill)
@@ -127,7 +138,7 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
   // Parse ordinary comma-separated trait and Merit clauses independently.
   // Keep the legacy narrative/group helpers below for general-purpose special wording.
   if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|Contract of|≤|maximum|or lower/i.test(value))
-    return textRequirementMet(value,context,(context.meritCatalog??[]).map(item=>item.name));
+    return textRequirementMet(value,context,context.meritCatalog??[]);
   const text=value.replace(/≤/g," maximum ");
   if(/Non-changeling/i.test(text)&&context.archetypes?.includes("changeling")) return false;
   return text.split(";").every((rawGroup)=>{
@@ -140,17 +151,16 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
     }
     if(/Cannot have/i.test(group)){
       const forbidden=group.replace(/Cannot have/i,"").trim();
-      return !(context.merits??[]).some((merit)=>courtKey(merit.name)===courtKey(forbidden));
+      return !requirementMet({merit:forbidden},context);
     }
     const requiredMerits=(context.meritCatalog??[]).filter((candidate)=>
-      new RegExp(`\\b${candidate.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\b`,"i").test(group)
+      !candidate.sourceId.startsWith("homebrew:") && new RegExp(`\\b${candidate.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\b`,"i").test(group)
     );
     if(requiredMerits.length&&!/\bor\b/i.test(group)){
-      const owned=context.merits??[];
       if(!requiredMerits.every((required)=>{
         const match=group.match(new RegExp(`${required.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\s*(•+)?`,"i"));
         const threshold=match?.[1]?.length??1;
-        return owned.some((item)=>courtKey(item.name)===courtKey(required.name)&&item.dots>=threshold);
+        return requirementMet({merit:required.id,minimum:threshold},context);
       })) return false;
     }
     if(/one Social Attribute/i.test(group)) return ["Presence","Manipulation","Composure"].some((name)=>traitValue(name,context)>=dotsIn(group));
@@ -175,10 +185,9 @@ function catalogPrerequisitesMet(value:string|undefined,context:MeritPrerequisit
     }
     if(/\bWyrd\b/i.test(group)) return Number(context.wyrd??0)>=(dotsIn(group)||Number(group.match(/\d+/)?.[0]??0));
     if(/\bSize\b/i.test(group)) return Number(context.size??5)>=(dotsIn(group)||Number(group.match(/\d+/)?.[0]??0));
-    const named=(context.merits??[]).filter((owned)=>new RegExp(`\\b${owned.name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\b`,"i").test(group));
-    if(named.length){
+    if(requiredMerits.length){
       const threshold=dotsIn(group)||1;
-      return /\bor\b/i.test(group)?named.some((merit)=>merit.dots>=threshold):named.every((merit)=>merit.dots>=threshold);
+      return /\bor\b/i.test(group)?requiredMerits.some((merit)=>requirementMet({merit:merit.id,minimum:threshold},context)):requiredMerits.every((merit)=>requirementMet({merit:merit.id,minimum:threshold},context));
     }
     return true;
   });

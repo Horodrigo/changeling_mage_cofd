@@ -501,6 +501,15 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: **507/507** testes completos; testes dirigidos de concessões/identidades, criação, Entitlements e arquitetura aprovados. Lint, TypeScript, build e `git diff --check` aprovados. Uma expectativa de arquitetura antiga exigia despacho pelo nome; foi reescrita para exigir o ID e verificada isoladamente e na suíte completa. Sem smoke de navegador.
 - Restam na prioridade 0 os consumidores de nomes na apresentação/configuração de fichas, controles genéricos de repetibilidade/graduações, requisitos especializados e os demais vínculos registrados. Etapas 1–4 ainda abertas.
 
+## Progresso — prioridade 0, requisitos e referências de Merits (2026-10-03)
+
+- Os requisitos estruturados e os requisitos impressos de Merits deixam de comparar o nome salvo na ficha. Resolvem a definição canônica no catálogo e verificam seu ID; exclusões funcionam nos dois sentidos. Rótulos renomeados não removem elegibilidade, enquanto IDs Homebrew/indisponíveis e escolhas antigas ambíguas não herdam um requisito oficial.
+- Os nomes canônicos presentes no texto inglês continuam sendo entrada editorial do parser, não identidade de uma seleção persistida. Referências impressas distribuídas não são vinculadas a um Homebrew criado pelo jogador só porque seu nome coincide. Os requisitos sazonais existentes também resolvem Mantle/Court Goodwill no catálogo, sem comparar labels salvos.
+- Status não reconhece mais qualquer nome terminado em “Status”. O Core fornece apenas sua identidade; Mage/Vampire fornecem suas próprias identidades ao contexto. As abreviações de domínio de Mage saíram do parser compartilhado e pertencem a Mage. O helper Awakened Status sem consumidores foi removido.
+- Novas escolhas no editor Homebrew salvam o ID do Merit referenciado; o nome canônico opcional é somente fallback de apresentação. Requisitos antigos mantêm sua referência original ao abrir/editar; o bridge aceita apenas nomes canônicos inequívocos, não traduções nem o primeiro homônimo. Os seletores de criação/XP e a validação exibem as referências no idioma atual por catálogo, preservando texto narrativo autoral. Esta mudança substitui o comportamento histórico de salvar nomes descrito no anexo.
+- Este lote não reescreve fichas, alocações, recursos, saldos ou históricos de XP. Nenhuma regra foi reconstruída de PDFs. Ainda pendentes na prioridade 0: referências de Merits nos requisitos de Legacy e ownership dos parsers especializados restantes. As traduções das etapas 1–4 continuam abertas.
+- Verificação: suíte completa **523/523** antes dos dois testes adicionais; suíte dirigida final **77/77**, incluindo round-trip EN/PT e acesso sazonal por identidade. TypeScript, lint, build e `git diff --check` aprovados. Sem smoke de navegador.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

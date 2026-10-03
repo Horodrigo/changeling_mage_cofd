@@ -3,7 +3,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 export function vampireMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[], archetypes: readonly string[]): MeritPrerequisiteContext {
-  return meritContextForSheet(sheet, catalog, archetypes, sheet.line_data.merit_granted_skill_bonuses as Record<string, number> | undefined);
+  return { ...meritContextForSheet(sheet, catalog, archetypes, sheet.line_data.merit_granted_skill_bonuses as Record<string, number> | undefined), statusMeritIds: ["vtr-kindred-status"] };
 }
 
 const CLAN_MERIT_CATEGORIES = new Set(["Dukhan", "Gangrel", "Nosferatu"]);

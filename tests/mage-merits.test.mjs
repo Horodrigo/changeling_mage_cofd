@@ -17,7 +17,7 @@ const rawMageCatalog=[
 ];
 const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=selected.get(item.name);if(!current||item.priority>current.priority)selected.set(item.name,item);return selected;},new Map()).values()];
 const merit=(name)=>mageCatalog.find(item=>item.name===name);
-const base={gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
+const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{
  for(const name of ["Sanctum","Demesne","Infamous Mentor","Imbued Ally","Order Archive","Awakened Status","Adamant Hand","Cabal Theme","Faction Member","Prelacy","Profane Tool","Svikiro"]){

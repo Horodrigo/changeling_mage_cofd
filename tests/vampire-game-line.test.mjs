@@ -551,11 +551,13 @@ test("Vampire Status and English trait prerequisites resolve against neutral sto
     gameLine: "VtR",
     attributes: { Resolve: 3, Composure: 3 },
     skills: { Brawl: 2 },
+    statusMeritIds: ["vtr-kindred-status"],
+    meritCatalog: [{ id: "vtr-kindred-status", name: "Kindred Status", sourceId: "vtr-2ed" }],
     merits: [{ name: "Kindred Status", dots: 2, configuration: { group: "Circle of the Crone" } }],
   };
-  assert.equal(textRequirementMet("Resolve •••; Composure •••", context, ["Kindred Status"]), true);
-  assert.equal(textRequirementMet("Circle of the Crone Status •", context, ["Kindred Status"]), true);
-  assert.equal(textRequirementMet("Lancea et Sanctum Status •", context, ["Kindred Status"]), false);
+  assert.equal(textRequirementMet("Resolve •••; Composure •••", context, context.meritCatalog), true);
+  assert.equal(textRequirementMet("Circle of the Crone Status •", context, context.meritCatalog), true);
+  assert.equal(textRequirementMet("Lancea et Sanctum Status •", context, context.meritCatalog), false);
   assert.equal(vampireCovenantStatus({ merits: context.merits }, "circle-of-the-crone", "Circle of the Crone"), 2);
 });
 

@@ -33,8 +33,9 @@ test("player-created Merits preserve exact ratings and enforce only structured p
   });
   assert.deepEqual(item.ratings, [1, 3, 5]);
   assert.deepEqual(normalizeMeritHomebrews(JSON.parse(JSON.stringify([item])))[0].levels.map((level) => level.rating), [1, 3, 5]);
-  assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 2 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item] }), true);
-  assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 1 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item] }), false);
+  const referenced = { id: "core-2ed:striking-looks", name: "Striking Looks", sourceId: "core-2ed" };
+  assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 2 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item, referenced] }), true);
+  assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 1 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item, referenced] }), false);
   assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }).length, 0);
   assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }, [{ name: item.name, definitionId: item.id }]).length, 1);
 

@@ -308,12 +308,12 @@ export function ExperienceMeritPicker({
               (item) =>
                 (showAllMerits || isEligible(item, context)) &&
                 (category === "all" || categoryKeys(item).includes(category)) &&
-                `${meritName(item)} ${item.name} ${meritPresentation(item, locale).description} ${meritPresentation(item, locale).prerequisites ?? ""} ${item.source} ${categoryKeys(item).join(" ")}`
+                `${meritName(item)} ${item.name} ${meritPresentation(item, locale, meritCatalog).description} ${meritPresentation(item, locale, meritCatalog).prerequisites ?? ""} ${item.source} ${categoryKeys(item).join(" ")}`
                   .toLocaleLowerCase(locale)
                   .includes(normalized),
             )
             .map((item) => {
-              const presented = meritPresentation(item, locale);
+              const presented = meritPresentation(item, locale, meritCatalog);
               const instances = character.merits
                   .map((owned, index) => ({ owned, index }))
                   .filter(

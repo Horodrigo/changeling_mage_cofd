@@ -10,6 +10,11 @@ const EXARCHS = new Set(["Eye", "Father", "General", "Unity", "Chancellor", "Rap
 const PROFANE_FORMS = new Set(["Scepter", "Robe", "Crown", "Throne", "Ring"]);
 const SVIKIRO_TRADITIONS = new Set(["wamasikati", "wedzinza"]);
 
+export const MAGE_STATUS_REQUIREMENTS = {
+  statusMeritIds: ["mta-2ed:awakened-status"],
+  statusDomainAliases: { Arrow: "Adamantine Arrow", Ladder: "Silver Ladder", Guardian: "Guardians of the Veil", Councillor: "Free Council", Seer: "Seers of the Throne", "Consilium/Order": "any" },
+};
+
 export function canAdvanceMageGrant(merit: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[]) {
   const id = resolveMeritDefinition(merit, catalog)?.id;
   return (merit.grantedBy === "Ordem" && id === "mta-2ed:awakened-status") ||
@@ -20,6 +25,7 @@ export function mageMeritContextForSheet(sheet: CharacterSheet, catalog: readonl
   const data = sheet.line_data;
   return {
     ...meritContextForSheet(sheet, catalog, ["awakened"], data.merit_granted_skill_bonuses as Record<string, number> | undefined),
+    ...MAGE_STATUS_REQUIREMENTS,
     path: String(data.path ?? ""), order: String(data.order ?? ""),
     gnosis: data.gnosis === undefined ? undefined : Number(data.gnosis),
     arcana: (data.arcana ?? {}) as Record<string, number>,
