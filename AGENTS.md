@@ -50,6 +50,8 @@ Core must not accumulate line-specific mechanics. These remain line-owned:
 
 Shared visual structure does not transfer mechanical ownership to Core.
 
+`lib/game-line-contracts/` means programming interfaces, not Changeling Contracts. Legacy Contract helpers/types in `lib/` and line-aware prerequisite context in `lib/merits.ts` remain ownership debt tracked in `MortalVampireMageTranslationAudit.md`; do not expand them. Homebrew does not exempt specialized mechanics, editors, or CSS from line ownership. Shared visual selectors reused by multiple lines must use neutral names rather than names of one line's powers or traits.
+
 ## Dependency Direction
 
 These constraints apply to direct and transitive imports:
@@ -147,6 +149,7 @@ Core may own generic Merit storage, ratings, rendering, configuration plumbing, 
 - Use stable Merit and configuration IDs. Never dispatch special behavior from translated or display names.
 - Persist `merits[].definitionId` for the catalog identity and `instanceId` for each purchased/configured instance. The shared creation picker and Experience instance picker resolve through `lib/merit-identity.ts`: an explicit definition ID is authoritative, including when unavailable. Its documented schema-2 ID-less fallback accepts only an unambiguous canonical name and source, never translated names or the first namesake. Structural normalization preserves IDs without loading catalogs. Existing line-specific name-based consumers are being migrated under `MortalVampireMageTranslationAudit.md`; do not expand them.
 - Mortal Experience entries persist a semantic `purchase` descriptor. Vampire and Mage Experience panels persist canonical undo identities and target ratings; their UI renders these in the current locale without rewriting prior labels or parsing them as identities. Merit purchases record both definition and instance IDs, and their refunds verify the exact instance, definition, recorded cost and remaining XP dots. A failed refund must not restore XP or delete history. Opaque history remains visible but cannot restore an old sheet snapshot or infer a purchase from translated text. Mage Legacy transactions and remaining name-dispatched grants/configuration consumers are tracked in the active localization audit.
+- Mage Experience refunds, Legacy progression, and the Legacy UI live in `game-lines/mage/`; shared `lib/experience-refunds.ts` contains only neutral dot/Merit refund mechanisms. Each line owns interpretation of supernatural-stat purchase history; Mage Gnosis uses semantic undo records, never translated purchase descriptions.
 - Catalog membership and purchase eligibility are separate. Keep valid definitions visible even when the current character cannot buy them, and explain unmet prerequisites.
 - Core enforces the catalog's `mortalOnly` flag before descriptive prerequisites. A line-owned rule may explicitly supply `mortalMeritsAllowed` (for example Vampire's Coil of Zirnitra); Core does not identify or calculate that exception. Validation messages use the same localized Merit presentation as catalog rows.
 - Preserve discontinuous ratings exactly. Do not infer an interval from the lowest and highest dots.

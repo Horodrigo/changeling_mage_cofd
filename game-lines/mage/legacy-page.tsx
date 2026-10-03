@@ -11,13 +11,14 @@ import { findLegacy,LEGACIES,legacyAttainmentPrerequisites,legacyEntryPrerequisi
 import { LegacyHomebrewEditor } from "@/game-lines/mage/legacy-homebrew-editor";
 import { LEGACY_HOMEBREW_SOURCE_ID,mergeLegacyHomebrews,saveLegacyHomebrews } from "@/game-lines/mage/legacy-homebrews";
 import { useLegacyHomebrews } from "@/game-lines/mage/use-legacy-homebrews";
-import type { MageAdvancementUndo } from "@/lib/experience-refunds";
-import { discardLegacyAdvancements } from "@/lib/legacy-progression";
+import type { MageAdvancementUndo } from "@/game-lines/mage/experience-refunds";
+import { discardLegacyAdvancements } from "@/game-lines/mage/legacy-progression";
 import { createRandomId } from "@/lib/random-id";
 import { alphabetical } from "@/lib/option-order";
-import { RuleSelect } from "./rule-select";
+import { RuleSelect } from "@/app/workspace/rule-select";
+import type { MageExperienceEntry } from "./experience-presentation";
 
-type MageXpEntry={undo?:MageAdvancementUndo;id:string;description:string;regular:number;arcane:number;createdAt:string;before:{attributes:Record<string,number>;skills:Record<string,number>;merits:CharacterSheet["merits"];specializations:CharacterSheet["specializations"];line_data:Record<string,unknown>}};
+type MageXpEntry = MageExperienceEntry;
 
 export function LegacyPage({character,updateSheet,onDiscard,onJoined}:{character:CharacterSheet;updateSheet:(sheet:CharacterSheet)=>void;onDiscard:()=>void;onJoined?:()=>void}){
  const { t }=useLanguage(),state=normalizeLegacyState(character.line_data.legacy_state),custom=useLegacyHomebrews(),preferences=useHomebrewPreferences(),definition=findLegacy(state.definitionId,custom),checks=definition?legacyEntryPrerequisites(character,definition):undefined,founding=Boolean(definition?.homebrew&&definition.founderCharacterId===character.id);

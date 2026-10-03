@@ -188,7 +188,7 @@ Inventário: `The Eleventh Question`, `Chronologue`, `Engineers of the System`, 
 
 Além do catálogo:
 
-- `app/workspace/legacy-page.tsx` apresenta literalmente `Tutelage`, `Daimonomikon`, `Soul or Soul Stone Study`, `1 Experience` e `1 Arcane Experience` nas opções.
+- `game-lines/mage/legacy-page.tsx` apresenta literalmente `Tutelage`, `Daimonomikon`, `Soul or Soul Stone Study`, `1 Experience` e `1 Arcane Experience` nas opções (movido da antiga superfície compartilhada).
 - `game-lines/mage/legacies.ts` gera rótulos de requisitos em inglês, incluindo nomes de traits e `Qualifying Skill`.
 - As identidades, os valores necessários e as opções mecânicas devem permanecer canônicos; apenas a apresentação precisa ser localizada.
 
@@ -220,6 +220,18 @@ Nas três linhas há transações cujo texto é montado no idioma da compra e de
 - Manter títulos de livros no original.
 - Não traduzir nomes, notas, benefícios customizados, Specialties ou outros textos livres escritos pelo jogador.
 - Conditions com nomes iguais em Core, Vampire e Mage precisam de terminologia coerente, mas não devem compartilhar efeitos diferentes só por terem o mesmo nome.
+
+### X03 — Ownership dos Contracts e estilos especializados
+
+Inspeção motivada pelos exemplos do usuário em Core e `app/css/globals.css`:
+
+- `lib/core/` não contém mecânicas de Contracts. O ID suportado `CtL` em `game-line-ids.ts` é parte do roteamento neutro.
+- `lib/game-line-contracts/` define contratos de programação (interfaces de registro, regras, UI e catálogos), não poderes de Changeling; permanece compartilhado.
+- **Dívida real:** `lib/contract-presentation.ts`, `lib/contract-clauses.ts`, o tipo `ContractDefinition` em `lib/catalog/catalog-types.ts` e sua reexportação em `lib/catalog/contract-catalog.ts` são especializados de Changeling. Devem passar para a linha sem duplicação ou adapters permanentes.
+- **Dívida real em mecanismo compartilhado:** `lib/merits.ts` lê `line_data.contracts`/`learned_contracts`, Court, Seeming, Wyrd e outros campos de linhas na montagem de contexto, e interpreta requisitos específicos de Contracts. A migração precisa preservar a elegibilidade por hooks/contexto da linha, não apenas deslocar ou renomear arquivos.
+- Os seletores exclusivos `.changeling-homebrew-source`, `.entitlement-homebrew-editor .homebrew-form` e `.contract-homebrew-editor .homebrew-form` foram movidos de `app/css/globals.css` para `game-lines/changeling/styles/sheet.css`, sem mudança de valores.
+- Classes visuais como `.contract-power-card`, `.creation-contract-list`, `.kith-current` e `.entitlement-page` possuem consumidores em outras linhas. Sua apresentação compartilhada precisa de nomes neutros; mover os seletores indiscriminadamente quebraria Mage/Vampire. Não há transferência automática de ownership mecânico pela reutilização visual. A superfície de Entitlements ainda em `app/workspace/entitlement-page.tsx` também deve passar para Changeling.
+- Homebrew não constitui uma exceção: o shell/controles realmente comuns são compartilhados; editores e mecânicas específicos pertencem à linha.
 
 ## Decisões da auditoria — aprovadas em 2026-10-02
 
@@ -281,6 +293,15 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - **Prioridade 0 ainda aberta:** compras de Legacy e sua apresentação semântica; detecção histórica de Gnosis em `builder-power-progression.ts`/`lib/power-progression.ts`; consumidores de identidade por nome em configuração, concessões automáticas, elegibilidade e conservação de catálogos desativados; integração restante em Changeling/Werewolf; qualificadores de Conditions/Tilts e de Merits mecanicamente distintos. A suíte dirigida cobre os históricos em EN/PT, a renderização dos painéis, isolamento de catálogos, import/export e estornos. Nenhuma nova tradução de catálogo neste lote.
 - Verificação: suíte completa **446/446**; após as últimas guardas contra undo desconhecido e estorno acima dos pontos pagos, suíte dirigida de identidade/persistência **41/41**. `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados no estado final. Sem smoke de navegador neste lote.
 
+
+## Progresso — prioridade 0, terceiro lote
+
+- Mage: estornos, progressão de Legacy e sua superfície foram movidos para `game-lines/mage/`, sem duplicar os caminhos antigos. `lib/experience-refunds.ts` ficou restrito aos mecanismos neutros de pontos/Merits. O antigo helper misto `lib/power-progression.ts` foi removido; os consumidores utilizam os helpers já existentes das linhas.
+- Gnosis: removida a interpretação de compras pelo texto `Gnose N`; a criação/edição reconhece apenas undo semântico de Gnosis, com rating ou valor anterior e quantidade válida. `creation_gnosis` explícito continua autoritativo. Texto histórico opaco permanece preservado e não é convertido em compra por adivinhação.
+- Changeling: os seletores especializados dos editores/inventário Homebrew citados em X03 passaram para seu CSS. Estilos compartilhados reutilizados com nomes especializados ainda precisam de neutralização coordenada.
+- A fixture de estorno de Entitlement agora registra explicitamente os quatro pontos pagos por XP; um registro sem `experienceDots` não autoriza o estorno de pontos de criação. Os testes de persistência importam estornos neutros e estornos de Mage de suas respectivas fronteiras.
+- **Prioridade 0 ainda aberta:** identidade/presentação das compras de Legacy; concessões/configurações e elegibilidade por nomes; integração restante em Changeling/Werewolf; qualificadores de homônimos e ownership descrito em X03. Nenhuma tradução nova de catálogo neste lote.
+- Verificação: suíte completa **448/448**; `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote; os valores CSS foram preservados, e testes de arquitetura protegem a localização dos seletores exclusivos.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

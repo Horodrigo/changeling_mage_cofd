@@ -1,6 +1,6 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
-import type { MageAdvancementUndo } from "@/lib/experience-refunds";
+import type { MageAdvancementUndo } from "./experience-refunds";
 import { translate, type Locale, type MessageKey } from "@/lib/i18n";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";

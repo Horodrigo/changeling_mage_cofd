@@ -22,7 +22,7 @@ import {
   derivedWithPermanentMerits,
 } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements } from "./experience-shared";
-import { LegacyPage } from "@/app/workspace/legacy-page";
+import { LegacyPage } from "./legacy-page";
 import { MageExperiencePanel } from "./experience-panel";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import {
@@ -67,7 +67,7 @@ import {
 import {
   refundMageAdvancement,
   type MageAdvancementUndo,
-} from "@/lib/experience-refunds";
+} from "./experience-refunds";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";

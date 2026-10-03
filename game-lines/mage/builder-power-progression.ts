@@ -4,11 +4,13 @@ import { creationPowerProgression } from "@/lib/core/character/creation-power-pr
 export function mageBuilderPowerProgression(sheet: CharacterSheet | null | undefined) {
   const history = sheet?.current_state?.mage_experience_history;
   const historicalRatings = Array.isArray(history)
-    ? history.flatMap((entry) =>
-        /^Gnose \d+$/.test(String(entry?.description ?? "")) && entry?.before?.line_data?.gnosis !== undefined
-          ? [Number(entry.before.line_data.gnosis)]
-          : [],
-      )
+    ? history.flatMap((entry) => {
+        if (entry?.undo?.kind !== "gnosis") return [];
+        const amount = entry.undo.amount ?? 1;
+        if (!Number.isInteger(amount) || amount < 1 || amount > 9) return [];
+        const previous = entry.rating !== undefined ? Number(entry.rating) - Number(amount) : Number(entry.before?.line_data?.gnosis);
+        return Number.isInteger(previous) && previous >= 1 && previous <= 10 ? [previous] : [];
+      })
     : [];
   return creationPowerProgression(sheet, "gnosis", historicalRatings);
 }

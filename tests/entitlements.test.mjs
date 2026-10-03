@@ -14,7 +14,7 @@ const {entitlementPresentation,normalizeEntitlementState,entitlementPrerequisite
 const {synchronizeChangelingBuilderMeritGrants}=await vite.ssrLoadModule("/game-lines/changeling/builder-merit-grants.ts");
 const synchronizeMeritGrants=(character)=>synchronizeChangelingBuilderMeritGrants(character,ENTITLEMENTS);
 const {refundMeritDots}=await vite.ssrLoadModule("/lib/experience-refunds.ts");
-const {refundPowerRating}=await vite.ssrLoadModule("/lib/power-progression.ts");
+const {refundChangelingPowerRating}=await vite.ssrLoadModule("/game-lines/changeling/builder-power-progression.ts");
 const CHANGELING_MERITS=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/merits.json",import.meta.url),"utf8"));
 
 const allocation=(sequence,target,blessingId)=>({id:`a${sequence}`,sequence,target,...(blessingId?{blessingId}:{})});
@@ -79,7 +79,7 @@ test("apresentação portuguesa preserva identidades mecânicas dos Títulos",()
 
 test("reduzir Fado remove a alocação mais nova",()=>{
   const current=sheet();current.line_data.creation_wyrd=1;
-  current.line_data=refundPowerRating(current,"wyrd");synchronizeMeritGrants(current);
+  current.line_data=refundChangelingPowerRating(current);synchronizeMeritGrants(current);
   const reduced=current.line_data.entitlement;
   assert.equal(current.line_data.wyrd,4);assert.deepEqual(reduced.allocations.map((item)=>item.sequence),[0,1,2,3]);
   assert.equal(reduced.allocations.some((item)=>item.blessingId==="hostile-oath"),false);assert.equal(reduced.token.rating,2);
@@ -87,9 +87,11 @@ test("reduzir Fado remove a alocação mais nova",()=>{
 
 test("benefícios alocados são derivados e desaparecem com o estado do Título",()=>{
   const current=synchronizeMeritGrants(sheet());
+  const purchased=current.merits.find((item)=>item.instanceId==="entitlement");
+  purchased.creationDots=0;purchased.experienceDots=4;
   assert.ok(current.specializations.some((item)=>item.grantedBy==="Entitlement:baron-lesser-ones"&&item.name==="Diplomacy"));
   assert.ok(current.merits.some((item)=>item.name==="Allies"&&item.dots===3&&item.grantedBy==="Entitlement:baron-lesser-ones"));
-  refundMeritDots(current,"Entitlement",4,"entitlement");
+  assert.equal(refundMeritDots(current,"Entitlement",4,"entitlement"),true);
   synchronizeMeritGrants(current);
   assert.equal(current.line_data.entitlement,undefined);
   assert.equal(current.merits.some((item)=>item.grantedBy?.startsWith("Entitlement:")),false);

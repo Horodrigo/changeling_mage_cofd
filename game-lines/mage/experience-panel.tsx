@@ -16,7 +16,7 @@ import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { meetsArcanaRequirements } from "@/game-lines/mage/builder-eligibility";
 import { withMagePowerRating } from "@/game-lines/mage/builder-power-progression";
-import { refundMageAdvancement, type MageAdvancementUndo } from "@/lib/experience-refunds";
+import { refundMageAdvancement, type MageAdvancementUndo } from "./experience-refunds";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/game-lines/mage/sheet-merit-configurations";
 import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";

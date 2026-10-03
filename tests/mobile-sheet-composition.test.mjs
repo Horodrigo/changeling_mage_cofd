@@ -20,7 +20,7 @@ test("mobile sheets keep summaries, details, powers, and resource tracks separat
     read("../game-lines/changeling/sheet-view.tsx"),
     read("../game-lines/vampire/sheet-view.tsx"),
     read("../game-lines/vampire/bloodline-page.tsx"),
-    read("../app/workspace/legacy-page.tsx"),
+    read("../game-lines/mage/legacy-page.tsx"),
     read("../app/workspace/character-paper-shell.tsx"),
     read("../app/css/globals.css"),
     read("../game-lines/mortal/styles/sheet.css"),

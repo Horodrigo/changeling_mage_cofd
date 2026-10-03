@@ -30,7 +30,7 @@ test("browser surfaces do not call crypto.randomUUID directly", async () => {
     "app/builder/merit-picker.tsx",
     "app/workspace/condition-manager.tsx",
     "app/workspace/entitlement-page.tsx",
-    "app/workspace/legacy-page.tsx",
+    "game-lines/mage/legacy-page.tsx",
     "game-lines/changeling/builder.tsx",
     "game-lines/changeling/builder-merit-editor.tsx",
     "game-lines/changeling/experience-panel.tsx",

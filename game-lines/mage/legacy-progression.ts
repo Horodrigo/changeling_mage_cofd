@@ -1,4 +1,4 @@
-import type { CharacterSheet } from "./core/character/character-types";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { refundMageAdvancement, type MageAdvancementUndo } from "./experience-refunds";
 
 type LegacyUndo = Extract<MageAdvancementUndo, { kind: "legacyInitiation" | "legacyAttainment" }>;

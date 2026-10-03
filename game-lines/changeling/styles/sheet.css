@@ -28,6 +28,21 @@
    Changeling sheet rules stay authoritative when selectors overlap.
    -------------------------------------------------------------------------- */
 
+.changeling-homebrew-source > .homebrew-source-summary {
+  min-height: 38px;
+  padding: 6px 14px;
+}
+.changeling-homebrew-source > .homebrew-source-summary > div {
+  grid-template-columns: minmax(0, 1fr) max-content;
+}
+.changeling-homebrew-source > .homebrew-source-body {
+  padding: 0 14px 10px;
+}
+.entitlement-homebrew-editor .homebrew-form,
+.contract-homebrew-editor .homebrew-form {
+  grid-template-columns: 1fr;
+}
+
 .character-card.ctl-card {
   border-color: #a8cdb5;
   background: linear-gradient(135deg, #f5fbf5, #e8f5eb);

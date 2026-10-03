@@ -7,12 +7,14 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType: "custom", configFile: false, root,
   resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false } });
 after(() => vite.close());
-const power = await vite.ssrLoadModule("/lib/power-progression.ts");
+const changelingPower = await vite.ssrLoadModule("/game-lines/changeling/builder-power-progression.ts");
+const magePower = await vite.ssrLoadModule("/game-lines/mage/builder-power-progression.ts");
 const merits = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const changelingMeritConfigurations = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
 const changelingExperience = await vite.ssrLoadModule("/game-lines/changeling/experience-shared.tsx");
 const mageMeritConfigurations = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
-const refunds = await vite.ssrLoadModule("/lib/experience-refunds.ts");
+const refunds = await vite.ssrLoadModule("/game-lines/mage/experience-refunds.ts");
+const { refundMeritDots } = await vite.ssrLoadModule("/lib/experience-refunds.ts");
 const vampireRefunds = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
 const mortalExperience = await vite.ssrLoadModule("/game-lines/mortal/experience-rules.ts");
 const experienceShared = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
@@ -80,28 +82,37 @@ const permutations = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
 
 for (const key of ["wyrd", "gnosis"]) for (const creation of [1,2,3]) {
   test(`${key}: mantém avanços além da criação ${creation} ao salvar/reabrir`, () => {
+    const withRating = key === "wyrd" ? changelingPower.withChangelingPowerRating : magePower.withMagePowerRating;
+    const progressionFor = key === "wyrd" ? changelingPower.changelingBuilderPowerProgression : magePower.mageBuilderPowerProgression;
+    const refund = key === "wyrd" ? changelingPower.refundChangelingPowerRating : magePower.refundMagePowerRating;
     let current = sheet(key, creation);
-    for (let i = 0; i < 3; i++) current.line_data = power.withPowerRating(current, key, current.line_data[key] + 1);
+    for (let i = 0; i < 3; i++) current.line_data = withRating(current, current.line_data[key] + 1);
     current = JSON.parse(JSON.stringify(current));
-    const progression = power.powerProgression(current, key);
+    const progression = progressionFor(current);
     assert.equal(progression.creation + progression.advancement, creation + 3);
     for (const order of permutations) {
       const copy = structuredClone(current);
-      for (let remaining = order.length; remaining > 0; remaining--) copy.line_data = power.refundPowerRating(copy, key);
+      for (let remaining = order.length; remaining > 0; remaining--) copy.line_data = refund(copy);
       assert.equal(copy.line_data[key], creation);
     }
   });
 }
 
-test("reconhece os avanços antigos pelo histórico, sem cobrar Méritos outra vez", () => {
+test("line-owned progression recognizes semantic history but never parses localized purchase labels", () => {
   const ctl = sheet(); ctl.line_data.wyrd = 3;
   ctl.current_state.experience_history = [{undo:{kind:"wyrd",previous:2}},{undo:{kind:"wyrd",previous:1}}];
-  assert.deepEqual(power.powerProgression(ctl, "wyrd"), {creation:1,advancement:2,current:3});
+  assert.deepEqual(changelingPower.changelingBuilderPowerProgression(ctl), {creation:1,advancement:2,current:3});
   const mage = sheet("gnosis"); mage.line_data.gnosis = 3;
   mage.current_state.mage_experience_history = [
-    {description:"Gnose 3",before:{line_data:{gnosis:2}}},
-    {description:"Gnose 2",before:{line_data:{gnosis:1}}}];
-  assert.deepEqual(power.powerProgression(mage, "gnosis"), {creation:1,advancement:2,current:3});
+    {description:"Any label",undo:{kind:"gnosis"},before:{line_data:{gnosis:2}}},
+    {undo:{kind:"gnosis"},rating:2}];
+  assert.deepEqual(magePower.mageBuilderPowerProgression(mage), {creation:1,advancement:2,current:3});
+  mage.current_state.mage_experience_history = [{description:"Gnose 2",before:{line_data:{gnosis:1}}}];
+  assert.deepEqual(magePower.mageBuilderPowerProgression(mage), {creation:3,advancement:0,current:3});
+  for (const amount of [0, -1, 0.5, 10, "1"]) {
+    mage.current_state.mage_experience_history = [{undo:{kind:"gnosis",amount},before:{line_data:{gnosis:1}}}];
+    assert.deepEqual(magePower.mageBuilderPowerProgression(mage), {creation:3,advancement:0,current:3});
+  }
 });
 
 test("reembolsa pontos em qualquer ordem sem restaurar snapshots de outras compras", () => {
@@ -210,7 +221,7 @@ test("Méritos reembolsam apenas pontos pagos e preservam instâncias repetidas"
   for (const order of permutations) {
     const current = sheet(); current.merits = [
       {name:"Allies",instanceId:"first",dots:4,creationDots:0,experienceDots:4}, {name:"Allies",instanceId:"second",dots:2,creationDots:2,experienceDots:0}];
-    for (const index of order) refunds.refundMeritDots(current, "Allies", [2,1,1][index], "first");
+    for (const index of order) refundMeritDots(current, "Allies", [2,1,1][index], "first");
     assert.deepEqual(current.merits, [{name:"Allies",instanceId:"second",dots:2,creationDots:2,experienceDots:0}]);
   }
 });
@@ -228,7 +239,7 @@ test("Mantle gratuito mantém o ponto inicial ao comprar, sincronizar e reembols
   merits.addExperienceMeritDots(current.merits[0], 1);
   changelingMeritConfigurations.synchronizeMeritGrants(current);
   assert.equal(current.merits[0].dots, 5);
-  refunds.refundMeritDots(current, "Mantle", 4, "mantle-autumn");
+  refundMeritDots(current, "Mantle", 4, "mantle-autumn");
   changelingMeritConfigurations.synchronizeMeritGrants(current);
   assert.deepEqual(
     {dots:current.merits[0].dots,creation:current.merits[0].creationDots,experience:current.merits[0].experienceDots},

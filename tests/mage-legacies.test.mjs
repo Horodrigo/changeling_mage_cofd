@@ -24,8 +24,8 @@ const {
   normalizeLegacyState,
 } = await vite.ssrLoadModule("/game-lines/mage/legacies.ts");
 
-const { refundMageAdvancement } = await vite.ssrLoadModule("/lib/experience-refunds.ts");
-const { discardLegacyAdvancements } = await vite.ssrLoadModule("/lib/legacy-progression.ts");
+const { refundMageAdvancement } = await vite.ssrLoadModule("/game-lines/mage/experience-refunds.ts");
+const { discardLegacyAdvancements } = await vite.ssrLoadModule("/game-lines/mage/legacy-progression.ts");
 
 const mage = (overrides = {}) => ({
   skills: { Investigation: 2, Academics: 2 },

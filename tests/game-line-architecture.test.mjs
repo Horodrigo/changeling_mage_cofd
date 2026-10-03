@@ -138,6 +138,8 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
     ["lib/mage-nimbus.ts", "game-lines/mage/nimbus.ts"],
     ["lib/mage-orders.ts", "game-lines/mage/orders.ts"],
     ["lib/mage-merit-configurations.ts", "game-lines/mage/merit-configurations.ts"],
+    ["lib/legacy-progression.ts", "game-lines/mage/legacy-progression.ts"],
+    ["app/workspace/legacy-page.tsx", "game-lines/mage/legacy-page.tsx"],
   ];
 
   for (const [legacyPath, ownedPath] of moved) {
@@ -148,6 +150,7 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
   await Promise.all([
     assertMissing("lib/changeling-conditions.ts"),
     assertMissing("lib/mage-conditions.ts"),
+    assertMissing("lib/power-progression.ts"),
   ]);
 
   const lineSources = (
@@ -163,6 +166,21 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
     /@\/lib\/(?:seeming-presentation|changeling-kith-choices|hedge-duelist-variants|mage-nimbus|mage-orders|mage-merit-configurations|changeling-conditions|mage-conditions)/,
     "a migrated game-line dependency still reaches back into lib/",
   );
+});
+
+test("shared Experience refunds contain no Mage mechanics", async () => {
+  const shared = await source("lib/experience-refunds.ts");
+  assert.doesNotMatch(shared, /Mage|mage|gnosis|arcana|legacy_state|refundPowerRating/);
+  await access(join(root, "game-lines/mage/experience-refunds.ts"));
+});
+
+test("Changeling-specific Homebrew selectors belong to its stylesheet", async () => {
+  const shared = await source("app/css/globals.css");
+  const owned = await source("game-lines/changeling/styles/sheet.css");
+  for (const selector of [".changeling-homebrew-source", ".entitlement-homebrew-editor", ".contract-homebrew-editor"]) {
+    assert.ok(!shared.includes(selector), `${selector} leaked into shared CSS`);
+    assert.ok(owned.includes(selector), `${selector} missing from Changeling CSS`);
+  }
 });
 
 test("current game-line source trees do not statically import one another", async () => {
