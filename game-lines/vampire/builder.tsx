@@ -1,4 +1,5 @@
 "use client";
+import { vampireMeritId } from "./merit-identities";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { meritPresentation } from "@/lib/merit-presentation";
 
@@ -107,7 +108,7 @@ function touchstoneMeritPoints(merits: CharacterSheet["merits"], baseSlot: numbe
   const points: TouchstoneMeritPoint[] = [];
   let offset = 0;
   merits.forEach((merit, meritIndex) => {
-    if (merit.name !== "Touchstone") return;
+    if (vampireMeritId(merit) !== "vtr-touchstone") return;
     const meritInstanceId = String(merit.instanceId ?? `touchstone-merit-${meritIndex}`);
     const dots = Math.max(0, Math.floor(Number(merit.dots ?? 0)));
     for (let dot = 1; dot <= dots; dot += 1) {
@@ -269,7 +270,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     for (const merit of common.merits) {
       const definition = resolveMeritDefinition(merit, meritCatalog);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
-      if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
+      if (definition?.id === "vtr-kindred-status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     if (clanId === "hollow-mekhet") {
       const addKa = (key: string, label: string) => result.push({ step: 4, key, label });

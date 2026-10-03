@@ -58,6 +58,7 @@ import { meritConfigurationTitle } from "@/lib/core/character/merit-configuratio
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { vampireMeritId } from "./merit-identities";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { createRandomId } from "@/lib/random-id";
@@ -209,7 +210,7 @@ function getTouchstoneMeritPoints(
   let offset = 0;
 
   character.merits.forEach((merit, meritIndex) => {
-    if (merit.name !== "Touchstone") return;
+    if (vampireMeritId(merit) !== "vtr-touchstone") return;
 
     const meritInstanceId = String(
       merit.instanceId ?? `touchstone-merit-${meritIndex}`,
@@ -2587,7 +2588,7 @@ function TricksOfTheDamned({
     Number(character.attributes.Wits ?? 1) +
     Number(character.attributes.Composure ?? 1);
   const feedingGrounds = character.merits
-    .filter((merit) => merit.name === "Feeding Grounds")
+    .filter((merit) => vampireMeritId(merit) === "vtr-feeding-grounds")
     .reduce((sum, merit) => sum + Number(merit.dots ?? 0), 0);
   const monstrousPool =
     Number(character.attributes.Strength ?? 1) + effectiveAuraBloodPotency;

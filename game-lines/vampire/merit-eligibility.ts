@@ -1,5 +1,6 @@
 import { meritContextForSheet, meritPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 export function vampireMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[], archetypes: readonly string[]): MeritPrerequisiteContext {
   return meritContextForSheet(sheet, catalog, archetypes, sheet.line_data.merit_granted_skill_bonuses as Record<string, number> | undefined);
@@ -36,8 +37,8 @@ export function zirnitraMortalMeritLimit(rating: number) {
 }
 
 export function zirnitraMortalMeritCount(context: MeritPrerequisiteContext) {
-  const names = new Set((context.meritCatalog ?? []).filter(isMortalSupernaturalMerit).map((merit) => merit.name));
-  return (context.merits ?? []).filter((merit) => merit.dots > 0 && names.has(merit.name)).length;
+  const catalog = context.meritCatalog ?? [];
+  return (context.merits ?? []).filter((merit) => merit.dots > 0 && resolveMeritDefinition(merit, catalog)?.mortalOnly === true).length;
 }
 
 export function vampireMeritEligible(merit: MeritDefinition, context: MeritPrerequisiteContext, zirnitraRating: number) {
@@ -75,5 +76,5 @@ export function vampireMeritEligible(merit: MeritDefinition, context: MeritPrere
   const count = zirnitraMortalMeritCount(context);
   const limit = zirnitraMortalMeritLimit(zirnitraRating);
   if (merit.id === "hurt-locker:supernatural-resistance" && count === 0) return false;
-  return (context.merits ?? []).some((owned) => owned.dots > 0 && owned.name === merit.name) ? count <= limit : count < limit;
+  return (context.merits ?? []).some((owned) => owned.dots > 0 && resolveMeritDefinition(owned, context.meritCatalog ?? [])?.id === merit.id) ? count <= limit : count < limit;
 }

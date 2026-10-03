@@ -251,6 +251,8 @@ test("WTF2 p. 92 Totem Advantage resolves separate traits, exact ratings and equ
   assert.equal(result.traits.skills.Athletics, character.skills.Athletics + 1);
   assert.equal(result.traits.specializations.length, character.specializations.length + 1);
   const expertise = result.traits.merits.find(item => item.name === "Area of Expertise");
+  assert.equal(expertise.definitionId, "core-2ed:area-of-expertise");
+  assert.equal(result.traits.merits.find(item => item.name === "Fleet of Foot").definitionId, "core-2ed:fleet-of-foot");
   assert.deepEqual(expertise.configuration, { skill: "Survival", specialty: "Tracking" });
   assert.equal(expertise.grantedBy, "werewolf:totem-advantage"); assert.equal(expertise.creationDots, 0); assert.equal(expertise.experienceDots, 0);
   assert.equal(expertise.instanceId, `totem:${entity.instanceId}:tracking`);

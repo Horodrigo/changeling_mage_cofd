@@ -467,6 +467,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: suíte completa **500/500**, suíte dirigida inicial **43/43** e **8/8** testes finais após acrescentar a proteção de alocações antigas. Lint, build, TypeScript e `git diff --check` aprovados. A classificação do índice de identidade pelo lint foi alinhada ao padrão Core existente, sem desligar a regra. Sem smoke de navegador.
 - Ainda abertos: reconciliação de criação/edição, Entitlement e outros consumidores de nomes, requisitos especializados compartilhados e traduções das etapas 1–4. Este lote não encerra a prioridade 0.
 
+## Progresso — prioridade 0, consumidores mecânicos Vampire e concessões Totem (2026-10-03)
+
+- Kindred Status, vínculos com Covenants/Shadow Cults, Touchstone e Feeding Grounds usam identidades canônicas. Os resumos e limites não reconhecem um Homebrew homônimo como o Merit oficial nem perdem uma seleção com rótulo alterado.
+- Coil of Zirnitra conta as definições efetivamente resolvidas com mortalOnly e verifica o upgrade da mesma definição, não o nome salvo.
+- Blood Tether Pack concede Pack Alpha com definitionId. Ao sair, remove apenas seu ponto gratuito: conserva a instância, a configuração e qualquer alocação paga, sem alterar XP/histórico/dano. Seleções com ID estranho não são removidas só por seu nome ou marcador.
+- Overlays de Merits do Totem Werewolf agora carregam também definitionId; continuam temporários, sem persistir os atributos efetivos na ficha-base. A lista principal de Merits Mage e a apresentação de Nameless Order foram corrigidas para resolver IDs.
+- Testes dirigidos cobrem identidade/instância, homônimos, fontes, limite de Zirnitra, concessão/remoção idempotente e conservação de XP/recursos. Requisitos compartilhados e outros consumidores ainda registrados continuam pendentes; as traduções de catálogos permanecem nas próximas etapas.
+
 ## Progresso — prioridade 0, resumos de configuração e companheiros (2026-10-03)
 
 - Resumos Core, Changeling e Mage recebem a identidade canônica da definição, e não o nome armazenado. Vampire também resolve a configuração pelos IDs do catálogo. As fichas mantêm os nomes/textos escritos pelo jogador sem utilizá-los como regras.

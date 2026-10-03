@@ -78,7 +78,7 @@ export function resolveTotemAdvantage(character: CharacterSheet, totem: TotemSel
   }
   const grantedMerit = (entry: typeof resolved[number]): MeritSelection | null => {
     const merit = definition(entry.choice);
-    return merit && entry.choice.kind === "merit" ? { instanceId: `totem:${totem!.instanceId}:${entry.id}`, name: merit.name, sourceId: merit.sourceId, source: merit.source,
+    return merit && entry.choice.kind === "merit" ? { definitionId: merit.id, instanceId: `totem:${totem!.instanceId}:${entry.id}`, name: merit.name, sourceId: merit.sourceId, source: merit.source,
       dots: entry.choice.dots, configuration: structuredClone(entry.choice.configuration), grantedBy: "werewolf:totem-advantage", creationDots: 0, experienceDots: 0 } : null;
   };
   const compose = (entries: typeof resolved): Traits => {

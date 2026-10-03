@@ -1358,7 +1358,7 @@ function ExpandedMeritList({
               <DotValue value={item.dots} />
             </summary>
             <div className="expanded-merit-body">
-              {item.name === "Mystery Cult Initiation" &&
+              {definition?.id === "core-2ed:mystery-cult-initiation" &&
               item.grantedBy === "Nameless Order" ? (
                 <NamelessMysteryCultLevels
                   dots={item.dots}
@@ -2251,9 +2251,7 @@ function MeritSheetList({
     <div className="sheet-merits single-column">
       {visible.length ? (
         visible.map((item, index) => {
-          const definition = availableCatalog.find(
-            (entry) => entry.name === item.name,
-          );
+          const definition = resolveMeritDefinition(item, availableCatalog);
           const presented = definition && meritPresentation(definition, locale);
           const tooltip = presented
             ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`

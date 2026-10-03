@@ -25,7 +25,7 @@ import { vampireMeritContextForSheet, vampireMeritEligible, vampireMeritFilterCa
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
-import { meritMatchesDefinition } from "@/lib/merit-identity";
+import { meritMatchesDefinition, resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { vampireExperienceLabel, type VampireExperienceEntry } from "./experience-presentation";
@@ -106,7 +106,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const covenantStatusFor = (id: string) => {
     const definition = reference.covenants.find((item) => item.id === id);
     if (!definition) return 0;
-    if (definition.group === "shadow-cult") return Math.max(0, ...character.merits.filter((item) => item.name === "Mystery Cult Initiation" && [definition.id, definition.name, definition.translatedName].some((name) => String(item.configuration?.cult ?? "").localeCompare(name, undefined, { sensitivity: "base" }) === 0)).map((item) => Number(item.dots) || 0));
+    if (definition.group === "shadow-cult") return Math.max(0, ...character.merits.filter((item) => resolveMeritDefinition(item, meritCatalog)?.id === "core-2ed:mystery-cult-initiation" && [definition.id, definition.name, definition.translatedName].some((name) => String(item.configuration?.cult ?? "").localeCompare(name, undefined, { sensitivity: "base" }) === 0)).map((item) => Number(item.dots) || 0));
     return vampireCovenantStatus(character, id, definition.name, definition.translatedName);
   };
   const disciplines = recordRatings(character.line_data.disciplines, disciplineNames, 10);
@@ -281,9 +281,9 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     !isRepeatableDefinition(selectedMerit) &&
     character.merits.some((merit) => meritMatchesDefinition(merit, selectedMerit, meritCatalog)),
   );
-  const configuredAffiliation = selectedMerit?.name === "Kindred Status" ? String(meritConfiguration.group ?? "") : selectedMerit?.name === "Mystery Cult Initiation" ? String(meritConfiguration.cult ?? "") : "";
+  const configuredAffiliation = selectedMerit?.id === "vtr-kindred-status" ? String(meritConfiguration.group ?? "") : selectedMerit?.id === "core-2ed:mystery-cult-initiation" ? String(meritConfiguration.cult ?? "") : "";
   const configuredCovenant = reference.covenants.find((item) => [item.id, item.name, item.translatedName].some((name) => name.localeCompare(configuredAffiliation, undefined, { sensitivity: "base" }) === 0));
-  const isAffiliationMerit = selectedMerit?.name === "Kindred Status" ? Boolean(configuredCovenant) : selectedMerit?.name === "Mystery Cult Initiation" ? configuredCovenant?.group === "shadow-cult" : false;
+  const isAffiliationMerit = selectedMerit?.id === "vtr-kindred-status" ? Boolean(configuredCovenant) : selectedMerit?.id === "core-2ed:mystery-cult-initiation" ? configuredCovenant?.group === "shadow-cult" : false;
   const affiliationDots = vampireCovenantAffiliationDots(character, reference.covenants);
   const projectedAffiliationDots = affiliationDots - (isAffiliationMerit ? Number(ownedMerit?.dots ?? 0) : 0) + (isAffiliationMerit ? Number(nextMeritRating ?? 0) : 0);
   const meritUnavailable = purchase === "merit" && (
@@ -291,7 +291,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     !nextMeritRating ||
     (meritInstance >= 0 && (!ownedMerit || Boolean(ownedMerit.grantedBy))) ||
     duplicateNonRepeatableMerit ||
-    (selectedMerit.name === "Kindred Status" && !String(meritConfiguration.group ?? "").trim()) ||
+    (selectedMerit.id === "vtr-kindred-status" && !String(meritConfiguration.group ?? "").trim()) ||
     projectedAffiliationDots > 5 ||
     !vampireMeritEligible(selectedMerit, { ...meritContext, selectedDots: nextMeritRating, configuration: meritConfiguration }, zirnitraRating)
   );

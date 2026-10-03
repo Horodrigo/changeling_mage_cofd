@@ -1,6 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampirePowers, VampirePurchasablePower, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
+import { vampireMeritId } from "./merit-identities";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
@@ -52,9 +53,10 @@ function bloodTetherRating(character: CharacterSheet) {
 }
 
 function grantPackAlpha(character: CharacterSheet) {
-  if ((character.merits ?? []).some((merit) => merit.name === "Pack Alpha")) return character;
+  if ((character.merits ?? []).some((merit) => vampireMeritId(merit) === "vtr-pack-alpha")) return character;
   character.merits = [...(character.merits ?? []), {
     instanceId: "blood-tether-pack-alpha",
+    definitionId: "vtr-pack-alpha",
     name: "Pack Alpha",
     dots: 1,
     creationDots: 1,
@@ -78,12 +80,20 @@ export function createBloodTetherPack(character: CharacterSheet) {
 
 export function leaveBloodTetherPack(character: CharacterSheet) {
   const active = character.line_data.blood_tether_pack_active === true;
-  const granted = (character.merits ?? []).some((merit) => merit.grantedBy === BLOOD_TETHER_PACK_GRANT);
+  const granted = (character.merits ?? []).some((merit) => merit.grantedBy === BLOOD_TETHER_PACK_GRANT && vampireMeritId(merit) === "vtr-pack-alpha");
   if (!active && !granted) return character;
   const next = structuredClone(character);
   next.line_data.blood_tether_pack_active = false;
   if (active) next.current_state.willpower_lost_dots = Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0) - 1);
-  next.merits = (next.merits ?? []).filter((merit) => merit.grantedBy !== BLOOD_TETHER_PACK_GRANT);
+  next.merits = (next.merits ?? []).flatMap((merit) => {
+    if (merit.grantedBy !== BLOOD_TETHER_PACK_GRANT || vampireMeritId(merit) !== "vtr-pack-alpha") return [merit];
+    const experienceDots = Math.max(0, Number(merit.experienceDots ?? 0));
+    const creationDots = Math.max(0, Number(merit.creationDots ?? (merit.dots - experienceDots)) - 1);
+    if (!creationDots && !experienceDots) return [];
+    const retained = { ...merit, dots: creationDots + experienceDots, creationDots, experienceDots };
+    delete retained.grantedBy;
+    return [retained];
+  });
   return next;
 }
 
@@ -91,8 +101,8 @@ export function synchronizeBloodTetherPack(character: CharacterSheet) {
   const active = character.line_data.blood_tether_pack_active === true;
   const eligible = String(character.line_data.bloodline_id ?? "") === "adrestoi" && bloodTetherRating(character) >= 5;
   if (active && !eligible) return leaveBloodTetherPack(character);
-  if (active) return (character.merits ?? []).some((merit) => merit.name === "Pack Alpha") ? character : grantPackAlpha(structuredClone(character));
-  if ((character.merits ?? []).some((merit) => merit.grantedBy === BLOOD_TETHER_PACK_GRANT)) return leaveBloodTetherPack(character);
+  if (active) return (character.merits ?? []).some((merit) => vampireMeritId(merit) === "vtr-pack-alpha") ? character : grantPackAlpha(structuredClone(character));
+  if ((character.merits ?? []).some((merit) => merit.grantedBy === BLOOD_TETHER_PACK_GRANT && vampireMeritId(merit) === "vtr-pack-alpha")) return leaveBloodTetherPack(character);
   return character;
 }
 
@@ -328,7 +338,7 @@ export function vampireDerived(
 export function vampireCovenantStatus(sheet: Pick<CharacterSheet, "merits">, ...covenantNames: string[]) {
   const expected = new Set(covenantNames.map(normalizeAffiliation));
   return Math.max(0, ...sheet.merits
-    .filter((merit) => merit.name === "Kindred Status" && expected.has(normalizeAffiliation(String(merit.configuration?.group ?? ""))))
+    .filter((merit) => vampireMeritId(merit) === "vtr-kindred-status" && expected.has(normalizeAffiliation(String(merit.configuration?.group ?? ""))))
     .map((merit) => Number(merit.dots) || 0));
 }
 
@@ -340,8 +350,8 @@ export function vampireCovenantAffiliationDots(sheet: Pick<CharacterSheet, "meri
   const covenantNames = new Set(covenants.flatMap((item) => [item.id, item.name, item.translatedName]).map(normalizeAffiliation));
   const shadowNames = new Set(covenants.filter((item) => item.group === "shadow-cult").flatMap((item) => [item.id, item.name, item.translatedName]).map(normalizeAffiliation));
   return sheet.merits.reduce((sum, merit) => {
-    if (merit.name === "Kindred Status" && covenantNames.has(normalizeAffiliation(String(merit.configuration?.group ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
-    if (merit.name === "Mystery Cult Initiation" && shadowNames.has(normalizeAffiliation(String(merit.configuration?.cult ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
+    if (vampireMeritId(merit) === "vtr-kindred-status" && covenantNames.has(normalizeAffiliation(String(merit.configuration?.group ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
+    if (vampireMeritId(merit) === "core-2ed:mystery-cult-initiation" && shadowNames.has(normalizeAffiliation(String(merit.configuration?.cult ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
     return sum;
   }, 0);
 }
