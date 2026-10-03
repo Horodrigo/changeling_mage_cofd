@@ -19,6 +19,60 @@ const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=sele
 const merit=(name)=>mageCatalog.find(item=>item.name===name);
 const base={gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
+test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{
+ for(const name of ["Sanctum","Demesne","Infamous Mentor","Imbued Ally","Order Archive","Awakened Status","Adamant Hand","Cabal Theme","Faction Member","Prelacy","Profane Tool","Svikiro"]){
+  const official={...merit(name),prerequisites:undefined,requirements:undefined};
+  const mechanics = definition => mageMerits.mageMeritSelectionProblems(definition,{dots:3},base,[]).map(problem => [problem.key,problem.meritIds,problem.params?.minimum]);
+  assert.deepEqual(mechanics({...official,name:"Displayed in another language"}),mechanics(official),name);
+  assert.deepEqual(mageMerits.mageMeritSelectionProblems({...official,id:`homebrew:test:${official.id}`,homebrew:true},{dots:3},base,[]),[],name);
+ }
+});
+
+test("Mage links use exact definition/instance IDs and fail closed on ambiguous schema-2 selections",()=>{
+ const sanctum=merit("Sanctum"),safe=merit("Safe Place"),fake={...safe,id:"homebrew:fake-safe",sourceId:"homebrew:fake"};
+ const selection={dots:3,configuration:{safePlaceId:"safe-a"}},owned={instanceId:"safe-a",definitionId:safe.id,name:"Saved label",dots:3};
+ const valid={...base,meritCatalog:[...mageCatalog,fake],merits:[owned]};
+ const linkedProblems=context=>mageMerits.mageMeritSelectionProblems(sanctum,selection,context,[]).filter(item=>item.key==="ui.meritSelectLinked");
+ assert.deepEqual(linkedProblems(valid),[]);
+ assert.equal(linkedProblems({...valid,merits:[{...owned,definitionId:fake.id,name:safe.name}]}).length,1);
+ assert.equal(linkedProblems({...valid,merits:[{...owned,definitionId:"unavailable",name:safe.name}]}).length,1);
+ assert.equal(linkedProblems({...valid,merits:[owned,{...owned}]}).length,1);
+ assert.equal(linkedProblems({...valid,merits:[{...owned,definitionId:undefined,name:safe.name}]}).length,1);
+ assert.deepEqual(linkedProblems({...valid,merits:[{...owned,definitionId:undefined,name:safe.name,sourceId:safe.sourceId}]}),[]);
+ const mentor={...owned,definitionId:merit("Mentor").id};
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Infamous Mentor"),{...base,selectedDots:3,merits:[mentor]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Infamous Mentor"),{...base,selectedDots:4,merits:[mentor]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Infamous Mentor"),{...base,selectedDots:3,configuration:{mentorId:"missing"},merits:[mentor]}),false);
+});
+
+test("Mage linked Merit pickers filter by ID/rating and localized validation resolves those same IDs",async()=>{
+ const {createElement}=await import("react");
+ const {renderToStaticMarkup}=await import("react-dom/server");
+ const {LanguageProvider}=await vite.ssrLoadModule("/lib/i18n.tsx");
+ const {MeritConfigurationEditor}=await vite.ssrLoadModule("/app/builder/merit-configuration-editor.tsx");
+ const {MAGE_MERIT_CONFIGURATIONS}=await vite.ssrLoadModule("/game-lines/mage/merit-configurations.ts");
+ const {meritProblemMessage}=await vite.ssrLoadModule("/lib/merit-ui.ts");
+ const safe={...merit("Safe Place"),translatedName:"Local Seguro"},fake={...safe,id:"homebrew:fake-safe",sourceId:"homebrew:fake",translatedName:"Falso Local"};
+ const catalog=[...mageCatalog.filter(item=>item.id!==safe.id),safe,fake];
+ const owned=[
+  {instanceId:"valid-instance",definitionId:safe.id,name:"Label",dots:3},
+  {instanceId:"wrong-definition",definitionId:fake.id,name:safe.name,dots:5},
+  {instanceId:"too-low",definitionId:safe.id,name:safe.name,dots:2},
+  {instanceId:"ambiguous-old",name:safe.name,dots:3},
+  {instanceId:"duplicate",definitionId:safe.id,name:safe.name,dots:3},
+  {instanceId:"duplicate",definitionId:safe.id,name:safe.name,dots:4},
+ ];
+ const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(MeritConfigurationEditor,{merit:{definitionId:merit("Sanctum").id,name:"Sanctum",dots:3},catalog,ownedMerits:owned,definitions:MAGE_MERIT_CONFIGURATIONS,onChange:()=>{}})));
+ assert.match(markup,/value="valid-instance"/);
+ for(const id of ["wrong-definition","too-low","ambiguous-old","duplicate"])assert.ok(!markup.includes(`value="${id}"`),id);
+ const problem=mageMerits.mageMeritSelectionProblems(merit("Sanctum"),{dots:3}, {...base,meritCatalog:catalog},[]).find(item=>item.key==="ui.meritSelectLinked");
+ assert.match(meritProblemMessage(problem,merit("Sanctum"),"pt-BR",catalog),/Local Seguro/);
+ assert.match(meritProblemMessage(problem,merit("Sanctum"),"en-US",catalog),/Safe Place/);
+ assert.match(meritProblemMessage(problem,merit("Sanctum"),"pt-BR",[]),/core-2ed:safe-place/);
+ const shared=readFileSync(new URL("../lib/merits.ts",import.meta.url),"utf8").split("export function meritSelectionProblems")[1];
+ assert.doesNotMatch(shared,/Infamous Mentor|Sanctum|Demesne|Awakened Status|Adamant Hand|Cabal Theme|mentorId|safePlaceId/);
+});
+
 test("Mage catalog includes the nine audited supplemental Merits",()=>{
  assert.equal(mageCatalog.filter(item=>item.line==="MtA").length,71);
  assert.equal(merit("Mystery Cult Influence").sourceId,"mta-2ed");
@@ -63,11 +117,11 @@ test("Mage location merits preserve sources, ratings, and linked locations",()=>
   assert.equal(item.page,page,name);
  }
  const safePlace={instanceId:"safe-a",name:"Safe Place",dots:3};
- assert.deepEqual(merits.meritSelectionProblems(merit("Sanctum"),{dots:3,configuration:{safePlaceId:"safe-a"}},{...base,merits:[safePlace]}),[]);
- assert.ok(merits.meritSelectionProblems(merit("Sanctum"),{dots:4,configuration:{safePlaceId:"safe-a"}},{...base,merits:[safePlace]}).length>0);
+ assert.deepEqual(mageMerits.mageMeritSelectionProblems(merit("Sanctum"),{dots:3,configuration:{safePlaceId:"safe-a"}},{...base,merits:[safePlace]},[]),[]);
+ assert.ok(mageMerits.mageMeritSelectionProblems(merit("Sanctum"),{dots:4,configuration:{safePlaceId:"safe-a"}},{...base,merits:[safePlace]},[]).length>0);
  const sanctum={instanceId:"sanctum-a",name:"Sanctum",dots:1};
- assert.deepEqual(merits.meritSelectionProblems(merit("Demesne"),{dots:3,configuration:{sanctumId:"sanctum-a"}},{...base,merits:[sanctum]}),[]);
- assert.ok(merits.meritSelectionProblems(merit("Demesne"),{dots:3,configuration:{sanctumId:"missing"}},{...base,merits:[sanctum]}).length>0);
+ assert.deepEqual(mageMerits.mageMeritSelectionProblems(merit("Demesne"),{dots:3,configuration:{sanctumId:"sanctum-a"}},{...base,merits:[sanctum]},[]),[]);
+ assert.ok(mageMerits.mageMeritSelectionProblems(merit("Demesne"),{dots:3,configuration:{sanctumId:"missing"}},{...base,merits:[sanctum]},[]).length>0);
 });
 test("Shadow Self applies Shadow Name 3 and Mind 1",()=>{
  const shadow=merit("Shadow Self"),context={...base,arcana:{Mind:1},merits:[{name:"Shadow Name",dots:3}]};
@@ -88,9 +142,9 @@ test("Occultation and Fame exclude each other in either purchase order",()=>{
 });
 test("Infamous Mentor links a Mentor instance of equal rating",()=>{
  const infamous=merit("Infamous Mentor"),context={...base,merits:[{instanceId:"mentor-a",name:"Mentor",dots:3}]};
- assert.deepEqual(merits.meritSelectionProblems(infamous,{dots:3,configuration:{mentorId:"mentor-a"}},context),[]);
- assert.ok(merits.meritSelectionProblems(infamous,{dots:4,configuration:{mentorId:"mentor-a"}},context).length>0);
- assert.ok(merits.meritSelectionProblems(infamous,{dots:3,configuration:{mentorId:"missing"}},context).length>0);
+ assert.deepEqual(mageMerits.mageMeritSelectionProblems(infamous,{dots:3,configuration:{mentorId:"mentor-a"}},context,[]),[]);
+ assert.ok(mageMerits.mageMeritSelectionProblems(infamous,{dots:4,configuration:{mentorId:"mentor-a"}},context,[]).length>0);
+ assert.ok(mageMerits.mageMeritSelectionProblems(infamous,{dots:3,configuration:{mentorId:"missing"}},context,[]).length>0);
 });
 test("published Orders and unbounded Mage ratings are represented",()=>{
  assert.equal(orders.hasPublishedMageOrder("Silver Ladder"),true);

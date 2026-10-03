@@ -12,6 +12,8 @@ import { useLanguage, type MessageKey } from "@/lib/i18n";
 import { meritConfigurationTitle, normalizeMeritConfiguration, type MeritConfigDefinition, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { Choice } from "./common-controls";
 
 export type StructuredMeritEditorProps = {
@@ -59,7 +61,6 @@ export function MeritConfigurationEditor({
   const visible = definition.fields.filter((field) => (field.minDots ?? 0) <= effectiveDots);
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const label = (value: string) => value.startsWith("ui.") ? t(value as MessageKey) : systemTerm(value, locale);
-  const meritLabel = (name: string) => locale === "pt-BR" ? catalog.find((item) => item.name === name)?.translatedName || name : name;
   const structuredProps = { merit, configuration, onChange, compact };
   const injected = renderStructured?.(structuredProps);
   if (injected != null) return injected;
@@ -72,8 +73,12 @@ export function MeritConfigurationEditor({
   const fields = <div>{visible.map((field) => {
     const value = configuration[field.key];
     if (field.kind === "merit") {
-      const choices = ownedMerits.filter((item) => item.instanceId && field.meritNames?.includes(item.name) && item.dots >= (merit.name === "Infamous Mentor" ? merit.dots : 1));
-      return <label key={field.key}>{label(field.label)}<select value={String(value ?? "")} onChange={(event) => set(field.key, event.target.value)}><option value="">{t("ui.selectAnInstance")}</option>{choices.map((item) => <option key={item.instanceId} value={item.instanceId}>{meritLabel(item.name)}: {meritConfigurationTitle(item.configuration) || item.instanceId} ({item.dots})</option>)}</select></label>;
+      const minimum = field.minimumDots === "rating" ? merit.dots : field.minimumDots ?? 1;
+      const choices = ownedMerits.flatMap(item => {
+        const linked = resolveMeritDefinition(item, catalog);
+        return item.instanceId && ownedMerits.filter(candidate => candidate.instanceId === item.instanceId).length === 1 && linked && field.meritIds?.includes(linked.id) && item.dots >= minimum ? [{item, linked}] : [];
+      });
+      return <label key={field.key}>{label(field.label)}<select value={String(value ?? "")} onChange={(event) => set(field.key, event.target.value)}><option value="">{t("ui.selectAnInstance")}</option>{choices.map(({item, linked}) => <option key={item.instanceId} value={item.instanceId}>{meritPresentation(linked, locale).name}: {meritConfigurationTitle(item.configuration) || item.instanceId} ({item.dots})</option>)}</select></label>;
     }
     if (field.kind === "court") {
       return <div key={field.key}>{renderCustomField?.(field.kind, { keyName: field.key, value: Array.isArray(value) ? "" : String(value ?? ""), onChange: (next) => set(field.key, next) })}</div>;

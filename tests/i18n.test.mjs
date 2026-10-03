@@ -133,28 +133,29 @@ test("Vampire purchase labels use audited dictionary terms in both locales", asy
 });
 
 test("Merit validation returns semantic messages and resolves them in both locales", async () => {
-  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
-  const { meritSelectionProblems } = await vite.ssrLoadModule("/lib/merits.ts");
   const { mageMeritSelectionProblems } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
-  const context={gameLine:"MtA",order:"Mysterium",attributes:{Strength:1},skills:{},merits:[]};
-  const definition=(name)=>({name,line:"MtA",ratings:[1,2,3],prerequisites:"Strength •••"});
+  const { meritProblemMessage } = await vite.ssrLoadModule("/lib/merit-ui.ts");
+  const catalog = ["shared/data/merits.json", "game-lines/mage/data/merits.json", "game-lines/mage/data/merits-supplements.json"].flatMap(path => JSON.parse(readFileSync(new URL(`../public/${path}`, import.meta.url), "utf8")));
+  const context={gameLine:"MtA",order:"Mysterium",attributes:{Strength:1},skills:{},merits:[],meritCatalog:catalog};
+  const definition=(name)=>({...catalog.find(item => item.name === name),prerequisites:"Strength •••"});
   const problems=[
-    ...meritSelectionProblems(definition("Sanctum"),{dots:3},context),
-    ...meritSelectionProblems(definition("Awakened Status"),{dots:2},context),
-    ...meritSelectionProblems(definition("Awakened Status"),{dots:2,configuration:{domain:"Silver Ladder"}},context),
-    ...meritSelectionProblems(definition("Adamant Hand"),{dots:1},context),
-    ...meritSelectionProblems(definition("Cabal Theme"),{dots:1},context),
+    ...mageMeritSelectionProblems(definition("Sanctum"),{dots:3},context,[]),
+    ...mageMeritSelectionProblems(definition("Awakened Status"),{dots:2},context,[]),
+    ...mageMeritSelectionProblems(definition("Awakened Status"),{dots:2,configuration:{domain:"Silver Ladder"}},context,[]),
+    ...mageMeritSelectionProblems(definition("Adamant Hand"),{dots:1},context,[]),
+    ...mageMeritSelectionProblems(definition("Cabal Theme"),{dots:1},context,[]),
     ...["Faction Member","Prelacy","Profane Tool","Svikiro"].flatMap(name=>mageMeritSelectionProblems(definition(name),{dots:3},context,[])),
   ];
   const before=JSON.stringify(problems);
   for(const problem of problems){
     assert.match(problem.key,/^ui\.merit/);
-    for(const locale of ["pt-BR","en-US"]) assert.doesNotMatch(translate(locale,problem.key,problem.params),/missing translation|\{\w+\}/);
+    for(const locale of ["pt-BR","en-US"]) assert.doesNotMatch(meritProblemMessage(problem,definition("Sanctum"),locale,catalog),/missing translation|\{\w+\}/);
   }
   const linked=problems.find(problem=>problem.key==="ui.meritSelectLinked");
-  assert.deepEqual(linked.params,{merits:"Safe Place",minimum:3});
-  assert.match(translate("pt-BR",linked.key,linked.params),/^Selecione/);
-  assert.match(translate("en-US",linked.key,linked.params),/^Select/);
+  assert.deepEqual(linked.params,{minimum:3});
+  assert.deepEqual(linked.meritIds,["core-2ed:safe-place"]);
+  assert.match(meritProblemMessage(linked,definition("Sanctum"),"pt-BR",catalog),/^Selecione/);
+  assert.match(meritProblemMessage(linked,definition("Sanctum"),"en-US",catalog),/^Select/);
   assert.equal(JSON.stringify(problems),before);
 });
 

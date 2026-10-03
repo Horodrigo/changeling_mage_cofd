@@ -6,7 +6,8 @@ export type MeritConfigField = {
   key: string;
   label: string;
   kind?: "text" | "textarea" | "list" | "court" | "select" | "merit";
-  meritNames?: string[];
+  meritIds?: string[];
+  minimumDots?: number | "rating";
   rowsPerDot?: number;
   fixedRows?: number;
   placeholder?: string;

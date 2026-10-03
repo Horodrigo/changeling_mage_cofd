@@ -94,10 +94,6 @@ export function meritPrerequisitesMet(
   if(forbidden(merit).some(name=>owned.some(item=>item.dots>0&&canonicalTrait(item.name)===canonicalTrait(name))))return false;
   const catalog=context.meritCatalog??[];
   if(owned.some(item=>item.dots>0&&catalog.some(def=>def.name===item.name&&forbidden(def).some(name=>canonicalTrait(name)===canonicalTrait(merit.name)))))return false;
-  if(merit.name==="Infamous Mentor"){
-    const id=String(context.configuration?.mentorId??"");
-    return owned.some(item=>item.name==="Mentor"&&item.dots>=(context.selectedDots??1)&&(!id||item.instanceId===id));
-  }
   if (merit.name === "Lucid Dreamer" && context.archetypes?.includes("changeling")) return false;
   let usedSeemingAlternative=false;
   if(merit.seeming&&courtKey(context.seeming)!==courtKey(merit.seeming)){
@@ -208,26 +204,10 @@ export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Recor
     powers:[...(Array.isArray(data.contracts)?data.contracts:[]),...(Array.isArray(data.learned_contracts)?data.learned_contracts:[])].map(item=>String(item.originalName??item.name??""))};
 }
 
-export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams };
+export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams; meritIds?: readonly string[] };
 
 export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext):MeritSelectionProblem[]{
   const config=selection.configuration??{}, problems:MeritSelectionProblem[]=[];
   if(!meritPrerequisitesMet(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
-  const linked=(key:string,names:string[],minimum=1)=>{
-    const id=String(config[key]??"");
-    if(!(context.merits??[]).some(item=>item.instanceId===id&&names.includes(item.name)&&item.dots>=minimum)) problems.push({key:"ui.meritSelectLinked",params:{merits:names.join(", "),minimum}});
-  };
-  if(merit.name==="Infamous Mentor")linked("mentorId",["Mentor"],selection.dots);
-  if(merit.name==="Sanctum")linked("safePlaceId",["Safe Place"],selection.dots);
-  if(merit.name==="Demesne")linked("sanctumId",["Sanctum"]);
-  if(merit.name==="Imbued Ally")linked("allyId",["Retainer","Familiar"]);
-  if(merit.name==="Order Archive")linked("statusId",["Awakened Status","Consilium/Order Status"]);
-  if(merit.name==="Awakened Status"){
-    const domain=String(config.domain??"");
-    if(!domain)problems.push({key:"ui.meritSelectStatusDomain"});
-    if(domain&&domain!=="Consilium"&&domain!==context.order&&selection.dots>1)problems.push({key:"ui.meritStatusOutsideOrder"});
-  }
-  if(merit.name==="Adamant Hand"&&!requirementMet({trait:String(config.skill??""),minimum:3},context))problems.push({key:"ui.meritAdamantHandSkill"});
-  if(merit.name==="Cabal Theme"&&(!String(config.name??"").trim()||!String(config.description??"").trim()))problems.push({key:"ui.meritCabalThemeRequired"});
   return problems;
 }

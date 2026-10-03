@@ -212,7 +212,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     for (const merit of common.merits) {
       const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale)}`);
+      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale, meritCatalog)}`);
     }
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [

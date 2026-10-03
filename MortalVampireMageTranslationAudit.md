@@ -322,6 +322,16 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Esta etapa resolve a parte CSS de X03; a migração dos helpers/tipos de Contracts, do contexto de Merits e da superfície de Entitlement continua pendente. A meta de tradução não está concluída.
 - Verificação: suíte dirigida **20/20**, suíte completa **456/456**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
 
+## Progresso — prioridade 0, validações e vínculos de Mage
+
+- As validações especializadas de Sanctum, Demesne, Infamous Mentor, Imbued Ally, Order Archive, Awakened Status, Adamant Hand e Cabal Theme saíram do mecanismo compartilhado e passaram para `game-lines/mage/merits.ts`. Estas e as validações existentes de Faction Member, Prelacy, Profane Tool e Svikiro disparam por ID canônico, não pelo nome.
+- Vínculos de Sanctum/Demesne/Infamous Mentor/Imbued Ally/Order Archive verificam IDs de definição e de instância, rejeitando instâncias duplicadas, definições indisponíveis, Homebrew homônimo e pontos insuficientes. O fallback já existente para seleções schema-2 sem ID permanece restrito a nome canônico/origem inequívocos, sem alterar os registros.
+- Os seletores de instâncias usam os mesmos IDs e mínimos. O mecanismo compartilhado recebe `meritIds` e `minimumDots`; não contém mais uma exceção por nome para Infamous Mentor. O seletor de Safe Place de Sanctum agora respeita o mínimo já exigido pela validação, em vez de oferecer escolhas que seriam recusadas.
+- A elegibilidade de Infamous Mentor foi transferida para Mage e ligada aos seletores de criação/XP e à validação da compra. Faction Member identifica o Awakened Status pertinente pelo ID. Custos, configurações salvas, XP, história e efeitos de catálogo não foram reescritos.
+- Mensagens de vínculos transportam IDs e resolvem a apresentação EN/PT no catálogo ativo. Um ID indisponível é exibido como ID, sem procurar um homônimo. A cobertura inclui renderização do seletor e ausência de mutações nos problemas semânticos durante a tradução.
+- **Prioridade 0 ainda aberta:** metadados/despacho dos editores e concessões ainda dependentes de nomes, contexto/requisitos específicos em helpers compartilhados, integração restante em Changeling/Werewolf, qualificadores de homônimos e a parte mecânica de X03. Nenhuma tradução nova de catálogo neste lote; a meta permanece ativa.
+- Verificação: suíte dirigida Mage **13/13**, suíte completa **459/459**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

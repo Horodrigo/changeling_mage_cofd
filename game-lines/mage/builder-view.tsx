@@ -23,6 +23,7 @@ import { useLanguage } from "@/lib/i18n";
 import { builderText } from "@/app/character-builder-messages";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { MageStructuredMeritEditor } from "./merit-configuration-editor";
+import { mageMeritPrerequisitesMet } from "./merits";
 import type { MageFactionDefinition } from "./factions";
 
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
@@ -267,6 +268,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           setMerits={props.setMerits}
           catalog={props.meritCatalog}
           context={props.meritContext}
+          isEligible={mageMeritPrerequisitesMet}
           spent={props.meritSpent}
           budget={props.meritBudget}
           powerLabel={t("ui.gnosisAtCreation")}
