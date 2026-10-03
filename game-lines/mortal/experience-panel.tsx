@@ -23,6 +23,7 @@ import { meritMatchesDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
+import { synchronizeMortalMeritGrants } from "./rules";
 import { refundMortalAdvancement, type MortalAdvancementUndo } from "./experience-rules";
 import { mortalExperienceLabel, type MortalExperienceEntry, type MortalExperiencePurchase } from "./experience-presentation";
 
@@ -125,6 +126,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       undo = { kind: "integrity", amount };
       semanticPurchase = { kind: "integrity", rating: intended };
     }
+    synchronizeMortalMeritGrants(next);
     next.derived = mortalDerived(next);
     const balance = experiencePurchaseBalances(available, spent, total, cost, builderMode);
     const entry: HistoryEntry = { id: createRandomId(), purchase: semanticPurchase, cost, createdAt: new Date().toISOString(), undo };
@@ -143,6 +145,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
     if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost <= 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots)) return setFeedback(t("ui.mortalRefundUnavailable"));
     const next = structuredClone(character);
     if (!refundMortalAdvancement(next, entry.undo)) return setFeedback(t("ui.mortalRefundUnavailable"));
+    synchronizeMortalMeritGrants(next);
     next.derived = mortalDerived(next);
     next.current_state = { ...next.current_state, experience_available: available + entry.cost, experience_spent: Math.max(0, spent - entry.cost), experience_total: total, mortal_experience_history: history.filter((item) => item.id !== entry.id) };
     updateSheet(next);

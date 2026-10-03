@@ -2,6 +2,7 @@ import type { MeritSelection } from "./core/character/character-types";
 import type { MeritDefinition } from "./merits";
 
 type MeritIdentity = Pick<MeritSelection, "name" | "definitionId" | "sourceId">;
+type DefinitionIdentity = Pick<MeritDefinition, "id" | "name" | "sourceId" | "additionalSources">;
 
 /**
  * IDs are authoritative, even when their definition is currently unavailable.
@@ -10,7 +11,7 @@ type MeritIdentity = Pick<MeritSelection, "name" | "definitionId" | "sourceId">;
  * in production; delete it once those ID-less selections are no longer supported.
  * Never match translated names or guess between multiple definitions.
  */
-export function resolveMeritDefinition(selection: MeritIdentity, catalog: readonly MeritDefinition[]) {
+export function resolveMeritDefinition<T extends DefinitionIdentity>(selection: MeritIdentity, catalog: readonly T[]) {
   if (selection.definitionId) return catalog.find(item => item.id === selection.definitionId);
   const candidates = catalog.filter(item => item.name === selection.name && (!selection.sourceId ||
     item.sourceId === selection.sourceId || item.additionalSources?.some(source => source.sourceId === selection.sourceId)));

@@ -24,10 +24,115 @@ const { COMMON_MERIT_CONFIGURATIONS } = await vite.ssrLoadModule("/app/builder/c
 const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const mageGrants = await vite.ssrLoadModule("/game-lines/mage/builder-merit-grants.ts");
 const vampireGrants = await vite.ssrLoadModule("/game-lines/vampire/builder-merit-grants.ts");
+const { COMMON_MERIT_IDENTITIES } = await vite.ssrLoadModule("/lib/core/character/merit-identities.ts");
+const { derivedWithPermanentMerits } = await vite.ssrLoadModule("/lib/core/character/derived-traits.ts");
+const { mortalRules, synchronizeMortalMeritGrants } = await vite.ssrLoadModule("/game-lines/mortal/rules.ts");
 const catalog = withMeritPresentation(read("shared/data/merits.json"), read("shared/data/merits-pt.json"));
 const resources = catalog.find(item => item.id === "core-2ed:resources");
 const namesake = { ...resources, id: "homebrew:test:resources", sourceId: "homebrew:test", source: "Player source", translatedName: "Outro recurso", presentationPt: { name: "Outro recurso", description: "Outro efeito" } };
 const catalogs = [namesake, ...catalog];
+
+test("pure Core Merit identities reconcile the canonical catalog, not a second editorial dataset", () => {
+  assert.equal(COMMON_MERIT_IDENTITIES.length, 8);
+  for (const identity of COMMON_MERIT_IDENTITIES) {
+    const definition = catalog.find(item => item.id === identity.id);
+    assert.ok(definition, identity.id);
+    assert.equal(identity.name, definition.name);
+    assert.equal(identity.sourceId, definition.sourceId);
+  }
+});
+
+test("Core grants dispatch by definition ID and derive stable grant identities independently of display names", () => {
+  const sheet = blankPrintCharacter("CofD");
+  sheet.merits = [{ definitionId: "core-2ed:professional-training", name: "Edited display", instanceId: "profession", dots: 4, creationDots: 1, experienceDots: 3,
+    configuration: { contacts: ["Authored group", "Other authored group"], specialty_1_skill: "Crafts", specialty_1_name: "Authored specialty", boosted_skill: "Athletics" } }];
+  const ownerBefore = JSON.stringify(sheet.merits[0]);
+  assert.deepEqual(synchronizeCommonMeritGrants(sheet), { Athletics: 1 });
+  assert.equal(JSON.stringify(sheet.merits[0]), ownerBefore);
+  const granted = sheet.merits[1];
+  assert.equal(granted.definitionId, "core-2ed:contacts");
+  assert.equal(granted.sourceId, "core-2ed");
+  assert.equal(granted.grantedBy, "Merit:core-2ed:professional-training:profession");
+  assert.deepEqual(granted.configuration.groups, ["Authored group", "Other authored group"]);
+  const grantsBefore = JSON.stringify([sheet.merits.slice(1), sheet.specializations]);
+  sheet.merits[0].name = "Treinamento Profissional";
+  synchronizeCommonMeritGrants(sheet);
+  assert.equal(JSON.stringify([sheet.merits.slice(1), sheet.specializations]), grantsBefore);
+  sheet.merits = [{ definitionId: "core-2ed:mystery-cult-influence", name: "Renamed", instanceId: "influence", dots: 1,
+    configuration: { level_1_type: "merit", level_1_merits: [encodeMeritGrantChoice(resources, 1)] } }];
+  synchronizeCommonMeritGrants(sheet);
+  assert.equal(sheet.merits[1].definitionId, resources.id);
+  assert.equal(sheet.merits[1].grantedBy, "Merit:core-2ed:mystery-cult-influence:influence:1");
+});
+
+test("Homebrew namesakes, unavailable IDs and foreign source names never receive official Core effects", () => {
+  for (const identity of COMMON_MERIT_IDENTITIES) for (const extra of [{ definitionId: "homebrew:test:merit" }, { definitionId: "unavailable:id" }, { sourceId: "homebrew:test" }]) {
+    const sheet = blankPrintCharacter("CofD");
+    sheet.derived = { Tamanho: 5, Vitalidade: 7, Iniciativa: 4, Defesa: 3, Deslocamento: 9 };
+    sheet.merits = [{ ...identity, ...extra, name: identity.name, instanceId: "authored", dots: 5, configuration: { contacts: ["Authored"], boosted_skill: "Athletics", level_1_type: "skill", level_1_skill: "Athletics" } }];
+    const before = JSON.stringify(sheet);
+    assert.deepEqual(synchronizeCommonMeritGrants(sheet), {});
+    assert.equal(JSON.stringify(sheet), before);
+    assert.deepEqual(derivedWithPermanentMerits(sheet), sheet.derived);
+  }
+  const sheet = blankPrintCharacter("CofD");
+  sheet.derived = { Tamanho: 5, Vitalidade: 7, Iniciativa: 4, Defesa: 3, Deslocamento: 9 };
+  sheet.merits = [{ name: "Professional Training", sourceId: "core-2ed", instanceId: "old", dots: 1, configuration: { contacts: ["Old authored group"] } }];
+  synchronizeCommonMeritGrants(sheet);
+  assert.equal(sheet.merits[1].definitionId, "core-2ed:contacts");
+  sheet.merits = [{ definitionId: "core-2ed:fast-reflexes", name: "Renamed", dots: 2 }, { definitionId: "core-2ed:giant", name: "Renamed", dots: 3 }];
+  const derived = derivedWithPermanentMerits(sheet);
+  assert.equal(derived.Iniciativa, sheet.derived.Iniciativa + 2);
+  assert.equal(derived.Tamanho, 6);
+  assert.equal(derived.Vitalidade, sheet.derived.Vitalidade + 1);
+});
+
+test("Mortal synchronization is pure, preserves paid instances/state and regenerates only unlocked Core grants", () => {
+  const sheet = blankPrintCharacter("CofD");
+  sheet.merits = [{ definitionId: "core-2ed:professional-training", name: "Edited display", instanceId: "paid-profession", dots: 4, creationDots: 0, experienceDots: 4,
+    configuration: { contacts: ["Authored group"], specialty_1_skill: "Crafts", specialty_1_name: "Authored", boosted_skill: "Athletics" } }];
+  sheet.specializations = [{ skill: "Crafts", name: "Paid specialty" }];
+  sheet.current_state.experience_available = 8;
+  sheet.current_state.health_damage = ["lethal"];
+  const before = JSON.stringify(sheet);
+  const next = mortalRules.synchronizeCharacter(sheet);
+  assert.equal(JSON.stringify(sheet), before);
+  assert.deepEqual(next.current_state, sheet.current_state);
+  assert.deepEqual(next.merits[0], sheet.merits[0]);
+  assert.deepEqual(next.line_data.merit_granted_skill_bonuses, { Athletics: 1 });
+  assert.deepEqual(mortalRules.synchronizeCharacter(next), next);
+  assert.equal(refundMeritDots(next, "Unrelated name", 4, "paid-profession", undefined, "core-2ed:professional-training"), true);
+  synchronizeMortalMeritGrants(next);
+  assert.deepEqual(next.merits, []);
+  assert.deepEqual(next.specializations, sheet.specializations);
+  assert.deepEqual(next.line_data.merit_granted_skill_bonuses, {});
+  assert.deepEqual(next.current_state, sheet.current_state);
+});
+
+test("rebuilding generated Core grants never deletes recorded XP or reassigns its purchased instance", () => {
+  const sheet = blankPrintCharacter("CofD");
+  const owner = { definitionId: "core-2ed:professional-training", name: "Professional Training", instanceId: "owner", dots: 1, configuration: { contacts: ["Authored"] } };
+  const paid = { definitionId: "core-2ed:contacts", name: "Contacts", instanceId: "grant-core-2ed:professional-training:owner-contacts", dots: 4, creationDots: 2, experienceDots: 2,
+    grantedBy: "Merit:core-2ed:professional-training:owner", configuration: { groups: ["Authored"] } };
+  sheet.merits = [owner, paid];
+  const state = JSON.stringify(sheet.current_state);
+  synchronizeCommonMeritGrants(sheet);
+  const retained = sheet.merits.find(item => item.instanceId === paid.instanceId);
+  assert.equal(retained.dots, 2);
+  assert.equal(retained.creationDots, 0);
+  assert.equal(retained.experienceDots, 2);
+  assert.equal(retained.grantedBy, undefined);
+  assert.equal(new Set(sheet.merits.map(item => item.instanceId)).size, sheet.merits.length);
+  const once = JSON.stringify(sheet);
+  synchronizeCommonMeritGrants(sheet);
+  assert.equal(JSON.stringify(sheet), once);
+  sheet.merits = sheet.merits.filter(item => item.instanceId !== owner.instanceId);
+  synchronizeCommonMeritGrants(sheet);
+  assert.deepEqual(sheet.merits, [retained]);
+  assert.equal(refundMeritDots(sheet, "Renamed", 2, paid.instanceId, undefined, paid.definitionId), true);
+  assert.deepEqual(sheet.merits, []);
+  assert.equal(JSON.stringify(sheet.current_state), state);
+});
 
 test("Cult choices persist canonical definition/source IDs and preserve exact Homonym choices", () => {
   for (const definition of [resources, namesake]) {

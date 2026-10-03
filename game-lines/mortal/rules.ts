@@ -1,6 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { boundedIntegrity, mortalDerived } from "./creation-rules";
+import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
 
 const strings = (value: unknown) => Array.isArray(value) ? value.map(String) : [];
 
@@ -25,8 +26,17 @@ function normalizeMortal(character: CharacterSheet): CharacterSheet {
   };
 }
 
+/** Mortal Builder/XP composition mutates its working copy; the rules hook below clones its input. */
+export function synchronizeMortalMeritGrants(character: CharacterSheet) {
+  character.line_data.merit_granted_skill_bonuses = synchronizeCommonMeritGrants(character);
+  return character;
+}
+
 /** Pure mortal/Core hooks. No browser, persistence, or supernatural-line imports. */
 export const mortalRules: GameLineRulesModule = {
   normalizeCharacter: normalizeMortal,
+  synchronizeCharacter(character) {
+    return synchronizeMortalMeritGrants(structuredClone(character));
+  },
   deriveCharacterState: mortalDerived,
 };

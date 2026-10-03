@@ -275,7 +275,7 @@ test("Nameless Order applies its fixed Mystery Cult progression at the correct d
   mageMeritConfigurations.synchronizeMeritGrants(sheet);
   const speech = sheet.merits.find((item)=>item.name==="High Speech");
   assert.equal(speech?.dots,1);
-  assert.match(String(speech?.grantedBy),/^Merit:Mystery Cult Initiation:/);
+  assert.match(String(speech?.grantedBy),/^Merit:core-2ed:mystery-cult-initiation:/);
   assert.deepEqual(sheet.line_data.rote_skills,[]);
   assert.deepEqual(sheet.line_data.merit_granted_skill_bonuses,{});
 

@@ -29,6 +29,7 @@ import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
+import { synchronizeMortalMeritGrants } from "./rules";
 import { MortalExperiencePanel } from "./experience-panel";
 
 function experienceSpecialties(initial: CharacterSheet | null | undefined) {
@@ -162,6 +163,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
       created_at: source?.created_at ?? now,
       updated_at: now,
     };
+    synchronizeMortalMeritGrants(completed);
     completed.derived = mortalDerived(completed);
     return completed;
   };

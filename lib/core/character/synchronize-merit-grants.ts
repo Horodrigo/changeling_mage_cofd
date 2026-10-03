@@ -1,5 +1,7 @@
 import type { CharacterSheet } from "./character-types";
 import { decodeMeritGrantChoice, normalizeMeritConfiguration } from "./merit-configuration";
+import { commonMeritId } from "./merit-identities";
+import { experienceMeritDots } from "@/lib/merit-progression";
 
 const GENERATED_PREFIX = "Merit:";
 
@@ -8,20 +10,34 @@ export function synchronizeCommonMeritGrants(
   sheet: CharacterSheet,
   includeGrantedBy: (source: string) => boolean = () => false,
 ) {
-  sheet.merits = sheet.merits.filter((item) => !item.grantedBy?.startsWith(GENERATED_PREFIX));
+  sheet.merits = sheet.merits.flatMap((item) => {
+    if (!item.grantedBy?.startsWith(GENERATED_PREFIX)) return [item];
+    const experienceDots = experienceMeritDots(item);
+    if (!experienceDots) return [];
+    const paid = { ...item, dots: experienceDots, creationDots: 0, experienceDots };
+    delete paid.grantedBy;
+    return [paid];
+  });
   sheet.specializations = (sheet.specializations ?? []).filter((item) => !item.grantedBy?.startsWith(GENERATED_PREFIX));
   const skillBonuses: Record<string, number> = {};
+  const grantInstanceId = (owner: string, key: string | number) => {
+    let id = `grant-${owner}-${key}`;
+    while (sheet.merits.some(item => item.instanceId === id)) id += "-free";
+    return id;
+  };
   const grantMerit = (owner: string, row: unknown, index: number) => {
     const choice = decodeMeritGrantChoice(row);
     if (!choice) return;
-    sheet.merits.push({ ...choice, instanceId: `grant-${owner}-${index}`, configuration: {}, grantedBy: `${GENERATED_PREFIX}${owner}` });
+    sheet.merits.push({ ...choice, instanceId: grantInstanceId(owner, index), configuration: {}, grantedBy: `${GENERATED_PREFIX}${owner}` });
   };
   for (const merit of sheet.merits.filter((item) => !item.grantedBy || includeGrantedBy(item.grantedBy))) {
-    const owner = `${merit.name}:${merit.instanceId ?? merit.name}`;
+    const definitionId = commonMeritId(merit);
+    if (!definitionId) continue;
+    const owner = `${definitionId}:${merit.instanceId ?? definitionId}`;
     const configuration = normalizeMeritConfiguration(merit.configuration);
-    if (merit.name === "Professional Training") {
+    if (definitionId === "core-2ed:professional-training") {
       const contacts = Array.isArray(configuration.contacts) ? configuration.contacts.filter(Boolean) : [];
-      if (merit.dots >= 1) sheet.merits.push({ instanceId: `grant-${owner}-contacts`, name: "Contacts", dots: 2, configuration: { groups: contacts.slice(0, 2) }, grantedBy: `${GENERATED_PREFIX}${owner}` });
+      if (merit.dots >= 1) sheet.merits.push({ definitionId: "core-2ed:contacts", sourceId: "core-2ed", source: "Chronicles of Darkness", instanceId: grantInstanceId(owner, "contacts"), name: "Contacts", dots: 2, configuration: { groups: contacts.slice(0, 2) }, grantedBy: `${GENERATED_PREFIX}${owner}` });
       if (merit.dots >= 3) for (const index of [1, 2]) {
         const skill = String(configuration[`specialty_${index}_skill`] ?? "");
         const name = String(configuration[`specialty_${index}_name`] ?? "");
@@ -30,7 +46,7 @@ export function synchronizeCommonMeritGrants(
       const boosted = String(configuration.boosted_skill ?? "");
       if (merit.dots >= 4 && boosted) skillBonuses[boosted] = (skillBonuses[boosted] ?? 0) + 1;
     }
-    if (merit.name === "Mystery Cult Initiation" || merit.name === "Mystery Cult Influence") {
+    if (definitionId === "core-2ed:mystery-cult-initiation" || definitionId === "core-2ed:mystery-cult-influence") {
       for (let level = 1; level <= Math.min(5, merit.dots); level += 1) {
         const prefix = `level_${level}`;
         const type = String(configuration[`${prefix}_type`] ?? "");
