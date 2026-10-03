@@ -105,20 +105,20 @@ body:has(.line-theme-vtr) {
   border-radius: 0 0 8px 8px;
 }
 
-.vtr-sheet .vampire-discipline-card > .contract-power-details {
+.vtr-sheet .vampire-discipline-card > .rule-power-details {
   padding: 14px;
 }
 
-.vtr-sheet .vampire-discipline-card > .contract-power-details.has-levels {
+.vtr-sheet .vampire-discipline-card > .rule-power-details.has-levels {
   padding: 0;
 }
 
-.vtr-sheet .contract-power-details.has-levels > .vampire-power-mechanics {
+.vtr-sheet .rule-power-details.has-levels > .vampire-power-mechanics {
   padding: 14px;
   border-bottom: 1px solid var(--vtr-rule);
 }
 
-.vtr-sheet .contract-power-details.has-levels > small {
+.vtr-sheet .rule-power-details.has-levels > small {
   display: block;
   padding: 0 14px 12px;
 }
@@ -617,7 +617,7 @@ body:has(.line-theme-vtr) {
 .bloodline-discipline-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
 .bloodline-discipline-list span { border: 1px solid var(--vtr-rule); background: #fff; padding: 5px 8px; color: var(--vtr-ink); font-size: 12px; }
 .bloodline-bane-card { border-left: 4px solid var(--vtr-ink) !important; }
-.vtr-sheet .entitlement-title [data-slot="button"] { min-height:30px; height:30px; border-radius:2px; padding:5px 10px; font:12px/1 Georgia,"Times New Roman",serif; }
+.vtr-sheet .affiliation-title [data-slot="button"] { min-height:30px; height:30px; border-radius:2px; padding:5px 10px; font:12px/1 Georgia,"Times New Roman",serif; }
 
 .vtr-dialog {
   --sheet-accent: #4d171c;
@@ -637,8 +637,8 @@ body:has(.line-theme-vtr) {
 .vtr-dialog .homebrew-section, .vtr-dialog .bloodline-details > section, .vtr-dialog .bloodline-overview > section { border-color: var(--vtr-rule); background: rgba(255, 252, 248, .58); }
 .vtr-dialog input, .vtr-dialog textarea, .vtr-dialog [data-slot="select-trigger"] { border-color: rgba(77, 23, 28, .28); background: rgba(255, 252, 248, .72); }
 .bloodline-homebrew-editor .homebrew-form { grid-template-columns: 1fr; }
-.vampire-bloodline-join-dialog .entitlement-select { display: grid; gap: 6px; font-weight: 700; }
-.vampire-bloodline-join-dialog .entitlement-select [data-slot="select-trigger"] { width: 100%; }
+.vampire-bloodline-join-dialog .affiliation-select { display: grid; gap: 6px; font-weight: 700; }
+.vampire-bloodline-join-dialog .affiliation-select [data-slot="select-trigger"] { width: 100%; }
 .vampire-bloodline-join-dialog .bloodline-joining-note { padding: 12px 14px; border-left: 4px solid var(--vtr-ink); background: rgba(255, 252, 248, .58); }
 .vampire-bloodline-join-dialog .bloodline-joining-note h3, .vampire-bloodline-join-dialog .bloodline-joining-note p { margin: 0 0 7px; }
 .vampire-bloodline-join-dialog .bloodline-joining-note ul { margin: 8px 0; padding-left: 20px; color: #55494a; font-size: 13px; line-height: 1.5; }

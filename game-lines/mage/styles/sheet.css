@@ -70,15 +70,15 @@
 
 .mage-spell-lines>.mage-spell-empty { min-height:28px; padding:5px 2px; border-bottom:1px solid #aaa8a16b; }
 
-.mage-spell-lines .contract-power-summary { padding:7px 9px; }
+.mage-spell-lines .rule-power-summary { padding:7px 9px; }
 
-.mage-spell-lines .contract-power-summary>strong { font-size:12px; }
+.mage-spell-lines .rule-power-summary>strong { font-size:12px; }
 
-.mage-spell-lines .contract-power-summary>small { color:#737b80; font:10px Inter,Arial,sans-serif; }
+.mage-spell-lines .rule-power-summary>small { color:#737b80; font:10px Inter,Arial,sans-serif; }
 
-.mage-spell-lines .contract-power-details { padding:9px; font:11px/1.4 Inter,Arial,sans-serif; }
+.mage-spell-lines .rule-power-details { padding:9px; font:11px/1.4 Inter,Arial,sans-serif; }
 
-.mage-spell-lines .contract-power-details p { margin:0; }
+.mage-spell-lines .rule-power-details p { margin:0; }
 
 .mage-spell-lines em { color:#777; font-size:11px; }
 
@@ -228,10 +228,10 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
 .mage-legacy-join-dialog .legacy-page h3 { color:var(--mta-ink); font-family:Georgia,"Times New Roman",serif; }
 .mage-legacy-join-dialog [data-slot="dialog-description"] { color:#526873; }
 .mage-legacy-join-dialog .legacy-page { padding:8px; }
-.mage-legacy-join-dialog .entitlement-select { display:grid; max-width:none; gap:6px; font-weight:700; }
-.mage-legacy-join-dialog .entitlement-select [data-slot="select-trigger"] { width:100%; border-color:rgba(30,77,108,.38); border-radius:2px; background:rgba(248,251,252,.8); }
+.mage-legacy-join-dialog .affiliation-select { display:grid; max-width:none; gap:6px; font-weight:700; }
+.mage-legacy-join-dialog .affiliation-select [data-slot="select-trigger"] { width:100%; border-color:rgba(30,77,108,.38); border-radius:2px; background:rgba(248,251,252,.8); }
 .mage-legacy-join-dialog .legacy-page > section,
-.mage-legacy-join-dialog .entitlement-overview > section { border-color:rgba(30,77,108,.28); background:rgba(248,251,252,.72); }
+.mage-legacy-join-dialog .affiliation-overview > section { border-color:rgba(30,77,108,.28); background:rgba(248,251,252,.72); }
 
 .legacy-join { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:end; }
 
@@ -421,7 +421,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   .sheet-bottom-grid.mage-bottom-grid {grid-template-columns:1fr}
 }
 
-.creation-spell-list .contract-power-card {
+.creation-spell-list .rule-power-card {
   border:1px solid #cbb9cf;
   background:#fcf9fd;
   box-shadow:0 1px 3px #2b162f12;
@@ -1339,15 +1339,15 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
   background:url("/game-lines/mage/images/vertical-rule.webp") left top/15px 100% no-repeat;
 }
 
-.mta-sheet .contract-power-summary,
-.mta-sheet .contract-power-details,
+.mta-sheet .rule-power-summary,
+.mta-sheet .rule-power-details,
 .mta-sheet .mage-attainment-list > div,
 .mta-sheet .spell-card-rule-line {
   border-color:var(--mta-line);
 }
 
-.mta-sheet .mage-spell-lines .contract-power-summary,
-.mta-sheet .mage-spell-lines .contract-power-details {
+.mta-sheet .mage-spell-lines .rule-power-summary,
+.mta-sheet .mage-spell-lines .rule-power-details {
   background-color:rgba(250,253,254,.52);
 }
 

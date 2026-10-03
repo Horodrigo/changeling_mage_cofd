@@ -180,11 +180,11 @@ export function EntitlementPage({
   ) : null;
   if (!definition)
     return (
-      <div className="entitlement-page">
+      <div className="affiliation-page">
         <h3 className="official-heading">
           <span>{t("ui.entitlement")}</span>
         </h3>
-        <label className="entitlement-select">
+        <label className="affiliation-select">
           {t("ui.title")}
           <Select onValueChange={selectOrCreate}>
             <SelectTrigger>
@@ -227,8 +227,8 @@ export function EntitlementPage({
     ...(state.allocations.length < wyrd ? [undefined] : []),
   ];
   return (
-    <div className="entitlement-page">
-      <header className="entitlement-title">
+    <div className="affiliation-page">
+      <header className="affiliation-title">
         <div>
           <h2>{definition.name}</h2>
           <p>
@@ -269,7 +269,7 @@ export function EntitlementPage({
         )}
       </header>
       {!state.accepted && (
-        <label className="entitlement-select">
+        <label className="affiliation-select">
           {t("ui.title")}
           <Select value={definition.id} onValueChange={selectOrCreate}>
             <SelectTrigger>
@@ -289,7 +289,7 @@ export function EntitlementPage({
         </label>
       )}
       {!state.accepted && definition.roles && (
-        <label className="entitlement-select">
+        <label className="affiliation-select">
           {t("ui.role")}
           <Select
             value={state.roleId || undefined}
@@ -309,7 +309,7 @@ export function EntitlementPage({
         </label>
       )}
       <p
-        className={`entitlement-prerequisites ${prerequisitesMet ? "met" : "unmet"}`}
+        className={`affiliation-prerequisites ${prerequisitesMet ? "met" : "unmet"}`}
       >
         <strong>{t("ui.prerequisites")}:</strong>{" "}
         {role
@@ -349,7 +349,7 @@ export function EntitlementPage({
           />
         </div>
       </section>
-      <div className="entitlement-overview">
+      <div className="affiliation-overview">
         <section>
           <h3>{t("ui.purpose")}</h3>
           <p>{definition.purpose}</p>
@@ -379,7 +379,7 @@ export function EntitlementPage({
       </div>
       {definition.id === "baron-lesser-ones" &&
         state.allocations.length >= 2 && (
-          <label className="entitlement-select">
+          <label className="affiliation-select">
             {t("ui.goblinFeaturesUpTo", {
               p1: Math.floor(state.allocations.length / 2),
             })}
@@ -393,7 +393,7 @@ export function EntitlementPage({
           </label>
         )}
       {definition.id === "dauphines-wayward-children" && (
-        <label className="entitlement-select">
+        <label className="affiliation-select">
           {t("ui.currentWards")}
           <textarea
             value={state.choices.wards ?? ""}
@@ -461,7 +461,7 @@ export function EntitlementPage({
       </section>
       <section>
         <h3>{t("ui.blessings")}</h3>
-        <div className="entitlement-blessings">
+        <div className="affiliation-benefits">
           {definition.blessings
             .filter(
               (blessing) => !state.accepted || activeBlessings.has(blessing.id),
@@ -635,7 +635,7 @@ export function EntitlementPage({
           ))}
         </section>
       )}
-      <div className="entitlement-overview">
+      <div className="affiliation-overview">
         <section>
           <h3>{t("ui.curse")}</h3>
           <p>{definition.curse}</p>

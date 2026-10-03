@@ -145,7 +145,7 @@ export function ResourceTrack({
           <button
             type="button"
             key={`stored-${index}`}
-            className={`stored-glamour-dot${index < storedCurrent ? " filled" : ""}`}
+            className={`stored-resource-dot${index < storedCurrent ? " filled" : ""}`}
             onClick={() =>
               onStoredChange(index < storedCurrent ? index : index + 1)
             }

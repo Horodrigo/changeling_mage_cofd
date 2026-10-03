@@ -230,7 +230,7 @@ Inspeção motivada pelos exemplos do usuário em Core e `app/css/globals.css`:
 - **Dívida real:** `lib/contract-presentation.ts`, `lib/contract-clauses.ts`, o tipo `ContractDefinition` em `lib/catalog/catalog-types.ts` e sua reexportação em `lib/catalog/contract-catalog.ts` são especializados de Changeling. Devem passar para a linha sem duplicação ou adapters permanentes.
 - **Dívida real em mecanismo compartilhado:** `lib/merits.ts` lê `line_data.contracts`/`learned_contracts`, Court, Seeming, Wyrd e outros campos de linhas na montagem de contexto, e interpreta requisitos específicos de Contracts. A migração precisa preservar a elegibilidade por hooks/contexto da linha, não apenas deslocar ou renomear arquivos.
 - Os seletores exclusivos `.changeling-homebrew-source`, `.entitlement-homebrew-editor .homebrew-form` e `.contract-homebrew-editor .homebrew-form` foram movidos de `app/css/globals.css` para `game-lines/changeling/styles/sheet.css`, sem mudança de valores.
-- Classes visuais como `.contract-power-card`, `.creation-contract-list`, `.kith-current` e `.entitlement-page` possuem consumidores em outras linhas. Sua apresentação compartilhada precisa de nomes neutros; mover os seletores indiscriminadamente quebraria Mage/Vampire. Não há transferência automática de ownership mecânico pela reutilização visual. A superfície de Entitlements ainda em `app/workspace/entitlement-page.tsx` também deve passar para Changeling.
+- Classes visuais reutilizadas por Changeling/Mage/Vampire foram neutralizadas: `rule-power-*`, `creation-power-*`, `template-choice-*`, `custom-template-editor` e `affiliation-*`. O marcador compartilhado de recurso armazenado usa `stored-resource-dot`. Seletores exclusivos de Kith, Court, Regalia, Token, Entitlement, Clarity e Goblin Debt passaram para o CSS de Changeling, preservando declarações e media queries; regras sem consumidores foram removidas. Testes protegem os novos nomes e a localização. Não há transferência automática de ownership mecânico pela reutilização visual. A superfície de Entitlements ainda em `app/workspace/entitlement-page.tsx` também deve passar para Changeling.
 - Homebrew não constitui uma exceção: o shell/controles realmente comuns são compartilhados; editores e mecânicas específicos pertencem à linha.
 
 ## Decisões da auditoria — aprovadas em 2026-10-02
@@ -313,6 +313,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Todos os Builders/painéis de XP foram atualizados para essa fronteira. Changeling/Mage incluem também os Merits existentes comprados só com XP, antes excluídos pelo uso exclusivo das escolhas de criação nessa preservação.
 - **Prioridade 0 ainda aberta:** identidade em concessões/configurações e elegibilidade por nomes; integração restante em Changeling/Werewolf; qualificadores de Conditions/Tilts e de Merits mecanicamente distintos; ownership descrito em X03. Nenhuma tradução nova de catálogo neste lote.
 - Verificação: suíte dirigida **48/48** e suíte completa **455/455**, incluindo EN/PT, recibos opacos, dependências, falhas atômicas, homônimos desativados e errata. `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
+
+## Progresso — prioridade 0, organização dos estilos
+
+- Os estilos exclusivos de Changeling saíram do CSS global, inclusive os editores Homebrew, Kith/Court, Regalia, Tokens/Trifles, Entitlement, Clarity, Goblin Debt e os destaques dinâmicos de Kith/seleção de linha.
+- As estruturas reutilizadas por Mage/Vampire/Changeling usam nomes neutros em todos os consumidores e overrides, sem copiar estilos nem alterar textos, regras ou dados persistidos. Seletores antigos sem consumidores foram removidos.
+- A comparação automatizada com o estado anterior confirmou as mesmas declarações em **2.786 combinações de seletor/media query** preservadas. Novos testes de arquitetura impedem a volta de seletores especializados ao CSS global. A fronteira foi documentada em `AGENTS.md`.
+- Esta etapa resolve a parte CSS de X03; a migração dos helpers/tipos de Contracts, do contexto de Merits e da superfície de Entitlement continua pendente. A meta de tradução não está concluída.
+- Verificação: suíte dirigida **20/20**, suíte completa **456/456**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

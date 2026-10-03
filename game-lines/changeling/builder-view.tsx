@@ -236,9 +236,9 @@ function CourtSelector(props: Pick<ChangelingBuilderViewProps,"court"|"setCourt"
     (!normalizedCourtSearch || `${court.label} ${court.detail}`.toLocaleLowerCase(locale).includes(normalizedCourtSearch)),
   );
   return (
-    <div className="kith-field">
+    <div className="template-choice-field">
       <span>{t("ui.court")}</span>
-      <div className="kith-current">
+      <div className="template-choice-current">
         <strong>{props.court ? courtDisplayName(props.courtCatalog, props.court, locale) : t("ui.noneSelected")}</strong>
         <small>
           {!props.court
@@ -304,9 +304,9 @@ function ChangelingAnchorSelector({kind,value,setValue,invalid=false}:{kind:"nee
   const label=kind==="needle"?t("ui.needle"):t("ui.thread");
   const normalized=search.trim().toLocaleLowerCase(locale);
   const filtered=definitions.filter((item)=>(sourceFilter==="all"||item.source===sourceFilter)&&(!normalized||`${item.name} ${changelingAnchorRecovery(kind,item.name,locale)}`.toLocaleLowerCase(locale).includes(normalized)));
-  return <div className={`kith-field anchor-field${invalid?" missing-field":""}`}>
+  return <div className={`template-choice-field anchor-field${invalid?" missing-field":""}`}>
     <span>{label}</span>
-    <div className="kith-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):t("ui.noneSelected4f351e")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):t("ui.reviewTheWillpowerRecoveryTriggersBeforeChoosing")}</small></div>
+    <div className="template-choice-current"><strong>{value?changelingAnchorDisplayName(kind,value,locale):t("ui.noneSelected4f351e")}</strong><small>{value?changelingAnchorRecovery(kind,value,locale).replace("\n"," · "):t("ui.reviewTheWillpowerRecoveryTriggersBeforeChoosing")}</small></div>
     <Dialog>
       <DialogTrigger asChild><Button type="button" variant="outline"><Search/> {t("ui.select93d2b9", { p1: label })}</Button></DialogTrigger>
       <DialogContent className="merit-dialog anchor-dialog ctl-dialog">
@@ -367,9 +367,9 @@ function KithSelector(props: Pick<ChangelingBuilderViewProps,"kith"|"setKith"|"k
     props.setCustomKithDescription("");
   };
   return (
-    <div className="kith-field">
+    <div className="template-choice-field">
       <span>{t("ui.kith")}</span>
-      <div className={`kith-current${creationChoice?" has-choice":""}`}>
+      <div className={`template-choice-current${creationChoice?" has-choice":""}`}>
         <div className="kith-choice-row">
           <strong>{(selected ? kithName(selected) : props.kith) || t("ui.noneSelected")}</strong>
           {creationChoice&&(creationChoice.kind==="text"?
@@ -611,14 +611,14 @@ function ContractSelector({
         <DialogFooter><DialogClose asChild><Button type="button" variant="outline" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
       </DialogContent>
       </Dialog>
-      <div className="contract-power-list creation-contract-list">
+      <div className="rule-power-list creation-power-list">
         {contracts.map((item,index)=>{
-          if(!item.name)return <article className="creation-contract-empty" key={index}><Badge variant={index<4?"secondary":"outline"}>{index<4?t("ui.common"):t("ui.royal")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
+          if(!item.name)return <article className="creation-power-empty" key={index}><Badge variant={index<4?"secondary":"outline"}>{index<4?t("ui.common"):t("ui.royal")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
           const presented=contractPresentation(item,locale,presentation),summary=contractSummary(presented,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
           const benefit=presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
-          return <details className="contract-power-card" key={`${item.id}-${index}`}>
-            <summary className="contract-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?t("ui.common"):t("ui.royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
-            <div className="contract-power-details"><dl>
+          return <details className="rule-power-card" key={`${item.id}-${index}`}>
+            <summary className="rule-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?t("ui.common"):t("ui.royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
+            <div className="rule-power-details"><dl>
               {summary&&<div><dt>{t("ui.summary")}</dt><dd>{summary}</dd></div>}
               {contractHasInvocationRoll(presented)===true&&<div><dt>{t("ui.dicePool")}</dt><dd>{presented.dicePool??t("ui.notListed")}</dd></div>}
               <div><dt>{t("ui.cost")}</dt><dd>{presented.cost??t("ui.asDescribed")}</dd></div>

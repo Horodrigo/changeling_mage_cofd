@@ -268,6 +268,7 @@ Work in small verifiable batches. Reconcile IDs, counts, source, page, required 
 Werewolf form comparisons display only changed Attributes and their recalculated totals, including active Merit modifiers. Do not repeat modifier labels or add a second full Attributes disclosure. Five desktop columns use fluid widths; the supplied transparent WebP is decorative and absent from mobile. Form Details uses ID-keyed structured passive fields from the static reference catalogs, not a runtime parser of the full form description.
 
 - Share controls only when behavior is truly common. A shared visual pattern does not imply a shared mechanical abstraction.
+- Shared CSS patterns use neutral names (`rule-power-*`, `creation-power-*`, `template-choice-*`, `affiliation-*`, `stored-resource-dot`). Changeling-specific Kith, Court, Regalia, Token, Entitlement, Clarity, and Goblin Debt selectors belong to its styles, including Homebrew editors. Reusing presentation does not move the underlying mechanics into Core.
 - Keep line-specific forms and interactions in the owning module.
 - Avoid giant switch components, universal section engines, and large optional-prop matrices.
 - Desktop page content uses the shared `1200px` maximum width and is centered. Full-width sections inside a page grid must explicitly span every grid column; do not rely on a generic `wide` class with unrelated selectors.

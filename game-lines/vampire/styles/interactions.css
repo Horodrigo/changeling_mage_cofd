@@ -257,7 +257,7 @@ body:has(.line-theme-vtr) [data-slot="select-content"] {
 }
 
 .vampire-template-current,
-.vampire-covenant-field .kith-current {
+.vampire-covenant-field .template-choice-current {
   display: grid;
   gap: 4px;
   min-height: 64px;

@@ -468,9 +468,9 @@ function CovenantSelector({ items, values, primary, onToggle, onPrimary, locale,
   const { t } = useLanguage();
   const selected = items.find((item) => item.id === primary);
   const selectedItems = items.filter((item) => values.includes(item.id));
-  return <div className={`kith-field vampire-covenant-field${invalid ? " missing-field" : ""}`}>
+  return <div className={`template-choice-field vampire-covenant-field${invalid ? " missing-field" : ""}`}>
     <span>{t("sheet.covenant")}</span>
-    <div className="kith-current vampire-template-current">
+    <div className="template-choice-current vampire-template-current">
       <strong>{selectedItems.length ? selectedItems.map((item) => displayName(item, locale)).join(" · ") : t("ui.noneSelected")}</strong>
       <p>{selected?.description ?? t("ui.selectCovenant")}</p>
       {selected?.advantage && <small><strong>{t("ui.advantage")}:</strong> {selected.advantage}</small>}

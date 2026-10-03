@@ -1911,32 +1911,32 @@ function DisciplineCards({
       {selected.map(({ item, rating }) => {
         return (
           <details
-            className="contract-power-card vampire-discipline-card"
+            className="rule-power-card vampire-discipline-card"
             key={item.id}
           >
-            <summary className="contract-power-summary">
+            <summary className="rule-power-summary">
               <strong>{localized(item, locale)}</strong>
               <DotValue value={rating} />
               <small>{item.summary}</small>
             </summary>
             <div
-              className={`contract-power-details${item.levels?.length ? " has-levels" : ""}`}
+              className={`rule-power-details${item.levels?.length ? " has-levels" : ""}`}
             >
               <PowerMechanics mechanics={item} />
               {(item.levels ?? [])
                 .filter((level) => level.rating <= rating)
                 .map((level) => (
                   <details
-                    className="contract-power-card vampire-discipline-level"
+                    className="rule-power-card vampire-discipline-level"
                     key={level.rating}
                   >
-                    <summary className="contract-power-summary">
+                    <summary className="rule-power-summary">
                       <strong>
                         {"•".repeat(level.rating)} {localized(level, locale)}
                       </strong>
                       <small>{level.summary}</small>
                     </summary>
-                    <div className="contract-power-details">
+                    <div className="rule-power-details">
                       <PowerMechanics mechanics={level} compact />
                       {item.id === "animalism" && level.rating === 2 && (
                         <Button
@@ -1954,14 +1954,14 @@ function DisciplineCards({
               {item.id === "blood-tether" &&
                 ownedLashes.map((lash) => (
                   <details
-                    className="contract-power-card vampire-discipline-level"
+                    className="rule-power-card vampire-discipline-level"
                     key={lash.id}
                   >
-                    <summary className="contract-power-summary">
+                    <summary className="rule-power-summary">
                       <strong>{localized(lash, locale)}</strong>
                       <small>{lash.summary}</small>
                     </summary>
-                    <div className="contract-power-details">
+                    <div className="rule-power-details">
                       <p>
                         <strong>{t("ui.prerequisites")}:</strong>{" "}
                         {lash.prerequisites}
@@ -2131,30 +2131,30 @@ function RitualDisciplines({
           );
           return (
             <details
-              className="contract-power-card vampire-discipline-card"
+              className="rule-power-card vampire-discipline-card"
               key={item.id}
             >
-              <summary className="contract-power-summary">
+              <summary className="rule-power-summary">
                 <strong>{localized(item, locale)}</strong>
                 <DotValue value={rating} />
                 <small>{item.summary}</small>
               </summary>
-              <div className="contract-power-details has-levels">
+              <div className="rule-power-details has-levels">
                 <PowerMechanics mechanics={item} />
                 <small>{t("ui.bloodSorceryFreeRitual")}</small>
                 {rituals.map((ritual) => (
                   <details
-                    className="contract-power-card vampire-discipline-level"
+                    className="rule-power-card vampire-discipline-level"
                     key={ritual.id}
                   >
-                    <summary className="contract-power-summary">
+                    <summary className="rule-power-summary">
                       <strong>
                         {"•".repeat(Number(ritual.rating ?? 0))}{" "}
                         {localized(ritual, locale)}
                       </strong>
                       <small>{ritual.summary}</small>
                     </summary>
-                    <div className="contract-power-details">
+                    <div className="rule-power-details">
                       <PowerMechanics mechanics={ritual} compact />
                     </div>
                   </details>
@@ -2411,15 +2411,15 @@ function PurchasedPowers({
           const rating = item.rating;
           return (
             <details
-              className="contract-power-card vampire-discipline-card"
+              className="rule-power-card vampire-discipline-card"
               key={item.id}
             >
-              <summary className="contract-power-summary">
+              <summary className="rule-power-summary">
                 <strong>{localized(item, locale)}</strong>
                 {Boolean(rating) && <DotValue value={Number(rating)} />}
                 <small>{item.summary}</small>
               </summary>
-              <div className="contract-power-details">
+              <div className="rule-power-details">
                 <small>
                   {item.kind} · {item.source} · p. {item.page || "—"}
                 </small>

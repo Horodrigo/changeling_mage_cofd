@@ -60,9 +60,9 @@ function OrderSelector(props: OrderSelectorProps) {
     props.setCustomOrder(custom);
   };
   return (
-    <div className={`kith-field ${props.invalid ? "missing-field" : ""}`}>
+    <div className={`template-choice-field ${props.invalid ? "missing-field" : ""}`}>
       <span>{t("ui.order")}</span>
-      <div className="kith-current order-current">
+      <div className="template-choice-current order-current">
         <strong>
           {(props.order === "Nameless" && props.customOrder?.name ? props.customOrder.name : mageOrderLabel(props.order, locale)) ||
             t("ui.noneSelected")}
@@ -107,7 +107,7 @@ function OrderSelector(props: OrderSelectorProps) {
             }}
           />
           {props.order === "Nameless" && (
-            <div className="custom-kith-editor">
+            <div className="custom-template-editor">
               <label>
                 {t("ui.orderName")}
                 <Input
@@ -172,7 +172,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
         </div>
         <div className="mta-template-column">
           <OrderSelector {...props} invalid={props.missing("order")} />
-          {affiliations.length>0&&<div className="kith-field"><Choice label={t("ui.ministryOptional")} value={props.affiliationId||"__none"} setValue={(value)=>props.setAffiliationId(value==="__none"?"":value)} options={["__none",...affiliations.map((item)=>item.id)]} optionLabels={{__none:t("ui.noMinistry"),...Object.fromEntries(affiliations.map((item)=>[item.id,item.name]))}}/>{affiliation&&<p>{affiliation.description} · {affiliation.patronExarch}{affiliation.additionalPatronExarchs?.length?` / ${affiliation.additionalPatronExarchs.join(" / ")}`:""}</p>}</div>}
+          {affiliations.length>0&&<div className="template-choice-field"><Choice label={t("ui.ministryOptional")} value={props.affiliationId||"__none"} setValue={(value)=>props.setAffiliationId(value==="__none"?"":value)} options={["__none",...affiliations.map((item)=>item.id)]} optionLabels={{__none:t("ui.noMinistry"),...Object.fromEntries(affiliations.map((item)=>[item.id,item.name]))}}/>{affiliation&&<p>{affiliation.description} · {affiliation.patronExarch}{affiliation.additionalPatronExarchs?.length?` / ${affiliation.additionalPatronExarchs.join(" / ")}`:""}</p>}</div>}
         </div>
         <div className="mta-template-column mta-virtue-vice">
           <label className={props.missing("virtue") ? "missing-field" : ""}>
@@ -401,15 +401,15 @@ function SpellSelector({
           </Button>
         </div>
       </div>
-      <div className="contract-power-list creation-contract-list creation-spell-list">
+      <div className="rule-power-list creation-power-list creation-spell-list">
         {Array.from({ length: count }, (_, index) => {
           const item = values[index];
-          if (!item) return <article className="creation-contract-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
+          if (!item) return <article className="creation-power-empty" key={index}><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
           const roteSkillOptions=item.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill));
           return (
-            <details className="contract-power-card" key={`${item.id}-${index}`}>
-              <summary className="contract-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote&&roteSkillOptions.length>0&&<span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={roteSkillOptions.includes(item.roteSkill??"")?item.roteSkill??"":""} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={roteSkillOptions}/></span>}</summary>
-              <div className="contract-power-details">
+            <details className="rule-power-card" key={`${item.id}-${index}`}>
+              <summary className="rule-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote&&roteSkillOptions.length>0&&<span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={roteSkillOptions.includes(item.roteSkill??"")?item.roteSkill??"":""} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={roteSkillOptions}/></span>}</summary>
+              <div className="rule-power-details">
                 <dl>
                   <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item)}</dd></div>
                   {spellReach(item) && <div><dt>{t("ui.reach")}</dt><dd>{spellReach(item)}</dd></div>}

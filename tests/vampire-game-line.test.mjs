@@ -530,7 +530,7 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   const shared = await readFile(`${root}/app/workspace/experience-shared.tsx`, "utf8");
   assert.match(shared, /categoryOptions \?\? items\.flatMap/);
   const sheet = await readFile(`${root}/game-lines/vampire/sheet-view.tsx`, "utf8");
-  assert.match(sheet, /return\s*\(?\s*<details\s+className="contract-power-card vampire-discipline-card"\s+key=\{item\.id\}\s*>/);
+  assert.match(sheet, /return\s*\(?\s*<details\s+className="rule-power-card vampire-discipline-card"\s+key=\{item\.id\}\s*>/);
   const css = await readFile(`${root}/app/css/globals.css`, "utf8");
   assert.match(css, /\.experience-merit-catalog article > div > strong/);
   assert.doesNotMatch(css, /\.experience-merit-catalog strong,/);

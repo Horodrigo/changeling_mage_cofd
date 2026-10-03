@@ -174,12 +174,37 @@ test("shared Experience refunds contain no Mage mechanics", async () => {
   await access(join(root, "game-lines/mage/experience-refunds.ts"));
 });
 
-test("Changeling-specific Homebrew selectors belong to its stylesheet", async () => {
+test("Changeling-specific selectors belong to its stylesheet, including Homebrew", async () => {
   const shared = await source("app/css/globals.css");
   const owned = await source("game-lines/changeling/styles/sheet.css");
-  for (const selector of [".changeling-homebrew-source", ".entitlement-homebrew-editor", ".contract-homebrew-editor"]) {
+  for (const selector of [
+    ".changeling-homebrew-source", ".entitlement-homebrew-editor", ".contract-homebrew-editor",
+    ".entitlement-touchstone", ".entitlement-allocations", ".entitlement-token-fields",
+    ".kith-dialog", ".kith-filters", ".kith-choice-row", ".contract-options",
+    ".token-allocation-header", ".trifle-use-track", ".regalia-information",
+    ".court-option", ".goblin-debt-track", ".clarity-box",
+    ".changeling-line-choice", ".skill-highlight-kith",
+  ]) {
     assert.ok(!shared.includes(selector), `${selector} leaked into shared CSS`);
     assert.ok(owned.includes(selector), `${selector} missing from Changeling CSS`);
+  }
+});
+
+test("shared presentation patterns use neutral names across game lines", async () => {
+  const shared = await source("app/css/globals.css");
+  assert.doesNotMatch(shared, /\.(?:contract-|creation-contract-|kith-|custom-kith-|entitlement-|regalia-|court-|trifle-|token-|goblin-debt-|clarity-|stored-glamour)/);
+  for (const selector of [".rule-power-card", ".template-choice-current", ".affiliation-page", ".stored-resource-dot"]) {
+    assert.ok(shared.includes(selector), `${selector} missing from shared CSS`);
+  }
+  for (const line of ["changeling", "mage", "vampire"]) {
+    const files = await sourceFiles(`game-lines/${line}`);
+    const content = (await Promise.all(files.map(source))).join("\n");
+    assert.doesNotMatch(content, /\b(?:contract-power-(?:list|card|summary|details)|creation-contract-(?:list|empty)|kith-(?:current|field)|custom-kith-editor|entitlement-(?:title|select|overview|prerequisites|blessings))\b/);
+    assert.match(content, /rule-power-card/);
+    assert.match(content, /template-choice-current/);
+  }
+  for (const path of ["app/workspace/entitlement-page.tsx", "game-lines/mage/legacy-page.tsx", "game-lines/vampire/bloodline-page.tsx"]) {
+    assert.match(await source(path), /className="affiliation-page/);
   }
 });
 
@@ -247,7 +272,7 @@ test("Changeling Homebrew uses category tabs and compact disclosure rows", async
   assert.match(sheet, /item\.name !== "Entitlement" && isExpanded/);
   assert.match(css, /\.panel\.homebrew-source\s*\{\s*padding:\s*0;\s*\}/);
   assert.match(css, /\.homebrew-list-item-body p\s*>\s*strong:first-child\s*\{\s*color:/);
-  assert.match(css, /\.contract-power-list dt\s*\{\s*display:\s*inline;/);
+  assert.match(css, /\.rule-power-list dt\s*\{\s*display:\s*inline;/);
   assert.doesNotMatch(homebrew, /className="homebrew-card"/);
 });
 

@@ -572,7 +572,7 @@ function ContractPowerList({ contracts, catalog, presentation, courtCatalog, see
     extraClauses?: Array<Record<string, unknown>>;
 }) {
     const { locale, t } = useLanguage();
-    return (<div className="contract-power-list">
+    return (<div className="rule-power-list">
       {contracts
             .filter((item) => item.name)
             .map((item, index) => {
@@ -664,13 +664,13 @@ function ContractPowerList({ contracts, catalog, presentation, courtCatalog, see
                     <dd>{definition.goblinDebt}</dd>
                   </div>)}
               </dl>;
-            return (<details className="contract-power-card" key={`${definition.id}-${index}`}>
-              <summary className="contract-power-summary">
+            return (<details className="rule-power-card" key={`${definition.id}-${index}`}>
+              <summary className="rule-power-summary">
                 <strong>{locale === "en-US" ? definition.originalName ?? definition.name : definition.name}</strong>
                 <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal")}</Badge>
                 <small>{systemTerm(definition.regalia, locale)} · {definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
               </summary>
-              <div className="contract-power-details">{details}</div>
+              <div className="rule-power-details">{details}</div>
             </details>);
         })}
     </div>);

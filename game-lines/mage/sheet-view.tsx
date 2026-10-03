@@ -2158,10 +2158,10 @@ function SpellColumn({
     <div className="mage-spell-lines">
       {items.map((item, index) => (
         <details
-          className="contract-power-card"
+          className="rule-power-card"
           key={`${String(item.id ?? item.name)}-${index}`}
         >
-          <summary className="contract-power-summary">
+          <summary className="rule-power-summary">
             <strong>
               {String(
                 locale === "en-US"
@@ -2204,7 +2204,7 @@ function SpellColumn({
               </span>
             )}
           </summary>
-          <div className="contract-power-details">
+          <div className="rule-power-details">
             <p>
               <strong>{t("ui.summary")}:</strong>{" "}
               {spellItemSummary(item, catalog)}

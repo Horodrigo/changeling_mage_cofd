@@ -28,6 +28,411 @@
    Changeling sheet rules stay authoritative when selectors overlap.
    -------------------------------------------------------------------------- */
 
+.token-allocation-header {
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.token-allocation-header .structured-rule {
+  flex: 1;
+}
+.token-kind-trigger {
+  width: 110px;
+}
+.token-catalog-trigger {
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 240px;
+}
+.token-add-button {
+  flex: none;
+  min-height: 0;
+  height: auto;
+  padding: 5px 8px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.token-add-button svg {
+  width: 14px;
+  height: 14px;
+}
+.token-remove-button {
+  justify-self: end;
+  min-height: 0;
+  height: auto;
+  padding: 4px 6px;
+  font-size: 11px;
+  line-height: 1.25;
+}
+.token-remove-button svg {
+  width: 12px;
+  height: 12px;
+}
+@media (max-width: 720px) {
+  .token-heading-row {
+    grid-template-columns: 1fr;
+  }
+}
+.trifle-use-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 7px;
+}
+.trifle-use-block > span {
+  color: #706873;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.trifle-use-track {
+  display: flex;
+  gap: 5px;
+}
+.trifle-use-track button {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1.5px solid var(--sheet-ink);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+.trifle-use-track button.used {
+  background: #777078;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+.regalia-choice-stack {
+  display: grid;
+  gap: 6px;
+}
+.regalia-field-label {
+  color: #504851;
+  font-size: 13px;
+  font-weight: 700;
+}
+.regalia-select .choice-label {
+  gap: 0;
+}
+.regalia-information {
+  min-height: 104px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 7px 10px;
+  border: 1px solid #ded6df;
+  border-radius: 8px;
+  background: #fff;
+  color: #504851;
+}
+.regalia-information strong {
+  overflow: hidden;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.regalia-information p {
+  margin: 0;
+  color: #827884;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.court-catalog-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  gap: 10px;
+  align-items: end;
+}
+.court-catalog {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  padding: 2px;
+}
+.court-option {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  padding: 11px 12px;
+  border: 1px solid #ded5df;
+  border-radius: 10px;
+  background: #fff;
+  color: #312b33;
+  text-align: left;
+  cursor: pointer;
+}
+.court-option:hover,
+.court-option.selected {
+  border-color: #78597d;
+  background: #f5eef6;
+}
+.court-option strong,
+.court-option small {
+  display: block;
+}
+.court-option small {
+  color: #776d78;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+@media (max-width: 720px) {
+  .court-catalog-filters,
+.court-catalog {
+    grid-template-columns: 1fr;
+  }
+}
+.line-choice button.changeling-line-choice {
+  border-color: #a8c9b1;
+  background: linear-gradient(145deg, #f4faf5, #e8f3ea);
+}
+.line-choice button.changeling-line-choice:hover {
+  border-color: #568263;
+}
+.line-choice button.changeling-line-choice.selected {
+  border-color: #315f43;
+  background: linear-gradient(145deg, #eaf5ec, #d8eadd);
+  box-shadow:
+    inset 0 0 0 1px #315f43,
+    0 10px 28px #234c3120;
+}
+.official-trait-line.skill-highlight-kith {
+  position: relative;
+  z-index: 1;
+  box-shadow: none;
+}
+.official-trait-line.skill-highlight-kith > .official-trait-label {
+  overflow: visible;
+}
+.goblin-debt-row {
+  color: #744014;
+  background: #fff4df;
+}
+.goblin-debt-block h4 {
+  margin: 0 0 8px;
+  text-align: center;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.goblin-debt-block {
+  margin-top: 24px;
+  padding: 13px;
+  border: 1px solid #a56c28;
+  background: #fff8ea;
+}
+.goblin-debt-track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.goblin-debt-track button {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  padding: 0;
+  border: 1.5px solid #744014;
+  background: #fff;
+  cursor: pointer;
+}
+.goblin-debt-track button.filled {
+  background:
+    linear-gradient(45deg, transparent 43%, #744014 44% 56%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, #744014 44% 56%, transparent 57%),
+    #fff;
+}
+.goblin-debt-block p {
+  margin: 8px 0 0;
+  color: #744014;
+  font:
+    12px/1.4 Inter,
+    Arial,
+    sans-serif;
+}
+.clarity-numbers {
+  display: flex;
+  gap: 5px;
+  margin-top: 2px;
+}
+.clarity-numbers span {
+  width: 20px;
+  flex: none;
+  text-align: center;
+  font:
+    10px Inter,
+    Arial,
+    sans-serif;
+}
+.clarity-box.mild span {
+  background-image: linear-gradient(
+    55deg,
+    transparent 44%,
+    var(--sheet-ink) 45% 55%,
+    transparent 56%
+  );
+}
+.clarity-box.severe span {
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 44%,
+      var(--sheet-ink) 45% 55%,
+      transparent 56%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 44%,
+      var(--sheet-ink) 45% 55%,
+      transparent 56%
+    );
+}
+.goblin-debt-note {
+  padding: 7px;
+  border-left: 3px solid #a56c28;
+  background: #fff6e7;
+}
+
+.entitlement-choice-help {
+  display: block;
+  max-width: 680px;
+  margin-top: 5px;
+  white-space: pre-line;
+  color: #675f68;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+.entitlement-touchstone.missing {
+  border-color: #b3261e;
+  background: #fff1f0;
+  color: #7b1712;
+}
+.entitlement-touchstone.missing input {
+  border-color: #b3261e;
+}
+.entitlement-inherent,
+.entitlement-heraldry,
+.entitlement-touchstone {
+  border: 1px solid #ddd3c8;
+  background: #fffefa;
+  padding: 12px;
+}
+.entitlement-inactive {
+  border-left: 4px solid #a34c4c;
+  background: #fff2f0;
+  padding: 9px 11px;
+  color: #793939;
+}
+.entitlement-allocations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.entitlement-allocations label,
+.entitlement-token-fields label,
+.stored-glamour {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.entitlement-disabled {
+  filter: grayscale(0.8);
+  opacity: 0.62;
+}
+.entitlement-choice-row,
+.entitlement-token-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+.entitlement-token-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.stored-glamour {
+  max-width: 250px;
+  margin-top: 9px;
+}
+.stored-glamour small {
+  font-weight: 400;
+}
+.entitlement-suspension {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+  font-size: 12px;
+}
+@media (max-width: 720px) {
+  .entitlement-allocations,
+  .entitlement-choice-row,
+  .entitlement-token-fields {
+    grid-template-columns: 1fr;
+  }
+}
+.kith-dialog {
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+}
+.kith-filters {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.kith-filters label {
+  display: grid;
+  gap: 5px;
+  color: #504851;
+  font-size: 11px;
+  font-weight: 700;
+}
+.kith-filters [data-slot="select-trigger"] {
+  width: 100%;
+  max-width: none;
+}
+.kith-choice-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.template-choice-current.has-choice .kith-choice-row {
+  grid-template-columns: minmax(0, 1fr) minmax(108px, 45%);
+}
+.template-choice-current .kith-choice-inline {
+  width: 100%;
+  min-width: 0;
+  height: 26px;
+  padding-block: 2px;
+  font-size: 11px;
+}
+.template-choice-current .kith-choice-inline.missing-choice {
+  border-color: #bb6f6f;
+}
+.contract-options {
+  margin: 7px 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--sheet-accent);
+  background: color-mix(in srgb, var(--sheet-accent) 5%, #fff);
+  font:
+    11px/1.45 Inter,
+    Arial,
+    sans-serif;
+}
+.contract-options ul {
+  display: grid;
+  gap: 5px;
+  margin: 5px 0 0;
+  padding-left: 15px;
+  list-style: disc;
+}
+
 .changeling-homebrew-source > .homebrew-source-summary {
   min-height: 38px;
   padding: 6px 14px;
@@ -109,7 +514,7 @@ body:has(.line-theme-ctl) {
   width: 126px;
 }
 
-.ctl-template-secondary > div:first-child .kith-current {
+.ctl-template-secondary > div:first-child .template-choice-current {
   min-height: 52px;
 }
 
@@ -1530,7 +1935,7 @@ body:has(.line-theme-ctl)
 .ctl-sheet .experience-actions button,
 .ctl-sheet .condition-manager > button,
 .ctl-sheet .notes-area textarea,
-.ctl-sheet .contract-power-card,
+.ctl-sheet .rule-power-card,
 .ctl-sheet .selected-condition,
 .ctl-sheet .selected-tilt {
   border-color: rgba(23, 56, 35, 0.38);
@@ -1733,13 +2138,13 @@ body:has(.line-theme-ctl)
   font-size: 14px;
 }
 
-.ctl-sheet .contract-power-card,
+.ctl-sheet .rule-power-card,
 .ctl-sheet .selected-condition,
 .ctl-sheet .selected-tilt {
   background: rgba(255, 254, 249, 0.48);
 }
 
-.ctl-sheet .contract-power-summary > strong,
+.ctl-sheet .rule-power-summary > strong,
 .ctl-sheet .selected-condition strong,
 .ctl-sheet .selected-tilt strong {
   color: var(--ctl-ink);
@@ -1750,17 +2155,17 @@ body:has(.line-theme-ctl)
   grid-template-columns: minmax(0, 1fr);
   gap: 8px;
 }
-.ctl-sheet .configured-token-card .contract-power-summary {
+.ctl-sheet .configured-token-card .rule-power-summary {
   position: relative;
   padding-right: 32px;
 }
-.ctl-sheet .configured-token-card .contract-power-summary::after {
+.ctl-sheet .configured-token-card .rule-power-summary::after {
   content: "▸";
   position: absolute;
   right: 12px;
   top: 13px;
 }
-.ctl-sheet .configured-token-card[open] .contract-power-summary::after {
+.ctl-sheet .configured-token-card[open] .rule-power-summary::after {
   transform: rotate(90deg);
 }
 .ctl-sheet .configured-token-card dl {
@@ -2172,7 +2577,7 @@ body:has(.line-theme-ctl)
   }
 
   /* Conteúdo longo */
-  .ctl-sheet .contract-power-card,
+  .ctl-sheet .rule-power-card,
   .ctl-sheet .selected-condition,
   .ctl-sheet .selected-tilt {
     max-width: 100%;
