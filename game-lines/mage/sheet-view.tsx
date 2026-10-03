@@ -95,7 +95,8 @@ import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { MageStructuredMeritEditor } from "./merit-configuration-editor";
+import { renderMageStructuredMeritEditor } from "./merit-configuration-editor";
+import { masqueConfigurationDots } from "./merit-configurations";
 import { CompanionPage as MageCompanionPage } from "./companion-page";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { useLegacyHomebrews } from "./use-legacy-homebrews";
@@ -1291,22 +1292,10 @@ function ExpandedMeritList({
                 compact
                 merit={item}
                 ownedMerits={character.merits}
-                configurationDots={
-                  item.name === "Masque"
-                    ? character.merits.find(
-                        (candidate) => candidate.name === "Masque (Style)",
-                      )?.dots
-                    : undefined
-                }
+                configurationDots={masqueConfigurationDots(item, character.merits, catalog)}
                 catalog={[...catalog]}
                 definitions={MAGE_SHEET_MERIT_CONFIGURATIONS}
-                renderStructured={(props) => (
-                  <MageStructuredMeritEditor
-                    {...props}
-                    factions={factions}
-                    order={String(character.line_data.order ?? "")}
-                  />
-                )}
+                renderStructured={(props) => renderMageStructuredMeritEditor({...props, catalog, factions, order: String(character.line_data.order ?? "")})}
                 onChange={(configuration) => {
                   const next = structuredClone(character);
                   const target = next.merits[meritIndex];

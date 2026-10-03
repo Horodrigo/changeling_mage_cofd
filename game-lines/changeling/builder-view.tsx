@@ -192,7 +192,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           powerLabel={t("ui.wyrdAtCreation")}
           power={props.wyrd}
           setPower={props.setWyrd}
-          isInlineConfiguration={(name) => isCommonInlineMeritConfiguration(name) || isChangelingInlineMeritConfiguration(name)}
+          isInlineConfiguration={(id) => isCommonInlineMeritConfiguration(id) || isChangelingInlineMeritConfiguration(id)}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => (
             <MeritConfigurationEditor
               merit={merit}

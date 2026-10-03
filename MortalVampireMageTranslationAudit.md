@@ -332,6 +332,17 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - **Prioridade 0 ainda aberta:** metadados/despacho dos editores e concessões ainda dependentes de nomes, contexto/requisitos específicos em helpers compartilhados, integração restante em Changeling/Werewolf, qualificadores de homônimos e a parte mecânica de X03. Nenhuma tradução nova de catálogo neste lote; a meta permanece ativa.
 - Verificação: suíte dirigida Mage **13/13**, suíte completa **459/459**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
 
+## Progresso — prioridade 0, identidade dos editores de configuração
+
+- Metadados de configuração de Core, Changeling, Mage e Vampire ganharam IDs explícitos conciliados com os respectivos catálogos. O editor compartilhado resolve a definição canônica antes de abrir os campos ou invocar o editor da linha. Um ID indisponível não é substituído por nome; seleções antigas sem ID continuam usando somente o fallback inequívoco já documentado.
+- Editores estruturados de Professional Training/Cults Core, Tokens/Hedgespun Item/Entitlement/Hollow/Shared Bastion/Stable Trod/Workshop/Warded Dreams de Changeling e Faction Member/Nameless Order/Mystery Cult Influence de Mage disparam por ID. O formulário genérico do Cult é reutilizado por Mage através de sua própria composição, sem incluir IDs de Mage no mecanismo Core.
+- O callback de apresentação inline recebe o ID, não o nome; os conjuntos paralelos de nomes foram substituídos pela consulta dos metadados existentes. O comportamento de Multilingual continua com duas linhas por ponto, expresso no metadado `rowsPerDot`, sem exceção por nome no renderizador.
+- A supressão do editor de Familiar na criação saiu do picker compartilhado e foi para a composição Mage. A consulta dos pontos de Masque (Style) em criação/XP/ficha é única e usa os IDs de Masque e Style; homônimos ou estilos ambíguos não concedem campos adicionais.
+- O despacho especializado de Mage retorna `null` antes de criar um elemento React quando o Merit não lhe pertence. Isso permite que os formulários genéricos e Core continuem aparecendo; anteriormente o elemento do componente especializado interceptava a renderização mesmo quando esse componente não mostrava nada.
+- Painéis de XP de Mage/Vampire/Werewolf e escolhas de Totem passam `definitionId` para o editor em seleções novas. As configurações salvas, textos autorais, XP e histórico permanecem inalterados; o ID resolvido de uma seleção antiga é enriquecido somente na cópia usada na renderização.
+- **Prioridade 0 ainda aberta:** concessões e valores de benefícios de Cult por nomes, requisitos/contextos específicos nos helpers compartilhados, seleção/apresentação de detalhes de Merits nas fichas, integração restante em Changeling/Werewolf, qualificadores de homônimos e a parte mecânica de X03. Não houve tradução nova de catálogo neste lote; a meta permanece ativa.
+- Verificação: testes novos de identidade **5/5**, suíte dirigida **63/63**, suíte completa **464/464**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

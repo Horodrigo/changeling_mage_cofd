@@ -1,16 +1,25 @@
 "use client";
 
 import { Choice } from "@/app/builder/common-controls";
-import type { StructuredMeritEditorProps } from "@/app/builder/merit-configuration-editor";
+import { CultMeritEditor, type StructuredMeritEditorProps } from "@/app/builder/merit-configuration-editor";
+import type { MeritDefinition } from "@/lib/merits";
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { useLanguage } from "@/lib/i18n";
 import type { MageFactionDefinition } from "./factions";
 import { findMageFaction, mageFactionAvailable } from "./factions";
 
-/** Mage-only editor for the fixed benefits of a Nameless Order. */
-export function MageStructuredMeritEditor(props: StructuredMeritEditorProps & { factions?: readonly MageFactionDefinition[]; order?: string }) {
+type MageStructuredMeritEditorProps = StructuredMeritEditorProps & { factions?: readonly MageFactionDefinition[]; order?: string; catalog: readonly MeritDefinition[] };
+
+export function renderMageStructuredMeritEditor(props: MageStructuredMeritEditorProps) {
+  const id = props.merit.definitionId;
+  if (id !== "mta-2ed:mystery-cult-influence" && id !== "mta-tome:faction-member" && !(id === "core-2ed:mystery-cult-initiation" && props.merit.grantedBy === "Nameless Order")) return null;
+  return <MageStructuredMeritEditor {...props} />;
+}
+
+function MageStructuredMeritEditor(props: MageStructuredMeritEditorProps) {
   const { t } = useLanguage();
-  if (props.merit.name === "Faction Member") {
+  if (props.merit.definitionId === "mta-2ed:mystery-cult-influence") return <CultMeritEditor {...props} />;
+  if (props.merit.definitionId === "mta-tome:faction-member") {
     const available = (props.factions ?? []).filter((faction) => mageFactionAvailable(faction, props.order));
     const selected = findMageFaction(props.factions ?? [], props.configuration.factionId);
     const set = (key: string, value: string) => props.onChange({ ...props.configuration, [key]: value });
@@ -23,7 +32,7 @@ export function MageStructuredMeritEditor(props: StructuredMeritEditorProps & { 
       </div>
     </details>;
   }
-  if (props.merit.name !== "Mystery Cult Initiation" || props.merit.grantedBy !== "Nameless Order") return null;
+  if (props.merit.definitionId !== "core-2ed:mystery-cult-initiation" || props.merit.grantedBy !== "Nameless Order") return null;
   const selected = Array.isArray(props.configuration.level_2_rote_skills)
     ? props.configuration.level_2_rote_skills.map(String)
     : [];

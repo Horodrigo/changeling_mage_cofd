@@ -16,14 +16,15 @@ import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
 import { findMageAffiliation, hasStandardCreationOrderBenefits, mageAffiliationsFor } from "./orders";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
-import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
+import { MAGE_MERIT_CONFIGURATIONS, masqueConfigurationDots } from "./merit-configurations";
 import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
 import { builderText } from "@/app/character-builder-messages";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
-import { MageStructuredMeritEditor } from "./merit-configuration-editor";
+import { renderMageStructuredMeritEditor } from "./merit-configuration-editor";
 import { mageMeritPrerequisitesMet } from "./merits";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import type { MageFactionDefinition } from "./factions";
 
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
@@ -274,9 +275,9 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           powerLabel={t("ui.gnosisAtCreation")}
           power={props.gnosis}
           setPower={props.setGnosis}
-          isInlineConfiguration={(name) => isCommonInlineMeritConfiguration(name) || Boolean(MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === name && item.fields.length === 1 && item.fields[0].kind === "text"))}
+          isInlineConfiguration={(id) => isCommonInlineMeritConfiguration(id) || Boolean(MAGE_MERIT_CONFIGURATIONS.find((item) => item.id === id && item.fields.length === 1 && item.fields[0].kind === "text"))}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => (
-            <MeritConfigurationEditor merit={merit} ownedMerits={ownedMerits} configurationDots={merit.name === "Masque" ? ownedMerits.find((item) => item.name === "Masque (Style)")?.dots : undefined} inline={inline} onChange={onChange} catalog={props.meritCatalog} definitions={MAGE_BUILDER_MERIT_CONFIGURATIONS} renderStructured={(editorProps) => <MageStructuredMeritEditor {...editorProps} factions={props.factionCatalog} order={props.order} />} />
+            resolveMeritDefinition(merit, props.meritCatalog)?.id === "mta-2ed:familiar" ? null : <MeritConfigurationEditor merit={merit} ownedMerits={ownedMerits} configurationDots={masqueConfigurationDots(merit, ownedMerits, props.meritCatalog)} inline={inline} onChange={onChange} catalog={props.meritCatalog} definitions={MAGE_BUILDER_MERIT_CONFIGURATIONS} renderStructured={(editorProps) => renderMageStructuredMeritEditor({...editorProps, catalog: props.meritCatalog, factions: props.factionCatalog, order: props.order})} />
           )}
         />
       </div>

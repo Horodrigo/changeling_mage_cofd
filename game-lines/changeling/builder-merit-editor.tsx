@@ -36,14 +36,14 @@ export function renderChangelingStructuredMeritEditor(
   tokenCatalog: readonly TokenDefinition[],
 ): ReactNode {
   const { merit } = props;
-  if (merit.name === "Token") return <TokenMeritEditor {...props} catalog={tokenCatalog} />;
-  if (merit.name === "Hedgespun Item") return <HedgespunItemEditor {...props} />;
-  if (merit.name === "Entitlement") return <EntitlementMeritEditor configuration={props.configuration} onChange={props.onChange} compact={props.compact} entitlementCatalog={entitlementCatalog} />;
-  if (merit.name === "Hollow") return <HollowEditor {...props} />;
-  if (merit.name === "Shared Bastion") return <SharedBastionEditor {...props} />;
-  if (merit.name === "Stable Trod") return <StableTrodEditor configuration={props.configuration} onChange={props.onChange} compact={props.compact} />;
-  if (merit.name === "Workshop") return <WorkshopEditor {...props} />;
-  if (merit.name === "Warded Dreams" || merit.name === "Dream Bastion") return <DreamBastionEditor {...props} />;
+  if (merit.definitionId === "ctl-2ed:token") return <TokenMeritEditor {...props} catalog={tokenCatalog} />;
+  if (merit.definitionId === "ctl-2ed:hedgespun-item") return <HedgespunItemEditor {...props} />;
+  if (merit.definitionId === "oak-ash-thorn:entitlement") return <EntitlementMeritEditor configuration={props.configuration} onChange={props.onChange} compact={props.compact} entitlementCatalog={entitlementCatalog} />;
+  if (merit.definitionId === "ctl-2ed:hollow") return <HollowEditor {...props} />;
+  if (merit.definitionId === "ctl-hedge:shared-bastion") return <SharedBastionEditor {...props} />;
+  if (merit.definitionId === "ctl-2ed:stable-trod") return <StableTrodEditor configuration={props.configuration} onChange={props.onChange} compact={props.compact} />;
+  if (merit.definitionId === "ctl-2ed:workshop") return <WorkshopEditor {...props} />;
+  if (merit.definitionId === "ctl-2ed:warded-dreams") return <DreamBastionEditor {...props} />;
   return null;
 }
 

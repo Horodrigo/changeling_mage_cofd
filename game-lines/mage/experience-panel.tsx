@@ -19,7 +19,8 @@ import { withMagePowerRating } from "@/game-lines/mage/builder-power-progression
 import { refundMageAdvancement, type MageAdvancementUndo } from "./experience-refunds";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/game-lines/mage/sheet-merit-configurations";
-import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";
+import { renderMageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";
+import { masqueConfigurationDots } from "./merit-configurations";
 import { findLegacy, LEGACIES, normalizeLegacyState } from "@/game-lines/mage/legacies";
 import { mergeLegacyHomebrews } from "./legacy-homebrews";
 import { refundLegacyExperiencePurchase } from "./legacy-progression";
@@ -543,7 +544,7 @@ export function MageExperiencePanel({
                 />
               </label>
             )}
-            {purchase==="merit"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={selectedMerit.name === "Masque" ? character.merits.find((item) => item.name === "Masque (Style)")?.dots : undefined} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=><MageStructuredMeritEditor {...props} factions={factionCatalog} order={String(character.line_data.order??"")}/>} onChange={setMageMeritConfiguration}/>}
+            {purchase==="merit"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{definitionId:selectedMerit.id,name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={masqueConfigurationDots({definitionId:selectedMerit.id,name:selectedMerit.name}, character.merits, meritCatalog)} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=>renderMageStructuredMeritEditor({...props,catalog:meritCatalog,factions:factionCatalog,order:String(character.line_data.order??"")})} onChange={setMageMeritConfiguration}/>}
             {purchase === "specialty" && <>
               <label>{t("ui.skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
               <label>{t("ui.specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>

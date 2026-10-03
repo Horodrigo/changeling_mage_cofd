@@ -44,7 +44,7 @@ export function MeritConfigurationEditor({
 }: {
   merit: MeritSelection;
   onChange: (value: MeritConfiguration) => void;
-  catalog: MeritDefinition[];
+  catalog: readonly MeritDefinition[];
   compact?: boolean;
   inline?: boolean;
   configurationDots?: number;
@@ -54,21 +54,20 @@ export function MeritConfigurationEditor({
   definitions: readonly MeritConfigDefinition[];
 }) {
   const { locale, t } = useLanguage();
-  const definition = definitions.find((item) => item.name === merit.name);
-  if (!definition) return null;
+  const canonical = resolveMeritDefinition(merit, catalog);
+  if (!canonical) return null;
   const configuration = normalizeMeritConfiguration(merit.configuration);
-  const effectiveDots = configurationDots ?? merit.dots;
-  const visible = definition.fields.filter((field) => (field.minDots ?? 0) <= effectiveDots);
-  const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
-  const label = (value: string) => value.startsWith("ui.") ? t(value as MessageKey) : systemTerm(value, locale);
-  const structuredProps = { merit, configuration, onChange, compact };
+  const structuredProps = { merit: {...merit, definitionId: canonical.id}, configuration, onChange, compact };
   const injected = renderStructured?.(structuredProps);
   if (injected != null) return injected;
-  if (STRUCTURED_MERITS.has(merit.name)) {
-    if (merit.name === "Professional Training") return <ProfessionalTrainingEditor {...structuredProps} />;
-    if (merit.name === "Mystery Cult Initiation" || merit.name === "Mystery Cult Influence") return <CultMeritEditor {...structuredProps} catalog={catalog} />;
-    return null;
-  }
+  const definition = definitions.find(item => item.id === canonical.id);
+  if (!definition) return null;
+  const effectiveDots = configurationDots ?? merit.dots;
+  const visible = definition.fields.filter(field => (field.minDots ?? 0) <= effectiveDots);
+  const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
+  const label = (value: string) => value.startsWith("ui.") ? t(value as MessageKey) : systemTerm(value, locale);
+  if (canonical.id === "core-2ed:professional-training") return <ProfessionalTrainingEditor {...structuredProps} />;
+  if (canonical.id === "core-2ed:mystery-cult-initiation" || canonical.id === "core-2ed:mystery-cult-influence") return <CultMeritEditor {...structuredProps} catalog={catalog} />;
   if (!visible.length) return null;
   const fields = <div>{visible.map((field) => {
     const value = configuration[field.key];
@@ -87,7 +86,7 @@ export function MeritConfigurationEditor({
       const rowCount = field.fixedRows ?? effectiveDots * (field.rowsPerDot ?? 1);
       const fieldLabel = label(field.label);
       const values = Array.isArray(value) ? value : [String(value ?? "")];
-      const count = merit.name === "Multilingual" ? merit.dots * 2 : rowCount;
+      const count = rowCount;
       return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({ length: count }, (_, index) => <Input key={index} value={values[index] ?? ""} placeholder={`${field.placeholder ? label(field.placeholder) : fieldLabel} ${index + 1}`} onChange={(event) => { const next = Array.from({ length: count }, (_, item) => values[item] ?? ""); next[index] = event.target.value; set(field.key, next); }} />)}</div></fieldset>;
     }
     if (field.kind === "select") return <label key={field.key}>{label(field.label)}<Select value={String(value ?? "")} onValueChange={(next) => set(field.key, next)}><SelectTrigger><SelectValue placeholder={field.placeholder ? label(field.placeholder) : t("ui.selectAnOption")} /></SelectTrigger><SelectContent>{(field.options ?? []).map((option) => <SelectItem key={option.value} value={option.value}>{label(option.label)}</SelectItem>)}</SelectContent></Select></label>;
@@ -115,7 +114,7 @@ function ProfessionalTrainingEditor({ merit, configuration, onChange, compact }:
   </div></details>;
 }
 
-function CultMeritEditor({ merit, configuration, onChange, compact, catalog }: StructuredMeritEditorProps & { catalog: MeritDefinition[] }) {
+export function CultMeritEditor({ merit, configuration, onChange, compact, catalog }: StructuredMeritEditorProps & { catalog: readonly MeritDefinition[] }) {
   const { t } = useLanguage();
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const value = (key: string) => String(configuration[key] ?? "");
@@ -126,7 +125,7 @@ function CultMeritEditor({ merit, configuration, onChange, compact, catalog }: S
   </div></details>;
 }
 
-function CultLevelEditor({ level, configuration, set, catalog }: { level: number; configuration: MeritConfiguration; set: (key: string, value: string | string[]) => void; catalog: MeritDefinition[] }) {
+function CultLevelEditor({ level, configuration, set, catalog }: { level: number; configuration: MeritConfiguration; set: (key: string, value: string | string[]) => void; catalog: readonly MeritDefinition[] }) {
   const { t } = useLanguage();
   const prefix = `level_${level}`;
   const value = (suffix: string) => String(configuration[`${prefix}_${suffix}`] ?? "");
@@ -142,21 +141,20 @@ function CultLevelEditor({ level, configuration, set, catalog }: { level: number
 }
 
 const CONFIG_SKILLS = Object.values(SKILLS).flat();
-const STRUCTURED_MERITS = new Set(["Professional Training", "Mystery Cult Initiation", "Mystery Cult Influence"]);
 
 function SkillChoice({ label, value, setValue, options = CONFIG_SKILLS }: { label: string; value: string; setValue: (value: string) => void; options?: string[] }) {
   const { locale, t } = useLanguage();
   return <Choice label={label} value={value || "__none"} setValue={(next) => setValue(next === "__none" ? "" : next)} options={["__none", ...options]} optionLabels={{ __none: t("ui.selectASkill"), ...Object.fromEntries(options.map((skill) => [skill, systemTerm(skill, locale)])) }} />;
 }
 
-function MeritGrantPicker({ value, max, catalog, onChange }: { value: string[]; max: number; catalog: MeritDefinition[]; onChange: (value: string[]) => void }) {
+function MeritGrantPicker({ value, max, catalog, onChange }: { value: string[]; max: number; catalog: readonly MeritDefinition[]; onChange: (value: string[]) => void }) {
   const { t } = useLanguage();
   const rows = value.length ? value : ["|1"];
   const used = rows.reduce((sum, row) => sum + (Number(row.split("|")[1]) || 1), 0);
   return <div className="merit-grant-picker">{rows.map((row, index) => { const [name, rawDots] = row.split("|"); const dots = Math.max(1, Number(rawDots) || 1); const available = Math.max(1, max - (used - dots)); return <div className="structured-choice-row" key={index}><MeritGrantSelectionDialog name={name} dots={dots} available={available} catalog={catalog} onSelect={(nextName, nextDots) => { const next = [...rows]; next[index] = `${nextName}|${nextDots}`; onChange(next); }} />{rows.length > 1 && <Button type="button" variant="ghost" size="icon" onClick={() => onChange(rows.filter((_, item) => item !== index))}><Trash2 /></Button>}</div>; })}{used < max && <Button type="button" size="sm" variant="outline" onClick={() => onChange([...rows, "|1"])}><Plus />{t("ui.addAnotherMerit")}</Button>}</div>;
 }
 
-function MeritGrantSelectionDialog({ name, dots, available, catalog, onSelect }: { name: string; dots: number; available: number; catalog: MeritDefinition[]; onSelect: (name: string, dots: number) => void }) {
+function MeritGrantSelectionDialog({ name, dots, available, catalog, onSelect }: { name: string; dots: number; available: number; catalog: readonly MeritDefinition[]; onSelect: (name: string, dots: number) => void }) {
   const { locale, t } = useLanguage();
   const [search, setSearch] = useState("");
   const normalized = search.trim().toLocaleLowerCase(locale);

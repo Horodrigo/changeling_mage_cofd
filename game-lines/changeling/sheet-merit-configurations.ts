@@ -22,8 +22,8 @@ export const CHANGELING_SHEET_MERIT_CONFIGURATIONS = [
 export const findMeritConfiguration = (name: string) =>
   CHANGELING_SHEET_MERIT_CONFIGURATIONS.find((item) => item.name === name);
 
-export const isInlineMeritConfiguration = (name: string) =>
-  isCommonInlineMeritConfiguration(name) || isChangelingInlineMeritConfiguration(name);
+export const isInlineMeritConfiguration = (id: string) =>
+  isCommonInlineMeritConfiguration(id) || isChangelingInlineMeritConfiguration(id);
 
 function courtDisplayName(catalog: readonly CourtDefinition[], value: unknown, locale: Locale) {
   const raw = String(value ?? "");

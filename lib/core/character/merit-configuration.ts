@@ -15,6 +15,7 @@ export type MeritConfigField = {
   options?: Array<{ value: string; label: string }>;
 };
 export type MeritConfigDefinition = {
+  id: string;
   name: string;
   fields: MeritConfigField[];
   grants?: boolean;

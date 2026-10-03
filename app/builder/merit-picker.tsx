@@ -60,7 +60,7 @@ export function MeritPicker({
   power?: number;
   setPower?: (value: number) => void;
   renderConfiguration: (props: MeritConfigurationRenderProps) => ReactNode;
-  isInlineConfiguration: (name: string) => boolean;
+  isInlineConfiguration: (id: string) => boolean;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
   categoryFor?: (definition: MeritDefinition) => string;
 }) {
@@ -108,7 +108,7 @@ export function MeritPicker({
             ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={t("ui.removefc5df2", { p1: definition ? meritName(definition) : selection.name })} description={t("ui.theMeritAndLinkedBenefitsWillBeRemoved")} action={t("ui.remove7d41cc")} onConfirm={remove} />
             : <Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`} onClick={remove}><Trash2 /></Button>)}
         </div>
-        {selection.name !== "Familiar" && renderConfiguration({ merit: selection, ownedMerits: context.merits ?? [], inline: isInlineConfiguration(selection.name), onChange: (configuration) => { const next = [...merits]; next[index] = { ...selection, configuration }; setMerits(next); } })}
+        {renderConfiguration({ merit: selection, ownedMerits: context.merits ?? [], inline: Boolean(definition && isInlineConfiguration(definition.id)), onChange: (configuration) => { const next = [...merits]; next[index] = { ...selection, configuration }; setMerits(next); } })}
       </div>;
     })}</div>
     {experienceMerits.length > 0 && <>

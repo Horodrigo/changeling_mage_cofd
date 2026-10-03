@@ -13,10 +13,10 @@ export const MAGE_SHEET_MERIT_CONFIGURATIONS = [
 export const findMeritConfiguration = (name: string) =>
   MAGE_SHEET_MERIT_CONFIGURATIONS.find((item) => item.name === name);
 
-export const isInlineMeritConfiguration = (name: string) =>
-  isCommonInlineMeritConfiguration(name) || Boolean(
+export const isInlineMeritConfiguration = (id: string) =>
+  isCommonInlineMeritConfiguration(id) || Boolean(
     MAGE_MERIT_CONFIGURATIONS.find((item) =>
-      item.name === name && item.fields.length === 1 && item.fields[0].kind === "text"),
+      item.id === id && item.fields.length === 1 && item.fields[0].kind === "text"),
   );
 
 export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US") {
