@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test, { after } from "node:test";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
+import { readFile } from "node:fs/promises";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({
@@ -24,8 +25,9 @@ const {
   normalizeLegacyState,
 } = await vite.ssrLoadModule("/game-lines/mage/legacies.ts");
 
-const { refundMageAdvancement } = await vite.ssrLoadModule("/game-lines/mage/experience-refunds.ts");
-const { discardLegacyAdvancements } = await vite.ssrLoadModule("/game-lines/mage/legacy-progression.ts");
+const { refundMageAdvancement, legacyUndoForEntry } = await vite.ssrLoadModule("/game-lines/mage/experience-refunds.ts");
+const { discardLegacyAdvancements, refundLegacyExperiencePurchase } = await vite.ssrLoadModule("/game-lines/mage/legacy-progression.ts");
+const { mageExperienceLabel } = await vite.ssrLoadModule("/game-lines/mage/experience-presentation.ts");
 
 const mage = (overrides = {}) => ({
   skills: { Investigation: 2, Academics: 2 },
@@ -166,6 +168,7 @@ test("Legacy refund restores removed Praxis and only its transaction delta", () 
 
   refundMageAdvancement(sheet, {
     kind: "legacyAttainment",
+    definitionId: "the-eleventh-question",
     rank: 2,
     removedPraxis: { key: "praxes", index: 0, item: praxis },
     creditedRegular: 0,
@@ -195,8 +198,8 @@ test("discarding a Legacy refunds only Legacy purchases and preserves unrelated 
     current_state: {
       mage_experience_available: 2,
       arcane_experience_available: 1,
-      mage_experience_spent: 1,
-      arcane_experience_spent: 1,
+      mage_experience_spent: 2,
+      arcane_experience_spent: 0,
       arcane_experience_beats: 2,
       mage_experience_history: [
         {
@@ -208,9 +211,10 @@ test("discarding a Legacy refunds only Legacy purchases and preserves unrelated 
         {
           id: "legacy",
           regular: 1,
-          arcane: 1,
+          arcane: 0,
           undo: {
             kind: "legacyInitiation",
+            definitionId: "the-eleventh-question",
             previousState: undefined,
             removedPraxis: { key: "praxes", index: 0, item: praxis },
             creditedRegular: 0,
@@ -227,10 +231,122 @@ test("discarding a Legacy refunds only Legacy purchases and preserves unrelated 
   assert.equal(discarded.line_data.legacy_state, undefined);
   assert.deepEqual(discarded.line_data.praxes, [praxis]);
   assert.equal(discarded.current_state.mage_experience_available, 3);
-  assert.equal(discarded.current_state.arcane_experience_available, 2);
+  assert.equal(discarded.current_state.arcane_experience_available, 1);
+  assert.equal(discarded.current_state.mage_experience_spent, 1);
   assert.equal(discarded.current_state.arcane_experience_beats, 0);
   assert.deepEqual(
     discarded.current_state.mage_experience_history.map((item) => item.id),
     ["other"],
   );
+});
+
+const legacyId = "the-eleventh-question";
+const legacySelection = { definitionId: legacyId, joined: false, attainmentRanks: [], initiationMethod: "" };
+const legacyReceipt = (kind = "legacyInitiation", overrides = {}) => ({
+  id: kind, regular: 1, arcane: 0, createdAt: "2026-10-02T00:00:00Z",
+  undo: { kind, definitionId: legacyId, ...(kind === "legacyInitiation" ? { previousState: legacySelection } : { rank: 2 }), creditedRegular: 0, creditedArcane: 0, creditedArcaneBeats: 0 },
+  ...overrides,
+});
+const purchasedLegacy = (ranks = [1]) => ({
+  attributes: {}, skills: {}, merits: [], specializations: [],
+  line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: ranks }, praxes: [] },
+  current_state: { mage_experience_available: 2, arcane_experience_available: 2, mage_experience_spent: 2, arcane_experience_spent: 2, arcane_experience_beats: 2, mage_experience_history: [legacyReceipt()] },
+});
+
+test("Legacy receipts display their definition ID and Attainment rank in both locales, never the selected namesake", () => {
+  const sheet = purchasedLegacy();
+  const namesake = { ...ELEVENTH_QUESTION, id: "other:legacy", name: ELEVENTH_QUESTION.name, attainments: [{ rank: 2, name: "Authored Attainment" }] };
+  const catalog = [ELEVENTH_QUESTION, namesake];
+  for (const [locale, initiation] of [["en-US", "Initiation"], ["pt-BR", "Iniciação"]]) {
+    const entry = legacyReceipt();
+    const before = structuredClone(entry);
+    assert.equal(mageExperienceLabel(entry, sheet, [], [], locale, catalog), `${ELEVENTH_QUESTION.name} · ${initiation}`);
+    assert.deepEqual(entry, before);
+    const attainment = legacyReceipt("legacyAttainment"); attainment.undo.definitionId = namesake.id;
+    assert.equal(mageExperienceLabel(attainment, sheet, [], [], locale, catalog), `${namesake.name} · 2. Authored Attainment`);
+    const unavailable = legacyReceipt(); unavailable.undo.definitionId = "unavailable:legacy";
+    assert.equal(mageExperienceLabel(unavailable, sheet, [], [], locale, catalog), `unavailable:legacy · ${initiation}`);
+    const opaque = { description: "Texto autoral preservado", regular: 1, arcane: 0, undo: { kind: "legacyAttainment", rank: 2 } };
+    assert.equal(mageExperienceLabel(opaque, sheet, [], [], locale, catalog), opaque.description);
+  }
+});
+
+test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
+  const initiation = legacyReceipt(); delete initiation.undo.definitionId;
+  const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
+  delete attainment.undo.definitionId;
+  for (const entry of [initiation, attainment]) {
+    const before = structuredClone(entry);
+    assert.equal(legacyUndoForEntry(entry).definitionId, legacyId);
+    assert.deepEqual(entry, before);
+  }
+  const opaque = { description: `${ELEVENTH_QUESTION.name} · Initiation`, undo: { kind: "legacyInitiation", previousState: undefined } };
+  assert.equal(legacyUndoForEntry(opaque), undefined);
+  const invalidExplicit = { ...initiation, undo: { ...initiation.undo, definitionId: "" } };
+  assert.equal(legacyUndoForEntry(invalidExplicit), undefined);
+  for (const state of [undefined, { ...legacySelection, joined: true }, { ...legacySelection, joined: true, attainmentRanks: [2] }, { ...legacySelection, joined: true, attainmentRanks: [1, 3] }]) {
+    assert.equal(legacyUndoForEntry({ ...attainment, before: { line_data: { legacy_state: state } } }), undefined);
+  }
+});
+
+test("Legacy refunds validate exact receipt, cost, later Attainments, and credited resources atomically", () => {
+  for (const invalidate of [
+    sheet => { sheet.current_state.mage_experience_history[0].undo.definitionId = "other:legacy"; },
+    sheet => { sheet.line_data.legacy_state.attainmentRanks = [1, 2]; },
+    sheet => { sheet.current_state.mage_experience_history[0].regular = 2; },
+    sheet => { sheet.current_state.mage_experience_history[0].arcane = -1; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.previousState = { ...legacySelection, definitionId: "other:legacy" }; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.creditedArcane = 1; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.creditedArcaneBeats = 3; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.creditedArcaneBeats = 2; sheet.current_state.arcane_experience_beats = 1; },
+    sheet => { sheet.current_state.mage_experience_spent = 0; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.removedPraxis = { key: "wrong", index: 0, item: { id: "converted" } }; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.removedPraxis = { key: "praxes", index: -1, item: { id: "converted" } }; },
+    sheet => { sheet.current_state.mage_experience_history[0].undo.removedPraxis = { key: "praxes", index: 0, item: null }; },
+    sheet => { sheet.current_state.mage_experience_history.push(structuredClone(sheet.current_state.mage_experience_history[0])); },
+    sheet => { const praxis = { id: "converted" }; sheet.current_state.mage_experience_history[0].undo.removedPraxis = { key: "praxes", index: 0, item: praxis }; sheet.line_data.praxes = [praxis]; },
+  ]) {
+    const sheet = purchasedLegacy(); invalidate(sheet);
+    const before = structuredClone(sheet);
+    assert.equal(refundLegacyExperiencePurchase(sheet, "legacyInitiation"), false);
+    assert.deepEqual(sheet, before);
+  }
+  const sheet = purchasedLegacy();
+  const encoded = JSON.parse(JSON.stringify(sheet));
+  assert.equal(refundLegacyExperiencePurchase(encoded, "legacyInitiation"), true);
+  assert.deepEqual(encoded.line_data.legacy_state, legacySelection);
+  assert.equal(encoded.current_state.mage_experience_available, 3);
+  assert.equal(encoded.current_state.mage_experience_spent, 1);
+  const once = structuredClone(encoded);
+  assert.equal(refundLegacyExperiencePurchase(encoded, "legacyInitiation"), false);
+  assert.deepEqual(encoded, once);
+});
+
+test("discard reverses the selected Legacy chain only, preserving unrelated receipts and failing atomically", () => {
+  const sheet = purchasedLegacy([1, 2]);
+  const praxis = { id: "converted", name: "Authored spell" };
+  const initiation = legacyReceipt(); initiation.undo.removedPraxis = { key: "praxes", index: 0, item: praxis }; initiation.undo.creditedArcane = 1; initiation.undo.creditedArcaneBeats = 2;
+  const other = legacyReceipt("legacyAttainment", { id: "other" }); other.undo.definitionId = "other:legacy";
+  sheet.current_state.mage_experience_history = [legacyReceipt("legacyAttainment", { regular: 0, arcane: 1 }), initiation, other];
+  const before = structuredClone(sheet);
+  const discarded = discardLegacyAdvancements(sheet);
+  assert.deepEqual(sheet, before);
+  assert.equal(discarded.line_data.legacy_state, undefined);
+  assert.deepEqual(discarded.line_data.praxes, [praxis]);
+  assert.deepEqual(discarded.current_state.mage_experience_history, [other]);
+  assert.deepEqual([discarded.current_state.mage_experience_available, discarded.current_state.arcane_experience_available, discarded.current_state.mage_experience_spent, discarded.current_state.arcane_experience_spent, discarded.current_state.arcane_experience_beats], [3, 2, 1, 1, 0]);
+  const invalid = structuredClone(sheet); invalid.current_state.arcane_experience_beats = 0;
+  const invalidBefore = structuredClone(invalid);
+  assert.equal(discardLegacyAdvancements(invalid), null);
+  assert.deepEqual(invalid, invalidBefore);
+  const opaque = structuredClone(sheet); delete opaque.current_state.mage_experience_history[0].undo.definitionId;
+  assert.equal(discardLegacyAdvancements(opaque), null);
+});
+
+test("Legacy UI stores semantic identities and deltas, not translated descriptions or whole-sheet snapshots", async () => {
+  const source = await readFile(new URL("../game-lines/mage/legacy-page.tsx", import.meta.url), "utf8");
+  assert.match(source, /kind:"legacyInitiation",definitionId:definition\.id/);
+  assert.match(source, /kind:"legacyAttainment",definitionId:definition\.id,rank:attainment\.rank/);
+  assert.match(source, /undo:structuredClone\(finalUndo\)/);
+  assert.doesNotMatch(source, /description:string|before:\{|savePurchase\(next,`/);
 });

@@ -125,7 +125,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const [fetishes, setFetishes] = useState(() => fetishSelections(initial?.line_data.fetishes));
   const [totem, setTotem] = useState(() => totemSelection(initial?.line_data.totem));
   const preferences = useHomebrewPreferences();
-  const meritCatalog = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, initial?.merits.map(item => item.name));
+  const meritCatalog = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, initial?.merits);
   const common = useCommonBuilderState(initial, player, { experienceHistoryKey: HISTORY_KEY, purchasedSpecialties: werewolfExperienceSpecialties(initial),
     adjustSkills: values => withoutAuspiceSkillGrant(values, recordedAuspiceSkillGrant(initial?.line_data.auspice_skill_grant)), grantedMeritSources: WEREWOLF_CREATION_GRANT_SOURCES });
   const [freeGrants] = useState(() => withWerewolfCreationGrants([], initial?.merits ?? [], meritCatalog));

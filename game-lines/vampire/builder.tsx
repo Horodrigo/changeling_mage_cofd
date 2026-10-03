@@ -157,7 +157,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),
-  ], customMerits, homebrewPreferences, initial?.merits.map((item) => item.name)).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
+  ], customMerits, homebrewPreferences, initial?.merits).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "vampire_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),

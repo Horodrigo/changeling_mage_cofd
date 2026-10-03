@@ -88,7 +88,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
   const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), homebrewPreferences);
   const disciplineNames = powers.disciplines.map((item) => item.name);
-  const meritCatalog = activeMeritCatalog([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")],customMerits,homebrewPreferences,character.merits.map((item)=>item.name));
+  const meritCatalog = activeMeritCatalog([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")],customMerits,homebrewPreferences,character.merits);
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
   const amount = amountDraft ?? String(available);
   const [purchase, setPurchase] = useState<PurchaseType>("attribute");

@@ -303,6 +303,17 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - **Prioridade 0 ainda aberta:** identidade/presentação das compras de Legacy; concessões/configurações e elegibilidade por nomes; integração restante em Changeling/Werewolf; qualificadores de homônimos e ownership descrito em X03. Nenhuma tradução nova de catálogo neste lote.
 - Verificação: suíte completa **448/448**; `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote; os valores CSS foram preservados, e testes de arquitetura protegem a localização dos seletores exclusivos.
 
+## Progresso — prioridade 0, quarto lote
+
+- Mage: compras de Legacy gravam `definitionId`; Attainments gravam também o rank. Foram removidas as novas descrições persistidas e as cópias integrais da ficha. O undo conserva apenas o estado anterior necessário, a Praxis convertida e os créditos, em cópia independente.
+- O histórico apresenta a iniciação no idioma atual e resolve o Legacy/Attainment pelo ID/rank, inclusive Homebrew. Definição indisponível mostra seu ID; não é substituída pelo Legacy atualmente selecionado nem por um homônimo. Os nomes e efeitos dos catálogos de Legacy ainda aguardam a etapa Mage da tradução.
+- Um bridge documentado para recibos schema-2 existentes lê somente o ID explicitamente registrado na seleção anterior à iniciação ou no estado anterior ao Attainment, verificando o estado de progressão. Não usa a descrição da compra, não migra o histórico e não inventa identidade para registros opacos.
+- Estorno/discard de Legacy usam a mesma função para validar o recibo exato, custo, saldo/recursos creditados e delta. Recusam outro Legacy, Attainments posteriores, restituição duplicada de Praxis e custos/identidades incoerentes. Créditos já gastos/convertidos não são perdoados por clamp: se não estiverem disponíveis, o estorno é recusado. Discard falho é atômico; históricos de outros Legacies e compras não relacionadas são preservados.
+- Merits: `activeMeritCatalog` preserva definições desativadas de Homebrew pelos IDs das seleções, não por um conjunto de nomes. O fallback schema-2 permanece restrito a nome canônico/origem inequívocos. Um ID indisponível ou um nome traduzido não ativa um homônimo. Errata continuam vinculadas ao ID canônico original.
+- Todos os Builders/painéis de XP foram atualizados para essa fronteira. Changeling/Mage incluem também os Merits existentes comprados só com XP, antes excluídos pelo uso exclusivo das escolhas de criação nessa preservação.
+- **Prioridade 0 ainda aberta:** identidade em concessões/configurações e elegibilidade por nomes; integração restante em Changeling/Werewolf; qualificadores de Conditions/Tilts e de Merits mecanicamente distintos; ownership descrito em X03. Nenhuma tradução nova de catálogo neste lote.
+- Verificação: suíte dirigida **48/48** e suíte completa **455/455**, incluindo EN/PT, recibos opacos, dependências, falhas atômicas, homônimos desativados e errata. `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

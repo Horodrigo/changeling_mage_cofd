@@ -20,7 +20,9 @@ import { refundMageAdvancement, type MageAdvancementUndo } from "./experience-re
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { MAGE_SHEET_MERIT_CONFIGURATIONS, normalizeMeritConfiguration, synchronizeMeritGrants } from "@/game-lines/mage/sheet-merit-configurations";
 import { MageStructuredMeritEditor } from "@/game-lines/mage/merit-configuration-editor";
-import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
+import { findLegacy, LEGACIES, normalizeLegacyState } from "@/game-lines/mage/legacies";
+import { mergeLegacyHomebrews } from "./legacy-homebrews";
+import { refundLegacyExperiencePurchase } from "./legacy-progression";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { createRandomId } from "@/lib/random-id";
@@ -113,10 +115,11 @@ export function MageExperiencePanel({
   const [regularSplit, setRegularSplit] = useState(0),
     [feedback, setFeedback] = useState("");
   const customMerits=useMeritHomebrews("MtA",true),customSpells=useSpellHomebrews(),customLegacies=useLegacyHomebrews(),homebrewPreferences=useHomebrewPreferences();
+  const legacyCatalog=mergeLegacyHomebrews(LEGACIES,customLegacies);
   const meritCatalog = activeMeritCatalog([
       ...catalogs.get<MeritDefinition[]>("core-merits"),
       ...catalogs.get<MeritDefinition[]>("mage-merits"),
-    ],customMerits,homebrewPreferences,character.merits.map((item)=>item.name)),
+    ],customMerits,homebrewPreferences,character.merits),
     merits = meritCatalog.filter(item=>meritPrerequisitesMet(item,meritContextForSheet(character, meritCatalog, ["awakened"]))),
     spells = activeSpellCatalog(catalogs.get<SpellDefinition[]>("mage-spells"),customSpells,homebrewPreferences),
     factionCatalog = catalogs.get<MageFactionDefinition[]>("mage-factions");
@@ -410,11 +413,17 @@ export function MageExperiencePanel({
   function revert(entry: MageXpEntry) {
     if (!history.some(item => item.id === entry.id)) return;
     const undo = entry.undo;
+    if (undo?.kind === "legacyInitiation" || undo?.kind === "legacyAttainment") {
+      const next = structuredClone(character);
+      if (!refundLegacyExperiencePurchase(next, entry.id)) return setFeedback(t("ui.legacyRefundUnavailable"));
+      recalculateCoreDerived(next);
+      updateSheet(synchronizeMeritGrants(next));
+      return;
+    }
     if (!undo || !Number.isInteger(entry.regular) || entry.regular < 0 || !Number.isInteger(entry.arcane) || entry.arcane < 0 || (undo.kind === "merit" && entry.regular + entry.arcane !== undo.dots) || (undo.kind === "wisdom" && entry.regular + entry.arcane === 0)) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
     const next = structuredClone(character);
     if (!refundMageAdvancement(next, undo)) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
-    const legacyUndo = undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment" ? undo : undefined;
-    const creditedArcane = legacyUndo?.creditedArcane ?? (undo.kind==="arcana"?undo.creditedArcane??0:0);
+    const creditedArcane = undo.kind==="arcana"?undo.creditedArcane??0:0;
     const refundedRegular = Number(entry.regular) || 0;
     const refundedArcane = Number(entry.arcane) || 0;
     const currentRegular = Number(next.current_state.mage_experience_available) || 0;
@@ -423,11 +432,10 @@ export function MageExperiencePanel({
     const currentSpentArcane = Number(next.current_state.arcane_experience_spent) || 0;
     next.current_state = {
       ...next.current_state,
-      mage_experience_available: currentRegular + refundedRegular - Number(legacyUndo?.creditedRegular ?? 0),
+      mage_experience_available: currentRegular + refundedRegular,
       arcane_experience_available: currentArcane + refundedArcane - Number(creditedArcane),
       mage_experience_spent: Math.max(0, currentSpentRegular - refundedRegular),
       arcane_experience_spent: Math.max(0, currentSpentArcane - refundedArcane),
-      arcane_experience_beats: Math.max(0, Number(next.current_state.arcane_experience_beats??0) - (legacyUndo?.creditedArcaneBeats ?? 0)),
       mage_experience_history: history.filter((item) => item.id !== entry.id),
     };
     recalculateCoreDerived(next);
@@ -435,7 +443,7 @@ export function MageExperiencePanel({
   }
   const historyPanel = <details className="experience-history">
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
-    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{mageExperienceLabel(entry, character, meritCatalog, spells, locale)}</span><strong>{entry.regular} {t("ui.xp")} + {entry.arcane} {t("ui.arcaneXP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
+    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{mageExperienceLabel(entry, character, meritCatalog, spells, locale, legacyCatalog)}</span><strong>{entry.regular} {t("ui.xp")} + {entry.arcane} {t("ui.arcaneXP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel mage-experience">

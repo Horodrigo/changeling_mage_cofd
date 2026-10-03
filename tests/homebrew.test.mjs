@@ -36,7 +36,7 @@ test("player-created Merits preserve exact ratings and enforce only structured p
   assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 2 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item] }), true);
   assert.equal(meritPrerequisitesMet(item, { gameLine: "CtL", attributes: { Presence: 1 }, merits: [{ name: "Striking Looks", dots: 1 }], meritCatalog: [item] }), false);
   assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }).length, 0);
-  assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }, [item.name]).length, 1);
+  assert.equal(activeMeritCatalog([], [item], { disabledIds: [item.id] }, [{ name: item.name, definitionId: item.id }]).length, 1);
 
   const base = { ...item, id: "official", name: "Official", translatedName: "Official", sourceId: "official", source: "Official" };
   const errata = { ...item, id: "homebrew:merit:errata", name: "Official — Errata", translatedName: "Official — Errata", sourceId: "h-vtr-test", source: "Test", defaultDisabled: true, errataFor: "official", description: "Revised.", descriptionEn: "Revised." };

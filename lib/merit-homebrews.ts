@@ -3,6 +3,8 @@ import { HOMEBREW_EVENT, homebrewContentActive, type HomebrewPreferences } from 
 import type { Requirement } from "./merit-requirements";
 import type { GameLine, MeritDefinition, MeritLevel } from "./merits";
 import { createRandomId } from "./random-id";
+import type { MeritSelection } from "./core/character/character-types";
+import { resolveMeritDefinition } from "./merit-identity";
 
 export type MeritHomebrewLine = "Core" | GameLine;
 
@@ -71,12 +73,16 @@ export function mergeMeritHomebrews(catalog: readonly MeritDefinition[], custom:
   return [...catalog, ...custom.filter((item) => !ids.has(item.id))];
 }
 
-export function activeMeritCatalog(catalog: readonly MeritDefinition[], custom: readonly MeritDefinition[], preferences: HomebrewPreferences, ownedNames: readonly string[] = []) {
-  const owned = new Set(ownedNames);
+export function activeMeritCatalog(catalog: readonly MeritDefinition[], custom: readonly MeritDefinition[], preferences: HomebrewPreferences, selections: readonly Pick<MeritSelection, "name" | "definitionId" | "sourceId">[] = []) {
   const merged = mergeMeritHomebrews(catalog, custom);
+  const definitions = merged.filter(item => !item.errataFor);
+  const owned = new Set(selections.flatMap(selection => {
+    const definition = resolveMeritDefinition(selection, definitions);
+    return definition ? [definition.id] : [];
+  }));
   const errata = new Map(merged.filter((item) => item.errataFor && homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)).map((item) => [item.errataFor!, item]));
   const normal = merged
-    .filter((item) => !item.catalogOnly && !item.errataFor && (owned.has(item.name) || homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)))
+    .filter((item) => !item.catalogOnly && !item.errataFor && (owned.has(item.id) || homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)))
     .map((item) => {
       const replacement = errata.get(item.id);
       return replacement ? { ...item, ...replacement, id: item.id, name: item.name, translatedName: item.translatedName, presentationPt: replacement.presentationPt, category: replacement.replacementCategory ?? item.category } : item;

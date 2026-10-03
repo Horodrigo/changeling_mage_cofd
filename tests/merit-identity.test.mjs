@@ -59,6 +59,36 @@ test("active errata retains the purchased canonical definition ID", () => {
   assert.equal(resolveMeritDefinition({ definitionId: resources.id, name: "Resources" }, active).description, "Replacement effect");
 });
 
+test("disabled Merit catalogs preserve the owned ID, never every namesake or an unavailable ID fallback", () => {
+  const disabledBase = { ...resources, sourceId: "homebrew:base-merits" };
+  const disabledNamesake = { ...namesake, sourceId: "homebrew:other-merits" };
+  const definitions = [disabledBase, disabledNamesake];
+  const preferences = { disabledIds: definitions.map(item => item.id) };
+  const owned = { definitionId: resources.id, instanceId: "xp", name: "Stale translated name", sourceId: "stale", dots: 2, creationDots: 0, experienceDots: 2 };
+  const before = structuredClone(owned);
+  assert.deepEqual(activeMeritCatalog(definitions, [], preferences, [owned]).map(item => item.id), [resources.id]);
+  assert.deepEqual(owned, before);
+  assert.deepEqual(activeMeritCatalog(definitions, [], preferences, [{ ...owned, definitionId: "unavailable", name: "Resources" }]), []);
+  assert.deepEqual(activeMeritCatalog(definitions, [], preferences, [{ name: "Resources" }]), []);
+  assert.deepEqual(activeMeritCatalog(definitions, [], preferences, [{ name: "Resources", sourceId: disabledNamesake.sourceId }]).map(item => item.id), [namesake.id]);
+  assert.deepEqual(activeMeritCatalog([disabledBase], [], preferences, [{ name: "Resources" }]).map(item => item.id), [resources.id]);
+  assert.deepEqual(activeMeritCatalog([disabledBase], [], preferences, [{ name: resources.translatedName }]), []);
+});
+
+test("owned definition retention and active errata preserve canonical IDs and presentation without mutating catalogs", () => {
+  const errata = { ...resources, id: "homebrew:errata:resources", errataFor: resources.id, name: "Resources", description: "Replacement mechanics" };
+  const definitions = [{ ...resources, sourceId: "homebrew:base-merits" }, { ...namesake, sourceId: "homebrew:other-merits" }, errata];
+  const before = structuredClone(definitions);
+  const preferences = { disabledIds: [resources.id, namesake.id] };
+  const owned = [{ definitionId: resources.id, name: "Stale name" }];
+  const active = activeMeritCatalog(definitions, [], preferences, owned);
+  assert.equal(active.length, 1);
+  assert.equal(active[0].id, resources.id);
+  assert.equal(active[0].description, errata.description);
+  assert.equal(active[0].name, resources.name);
+  assert.deepEqual(definitions, before);
+});
+
 test("definition and instance IDs survive schema-2 import/export and creation reediting", () => {
   const sheet = blankPrintCharacter("CofD");
   sheet.merits = [{ definitionId: resources.id, instanceId: "owned", name: resources.name, sourceId: resources.sourceId, dots: 4, creationDots: 2, experienceDots: 2, configuration: { custom: "Authored text" } }];

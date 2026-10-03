@@ -155,7 +155,7 @@ export function ExperiencePanel({
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<MeritDefinition[]>("core-merits"),
     ...catalogs.get<MeritDefinition[]>("changeling-merits"),
-  ],customMerits,homebrewPreferences,character.merits.map((item)=>item.name));
+  ],customMerits,homebrewPreferences,character.merits);
   const merits = meritCatalog;
   const ownedContracts = [
     ...objectList(character.line_data.contracts),

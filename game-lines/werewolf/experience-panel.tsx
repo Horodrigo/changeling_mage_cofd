@@ -64,7 +64,7 @@ export function WerewolfExperiencePanel({ character, updateSheet, updateState, c
   const { locale, t } = useLanguage(), preferences = useHomebrewPreferences();
   const reference = catalogs.get<WerewolfReferenceCatalog>("werewolf-reference"), gifts = catalogs.get<WerewolfGiftCatalog>("werewolf-gifts");
   const rites = catalogs.get<WerewolfRiteCatalog>("werewolf-rites");
-  const merits = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, character.merits.map(item => item.name));
+  const merits = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, character.merits);
   const context = { reference, gifts, rites, merits, totem: catalogs.get<WerewolfTotemCatalog>("werewolf-totem") }, contexts = werewolfAdvancementContexts(character, context), state = character.current_state;
   const available = werewolfExperienceValue(state.experience_available), spent = werewolfExperienceValue(state.experience_spent);
   const total = Math.max(available + spent, werewolfExperienceValue(state.experience_total)), beats = Math.min(5, werewolfExperienceValue(state.beats)), history = werewolfExperienceHistory(character);

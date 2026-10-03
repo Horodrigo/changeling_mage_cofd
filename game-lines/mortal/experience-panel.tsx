@@ -50,7 +50,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
   const beats = Math.max(0, Math.min(5, Math.trunc(Number(state.beats ?? 0))));
   const history = Array.isArray(state.mortal_experience_history) ? state.mortal_experience_history as HistoryEntry[] : [];
   const homebrewPreferences = useHomebrewPreferences();
-  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, character.merits.map((item) => item.name));
+  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, character.merits);
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
   const [purchase, setPurchase] = useState<PurchaseType>("attribute");
   const [target, setTarget] = useState("");

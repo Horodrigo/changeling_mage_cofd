@@ -128,7 +128,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("mage-merits"),
-  ], customMerits, homebrewPreferences, common.merits.map((item) => item.name)).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
+  ], customMerits, homebrewPreferences, [...(initial?.merits ?? []), ...common.merits]).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
 
   const [path, setPath] = useState(String(initial?.line_data.path ?? ""));
   const [order, setOrder] = useState(String(initial?.line_data.order || "Orderless"));

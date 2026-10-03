@@ -66,7 +66,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     purchasedSpecialties: experienceSpecialties(initial),
   });
   const homebrewPreferences = useHomebrewPreferences();
-  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, initial?.merits.map((item) => item.name));
+  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, initial?.merits);
   const [age, setAge] = useState(String(initial?.line_data.age ?? ""));
   const [faction, setFaction] = useState(String(initial?.line_data.faction ?? ""));
   const [groupName, setGroupName] = useState(String(initial?.line_data.group_name ?? ""));

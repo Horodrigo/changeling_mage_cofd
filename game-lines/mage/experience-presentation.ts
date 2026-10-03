@@ -1,6 +1,8 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MageAdvancementUndo } from "./experience-refunds";
+import { legacyUndoForEntry } from "./experience-refunds";
+import type { LegacyDefinition } from "./legacies";
 import { translate, type Locale, type MessageKey } from "@/lib/i18n";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
@@ -14,7 +16,7 @@ export type MageExperienceEntry = {
   description?: string; before?: unknown; previousLostWillpower?: number;
 };
 
-export function mageExperienceLabel(entry: MageExperienceEntry, character: CharacterSheet, merits: readonly MeritDefinition[], spells: readonly SpellDefinition[], locale: Locale) {
+export function mageExperienceLabel(entry: MageExperienceEntry, character: CharacterSheet, merits: readonly MeritDefinition[], spells: readonly SpellDefinition[], locale: Locale, legacies: readonly LegacyDefinition[] = []) {
   const undo = entry.undo;
   const fallback = entry.description ?? translate(locale, "ui.experience");
   if (!undo) return fallback;
@@ -38,10 +40,18 @@ export function mageExperienceLabel(entry: MageExperienceEntry, character: Chara
     ? `${translate(locale, "ui.actOfHubris")}: ${entry.act}`
     : `${translate(locale, "ui.wisdom")} −1`;
   if (undo.kind === "willpowerLoss") return translate(locale, "ui.permanentLossOfOneWillpowerDot");
+  if (undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment") {
+    const identified = legacyUndoForEntry(entry);
+    if (!identified) return fallback;
+    const legacy = legacies.find(item => item.id === identified.definitionId);
+    const name = legacy?.name ?? identified.definitionId;
+    return identified.kind === "legacyInitiation"
+      ? `${name} · ${translate(locale, "ui.initiation")}`
+      : `${name} · ${identified.rank}. ${legacy?.attainments.find(item => item.rank === identified.rank)?.name ?? translate(locale, "ui.attainment")}`;
+  }
   const keys: Partial<Record<MageAdvancementUndo["kind"], MessageKey>> = { gnosis: "ui.gnosis", wisdom: "ui.wisdom", willpower: "ui.willpower" };
   const key = keys[undo.kind];
   if (key) return rated(translate(locale, key), "amount" in undo ? undo.amount : 1);
-  // Legacy transactions are handled by the owning Legacy surface until its
-  // identity/presentation batch; unknown or authored historical text stays intact.
+  // Unknown or authored historical text stays intact.
   return fallback;
 }

@@ -110,7 +110,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   const meritCatalog = activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("changeling-merits"),
-  ], customMerits, homebrewPreferences, common.merits.map((item) => item.name))
+  ], customMerits, homebrewPreferences, [...(initial?.merits ?? []), ...common.merits])
     .sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
 
   const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? ""));
