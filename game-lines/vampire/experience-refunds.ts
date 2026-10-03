@@ -59,7 +59,7 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
       sorcery[undo.idsKey] = withoutMany(sorcery[undo.idsKey], undo.ids ?? []);
     } else sorcery[undo.key] = without(sorcery[undo.key], undo.id);
     sheet.line_data.blood_sorcery = sorcery;
-  } else {
+  } else if (undo.kind === "coil" || undo.kind === "scale") {
     const ordo = sheet.line_data.ordo_dracul && typeof sheet.line_data.ordo_dracul === "object" && !Array.isArray(sheet.line_data.ordo_dracul)
       ? { ...sheet.line_data.ordo_dracul as Record<string, unknown> }
       : {};
@@ -69,6 +69,6 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
       ordo.coil_ratings = ratings;
     } else if (undo.kind === "scale") ordo.scale_ids = without(ordo.scale_ids, undo.id);
     sheet.line_data.ordo_dracul = ordo;
-  }
+  } else return false;
   return true;
 }

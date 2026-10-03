@@ -37,6 +37,7 @@ import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCo
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewContentActive } from "./homebrew-catalog";
 import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
 import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
@@ -265,7 +266,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (affiliationDots > 5) add("merits", t("ui.vampireAffiliationDotsExceeded"));
     if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", t("ui.coilOfZirnitra"));
     for (const merit of common.merits) {
-      const definition = meritCatalog.find((item) => item.name === merit.name);
+      const definition = resolveMeritDefinition(merit, meritCatalog);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${meritProblemMessage(message, definition, locale)}`);
       if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
@@ -365,8 +366,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const bloodSorcery = covenantPower.bloodSorcery;
     const ordoDracul = { ...initialOrdo, mystery_id: covenantId === "ordo-dracul" ? mysteryId : initialOrdo.mystery_id ?? "", coil_ratings: covenantPower.coilRatings };
     const finalMerits = mergeCreationMerits(source?.merits, common.merits.map((merit) => {
-        const definition = meritCatalog.find((item) => item.name === merit.name);
-        return { ...merit, sourceId: definition?.sourceId, source: definition?.source, configuration: normalizeMeritConfiguration(merit.configuration) };
+        const definition = resolveMeritDefinition(merit, meritCatalog);
+        return { ...merit, ...(definition ? { definitionId: definition.id } : {}), sourceId: definition?.sourceId ?? merit.sourceId, source: definition?.source ?? merit.source, configuration: normalizeMeritConfiguration(merit.configuration) };
       }));
     const finalTouchstones = reconcileTouchstones(source, finalMerits, touchstoneSlot, touchstone);
     const completed: CharacterSheet = {

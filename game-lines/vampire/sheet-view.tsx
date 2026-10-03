@@ -59,6 +59,7 @@ import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui"
 import { useLanguage, type Locale } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import type {
@@ -487,7 +488,7 @@ function HumanityTrack({
             ...history,
             {
               id: createRandomId(),
-              label: `${t("ui.detachment")}: ${t(result === "dramatic-failure" ? "ui.dramaticFailure" : "ui.failure")}`,
+              result,
               cost: 0,
               createdAt: new Date().toISOString(),
               undo: { kind: "humanityLoss", amount: 1 },
@@ -1371,7 +1372,7 @@ export function VampireCharacterPaper({
         ),
       ) ||
         Boolean(
-          merits.find((definition) => definition.name === item.name)?.levels
+          resolveMeritDefinition(item, merits)?.levels
             ?.length,
         ) ||
         item.name === "Mystery Cult Initiation"),
@@ -2190,11 +2191,11 @@ function VampireExpandedMeritList({
   return (
     <div className="expanded-merit-list">
       {merits.map((merit, index) => {
-        const definition = catalog.find((item) => item.name === merit.name);
+        const definition = resolveMeritDefinition(merit, catalog);
         const configDefinition = VAMPIRE_MERIT_CONFIGURATIONS.find(
           (item) => item.name === merit.name,
         );
-        const displayName = localized(definition, locale) || merit.name;
+        const displayName = definition ? meritPresentation(definition, locale).name : merit.name;
         const detail = meritConfigurationTitle(merit.configuration);
         const configured = configuredDefinitionLines(
           configDefinition,
@@ -2297,8 +2298,8 @@ function MeritList({
   return (
     <div className="sheet-merits single-column">
       {visible.map((merit, index) => {
-        const definition = catalog.find((item) => item.name === merit.name);
-        const displayName = localized(definition, locale) || merit.name;
+        const definition = resolveMeritDefinition(merit, catalog);
+        const displayName = definition ? meritPresentation(definition, locale).name : merit.name;
         const configuredName = meritConfigurationTitle(merit.configuration);
         const presented = definition && meritPresentation(definition, locale);
         const tooltip = presented

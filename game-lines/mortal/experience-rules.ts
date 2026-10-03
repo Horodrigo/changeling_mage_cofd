@@ -16,8 +16,8 @@ export function refundMortalAdvancement(sheet: CharacterSheet, undo: MortalAdvan
     if (index >= 0) sheet.specializations.splice(index, 1);
   } else if (undo.kind === "merit") {
     return refundMeritDots(sheet, undo.name, undo.dots, undo.instanceId, undo.index, undo.definitionId);
-  } else {
+  } else if (undo.kind === "integrity") {
     sheet.line_data.integrity = subtractDots(sheet.line_data.integrity, undo.amount);
-  }
+  } else return false;
   return true;
 }

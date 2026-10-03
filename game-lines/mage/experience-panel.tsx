@@ -27,6 +27,9 @@ import { createRandomId } from "@/lib/random-id";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { meritMatchesDefinition } from "@/lib/merit-identity";
+import { meritPresentation } from "@/lib/merit-presentation";
+import { mageExperienceLabel, type MageExperienceEntry } from "./experience-presentation";
 import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
@@ -46,23 +49,7 @@ const PURCHASE_LABEL_KEYS = {
 const groupedTraitOptions=(groups:Record<string,readonly string[]>)=>Object.entries(groups).flatMap(([group,values])=>values.map(value=>({value,label:value,group})));
 const ATTRIBUTE_OPTIONS=groupedTraitOptions(ATTRIBUTES);
 const SKILL_OPTIONS=groupedTraitOptions(SKILLS);
-type MageXpSnapshot = {
-  attributes: Record<string, number>;
-  skills: Record<string, number>;
-  merits: CharacterSheet["merits"];
-  specializations: CharacterSheet["specializations"];
-  line_data: Record<string, unknown>;
-};
-type MageXpEntry = {
-  undo?: MageAdvancementUndo;
-  id: string;
-  description: string;
-  regular: number;
-  arcane: number;
-  createdAt: string;
-  before: MageXpSnapshot;
-  previousLostWillpower?: number;
-};
+type MageXpEntry = MageExperienceEntry;
 const MAGE_PURCHASE_GROUPS = [
   { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
   { group: "supernatural", purchases: ["gnosis", "arcanum"] },
@@ -168,16 +155,10 @@ export function MageExperiencePanel({
               ? availableSpells.map((item) => item.id)
               : [purchase];
   const chosenTarget=target||options[0]||"";
-  const selectedMerit = merits.find((item) => item.id === target) ?? merits[0],
-    ownedMerit =
-      mageMeritInstance >= 0 &&
-      character.merits[mageMeritInstance]?.name === selectedMerit?.name
-        ? character.merits[mageMeritInstance]
-        : selectedMerit && !isRepeatableDefinition(selectedMerit)
-          ? character.merits.find(
-              (item) => item.name === selectedMerit.name && !item.grantedBy,
-            )
-          : undefined,
+  const selectedMerit = merits.find((item) => item.id === target),
+    ownedMerit = mageMeritInstance >= 0
+        ? selectedMerit && character.merits[mageMeritInstance] && meritMatchesDefinition(character.merits[mageMeritInstance], selectedMerit, meritCatalog) ? character.merits[mageMeritInstance] : undefined
+        : undefined,
     meritRatings = selectedMerit
       ? meritRatingsFor(selectedMerit,(ownedMerit?.dots??0)+1).filter(
           (dot) => dot > (ownedMerit?.dots ?? 0),
@@ -213,7 +194,7 @@ export function MageExperiencePanel({
   }
   else if (purchase === "merit") {
     cost = nextMerit ? nextMerit - (ownedMerit?.dots ?? 0) : 0;
-    label = (locale==="en-US"?selectedMerit?.name:selectedMerit?.translatedName) ?? t("ui.merit");
+    label = selectedMerit ? meritPresentation(selectedMerit, locale).name : t("ui.merit");
   } else if (purchase === "arcanum") {
     const current = Number(arcana[chosenTarget] ?? 0);
     const ruling = path?.ruling.includes(chosenTarget as never)||activeLegacy.joined&&activeLegacyDefinition?.rulingArcanum===systemTerm(chosenTarget,"en-US");
@@ -274,7 +255,9 @@ export function MageExperiencePanel({
   function buy() {
     if(purchase==="merit"){
       if(!selectedMerit||!nextMerit)return setFeedback(t("ui.selectAnAvailableMerit"));
-      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>item.name===selectedMerit.name&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
+      if (mageMeritInstance >= 0 && (!ownedMerit || (ownedMerit.grantedBy && !canAdvanceGrantedMerit("MtA", ownedMerit)))) return setFeedback(t("ui.selectAnAvailableMerit"));
+      if (mageMeritInstance < 0 && !isRepeatableDefinition(selectedMerit) && character.merits.some(item => meritMatchesDefinition(item, selectedMerit, meritCatalog))) return setFeedback(t("ui.selectAnAvailableMerit"));
+      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>meritMatchesDefinition(item,selectedMerit,meritCatalog)&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
       const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContextForSheet(character, meritCatalog, ["awakened"]),factionCatalog,character.line_data.affiliation_id);
       if(problems.length)return setFeedback(problems.map(problem=>meritProblemMessage(problem,selectedMerit,locale)).join(" "));
     }
@@ -298,29 +281,18 @@ export function MageExperiencePanel({
       return;
     }
     const next = structuredClone(character);
-    const before = {
-      attributes: structuredClone(next.attributes),
-      skills: structuredClone(next.skills),
-      merits: structuredClone(next.merits),
-      specializations: structuredClone(next.specializations),
-      line_data: structuredClone(next.line_data),
-    };
+    let purchasedMeritIndex = -1;
     if (purchase === "attribute")
       next.attributes[chosenTarget] = intendedRating;
     else if (purchase === "skill")
       next.skills[chosenTarget] = intendedRating;
     else if (purchase === "merit" && selectedMerit && nextMerit) {
-      const found =
-        mageMeritInstance >= 0
-          ? next.merits[mageMeritInstance]
-          : !isRepeatableDefinition(selectedMerit)
-            ? next.merits.find(
-                (item) => item.name === selectedMerit.name && !item.grantedBy,
-              )
-            : undefined;
-      if (found && found.name === selectedMerit.name) {addExperienceMeritDots(found, nextMerit-found.dots);found.configuration=normalizeMeritConfiguration(mageMeritConfiguration);}
-      else
+      purchasedMeritIndex = mageMeritInstance >= 0 ? mageMeritInstance : ownedMerit ? character.merits.indexOf(ownedMerit) : -1;
+      const found = next.merits[purchasedMeritIndex];
+      if (found && meritMatchesDefinition(found, selectedMerit, meritCatalog)) {addExperienceMeritDots(found, nextMerit-found.dots);found.configuration=normalizeMeritConfiguration(mageMeritConfiguration);}
+      else {
         next.merits.push({
+          definitionId: selectedMerit.id,
           name: selectedMerit.name,
           dots: nextMerit,
           creationDots: 0,
@@ -330,6 +302,10 @@ export function MageExperiencePanel({
           configuration: normalizeMeritConfiguration(mageMeritConfiguration),
           instanceId:createRandomId(),
         });
+        purchasedMeritIndex = next.merits.length - 1;
+      }
+      next.merits[purchasedMeritIndex].definitionId = selectedMerit.id;
+      next.merits[purchasedMeritIndex].instanceId ??= createRandomId();
     } else if (purchase === "specialty")
       next.specializations.push({ skill: mageSpecialtySkill, name: mageSpecialtyName.trim() });
     else if (purchase === "arcanum")
@@ -376,11 +352,11 @@ export function MageExperiencePanel({
     else if (purchase === "gnosis") undo = { kind: "gnosis", amount: ratingAmount };
     else if (purchase === "wisdom") undo = { kind: "wisdom", amount: ratingAmount };
     else if (purchase === "merit") {
-      const index = next.merits.findIndex((item, i) => item.name === selectedMerit.name && item.dots !== before.merits[i]?.dots);
-      if (index < 0) return setFeedback(t("ui.thePurchasedMeritCouldNotBeIdentified"));
+      const index = purchasedMeritIndex;
+      if (index < 0 || !selectedMerit) return setFeedback(t("ui.thePurchasedMeritCouldNotBeIdentified"));
       const instanceId = next.merits[index].instanceId ?? createRandomId();
       next.merits[index].instanceId = instanceId;
-      undo = { kind: "merit", name: selectedMerit.name, dots: cost, instanceId };
+      undo = { kind: "merit", definitionId: selectedMerit.id, name: selectedMerit.name, dots: cost, instanceId };
     } else if (purchase === "specialty") undo = { kind: "specialty", skill: mageSpecialtySkill, name: mageSpecialtyName.trim() };
     else if (purchase === "rote" || purchase === "praxis")
       undo = { kind: "spell", key: purchase === "rote" ? "learned_rotes" : "learned_praxes", id: selectedSpell.id };
@@ -388,11 +364,10 @@ export function MageExperiencePanel({
     const entry: MageXpEntry = {
       undo,
       id: createRandomId(),
-      description: label,
+      ...(ratedMaximum ? { rating: intendedRating } : purchase === "merit" ? { rating: nextMerit } : {}),
       regular: splitRegular,
       arcane: splitArcane,
       createdAt: new Date().toISOString(),
-      before,
     };
     const regularBalance = experiencePurchaseBalances(regular, spentRegular, Number(next.current_state.mage_experience_total ?? 0), splitRegular, builderMode);
     const arcaneBalance = experiencePurchaseBalances(arcane, spentArcane, Number(next.current_state.arcane_experience_total ?? 0), splitArcane, builderMode);
@@ -416,21 +391,12 @@ export function MageExperiencePanel({
       return;
     }
     const next = structuredClone(character);
-    const before = {
-      attributes: structuredClone(next.attributes),
-      skills: structuredClone(next.skills),
-      merits: structuredClone(next.merits),
-      specializations: structuredClone(next.specializations),
-      line_data: structuredClone(next.line_data),
-    };
     const entry: MageXpEntry = {
       id: createRandomId(),
-      description: t("ui.permanentLossOfOneWillpowerDot"),
       undo: { kind: "willpowerLoss" },
       regular: 0,
       arcane: 0,
       createdAt: new Date().toISOString(),
-      before,
       previousLostWillpower: lostWillpower,
     };
     next.current_state = {
@@ -443,34 +409,8 @@ export function MageExperiencePanel({
   }
   function revert(entry: MageXpEntry) {
     if (!history.some(item => item.id === entry.id)) return;
-    let undo = entry.undo;
-    // Hubris losses were briefly stored as ordinary Wisdom purchases; treat
-    // those legacy entries as losses so reverting them restores Wisdom.
-    if (undo?.kind === "wisdom" && /Ato de Hubris|Act of Hubris/i.test(entry.description))
-      undo = { kind: "wisdomLoss" };
-    // Older purchases lack a delta record; recognize only unambiguous targets.
-    if (!undo) {
-      if (/^Gnose \d+$/.test(entry.description)) undo = { kind: "gnosis" };
-      else if (/^Sabedoria \d+$/.test(entry.description)) undo = { kind: "wisdom" };
-      else if (Object.values(ATTRIBUTES).flat().some(name => name === entry.description))
-        undo = { kind: "trait", group: "attributes", name: entry.description };
-      else if (Object.values(SKILLS).flat().some(name => name === entry.description) && entry.regular + entry.arcane === 2)
-        undo = { kind: "trait", group: "skills", name: entry.description };
-      else if (entry.previousLostWillpower !== undefined) undo = { kind: "willpowerLoss" };
-      else if (entry.description === "Recuperar ponto perdido de Força de Vontade") undo = { kind: "willpower" };
-      else {
-        const arcanaName = Object.keys(arcana).find(name => entry.description.startsWith(`${name} `) && /^\d+$/.test(entry.description.slice(name.length + 1)));
-        const merit = merits.find(item => item.translatedName === entry.description);
-        const spell = spells.find(item => item.name === entry.description);
-        if (arcanaName) undo = { kind: "arcana", name: arcanaName };
-        else if (merit && character.merits.filter(item => item.name === merit.name && !item.grantedBy).length === 1)
-          undo = { kind: "merit", name: merit.name, dots: entry.regular + entry.arcane };
-        else if (spell) undo = { kind: "spell", id: spell.id, key: entry.arcane > 0 ? "learned_praxes" : "learned_rotes" };
-        else if (Object.values(SKILLS).flat().some(name => name === entry.description))
-          undo = { kind: "specialty", skill: entry.description, name: t("ui.newSpecialty") };
-      }
-    }
-    if (!undo) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
+    const undo = entry.undo;
+    if (!undo || !Number.isInteger(entry.regular) || entry.regular < 0 || !Number.isInteger(entry.arcane) || entry.arcane < 0 || (undo.kind === "merit" && entry.regular + entry.arcane !== undo.dots) || (undo.kind === "wisdom" && entry.regular + entry.arcane === 0)) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
     const next = structuredClone(character);
     if (!refundMageAdvancement(next, undo)) return setFeedback(t("ui.thisOlderPurchaseDoesNotIdentifyTheAdvancement"));
     const legacyUndo = undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment" ? undo : undefined;
@@ -495,7 +435,7 @@ export function MageExperiencePanel({
   }
   const historyPanel = <details className="experience-history">
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
-    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{entry.regular} {t("ui.xp")} + {entry.arcane} {t("ui.arcaneXP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
+    <div>{history.length ? history.map((entry) => <p key={entry.id}><span>{mageExperienceLabel(entry, character, meritCatalog, spells, locale)}</span><strong>{entry.regular} {t("ui.xp")} + {entry.arcane} {t("ui.arcaneXP")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel mage-experience">

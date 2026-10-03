@@ -29,6 +29,7 @@ import { MageExperiencePanel } from "./experience-panel";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
@@ -210,7 +211,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     });
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     for (const merit of common.merits) {
-      const definition = meritCatalog.find((item) => item.name === merit.name);
+      const definition = resolveMeritDefinition(merit, meritCatalog);
       if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale)}`);
     }
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
@@ -254,8 +255,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
       ],
       merits: [
         ...mergeCreationMerits(source?.merits, common.merits.map((item) => {
-          const definition = meritCatalog.find((entry) => entry.name === item.name);
-          return { ...item, configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId, source: definition?.source };
+          const definition = resolveMeritDefinition(item, meritCatalog);
+          return { ...item, ...(definition ? { definitionId: definition.id } : {}), configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId ?? item.sourceId, source: definition?.source ?? item.source };
         })),
         ...(hasStandardCreationOrderBenefits(order) && !common.merits.some((item) => item.name === "High Speech") && !source?.merits.some((item) => item.name === "High Speech" && item.experienceDots)
           ? [{ name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]

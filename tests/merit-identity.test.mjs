@@ -22,6 +22,10 @@ const { activeMeritCatalog } = await vite.ssrLoadModule("/lib/merit-homebrews.ts
 const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const { MeritPicker } = await vite.ssrLoadModule("/app/builder/merit-picker.tsx");
 const { MortalExperiencePanel } = await vite.ssrLoadModule("/game-lines/mortal/experience-panel.tsx");
+const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
+const { mageExperienceLabel } = await vite.ssrLoadModule("/game-lines/mage/experience-presentation.ts");
+const { VampireExperiencePanel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
+const { MageExperiencePanel } = await vite.ssrLoadModule("/game-lines/mage/experience-panel.tsx");
 
 const core = JSON.parse(await readFile(new URL("../public/shared/data/merits.json", import.meta.url), "utf8"));
 const corePt = JSON.parse(await readFile(new URL("../public/shared/data/merits-pt.json", import.meta.url), "utf8"));
@@ -109,6 +113,10 @@ test("missing, ambiguous, mismatched and over-refunded Merit purchases leave the
   for (const refund of [refundMortalAdvancement, refundMageAdvancement, refundVampireAdvancement]) {
     assert.equal(refund(sheet, { kind: "merit", name: "Resources", dots: 1, instanceId: "missing" }), false);
     assert.deepEqual(sheet, before);
+    assert.equal(refund(sheet, { kind: "unknown", amount: 1 }), false);
+    assert.deepEqual(sheet, before);
+    assert.equal(refund(sheet, { kind: "merit", name: "Resources", dots: 3, instanceId: "owned" }), false);
+    assert.deepEqual(sheet, before);
   }
 });
 
@@ -167,4 +175,95 @@ test("Mortal XP surface renders semantic history in EN without exposing old PT l
   assert.match(markup, /Resources 2/);
   assert.doesNotMatch(markup, /Rótulo antigo|missing translation|undefined/);
   assert.deepEqual(sheet, before);
+});
+
+const power = id => ({ id, name: `English ${id}`, translatedName: `Português ${id}`, levels: [] });
+const powers = {
+  disciplines: [power("Vigor")], ritualDisciplines: [power("kimiya"), power("therion"), power("gilded-cage")],
+  devotions: [power("devotion")], lashes: [power("lash")], cruacRites: [power("rite")], thebanMiracles: [power("miracle")],
+  kimiyaFormulae: [power("formula")], therionSacrileges: [power("sacrilege")], gildedInvocations: [power("invocation")],
+  coils: [power("coil")], scales: [power("scale")], detournements: [power("detournement")],
+};
+const spell = { id: "spell", name: "Feitiço", originalName: "Spell", requirements: {}, roteSkills: [] };
+
+test("Vampire history resolves every purchase through canonical undo and current-locale presentation", () => {
+  const sheet = blankPrintCharacter("VtR");
+  const examples = [
+    [{ kind: "trait", group: "attributes", name: "Strength", amount: 2 }, "Strength 4", "Força 4", 4],
+    [{ kind: "specialty", skill: "Athletics", name: "Authored" }, "Athletics: Authored", "Atletismo: Authored"],
+    [{ kind: "merit", definitionId: resources.id, instanceId: "owned", name: "Old Name", dots: 2 }, "Resources 3", "Recursos 3", 3],
+    [{ kind: "discipline", name: "English Vigor", amount: 2 }, "English Vigor +2", "Português Vigor +2"],
+    [{ kind: "bloodPotency" }, "Blood Potency +1", "Potência de Sangue +1"],
+    [{ kind: "humanity" }, "Humanity +1", "Humanidade +1"],
+    [{ kind: "humanityLoss", amount: 1 }, "Humanity −1", "Humanidade −1"],
+    [{ kind: "willpower" }, "Willpower +1", "Força de Vontade +1"],
+    [{ kind: "cruac" }, "Crúac +1", "Crúac +1"],
+    [{ kind: "theban" }, "Theban Sorcery +1", "Feitiçaria Tebana +1"],
+    ...[["kimiya_rating", "kimiya"], ["therion_rating", "therion"], ["gilded_cage_rating", "gilded-cage"]].map(([ratingKey, id]) => [{ kind: "bloodSorcery", ratingKey }, `English ${id} +1`, `Português ${id} +1`]),
+    ...["devotion", "lash", "scale", "detournement"].map(kind => [{ kind, id: kind }, `English ${kind}`, `Português ${kind}`]),
+    [{ kind: "coil", id: "coil", amount: 2 }, "English coil +2", "Português coil +2"],
+    ...[["cruac_rite_ids", "rite"], ["theban_miracle_ids", "miracle"], ["kimiya_formula_ids", "formula"], ["therion_sacrilege_ids", "sacrilege"], ["gilded_invocation_ids", "invocation"]].map(([key, id]) => [{ kind: "ritual", key, id }, `English ${id}`, `Português ${id}`]),
+  ];
+  for (const [undo, en, pt, rating] of examples) {
+    const entry = { undo, rating, label: "Stale translated label" };
+    const before = structuredClone(entry);
+    assert.equal(vampireExperienceLabel(entry, sheet, catalog, powers, "en-US"), en);
+    assert.equal(vampireExperienceLabel(entry, sheet, catalog, powers, "pt-BR"), pt);
+    assert.deepEqual(entry, before);
+  }
+});
+
+test("Mage history localizes traits, Merits and spell identities while preserving authored text", () => {
+  const sheet = blankPrintCharacter("MtA");
+  const examples = [
+    [{ kind: "trait", group: "skills", name: "Athletics", amount: 2 }, "Athletics +2", "Atletismo +2"],
+    [{ kind: "merit", definitionId: resources.id, instanceId: "owned", name: "Old Name", dots: 2 }, "Resources 3", "Recursos 3", 3],
+    [{ kind: "arcana", name: "Fate", amount: 2 }, "Fate +2", "Destino +2"],
+    [{ kind: "gnosis" }, "Gnosis +1", "Gnose +1"],
+    [{ kind: "wisdom" }, "Wisdom +1", "Sabedoria +1"],
+    [{ kind: "wisdomLoss" }, "Wisdom −1", "Sabedoria −1"],
+    [{ kind: "willpower" }, "Willpower +1", "Força de Vontade +1"],
+    [{ kind: "spell", key: "learned_rotes", id: "spell" }, "Rote: Spell", "Rota: Feitiço"],
+    [{ kind: "spell", key: "learned_praxes", id: "spell" }, "Praxis: Spell", "Práxis: Feitiço"],
+    [{ kind: "specialty", skill: "Athletics", name: "Authored" }, "Athletics: Authored", "Atletismo: Authored"],
+  ];
+  for (const [undo, en, pt, rating] of examples) {
+    const entry = { undo, rating, description: "Stale translated label" };
+    const before = structuredClone(entry);
+    assert.equal(mageExperienceLabel(entry, sheet, catalog, [spell], "en-US"), en);
+    assert.equal(mageExperienceLabel(entry, sheet, catalog, [spell], "pt-BR"), pt);
+    assert.deepEqual(entry, before);
+  }
+  const act = { undo: { kind: "wisdomLoss" }, act: "Texto autoral" };
+  assert.equal(mageExperienceLabel(act, sheet, catalog, [], "pt-BR"), "Ato de Húbris: Texto autoral");
+});
+
+test("opaque or unavailable historical identities never get reparsed or replaced by namesakes", () => {
+  const sheet = blankPrintCharacter("VtR");
+  for (const render of [entry => vampireExperienceLabel(entry, sheet, catalog, powers, "pt-BR"), entry => mageExperienceLabel(entry, sheet, catalog, [], "pt-BR")]) {
+    assert.equal(render({ label: "Resources", description: "Resources" }), "Resources");
+    assert.equal(render({ label: "Unknown", description: "Unknown", undo: { kind: "unknown" } }), "Unknown");
+    assert.equal(render({ undo: { kind: "merit", definitionId: "unavailable", instanceId: "owned", name: "Resources", dots: 2 } }), "Resources +2");
+  }
+});
+
+test("Vampire and Mage XP surfaces render semantic history without mutation or cross-line catalogs", () => {
+  for (const [line, Component, historyKey] of [["VtR", VampireExperiencePanel, "vampire_experience_history"], ["MtA", MageExperiencePanel, "mage_experience_history"]]) {
+    const sheet = blankPrintCharacter(line);
+    sheet.current_state[historyKey] = [{ id: "purchase", cost: 2, regular: 2, arcane: 0, rating: 3, createdAt: "2026-10-02T00:00:00Z", label: "Rótulo antigo", description: "Rótulo antigo", undo: { kind: "merit", definitionId: resources.id, instanceId: "owned", name: "Old Name", dots: 2 } }];
+    const before = structuredClone(sheet);
+    const groups = [];
+    const catalogs = { get(group) {
+      groups.push(group);
+      if (group === "core-merits") return catalog;
+      if (group === "vampire-reference") return { clans: [], covenants: [], bloodlines: [] };
+      if (group === "vampire-powers") return powers;
+      return [];
+    } };
+    const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(Component, { character: sheet, catalogs, builderMode: true, updateSheet() { assert.fail("render must not update the sheet"); } })));
+    assert.match(markup, /Resources 3/);
+    assert.doesNotMatch(markup, /Rótulo antigo|missing translation|undefined/);
+    assert.ok(groups.every(group => group === "core-merits" || group.startsWith(line === "VtR" ? "vampire-" : "mage-")));
+    assert.deepEqual(sheet, before);
+  }
 });

@@ -25,12 +25,16 @@ import { vampireMeritEligible, vampireMeritFilterCategory } from "./merit-eligib
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
+import { meritMatchesDefinition } from "@/lib/merit-identity";
+import { meritPresentation } from "@/lib/merit-presentation";
+import { addExperienceMeritDots } from "@/lib/merit-progression";
+import { vampireExperienceLabel, type VampireExperienceEntry } from "./experience-presentation";
 import { activeVampirePowers, vampireHomebrewContentActive } from "./homebrew-catalog";
 import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
 import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "lash" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
-type HistoryEntry = { id: string; label: string; cost: number; createdAt: string; before?: CharacterSheet; undo?: VampireAdvancementUndo };
+type HistoryEntry = VampireExperienceEntry;
 
 const PURCHASE_GROUPS = [
   { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
@@ -149,7 +153,10 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const options = (() => {
     if (purchase === "attribute") return Object.values(ATTRIBUTES).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
     if (purchase === "skill" || purchase === "specialty") return Object.values(SKILLS).flat().map((name) => ({ value: name, label: systemTerm(name, locale) }));
-    if (purchase === "merit") return target ? [{ value: target, label: meritCatalog.find((item) => item.id === target)?.name ?? target }] : [];
+    if (purchase === "merit") {
+      const definition = meritCatalog.find((item) => item.id === target);
+      return target ? [{ value: target, label: definition ? meritPresentation(definition, locale).name : target }] : [];
+    }
     if (purchase === "discipline") return [
       ...disciplineNames.filter((name) => { const discipline = powers.disciplines.find((item) => item.name === name); return vampireDisciplineAvailable(name, bloodlineId, String(character.line_data.clan_id ?? ""), covenantIds) && (!discipline?.clanIds?.length || discipline.clanIds.includes(String(character.line_data.clan_id ?? ""))) && (!discipline?.covenantIds?.length || discipline.covenantIds.some((id) => covenantIds.includes(id))) && activePower(discipline ?? { id: name, source: "Vampire: The Requiem Second Edition" }); }).map((name) => ({ value: name, label: vampireDisciplineDisplayName(name, powers.disciplines, locale), localized: true })),
       ...powers.ritualDisciplines.filter((item) => activePower(item) && ritualDisciplineAvailable(item.id)).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true })),
@@ -176,7 +183,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const selectedRitualDiscipline = purchase === "discipline" ? powers.ritualDisciplines.find((item) => item.id === chosenOption) : undefined;
   const selectedCoil = purchase === "discipline" ? powers.coils.find((item) => item.id === chosenOption) : undefined;
   const selectedMerit = meritCatalog.find((item) => item.id === chosenOption);
-  const ownedMerit = meritInstance >= 0 ? character.merits[meritInstance] : undefined;
+  const ownedMerit = meritInstance >= 0 && selectedMerit && character.merits[meritInstance] && meritMatchesDefinition(character.merits[meritInstance], selectedMerit, meritCatalog) ? character.merits[meritInstance] : undefined;
   const nextMeritRating = selectedMerit ? meritDots : undefined;
   const humanityMaximum = Math.max(0, 10 - Number(bloodSorcery.cruac_rating ?? 0));
   const mysteryId = String(ordo.mystery_id ?? "");
@@ -272,7 +279,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     selectedMerit &&
     meritInstance < 0 &&
     !isRepeatableDefinition(selectedMerit) &&
-    character.merits.some((merit) => merit.name === selectedMerit.name),
+    character.merits.some((merit) => meritMatchesDefinition(merit, selectedMerit, meritCatalog)),
   );
   const configuredAffiliation = selectedMerit?.name === "Kindred Status" ? String(meritConfiguration.group ?? "") : selectedMerit?.name === "Mystery Cult Initiation" ? String(meritConfiguration.cult ?? "") : "";
   const configuredCovenant = reference.covenants.find((item) => [item.id, item.name, item.translatedName].some((name) => name.localeCompare(configuredAffiliation, undefined, { sensitivity: "base" }) === 0));
@@ -282,6 +289,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const meritUnavailable = purchase === "merit" && (
     !selectedMerit ||
     !nextMeritRating ||
+    (meritInstance >= 0 && (!ownedMerit || Boolean(ownedMerit.grantedBy))) ||
     duplicateNonRepeatableMerit ||
     (selectedMerit.name === "Kindred Status" && !String(meritConfiguration.group ?? "").trim()) ||
     projectedAffiliationDots > 5 ||
@@ -301,22 +309,17 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     if (unavailable || (!builderMode && available < cost)) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
     const next = structuredClone(character);
     let purchasedMeritIndex = -1;
-    let label = options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale);
-    if (ratedMaximum) label = `${options.find((item) => item.value === chosen)?.label ?? purchaseLabel(purchase, locale)} ${intendedRating}`;
     if (purchase === "attribute") next.attributes[chosen] = intendedRating;
     else if (purchase === "skill") next.skills[chosen] = intendedRating;
-    else if (purchase === "specialty") { next.specializations.push({ skill: chosen, name: specialtyName.trim() }); label = `${systemTerm(chosen, locale)}: ${specialtyName.trim()}`; }
+    else if (purchase === "specialty") next.specializations.push({ skill: chosen, name: specialtyName.trim() });
     else if (purchase === "merit" && selectedMerit && nextMeritRating) {
-      if (meritInstance >= 0 && next.merits[meritInstance]?.name === selectedMerit.name) {
+      if (meritInstance >= 0 && meritMatchesDefinition(next.merits[meritInstance], selectedMerit, meritCatalog)) {
         purchasedMeritIndex = meritInstance;
-        next.merits[meritInstance] = {
-          ...next.merits[meritInstance],
-          dots: nextMeritRating,
-          experienceDots: Number(next.merits[meritInstance].experienceDots ?? 0) + cost,
-          configuration: normalizeMeritConfiguration(meritConfiguration),
-        };
+        addExperienceMeritDots(next.merits[meritInstance], cost);
+        next.merits[meritInstance].configuration = normalizeMeritConfiguration(meritConfiguration);
       } else {
         next.merits.push({
+          definitionId: selectedMerit.id,
           instanceId: createRandomId(),
           name: selectedMerit.name,
           dots: nextMeritRating,
@@ -350,10 +353,14 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     const nextDisciplines = recordRatings(next.line_data.disciplines, disciplineNames, 10);
     next.derived = vampireDerived(next.attributes, next.skills, nextDisciplines, Number(next.line_data.blood_potency ?? 1), reference);
     const purchasedMerit = purchasedMeritIndex >= 0 ? next.merits[purchasedMeritIndex] : undefined;
+    if (purchasedMerit && selectedMerit) {
+      purchasedMerit.definitionId = selectedMerit.id;
+      purchasedMerit.instanceId ??= createRandomId();
+    }
     const undo: VampireAdvancementUndo = purchase === "attribute" ? { kind: "trait", group: "attributes", name: chosen, amount: ratingAmount }
       : purchase === "skill" ? { kind: "trait", group: "skills", name: chosen, amount: ratingAmount }
       : purchase === "specialty" ? { kind: "specialty", skill: chosen, name: specialtyName.trim() }
-      : purchase === "merit" ? { kind: "merit", name: selectedMerit!.name, dots: cost, instanceId: purchasedMerit?.instanceId, index: purchasedMeritIndex }
+      : purchase === "merit" ? { kind: "merit", definitionId: selectedMerit!.id, name: selectedMerit!.name, dots: cost, instanceId: purchasedMerit?.instanceId }
       : purchase === "discipline" && selectedRitualDiscipline?.id === "cruac" ? { kind: "cruac", ids: freePowerSelections, amount: ratingAmount, humanityLost: Math.max(0, Number(character.line_data.humanity ?? 7) - Number(next.line_data.humanity ?? 7)) }
       : purchase === "discipline" && selectedRitualDiscipline?.id === "theban" ? { kind: "theban", ids: freePowerSelections, amount: ratingAmount }
       : purchase === "discipline" && selectedRitualDiscipline && ["kimiya", "therion", "gilded-cage"].includes(selectedRitualDiscipline.id) ? { kind: "bloodSorcery", ratingKey: selectedRitualDiscipline.id === "kimiya" ? "kimiya_rating" : selectedRitualDiscipline.id === "therion" ? "therion_rating" : "gilded_cage_rating", idsKey: selectedRitualDiscipline.id === "kimiya" ? "kimiya_formula_ids" : selectedRitualDiscipline.id === "therion" ? "therion_sacrilege_ids" : "gilded_invocation_ids", ids: freePowerSelections, amount: ratingAmount }
@@ -367,7 +374,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       : purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" ? { kind: "ritual", key: ({ rite: "cruac_rite_ids", miracle: "theban_miracle_ids", formula: "kimiya_formula_ids", sacrilege: "therion_sacrilege_ids", invocation: "gilded_invocation_ids" } as const)[purchase], id: chosen }
       : purchase === "detournement" ? { kind: "detournement", id: chosen }
       : { kind: "scale", id: chosen };
-    const entry: HistoryEntry = { id: createRandomId(), label, cost, createdAt: new Date().toISOString(), undo };
+    const entry: HistoryEntry = { id: createRandomId(), ...(ratedMaximum ? { rating: intendedRating } : purchasedMerit ? { rating: purchasedMerit.dots } : {}), cost, createdAt: new Date().toISOString(), undo };
     const balance = experiencePurchaseBalances(available, spent, total, cost, builderMode);
     next.current_state = { ...next.current_state, experience_available: balance.available, experience_spent: balance.spent, experience_total: balance.total, vampire_experience_history: [...history, entry] };
 
@@ -423,13 +430,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   };
   const revert = (entry: HistoryEntry) => {
     if (!history.some((item) => item.id === entry.id)) return;
-    if (!entry.undo) {
-      if (!entry.before || history.at(-1)?.id !== entry.id) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
-      const restored = structuredClone(entry.before);
-      restored.current_state = { ...restored.current_state, experience_available: available + entry.cost, experience_spent: Math.max(0, spent - entry.cost), experience_total: total, vampire_experience_history: history.filter((item) => item.id !== entry.id) };
-      updateSheet(synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(restored, powers)));
-      return;
-    }
+    if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost < 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     const next = structuredClone(character);
     if (!refundVampireAdvancement(next, entry.undo)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, disciplineNames, 10), Number(next.line_data.blood_potency ?? 1), reference);
@@ -441,14 +442,14 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       vampire_experience_history: history.filter((item) => item.id !== entry.id),
     };
     updateSheet(synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(next), powers)));
-    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.label, p2: entry.cost }));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: vampireExperienceLabel(entry, character, meritCatalog, powers, locale), p2: entry.cost }));
   };
   const commitAvailableExperience = () => {
     const nextAvailable = Math.max(0, Math.trunc(Number(amount) || 0));
     setAmountDraft(null);
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
-  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{entry.label}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo && (!entry.before || history.at(-1)?.id !== entry.id)} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
+  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{vampireExperienceLabel(entry, character, meritCatalog, powers, locale)}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
     <div className="experience-title"><div><span>{builderMode ? t("ui.creationAdvancement") : t("ui.beatsAndExperience")}</span><small>{builderMode ? t("ui.creationAdvancementDescription") : t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
     <div className="experience-totals">

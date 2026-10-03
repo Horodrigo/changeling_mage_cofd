@@ -89,6 +89,7 @@ import {
 } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { normalizeDamage, powerResourceLimits } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
@@ -478,7 +479,7 @@ export function MageCharacterPaper({
     const entry = losesWisdom
       ? {
           id: createRandomId(),
-          description: `${t("ui.actOfHubris")}: ${act}`,
+          act,
           regular: 0,
           arcane: 0,
           createdAt: new Date().toISOString(),
@@ -1239,12 +1240,8 @@ function meritLabel(
   catalog: readonly MeritDefinition[],
   locale: Locale = "en-US",
 ) {
-  const definition = catalog.find((entry) => entry.name === item.name);
-  const base =
-      locale === "en-US"
-        ? (definition?.name ?? item.name)
-        : (definition?.translatedName ??
-          (item.name === "Hollow" ? "Recanto" : item.name)),
+  const definition = resolveMeritDefinition(item, catalog);
+  const base = definition ? meritPresentation(definition, locale).name : item.name,
     detail = meritConfigurationTitle(item.configuration);
   return detail ? `${base}: ${detail}` : base;
 }
@@ -1272,9 +1269,8 @@ function ExpandedMeritList({
   return (
     <div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
-        const style = catalog.find(
-            (entry) => entry.name === item.name && entry.levels?.length,
-          ),
+        const definition = resolveMeritDefinition(item, catalog);
+        const style = definition?.levels?.length ? definition : undefined,
           configured = expandedConfigurationLines(
             item.name,
             item.dots,

@@ -273,6 +273,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - **Prioridade 0 ainda não concluída:** migrar compras/histórico/estornos de Vampire e Mage, completar os consumidores por ID e a integração das concessões/configurações; implementar qualificadores dos homônimos após comparar sua mecânica. Nenhuma nova tradução de catálogo foi iniciada neste lote.
 - Verificação deste lote: `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados; suíte completa com **442/442 testes aprovados**. Sem smoke de navegador neste lote.
 
+## Progresso — prioridade 0, segundo lote
+
+- Vampire e Mage: compras e upgrades de Merits passam a registrar `definitionId` e `instanceId`, com estorno dirigido à instância exata. A criação/edição e os nomes/níveis apresentados na ficha resolvem pelo ID explícito; o fallback restrito do primeiro lote continua apenas para seleções existentes sem ID.
+- Seus painéis de XP passam a persistir undo canônico e rating final, sem novos labels traduzidos. A apresentação EN/PT resolve Merits, traits, Disciplines, blood sorcery e poderes de Vampire, Arcana e Spells de Mage. A descrição autoral de Specialty e de Acts of Hubris permanece intacta. Detachment guarda o resultado semântico. Históricos antigos são apresentados por seus deltas quando identificáveis, sem alterar o registro, o saldo ou as compras.
+- O painel de XP de Mage não reconstrói mais estornos a partir de descrições traduzidas. Vampire não restaura uma ficha inteira de um snapshot antigo para estornar. Entradas opacas ficam preservadas/visíveis e sem estorno; compras de Merits com custo incoerente ou instância ausente não concedem XP. Entradas antigas de Wisdom com custo zero e classificação ambígua também não são estornadas por adivinhação.
+- **Prioridade 0 ainda aberta:** compras de Legacy e sua apresentação semântica; detecção histórica de Gnosis em `builder-power-progression.ts`/`lib/power-progression.ts`; consumidores de identidade por nome em configuração, concessões automáticas, elegibilidade e conservação de catálogos desativados; integração restante em Changeling/Werewolf; qualificadores de Conditions/Tilts e de Merits mecanicamente distintos. A suíte dirigida cobre os históricos em EN/PT, a renderização dos painéis, isolamento de catálogos, import/export e estornos. Nenhuma nova tradução de catálogo neste lote.
+- Verificação: suíte completa **446/446**; após as últimas guardas contra undo desconhecido e estorno acima dos pontos pagos, suíte dirigida de identidade/persistência **41/41**. `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados no estado final. Sem smoke de navegador neste lote.
+
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

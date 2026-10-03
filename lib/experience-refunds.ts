@@ -13,9 +13,9 @@ export function refundMeritDots(sheet: CharacterSheet, name: string, amount: num
     : legacyIndex !== undefined && sheet.merits[legacyIndex]?.name === name
       ? legacyIndex
       : candidates.length === 1 ? candidates[0].index : -1;
-  if (index < 0 || !Number.isInteger(amount) || amount <= 0) return false;
+  if (index < 0 || !Number.isInteger(amount) || amount <= 0 || experienceMeritDots(sheet.merits[index]) < amount) return false;
   // New ID-keyed transactions cannot fall back to a namesake or creation dots.
-  if (definitionId && (!instanceId || sheet.merits[index].definitionId !== definitionId || experienceMeritDots(sheet.merits[index]) < amount)) return false;
+  if (definitionId && (!instanceId || sheet.merits[index].definitionId !== definitionId)) return false;
   if (removeExperienceMeritDots(sheet.merits[index], amount) === 0) sheet.merits.splice(index, 1);
   return true;
 }
@@ -58,6 +58,7 @@ export function refundMageAdvancement(sheet: CharacterSheet, undo: MageAdvanceme
   } else if (undo.kind === "specialty") {
     const index = sheet.specializations.findLastIndex(item => item.skill === undo.skill && item.name === undo.name);
     if (index >= 0) sheet.specializations.splice(index, 1);
-  } else sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? undo.amount ?? 1 : -1));
+  } else if (undo.kind === "willpower" || undo.kind === "willpowerLoss") sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.kind === "willpower" ? undo.amount ?? 1 : -1));
+  else return false;
   return true;
 }
