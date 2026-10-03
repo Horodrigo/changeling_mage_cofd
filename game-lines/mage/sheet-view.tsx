@@ -361,6 +361,7 @@ export function MageCharacterPaper({
           </DialogDescription>
         </DialogHeader>
         <LegacyPage
+          meritCatalog={meritCatalog}
           character={character}
           updateSheet={updateSheet}
           onDiscard={() => setLegacyJoinOpen(false)}
@@ -803,6 +804,7 @@ export function MageCharacterPaper({
               ),
               legacy: (
                 <LegacyPage
+                  meritCatalog={meritCatalog}
                   character={character}
                   updateSheet={updateSheet}
                   onDiscard={() => setSheetTab("resumo")}
@@ -1173,6 +1175,7 @@ export function MageCharacterPaper({
                 className="ctl-sheet-page powers-page"
               >
                 <LegacyPage
+                  meritCatalog={meritCatalog}
                   character={character}
                   updateSheet={updateSheet}
                   onDiscard={() => setSheetTab("principal")}

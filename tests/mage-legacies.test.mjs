@@ -41,6 +41,60 @@ const mage = (overrides = {}) => ({
   },
 });
 
+const meritCatalog = (await Promise.all([
+  "public/shared/data/merits.json", "public/game-lines/mage/data/merits.json", "public/game-lines/mage/data/merits-supplements.json",
+].map(path => readFile(new URL(`../${path}`, import.meta.url), "utf8").then(JSON.parse)))).flat();
+
+test("Legacy Merit references reconcile with canonical Core/Mage catalog identities", () => {
+  for (const legacy of LEGACIES) {
+    for (const requirements of [legacy.entryRequirements, ...legacy.attainments.map(item => item.requirements)].filter(Boolean)) {
+      for (const id of [...(requirements.merits ?? []).map(item => item.definitionId), ...(requirements.anyMerits ?? []).flatMap(item => item.definitionIds)]) {
+        assert.equal(meritCatalog.filter(item => item.id === id).length, 1, `${legacy.id}: ${id}`);
+      }
+    }
+  }
+});
+
+test("Nighthawks entry and first Attainment use Awakened Status ID and Mysterium domain", () => {
+  const definition = LEGACIES.find(item => item.id === "nighthawks");
+  const character = { ...mage({ order: "Mysterium", arcana: { Matter: 1, Prime: 2 } }), skills: { Larceny: 2, Academics: 1 }, merits: [{ definitionId: "mta-2ed:awakened-status", instanceId: "order-status", name: "Rótulo autoral", dots: 1, configuration: { domain: "Mysterium" } }] };
+  const before = structuredClone(character);
+  const check = (sheet, catalog = meritCatalog) => [legacyEntryPrerequisites(sheet, definition, catalog).met, legacyAttainmentPrerequisites(sheet, definition, 1, catalog)];
+  assert.deepEqual(check(character), [true, true]);
+  assert.deepEqual(check(character, []), [false, false]);
+  for (const definitionId of ["core-2ed:status", "homebrew:merit:status", "unavailable:status"]) {
+    assert.deepEqual(check({ ...character, merits: [{ ...character.merits[0], definitionId, name: "Order Status (Mysterium)", dots: 5 }] }), [false, false]);
+  }
+  assert.deepEqual(check({ ...character, merits: [{ ...character.merits[0], configuration: { domain: "Silver Ladder" } }] }), [false, false]);
+  const oldSelection = { name: "Awakened Status", sourceId: "mta-2ed", dots: 1, configuration: { domain: "Mysterium" } };
+  assert.deepEqual(check({ ...character, merits: [oldSelection] }), [true, true]);
+  assert.deepEqual(check({ ...character, merits: [{ ...oldSelection, name: "Status do Desperto" }] }), [false, false]);
+  assert.deepEqual(character, before);
+});
+
+test("Legacy Status alternatives resolve IDs without pooling independent instances or matching Homebrew namesakes", () => {
+  const definition = LEGACIES.find(item => item.id === "tyrian-archons");
+  const character = { ...mage({ path: "Obrimos", arcana: { Prime: 2 } }), skills: { Expression: 2 }, merits: [{ definitionId: "mta-signs:profane-tool", instanceId: "tool", name: "Ferramenta autoral", dots: 1 }] };
+  const status = { definitionId: "mta-2ed:awakened-status", instanceId: "order", name: "Status renomeado", dots: 3 };
+  const check = selections => legacyEntryPrerequisites({ ...character, merits: [...character.merits, ...selections] }, definition, meritCatalog).met;
+  for (const definitionId of definition.entryRequirements.anyMerits[0].definitionIds) assert.equal(check([{ ...status, definitionId }]), true, definitionId);
+  for (const definitionId of ["homebrew:merit:status", "unavailable:status"]) assert.equal(check([{ ...status, definitionId, name: "Awakened Status" }]), false);
+  assert.equal(check([{ ...status, dots: 2 }, { ...status, instanceId: "other-order", dots: 1 }]), false);
+  assert.equal(check([{ name: "Mystery Cult Influence", dots: 3 }]), false);
+  assert.equal(check([{ name: "Mystery Cult Influence", sourceId: "mta-2ed", dots: 3 }]), true);
+  assert.equal(check([{ name: "Not Really Status", dots: 5 }]), false);
+});
+
+test("House of Ariadne Contacts and Sleeper Status requirements keep identities after JSON round-trip", () => {
+  const definition = LEGACIES.find(item => item.id === "house-of-ariadne");
+  const character = { ...mage({ gnosis: 8, arcana: { Time: 5 } }), skills: { Streetwise: 4 }, merits: [{ definitionId: "core-2ed:contacts", instanceId: "contacts", name: "Contatos autorais", dots: 3 }, { definitionId: "core-2ed:status", instanceId: "status", name: "Organização local", dots: 2 }] };
+  assert.equal(legacyAttainmentPrerequisites(JSON.parse(JSON.stringify(character)), definition, 5, meritCatalog), true);
+  for (const definitionId of ["mta-2ed:awakened-status", "homebrew:merit:status", "unavailable:status"]) {
+    assert.equal(legacyAttainmentPrerequisites({ ...character, merits: [character.merits[0], { ...character.merits[1], definitionId, name: "Status" }] }, definition, 5, meritCatalog), false);
+  }
+  assert.equal(legacyAttainmentPrerequisites({ ...character, merits: [{ ...character.merits[0], definitionId: "homebrew:merit:contacts", name: "Contacts" }, character.merits[1]] }, definition, 3, meritCatalog), false);
+});
+
 test("The Eleventh Question contains the complete five-rank progression", () => {
   assert.equal(ELEVENTH_QUESTION.rulingArcanum, "Time");
   assert.deepEqual(
@@ -348,5 +402,9 @@ test("Legacy UI stores semantic identities and deltas, not translated descriptio
   assert.match(source, /kind:"legacyInitiation",definitionId:definition\.id/);
   assert.match(source, /kind:"legacyAttainment",definitionId:definition\.id,rank:attainment\.rank/);
   assert.match(source, /undo:structuredClone\(finalUndo\)/);
+  assert.match(source, /legacyEntryPrerequisites\(character,definition,meritCatalog\)/);
+  assert.match(source, /legacyAttainmentPrerequisites\(character,definition,attainment.rank,meritCatalog\)/);
+  const sheetSource = await readFile(new URL("../game-lines/mage/sheet-view.tsx", import.meta.url), "utf8");
+  assert.equal((sheetSource.match(/<LegacyPage\s+meritCatalog=\{meritCatalog\}/g) ?? []).length, 3);
   assert.doesNotMatch(source, /description:string|before:\{|savePurchase\(next,`/);
 });

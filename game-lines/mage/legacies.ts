@@ -1,10 +1,13 @@
 import legacyCatalog from "@/game-lines/mage/catalog-data/legacies.json";
 import supplementCatalog from "@/game-lines/mage/catalog-data/legacies-supplement.json";
 import { freezeCatalogData } from "@/lib/catalog/catalog-service";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
+import type { DefinitionIdentity } from "@/lib/merit-identity";
+import type { MeritSelection } from "@/lib/core/character/character-types";
 
-type LegacyCharacter = {id?:string;line_data:Record<string,unknown>;skills:Record<string,number>;merits?:Array<{name:string;dots:number}>;specializations?:Array<{skill?:string;name?:string}>};
+type LegacyCharacter = {id?:string;line_data:Record<string,unknown>;skills:Record<string,number>;merits?:MeritSelection[];specializations?:Array<{skill?:string;name?:string}>};
 
-type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{name:string;dots:number}>;anyMerits?:Array<{names:string[];dots:number}>};
+type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{definitionId:string;name:string;dots:number;domain?:string}>;anyMerits?:Array<{definitionIds:string[];names:string[];dots:number}>};
 
 export type LegacyAttainment = {
   rank: 1|2|3|4|5;
@@ -63,15 +66,19 @@ export function legacyArcanumRating(arcana:Record<string,number>,name:string){
   return Number(arcana[name]??0);
 }
 
-function legacyRequirementsMet(character:LegacyCharacter,requirements:LegacyRequirements|undefined){
+function legacyRequirementsMet(character:LegacyCharacter,requirements:LegacyRequirements|undefined,catalog:readonly DefinitionIdentity[]){
   if(!requirements)return true;
   const arcana=(character.line_data.arcana??{}) as Record<string,number>;
   if(Object.entries(requirements.arcana??{}).some(([name,rating])=>legacyArcanumRating(arcana,name)<rating))return false;
   if(Object.entries(requirements.skills??{}).some(([name,rating])=>legacySkillRating(character.skills,name)<rating))return false;
   if(requirements.anySkills){const {names,rating,count=1}=requirements.anySkills;if(names.filter(name=>legacySkillRating(character.skills,name)>=rating).length<count)return false;}
   if(requirements.specializations?.some(required=>!(character.specializations??[]).some(item=>legacySkillRating({[String(item.skill??"")]:1},required.skill)>0&&new RegExp(required.includes??".","i").test(String(item.name??"")))))return false;
-  if(requirements.merits?.some(required=>(character.merits??[]).filter(item=>item.name===required.name||required.name==="Status"&&/Status/.test(item.name)).reduce((sum,item)=>sum+Number(item.dots||0),0)<required.dots))return false;
-  if(requirements.anyMerits?.some(required=>!required.names.some(name=>(character.merits??[]).filter(item=>item.name===name||name==="Status"&&/Status/.test(item.name)).reduce((sum,item)=>sum+Number(item.dots||0),0)>=required.dots)))return false;
+  const hasMerit=(ids:readonly string[],dots:number,domain?:string)=>(character.merits??[]).some(item=>
+    ids.includes(resolveMeritDefinition(item,catalog)?.id??"")&&item.dots>=dots&&
+    (domain===undefined||item.configuration?.domain===domain)
+  );
+  if(requirements.merits?.some(required=>!hasMerit([required.definitionId],required.dots,required.domain)))return false;
+  if(requirements.anyMerits?.some(required=>!hasMerit(required.definitionIds,required.dots)))return false;
   return true;
 }
 
@@ -100,7 +107,7 @@ export function eleventhQuestionPrerequisites(character:LegacyCharacter){
   return {gnosis:gnosis>=2,time,investigation,qualifying,parentage,praxis,met:gnosis>=2&&time&&investigation&&qualifying&&(parentage||praxis)};
 }
 
-export function legacyEntryPrerequisites(character:LegacyCharacter,definition:LegacyDefinition){
+export function legacyEntryPrerequisites(character:LegacyCharacter,definition:LegacyDefinition,catalog:readonly DefinitionIdentity[]=[]){
   if(definition.id==="the-eleventh-question"){
     const result=eleventhQuestionPrerequisites(character);
     return {...result,items:[{label:"Gnosis 2",met:result.gnosis},{label:"Time 2",met:result.time},{label:"Investigation 2",met:result.investigation},{label:"Qualifying Skill 2",met:result.qualifying},{label:"Moros, Guardian/Mysterium, or Perfect Timing Praxis",met:result.parentage||result.praxis}]};
@@ -112,15 +119,15 @@ export function legacyEntryPrerequisites(character:LegacyCharacter,definition:Le
   }
   const parentage=definition.parentage.paths.includes(String(data.path))||definition.parentage.orders.includes(String(data.order));
   const praxis=[...(Array.isArray(data.praxes)?data.praxes:[]),...(Array.isArray(data.learned_praxes)?data.learned_praxes:[])].some(item=>item&&typeof item==="object"&&String((item as Record<string,unknown>).originalName??(item as Record<string,unknown>).name)===definition.entryPraxis);
-  const gnosisMet=gnosis>=2,mechanical=legacyRequirementsMet(character,definition.entryRequirements);
+  const gnosisMet=gnosis>=2,mechanical=legacyRequirementsMet(character,definition.entryRequirements,catalog);
   return {gnosis:gnosisMet,parentage,praxis,met:gnosisMet&&mechanical&&(parentage||praxis),items:[{label:"Gnosis 2",met:gnosisMet},...requirementItems(character,definition.entryRequirements),{label:[...definition.parentage.paths,...definition.parentage.orders,definition.entryPraxis&&`${definition.entryPraxis} Praxis`].filter(Boolean).join(", "),met:parentage||praxis}]};
 }
 
-export function legacyAttainmentPrerequisites(character:LegacyCharacter,definition:LegacyDefinition,rank:number){
+export function legacyAttainmentPrerequisites(character:LegacyCharacter,definition:LegacyDefinition,rank:number,catalog:readonly DefinitionIdentity[]=[]){
   const attainment=definition.attainments.find(item=>item.rank===rank);
   if(!attainment)return false;
   const gnosis=Number(character.line_data.gnosis??1),arcana=(character.line_data.arcana??{}) as Record<string,number>;
-  if(gnosis<attainment.orthodoxGnosis||legacyArcanumRating(arcana,definition.rulingArcanum)<attainment.rulingArcanum||!legacyRequirementsMet(character,attainment.requirements))return false;
+  if(gnosis<attainment.orthodoxGnosis||legacyArcanumRating(arcana,definition.rulingArcanum)<attainment.rulingArcanum||!legacyRequirementsMet(character,attainment.requirements,catalog))return false;
   if(definition.id!=="the-eleventh-question")return true;
   const qualifying=["Academics","Larceny","Medicine","Occult","Science"].map(skill=>legacySkillRating(character.skills,skill)).sort((a,b)=>b-a);
   const investigation=legacySkillRating(character.skills,"Investigation")>=(rank>=4?4:rank>=2?3:2);
