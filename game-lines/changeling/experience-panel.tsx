@@ -19,11 +19,11 @@ import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/li
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
 import { refundChangelingPowerRating, withChangelingPowerRating } from "@/game-lines/changeling/builder-power-progression";
-import { subtractDots, refundMeritDots } from "@/lib/experience-refunds";
-import { addExperienceMeritDots } from "@/lib/merit-progression";
+import { subtractDots } from "@/lib/experience-refunds";
+import { changelingExperienceMeritInstance, changelingMeritExperienceLabel, changelingMeritReceiptDefinition, quoteChangelingMeritPurchase, refundChangelingMeritPurchase, type ChangelingMeritUndo } from "./experience-merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } from "@/game-lines/changeling/builder-merit-grants";
 import { RuleSelect } from "@/app/workspace/rule-select";
-import { stringList } from "@/app/workspace/sheet-primitives";
 import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { createRandomId } from "@/lib/random-id";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -39,7 +39,7 @@ import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { ExperienceRules, contractExperienceCost, derivedWithPermanentMerits, purchasePreview, recalculateCtlDerived, type ChangelingPurchaseType } from "./experience-shared";
 type ExperienceUndo =
   | {
@@ -49,13 +49,7 @@ type ExperienceUndo =
       previous: number;
       amount?: number;
     }
-  | {
-      kind: "merit";
-      name: string;
-      previousDots: number | null;
-      instanceIndex?: number;
-      instanceId?: string;
-    }
+  | ChangelingMeritUndo
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "contract"; id: string }
   | { kind: "benefit"; contractId: string; seeming: string }
@@ -67,7 +61,7 @@ type ExperienceUndo =
 type ExperienceEntry = {
   id: string;
   kind: "spend";
-  description: string;
+  description?: string;
   experience: number;
   createdAt: string;
   undo?: ExperienceUndo;
@@ -131,11 +125,8 @@ export function ExperiencePanel({
     ),
   );
   const total = available + spentXp;
-  const history = (
-    Array.isArray(state.experience_history)
-      ? (state.experience_history as ExperienceEntry[])
-      : []
-  ).filter((entry) => entry.kind === "spend");
+  const storedHistory: unknown[] = Array.isArray(state.experience_history) ? state.experience_history : [];
+  const history = storedHistory.filter((entry): entry is ExperienceEntry => Boolean(entry && typeof entry === "object" && "kind" in entry && entry.kind === "spend"));
   const [experienceInput, setExperienceInput] = useState(String(available));
   const [purchaseType, setPurchaseType] = useState<ChangelingPurchaseType>(PURCHASE_TYPES[0]);
   const [targetRating, setTargetRating] = useState(0);
@@ -202,15 +193,7 @@ export function ExperiencePanel({
     return [...seemingOptions, ...clauseOptions];
   });
   const selectedMerit = merits.find((item) => item.id === meritId) ?? merits[0];
-  const ownedMerit =
-    meritInstance >= 0 &&
-    character.merits[meritInstance]?.name === selectedMerit?.name
-      ? character.merits[meritInstance]
-      : selectedMerit && !isRepeatableDefinition(selectedMerit)
-        ? character.merits.find(
-            (item) => item.name === selectedMerit.name && !item.grantedBy,
-          )
-        : undefined;
+  const ownedMerit = selectedMerit ? changelingExperienceMeritInstance(character, selectedMerit, meritInstance, meritCatalog) : undefined;
   const availableMeritRatings = selectedMerit
     ? meritRatingsFor(selectedMerit,(ownedMerit?.dots??0)+1).filter(
         (rating) => rating > (ownedMerit?.dots ?? 0),
@@ -253,7 +236,7 @@ export function ExperiencePanel({
       experience_beats: change.beats,
       experience_available: change.available,
       experience_total: change.total,
-      experience_history: history,
+      experience_history: storedHistory,
     };
     updateSheet(next);
   }
@@ -276,13 +259,12 @@ export function ExperiencePanel({
         experience_beats: change.beats,
         experience_available: change.available,
         experience_total: change.total,
-        experience_history: history,
       };
       updateSheet(next);
     };
     fieldset.addEventListener("click", click);
     return () => fieldset.removeEventListener("click", click);
-  }, [available, beats, character, history, total, updateSheet]);
+  }, [available, beats, character, total, updateSheet]);
   function commitAvailableExperience() {
     const value = Math.max(0, Math.trunc(Number(experienceInput) || 0));
     setExperienceInput(String(value));
@@ -292,13 +274,13 @@ export function ExperiencePanel({
       experience_available: value,
       experience_spent: spentXp,
       experience_total: value + spentXp,
-      experience_history: history,
+      experience_history: storedHistory,
     };
     updateSheet(next);
     setFeedback(t("ui.availableExperienceUpdated"));
   }
   function append(entry: ExperienceEntry, nextState: Record<string, unknown>) {
-    nextState.experience_history = [entry, ...history].slice(0, 100);
+    nextState.experience_history = [entry, ...storedHistory].slice(0, 100);
   }
   function markWillpowerLoss() {
     const maximum = Math.max(
@@ -365,7 +347,7 @@ export function ExperiencePanel({
       {
         id: createRandomId(),
         kind: "spend",
-        description,
+        ...(undo.kind === "merit" ? {} : { description }),
         experience: -cost,
         createdAt: new Date().toISOString(),
         undo,
@@ -388,13 +370,12 @@ export function ExperiencePanel({
     const undo = entry.undo;
     if (undo.kind === "trait") next[undo.group][undo.name] = subtractDots(next[undo.group][undo.name], undo.amount ?? 1, undo.group === "attributes" ? 1 : 0);
     else if (undo.kind === "merit") {
-      if (!refundMeritDots(next, undo.name, Math.abs(entry.experience), undo.instanceId, undo.instanceIndex)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
-      if (undo.name === "Touchstone") {
-        const maximum = 1 + next.merits
-          .filter((merit) => merit.name === "Touchstone" && !merit.grantedBy)
-          .reduce((sum, merit) => sum + merit.dots, 0);
-        next.line_data.touchstones = stringList(next.line_data.touchstones).slice(0, maximum);
-      }
+      const refunded = refundChangelingMeritPurchase(character, entry.id, meritCatalog, builderMode);
+      if (!refunded) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+      recalculateCtlDerived(refunded);
+      updateSheet(synchronizeMeritGrants(refunded, entitlementCatalog));
+      setFeedback(t("ui.wasRefundedExperienceRestored", { p1: changelingMeritExperienceLabel(entry, character, meritCatalog, locale), p2: Math.abs(entry.experience) }));
+      return;
     } else if (undo.kind === "specialty") {
       const index = next.specializations
         .map((item) => `${item.skill}::${item.name}`)
@@ -449,11 +430,11 @@ export function ExperiencePanel({
       experience_available: nextAvailable,
       experience_spent: nextSpent,
       experience_total: nextAvailable + nextSpent,
-      experience_history: history.filter((item) => item.id !== entry.id),
+      experience_history: storedHistory.filter(item => !(item && typeof item === "object" && "id" in item && item.id === entry.id)),
     };
     recalculateCtlDerived(next);
     updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
-    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description, p2: refund }));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description ?? "", p2: refund }));
   }
   function buy() {
     if (purchaseType === "attribute") {
@@ -502,39 +483,13 @@ export function ExperiencePanel({
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
       if(!changelingExperienceMeritEligible(selectedMerit,{...meritContext,selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
-      const current = ownedMerit?.dots ?? 0;
-      const cost = nextMeritRating - current;
-      const instanceId = ownedMerit?.instanceId ?? createRandomId();
-      const targetIndex = ownedMerit
-        ? character.merits.indexOf(ownedMerit)
-        : character.merits.length;
+      const quoted = quoteChangelingMeritPurchase(character, selectedMerit.id, nextMeritRating, meritInstance, meritCatalog);
+      if (!quoted) return setFeedback(t("ui.selectAnAvailableMerit"));
       spend(
-        cost,
-        `${selectedMerit.translatedName} ${nextMeritRating}`,
-        {
-          kind: "merit",
-          name: selectedMerit.name,
-          previousDots: ownedMerit?.dots ?? null,
-          instanceIndex: targetIndex,
-          instanceId,
-        },
-        (next) => {
-          const found = ownedMerit ? next.merits[targetIndex] : undefined;
-          if (found && found.name === selectedMerit.name) {
-            found.instanceId = instanceId;
-            addExperienceMeritDots(found, cost);
-          } else
-            next.merits.push({
-              instanceId,
-              name: selectedMerit.name,
-              dots: nextMeritRating,
-              creationDots: 0,
-              experienceDots: nextMeritRating,
-              sourceId: selectedMerit.sourceId,
-              source: selectedMerit.source,
-              configuration: {},
-            });
-        },
+        quoted.cost,
+        `${meritPresentation(selectedMerit, locale).name} ${nextMeritRating}`,
+        quoted.undo,
+        next => { next.merits[quoted.index] = quoted.selection; },
       );
       return;
     }
@@ -637,7 +592,19 @@ export function ExperiencePanel({
   });
   const historyPanel = <details className="experience-history">
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
-    <div>{history.length ? history.slice(0, 12).map((entry) => <p key={entry.id}><span>{entry.description}</span><strong>{Math.abs(entry.experience)}{t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>{entry.undo?.kind === "merit" && ["Entitlement", "Fae Mount", "Fae Pet"].includes(entry.undo.name) ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={!entry.undo}><RotateCcw /> {t("ui.refund")}</Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name === "Entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>: <Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}</p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
+    <div>{history.length ? history.slice(0, 12).map(entry => {
+      const definition = changelingMeritReceiptDefinition(entry, character, meritCatalog);
+      const label = changelingMeritExperienceLabel(entry, character, meritCatalog, locale);
+      const disabled = !entry.undo || (entry.undo.kind === "merit" && !refundChangelingMeritPurchase(character, entry.id, meritCatalog, builderMode));
+      const confirmation = definition && ["oak-ash-thorn:entitlement", "ctl-2ed:fae-mount", "h-seemings:fae-pet"].includes(definition.id);
+      return <p key={entry.id}><span>{label}</span><strong>{Math.abs(entry.experience)}{t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>
+        {confirmation ? <ConfirmAction trigger={<Button type="button" size="sm" variant="ghost" disabled={disabled}><RotateCcw /> {t("ui.refund")}</Button>}
+          title={t("ui.refund20298a", { p1: meritPresentation(definition, locale).name })}
+          description={definition.id === "oak-ash-thorn:entitlement" ? t("ui.theRefundWillRemoveTheEntitlementItsRanks") : t("ui.theRefundWillRemoveTheMeritAndIts")}
+          action={t("ui.refund1982c5")} onConfirm={() => revertPurchase(entry)}/>
+          : <Button type="button" size="sm" variant="ghost" disabled={disabled} onClick={() => revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}
+      </p>;
+    }) : <em>{t("ui.noExpensesRecorded")}</em>}</div>
   </details>;
   return (
     <section className="experience-panel">
@@ -869,34 +836,7 @@ export function ExperiencePanel({
         </div>}
       </div>
       {feedback && <p className="experience-feedback compact">{feedback}</p>}
-      <details className="experience-history">
-        <summary>
-          <History /> {t("ui.experienceExpenses")} ({history.length})
-        </summary>
-        <div>
-          {history.length ? (
-            history.slice(0, 12).map((entry) => (
-              <p key={entry.id}>
-                <span>{entry.description}</span>
-                <strong>{Math.abs(entry.experience)}{t("ui.xp")}</strong>
-                <small>
-                  {new Date(entry.createdAt).toLocaleDateString(locale)}
-                </small>
-                {entry.undo?.kind==="merit"&&["Entitlement","Fae Mount","Fae Pet"].includes(entry.undo.name)?<ConfirmAction trigger={<Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  disabled={!entry.undo}
-                >
-                  <RotateCcw /> {t("ui.refund")}
-                </Button>} title={t("ui.refund20298a", { p1: entry.undo.name })} description={entry.undo.name==="Entitlement"?t("ui.theRefundWillRemoveTheEntitlementItsRanks"):t("ui.theRefundWillRemoveTheMeritAndIts")} action={t("ui.refund1982c5")} onConfirm={()=>revertPurchase(entry)}/>:<Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={()=>revertPurchase(entry)}><RotateCcw /> {t("ui.refund")}</Button>}
-              </p>
-            ))
-          ) : (
-            <em>{t("ui.noExpensesRecorded")}</em>
-          )}
-        </div>
-      </details>
+      {historyPanel}
     </section>
   );
 }
