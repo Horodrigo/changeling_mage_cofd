@@ -8,7 +8,6 @@ import { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationCategoryD
 import type { Specialty } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { builderText } from "../character-builder-messages";
 
 type Setter<T> = (value: T) => void;
 type MissingCheck = (key: string) => boolean;
@@ -109,10 +108,10 @@ function DotGroups({ groups, values, setValues, base, maximum, budgets }: {
   return <div className="dot-groups">{Object.entries(groups).map(([category, names], index) => {
     const next = spent.map((dots, candidate) => dots + (candidate === index ? 1 : 0));
     return <section className="dot-group" key={category}>
-      <h4>{builderText(locale, category)} <small>{Number.isFinite(spent[index]) ? t("ui.dots638f6d", { p1: spent[index] }) : "—"}</small></h4>
+      <h4>{systemTerm(category, locale)} <small>{Number.isFinite(spent[index]) ? t("ui.dots638f6d", { p1: spent[index] }) : "—"}</small></h4>
       {names.map((name) => <DotRow
         key={name}
-        name={builderText(locale, name)}
+        name={systemTerm(name, locale)}
         value={values[name] ?? base}
         min={base}
         max={maximum}

@@ -20,7 +20,7 @@ import { MAGE_MERIT_CONFIGURATIONS, masqueConfigurationDots } from "./merit-conf
 import type { MeritDefinition } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
-import { builderText } from "@/app/character-builder-messages";
+import { systemTerm } from "@/lib/system-terms";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { renderMageStructuredMeritEditor } from "./merit-configuration-editor";
 import { mageMeritPrerequisitesMet, type MageMeritContext } from "./merits";
@@ -72,7 +72,7 @@ function OrderSelector(props: OrderSelectorProps) {
         <p>{(props.order ? MTA_ORDER_DESCRIPTIONS[props.order]?.[locale === "pt-BR" ? 0 : 1] : "") || props.customOrder?.description || t(props.order === "Nameless" ? "ui.anOrderWithoutARecognizedNameAmongThe" : "ui.chooseAnOrderToReviewItsDescription")}</p>
         {hasStandardCreationOrderBenefits(props.order) ? <small>
           <strong>{t("ui.roteSkills")}:</strong>{" "}
-          {(MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => builderText(locale, skill)).join(", ")}
+          {(MTA_ORDERS[props.order as keyof typeof MTA_ORDERS] ?? []).map((skill) => systemTerm(skill, locale)).join(", ")}
         </small> : null}
       </div>
       <Dialog>
@@ -158,9 +158,9 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           />
           <p className="path-arcana-summary">
             <span>{t("ui.rulinge76e13")}:</span>{" "}
-            <strong>{pathData?.ruling.map((arcanum) => builderText(locale, arcanum)).join(t("ui.and")) ?? t("ui.selectAPath")}</strong>
+            <strong>{pathData?.ruling.map((arcanum) => systemTerm(arcanum, locale)).join(t("ui.and")) ?? t("ui.selectAPath")}</strong>
             {" · "}<span>{t("ui.inferior")}:</span>{" "}
-            <strong>{pathData ? builderText(locale, pathData.inferior) : "—"}</strong>
+            <strong>{pathData ? systemTerm(pathData.inferior, locale) : "—"}</strong>
           </p>
           <div className="ctl-favored-inline">
             <Choice

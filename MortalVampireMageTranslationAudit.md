@@ -568,6 +568,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Levantamento AST dos textos JSX e atributos visuais ativos de app/Mortal/Mage/Vampire: os textos simples encontrados restantes são citações/nomes de marca; há rótulos de acessibilidade nos componentes padrão não utilizados e `data-page-title` sem consumidor visual, que não motivam uma expansão de escopo. A inspeção das mensagens dinâmicas encontrou os rótulos corrigidos neste lote. **Ainda revisar** os mapas anteriores `app/character-builder-messages.ts` e `app/workspace/workspace-i18n.ts` e seus consumidores, além das referências/detalhes ligados aos catálogos das etapas 3–4, antes de fechar a interface.
 - Verificação: **25/25** testes dirigidos de i18n, Status/Humanity e identidades Vampire; lint, TypeScript, build e `git diff --check` aprovados. A suíte completa imediatamente anterior passou **546/546** com os requisitos e toda a localização Core/Conditions/Tilts. Sem smoke de navegador. A etapa 2 permanece aberta; Vampire/Mage integrais ainda pendentes.
 
+## Progresso — etapa 2, remoção dos mapas de UI duplicados (2026-10-03)
+
+- `app/workspace/workspace-i18n.ts` não tinha consumidores nem imports e foi removido. `app/character-builder-messages.ts` repetia rótulos do dicionário de termos; seus únicos consumidores (controles de criação compartilhados e referências de Path/Order Mage) usam agora `systemTerm` diretamente. Não foi criado outro adapter nem alterado o vocabulário.
+- **130 comparações** dos valores realmente fornecidos por Core/Mage em EN/PT preservaram os resultados: categorias, Atributos, Perícias, Arcana, ruling/inferior de Paths e texto desconhecido autoral. A remoção elimina 129 linhas de tabelas/wrappers redundantes; dados canônicos e escolhas persistidas não mudam.
+- Verificação: **45/45** testes dirigidos de i18n, alocação de criação e arquitetura; lint, TypeScript, build e `git diff --check` aprovados. Nenhum consumer dos arquivos removidos permaneceu. Sem smoke de navegador.
+- O levantamento seguinte encontrou captions técnicos em inglês para fontes criadas pelo jogador (Merits/Spells/Legacies), Arcana canônicos em cards de Spells criados e keys de resultados de poderes na página Homebrew Vampire. Esses pontos de apresentação serão corrigidos mantendo as fontes/fields persistidos e todos os textos autorais. A etapa 2 ainda não está concluída.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.
