@@ -321,11 +321,15 @@ test("edição preserva Méritos de Experiência e substitui apenas a base de cr
   ]);
 });
 
-test("edição preserva XP de Méritos automáticos quando o grant inicial é recriado", () => {
+test("edição preserva XP de Méritos automáticos na instância exata, nunca pelo nome do grant", () => {
   const existing = [{name:"Kindred Status",instanceId:"old",dots:3,creationDots:1,experienceDots:2,configuration:{group:"Circle of the Crone"},grantedBy:"Vampire Template"}];
   const edited = [{name:"Kindred Status",instanceId:"new",dots:1,configuration:{group:"Daeva"},grantedBy:"Vampire Template"}];
   assert.deepEqual(merits.mergeCreationMerits(existing,edited),[
-    {name:"Kindred Status",instanceId:"new",dots:3,creationDots:1,experienceDots:2,configuration:{group:"Daeva"},grantedBy:"Vampire Template"},
+    {name:"Kindred Status",instanceId:"old",dots:2,creationDots:0,experienceDots:2,configuration:{group:"Circle of the Crone"}},
+    {name:"Kindred Status",instanceId:"new",dots:1,creationDots:1,experienceDots:0,configuration:{group:"Daeva"},grantedBy:"Vampire Template"},
+  ]);
+  assert.deepEqual(merits.mergeCreationMerits(existing,[{...edited[0],instanceId:"old"}]),[
+    {name:"Kindred Status",instanceId:"old",dots:3,creationDots:1,experienceDots:2,configuration:{group:"Daeva"},grantedBy:"Vampire Template"},
   ]);
 });
 

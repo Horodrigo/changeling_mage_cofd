@@ -31,7 +31,7 @@ import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { BLOOD_TETHER_PACK_GRANT, hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireEditableCreationAttributes } from "./creation-rules";
-import { isShadowCultId, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
+import { isShadowCultId, reconcileVampireCreationMeritGrants, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -288,31 +288,25 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const missing = (key: string) => issues.some((issue) => issue.key === key);
   useEffect(() => {
     setMerits((current) => {
-      const automatic = current.filter((merit) =>
-        (merit.name === "Kindred Status" && merit.grantedBy === "Vampire Template") ||
-        (merit.name === "Mystery Cult Initiation" && merit.grantedBy === "Vampire Shadow Cult"),
-      );
-      const retained = current.filter((merit) => !automatic.includes(merit));
-      const previous = automatic.find((merit) => merit.name === (shadowCult ? "Mystery Cult Initiation" : "Kindred Status"));
-      const next = !statusGroup ? retained : [...retained, shadowCult ? {
-        ...previous,
-        instanceId: previous?.instanceId ?? `shadow-cult-${covenantId}`,
+      const next = reconcileVampireCreationMeritGrants(current, !statusGroup ? undefined : shadowCult ? {
+        definitionId: "core-2ed:mystery-cult-initiation",
+        instanceId: `shadow-cult-${covenantId}`,
         name: "Mystery Cult Initiation",
-        dots: Math.max(1, Number(previous?.dots ?? 1)),
+        dots: 1,
         sourceId: "h-vtr-strange-shades",
         source: "Strange Shades: Mekhet",
-        configuration: { ...(previous?.configuration ?? {}), cult: selectedCovenant?.name ?? statusGroup },
+        configuration: { cult: selectedCovenant?.name ?? statusGroup },
         grantedBy: "Vampire Shadow Cult",
       } : {
-        ...previous,
-        instanceId: previous?.instanceId ?? "vampire-template-kindred-status",
+        definitionId: "vtr-kindred-status",
+        instanceId: "vampire-template-kindred-status",
         name: "Kindred Status",
-        dots: Math.max(1, Number(previous?.dots ?? 1)),
+        dots: 1,
         sourceId: "vtr-2ed",
         source: "Vampire: The Requiem Second Edition",
         configuration: { group: statusGroup },
         grantedBy: "Vampire Template",
-      }];
+      });
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
   }, [covenantId, selectedCovenant?.name, shadowCult, statusGroup, setMerits]);

@@ -9,13 +9,13 @@
       "level_1_specialty_name": "Spirits",
       "level_2_type": "merit",
       "level_2_merits": [
-        "Demolisher|1"
+        "{\"definitionId\":\"core-2ed:demolisher\",\"name\":\"Demolisher\",\"dots\":1,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_3_type": "skill",
       "level_3_skill": "Weaponry",
       "level_4_type": "merit",
       "level_4_merits": [
-        "Medium|3"
+        "{\"definitionId\":\"core-2ed:medium\",\"name\":\"Medium\",\"dots\":3,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_5_type": "custom",
       "level_5_custom": "Spend Willpower to make the vampire's blood a bane to spirits for the scene."
@@ -31,13 +31,13 @@
       "level_1_specialty_name": "Kindred",
       "level_2_type": "merit",
       "level_2_merits": [
-        "Alternate Identity|1"
+        "{\"definitionId\":\"core-2ed:alternate-identity\",\"name\":\"Alternate Identity\",\"dots\":1,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_3_type": "skill",
       "level_3_skill": "Stealth",
       "level_4_type": "merit",
       "level_4_merits": [
-        "Resources|3"
+        "{\"definitionId\":\"core-2ed:resources\",\"name\":\"Resources\",\"dots\":3,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_5_type": "custom",
       "level_5_custom": "See past the Lost Visage according to Humanity."
@@ -53,13 +53,13 @@
       "level_1_specialty_name": "Prophecy",
       "level_2_type": "merit",
       "level_2_merits": [
-        "Fast Reflexes|1"
+        "{\"definitionId\":\"core-2ed:fast-reflexes\",\"name\":\"Fast Reflexes\",\"dots\":1,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_3_type": "skill",
       "level_3_skill": "Occult",
       "level_4_type": "merit",
       "level_4_merits": [
-        "Anonymity|3"
+        "{\"definitionId\":\"core-2ed:anonymity\",\"name\":\"Anonymity\",\"dots\":3,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_5_type": "custom",
       "level_5_custom": "Spend Willpower to act normally when surprised or take an instant action immediately before the foretold event."
@@ -75,17 +75,17 @@
       "level_1_specialty_name": "Surveillance",
       "level_2_type": "merit",
       "level_2_merits": [
-        "Trained Observer|1"
+        "{\"definitionId\":\"core-2ed:trained-observer\",\"name\":\"Trained Observer\",\"dots\":1,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_3_type": "skill",
       "level_3_skill": "Expression",
       "level_4_type": "merits",
       "level_4_merits": [
-        "Cacophony Savvy|3"
+        "{\"definitionId\":\"vtr-cacophony-savvy\",\"name\":\"Cacophony Savvy\",\"dots\":3,\"sourceId\":\"vtr-2ed\",\"source\":\"Vampire: The Requiem Second Edition\"}"
       ],
       "level_5_type": "merit",
       "level_5_merits": [
-        "Fame|3"
+        "{\"definitionId\":\"core-2ed:fame\",\"name\":\"Fame\",\"dots\":3,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ]
     }
   },
@@ -102,7 +102,7 @@
     "configuration": {
       "level_1_type": "merit",
       "level_1_merits": [
-        "Tolerance for Biology|1"
+        "{\"definitionId\":\"core-2ed:tolerance-for-biology\",\"name\":\"Tolerance for Biology\",\"dots\":1,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ],
       "level_2_type": "custom",
       "level_2_custom": "Choose Crafts (Butchery) or Occult (Offerings) as a Specialty.",

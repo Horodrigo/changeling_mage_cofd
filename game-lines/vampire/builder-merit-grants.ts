@@ -1,7 +1,8 @@
-import type { CharacterSheet } from "@/lib/core/character/character-types";
+import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
 import shadowCultCatalog from "./catalog-data/shadow-cults.json";
+import { createRandomId } from "@/lib/random-id";
 
 const TEMPLATE_SOURCE = "Vampire Template";
 export const SHADOW_CULT_SOURCE = "Vampire Shadow Cult";
@@ -13,27 +14,54 @@ export function isShadowCultId(id: string): id is (typeof SHADOW_CULT_IDS)[numbe
   return SHADOW_CULT_IDS.includes(id as (typeof SHADOW_CULT_IDS)[number]);
 }
 
+/**
+ * Builder and pure synchronization consume this schema-2 production bridge for old template grants.
+ * Only exact canonical names with the owning producer marker and source qualify; explicit IDs win.
+ * Delete the name branch once ID-less Vampire automatic grants are no longer supported.
+ */
+function templateMeritId(merit: MeritSelection) {
+  if (merit.definitionId) return merit.definitionId;
+  if (merit.grantedBy === TEMPLATE_SOURCE && merit.name === "Kindred Status" && (!merit.sourceId || merit.sourceId === "vtr-2ed")) return "vtr-kindred-status";
+  if (merit.grantedBy === SHADOW_CULT_SOURCE && merit.name === "Mystery Cult Initiation" && (!merit.sourceId || merit.sourceId === "core-2ed" || Object.values(SHADOW_CULTS).some(cult => cult.sourceId === merit.sourceId))) return "core-2ed:mystery-cult-initiation";
+  return undefined;
+}
+
+export function reconcileVampireTemplateMerits(current: readonly MeritSelection[], grant?: MeritSelection) {
+  const automatic = current.filter(merit => (merit.grantedBy === TEMPLATE_SOURCE && templateMeritId(merit) === "vtr-kindred-status") || (merit.grantedBy === SHADOW_CULT_SOURCE && templateMeritId(merit) === "core-2ed:mystery-cult-initiation"));
+  const previous = automatic.find(merit => templateMeritId(merit) === grant?.definitionId);
+  const retained = current.flatMap(merit => {
+    if (!automatic.includes(merit)) return [merit];
+    if (templateMeritId(merit) === grant?.definitionId) return [];
+    const experienceDots = Math.max(0, Number(merit.experienceDots ?? 0));
+    const creationDots = Math.max(0, Number(merit.creationDots ?? (merit.dots - experienceDots)) - 1);
+    const retained = { ...merit, definitionId: templateMeritId(merit), dots: creationDots + experienceDots, creationDots, experienceDots };
+    delete retained.grantedBy;
+    return retained.dots ? [retained] : [];
+  });
+  if (!grant) return retained;
+  const experienceDots = Math.max(0, Number(previous?.experienceDots ?? 0));
+  const creationDots = Math.max(1, Number(previous?.creationDots ?? (Number(previous?.dots ?? 1) - experienceDots)));
+  const instanceId = previous?.instanceId ?? (current.some(merit => merit.instanceId === grant.instanceId) ? createRandomId() : grant.instanceId);
+  return [...retained, { ...previous, ...grant, instanceId, dots: creationDots + experienceDots, creationDots, experienceDots, configuration: { ...normalizeMeritConfiguration(previous?.configuration), ...grant.configuration } }];
+}
+
+/** Builder dots are creation allocations, not total ratings; never put XP back into that budget. */
+export function reconcileVampireCreationMeritGrants(current: readonly MeritSelection[], grant?: MeritSelection) {
+  const totals = current.map(merit => ({ ...merit, creationDots: merit.dots, dots: merit.dots + Number(merit.experienceDots ?? 0) }));
+  return reconcileVampireTemplateMerits(totals, grant).map(merit => ({ ...merit, dots: Number(merit.creationDots ?? merit.dots) })).filter(merit => merit.dots > 0);
+}
+
 export function synchronizeVampireBuilderMeritGrants(sheet: CharacterSheet) {
   const primaryCovenant = String(sheet.line_data.covenant_id ?? "covenantless");
   const group = String(sheet.line_data.kindred_status_group ?? "").trim();
-  const automatic = sheet.merits.filter((item) =>
-    (item.name === "Kindred Status" && item.grantedBy === TEMPLATE_SOURCE) ||
-    (item.name === "Mystery Cult Initiation" && item.grantedBy === SHADOW_CULT_SOURCE),
-  );
-  sheet.merits = sheet.merits.filter((item) => !automatic.includes(item));
-
+  let grant: MeritSelection | undefined;
   if (isShadowCultId(primaryCovenant)) {
     const cult = SHADOW_CULTS[primaryCovenant];
-    const existing = automatic.find((item) => item.name === "Mystery Cult Initiation");
-    const experienceDots = Math.max(0, Number(existing?.experienceDots ?? 0));
-    const creationDots = Math.max(1, Number(existing?.creationDots ?? existing?.dots ?? 1) - experienceDots);
-    sheet.merits.push({ ...existing, instanceId: existing?.instanceId ?? `shadow-cult-${primaryCovenant}`, name: "Mystery Cult Initiation", dots: creationDots + experienceDots, creationDots, experienceDots, sourceId: cult.sourceId, source: cult.source, configuration: { ...normalizeMeritConfiguration(existing?.configuration), cult: cult.name, ...cult.configuration }, grantedBy: SHADOW_CULT_SOURCE });
+    grant = { definitionId: "core-2ed:mystery-cult-initiation", instanceId: `shadow-cult-${primaryCovenant}`, name: "Mystery Cult Initiation", dots: 1, sourceId: cult.sourceId, source: cult.source, configuration: { cult: cult.name, ...cult.configuration }, grantedBy: SHADOW_CULT_SOURCE };
   } else if (group) {
-    const existing = automatic.find((item) => item.name === "Kindred Status");
-    const experienceDots = Math.max(0, Number(existing?.experienceDots ?? 0));
-    const creationDots = Math.max(1, Number(existing?.creationDots ?? existing?.dots ?? 1) - experienceDots);
-    sheet.merits.push({ ...existing, instanceId: existing?.instanceId ?? "vampire-template-kindred-status", name: "Kindred Status", dots: creationDots + experienceDots, creationDots, experienceDots, sourceId: "vtr-2ed", source: "Vampire: The Requiem Second Edition", configuration: { group }, grantedBy: TEMPLATE_SOURCE });
+    grant = { definitionId: "vtr-kindred-status", instanceId: "vampire-template-kindred-status", name: "Kindred Status", dots: 1, sourceId: "vtr-2ed", source: "Vampire: The Requiem Second Edition", configuration: { group }, grantedBy: TEMPLATE_SOURCE };
   }
+  sheet.merits = reconcileVampireTemplateMerits(sheet.merits, grant);
   sheet.line_data.merit_granted_skill_bonuses = synchronizeCommonMeritGrants(sheet, (source) => source === SHADOW_CULT_SOURCE);
   return sheet;
 }

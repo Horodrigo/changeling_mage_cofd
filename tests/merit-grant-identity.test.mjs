@@ -16,10 +16,14 @@ const { commonExpandedConfigurationLines } = await vite.ssrLoadModule("/app/work
 const { withMeritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
 const { resolveMeritDefinition } = await vite.ssrLoadModule("/lib/merit-identity.ts");
 const { normalizeStoredSheet, validateCurrentCharacter } = await vite.ssrLoadModule("/lib/character-persistence.ts");
+const { refundMeritDots } = await vite.ssrLoadModule("/lib/experience-refunds.ts");
+const { mergeCreationMerits } = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
 const { MeritConfigurationEditor } = await vite.ssrLoadModule("/app/builder/merit-configuration-editor.tsx");
 const { COMMON_MERIT_CONFIGURATIONS } = await vite.ssrLoadModule("/app/builder/common-merit-configurations.ts");
 const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+const mageGrants = await vite.ssrLoadModule("/game-lines/mage/builder-merit-grants.ts");
+const vampireGrants = await vite.ssrLoadModule("/game-lines/vampire/builder-merit-grants.ts");
 const catalog = withMeritPresentation(read("shared/data/merits.json"), read("shared/data/merits-pt.json"));
 const resources = catalog.find(item => item.id === "core-2ed:resources");
 const namesake = { ...resources, id: "homebrew:test:resources", sourceId: "homebrew:test", source: "Player source", translatedName: "Outro recurso", presentationPt: { name: "Outro recurso", description: "Outro efeito" } };
@@ -80,4 +84,138 @@ test("Cult summaries localize the exact chosen definition without changing rows 
 
 test("malformed grants fail without being interpreted as a canonical name or manufacturing ratings", () => {
   for (const row of [null, [], {}, "Resources", "Resources|", "Resources|0", "Resources|-1", "Resources|1.5", "Resources|Infinity", "Resources|1|2", "{broken", '{"name":"Resources","dots":1}', '{"definitionId":"id","name":"Resources","dots":"1"}', '{"definitionId":"id","name":"Resources","dots":1,"sourceId":[]}', '{"definitionId":"","name":"Resources","dots":1}']) assert.equal(decodeMeritGrantChoice(row), undefined, String(row));
+});
+
+const templateCatalog = [...catalog, ...read("game-lines/mage/data/merits.json"), ...read("game-lines/mage/data/merits-supplements.json"), ...read("game-lines/vampire/data/merits.json")];
+const selection = (id, grantedBy, dots = 1, extra = {}) => {
+  const definition = templateCatalog.find(item => item.id === id);
+  return { definitionId: id, name: definition.name, sourceId: definition.sourceId, source: definition.source, dots, grantedBy, ...extra };
+};
+
+test("all automatic Nameless Order and bundled Shadow Cult benefits reconcile canonical IDs, sources and unchanged ratings", () => {
+  const rows = [mageGrants.NAMELESS_HIGH_SPEECH_BENEFIT];
+  const shadowCults = JSON.parse(readFileSync(new URL("../game-lines/vampire/catalog-data/shadow-cults.json", import.meta.url), "utf8"));
+  for (const cult of Object.values(shadowCults)) for (const [key, value] of Object.entries(cult.configuration)) if (/^level_\d_merits$/.test(key)) rows.push(...value);
+  assert.equal(rows.length, 11);
+  for (const row of rows) {
+    const choice = decodeMeritGrantChoice(row);
+    assert.ok(choice.definitionId);
+    const definition = resolveMeritDefinition(choice, templateCatalog);
+    assert.ok(definition, choice.definitionId);
+    assert.equal(choice.name, definition.name);
+    assert.equal(choice.sourceId, definition.sourceId);
+    assert.equal(choice.source, definition.source);
+    assert.ok(definition.ratings.includes(choice.dots));
+  }
+});
+
+test("Mage creation grants identify official choices by ID, preserve Homebrew namesakes and keep existing XP instances", () => {
+  const fake = { ...selection("mta-2ed:awakened-status", undefined), definitionId: "homebrew:status", instanceId: "authored", configuration: { domain: "Authored", name: "Authored" } };
+  const paid = selection("mta-2ed:awakened-status", "Ordem", 3, { instanceId: "order-status", creationDots: 1, experienceDots: 2, name: "Changed display", configuration: { domain: "Free Council" } });
+  const wanted = [selection("mta-2ed:awakened-status", "Ordem", 1, { configuration: { domain: "Free Council" } }), selection("mta-2ed:high-speech", "Ordem")];
+  const current = [fake, { ...paid, dots: paid.creationDots }], before = JSON.stringify(current);
+  const next = mageGrants.reconcileMageCreationMeritGrants(current, wanted, templateCatalog);
+  assert.deepEqual(next.find(item => item.instanceId === "authored"), fake);
+  assert.equal(next.find(item => item.definitionId === "mta-2ed:awakened-status").instanceId, paid.instanceId);
+  assert.equal(next.find(item => item.instanceId === paid.instanceId).experienceDots, 2);
+  assert.equal(next.find(item => item.instanceId === paid.instanceId).dots, 1);
+  assert.equal(mergeCreationMerits([fake, paid], next).find(item => item.instanceId === paid.instanceId).dots, 3);
+  assert.ok(next.some(item => item.definitionId === "mta-2ed:high-speech" && item.instanceId));
+  assert.equal(JSON.stringify(current), before);
+  assert.deepEqual(mageGrants.reconcileMageCreationMeritGrants(next, wanted, templateCatalog), next);
+  const unavailable = { ...fake, definitionId: "unavailable:id", grantedBy: "Ordem" };
+  assert.deepEqual(mageGrants.reconcileMageCreationMeritGrants([unavailable], wanted, templateCatalog).find(item => item.instanceId === "authored"), unavailable);
+});
+
+test("Mage template changes retain purchased dots and their instance, while ID-less automatic grants receive canonical IDs", () => {
+  const paid = selection("core-2ed:mystery-cult-initiation", "Nameless Order", 4, { instanceId: "paid-cult", creationDots: 1, experienceDots: 3, configuration: { cult: "Authored" } });
+  const wanted = [selection("mta-2ed:awakened-status", "Ordem"), selection("mta-2ed:high-speech", "Ordem")];
+  const creation = mageGrants.reconcileMageCreationMeritGrants([{ ...paid, dots: paid.creationDots }], wanted, templateCatalog);
+  assert.equal(creation.some(item => item.instanceId === paid.instanceId), false);
+  const next = mergeCreationMerits([paid], creation);
+  const expectedPaid = { ...paid, dots: 3, creationDots: 0 };
+  delete expectedPaid.grantedBy;
+  assert.deepEqual(next.find(item => item.instanceId === "paid-cult"), expectedPaid);
+  const sheet = { merits: [paid], specializations: [], line_data: { order: "Free Council" }, current_state: { experience_available: 5, experience_spent: 3, experience_history: [{ id: "paid" }] } };
+  const state = JSON.stringify(sheet.current_state);
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  const retained = sheet.merits.find(item => item.instanceId === "paid-cult");
+  assert.equal(retained.dots, 3);
+  assert.equal(retained.experienceDots, 3);
+  assert.equal(retained.grantedBy, undefined);
+  assert.equal(JSON.stringify(sheet.current_state), state);
+  assert.equal(refundMeritDots(sheet, "Unrelated display label", 3, "paid-cult", undefined, "core-2ed:mystery-cult-initiation"), true);
+  assert.equal(sheet.merits.some(item => item.instanceId === "paid-cult"), false);
+  const allocated = { ...paid, dots: 5, creationDots: 3, experienceDots: 2 };
+  const retainedCreation = mageGrants.reconcileMageCreationMeritGrants([{ ...allocated, dots: allocated.creationDots }], [], templateCatalog);
+  assert.equal(retainedCreation[0].dots, 2);
+  const retainedAllocation = mergeCreationMerits([allocated], retainedCreation)[0];
+  assert.equal(retainedAllocation.dots, 4);
+  assert.equal(retainedAllocation.creationDots, 2);
+  assert.equal(retainedAllocation.experienceDots, 2);
+  assert.equal(retainedAllocation.instanceId, allocated.instanceId);
+  const legacy = selection("mta-2ed:awakened-status", "Ordem", 2, { instanceId: "legacy", creationDots: 1, experienceDots: 1 });
+  delete legacy.definitionId;
+  sheet.merits = [legacy];
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.equal(sheet.merits.find(item => item.instanceId === "legacy").definitionId, "mta-2ed:awakened-status");
+  const markedNamesake = { ...legacy, definitionId: "homebrew:status" };
+  sheet.merits = [markedNamesake];
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.deepEqual(sheet.merits.find(item => item.instanceId === "legacy"), markedNamesake);
+});
+
+test("Vampire creation and synchronization use the same ID-based template reconciliation without subtracting XP twice", () => {
+  const paid = selection("vtr-kindred-status", "Vampire Template", 5, { instanceId: "paid-status", creationDots: 3, experienceDots: 2, name: "Changed display", configuration: { group: "Daeva" } });
+  const fake = { ...selection("vtr-kindred-status", undefined), instanceId: "authored", definitionId: "homebrew:kindred-status", configuration: { group: "Authored" } };
+  const wanted = selection("vtr-kindred-status", "Vampire Template", 1, { instanceId: "vampire-template-kindred-status", configuration: { group: "Daeva" } });
+  const current = [fake, paid], before = JSON.stringify(current);
+  const next = vampireGrants.reconcileVampireTemplateMerits(current, wanted);
+  assert.deepEqual(next.find(item => item.instanceId === "authored"), fake);
+  assert.equal(next.find(item => item.instanceId === "paid-status").dots, 5);
+  assert.equal(next.find(item => item.instanceId === "paid-status").creationDots, 3);
+  assert.equal(next.find(item => item.instanceId === "paid-status").experienceDots, 2);
+  assert.equal(JSON.stringify(current), before);
+  assert.deepEqual(vampireGrants.reconcileVampireTemplateMerits(next, wanted), next);
+  const creation = vampireGrants.reconcileVampireCreationMeritGrants([{ ...paid, dots: paid.creationDots }], wanted);
+  assert.equal(creation[0].dots, 3);
+  assert.equal(mergeCreationMerits([paid], creation)[0].dots, 5);
+  const reduced = vampireGrants.reconcileVampireCreationMeritGrants([{ ...paid, dots: paid.creationDots }]);
+  assert.equal(reduced[0].dots, 2);
+  assert.equal(mergeCreationMerits([paid], reduced)[0].dots, 4);
+  const sheet = { merits: current, specializations: [], line_data: { covenant_id: "invictus", kindred_status_group: "Daeva" }, current_state: { experience_available: 5, experience_spent: 2 } };
+  const state = JSON.stringify(sheet.current_state);
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  assert.equal(sheet.merits.find(item => item.instanceId === "paid-status").dots, 5);
+  assert.equal(JSON.stringify(sheet.current_state), state);
+});
+
+test("Vampire leaving a template retains purchased dots, unknown identities and ID-bearing Shadow Cult benefits", () => {
+  const paid = selection("vtr-kindred-status", "Vampire Template", 3, { instanceId: "paid-status", creationDots: 1, experienceDots: 2, configuration: { group: "Daeva" } });
+  const unknown = { ...paid, definitionId: "unavailable:id", instanceId: "unknown" };
+  const removed = vampireGrants.reconcileVampireTemplateMerits([unknown, paid]);
+  assert.deepEqual(removed[0], unknown);
+  assert.equal(removed[1].dots, 2);
+  assert.equal(removed[1].creationDots, 0);
+  assert.equal(removed[1].experienceDots, 2);
+  assert.equal(removed[1].grantedBy, undefined);
+  const creation = vampireGrants.reconcileVampireCreationMeritGrants([{ ...paid, dots: paid.creationDots }]);
+  assert.deepEqual(creation, []);
+  assert.deepEqual(mergeCreationMerits([paid], creation), [removed[1]]);
+  assert.deepEqual(mergeCreationMerits([{ ...paid, dots: 1, experienceDots: 0 }], []), []);
+  const allocated = vampireGrants.reconcileVampireTemplateMerits([{ ...paid, dots: 5, creationDots: 3 }])[0];
+  assert.equal(allocated.dots, 4);
+  assert.equal(allocated.creationDots, 2);
+  assert.equal(allocated.experienceDots, 2);
+  const sheet = { merits: [paid], specializations: [], line_data: { covenant_id: "followers-of-seth", kindred_status_group: "Followers of Seth" }, current_state: { experience_available: 5, experience_spent: 2 } };
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  const owner = sheet.merits.find(item => item.grantedBy === "Vampire Shadow Cult");
+  assert.equal(owner.definitionId, "core-2ed:mystery-cult-initiation");
+  owner.dots = 2;
+  owner.creationDots = 2;
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  assert.equal(sheet.merits.find(item => item.name === "Demolisher").definitionId, "core-2ed:demolisher");
+  assert.equal(sheet.merits.find(item => item.instanceId === "paid-status").experienceDots, 2);
+  assert.equal(refundMeritDots(sheet, "Unrelated display label", 2, "paid-status", undefined, "vtr-kindred-status"), true);
+  assert.ok(sheet.merits.some(item => item.definitionId === "core-2ed:mystery-cult-initiation" && item.grantedBy));
 });

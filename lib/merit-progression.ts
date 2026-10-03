@@ -19,12 +19,16 @@ export function creationMerits(merits: MeritSelection[] = []) {
 export function mergeCreationMerits(existing: MeritSelection[] = [], selected: MeritSelection[] = []) {
   const selectedIds = new Set(selected.map((merit) => merit.instanceId).filter(Boolean));
   const result = existing
-    .filter((merit) => !merit.grantedBy)
     .filter((merit) => experienceMeritDots(merit) > 0 && !selectedIds.has(merit.instanceId))
-    .map((merit) => ({ ...merit, creationDots: 0, experienceDots: experienceMeritDots(merit), dots: experienceMeritDots(merit) }));
+    .map((merit) => {
+      // No missing creation row can authorize discarding paid dots, including a former free grant.
+      const purchased = { ...merit, creationDots: 0, experienceDots: experienceMeritDots(merit), dots: experienceMeritDots(merit) };
+      delete purchased.grantedBy;
+      return purchased;
+    });
 
   for (const merit of selected) {
-    const previous = existing.find((item) => item.instanceId && item.instanceId === merit.instanceId) ?? (merit.grantedBy ? existing.find((item) => item.name === merit.name && item.grantedBy === merit.grantedBy) : undefined);
+    const previous = existing.find((item) => item.instanceId && item.instanceId === merit.instanceId);
     const creation = dots(merit.dots);
     const experience = previous ? experienceMeritDots(previous) : 0;
     result.push({ ...(previous ?? {}), ...merit, creationDots: creation, experienceDots: experience, dots: creation + experience });

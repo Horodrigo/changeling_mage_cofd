@@ -1,7 +1,7 @@
 "use client";
 import { meritProblemMessage } from "@/lib/merit-ui";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CharacterBuilderShell,
   builderCurrentState,
@@ -34,6 +34,7 @@ import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
 import { mageMeritSelectionProblems } from "./merits";
+import { NAMELESS_HIGH_SPEECH_BENEFIT, reconcileMageCreationMeritGrants } from "./builder-merit-grants";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
   if (!value || typeof value !== "object") return null;
@@ -125,10 +126,10 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const factionCatalog = catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
   const customMerits = useMeritHomebrews("MtA", true), customSpells = useSpellHomebrews(), homebrewPreferences = useHomebrewPreferences();
   const spellCatalog = activeSpellCatalog(catalogs.get<readonly SpellDefinition[]>("mage-spells"), customSpells, homebrewPreferences);
-  const meritCatalog = activeMeritCatalog([
+  const meritCatalog = useMemo(() => activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("mage-merits"),
-  ], customMerits, homebrewPreferences, [...(initial?.merits ?? []), ...common.merits]).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
+  ], customMerits, homebrewPreferences, [...(initial?.merits ?? []), ...common.merits]).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs, customMerits, homebrewPreferences, initial?.merits, common.merits]);
 
   const [path, setPath] = useState(String(initial?.line_data.path ?? ""));
   const [order, setOrder] = useState(String(initial?.line_data.order || "Orderless"));
@@ -147,7 +148,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const [praxes, setPraxes] = useState<Array<SpellSelection | null>>(() => readSpells(initial, "praxes", 3, spellCatalog));
   const setMerits = common.setMerits;
 
-  const namelessInitiation = common.merits.find((item) => item.name === "Mystery Cult Initiation" && item.grantedBy === "Nameless Order");
+  const namelessInitiation = common.merits.find((item) => resolveMeritDefinition(item, meritCatalog)?.id === "core-2ed:mystery-cult-initiation" && item.grantedBy === "Nameless Order");
   const namelessInitiationDots = Number(namelessInitiation?.dots ?? 1);
   const namelessConfiguration = normalizeMeritConfiguration(namelessInitiation?.configuration);
   const namelessRoteSkills = Array.isArray(namelessConfiguration.level_2_rote_skills)
@@ -166,24 +167,17 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   useEffect(() => {
     const wanted: MeritSelection[] = hasStandardCreationOrderBenefits(order)
       ? [
-          { name: "Awakened Status", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order } },
-          { name: "High Speech", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {} },
+          { definitionId: "mta-2ed:awakened-status", name: "Awakened Status", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order } },
+          { definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {} },
         ]
       : order === "Nameless"
-        ? [{ name: "Mystery Cult Initiation", dots: 1, grantedBy: "Nameless Order", sourceId: "core-2ed", source: "Chronicles of Darkness", configuration: { ...normalizeMeritConfiguration(customOrder?.initiation), cult: customOrder?.name ?? "", level_1_type: "merit", level_1_merits: ["High Speech|1"] } }]
+        ? [{ definitionId: "core-2ed:mystery-cult-initiation", name: "Mystery Cult Initiation", dots: 1, grantedBy: "Nameless Order", sourceId: "core-2ed", source: "Chronicles of Darkness", configuration: { ...normalizeMeritConfiguration(customOrder?.initiation), cult: customOrder?.name ?? "", level_1_type: "merit", level_1_merits: [NAMELESS_HIGH_SPEECH_BENEFIT] } }]
         : [];
     setMerits((current) => {
-      const automatic = new Set(["Ordem", "Nameless Order"]);
-      const grantedNames = new Set(wanted.map((merit) => merit.name));
-      const paidWithExperience = (name: string) => current.some((merit) => merit.name === name && !merit.grantedBy && Number(merit.experienceDots ?? 0) > 0);
-      const retained = current.filter((merit) => !automatic.has(String(merit.grantedBy)) && !(grantedNames.has(merit.name) && Number(merit.experienceDots ?? 0) === 0));
-      const next = [...retained, ...wanted.filter((merit) => !paidWithExperience(merit.name)).map((grant) => {
-        const existing = current.find((merit) => merit.name === grant.name && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && Number(merit.experienceDots ?? 0) === 0)));
-        return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
-      })];
+      const next = reconcileMageCreationMeritGrants(current, wanted, meritCatalog);
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
-  }, [order, customOrder?.name, customOrder?.initiation, setMerits]);
+  }, [order, customOrder?.name, customOrder?.initiation, setMerits, meritCatalog]);
 
   const meritSpent = common.merits.reduce((sum, item) => sum + Math.max(0, item.dots - (item.grantedBy ? 1 : 0)), 0);
   const meritBudget = Math.max(0, 10 - (gnosis - 1) * 5);
@@ -258,8 +252,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
           const definition = resolveMeritDefinition(item, meritCatalog);
           return { ...item, ...(definition ? { definitionId: definition.id } : {}), configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId ?? item.sourceId, source: definition?.source ?? item.source };
         })),
-        ...(hasStandardCreationOrderBenefits(order) && !common.merits.some((item) => item.name === "High Speech") && !source?.merits.some((item) => item.name === "High Speech" && item.experienceDots)
-          ? [{ name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]
+        ...(hasStandardCreationOrderBenefits(order) && !common.merits.some((item) => resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:high-speech") && !source?.merits.some((item) => resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:high-speech" && item.experienceDots)
+          ? [{ definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]
           : []),
       ],
       line_data: {
