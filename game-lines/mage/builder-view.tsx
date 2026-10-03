@@ -270,6 +270,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           catalog={props.meritCatalog}
           context={props.meritContext}
           isEligible={mageMeritPrerequisitesMet}
+          confirmRemoval={(definition) => definition?.id === "mta-2ed:familiar"}
           spent={props.meritSpent}
           budget={props.meritBudget}
           powerLabel={t("ui.gnosisAtCreation")}

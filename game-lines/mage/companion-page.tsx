@@ -5,6 +5,8 @@ import { RuleSelect } from "@/app/workspace/rule-select";
 import { SheetHeading, stringList } from "@/app/workspace/sheet-primitives";
 import { Input } from "@/components/ui/input";
 import { ANIMALS, animalPresentation } from "@/lib/companions";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
+import type { MeritDefinition } from "@/lib/merits";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { useLanguage } from "@/lib/i18n";
@@ -31,15 +33,16 @@ const FAMILIAR_NUMINA = {
   "Telekinesis": "ui.familiarNumina.telekinesis",
 } as const;
 
-export function CompanionPage({ character, updateSheet }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void }) {
+export function CompanionPage({ character, updateSheet, catalog }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalog: readonly MeritDefinition[] }) {
   const { t } = useLanguage();
-  const familiars = character.merits.map((merit, index) => ({ merit, index })).filter(({ merit }) => !merit.grantedBy && merit.name === "Familiar");
+  const familiars = character.merits.map((merit, index) => ({ merit, index })).filter(({ merit }) => !merit.grantedBy && resolveMeritDefinition(merit, catalog)?.id === "mta-2ed:familiar");
   return <section className="mage-companions">
-    {!!familiars.length && <><SheetHeading>{t("ui.familiars")}</SheetHeading>{familiars.map(({ merit, index }) => <FamiliarCompanionCard key={`Familiar-${index}`} merit={merit} meritIndex={index} character={character} updateSheet={updateSheet}/>)}</>}
+    {!!familiars.length && <><SheetHeading>{t("ui.familiars")}</SheetHeading>{familiars.map(({ merit, index }) => <FamiliarCompanionCard key={`Familiar-${index}`} merit={merit} meritIndex={index} character={character} updateSheet={updateSheet} catalog={catalog}/>)}</>}
   </section>;
 }
 
-function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
+function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet, catalog }: {
+  catalog: readonly MeritDefinition[];
   merit: CharacterSheet["merits"][number];
   meritIndex: number;
   character: CharacterSheet;
@@ -51,7 +54,7 @@ function FamiliarCompanionCard({ merit, meritIndex, character, updateSheet }: {
   const save = (patch: Record<string, string | string[]>) => {
     const next = structuredClone(character);
     const target = next.merits[meritIndex];
-    if (target?.name === merit.name) target.configuration = { ...normalizeMeritConfiguration(target.configuration), ...patch };
+    if (target && target.instanceId === merit.instanceId && resolveMeritDefinition(target, catalog)?.id === resolveMeritDefinition(merit, catalog)?.id) target.configuration = { ...normalizeMeritConfiguration(target.configuration), ...patch };
     updateSheet(next);
   };
   const form = String(configuration.form ?? "animal");

@@ -153,13 +153,14 @@ export function MageCharacterPaper({
     isMobile
       ? setMobileTab({ characterId: character.id, value })
       : setDesktopTab(value);
-  const isExpanded = (name: string) =>
-    meritCatalog.some((item) => item.name === name && item.levels?.length) ||
-    Boolean(findMeritConfiguration(name));
+  const isExpanded = (selection: CharacterSheet["merits"][number]) => {
+    const definition = resolveMeritDefinition(selection, meritCatalog);
+    return Boolean(definition?.levels?.length || findMeritConfiguration(definition?.id) || definition?.id === "mta-2ed:mystery-cult-influence");
+  };
   const data = character.line_data;
   const hasCompanions =
     character.merits.some(
-      (item) => !item.grantedBy && item.name === "Familiar",
+      (item) => !item.grantedBy && resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:familiar",
     ) ||
     selectedConditionList(
       character.current_state?.conditions,
@@ -426,7 +427,7 @@ export function MageCharacterPaper({
   );
   const expandedMerits = character.merits.filter(
     (item) =>
-      (isExpanded(item.name) || item.name === "Mystery Cult Initiation") &&
+      isExpanded(item) &&
       (!item.grantedBy || item.grantedBy === "Nameless Order"),
   );
   const principalMerits = character.merits.filter(
@@ -832,6 +833,7 @@ export function MageCharacterPaper({
               companheiros: (
                 <div className="companions-page">
                   <MageCompanionPage
+                    catalog={meritCatalog}
                     character={character}
                     updateSheet={updateSheet}
                   />
@@ -1195,6 +1197,7 @@ export function MageCharacterPaper({
             >
               <div className="companions-page">
                 <MageCompanionPage
+                  catalog={meritCatalog}
                   character={character}
                   updateSheet={updateSheet}
                 />
@@ -1265,7 +1268,7 @@ function ExpandedMeritList({
   const visible = merits.filter(
     (item) =>
       (!item.grantedBy || item.grantedBy === "Nameless Order") &&
-      item.name !== "Familiar",
+      resolveMeritDefinition(item, catalog)?.id !== "mta-2ed:familiar",
   );
   return (
     <div className="expanded-merit-list">
@@ -1273,7 +1276,7 @@ function ExpandedMeritList({
         const definition = resolveMeritDefinition(item, catalog);
         const style = definition?.levels?.length ? definition : undefined,
           configured = expandedConfigurationLines(
-            item.name,
+            definition?.id,
             item.dots,
             item.configuration,
             locale,
@@ -1287,8 +1290,8 @@ function ExpandedMeritList({
           configurationEditor =
             character &&
             updateSheet &&
-            findMeritConfiguration(item.name) &&
-            item.name !== "Familiar" ? (
+            findMeritConfiguration(definition?.id) &&
+            resolveMeritDefinition(item, catalog)?.id !== "mta-2ed:familiar" ? (
               <MeritConfigurationEditor
                 compact
                 merit={item}
@@ -1417,7 +1420,7 @@ function NamelessMysteryCultLevels({
         .map((skill) => systemTerm(String(skill), locale))
     : [];
   const configured = expandedConfigurationLines(
-    "Mystery Cult Initiation",
+    "core-2ed:mystery-cult-initiation",
     dots,
     configuration,
     locale,

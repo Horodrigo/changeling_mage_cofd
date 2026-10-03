@@ -82,7 +82,7 @@ test("custom Token fields remain authored and unknown identities never trigger i
   }
   const { expandedConfigurationLines } = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
   const config = { items: [JSON.stringify(selection(definition, "pt-BR"))] };
-  const english = expandedConfigurationLines("Token", 5, config, "en-US", [], catalog).join("\n");
+  const english = expandedConfigurationLines("ctl-2ed:token", 5, config, "en-US", [], catalog).join("\n");
   assert.ok(english.includes(definition.name) && english.includes(definition.effect));
   assert.ok(!english.includes(tokenPresentation(definition, "pt-BR").name));
   assert.match(await read("game-lines/changeling/builder-merit-editor.tsx"), /catalogId:selected\.id/);

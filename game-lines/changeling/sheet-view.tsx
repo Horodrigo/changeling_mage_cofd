@@ -116,10 +116,10 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
     const sheetTab = mobileTab.characterId === character.id ? mobileTab.value : "resumo";
     const setSheetTab = (value: string) => setMobileTab({ characterId: character.id, value });
-    const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) || Boolean(findMeritConfiguration(name));
+    const isExpanded = (selection: CharacterSheet["merits"][number]) => { const definition = resolveMeritDefinition(selection, meritCatalog); return Boolean(definition?.levels?.length || findMeritConfiguration(definition?.id)); };
     const data = character.line_data;
     const entitlementMerit = character.merits.find((item) => changelingMeritId(item) === "oak-ash-thorn:entitlement" && !item.grantedBy);
-    const hasCompanions = character.merits.some((item) => !item.grantedBy && ["Fae Mount", "Fae Pet"].includes(item.name)) || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
+    const hasCompanions = character.merits.some((item) => !item.grantedBy && ["ctl-2ed:fae-mount", "h-seemings:fae-pet"].includes(resolveMeritDefinition(item, meritCatalog)?.id ?? "")) || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
     const derived = derivedWithPermanentMerits(character);
     const grantedSkillBonuses = (data.merit_granted_skill_bonuses &&
         typeof data.merit_granted_skill_bonuses === "object"
@@ -191,7 +191,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         updateSheet(synchronizeEntitlement(next, entitlementCatalog));
     };
     const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 10, 0);
-    const expandedMerits = character.merits.filter((item) => changelingMeritId(item) !== "oak-ash-thorn:entitlement" && isExpanded(item.name) && !item.grantedBy);
+    const expandedMerits = character.merits.filter((item) => changelingMeritId(item) !== "oak-ash-thorn:entitlement" && isExpanded(item) && !item.grantedBy);
     const principalMerits = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
     const selectedConditions = [
         ...selectedConditionList(character.current_state?.conditions, conditionCatalog),
@@ -257,7 +257,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
               <SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/>
               <CombatPage character={character} derived={derived} updateSheet={updateSheet}/>
             </>,
-                companheiros: <div className="companions-page"><CompanionPage character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>,
+                companheiros: <div className="companions-page"><CompanionPage catalog={meritCatalog} character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>,
                 anotacoes: <><SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
             }}
         </SwipeableSheetTabs>
@@ -328,7 +328,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             <CombatPage character={character} derived={derived} updateSheet={updateSheet}/>
           </TabsContent>
           <TabsContent value="companheiros" data-page-title="Companheiros" className="ctl-sheet-page powers-page">
-            <div className="companions-page"><CompanionPage character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>
+            <div className="companions-page"><CompanionPage catalog={meritCatalog} character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div>
           </TabsContent>
         </Tabs>)}
     </CharacterPaperShell>);
@@ -367,12 +367,12 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             return;
         updateSheet({ ...character, current_state: { ...character.current_state, trifle_uses: { ...trifleUses, [key]: Math.max(0, Math.min(3, value)) } } });
     };
-    const visible = merits.filter((item) => !item.grantedBy && !["Fae Mount", "Fae Pet"].includes(item.name));
+    const visible = merits.filter((item) => !item.grantedBy && !["ctl-2ed:fae-mount", "h-seemings:fae-pet"].includes(resolveMeritDefinition(item, catalog)?.id ?? ""));
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
-            const definition = resolveMeritDefinition(item, catalog), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog, tokenCatalog, catalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
+            const definition = resolveMeritDefinition(item, catalog), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(definition?.id, item.dots, item.configuration, locale, courtCatalog, tokenCatalog, catalog), tokenItems = definition?.id === "ctl-2ed:token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = definition?.id === "ctl-2ed:token"
                 ? t("ui.tokens")
-                : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
+                : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(definition?.id) && !["ctl-2ed:fae-mount", "h-seemings:fae-pet", "oak-ash-thorn:entitlement"].includes(definition?.id ?? "")
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>
                 : null;
@@ -387,7 +387,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                   {meritPresentation(definition, locale).prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {meritPresentation(definition, locale).prerequisites}</p>}
                   <p>{meritPresentation(definition, locale).description}</p>
                 </>}
-                {item.name === "Token" ? <ConfiguredTokenList items={tokenItems} catalog={tokenCatalog} dots={item.dots} locale={locale} renderTrifleUses={(token, index) => <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`, value)}/>} /> : configured.length ? (configured.map((line, index) => (<section key={`${item.name}-configured-${index}`}>
+                {definition?.id === "ctl-2ed:token" ? <ConfiguredTokenList items={tokenItems} catalog={tokenCatalog} dots={item.dots} locale={locale} renderTrifleUses={(token, index) => <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`, value)}/>} /> : configured.length ? (configured.map((line, index) => (<section key={`${item.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                     </section>))) : !definition && (<p>
@@ -417,7 +417,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                     ? <>{configured.map((line, index) => (<section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
-                    </section>))}{item.name === "Hedge Duelist" && (presented.levels ?? []).filter((level) => level.rating > 1 && level.rating <= item.dots).map((level, index) => <section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
+                    </section>))}{definition?.id === "ctl-2ed:hedge-duelist" && (presented.levels ?? []).filter((level) => level.rating > 1 && level.rating <= item.dots).map((level, index) => <section key={`${style.name}-shared-${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}</strong><p>{level.description}</p></section>)}</>
                     : (presented.levels ?? [])
                         .filter((level) => level.rating <= item.dots)
                         .map((level, index) => (<section key={`${style.name}-${level.rating}-${index}`}>

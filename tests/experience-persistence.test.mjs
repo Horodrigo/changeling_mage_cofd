@@ -291,7 +291,7 @@ test("Nameless Order applies its fixed Mystery Cult progression at the correct d
   mageMeritConfigurations.synchronizeMeritGrants(sheet);
   assert.equal(sheet.line_data.merit_granted_skill_bonuses.Occult,1);
   assert.deepEqual(
-    mageMeritConfigurations.expandedConfigurationLines("Mystery Cult Initiation",3,advancedInitiation.configuration,"en-US"),
+    mageMeritConfigurations.expandedConfigurationLines("core-2ed:mystery-cult-initiation",3,advancedInitiation.configuration,"en-US"),
     ["Cult: The Unnamed","Dot 1: High Speech •","Dot 2: Rote Skills: Academics, Occult, Science","Dot 3: Occult +1"],
   );
 });

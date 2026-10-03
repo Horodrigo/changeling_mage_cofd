@@ -1368,14 +1368,14 @@ export function VampireCharacterPaper({
         ["Vampire Template", "Vampire Shadow Cult"].includes(item.grantedBy)) &&
       (Boolean(
         VAMPIRE_MERIT_CONFIGURATIONS.find(
-          (definition) => definition.name === item.name,
+          (definition) => definition.id === resolveMeritDefinition(item, merits)?.id,
         ),
       ) ||
         Boolean(
           resolveMeritDefinition(item, merits)?.levels
             ?.length,
         ) ||
-        item.name === "Mystery Cult Initiation"),
+        resolveMeritDefinition(item, merits)?.id === "core-2ed:mystery-cult-initiation"),
   );
   const summary = (
     <>
@@ -2193,7 +2193,7 @@ function VampireExpandedMeritList({
       {merits.map((merit, index) => {
         const definition = resolveMeritDefinition(merit, catalog);
         const configDefinition = VAMPIRE_MERIT_CONFIGURATIONS.find(
-          (item) => item.name === merit.name,
+          (item) => item.id === definition?.id,
         );
         const displayName = definition ? meritPresentation(definition, locale).name : merit.name;
         const detail = meritConfigurationTitle(merit.configuration);
@@ -2210,7 +2210,7 @@ function VampireExpandedMeritList({
               locale,
             )
           : (commonExpandedConfigurationLines(
-              merit.name,
+              definition?.id,
               merit.dots,
               merit.configuration,
               locale,

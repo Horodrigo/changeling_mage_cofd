@@ -1,4 +1,5 @@
 "use client";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
@@ -170,9 +171,9 @@ function ContractCard({ data, rows, continued = false, detailed }: { data: Contr
 
 function ExpandedMeritCard({ merit, catalog, courts, tokens, detailed }: { merit: CharacterSheet["merits"][number]; catalog: readonly MeritDefinition[]; courts: readonly CourtDefinition[]; tokens: readonly TokenDefinition[]; detailed: boolean }) {
   const { locale, t } = useLanguage();
-  const definition = catalog.find((item) => item.name === merit.name);
+  const definition = resolveMeritDefinition(merit, catalog);
   const presented = definition && meritPresentation(definition, locale);
-  const configured = expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, courts, tokens);
+  const configured = expandedConfigurationLines(definition?.id, merit.dots, merit.configuration, locale, courts, tokens, catalog);
   const configuredTitle = meritConfigurationTitle(merit.configuration, locale, courts);
   const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
   const title = configuredTitle ? `${name}: ${configuredTitle}` : name;
@@ -393,7 +394,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section>
           <SheetHeading>{t("ui.oaths")}</SheetHeading><PrintTextList values={cleanList(data.oaths)} minimum={6}/>
           <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
-          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(merit.name, merit.dots, merit.configuration, locale, reference.courts, tokenCatalog)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
+          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(resolveMeritDefinition(merit, meritCatalog)?.id, merit.dots, merit.configuration, locale, reference.courts, tokenCatalog, meritCatalog)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
           <SheetHeading>{t("ui.combat")}</SheetHeading>
           <div className="ctl-print-combat-table"><header><span>{t("combat.weapons")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span/><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div>
           <SheetHeading>{t("ui.equipment")}</SheetHeading>

@@ -27,14 +27,14 @@ export function configuredDefinitionLines(
 
 /** Presentation shared only by genuinely Core merit configurations. */
 export function commonExpandedConfigurationLines(
-  name: string,
+  definitionId: string | undefined,
   dots: number,
   value: unknown,
   locale: Locale = "en-US",
   catalog: readonly MeritDefinition[] = [],
 ): string[] | undefined {
   const configuration = normalizeMeritConfiguration(value);
-  if (name === "Professional Training") {
+  if (definitionId === "core-2ed:professional-training") {
     const lines: string[] = [];
     const profession = String(configuration.profession ?? "").trim();
     const contacts = Array.isArray(configuration.contacts) ? configuration.contacts.filter(Boolean) : [];
@@ -51,17 +51,17 @@ export function commonExpandedConfigurationLines(
     if (dots >= 4 && boosted) lines.push(`${translate(locale, "ui.skillIncrease")}: ${systemTerm(boosted, locale)} +1`);
     return lines;
   }
-  if (name === "Contacts") {
+  if (definitionId === "core-2ed:contacts") {
     const groups = configuration.groups;
     const choices = Array.isArray(groups) ? groups.filter(Boolean) : String(groups ?? "").trim() ? [String(groups)] : [];
     return choices.map((choice, index) => `${translate(locale, "ui.contact")} ${index + 1}: ${choice}`);
   }
-  if (name === "Multilingual") {
+  if (definitionId === "core-2ed:multilingual") {
     const configured = configuration.languages;
     const languages = Array.isArray(configured) ? configured.filter(Boolean) : String(configured ?? "").trim() ? [String(configured)] : [];
     return languages.length ? [`${translate(locale, "ui.languages")}: ${languages.join(", ")}`] : [];
   }
-  if (name === "Mystery Cult Initiation" || name === "Mystery Cult Influence") {
+  if (definitionId === "core-2ed:mystery-cult-initiation" || definitionId === "core-2ed:mystery-cult-influence") {
     const lines: string[] = [];
     const cult = String(configuration.cult ?? "").trim();
     if (cult) lines.push(`${translate(locale, "ui.cult")}: ${cult}`);

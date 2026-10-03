@@ -467,6 +467,15 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: suíte completa **500/500**, suíte dirigida inicial **43/43** e **8/8** testes finais após acrescentar a proteção de alocações antigas. Lint, build, TypeScript e `git diff --check` aprovados. A classificação do índice de identidade pelo lint foi alinhada ao padrão Core existente, sem desligar a regra. Sem smoke de navegador.
 - Ainda abertos: reconciliação de criação/edição, Entitlement e outros consumidores de nomes, requisitos especializados compartilhados e traduções das etapas 1–4. Este lote não encerra a prioridade 0.
 
+## Progresso — prioridade 0, resumos de configuração e companheiros (2026-10-03)
+
+- Resumos Core, Changeling e Mage recebem a identidade canônica da definição, e não o nome armazenado. Vampire também resolve a configuração pelos IDs do catálogo. As fichas mantêm os nomes/textos escritos pelo jogador sem utilizá-los como regras.
+- Fae Mount/Fae Pet e Familiar são reconhecidos na aba de companheiros pela definição resolvida no catálogo ativo. Seleções renomeadas continuam funcionando; IDs explícitos indisponíveis, Homebrew homônimo e escolhas antigas ambíguas não herdam cartões oficiais.
+- Mage fornece a adaptação de seu próprio Mystery Cult Influence para o resumo genérico de culto, sem introduzir identidade Mage no helper Core.
+- Confirmação de remoção no seletor de criação é um mecanismo neutro; Changeling/Mage fornecem seus próprios predicados por definição canônica, sem manter uma lista de companheiros/Entitlements no componente compartilhado.
+- Os testes existentes foram atualizados para a API por ID e mantidos; novos testes cobrem resumos EN/PT, rótulos renomeados, homônimos e renderização sem mutação. Changeling print recebeu somente a adaptação necessária à assinatura do helper compartilhado, não um novo lote de tradução/impressão.
+- Ainda pendentes na prioridade 0: requisitos e os demais despachos mecânicos por nomes registrados nesta auditoria. A meta completa continua aberta.
+
 ## Progresso — prioridade 0, controles de graduação e instâncias (2026-10-03)
 
 - Removidas as listas de nomes que determinavam repetibilidade e graduações sem limite nos seletores compartilhados e nas compras de Changeling/Werewolf. As 19 definições afetadas agora declaram esses metadados nos próprios catálogos; seus nomes, regras e graduações originais foram preservados.

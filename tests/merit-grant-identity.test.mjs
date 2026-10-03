@@ -177,10 +177,10 @@ test("Cult grants preserve ID, stable instance, purchase allocations and schema-
 test("Cult summaries localize the exact chosen definition without changing rows or substituting an unknown ID", () => {
   const configuration = { cult: "Authored name", level_1_type: "merit", level_1_merits: [encodeMeritGrantChoice(namesake, 1)], level_3_type: "merits", level_3_merits: [encodeMeritGrantChoice(resources, 2)] };
   const before = JSON.stringify(configuration);
-  assert.deepEqual(commonExpandedConfigurationLines("Mystery Cult Initiation", 3, configuration, "en-US", catalogs), ["Cult: Authored name", "Dot 1: Resources •", "Dot 3: Resources ••"]);
-  assert.deepEqual(commonExpandedConfigurationLines("Mystery Cult Initiation", 3, configuration, "pt-BR", catalogs), [`${translate("pt-BR", "ui.cult")}: Authored name`, `${translate("pt-BR", "ui.dot")} 1: Outro recurso •`, `${translate("pt-BR", "ui.dot")} 3: Recursos ••`]);
+  assert.deepEqual(commonExpandedConfigurationLines("core-2ed:mystery-cult-initiation", 3, configuration, "en-US", catalogs), ["Cult: Authored name", "Dot 1: Resources •", "Dot 3: Resources ••"]);
+  assert.deepEqual(commonExpandedConfigurationLines("core-2ed:mystery-cult-initiation", 3, configuration, "pt-BR", catalogs), [`${translate("pt-BR", "ui.cult")}: Authored name`, `${translate("pt-BR", "ui.dot")} 1: Outro recurso •`, `${translate("pt-BR", "ui.dot")} 3: Recursos ••`]);
   const unavailable = { ...configuration, level_1_merits: [encodeMeritGrantChoice({ ...resources, id: "unavailable:id", name: "Stored canonical fallback" }, 1)] };
-  assert.ok(commonExpandedConfigurationLines("Mystery Cult Initiation", 1, unavailable, "pt-BR", catalogs).includes(`${translate("pt-BR", "ui.dot")} 1: Stored canonical fallback •`));
+  assert.ok(commonExpandedConfigurationLines("core-2ed:mystery-cult-initiation", 1, unavailable, "pt-BR", catalogs).includes(`${translate("pt-BR", "ui.dot")} 1: Stored canonical fallback •`));
   assert.equal(JSON.stringify(configuration), before);
   const markup = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(MeritConfigurationEditor, { merit: { definitionId: "core-2ed:mystery-cult-initiation", name: "Mystery Cult Initiation", dots: 3, configuration }, catalog: catalogs, definitions: COMMON_MERIT_CONFIGURATIONS, onChange: () => {} })));
   assert.match(markup, /Resources ••/);

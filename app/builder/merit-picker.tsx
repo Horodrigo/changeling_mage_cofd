@@ -47,6 +47,7 @@ export function MeritPicker({
   isInlineConfiguration,
   isEligible = meritPrerequisitesMet,
   categoryFor = (definition) => definition.category,
+  confirmRemoval = () => false,
 }: {
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
@@ -61,6 +62,7 @@ export function MeritPicker({
   isInlineConfiguration: (id: string) => boolean;
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
   categoryFor?: (definition: MeritDefinition) => string;
+  confirmRemoval?: (definition: MeritDefinition | undefined) => boolean;
 }) {
   const { locale, t } = useLanguage();
   const meritName = (definition: MeritDefinition) => meritPresentation(definition, locale).name;
@@ -97,7 +99,7 @@ export function MeritPicker({
     <div className="merit-picker">{merits.map((selection, index) => {
       const definition = resolveMeritDefinition(selection, catalog);
       const remove = () => setMerits(merits.filter((_, itemIndex) => itemIndex !== index));
-      const needsConfirmation = ["Fae Mount", "Fae Pet", "Familiar", "Entitlement"].includes(selection.name);
+      const needsConfirmation = confirmRemoval(definition);
       return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale) : undefined}>
         <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong>
           <small>{definition ? `${categoryName(categoryFor(definition))} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>

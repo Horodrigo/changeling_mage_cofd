@@ -6,6 +6,8 @@ import { ArmorDotPicker, CompactValues, HealthTrack, SheetHeading, TraitBlock, s
 import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ANIMALS, animalPresentation } from "@/lib/companions";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
+import type { MeritDefinition } from "@/lib/merits";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES } from "@/lib/core/character/creation-rules";
@@ -15,20 +17,21 @@ import type { DamageLevel } from "@/lib/resource-rules";
 
 const FAE_MOUNT_ABILITIES = ["manyleague", "chatterbox", "actormask", "armorshell", "burdenback", "dreamspun", "thornbeast", "hedgefoot"] as const;
 
-export function CompanionPage({ character, updateSheet }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void }) {
+export function CompanionPage({ character, updateSheet, catalog }: { character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; catalog: readonly MeritDefinition[] }) {
   const { t } = useLanguage();
   const faeCompanions = character.merits
     .map((merit, index) => ({ merit, index }))
-    .filter(({ merit }) => !merit.grantedBy && ["Fae Mount", "Fae Pet"].includes(merit.name));
+    .filter(({ merit }) => !merit.grantedBy && ["ctl-2ed:fae-mount", "h-seemings:fae-pet"].includes(resolveMeritDefinition(merit, catalog)?.id ?? ""));
   return <section className="changeling-companions">
     {!!faeCompanions.length && <>
       <SheetHeading>{t("ui.faeCompanions")}</SheetHeading>
-      {faeCompanions.map(({ merit, index }) => <FaeCompanionCard key={`${merit.name}-${index}`} merit={merit} meritIndex={index} character={character} updateSheet={updateSheet}/>)}
+      {faeCompanions.map(({ merit, index }) => <FaeCompanionCard key={`${merit.name}-${index}`} merit={merit} meritIndex={index} character={character} updateSheet={updateSheet} catalog={catalog}/>)}
     </>}
   </section>;
 }
 
-function FaeCompanionCard({ merit, meritIndex, character, updateSheet }: {
+function FaeCompanionCard({ merit, meritIndex, character, updateSheet, catalog }: {
+  catalog: readonly MeritDefinition[];
   merit: CharacterSheet["merits"][number];
   meritIndex: number;
   character: CharacterSheet;
@@ -37,15 +40,15 @@ function FaeCompanionCard({ merit, meritIndex, character, updateSheet }: {
   const { locale, t } = useLanguage();
   const isMobile = useIsMobile();
   const configuration = normalizeMeritConfiguration(merit.configuration);
-  const name = String(configuration.name ?? (merit.name === "Fae Mount" ? t("ui.faeMount") : t("ui.faePet")));
+  const name = String(configuration.name ?? (resolveMeritDefinition(merit, catalog)?.id === "ctl-2ed:fae-mount" ? t("ui.faeMount") : t("ui.faePet")));
   const save = (patch: Record<string, string | string[]>) => {
     const next = structuredClone(character);
     const target = next.merits[meritIndex];
-    if (target?.name === merit.name) target.configuration = { ...normalizeMeritConfiguration(target.configuration), ...patch };
+    if (target && target.instanceId === merit.instanceId && resolveMeritDefinition(target, catalog)?.id === resolveMeritDefinition(merit, catalog)?.id) target.configuration = { ...normalizeMeritConfiguration(target.configuration), ...patch };
     updateSheet(next);
   };
 
-  if (merit.name === "Fae Pet") {
+  if (resolveMeritDefinition(merit, catalog)?.id === "h-seemings:fae-pet") {
     const animalId = String(configuration.animalId ?? ANIMALS[0]?.id ?? "");
     const animal = ANIMALS.find(item => item.id === animalId);
     return <article className="companion-card merit-companion companion-config">

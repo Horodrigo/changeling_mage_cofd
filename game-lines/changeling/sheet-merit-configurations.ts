@@ -20,8 +20,8 @@ export const CHANGELING_SHEET_MERIT_CONFIGURATIONS = [
   ...CHANGELING_MERIT_CONFIGURATIONS,
 ];
 
-export const findMeritConfiguration = (name: string) =>
-  CHANGELING_SHEET_MERIT_CONFIGURATIONS.find((item) => item.name === name);
+export const findMeritConfiguration = (definitionId: string | undefined) =>
+  CHANGELING_SHEET_MERIT_CONFIGURATIONS.find((item) => item.id === definitionId);
 
 export const isInlineMeritConfiguration = (id: string) =>
   isCommonInlineMeritConfiguration(id) || isChangelingInlineMeritConfiguration(id);
@@ -58,9 +58,9 @@ function decodeHedgespunConfiguration(configuration: MeritConfiguration) {
   };
 }
 
-export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = [], tokenCatalog: readonly TokenDefinition[] = [], catalog: readonly MeritDefinition[] = []) {
+export function expandedConfigurationLines(definitionId: string | undefined, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = [], tokenCatalog: readonly TokenDefinition[] = [], catalog: readonly MeritDefinition[] = []) {
   const configuration = normalizeMeritConfiguration(value);
-  if (name === "Token") {
+  if (definitionId === "ctl-2ed:token") {
     const items = decodeConfiguredRows<TokenConfigurationItem>(configuration.items);
     const lines: string[] = [];
     for (const [index, stored] of items.entries()) {
@@ -77,7 +77,7 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     if (allocated !== dots) lines.push(`${translate(locale, "ui.unallocatedDots")}: ${Math.max(0, dots - allocated)}`);
     return lines;
   }
-  if (name === "Hedgespun Item") {
+  if (definitionId === "ctl-2ed:hedgespun-item") {
     const item = decodeHedgespunConfiguration(configuration);
     const lines: string[] = [];
     const selectedBenefits = item.benefits.slice(0, Math.max(0, dots));
@@ -96,14 +96,14 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     lines.push(`${translate(locale, "ui.drawback")}: ${drawback}`);
     return lines;
   }
-  if (name === "Hollow" || name === "Shared Bastion") {
+  if (definitionId === "ctl-2ed:hollow" || definitionId === "ctl-hedge:shared-bastion") {
     const lines: string[] = [];
     const configuredName = String(configuration.name ?? "").trim();
     const location = String(configuration.location ?? "").trim();
     const features = Array.isArray(configuration.features) ? configuration.features : [];
     if (configuredName) lines.push(`${translate(locale, "ui.name")}: ${configuredName}`);
     if (location) lines.push(`${translate(locale, "ui.locationAndAppearance")}: ${location}`);
-    const options = name === "Hollow" ? meritOptions.hollowOptions : meritOptions.sharedBastionOptions;
+    const options = definitionId === "ctl-2ed:hollow" ? meritOptions.hollowOptions : meritOptions.sharedBastionOptions;
     if (features.length) lines.push(`${translate(locale, "ui.features")}: ${features.map((item) => {
       const canonical = String(item).split("|")[0];
       const option = options.find((entry) => entry.name === canonical);
@@ -111,7 +111,7 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     }).join(", ")}`);
     return lines;
   }
-  if (name === "Stable Trod") {
+  if (definitionId === "ctl-2ed:stable-trod") {
     const lines: string[] = [];
     const configuredName = String(configuration.name ?? "").trim();
     const enhancement = String(configuration.enhancement ?? "").trim();
@@ -120,11 +120,11 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     if (enhancement) lines.push(`${translate(locale, "ui.sharedHollowEnhancement")}: ${option ? translate(locale, option.nameKey) : enhancement}`);
     return lines;
   }
-  if (name === "Workshop") {
+  if (definitionId === "ctl-2ed:workshop") {
     const specialties = Array.isArray(configuration.specialties) ? configuration.specialties.filter(Boolean) : [];
     return specialties.length ? [`${translate(locale, "ui.craftSpecialties")}: ${specialties.join(", ")}`] : [];
   }
-  if (name === "Court Goodwill") {
+  if (definitionId === "ctl-2ed:court-goodwill") {
     const court = courtDisplayName(courtCatalog, configuration.court, locale) || translate(locale, "ui.notSelected");
     const mantle = Math.max(0, dots - 2);
     return [
@@ -134,13 +134,13 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
       translate(locale, "ui.courtGoodwillMentor"),
     ];
   }
-  if (name === "Hedge Duelist") {
+  if (definitionId === "ctl-2ed:hedge-duelist") {
     const selected = String(configuration.firstManeuver ?? "");
     const variant = HEDGE_DUELIST_VARIANTS.find((item) => item.label === selected);
     return variant ? [`${translate(locale, `ui.hedgeDuelist.${variant.value}.choice`)}: ${translate(locale, `ui.hedgeDuelist.${variant.value}.description`)}`] : [];
   }
-  return commonExpandedConfigurationLines(name, dots, value, locale, catalog)
-    ?? configuredDefinitionLines(findMeritConfiguration(name), dots, value, locale);
+  return commonExpandedConfigurationLines(definitionId, dots, value, locale, catalog)
+    ?? configuredDefinitionLines(findMeritConfiguration(definitionId), dots, value, locale);
 }
 
 export { decodeConfiguredRows, normalizeMeritConfiguration };

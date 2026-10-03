@@ -203,9 +203,10 @@ test("Fae Mount ability labels and descriptions resolve for every canonical choi
   assert.match(translate("pt-BR","ui.armorshellProvidesArmor32OnlyTheHigher"),/^Blindagem /);
   assert.equal(translate("pt-BR","ui.hedgefootMode"),"Modo de Pé-de-Sebe");
   const { CompanionPage } = await vite.ssrLoadModule("/game-lines/changeling/companion-page.tsx");
-  const character={merits:[{name:"Fae Mount",dots:1,configuration:{name:"My mount",abilities:["chatterbox"]}}]};
+  const catalog=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/merits.json",import.meta.url),"utf8"));
+  const character={merits:[{definitionId:"ctl-2ed:fae-mount",name:"Fae Mount",dots:1,configuration:{name:"My mount",abilities:["chatterbox"]}}]};
   const before=JSON.stringify(character);
-  const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,updateSheet:()=>{}})));
+  const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,catalog,updateSheet:()=>{}})));
   assert.match(markup,/Chatterbox/);
   assert.doesNotMatch(markup,/missing translation/);
   assert.equal(JSON.stringify(character),before);
@@ -218,9 +219,10 @@ test("Familiar Numina localize labels while preserving canonical selections and 
   for(const key of Object.keys(messages["en-US"].ui.familiarNumina)) assert.doesNotMatch(translate("pt-BR",`ui.familiarNumina.${key}`),/missing translation/);
   assert.equal(translate("pt-BR","ui.familiarNumina.mortalMask"),"Mascarilha Mortal");
   const { CompanionPage } = await vite.ssrLoadModule("/game-lines/mage/companion-page.tsx");
-  const character={merits:[{name:"Familiar",dots:2,configuration:{name:"My familiar",entity:"Ghost",numina:["Awe"]}}]};
+  const catalog=JSON.parse(readFileSync(new URL("../public/game-lines/mage/data/merits.json",import.meta.url),"utf8"));
+  const character={merits:[{definitionId:"mta-2ed:familiar",name:"Familiar",dots:2,configuration:{name:"My familiar",entity:"Ghost",numina:["Awe"]}}]};
   const before=JSON.stringify(character);
-  const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,updateSheet:()=>{}})));
+  const markup=renderToStaticMarkup(createElement(LanguageProvider,null,createElement(CompanionPage,{character,catalog,updateSheet:()=>{}})));
   assert.match(markup,/My familiar/);
   assert.match(markup,/Awe/);
   assert.doesNotMatch(markup,/missing translation/);
@@ -269,9 +271,9 @@ test("expanded Merit configuration translates selected options but preserves aut
   const masque = MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === "Masque (Style)");
   assert.deepEqual(configuredDefinitionLines(masque, 1, { nimbus: "Hidden" }, "pt-BR"), []);
   const { expandedConfigurationLines } = await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
-  assert.deepEqual(expandedConfigurationLines("Artifact", 3, {}, "pt-BR"), ["Capacidade de Mana: 6", "Gnose efetiva: 2"]);
+  assert.deepEqual(expandedConfigurationLines("mta-2ed:artifact", 3, {}, "pt-BR"), ["Capacidade de Mana: 6", "Gnose efetiva: 2"]);
   const changeling = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
-  assert.deepEqual(changeling.expandedConfigurationLines("Hedge Duelist", 1, { firstManeuver: "Shadowplay" }, "pt-BR"), [
+  assert.deepEqual(changeling.expandedConfigurationLines("ctl-2ed:hedge-duelist", 1, { firstManeuver: "Shadowplay" }, "pt-BR"), [
     "Jogo de Sombras (Trevoso): Ganhe +2 de Defesa enquanto estiver na escuridão ou em sombras profundas.",
   ]);
 });
@@ -291,11 +293,11 @@ test("Changeling structure options localize presentation without altering canoni
   const { expandedConfigurationLines } = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");
   const value = { name: "Shadow Garden", features: ["Shadow Garden|1", "My garden|1"] };
   const before = JSON.stringify(value);
-  const pt = expandedConfigurationLines("Hollow", 2, value, "pt-BR");
+  const pt = expandedConfigurationLines("ctl-2ed:hollow", 2, value, "pt-BR");
   assert.ok(pt.includes("Nome: Shadow Garden"), "Authored names must not be translated");
   assert.ok(pt.some((line) => line.endsWith("Jardim de Sombras, My garden")));
-  assert.ok(expandedConfigurationLines("Hollow", 2, value, "en-US").some((line) => line.endsWith("Shadow Garden, My garden")));
-  assert.ok(expandedConfigurationLines("Stable Trod", 1, { enhancement: "Hob Alarm" }, "pt-BR").some((line) => line.endsWith("Alarme Hob")));
+  assert.ok(expandedConfigurationLines("ctl-2ed:hollow", 2, value, "en-US").some((line) => line.endsWith("Shadow Garden, My garden")));
+  assert.ok(expandedConfigurationLines("ctl-2ed:stable-trod", 1, { enhancement: "Hob Alarm" }, "pt-BR").some((line) => line.endsWith("Alarme Hob")));
   assert.equal(JSON.stringify(value), before);
   const { renderChangelingStructuredMeritEditor } = await vite.ssrLoadModule("/game-lines/changeling/builder-merit-editor.tsx");
   for (const name of ["Hollow", "Shared Bastion", "Hedgespun Item", "Stable Trod"]) {

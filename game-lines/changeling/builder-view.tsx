@@ -187,6 +187,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           setMerits={props.setMerits}
           catalog={props.meritCatalog}
           context={props.meritContext}
+          confirmRemoval={(definition) => ["ctl-2ed:fae-mount", "h-seemings:fae-pet", "oak-ash-thorn:entitlement"].includes(definition?.id ?? "")}
           spent={props.meritSpent}
           budget={props.meritBudget}
           powerLabel={t("ui.wyrdAtCreation")}
