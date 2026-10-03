@@ -1277,6 +1277,7 @@ function ExpandedMeritList({
             item.dots,
             item.configuration,
             locale,
+            catalog,
           ),
           cult = String(
             normalizeMeritConfiguration(item.configuration).cult ?? "",
@@ -1362,6 +1363,7 @@ function ExpandedMeritList({
                     item.configuration,
                   )}
                   locale={locale}
+                  catalog={catalog}
                 />
               ) : configured.length ? (
                 <>
@@ -1401,10 +1403,12 @@ function NamelessMysteryCultLevels({
   dots,
   configuration,
   locale,
+  catalog,
 }: {
   dots: number;
   configuration: Record<string, string | string[]>;
   locale: Locale;
+  catalog: readonly MeritDefinition[];
 }) {
   const { t } = useLanguage();
   const roteSkills = Array.isArray(configuration.level_2_rote_skills)
@@ -1417,6 +1421,7 @@ function NamelessMysteryCultLevels({
     dots,
     configuration,
     locale,
+    catalog,
   );
   const configuredDescription = (level: number) => {
     const prefix = t("ui.namelessCultLevelPrefix", { level });

@@ -1,5 +1,5 @@
 import type { CharacterSheet } from "./character-types";
-import { normalizeMeritConfiguration } from "./merit-configuration";
+import { decodeMeritGrantChoice, normalizeMeritConfiguration } from "./merit-configuration";
 
 const GENERATED_PREFIX = "Merit:";
 
@@ -11,9 +11,10 @@ export function synchronizeCommonMeritGrants(
   sheet.merits = sheet.merits.filter((item) => !item.grantedBy?.startsWith(GENERATED_PREFIX));
   sheet.specializations = (sheet.specializations ?? []).filter((item) => !item.grantedBy?.startsWith(GENERATED_PREFIX));
   const skillBonuses: Record<string, number> = {};
-  const grantMerit = (owner: string, name: string, dots: number, index: number) => {
-    if (!name || dots < 1) return;
-    sheet.merits.push({ instanceId: `grant-${owner}-${index}`, name, dots, configuration: {}, grantedBy: `${GENERATED_PREFIX}${owner}` });
+  const grantMerit = (owner: string, row: unknown, index: number) => {
+    const choice = decodeMeritGrantChoice(row);
+    if (!choice) return;
+    sheet.merits.push({ ...choice, instanceId: `grant-${owner}-${index}`, configuration: {}, grantedBy: `${GENERATED_PREFIX}${owner}` });
   };
   for (const merit of sheet.merits.filter((item) => !item.grantedBy || includeGrantedBy(item.grantedBy))) {
     const owner = `${merit.name}:${merit.instanceId ?? merit.name}`;
@@ -44,7 +45,7 @@ export function synchronizeCommonMeritGrants(
         }
         if (type === "merit" || type === "merits" || type === "merit_skill") {
           const rows = Array.isArray(configuration[`${prefix}_merits`]) ? configuration[`${prefix}_merits`] as string[] : [];
-          rows.forEach((row, index) => { const [name, rawDots] = row.split("|"); grantMerit(`${owner}:${level}`, name, Math.max(1, Number(rawDots) || 1), index); });
+          rows.forEach((row, index) => grantMerit(`${owner}:${level}`, row, index));
         }
       }
     }

@@ -9,6 +9,7 @@ import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants"
 import meritOptions from "./catalog-data/merit-options.json";
 import type { TokenDefinition } from "./catalogs/tokens";
 import { configuredTokenPresentation, type TokenConfigurationItem } from "./token-presentation";
+import type { MeritDefinition } from "@/lib/merits";
 
 export type TokenKind = "token" | "trifle" | "bauble";
 export type { TokenConfigurationItem } from "./token-presentation";
@@ -57,7 +58,7 @@ function decodeHedgespunConfiguration(configuration: MeritConfiguration) {
   };
 }
 
-export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = [], tokenCatalog: readonly TokenDefinition[] = []) {
+export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", courtCatalog: readonly CourtDefinition[] = [], tokenCatalog: readonly TokenDefinition[] = [], catalog: readonly MeritDefinition[] = []) {
   const configuration = normalizeMeritConfiguration(value);
   if (name === "Token") {
     const items = decodeConfiguredRows<TokenConfigurationItem>(configuration.items);
@@ -138,7 +139,7 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     const variant = HEDGE_DUELIST_VARIANTS.find((item) => item.label === selected);
     return variant ? [`${translate(locale, `ui.hedgeDuelist.${variant.value}.choice`)}: ${translate(locale, `ui.hedgeDuelist.${variant.value}.description`)}`] : [];
   }
-  return commonExpandedConfigurationLines(name, dots, value, locale)
+  return commonExpandedConfigurationLines(name, dots, value, locale, catalog)
     ?? configuredDefinitionLines(findMeritConfiguration(name), dots, value, locale);
 }
 

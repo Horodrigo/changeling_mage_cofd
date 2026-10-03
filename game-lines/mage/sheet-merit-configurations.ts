@@ -4,6 +4,7 @@ import { meritConfigurationTitle, normalizeMeritConfiguration } from "@/lib/core
 import { translate, type Locale } from "@/lib/i18n";
 import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
+import type { MeritDefinition } from "@/lib/merits";
 
 export const MAGE_SHEET_MERIT_CONFIGURATIONS = [
   ...COMMON_MERIT_CONFIGURATIONS,
@@ -19,7 +20,7 @@ export const isInlineMeritConfiguration = (id: string) =>
       item.id === id && item.fields.length === 1 && item.fields[0].kind === "text"),
   );
 
-export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US") {
+export function expandedConfigurationLines(name: string, dots: number, value: unknown, locale: Locale = "en-US", catalog: readonly MeritDefinition[] = []) {
   const mageDefinition = MAGE_MERIT_CONFIGURATIONS.find((item) => item.name === name);
   if (mageDefinition) {
     const lines = configuredDefinitionLines(mageDefinition, dots, value, locale);
@@ -28,7 +29,7 @@ export function expandedConfigurationLines(name: string, dots: number, value: un
     if (name === "Familiar" || name === "Supernal Watcher") lines.push(translate(locale, "ui.meritConfig.rankSummary", { rank: dots / 2 }));
     return lines;
   }
-  return commonExpandedConfigurationLines(name, dots, value, locale)
+  return commonExpandedConfigurationLines(name, dots, value, locale, catalog)
     ?? configuredDefinitionLines(findMeritConfiguration(name), dots, value, locale);
 }
 

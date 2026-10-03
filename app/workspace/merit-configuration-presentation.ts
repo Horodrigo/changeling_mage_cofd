@@ -1,6 +1,9 @@
 import { translate, type Locale } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
-import { normalizeMeritConfiguration, type MeritConfigDefinition } from "@/lib/core/character/merit-configuration";
+import { decodeMeritGrantChoice, normalizeMeritConfiguration, type MeritConfigDefinition } from "@/lib/core/character/merit-configuration";
+import type { MeritDefinition } from "@/lib/merits";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { meritPresentation } from "@/lib/merit-presentation";
 
 export function configuredDefinitionLines(
   definition: MeritConfigDefinition | undefined,
@@ -28,6 +31,7 @@ export function commonExpandedConfigurationLines(
   dots: number,
   value: unknown,
   locale: Locale = "en-US",
+  catalog: readonly MeritDefinition[] = [],
 ): string[] | undefined {
   const configuration = normalizeMeritConfiguration(value);
   if (name === "Professional Training") {
@@ -80,9 +84,12 @@ export function commonExpandedConfigurationLines(
       }
       if (type === "merit" || type === "merits" || type === "merit_skill") {
         const merits = Array.isArray(configuration[`${prefix}_merits`]) ? configuration[`${prefix}_merits`] as string[] : [];
-        benefits.push(...merits.filter((row) => row.split("|")[0]).map((row) => {
-          const [merit, rating] = row.split("|");
-          return `${merit} ${"•".repeat(Math.max(1, Number(rating) || 1))}`;
+        benefits.push(...merits.flatMap((row) => {
+          const choice = decodeMeritGrantChoice(row);
+          if (!choice) return [];
+          const definition = resolveMeritDefinition(choice, catalog);
+          const name = definition ? meritPresentation(definition, locale).name : choice.name;
+          return [`${name} ${choice.dots > 5 ? choice.dots : "•".repeat(choice.dots)}`];
         }));
       }
       if (type === "custom") {

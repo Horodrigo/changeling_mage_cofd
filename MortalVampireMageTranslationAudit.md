@@ -343,6 +343,15 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - **Prioridade 0 ainda aberta:** concessões e valores de benefícios de Cult por nomes, requisitos/contextos específicos nos helpers compartilhados, seleção/apresentação de detalhes de Merits nas fichas, integração restante em Changeling/Werewolf, qualificadores de homônimos e a parte mecânica de X03. Não houve tradução nova de catálogo neste lote; a meta permanece ativa.
 - Verificação: testes novos de identidade **5/5**, suíte dirigida **63/63**, suíte completa **464/464**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
 
+## Progresso — prioridade 0, identidade dos benefícios de Cult
+
+- Novas escolhas no seletor compartilhado de benefícios de Cult guardam definição e fonte canônicas, nome inglês de fallback e pontos em registros JSON dentro das linhas de configuração existentes. A sincronização copia os IDs para o Merit concedido; duas definições homônimas permanecem independentes.
+- Editor e resumos Desktop/Mobile em Changeling, Mage e Vampire usam o catálogo ativo e `meritPresentation()` para nomes e textos. Um ID indisponível não é substituído por outro Merit com o mesmo nome. Seleções e textos autorais não são reescritos ao trocar o idioma.
+- O leitor `Nome|pontos` preserva as escolhas schema-2 já salvas e os dados de concessão ainda nesse formato. Ele não atribui IDs por palpite nem faz migração automática. O seletor resolve esse formato apenas se a identificação canônica for inequívoca; uma escolha nova usa o registro com ID. O helper documenta consumidores, uso em produção e condição de remoção.
+- Validação estrutural rejeita registros malformados e ratings inválidos sem interpretar JSON quebrado como nome. A cobertura verifica homônimos oficiais/Homebrew, estabilidade das instâncias concedidas, sincronização idempotente, import/export schema-2, apresentação EN/PT e preservação de alocações, saldos e histórico de XP.
+- **Prioridade 0 ainda aberta:** despacho do Merit concedente e marcadores de concessão ainda por nome, produtores estáticos de benefícios (Nameless Order/Shadow Cults), contexto/requisitos específicos em helpers compartilhados, seleção/apresentação restante nas fichas, integração Core em Mortals/Werewolf, qualificadores de homônimos e a parte mecânica de X03. Nenhuma tradução nova de catálogo neste lote; a meta permanece ativa.
+- Verificação: testes novos **4/4**, suíte completa **468/468**, `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. Sem smoke de navegador neste lote.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

@@ -2214,6 +2214,7 @@ function VampireExpandedMeritList({
               merit.dots,
               merit.configuration,
               locale,
+              catalog,
             ) ?? []);
         const meritIndex = character.merits.indexOf(merit);
         const editor =
