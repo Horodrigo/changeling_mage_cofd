@@ -213,6 +213,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     : statusScope === "clan"
       ? selectedClan?.name ?? ""
       : statusCity.trim();
+  const statusGroupLabel = statusScope === "covenant" && selectedCovenant ? displayName(selectedCovenant, locale)
+    : statusScope === "clan" && selectedClan ? displayName(selectedClan, locale) : statusGroup;
   const purchasedCovenantStatus = selectedCovenant ? vampireCovenantStatus({ merits: common.merits }, covenantId, selectedCovenant.name, selectedCovenant.translatedName) : 0;
   const covenantStatus = Math.max(purchasedCovenantStatus, statusScope === "covenant" && statusGroup ? 1 : 0);
   const selectablePower = (item: { id: string; source: string; sourceId?: string }) => item.id === creationCovenantPowerId || vampireHomebrewContentActive(homebrewPreferences, item);
@@ -254,7 +256,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (!selectedClan) add("clan", t("ui.clan"));
     if (selectedClan?.favoredAttributeMode !== "both" && !selectedClan?.favoredAttributes.includes(favoredAttribute)) add("favoredAttribute", t("ui.clanFavoredAttribute"));
     if (!selectedCovenant || !covenantIds.includes(covenantId)) add("covenant", t("sheet.covenant"));
-    if (!statusGroup) add("kindredStatus", shadowCult ? "Mystery Cult Initiation" : t("ui.kindredStatus"));
+    if (!statusGroup) add("kindredStatus", shadowCult ? t("ui.mysteryCultInitiation") : t("ui.kindredStatus"));
     if (!reference.anchors.some((item) => item.id === maskId)) add("mask", t("sheet.mask"));
     if (!reference.anchors.some((item) => item.id === dirgeId) || dirgeId === maskId) add("dirge", t("ui.dirgeDistinctFromMask"));
     if (totalDisciplineDots !== 3 || inClanDots < 2) add("disciplines", t("ui.message3DisciplineDotsAtLeast2InClan"));
@@ -428,7 +430,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         </div>
 
         <div className={`vampire-kindred-status-grant${missing("kindredStatus") ? " missing-field" : ""}`}>
-          {shadowCult ? <><div><strong>{t("ui.shadowCultInitiationGrant", { cult: selectedCovenant?.name ?? "" })}</strong><small>{t("ui.shadowCultGrantDescription")}</small></div><span>{t("ui.covenantAffiliationLimit")}</span></> : <><div><strong>{t("ui.kindredStatus")} •</strong><small>{t("ui.kindredStatusTemplateDot")}</small></div><Choice label={t("ui.statusType")} value={statusScope} setValue={(value) => setStatusScope(value as KindredStatusScope)} options={statusScopeOptions} optionLabels={{ covenant: t("sheet.covenant"), clan: t("ui.clan"), city: t("ui.city") }} />{statusScope === "city" && <label>{t("ui.city")}<Input value={statusCity} onChange={(event) => setStatusCity(event.target.value)} placeholder={t("ui.cityName")} /></label>}{statusGroup && <span>{t("ui.grants")}: <strong>{t("ui.kindredStatus")} ({statusGroup}) •</strong></span>}</>}
+          {shadowCult ? <><div><strong>{t("ui.shadowCultInitiationGrant", { cult: selectedCovenant ? displayName(selectedCovenant, locale) : "" })}</strong><small>{t("ui.shadowCultGrantDescription")}</small></div><span>{t("ui.covenantAffiliationLimit")}</span></> : <><div><strong>{t("ui.kindredStatus")} •</strong><small>{t("ui.kindredStatusTemplateDot")}</small></div><Choice label={t("ui.statusType")} value={statusScope} setValue={(value) => setStatusScope(value as KindredStatusScope)} options={statusScopeOptions} optionLabels={{ covenant: t("sheet.covenant"), clan: t("ui.clan"), city: t("ui.city") }} />{statusScope === "city" && <label>{t("ui.city")}<Input value={statusCity} onChange={(event) => setStatusCity(event.target.value)} placeholder={t("ui.cityName")} /></label>}{statusGroup && <span>{t("ui.grants")}: <strong>{t("ui.kindredStatus")} ({statusGroupLabel}) •</strong></span>}</>}
         </div>
 
         <div className="vampire-anchor-grid">
@@ -440,7 +442,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>
           {powers.disciplines.filter((discipline) => !discipline.bloodlineId && vampireDisciplineAvailable(discipline.name, "", clanId, covenantIds) && (!discipline.clanIds?.length || discipline.clanIds.includes(clanId)) && (!discipline.covenantIds?.length || discipline.covenantIds.some((id) => covenantIds.includes(id))) && vampireHomebrewContentActive(homebrewPreferences, discipline)).map((discipline) => <DotRow key={discipline.name} name={displayName(discipline, locale)} value={disciplines[discipline.name] ?? 0} min={0} max={3} canIncrease={totalDisciplineDots < 3} setValue={(value) => setDisciplines({ ...disciplines, [discipline.name]: value })} tag={selectedClan?.disciplines.includes(discipline.name) ? t("ui.inClan") : undefined} />)}
           {covenantPowerOptions.length > 0 && <DotRow
-            name={covenantId === "circle-of-the-crone" || covenantId === "followers-of-seth" ? "Crúac" : covenantId === "lancea-et-sanctum" ? "Theban Sorcery" : covenantId === "architects-of-the-monolith" ? "Gilded Cage" : displayName(covenantPowerOptions[0], locale)}
+            name={covenantId === "circle-of-the-crone" || covenantId === "followers-of-seth" ? t("ui.cruac") : covenantId === "lancea-et-sanctum" ? t("ui.thebanSorcery") : covenantId === "architects-of-the-monolith" ? t("ui.gildedCage") : displayName(covenantPowerOptions[0], locale)}
             value={hasCreationCovenantPower ? 1 : 0}
             min={0}
             max={1}
