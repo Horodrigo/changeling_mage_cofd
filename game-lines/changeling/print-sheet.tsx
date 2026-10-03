@@ -16,7 +16,7 @@ import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSecti
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { entitlementCatalogPresentation, normalizeEntitlementState } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, normalizeEntitlementState } from "@/game-lines/changeling/entitlements";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale, type Translator } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";

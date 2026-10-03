@@ -50,7 +50,7 @@ Core must not accumulate line-specific mechanics. These remain line-owned:
 
 Shared visual structure does not transfer mechanical ownership to Core.
 
-`lib/game-line-contracts/` means programming interfaces, not Changeling Contracts. Changeling owns Contract types, presentation and clause helpers, and its Entitlement page in `game-lines/changeling/`; do not restore shared reexports or legacy paths. Specialized prerequisite types/parsers in `lib/merits.ts` remain ownership debt tracked in `MortalVampireMageTranslationAudit.md`; do not expand them. Shared context construction no longer reads `line_data`: each line supplies its own mechanics to the neutral outer-trait context. Homebrew does not exempt specialized mechanics, editors, or CSS from line ownership. Shared visual selectors reused by multiple lines must use neutral names rather than names of one line's powers or traits.
+`lib/game-line-contracts/` means programming interfaces, not Changeling Contracts. Changeling owns Contract types, presentation and clause helpers, its Entitlement page, and Entitlement types/rules/grant synchronization in `game-lines/changeling/`; do not restore shared reexports or legacy paths. Specialized prerequisite types/parsers in `lib/merits.ts` remain ownership debt tracked in `MortalVampireMageTranslationAudit.md`; do not expand them. Shared context construction no longer reads `line_data`: each line supplies its own mechanics to the neutral outer-trait context. Homebrew does not exempt specialized mechanics, editors, or CSS from line ownership. Shared visual selectors reused by multiple lines must use neutral names rather than names of one line's powers or traits.
 
 ## Dependency Direction
 
@@ -171,6 +171,7 @@ Core may own generic Merit storage, ratings, rendering, configuration plumbing, 
 Important line-owned examples:
 
 - Changeling Court selection grants and identifies Mantle; Mantle is not a new arbitrary purchase. Court Goodwill uses canonical Court identity and its own instance/access rules.
+- Changeling Builder Court reconciliation operates on creation-only rows by canonical definition ID, while the neutral merge restores XP by exact instance. Its Contract picker and validation receive recomposed total Mantle/Goodwill ratings, not creation-only dots. Entitlement prerequisites, selection and generated Merit grants use an owning identity-only index reconciled with static Core/Changeling catalogs. Resynchronization removes free allocations only, preserving recorded XP and the original instance; new grants carry definition/source IDs. Its page and sheet do not identify the Entitlement Merit by the displayed name. Remaining sheet/configuration consumers are tracked in the localization audit.
 - Fae Mount configuration belongs to the Changeling companion surface.
 - Mage-specific status, magical items, grants, and prerequisites must not be modeled by copying Changeling-specific mechanics.
 

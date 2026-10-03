@@ -2,15 +2,33 @@ import { courtCanonicalId } from "@/lib/changeling-courts";
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
-import { synchronizeEntitlement, type EntitlementDefinition } from "@/lib/entitlements";
-import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { synchronizeEntitlement, type EntitlementDefinition } from "@/game-lines/changeling/entitlements";
+import { changelingMeritId } from "./merit-identities";
 
 /** Identity-only index for the pure synchronization hook; canonical schema-2 fallback is shared.
  * Remove its ID-less branch with the shared resolver when those stored selections end. */
 export const CHANGELING_COURT_MERIT_IDENTITIES = [
   ["mantle", "Mantle"], ["court-goodwill", "Court Goodwill"],
 ].map(([slug, name]) => ({ id: `ctl-2ed:${slug}`, name, sourceId: "ctl-2ed" }));
-const courtMeritId = (merit: MeritSelection) => merit.definitionId ?? resolveMeritDefinition(merit, CHANGELING_COURT_MERIT_IDENTITIES)?.id;
+const courtMeritId = changelingMeritId;
+
+/** Builder rows contain creation dots only; mergeCreationMerits restores XP by exact instance. */
+export function reconcileChangelingCreationMerits(current: MeritSelection[], courtValue: string) {
+  const court = courtCanonicalId(courtValue);
+  const courtless = !court || ["sem corte", "courtless"].includes(court.toLowerCase());
+  const existing = current.find(item => courtMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte");
+  const retained = current.flatMap(item => {
+    if (courtMeritId(item) !== "ctl-2ed:mantle" || item.grantedBy !== "Corte") return [item];
+    const creation = Math.max(0, item.dots - 1);
+    if (!courtless || !creation) return [];
+    const next = { ...item, dots: creation, creationDots: creation }; delete next.grantedBy; return [next];
+  });
+  if (!courtless) retained.push({ ...existing, definitionId: "ctl-2ed:mantle", instanceId: existing?.instanceId ?? `mantle-${court}`,
+    name: "Mantle", dots: Math.max(1, existing?.dots ?? 1), creationDots: Math.max(1, existing?.dots ?? 1),
+    experienceDots: existing?.experienceDots ?? 0, sourceId: "ctl-2ed", source: "Changeling the Lost", grantedBy: "Corte",
+    configuration: { ...normalizeMeritConfiguration(existing?.configuration), court } });
+  return retained;
+}
 
 function withoutFreeMantle(merit: MeritSelection) {
   const experienceDots = Math.max(0, Number(merit.experienceDots ?? 0));

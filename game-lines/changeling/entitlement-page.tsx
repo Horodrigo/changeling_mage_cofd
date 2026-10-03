@@ -18,7 +18,7 @@ import {
   type EntitlementAllocation,
   type EntitlementDefinition,
   type EntitlementState,
-} from "@/lib/entitlements";
+} from "@/game-lines/changeling/entitlements";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { synchronizeChangelingBuilderMeritGrants as synchronizeMeritGrants } from "@/game-lines/changeling/builder-merit-grants";
 import {
@@ -42,6 +42,7 @@ import {
   saveEntitlementHomebrews,
 } from "@/game-lines/changeling/entitlement-homebrews";
 import { useEntitlementHomebrews } from "@/game-lines/changeling/use-entitlement-homebrews";
+import { changelingMeritId } from "./merit-identities";
 export function EntitlementPage({
   character,
   updateSheet,
@@ -69,7 +70,7 @@ export function EntitlementPage({
     (character.line_data.entitlement as Record<string, unknown> | undefined)
       ?.definitionId ??
       character.merits.find(
-        (item) => item.name === "Entitlement" && !item.grantedBy,
+        (item) => changelingMeritId(item) === "oak-ash-thorn:entitlement" && !item.grantedBy,
       )?.configuration?.definitionId ??
       "",
   );
@@ -94,7 +95,7 @@ export function EntitlementPage({
       entitlement: normalizeEntitlementState(nextState, wyrd, definitions),
     };
     const merit = next.merits.find(
-      (item) => item.name === "Entitlement" && !item.grantedBy,
+      (item) => changelingMeritId(item) === "oak-ash-thorn:entitlement" && !item.grantedBy,
     );
     if (merit)
       merit.configuration = {

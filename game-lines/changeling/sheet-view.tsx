@@ -28,13 +28,14 @@ import { contractDisplayOptions,contractHasInvocationRoll,contractOutcomeSection
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { changelingAnchorDisplayName, changelingAnchorRecovery, normalizeChangelingFrailties, seemingDisplayName, wyrdSummary } from "./creation-rules";
-import { entitlementCatalogPresentation,entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation,entitlementPrerequisitesMet,normalizeEntitlementState,synchronizeEntitlement,type EntitlementDefinition } from "@/game-lines/changeling/entitlements";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { changelingMeritId } from "./merit-identities";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
@@ -117,7 +118,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const setSheetTab = (value: string) => setMobileTab({ characterId: character.id, value });
     const isExpanded = (name: string) => meritCatalog.some((item) => item.name === name && item.levels?.length) || Boolean(findMeritConfiguration(name));
     const data = character.line_data;
-    const entitlementMerit = character.merits.find((item) => item.name === "Entitlement" && !item.grantedBy);
+    const entitlementMerit = character.merits.find((item) => changelingMeritId(item) === "oak-ash-thorn:entitlement" && !item.grantedBy);
     const hasCompanions = character.merits.some((item) => !item.grantedBy && ["Fae Mount", "Fae Pet"].includes(item.name)) || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
     const derived = derivedWithPermanentMerits(character);
     const grantedSkillBonuses = (data.merit_granted_skill_bonuses &&
@@ -149,7 +150,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const aspirations = stringList(data.aspirations);
     const frailties = normalizeChangelingFrailties(data.frailties, Number(data.wyrd ?? 1));
     const touchstoneSlots = 1 + character.merits
-        .filter((merit) => merit.name === "Touchstone" && !merit.grantedBy)
+        .filter((merit) => resolveMeritDefinition(merit, meritCatalog)?.id === "ctl-2ed:touchstone" && !merit.grantedBy)
         .reduce((sum, merit) => sum + merit.dots, 0);
     const touchstones = stringList(data.touchstones);
     if (!touchstones.length)
@@ -181,7 +182,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const setStoredGlamour = (value: number) => {
         if (!entitlementMerit || !entitlementState)
             return;
-        const next = structuredClone(character), merit = next.merits.find((item) => item.name === "Entitlement" && !item.grantedBy);
+        const next = structuredClone(character), merit = next.merits.find((item) => item.instanceId === entitlementMerit.instanceId && changelingMeritId(item) === "oak-ash-thorn:entitlement" && !item.grantedBy);
         if (!merit)
             return;
         const state = normalizeEntitlementState(next.line_data.entitlement, powerRating, entitlementCatalog);
@@ -190,7 +191,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
         updateSheet(synchronizeEntitlement(next, entitlementCatalog));
     };
     const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 10, 0);
-    const expandedMerits = character.merits.filter((item) => item.name !== "Entitlement" && isExpanded(item.name) && !item.grantedBy);
+    const expandedMerits = character.merits.filter((item) => changelingMeritId(item) !== "oak-ash-thorn:entitlement" && isExpanded(item.name) && !item.grantedBy);
     const principalMerits = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
     const selectedConditions = [
         ...selectedConditionList(character.current_state?.conditions, conditionCatalog),
@@ -732,7 +733,7 @@ function CourtLore({ data, merits, courtCatalog, main = false, }: {
     const emotion = custom ? String(custom.emotion ?? "") : String(official?.emotion ?? "");
     const benefits = custom && Array.isArray(custom.mantleBenefits)
         ? custom.mantleBenefits.map(String)
-        : official?.mantleBenefits ?? [], dots = merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte")?.dots ?? 1;
+        : official?.mantleBenefits ?? [], dots = merits.find((item) => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1;
     if (main)
         return (<details className="expanded-merit-card court-summary-card">
       <summary>

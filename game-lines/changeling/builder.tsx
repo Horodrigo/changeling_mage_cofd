@@ -19,7 +19,7 @@ import {
   normalizeChangelingFrailties,
 } from "./creation-rules";
 import { canSelectContract } from "./builder-eligibility";
-import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
+import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
@@ -32,7 +32,7 @@ import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
 import { createRandomId } from "@/lib/random-id";
-import { entitlementCatalogPresentation } from "@/lib/entitlements";
+import { entitlementCatalogPresentation } from "@/game-lines/changeling/entitlements";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
 import { ExperiencePanel } from "./experience-panel";
@@ -46,6 +46,9 @@ import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-hom
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
 import { recoverChangelingMeritAllocations } from "./merit-allocation";
+import { reconcileChangelingCreationMerits } from "./builder-merit-grants";
+import { changelingMeritId } from "./merit-identities";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 const translateRegalia = (value: string) => value;
 
@@ -135,16 +138,8 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   const setMerits = common.setMerits;
 
   useEffect(() => {
-    const wanted: MeritSelection[] = court && !["Sem Corte", "Courtless"].includes(court)
-      ? [{ name: "Mantle", dots: 1, grantedBy: "Corte", sourceId: "ctl-2ed", source: "Changeling the Lost", configuration: { court } }]
-      : [];
     setMerits((current) => {
-      const retained = current.filter((merit) => merit.grantedBy !== "Corte" && !(merit.name === "Mantle" && Number(merit.experienceDots ?? 0) === 0));
-      const paidWithExperience = current.some((merit) => merit.name === "Mantle" && !merit.grantedBy && Number(merit.experienceDots ?? 0) > 0);
-      const next = [...retained, ...wanted.filter(() => !paidWithExperience).map((grant) => {
-        const existing = current.find((merit) => merit.name === grant.name && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && Number(merit.experienceDots ?? 0) === 0)));
-        return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
-      })];
+      const next = reconcileChangelingCreationMerits(current, court);
       return JSON.stringify(next) === JSON.stringify(current) ? current : next;
     });
   }, [court, setMerits]);
@@ -161,7 +156,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   const meritContext: MeritPrerequisiteContext = {
     gameLine: "CtL", archetypes: ["changeling"], attributes: common.attributes, skills: common.skills,
     seeming, kith, wyrd, court,
-    mantle: court && court !== "Sem Corte" ? Math.max(1, initial?.merits.find((item) => item.name === "Mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
+    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, mergeCreationMerits(initial?.merits, common.merits).find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
     merits: mergeCreationMerits(initial?.merits, common.merits),
     meritCatalog,
     powers: contracts.map((item) => item.originalName || item.name).filter(Boolean),
@@ -173,7 +168,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
     for (const merit of common.merits) {
-      const definition = meritCatalog.find((item) => item.name === merit.name);
+      const definition = resolveMeritDefinition(merit, meritCatalog);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
     }
     if (meritSpent > meritBudget) add(3, "merits", t("ui.meritsExceedTheLimit"));
@@ -186,8 +181,8 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", t("ui.kithBlessingChoice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: seemingCatalog[seeming]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
     if (
-      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectContract(item, favoredRegalia, court, reference.courts, common.merits)).length !== 4 ||
-      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectContract(item, favoredRegalia, court, reference.courts, common.merits)).length !== 2
+      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectContract(item, favoredRegalia, court, reference.courts, meritContext.merits)).length !== 4 ||
+      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectContract(item, favoredRegalia, court, reference.courts, meritContext.merits)).length !== 2
     ) add(3, "contracts", t("ui.fourCommonContractsAndTwoRoyalContractsAllowed"));
     return result;
   })();
@@ -212,8 +207,9 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
         ...(source?.specializations ?? []).filter((item) => Boolean(item.grantedBy)),
       ],
       merits: mergeCreationMerits(source?.merits, common.merits.map((item) => {
-        const definition = meritCatalog.find((entry) => entry.name === item.name);
-        return { ...item, configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId, source: definition?.source };
+        const definition = resolveMeritDefinition(item, meritCatalog);
+        return { ...item, configuration: normalizeMeritConfiguration(item.configuration), definitionId: definition?.id ?? item.definitionId,
+          sourceId: definition?.sourceId ?? item.sourceId, source: definition?.source ?? item.source };
       })),
       line_data: {
         ...(source?.line_data ?? {}), seeming, kith, kith_choice: customKith ? "" : kithChoice,

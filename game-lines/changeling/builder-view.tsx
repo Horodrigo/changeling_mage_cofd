@@ -22,7 +22,7 @@ import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { courtPageCitation, type CourtDefinition } from "@/lib/changeling-courts";
 import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
-import type { EntitlementDefinition } from "@/lib/entitlements";
+import type { EntitlementDefinition } from "@/game-lines/changeling/entitlements";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, type ContractPresentationCatalog } from "./contract-presentation";
@@ -176,7 +176,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           customKith={props.customKith}
           court={props.court}
           courtCatalog={props.courtCatalog}
-          merits={props.merits}
+          merits={props.meritContext.merits ?? props.merits}
           catalog={props.contractCatalog}
           presentation={props.contractPresentation}
         />
@@ -480,7 +480,7 @@ function ContractSelector({
   customKith: boolean;
   court: string;
   courtCatalog: CourtDefinition[];
-  merits: MeritSelection[];
+  merits: readonly Pick<MeritSelection, "name" | "definitionId" | "sourceId" | "dots" | "configuration">[];
   catalog: ContractDefinition[];
   presentation: ContractPresentationCatalog;
 }) {

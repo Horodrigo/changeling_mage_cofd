@@ -1,5 +1,5 @@
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
-import type { EntitlementBlessing, EntitlementDefinition, EntitlementRole } from "@/lib/entitlements";
+import type { EntitlementBlessing, EntitlementDefinition, EntitlementRole } from "@/game-lines/changeling/entitlements";
 import { HOMEBREW_EVENT } from "@/lib/homebrew";
 
 export const ENTITLEMENT_HOMEBREW_SOURCE_ID = "homebrew:changeling-entitlements";

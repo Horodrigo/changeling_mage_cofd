@@ -9,7 +9,7 @@ import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import type { ContractDefinition } from "./contract-types";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary } from "./contract-presentation";
-import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/game-lines/changeling/entitlements";
 import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-line-contracts/game-line-ui";
 import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { useLanguage } from "@/lib/i18n";

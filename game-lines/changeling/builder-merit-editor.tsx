@@ -9,7 +9,7 @@ import { Choice } from "@/app/builder/common-controls";
 import type { StructuredMeritEditorProps } from "@/app/builder/merit-configuration-editor";
 import type { MeritSelection } from "@/lib/core/character/character-types";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
-import type { EntitlementDefinition } from "@/lib/entitlements";
+import type { EntitlementDefinition } from "@/game-lines/changeling/entitlements";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";

@@ -15,7 +15,7 @@ import type { ContractDefinition } from "./contract-types";
 import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "./contract-presentation";
 import { availableForeignClauseCourtIds } from "./contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
-import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/lib/entitlements";
+import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/game-lines/changeling/entitlements";
 import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { changePermanentClarity, normalizeClarityDamage } from "@/lib/resource-rules";
 import { refundChangelingPowerRating, withChangelingPowerRating } from "@/game-lines/changeling/builder-power-progression";

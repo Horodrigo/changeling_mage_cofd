@@ -1,5 +1,6 @@
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { MeritSelection } from "@/lib/core/character/character-types";
+import { changelingMeritId } from "./merit-identities";
 
 function courtCanonicalId(courts: readonly CourtDefinition[], value: unknown) {
   const raw = String(value ?? "").trim();
@@ -15,7 +16,7 @@ export function canSelectContract(
   favoredRegalia: readonly string[],
   court: string,
   courts: readonly CourtDefinition[],
-  merits: readonly Pick<MeritSelection, "name" | "dots" | "configuration">[] = [],
+  merits: readonly Pick<MeritSelection, "name" | "definitionId" | "sourceId" | "dots" | "configuration">[] = [],
 ) {
   const selectedCourt = courtCanonicalId(courts, court).toLocaleLowerCase();
   const courtContract = contract.categoryKind === "Corte" || new Set([
@@ -25,11 +26,11 @@ export function canSelectContract(
   if (courtContract) {
     const mantleRequired = contract.type === "Comum" ? 1 : 3;
     const goodwillRequired = contract.type === "Comum" ? 2 : 5;
-    const qualifies = (merit: Pick<MeritSelection, "name" | "dots">) =>
-      merit.name === "Mantle" && merit.dots >= mantleRequired ||
-      merit.name === "Court Goodwill" && merit.dots >= goodwillRequired;
-    const meritCourt = (merit: Pick<MeritSelection, "name" | "configuration">) =>
-      courtCanonicalId(courts, merit.configuration?.court || (merit.name === "Mantle" ? selectedCourt : "")).toLocaleLowerCase();
+    const qualifies = (merit: Pick<MeritSelection, "name" | "definitionId" | "sourceId" | "dots">) =>
+      changelingMeritId(merit) === "ctl-2ed:mantle" && merit.dots >= mantleRequired ||
+      changelingMeritId(merit) === "ctl-2ed:court-goodwill" && merit.dots >= goodwillRequired;
+    const meritCourt = (merit: Pick<MeritSelection, "name" | "definitionId" | "sourceId" | "configuration">) =>
+      courtCanonicalId(courts, merit.configuration?.court || (changelingMeritId(merit) === "ctl-2ed:mantle" ? selectedCourt : "")).toLocaleLowerCase();
     const hasAccess = (targetCourt: string) => merits.some((merit) => meritCourt(merit) === targetCourt && qualifies(merit));
     if (contract.regalia === "All") return merits.some((merit) => qualifies(merit) && !["", "courtless", "sem corte"].includes(meritCourt(merit)));
     const targetCourts = contract.courtIds ?? Object.keys(contract.courtClauses ?? {});

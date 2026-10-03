@@ -14,6 +14,9 @@ const grants = await vite.ssrLoadModule("/game-lines/changeling/builder-merit-gr
 const { withMeritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
 const { prepareCharacterForSave } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
 const { creationMerits, mergeCreationMerits } = await vite.ssrLoadModule("/lib/merit-progression.ts");
+const { CHANGELING_MERIT_IDENTITIES, changelingMeritId } = await vite.ssrLoadModule("/game-lines/changeling/merit-identities.ts");
+const { canSelectContract } = await vite.ssrLoadModule("/game-lines/changeling/builder-eligibility.ts");
+const { synchronizeEntitlement, entitlementPrerequisitesMet, normalizeEntitlementState } = await vite.ssrLoadModule("/game-lines/changeling/entitlements.ts");
 const json = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
 const catalog = withMeritPresentation([
   ...json("public/shared/data/merits.json"), ...json("public/game-lines/changeling/data/merits.json"),
@@ -21,6 +24,7 @@ const catalog = withMeritPresentation([
 const allies = catalog.find(item => item.name === "Allies");
 const homebrew = { ...allies, id: "homebrew:allies", sourceId: "homebrew", source: "Homebrew", presentationPt: { name: "Aliados Caseiros" } };
 const active = [...catalog, homebrew];
+const entitlements = json("public/game-lines/changeling/data/entitlements.json");
 const sheet = () => ({ id: "xp-test", schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
   ruleset: { id: "ctl-2ed-embedded", version: 1 }, character: { name: "Test", player: "Test" },
   attributes: { Intelligence: 3, Wits: 3, Resolve: 3, Strength: 3, Dexterity: 3, Stamina: 3, Presence: 3, Manipulation: 3, Composure: 3 },
@@ -183,4 +187,84 @@ test("CtL Court Goodwill benefits reject explicit Homebrew/unavailable namesakes
   ];
   grants.synchronizeChangelingBuilderMeritGrants(current);
   assert.deepEqual(current.line_data.court_goodwill_benefits, [{ court: "autumn", dots: 4, mantleDots: 2 }]);
+});
+
+test("CtL pure identities reconcile static catalogs and never inherit another definition's behavior", () => {
+  for (const identity of CHANGELING_MERIT_IDENTITIES) {
+    const canonical = catalog.find(item => item.id === identity.id);
+    assert.deepEqual({ id: canonical.id, name: canonical.name, sourceId: canonical.sourceId }, identity);
+    assert.equal(changelingMeritId({ ...identity, definitionId: identity.id, name: "Changed" }), identity.id);
+    assert.equal(changelingMeritId({ name: identity.name, sourceId: "foreign" }), undefined);
+    assert.equal(changelingMeritId({ name: identity.name, definitionId: "homebrew:unknown" }), "homebrew:unknown");
+  }
+});
+
+test("CtL creation Court reconciliation excludes XP from budget, preserves instances and leaves Homebrew namesakes untouched", () => {
+  const current = sheet(); current.line_data.court = "autumn";
+  grants.synchronizeChangelingBuilderMeritGrants(current);
+  Object.assign(current.merits[0], { name: "Changed", dots: 4, creationDots: 1, experienceDots: 3, configuration: { court: "autumn", note: "Authored" } });
+  const row = { ...current.merits[0], dots: 1 };
+  const hb = { ...row, definitionId: "homebrew:mantle", name: "Mantle", instanceId: "hb" };
+  const rows = grants.reconcileChangelingCreationMerits([row, hb], "autumn");
+  assert.equal(rows.find(item => item.instanceId === row.instanceId).dots, 1);
+  const merged = mergeCreationMerits(current.merits, rows);
+  assert.equal(merged.find(item => item.instanceId === row.instanceId).dots, 4);
+  const courtless = grants.reconcileChangelingCreationMerits(rows, "courtless");
+  assert.deepEqual(courtless, [hb]);
+  const edited = mergeCreationMerits(current.merits, courtless);
+  assert.equal(edited.find(item => item.instanceId === row.instanceId).experienceDots, 3);
+  assert.equal(edited.find(item => item.instanceId === row.instanceId).grantedBy, undefined);
+  assert.equal(edited.find(item => item.instanceId === row.instanceId).configuration.note, "Authored");
+});
+
+test("CtL per-Court Contract access uses canonical Mantle/Goodwill IDs, not display names", () => {
+  const contract = { categoryKind: "Corte", type: "Real", regalia: "autumn", courtIds: ["autumn"] };
+  const official = { definitionId: "ctl-2ed:mantle", name: "Manto", dots: 3, configuration: { court: "autumn" } };
+  assert.equal(canSelectContract(contract, [], "autumn", [], [official]), true);
+  for (const definitionId of ["homebrew:mantle", "missing:mantle"]) {
+    assert.equal(canSelectContract(contract, [], "autumn", [], [{ ...official, definitionId, name: "Mantle" }]), false);
+  }
+  assert.equal(canSelectContract(contract, [], "winter", [], [{ ...official, configuration: { court: "winter" } }]), false);
+});
+
+test("CtL Entitlement grants carry IDs, recompose without losing paid dots and disappear only when free", () => {
+  const current = sheet(); current.skills.Empathy = 2; current.skills.Persuasion = 2;
+  current.merits = [{ definitionId: "oak-ash-thorn:entitlement", instanceId: "title", name: "Changed", dots: 4, creationDots: 0, experienceDots: 4, configuration: { definitionId: "baron-lesser-ones" } },
+    { definitionId: "ctl-2ed:hob-kin", name: "Changed", dots: 1, creationDots: 1, experienceDots: 0 }];
+  current.line_data.entitlement = { definitionId: "baron-lesser-ones", accepted: true, touchstone: { name: "Authored", status: "active" },
+    allocations: [{ id: "a", sequence: 0, target: "blessing", blessingId: "hobgoblin-allies" }], choices: { "hobgoblin-allies": "Authored allies" } };
+  synchronizeEntitlement(current, entitlements);
+  const automatic = current.merits.find(item => item.grantedBy);
+  assert.equal(automatic.definitionId, allies.id);
+  assert.equal(automatic.sourceId, allies.sourceId);
+  const grantInstance = automatic.instanceId;
+  automatic.dots += 1; automatic.experienceDots = 1;
+  automatic.configuration.note = "Authored";
+  synchronizeEntitlement(current, entitlements);
+  assert.equal(current.merits.find(item => item.instanceId === grantInstance).experienceDots, 1);
+  assert.equal(current.merits.find(item => item.instanceId === grantInstance).dots, 3);
+  const stable = structuredClone(current); synchronizeEntitlement(current, entitlements); assert.deepEqual(current, stable);
+  current.merits = current.merits.filter(item => item.instanceId !== "title");
+  synchronizeEntitlement(current, entitlements);
+  const paid = current.merits.find(item => item.instanceId === grantInstance);
+  assert.equal(paid.dots, 1); assert.equal(paid.creationDots, 0); assert.equal(paid.experienceDots, 1);
+  assert.equal(paid.grantedBy, undefined); assert.equal(paid.configuration.note, "Authored");
+});
+
+test("CtL Entitlement prerequisites and selection reject explicit Homebrew/unavailable Merit homonyms", () => {
+  const current = sheet(); current.skills.Empathy = 2; current.skills.Persuasion = 2;
+  const title = entitlements.find(item => item.id === "baron-lesser-ones");
+  const state = normalizeEntitlementState({ definitionId: title.id }, 3, entitlements);
+  const hob = { definitionId: "ctl-2ed:hob-kin", name: "Changed", dots: 1 };
+  current.merits = [hob]; assert.equal(entitlementPrerequisitesMet(title, state, current), true);
+  for (const definitionId of ["homebrew:hob-kin", "missing:hob-kin"]) {
+    current.merits = [{ ...hob, definitionId, name: "Hob Kin" }];
+    assert.equal(entitlementPrerequisitesMet(title, state, current), false);
+  }
+  current.merits = [{ definitionId: "homebrew:entitlement", name: "Entitlement", dots: 4, configuration: { definitionId: title.id } }];
+  current.line_data.entitlement = state;
+  synchronizeEntitlement(current, entitlements);
+  assert.equal(current.merits.length, 1);
+  assert.equal(current.merits[0].definitionId, "homebrew:entitlement");
+  assert.equal(current.line_data.entitlement, undefined);
 });

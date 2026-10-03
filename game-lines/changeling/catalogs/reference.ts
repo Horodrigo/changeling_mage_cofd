@@ -1,7 +1,7 @@
 import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-groups";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
-import type { EntitlementDefinition, EntitlementPresentationCatalog } from "@/lib/entitlements";
+import type { EntitlementDefinition, EntitlementPresentationCatalog } from "@/game-lines/changeling/entitlements";
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import type { ContractPresentationCatalog } from "../contract-presentation";
 import type { TokenPresentation } from "./tokens";

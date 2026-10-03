@@ -22,6 +22,16 @@ async function assertMissing(path) {
   await assert.rejects(access(join(root, path)));
 }
 
+test("Entitlement mechanics and types belong only to Changeling, without a shared legacy reexport", async () => {
+  await assertMissing("lib/entitlements.ts");
+  assert.match(await source("game-lines/changeling/entitlements.ts"), /synchronizeEntitlement/);
+  for (const directory of ["lib", "app", "game-lines"]) {
+    for (const file of await sourceFiles(directory)) {
+      assert.doesNotMatch(await source(file), /["']@\/lib\/entitlements["']/, file);
+    }
+  }
+});
+
 test("shared Merit context and XP picker do not interpret persisted line mechanics", async () => {
   const merits = await source("lib/merits.ts");
   const context = merits.slice(merits.indexOf("export function meritContextForSheet"), merits.indexOf("export type MeritSelectionProblem"));
@@ -293,7 +303,7 @@ test("Changeling Homebrew uses category tabs and compact disclosure rows", async
   assert.match(homebrew, /item\.singleWillpower/);
   assert.match(homebrew, /const categoryOrder = \[t\("ui\.merits"\), t\("ui\.seemings"\), t\("ui\.courts"\), t\("ui\.kiths"\), t\("ui\.entitlements"\), t\("ui\.contracts"\), t\("ui\.needles"\), t\("ui\.threads"\), t\("ui\.conditions"\), "Errata"\]/);
   assert.match(homebrew, /categoryRank\(left\) - categoryRank\(right\)/);
-  assert.match(sheet, /item\.name !== "Entitlement" && isExpanded/);
+  assert.match(sheet, /changelingMeritId\(item\) !== "oak-ash-thorn:entitlement" && isExpanded/);
   assert.match(css, /\.panel\.homebrew-source\s*\{\s*padding:\s*0;\s*\}/);
   assert.match(css, /\.homebrew-list-item-body p\s*>\s*strong:first-child\s*\{\s*color:/);
   assert.match(css, /\.rule-power-list dt\s*\{\s*display:\s*inline;/);

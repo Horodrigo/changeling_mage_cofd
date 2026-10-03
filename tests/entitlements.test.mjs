@@ -7,7 +7,7 @@ import {readFileSync} from "node:fs";
 const root=fileURLToPath(new URL("..",import.meta.url));
 const vite=await createServer({appType:"custom",configFile:false,root,resolve:{alias:{"@":root}},server:{middlewareMode:true,hmr:false}});
 after(async()=>vite.close());
-const entitlementModule=await vite.ssrLoadModule("/lib/entitlements.ts");
+const entitlementModule=await vite.ssrLoadModule("/game-lines/changeling/entitlements.ts");
 const ENTITLEMENTS=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/entitlements.json",import.meta.url),"utf8"));
 const ENTITLEMENTS_PT=JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/entitlements-pt.json",import.meta.url),"utf8"));
 const {entitlementPresentation,normalizeEntitlementState,entitlementPrerequisitesMet}=entitlementModule;

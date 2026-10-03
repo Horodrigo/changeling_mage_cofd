@@ -467,6 +467,15 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: suíte completa **500/500**, suíte dirigida inicial **43/43** e **8/8** testes finais após acrescentar a proteção de alocações antigas. Lint, build, TypeScript e `git diff --check` aprovados. A classificação do índice de identidade pelo lint foi alinhada ao padrão Core existente, sem desligar a regra. Sem smoke de navegador.
 - Ainda abertos: reconciliação de criação/edição, Entitlement e outros consumidores de nomes, requisitos especializados compartilhados e traduções das etapas 1–4. Este lote não encerra a prioridade 0.
 
+## Progresso — prioridade 0, criação e Entitlement Changeling (2026-10-03)
+
+- O Builder resolve os Merits pelo ID para validar e salvar suas fontes. A reconciliação de Court usa somente pontos de criação, preserva a instância e deixa homônimos Homebrew intactos; o merge restaura XP pela instância exata. Os filtros e a validação de Contracts recebem as graduações totais de Mantle/Court Goodwill, sem consumir orçamento de criação com XP.
+- O acesso por Court reconhece apenas os IDs oficiais de Mantle/Court Goodwill e a ponte schema-2 de nome/fonte canônicos. Labels alterados com ID não perdem acesso; IDs Homebrew/indisponíveis não herdam a regra. A ficha resolve também o número de Touchstones pelo Merit oficial, não por homônimos.
+- Tipos, apresentação, requisitos e sincronização de Entitlement foram movidos de `lib/entitlements.ts` para `game-lines/changeling/entitlements.ts`, sem reexport legado. Todos os consumidores e testes foram atualizados. Um novo teste protege essa ownership.
+- Seleção e pré-requisitos de Entitlement usam IDs. Novas concessões incluem definição/fonte/instância; sincronizar ou retirar o Título remove só a alocação gratuita, conservando XP registrado, instância e configuração autoral. Os IDs da pequena referência de identidade são reconciliados com os catálogos estáticos, sem duplicar efeitos editoriais.
+- Verificação: **507/507** testes completos; testes dirigidos de concessões/identidades, criação, Entitlements e arquitetura aprovados. Lint, TypeScript, build e `git diff --check` aprovados. Uma expectativa de arquitetura antiga exigia despacho pelo nome; foi reescrita para exigir o ID e verificada isoladamente e na suíte completa. Sem smoke de navegador.
+- Restam na prioridade 0 os consumidores de nomes na apresentação/configuração de fichas, controles genéricos de repetibilidade/graduações, requisitos especializados e os demais vínculos registrados. Etapas 1–4 ainda abertas.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

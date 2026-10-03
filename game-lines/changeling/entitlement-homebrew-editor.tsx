@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { EntitlementBlessing, EntitlementDefinition, EntitlementRole } from "@/lib/entitlements";
+import type { EntitlementBlessing, EntitlementDefinition, EntitlementRole } from "@/game-lines/changeling/entitlements";
 import { useLanguage } from "@/lib/i18n";
 import { ENTITLEMENT_HOMEBREW_SOURCE, ENTITLEMENT_HOMEBREW_SOURCE_ID, entitlementHomebrewId, normalizeEntitlementHomebrew } from "./entitlement-homebrews";
 
