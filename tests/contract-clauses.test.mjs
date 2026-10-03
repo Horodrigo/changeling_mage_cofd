@@ -6,7 +6,7 @@ import { createServer } from "vite";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType:"custom", configFile:false, root, resolve:{alias:{"@":root}}, server:{middlewareMode:true,hmr:false}, optimizeDeps:{noDiscovery:true,include:[]} });
 after(async () => vite.close());
-const clauses = await vite.ssrLoadModule("/lib/contract-clauses.ts");
+const clauses = await vite.ssrLoadModule("/game-lines/changeling/contract-clauses.ts");
 
 const common = { id:"common", type:"Comum", courtClauses:{sun:"S",moon:"M"} };
 const royal = { id:"royal", type:"Real", courtClauses:{sun:"S",moon:"M"} };

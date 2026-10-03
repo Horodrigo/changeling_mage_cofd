@@ -75,6 +75,8 @@ The major boundaries are:
 
 Builder, sheet, rules, print surfaces, and catalog groups remain independently lazy where applicable. Inactive game lines should not impose their JavaScript or catalog-data cost on the current character.
 
+Changeling's Contract types, presentation and clause helpers, and its Entitlement page live under `game-lines/changeling/`. `lib/game-line-contracts/` defines neutral programming interfaces, not Changeling powers.
+
 ## Folder organization
 
 Folders separate executable source from publicly served files, then group both by ownership:

@@ -1,7 +1,7 @@
 "use client";
 
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
+import type { ContractDefinition } from "./contract-types";
 import type { MeritDefinition } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";

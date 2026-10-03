@@ -135,6 +135,10 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
     ["lib/seeming-presentation.ts", "game-lines/changeling/seeming-presentation.ts"],
     ["lib/changeling-kith-choices.ts", "game-lines/changeling/kith-choices.ts"],
     ["lib/hedge-duelist-variants.ts", "game-lines/changeling/hedge-duelist-variants.ts"],
+    ["lib/contract-presentation.ts", "game-lines/changeling/contract-presentation.ts"],
+    ["lib/contract-clauses.ts", "game-lines/changeling/contract-clauses.ts"],
+    ["lib/catalog/contract-catalog.ts", "game-lines/changeling/contract-types.ts"],
+    ["app/workspace/entitlement-page.tsx", "game-lines/changeling/entitlement-page.tsx"],
     ["lib/mage-nimbus.ts", "game-lines/mage/nimbus.ts"],
     ["lib/mage-orders.ts", "game-lines/mage/orders.ts"],
     ["lib/mage-merit-configurations.ts", "game-lines/mage/merit-configurations.ts"],
@@ -146,6 +150,7 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
     await assertMissing(legacyPath);
     await access(join(root, ownedPath));
   }
+  assert.doesNotMatch(await source("lib/catalog/catalog-types.ts"), /\b(?:ContractDefinition|SeemingKey)\b/);
 
   await Promise.all([
     assertMissing("lib/changeling-conditions.ts"),
@@ -163,7 +168,7 @@ test("migrated line-owned modules stay out of lib and inside their owning game l
 
   assert.doesNotMatch(
     content,
-    /@\/lib\/(?:seeming-presentation|changeling-kith-choices|hedge-duelist-variants|mage-nimbus|mage-orders|mage-merit-configurations|changeling-conditions|mage-conditions)/,
+    /@\/lib\/(?:seeming-presentation|changeling-kith-choices|hedge-duelist-variants|contract-presentation|contract-clauses|catalog\/contract-catalog|mage-nimbus|mage-orders|mage-merit-configurations|changeling-conditions|mage-conditions)|@\/app\/workspace\/entitlement-page/,
     "a migrated game-line dependency still reaches back into lib/",
   );
 });
@@ -207,7 +212,7 @@ test("shared presentation patterns use neutral names across game lines", async (
     assert.match(content, /rule-power-card/);
     assert.match(content, /template-choice-current/);
   }
-  for (const path of ["app/workspace/entitlement-page.tsx", "game-lines/mage/legacy-page.tsx", "game-lines/vampire/bloodline-page.tsx"]) {
+  for (const path of ["game-lines/changeling/entitlement-page.tsx", "game-lines/mage/legacy-page.tsx", "game-lines/vampire/bloodline-page.tsx"]) {
     assert.match(await source(path), /className="affiliation-page/);
   }
 });

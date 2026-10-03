@@ -1,6 +1,6 @@
-import type { ContractDefinition } from "./catalog/contract-catalog";
-import type { Locale } from "./i18n";
-import { commonMessages } from "./i18n/messages/common";
+import type { ContractDefinition } from "./contract-types";
+import type { Locale } from "@/lib/i18n";
+import { commonMessages } from "@/lib/i18n/messages/common";
 
 export type ContractPresentation = Pick<ContractDefinition, "name" | "description"> & Partial<Pick<ContractDefinition,
   "summary" | "effect" | "dicePool" | "loophole" | "seemingBenefits" | "courtClauses" |

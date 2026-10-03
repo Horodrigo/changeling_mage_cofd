@@ -18,7 +18,7 @@ const CONTRACT_PRESENTATION_PT = Object.assign({}, ...contractShards.map((name) 
 const CONTRACT_NAME_ALIASES = Object.fromEntries(
   CONTRACTS.flatMap((contract) => [[contract.name, contract.id], [contract.originalName, contract.id]]),
 );
-const { contractPresentation, contractSummary, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+const { contractPresentation, contractSummary, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/game-lines/changeling/contract-presentation.ts");
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
 
 test("tradução pt-BR cobre os 260 Contratos canônicos", () => {

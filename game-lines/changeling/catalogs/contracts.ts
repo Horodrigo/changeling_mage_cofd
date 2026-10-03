@@ -1,5 +1,5 @@
 import type { CatalogGroupModule } from "@/lib/game-line-contracts/catalog-groups";
-import type { ContractDefinition } from "@/lib/catalog/catalog-types";
+import type { ContractDefinition } from "../contract-types";
 
 export const CHANGELING_CONTRACT_SHARDS = [
   "h-courts", "ctl-oak-ash-thorn", "ctl-the-hedge", "ctl-dark-eras", "ctl-kith-and-kin", "ctl-core",

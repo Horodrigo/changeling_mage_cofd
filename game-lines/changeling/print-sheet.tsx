@@ -5,14 +5,14 @@ import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintF
 import { PrintIntegrityTrack } from "@/app/workspace/print-sheet-primitives";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
 import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList } from "@/app/workspace/sheet-primitives";
-import type { ContractDefinition } from "@/lib/catalog/contract-catalog";
+import type { ContractDefinition } from "./contract-types";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { kithCreationChoice } from "./kith-choices";
 import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
-import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits, type ContractPresentationCatalog } from "@/lib/contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits, type ContractPresentationCatalog } from "./contract-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";

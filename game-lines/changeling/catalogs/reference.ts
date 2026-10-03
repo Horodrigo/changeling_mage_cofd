@@ -3,7 +3,7 @@ import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { EntitlementDefinition, EntitlementPresentationCatalog } from "@/lib/entitlements";
 import type { KithDefinition } from "@/lib/changeling-kiths";
-import type { ContractPresentationCatalog } from "@/lib/contract-presentation";
+import type { ContractPresentationCatalog } from "../contract-presentation";
 import type { TokenPresentation } from "./tokens";
 import { CHANGELING_CONTRACT_SHARDS } from "./contracts";
 

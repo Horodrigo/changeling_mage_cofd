@@ -1,5 +1,5 @@
-import type { ContractDefinition } from "./catalog/contract-catalog";
-import { courtCanonicalId } from "./changeling-courts";
+import type { ContractDefinition } from "./contract-types";
+import { courtCanonicalId } from "@/lib/changeling-courts";
 
 export function availableForeignClauseCourtIds(
   contract: Pick<ContractDefinition, "id" | "type" | "courtClauses">,

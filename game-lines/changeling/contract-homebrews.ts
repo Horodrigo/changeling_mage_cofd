@@ -1,4 +1,4 @@
-import type { ContractDefinition, SeemingKey } from "@/lib/catalog/catalog-types";
+import type { ContractDefinition, SeemingKey } from "./contract-types";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { HOMEBREW_EVENT } from "@/lib/homebrew";
 import { createRandomId } from "@/lib/random-id";

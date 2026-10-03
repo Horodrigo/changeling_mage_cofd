@@ -28,8 +28,8 @@ import {
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
-import { RuleSelect } from "./rule-select";
-import { ConfirmAction } from "./confirm-action";
+import { RuleSelect } from "@/app/workspace/rule-select";
+import { ConfirmAction } from "@/app/workspace/confirm-action";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import {
   homebrewContentActive,

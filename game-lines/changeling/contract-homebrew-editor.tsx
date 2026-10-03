@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { ContractDefinition, SeemingKey } from "@/lib/catalog/catalog-types";
+import type { ContractDefinition, SeemingKey } from "./contract-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";

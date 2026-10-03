@@ -50,7 +50,7 @@ Core must not accumulate line-specific mechanics. These remain line-owned:
 
 Shared visual structure does not transfer mechanical ownership to Core.
 
-`lib/game-line-contracts/` means programming interfaces, not Changeling Contracts. Legacy Contract helpers/types in `lib/` and line-aware prerequisite context in `lib/merits.ts` remain ownership debt tracked in `MortalVampireMageTranslationAudit.md`; do not expand them. Homebrew does not exempt specialized mechanics, editors, or CSS from line ownership. Shared visual selectors reused by multiple lines must use neutral names rather than names of one line's powers or traits.
+`lib/game-line-contracts/` means programming interfaces, not Changeling Contracts. Changeling owns Contract types, presentation and clause helpers, and its Entitlement page in `game-lines/changeling/`; do not restore shared reexports or legacy paths. Line-aware prerequisite context in `lib/merits.ts` remains ownership debt tracked in `MortalVampireMageTranslationAudit.md`; do not expand it. Homebrew does not exempt specialized mechanics, editors, or CSS from line ownership. Shared visual selectors reused by multiple lines must use neutral names rather than names of one line's powers or traits.
 
 ## Dependency Direction
 

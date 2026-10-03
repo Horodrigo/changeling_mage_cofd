@@ -109,7 +109,7 @@ test("Mage Order labels follow the active locale", async () => {
 
 test("Contract outcomes and Courtless use dictionary labels without changing mechanics", async () => {
   const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
-  const { contractOutcomeSections } = await vite.ssrLoadModule("/lib/contract-presentation.ts");
+  const { contractOutcomeSections } = await vite.ssrLoadModule("/game-lines/changeling/contract-presentation.ts");
   const { courtDisplayName } = await vite.ssrLoadModule("/lib/changeling-courts.ts");
   const contract={description:"Description",dicePool:"Wits + Wyrd",success:"Success text",exceptionalSuccess:"Exceptional text",failure:"Failure text",dramaticFailure:"Dramatic text"};
   const before=JSON.stringify(contract);
