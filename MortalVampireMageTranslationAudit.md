@@ -467,6 +467,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: suíte completa **500/500**, suíte dirigida inicial **43/43** e **8/8** testes finais após acrescentar a proteção de alocações antigas. Lint, build, TypeScript e `git diff --check` aprovados. A classificação do índice de identidade pelo lint foi alinhada ao padrão Core existente, sem desligar a regra. Sem smoke de navegador.
 - Ainda abertos: reconciliação de criação/edição, Entitlement e outros consumidores de nomes, requisitos especializados compartilhados e traduções das etapas 1–4. Este lote não encerra a prioridade 0.
 
+## Progresso — prioridade 0, controles de graduação e instâncias (2026-10-03)
+
+- Removidas as listas de nomes que determinavam repetibilidade e graduações sem limite nos seletores compartilhados e nas compras de Changeling/Werewolf. As 19 definições afetadas agora declaram esses metadados nos próprios catálogos; seus nomes, regras e graduações originais foram preservados.
+- Contacts e Staff continuam agregados, não instâncias repetíveis; Token também permanece agregado. Graduações descontínuas não foram transformadas em intervalos.
+- Homebrew homônimo não herda comportamento oficial pelo nome. A opção explícita de múltiplas instâncias pode ser configurada no editor e sobrevive ao import/export.
+- Recursos Core/Changeling tiveram suas versões incrementadas para atualizar os caches. Testes cobrem os metadados canônicos, nomes renomeados/homônimos, graduações descontínuas e conservação das opções Homebrew.
+- A prioridade 0 continua aberta nos consumidores restantes de configuração/requisitos por nome. As etapas de tradução 1–4 ainda não foram concluídas.
+
 ## Progresso — prioridade 0, criação e Entitlement Changeling (2026-10-03)
 
 - O Builder resolve os Merits pelo ID para validar e salvar suas fontes. A reconciliação de Court usa somente pontos de criação, preserva a instância e deixa homônimos Homebrew intactos; o merge restaura XP pela instância exata. Os filtros e a validação de Contracts recebem as graduações totais de Mantle/Court Goodwill, sem consumir orçamento de criação com XP.

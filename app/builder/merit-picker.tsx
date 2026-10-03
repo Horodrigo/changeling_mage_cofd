@@ -12,8 +12,6 @@ import { meritConfigurationTitle } from "@/lib/core/character/merit-configuratio
 import {
   meritPrerequisitesMet,
   meritRatingsFor,
-  REPEATABLE_MERITS,
-  UNBOUNDED_MERITS,
   type MeritDefinition,
   type MeritPrerequisiteContext,
 } from "@/lib/merits";
@@ -130,7 +128,7 @@ export function MeritPicker({
           const repeatable = isRepeatableDefinition(definition);
           const prerequisitesMet = isEligible(definition, context);
           const presented = meritPresentation(definition, locale);
-          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {UNBOUNDED_MERITS.has(definition.name) ? "1+" : meritRatingsFor(definition).map((rating) => "•".repeat(rating)).join(", ")}</small>{presented.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}<p>{presented.description}</p>{presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}</div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
+          return <article className={selected ? "merit-option selected" : !prerequisitesMet ? "merit-option merit-option-locked" : "merit-option"} key={definition.id}><div><strong>{meritName(definition)}</strong><small>{definition.source} · p. {definition.page || "—"} · {definition.unbounded ? "1+" : meritRatingsFor(definition).map((rating) => "•".repeat(rating)).join(", ")}</small>{presented.prerequisites && <p className={`rule-detail${prerequisitesMet ? "" : " merit-prerequisites-missing"}`}><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}<p>{presented.description}</p>{presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}</div><Button type="button" size="sm" className="catalog-selection-action" variant={selected ? "secondary" : "outline"} disabled={!prerequisitesMet || (selected && !repeatable)} onClick={() => addMerit(definition)}>{selected && !repeatable ? <><Check /> {t("ui.selected")}</> : <><Plus /> {repeatable && selected ? t("ui.newInstance") : t("ui.add")}</>}</Button></article>;
         })}</div></section>;
       })}{!visibleCatalog.length && <em>{t("ui.noMeritsMatchTheFilters")}</em>}</div><DialogFooter><DialogClose asChild><Button type="button" size="sm" className="catalog-dialog-done">{t("ui.done")}</Button></DialogClose></DialogFooter>
     </DialogContent></Dialog>
@@ -138,7 +136,7 @@ export function MeritPicker({
 }
 
 function isRepeatableDefinition(definition: MeritDefinition) {
-  return REPEATABLE_MERITS.has(definition.name) || Boolean((definition as MeritDefinition & { repeatable?: boolean }).repeatable);
+  return Boolean(definition.repeatable);
 }
 
 function meritTooltip(definition: MeritDefinition, locale: "pt-BR" | "en-US") {

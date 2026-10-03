@@ -75,6 +75,7 @@
   },
   {
     "id": "ctl-2ed:court-goodwill",
+    "repeatable": true,
     "name": "Court Goodwill",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
@@ -162,6 +163,7 @@
   },
   {
     "id": "ctl-2ed:fae-mount",
+    "repeatable": true,
     "name": "Fae Mount",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
@@ -542,6 +544,7 @@
   },
   {
     "id": "ctl-2ed:hedgespun-item",
+    "repeatable": true,
     "name": "Hedgespun Item",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
@@ -1033,6 +1036,7 @@
   },
   {
     "id": "h-courts:acquired-taste",
+    "repeatable": true,
     "name": "Acquired Taste",
     "ratings": [1],
     "line": "CtL",
@@ -1385,6 +1389,7 @@
   },
   {
     "id": "ctl-2ed:hollow",
+    "repeatable": true,
     "name": "Hollow",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
@@ -1399,6 +1404,7 @@
   },
   {
     "id": "ctl-2ed:stable-trod",
+    "repeatable": true,
     "name": "Stable Trod",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
@@ -1428,6 +1434,7 @@
   },
   {
     "id": "ctl-hedge:shared-bastion",
+    "repeatable": true,
     "name": "Shared Bastion",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
@@ -1487,6 +1494,7 @@
   },
   {
     "id": "ctl-2ed:hedge-duelist",
+    "repeatable": true,
     "name": "Hedge Duelist",
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",

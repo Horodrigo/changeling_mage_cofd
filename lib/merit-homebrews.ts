@@ -60,6 +60,7 @@ export function normalizeMeritHomebrew(value: unknown): MeritDefinition | null {
     translatedName: name, description: description || levels[0]?.description || "", descriptionEn: description || levels[0]?.description || "",
     prerequisites, narrativePrerequisites: narrativePrerequisites || undefined, page: 0, ...(levels.length ? { levels } : {}),
     ...(requirements ? { requirements } : {}), ...(item.unbounded === true ? { unbounded: true as const } : {}),
+    ...(item.repeatable === true ? { repeatable: true as const } : {}),
     homebrew: true, descriptivePrerequisites: true,
   };
 }

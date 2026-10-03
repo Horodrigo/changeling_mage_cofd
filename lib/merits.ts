@@ -50,17 +50,8 @@ export type MeritDefinition = {
   replacementCategory?: string;
 };
 
-export const REPEATABLE_MERITS = new Set([
-  "Allies", "Alternate Identity", "Court Goodwill", "Fae Mount",
-  "Language", "Library", "Mentor", "Retainer", "Safe Place", "Status",
-  "Striking Looks", "Hedgespun Item",
-  "Hedge Duelist", "Hollow", "Stable Trod", "Shared Bastion", "Acquired Taste",
-]);
-export const UNBOUNDED_MERITS = new Set(["Contacts", "Staff"]);
-export const EXTENDED_DOT_MERITS = new Set(["Token"]);
-
 export const meritRatingsFor = (merit: Pick<MeritDefinition, "name" | "ratings" | "unbounded">, ceiling = Math.max(...merit.ratings)) =>
-  (UNBOUNDED_MERITS.has(merit.name) || merit.unbounded) ? Array.from({length:Math.max(0,ceiling-Math.min(...merit.ratings))+1},(_,index)=>index+Math.min(...merit.ratings)) : merit.ratings;
+  merit.unbounded ? Array.from({length:Math.max(0,ceiling-Math.min(...merit.ratings))+1},(_,index)=>index+Math.min(...merit.ratings)) : merit.ratings;
 export const meritPrerequisitesFor = (merit: Pick<MeritDefinition, "prerequisites">) => merit.prerequisites;
 
 export type MeritPrerequisiteContext = RequirementContext & {

@@ -1,6 +1,6 @@
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
-import { meritPrerequisitesMet, meritRatingsFor, meritSelectionProblems, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
+import { meritPrerequisitesMet, meritRatingsFor, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
 import type { WerewolfTotemCatalog } from "./catalogs/totem";
@@ -71,7 +71,7 @@ export function resolveTotemAdvantage(character: CharacterSheet, totem: TotemSel
   for (const entry of resolved) {
     const others = resolved.filter(item => item.id !== entry.id && key(item.choice) === key(entry.choice));
     const merit = definition(entry.choice);
-    if (others.length && (!merit || (!merit.repeatable && !REPEATABLE_MERITS.has(merit.name)))) {
+    if (others.length && (!merit || !merit.repeatable)) {
       // Separate already-owned Specialties may each receive their explicitly granted Area of Expertise.
       if (!(entry.automaticExpertise && others.every(item => item.automaticExpertise && item.choice.kind === "merit" && entry.choice.kind === "merit" && (item.choice.configuration.specialty !== entry.choice.configuration.specialty || item.choice.configuration.skill !== entry.choice.configuration.skill)))) add(entry.id, "duplicate");
     }

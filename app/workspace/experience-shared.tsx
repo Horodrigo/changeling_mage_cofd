@@ -7,7 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";
-import { meritPrerequisitesMet, meritRatingsFor, UNBOUNDED_MERITS, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritPrerequisitesMet, meritRatingsFor, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { alphabetical, compareOptionLabels } from "@/lib/option-order";
 import { RuleSelect } from "./rule-select";
 import { systemTerm } from "@/lib/system-terms";
@@ -322,7 +322,7 @@ export function ExperienceMeritPicker({
                       (!owned.grantedBy || canAdvanceGrant(owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
-                ratings = UNBOUNDED_MERITS.has(item.name)
+                ratings = item.unbounded
                 ? meritRatingsFor(
                     item,
                     Math.max(1, ...instances.map(({ owned }) => owned.dots + 1)),
@@ -387,8 +387,7 @@ export function ExperienceMeritPicker({
 }
 export function isRepeatableDefinition(definition: MeritDefinition) {
   return (
-    REPEATABLE_MERITS.has(definition.name) ||
-    Boolean((definition as MeritDefinition & { repeatable?: boolean }).repeatable)
+    Boolean(definition.repeatable)
   );
 }
 export function recalculateCoreDerived(sheet: CharacterSheet) {

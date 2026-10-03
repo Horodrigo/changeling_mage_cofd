@@ -3,7 +3,7 @@ import { asRecord } from "@/lib/core/character/current-character-validation";
 import { addExperienceMeritDots, creationMeritDots, experienceMeritDots, removeExperienceMeritDots } from "@/lib/merit-progression";
 import { resolveMeritDefinition, meritMatchesDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
-import { meritRatingsFor, REPEATABLE_MERITS, type MeritDefinition } from "@/lib/merits";
+import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import type { Locale } from "@/lib/i18n";
 import { createRandomId } from "@/lib/random-id";
 import { canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritContextForSheet } from "./merit-context";
@@ -30,7 +30,7 @@ export function quoteChangelingMeritPurchase(sheet: CharacterSheet, definitionId
   const owned = changelingExperienceMeritInstance(sheet, definition, index, catalog);
   if (index >= 0 && !owned) return;
   if (owned && (!natural(owned.dots) || owned.dots < 1)) return;
-  if (!owned && !definition.repeatable && !REPEATABLE_MERITS.has(definition.name) && sheet.merits.some(item => meritMatchesDefinition(item, definition, catalog))) return;
+  if (!owned && !definition.repeatable && sheet.merits.some(item => meritMatchesDefinition(item, definition, catalog))) return;
   const cost = target - (owned?.dots ?? 0);
   if (cost < 1 || !meritRatingsFor(definition, target).includes(target) ||
     !changelingExperienceMeritEligible(definition, { ...changelingMeritContextForSheet(sheet, catalog), selectedDots: target, configuration: owned?.configuration })) return;

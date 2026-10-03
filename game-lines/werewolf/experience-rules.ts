@@ -2,7 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { addExperienceMeritDots, experienceMeritDots, removeExperienceMeritDots } from "@/lib/merit-progression";
-import { meritPrerequisitesMet, meritSelectionProblems, meritRatingsFor, REPEATABLE_MERITS, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritPrerequisitesMet, meritSelectionProblems, meritRatingsFor, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
@@ -115,7 +115,7 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     if (purchase.instanceId && character.merits.filter(item => item.instanceId === purchase.instanceId).length !== 1) fail("meritInstance");
     if (purchase.instanceId && (!instance || werewolfMeritDefinition(instance, catalogs.merits)?.id !== definition.id)) fail("meritInstance");
     if (instance?.grantedBy && !canAdvanceWerewolfGrant(instance, catalogs.merits)) fail("grant");
-    if (!instance && !definition.repeatable && !REPEATABLE_MERITS.has(definition.name) && character.merits.some(item => werewolfMeritDefinition(item, catalogs.merits)?.id === definition.id)) fail("meritInstance");
+    if (!instance && !definition.repeatable && character.merits.some(item => werewolfMeritDefinition(item, catalogs.merits)?.id === definition.id)) fail("meritInstance");
     if (!natural(purchase.target) || purchase.target <= (instance?.dots ?? 0) || !meritRatingsFor(definition, purchase.target).includes(purchase.target)) fail("meritChoices");
     const { core, own } = werewolfAdvancementContexts(character, catalogs);
     const choice = { id: definition.id, instanceId: instance?.instanceId, dots: purchase.target, configuration: normalizeMeritConfiguration(purchase.configuration) };
